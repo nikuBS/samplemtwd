@@ -66,12 +66,12 @@
                        <li class="guide-item">
                            <h3 class="guide-tit">데이터 중심의 MY 홈</h3>
                            <p class="guide-cont">MY 홈 화면에서 데이터 잔여량 확인부터<br>데이터 선물/충전까지 쉽게 이용해보세요.</p>
-                           <img src="/img/customer/app_use_guide01.png" alt="" class="guide-img">
+                           <img src="{{cdn}}/img/customer/app_use_guide01.png" alt="" class="guide-img">
                        </li>
                        <li class="guide-item">
                             <h3 class="guide-tit">결합상품 관리도 편리하게</h3>
                             <p class="guide-cont">IPTV, 인터넷, 집전화도 휴대폰처럼<br>조회하고 관리할 수 있어요.</p>
-                            <img src="/img/customer/app_use_guide02.png" alt="" class="guide-img">
+                            <img src="{{cdn}}/img/customer/app_use_guide02.png" alt="" class="guide-img">
                         </li>
                         <li class="guide-item">
                             <h3 class="guide-tit">‘바로가기’ 메뉴 편집</h3>
@@ -81,24 +81,24 @@
                         <li class="guide-item">
                             <h3 class="guide-tit">한눈에 보기 쉬운 전체메뉴</h3>
                             <p class="guide-cont">티월드에서 제공하는 정보를<br>전체메뉴에서 한눈에 확인해보세요.</p>
-                            <img src="/img/customer/app_use_guide04.png" alt="" class="guide-img">
+                            <img src="{{cdn}}/img/customer/app_use_guide04.png" alt="" class="guide-img">
                         </li>
                         <li class="guide-item">
                             <h3 class="guide-tit">다른 회선 정보도 손쉽게</h3>
                             <p class="guide-cont">다회선 이용 고객 또는 자녀회선 등의<br>다른 회선 정보도 바로 확인할 수 있어요.</p>
-                            <img src="/img/customer/app_use_guide05.png" alt="" class="guide-img">
+                            <img src="{{cdn}}/img/customer/app_use_guide05.png" alt="" class="guide-img">
                         </li>
                         <li class="guide-item">
                             <h3 class="guide-tit">복잡한 업무처리도 간편하게!</h3>
                             <p class="guide-cont">매장이나 고객센터에서만 처리할 수 있었던<br>업무처리도 모바일에서 가능해요.</p>
                             <ul class="inner-guide-list">
                                 <li class="inner-guide-item">
-                                    <i class="guide-ico"><span><img src="/img/customer/app_use_ico01.png" alt=""></span></i>
+                                    <i class="guide-ico"><span><img src="{{cdn}}/img/customer/app_use_ico01.png" alt=""></span></i>
                                     <h4 class="inner-tit">만 14세 미만 이용자의<br>충전허용금액 변경</h4>
                                     <p class="inner-guide-cont">법정대리인인 부모의 계정으로<br>충전허용금액 변경을 지원합니다.</p>
                                 </li>
                                 <li class="inner-guide-item">
-                                    <i class="guide-ico"><span><img src="/img/customer/app_use_ico02.png" alt=""></span></i>
+                                    <i class="guide-ico"><span><img src="{{cdn}}/img/customer/app_use_ico02.png" alt=""></span></i>
                                     <h4 class="inner-tit">장기 일시정지 신청</h4>
                                     <p class="inner-guide-cont">군입대, 해외체류 등의 사유로<br>장기 일시정지를 신청해야 하는 경우<br>구비서류를 제출하고 신청할 수 있어요.</p>
                                 </li>
@@ -111,5 +111,14 @@
         </div>
         <!--// #contents -->
     </div>
-</body>
+</body> 
+<script type="text/javascript">
+    $(document).ready(function(){
+        //퍼블 화면 확인용 스크립트
+        $('img').each(function (index, ele) {
+            var src = $(this).attr('src');
+            $(this).attr('src', src.replace('{{cdn}}', ''));
+        });
+    });
+</script>
 </html>

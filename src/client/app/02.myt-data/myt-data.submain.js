@@ -121,7 +121,7 @@ Tw.MyTDataSubMain.prototype = {
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
 
     // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 Start
-    this.$container.on('click', '.fe-tab-wrap > li', $.proxy(this._changeTab, this));
+    // this.$container.on('click', '.fe-tab-wrap > li', $.proxy(this._changeTab, this));
     // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 End
 
   },
@@ -181,7 +181,7 @@ Tw.MyTDataSubMain.prototype = {
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
         if(!row.banner.result.summary){
-          row.banner.result.summary = {target: row.target};  
+          row.banner.result.summary = {target: row.target};
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
@@ -190,7 +190,7 @@ Tw.MyTDataSubMain.prototype = {
       }
 
       if(admBanner.code === Tw.API_CODE.CODE_00){
-        row.banner.result.imgList = row.banner.result.imgList.concat( 
+        row.banner.result.imgList = row.banner.result.imgList.concat(
           admBanner.result.banners.map(function(admbnr){
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
             admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
@@ -213,8 +213,8 @@ Tw.MyTDataSubMain.prototype = {
       if ( bnr.banner.result.bltnYn === 'N' ) {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
-      
-      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) 
+
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary)
           && bnr.banner.result.imgList.length > 0) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
       }else{
@@ -222,11 +222,11 @@ Tw.MyTDataSubMain.prototype = {
         this.$container.find('[data-id=banners]').hide();
       }
     }, this));
-    
+
     new Tw.XtractorService(this.$container);
 
   },
-  
+
   /**
    * @function
    * @desc 배너 설정유무
@@ -493,18 +493,25 @@ Tw.MyTDataSubMain.prototype = {
    * @desc tab 기본 선택
    */
   __tabDefaultFocused: function (id) {
-
+    var $tabs = this.$patternChart.find('.tab-linker').children('ul');
+    var $tabContents = this.$patternChart.find('.tab-contents').children('ul');
+    $tabs.children('li').attr('aria-selected', false);
+    $tabContents.children('li').attr('aria-selected', false);
+    var tabId = '#tab' + id;
+    $tabs.children(tabId).attr('aria-selected', true); // 탭
+    $tabContents.children(tabId + '-tab').attr('aria-selected', true); // 탭 내용
+    /*
     var $currTab = this.$container.find('.fe-tab-wrap'); // 탭
     $currTab.find('li').attr('aria-selected', false);
-    $currTab.find('a').attr('aria-selected', false);
+    // $currTab.find('a').attr('aria-selected', false);
 
-    this.$container.find('.tab-contents div.fe-tab-body').hide(); // 탭 내용 전부 숨기기
+    // this.$container.find('.tab-contents div.fe-tab-body').hide(); // 탭 내용 전부 숨기기
     this.$container.find('.tab-contents li').attr('aria-selected', false); // 탭 내용 > 전부 선택해제
 
     var $currTabBody =  this.$container.find('#tab'+id).attr('aria-selected', true); // 탭 내용
-    $currTabBody.find('a').attr('aria-selected', true); // a 링크 선택
+    // $currTabBody.find('a').attr('aria-selected', true); // a 링크 선택
     this.$container.find('#'+$currTabBody.attr('aria-controls')).attr('aria-selected', true).find('div.fe-tab-body').show(); // 선택된 탭 내용 보이기
-
+    */
   },
   // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 End
 

@@ -223,6 +223,8 @@ Tw.API_CMD = {
   BFF_05_0209: { path: '/core-modification/:version/wire-phone/numchange/change', method:Tw.API_METHOD.GET },
   BFF_05_0210: { path: '/core-modification/:version/wire-phone/numchange/change/number', method: Tw.API_METHOD.GET },
   BFF_05_0211: { path: '/core-modification/:version/wire-phone/numchange/change/put', method: Tw.API_METHOD.PUT },
+  // [OP002-4379]
+  BFF_05_0213: { path: '/core-bill/:version/bill-pay/cdr-pattern', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
@@ -518,7 +520,7 @@ Tw.API_CMD = {
   BFF_10_0184: { path: '/core-product/:version/mobiles/additions/flocheck', method: Tw.API_METHOD.GET },
   BFF_10_0185: { path: '/core-product/:version/mobiles/additions-sets/smartcallpick-infos', method: Tw.API_METHOD.GET },
   BFF_10_0186: { path: '/core-product/:version/mobiles/additions-sets/smartcallpick-sets', method: Tw.API_METHOD.POST },
-  
+
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
   BFF_10_0058: { path: '/core-product/:version/roaming/country-rate', method: Tw.API_METHOD.GET },
