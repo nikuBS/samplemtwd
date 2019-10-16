@@ -35596,6 +35596,9 @@ body.apphome .section-box {
 .data-used .chart-wrap.bar2.kjs2 .data-arry .data-ul > li.average .bar{background: url(/img/chart/pattern11.gif) repeat 0 0;}
 .data-used .contents-empty .desc {font-size: 1rem; color:#666;} /* 190904 [OP002-3416] 추가_01 */
 .data-used .contents-empty {padding:3rem 0 3.5rem;} /* 190904 [OP002-3416] 추가_02 */
+.data-used .data-a {text-align:center;}/* 190905 [OP002-3416] 추가_01 */
+.data-used .data-a th{text-align:center;vertical-align: middle;}/* 190905 [OP002-3416] 추가_02 */
+.data-used .result-none.type3{color:#666;}/* 190905 [OP002-3416] 추가_03 */
 .paymentCon.dayTimeUse{overflow:hidden;}
 .graph_chart_vert{height:13rem;text-align:center;background:url(/img/chart/bg_bar2.gif) repeat-x 0 9.688rem;}
 .graph_chart_vert ul{display:inline-block;*display:inline;*zoom:1;padding-top:1.875rem;text-align:center}

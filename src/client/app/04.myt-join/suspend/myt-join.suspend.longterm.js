@@ -484,8 +484,11 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
+      // 종료 날짜가 시작날짜와 동일한 월인 경우 요일로 계산하여 처리
+      diff = (Tw.DateHelper.getDiffByUnit(from, to, 'months') ||
+          Tw.DateHelper.getDiffByUnit(from, to, 'days')) * -1;
       if (from < curDate) {
+        // 시작일이 현재일보다 이전을 선택한 경우
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
       } else if ( diff < 0 ) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
