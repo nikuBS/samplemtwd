@@ -29,14 +29,14 @@
                         <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind"></span></i></span>
                         <!-- // Grand open 접근성 수정 -->
                         <div class="user-info">
-                            <span class="username"><span class="blind">가입자명</span><%= '가입자명(홍*동)' %></span>
+                            <span class="username"><span class="blind">가입자명</span>{{ svcInfo.mbrNm }}</span>
                         </div>
-                        <div class="p-num"><span class="blind">회선정보</span><%= '회선정보(010-12**-45**)' %></div>
+                        <div class="p-num"><span class="blind">회선정보</span>{{ svcInfo.svcNumDashed }}</div>
                     </div>
                 </div>
             </div>
             <!-- //.cont-box -->
-
+            {{#if byMonths}}
             <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
@@ -47,131 +47,129 @@
                         <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker tab-multiline">
                                 <ul role="tablist" style="width: 2338px;">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">7월</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">6월</a></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="">5월</a></li>
+                                    {{#each byMonths}}
+                                    <li role="tab" aria-selected="{{arr selected}}" aria-controls="tab{{inc @index}}-tab" id="tab{{inc @index}}"><button data-href="#tab{{inc @index}}-tab">{{caption}}</button></li>
+                                    {{/each}}
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
-                                        <div class="cont-box">
-                                            <div class="ti-caption-type01 pb14">
-                                                <h2 class="tit">월별 사용량 정보</h2>
+                                    {{#each byMonths}}
+                                        <li role="tabpanel" id="tab{{inc @index}}-tab" aria-labelledby="{{inc @index}}" aria-selected="{{arr selected}}">
+                                        {{#if hasData}}
+                                            <div class="cont-box">
+                                                <div class="ti-caption-type01 pb14">
+                                                    <h2 class="tit">월별 사용량 정보</h2>
+                                                </div>
+                                                <table class="data-a mt0" width="100%" border="1">
+                                                    <caption>월별 사용량 정보 안내 - 항목(음성통화/문자메세지(건)/문자메세지(원)/데이터),총사용량, 기본제공량,
+                                                        기본제공사용량으로로 구성된 표입니다.
+                                                    </caption>
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="34%">
+                                                            항목
+                                                        </th>
+                                                        <th width="%">
+                                                            총<br>사용량
+                                                        </th>
+                                                        <th width="%">
+                                                            기본<br>제공량
+                                                        </th>
+                                                        <th width="24%">
+                                                            기본제공사용량
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>
+                                                            음성통화
+                                                        </th>
+                                                        <td>
+                                                            {{voice.totalUsage}}
+                                                        </td>
+                                                        <td>
+                                                            {{voice.basOfrQty}}
+                                                        </td>
+                                                        <td>
+                                                            {{voice.basOfrUsage}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            문자메세지(건)
+                                                        </th>
+                                                        <td>
+                                                            {{sms.totalUsage}}
+                                                        </td>
+                                                        <td>
+                                                            {{sms.basOfrQty}}
+                                                        </td>
+                                                        <td>
+                                                            {{sms.basOfrUsage}}
+                                                        </td>
+                                                    </tr>
+                                                    {{!--"무제한"일 경우만 노출--}}
+                                                    {{#if sms.unlimited}}
+                                                    <tr>
+                                                        <th>
+                                                            문자메세지(원)
+                                                        </th>
+                                                        <td>
+                                                            -
+                                                        </td>
+                                                        <td>
+                                                            무제한
+                                                        </td>
+                                                        <td>
+                                                            무제한
+                                                        </td>
+                                                    </tr>
+                                                    {{/if}}
+                                                    <tr>
+                                                        <th>
+                                                            데이터
+                                                        </th>
+                                                        <td>
+                                                            {{data.totalUsage}}
+                                                        </td>
+                                                        <td>
+                                                            {{data.basOfrQty}}
+                                                        </td>
+                                                        <td>
+                                                            {{data.basOfrUsage}}
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="data-a mt20">
+                                                    <caption>월별 사용량 정보 표시</caption>
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="33%" scope="col">음성(망내)</th>
+                                                        <th width="33%" scope="col">음성(망외)</th>
+                                                        <th width="33%" scope="col">영상통화</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td scope="row">{{voice.inNetCallUsage}}</td>
+                                                        <td scope="row">{{voice.outNetCallUsage}}</td>
+                                                        <td>{{voice.videoCallUsage}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                            <table class="data-a mt0" width="100%" border="1">
-                                                <caption>월별 사용량 정보 안내 - 항목(음성통화/문자메세지(건)/문자메세지(원)/데이터),총사용량, 기본제공량,
-                                                    기본제공사용량으로로 구성된 표입니다.
-                                                </caption>
-                                                <thead>
-                                                <tr>
-                                                    <th width="34%">
-                                                        항목
-                                                    </th>
-                                                    <th width="%">
-                                                        총<br>사용량
-                                                    </th>
-                                                    <th width="%">
-                                                        기본<br>제공량
-                                                    </th>
-                                                    <th width="24%">
-                                                        기본제공사용량
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <th>
-                                                        음성통화
-                                                    </th>
-                                                    <td>
-                                                        <%- '00시간 00분' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '00시간 00분' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '00시간 00분' %>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>
-                                                        문자메세지(건)
-                                                    </th>
-                                                    <td>
-                                                        <%- '00건' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '00건' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '00건' %>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>
-                                                        문자메세지(원)
-                                                    </th>
-                                                    <td>
-                                                        <%- '무제한' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '-' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '10,000원' %>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>
-                                                        데이터
-                                                    </th>
-                                                    <td>
-                                                        <%- '100GB' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '무제한' %>
-                                                    </td>
-                                                    <td>
-                                                        <%- '100GB' %>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-
-                                            <table class="data-a mt20">
-                                                <caption>월별 사용량 정보 표시</caption>
-                                                <thead>
-                                                <tr>
-                                                    <th width="33%" scope="col">음성(망내)</th>
-                                                    <th width="33%" scope="col">음성(망외)</th>
-                                                    <th width="33%" scope="col">영상통화</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td scope="row"><%- '00시간 00분 00초' %></td>
-                                                    <td scope="row"><%- '0초' %></td>
-                                                    <td><%- '00시간 00분 00초' %></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </li>
-                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
-                                        <div class="cont-box pt0 pb0">
-                                            <div class="result-none type3">
-                                                최근 사용량 내역이 없습니다.
+                                        {{^}}
+                                            <div class="cont-box pt0 pb0">
+                                                <div class="result-none type3">
+                                                    최근 사용량 내역이 없습니다.
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3" aria-selected="false">
-                                        <div class="cont-box pt0 pb0">
-                                            <div class="result-none">
-                                                최근 사용량 내역이 없습니다.
-                                            </div>
-                                        </div>
-                                    </li>
+                                        {{/if}}
+                                        </li>
+                                    {{/each}}
                                 </ul>
                             </div>
                         </div>
@@ -180,7 +178,9 @@
                 <!--// .component -->
             </div>
             <!--// .cont-box -->
-
+            {{/if}}
+            {{#if byWeekdays}}
+                {{#if byTimes}}
             <hr class="cont-sp type1" aria-hidden="true">
 
             <div class="cont-box">
@@ -190,41 +190,13 @@
                 <div class="paymentCon dayTimeUse">
                     <div class="graph_chart_hoz center">
                         <ul class="graph_day">
+                            {{#each byWeekdays}}
                             <li>
-                                <span class="barInfo">월</span>
-                                <span class="graphBar"><span class="currBar" style="width:40.6%"><!-- 그래프 영역 --></span></span><!-- currBar 값이 width 값이 됨 -->
-                                <strong>40.6%</strong>
+                                <span class="barInfo">{{caption}}</span>
+                                <span class="graphBar"><span class="currBar" style="width: {{totSum}}%"></span></span>
+                                <strong>{{totSum}}%</strong>
                             </li>
-                            <li>
-                                <span class="barInfo">화</span>
-                                <span class="graphBar"><span class="currBar" style="width:60.7%"><!-- 그래프 영역 --></span></span><!-- currBar 값이 width 값이 됨 -->
-                                <strong>60.7%</strong>
-                            </li>
-                            <li>
-                                <span class="barInfo">수</span>
-                                <span class="graphBar"><span class="currBar" style="width:49.45%"><!-- 그래프 영역 --></span></span><!-- currBar 값이 width 값이 됨 -->
-                                <strong>49.45%</strong>
-                            </li>
-                            <li>
-                                <span class="barInfo">목</span>
-                                <span class="graphBar"><span class="currBar" style="width:25.85%"><!-- 그래프 영역 --></span></span><!-- currBar 값이 width 값이 됨 -->
-                                <strong>25.85%</strong>
-                            </li>
-                            <li>
-                                <span class="barInfo">금</span>
-                                <span class="graphBar"><span class="currBar" style="width:35.56%"><!-- 그래프 영역 --></span></span><!-- currBar 값이 width 값이 됨 -->
-                                <strong>35.56%</strong>
-                            </li>
-                            <li>
-                                <span class="barInfo">토</span>
-                                <span class="graphBar"><span class="currBar" style="width:50.45%"><!-- 그래프 영역 --></span></span><!-- currBar 값이 width 값이 됨 -->
-                                <strong>50.45%</strong>
-                            </li>
-                            <li>
-                                <span class="barInfo">일</span>
-                                <span class="graphBar"><span class="currBar" style="width:25.85%"><!-- 그래프 영역 --></span></span><!-- currBar 값이 width 값이 됨 -->
-                                <strong>25.85%</strong>
-                            </li>
+                            {{/each}}
                         </ul>
                     </div>
                 </div>
@@ -233,33 +205,19 @@
                 </div>
                 <div class="graph_chart_vert">
                     <ul>
-                        <li class="time1">
-                            <span class="barInfo">00~06시</span>
+                        {{#each byTimes}}
+                        <li class="time{{inc @index}}">
+                            <span class="barInfo">{{caption}}시</span>
                             <span class="graphBar">
-                                    <span class="currBar" style="height:40.6%"><!-- 그래프 영역 --></span>
-                                </span><!-- currBar 값이 height 값이 됨 --><strong>40.6%</strong>
+                                <span class="currBar" style="height: {{arr totSum}}%"></span>
+                            </span><strong>{{arr totSum}}%</strong>
                         </li>
-                        <li class="time2">
-                            <span class="barInfo">06~12시</span>
-                            <span class="graphBar">
-                                    <span class="currBar" style="height:58.93%"><!-- 그래프 영역 --></span>
-                                </span><!-- currBar 값이 height 값이 됨 --><strong>58.93%</strong>
-                        </li>
-                        <li class="time3">
-                            <span class="barInfo">12~18시</span>
-                            <span class="graphBar">
-                                    <span class="currBar" style="height:26.286%"><!-- 그래프 영역 --></span>
-                                </span><!-- currBar 값이 height 값이 됨 --><strong>26.28%</strong>
-                        </li>
-                        <li class="time4">
-                            <span class="barInfo">18~24시</span>
-                            <span class="graphBar">
-                                    <span class="currBar" style="height:35.48%"><!-- 그래프 영역 --></span>
-                                </span><!-- currBar 값이 height 값이 됨 --><strong>35.48%</strong>
-                        </li>
+                        {{/each}}
                     </ul>
                 </div>
             </div><!--// .cont-box -->
+                {{/if}}
+            {{/if}}
         </div> <!-- //.container-->
     </div>
     <!-- // .container-wrap -->
