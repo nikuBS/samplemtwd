@@ -15,7 +15,7 @@ class CustomerUseGuideApp extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
          childInfo: any, pageInfo: any) {
 
-    const id = 'D00015';
+    const id = req.query.id || '';
     
     this.getContent(res, svcInfo, pageInfo, id).subscribe(
       (content) => {
