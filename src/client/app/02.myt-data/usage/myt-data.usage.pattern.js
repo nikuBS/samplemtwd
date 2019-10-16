@@ -19,9 +19,24 @@ Tw.MyTDataUsagePattern.prototype = {
    * @private
    */
   _bindEvent: function () {
-    // 나의 데이터 통화로
-    this.$container.on('click', 'button.prev-step', $.proxy(this._historyService.goBack, /* function () {
+    // 나의 데이터/통화로 이동
+    /*
+    this.$container.on('click', 'button.prev-step', $.proxy(this._historyService.goBack, /!* function () {
       this._historyService.goBack// .replaceURL('/myt-data/submain');
-    }, */ this));
+    }, *!/ this));
+    */
+    // TODO: Tab을 switching하는 것은 widget(widgets.js:component_tabs)의 영역이므로, 추후 기준이 정리되면 제거되어야 함
+    // NOTE: 다른 탭으로 이동 (상위 컨테이너 기준으로 이벤트를 거는 것이 좋으나, 이 경우는 오직 LI에만 필요함)
+    this.$container.find('.data-used').find('.tab-linker').children('ul').on('click', 'li', $.proxy(this._onTabClicked, this));
+  },
+  // TODO: Tab을 switching하는 것은 widget(widgets.js:component_tabs)의 영역이므로, 추후 기준이 정리되면 제거되어야 함
+  _onTabClicked: function (event) {
+    // 마우스로 LI를 클릭했을 때만, 발생시키기 위해
+    if (event.originalEvent && event.target.tagName === 'LI') {
+      var $target = $(event.target);
+      if ($target.attr('aria-selected') !== 'true') {
+        $target.children('button').trigger('click');
+      }
+    }
   }
 };
