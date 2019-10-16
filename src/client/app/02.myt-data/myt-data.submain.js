@@ -590,10 +590,13 @@ Tw.MyTDataSubMain.prototype = {
         item = data[index];
         usage = parseInt(item.totalUsage, 10);
         totalUsage += usage;
-        itemsDataChart.push({
-          t: this._recentChartDate(item.invMth), // 각 항목 타이틀
-          v: this.__convertData(usage) // 배열 평균값으로 전달
-        });
+        // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
+        if (usage) {
+          itemsDataChart.push({
+            t: this._recentChartDate(item.invMth), // 각 항목 타이틀
+            v: this.__convertData(usage) // 배열 평균값으로 전달
+          });
+        }
       }
       // data
       if (totalUsage) {
@@ -630,10 +633,13 @@ Tw.MyTDataSubMain.prototype = {
         item = data[index];
         usage = parseInt(item.totalUsage, 10);
         totalUsage += usage;
-        itemsVoiceChart.push({
-          t: this._recentChartDate(item.invMth), // 각 항목 타이틀
-          v: this.__convertVoice(usage) // 배열 평균값으로 전달
-        });
+        // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
+        if (usage) {
+          itemsVoiceChart.push({
+            t: this._recentChartDate(item.invMth), // 각 항목 타이틀
+            v: this.__convertVoice(usage) // 배열 평균값으로 전달
+          });
+        }
       }
       // voice
       if (totalUsage) {
@@ -670,10 +676,13 @@ Tw.MyTDataSubMain.prototype = {
         item = data[index];
         usage = parseInt(item.totalUsage, 10); // 배열 평균값으로 전달
         totalUsage += usage;
-        itemsSMSChart.push({
-          t: this._recentChartDate(item.invMth), // 각 항목 타이틀
-          v: usage
-        });
+        // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
+        if (usage) {
+          itemsSMSChart.push({
+            t: this._recentChartDate(item.invMth), // 각 항목 타이틀
+            v: usage
+          });
+        }
       }
       // sms
       if (totalUsage) {
