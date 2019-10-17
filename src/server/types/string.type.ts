@@ -885,9 +885,10 @@ export const CUSTOMER_SITE_OPTION_TYPE = [
 
 export const DIRECTSHOP_LINK = {
   common: 'https://m.shop.tworld.co.kr/shopguide',
-  discount: '/bnft?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide5&fSiteCd=1010',
-  buy: '/dc-agrmt-typ?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide6&fSiteCd=1010',
-  delivery: '/dvc-dlv?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide7&fSiteCd=1010'
+  benefit: '/submain',
+  buy: '/inqr/#qna_tab1',
+  delivery: '/inqr/#qna_tab2',
+  exchangeReturn: '/inqr/#qna_tab3'
 };
 
 /**
@@ -1042,79 +1043,106 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     upperCat: true,
     sub_list: [
       {
-        sub_title: '할인/혜택',
+        // sub_title: '할인/혜택',
+        sub_title: '차원이 다른 혜택',
         sub_text: '',
         dep_list: [
           {
-            dep_title: '요금약정할인',
+            dep_title: '혜택',
             type: 'A1',
-            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.discount}`
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.benefit}`
             // code: 'C00001'
-          },
-          {
-            dep_title: '결합할인',
-            type: 'A1',
-            code: 'C00007'
-          },
-          {
-            dep_title: 'T world 다이렉트 혜택',
-            type: 'A2',
-            code: 'C00009'
           }
+          // 다이렉트 관련 내용은 더이상 사용하지 않기 때문에 삭제 해도 된다고 함 - 기획(김린아 선임님)
+          // type에 대한 정확한 내용은 확인 불가(A1,A2,B1... 기타등등)
+          // {
+          //   dep_title: '결합할인',
+          //   type: 'A1',
+          //   code: 'C00007'
+          // },
+          // {
+          //   dep_title: 'T world 다이렉트 혜택',
+          //   type: 'A2',
+          //   code: 'C00009'
+          // }
         ]
       },
       {
-        sub_title: '구매',
+        // sub_title: '구매',
+        sub_title: '구매/배송',
         sub_text: '',
         dep_list: [
           {
-            dep_title: '구매 전 꿀팁',
+            dep_title: '구매배송',
             type: 'A2',
             code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.buy}`
             // code: 'C00011'
-          },
-          {
-            dep_title: '다이렉트샵구매가이드',
-            type: 'A2',
-            code: 'C00010'
-          },
-          {
-            dep_title: '가입유형',
-            type: 'A1',
-            code: 'C00005'
-          },
-          {
-            dep_title: '휴대폰분할상환수수료',
-            type: 'A2',
-            code: 'C00006'
-          },
-          {
-            dep_title: '구매유의사항',
-            type: 'A2',
-            code: 'C00008'
           }
+          // {
+          //   dep_title: '다이렉트샵구매가이드',
+          //   type: 'A2',
+          //   code: 'C00010'
+          // },
+          // {
+          //   dep_title: '가입유형',
+          //   type: 'A1',
+          //   code: 'C00005'
+          // },
+          // {
+          //   dep_title: '휴대폰분할상환수수료',
+          //   type: 'A2',
+          //   code: 'C00006'
+          // },
+          // {
+          //   dep_title: '구매유의사항',
+          //   type: 'A2',
+          //   code: 'C00008'
+          // }
         ]
       },
       {
-        sub_title: '배송/개통',
+        // sub_title: '배송/개통',
+        sub_title: '개통/세팅',
         sub_text: '',
         dep_list: [
           {
-            dep_title: '배송방법',
+            dep_title: '개통세팅',
             type: 'A2',
             code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.delivery}`
             // code: 'C00002'
-          },
-          {
-            dep_title: '개통방법',
-            type: 'A1',
-            code: 'C00003'
-          },
-          {
-            dep_title: '반품교환',
-            type: 'A1',
-            code: 'C00004'
           }
+          // {
+          //   dep_title: '개통방법',
+          //   type: 'A1',
+          //   code: 'C00003'
+          // },
+          // {
+          //   dep_title: '반품교환',
+          //   type: 'A1',
+          //   code: 'C00004'
+          // }
+        ]
+      },
+      {
+        sub_title: '교환/반품',
+        sub_text: '',
+        dep_list: [
+          {
+            dep_title: '교환반품',
+            type: 'A2',
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.exchangeReturn}`
+            // code: 'C00002'
+          }
+          // {
+          //   dep_title: '개통방법',
+          //   type: 'A1',
+          //   code: 'C00003'
+          // },
+          // {
+          //   dep_title: '반품교환',
+          //   type: 'A1',
+          //   code: 'C00004'
+          // }
         ]
       }
     ]
