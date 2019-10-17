@@ -21,6 +21,7 @@ Tw.MyTFareInfoHistory = function (rootEl, data) {
   this._cachedElement();
   this._bindEvent();
   this._init();
+  this._setCoachMark();
 };
 
 Tw.MyTFareInfoHistory.prototype = {
@@ -569,5 +570,14 @@ Tw.MyTFareInfoHistory.prototype = {
   _apiError: function ($target, err) {
     Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop(null, $target);
     return false;
+  },
+
+  /**
+   * @function
+   * @desc 코치마크 처리
+   * @private
+   */
+  _setCoachMark: function () {
+    new Tw.CoachMark(this.$container, '.fe-coach-change', '.fe-coach-change-target', Tw.NTV_STORAGE.COACH_MYTFARE_INFO_HISTORY_SEARCH);
   }
 };

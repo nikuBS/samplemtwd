@@ -7,6 +7,8 @@ import MyTDataUsageChildRechargeComplete from './controllers/usage/myt-data.usag
 import MyTDataUsageTotalSharingData from './controllers/usage/myt-data.usage.total-sharing-data.controller';
 import MyTDataUsageCancelTshare from './controllers/usage/myt-data.usage.cancel-tshare.controller';
 import MyTDataUsageCancelTshareComplete from './controllers/usage/myt-data.usage.cancel-tshare-complete.controller';
+// [OP002-4379]
+import MyTDataUsagePattern from './controllers/usage/myt-data.usage.pattern.controller';
 import MyTDataRechargeCoupon from './controllers/recharge/myt-data.recharge.coupon.controller';
 import MyTDataRechargeCouponUse from './controllers/recharge/myt-data.recharge.coupon.use.controller';
 import MyTDataTing from './controllers/ting/myt-data.ting.controller';
@@ -70,6 +72,8 @@ class MytDataRouter extends TwRouter {
 
     this.controllers.push({ url: '/5g-setting', controller: MyTData5gSetting });
     this.controllers.push({ url: '/5g-setting/history', controller: MyTData5gSettingHistory });
+    // [OP002-4379]
+    this.controllers.push({ url: '/usage-pattern', controller: MyTDataUsagePattern });
   }
 }
 

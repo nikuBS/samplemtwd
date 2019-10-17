@@ -7,7 +7,7 @@ class FormatHelper {
    * @desc add leading zeros
    * @param  {number} number
    * @param  {number} length
-   * @returns {string} 
+   * @returns {string}
    * @static
    */
   static leadingZeros(number: number, length: number): string {
@@ -30,7 +30,7 @@ class FormatHelper {
   }
 
   /**
-   * @desc whether value is object or not 
+   * @desc whether value is object or not
    * @param  {any} value
    * @returns {boolean}
    * @static
@@ -51,7 +51,7 @@ class FormatHelper {
 
   /**
    * @desc whether value is string
-   * @param {any} value 
+   * @param {any} value
    * @returns {boolean}
    * @static
    */
@@ -66,7 +66,7 @@ class FormatHelper {
 
   /**
    * @desc remove all tags
-   * @param {string} context 
+   * @param {string} context
    * @returns {string}
    * @static
    */
@@ -208,14 +208,16 @@ class FormatHelper {
     if ( hours > 0 ) {
       formatted.push({ data: hours, unit: VOICE_UNIT.HOURS });
     }
-    const min = Math.floor((data - (hours * 3600)) / 60);
+    // const min = Math.floor((data - (hours * 3600)) / 60);
+    const min = Math.floor((data % 3600) / 60);
     if ( min > 0 ) {
       formatted.push({ data: min, unit: VOICE_UNIT.MIN });
     }
-    const sec = data - (hours * 3600) - (min * 60);
     if (hours > 0) {
       return formatted;
     }
+    // const sec = data - (hours * 3600) - (min * 60);
+    const sec = data % 60;
     if ( sec !== 0 || hours + min <= 0 ) {
       formatted.push({ data: sec, unit: sec > 0 ? VOICE_UNIT.SEC : VOICE_UNIT.MIN });
     }
@@ -264,7 +266,7 @@ class FormatHelper {
 
   /**
    * @desc add dot to date
-   * @param {string} date 
+   * @param {string} date
    * @returns {string}
    * @static
    */
@@ -366,7 +368,7 @@ class FormatHelper {
 
   /**
    * @desc add dash to card number
-   * @param value 
+   * @param value
    * @static
    */
   static addCardDash(value: string): string {
@@ -379,7 +381,7 @@ class FormatHelper {
 
   /**
    * @desc add white space to card number
-   * @param value 
+   * @param value
    * @static
    */
   static addCardSpace(value: string): string {

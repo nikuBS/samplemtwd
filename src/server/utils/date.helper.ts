@@ -32,8 +32,8 @@ class DateHelper {
   /**
    * @function
    * @desc Convert to date object
-   * @param {string or Date} date 
-   * @param {string} format 
+   * @param {string|Date} date
+   * @param {string} format
    * @public
    */
   static convDateCustomFormat(date: any, format: string): Date {
@@ -42,7 +42,7 @@ class DateHelper {
 
   /**
    * @function
-   * @desc get first date of next month 
+   * @desc get first date of next month
    * @returns {Date}
    * @public
    */
@@ -52,11 +52,11 @@ class DateHelper {
     next.setMonth(next.getMonth() + 1);
     return next;
   }
-  
+
   /**
    * @function
    * @desc get month before given months
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @param {number} before months
    * @returns {string} : 6
    * @public
@@ -68,7 +68,7 @@ class DateHelper {
   /**
    * @function
    * @desc get year before given months
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @param {number} before months
    * @returns {string} : 6
    * @public
@@ -80,7 +80,7 @@ class DateHelper {
   /**
    * @function
    * @desc get formatted date
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 20180601
    * @public
    */
@@ -90,8 +90,8 @@ class DateHelper {
 
   /**
    * @function
-   * @desc get first date of next month 
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @desc get first date of next month
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @return {string} : 2018.6.
    * @public
    */
@@ -105,7 +105,7 @@ class DateHelper {
   /**
    * @function
    * @desc get first date of next month without last dot
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @return {string} : 2018.6
    * @public
    */
@@ -119,7 +119,7 @@ class DateHelper {
   /**
    * @function
    * @desc get formatted date
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01 12:00:00
    * @public
    */
@@ -130,7 +130,7 @@ class DateHelper {
   /**
    * @function
    * @desc get month from date
-   * @param {Date or string} date YYYYMMDDhhmmss or none
+   * @param {Date|string} date YYYYMMDDhhmmss|none
    * @returns {string} : 12
    */
   static getCurrentMonth(date?: any): string {
@@ -140,7 +140,7 @@ class DateHelper {
   /**
    * @function
    * @desc get year from date
-   * @param {Date or string} date YYYYMMDDhhmmss or none
+   * @param {Date|string} date YYYYMMDDhhmmss|none
    * @returns {string} : 2018
    * @public
    */
@@ -151,7 +151,7 @@ class DateHelper {
   /**
    * @function
    * @desc get a date before 1 year
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : currentDateTime - 1 year
    * @public
    */
@@ -162,7 +162,7 @@ class DateHelper {
   /**
    * @function
    * @desc get a date before 6 months
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : currentDateTime - 6 months
    * @public
    */
@@ -173,7 +173,7 @@ class DateHelper {
   /**
    * @function
    * @desc get a date after 1 year
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : currentDateTime + 1 year
    * @public
    */
@@ -184,7 +184,7 @@ class DateHelper {
   /**
    * @function
    * @desc get a date in korean
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018년 12월 31일
    * @public
    */
@@ -195,18 +195,19 @@ class DateHelper {
   /**
    * @function
    * @desc get month in korean
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
+   * @param {boolean} incYear include year number to result
    * @returns {string} : 12월
    * @public
    */
-  static getShortKoreanMonth(date: any): string {
-    return moment(this.convDateFormat(date)).format('M월');
+  static getShortKoreanMonth(date: any, incYear?: boolean): string {
+    return moment(this.convDateFormat(date)).format(incYear ? 'YY년M월' : 'M월');
   }
 
   /**
    * @function
    * @desc get formatted date
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1.
    * @public
    */
@@ -217,7 +218,7 @@ class DateHelper {
   /**
    * @function
    * @desc get formatted date without last dot
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1
    * @public
    */
@@ -228,18 +229,18 @@ class DateHelper {
   /**
    * @function
    * @desc get formatted date
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1
    * @public
    */
   static getDashShortDateNoDot(date: any): string {
     return moment(this.convDateFormat(date)).format('YYYY-MM-DD');
   }
-  
+
   /**
    * @function
    * @desc get first day of the month from given date
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1
    * @public
    */
@@ -250,7 +251,7 @@ class DateHelper {
   /**
    * @function
    * @desc get last day of the month from given date
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @param date {Date}|{string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. (last date of this month)
    * @public
    */
@@ -261,7 +262,7 @@ class DateHelper {
   /**
    * @function
    * @desc get date and time
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. 12:00
    * @public
    */
@@ -272,7 +273,7 @@ class DateHelper {
   /**
    * @function
    * @desc get date and time with 24 hour format
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. 12:00
    * @public
    */
@@ -283,7 +284,7 @@ class DateHelper {
   /**
    * @function
    * @desc get date and time
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1 12:00:00
    * @public
    */
@@ -294,7 +295,7 @@ class DateHelper {
   /**
    * @function
    * @desc get date and time with 24 hour format
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1 12:00:00
    * @public
    */
@@ -305,7 +306,7 @@ class DateHelper {
   /**
    * @function
    * @desc get next day
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @param format
    * @returns {string} : 2018-06-02 11:59
    * @public
@@ -385,10 +386,10 @@ class DateHelper {
   }
 
   /**
-   * @function 
+   * @function
    * @desc get difference between two days
    * @param {string} endDate, {string} startDate, {any} unit
-   * @returns {number} 
+   * @returns {number}
    * @public
    */
   static getDiffByUnit(endDate: string, startDate: string, unit: any): number {
@@ -398,7 +399,7 @@ class DateHelper {
   /**
    * @function
    * @dest get d-day
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {number} : 30
    * @public
    */
@@ -409,7 +410,7 @@ class DateHelper {
   /**
    * @function
    * @desc get date and time after 5 minutes
-   * @param {string or Date} date 
+   * @param {string|Date} date
    * @public
    */
   static add5min(date: any): any {
@@ -419,7 +420,7 @@ class DateHelper {
   /**
    * @function
    * @desc get next day
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @param format
    * @returns {string} : 2019-07-11
    * @public
@@ -440,9 +441,9 @@ class DateHelper {
     return targetAge > moment(this.getCurrentShortDate()).diff(birthday, 'year');
   }
 
-  /** 
+  /**
    * @desc Get time in korean
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 오후 2시 11분
    * @public
    */

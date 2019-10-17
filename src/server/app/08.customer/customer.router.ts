@@ -39,6 +39,7 @@ import CustomerResearchesResult from './controllers/researches/customer.research
 import CustomerAgentsearchRentPhone from './controllers/agentsearch/customer.agentsearch.rentphone.controller';
 import CustomerFaqView from './controllers/faq/customer.faq.view.controller';
 import CustomerAgentsearchHappycom from './controllers/agentsearch/customer.agentsearch.happycom.controller';
+import CustomerUseGuideApp from './controllers/useguide/customer.useguide.app.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -86,6 +87,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/svc-info/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/svc-info/researches', controller: CustomerResearches });
     this.controllers.push({ url: '/svc-info/researches/result', controller: CustomerResearchesResult });
+    this.controllers.push({ url: '/useguide/app', controller: CustomerUseGuideApp });
   }
 }
 

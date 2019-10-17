@@ -17,6 +17,7 @@ Tw.MyTDataUsage = function (rootEl, options) {
   this._registerHelper();
   this._requestServices();
   this._init();
+  this._setCoachMark();
 
 };
 
@@ -576,6 +577,15 @@ Tw.MyTDataUsage.prototype = {
     var ret = v.replace(/-/g).trim();
     ret = ret.substr(0, 4) + '-' + ret.substr(4, 4) + '-' + ret.substr(8, 4) + '-' + ret.substr(12, 2);
     return ret;
+  },
+
+  /**
+   * @function
+   * @desc 코치마크 처리
+   * @private
+   */
+  _setCoachMark: function () {
+    new Tw.CoachMark(this.$container, '.fe-coach-share', '.fe-coach-share-target', Tw.NTV_STORAGE.COACH_MYTDATA_HOTDATA_SHARE);
   }
 
 };

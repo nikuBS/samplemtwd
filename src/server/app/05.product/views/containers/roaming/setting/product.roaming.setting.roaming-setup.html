@@ -49,7 +49,13 @@
                             </div>
                             <p id="aria-val-tx1" class="error-txt start none">서비스 개시일 설정은 당일 현재시간 이후만 가능합니다.</p>
                             <ul class="announcement-box">
-                                <li id="aria-dateset1" class="announcement-bullet type01">1개월 이내의 날짜를 선택하세요.</li>
+                                <li id="aria-dateset1" class="announcement-bullet type01">
+                                    <% if(isCustomGuidedProd){ %>
+                                    <%= customGuide.selectableStartDate %>
+                                    <% } else { %>
+                                    1개월 이내의 날짜를 선택하세요.
+                                    <% } %>
+                                </li>
                                 <li id="aria-timeset1" class="announcement-bullet type01">한국시각 기준 00시~23시입니다.</li>
                             </ul>
                         </div>
@@ -67,7 +73,7 @@
                             </div>
                             <p id="aria-val-tx2" class="error-txt end none">서비스 종료일 설정은 당일 이후만 가능합니다.</p>
                             <ul class="announcement-box">
-                                <li id="aria-dateset2" class="announcement-bullet type01">서비스 개시일 30이내의 날짜를 선택하세요.</li>
+                                <li id="aria-dateset2" class="announcement-bullet type01">서비스 개시일 30일 안의 날짜를 선택하세요.</li>
                                 <li id="aria-timeset2" class="announcement-bullet type01">한국시각 기준 00시~23시입니다.</li>
                             </ul>
                         </div>
@@ -126,7 +132,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingSettingRoamingSetup($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%-JSON.stringify(prodBffInfo) %>, '<%- prodId %>')
+    new Tw.ProductRoamingSettingRoamingSetup($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%-JSON.stringify(prodBffInfo) %>, '<%- prodId %>', <%- isCustomGuidedProd %>, <%- JSON.stringify(customGuide) %>)
   });
 </script>
 <% include ../../../components/end.component.html %>

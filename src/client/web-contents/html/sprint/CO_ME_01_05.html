@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+					<div class="h-tit">회원정보</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 190831 리디자인_01 -->
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!-- //190831 리디자인_01 -->
+                
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tit-type2">조회 및 변경하실 회원정보를<br /><span class="str">선택해 주세요.</span></h3>
+                    <ul class="link-caption-type mt10">
+                        <li>
+                            <button title="T아이디 회선정보 조회 화면으로 이동">
+                                <span class="tit">회선관리</span>
+                                <span class="txt">SK텔레콤에 가입한 회선을 확인하고 T world<br />서비스를 이용할 회선을 설정할 수 있습니다.</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button title="T아이디 회원정보 조회 화면으로 이동">
+                                <!-- 191008 [OP002-4231] 수정_01 -->
+                                <span class="tit">T아이디회원정보관리</span>
+                                <span class="txt">T아이디회원정보는 아이디, 휴대폰번호, 이메일, <br>비밀번호, 주소 조회/변경이 가능합니다.</span>
+                                <!-- // 191008 [OP002-4231] 수정_01 -->
+                            </button>
+                        </li>
+                        <li>
+                            <button title="회원 탈퇴 안내 화면으로 이동">
+                                <span class="tit">회원 탈퇴</span>
+                                <span class="txt">T world 탈퇴가 되어도 T아이디는<br />유지됩니다.</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

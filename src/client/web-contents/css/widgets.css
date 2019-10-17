@@ -2069,6 +2069,37 @@ li.checkbox.type01 {
 .tod-plan-bene-list .item .bene-wrap .description-wrap .bene-desc .bene-desc-sub{color:#858585; display:block;padding-top:0.125rem}
 /* //190828 [OP002-2006] 내게 맞는 요금제 - 2차 */
 
+/* 190926 [OP002-4000] 공통개선 도움말강화 */
+.tod-coach-mark{display:inline-block; position:absolute; top:0; right:0; /* left:50%; transform:translateX(-50%); */ font-size:0.8125rem; line-height:1.125rem; padding:0.8125rem 2.6875rem 0.625rem 0.8125rem; background:#333; color:#d1d1d1; border-radius:0.3125rem; box-shadow:0 0.625rem 0.9375rem rgba(0, 0, 0, 0.2); white-space:nowrap; z-index:1 ; box-shadow:0 0.3125rem 0.625rem rgba(0, 0, 0, 0.15)}
+.tod-coach-mark .point{color:#fff; font-weight:normal}
+.tod-coach-mark .close{position:absolute; right:0; top:0; width:1.9375rem; height:2.5625rem; background:url('/img/customer/btn_coach_mark_white.png') no-repeat 50%; background-size:0.5625rem 0.5625rem}
+.tod-coach-mark:after{content:''; display:inline-block; width:0; height:0; border-bottom:0.375rem solid #333; border-right:0.375rem solid transparent; border-left:0.375rem solid transparent; position:absolute; right:50%; top:-0.375rem;}
+.tod-coach-mark.downarr:after{top:auto; bottom:-0.375rem; border-top:0.375rem solid #333; border-bottom:none}
+.main-chart-box > .line .tod-coach-mark{right:auto; left:50%; -webkit-transform:translateX(-50%); transform:translateX(-50%); top:1.44rem}
+.main-chart-box > .line .tod-coach-mark:after{right:26%}
+.main-chart-box .donutchart .tod-coach-mark{top:9.69rem; right:auto; left:50%; -webkit-transform:translateX(-50%); transform:translateX(-50%); }
+.main-chart-box .donutchart .tod-coach-mark:after{right:34%}
+.g-coach-box li.mark-lock .tod-coach-mark{top:-4.3125rem; right:-0.25rem}
+.g-coach-box li.mark-lock .tod-coach-mark:after{right:14%}
+.g-coach-box li.mark-pin .tod-coach-mark{top:-4.3125rem; right:auto; left:50%; -webkit-transform:translateX(-50%); transform:translateX(-50%);}
+.sort-area.tod-sort-area{overflow:visible}
+.sort-area.tod-sort-area:after{content:''; display:block; clear:both}
+.sort-area.tod-sort-area .tod-select-wrap{display:block; position:relative; float:right}
+.sort-area.tod-sort-area .tod-select-wrap .tod-coach-mark{top:1.9375rem}
+.sort-area.tod-sort-area .tod-select-wrap .tod-coach-mark:after{right:14%}
+.user-month-bill .this-month-bill .btn-wrap .tod-coach-mark{top:2.6875rem}
+.user-month-bill .this-month-bill .btn-wrap .tod-coach-mark:after{right:24%}
+.plan-pay-title.tod-plan-pay-title{overflow:visible; }
+.plan-pay-title.tod-plan-pay-title:after{content:''; display:block; clear:both;}
+.plan-pay-title.tod-plan-pay-title .tod-pay-sel-wrap{position:relative}
+.plan-pay-title.tod-plan-pay-title .tod-pay-sel-wrap .tod-coach-mark{top:2.6875rem}
+.plan-pay-title.tod-plan-pay-title .tod-pay-sel-wrap .tod-coach-mark:after{right:24%}
+.calling-plan .tod-coach-mark{left:5.3125rem; top:2.625rem; right:auto; transform:translate(-50%)}
+.calling-plan .tod-coach-mark:after{right:54%}
+.headingbox-wrap .tod-have-pos{position:relative}
+.headingbox-wrap .tod-have-pos .tod-coach-mark{top:1.6875rem}
+.headingbox-wrap .tod-have-pos .tod-coach-mark:after{right:16%}
+
 
 
 

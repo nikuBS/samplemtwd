@@ -46,9 +46,11 @@ Tw.CoachMark.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( resp.params.value === 'N' ) {
         this.$coachView.removeClass('none');
+        setTimeout($.proxy(this._onClickCoachClose, this), 5000);
       }
     } else {
       this.$coachView.removeClass('none');
+      setTimeout($.proxy(this._onClickCoachClose, this), 5000);
     }
   },
 

@@ -97,7 +97,7 @@
                 <div class="calling-plan type01">
                     <button class="wrap-link fs-type01 fe-btn-share">
                         <span class="left" style="width: auto;">
-                            <strong class="ff-tb fe-remained">
+                            <strong class="ff-tb fe-remained fe-coach-share-target">
                                 <% if(items[i].isRemainUnlimited) { %>
                                     <%= items[i].remained %>
                                 <% } else { %>
@@ -111,6 +111,10 @@
                             <strong id="sharedDataUsed" class="ff-tb fs-type02 fe-used"></strong> 공유
                         </span>
                     </button>
+                    <span class="tod-coach-mark fe-coach-share none">
+                        <strong class="point">데이터를 공유</strong>할 수 있어요  
+                        <button class="close"><span class="blind">닫기</span></button>
+                    </span>
                 </div>
                 <% } %>
             <% } %>

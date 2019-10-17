@@ -15,6 +15,8 @@ Tw.ProductSubmain = function(rootEl, menuId) {
   this._getTosAdminProductBanner();
   this._cachedElement();
   this._bindEvent();
+
+  this._setCoachMark();
 };
 
 Tw.ProductSubmain.prototype = {
@@ -172,5 +174,14 @@ Tw.ProductSubmain.prototype = {
 
   _getBannerCode: function(uri) {
     return this.TOS_BANNER_CODES[uri];
+  },
+
+  /**
+   * @function
+   * @desc 코치마크 처리
+   * @private
+   */
+  _setCoachMark: function () {
+    new Tw.CoachMark(this.$container, '.fe-coach-total', '.fe-coach-total-target', Tw.NTV_STORAGE.COACH_PRODUCT_MOBILEPLAN_TOTAL);
   }
 };

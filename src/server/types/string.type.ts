@@ -101,6 +101,16 @@ export const MYT_DATA_USAGE_CANCEL_TSHARE = {
   TITLE: 'T데이터 셰어링 USIM 해지'
 };
 
+// [OP002-4379]
+export const MYT_DATA_USAGE_PATTERN = {
+    TITLE: '최근 사용량'
+};
+
+// [OP002-4379]
+export const MYT_DATA_USAGE_PATTERN_DETAIL = {
+    TITLE: '사용패턴'
+};
+
 export const MYT_DATA_CHILD_USAGE = {
   TITLE: '자녀 실시간 잔여량'
 };
@@ -617,7 +627,7 @@ export const CUSTOMER_FAQ_SEARCH_FILTER = {
   1100000: '요금제',
   1101000: '모바일',
   1102000: '결합상품',
-  1103000: '휴대용 와이파이', 
+  1103000: '휴대용 와이파이',
   1104000: '인터넷/집전화 상품',
   1200000: '가입/변경/해지',
   1201000: '가입/변경/해지',
@@ -1380,3 +1390,19 @@ export const SMART_CALL_PICK = [
     checked: false
   }
 ];
+
+export const ROAMING_CUSTOMIZED_MESSAGE = {
+  
+  SIXTY_DAY: '60일 안의 날짜를 선택하세요.'
+}
+
+export const ROAMING_PRODUCT_CUSTOMIZE_DATA = {
+  NA00006487:{ // baro OnePass VIP 기간형
+    selectableStartDateRange: 60,
+    selectableStartDate: ROAMING_CUSTOMIZED_MESSAGE.SIXTY_DAY
+  },
+  NA00006745:{ // baro OnePass Data VIP 기간형
+    selectableStartDateRange: 60,
+    selectableStartDate: ROAMING_CUSTOMIZED_MESSAGE.SIXTY_DAY
+  }
+}

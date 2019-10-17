@@ -8,10 +8,10 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
+import { ROAMING_PRODUCT_CUSTOMIZE_DATA } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
-import { REDIS_KEY } from '../../../../../types/redis.type';
 
 
 class ProductRoamingJoinRoamingSetup extends TwViewController {
@@ -31,6 +31,10 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
         title: PRODUCT_TYPE_NM.JOIN
       });
     }
+
+    // 상품 별 가이드 수정사항 확인
+    const customGuide = FormatHelper.isEmpty(ROAMING_PRODUCT_CUSTOMIZE_DATA[prodId]) ? {} : ROAMING_PRODUCT_CUSTOMIZE_DATA[prodId];
+    const isCustomGuidedProd = !FormatHelper.isEmpty(customGuide);
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
@@ -56,7 +60,9 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
         prodApiInfo : prodApiInfo.result,
         prodId : prodId,
         pageInfo : pageInfo,
-        isPromotion : isPromotion
+        isPromotion : isPromotion,
+        isCustomGuidedProd : isCustomGuidedProd,
+        customGuide : customGuide
       });
     });
 
