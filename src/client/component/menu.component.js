@@ -765,7 +765,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
         // OP002-4354 H/C
         // item.isNew = item.isNewImgUseYn === 'Y' ? true : false;
-        item.isNew = item.menuId === 'M001962' ? true : false;
+        var isNewMenuId = Tw.Environment.environment === 'prd' ? 'M002208' : 'M001962'
+        item.isNew = item.menuId === isNewMenuId ? true : false;
 
         if(this.TRACKER_CODES.indexOf(item.menuId) > -1){
           item.tracker = {
