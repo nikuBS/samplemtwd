@@ -18,7 +18,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
-const WEEKDAYS_CAPTIONS = { 1: '일', 2: '토', 3: '금', 4: '목', 5: '수', 6: '화', 7: '월' };
+const WEEKDAYS_CAPTIONS = { 1: '일', 2: '월', 3: '화', 4: '수', 5: '목', 6: '금', 7: '토' };
 const HOURS_CAPTIONS = { A: '00~06', B: '06~12', C: '12~18', D: '18~24' };
 const TEMPLATE_FILE = 'usage/myt-data.usage.pattern.html';
 const REPLACEMENT_STRING = '-';
@@ -223,12 +223,14 @@ class MyTDataUsagePattern extends TwViewController {
       const patternsByWeekdays = dataPatterns.usagePatternbyDayList;
       if (patternsByWeekdays) {
         // 역순 정렬
+        /*
         patternsByWeekdays.sort((weekday1, weekday2) => {
           // XXX: 아래과 같이 해야 일반적인 역순 정렬임 (1[일] ~ 7[월] 이므로)
           // return (weekday.num1 < weekday2.num) ? 1 : ((weekday1.num > weekday2.num) ? -1 : 0);
           // XXX: 같은 경우가 실제 발생하기 때문에, 0값 비교 처리 제거
           return (weekday1.num < weekday2.num) ? 1 : -1;
         });
+        */
         // 표시 이름 만들기
         patternsByWeekdays.forEach(weekday => (weekday.caption = WEEKDAYS_CAPTIONS[weekday.num]));
         options.byWeekdays = patternsByWeekdays;
