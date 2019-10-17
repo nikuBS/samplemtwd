@@ -31,8 +31,14 @@ class CustomerSvcInfoSite extends TwViewController {
   }  
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any)  {
-    const {code} = req.query; 
-    const curContent = this.findCurContent(code);
+    const {code} = req.query;
+    let curContent = this.findCurContent(code);
+
+    // OP002-4354 : 검색에서 링크 이동이 가능하도록 H/C
+    if ((code ===  'D00010' && String(process.env.NODE_ENV) === 'prd') 
+        || (code ===  'D00015' && String(process.env.NODE_ENV) !== 'prd')) {
+      curContent = code;
+    }
 
     if (FormatHelper.isEmpty(curContent)) {
       return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
