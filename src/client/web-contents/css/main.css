@@ -5567,3 +5567,10 @@ body.apphome .main-membershop-box {
 .main-chart-box .call-message [class^="bt-"].bt-5gx {padding-left:1.31rem;}
 .main-chart-box .call-message [class^="bt-"].bt-5gx .remain {display:inline-block; min-width:7rem; text-align:right; color:#178bce;}
 .main-chart-box .donutchart .donut-chart.data-type .tx-add {position:absolute; top:58%; left:2.625rem; right:2.625rem; font-size:0.75rem;}
+
+/* 191016 [OP002-4450] eSIM 셀프 개통하기 */
+.tod-main-banner-box{display:table;width:100%;padding:0.75rem 1.25rem}
+.tod-main-banner-box .banner-img-wrap{display:table-cell;vertical-align:middle;padding-right:0.75rem}
+.tod-main-banner-box .banner-text-wrap{display:table-cell;vertical-align:middle;font-size:0.75rem;text-align:left}
+.tod-main-banner-box .banner-text-wrap .title{display:block}
+.tod-main-banner-box .banner-text-wrap .title + .desc{display:block;padding-top:0.125rem}
