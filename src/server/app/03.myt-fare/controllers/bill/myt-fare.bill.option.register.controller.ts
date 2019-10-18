@@ -39,7 +39,7 @@ class MyTFareBillOptionRegister extends TwViewController {
           res.render('bill/myt-fare.bill.option.register.html', {
             svcInfo: svcInfo, // 회선 정보 (필수)
             pageInfo: pageInfo, // 페이지 정보 (필수)
-            paymentOption: this.parseData(paymentOption.result)
+            paymentOption: this.parseData(paymentOption.result, svcInfo)
           });
         } else {
           this.error.render(res, {
@@ -61,7 +61,7 @@ class MyTFareBillOptionRegister extends TwViewController {
   /**
    * @function
    * @desc 납부방법 조회
-   * @returns {any}
+   * @returns any
    */
   private getPaymentOption(): any {
     return this.apiService.request(API_CMD.BFF_07_0060, {}).map((res) => {
@@ -73,9 +73,10 @@ class MyTFareBillOptionRegister extends TwViewController {
    * @function
    * @desc parsing data
    * @param result
-   * @returns {any}
+   * @param svcInfo
+   * @returns any
    */
-  private parseData(result): any {
+  private parseData(result, svcInfo: any): any {
     result.payCode = '1'; // default setting
     result.payDate = '11'; // default setting
 
@@ -98,29 +99,31 @@ class MyTFareBillOptionRegister extends TwViewController {
       result.isAuto = false;
     }
 
-    result.bankList = this.getBankList(result.lBankArray); // 납부 가능한 은행리스트
-    return result;
-  }
-
-  /**
-   * @function
-   * @desc 납부 가능한 은행 리스트 조회
-   * @param {any[]} bankArray
-   * @returns {any}
-   */
-  private getBankList(bankArray: any[]): any {
-    const bankList: any = [];
-    if (!FormatHelper.isEmpty(bankArray)) {
-      for (let i = 0; i < bankArray.length; i++) {
-        const obj = {
-          bankCardCoCd: bankArray[i].commCdVal, // 은행코드
-          bankCardCoNm: bankArray[i].commCdValNm // 은행명
-        };
-        bankList.push(obj);
+    /**
+     * @function
+     * @desc 납부 가능한 은행 리스트 조회
+     * @param bankArray
+     * @returns any
+     */
+    const getBankList = (bankArray: any[]) => {
+      const bankList: any = [];
+      if (!FormatHelper.isEmpty(bankArray)) {
+        for (let i = 0; i < bankArray.length; i++) {
+          const obj = {
+            bankCardCoCd: bankArray[i].commCdVal, // 은행코드
+            bankCardCoNm: bankArray[i].commCdValNm // 은행명
+          };
+          bankList.push(obj);
+        }
+        return JSON.stringify(bankList);
       }
-      return JSON.stringify(bankList);
-    }
-    return bankList;
+      return bankList;
+    };
+
+    result.bankList = getBankList(result.lBankArray); // 납부 가능한 은행리스트
+    // 2019-10-18[OP002-4362] : NC00000081 & KDB산업은행 계좌로 통신비 자동납부 신청자 인 경우.
+    result.isTHigh5KDBProd = svcInfo.prodId === 'NC00000081' && result.bankCardCoCd === '002';
+    return result;
   }
 }
 
