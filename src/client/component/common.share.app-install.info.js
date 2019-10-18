@@ -166,7 +166,13 @@ Tw.CommonShareAppInstallInfo.prototype = {
    */
   _goStore: function (isLink) {
     if (isLink || this._isLink) {
-      Tw.CommonHelper.openUrlExternal(this._href);
+      // OP002-4633 : (W-1910-088-01) [바로가기] iOS 랜딩 시 외부 팝업 얼럿 호출 오류 수정건.
+      // App 접속이 아니고, 아이폰 일경우
+      if( !Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isIos()) {
+        window.location.href = this._href;
+      } else {
+        Tw.CommonHelper.openUrlExternal(this._href);
+      }
     }
   },
   /**
