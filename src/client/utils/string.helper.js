@@ -66,6 +66,16 @@ Tw.StringHelper = (function () {
     }
   };
 
+  /**
+   * replace dash number
+   * @desc remove dash to value
+   * @param {String} value
+   * @return {String}
+   */
+  var removeStringToDash = function (value) {
+    return value.replace(/-/gi, '');
+  };
+
   var stringf = function() {
     var src = arguments[0];
 
@@ -99,6 +109,7 @@ Tw.StringHelper = (function () {
     replaceDateNotaionWithDot: replaceDateNotaionWithDot,
     parseCommaedStringToInt: parseCommaedStringToInt,
     phoneStringToDash: phoneStringToDash,
+    removeStringToDash: removeStringToDash,
     stringf : stringf,
     getKorInitialChar : getKorInitialChar
   };

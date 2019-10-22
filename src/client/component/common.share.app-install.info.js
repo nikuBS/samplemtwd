@@ -12,10 +12,11 @@
  * @param target - page target
  * @param loginType - login type
  */
-Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {
+Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType, referer) {
   this.$container = rootEl;
   this._target = target || '/main/home';
   this._loginType = loginType || 'N';
+  this._twReferer = referer || '';
 
   this._popupService = Tw.Popup;
 
@@ -62,7 +63,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
    * @desc tworld 바로가기
    */
   _moveToTworld: function() {
-    var appCustomScheme = 'mtworldapp2://tworld?' + encodeURIComponent('target=' + this._target + '&loginType=' + this._loginType);
+    var appCustomScheme = 'mtworldapp2://tworld?' + encodeURIComponent('target=' + this._target + '&loginType=' + this._loginType + '&twReferer=' + this._twReferer);
 
     if (this._isAndroid) {
       setTimeout($.proxy(this._checkStoreForAndroid, this), 1000);
