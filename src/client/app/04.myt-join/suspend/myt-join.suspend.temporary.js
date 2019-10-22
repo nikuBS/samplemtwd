@@ -191,7 +191,10 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       }
 
       if ( this.$checkSMSnoti.attr('checked') ) {
-        params.smsSvcNum = this.$inputTel.val();
+        // [OP002-4647] 일시정지 시 문자로 안내 번호입력 후 신청번호 오류
+        // API 요청 시 잘못된 인자값으로 전달
+        // params.smsSvcNum = this.$inputTel.val();
+        params.smsSvcNum = Tw.StringHelper.removeStringToDash(this.$inputTel.val());
       }
     }
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
