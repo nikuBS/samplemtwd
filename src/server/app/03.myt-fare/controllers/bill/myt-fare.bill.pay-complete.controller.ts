@@ -8,43 +8,49 @@
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
-import {MYT_FARE_COMPLETE_MSG} from '../../../../types/string.type';
 import ParamsHelper from '../../../../utils/params.helper';
+import {MYT_FARE_COMPLETE_MSG} from '../../../../types/string.type';
 
 /**
  * @class
  * @desc 요금납부 및 선결제 완료
  */
 class MyTFareBillPayComplete extends TwViewController {
+  /* [OP002-4676] 빈 함수는 필요없음
   constructor() {
     super();
   }
+  */
 
   /**
    * @function
    * @desc render
-   * @param {e.Request} req
-   * @param {e.Response} res
-   * @param {e.NextFunction} next
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
    * @param svcInfo
    * @param allSvc
    * @param childInfo
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const queryObject = ParamsHelper.getQueryParams(req.url);
-    res.render('bill/myt-fare.bill.pay-complete.html', Object.assign(this._getData(queryObject), { pageInfo }));
+    // [OP002-4676] 코드 단순화
+    const params = ParamsHelper.getQueryParams(req.url); // req.query
+    const options = this._getData(params); // Object.assign(this._getData(params), { pageInfo });
+    options.pageInfo = pageInfo;
+    res.render('bill/myt-fare.bill.pay-complete.html', options);
   }
 
   /**
    * @function
    * @desc get data
-   * @param queryObject
+   * @param {Object|null} params
    * @returns {any}
    * @private
    */
-  private _getData(queryObject: any): any {
-    let data = {
+  private _getData(params: any): any {
+    // [OP002-4676] 코드 단순화
+    const data = {
       mainTitle: MYT_FARE_COMPLETE_MSG.PAYMENT, // 메인 타이틀
       subTitle: '',
       description: '',
@@ -53,17 +59,17 @@ class MyTFareBillPayComplete extends TwViewController {
       confirmUrl: '/myt-fare/submain' // 하단 확인 버튼 클릭 시 이동할 대상
     };
 
-    if (queryObject !== null) {
-      const type = queryObject['type']; // 완료페이지에 쿼리스트링으로 추가된 정보
+    if (params !== null) {
+      const type = params['type']; // 완료페이지에 쿼리스트링으로 추가된 정보
       if (type === 'sms') { // SMS 전송 완료일 경우
-        data = this._getSmsData(queryObject, data); // 화면에 추가로 입력할 정보
-      } else if (type === 'small' || type === 'contents') { // 소액결제 및 콘텐츠이용료 선결제일 경우
-        const subType = queryObject['sub'];
+        return this._getSmsData(params, data); // 화면에 추가로 입력할 정보
+      }
+      if (type === 'small' || type === 'contents') { // 소액결제 및 콘텐츠이용료 선결제일 경우
+        const subType = params['sub'];
         if (FormatHelper.isEmpty(subType)) {
-          data = this._getPrepayData(data, type); // 선결제
-        } else {
-          data = this._getAutoPrepayData(data, type, subType); // 자동선결제
+          return this._getPrepayData(data, type); // 선결제
         }
+        return this._getAutoPrepayData(data, type, subType); // 자동선결제
       }
     }
     return data;
