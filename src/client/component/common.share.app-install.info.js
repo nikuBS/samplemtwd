@@ -12,10 +12,11 @@
  * @param target - page target
  * @param loginType - login type
  */
-Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {
+Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType, referer) {
   this.$container = rootEl;
   this._target = target || '/main/home';
   this._loginType = loginType || 'N';
+  this._twReferer = referer || '';
 
   this._popupService = Tw.Popup;
 
@@ -62,7 +63,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
    * @desc tworld 바로가기
    */
   _moveToTworld: function() {
-    var appCustomScheme = 'mtworldapp2://tworld?' + encodeURIComponent('target=' + this._target + '&loginType=' + this._loginType);
+    var appCustomScheme = 'mtworldapp2://tworld?target=' + encodeURIComponent(this._target) + '&loginType=' + encodeURIComponent(this._loginType) + '&twReferer=' + encodeURIComponent(this._twReferer);
 
     if (this._isAndroid) {
       setTimeout($.proxy(this._checkStoreForAndroid, this), 1000);
@@ -166,7 +167,13 @@ Tw.CommonShareAppInstallInfo.prototype = {
    */
   _goStore: function (isLink) {
     if (isLink || this._isLink) {
-      Tw.CommonHelper.openUrlExternal(this._href);
+      // OP002-4633 : (W-1910-088-01) [바로가기] iOS 랜딩 시 외부 팝업 얼럿 호출 오류 수정건.
+      // App 접속이 아니고, 아이폰 일경우
+      if( !Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isIos()) {
+        window.location.href = this._href;
+      } else {
+        Tw.CommonHelper.openUrlExternal(this._href);
+      }
     }
   },
   /**

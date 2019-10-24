@@ -17,19 +17,21 @@
                         <div class="title-box">
                             <i class="icon-complete-120"><span class="blind">complete</span></i>
                             <p class="tx-tit">
-                                <% if (subTitle !== '') { %><%= subTitle %><br /><% } %>
+                                <%_ if (subTitle !== '') { _%><%= subTitle _%><br /><%_ } _%>
                                 <span class="tx-highlight pt10"><%= mainTitle %></span>
                             </p>
                         </div>
                         <div class="tx-contents">
-                            <% if (description !== '') { %>
+                            <%_ if (description !== '') { _%>
                             <p class="code-txt"><%- description %></p>
-                            <% } %>
-                            <% if (centerName !== '') { %>
+                            <%_
+                            }
+                            if (centerName !== '') {
+                            _%>
                             <ul class="bt-slice item-one">
                                 <li><a href="<%= centerUrl %>" type="button" class="btn-round2 btn-style3"><%= centerName %></a></li>
                             </ul>
-                            <% } %>
+                            <%_ } _%>
                         </div>
                     </div>
                 </div>

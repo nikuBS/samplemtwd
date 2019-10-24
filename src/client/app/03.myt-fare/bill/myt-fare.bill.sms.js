@@ -80,9 +80,9 @@ Tw.MyTFareBillSms.prototype = {
   _selectPopupCallback: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
 
-    var $id = $target.attr('id');
-    if (!Tw.FormatHelper.isEmpty($id)) {
-      $layer.find('input#' + $id).attr('checked', 'checked');
+    var id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty(id)) {
+      $layer.find('input#' + id).attr('checked', 'checked');
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
@@ -93,9 +93,10 @@ Tw.MyTFareBillSms.prototype = {
    * @param event
    */
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.target);
-    $target.attr('id', $selectedValue.attr('id'));
-    $target.text($selectedValue.parents('label').text());
+    var $selectedItem = $(event.target);
+    $target.attr('id', $selectedItem.attr('id'));
+    // [OP002-4676] parents는 이 경우에, 잘못된 대상을 선택하거나, 너무 많은 대상을 추릴 수 있어 개선
+    $target.text($.trim($selectedItem.closest('label').text()));
 
     this._popupService.close();
   },
@@ -105,22 +106,18 @@ Tw.MyTFareBillSms.prototype = {
    * @returns {Array}
    */
   _getAccountList: function () {
-    var accountList = [];
-    var listObj = {
-      'list': []
-    };
+    // [OP002-4676] 코드 단순화
+    var list = [];
     this.$accountList.find('li').each(function () {
-      var $this = $(this);
-      var obj = {
-        'label-attr': 'id="' + $this.attr('id') + '"',
-        'radio-attr': 'id="' + $this.attr('id') + '" name="r2"',
-        'txt': $this.text()
-      };
-      listObj.list.push(obj);
+      var $li = $(this);
+      var id = $li.attr('id');
+      list.push({
+        'label-attr': 'id="' + id + '"',
+        'radio-attr': 'id="' + id + '" name="r2"',
+        'txt': $.trim($li.text())
+      });
     });
-    accountList.push(listObj);
-
-    return accountList;
+    return [{list: list}];
   },
   /**
    * @function
@@ -128,22 +125,18 @@ Tw.MyTFareBillSms.prototype = {
    * @returns {Array}
    */
   _getHpList: function () {
-    var hpList = [];
-    var listObj = {
-      'list': []
-    };
+    // [OP002-4676] 코드 단순화
+    var list = [];
     this.$hpList.find('li').each(function () {
-      var $this = $(this);
-      var obj = {
-        'label-attr': 'id="' + $this.attr('id') + '"',
-        'radio-attr': 'id="' + $this.attr('id') + '" name="r2"',
-        'txt': $this.text()
-      };
-      listObj.list.push(obj);
+      var $li = $(this);
+      var id = $li.attr('id');
+      list.push({
+        'label-attr': 'id="' + id + '"',
+        'radio-attr': 'id="' + id + '" name="r2"',
+        'txt': $.trim($li.text())
+      });
     });
-    hpList.push(listObj);
-
-    return hpList;
+    return [{list: list}];
   },
   /**
    * @function
@@ -204,8 +197,10 @@ Tw.MyTFareBillSms.prototype = {
    */
   _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var svcNum = '';
-      if (!Tw.FormatHelper.isEmpty(res.result.svcNum)) {
+      // [OP002-4676] 실제로 문자를 보낸 번호를 노출
+      var svcNum = $.trim(this.$hpSelector.text());
+      // [OP002-4676] 없는 경우, 기준 번호를 노출
+      if (!svcNum && res.result.svcNum) { // if (!Tw.FormatHelper.isEmpty(res.result.svcNum)) {
         svcNum = Tw.FormatHelper.conTelFormatWithDash(res.result.svcNum);
       }
       this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=sms&svcNum=' + svcNum);
