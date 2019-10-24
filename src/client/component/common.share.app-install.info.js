@@ -63,7 +63,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
    * @desc tworld 바로가기
    */
   _moveToTworld: function() {
-    var appCustomScheme = 'mtworldapp2://tworld?' + encodeURIComponent('target=' + this._target + '&loginType=' + this._loginType + '&twReferer=' + this._twReferer);
+    var appCustomScheme = 'mtworldapp2://tworld?target=' + encodeURIComponent(this._target) + '&loginType=' + encodeURIComponent(this._loginType) + '&twReferer=' + encodeURIComponent(this._twReferer);
 
     if (this._isAndroid) {
       setTimeout($.proxy(this._checkStoreForAndroid, this), 1000);
