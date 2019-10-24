@@ -52,7 +52,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
           });
         }
 
-        res.render('myplancombine/myt-join.myplancombine.combination.html', { svcInfo, pageInfo, combination, pageId, prodId, type: req.query.type });
+        res.render('myplancombine/myt-join.myplancombine.combination.html', { svcInfo, pageInfo, combination, pageId, prodId });
       });
     } else {  // 결합상품 목록 페이지로 랜딩
       this._getCombinations().subscribe(combinations => {
