@@ -25,14 +25,7 @@ const wireMembers = (combination.combinationWireMemberList || []).filter(member 
                 <span class="tx-cont"><%= groupInfo.combStaDt %></span>
             </li>
             <li>
-                <span class="title">
-                    가입상태
-                    <!--T+B인터넷(패밀리형) 인경우만 노출-->
-                    <%if(type === '2' && ['NH00000039','TW00000062'].indexOf(prodId) > -1 ){%>
-                        <!--상세정보 는 추후개발-->
-                        <!--<a class="bt-link-tx underline ml4" href="/myt-join/combinations/joinperiod" aria-haspopup="true">상세정보</a>-->
-                    <%}%>
-                </span>
+                <span class="title">가입상태</span>
                 <span class="tx-cont">결합완료</span>
             </li>
             <li>
@@ -80,7 +73,7 @@ const wireMembers = (combination.combinationWireMemberList || []).filter(member 
                                     <li><dl><dt>상품</dt><dd>T상품</dd></dl></li>
                                     <li><dl><dt>요금제</dt><dd><%= member.feeProdNm %></dd></dl></li>
                                     <li><dl><dt>서비스 제공회사</dt><dd>SK텔레콤</dd></dl></li>
-                                    <li><dl><dt>사용기간</dt><dd>-</dd></dl></li>
+                                    <li><dl><dt>사용 개월 수</dt><dd>-</dd></dl></li>
                                     <li><dl><dt>T끼리 온가족 할인</dt><dd><%= member.famlUseYn === 'Y'? '할인제도 사용중' : '-' %></dd></dl></li>
                                 </ul>
                             </div>
@@ -115,7 +108,7 @@ const wireMembers = (combination.combinationWireMemberList || []).filter(member 
                                     <li><dl><dt>상품</dt><dd>B상품</dd></dl></li>
                                     <li><dl><dt>요금제</dt><dd><%= member.feeProdNm %></dd></dl></li>
                                     <li><dl><dt>서비스 제공회사</dt><dd><%= member.coClCd === 'T' ? 'SK텔레콤' : 'SK브로드밴드'%></dd></dl></li>
-                                    <li><dl><dt>사용기간</dt><dd><%= member.useYearCnt %></dd></dl></li>
+                                    <li><dl><dt>사용 개월 수</dt><dd><%= member.useYearCnt %></dd></dl></li>
                                     <li><dl><dt>T끼리 온가족 할인</dt><dd>-</dd></dl></li>
                                 </ul>
                             </div>
@@ -129,25 +122,22 @@ const wireMembers = (combination.combinationWireMemberList || []).filter(member 
     <!-- //.widget -->
     <% if (combination.combinationGroup.isRepresentation) { %>
     <ul class="bt-slice">
-        <li>
-            <a class="btn-round1 btn-style4" href="/product/callplan?prod_id=<%= prodId %>">해지하기</a>
+        <li class="bt-white2">
+            <a href="/product/callplan?prod_id=<%= prodId %>">해지하기</a>
         </li>
     </ul>
     <% } %>
 </div>
 <!--// .cont-box -->
 
+<hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box --><!-- 2018-11-02 수정 -->
-<div class="cont-box noborder bgnone">
-    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-    <ul class="pg-chk-list02">
-        <li><button id="MS_07_01_06_tip_01" class="btn-tip" aria-haspopup="true">본인인증 필요한 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-        <li><button id="MS_07_01_06_tip_02" class="btn-tip" aria-haspopup="true">결합상품 자동 해지되는 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-        <li><button id="MS_07_01_06_tip_03" class="btn-tip" aria-haspopup="true">할인 적용되는 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-        <!--T+B인터넷(패밀리형) 인경우만 노출-->
-        <%if(type === '2' && ['NH00000039','TW00000062'].indexOf(prodId) > -1 ){%>
-        <li><button id="MS_07_01_01_tip_05" class="btn-tip" aria-haspopup="true">가입연수 산정<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-        <%}%>
+<div class="cont-box nogaps-btm">
+    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+    <ul class="noti-list02">
+        <li><button id="MS_07_01_06_tip_01" type="button" class="tip-view-btn" title="본인인증 필요한 경우 TIP보기" aria-haspopup="true">본인인증 필요한 경우<span class="tip-view">TIP</span></button></li>
+        <li><button id="MS_07_01_06_tip_02" type="button" class="tip-view-btn" title="결합상품 자동 해지되는 경우 TIP보기" aria-haspopup="true">결합상품 자동 해지되는 경우<span class="tip-view">TIP</span></button></li>
+        <li><button id="MS_07_01_06_tip_03" type="button" class="tip-view-btn" title="할인 적용되는 경우 TIP보기" aria-haspopup="true">할인 적용되는 경우<span class="tip-view">TIP</span></button></li>
     </ul>
 </div>
 <!--// .cont-box -->
