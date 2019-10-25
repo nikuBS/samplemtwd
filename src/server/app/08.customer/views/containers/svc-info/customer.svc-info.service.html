@@ -21,6 +21,10 @@
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
 
+            <!-- 190831 리디자인_01 -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- //190831 리디자인_01 -->
+
             <div class="cont-box nogaps-btm">
                 <div class="plan-history-wrap">
                     <div class="plan-data-wrap">
@@ -28,8 +32,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 190831 리디자인_02 -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- //190831 리디자인_02 -->
+
             <% data.list.forEach(function(el, selectIndex){ %>
-            <div class="ti-caption-gray bdt">
+            <div class="ti-caption-gray tod-caption-white"><!-- 190831 리디자인_03 : class="ti-caption-gray tod-caption-white"-->
                 <span class="tit"><%=el.title %></span>
             </div>
             <div class="cont-box nogaps-hoz">
@@ -53,10 +62,10 @@
                                         data-select-subdex="<%=selectSubdex%>"
                                     ><%=sub.dep_list[0].dep_title %></button>
                                 </span>
-                                <span class="bt-box">
+                                <span class="bt-box3">
                                     <button 
                                         type="button" 
-                                        class="fe-select-btn"
+                                        class="fe-select-btn btn-round2 btn-style3"
                                         data-select-index="<%=selectIndex%>"
                                         data-select-subdex="<%=selectSubdex%>"
                                         data-list-code="<%=sub.dep_list[0].code %>"
@@ -82,6 +91,9 @@
                     <% }) %>
                 </ul>
             </div>
+            <!-- 190831 리디자인_04 -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- //190831 리디자인_04 -->
             <% }) %>
 
         </div>
