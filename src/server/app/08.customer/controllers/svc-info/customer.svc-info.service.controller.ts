@@ -73,7 +73,7 @@ class CustomerUseguideService extends TwViewController {
     const result = CUSTOMER_SERVICE_OPTION_TYPE.reduce((prev: any, list: any, listIndex) => {
       // 카테고리가 합쳐져야 하는 경우 실행됨
       if (!FormatHelper.isEmpty(list.united)) {
-        if (this.isUnited(list.united)) {
+        if (this.isUnited(list.united)) { // 이미 united 되어 있는 상태인지 확인, 처음은 united 가 되어 있지 않기 때문에 else로 이동
           return prev;
         } else {
           return prev.concat(this.getUnitedList(list.united));
