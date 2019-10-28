@@ -1,13 +1,14 @@
 <%#
 * @file myt-fare.bill.option.register.html
 * @author Jayoon Kong (jayoon.kong@sk.com)
+* @editor 양정규
 * @since 2018.10.02
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <div id="myt-fare-bill-option-register" class="wrap" data-menuId="<%= pageInfo.menuId %>">
-        <div class="popup-page tw-popup fixed-bottom h60">
+        <div class="popup-page tw-popup fixed-bottom h60 nobg">
             <!-- #header -->
             <%- include('../components/header.component.html', { title: paymentOption.title, type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
@@ -15,6 +16,16 @@
             <div id="contents" class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- 191011 [OP002-4382] 추가_01 -->
+                    <%if(paymentOption.isTHigh5KDBProd){%>
+                    <div class="tod-myt-noti-comp">
+                        <p class="dd-desc pt0">T high5 x KDB산업은행 적금 가입고객으로 자동납부 변경/해지 시 통신비 자동이체 관련 우대금리 혜택이 소멸되니 유의하시기 바랍니다.</p>
+                    </div>
+                    <%}%>
+                    <!-- //191011 [OP002-4382] 추가_01 -->
+
+                    <!-- .cont-box -->
                     <div class="cont-box nogaps">
                         <div class="form-data-tit-wrap ml16">
                             <strong class="tit">자동납부 방법</strong>
@@ -45,7 +56,7 @@
                         </div>
                     </div>
                     <hr class="cont-sp type1" aria-hidden="true"/>
-                    <!-- .cont-box -->
+                    <!--// .cont-box -->
                     <!-- 계좌이체 납부 -->
                     <div id="01" class="cont-box fe-wrap fe-bank-wrap">
                         <ul class="form-data-list">
@@ -158,40 +169,26 @@
                          data-rltm-ser-num="<%= paymentOption.rltmSerNum %>" data-fst-drw-schd-dt="<%= paymentOption.fstDrwSchdDt %>">
                     </div>
                     <!--// .cont-box -->
-                    <hr class="cont-sp type1" aria-hidden="true"/>
                     <!-- .cont-box -->
-                    <div class="cont-box nogaps-btm">
-                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list02">
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
                             <% if (paymentOption.type === 'change') { %>
-                            <li>
-                                <button id="MF_05_01_01_tip_01" class="tip-view-btn" aria-haspopup="true" type="button">
-                                    자동납부 신청/변경/해지 시<span class="tip-view">TIP</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button id="MF_05_01_01_tip_03" class="tip-view-btn" aria-haspopup="true" type="button">
-                                    은행 자동납부 신청 안내<span class="tip-view">TIP</span></button>
-                            </li>
+                            <li><button id="MF_05_01_01_tip_01" class="btn-tip" aria-haspopup="true">자동납부 신청∙변경∙해지 시<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button id="MF_05_01_01_tip_03" class="btn-tip" aria-haspopup="true">은행 자동납부 신청 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                             <% } %>
-                            <li>
-                                <button id="MF_05_01_tip_03" class="tip-view-btn" aria-haspopup="true" type="button">
-                                    이용시간 안내<span class="tip-view">TIP</span></button>
-                            </li>
-                            <li>
-                                <button id="MF_05_01_tip_04" class="tip-view-btn" aria-haspopup="true" type="button">
-                                    추가문의 안내<span class="tip-view">TIP</span></button>
-                            </li>
+                            <li><button id="MF_05_01_tip_03" class="btn-tip" aria-haspopup="true">이용시간 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button id="MF_05_01_tip_04" class="btn-tip" aria-haspopup="true">추가문의 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->
-                </div>
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button class="fe-pay" disabled="disabled"><%= paymentOption.buttonName %></button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
-                        </li>
-                    </ul>
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button class="fe-pay" disabled="disabled"><%= paymentOption.buttonName %></button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <!--// #contents -->

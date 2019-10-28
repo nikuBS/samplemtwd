@@ -50,11 +50,11 @@
                         <% } %>
                     </div>
                     <ul class="bt-slice item-two mt30">
-                        <li class="bt-blue1">
-                            <button class="fe-auto">변경</button>
+                        <li>
+                            <button class="btn-round1 btn-style4 fe-auto">변경</button>
                         </li>
-                        <li class="bt-blue1">
-                            <button class="fe-cancel">해지</button>
+                        <li>
+                            <button class="btn-round1 btn-style1 fe-cancel">해지</button>
                         </li>
                     </ul>
                 </div>
@@ -68,6 +68,7 @@
                 <% } %>
                 <!--// .cont-box -->
                 <!-- 바로 아래 div는 자동납부 방법 조회 시 서버에서 리턴되는 데이터로, 납부 신청 및 변경 시 필요한 데이터라 html에 셋팅 -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <div data-acnt-num="<%= paymentOption.acntNum %>"
                      data-payer-num-cl-cd="<%= paymentOption.payerNumClCd %>"
                      data-bank-card-co-cd="<%= paymentOption.bankCardCoCd %>"
@@ -76,7 +77,7 @@
                      data-auth-req-ser-num="<%= paymentOption.authReqSerNum %>"
                      data-rltm-ser-num="<%= paymentOption.rltmSerNum %>"
                      data-pay-mthd-cd="<%= paymentOption.payMthdCd %>"
-                     class="ti-caption-gray fe-info">
+                     class="ti-caption-gray tod-caption-white fe-info">
                     <h3 class="tit">상세정보</h3>
                     <!-- 자동납부 사용자가 아닐 경우 주소 및 연락처변경 버튼 셋팅 -->
                     <% if (!paymentOption.isAuto) { %><button class="detail-view2 fe-change-address">주소 및 연락처변경</button><% } %>
@@ -204,37 +205,17 @@
                 <!--// .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
                         <% if (paymentOption.payMthdCd === '01' || paymentOption.payMthdCd === '02') { %>
-                        <li>
-                            <button id="MF_05_01_tip_01" class="tip-view-btn" aria-haspopup="true" type="button">
-                                인출(승인)일 안내<span class="tip-view">TIP</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button id="MF_05_01_tip_02" class="tip-view-btn" aria-haspopup="true" type="button">
-                                자동납부 할인 안내<span class="tip-view">TIP</span>
-                            </button>
-                        </li>
+                        <li><button id="MF_05_01_tip_01" class="btn-tip" aria-haspopup="true">인출(승인)일 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button id="MF_05_01_tip_02" class="btn-tip" aria-haspopup="true">자동납부 할인 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <% } else { %>
-                        <li>
-                            <button id="MF_05_01_02_tip_02" class="tip-view-btn" aria-haspopup="true" type="button">
-                                매월 5일 이후 해지 시<span class="tip-view">TIP</span>
-                            </button>
-                        </li>
+                        <li><button id="MF_05_01_02_tip_02" class="btn-tip" aria-haspopup="true">매월 5일 이후 해지 시<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <% } %>
-                        <li>
-                            <button id="MF_05_01_tip_03" class="tip-view-btn" aria-haspopup="true" type="button">
-                                이용시간 안내<span class="tip-view">TIP</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button id="MF_05_01_tip_04" class="tip-view-btn" aria-haspopup="true" type="button">
-                                추가문의 안내<span class="tip-view">TIP</span>
-                            </button>
-                        </li>
+                        <li><button id="MF_05_01_tip_03" class="btn-tip" aria-haspopup="true">이용시간 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button id="MF_05_01_tip_04" class="btn-tip" aria-haspopup="true">추가문의 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
