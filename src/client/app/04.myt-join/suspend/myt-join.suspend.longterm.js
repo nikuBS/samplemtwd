@@ -477,22 +477,26 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   _onChangeDateSelect: function(event) {
     //validation check
     var from, diff, $period, msg;
+    var target = 'days';
     var targetRole = event.target.getAttribute('data-role');
     var curDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDD');
     var to = Tw.DateHelper.getCurrentShortDate();
-    if ( this.$optionType.filter('[checked]').val() === 'military' ) {// 군입대
+    if (this.$optionType.filter('[checked]').val() === 'military') {// 군입대
       $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
+      // diff !== 0, 한달 이내인 경우 0
+      if (diff) {
+        target = 'months';
+      }
       // 종료 날짜가 시작날짜와 동일한 월인 경우 요일로 계산하여 처리
-      diff = (Tw.DateHelper.getDiffByUnit(from, to, 'months') ||
-          Tw.DateHelper.getDiffByUnit(from, to, 'days')) * -1;
+      diff = Tw.DateHelper.getDiffByUnit(from, to, target) * -1;
       if (from < curDate) {
         // 시작일이 현재일보다 이전을 선택한 경우
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
-      } else if ( diff < 0 ) {
+      } else if (diff < 0) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
-      } else if ( diff > 24 ) {
+      } else if (target === 'months' && diff > 24) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD;
       }
       if (msg) {
@@ -500,6 +504,14 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
           event.target.value = this.militaryFromDate;
         } else {
           event.target.value = this.militaryToDate;
+        }
+      } else {
+        // 정상으로 날짜를 선택한 경우 변경값을 저장해준다.
+        this.abroadFromeDate = event.target.value;
+        if (targetRole === 'fe-from-dt') {
+          this.militaryFromDate = event.target.value;
+        } else {
+          this.militaryToDate = event.target.value;
         }
       }
     } else { // 해외체류
@@ -513,9 +525,13 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       }
       if (msg && targetRole === 'fe-from-dt') {
         event.target.value = this.abroadFromeDate;
+      } else {
+        // 정상으로 날짜를 선택한 경우 변경값을 저장해준다.
+        this.abroadFromeDate = event.target.value;
       }
     }
     if (msg) {
+      // 날짜를 잘못 선택한 경우
       this._popupService.openAlert(msg, null, null, null, null, $(event.currentTarget));
     }
   }
