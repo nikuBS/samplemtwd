@@ -62,7 +62,9 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
    */
   _bindEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
+    $popupContainer.on('click', '.fe-btn_change_prod', $.proxy(this._onChangeProd, this));
     $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onClose, this));
+    $popupContainer.on('click', '.fe-btn_cancel', $.proxy(this._onCancel, this));
   },
 
   /**
@@ -212,6 +214,26 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
    * @param e - 변경 할게요 버튼 클릭 이벤트
    */
   _onChange: function(e) {
+    $('.fe-open_pop').css('display', 'block');
+  },
+
+  /**
+   * @function
+   * @desc 다음에 할게요. 클릭 시 요금제 리스트로 이동
+   */
+  _onClose: function() {
+    this._popupService.closeAll();
+    setTimeout($.proxy(function() {
+      this._historyService.goLoad('/product/mobileplan');
+    }, this));
+  },
+
+  /**
+   * @function
+   * @desc 추가 방어 팝업 확인 버튼 선택 시
+   * @param e - 추가 방어 팝업 확인 버튼 클릭 이벤트
+   */
+  _onChangeProd: function(e) {
     var isCustom = $(e.currentTarget).data('is_custom');
 
     // 기타 이유 서버에 전송!
@@ -229,12 +251,12 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
 
   /**
    * @function
-   * @desc 다음에 할게요. 클릭 시 요금제 리스트로 이동
+   * @desc 추가 팝업에서 취소 클릭 시 요금제 리스트로 이동
    */
-  _onClose: function() {
+  _onCancel: function() {
     this._popupService.closeAll();
     setTimeout($.proxy(function() {
-      this._historyService.goLoad('/product/mobileplan');
+      this._historyService.goLoad('/product/callplan?prod_id='+this._targetProdId);
     }, this));
   },
 
