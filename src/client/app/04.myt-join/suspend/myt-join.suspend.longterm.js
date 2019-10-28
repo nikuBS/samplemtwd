@@ -477,7 +477,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   _onChangeDateSelect: function(event) {
     //validation check
     var from, diff, $period, msg;
-    var target = 'days';
+    var unitType = 'days';
     var targetRole = event.target.getAttribute('data-role');
     var curDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDD');
     var to = Tw.DateHelper.getCurrentShortDate();
@@ -487,16 +487,16 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
       // diff !== 0, 한달 이내인 경우 0
       if (diff) {
-        target = 'months';
+        unitType = 'months';
       }
       // 종료 날짜가 시작날짜와 동일한 월인 경우 요일로 계산하여 처리
-      diff = Tw.DateHelper.getDiffByUnit(from, to, target) * -1;
+      diff = Tw.DateHelper.getDiffByUnit(from, to, unitType) * -1;
       if (from < curDate) {
         // 시작일이 현재일보다 이전을 선택한 경우
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
       } else if (diff < 0) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
-      } else if (target === 'months' && diff > 24) {
+      } else if (unitType === 'months' && diff > 24) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD;
       }
       if (msg) {
@@ -517,7 +517,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     } else { // 해외체류
       $period = this.$container.find('.fe-abroad.fe-date');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(from, to, 'days');
+      diff = Tw.DateHelper.getDiffByUnit(from, to, unitType);
       if (diff < 0) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
       } else if (diff > 30) {
