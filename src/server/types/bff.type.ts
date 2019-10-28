@@ -620,6 +620,15 @@ export const LIVE_CHAT_CHECK_PROD_ID = [
   'TW11100210', 'TW11100059'
 ];
 
+// T high5 적금 상품
+export const T_HIGH5_PROD_ID = [
+  'NC00000081', // 대표상품
+  'NC00000082', // 12개월 저금리
+  'NC00000083', // 12개월 고금리
+  'NC00000084', // 24개월 저금리
+  'NC00000085'  // 24개월 고금리
+];
+
 export enum LOGIN_TYPE {
   NONE = 'N',
   TID = 'T',

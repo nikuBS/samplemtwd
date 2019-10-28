@@ -8,6 +8,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import {T_HIGH5_PROD_ID} from '../../../../types/bff.type';
 
 /**
  * @class
@@ -36,7 +37,7 @@ class MyTFareBillOptionCancel extends TwViewController {
           paymentOption: paymentOption.result,
           svcInfo: svcInfo,
           pageInfo: pageInfo,
-          isTHigh5KDBProd: svcInfo.prodId === 'NC00000081' && paymentOption.bankCardCoCd === '002'
+          isTHigh5KDBProd: T_HIGH5_PROD_ID.indexOf(svcInfo.prodId) > -1 && paymentOption.result.bankCardCoCd === '002'
         });
       } else {
         this.error.render(res, {
