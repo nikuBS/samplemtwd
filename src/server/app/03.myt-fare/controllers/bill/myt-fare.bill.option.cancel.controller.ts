@@ -35,7 +35,8 @@ class MyTFareBillOptionCancel extends TwViewController {
         res.render('bill/myt-fare.bill.option.cancel.html', {
           paymentOption: paymentOption.result,
           svcInfo: svcInfo,
-          pageInfo: pageInfo
+          pageInfo: pageInfo,
+          isTHigh5KDBProd: svcInfo.prodId === 'NC00000081' && paymentOption.bankCardCoCd === '002'
         });
       } else {
         this.error.render(res, {
