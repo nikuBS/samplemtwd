@@ -1038,8 +1038,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     unitedTitle: '다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
-    title: 'T world 다이렉트 이용안내',
-    text: 'T world 다이렉트에서 구매를 원한다면',
+    title: 'T월드 다이렉트 이용안내',
+    text: 'T월드 다이렉트에서 구매를 원한다면',
     upperCat: true,
     sub_list: [
       {
