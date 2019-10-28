@@ -8,7 +8,7 @@
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE, T_HIGH5_PROD_ID} from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
 import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
@@ -121,8 +121,8 @@ class MyTFareBillOptionRegister extends TwViewController {
     };
 
     result.bankList = getBankList(result.lBankArray); // 납부 가능한 은행리스트
-    // 2019-10-18[OP002-4362] : THIGH5상품이면서 & KDB산업은행 계좌로 통신비 자동납부 신청자 인 경우.
-    result.isTHigh5KDBProd = T_HIGH5_PROD_ID.indexOf(svcInfo.prodId) > -1 && result.bankCardCoCd === '002';
+    // 2019-10-18[OP002-4362] : THIGH5상품이면서(checkCardYn = 'Q') & KDB산업은행 계좌로 통신비 자동납부 신청자 인 경우.
+    result.isTHigh5KDBProd = result.checkCardYn === 'Q' && result.bankCardCoCd === '002';
     return result;
   }
 }
