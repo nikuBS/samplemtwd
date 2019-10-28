@@ -475,13 +475,28 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @private
    */
   _onChangeDateSelect: function(event) {
+    var isMilitary = this.$optionType.filter('[checked]').val() === 'military';
+    var targetRole = event.target.getAttribute('data-role');
+    if (!event.target.value) {
+      // input 내 빈값인(삭제) 경우 - 기존 선택된 날짜로 초기화 시켜준다.
+      if (isMilitary) {
+        if (targetRole === 'fe-from-dt') {
+          event.target.value = this.militaryFromDate;
+        } else {
+          event.target.value = this.militaryToDate;
+        }
+      }  else {
+        event.target.value = this.abroadFromeDate;
+      }
+      return false;
+    }
     //validation check
     var from, diff, $period, msg;
     var unitType = 'days';
-    var targetRole = event.target.getAttribute('data-role');
     var curDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDD');
     var to = Tw.DateHelper.getCurrentShortDate();
-    if (this.$optionType.filter('[checked]').val() === 'military') {// 군입대
+    if (isMilitary) {
+      // 군입대
       $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
@@ -514,7 +529,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
           this.militaryToDate = event.target.value;
         }
       }
-    } else { // 해외체류
+    } else {
+      // 해외체류
       $period = this.$container.find('.fe-abroad.fe-date');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, unitType);
