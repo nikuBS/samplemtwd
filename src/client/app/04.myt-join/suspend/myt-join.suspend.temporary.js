@@ -271,27 +271,46 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @private
    */
   _onChangeDateSelect: function(event) {
-    //validation check
-    var from, to, diff, msg;
     var targetRole = event.target.getAttribute('data-role');
+    if (!event.target.value) {
+      // input 내 빈값인(삭제) 경우 - 기존 선택된 날짜로 초기화 시켜준다.
+      if (targetRole === 'fe-date-from') {
+        event.target.value = this.fromDate;
+      } else {
+        event.target.value = this.toDate;
+      }
+    }
+    //validation check
+    var msg = '';
     // duration check
-    from = this.$container.find('[data-role="fe-date-from"]').val().replace(/-/g, '');
-    to = this.$container.find('[data-role="fe-date-to"]').val().replace(/-/g, '');
-    diff = Tw.DateHelper.getDiffByUnit(from,  Tw.DateHelper.getCurrentShortDate(), 'days');
-    if ( diff < 0 ) {// 시작일이 오늘 이전일 경우
+    var from = this.$container.find('[data-role="fe-date-from"]').val().replace(/-/g, '');
+    var to = this.$container.find('[data-role="fe-date-to"]').val().replace(/-/g, '');
+    var diff = Tw.DateHelper.getDiffByUnit(from,  Tw.DateHelper.getCurrentShortDate(), 'days');
+    if (diff < 0) {
+      // 시작일이 오늘 이전일 경우
       msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
-    } else if ( to < from ) {// 종료일자가 시작일 이전일 경우
+    } else if (to < from) {
+      // 종료일자가 시작일 이전일 경우
       msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
-    } else if (diff > 93 ) {// -일시정지는 1회 최대 93일 까지 신청 가능
+    } else if (diff > 93) {
+      // -일시정지는 1회 최대 93일 까지 신청 가능
       msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_02;
     }
     if (msg) {
+      // 날짜가 맞지 않는 경우
       if (targetRole === 'fe-date-from') {
         event.target.value = this.fromDate;
       } else {
         event.target.value = this.toDate;
       }
       this._popupService.openAlert(msg, null, null, null, null, $(event.currentTarget));
+    } else {
+      // 정상으로 날짜를 선택한 경우 변경값을 저장해준다.
+      if (targetRole === 'fe-date-from') {
+        this.fromDate = event.target.value;
+      } else {
+        this.toDate = event.target.value;
+      }
     }
   }
 };
