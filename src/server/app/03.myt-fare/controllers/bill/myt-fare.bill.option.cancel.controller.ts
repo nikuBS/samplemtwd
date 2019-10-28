@@ -8,7 +8,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import {T_HIGH5_PROD_ID} from '../../../../types/bff.type';
 
 /**
  * @class
@@ -37,7 +36,8 @@ class MyTFareBillOptionCancel extends TwViewController {
           paymentOption: paymentOption.result,
           svcInfo: svcInfo,
           pageInfo: pageInfo,
-          isTHigh5KDBProd: T_HIGH5_PROD_ID.indexOf(svcInfo.prodId) > -1 && paymentOption.result.bankCardCoCd === '002'
+          // 2019-10-18[OP002-4362] : THIGH5상품이면서(checkCardYn = 'Q') & KDB산업은행 계좌로 통신비 자동납부 신청자 인 경우.
+          isTHigh5KDBProd: paymentOption.result.checkCardYn === 'Q' && paymentOption.result.bankCardCoCd === '002'
         });
       } else {
         this.error.render(res, {
