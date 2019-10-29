@@ -108,7 +108,7 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
-    this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
+    this.$container.on('click','.icon-gnb-search, .fe-search-link',$.proxy(this._doSearch,this));
     this.$container.on('change','.resultsearch-box > .custom-form > input',$.proxy(
       function(e) {this.$container.find('.resultsearch-box > label').toggleClass('on',$(e.currentTarget).prop('checked'));}
     ,this));

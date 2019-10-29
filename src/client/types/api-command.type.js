@@ -523,6 +523,7 @@ Tw.API_CMD = {
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
+  BFF_10_0055: { path: '/core-product/:version/services/roaming/count', method: Tw.API_METHOD.GET},
   BFF_10_0058: { path: '/core-product/:version/roaming/country-rate', method: Tw.API_METHOD.GET },
   BFF_10_0059: { path: '/core-product/:version/roaming/modelCode-srch', method: Tw.API_METHOD.GET },
   BFF_10_0060: { path: '/core-product/:version/roaming/country-srch', method: Tw.API_METHOD.GET },
@@ -635,7 +636,10 @@ Tw.NODE_CMD = {
 Tw.SESSION_CMD = {
   BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_04_0001' },
   BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' },
-  BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: Tw.API_METHOD.GET, command: 'BFF_07_0017' }
+  BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: Tw.API_METHOD.GET, command: 'BFF_07_0017' },
+  BFF_05_0106: { path: '/core-modification/:version/bill-discounts', method: Tw.API_METHOD.GET, command: 'BFF_05_0106' },
+  BFF_05_0094: { path: '/core-modification/:version/combination-discounts', method: Tw.API_METHOD.GET, command: 'BFF_05_0094' },
+  BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: Tw.API_METHOD.GET, command: 'BFF_05_0196' }
 };
 
 Tw.TMAP = {
