@@ -223,7 +223,7 @@ export const API_CMD = {
     bypass: false
   },
   BFF_05_0093: { path: '/core-bill/:version/micro-pay/cphist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0094: { path: '/core-modification/:version/combination-discounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0094: { path: '/core-modification/:version/combination-discounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_05_0096: { path: '/core-product/:version/benefit-suggestions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0098: { path: '/core-membership/:version/card-vip-benefit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0100: { path: '/core-bill/:version/rainbow-point-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -233,7 +233,7 @@ export const API_CMD = {
   BFF_05_0103: { path: '/core-bill/:version/rainbow-point-families', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0104: { path: '/core-bill/:version/rainbow-point-transfers', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0105: { path: '/core-bill/:version/rainbow-point-transfers/:args0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0106: { path: '/core-modification/:version/bill-discounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0106: { path: '/core-modification/:version/bill-discounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_05_0107: {
     path: '/core-modification/:version/my-discount-benefit/support-agree-info',
     method: API_METHOD.GET,
@@ -323,7 +323,7 @@ export const API_CMD = {
   BFF_05_0186: { path: '/core-modification/:version/number-change/init', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0194: { path: '/core-modification/:version/longterm-phone-pause', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0195: { path: '/core-modification/:version/longterm-phone-pause', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_05_0197: { path: '/core-modification/:version/longterm-phone-pause', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0198: { path: '/core-modification/:version/wire/cancel-request-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
@@ -1011,7 +1011,10 @@ export const SESSION_CMD = {
   BFF_03_0004: 'BFF_03_0004',
   BFF_05_0061: 'BFF_05_0061',
   BFF_07_0017: 'BFF_07_0017',
-  BFF_10_0178: 'BFF_10_0178'
+  BFF_10_0178: 'BFF_10_0178',
+  BFF_05_0106: 'BFF_05_0106',
+  BFF_05_0094: 'BFF_05_0094',
+  BFF_05_0196: 'BFF_05_0196'
 };
 
 export const API_CODE = {
