@@ -69,7 +69,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     M000194: 'data',
     M000233: 'bill',
     M000301: 'svcCnt',
-    M000570: 'membership'
+    M000570: 'membership',
+    M000542: 'benefit',
+    M000439: 'roaming'
   },
 
   XTRACTOR_CODE: { // 유동적 메뉴에 대한 통계코드 matching
@@ -174,6 +176,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$container.on('click', '#fe-refund', $.proxy(this._onRefund, this));
     this.$container.on('click', '#fe-btn-simple-login', $.proxy(this._onSimpleLogin, this));
     this.$container.on('click', '.fe-menu-link', $.proxy(this._onMenuLink, this));
+    this.$container.on('click', '.fe-menu-search', $.proxy(this._onMenuLink, this));
     this.$container.on('click', '.fe-bt-free-sms', $.proxy(this._onFreeSMS, this));
     this.$container.on('click', '.fe-t-noti', $.proxy(this._onTNoti, this));
     this.$container.on('click', '.fe-userinfo', $.proxy(this._onUserInfo, this));
@@ -337,13 +340,13 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    */
   _onUserInfo: function ($event) {
     var $target = $($event.currentTarget);
-    if ( this._isMultiLine ) {
+    // if ( this._isMultiLine ) {
       if ( !this._lineComponent ) {
         this._lineComponent = new Tw.LineComponent();
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해
       this._lineComponent.onClickLine(this._svcMgmtNum, $target);
-    }
+    // }
   },
 
   /**
@@ -515,7 +518,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
       // If a user does not have mobile line, do not show free sms button
       if (!userInfo.canSendFreeSMS) {
-        this.$container.find('.fe-bt-free-sms').addClass('none');
+        this.$container.find('.fe-bt-free-sms-target').addClass('none');
       }
     } else {
       this.$container.removeClass('user-type');
@@ -524,7 +527,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     // When web
     if ( !Tw.BrowserHelper.isApp() ) {
       this.$container.find('.fe-when-web').removeClass('none');
-      this.$container.find('.fe-bt-free-sms').addClass('none');
+      this.$container.find('.fe-bt-free-sms-target').addClass('none');
     }
 
     // When logout and app
@@ -546,7 +549,13 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       this.$container.find('.fe-when-app-and-login').removeClass('none');
     }
 
-    this.$menuArea.find('.section-search').after(this._menuTpl({ list: menu }));
+    // when app and login(Tlogin, not simple login)
+    if (!isApp && !isLogin) {
+      this.$container.find('.fe-when-web-and-logout').removeClass('none');
+    }
+
+    // this.$menuArea.find('.section-search').after(this._menuTpl({ list: menu }));
+    this.$menuArea.find('.footer').before(this._menuTpl({ list: menu }));
 
     if ( isLogin ) {
       $('.fe-menu-realtime').each($.proxy(function (i, elem) {
@@ -634,6 +643,30 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
                 $(elem).remove();
               });
             break;
+          case 'benefit': // 혜택/할인
+          this._apiService.requestArray([
+              { command: Tw.SESSION_CMD.BFF_05_0106 }, // /bypass/core-modification/v1/bill-discounts
+              { command: Tw.SESSION_CMD.BFF_05_0094 }, // /bypass/core-modification/v1/combination-discounts
+              { command: Tw.SESSION_CMD.BFF_05_0196 } // /bypass/core-modification/v1/loyalty-benefits
+            ])
+            .done($.proxy(this._showBenefitDiscountInfo, this, elem))
+            .fail(function () {
+              $(elem).remove();
+            });
+            break;
+          case 'roaming': // 로밍
+            this._apiService.request(Tw.API_CMD.BFF_10_0055, {})
+            .then($.proxy(function (res) {
+              if ( res.code === Tw.API_CODE.CODE_00 ) {
+                this._showUsingRoamingInfo(elem, res.result);
+              } else {
+                $(elem).remove();
+              }
+            }, this))
+            .fail(function () {
+              $(elem).remove();
+            });
+            break;
           default:
             break;
         }
@@ -665,9 +698,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     }, this));
 
     // 웹접근성 (단독 라인일 경우 userinfo 영역에 안내 메세지 추가)
-    if (this._isLogin && !this._isMultiLine) {
-      this.$container.find('.fe-userinfo').attr('title', '다회선일 경우에만 사용 가능합니다.');
-    }
+    // if (this._isLogin && !this._isMultiLine) {
+    //   this.$container.find('.fe-userinfo').attr('title', '다회선일 경우에만 사용 가능합니다.');
+    // }
   },
 
   /**
@@ -975,5 +1008,52 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       return false;
     }
     return true;
+  },
+  
+  /**
+   * @function
+   * @desc 나의 혜택/할인 정보 값 설정
+   */
+  _showBenefitDiscountInfo: function (elem) {
+    var benefitDiscount = 0;
+    var resp;
+
+    if ((resp = arguments[1]).code === Tw.API_CODE.CODE_00) {
+      // 요금할인
+      benefitDiscount += resp.result.priceAgrmtList.length;
+      // 요금할인- 복지고객
+      benefitDiscount += (resp.result.wlfCustDcList && resp.result.wlfCustDcList.length > 0) ? resp.result.wlfCustDcList.length : 0;
+    }
+
+    // 결합할인
+    if ((resp = arguments[2]).code === Tw.API_CODE.CODE_00) {
+      var resp1 = resp.result;
+      if (resp1.prodNm.trim() !== '') {
+        benefitDiscount += Number(resp1.etcCnt) + 1;
+      }
+    }
+
+    // 장기가입 혜택 건수
+    if ((resp = arguments[3]).code === Tw.API_CODE.CODE_00) {
+      // 장기가입 쿠폰
+      benefitDiscount += (resp.result.benfList && resp.result.benfList.length > 0) ? 1 : 0;
+      // 장기가입 요금
+      benefitDiscount += (resp.result.dcList && resp.result.dcList.length > 0) ? resp.result.dcList.length : 0;
+    }
+
+    if(benefitDiscount > 0) {
+      $(elem).text(benefitDiscount + Tw.BENEFIT.INDEX.COUNT_SUFFIX);
+    } else {
+      $(elem).remove();
+    }
+  },
+
+
+  /**
+   * @function
+   * @desc T 로밍 정보 값 설정
+   */
+  _showUsingRoamingInfo: function (elem, result) {
+    $(elem).text(result.prodInfoTxt);
   }
 };
