@@ -28,7 +28,7 @@
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
 </head>
-<body>
+<body style="height:100%"><!-- body스크롤 hidden -->
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -36,7 +36,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" style="height:100%; padding:0"><!-- body스크롤 hidden -->
         <!-- #header -->
         <div id="header" class="header-wrap">
             <div class="h-belt">
@@ -53,54 +53,93 @@
         </div>
         <!--// #header -->
         <!-- #common-menu -->
-        <div id="common-menu" class="user-type on"><!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
+        <!-- 191007 [OP002-4009] 수정01 -->
+        <div id="common-menu" class="user-type on tod-common-menu"><!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 --> 
             <div class="section-userinfo">
-                <!-- 로그인 전
-                <button class="login">로그인해주세요</button>
-                //로그인 전 -->
-                <!-- 로그인 후 -->
-                <!-- case1 -->
-                <span class="userinfo">
-                    <button class="ti-tx">
-                        <strong class="ti">갤럭시S8+</strong>
-                        <em class="tx underline">인천 연************</em>
-                        <!-- <em class="tx underline">010-4034-1396</em> -->
-                    </button>
-                    <button class="bt">무료문자</button>
+                <!-- 로그인전 -->
+                <span class="userinfo" style="display:none">
+                    <button class="login">로그인해주세요</button>
                 </span>
-                <!-- //case1 -->
-                <!-- case2
-                <span class="userinfo">
+                <!-- //로그인전 -->
+                <!--  case2 -->
+                <span class="userinfo" style="display:none">
                     <strong class="ti">반갑습니다</strong>
                     <em class="tx"><span>홍*동</span> 님</em>
-                    <button class="bt">무료문자</button>
                 </span>
-                //case2 -->
-                <!-- case3
-                <span class="userinfo">
+                <!--  //case2 -->
+                <!--  case8 -->
+                <span class="userinfo" style="display:none">
                     <strong class="ti">반갑습니다</strong>
                     <button class="tx underline">회선등록</button>
-                    <button class="bt">무료문자</button>
                 </span>
-                //case3 -->
-                <!-- //로그인 후 -->
-                <button class="c-notify on"><span class="blind">알림</span></button><!-- 새로운 알림 있는경우 on 추가 -->
-                <button class="c-option"><span class="blind">설정</span></button>
+                <!--  //case8 -->
+                <!--  case8 -->
+                <span class="userinfo">
+                    <strong class="ti">갤럭시S8+</strong>
+                    <button class="tx underline">인천 연************</button>
+                </span>
+                <!--  //case8 -->
+                <!-- 로그인 후  -->
+                <div class="tod-ico-menu-wrap after-login">
+                    <ul class="tod-ico-list">
+                        <li class="item">
+                            <button class="ico-btn">
+                                <i class="ico"><img src="/img/common/menu-m-ico01.png" alt=""></i><span class="txt">검색</span>
+                            </button>
+                        </li>
+                        <li class="item">
+                            <button class="ico-btn">
+                                <i class="ico"><img src="/img/common/menu-m-ico02.png" alt=""></i><span class="txt">무료문자</span>
+                            </button>
+                        </li>
+                        <li class="item">
+                            <button class="ico-btn on"> <!-- on toggle -->
+                                <i class="ico"><img src="/img/common/menu-m-ico03.png" alt=""></i><span class="txt">알림</span>
+                            </button>
+                        </li>
+                        <li class="item">
+                            <button class="ico-btn">
+                                <i class="ico"><img src="/img/common/menu-m-ico04.png" alt=""></i><span class="txt">설정</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //로그인 후  -->
             </div>
             <div class="section-cont">
+                <!-- 로그인 전  -->
+                <div class="tod-ico-menu-wrap before-login">
+                    <ul class="tod-ico-list">
+                        <li class="item">
+                            <button class="ico-btn">
+                                <i class="ico"><img src="/img/common/menu-m-ico01.png" alt=""></i><span class="txt">검색</span>
+                            </button>
+                        </li>
+                        <li class="item">
+                            <button class="ico-btn">
+                                <i class="ico"><img src="/img/common/menu-m-ico04.png" alt=""></i><span class="txt">설정</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //로그인 전  -->
                 <!-- 검색영역 -->
-                <div class="section-search">
+                <!-- <div class="section-search">
                     <span class="inputbox">
                         <span class="input">
                             <input type="text" placeholder="업무 검색 (예: 무료문자)" title="input" value="">
                             <button class="cancel"><span class="blind">삭제</span></button>
                         </span>
                     </span>
-                </div>
+                </div> -->
                 <!-- //검색영역 -->
                 
                 <!-- gnb -->
                 <!-- 2019.02.23 나의 데이터/통화, 나의 가입정보 우측 텍스트가 길어질 수 있는 부분에 txt-long 클래스 추가 -->
+                <div class="tod-gnb-ctl-wrap">
+                    <button class="btn all-open">전체열기</button>
+                    <button class="btn all-close">전체닫기</button>
+                </div>
                 <div class="section-gnb">
                     <ul class="gnb-depth1">
                         <li>
@@ -124,8 +163,8 @@
                         <li>
                             <div class="bt-depth1">
                                 <a href="#" class="bt">
-                                    <!-- <span class="ico"><img src="/img/svg/icon_48px_charge.svg" alt="샘플아이콘"></span> --><!-- 없는 경우 -->
-                                    <span class="ti-info">나의 요금 <em class="info"><span>54,560</span>원</em></span>
+                                    <span class="ico"><img src="/img/svg/icon_48px_charge.svg" alt="샘플아이콘"></span>
+                                    <span class="ti-info">나의 요금 <em class="info"><span>9</span>월 <span>54,560</span>원</em></span>
                                 </a>
                                 <button class="more">하위메뉴 보기</button>
                             </div>
@@ -145,7 +184,7 @@
                             <div class="bt-depth1 txt-long">
                                 <a href="#" class="bt">
                                     <span class="ico"><img src="/img/svg/icon_48px_my.svg" alt="나의 가입정보 아이콘"></span>
-                                    <span class="ti-info">나의 가입정보 <em class="info">총 <span>2</span>개 회선</em></span>
+                                    <span class="ti-info">나의 가입정보 <em class="info">5GX프라임</em></span>
                                 </a>
                                 <button class="more">하위메뉴 보기</button>
                             </div>
@@ -160,13 +199,13 @@
                             </div>
                         </li>
                     </ul>
-
+                   
                     <ul class="gnb-depth1">
                         <li>
                             <div class="bt-depth1">
                                 <button class="bt">
                                     <span class="ico"><img src="/img/svg/icon_48px_tmembership.svg" alt="T멤버십 아이콘"></span>
-                                    <span class="ti-info">T멤버십 <em class="info"><span>10.2</span>GB / <span>70</span>분</em></span>
+                                    <span class="ti-info">T멤버십 <em class="info">VIP</em></span>
                                 </button>
                             </div>
                             <div class="depth2">
@@ -181,7 +220,7 @@
                             <div class="bt-depth1">
                                 <button class="bt">
                                     <span class="ico"><img src="/img/svg/icon_48px_discount.svg" alt="혜택/할인 아이콘"></span>
-                                    <span class="ti-info">혜택 / 할인 <em class="info"><span>10.2</span>GB / <span>70</span>분</em></span>
+                                    <span class="ti-info">혜택 / 할인 <em class="info"><span>5</span>건</em></span>
                                 </button>
                                 <button class="more">하위메뉴 보기</button>
                             </div>
@@ -199,7 +238,7 @@
                             <div class="bt-depth1">
                                 <button class="bt">
                                     <span class="ico"><img src="/img/svg/icon_48px_event.svg" alt="이벤트 아이콘"></span>
-                                    <span class="ti-info">이벤트 <em class="info"><span>10.2</span>GB / <span>70</span>분</em></span>
+                                    <span class="ti-info">이벤트</span>
                                 </button>
                                 <button class="more">하위메뉴 보기</button>
                             </div>
@@ -212,7 +251,6 @@
                             </div>
                         </li>
                     </ul>
-
                     <ul class="gnb-depth1">
                         <li>
                             <div class="bt-depth1">
@@ -242,7 +280,7 @@
                             <div class="bt-depth1">
                                 <button class="bt">
                                     <span class="ico"><img src="/img/svg/icon_48px_roaming.svg" alt="T로밍 아이콘"></span>
-                                    <span class="ti-info">T로밍</span>
+                                    <span class="ti-info">T로밍 <em class="info">Baro OnePass 300 기본형</em></span>
                                 </button>
                                 <button class="more">하위메뉴 보기</button>
                             </div>
@@ -355,10 +393,10 @@
                 <div class="section-gnb">
                     <ul class="gnb-depth1">
                         <li>
-                            <div class="bt-depth1" style="background-image:url(/img/main/tbd_main_gnb.jpg);"><!-- 배경이미지가 있는경우 -->
+                            <div class="bt-depth1"><!-- 배경이미지가 있는경우 -->
                                 <button class="bt">
                                     <span class="ico"><img src="/img/svg/icon_48px_directshop.svg" alt="다이렉트샵 아이콘"></span>
-                                    <span class="ti-info">다이렉트샵 <em class="tx">SK텔레콤 공식 온라인 맞춤샵</em></span>
+                                    <span class="ti-info">T월드 다이렉트 <!-- <em class="tx">SK텔레콤 공식 온라인 맞춤샵</em> --></span>
                                 </button>
                                 <button class="more">하위메뉴 보기</button>
                             </div>
@@ -383,9 +421,16 @@
                 <!-- gnb 바로가기 영역 -->
                 <div class="section-gnb">
                     <ul class="gnb-depth1">
-                        <li><button class="bt">T앱</button></li>
-                        <li><button class="bt">패밀리 사이트</button></li>
-                        <li><button class="bt">사업자 정보</button></li>
+                        <li>
+                            <div class="bt-depth1">
+                                <button class="bt">
+                                    <span class="ico"><img src="/img/svg/icon_48px_tapp.svg" alt="T앱 아이콘"></span>
+                                    <span class="ti-info">T앱</span>
+                                </button>
+                            </div>
+                        </li>
+                       <!--  <li><button class="bt">패밀리 사이트</button></li>
+                        <li><button class="bt">사업자 정보</button></li> -->
                     </ul>
                 </div>
                 <!-- //gnb 바로가기 영역 -->
@@ -395,28 +440,33 @@
                     <ul class="f-menu">
                         <li><button class="bt">이용약관</button></li>
                         <li><button class="bt"><strong>개인정보 처리방침</strong></button></li>
-                        <li><button class="bt"><strong>개인정보 이용내역</strong></button></li>
-                        <!-- li><button class="bt"><strong>인증서 불러오기</strong></button></li --><!-- 모바일 web -->
+                        <!-- <li><button class="bt"><strong>개인정보 이용내역</strong></button></li> --><!-- 모바일 web -->
                         <li><button class="bt">미환급금 조회</button></li>
                         <li><button class="bt">이용자 피해예방센터</button></li>
+                        <li><button class="bt">사업자 정보</button></li>
+                        <li><button class="bt">패밀리 사이트 </button></li>
                     </ul>
-                    <p class="f-info">
-                        휴대폰 고객센터 : 국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료)<br>
-                        국번없이 <a href="tel:1599-0011">1599-0011</a>(유료)<br>
-                        인터넷 / 집전화 고객센터 : <a href="tel:080-816-2000">080-816-2000</a>(무료) 또는 <a href="tel:1600-2000">1600-2000</a>(유료)<br>
-                        초콜릿 고객센터 : <a href="tel:1599-3377">1599-3377</a>(유료)<br>
-                    </p>
+                    <dl class="f-info">
+                        <dt>휴대폰 고객센터</dt>
+                        <dd>국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료) 국번없이 <a href="tel:1599-0011">1599-0011</a>(유료)</dd>
+                        <dt>인터넷&middot;집전화 고객센터</dt>
+                        <dd><a href="tel:080-816-2000">080-816-2000</a>(무료) 또는 <a href="tel:1600-2000">1600-2000</a>(유료)</dd>
+                        <dt>초콜릿 고객센터</dt>
+                        <dd><a href="tel:1599-3377">1599-3377</a>(유료)</dd>
+                    </dl>
                     <strong class="f-ltd">SK telecom., LTD</strong>
                     <div class="f-bt">
-                        <!-- 로그인 전
-                        <button class="f-join">회원가입</button>
-                        <button class="f-login">로그인</button>
-                        <button class="f-login2">간편 로그인</button>
-                        //로그인 전 -->
-                        <!-- 로그인 후 -->
-                        <button class="f-member">회원정보</button>
-                        <button class="f-logout">로그아웃</button>
-                        <!-- //로그인 후 -->
+                        <ul class="tod-f-bt-wrap">
+                            <!-- 로그인전 -->
+                            <!-- <li><button class="f-join">회원가입</button></li>
+                            <li><button class="f-login2">간편 로그인</button></li>
+                            <li><button class="f-login">로그인</button></li> -->
+                            <!-- //로그인전 -->
+                            <!--  로그인후 -->
+                            <li><button class="f-member">회원정보</button></li>
+                            <li><button class="f-logout">로그아웃</button></li>
+                            <!--  //로그인후 -->
+                        </ul>
                     </div>
                 </div>
                 <!-- //footer -->
@@ -424,6 +474,7 @@
 
             <button class="c-close"><span class="blind">닫기</span></button>
         </div>
+        <!-- //191007 [OP002-4009] 수정01 -->
         <!-- // #common-menu -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
