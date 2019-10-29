@@ -148,8 +148,8 @@
 <script type="text/javascript">
   $(document).ready(function () {
 
-    //5gx사이트로 리다이렉트 처리
-    window.location.href = 'https://m.sktelecom5gx.com';
+    //5gx사이트로 외부 브라우저에서 처리
+    Tw.CommonHelper.openUrlExternal('https://m.sktelecom5gx.com');
 
     // 190404_수정 START
     $('.og-5mktp-intro-cover').on('touchstart touchmove', function (e) {
