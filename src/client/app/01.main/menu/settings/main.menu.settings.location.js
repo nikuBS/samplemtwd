@@ -28,22 +28,7 @@ Tw.MainMenuSettingsLocation.prototype = {
     this.$term.on('change', $.proxy(this._onTermChanged, this));
     this.$container.on('click', '#fe-view', $.proxy(this._onLink, this));
     this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
-    this.$container.on('click', '#fe-chatbot', $.proxy(this._onChatBotClick, this));
     this.$container.on('click', '#fe-dsds', $.proxy(this._onDsdsClick, this));
-  },
-    /**
-   * @function
-   * @desc 임시로 챗봇으로 이동
-   */
-  _onChatBotClick: function(e){
-    new Tw.MainMenuSettingsTempChatbot({
-      $element: this.$container
-      // , data : {
-      //   _svcMgmtNum: this._svcMgmtNum,
-      //   _custNum: this._custNum,
-      //   _mbrChlId: this._mbrChlId,
-      // }
-    }).goChatbot(e);
   },
     /**
    * @function
