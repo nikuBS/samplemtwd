@@ -26,16 +26,18 @@ function recognizeLastChar(keyword){
     // #skip_navigation -->
 <div class="wrap">
 <div class="searchbox-header fe-header-wrap fe-aria-hidden-el">
-    <div class="sch-form">
-            <span class="inputbox">
-                <span class="input">
-                    <input type="text" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
-                    <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
-                </span>
+    <!-- 191001 [OP002-4009] 수정01 -->
+    <div class="sch-form tod-sch-form">
+        <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+        <span class="inputbox">
+            <span class="input">
+                <input type="search" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
+                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
             </span>
+        </span>
         <button class="icon-gnb-search"><span class="blind">검색</span></button>
-        <div class="searchbox-close"><button class="close-area">취소</button></div>
     </div>
+    <!-- //191001 [OP002-4009] 수정01 -->
 </div>
 
 <div id="contents" class="search-content fe-aria-hidden-el fe-container-wrap container-wrap">
@@ -87,24 +89,26 @@ function recognizeLastChar(keyword){
 
     <hr class="cont-sp type1" aria-hidden="true">
     <% } %>
-
-    <div class="cont-box nogaps-hoz">
+    <!-- 191001 [OP002-4009] 수정02 -->
+    <div class="cont-box nogaps-btm">
         <div class="rec-list">
-            <h3 class="searchlist-title">인기 검색어</h3>
-            <ul class="popularsearchword-list linklist-type">
-                <% for(var i=0;i<popularKeyword.Query.length;i++){ %>
-                <% if(i>4) break;%>
-                <li>
-                    <a href="/common/search?keyword=<%= encodeURIComponent(popularKeyword.Query[i].content) %>&step=<%= Number(step)+1%>" data-keyword="<%= popularKeyword.Query[i].content %>" class="category-type search-element">
-                        <strong class="number"><%= i+1 %></strong>
-                        <span class="text"><%= popularKeyword.Query[i].content %></span>
-                    </a>
-                </li>
-                <% } %>
-            </ul>
+            <p class="tod-search-tit">인기 검색어</p>
+            <div class="tod-popularword-wrap">
+                <ul class="popularsearchword-list linklist-type tod-popularsearchword-list">
+                    <% for(var i=0;i<popularKeyword.Query.length;i++){ %>
+                    <% if(i>4) break;%>
+                    <li>
+                        <a href="/common/search?keyword=<%= encodeURIComponent(popularKeyword.Query[i].content) %>&step=<%= Number(step)+1%>" data-keyword="<%= popularKeyword.Query[i].content %>" class="category-type search-element">
+                            <strong class="number"><%= i+1 %></strong>
+                            <span class="text"><%= popularKeyword.Query[i].content %></span>
+                        </a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
         </div>
     </div>
-
+    <!-- //191001 [OP002-4009] 수정02 -->
 </div>
 
 
