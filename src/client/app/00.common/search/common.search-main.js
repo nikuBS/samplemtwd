@@ -48,6 +48,7 @@ Tw.CommonSearchMain.prototype = {
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     new Tw.XtractorService(this.$container);
     //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
+    this._loadRecommendMenuInfo();
   },
   /**
    * @function
@@ -56,6 +57,7 @@ Tw.CommonSearchMain.prototype = {
    * @returns {void}
    */
   _keyInputEvt : function (inputEvtObj) {
+    inputEvtObj.preventDefault();
     if(Tw.InputHelper.isEnter(inputEvtObj)){
       this._searchByInputValue();
     }else{
@@ -80,6 +82,63 @@ Tw.CommonSearchMain.prototype = {
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
     this.$container.on('click','.search-element',$.proxy(this._searchByElement,this));
+    this.$container.on('click','.rec-word',$.proxy(this._searchByRecWord,this));
+    this.$container.on('click','#fe-btn-more',$.proxy(this._showMorePopularSearchWord,this));
+    this.$container.on('click','#fe-btn-fold',$.proxy(this._hideMorePopularSearchWord,this));
+    this.$container.on('click','#fe-btn-rcmnd',$.proxy(this._goRcmndLink,this));
+    this.$container.on('click','.fe-btn-doLikeThis',$.proxy(this._goDoLikeThisLink,this));
+  },
+  /**
+   * @function
+   * @desc 추천메뉴 정보 로드
+   * @param  
+   */
+  _loadRecommendMenuInfo : function () {
+    this._apiService.request(Tw.NODE_CMD.GET_MENU_RCMD, {})
+      .then($.proxy(this._onMenuRcmd, this));
+  },
+  /**
+   * @function
+   * @desc redis에서 조회된 추천업무 리스트를 화면에 update
+   * @param  {Object} res - redis조회로 부터 전달받은 추천업무 결과 값
+   */
+  _onMenuRcmd: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      var $area = this.$container.find('.search-task-list');
+      var result = res.result.rcmndMenus;
+
+      // 노출순서 기준 오름차순으로 정렬 (1,2,3,4...)
+      result.sort(function(a,b) {
+        return a["expsSeq"] - b["expsSeq"];
+      });
+
+      for (var i = 0; i < result.length; i += 1) {
+        $area.append(this._compileTplForRecommendationItem(result[i].menuUrl, result[i].menuNm, result[i].impDispYn, result[i].oferStcCd));
+      }
+    }
+  },
+  /**
+   * @function
+   * @desc 각각의 추천업무를 화면에 보여주기 위해 markup 형태로 조립
+   * @param  {String} href - 클릭 시 연결할 url
+   * @param  {String} title - 표기할 추천업무 명
+   */
+  _compileTplForRecommendationItem: function (href, title, impDispYn, oferStcCd) {
+    var returnStr = ''
+
+    if (impDispYn === 'Y') {
+      returnStr += '<li class="item strong">';
+    } else {
+      returnStr += '<li class="item">';
+    }
+
+    if (oferStcCd === null) {
+      oferStcCd = '';
+    }
+
+    returnStr += '<button type="button" id="fe-btn-rcmnd" value="' + href + '" data-xt_eid="' + oferStcCd + '" data-xt_csid="NO" data-xt_action="BC">' + title + '</button></li>';
+
+    return returnStr;
   },
   /**
    * @function
@@ -221,6 +280,81 @@ Tw.CommonSearchMain.prototype = {
   /**
    * @function
    * @member
+   * @desc 추천검색어로 검색 실행
+   * @param {Object} linkEvt - 이벤트 객체
+   * @returns {Object}
+   */
+  _searchByRecWord : function(){
+    var recWord = this.$container.find('#fe-rec-keyword').val();
+    if(!Tw.FormatHelper.isEmpty(recWord) && recWord.trim().length>0){
+      this._doSearch(recWord);
+    }
+  },
+  /**
+   * @function
+   * @member
+   * @desc 인기 검색어 6위-10위 더 보기
+   */
+  _showMorePopularSearchWord : function(){
+    _.each(this.$container.find('.fe-popularword-list-content'), $.proxy(this._showMoreContent, this));
+
+    this.$container.find('#fe-btn-more').addClass('hide');
+    this.$container.find('#fe-btn-fold').removeClass('hide');
+  },
+  /**
+   * @function
+   * @member
+   * @desc 인기 검색어 6위-10위 더 보기
+   */
+  _showMoreContent : function(elem) {
+    var $elem = $(elem);
+
+    if($elem.data('index') > 5) {
+      $elem.show();
+    }
+  },
+  /**
+   * @function
+   * @member
+   * @desc 인기 검색어 6위-10위 접기
+   */
+  _hideMorePopularSearchWord : function () {
+    _.each(this.$container.find('.fe-popularword-list-content'), $.proxy(this._hideMoreContent, this));
+
+    this.$container.find('#fe-btn-more').removeClass('hide');
+    this.$container.find('#fe-btn-fold').addClass('hide');
+  },
+  /**
+   * @function
+   * @member
+   * @desc 인기 검색어 6위-10위 접기
+   */
+  _hideMoreContent : function(elem) {
+    var $elem = $(elem);
+
+    if($elem.data('index') > 5) {
+      $elem.hide();
+    }
+  },
+  /**
+   * @function
+   * @member
+   * @desc 어떤 업무를 찾고 계신가요 메뉴 이동
+   */
+  _goRcmndLink : function (elem) {
+    location.href = elem.currentTarget.value;
+  },
+  /**
+   * @function
+   * @member
+   * @desc 이럴 땐 이렇게 하세요 링크 이동
+   */
+  _goDoLikeThisLink : function (elem) {
+    location.href = $(elem.currentTarget).data('url');
+  },
+  /**
+   * @function
+   * @member
    * @desc 검색 페이지로 이동
    * @param {String} searchKeyword - 키워드
    * @returns {void}
@@ -248,7 +382,9 @@ Tw.CommonSearchMain.prototype = {
     if(this._historyService.getHash()==='#input_P'){
       ++this._step;
     }
-    this._historyService.go(this._step*-1);
+    setTimeout($.proxy(function () {
+      this._historyService.go(Number(this._step)*-1);
+    },this));
   },
   /**
    * @function

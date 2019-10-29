@@ -9613,3 +9613,37 @@ button:focus span {
 .paymentcharge-box .money {font-size: 1.56rem; word-break: break-all; line-height: 1.75rem;text-decoration: underline;}
 .paymentcharge-box .s_money {font-size: 0.88rem; word-break: break-all; line-height: 1.75rem;text-decoration: underline;}
 .paymentcharge-box .fb{font-size: 1.56rem;}
+
+/* 191001 [OP002-4009] 전체메뉴_통합검색 UI개선 */
+.sch-form.tod-sch-form{background:-webkit-linear-gradient(left, #f7645c 0%,#f65b7e 100%); background: linear-gradient(to right, #f7645c 0%,#f65b7e 100%); padding:12px 12px 12px 48px}
+.sch-form.tod-sch-form input[type='search']{display:block; width:100%; height:2.63rem; padding:2px 46px 0 10px; background:#fff; border:none; border-radius:0.25rem; font-size:0.94rem; color:#000; font-weight:300}
+.sch-form.tod-sch-form .inputbox .input .cancel{right:40px}
+.sch-form.tod-sch-form .icon-gnb-search{left:auto; right:12px}
+.sch-form.tod-sch-form .close-area{width:48px; right:auto; left:0; background:url('/img/common/search-arr-white.png') no-repeat 50% 50%; background-size:11px 20px}
+.tod-rec-search-box{padding:16px 0}
+.tod-rec-search-box .rec-search{overflow:hidden; display:flex; width:100%; flex-wrap:nowrap}
+.tod-rec-search-box .rec-search .rec-item{width:75px; height:20px; box-sizing:border-box; border:1px solid #f76151; border-radius:16px; text-align:center; font-size:11px; color:#f76151; line-height:20px; flex-shrink:0;}
+.tod-rec-search-box .rec-search .rec-word{width:-webkit-calc(100% - 75px); width:calc(100% - 75px); height:20px; line-height:20px; white-space:nowrap; font-size:16px; text-overflow:ellipsis; overflow:hidden; padding-left:8px; box-sizing:border-box}
+.tod-search-tit{font-size:16px; color:#000; font-weight:500 }
+.tod-search-tit.slide-tit{padding:20px 16px 0;}
+.tod-search-task-box{overflow:hidden; width:100%; margin-top:15px }
+.tod-search-task-box .search-task-list{overflow:hidden; margin:-8px -8px 0 0}
+.tod-search-task-box .search-task-list .item{float:left; margin:8px 8px 0 0}
+.tod-search-task-box .search-task-list .item button{display:inline-block; padding:10px 13px 9px; color:#000; font-size:13px; border:1px solid #e6e7e8; border-radius:36px; line-height:1; background:#fff; white-space:nowrap; }
+.tod-search-task-box .search-task-list .item.strong button{background:#f76151; border-color:#f76151; color:#fff}
+.tod-popularword-wrap{overflow:hidden; margin-top:10px; height:auto}
+.tod-popularword-wrap .popularsearchword-list .category-type .number{width:30px; text-align:center; color:#666}
+.tod-popularword-wrap .popularsearchword-list .category-type .text{width:calc(100% - 30px); padding-left:8px}
+.tod-popularword-wrap .popularsearchword-list .category-type{height:41px}
+.tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(-n+3) .category-type{border-bottom:none}
+.tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(-n+3) .category-type .number{background:none; color:#f76252; font-weight:700; padding-top:0; height:auto}
+.tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(-n+3) .category-type .text{font-weight:normal; font-size:16px}
+.tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(n+6):nth-child(-n+10) {display:none}
+.tod-popularword-wrap.show .popularsearchword-list.linklist-type li:nth-child(n+6):nth-child(-n+10) {display:block}
+.btn-more button .tod-pop-btn{display:inline-block}
+.btn-more button .tod-pop-btn:after{content:''; display:inline-block; width:12px; height:7px; background:url('/img/common/btn-arr.png') no-repeat left top; background-size:100% 100%; vertical-align:top; margin:5px 0 0 8px}
+.btn-more button .tod-pop-btn.hide{display:none}
+.btn-more button .tod-pop-btn.fold:after{-webkit-transform:rotate(180deg); transform:rotate(180deg);}
+.tod-search-bann-wrap{overflow:hidden}
+.tod-search-bann-wrap .tod-search-bann-box.section-swiper-box .slider-box .slick-dots{top:-20px}
+.tod-search-bann-wrap .tod-search-bann-box.section-swiper-box.tod-bann-auto .slider-box .tod-bann-btn{top:-23px}

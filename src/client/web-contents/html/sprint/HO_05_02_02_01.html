@@ -44,16 +44,20 @@
     <!--// #skip_navigation -->
 
     <div class="searchbox-header">
-        <div class="sch-form">
-            <span class="inputbox">
-                <span class="input">
-                    <input type="text" placeholder="" title="검색어 입력" value="변경 후 개통법">
-                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+        <!-- 191001 [OP002-4009] 수정01 -->
+        <div class="sch-form tod-sch-form">
+            <!-- <form action="#" role="search"> -->
+                <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+                <span class="inputbox">
+                    <span class="input">
+                        <input type="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="">
+                        <button class="cancel" style="display:none"><span class="blind">삭제</span></button>
+                    </span>
                 </span>
-            </span>
-            <button class="icon-gnb-search"><span class="blind">검색</span></button>
-            <div class="searchbox-close"><button class="close-area">취소</button></div>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            <!-- </form> -->
         </div>
+        <!-- //191001 [OP002-4009] 수정01 -->
     </div>
     
     <div class="search-content">
@@ -84,45 +88,47 @@
         </div>
 
         <hr class="cont-sp type1" aria-hidden="true"/>
-
-        <div class="cont-box nogaps-hoz">
+        <!-- 191001 [OP002-4009] 수정02 -->
+        <div class="cont-box nogaps-btm">
             <div class="rec-list">
-                <h3 class="searchlist-title">인기 검색어</h3>
-                <ul class="popularsearchword-list linklist-type">
-                    <li>
-                        <a href="" class="category-type">
-                            <strong class="number">1</strong>
-                            <span class="text">번호 변경ㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅁㅁㄴㅇㅁㄴ</span>
-                        </a>
-                    </li>
-                    <li>
-                        <button class="category-type">
-                            <strong class="number">2</strong>
-                            <span class="text">선택약정 할인</span>
-                        </button>
-                    </li>
-                    <li>
-                        <a href="" class="category-type">
-                            <strong class="number">3</strong>
-                            <span class="text">카라이프</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="category-type">
-                            <strong class="number">4</strong>
-                            <span class="text">친구찾기</span>
-                        </a>
-                    </li>
-                    <li>
-                        <button class="category-type">
-                            <strong class="number">5</strong>
-                            <span class="text">컬러링</span>
-                        </button>
-                    </li>
-                </ul>
+                <p class="tod-search-tit">인기 검색어</p>
+                <div class="tod-popularword-wrap">
+                    <ul class="popularsearchword-list linklist-type tod-popularsearchword-list">
+                        <li>
+                            <a href="#" class="category-type">
+                                <strong class="number">1</strong>
+                                <span class="text">번호 변경ㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅁㅁㄴㅇㅁㄴ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-type">
+                                <strong class="number">2</strong>
+                                <span class="text">선택약정 할인</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-type">
+                                <strong class="number">3</strong>
+                                <span class="text">카라이프</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-type">
+                                <strong class="number">4</strong>
+                                <span class="text">친구찾기</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="category-type">
+                                <strong class="number">5</strong>
+                                <span class="text">컬러링</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-
+        <!-- //191001 [OP002-4009] 수정02 -->
     </div>
 
 </body>

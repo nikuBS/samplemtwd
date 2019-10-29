@@ -44,16 +44,20 @@
     <!--// #skip_navigation -->
 
     <div class="searchbox-header">
-        <div class="sch-form">
-            <span class="inputbox">
-                <span class="input">
-                    <input type="text" placeholder="T world 2019-옥의 티를 찾아라!" title="검색" value="">
-                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+        <!-- 191001 [OP002-4009] 수정01 -->
+        <div class="sch-form tod-sch-form">
+            <!-- <form action="#" role="search"> -->
+                <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+                <span class="inputbox">
+                    <span class="input">
+                        <input type="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="">
+                        <button class="cancel" style="display:none"><span class="blind">삭제</span></button>
+                    </span>
                 </span>
-            </span>
-            <button class="icon-gnb-search"><span class="blind">검색</span></button>
-            <div class="searchbox-close"><button class="close-area">취소</button></div>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            <!-- </form> -->
         </div>
+        <!-- //191001 [OP002-4009] 수정01 -->
     </div>
 
     <div class="searchbox-layer02 searchbox-lock">
