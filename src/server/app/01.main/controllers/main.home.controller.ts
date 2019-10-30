@@ -449,7 +449,7 @@ class MainHome extends TwViewController {
    * @return {object}
    */
   private parseUsageData(usageData: any, svcInfo: any): any {
-    const etcKinds = ['voice', 'sms'];
+    const etcKinds = ['voice', 'sms', 'spclData'];
     const result = {
       data: { isShow: false },
       voice: { isShow: false },
@@ -529,9 +529,13 @@ class MainHome extends TwViewController {
       data.myTotal = 0;
       data.myRemained = 0;
       list.map((target) => {
-        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 ) {
+        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 || target.unit !== UNIT_E.FEE) {
           data.myTotal += +target.total;
           data.myRemained += +target.remained;
+        }
+
+        if ( target.unit === UNIT_E.FEE) {
+          data.isShow = false;
         }
       });
 
