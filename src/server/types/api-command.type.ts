@@ -913,7 +913,7 @@ export const API_CMD = {
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0179: {
-    path: '/core-product/v1/mobiles/additions-sets/tHigh5-sets',
+    path: '/core-product/v1/mobiles/additions-sets/:args0/tHigh5-sets',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0180: {

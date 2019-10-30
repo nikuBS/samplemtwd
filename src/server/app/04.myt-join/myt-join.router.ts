@@ -3,6 +3,7 @@ import MyTJoinSubmainController from './myt-join.submain.controller';
 import MyTJoinMyplan from './controllers/myplan/myt-join.myplan.controller';
 import MyTJoinMyPlanAdd from './controllers/myplanadd/myt-join.myplanadd.controller';
 import MyTJoinMyPlanAddTHigh5 from './controllers/myplanadd/myt-join.myplanadd.thigh5.controller';
+import MyTJoinMyPlanAddKdbTHigh5 from './controllers/myplanadd/myt-join.myplanadd.kdb-thigh5.controller';
 import MyTJoinMyPlanCombine from './controllers/myplancombine/myt-join.myplancombine.controller';
 import MyTJoinMyplanAlarm from './controllers/myplan/myt-join.myplan.alarm.controller';
 import MyTJoinMyplanAlarmterminate from './controllers/myplan/myt-join.myplan.alarmterminate.controller';
@@ -83,6 +84,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/phone/extalarm/complete', controller: MyTJoinPhoneNumChgAlarmExt });
     this.controllers.push({ url: '/additions', controller: MyTJoinMyPlanAdd });
     this.controllers.push({ url: '/addition/thigh5', controller: MyTJoinMyPlanAddTHigh5 });
+    this.controllers.push({ url: '/addition/kdb-thigh5', controller: MyTJoinMyPlanAddKdbTHigh5 });
     this.controllers.push({ url: '/combinations/share', controller: MyTJoinMyPlanCombineShare });
     this.controllers.push({ url: '/combinations(/:combination)?', controller: MyTJoinMyPlanCombine });
     this.controllers.push({ url: '/submain/wire/numchange', controller: MyTJoinWireNumChange });
