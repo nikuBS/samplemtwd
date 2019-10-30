@@ -91,7 +91,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
         this._gubun = 'Done';
         this._requestCnt++; // 최초 호출 이후 gubun과 requestCnt 변경
 
-        setTimeout($.proxy(this.getRemainLimit, this), 1000); // 1초 후 재호출
+        this.getRemainLimit(); // 다시 호출
       } else {
         if (res.result.gubun === 'Done') {
           Tw.CommonHelper.endLoading(this.$className);
@@ -286,7 +286,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
         new Tw.MyTFareBillPrepayMainSKpay({
           $element: this.$container,
           callbackSKpay: $.proxy(this._goSKpay, this),
-          callbackPrepay: $.proxy(this._goPrepayCallback, this)
+          callbackCard: $.proxy(this._goCard, this)
         }).openPaymentOption(e);
       } else {
         this._goAppInfo(e); // 웹일 경우 앱 설치 유도 페이지로 이동
@@ -298,14 +298,11 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
     /**
    * @function
-   * @desc 실시간 계좌이체, 체크/신용카드 결제
+   * @desc 체크/신용카드 결제
    * @param $layer
    */
-  _goPrepayCallback: function (prepayType) {
-    var url = '/myt-fare/bill/'+ this.$title;
-    // prepayType=account (실시간 계좌이체), 그외 : 체크/신용카드 결제
-    url += prepayType === 'account' ? '/prepay-account' : '/prepay';
-    this._historyService.goLoad(url);
+  _goCard: function ($layer) {
+    this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/prepay');
   },
 /**
    * @function

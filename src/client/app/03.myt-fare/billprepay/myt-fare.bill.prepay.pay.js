@@ -302,11 +302,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
       cardExpyyVal: $.trim(this.$cardY.val())+ $.trim(this.$cardM.val()),
       instMm: this.$cardTypeSelector.attr('id').toString(),
       cardPwdVal: $.trim(this.$cardPw.val().toString()),
-      isAutoCardInfo: this._recvAutoCardNumber === this.$cardNumber.val() ? 'Y':'N', // [OP002-1754]2019-07-02 추가
-      settlWayCd: '02', // 실시간계좌이체, 체크/신용카드 결제 구분코드 (체크/신용카드 : 02, 실시간계좌이체 : 41)
-      bankAutoYn: '', // 자동납부 계좌 유무
-      bankCode: '', // 은행코드
-      bankAccn: '' // 은행계좌번호
+      isAutoCardInfo: this._recvAutoCardNumber === this.$cardNumber.val() ? 'Y':'N' // [OP002-1754]2019-07-02 추가
     };
     return reqData;
   },
