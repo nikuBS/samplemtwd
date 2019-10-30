@@ -529,7 +529,7 @@ class MainHome extends TwViewController {
       data.myTotal = 0;
       data.myRemained = 0;
       list.map((target) => {
-        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 || target.unit !== UNIT_E.FEE) {
+        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 && target.unit !== UNIT_E.FEE) {
           data.myTotal += +target.total;
           data.myRemained += +target.remained;
         }
