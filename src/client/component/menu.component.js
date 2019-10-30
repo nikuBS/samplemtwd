@@ -869,6 +869,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     }
 
     var ret = '';
+    var isFee = false;
 
     var dataRemained = _.reduce(info.gnrlData, function (memo, item) {
       if ( memo < 0 ) { // Unlimit
@@ -881,12 +882,16 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       }
 
       memo += +item.remained;
+
+      if(item.unit === Tw.UNIT_E.FEE) {
+        isFee = true;
+      }
       return memo;
     }, 0);
 
     if ( dataRemained < 0 ) {
       ret = Tw.COMMON_STRING.UNLIMIT;
-    } else {
+    } else if(!isFee) {
       var dataObj = Tw.FormatHelper.convDataFormat(dataRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
       ret = dataObj.data + dataObj.unit;
     }

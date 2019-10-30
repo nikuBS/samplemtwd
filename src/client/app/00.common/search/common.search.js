@@ -869,7 +869,9 @@ Tw.CommonSearch.prototype = {
       var totalRemained = 0;
       for(var idx in gnrlData){
         if(!Tw.FormatHelper.isEmpty(gnrlData[idx].remained)){
-          totalRemained+= parseInt(gnrlData[idx].remained);
+          if(gnrlData[idx].unit !== Tw.UNIT_E.FEE) {
+            totalRemained+= parseInt(gnrlData[idx].remained);
+          }
         }
       }
       usageData.totalRemained = Tw.FormatHelper.convDataFormat(totalRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
