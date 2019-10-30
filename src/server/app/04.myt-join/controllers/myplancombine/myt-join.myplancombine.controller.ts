@@ -60,6 +60,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
 
         res.render('myplancombine/myt-join.myplancombine.combination.html', { svcInfo, pageInfo, combination, pageId, prodId, type: req.query.type });
       });
+
     } else {  // 결합상품 목록 페이지로 랜딩
       this._getCombinations().subscribe(combinations => {
         if (combinations.code) {
@@ -152,26 +153,6 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         item.useYearCnt = getDateByMasking(item.useYearCnt);
       });
 
-      const combinationWirelessMemberList = (resp.result.combinationWirelessMemberList || []).map(member => {
-        addTotalUse(member.useYy, member.useMm);
-
-        return {
-          ...member,
-          auditDtm: member.auditDtm && DateHelper.getShortDate(member.auditDtm),
-          aftBasFeeAmtTx: FormatHelper.addComma(String(member.aftBasFeeAmtTx)),
-          basFeeAmtTx: FormatHelper.addComma(String(member.basFeeAmtTx)),
-          basFeeDcTx: FormatHelper.addComma(String(member.basFeeDcTx)),
-          badge: BADGE[member.relClCd],
-          bIdx: resp.result.combinationWireMemberList.findIndex(wire => {
-            return wire.mblSvcMgmtNum === member.svcMgmtNum;
-          }),
-          svcNum: FormatHelper.conTelFormatWithDash(member.svcNum),
-          asgnNum: FormatHelper.conTelFormatWithDash(member.asgnNum),
-          useYearCnt: getDateByMasking(member.useYearCnt),
-          expDate: getTextDate(member.totMYy, member.totMMm)
-        };
-      });
-
       // 년도(yy), 월(mm) 값이 0이 아닌경우만 노출. 둘다 0 이면 하이픈(-)
       const getTextDate = (yy, mm) => {
         yy = yy ? yy.toString() : '0';
@@ -195,6 +176,26 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         }
         return text.trim();
       };
+
+      const combinationWirelessMemberList = (resp.result.combinationWirelessMemberList || []).map(member => {
+        addTotalUse(member.useYy, member.useMm);
+
+        return {
+          ...member,
+          auditDtm: member.auditDtm && DateHelper.getShortDate(member.auditDtm),
+          aftBasFeeAmtTx: FormatHelper.addComma(String(member.aftBasFeeAmtTx)),
+          basFeeAmtTx: FormatHelper.addComma(String(member.basFeeAmtTx)),
+          basFeeDcTx: FormatHelper.addComma(String(member.basFeeDcTx)),
+          badge: BADGE[member.relClCd],
+          bIdx: resp.result.combinationWireMemberList.findIndex(wire => {
+            return wire.mblSvcMgmtNum === member.svcMgmtNum;
+          }),
+          svcNum: FormatHelper.conTelFormatWithDash(member.svcNum),
+          asgnNum: FormatHelper.conTelFormatWithDash(member.asgnNum),
+          useYearCnt: getDateByMasking(member.useYearCnt),
+          expDate: getTextDate(member.totMYy, member.totMMm)
+        };
+      });
 
       // 가족 합산 총 가입기간 텍스트 변환
       const getTotalUseDate = () => {
