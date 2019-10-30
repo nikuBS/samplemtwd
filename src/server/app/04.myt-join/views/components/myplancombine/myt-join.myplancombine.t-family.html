@@ -24,10 +24,9 @@
             </li>
             <li>
                 <span class="title">가족 합산 총 가입기간
-                    <!--상세정보 는 추후개발-->
-                    <!--<a class="bt-link-tx underline ml4" href="/myt-join/combinations/joinperiod" aria-haspopup="true">상세정보</a>-->
+                    <a class="bt-link-tx underline ml4" href=<%=`/myt-join/combinations/joinperiod?prodId=${prodId}`%> aria-haspopup="true">상세정보</a>
                 </span>
-                <span class="tx-cont"><%= groupInfo.totUseYy %>년</span>
+                <span class="tx-cont"><%= groupInfo.totUseYyText %></span>
             </li>
             <li>
                 <span class="title">결합회선</span>
@@ -94,9 +93,9 @@
                                                 </dd>
                                             </dl>
                                         </li>
-                                        <li><dl><dt>휴대폰 가입기간</dt><dd><%= member.useYySum %>년</dd></dl></li>
-                                        <li><dl><dt>B가입기간</dt><dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].useYySum + '년' : '-' %></dd></dl></li>
-                                        <li><dl><dt>제외기간</dt><dd><%= member.totMYy ? member.totMYy+'년': '-' %></dd></dl></li>
+                                        <li><dl><dt>휴대폰 가입기간</dt><dd><%= member.useYearCnt %></dd></dl></li>
+                                        <li><dl><dt>B가입기간</dt><dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].useYearCnt : '-' %></dd></dl></li>
+                                        <li><dl><dt>제외기간</dt><dd><%= member.expDate %></dd></dl></li>
                                         <li><dl><dt>월정액 할인율</dt><dd><%= member.tcFeeBenf %></dd></dl></li>
                                         <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan?prod_id=<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
                                         <li><dl><dt>할인 전 금액</dt><dd><%= member.basFeeAmtTx %> 원</dd></dl></li>

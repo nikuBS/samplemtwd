@@ -214,7 +214,11 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
    * @param e - 변경 할게요 버튼 클릭 이벤트
    */
   _onChange: function(e) {
-    $('.fe-open_pop').css('display', 'block');
+    this._popupService.closeAll();
+
+    if (this._confirmCallback) {
+      this._confirmCallback();
+    }
   },
 
   /**
@@ -230,23 +234,11 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
 
   /**
    * @function
-   * @desc 추가 방어 팝업 확인 버튼 선택 시
-   * @param e - 추가 방어 팝업 확인 버튼 클릭 이벤트
+   * @desc 5GX 요금제 추가 방어 팝업 확인 버튼 선택 시
+   * @param e - 5GX 요금제 추가 방어 팝업 확인 버튼 클릭 이벤트
    */
   _onChangeProd: function(e) {
-    var isCustom = $(e.currentTarget).data('is_custom');
-
-    // 기타 이유 서버에 전송!
-    if (isCustom === 'Y') {
-      // BE API 요청
-      // this._apiService.request(Tw.API_CMD.BFF_10_0000, {});
-    }
-
-    this._popupService.closeAll();
-
-    if (this._confirmCallback) {
-      this._confirmCallback();
-    }
+    $('.fe-open_pop').css('display', 'block');
   },
 
   /**
