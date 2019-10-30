@@ -512,7 +512,7 @@ class MytDataSubmainController extends TwViewController {
         }
       }
     } else if ( data5gx.isBoostPark ) { // 양정규 : 장소권 인경우
-      data._5gxTicket = true;
+      data._5gxTicket.timeTicket = false;
     }
     // if ( gnrlData.length > 0 ) {
     gnrlData.forEach(item => {
@@ -652,11 +652,12 @@ class MytDataSubmainController extends TwViewController {
         // [OP002-3871] 5GX 항목은 별도 항목으로 추출
         // 음성 통환.영상 통화로 수신됨
         // [OP002-4419] 디지털(집) 전화 회선으로 화면진입시 502 오류 수정
-        const voice = resp.result.voice || [];
-        const data5gx = voice.reduce((acc, item, index) => {
+        // [OP002-4862] 5G 시간권 공제항목 이 기존 voice -> spclData 로 변경
+        const spclData = resp.result.spclData || [];
+        const data5gx = spclData.reduce((acc, item, index) => {
           if ( PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1 ) {
             acc.push(item);
-            voice.splice(index, 1);
+            spclData.splice(index, 1);
           }
           return acc;
         }, []);
@@ -674,16 +675,13 @@ class MytDataSubmainController extends TwViewController {
           resp.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
         } else {
           // 양정규 : 장소권 여부 추가
-          const spclData = resp.result.spclData || [];
-          let isBoostPark = false;
+          // [OP002-4862] 5G 시간권 공제항목 이 기존 voice -> spclData 로 변경
+          resp.result._5gxData = {
+            isBoostPark: false
+          };
           spclData.forEach((item) => {
             if ( PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > 2 ) {
-              isBoostPark = true;
-            }
-          });
-          resp.result = Object.assign(resp.result, {
-            _5gxData: {
-              isBoostPark: isBoostPark
+              resp.result._5gxData.isBoostPark = true;
             }
           });
         }

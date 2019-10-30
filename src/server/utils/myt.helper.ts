@@ -63,7 +63,15 @@ class MyTHelper {
     // 범용 데이터 공제항목
     // [OP002-4864] 정액 요금제 '원' 단위 위젯 미표기
     // 특정 요금(팅PLUS14/19/24/29) etc로 넘어오는 부분이 gnrlData 바뀌어 넘어오게 되어 예외처리 추가
-    const gnrlData = usageData.gnrlData ? usageData.gnrlData.filter(item => item.unit !== UNIT_E.FEE) : [];
+    const etcGnrlData: any = usageData.etc || [];
+    const gnrlData = usageData.gnrlData ? usageData.gnrlData.filter(item => {
+      if ( item.unit === UNIT_E.FEE ) {
+        etcGnrlData.push(item);
+      } else {
+        return item;
+      }
+    }) : [];
+    usageData.etc = etcGnrlData;
     // [OP002-3871] 개산식을 단순화하고, 반복회수를 가능한 줄임
     /*
     let totalRemainUnLimited = false;
