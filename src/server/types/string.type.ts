@@ -1438,3 +1438,7 @@ export const ROAMING_PRODUCT_CUSTOMIZE_DATA = {
 export const NODE_ERROR_MSG = {
   '1006': '잘못된 접근 경로 입니다.'
 };
+
+export const MYT_JOIN_MYPLANCOMBINE = {
+  DATE_FORMAT : '{0}년 {1}개월'
+};
