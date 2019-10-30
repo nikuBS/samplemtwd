@@ -67,7 +67,7 @@ Tw.MyTFareBillPrepayAccount.prototype = {
     this.$container.on('change', '.fe-account-info > li', $.proxy(this._onChangeOption, this)); // 자동납부 정보와 수동입력 중 선택
     this.$container.on('change', '.fe-account-info', $.proxy(this._checkIsAbled, this)); // 하단버튼 활성화 체크
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this)); // 은행선택
-    this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this)); // x버튼 클릭
+    this.$container.on('click', '.fe-close-pop', $.proxy(this._onClose, this)); // x버튼 클릭
     this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500)); // 납부확인
   },
 
@@ -295,10 +295,17 @@ Tw.MyTFareBillPrepayAccount.prototype = {
   _makeRequestData: function () {
     var data = this._getData();
     return {
-      bankAutoYn : this._bankAutoYn, // 자동납부 계좌 유무
       tmthChrgPsblAmt: this.$maxAmount.attr('id'), // 선결제 가능금액
-      requestSum: $.trim(this.$prepayAmount.val().toString()),  // 선결제 금액
       checkAuto: 'N', // 자동납정보 이용여부
+      requestSum: $.trim(this.$prepayAmount.val().toString()),  // 선결제 금액
+      cardNumVal: '', // 카드번cardNumVal
+      cardCorp: '', // 카드사 코드
+      cardNm: '', // 카드사명
+      cardExpyyVal: '', // 카드 유효년월
+      instMm: '', // 납부형태(카드 할부개월수)
+      cardPwdVal: '', // 비밀번호
+      isAutoCardInfo: '',
+      bankAutoYn : this._bankAutoYn, // 자동납부 계좌 유무
       settlWayCd: '41', // 실시간계좌이체, 체크/신용카드 결제 구분코드 (체크/신용카드 : 02, 실시간계좌이체 : 41)
       bankCode: data.bankCd, // 은행코드
       bankAccn: data.accountNum // 은행계좌번호
