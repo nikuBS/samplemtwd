@@ -10,6 +10,7 @@ import 'rxjs/add/observable/of';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {MYT_JOIN_MYPLANCOMBINE, MYT_JOIN_WIRE_SET_PAUSE, MYT_STRING_KOR_TERM} from '../../../../types/string.type';
+import StringHelper from '../../../../utils/string.helper';
 
 /**
  * @class
@@ -95,8 +96,8 @@ export default class MyTJoinMyPlanCombineJoinPeriod extends TwViewController {
         addTotalUse(item.useYy, item.useMm);
         if (isWire) {
           item.svcType = svcType;
-          item.svcNum = svcType === 'T' ? item.svcNum : '-'; // B상품인 경우 하이픈(-)처리
         }
+        item.svcNum = svcType === 'T' ? StringHelper.phoneStringToDash(item.svcNum) : '-'; // B상품인 경우 하이픈(-)처리
         item.totalJoinDate = getTextDate(item.uyy, item.umm);       // 총 가입기간
         item.totalExpDate = getTextDate(item.totMYy, item.totMMm);  // 총 제외기간
         item.totalUseDate = getTextDate(item.useYy, item.useMm);    // 적용 가입기간
