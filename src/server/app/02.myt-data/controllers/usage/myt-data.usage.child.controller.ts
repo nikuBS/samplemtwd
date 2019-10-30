@@ -8,11 +8,12 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTHelper from '../../../../utils/myt.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import {  MYT_DATA_CHILD_USAGE } from '../../../../types/string.type';
+import { MYT_DATA_CHILD_USAGE } from '../../../../types/string.type';
+import { PRODUCT_5GX_TICKET_SKIP_ID, PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID } from '../../../../types/bff.type';
 import StringHelper from '../../../../utils/string.helper';
 
 const VIEW = {
@@ -30,7 +31,7 @@ class MyTDataUsageChild extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, children: any, pageInfo: any) {
     const self = this;
     this.childSvcMgmtNum = req.query.childSvcMgmtNum;
-    if (FormatHelper.isEmpty(this.childSvcMgmtNum)) {
+    if ( FormatHelper.isEmpty(this.childSvcMgmtNum) ) {
       return this.renderErr(res, svcInfo, pageInfo, {});
     }
     Observable.combineLatest(
@@ -48,8 +49,33 @@ class MyTDataUsageChild extends TwViewController {
 
       const usageDataResult = usageDataResp.result;
       const childInfo = this.getChildInfo(children);
-      if (FormatHelper.isEmpty(childInfo)) {
+      if ( FormatHelper.isEmpty(childInfo) ) {
         return this.renderErr(res, svcInfo, pageInfo, {});
+      }
+      // [OP002-3871] 5GX 항목은 범융 별도 항목으로 추출
+      // 음성 통환.영상 통화로 수신됨
+      // [OP002-4419] 디지털(집) 전화 회선으로 화면진입시 502 오류 수정
+      // [OP002-4862] 5G 시간권 공제항목 이 기존 voice -> spclData 로 변경
+      const spclData = usageDataResult.spclData || [];
+      const data5gx = spclData.reduce((acc, item, index) => {
+        if ( PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1 ) {
+          acc.push(item);
+          spclData.splice(index, 1);
+        }
+        return acc;
+      }, []);
+      if ( data5gx.length > 0 ) {
+        // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
+        const gnrlData = usageDataResult.result.gnrlData;
+        const _5gxTimeTicketData = gnrlData.reduce((acc, item, index) => {
+          if ( PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1 ) {
+            acc.push(item);
+            gnrlData.splice(index, 1);
+          }
+          return acc;
+        }, []);
+        // 자료 정리 순서: 0. "시간권 데이터(무제한)", 1. "Data 시간권..."
+        usageDataResult.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
       }
       const usageData = MyTHelper.parseChildCellPhoneUsageData(usageDataResult);
       const tingSubscription = tingSubscriptionsResp.code === API_CODE.CODE_00;
@@ -83,7 +109,7 @@ class MyTDataUsageChild extends TwViewController {
       pageInfo: pageInfo,
       svcInfo
     };
-    if (err) {
+    if ( err ) {
       Object.assign(option, err);
     }
     return this.error.render(res, option);
