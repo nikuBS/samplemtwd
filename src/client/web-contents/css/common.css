@@ -9666,3 +9666,12 @@ button:focus span {
 .section-swiper-box .slider-box .slick-dots li span, .section-swiper-box .slider-box .slick-dots li button {display: block; width: 0.44rem; height: 0.44rem; margin: 0;border-radius: 100%;overflow: hidden;color: transparent;  border: 1px solid #000000;  background: #fff;  -webkit-box-sizing: border-box; box-sizing: border-box;  opacity: 1; }
 .section-swiper-box .slider-box .slick-dots li.slick-active {width: 0.5rem;height: 0.5rem; }
 .section-swiper-box .slider-box .slick-dots li.slick-active span, .section-swiper-box .slider-box .slick-dots li.slick-active button {width: 0.44rem;height: 0.44rem;background: #000000; }
+
+/* 191025 [OP002-4668] 5G D/G 방어 추가 */
+.popup .popup-info.tod-dwg-full{background: transparent; width: calc(100% - 6rem); max-width: 18.75rem;}
+.popup .popup-info .tod-bt-group{margin-top: 0; background-color:#fff;}
+.popup .popup-info .tod-btns{overflow: hidden; height: 3.125rem;}
+.popup .popup-info .tod-btns > li{float:left; width: 50%;}
+.popup .popup-info .tod-btns .btn{width:100%; line-height: 3.125rem; font-size: 0.938rem; font-weight: #700;} 
+.popup .popup-info .tod-btns > li:first-child .btn{text-align: left; padding-left: 1.5rem;}
+.popup .popup-info .tod-btns > li:last-child .btn{text-align: right; padding-right: 1.5rem;}
