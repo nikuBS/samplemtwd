@@ -65,7 +65,7 @@ class MyTHelper {
     // 특정 요금(팅PLUS14/19/24/29) etc로 넘어오는 부분이 gnrlData 바뀌어 넘어오게 되어 예외처리 추가
     const etcGnrlData: any = usageData.etc || [];
     const gnrlData = usageData.gnrlData ? usageData.gnrlData.filter(item => {
-      if (item.unit === UNIT_E.FEE) {
+      if ( item.unit === UNIT_E.FEE ) {
         etcGnrlData.push(item);
       } else {
         return item;
@@ -187,7 +187,7 @@ class MyTHelper {
     usageData.data = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || (UNLIMIT_CODE.indexOf(item.unlimit) > -1)));
 
     // [OP002-3871] 5GX 시간권/장소권 정보 표시
-    if ( !data5gx.isBoostPark && data5gx.length > 0 ) {
+    if ( data5gx.length > 0 ) {
       // 시간권인 경우, 노출 순서
       // 1. "시간권 데이터(skipId: DSGK1), 무제한(skipNm)"
       // 2. "데이터 시간권 00시간, 00시간 00분 남음 | 00분 사용"
@@ -200,9 +200,6 @@ class MyTHelper {
       }
       // }}
       usageData.data.push(...data5gx);
-    } else if ( data5gx.isBoostPark ) {
-      // 장소권 인 경우
-      usageData.data._5gxTicket = true;
     }
 
     kinds.forEach(kind => {
