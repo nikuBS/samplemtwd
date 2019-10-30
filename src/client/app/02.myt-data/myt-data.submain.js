@@ -270,7 +270,8 @@ Tw.MyTDataSubMain.prototype = {
    * @desc _initOtherLinesInfo() 실행
    */
   _checkScroll: function () {
-    if (/* this.$recentUsage.length > 0 && */ !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage) ) {
+    // 무선 회선인 경우에만 최근 사용량 그래프 노출 [OP002-4379]
+    if ( this.$recentUsage.length > 0 &&  !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage) ) {
       this._requestRecentUsage();
     }
 
@@ -1021,8 +1022,6 @@ Tw.MyTDataSubMain.prototype = {
     if ( gapCnt > this._OTHER_LINE_MAX_COUNT ) {
       gapCnt = this._OTHER_LINE_MAX_COUNT;
       isMore = true;
-    } else {
-      gapCnt = gapCnt;
     }
     var fromCnt = renderedListCnt;
     var endCnt = fromCnt + gapCnt;

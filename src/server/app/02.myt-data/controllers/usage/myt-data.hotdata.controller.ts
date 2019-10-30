@@ -14,11 +14,11 @@ import DateHelper from '../../../../utils/date.helper';
 import MyTHelper from '../../../../utils/myt.helper';
 import { MYT_DATA_USAGE } from '../../../../types/string.type';
 import {
+  PRODUCT_5GX_TICKET_SKIP_ID,
+  PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
   S_FLAT_RATE_PROD_ID,
   SVC_ATTR_E,
-  SVC_CDGROUP,
-  PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
-  PRODUCT_5GX_TICKET_SKIP_ID
+  SVC_CDGROUP
 } from '../../../../types/bff.type';
 
 const TEMPLATE = {
@@ -48,20 +48,20 @@ function _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extr
     isWireLess: false
   };
 
-  switch (svcInfo.svcAttrCd) {
-      // 휴대폰
+  switch ( svcInfo.svcAttrCd ) {
+    // 휴대폰
     case SVC_ATTR_E.MOBILE_PHONE:
       option['usageData'] = MyTHelper.parseCellPhoneUsageData(result, svcInfo);
-      if (extraDataResp && extraDataResp['code'] === API_CODE.CODE_00) {
+      if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
         option['balanceAddOns'] = extraDataResp['result'];
       }
       template = TEMPLATE.CIRCLE;
       break;
-      // 선불카드(폰)
+    // 선불카드(폰)
     case SVC_ATTR_E.PPS:
       option['usageData'] = MyTHelper.parseUsageData(result);
       // PPS 정보
-      if (extraDataResp && extraDataResp['code'] === API_CODE.CODE_00) {
+      if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
         const extraData = extraDataResp['result'];
         extraData.showObEndDt = DateHelper.getShortDate(extraData.obEndDt);
         extraData.showInbEndDt = DateHelper.getShortDate(extraData.inbEndDt);
@@ -70,14 +70,14 @@ function _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extr
       }
       template = TEMPLATE.BAR;
       break;
-      // 유선 집전화
+    // 유선 집전화
     case SVC_ATTR_E.TELEPHONE: {
-      if (result.balance) {
-        if (result.balance[0]) {
+      if ( result.balance ) {
+        if ( result.balance[0] ) {
           result.voice = [];
           result.voice.push(result.balance[0]);
         }
-        if (result.balance[1]) {
+        if ( result.balance[1] ) {
           result.sms = [];
           result.sms.push(result.balance[1]);
         }
@@ -92,7 +92,7 @@ function _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extr
       break;
   }
 
-  if (SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1) {
+  if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
     option['isWireLess'] = true;
   }
 
@@ -117,7 +117,7 @@ function _renderError(res: any, svcInfo: any, pageInfo: any, resp: any) {
     error.title = MYT_DATA_USAGE.ERROR.DEFAULT_TITLE;
   }
   // 유선인 경우
-  if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) !== -1 && (error.code === 'BLN0004' || error.code === 'BLN0007')) {
+  if ( SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) !== -1 && (error.code === 'BLN0004' || error.code === 'BLN0007') ) {
     error.contents = MYT_DATA_USAGE.ERROR['BLN0004_S'].contents;
   }
   res.render(TEMPLATE.ERROR, {
@@ -140,19 +140,20 @@ class MyTDataHotdata extends TwViewController {
         // [OP002-3871] 5GX 항목은 범융 별도 항목으로 추출
         // 음성 통환.영상 통화로 수신됨
         // [OP002-4419] 디지털(집) 전화 회선으로 화면진입시 502 오류 수정
-        const voice = respUsedData.result.voice || [];
-        const data5gx = voice.reduce((acc, item, index) => {
-          if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1) {
+        // [OP002-4862] 5G 시간권 공제항목 이 기존 voice -> spclData 로 변경
+        const spclData = respUsedData.result.spclData || [];
+        const data5gx = spclData.reduce((acc, item, index) => {
+          if ( PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1 ) {
             acc.push(item);
-            voice.splice(index, 1);
+            spclData.splice(index, 1);
           }
           return acc;
         }, []);
-        if (data5gx.length > 0) {
+        if ( data5gx.length > 0 ) {
           // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
           const gnrlData = respUsedData.result.gnrlData;
           const _5gxTimeTicketData = gnrlData.reduce((acc, item, index) => {
-            if (PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1) {
+            if ( PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1 ) {
               acc.push(item);
               gnrlData.splice(index, 1);
             }
@@ -161,7 +162,7 @@ class MyTDataHotdata extends TwViewController {
           // 자료 정리 순서: 0. "시간권 데이터(무제한)", 1. "Data 시간권..."
           respUsedData.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
         }
-        if (SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) > -1) {
+        if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) > -1 ) {
           let reqExtraData;
           switch ( svcInfo.svcAttrCd ) {
             case SVC_ATTR_E.MOBILE_PHONE :
@@ -183,7 +184,7 @@ class MyTDataHotdata extends TwViewController {
           }
         } else {
           // 집전화 정액제 상품을 제외하고 에러처리
-          if (svcInfo.svcAttrCd === 'S3' && S_FLAT_RATE_PROD_ID.indexOf(svcInfo.prodId) > -1) {
+          if ( svcInfo.svcAttrCd === 'S3' && S_FLAT_RATE_PROD_ID.indexOf(svcInfo.prodId) > -1 ) {
             _render(res, svcInfo, pageInfo, respUsedData);
           } else {
             _renderError(res, svcInfo, pageInfo, {
