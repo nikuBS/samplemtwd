@@ -108,7 +108,7 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
-    this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
+    this.$container.on('click','.icon-gnb-search, .fe-search-link',$.proxy(this._doSearch,this));
     this.$container.on('change','.resultsearch-box > .custom-form > input',$.proxy(
       function(e) {this.$container.find('.resultsearch-box > label').toggleClass('on',$(e.currentTarget).prop('checked'));}
     ,this));
@@ -869,7 +869,9 @@ Tw.CommonSearch.prototype = {
       var totalRemained = 0;
       for(var idx in gnrlData){
         if(!Tw.FormatHelper.isEmpty(gnrlData[idx].remained)){
-          totalRemained+= parseInt(gnrlData[idx].remained);
+          if(gnrlData[idx].unit !== Tw.UNIT_E.FEE) {
+            totalRemained+= parseInt(gnrlData[idx].remained);
+          }
         }
       }
       usageData.totalRemained = Tw.FormatHelper.convDataFormat(totalRemained, Tw.UNIT[Tw.UNIT_E.DATA]);

@@ -5430,3 +5430,69 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .tod-app-guide-wrap .app-guide-list .guide-item .inner-guide-list .inner-guide-item .inner-tit{margin-top:1rem; color:#000; font-size:0.9375rem; line-height:1.25rem }
 .tod-app-guide-wrap .app-guide-list .guide-item .inner-guide-list .inner-guide-item .inner-guide-cont{margin-top:0.375rem; font-size:0.8125rem; line-height:1.0625rem; color:#666}
 
+/* 191007 [OP002-4009] 전체메뉴_통합검색 UI개선 */
+#common-menu.tod-common-menu{padding-top:3.4375rem; }
+#common-menu.tod-common-menu .section-userinfo{height:auto; background:-webkit-linear-gradient(left, #f7645c 0%,#f65b7e 100%); background: linear-gradient(to right, #f7645c 0%,#f65b7e 100%); padding:1.125rem 1rem 0 1rem; box-shadow:none;}
+#common-menu.tod-common-menu .section-userinfo .userinfo{display:block; height:auto; overflow:hidden; border-bottom:0.0625rem solid rgba(255,255,255,0.2); padding:0 2.1875rem 0.8125rem 0 }
+#common-menu.tod-common-menu .section-userinfo .userinfo .ti{float:left; margin:0; color:#fff; transition:none; font-size:1.0625rem; font-weight:400; }
+#common-menu.tod-common-menu .section-userinfo .userinfo .tx{float:right; color:#fff; margin-top:0.0625rem; top:0}
+#common-menu.tod-common-menu.user-type.scroll .section-userinfo .userinfo .ti{top:0; color:#fff}
+#common-menu.tod-common-menu.user-type.scroll .section-userinfo .userinfo .tx{-webkit-transform:translateY(0); transform:translateY(0)}
+#common-menu.tod-common-menu .tod-ico-menu-wrap{width:100%; box-sizing:border-box; background:-webkit-linear-gradient(left, #f7645c 0%,#f65b7e 100%); background: linear-gradient(to right, #f7645c 0%,#f65b7e 100%); padding:0.75rem 0;}
+#common-menu.tod-common-menu .section-cont .tod-ico-menu-wrap{padding:0.75rem 1rem;}
+#common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content:space-around}
+#common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list .item{text-align:center;}
+#common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list .item .ico-btn{display:inline-block; color:#fff; font-size:0.8125rem; padding:0 0.9375rem}
+#common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list .item .ico-btn .ico{display:inline-block; width:1.5rem; height:1.5rem; vertical-align:top; position:relative}
+#common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list .item .ico-btn.on .ico:before{content:''; display:inline-block; width:0.3125rem; height:0.3125rem; border-radius:100%; background:#fff; position:absolute; right:0; top:0  }
+#common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list .item .ico-btn .ico img{width:100%; height:100%; vertical-align:top }
+#common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list .item .ico-btn .txt{display:block; text-align:center; line-height:1; margin-top:0.5rem ;  }
+#common-menu.tod-common-menu .section-userinfo .login{color:#fff; background-image:url('/img/common/ico-login-white.png')}
+#common-menu.tod-common-menu .c-close{background-image:url('/img/common/exit-white.png'); top:1rem }
+/* 로그인전 */
+#common-menu.tod-common-menu{padding-top:3.4375rem;}
+#common-menu.tod-common-menu .section-userinfo{height:3.4375rem;}
+#common-menu.tod-common-menu .tod-ico-menu-wrap.after-login{display:none}
+#common-menu.tod-common-menu .tod-ico-menu-wrap.before-login{display:block}
+/* 로그인후 */
+#common-menu.tod-common-menu.user-type{padding-top:7.9375rem;}
+#common-menu.tod-common-menu.user-type .section-userinfo{height:7.9375rem; -webkit-transition:height 0.15s; transition:height 0.15s; will-change:height;}
+#common-menu.tod-common-menu.user-type .tod-ico-menu-wrap.after-login{display:block}
+#common-menu.tod-common-menu.user-type .tod-ico-menu-wrap.before-login{display:none}
+/* 로그인후 스크롤 */
+#common-menu.tod-common-menu.user-type.scroll{padding-top:6.5rem}
+#common-menu.tod-common-menu.user-type.scroll .section-userinfo{height:6.5rem; box-shadow:0 0.0625rem 0.625rem rgba(00,00,00,0.3)}
+#common-menu.tod-common-menu.user-type.scroll .tod-ico-menu-wrap .tod-ico-list .item .ico-btn .txt{display:inline-block; height:1.5rem; line-height:1.5625rem; vertical-align:top; margin:0 0 0 0.4375rem; text-align:left}
+#common-menu.tod-common-menu.user-type.scroll .tod-ico-menu-wrap .tod-ico-list .item .ico-btn{padding:0 0.5rem}
+@media all and (max-width: 320px) {
+  #common-menu.tod-common-menu .tod-ico-menu-wrap .tod-ico-list .item .ico-btn{padding:0 0.5rem}
+  #common-menu.tod-common-menu.user-type.scroll .tod-ico-menu-wrap .tod-ico-list .item .ico-btn{padding:0}
+  #common-menu.tod-common-menu.user-type.scroll .tod-ico-menu-wrap .tod-ico-list .item .ico-btn .txt{margin:0 0 0 0.3125rem}
+}
+#common-menu.tod-common-menu .section-cont .tod-gnb-ctl-wrap{text-align:right; padding:0.5625rem 1.1875rem 0.375rem }
+#common-menu.tod-common-menu .section-cont .tod-gnb-ctl-wrap .btn{font-size:0.875rem; position:relative; padding:0.3125rem 1.25rem 0.3125rem 0.5rem; margin-left:0.5rem } 
+#common-menu.tod-common-menu .section-cont .tod-gnb-ctl-wrap .btn:after{content:''; display:inline-block; width:0.8125rem; height:0.8125rem; position:absolute; right:0; top:0.4375rem; background-position:center; background-size:0.8125rem auto; background-repeat:no-repeat}
+#common-menu.tod-common-menu .section-cont .tod-gnb-ctl-wrap .btn.all-open:after{background-image:url('/img/common/ico-menu-open.png')}
+#common-menu.tod-common-menu .section-cont .tod-gnb-ctl-wrap .btn.all-close:after{background-image:url('/img/common/ico-menu-close.png')}
+#common-menu.tod-common-menu .section-cont .section-gnb{margin-top:0; border-bottom:none; background:none;}
+#common-menu.tod-common-menu .section-cont .section-gnb .gnb-depth1{border-bottom:0.0625rem solid #e5e5e5; margin-bottom:0.5625rem; position:relative; background:#fff}
+#common-menu.tod-common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info{font-weight:normal}
+#common-menu.tod-common-menu .footer{padding-bottom:0}
+#common-menu.tod-common-menu .footer .f-menu li:not(:last-child){padding-right:0.625rem; position:relative}
+#common-menu.tod-common-menu .footer .f-menu li:not(:last-child):before{content:''; display:inline-block; width:0.0625rem; height:0.625rem; background:#c1c1c1; position:absolute; right:0; top:50%; margin-top:-0.3125rem }
+#common-menu.tod-common-menu .footer .f-menu li .bt{color:#666}
+#common-menu.tod-common-menu .footer .f-info{margin-top:1.875rem; color:#666}
+#common-menu.tod-common-menu .footer .f-info dt{font-weight:500; margin-top:0.4375rem}
+#common-menu.tod-common-menu .footer .f-bt{display:table; width:auto; margin:1.875rem -1rem 0 -1rem; background:#fff; border-top:0.0625rem solid #e5e5e5; overflow:hidden; width:calc(100% + 2rem)  }
+#common-menu.tod-common-menu .footer .f-bt .tod-f-bt-wrap{display:table; width:100%; table-layout: fixed;}
+#common-menu.tod-common-menu .footer .f-bt .tod-f-bt-wrap > li{display:table-cell; position:relative}
+#common-menu.tod-common-menu .footer .f-bt .tod-f-bt-wrap > li:not(:first-child):before{content:''; display:inline-block; width:0.0625rem; height:0.75rem; background:#e5e5e5; position:absolute; left:-0.0313rem; top:50%; margin-top:-0.375rem}
+#common-menu.tod-common-menu .footer .f-bt button{width:100%; float:none; height:2.4375rem; text-align:center; background:none; padding:0; color:#000; font-size:0.8125rem; position:relative; margin:0 !important; line-height:2.4375rem; box-sizing:border-box; }
+#common-menu.tod-common-menu .footer .f-bt button:before{content:''; width:1rem; height:1rem; display:inline-block; background-position:left top; background-repeat:no-repeat;  background-size:1rem 1rem; margin:0 0.375rem 0 0; vertical-align:-0.1875rem}
+#common-menu.tod-common-menu .footer .f-bt .f-member:before{background-image:url('/img/svg/icon_32px_member.svg')}
+#common-menu.tod-common-menu .footer .f-bt .f-logout:before{background-image:url('/img/svg/icon_32px_logout.svg')}
+#common-menu.tod-common-menu .footer .f-bt .f-join:before{background-image:url('/img/svg/icon_32px_join.svg')}
+#common-menu.tod-common-menu .footer .f-bt .f-login:before{background-image:url('/img/svg/icon_32px_login.svg')}
+#common-menu.tod-common-menu .footer .f-bt .f-login2:before{background-image:url('/img/svg/icon_32px_easy_login.svg')}
+#common-menu.tod-common-menu .tod-ico-menu-wrap .fake-search{width:100%; height:2.625rem; background:#fff; border-radius:0.3125rem; vertical-align:top; position:relative}
+#common-menu.tod-common-menu .tod-ico-menu-wrap .fake-search:before{content:''; display:inline-block; width:1.5rem; height:1.5rem; background:url('/img/svg/icon_48px_titlebar_search.svg') no-repeat left top; background-size:100% 100% ; position:absolute; right:0.75rem; top:50%; margin-top:-0.75rem }

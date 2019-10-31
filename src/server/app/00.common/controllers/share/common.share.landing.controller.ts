@@ -30,6 +30,7 @@ class CommonShareLanding extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const url = decodeURIComponent(req.query.url);
 
+    // Native 호출 시
     if ( url.indexOf('mtworldapp2://tworld?') !== -1 ) {
       const result = url.split('tworld?')[1];
       let target = '';
@@ -44,13 +45,38 @@ class CommonShareLanding extends TwViewController {
       target = target.indexOf('target=') !== -1 ? target.split('target=')[1] : '/main/home';
       loginType = loginType.indexOf('loginType=') !== -1 ? loginType.split('loginType=')[1] : 'N';
       res.render('share/common.share.landing.html', { target, loginType, svcInfo, pageInfo });
+    // web 호출 시
     } else {
-      this.error.render(res, {
-        code: '',
-        msg: '',
-        pageInfo: pageInfo,
-        svcInfo: svcInfo
-      });
+
+      let target = url || '/main/home';
+      const svcMgmtNum = req.query.svcMgmtNum || '';
+      if ( /urlQuery/.test(target) ) {
+        target = target.replace(/urlQuery/gi, '&');
+      }
+
+      // 특정 회선으로 회선 변경 후 landing 시
+      if (!FormatHelper.isEmpty(svcMgmtNum) && svcMgmtNum !== svcInfo.svcMgmtNum) {
+        this.apiService.requestChangeSession({svcMgmtNum:  svcMgmtNum}).subscribe((resp) => {
+          res.redirect(target);
+        }, (error) => {
+          this.error.render(res, {
+            code: error.code,
+            msg: error.msg,
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
+          });
+        });
+      } else {
+        res.redirect(target);
+        // this.error.render(res, {
+        //   code: '',
+        //   msg: '',
+        //   pageInfo: pageInfo,
+        //   svcInfo: svcInfo
+        // });
+      }
+
+
     }
   }
 }

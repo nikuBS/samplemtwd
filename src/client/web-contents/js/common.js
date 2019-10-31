@@ -1632,6 +1632,17 @@ skt_landing.action = {
                 $(this).parent().parent().toggleClass('open');
             }
         });
+        /* 191010 [OP002-4009][개선][UX/PUB](W-1909-023-01) 전체메뉴 &통합검색 UI개선 START */
+        $('.tod-gnb-ctl-wrap > button.btn').on('click', function (e) {
+            e.preventDefault();
+            var isOpen = $(this).hasClass('all-open');
+            $('.bt-depth1 .more').each(function (idx, ele) {
+            if($(ele).parent().next().is('.depth2')){
+                $(ele).parent().parent().toggleClass('open', isOpen);
+            }
+            });
+        });
+        /* 191010 [OP002-4009][개선][UX/PUB](W-1909-023-01) 전체메뉴 &통합검색 UI개선 END */
     },
     /**
      * @summary - 세로로 올라가는 슬라이드 배너 형태

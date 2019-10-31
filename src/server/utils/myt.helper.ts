@@ -1,12 +1,13 @@
-import { SKIP_NAME, MYT_DATA_USAGE } from '../types/string.type';
+import { MYT_DATA_USAGE, SKIP_NAME } from '../types/string.type';
 import {
+  DAY_BTN_STANDARD_SKIP_ID,
+  INFINITY_DATA_PROD_ID,
+  PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
+  TOTAL_SHARE_DATA_SKIP_ID,
+  TPLAN_SHARE_LIST,
   UNIT,
   UNIT_E,
-  UNLIMIT_CODE,
-  INFINITY_DATA_PROD_ID,
-  DAY_BTN_STANDARD_SKIP_ID,
-  TPLAN_SHARE_LIST,
-  TOTAL_SHARE_DATA_SKIP_ID, PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID
+  UNLIMIT_CODE
 } from '../types/bff.type';
 import FormatHelper from './format.helper';
 import DateHelper from './date.helper';
@@ -42,7 +43,7 @@ function filterBySkipId(target: Array<any>, data: Array<any>): any {
   // TODO: 구문이 find last가 되며, mapping할 필요가 없다.
   // data.map(item => {
   data.forEach(item => {
-    if (target.indexOf(item.skipId) > -1) {
+    if ( target.indexOf(item.skipId) > -1 ) {
       found = item;
     }
   });
@@ -59,7 +60,18 @@ class MyTHelper {
    * @private
    */
   static setTotalRemained(usageData: any) {
-    const gnrlData = usageData.gnrlData || []; // 범용 데이터 공제항목
+    // 범용 데이터 공제항목
+    // [OP002-4864] 정액 요금제 '원' 단위 위젯 미표기
+    // 특정 요금(팅PLUS14/19/24/29) etc로 넘어오는 부분이 gnrlData 바뀌어 넘어오게 되어 예외처리 추가
+    const etcGnrlData: any = usageData.etc || [];
+    const gnrlData = usageData.gnrlData ? usageData.gnrlData.filter(item => {
+      if ( item.unit === UNIT_E.FEE ) {
+        etcGnrlData.push(item);
+      } else {
+        return item;
+      }
+    }) : [];
+    usageData.etc = etcGnrlData;
     // [OP002-3871] 개산식을 단순화하고, 반복회수를 가능한 줄임
     /*
     let totalRemainUnLimited = false;
@@ -109,7 +121,10 @@ class MyTHelper {
    * @public
    */
   static parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
-    const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목 (합산 가능한 공제항목)
+    // 범용 데이터 공제항목 (합산 가능한 공제항목)
+    // [OP002-4864] 정액 요금제 '원' 단위 위젯 미표기
+    // 특정 요금(팅PLUS14/19/24/29) etc로 넘어오는 부분이 gnrlData 바뀌어 넘어오게 되어 예외처리 추가
+    const gnrlData = usageData.gnrlData ? usageData.gnrlData.filter(item => item.unit !== UNIT_E.FEE) : [];
     const data5gx = usageData._5gxData || [];   // 5GX 시간권/장소권 공제항목
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
     let ordered: Array<any> = [];
@@ -117,45 +132,45 @@ class MyTHelper {
     let tOPlanSharedData;                       // 통합공유데이터
 
     // if ( gnrlData ) {
-      // 총데이터 잔여량 표시 데이터 세팅
-      MyTHelper.setTotalRemained(usageData);
+    // 총데이터 잔여량 표시 데이터 세팅
+    MyTHelper.setTotalRemained(usageData);
 
-      // 기본제공데이터
-      defaultData = gnrlData.find((item) => (item.prodId === svcInfo.prodId && FormatHelper.isEmpty(item.rgstDtm))) || {};
+    // 기본제공데이터
+    defaultData = gnrlData.find((item) => (item.prodId === svcInfo.prodId && FormatHelper.isEmpty(item.rgstDtm))) || {};
 
-      // 기본제공데이터를 제외한 데이터 배열 취합
-      ordered = ordered.concat(gnrlData.filter(item => (item.skipId !== defaultData.skipId)));
+    // 기본제공데이터를 제외한 데이터 배열 취합
+    ordered = ordered.concat(gnrlData.filter(item => (item.skipId !== defaultData.skipId)));
 
-      // 기본제공데이터가 있는 경우 최상위 노출
-      if ( !FormatHelper.isEmpty(defaultData.skipId) ) {
-        ordered.unshift(defaultData);
-        usageData.hasDefaultData = true;
-      } else {
-        usageData.hasDefaultData = false;
-      }
+    // 기본제공데이터가 있는 경우 최상위 노출
+    if ( !FormatHelper.isEmpty(defaultData.skipId) ) {
+      ordered.unshift(defaultData);
+      usageData.hasDefaultData = true;
+    } else {
+      usageData.hasDefaultData = false;
+    }
     // }
 
     // if ( spclData ) {
-      // 통합공유데이터
-      tOPlanSharedData = filterBySkipId(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
+    // 통합공유데이터
+    tOPlanSharedData = filterBySkipId(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
 
-      // 통합공유데이터 제외한 데이터 배열 취합
-      ordered = ordered.concat(spclData.filter(item => (item.skipId !== tOPlanSharedData.skipId)));
+    // 통합공유데이터 제외한 데이터 배열 취합
+    ordered = ordered.concat(spclData.filter(item => (item.skipId !== tOPlanSharedData.skipId)));
 
-      // 기본제공 데이터 존재
-      if ( usageData.hasDefaultData ) {
-        // t가족모아 이용중인 경우 기본제공 데이터의 tOPlanSharedData에 할당
-        if ( !FormatHelper.isEmpty(tOPlanSharedData.skipId) ) {
-          defaultData.tOPlanSharedData = tOPlanSharedData;
-        } else {
-          // [DV001-18235] 기본데이터가 무제한으로 무제한 공유 가능으로 표기되면 안되는 항목들 통합공유데이터 표시안함
-          if ( INFINITY_DATA_PROD_ID.indexOf(defaultData.prodId) > -1 ) {
-            defaultData.sharedData = false;
-          } else { // T끼리 데이터 선물 사용량 + 데이터 함께쓰기 사용량 표시를 위한 키값
-            defaultData.sharedData = true;
-          }
+    // 기본제공 데이터 존재
+    if ( usageData.hasDefaultData ) {
+      // t가족모아 이용중인 경우 기본제공 데이터의 tOPlanSharedData에 할당
+      if ( !FormatHelper.isEmpty(tOPlanSharedData.skipId) ) {
+        defaultData.tOPlanSharedData = tOPlanSharedData;
+      } else {
+        // [DV001-18235] 기본데이터가 무제한으로 무제한 공유 가능으로 표기되면 안되는 항목들 통합공유데이터 표시안함
+        if ( INFINITY_DATA_PROD_ID.indexOf(defaultData.prodId) > -1 ) {
+          defaultData.sharedData = false;
+        } else { // T끼리 데이터 선물 사용량 + 데이터 함께쓰기 사용량 표시를 위한 키값
+          defaultData.sharedData = true;
         }
       }
+    }
     // }
 
     // 당일 사용량(PA) DDZ25, DDZ23, DD0PB 에 해당하는 공제항목이 있으면
@@ -163,16 +178,16 @@ class MyTHelper {
     const pas = ordered.filter(item => (DAY_BTN_STANDARD_SKIP_ID.indexOf(item.skipId) > -1));
 
     // if ( pas.length > 0 ) {
-      pas.forEach((pa) => {
-        ordered = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || item.prodId !== pa.prodId));
-      });
+    pas.forEach((pa) => {
+      ordered = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || item.prodId !== pa.prodId));
+    });
     // }
 
     // skipId가 'PA' && 무제한이 아닌 경우 노출 제외
     usageData.data = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || (UNLIMIT_CODE.indexOf(item.unlimit) > -1)));
 
     // [OP002-3871] 5GX 시간권/장소권 정보 표시
-    if (data5gx.length > 0) {
+    if ( data5gx.length > 0 ) {
       // 시간권인 경우, 노출 순서
       // 1. "시간권 데이터(skipId: DSGK1), 무제한(skipNm)"
       // 2. "데이터 시간권 00시간, 00시간 00분 남음 | 00분 사용"
@@ -180,7 +195,7 @@ class MyTHelper {
       // 1. "프라임0 데이터부스트파크권 00GB, 00GB 남음 | 00GB 사용"
       // {{ TODO: 지금은 "시간권 데이터(무제한)" 권의 쿠폰 등록일 표시되는데, 이경우는, 만료 시간(일+시간)의 표시가 필요함
       const item5gx = data5gx.find(item => (PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1));
-      if (item5gx) {
+      if ( item5gx ) {
         item5gx.rgstDtm = '';
       }
       // }}
@@ -203,7 +218,10 @@ class MyTHelper {
    * @public
    */
   static parseChildCellPhoneUsageData(usageData: any): any {
-    const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목
+    // 범용 데이터 공제항목
+    // [OP002-4864] 정액 요금제 '원' 단위 위젯 미표기
+    // 특정 요금(팅PLUS14/19/24/29) etc로 넘어오는 부분이 gnrlData 바뀌어 넘어오게 되어 예외처리 추가
+    const gnrlData = usageData.gnrlData ? usageData.gnrlData.filter(item => item.unit !== UNIT_E.FEE) : [];
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
     let dataArr = gnrlData.concat(spclData);
 

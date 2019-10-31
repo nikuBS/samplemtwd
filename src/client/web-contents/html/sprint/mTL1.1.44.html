@@ -55,7 +55,7 @@
 
         <div class="imagemap">
             <img src="/img/event/img_event_mTL1.1.44_3.png" alt="둘, AR로 즐기는 Cool 파크"><!-- 190802 [OP002-2985] 대체텍스트 수정 -->
-            <div class="evtBtnBox" style="position:absolute; top:17%; left:33.6%; width:32.5%; height:2.3%;"><a href="https://m.sktelecom5gx.com"><span class="blind">쿨파크 자세히보기</span></a></div><!-- 190809 [OP002-3095] 수정_01 : 링크 위치 -->
+            <div class="evtBtnBox" style="position:absolute; top:17%; left:33.6%; width:32.5%; height:2.3%;"><a href="javascript:go_link('https://m.sktelecom5gx.com');"><span class="blind">쿨파크 자세히보기</span></a></div><!-- 191028 [OP002-4705] 수정_01 -->
             <!-- 190802 [OP002-2985] 대체텍스트 수정 -->
             <div class="blind">
                 <p>차원이 다른 AR/VR 서비스,  SKT 5GX Boost Park에서 즐기자!</p>
@@ -163,6 +163,38 @@
         });
     });
 </script> -->
+
+<!-- 191028 [OP002-4705] 추가_01 -->
+<script type="text/javascript">
+    var isAndroid = false;
+    if (window.tworld) {
+        isAndroid = true;
+        nativeService = window.tworld;
+    } else if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.tworld) {
+        nativeService = window.webkit.messageHandlers.tworld;
+    }
+
+    function go_link(outbrowser_url) {
+        if (window.tworld) {
+            param = {
+                command: 'openUrl',
+                params: {
+                    type: 1,
+                    href: outbrowser_url
+                },
+                callback: 'onNewUrlOpenResp'
+            };
+            if (isAndroid) {
+                param = JSON.stringify(param);
+            }
+            // wifi인경우 callbackLinkUrl
+            nativeService.postMessage(param);
+        } else {
+            window.open(outbrowser_url, '_blank');
+        }
+    }
+</script>
+<!-- //191028 [OP002-4705] 추가_01 -->
 </body>
 
 </html>

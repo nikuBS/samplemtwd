@@ -102,7 +102,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
    * @param  {string} type TB결합상품에 대해서 BFF에 개인형/패밀리형 구분이 없어서 FE에서 query param로 받음
    * @private
    */
-  private getCombination = (id, svcInfo, type) => { 
+  private getCombination = (id, svcInfo, type) => {
     return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, [id]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {

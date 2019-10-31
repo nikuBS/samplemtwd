@@ -102,6 +102,8 @@ Tw.LineComponent.prototype = {
       this._lineList = this._parseLineList(resp.result);
       if ( this._index > 1 ) {
         this._openListPopup(this._lineList, $target);
+      } else if ( this._index === 1 ){
+        this._historyService.goLoad('/common/member/line');
       }
     } else {
       Tw.Error(resp.code, resp.msg).pop();

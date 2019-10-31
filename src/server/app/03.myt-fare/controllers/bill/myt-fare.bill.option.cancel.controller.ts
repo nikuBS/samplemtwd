@@ -35,7 +35,9 @@ class MyTFareBillOptionCancel extends TwViewController {
         res.render('bill/myt-fare.bill.option.cancel.html', {
           paymentOption: paymentOption.result,
           svcInfo: svcInfo,
-          pageInfo: pageInfo
+          pageInfo: pageInfo,
+          // 2019-10-18[OP002-4362] : THIGH5상품이면서(checkCardYn = 'Q') & KDB산업은행 계좌로 통신비 자동납부 신청자 인 경우.
+          isTHigh5KDBProd: paymentOption.result.checkCardYn === 'Q' && paymentOption.result.bankCardCoCd === '002'
         });
       } else {
         this.error.render(res, {

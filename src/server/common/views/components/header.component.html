@@ -55,50 +55,128 @@
 </div>
 <!--// #header -->
 <!-- #common-menu -->
-<div id="common-menu" class="user-type" aria-hidden="true">
+<div id="common-menu" class="user-type tod-common-menu" aria-hidden="true">
     <button class="c-close fe-menu-section" id="fe-close"><span class="blind">닫기</span></button>
     <!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
     <div class="section-userinfo fe-menu-section">
         <!-- 로그인 전 -->
-        <button class="login fe-bt-login fe-when-logout none">로그인해주세요</button>
+        <!-- <button class="login fe-bt-login fe-when-logout none">로그인해주세요</button> -->
         <!-- //로그인 전 -->
         <!-- 로그인 후 -->
         <!-- case1 -->
-        <span class="userinfo fe-when-login-type0 none">
+        <!-- <span class="userinfo fe-when-login-type0 none">
             <button class="ti-tx fe-userinfo" data-xt_eid="CMMA_A11_B3-1" data-xt_csid="NO" data-xt_action="BC">
                 <strong class="ti" id="fe-nick-name"></strong>
                 <em class="tx underline" id="fe-svc-number"></em>
-                <!-- <em class="tx underline">010-4034-1396</em> -->
             </button>
             <button class="bt fe-bt-free-sms" data-xt_eid="CMMA_A11_B3-2" data-xt_csid="NO" data-xt_action="BC">무료문자</button>
-        </span>
+        </span> -->
         <!-- //case1 -->
         <!-- case2 -->
-        <span class="userinfo fe-when-login-type2 none">
+        <!-- <span class="userinfo fe-when-login-type2 none">
             <strong class="ti fe-userinfo">반갑습니다</strong>
             <em class="tx fe-userinfo"><span id="fe-user-name"></span> 님</em>
-        </span>
+        </span> -->
         <!-- //case2 -->
         <!-- case3 -->
-        <span class="userinfo fe-when-login-type1 none">
+        <!-- <span class="userinfo fe-when-login-type1 none">
             <strong class="ti">반갑습니다</strong>
             <button class="tx underline fe-bt-regi-svc">회선등록</button>
             <button class="bt fe-bt-free-sms" data-xt_eid="CMMA_A11_B3-2" data-xt_csid="NO" data-xt_action="BC">무료문자</button>
-        </span>
+        </span> -->
         <!-- //case3 -->
         <!-- //로그인 후 -->
-        <button class="c-notify fe-when-app-and-login fe-t-noti none" data-tid="<%= typeof svcInfo === 'undefined' || svcInfo === null ? '' : svcInfo.userId %>"
+
+        <!-- <button class="c-notify fe-when-app-and-login fe-t-noti none" data-tid="<%= typeof svcInfo === 'undefined' || svcInfo === null ? '' : svcInfo.userId %>"
             data-xt_eid="CMMA_A11_B3-3" data-xt_csid="NO" data-xt_action="BC">
             <span class="blind" id="fe-empty-t-noti" aria-hidden="false">알림</span>
             <span class="blind" id="fe-new-t-noti" aria-hidden="true">알림을 확인하세요</span>
-        </button><!-- 새로운 알림 있는경우 on 추가 -->
+        </button>
         <button class="c-option fe-when-app-or-login fe-menu-link none" value="/main/menu/settings" data-xt_eid="CMMA_A11_B3-4"
             data-xt_csid="NO" data-xt_action="BC">
             <span class="blind">설정</span>
-        </button>
+        </button> -->
+
+        <!-- 로그인전 -->
+        <span class="userinfo fe-when-logout none">
+            <button class="login fe-bt-login">로그인해주세요</button>
+        </span>
+        <!-- //로그인전 -->
+        <!--  case2 -->
+        <!-- 준회원 -->
+        <span class="userinfo fe-when-login-type2 none">
+            <strong class="ti">반갑습니다</strong>
+            <em class="tx fe-userinfo"><span id="fe-user-name"></span> 님</em>
+        </span>
+        <!-- // 준회원 -->
+        <!--  //case2 -->
+        <!--  case8 -->
+        <!-- 회선 미등록 회원 -->
+        <span class="userinfo fe-when-login-type1 none">
+            <strong class="ti">반갑습니다</strong>
+            <button class="tx underline fe-bt-regi-svc">회선등록</button>
+        </span>
+        <!-- // 회선 미등록 회원 -->
+        <!--  //case8 -->
+        <!--  case8 -->
+        <span class="userinfo fe-when-login-type0 none">
+            <strong id="fe-nick-name" class="ti"></strong>
+            <button class="tx underline fe-userinfo" id="fe-svc-number" data-xt_eid="CMMA_A11_B3-1" data-xt_csid="NO" data-xt_action="BC"></button>
+        </span>
+        <div class="tod-ico-menu-wrap after-login">
+                <ul class="tod-ico-list">
+                    <li class="item fe-when-app-or-login none">
+                        <button class="ico-btn fe-menu-link" value="/common/search-main" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico01.png" alt=""></i><span class="txt">검색</span>
+                        </button>
+                    </li>
+                    <li class="item fe-when-login fe-bt-free-sms-target none">
+                        <button class="ico-btn fe-bt-free-sms" data-xt_eid="CMMA_A11_B3-2" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico02.png" alt=""></i><span class="txt">무료문자</span>
+                        </button>
+                    </li>
+                    <li class="item fe-when-app-and-login none">
+                        <button class="ico-btn fe-t-noti" data-tid="<%= typeof svcInfo === 'undefined' || svcInfo === null ? '' : svcInfo.userId %>"
+                                data-xt_eid="CMMA_A11_B3-3" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico03.png" alt=""></i>
+                            <span class="txt" id="fe-empty-t-noti" aria-hidden="false">알림</span>
+                            <span class="blind" id="fe-new-t-noti" aria-hidden="true">알림을 확인하세요</span>
+                        </button>
+                    </li>
+                    <li class="item fe-when-app-or-login none">
+                        <button class="ico-btn fe-menu-link" value="/main/menu/settings" data-xt_eid="CMMA_A11_B3-4" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico04.png" alt=""></i><span class="txt">설정</span>
+                        </button>
+                    </li>
+                    </button>
+                </ul>
+            </div>
+        <!--  //case8 -->
+        <!-- //로그인 후 -->
     </div>
     <div class="section-cont fe-menu-section" id="fe-menu-area">
-        <div class="section-search">
+        <div class="tod-ico-menu-wrap before-login">
+            <ul class="tod-ico-list">
+                <li class="item fe-when-app-or-login none">
+                    <button class="ico-btn fe-menu-link" value="/common/search-main" data-xt_eid="CMMA_A11_B3-5" data-xt_csid="NO" data-xt_action="BC">
+                        <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico01.png" alt=""></i><span class="txt">검색</span>
+                    </button>
+                </li>
+                <li class="item fe-when-app-or-login none">
+                    <button class="ico-btn fe-menu-link" value="/main/menu/settings" data-xt_eid="CMMA_A11_B3-4" data-xt_csid="NO" data-xt_action="BC">
+                        <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico04.png" alt=""></i><span class="txt">설정</span>
+                    </button>
+                </li>
+                <button value="/common/search-main" class="fake-search fe-menu-link fe-when-web-and-logout none" data-xt_eid="CMMA_A11_B3-5" data-xt_csid="NO" data-xt_action="BC">
+                    <span class="tod-blind">통합검색으로 이동</span>
+                </button>
+            </ul>
+        </div>
+        <div class="tod-gnb-ctl-wrap">
+            <button class="btn all-open" data-xt_eid="CMMA_A11_B3-96" data-xt_csid="NO" data-xt_action="BC">전체열기</button>
+            <button class="btn all-close" data-xt_eid="CMMA_A11_B3-97" data-xt_csid="NO" data-xt_action="BC">전체닫기</button>
+        </div>
+        <!-- <div class="section-search">
             <span class="inputbox">
                 <span class="input">
                     <input id="fe-search-input" type="text" placeholder="업무 검색 (예: 리필쿠폰)" title="업무 검색 페이지로 이동" value=""
@@ -106,7 +184,7 @@
                     <button class="cancel"><span class="blind">삭제</span></button>
                 </span>
             </span>
-        </div>
+        </div> -->
 
         <!-- footer -->
         <div class="footer">
@@ -132,59 +210,72 @@
                 <li>
                     <button class="bt fe-menu-link" value="/customer/damage-info">이용자 피해예방센터</button>
                 </li>
+                <li>
+                    <button class="bt fe-menu-link" value="/main/menu/settings/business-info" data-xt_eid="CMMA_A11_B3-79" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="M000119" data-tracker_tw_menu_nm="사업자 정보">사업자 정보</button>
+                </li>
+                <li>
+                    <button class="bt fe-menu-link" value="/main/menu/settings/family-sites" data-xt_eid="CMMA_A11_B3-78" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="M000118" data-tracker_tw_menu_nm="패밀리 사이트">패밀리 사이트</button>
+                </li>
             </ul>
-            <p class="f-info">
+            <dl class="f-info">
+                <dt>휴대폰 고객센터</dt>
+                <dd>국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료) 국번없이 <a href="tel:1599-0011">1599-0011</a>(유료)</dd>
+                <dt>인터넷·집전화 고객센터</dt>
+                <dd><a href="tel:080-816-2000">080-816-2000</a>(무료) 또는 <a href="tel:1600-2000">1600-2000</a>(유료)</dd>
+                <dt>초콜릿 고객센터</dt>
+                <dd><a href="tel:1599-3377">1599-3377</a>(유료)</dd>
+            </dl>
+            <!-- <p class="f-info">
                 휴대폰 고객센터 : 국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료)<br>
                 국번없이 <a href="tel:1599-0011">1599-0011</a>(유료)<br>
                 인터넷 · 집전화 고객센터 : <a href="tel:080-816-2000">080-816-2000</a>(무료) 또는 <a href="tel:1600-2000">1600-2000</a>(유료)<br>
                 초콜릿 고객센터 : <a href="tel:1599-3377">1599-3377</a>(유료)<br>
-            </p>
+            </p> -->
             <strong class="f-ltd">SK telecom., LTD</strong>
             <div class="f-bt">
+                <ul class="tod-f-bt-wrap">
                 <!-- 로그인 전 -->
-                <button class="f-member fe-when-logout none" id="fe-signup" value="/common/member/signup-guide">회원가입</button>
-                <button class="f-login fe-bt-login fe-when-logout none">로그인</button>
-                <button class="f-login2 fe-when-logout-and-app none" id="fe-btn-simple-login">간편 로그인</button>
+                <li class="fe-when-logout none"><button class="f-join" id="fe-signup" value="/common/member/signup-guide">회원가입</button></li>
+                <li class="fe-when-logout-and-app none"><button class="f-login2" id="fe-btn-simple-login">간편 로그인</button></li>
+                <li class="fe-when-logout none"><button class="f-login fe-bt-login">로그인</button></li>
                 <!-- //로그인 전 -->
                 <!-- 로그인 후 -->
-                <button class="f-member fe-when-login fe-menu-link none" value="/common/member/manage" data-xt_eid="CMMA_A11_B3-6"
+                <li class="fe-when-login none">
+                    <button class="f-member fe-menu-link" value="/common/member/manage" data-xt_eid="CMMA_A11_B3-6"
                     data-xt_csid="NO" data-xt_action="BC">회원정보</button>
-                <button class="f-logout fe-when-login none fe-bt-logout" data-xt_eid="CMMA_A11_B3-7" data-xt_csid="NO"
+                </li>
+                <li class="fe-when-login none">
+                    <button class="f-logout fe-bt-logout" data-xt_eid="CMMA_A11_B3-7" data-xt_csid="NO"
                     data-xt_action="BC">로그아웃</button>
+                </li>
                 <!-- //로그인 후 -->
+                </ul>
             </div>
         </div>
         <!-- //footer -->
     </div>
 
-    <div class="searchbox-header fe-search-section none">
+    <!-- <div class="searchbox-header fe-search-section none">
         <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
-                    <!--접근성 수정-->
                     <input id="fe-search-input2" type="text" placeholder="업무 검색 (예: 리필쿠폰)" title="업무 검색 (예: 리필쿠폰)"
                         value="">
-                    <!-- //접근성 수정-->
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </span>
             </span>
             <button class="icon-gnb-search"><span class="blind">검색</span></button>
             <div class="searchbox-close"><button class="close-area" id="fe-cancel-search">취소</button></div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="fe-search-section none">
+    <!-- <div class="fe-search-section none">
         <div class="cont-box nogaps-hoz">
             <h3 class="searchlist-title">T world에서 가장 많이 찾는 업무</h3>
             <ul class="popularsearchword-list">
-                <!-- <li> -->
-                <!-- <a href="" class="category-type"> -->
-                <!-- <span class="text">번호 변경ㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅁㅁㄴㅇㅁㄴ</span> -->
-                <!-- </a> -->
-                <!-- </li> -->
             </ul>
         </div>
-    </div>
+    </div> -->
 </div>
 <!-- // #common-menu -->
 
