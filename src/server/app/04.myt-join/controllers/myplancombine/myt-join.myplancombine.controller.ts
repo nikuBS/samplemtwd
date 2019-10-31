@@ -10,13 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { COMBINATION_PRODUCT } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import {
-  MYT_JOIN_PERSONAL,
-  MYT_JOIN_FAMILY,
-  MYT_JOIN_MYPLANCOMBINE,
-  MYT_STRING_KOR_TERM,
-  MYT_JOIN_WIRE_SET_PAUSE
-} from '../../../../types/string.type';
+import { MYT_JOIN_PERSONAL, MYT_JOIN_FAMILY } from '../../../../types/string.type';
 
 /**
  * @class
@@ -49,7 +43,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         });
       }
 
-      this.getCombination(prodId, svcInfo, req.query.type, pageInfo).subscribe(combination => {
+      this.getCombination(prodId, svcInfo, req.query.type).subscribe(combination => {
         if (combination.code) {
           return this.error.render(res, {
             pageInfo: pageInfo,
@@ -60,7 +54,6 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
 
         res.render('myplancombine/myt-join.myplancombine.combination.html', { svcInfo, pageInfo, combination, pageId, prodId, type: req.query.type });
       });
-
     } else {  // 결합상품 목록 페이지로 랜딩
       this._getCombinations().subscribe(combinations => {
         if (combinations.code) {
@@ -107,10 +100,9 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
    * @param  {string} id 결합상품 id
    * @param  {any} svcInfo 세션 정보
    * @param  {string} type TB결합상품에 대해서 BFF에 개인형/패밀리형 구분이 없어서 FE에서 query param로 받음
-   * @param  {any} pageInfo
    * @private
    */
-  private getCombination = (id, svcInfo, type, pageInfo) => {
+  private getCombination = (id, svcInfo, type) => {
     return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, [id]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -130,84 +122,6 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
       };
 
       const group = resp.result.combinationGroup;
-      let totalUseYy = 0 // 총 적용 가입기간(년도)
-          , totalUseMm = 0; // 총 적용 가입기간(월)
-
-      // 가족 합산 총 가입기간 더하기
-      const addTotalUse = (useYy, useMm) => {
-        totalUseYy += Number(useYy) || 0;
-        totalUseMm += Number(useMm) || 0;
-      };
-
-      // 마스킹 유무에 따른 날짜값 반환
-      const getDateByMasking = (date) => {
-        // 마스킹 상태인 경우 강제로 [*년 *개월] 로 리턴해준다.
-        if (!pageInfo.masking) {
-          return MYT_JOIN_MYPLANCOMBINE.DATE_FORMAT.replace('{0}', '*').replace('{1}', '*');
-        }
-        return date;
-      };
-
-      // B상품 사용기간 날짜 포맷팅
-      resp.result.combinationWireMemberList.forEach( item => {
-        item.useYearCnt = getDateByMasking(item.useYearCnt);
-      });
-
-      // 년도(yy), 월(mm) 값이 0이 아닌경우만 노출. 둘다 0 이면 하이픈(-)
-      const getTextDate = (yy, mm) => {
-        yy = yy ? yy.toString() : '0';
-        mm = mm ? mm.toString() : '0';
-
-        const template = MYT_JOIN_MYPLANCOMBINE.DATE_FORMAT;
-        let text = '';
-        // 마스킹 상태인 경우
-        if (!pageInfo.masking) {
-          return template.replace('{0}', yy).replace('{1}', mm);
-        }
-        // 년도 가 0이 아닌경우
-        if (yy !== '0') {
-          text = yy + MYT_STRING_KOR_TERM.year;
-        }
-        if (mm !== '0') {
-          text += ' ' + mm + MYT_JOIN_WIRE_SET_PAUSE.MONTH;
-        }
-        if (yy === '0' && mm === '0') {
-          return '-';
-        }
-        return text.trim();
-      };
-
-      const combinationWirelessMemberList = (resp.result.combinationWirelessMemberList || []).map(member => {
-        addTotalUse(member.useYy, member.useMm);
-
-        return {
-          ...member,
-          auditDtm: member.auditDtm && DateHelper.getShortDate(member.auditDtm),
-          aftBasFeeAmtTx: FormatHelper.addComma(String(member.aftBasFeeAmtTx)),
-          basFeeAmtTx: FormatHelper.addComma(String(member.basFeeAmtTx)),
-          basFeeDcTx: FormatHelper.addComma(String(member.basFeeDcTx)),
-          badge: BADGE[member.relClCd],
-          bIdx: resp.result.combinationWireMemberList.findIndex(wire => {
-            return wire.mblSvcMgmtNum === member.svcMgmtNum;
-          }),
-          svcNum: FormatHelper.conTelFormatWithDash(member.svcNum),
-          asgnNum: FormatHelper.conTelFormatWithDash(member.asgnNum),
-          useYearCnt: getDateByMasking(member.useYearCnt),
-          expDate: getTextDate(member.totMYy, member.totMMm)
-        };
-      });
-
-      // 가족 합산 총 가입기간 텍스트 변환
-      const getTotalUseDate = () => {
-        // 마스킹 상태인 경우
-        if (!pageInfo.masking) {
-          return getTextDate('*', '*');
-        }
-        totalUseYy += Math.floor(totalUseMm / 12);
-        totalUseMm = totalUseMm % 12;
-        return getTextDate(totalUseYy, totalUseMm);
-     };
-
       return {
         ...resp.result,
         combinationGroup: {
@@ -216,10 +130,23 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
           // 유선 상품일 경우, BFF에서 상품명에 개인형, 패밀리형 구분이 되어 있지 않아서 프론트에서 처리 추가
           totBasFeeDcTx: FormatHelper.addComma(String(group.totBasFeeDcTx)),
           combStaDt: DateHelper.getShortDate(group.combStaDt),
-          isRepresentation: group.svcMgmtNum === svcInfo.svcMgmtNum,
-          totUseYyText: getTotalUseDate()
+          isRepresentation: group.svcMgmtNum === svcInfo.svcMgmtNum
         },
-        combinationWirelessMemberList
+        combinationWirelessMemberList: (resp.result.combinationWirelessMemberList || []).map(member => {
+          return {
+            ...member,
+            auditDtm: member.auditDtm && DateHelper.getShortDate(member.auditDtm),
+            aftBasFeeAmtTx: FormatHelper.addComma(String(member.aftBasFeeAmtTx)),
+            basFeeAmtTx: FormatHelper.addComma(String(member.basFeeAmtTx)),
+            basFeeDcTx: FormatHelper.addComma(String(member.basFeeDcTx)),
+            badge: BADGE[member.relClCd],
+            bIdx: resp.result.combinationWireMemberList.findIndex(wire => {
+              return wire.mblSvcMgmtNum === member.svcMgmtNum;
+            }),
+            svcNum: FormatHelper.conTelFormatWithDash(member.svcNum),
+            asgnNum: FormatHelper.conTelFormatWithDash(member.asgnNum)
+          };
+        })
       };
     });
   }
