@@ -48,8 +48,11 @@ class CommonShareLanding extends TwViewController {
     // web 호출 시
     } else {
 
-      const target = url || '/main/home';
+      let target = url || '/main/home';
       const svcMgmtNum = req.query.svcMgmtNum || '';
+      if ( /urlQuery/.test(target) ) {
+        target = target.replace(/urlQuery/gi, '&');
+      }
 
       // 특정 회선으로 회선 변경 후 landing 시
       if (!FormatHelper.isEmpty(svcMgmtNum) && svcMgmtNum !== svcInfo.svcMgmtNum) {
