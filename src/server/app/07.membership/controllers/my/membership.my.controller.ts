@@ -13,7 +13,6 @@ import FormatHelper from '../../../../utils/format.helper';
 import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import { Observable } from 'rxjs/Observable';
-import { NODE_ERROR_MSG } from '../../../../types/string.type';
 
 export default class MembershipMy extends TwViewController {
 
@@ -62,7 +61,7 @@ export default class MembershipMy extends TwViewController {
       if ( resp.code !== API_CODE.CODE_00 ) {
         return {
           code: resp.code,
-          msg: resp.code === 'MBR0001'? NODE_ERROR_MSG.MBR0001 : resp.msg
+          msg: resp.msg
         };
       } else {
         membershipData = this.parseMembershipData(resp.result);
