@@ -183,12 +183,8 @@ Tw.MyTFareBillSms.prototype = {
    */
   _pay: function (e) {
     var $target = $(e.currentTarget);
-    // [OP002-4792] 금액이 있을 경우, 금액 포함, 없을 경우, 빼고
-    var $amount = this.$container.find('.fe-amount');
-    var amount = $amount.length ? ($.trim($amount.text()) || 0) : 0;
     this._apiService.request(Tw.API_CMD.BFF_07_0027, {
-      // 형식: "은행명 은행계좌[ 금액(,)]"
-      msg: $.trim(this.$accountSelector.text()) + (amount ? (' ' + amount + '원') : ''),
+      msg: $.trim(this.$accountSelector.text()),
       svcMgmtNum: $.trim(this.$hpSelector.data('svcMgmtNum') || this.$hpSelector.attr('id'))
     }).done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
