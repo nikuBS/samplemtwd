@@ -16,6 +16,8 @@ Tw.MyTJoinSubMain = function (params) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._nicknamePopup = new Tw.NicknameComponent();
+  // [OP002-4773] 장기일시정지 재신청 과정 간소화
+  this._dateHelper = Tw.DateHelper;
   this.data = params.data;
   this._menuId = this.data.pageInfo.menuId;
   this._rendered();
@@ -183,7 +185,7 @@ Tw.MyTJoinSubMain.prototype = {
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
         if(!row.banner.result.summary){
-          row.banner.result.summary = {target: row.target};  
+          row.banner.result.summary = {target: row.target};
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
@@ -192,7 +194,7 @@ Tw.MyTJoinSubMain.prototype = {
       }
 
       if(admBanner.code === Tw.API_CODE.CODE_00){
-        row.banner.result.imgList = row.banner.result.imgList.concat( 
+        row.banner.result.imgList = row.banner.result.imgList.concat(
           admBanner.result.banners.map(function(admbnr){
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
             admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
@@ -215,8 +217,8 @@ Tw.MyTJoinSubMain.prototype = {
       if ( bnr.banner.result.bltnYn === 'N' ) {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
-      
-      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) 
+
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary)
           && bnr.banner.result.imgList.length > 0) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
       }else{
@@ -224,7 +226,7 @@ Tw.MyTJoinSubMain.prototype = {
         this.$container.find('[data-id=banners]').hide();
       }
     }, this));
-    
+
     new Tw.XtractorService(this.$container);
 
   },
@@ -370,13 +372,168 @@ Tw.MyTJoinSubMain.prototype = {
     }
     else if ( (this.data.myPausedState && this.data.myPausedState.state) ||
       (this.data.myLongPausedState && this.data.myLongPausedState.state) ) {
-      // 일시정지 중이거나 장기일시 중이거나 하는 경우 신청현황
-      this._historyService.goLoad('submain/suspend/status');
+      // [OP002-4773] 장기일시정지 재신청 과정 간소화
+      if (this.data.myPausedState.armyDt || this.data.myPausedState.armyExtDt) {
+        // 군 장기일시정지 중 임시 해제 상태인 경우,
+        this._openResumeSuspendPopup(this.$pauseC);
+      } else {
+        // 일시정지 중이거나 장기일시 중이거나 하는 경우 신청현황
+        this._historyService.goLoad('submain/suspend/status');
+      }
     }
     else {
       // 신청해제
       this._historyService.goLoad('/myt-join/submain/suspend#temporary');
     }
+  },
+  // [OP002-4773] 장기일시정지 재신청 과정 간소화
+  _reformatDate: function (date) {
+    return this._dateHelper.getShortDateWithFormat(date, 'YYYY.M.D.');
+  },
+  /**
+   * @function
+   * @desc (군) 장기일시정지 중 일지 해제 후 재 신청(일시정지 다시 시작): 'Reduced Rate Suspend'
+   * @param $target
+   * @private
+   */
+  _openResumeSuspendPopup: function ($target) {
+    var myPausedState = this.data.myPausedState;
+    var period = {
+      from: this._reformatDate(myPausedState.fromDt),
+    };
+    if (myPausedState.toDt) {
+      period.to = this._reformatDate(this.data.myPausedState.toDt);
+    }
+    var data = {
+      svcInfo: this.data.svcInfo,
+      period: period,
+      reason: myPausedState.svcChgRsnNm.replace(Tw.MYT_JOIN_SUSPEND.STATE_EXCLUDE, '')
+    };
+    this._popupService.open({
+        hbs: 'MS_03_05_04',
+        data: data
+    }, $.proxy(this._onResumeSuspendPopupOpen, this, data), $.proxy(this._onResumeSuspendPopupClose, this), 'resume-suspend',
+    $target);
+  },
+  /**
+   * @function
+   * @desc Resume Suspend(장기일시정지 재신청) 요청 - open callback
+   * @param $popup Resume Suspend(장기일시정지 재신청) popup element
+   */
+  _onResumeSuspendPopupOpen: function (data, $popup) {
+    this._popupResumeSuspend = {
+      $date: $popup.find('.date-selcet').find('input[type="date"]'),
+      $start: $popup.find('button#fe-resuspend')
+    };
+    // 아래와 같이 하는 것이 더 빠르지만, utility 함수를 사용하는 것으로 표준화한다.
+    // this._popupResumeSuspend.$date.val(new Date().toISOString().substring(0, 10));
+    this._popupResumeSuspend.$date.val(Tw.DateHelper.getDateCustomFormat('YYYY-MM-DD'));
+    this._popupResumeSuspend.$date.on('change', $.proxy(this._onResumeSuspendPopupDateChanged, this));
+    this._popupResumeSuspend.$start.on('click', _.debounce($.proxy(this._requestResumeSuspend, this, data, $popup), 500));
+  },
+  /**
+   * @function
+   * @desc Resume Suspend(장기일시정지 재신청) 팝업 close Callback
+   */
+  _onResumeSuspendPopupClose: function () {
+    // 초기화
+    this._popupResumeSuspend.$date.off();
+    this._popupResumeSuspend.$start.off();
+    delete this._popupResumeSuspend;
+  },
+  /**
+   * @function
+   * @desc 일시정지 기한 변경 시 체크 [OP002-4422]
+   * @param event
+   */
+  _onResumeSuspendPopupDateChanged: function (event) {
+    var value = event.target.value;
+    // 작업하는 중에도 시간은 변경될 수 있어서, 값을 돌릴때는 지금의 시간으로 넣음 (2019-10-30 23:59:59 -> 2019-10-31 00:00:00)
+    var today = Tw.DateHelper.getDateCustomFormat('YYYY-MM-DD');
+    if (!value) {
+      event.target.value = this._popupResumeSuspend.dateValid || today;
+      this._popupResumeSuspend.dateValid = event.target.value;
+      return false;
+    }
+    /*
+    var changed = Number(event.target.value.replace(/-/g, '') || 0); // this._$popupResumeSuspendDate.val().replace(/-/g, '');
+    if (Number(today.replace(/-/g, '')) > changed) {
+      event.target.value = today;
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
+        null, null, null, null, $(event.currentTarget));
+      return false;
+    }
+    */
+    var diff = Tw.DateHelper.getDiffByUnit(value, today.replace(/-/g, ''), 'days');
+    // 오늘보다 이전이거나
+    if ( diff < 0 ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
+      return false;
+    }
+    // 오늘보다 30일 이후거나
+    if ( diff > 30 ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
+      return false;
+    }
+    // 마지막 성공한 값을 저장해 놓는다.
+    this._popupResumeSuspend.dateValid = value;
+  },
+  /**
+   * @function
+   * @desc Resuspend(장기일시정지 재신청) 요청
+   * @param data
+   * @param $popup Resuspend(장기일시정지 재신청) popup element
+   */
+  _requestResumeSuspend: function (data, $popup) {
+    var fromDate = this._popupResumeSuspend.$date.val();
+    // var fromDate = $popup.find('input[type="date"]').val();
+    // TODO: 아래 구문은 필요없어 보이는데, 확인 후 삭제하자
+    /*
+    var diff = Tw.DateHelper.getDiffByUnit(fromDate, Tw.DateHelper.getCurrentShortDate(), 'days');
+    if ( diff < 0 ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
+      return;
+    }
+    if ( diff > 30 ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
+      return;
+    }
+    */
+    fromDate = fromDate.replace(/-/g, '');
+    // var params = { fromDt: fromDate.replace(/-/g, '') };
+    this._apiService.request(Tw.API_CMD.BFF_05_0151, {fromDt: fromDate})
+      .done($.proxy(this._onResumeSuspendRequestSuccess, this, {
+        fromDt: fromDate,
+        toDt: data.period.to.replace(/\./g, '')
+      }))
+      .fail($.proxy(this._onResumeSuspendRequestError, this));
+  },
+  /**
+   * @function
+   * @desc Success callback for _requestResumeSuspend
+   * @param params parameters for request API
+   * @param res response
+   * @private
+   */
+  _onResumeSuspendRequestSuccess: function (params, res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      params.command = 'resuspend';
+      params.svcNum = this.data.svcInfo.svcNum;
+      // params.toDt = this._params.status.period.to;
+      this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param(params));
+    } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
+    } else {
+      this._onResumeSuspendRequestError(res);
+    }
+  },
+  /**
+   * @function
+   * @desc Error call back
+   * @param res
+   */
+  _onResumeSuspendRequestError: function (res) {
+    Tw.Error(res.code, res.msg).pop();
   },
   /**
    * @function
@@ -509,7 +666,7 @@ Tw.MyTJoinSubMain.prototype = {
    * @private
    */
   _onChangeWireNumber: function (e) {
-    if(this.data.svcInfo.actCoClCd === 'B' ){ // 브로드밴드 가입자       
+    if (this.data.svcInfo.actCoClCd === 'B' ) { // 브로드밴드 가입자
       this._popupService.openConfirmButton(Tw.WIRE_NUMBER_CHANGE.ALERT_BROADBAND.CONTENTS,
         Tw.WIRE_NUMBER_CHANGE.ALERT_BROADBAND.TITLE,
         $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.OUTLINK.BROADBAND), null,

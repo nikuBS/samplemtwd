@@ -67,12 +67,14 @@
             <!--// .cont-box -->
             <%- include('../components/submain/myt-join.submain.prod-info.html', data) %>
             <!--포켓파이 회선 M3 추가 OP002-1517-->
-            <% if (data.type === 0 || data.svcInfo.svcAttrCd === 'M3') { %>
+            <%_ if (data.type === 0 || data.svcInfo.svcAttrCd === 'M3') { _%>
+                <%# [OP002-4773] 장기일시정지 재신청 과정 간소화 %>
+                <%_ if (data.myPausedState || data.isOldNumber || data.isNotChangeNumber) { _%>
                 <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
-            <% } else if (data.type === 2) { %>
+                <%_ } _%>
+            <%_ } else if (data.type === 2) { _%>
                 <%- include('../components/submain/myt-join.submain.wire-more-info.html', data) %>
-            <% } %>
-
+            <%_ } _%>
             <hr class="cont-sp type1" aria-hidden="true" data-id="banners-empty" />
             <div class="cont-box nogaps noborder" data-id="banners">
                 <div class="main-slide-banner slide-pagingtype pg-rtop">
