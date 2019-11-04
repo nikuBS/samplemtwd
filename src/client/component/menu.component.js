@@ -869,7 +869,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     }
 
     var ret = '';
-    var isFee = false;
+    var includeFee = false;
+    var includeFeeCnt = 0;
+    var isAllFee = false;
 
     var dataRemained = _.reduce(info.gnrlData, function (memo, item) {
       if ( memo < 0 ) { // Unlimit
@@ -884,14 +886,20 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       memo += +item.remained;
 
       if(item.unit === Tw.UNIT_E.FEE) {
-        isFee = true;
+        includeFee = true;
+        includeFeeCnt++;
       }
       return memo;
     }, 0);
 
+    // gnrlData에 원단위만 존재하는 경우, 실시간 데이터 잔여량을 보여주지 않는다.
+    if ( includeFeeCnt === info.gnrlData.length && includeFee) {
+      isAllFee = true;
+    }
+
     if ( dataRemained < 0 ) {
       ret = Tw.COMMON_STRING.UNLIMIT;
-    } else if(!isFee) {
+    } else if(!isAllFee) {
       var dataObj = Tw.FormatHelper.convDataFormat(dataRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
       ret = dataObj.data + dataObj.unit;
     }
