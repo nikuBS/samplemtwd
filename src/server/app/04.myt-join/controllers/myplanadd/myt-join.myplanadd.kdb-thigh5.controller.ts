@@ -17,13 +17,13 @@ const DGRADE_PROD_ID: any = [
 ];
 const DGRADE_DAY_MAX = 44;
 
-class MyTJoinMyPlanAddTHigh5 extends TwViewController {
+class MyTJoinMyPlanAddKdbTHigh5 extends TwViewController {
   constructor() {
     super();
   }
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    this._getAdditionTHigh5().subscribe(result => {
+    this._getAdditionKdbTHigh5().subscribe(result => {
       if (result.code || result.thigh5Yn === 'N') {
         return this.error.render(res, {
           ...result,
@@ -42,10 +42,10 @@ class MyTJoinMyPlanAddTHigh5 extends TwViewController {
 
       console.log("result : " + JSON.stringify(result));
 
-      res.render('myplanadd/myt-join.myplanadd.thigh5.html', {
+      res.render('myplanadd/myt-join.myplanadd.kdb-thigh5.html', {
         scrbDt: DateHelper.getShortDate(result.scrbDt),
         joinTermCd: result.joinTermCd === '01' ? 12 : 24,
-        preferential: MYT_JOIN_THIGH5_PREFERENTIAL.DGB[result.thigh5ProdId] ? MYT_JOIN_THIGH5_PREFERENTIAL.DGB[result.thigh5ProdId] : '',
+        preferential: MYT_JOIN_THIGH5_PREFERENTIAL.KDB[result.thigh5ProdId] ? MYT_JOIN_THIGH5_PREFERENTIAL.KDB[result.thigh5ProdId] : '',
         dGradeYn: DGRADE_PROD_ID.indexOf(result.thigh5ProdId) !== -1 ? 'Y' : 'N',
         dGradeDay: parseInt(result.dGradeDay, 10),
         thigh5HeroYn: result.thigh5HeroYn,
@@ -56,8 +56,8 @@ class MyTJoinMyPlanAddTHigh5 extends TwViewController {
     });
   }
 
-  private _getAdditionTHigh5 = () => {
-    return this.apiService.request(API_CMD.BFF_10_0179, {}, {}, ['NC00000079']).map(resp => {
+  private _getAdditionKdbTHigh5 = () => {
+    return this.apiService.request(API_CMD.BFF_10_0179, {}, {}, ['NC00000081']).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
@@ -92,4 +92,4 @@ class MyTJoinMyPlanAddTHigh5 extends TwViewController {
   }
 }
 
-export default MyTJoinMyPlanAddTHigh5;
+export default MyTJoinMyPlanAddKdbTHigh5;
