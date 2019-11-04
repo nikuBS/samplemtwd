@@ -503,6 +503,8 @@ class MainHome extends TwViewController {
     data.myRemainedRatio = 100;
     data.shareRemainedRatio = 100;
     data.linkUrl = '/myt-data/hotdata';
+    let includeFee = false;
+    let includeFeeCnt = 0;
 
     list.map((target) => {
       if ( UNLIMIT_CODE.indexOf(target.unlimit) !== -1 ) {
@@ -534,10 +536,16 @@ class MainHome extends TwViewController {
           data.myRemained += +target.remained;
         }
 
-        if ( target.unit === UNIT_E.FEE) {
-          data.isShow = false;
+        if (target.unit === UNIT_E.FEE) {
+          includeFee = true;
+          includeFeeCnt++;
         }
       });
+
+      // gnrlData에 원단위만 존재하는 경우, 실시간 데이터 잔여량을 보여주지 않는다.
+      if ( includeFeeCnt === list.length && includeFee) {
+        data.isShow = false;
+      }
 
       data.addRemained = data.myRemained + data.shareRemained;
       data.addTotal = data.myTotal + data.shareTotal;
