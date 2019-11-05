@@ -304,16 +304,21 @@
                             // 데이터 시간권 이용자인(부스트파크 옵션 이용자가 아닌) 경우
                             if (data._5gxTicket.timeTicket) {
                             _%>
-                            <span class="tit">데이터 시간권 <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/5g-setting?remainTime=<%- data._5gxTicket.remained %>">자세히</a></span></span>
+                            <span class="tit">데이터 시간권 <span class="ml8">
+                                <!-- [OP002-4958] - 5gx 관련 기능 개선 및 오류 수정 -->
+                                <% var isRemained = data._5gxTicket.remained === 0 ? '0' : '1'; %>
+                                <a class="bt-link-tx small underline" href="/myt-data/5g-setting?remained=<%- isRemained %>">자세히</a>
+                            </span></span>
                                 <%_
                                 if (data._5gxTicket.ticketSet) {
                                     // 시간 설정 ON
                                 _%>
                                 <span class="value type2"><strong>사용중</strong></span>
+                                <!--  [OP002-4958] - 5gx 관련 기능 개선 및 오류 수정 (잔여시간 0분의 경우 "0분 남음"으로 표기 ) -->
                                 <%_
-                                } else if (data._5gxTicket.showRemained.hours > 0 || data._5gxTicket.showRemained.min > 0) {
+                                } else if (data._5gxTicket.showRemained.hours >= 0 || data._5gxTicket.showRemained.min >= 0) {
                                     // 시간 설정 OFF 혹은 남은 시간이 없음
-                                    var remained = '';
+                                    var remained = '0분';
                                     if (data._5gxTicket.showRemained.hours > 0) {
                                         remained = data._5gxTicket.showRemained.hours + '시간';
                                     }
