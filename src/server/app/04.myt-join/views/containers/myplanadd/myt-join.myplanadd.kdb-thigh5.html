@@ -51,7 +51,7 @@
 						<div class="announcement-box pt2">
 							<span class="announcement-bullet type02">자세히 보기를 누르면 핀크앱으로 이동합니다.</span>
 							<span class="bt-wrap block">
-								<a href="#" class="bt-link-tx small underline">자세히 보기</a>
+								<button class="bt-link-tx small underline fe-btn-open-app">자세히 보기</button>
 							</span>
 						</div>
 					</div>
@@ -71,9 +71,11 @@
                             </li>
                             <!--
                             아래의 경우만 노출
-                            'NC00000075',   // 12개월 고금리
-                            'NC00000077',   // 24개월 고금리-->
-                            <% if (dGradeYn === 'Y') { %>
+                            'NC00000082',   // 12개월 고금리
+							'NC00000084',   // 24개월 고금리
+							모든 사용자에게 임시 노출
+							-->
+                            <% if (true || dGradeYn === 'Y') { %> 
                             <li>
 								<span class="stit">추가 혜택<button id="TC000087" page-id="" class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
 								<span class="use">조건 충족 시<br/> 우대금리 II 1%</span>
@@ -147,11 +149,11 @@
 				<div class="cont-box nogaps">
 					<ul class="full-link-list">
 						<li>
-							<button>
+                            <a href="/myt-join/myplan/alarm">
 								<span class="inner">
 									<span class="tit">요금제 변경 가능 알림 서비스</span>
 								</span>
-							</button>
+                            </a>
 						</li>
 					</ul>
 				</div>
