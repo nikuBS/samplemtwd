@@ -378,8 +378,7 @@ Tw.MyTJoinSubMain.prototype = {
         // 신청현황: 일시정지 예약중
         this._historyService.goLoad('submain/suspend/status');
       }
-    } else if ( (stateMyPaused && stateMyPaused.state) ||
-      (stateMyLongPaused && stateMyLongPaused.state) ) {
+    } else if ( (stateMyPaused && stateMyPaused.state) || (stateMyLongPaused && stateMyLongPaused.state) ) {
       // 신청현황: 일시정지 중, 장기일시 중
       this._historyService.goLoad('submain/suspend/status');
     }
