@@ -362,27 +362,29 @@ Tw.MyTJoinSubMain.prototype = {
    * @desc 모바일 일시정지/해제
    */
   _onMovedMobilePause: function () {
-    if( this.data.myPausedState && this.data.myPausedState.reservedYn === 'Y'){
-      if(this.data.myPausedState.fromDt === '99991231'){ // [OP002-1526] 2G 장기 미사용 이용정지 화면 진입 불가
+    var stateMyPaused = this.data.myPausedState;
+    var stateMyLongPaused = this.data.myLongPausedState;
+    if ( stateMyPaused && (stateMyPaused.svcStCd === 'AC') && (stateMyPaused.armyDt || stateMyPaused.armyExtDt) ) {
+      // [OP002-4773] 장기일시정지 재신청 과정 간소화
+      // 장기일시정지 재신청: 군 장기일시정지 중 임시 해제 상태인 경우, 바로 재신청 가능하도록
+      this._openResumeSuspendPopup(this.$pauseC);
+    }
+    else if ( stateMyPaused && stateMyPaused.reservedYn === 'Y') {
+      // [OP002-1526]
+      if (stateMyPaused.fromDt === '99991231') {
+        // 2G 장기 미사용 이용정지 화면 진입 불가
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR.UNUSED_2G_USER, null, null);
       } else {
-        // [OP002-1526] 일시정지 예약중 추가
+        // 신청현황: 일시정지 예약중
         this._historyService.goLoad('submain/suspend/status');
       }
-    }
-    else if ( (this.data.myPausedState && this.data.myPausedState.state) ||
-      (this.data.myLongPausedState && this.data.myLongPausedState.state) ) {
-      // [OP002-4773] 장기일시정지 재신청 과정 간소화
-      if (this.data.myPausedState.armyDt || this.data.myPausedState.armyExtDt) {
-        // 군 장기일시정지 중 임시 해제 상태인 경우,
-        this._openResumeSuspendPopup(this.$pauseC);
-      } else {
-        // 일시정지 중이거나 장기일시 중이거나 하는 경우 신청현황
-        this._historyService.goLoad('submain/suspend/status');
-      }
+    } else if ( (stateMyPaused && stateMyPaused.state) ||
+      (stateMyLongPaused && stateMyLongPaused.state) ) {
+      // 신청현황: 일시정지 중, 장기일시 중
+      this._historyService.goLoad('submain/suspend/status');
     }
     else {
-      // 신청해제
+      // 신청하기: "일시정지/해제"로 이동
       this._historyService.goLoad('/myt-join/submain/suspend#temporary');
     }
   },
