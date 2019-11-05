@@ -112,7 +112,7 @@ Tw.MyTData5gSettingMain.prototype = {
     $comment.text($comment.data('defText'));
 
     // 사용 가능 시간 조회
-    // [OP002-4958] - 5gx 관련 기능 개선 및 오류 수정
+    // [OP002-4982] - 5gx 관련 기능 개선 및 오류 수정
     // CDRS 잔여량 5분 캐시로딩으로 시간권 잔여량 실제 잔여량과 차이나는 이슈 수정
     this._requestAvailableTime();
   },

@@ -21,7 +21,7 @@ Tw.MyTData5gSetting.prototype = {
     this._cachedElement();
     this._bindEvent();
     // page 유형에 따라 호출하는 인스턴스 분리
-    // [OP002-4958] - 5gx 관련 기능 개선 및 오류 수정
+    // [OP002-4982] - 5gx 관련 기능 개선 및 오류 수정
     // CDRS 잔여량 5분 캐시로딩으로 시간권 잔여량 실제 잔여량과 차이나는 이슈 수정
     // 데이터 시간권 사용중 페이지 내 '사용 가능 시간' 페이지 진입 시, API 호출하도록 수정
     switch ( this._settingData.pageType ) {
