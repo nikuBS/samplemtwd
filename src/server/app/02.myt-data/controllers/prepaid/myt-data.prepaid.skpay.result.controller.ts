@@ -77,7 +77,7 @@ class MyTDataPrepaidSKpayResult extends TwViewController {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
             return res.redirect('/myt-data/recharge/prepaid/voice-complete?type=voice&previousAmount=' + query.previousAmount + '&afterAmount=' + query.afterAmount + '&rechargeAmount='+ query.rechargeAmount);
           } else {
-            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo }));
+            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, createInfo.msg), { pageInfo }));
           }
         });
       } else if (query.source && query.source === urlData) {
@@ -85,7 +85,7 @@ class MyTDataPrepaidSKpayResult extends TwViewController {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
               return res.redirect('/myt-data/recharge/prepaid/data-complete?data=' + query.mb);
           } else {
-            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo }));
+            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, createInfo.msg), { pageInfo }));
           }
         });
       }
