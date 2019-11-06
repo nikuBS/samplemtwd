@@ -15,12 +15,7 @@ Tw.MyTData5gSettingMain = function (rootEl, data) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._settingData = data;
-  this._initCircleDatepicker();
-  this._cachedElement();
-  // this._loadRemainTime();
-  // 서버에서 선 조회 기능이 추가되어 추가
-  this._initRemainTime();
-  this._bindEvent();
+  this._initialize();
   if (!Tw.Environment.init) {
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openIntro, this));
   } else {
@@ -29,6 +24,24 @@ Tw.MyTData5gSettingMain = function (rootEl, data) {
 };
 
 Tw.MyTData5gSettingMain.prototype = {
+  /**
+   * 초기화
+   * @private
+   */
+  _initialize: function () {
+    this._initCircleDatepicker();
+    this._cachedElement();
+    this._bindEvent();
+    // this._loadRemainTime();
+    // 서버에서 선 조회 기능이 추가되어 추가
+    if (this._settingData.remainTime) {
+      // [OP002-4982] 최초 사용가능 시간 조회하여 데이터가 있는 경우
+      this._initRemainTime();
+      this._setRemainTime();
+    } else {
+      this._loadRemainTime();
+    }
+  },
   /**
    * @function
    * @desc dom caching
@@ -59,8 +72,8 @@ Tw.MyTData5gSettingMain.prototype = {
     this.$timeSetButton.on('click', $.proxy(this._start5g, this));
     this.$timePicker.on('click', $.proxy(this._onClickTime, this));
     this.$timeButton.on('click', $.proxy(this._addTime, this));
-    this.$datePicker.circle_datepicker().on('timer', _.debounce($.proxy(this._onTimer, this), 10));
-    this.$container.on('click', '.fe-time-search', _.debounce($.proxy(this._loadRemainTime, this), 10));
+    this.$datePicker.circle_datepicker().on('timer', _.debounce($.proxy(this._onTimer, this), 500));
+    this.$container.on('click', '.fe-time-search', _.debounce($.proxy(this._loadRemainTime, this), 500));
   },
 
   /**
@@ -113,13 +126,6 @@ Tw.MyTData5gSettingMain.prototype = {
     this.$usedTime.eq(0).children().eq(0).addBack('block').show().next().addClass('none');
     var $comment = this.$timePicked.children().eq(0);
     $comment.text($comment.data('defText'));
-
-    if (this._settingData.remainTime) {
-      // [OP002-4982] 최초 사용가능 시간 조회하여 데이터가 있는 경우
-      this._setRemainTime();
-    } else {
-      this._loadRemainTime();
-    }
   },
 
   /**
