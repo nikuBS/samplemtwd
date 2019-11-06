@@ -52,7 +52,8 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
     this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
     this.$container.find('#search_keyword').on('focus',$.proxy(this._inputFocusEvt,this));
-    this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
+    // this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
+    this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
     this.$container.on('click','.search-element',$.proxy(this._keywordSearch,this));
     this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
     this.$inputElement = this.$container.find('#search_keyword');
