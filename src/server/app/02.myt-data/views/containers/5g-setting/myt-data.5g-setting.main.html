@@ -13,6 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
+<% var { svcInfo, pageInfo, pageType, duedate } = renderCommonInfo;%>
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '데이터 시간권 설정', svcInfo: svcInfo }); %>
@@ -31,7 +32,7 @@
                     'BOOST_PARK':   '../../components/5g-setting/myt-data.5g-setting.boostpark.html'  // 부스트 파크
                 };
             %>
-            <%- include(pages[pageType]); %>
+            <%- include(pages[pageType], renderCommonInfo); %>
             <% include ../../components/5g-setting/myt-data.5g-setting.common.html %>
         </div>
         <!-- //190909 [OP002-3626] 수정_02 -->
@@ -42,14 +43,10 @@
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
   $(document).ready(function () {
-    var pageType = '<%=pageType%>';
-    new Tw.MyTData5gSetting($('.wrap'));
-    if (pageType === 'NO_USE') {
-        new Tw.MyTData5gSettingMain($('.wrap'));
-    }
-    else if (pageType === 'IN_USE') {
-        new Tw.MyTData5gSettingMainInuse($('.wrap'), '<%- escape(JSON.stringify(conversionsInfo)) %>'); // 이용중일 때만 생성하기
-    }
+    new Tw.MyTData5gSetting({
+      rootEl: $('.wrap'),
+      data: '<%- escape(JSON.stringify(renderCommonInfo)) %>'
+    });
   });
 </script>
 <% include ../../components/end.component.html %>
