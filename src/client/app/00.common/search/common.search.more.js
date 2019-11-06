@@ -66,7 +66,8 @@ $.extend(Tw.CommonSearchMore.prototype,
     this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
     this.$container.on('change','.sispopup',$.proxy(this._pageChange,this));
     this.$container.on('click','.page-change',$.proxy(this._pageChange,this));
-    this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
+    // this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
+    this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
     this.$container.on('change','.resultsearch-box > .custom-form > input',$.proxy(
       function(e) {this.$container.find('.resultsearch-box > label').toggleClass('on',$(e.currentTarget).prop('checked'));}

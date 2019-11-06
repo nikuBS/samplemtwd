@@ -28,14 +28,16 @@ function recognizeLastChar(keyword){
 <div class="searchbox-header fe-header-wrap fe-aria-hidden-el">
     <!-- 191001 [OP002-4009] 수정01 -->
     <div class="sch-form tod-sch-form">
-        <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
-        <span class="inputbox">
-            <span class="input">
-                <input type="search" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
-                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+        <form action="#" role="search" id="frm" onsubmit="return false;">
+            <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+            <span class="inputbox">
+                <span class="input">
+                    <input type="search" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </span>
             </span>
-        </span>
-        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            <button class="icon-gnb-search"><span class="blind">검색</span></button>
+        </form>
     </div>
     <!-- //191001 [OP002-4009] 수정01 -->
 </div>

@@ -105,7 +105,8 @@ Tw.CommonSearch.prototype = {
     this.$inputElement.on('keyup',$.proxy(this._inputChangeEvent,this));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
-    this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
+    // this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
+    this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.on('click','.icon-gnb-search, .fe-search-link',$.proxy(this._doSearch,this));
