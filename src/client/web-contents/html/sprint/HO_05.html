@@ -16,10 +16,13 @@
     <meta property="og:image" content="/image/common/skt_facebook.jpg" />
     <meta property="og:description" content="SKT framework" />
     <title>SKT</title>
+    <!-- 191101_css링크수정 - main.css삭제/components추가 -->
     <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 컴포너트 위젯 -->
+    <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /> --><!-- [C] 단락별 컴퍼넌트 -->
+    <!-- //191101_css링크수정 - main.css삭제/components추가 -->
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
@@ -59,12 +62,16 @@
         <!-- 191001 [OP002-4009] 추가01 -->
         <hr class="cont-sp type1" aria-hidden="true">
         <div class="cont-box nogaps-hoz">
+            <!-- 191105 [OP002-4966] 수정01 -->
             <div class="tod-rec-search-box">
                 <dl class="rec-search">
-                    <dt class="rec-item">추천검색</dt>
-                    <dd class="rec-word">5 GX초[超]시대, 생활이 되다</dd>
+                    <dt class="rec-item"><span class="tod-blind">추천검색</span></dt>
+                    <dd class="rec-word">
+                        <button>5 GX초[超]시대, 생활이 되다</button>
+                    </dd>
                 </dl>
             </div>
+            <!-- //191105 [OP002-4966] 수정01 -->
         </div>
         <hr class="cont-sp type1" aria-hidden="true">
         <div class="cont-box">
