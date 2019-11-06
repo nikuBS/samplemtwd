@@ -16,11 +16,7 @@ Tw.MyTData5gSettingMainInuse = function (rootEl, data) {
   this._historyService = new Tw.HistoryService(this.$container);
   this._settingData = data;
   this._usingInfo = this._settingData.conversionsInfo;
-
-  this._cachedElement();
-  this._bindEvent();
-  this._startTimer();
-  this._loadAvailableTime();
+  this._initialize();
 };
 
 Tw.MyTData5gSettingMainInuse.prototype = {
@@ -34,7 +30,76 @@ Tw.MyTData5gSettingMainInuse.prototype = {
   _loadAvailableTime: function () {
     this.reqCnt = 0;
     // server 에서 사용가능시간을 조회하도록 변경하여 client 에서 조회하는 부분 제외
-    // this._requestAvailableTime();
+    this._initAvailableTime();
+    this._requestAvailableTime();
+  },
+
+  /**
+   * 초기화
+   * @private
+   */
+  _initialize: function() {
+    this._cachedElement();
+    this._bindEvent();
+    this._startTimer();
+    // 시간가능시간 정보가 없는 경우는 다시 조회, 시간이 있으면 화면에 바로 노출
+    if(this._settingData.remainTime) {
+      this._setAvailableTime(this._settingData.remainTime);
+    } else {
+      this._loadAvailableTime();
+    }
+  },
+
+  /**
+   * 시간권 가능시간 조회중 노출
+   * @private
+   */
+  _initAvailableTime: function() {
+    this.$deductDate.addClass('none');
+    this.$deductInquiry.removeClass('none');
+    this.$deductInquiry.find('[data-inquiry=text]').removeClass('none');
+    this.$deductInquiry.find('button').addClass('none');
+  },
+
+  /**
+   * 시간권 가능시간 조회 후 실패시 조회하기 버튼 노출
+   * @private
+   */
+  _failedAvailableTime: function() {
+    this.$deductDate.addClass('none');
+    this.$deductInquiry.removeClass('none');
+    this.$deductInquiry.find('[data-inquiry=text]').addClass('none');
+    this.$deductInquiry.find('button').removeClass('none');
+  },
+
+  /**
+   * 가능시간 화면에 표시
+   * @param dataRemQty
+   * @private
+   */
+  _setAvailableTime: function(dataRemQty) {
+    // 단위변경 분 -> 초
+    var availableTime = Tw.FormatHelper.convVoiceFormat(dataRemQty * 60);
+    var time = {
+      hour: availableTime.hours,
+      min: availableTime.min,
+      html: ''
+    };
+    // 사용가능시간이 최대 시간인 12시간을 초과한 경우
+    if (dataRemQty > 720) {
+      time.hour = 12;
+      time.min = 0;
+    }
+    // 시 또는 분이 0이 아닌 경우에만 시간 단위 노출
+    if (time.hour > 0) {
+      time.html += '<b>' + time.hour + '</b>' + Tw.VOICE_UNIT.HOURS + ' ';
+    }
+    if (time.min > 0) {
+      time.html += '<b>' + time.min + '</b>' + Tw.VOICE_UNIT.MIN;
+    }
+    this.$availableDate.html(time.html);
+    this.$deductDate.removeClass('none');
+    this.$deductInquiry.addClass('none');
   },
 
   /**
@@ -69,29 +134,12 @@ Tw.MyTData5gSettingMainInuse.prototype = {
         window.setTimeout($.proxy(this._requestAvailableTime, this), 1000);
         return;
       }
+      // 조회 실패시 조회버튼 노출
+      this._failedAvailableTime();
       this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
       return;
     }
-    // 단위변경 분 -> 초
-    var availableTime = Tw.FormatHelper.convVoiceFormat(resp.result.dataRemQty * 60);
-    var time = {
-      hour: availableTime.hours,
-      min: availableTime.min,
-      html: ''
-    };
-    // 사용가능시간이 최대 시간인 12시간을 초과한 경우
-    if (resp.result.dataRemQty > 720) {
-      time.hour = 12;
-      time.min = 0;
-    }
-    // 시 또는 분이 0이 아닌 경우에만 시간 단위 노출
-    if (time.hour > 0) {
-      time.html += '<b>' + time.hour + '</b>' + Tw.VOICE_UNIT.HOURS + ' ';
-    }
-    if (time.min > 0) {
-      time.html += '<b>' + time.min + '</b>' + Tw.VOICE_UNIT.MIN;
-    }
-    this.$availableDate.html(time.html);
+    this._setAvailableTime(resp.result.dataRemQty);
     Tw.CommonHelper.endLoading('.container');
   },
 
@@ -101,6 +149,8 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    */
   _cachedElement: function () {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
+    this.$deductDate = this.$container.find('[data-target=date]');
+    this.$deductInquiry = this.$container.find('[data-target=inquiry]');
     this.$availableDate = this.$container.find('[data-id=available-date]');
     this.startTime = Tw.DateHelper.convDateFormat(this._usingInfo.convStaDtm);
   },
@@ -111,6 +161,8 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    */
   _bindEvent: function () {
     this.$btnTerminate.on('click', $.proxy(this._onClickTerminate, this));
+    // 조회하기버튼 click
+    this.$deductInquiry.on('click', 'button', _.debounce($.proxy(this._loadAvailableTime, this), 500));
   },
 
   /**
