@@ -5,14 +5,18 @@
         <div class="og-start5G-time">
             <div class="time-count">
                 종료 예정 시각
-                <% var { duedate } = renderCommonInfo;%>
+                <% var { convRemainTime, duedate } = renderCommonInfo;%>
                 <strong class="val-time-wrap"><%=duedate.amPm%> <b><%=duedate.hour%></b>시 <b><%=duedate.min%></b>분</strong>
             </div>
             <div class="data-deduct">
                 사용 가능 시간
                 <span class="val-ue-wrap" data-id="available-date">
-                    <b data-type="hour">0</b>시간
-                    <b data-type="min">0</b>분
+                    <%if(convRemainTime.hours > 0) {%>
+                        <b><%= convRemainTime.hours %></b>시간
+                    <%}%>
+                    <%if(convRemainTime.min > 0) {%>
+                        <b><%= convRemainTime.min %></b>분
+                    <%}%>
                 </span>
             </div>
         </div>

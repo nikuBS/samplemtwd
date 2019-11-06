@@ -305,9 +305,8 @@
                             if (data._5gxTicket.timeTicket) {
                             _%>
                             <span class="tit">데이터 시간권 <span class="ml8">
-                                <!-- [OP002-4982] - 5gx 관련 기능 개선 및 오류 수정 -->
-                                <% var isRemained = data._5gxTicket.remained === 0 ? '0' : '1'; %>
-                                <a class="bt-link-tx small underline" href="/myt-data/5g-setting?remained=<%- isRemained %>">자세히</a>
+                                <!-- [OP002-4982] - 5gx 관련 기능 개선 및 오류 수정(query 제거) -->
+                                <a class="bt-link-tx small underline" href="/myt-data/5g-setting">자세히</a>
                             </span></span>
                                 <%_
                                 if (data._5gxTicket.ticketSet) {
