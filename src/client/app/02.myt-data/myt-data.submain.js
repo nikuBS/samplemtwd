@@ -38,29 +38,29 @@ Tw.MyTDataSubMain.prototype = {
    * @desc 초기값 설정
    */
   _rendered: function () {
-    if ( !Tw.BrowserHelper.isApp() && this._historyService.isBack() ) {
+    if (!Tw.BrowserHelper.isApp() && this._historyService.isBack()) {
       // this._historyService.reload();
       this._historyService.goLoad('/myt-data/submain');
     }
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
-    if ( this.data.immCharge ) {
+    if (this.data.immCharge) {
       this.$immChargeBtn = this.$container.find('[data-id=immCharge]');
     }
     // T끼리 데이터 선물 버튼
-    if ( this.data.present ) {
+    if (this.data.present) {
       this.$presentBtn = this.$container.find('[data-id=present]');
     }
     // T가족모아 배너
-    if ( this.data.family ) {
+    if (this.data.family) {
       this.$familymoaBanner = this.$container.find('[data-id=family-moa]');
     }
     this.$prepayContainer = this.$container.find('[data-id=prepay-container]');
-    if ( this.data.refill ) {
+    if (this.data.refill) {
       this.$refillBtn = this.$container.find('[data-id=refill]');
     }
-    if ( this.data.isBenefit ) {
+    if (this.data.isBenefit) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
     }
     this.$dataPesterBtn = this.$container.find('[data-id=pester]');
@@ -70,16 +70,16 @@ Tw.MyTDataSubMain.prototype = {
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     // }
-    if ( this.data.otherLines.length > 0 ) {
+    if (this.data.otherLines.length > 0) {
       this.$otherLines = this.$container.find('[data-id=other-lines]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
-      if ( this.data.otherLines.length > 20 ) {
+      if (this.data.otherLines.length > 20) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
       }
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
 
-    if ( !Tw.FormatHelper.isEmpty(this._bpcpServiceId) ) {
+    if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
       this._initBpcp();
     }
   },
@@ -89,20 +89,20 @@ Tw.MyTDataSubMain.prototype = {
    */
   _bindEvent: function () {
     // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
-    if ( this.data.immCharge ) {
+    if (this.data.immCharge) {
       this.$immChargeBtn.on('click', $.proxy(this._onImmChargeDetail, this));
     }
-    if ( this.data.present ) {
+    if (this.data.present) {
       this.$presentBtn.on('click', $.proxy(this._onTPresentDetail, this));
     }
     // T가족모아 배너
-    if ( this.data.family ) {
+    if (this.data.family) {
       this.$familymoaBanner.on('click', $.proxy(this._onFamilyMoaDetail, this));
     }
-    if ( this.data.refill ) {
+    if (this.data.refill) {
       this.$refillBtn.on('click', $.proxy(this._onRefillDetail, this));
     }
-    if ( this.data.isBenefit ) {
+    if (this.data.isBenefit) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
     }
     this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
@@ -110,14 +110,14 @@ Tw.MyTDataSubMain.prototype = {
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail.on('click', $.proxy(this._onBreakdownListDetail, this));
     // }
-    if ( this.data.otherLines.length > 0 ) {
+    if (this.data.otherLines.length > 0) {
       this.$otherLines.on('click', $.proxy(this._onOtherLinesItemDetail, this));
-      if ( this.data.otherLines.length > 20 ) {
+      if (this.data.otherLines.length > 20) {
         this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
       }
     }
     this.$otherPages.find('button').on('click', $.proxy(this._onOtherPages, this));
-    this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
+    this.$prepayContainer.on('click', 'li', $.proxy(this._onPrepayCoupon, this));
 
     // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 Start
     // TODO: Tab을 switching하는 것은 widget(widgets.js:component_tabs)의 영역이므로, 추후 기준이 정리되면 제거되어야 함
@@ -147,9 +147,9 @@ Tw.MyTDataSubMain.prototype = {
     }
     */
     // 마우스로 LI를 클릭했을 때만, 발생시키기 위해
-    if ( event.originalEvent && event.target.tagName === 'LI' ) {
+    if (event.originalEvent && event.target.tagName === 'LI') {
       var $target = $(event.target);
-      if ( $target.attr('aria-selected') !== 'true' ) {
+      if ($target.attr('aria-selected') !== 'true') {
         $target.children('button').trigger('click');
       }
     }
@@ -189,8 +189,8 @@ Tw.MyTDataSubMain.prototype = {
     var result = [{ target: 'M', banner: banner1 }];
 
     result.forEach(function (row) {
-      if ( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
-        if ( !row.banner.result.summary ) {
+      if (row.banner && row.banner.code === Tw.API_CODE.CODE_00) {
+        if (!row.banner.result.summary) {
           row.banner.result.summary = { target: row.target };
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
@@ -199,7 +199,7 @@ Tw.MyTDataSubMain.prototype = {
         row.banner = { result: { summary: { target: row.target }, imgList: [] } };
       }
 
-      if ( admBanner.code === Tw.API_CODE.CODE_00 ) {
+      if (admBanner.code === Tw.API_CODE.CODE_00) {
         row.banner.result.imgList = row.banner.result.imgList.concat(
           admBanner.result.banners.map(function (admbnr) {
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
@@ -220,11 +220,11 @@ Tw.MyTDataSubMain.prototype = {
    */
   _drawTosAdminMytDataBanner: function (banners) {
     _.map(banners, $.proxy(function (bnr) {
-      if ( bnr.banner.result.bltnYn === 'N' ) {
+      if (bnr.banner.result.bltnYn === 'N') {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
 
-      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0 ) {
+      if (!Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN,
           bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
       } else {
@@ -251,7 +251,7 @@ Tw.MyTDataSubMain.prototype = {
    */
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
-    if ( Tw.BrowserHelper.isApp() ) {
+    if (Tw.BrowserHelper.isApp()) {
       Tw.CommonHelper.resetHeight(this.$bannerList[0]);
     }
   },
@@ -271,14 +271,14 @@ Tw.MyTDataSubMain.prototype = {
    */
   _checkScroll: function () {
     // 무선 회선인 경우에만 최근 사용량 그래프 노출 [OP002-4379]
-    if ( this.$recentUsage.length > 0 &&  !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage) ) {
+    if (this.$recentUsage.length > 0 && !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage)) {
       this._requestRecentUsage();
     }
 
-    if ( this.data.otherLines.length > 0 && !this._isRequestOtherLinesInfo && this._elementScrolled(this.$otherLines) ) {
+    if (this.data.otherLines.length > 0 && !this._isRequestOtherLinesInfo && this._elementScrolled(this.$otherLines)) {
       // var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
       var otherLinesLength = Math.min(this.data.otherLines.length, this._OTHER_LINE_MAX_COUNT);
-      if ( otherLinesLength > 0 ) {
+      if (otherLinesLength > 0) {
         // setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
         this._initOtherLinesInfo(0, otherLinesLength);
       }
@@ -313,7 +313,7 @@ Tw.MyTDataSubMain.prototype = {
    */
   __convertVoice: function (value) {
     var voice = Tw.FormatHelper.convVoiceFormat(value);
-    if ( voice.hours > 0 ) {
+    if (voice.hours > 0) {
       return (voice.hours * 60) + voice.min + ':' + voice.sec;
     }
     return voice.min + ':' + voice.sec;
@@ -349,7 +349,7 @@ Tw.MyTDataSubMain.prototype = {
     data.isUnlimit = !_.isFinite(data.total);
     data.remainedRatio = 100;
     data.showUsed = this.__convFormat(data.used, data.unit);
-    if ( !data.isUnlimit ) {
+    if (!data.isUnlimit) {
       data.showTotal = this.__convFormat(data.total, data.unit);
       data.showRemained = this.__convFormat(data.remained, data.unit);
       data.remainedRatio = Math.round((data.remained / data.total) * 100);
@@ -401,18 +401,18 @@ Tw.MyTDataSubMain.prototype = {
       sms: [],
       tmoa: []
     };
-    if ( GDATA.length > 0 ) {
+    if (GDATA.length > 0) {
       _.filter(
         GDATA,
         $.proxy(function (item) {
           // [OP002-4864] 정액 요금제 '원' 단위 위젯 미표기
           // 특정 요금(팅PLUS14/19/24/29) etc로 넘어오는 부분이 gnrlData 바뀌어 넘어오게 되어 예외처리 추가
-          if ( item.unit !== Tw.UNIT_E.FEE ) {
-            if ( item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
+          if (item.unit !== Tw.UNIT_E.FEE) {
+            if (item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M') {
               result.totalLimit = true;
             }
             this.__convShowData(item);
-            if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
+            if (item.skipId === skipIdList[0] || item.skipId === skipIdList[1]) {
               result.tmoa.push(item);
               tmoaRemained += parseInt(item.remained || 0, 10);
               tmoaTotal += parseInt(item.total || 0, 10);
@@ -424,7 +424,7 @@ Tw.MyTDataSubMain.prototype = {
           }
         }, this)
       );
-      if ( !result.totalLimit ) {
+      if (!result.totalLimit) {
         result.total = this.__calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
       } else {
         result.total = {
@@ -433,7 +433,7 @@ Tw.MyTDataSubMain.prototype = {
         };
       }
     }
-    if ( SDATA.length > 0 ) {
+    if (SDATA.length > 0) {
       _.filter(
         SDATA,
         $.proxy(function (item) {
@@ -442,7 +442,7 @@ Tw.MyTDataSubMain.prototype = {
         }, this)
       );
     }
-    if ( VOICE.length > 0 ) {
+    if (VOICE.length > 0) {
       _.filter(
         VOICE,
         $.proxy(function (item) {
@@ -451,7 +451,7 @@ Tw.MyTDataSubMain.prototype = {
         }, this)
       );
     }
-    if ( SMS.length > 0 ) {
+    if (SMS.length > 0) {
       _.filter(
         SMS,
         $.proxy(function (item) {
@@ -470,7 +470,7 @@ Tw.MyTDataSubMain.prototype = {
    */
   __selectOtherLine: function (number) {
     var select = _.find(this.data.otherLines, function (item) {
-      if ( item.svcMgmtNum === number ) {
+      if (item.svcMgmtNum === number) {
         return item;
       }
     });
@@ -484,7 +484,7 @@ Tw.MyTDataSubMain.prototype = {
    */
   __selectSvcType: function (attrCd) {
     var clsNm = 'cellphone';
-    if ( ['M3', 'M4'].indexOf(attrCd) > -1 ) {
+    if (['M3', 'M4'].indexOf(attrCd) > -1) {
       clsNm = 'tablet';
     }
     return clsNm;
@@ -583,7 +583,7 @@ Tw.MyTDataSubMain.prototype = {
     var usage;
     var totalUsage;
     // "데이터" 탭
-    if ( this.__isUsageDataExists(this.data.recentUsage.data) ) {
+    if (this.__isUsageDataExists(this.data.recentUsage.data)) {
       var itemsDataChart = [];
       idTabSelect = '1';
       data = this.data.recentUsage.data;
@@ -594,7 +594,7 @@ Tw.MyTDataSubMain.prototype = {
         usage = parseInt(item.totalUsage, 10);
         totalUsage += usage;
         // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
-        if ( usage ) {
+        if (usage) {
           itemsDataChart.push({
             t: this._recentChartDate(item.invMth), // 각 항목 타이틀
             v: this.__convertData(usage) // 배열 평균값으로 전달
@@ -602,7 +602,7 @@ Tw.MyTDataSubMain.prototype = {
         }
       }
       // data
-      if ( totalUsage ) {
+      if (totalUsage) {
         charVisibled = 0x001;
         this.$recentUsage.chart2({
           type: Tw.CHART_TYPE.BAR_2, //bar
@@ -616,7 +616,7 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     $elem = this.$container.find('.fe-tab-data');
-    if ( (charVisibled & 0x001) === 0 ) {
+    if ((charVisibled & 0x001) === 0) {
       $elem.siblings().removeClass('none');
       $elem.remove();
       // this.$container.find('.fe-tab-data').remove().siblings().removeClass('none');
@@ -624,9 +624,9 @@ Tw.MyTDataSubMain.prototype = {
       $elem.siblings().remove();
     }
     // "음성" 탭
-    if ( this.__isUsageDataExists(this.data.recentUsage.voice) ) {
+    if (this.__isUsageDataExists(this.data.recentUsage.voice)) {
       var itemsVoiceChart = [];
-      if ( !idTabSelect ) {
+      if (!idTabSelect) {
         idTabSelect = '2';
       }
       data = this.data.recentUsage.voice;
@@ -637,7 +637,7 @@ Tw.MyTDataSubMain.prototype = {
         usage = parseInt(item.totalUsage, 10);
         totalUsage += usage;
         // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
-        if ( usage ) {
+        if (usage) {
           itemsVoiceChart.push({
             t: this._recentChartDate(item.invMth), // 각 항목 타이틀
             v: this.__convertVoice(usage) // 배열 평균값으로 전달
@@ -645,7 +645,7 @@ Tw.MyTDataSubMain.prototype = {
         }
       }
       // voice
-      if ( totalUsage ) {
+      if (totalUsage) {
         charVisibled += 0x010;
         this.$recentUsage.chart2({
           type: Tw.CHART_TYPE.BAR_2, //bar
@@ -659,7 +659,7 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     $elem = this.$container.find('.fe-tab-voice');
-    if ( (charVisibled & 0x010) === 0 ) {
+    if ((charVisibled & 0x010) === 0) {
       $elem.siblings().removeClass('none');
       $elem.remove();
       // this.$container.find('.fe-tab-voice').remove().siblings().removeClass('none');
@@ -667,9 +667,9 @@ Tw.MyTDataSubMain.prototype = {
       $elem.siblings().remove();
     }
     // "문자" 탭
-    if ( this.__isUsageDataExists(this.data.recentUsage.sms) ) {
+    if (this.__isUsageDataExists(this.data.recentUsage.sms)) {
       var itemsSMSChart = [];
-      if ( !idTabSelect ) {
+      if (!idTabSelect) {
         idTabSelect = '3';
       }
       data = this.data.recentUsage.sms;
@@ -680,7 +680,7 @@ Tw.MyTDataSubMain.prototype = {
         usage = parseInt(item.totalUsage, 10); // 배열 평균값으로 전달
         totalUsage += usage;
         // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
-        if ( usage ) {
+        if (usage) {
           itemsSMSChart.push({
             t: this._recentChartDate(item.invMth), // 각 항목 타이틀
             v: usage
@@ -688,7 +688,7 @@ Tw.MyTDataSubMain.prototype = {
         }
       }
       // sms
-      if ( totalUsage ) {
+      if (totalUsage) {
         charVisibled += 0x100;
         this.$recentUsage.chart2({
           type: Tw.CHART_TYPE.BAR_2, //bar
@@ -702,7 +702,7 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     $elem = this.$container.find('.fe-tab-sms');
-    if ( (charVisibled & 0x100) === 0 ) {
+    if ((charVisibled & 0x100) === 0) {
       $elem.siblings().removeClass('none');
       $elem.remove();
       // this.$container.find('.fe-tab-sms').remove().siblings().removeClass('none');
@@ -710,7 +710,7 @@ Tw.MyTDataSubMain.prototype = {
       $elem.siblings().remove();
     }
     // 표시할 것이 없음
-    if ( charVisibled === 0 ) {
+    if (charVisibled === 0) {
       // NOTE: 사용될 수 없는 DOM 이므로 제거를 해서 개선한다.
       // this.$recentUsage.remove();
       // this.$container.find('.cont-sp[data-id=recent_usage]').remove();
@@ -739,18 +739,18 @@ Tw.MyTDataSubMain.prototype = {
     for ( var idx = from; idx < end; idx++ ) {
       this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
       var param = { command: Tw.API_CMD.BFF_05_0001 };
-      if ( this.data.otherLines[idx].child ) {
+      if (this.data.otherLines[idx].child) {
         param.params = { childSvcMgmtNum: this.data.otherLines[idx].svcMgmtNum };
       } else {
         // 간편로그인이 아닌 경우에만 다른회선잔여량도 포함시킨다.
-        if ( this.data.svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
+        if (this.data.svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY) {
           // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
           param.headers = { 'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum };
         }
       }
       requestCommand.push(param);
     }
-    if ( requestCommand.length > 0 ) {
+    if (requestCommand.length > 0) {
       this._apiService
         .requestArray(requestCommand)
         .done($.proxy(this._responseOtherLine, this))
@@ -767,45 +767,45 @@ Tw.MyTDataSubMain.prototype = {
    */
   _responseOtherLine: function () {
     var list = [];
-    if ( arguments.length > 0 ) {
+    if (arguments.length > 0) {
       for ( var idx = 0; idx < arguments.length; idx++ ) {
         var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
         var data = {};
-        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
+        if (arguments[idx].code === Tw.API_CODE.CODE_00) {
           var result = arguments[idx].result;
           // 집전화 정액제 상품
-          if ( result.balance ) {
-            if ( result.balance[0] ) {
+          if (result.balance) {
+            if (result.balance[0]) {
               result.voice = [];
               result.voice.push(result.balance[0]);
             }
-            if ( result.balance[1] ) {
+            if (result.balance[1]) {
               result.sms = [];
               result.sms.push(result.balance[1]);
             }
           }
           var item = this.__parseRemnantData(result);
-          if ( item.total ) {
+          if (item.total) {
             data = {
               data: item.totalLimit ? Tw.COMMON_STRING.UNLIMIT : item.total.showRemained.data,
               unit: item.totalLimit ? '' : item.total.showRemained.unit
             };
           } else {
-            if ( item.sdata.length > 0 ) {
+            if (item.sdata.length > 0) {
               data = {
                 data: item.sdata[0].showRemained ? item.sdata[0].showRemained.data : item.sdata[0].remained,
                 unit: item.sdata[0].showRemained ? item.sdata[0].showRemained.unit : ''
               };
             } else {
-              if ( item.voice.length > 0 ) {
+              if (item.voice.length > 0) {
                 data = {
                   data: item.voice[0].showRemained.hours + Tw.VOICE_UNIT.HOURS + item.voice[0].showRemained.min + Tw.VOICE_UNIT.MIN,
                   unit: ''
                 };
               } else {
-                if ( item.sms.length > 0 ) {
+                if (item.sms.length > 0) {
                   var smsTotalData = item.sms[0].total;
-                  if ( item.sms[0].isUnlimit && smsTotalData ) {
+                  if (item.sms[0].isUnlimit && smsTotalData) {
                     var isStandard = smsTotalData === Tw.COMMON_STRING.STANDARD;
                     data = {
                       data: isStandard ? Tw.COMMON_STRING.UNLIMIT : smsTotalData,
@@ -841,7 +841,7 @@ Tw.MyTDataSubMain.prototype = {
    * @param {Arraylist} list
    */
   _initOtherLineList: function (list) {
-    if ( list.length > 0 ) {
+    if (list.length > 0) {
       for ( var i = 0; i < list.length; i++ ) {
         var $ul = this.$container.find('ul.my-line-info');
         var result = this.$moreTempleate(list[i]);
@@ -889,7 +889,7 @@ Tw.MyTDataSubMain.prototype = {
    * @desc pps 인 경우 자동알람서비스 그 외 데이터선물하기
    */
   _onTPresentDetail: function () {
-    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+    if (this.data.svcInfo.svcAttrCd === 'M2') {
       // PPS 인 경우 자동알람서비스 - 190128 SB 기준 변경됨
       // 인증인 API 호출시 인증화면으로 넘어감으로 DC_09_05로 이동 - 재차 확인 필요
       this._historyService.goLoad('/myt-data/recharge/prepaid/alarm');
@@ -924,7 +924,7 @@ Tw.MyTDataSubMain.prototype = {
    * @param {Object} e
    */
   _onDataPesterDetail: function (e) {
-    if ( Tw.BrowserHelper.isApp() ) {
+    if (Tw.BrowserHelper.isApp()) {
       //  2_A17 Alert 호출
       this._popupService.openModalTypeA(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.TITLE,
@@ -997,8 +997,8 @@ Tw.MyTDataSubMain.prototype = {
         mgmtNum = $target.attr('data-svc-mgmt-num'),
         number  = $target.attr('data-num'),
         isChild = $target.find('.icon-children').length > 0;
-    if ( mgmtNum ) {
-      if ( isChild ) {
+    if (mgmtNum) {
+      if (isChild) {
         // 자녀회선
         this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
       } else {
@@ -1019,15 +1019,15 @@ Tw.MyTDataSubMain.prototype = {
     var renderedListCnt = this.$otherLines.find('.my-line-info li').length;
     var gapCnt = this.data.otherLines.length - renderedListCnt;
     var isMore = false;
-    if ( gapCnt > this._OTHER_LINE_MAX_COUNT ) {
+    if (gapCnt > this._OTHER_LINE_MAX_COUNT) {
       gapCnt = this._OTHER_LINE_MAX_COUNT;
       isMore = true;
     }
     var fromCnt = renderedListCnt;
     var endCnt = fromCnt + gapCnt;
-    if ( gapCnt > 0 ) {
+    if (gapCnt > 0) {
       this._initOtherLinesInfo(fromCnt, endCnt);
-      if ( isMore ) {
+      if (isMore) {
         this.$otherLines.find('.btn-more').show();
       } else {
         this.$otherLines.find('.btn-more').hide();
@@ -1050,7 +1050,7 @@ Tw.MyTDataSubMain.prototype = {
    * @desc 회선 변경 후 처리
    */
   _onChangeSessionSuccess: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
+    if (Tw.BrowserHelper.isApp()) {
       Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
@@ -1073,7 +1073,7 @@ Tw.MyTDataSubMain.prototype = {
    * @param {Object} event
    */
   _onPrepayCoupon: function (event) {
-    var $target = $(event.currentTarget);
+    var $target = $(event.currentTarget).find('button');
     var type = $target.attr('data-type');
     var url = '';
     switch ( type ) {
@@ -1102,7 +1102,7 @@ Tw.MyTDataSubMain.prototype = {
    * @private
    */
   _successRequestRecentUsage: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       // OP002-794: 집계중기간(매월 1일 ~ 12일경) 지난달 제외한 직전3개월 데이터로 표시함. 항상 노출로 변경
       this.data.recentUsage = resp.result;
       // XXX: 왜 300ms인지 모르겠음
@@ -1135,7 +1135,7 @@ Tw.MyTDataSubMain.prototype = {
    * @private
    */
   _errorRequest: function (resp) {
-    if ( !resp ) {
+    if (!resp) {
       resp = {
         code: '',
         msg: Tw.ALERT_MSG_COMMON.SERVER_ERROR

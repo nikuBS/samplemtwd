@@ -5,10 +5,10 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {NextFunction, Request, Response} from 'express';
-import {Observable} from 'rxjs/Observable';
+import { NextFunction, Request, Response } from 'express';
+import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
-import {API_CMD} from '../../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 import moment = require('moment');
 
 /**
@@ -57,9 +57,9 @@ class MyTData5gSetting extends TwViewController {
     this.renderCommonInfo = {
       pageInfo,
       svcInfo,
+      pageType: 'NO_USE', // default 미이용
       param : req.query
     };
-    const renderCommonInfo = this.renderCommonInfo;
 
     Observable.combineLatest(
       this.getConversionsInfo(),  // 시간권 사용중 정보
@@ -71,7 +71,7 @@ class MyTData5gSetting extends TwViewController {
       const apiError = this.error.apiError([conversionsInfo, multiAddition]);
       // 에러 인 경우
       if (!FormatHelper.isEmpty(apiError)) {
-        return this.error.render(res, Object.assign(renderCommonInfo, {
+        return this.error.render(res, Object.assign(this.renderCommonInfo, {
           code: apiError.code,
           msg: apiError.msg,
           isBackCheck: true
@@ -79,48 +79,49 @@ class MyTData5gSetting extends TwViewController {
       }
 
       // todo : result 값 없을때 고려하기..
-      this.parseData(renderCommonInfo, conversionsInfo, multiAddition);
-      return res.render('5g-setting/myt-data.5g-setting.main.html', renderCommonInfo); // 기본 시간설정
+      this.parseData(conversionsInfo, multiAddition);
+      return res.render('5g-setting/myt-data.5g-setting.main.html', {renderCommonInfo: this.renderCommonInfo}); // 기본 시간설정
     });
   }
 
   /**
-   * @param data
-   * @param resp
-   * @desc 수신한 데이터 파싱
+   * 수신한 데이터 파싱
+   * @param conversionsInfo
+   * @param multiAddition
    */
-  private parseData(data: any, conversionsInfo: any, multiAddition: any): void {
-    data.conversionsInfo = conversionsInfo = conversionsInfo.result[0];
-
-    let pageType = 'NO_USE';  // default 미이용
-
+  private parseData(conversionsInfo: any, multiAddition: any): void {
+    this.renderCommonInfo.conversionsInfo = conversionsInfo = conversionsInfo.result[0];
+    // 사용시간 여부
+    this.renderCommonInfo.isRemained = this.renderCommonInfo.param.remained === '1';
     // 이용중인 경우
     if (conversionsInfo.currUseYn === 'Y' && +conversionsInfo.remTime > 0) {
-      pageType = 'IN_USE';
+      this.renderCommonInfo.pageType = 'IN_USE';
       // 종료예정시각 설정
       const time = moment(conversionsInfo.convEndDtm, 'YYYYMMDDhhmmss').format('LT').split(' '); // 종료시간 (format: 오후 1:10)
-      data.duedate = {
+      this.renderCommonInfo.duedate = {
         amPm: time[0],  // 오전/오후
         hour: time[1].split(':')[0],
         min: time[1].split(':')[1]
       };
 
       // 사용 가능시간 포맷팅
-      data.remainTime = FormatHelper.convVoiceFormat(data.param.remainTime) || {
-        hours: 0,
-        min: 0
-      };
+      // data.remainTime = FormatHelper.convVoiceFormat(data.param.remainTime) || {
+      //   hours: 0,
+      //   min: 0
+      // };
     } else { // 미 이용중
       // 이용시간 전부 소진
-      if (+data.param.remainTime < 1) {
-        pageType = 'END';
+      // if (+data.param.remainTime < 1) {
+      //   this.renderCommonInfo.pageType = 'END';
+      // }
+      if (!this.renderCommonInfo.isRemained) {
+        this.renderCommonInfo.pageType = 'END';
       }
       // 부스트 파크 사용자일때
       if (this.isBoostPark(multiAddition)) {
-        pageType = 'BOOST_PARK';
+        this.renderCommonInfo.pageType = 'BOOST_PARK';
       }
     }
-    data.pageType = pageType;
     // --> 페이지 설정 끝
 
   }
@@ -149,9 +150,9 @@ class MyTData5gSetting extends TwViewController {
    * @desc 시간권 이용중 정보 조회
    */
   private getConversionsInfo(): Observable<any> {
-    if (this.renderCommonInfo.param.conversionsInfo) {
-      return Observable.of(JSON.parse(this.renderCommonInfo.param.conversionsInfo));
-    }
+    // if (this.renderCommonInfo.param.conversionsInfo) {
+    //   return Observable.of(JSON.parse(this.renderCommonInfo.param.conversionsInfo));
+    // }
 
     return this.apiService.request(API_CMD.BFF_06_0078, {});
   }

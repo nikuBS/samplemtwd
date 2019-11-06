@@ -18,15 +18,32 @@
     <div class="searchbox-header" aria-hidden="false">
         <!-- 191001 [OP002-4009] 수정01 -->
         <div class="sch-form tod-sch-form">
-            <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
-            <span class="inputbox">
-                <span class="input">
-                    <input type="search" class="fe-nofocus-move" name="keyword" id="search_input" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" >
-                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                    <!-- <input style="visibility: hidden; width: 0px"> -->
+            <!-- 
+            <form action="#" role="search" id="frm" defaultbutton="search_input">
+                <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+                <span class="inputbox">
+                    <span class="input">
+                        <input type="search" class="fe-nofocus-move" name="keyword" id="search_input" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" >
+                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        <input type="text" style="display: none;" />
+                    </span>
                 </span>
-            </span>
-            <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            </form> 
+            -->
+            
+            <form action="#" role="search" id="frm" onsubmit="return false;">            
+                <div class="searchbox-close"><button type="button" class="close-area"><span class="tod-blind">취소</span></button></div>
+                <span class="inputbox">
+                    <span class="input">
+                        <input type="search" class="fe-nofocus-move" name="keyword" id="search_input" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" >
+                        <button class="cancel" type="button" style="display: none;"><span class="blind">삭제</span></button>
+                        <!-- <input style="visibility: hidden; width: 0px"> -->
+                        <input type="text" style="display: none;" />
+                    </span>
+                </span>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            </form>
         </div>
         <!-- //191001 [OP002-4009] 수정01 -->
     </div>
@@ -39,13 +56,17 @@
             <!-- 191001 [OP002-4009] 추가01 -->
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-hoz">
+                <!-- 191105 [OP002-4966] 수정01 -->
                 <div class="tod-rec-search-box">
                     <dl class="rec-search">
-                        <dt class="rec-item">추천검색</dt>
+                        <dt class="rec-item"><span class="tod-blind">추천검색</span></dt>
                         <input type="hidden" id="fe-rec-keyword" value="<%= recommendKeyword.code==='00'?recommendKeyword.result.keywordNm:'' %>">
-                        <dd class="rec-word" data-xt_eid="CMMA_A11_B4-51" data-xt_csid="NO" data-xt_action="BC"><%= recommendKeyword.code==='00'&&recommendKeyword.result.keywordDs?recommendKeyword.result.keywordDs:'검색어를 입력하세요.' %></dd>
+                        <dd class="rec-word" data-xt_eid="CMMA_A11_B4-51" data-xt_csid="NO" data-xt_action="BC">
+                            <button><%= recommendKeyword.code==='00'&&recommendKeyword.result.keywordDs?recommendKeyword.result.keywordDs:'검색어를 입력하세요.' %></button>
+                        </dd>
                     </dl>
                 </div>
+                <!-- //191105 [OP002-4966] 수정01 -->
             </div>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box">
@@ -78,12 +99,16 @@
                     </div>
 
                     <div class="btn-more">
-                        <button>
+                        <button id="fe-btn-more" data-xt_eid="CMMA_A11_B4-52" data-xt_csid="NO" data-xt_action="BC">
                             <!-- tod-pop-btn에 hide toggle -->
-                            <span class="tod-pop-btn" id="fe-btn-more">
-                                <span class="tod-txcolor6" data-xt_eid="CMMA_A11_B4-52" data-xt_csid="NO" data-xt_action="BC">6위 ~ 10위</span> 더 보기
+                            <span class="tod-pop-btn" >
+                                <span class="tod-txcolor6" >6위 ~ 10위</span> 더 보기
                             </span>
-                            <span class="tod-pop-btn fold hide" id="fe-btn-fold" data-xt_eid="CMMA_A11_B4-53" data-xt_csid="NO" data-xt_action="BC">
+                        </button>
+
+                        <button id="fe-btn-fold" style="display: none" data-xt_eid="CMMA_A11_B4-53" data-xt_csid="NO" data-xt_action="BC">
+                            <!-- tod-pop-btn에 hide toggle -->
+                            <span class="tod-pop-btn fold" >
                                 접기
                             </span>
                         </button>
