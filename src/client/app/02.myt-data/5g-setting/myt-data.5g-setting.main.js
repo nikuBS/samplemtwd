@@ -8,15 +8,18 @@
  * @constructor
  * @desc 초기화를 위한 class
  * @param {HTMLDivElement} rootEl 최상위 element
+ * @param data
  */
-Tw.MyTData5gSettingMain = function (rootEl) {
+Tw.MyTData5gSettingMain = function (rootEl, data) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-
+  this._settingData = data;
   this._initCircleDatepicker();
   this._cachedElement();
-  this._loadRemainTime();
+  // this._loadRemainTime();
+  // 서버에서 선 조회 기능이 추가되어 추가
+  this._initRemainTime();
   this._bindEvent();
   if (!Tw.Environment.init) {
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openIntro, this));
@@ -97,10 +100,10 @@ Tw.MyTData5gSettingMain.prototype = {
   },
 
   /**
-   * @function
-   * @desc 화면 진입시 사용가능시간 조회하기
+   * 사용가능시간 정보 초기화
+   * @private
    */
-  _loadRemainTime: function () {
+  _initRemainTime: function () {
     // 초기화
     this.reqCnt = 0;
     this.$timeConf.addClass('disabled');
@@ -111,6 +114,65 @@ Tw.MyTData5gSettingMain.prototype = {
     var $comment = this.$timePicked.children().eq(0);
     $comment.text($comment.data('defText'));
 
+    if (this._settingData.remainTime) {
+      // [OP002-4982] 최초 사용가능 시간 조회하여 데이터가 있는 경우
+      this._setRemainTime();
+    } else {
+      this._loadRemainTime();
+    }
+  },
+
+  /**
+   * 사용가능시간 정보 설정
+   * @param time
+   * @private
+   */
+  _setRemainTime: function (time) {
+    // api를 호출하지 않고 처음 실행 시 서버에서 받은 데이터로 사용
+    if (!time) {
+      time = this._settingData.remainTime;
+    }
+    this.remainTime = time * 60;  // 단위변경 분 -> 초
+    this.loadTime = new Date();
+    var availableTime = Tw.FormatHelper.convVoiceFormat(this.remainTime);
+    var isOverTime = +time > 720; // 사용가능시간이 최대 시간인 12시간을 초과한 경우 유무
+    var maxHour = isOverTime ? 12 : availableTime.hours, maxMin = isOverTime ? 0 : availableTime.min;
+
+    var $usableTime = this.$usedTime; // 다이얼 밑에 "사용가능시간" 영역
+    // 사용가능 최대 시간 입력 부분 (사용가능 시간이 12시간 초과이면 12시간 까지만 입력)
+    var timeText = maxHour > 0 ? maxHour + Tw.VOICE_UNIT.HOURS + ' ' : '';
+    timeText += maxMin > 0 ? maxMin + Tw.VOICE_UNIT.MIN : '';
+    timeText = timeText.trim();
+    // 다이얼 사용 가능시간 세팅
+    this.$timeConf.data('maxHour', maxHour).data('maxMinute', maxMin);
+    this.$timePicked.hide().eq(1).show().siblings().eq(1).find('span').prepend(timeText); // timeText="HH시간 MM분까지 선택가능"
+
+    // 다이얼 밑에 "사용가능시간" 영역
+    if (availableTime.hours > 0) {
+      $usableTime.find('b:first').text(availableTime.hours).parent().removeClass('none');
+    }
+    if (availableTime.min > 0) {
+      $usableTime.find('b:eq(1)').text(availableTime.min).parent().removeClass('none');
+    }
+
+    // 하단 사용가능시간 영역 텍스트 ("조회 중입니다." 비노출 & 사용 가능시간 노출)
+    $usableTime.eq(0).hide().next().removeClass('none');
+    this.$timeConf.removeClass('disabled');
+    this.$timeButton.prop('disabled', false);
+
+    // 조회요청 시간 초과된 후 "데이터 시간권 사용" 버튼 클릭한 경우, 사용가능시간 조회 완료 후 다시 데이터시간권 사용 컨펌 창 노출.
+    if (this.isTimeOver) {
+      this.isTimeOver = false;
+      this._onConfirmStart5G();
+    }
+  },
+
+  /**
+   * @function
+   * @desc 화면 진입시 사용가능시간 조회하기
+   */
+  _loadRemainTime: function () {
+    this._initRemainTime();
     // 사용 가능 시간 조회
     // [OP002-4982] - 5gx 관련 기능 개선 및 오류 수정
     // CDRS 잔여량 5분 캐시로딩으로 시간권 잔여량 실제 잔여량과 차이나는 이슈 수정
@@ -561,12 +623,12 @@ Tw.MyTData5gSettingMain.prototype = {
   _onSuccessCouponUsed: function (resp) {
     // 5G 시간권 사용 요청이 성공한 경우
     if (resp.result.length > 0 && resp.result[0].currUseYn === 'Y') {
-      var isRemained = this.remainTime ? '1' : '0';
-      Tw.CommonHelper.endLoading('.container');
       // 성공 후 잔여량 API 정리
       Tw.MyTData5gSetting.prototype.clearResidualQuantity()
         .done($.proxy(function () {
-          this._historyService.replaceURL('/myt-data/5g-setting?remained=' + isRemained);
+          // 불필요한 query 제거
+          this._historyService.replaceURL('/myt-data/5g-setting');
+          Tw.CommonHelper.endLoading('.container');
         }, this));
     }
   },
@@ -593,39 +655,6 @@ Tw.MyTData5gSettingMain.prototype = {
       this.$timePicked.children().eq(0).text(text);
       return;
     }
-    // 응답 받은 후 로직..
-    this.remainTime = resp.result.dataRemQty * 60;  // 단위변경 분 -> 초
-    this.loadTime = new Date();
-    var availableTime = Tw.FormatHelper.convVoiceFormat(this.remainTime);
-    var isOverTime = +resp.result.dataRemQty > 720; // 사용가능시간이 최대 시간인 12시간을 초과한 경우 유무
-    var maxHour = isOverTime ? 12 : availableTime.hours, maxMin = isOverTime ? 0 : availableTime.min;
-
-    var $usableTime = this.$usedTime; // 다이얼 밑에 "사용가능시간" 영역
-    // 사용가능 최대 시간 입력 부분 (사용가능 시간이 12시간 초과이면 12시간 까지만 입력)
-    var timeText = maxHour > 0 ? maxHour + Tw.VOICE_UNIT.HOURS + ' ' : '';
-    timeText += maxMin > 0 ? maxMin + Tw.VOICE_UNIT.MIN : '';
-    timeText = timeText.trim();
-    // 다이얼 사용 가능시간 세팅
-    this.$timeConf.data('maxHour', maxHour).data('maxMinute', maxMin);
-    this.$timePicked.hide().eq(1).show().siblings().eq(1).find('span').prepend(timeText); // timeText="HH시간 MM분까지 선택가능"
-
-    // 다이얼 밑에 "사용가능시간" 영역
-    if (availableTime.hours > 0) {
-      $usableTime.find('b:first').text(availableTime.hours).parent().removeClass('none');
-    }
-    if (availableTime.min > 0) {
-      $usableTime.find('b:eq(1)').text(availableTime.min).parent().removeClass('none');
-    }
-
-    // 하단 사용가능시간 영역 텍스트 ("조회 중입니다." 비노출 & 사용 가능시간 노출)
-    $usableTime.eq(0).hide().next().removeClass('none');
-    this.$timeConf.removeClass('disabled');
-    this.$timeButton.prop('disabled', false);
-
-    // 조회요청 시간 초과된 후 "데이터 시간권 사용" 버튼 클릭한 경우, 사용가능시간 조회 완료 후 다시 데이터시간권 사용 컨펌 창 노출.
-    if (this.isTimeOver) {
-      this.isTimeOver = false;
-      this._onConfirmStart5G();
-    }
+    this._setRemainTime(resp.result.dataRemQty);
   }
 };
