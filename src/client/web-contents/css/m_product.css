@@ -1143,3 +1143,14 @@
 
 /* 190926 [OP002-3539] table 수정 */
 .callP_wrap table td{vertical-align: middle!important;}
+
+/* 191030 [OP002-4661] T high5 금융 시리즈 제휴 서비스 안내 */
+.idpt-benefit .alliance-card-box .card-info .tag {display:inline-block; vertical-align:top; padding:0 0.5rem; color:#fff; font-size:0.625rem; line-height:1rem; letter-spacing:-0.0625rem; border-radius:2px;}
+.idpt-benefit .alliance-card-box .card-info .tag.color01 {background:#119ed7;}
+.idpt-benefit .alliance-card-box .card-info .tag.color02 {background:#f76252;}
+.idpt-benefit .alliance-card-box .card-info .tag_iplus {display:inline-block; vertical-align:top; width:0.8125rem; height:1rem; color:#666; line-height:1rem; text-align:center;}
+
+/* 191101 [OP002-4817] 텍스트 시각화 스타일 추가 */
+.prCont-txt .txt-litype {position:relative !important; margin:12px 0 0 !important; padding:0 !important; color:#858585 !important; font-size:13px !important; line-height:20px !important;}
+.prCont-txt .txt-litype:after {content:none !important;}
+.prCont-txt .txt-color-black {color:#000 !important;}

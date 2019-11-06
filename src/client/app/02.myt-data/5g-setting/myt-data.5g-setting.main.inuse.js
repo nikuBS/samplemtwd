@@ -33,7 +33,8 @@ Tw.MyTData5gSettingMainInuse.prototype = {
   // 데이터 시간권 사용중 페이지 내 '사용 가능 시간' 페이지 진입 시, API 호출하도록 수정
   _loadAvailableTime: function () {
     this.reqCnt = 0;
-    this._requestAvailableTime();
+    // server 에서 사용가능시간을 조회하도록 변경하여 client 에서 조회하는 부분 제외
+    // this._requestAvailableTime();
   },
 
   /**
@@ -172,23 +173,31 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * @param resp
    * @private
    */
-  _onSuccessCouponEnded: function (resp) {
-    var result = resp.result || [];
-    if (result.length > 0 && result[0].currUseYn === 'Y') {
-      setTimeout($.proxy(function () {
-        // 스윙에 정보가 설정되지 않는 문제로 인하여 딜레이 추가
-        Tw.MyTData5gSetting.prototype.requestGetConversions()
-          .done($.proxy(this._onSuccessCouponEnded, this))
-          .fail(Tw.CommonHelper.endLoading('.container'));
-      }, this), 1000);
-    } else {
-      Tw.CommonHelper.endLoading('.container');
-      // 성공 후 잔여량 API 정리
-      Tw.MyTData5gSetting.prototype.clearResidualQuantity()
-        .done($.proxy(function () {
-          this._historyService.replaceURL('/myt-data/5g-setting?remained=1');
-        }, this));
-    }
+  _onSuccessCouponEnded: function (/*resp*/) {
+    // 서버사이드에서 API 요청 처리를 하여 client 에서 제외
+    // var result = resp.result || [];
+    // if (result.length > 0 && result[0].currUseYn === 'Y') {
+    //   setTimeout($.proxy(function () {
+    //     // 스윙에 정보가 설정되지 않는 문제로 인하여 딜레이 추가
+    //     Tw.MyTData5gSetting.prototype.requestGetConversions()
+    //       .done($.proxy(this._onSuccessCouponEnded, this))
+    //       .fail(Tw.CommonHelper.endLoading('.container'));
+    //   }, this), 1000);
+    // } else {
+    //   // 성공 후 잔여량 API 정리
+    //   Tw.MyTData5gSetting.prototype.clearResidualQuantity()
+    //     .done($.proxy(function () {
+    //       Tw.CommonHelper.endLoading('.container');
+    //       this._historyService.replaceURL('/myt-data/5g-setting');
+    //     }, this));
+    // }
+    // 성공 후 잔여량 API 정리
+    Tw.MyTData5gSetting.prototype.clearResidualQuantity()
+      .done($.proxy(function () {
+        Tw.CommonHelper.endLoading('.container');
+        // 불필요한 query 제거
+        this._historyService.replaceURL('/myt-data/5g-setting');
+      }, this));
   },
 
   /**

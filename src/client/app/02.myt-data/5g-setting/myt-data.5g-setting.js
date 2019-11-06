@@ -26,7 +26,7 @@ Tw.MyTData5gSetting.prototype = {
     // 데이터 시간권 사용중 페이지 내 '사용 가능 시간' 페이지 진입 시, API 호출하도록 수정
     switch ( this._settingData.pageType ) {
       case  'NO_USE':
-        new Tw.MyTData5gSettingMain(this.$container);
+        new Tw.MyTData5gSettingMain(this.$container, this._settingData);
         break;
       case 'IN_USE':
         new Tw.MyTData5gSettingMainInuse(this.$container, this._settingData); // 이용중일 때만 생성하기
@@ -95,7 +95,7 @@ Tw.MyTData5gSetting.prototype = {
    * 실시간잔여량 조회 캐쉬 정리
    */
   clearResidualQuantity: function () {
-    return Tw.Api.request(Tw.NODE_CMD.DELETE_SESSION_STORE, { apiId : Tw.SESSION_CMD.BFF_05_0001 });
+    return Tw.Api.request(Tw.NODE_CMD.DELETE_SESSION_STORE, { apiId: Tw.SESSION_CMD.BFF_05_0001 });
   },
 
   /**
