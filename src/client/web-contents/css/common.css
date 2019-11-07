@@ -9670,6 +9670,10 @@ button:focus span {
 .tod-search-bann-wrap .section-swiper-box .slider-box .slick-dots li.slick-active span, .section-swiper-box .slider-box .slick-dots li.slick-active button {width: 0.44rem;height: 0.44rem;background: #000000; }
 /* //191105 [OP002-4966] 통합검색 UI개선_잔여업무 - 다시 재정비 */
 
+/* 191022 [OP002-4368] KDB x T high5 적금 현황 조회 */
+.bar-chart-hoz .data-bar.tod-gray {background-color:#c7c5c5; background:-webkit-linear-gradient(left, #c7c5c5 0, #afafaf 65%, #999999 100%); background:linear-gradient(to right, #c7c5c5 0, #afafaf 65%, #999999 100%);}
+.bar-chart-hoz .data-bar.tod-green {background-color:#2bbc7d; background:-webkit-linear-gradient(left, #2bbc7d 0, #00a49a 100%); background:linear-gradient(to right, #2bbc7d 0, #00a49a 100%);}
+
 /* 191025 [OP002-4668] 5G D/G 방어 추가 */
 .popup .popup-info.tod-dwg-full{background: transparent; width: calc(100% - 6rem); max-width: 18.75rem;}
 .popup .popup-info .tod-bt-group{margin-top: 0; background-color:#fff;}
