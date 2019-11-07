@@ -9615,57 +9615,64 @@ button:focus span {
 .paymentcharge-box .fb{font-size: 1.56rem;}
 
 /* 191001 [OP002-4009] 전체메뉴_통합검색 UI개선 */
-.sch-form.tod-sch-form{background:-webkit-linear-gradient(left, #f7645c 0%,#f65b7e 100%); background: linear-gradient(to right, #f7645c 0%,#f65b7e 100%); padding:12px 12px 12px 48px}
-.sch-form.tod-sch-form input[type='search']{display:block; width:100%; height:2.63rem; padding:2px 46px 0 10px; background:#fff; border:none; border-radius:0.25rem; font-size:0.94rem; color:#000; font-weight:300}
+/* 191105 [OP002-4966] 통합검색 UI개선_잔여업무 - 다시 재정비 */
+.sch-form.tod-sch-form{background:-webkit-linear-gradient(left, #f7645c 0%,#f65b7e 100%); background: linear-gradient(to right, #f7645c 0%,#f65b7e 100%); padding:0.75rem 0.75rem 0.75rem 3rem}
+.sch-form.tod-sch-form input[type='search']{display:block; width:100%; height:2.63rem; padding:0.125rem 2.875rem 0 0.625rem; background:#fff; border:none; border-radius:0.25rem; font-size:0.94rem; color:#000; font-weight:300}
 .sch-form.tod-sch-form .inputbox .input .cancel{right:40px}
-.sch-form.tod-sch-form .icon-gnb-search{left:auto; right:12px}
-.sch-form.tod-sch-form .close-area{width:48px; right:auto; left:0; background:url('/img/common/search-arr-white.png') no-repeat 50% 50%; background-size:11px 20px}
-.tod-rec-search-box{padding:16px 0}
-.tod-rec-search-box .rec-search{overflow:hidden; display:flex; width:100%; flex-wrap:nowrap}
-.tod-rec-search-box .rec-search .rec-item{width:75px; height:20px; box-sizing:border-box; border:1px solid #f76151; border-radius:16px; text-align:center; font-size:11px; color:#f76151; line-height:20px; flex-shrink:0;}
-.tod-rec-search-box .rec-search .rec-word{width:-webkit-calc(100% - 75px); width:calc(100% - 75px); height:20px; line-height:20px; white-space:nowrap; font-size:16px; text-overflow:ellipsis; overflow:hidden; padding-left:8px; box-sizing:border-box}
+.sch-form.tod-sch-form .icon-gnb-search{left:auto; right:0.75rem}
+.sch-form.tod-sch-form .close-area{width:3rem; right:auto; left:0; background:url('/img/common/search-arr-white.png') no-repeat 50% 50%; background-size:0.6875rem 1.25rem}
+.tod-rec-search-box{padding:1rem 0}
+.tod-rec-search-box .rec-search{display:flex; width:100%; flex-wrap:nowrap; align-items:center}
+.tod-rec-search-box .rec-search .rec-item{width:3.375rem; height:1.25rem; box-sizing:border-box; background:url('/img/common/recommand_sear_badge.png') no-repeat left top; background-size:3.375rem 1.25rem; } 
+.tod-rec-search-box .rec-search .rec-word{width:-webkit-calc(100% - 3.375rem - 0.5rem); width:calc(100% - 3.375rem - 0.5rem); height:1.25rem; box-sizing:border-box; margin-left:0.5rem}
+.tod-rec-search-box .rec-search .rec-word button{display:inline-block; width:100%; line-height:21px; white-space:nowrap; font-size:1rem; text-overflow:ellipsis; overflow:hidden; text-align:left}
 .tod-search-tit{font-size:16px; color:#000; font-weight:500 }
-.tod-search-tit.slide-tit{padding:20px 16px 0;}
-.tod-search-task-box{overflow:hidden; width:100%; margin-top:15px }
-.tod-search-task-box .search-task-list{overflow:hidden; margin:-8px -8px 0 0}
-.tod-search-task-box .search-task-list .item{float:left; margin:8px 8px 0 0}
-.tod-search-task-box .search-task-list .item button{display:inline-block; padding:10px 13px 9px; color:#000; font-size:13px; border:1px solid #e6e7e8; border-radius:36px; line-height:1; background:#fff; white-space:nowrap; }
+.tod-search-tit.slide-tit{padding:1.25rem 1rem 0;}
+.tod-search-task-box{overflow:hidden; width:100%; margin-top:0.9375rem }
+.tod-search-task-box .search-task-list{overflow:hidden; margin:-0.5rem -0.5rem 0 0}
+.tod-search-task-box .search-task-list .item{float:left; margin:0.5rem 0.5rem 0 0}
+.tod-search-task-box .search-task-list .item button{display:inline-block; padding:0.625rem 0.8125rem 0.5625rem; color:#000; font-size:0.8125rem; border:0.0625rem solid #e6e7e8; border-radius:2.25rem; line-height:1; background:#fff; white-space:nowrap; }
 .tod-search-task-box .search-task-list .item.strong button{background:#f76151; border-color:#f76151; color:#fff}
 .tod-popularword-wrap{overflow:hidden; margin-top:10px; height:auto}
-.tod-popularword-wrap .popularsearchword-list .category-type .number{width:30px; text-align:center; color:#666}
-.tod-popularword-wrap .popularsearchword-list .category-type .text{width:calc(100% - 30px); padding-left:8px}
-.tod-popularword-wrap .popularsearchword-list .category-type{height:41px}
+.tod-popularword-wrap .popularsearchword-list .category-type .number{width:1.875rem; text-align:center; color:#666}
+.tod-popularword-wrap .popularsearchword-list .category-type .text{width:calc(100% - 1.875rem); padding-left:0.5rem}
+.tod-popularword-wrap .popularsearchword-list .category-type{height:2.5625rem}
 .tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(-n+3) .category-type{border-bottom:none}
 .tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(-n+3) .category-type .number{background:none; color:#f76252; font-weight:700; padding-top:0; height:auto}
-.tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(-n+3) .category-type .text{font-weight:normal; font-size:16px}
+.tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(-n+3) .category-type .text{font-weight:normal; font-size:1rem}
 .tod-popularword-wrap .popularsearchword-list.linklist-type li:nth-child(n+6):nth-child(-n+10) {display:none}
 .tod-popularword-wrap.show .popularsearchword-list.linklist-type li:nth-child(n+6):nth-child(-n+10) {display:block}
 .btn-more button .tod-pop-btn{display:inline-block}
-.btn-more button .tod-pop-btn:after{content:''; display:inline-block; width:12px; height:7px; background:url('/img/common/btn-arr.png') no-repeat left top; background-size:100% 100%; vertical-align:top; margin:5px 0 0 8px}
+.btn-more button .tod-pop-btn:after{content:''; display:inline-block; width:0.75rem; height:0.4375rem; background:url('/img/common/btn-arr.png') no-repeat left top; background-size:100% 100%; vertical-align:top; margin:0.3125rem 0 0 0.5rem}
 .btn-more button .tod-pop-btn.hide{display:none}
 .btn-more button .tod-pop-btn.fold:after{-webkit-transform:rotate(180deg); transform:rotate(180deg);}
 .tod-search-bann-wrap{overflow:hidden}
 .tod-search-bann-wrap .tod-search-bann-box.section-swiper-box .slider-box .slick-dots{top:-20px}
-.tod-search-bann-wrap .tod-search-bann-box.section-swiper-box.tod-bann-auto .slider-box .tod-bann-btn{top:-23px}
-.help-list {overflow: hidden;margin: 1.56rem 0 1.88rem 0; }
-.help-list li { float: left; width: 33.333%; }
-.help-list li .bt { display: block; width: 100%; color: inherit; font-size: 0.81rem; font-weight: 500; line-height: 0.88rem; text-align: center; }
-.help-list li .bt .ico {position: relative; overflow: hidden;display: block;width: 4.25rem;height: 4.25rem;margin: 0 auto 0.75rem;border-radius: 100%;  z-index: 1; }
-.help-list li .bt .ico img {width: 100%;height: 100%;vertical-align: middle; }
-.tod-bann-auto .slider1-auto .slider-box{position:relative}
-.tod-bann-auto .slider1-auto .slick-dots{right:2.9375rem !important}
-.tod-bann-auto.main-tip-box.box-type .slider1-auto .slider-box .tod-bann-btn{top:-3.9375rem !important}
-.tod-bann-auto.accessories-box .slider1-auto .slider-box .tod-bann-btn{top:1.6875rem !important}
-.tod-bann-auto .tod-bann-btn{position:absolute; width:auto !important; top:1.3125rem; right:1.5rem; padding:0.3125rem; line-height:0; vertical-align:top }
-.tod-bann-auto .tod-bann-btn:before{content:''; display:inline-block; width:0.8125rem !important; height:0.8125rem !important; border-radius:50%; text-align:center;  background:rgba(00,00,00,0.3) url('/img/main/tod_ban_play.png') no-repeat 50% 50%; background-size:100%;}
-.tod-bann-auto .tod-bann-btn.stop:before{background-image:url('/img/main/tod_ban_stop.png')}
-.section-swiper-box .slick-prev,
-.section-swiper-box .slick-next {display: none !important; }
-.section-swiper-box .slider-box .slick-dots {position: absolute;right: 1.5rem;top: 0;bottom: auto;width: auto; }
-.section-swiper-box .slider-box .slick-dots li {float: left; width: 0.44rem;height: 0.44rem;margin: 0 0 0 0;padding: 5px;color: transparent; }
-.section-swiper-box .slider-box .slick-dots li span, .section-swiper-box .slider-box .slick-dots li button {display: block; width: 0.44rem; height: 0.44rem; margin: 0;border-radius: 100%;overflow: hidden;color: transparent;  border: 1px solid #000000;  background: #fff;  -webkit-box-sizing: border-box; box-sizing: border-box;  opacity: 1; }
-.section-swiper-box .slider-box .slick-dots li.slick-active {width: 0.5rem;height: 0.5rem; }
-.section-swiper-box .slider-box .slick-dots li.slick-active span, .section-swiper-box .slider-box .slick-dots li.slick-active button {width: 0.44rem;height: 0.44rem;background: #000000; }
+.tod-search-bann-wrap .tod-search-bann-box.section-swiper-box.tod-bann-auto .slider-box .tod-bann-btn{top:-1.4375rem}
+.tod-search-bann-wrap .help-list {overflow: hidden;margin: 1.56rem 0 1.88rem 0; }
+.tod-search-bann-wrap .help-list li { float: left; width: 33.333%; }
+.tod-search-bann-wrap .help-list li .bt { display: block; width: 100%; color: inherit; font-size: 0.81rem; font-weight: 500; line-height: 0.88rem; text-align: center; }
+.tod-search-bann-wrap .help-list li .bt .ico {position: relative; overflow: hidden;display: block;width: 4.25rem;height: 4.25rem;margin: 0 auto 0.75rem;border-radius: 100%;  z-index: 1; }
+.tod-search-bann-wrap .help-list li .bt .ico img {width: 100%;height: 100%;vertical-align: middle; }
+.tod-search-bann-wrap .tod-bann-auto .slider1-auto .slider-box{position:relative}
+.tod-search-bann-wrap .tod-bann-auto .slider1-auto .slick-dots{right:2.9375rem !important}
+.tod-search-bann-wrap .tod-bann-auto.main-tip-box.box-type .slider1-auto .slider-box .tod-bann-btn{top:-3.9375rem !important}
+.tod-search-bann-wrap .tod-bann-auto.accessories-box .slider1-auto .slider-box .tod-bann-btn{top:1.6875rem !important}
+.tod-search-bann-wrap .tod-bann-auto .tod-bann-btn{position:absolute; width:auto !important; top:1.3125rem; right:1.5rem; padding:0.3125rem; line-height:0; vertical-align:top }
+.tod-search-bann-wrap .tod-bann-auto .tod-bann-btn:before{content:''; display:inline-block; width:0.8125rem !important; height:0.8125rem !important; border-radius:50%; text-align:center;  background:rgba(00,00,00,0.3) url('/img/main/tod_ban_play.png') no-repeat 50% 50%; background-size:100%;}
+.tod-search-bann-wrap .tod-bann-auto .tod-bann-btn.stop:before{background-image:url('/img/main/tod_ban_stop.png')}
+.tod-search-bann-wrap .section-swiper-box .slick-prev,
+.tod-search-bann-wrap .section-swiper-box .slick-next {display: none !important; }
+.tod-search-bann-wrap .section-swiper-box .slider-box .slick-dots {position: absolute;right: 1.5rem;top: 0;bottom: auto;width: auto; }
+.tod-search-bann-wrap .section-swiper-box .slider-box .slick-dots li {float: left; width: 0.44rem;height: 0.44rem; margin: 0 0 0 0; padding: 5px;color: transparent; }
+.tod-search-bann-wrap .section-swiper-box .slider-box .slick-dots li span, .section-swiper-box .slider-box .slick-dots li button {display: block; width: 0.44rem; height: 0.44rem; margin: 0;border-radius: 100%;overflow: hidden;color: transparent;  border: 1px solid #000000;  background: #fff;  -webkit-box-sizing: border-box; box-sizing: border-box;  opacity: 1; }
+.tod-search-bann-wrap .section-swiper-box .slider-box .slick-dots li.slick-active {width: 0.5rem;height: 0.5rem; }
+.tod-search-bann-wrap .section-swiper-box .slider-box .slick-dots li.slick-active span, .section-swiper-box .slider-box .slick-dots li.slick-active button {width: 0.44rem;height: 0.44rem;background: #000000; }
+/* //191105 [OP002-4966] 통합검색 UI개선_잔여업무 - 다시 재정비 */
+
+/* 191022 [OP002-4368] KDB x T high5 적금 현황 조회 */
+.bar-chart-hoz .data-bar.tod-gray {background-color:#c7c5c5; background:-webkit-linear-gradient(left, #c7c5c5 0, #afafaf 65%, #999999 100%); background:linear-gradient(to right, #c7c5c5 0, #afafaf 65%, #999999 100%);}
+.bar-chart-hoz .data-bar.tod-green {background-color:#2bbc7d; background:-webkit-linear-gradient(left, #2bbc7d 0, #00a49a 100%); background:linear-gradient(to right, #2bbc7d 0, #00a49a 100%);}
 
 /* 191025 [OP002-4668] 5G D/G 방어 추가 */
 .popup .popup-info.tod-dwg-full{background: transparent; width: calc(100% - 6rem); max-width: 18.75rem;}

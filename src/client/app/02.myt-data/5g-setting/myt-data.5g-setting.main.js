@@ -8,18 +8,15 @@
  * @constructor
  * @desc 초기화를 위한 class
  * @param {HTMLDivElement} rootEl 최상위 element
+ * @param data
  */
-Tw.MyTData5gSettingMain = function (rootEl) {
+Tw.MyTData5gSettingMain = function (rootEl, data) {
   this.$container = rootEl;
-  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-
-  this._initCircleDatepicker();
-  this._cachedElement();
-  this._loadRemainTime();
-  this._bindEvent();
-  if ( !Tw.Environment.init ) {
+  this._settingData = data;
+  this._initialize();
+  if (!Tw.Environment.init) {
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openIntro, this));
   } else {
     this._openIntro();
@@ -27,6 +24,24 @@ Tw.MyTData5gSettingMain = function (rootEl) {
 };
 
 Tw.MyTData5gSettingMain.prototype = {
+  /**
+   * 초기화
+   * @private
+   */
+  _initialize: function () {
+    this._initCircleDatepicker();
+    this._cachedElement();
+    this._bindEvent();
+    // this._loadRemainTime();
+    // 서버에서 선 조회 기능이 추가되어 추가
+    if (this._settingData.remainTime) {
+      // [OP002-4982] 최초 사용가능 시간 조회하여 데이터가 있는 경우
+      this._initRemainTime();
+      this._setRemainTime();
+    } else {
+      this._loadRemainTime();
+    }
+  },
   /**
    * @function
    * @desc dom caching
@@ -57,8 +72,8 @@ Tw.MyTData5gSettingMain.prototype = {
     this.$timeSetButton.on('click', $.proxy(this._start5g, this));
     this.$timePicker.on('click', $.proxy(this._onClickTime, this));
     this.$timeButton.on('click', $.proxy(this._addTime, this));
-    this.$datePicker.circle_datepicker().on('timer', _.debounce($.proxy(this._onTimer, this), 10));
-    this.$container.on('click','.fe-time-search', _.debounce($.proxy(this._loadRemainTime, this), 10));
+    this.$datePicker.circle_datepicker().on('timer', _.debounce($.proxy(this._onTimer, this), 500));
+    this.$container.on('click', '.fe-time-search', _.debounce($.proxy(this._loadRemainTime, this), 500));
   },
 
   /**
@@ -72,30 +87,36 @@ Tw.MyTData5gSettingMain.prototype = {
     this._popupService.open({
       url: '/hbs/',
       hbs: 'popup',
-      'notice_has':'og-popup-intro',
-      'cont_align':'tc',
-      'contents': '<img src="'+ Tw.Environment.cdn+'/img/t_m5g/og_pop_intro.png" alt="5GX 0Plan 시간권으로 데이터를 이용하세요! 사용량 걱정 없이 원하는 시간만큼 쓰는 방법!" style="max-width:100%;">',
-      'bt_b': [{
+      notice_has: 'og-popup-intro',
+      cont_align: 'tc',
+      bt_b: [{
         style_class: 'pos-left',
         txt: '다시보지 않기'
-      },{
+      }, {
         style_class: 'bt-red1 pos-right',
         txt: '시작하기'
-      }]
-    }, $.proxy(function () {
-      $('.pos-left').on('click', function () {
-        localStorage['dont.again'] = 'do not again';
-        Tw.Popup.close();
-      });
-      $('.pos-right').on('click', Tw.Popup.close);
-    }, this));
+      }],
+      contents: '<img src="' + Tw.Environment.cdn +
+        '/img/t_m5g/og_pop_intro.png" alt="5GX 0Plan 시간권으로 데이터를 이용하세요! 사용량 걱정 없이 원하는 시간만큼 쓰는 방법!" ' +
+        'style="max-width:100%;">'
+    }, this._introPopOpenCallback);
+  },
+
+  _introPopOpenCallback: function ($elem) {
+    this.$popupLeftBtn = $elem.find('.pos-left');
+    this.$popupRightBtn = $elem.find('.pos-right');
+    this.$popupLeftBtn.on('click', function () {
+      localStorage['dont.again'] = 'do not again';
+      Tw.Popup.close();
+    });
+    this.$popupRightBtn.on('click', Tw.Popup.close);
   },
 
   /**
-   * @function
-   * @desc 화면 진입시 사용가능시간 조회하기
+   * 사용가능시간 정보 초기화
+   * @private
    */
-  _loadRemainTime : function () {
+  _initRemainTime: function () {
     // 초기화
     this.reqCnt = 0;
     this.$timeConf.addClass('disabled');
@@ -105,50 +126,22 @@ Tw.MyTData5gSettingMain.prototype = {
     this.$usedTime.eq(0).children().eq(0).addBack('block').show().next().addClass('none');
     var $comment = this.$timePicked.children().eq(0);
     $comment.text($comment.data('defText'));
-
-    // 사용 가능 시간 조회
-    this._requestAvailableTime();
   },
 
   /**
-   * @function
-   * @desc 사용가능 시간 조회
+   * 사용가능시간 정보 설정
+   * @param time
+   * @private
    */
-  _requestAvailableTime: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0079, { reqCnt: this.reqCnt++ })
-      .done($.proxy(this._onSucessAvailableTime, this))
-      .fail(this._onFail);
-  },
-
-  /**
-   * @function
-   * @param resp
-   * @returns {void|*}
-   * @desc 사용가능시간 조회 콜백
-   */
-  _onSucessAvailableTime: function (resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
+  _setRemainTime: function (time) {
+    // api를 호출하지 않고 처음 실행 시 서버에서 받은 데이터로 사용
+    if (!time) {
+      time = this._settingData.remainTime;
     }
-    if ( !resp.result || Tw.FormatHelper.isEmpty(resp.result.dataRemQty) || resp.result.brwsPsblYn !== 'Y' || resp.result.cnvtPsblYn !== 'Y') {
-      // 최대 3회 호출.
-      if (this.reqCnt < 3) {
-        window.setTimeout($.proxy(this._requestAvailableTime, this), 1000);
-        return;
-      }
-      // 3회 호출해도 값이 없으면 조회하기 버튼 노출
-      this.$usedTime.eq(0).children().eq(0).removeClass('block').hide().next().removeClass('none');
-      // 다아얼 상단 텍스트 문구 변경 (조회 실패시 '사용 가능 시간을 다시 조회해 주세요.)
-      var $comment = this.$timePicked.children().eq(0);
-      $comment.text($comment.data('failText'));
-      return;
-    }
-
-    // 응답 받은 후 로직..
-    this.remainTime = resp.result.dataRemQty * 60;  // 단위변경 분 -> 초
+    this.remainTime = time * 60;  // 단위변경 분 -> 초
     this.loadTime = new Date();
     var availableTime = Tw.FormatHelper.convVoiceFormat(this.remainTime);
-    var isOverTime = +resp.result.dataRemQty > 720; // 사용가능시간이 최대 시간인 12시간을 초과한 경우 유무
+    var isOverTime = +time > 720; // 사용가능시간이 최대 시간인 12시간을 초과한 경우 유무
     var maxHour = isOverTime ? 12 : availableTime.hours, maxMin = isOverTime ? 0 : availableTime.min;
 
     var $usableTime = this.$usedTime; // 다이얼 밑에 "사용가능시간" 영역
@@ -156,9 +149,8 @@ Tw.MyTData5gSettingMain.prototype = {
     var timeText = maxHour > 0 ? maxHour + Tw.VOICE_UNIT.HOURS + ' ' : '';
     timeText += maxMin > 0 ? maxMin + Tw.VOICE_UNIT.MIN : '';
     timeText = timeText.trim();
-
     // 다이얼 사용 가능시간 세팅
-    this.$timeConf.data('maxHour', maxHour).data('maxMinute',maxMin);
+    this.$timeConf.data('maxHour', maxHour).data('maxMinute', maxMin);
     this.$timePicked.hide().eq(1).show().siblings().eq(1).find('span').prepend(timeText); // timeText="HH시간 MM분까지 선택가능"
 
     // 다이얼 밑에 "사용가능시간" 영역
@@ -181,7 +173,29 @@ Tw.MyTData5gSettingMain.prototype = {
     }
   },
 
-  _togglePicker: function(index) {
+  /**
+   * @function
+   * @desc 화면 진입시 사용가능시간 조회하기
+   */
+  _loadRemainTime: function () {
+    this._initRemainTime();
+    // 사용 가능 시간 조회
+    // [OP002-4982] - 5gx 관련 기능 개선 및 오류 수정
+    // CDRS 잔여량 5분 캐시로딩으로 시간권 잔여량 실제 잔여량과 차이나는 이슈 수정
+    this._requestAvailableTime();
+  },
+
+  /**
+   * @function
+   * @desc 사용가능 시간 조회
+   */
+  _requestAvailableTime: function () {
+    Tw.MyTData5gSetting.prototype.requestAvailableTime(this.reqCnt++)
+      .done($.proxy(this._onAtSuccessCallback, this))
+      .fail(Tw.MyTData5gSetting.prototype.onFail);
+  },
+
+  _togglePicker: function (index) {
     this.$timeConf.data('type', index);
     this.$timePicker.removeClass('on').eq(index).addClass('on');
     var pi = (index === 0) ? this.$timeConf.data('hour') : this.$timeConf.data('minute');
@@ -189,9 +203,9 @@ Tw.MyTData5gSettingMain.prototype = {
   },
 
   // 시간 or 분 선택 시
-  _onClickTime : function(e) {
+  _onClickTime: function (e) {
     e.preventDefault();
-    var idx =  this.$timePicker.index($(e.currentTarget));
+    var idx = this.$timePicker.index($(e.currentTarget));
     this._togglePicker(idx);
   },
 
@@ -313,16 +327,20 @@ Tw.MyTData5gSettingMain.prototype = {
 
         if (this.pressed === 'path') {
           this.value = [this.oldValues[0] - diff, this.oldValues[1] - diff];
-        } else if (this.pressed === 'start') {
-          if (this.oldValues[0] - diff > this.oldValues[1]) {
-            diff = diff + 360;
+        } else {
+          if (this.pressed === 'start') {
+            if (this.oldValues[0] - diff > this.oldValues[1]) {
+              diff = diff + 360;
+            }
+            this.value[0] = this.oldValues[0] - diff;
+          } else {
+            if (this.pressed === 'end') {
+              if (this.oldValues[1] - diff < this.oldValues[0]) {
+                diff = diff - 360;
+              }
+              this.value[1] = this.oldValues[1] - diff;
+            }
           }
-          this.value[0] = this.oldValues[0] - diff;
-        } else if (this.pressed === 'end') {
-          if (this.oldValues[1] - diff < this.oldValues[0]) {
-            diff = diff - 360;
-          }
-          this.value[1] = this.oldValues[1] - diff;
         }
 
         this.value[0] = this.value[0] % 360;
@@ -357,10 +375,12 @@ Tw.MyTData5gSettingMain.prototype = {
       var direction;
       if (Math.round(this.oldCircle) === 0 && Math.round(this.value[2]) === 72) {
         direction = false;
-      } else if (Math.round(this.oldCircle) === 72 && Math.round(this.value[2]) === 0) {
-        direction = true;
       } else {
-        direction = this.value[2] > this.oldCircle;
+        if (Math.round(this.oldCircle) === 72 && Math.round(this.value[2]) === 0) {
+          direction = true;
+        } else {
+          direction = this.value[2] > this.oldCircle;
+        }
       }
 
       this.$el.trigger('change', [[angle_to_time(this.value[0], this.options.step_mins), angle_to_time(this.value[1], this.options.step_mins)]]);
@@ -381,15 +401,15 @@ Tw.MyTData5gSettingMain.prototype = {
    * @desc 서클 드래그시 설정
    */
   _onTimer: function (e, data) {
-    var $timeConf = this.$timeConf,
-      hourPi = 360 / 13,
-      minutePi = 360 / 6,
-      time = 0,
-      $hour = this.$time,
-      $minute = this.$min,
-      $timePicked = this.$timePicked,
-      maxHour = $timeConf.data('maxHour'),
-      maxMinute = $timeConf.data('maxMinute')
+    var $timeConf   = this.$timeConf,
+        hourPi      = 360 / 13,
+        minutePi    = 360 / 6,
+        time        = 0,
+        $hour       = this.$time,
+        $minute     = this.$min,
+        $timePicked = this.$timePicked,
+        maxHour     = $timeConf.data('maxHour'),
+        maxMinute   = $timeConf.data('maxMinute')
     ;
     // 시간
     if ($timeConf.data('type') === 0) {
@@ -408,22 +428,22 @@ Tw.MyTData5gSettingMain.prototype = {
       var maxMin = $timeConf.data('maxMin') || '00';
       var minPrefix = maxMin.charAt(0); // 숫자 맨 앞자리
       if (time === parseInt(minPrefix, 10)) {
-        time = parseInt(maxMin,10);
+        time = parseInt(maxMin, 10);
       } else {
-        time = time*10;
-        $timeConf.data('maxMin','');
+        time = time * 10;
+        $timeConf.data('maxMin', '');
       }
 
       // 50 분에서 다이얼을 오른쪽으로 돌려서 다시 0부터 시작인 경우, "시간" 1시간 추가됨.
-      if(this.min === 50 && time === 0){
+      if (this.min === 50 && time === 0) {
         // 최대 시간은 12시
-        if (this.hour < 12){
+        if (this.hour < 12) {
           $hour.html(this._addZero(++this.hour));
           $timeConf.data('hour', hourPi * this.hour);
         }
       }
       // 0분인 상태에서 다이얼을 왼쪽으로 돌리면 시간에서 1시간 빼줌.
-      if(this.min === 0 && time === 50){
+      if (this.min === 0 && time === 50) {
         if (this.hour > 0) {
           $hour.html(this._addZero(--this.hour));
           $timeConf.data('hour', hourPi * this.hour);
@@ -435,7 +455,7 @@ Tw.MyTData5gSettingMain.prototype = {
     }
 
     var hour = parseInt($hour.html(), 10),
-      min = parseInt($minute.html(), 10);
+        min  = parseInt($minute.html(), 10);
 
     this.hour = hour;
     this.min = min;
@@ -463,7 +483,7 @@ Tw.MyTData5gSettingMain.prototype = {
    * @desc 버튼으로 시간설정 callback
    */
   _pickerRedraw: function (pi) {
-    this.$datePicker.trigger('circledatepickerredraw', {'pi': pi});
+    this.$datePicker.trigger('circledatepickerredraw', { 'pi': pi });
   },
 
   /**
@@ -479,20 +499,20 @@ Tw.MyTData5gSettingMain.prototype = {
    * @param e
    * @desc 시간 설정 버튼 클릭시
    */
-  _addTime : function (e) {
+  _addTime: function (e) {
     var
-      $this = $(e.currentTarget),
+      $this     = $(e.currentTarget),
       $timeConf = this.$timeConf,
-      hourPi = 360 / 13,
-      minutePi = 360 / 6,
-      time = 0,
-      pi = 0,
-      $hour = this.$time,
-      $minute = this.$min,
-      maxHour = $timeConf.data('maxHour'),
+      hourPi    = 360 / 13,
+      minutePi  = 360 / 6,
+      time      = 0,
+      pi        = 0,
+      $hour     = this.$time,
+      $minute   = this.$min,
+      maxHour   = $timeConf.data('maxHour'),
       maxMinute = $timeConf.data('maxMinute')
     ;
-    switch ($this.index()) {
+    switch ( $this.index() ) {
       case 0 :
         // 분단위 시간 설정 클릭시
         pi = (parseInt($timeConf.data('minute') + minutePi, 10) >= 360) ? 0 : parseInt($timeConf.data('minute') + minutePi, 10);
@@ -507,7 +527,7 @@ Tw.MyTData5gSettingMain.prototype = {
         pi = (pi === parseInt(hourPi, 10)) ? pi + hourPi : pi;
         time = parseInt(pi / hourPi, 10);
         // "전체" 선택 후 "1시간" 추가 버튼 클릭 시 시간 안맞는거 보정.
-        if (time !== 0 && time < (this.hour+1)) {
+        if (time !== 0 && time < (this.hour + 1)) {
           pi += hourPi;
         }
         $timeConf.data('hour', pi);
@@ -524,7 +544,7 @@ Tw.MyTData5gSettingMain.prototype = {
         }
 
         // 사용가능 시간이 12시간 초과인 경우 최대 12시간만 체크함.
-        if ( maxHour * 60 + maxMinute > 720) {
+        if (maxHour * 60 + maxMinute > 720) {
           maxHour = 12;
           maxMinute = 0;
         }
@@ -581,11 +601,9 @@ Tw.MyTData5gSettingMain.prototype = {
   _requestStart5g: function () {
     this._popupService.close();
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-
-    this._apiService.request(Tw.API_CMD.BFF_06_0080, {
-      timeUnit: this.hour * 60 + this.min
-    }).done($.proxy(this._procConfirmRes, this))
-    .fail($.proxy(this._onFail, this));
+    Tw.MyTData5gSetting.prototype.requestEditConversions(this.hour * 60 + this.min)
+      .done($.proxy(this._procConfirmRes, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   /**
@@ -597,45 +615,52 @@ Tw.MyTData5gSettingMain.prototype = {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
-    this._intervalReload();
-  },
-
-  /**
-   * @function
-   * @desc BE 처리하는데 시간 걸려서 요청 후 1초 주기로 재요청 하여 상태값 변경되면 페이지 이동한다.
-   */
-  _intervalReload: function () {
-    var reqCnt = 0;
-    // 사용가능 시간에서 시간권 요청 한 시간을 빼준다.
-    this.remainTime -= (this.hour * 60 + this.min) * 60;
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    var interval = window.setInterval(function () {
-      var callBack = function (res) {
-        if (res.result.length > 0 && res.result[0].currUseYn === 'Y') {
-          this._historyService.replaceURL('/myt-data/5g-setting?remainTime='+this.remainTime+'&conversionsInfo='+JSON.stringify(res));
-          return;
-        }
-      };
-
-      if (reqCnt++ > 2){
-        window.clearInterval(interval);
-      }
-
-      this._apiService.request(Tw.API_CMD.BFF_06_0078, {})
-        .done($.proxy(callBack, this))
-        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
-
-    }.bind(this), 1000);
+    Tw.MyTData5gSetting.prototype.requestGetConversions()
+      .done($.proxy(this._onSuccessCouponUsed, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   /**
-   * @function
-   * @desc API Fail
-   * @param {JSON} err
+   * 5G 시간권 사용 요청이 성공한 경우 현재 페이지 갱신
+   * @param resp
+   * @private
    */
-  _onFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
-    Tw.Error(err.code, err.msg).pop();
-  }
+  _onSuccessCouponUsed: function (resp) {
+    // 5G 시간권 사용 요청이 성공한 경우
+    if (resp.result.length > 0 && resp.result[0].currUseYn === 'Y') {
+      // 성공 후 잔여량 API 정리
+      Tw.MyTData5gSetting.prototype.clearResidualQuantity()
+        .done($.proxy(function () {
+          // 불필요한 query 제거
+          this._historyService.replaceURL('/myt-data/5g-setting');
+          Tw.CommonHelper.endLoading('.container');
+        }, this));
+    }
+  },
 
+  /**
+   * 사용가능시간 조회 후 결과 처리
+   * @param resp
+   * @private
+   */
+  _onAtSuccessCallback: function (resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+    if (!resp.result || Tw.FormatHelper.isEmpty(resp.result.dataRemQty) || resp.result.brwsPsblYn !== 'Y' || resp.result.cnvtPsblYn !== 'Y') {
+      // 최대 3회 호출.
+      if (this.reqCnt < 3) {
+        window.setTimeout($.proxy(this._requestAvailableTime, this), 1000);
+        return;
+      }
+      // 3회 호출해도 값이 없으면 조회하기 버튼 노출
+      this.$usedTime.eq(0).children().eq(0).removeClass('block').hide().next().removeClass('none');
+      // 다아얼 상단 텍스트 문구 변경 (조회 실패시 '사용 가능 시간을 다시 조회해 주세요.)
+      var text = this.$timePicked.children().eq(0).data('failText');
+      this.$timePicked.children().eq(0).text(text);
+      return;
+    }
+    this._setRemainTime(resp.result.dataRemQty);
+  }
 };

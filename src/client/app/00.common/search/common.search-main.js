@@ -77,7 +77,8 @@ Tw.CommonSearchMain.prototype = {
    * @returns {void}
    */
   _bindEvent : function () {
-    this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
+    // this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
+    this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
     this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
@@ -298,8 +299,8 @@ Tw.CommonSearchMain.prototype = {
   _showMorePopularSearchWord : function(){
     _.each(this.$container.find('.fe-popularword-list-content'), $.proxy(this._showMoreContent, this));
 
-    this.$container.find('#fe-btn-more').addClass('hide');
-    this.$container.find('#fe-btn-fold').removeClass('hide');
+    document.querySelector('#fe-btn-more').setAttribute('style', 'display: none');
+    document.querySelector('#fe-btn-fold').setAttribute('style', 'display: block');
   },
   /**
    * @function
@@ -321,8 +322,8 @@ Tw.CommonSearchMain.prototype = {
   _hideMorePopularSearchWord : function () {
     _.each(this.$container.find('.fe-popularword-list-content'), $.proxy(this._hideMoreContent, this));
 
-    this.$container.find('#fe-btn-more').removeClass('hide');
-    this.$container.find('#fe-btn-fold').addClass('hide');
+    document.querySelector('#fe-btn-more').setAttribute('style', 'display: block');
+    document.querySelector('#fe-btn-fold').setAttribute('style', 'display: none');
   },
   /**
    * @function
