@@ -53,45 +53,19 @@ class MyTData5gSetting extends TwViewController {
     this.renderCommonInfo = {
       pageInfo,
       svcInfo,
-      pageType: 'NO_USE' // default 미이용
+      remainTime: req.query.remainTime,
+      pageType: 'UN_USE' // default 미이용
     };
     // 사용시간 조회 -> 시간권정보 및 이용내역 조회 -> 부가서비스 조회 순서대로 처리
     // 5G 관련 API 요청시 딜레이가 발생함 (swing legacy 에서 응답이 늦음)
-    this.getAvailableTime().subscribe(availableData => {
-      this.requestAvailableTime(availableData, res);
-    });
-  }
-
-  /**
-   * 사용가능시간 조회
-   * @param availableData
-   * @param res
-   */
-  private requestAvailableTime(availableData: any, res: Response) {
-    const { result } = availableData;
-    if ( !result || result.brwsPsblYn !== 'Y' || result.cnvtPsblYn !== 'Y' ) {
-      if ( this.reqCnt < 3 ) {
-        this.getAvailableTime().subscribe(data => {
-          this.requestAvailableTime(data, res);
-        });
-        return;
-      }
-      const apiError = this.error.apiError([availableData]);
-      return this.error.render(res, Object.assign(this.renderCommonInfo, {
-        code: apiError.code,
-        msg: apiError.msg,
-        isBackCheck: true
-      }));
-    }
-    this.request5GInfomation(availableData, res);
+    this.request5GInfomation(res);
   }
 
   /**
    * 시간권정보 및 부가서비스 조회
-   * @param availableData
    * @param res
    */
-  private request5GInfomation(availableData: any, res: Response): void {
+  private request5GInfomation(res: Response): void {
     // 시간권 정보 조회 시 차이가 발생하여 delay 처리
     Observable.combineLatest(
       this.getConversionsInfo(),  // 시간권 사용중 정보
@@ -106,7 +80,7 @@ class MyTData5gSetting extends TwViewController {
           isBackCheck: true
         }));
       }
-      this.parseData(availableData, conversionsInfo, multiAddition);
+      this.parseData(conversionsInfo, multiAddition);
       return res.render('5g-setting/myt-data.5g-setting.main.html', { renderCommonInfo: this.renderCommonInfo }); // 기본 시간설정
     });
   }
@@ -116,11 +90,11 @@ class MyTData5gSetting extends TwViewController {
    * @param conversionsInfo
    * @param multiAddition
    */
-  private parseData(availableData: any, conversionsInfo: any, multiAddition: any): void {
+  private parseData(conversionsInfo: any, multiAddition: any): void {
     this.renderCommonInfo.conversionsInfo = conversionsInfo = conversionsInfo.result[0];
     // 사용시간 여부
-    this.renderCommonInfo.isRemained = (+availableData.result.dataRemQty > 0);
-    this.renderCommonInfo.remainTime = +availableData.result.dataRemQty;
+    // this.renderCommonInfo.isRemained = (+availableData.result.dataRemQty > 0);
+    // this.renderCommonInfo.remainTime = +availableData.result.dataRemQty;
     // 이용중인 경우
     if ( conversionsInfo.currUseYn === 'Y' && +conversionsInfo.remTime > 0 ) {
       this.renderCommonInfo.pageType = 'IN_USE';
@@ -131,26 +105,17 @@ class MyTData5gSetting extends TwViewController {
         hour: time[1].split(':')[0],
         min: time[1].split(':')[1]
       };
-      // 사용 가능시간 포맷팅
-      this.renderCommonInfo.convRemainTime = FormatHelper.convVoiceFormat(availableData.result.dataRemQty) || {
-        hours: 0,
-        min: 0
-      };
     } else { // 미 이용중
       // 이용시간 전부 소진
       // if (+data.param.remainTime < 1) {
       //   this.renderCommonInfo.pageType = 'END';
       // }
-      if (!this.renderCommonInfo.isRemained) {
-        this.renderCommonInfo.pageType = 'END';
-      }
       // 부스트 파크 사용자일때
       if ( this.isBoostPark(multiAddition) ) {
         this.renderCommonInfo.pageType = 'BOOST_PARK';
       }
     }
     // --> 페이지 설정 끝
-
   }
 
   /**
@@ -162,15 +127,6 @@ class MyTData5gSetting extends TwViewController {
       prodIds.push('NA0000673' + i);
     }
     return this.apiService.request(API_CMD.BFF_10_0183, {}, {}, [prodIds.join('~')]);
-
-    // Mock 데이타
-    /*return Observable.of({
-      code: '00',
-      result: {
-        NA00006734: 'N'
-        // NA00006734: '20190919'
-      }
-    });*/
   }
 
   /**
@@ -182,16 +138,7 @@ class MyTData5gSetting extends TwViewController {
     //   return Observable.of(JSON.parse(this.renderCommonInfo.param.conversionsInfo));
     // }
     // swing legacy 와 BE 응답에 딜레이가 있어 delay 추가
-    return this.apiService.request(API_CMD.BFF_06_0078, {}).pipe(delay(1500));
-  }
-
-  /**
-   * 사용시간 조회 요청
-   */
-  private getAvailableTime(): Observable<any> {
-    // swing legacy 와 BE 응답에 딜레이가 있어 delay 추가
-    return this.apiService.request(API_CMD.BFF_06_0079, { reqCnt: this.reqCnt++ })
-      .pipe(delay(1500));
+    return this.apiService.request(API_CMD.BFF_06_0078, {}).pipe(delay(500));
   }
 
   /**
