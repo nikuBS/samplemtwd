@@ -229,69 +229,69 @@ Tw.POPUP_TPL = {
 
   CUSTOMER_FAQ_SEARCH_FILTER: [
     {
-      faqCategoryId: "1100000", faqCategoryNm: "요금제", subFilters: [
-        {faqFilterId: "1101000", faqFilterNm: "모바일"},
-        {faqFilterId: "1102000", faqFilterNm: "결합상품"},
-        {faqFilterId: "1103000", faqFilterNm: "휴대용 와이파이"},
-        {faqFilterId: "1104000", faqFilterNm: "인터넷/집전화 상품"}
+      faqCategoryId: '1100000', faqCategoryNm: '요금제', subFilters: [
+        {faqFilterId: '1101000', faqFilterNm: '모바일'},
+        {faqFilterId: '1102000', faqFilterNm: '결합상품'},
+        {faqFilterId: '1103000', faqFilterNm: '휴대용 와이파이'},
+        {faqFilterId: '1104000', faqFilterNm: '인터넷/집전화 상품'}
         ]
     },
     {
-      faqCategoryId: "1200000", faqCategoryNm: "가입/변경/해지", subFilters: [
-        {faqFilterId: "1201000", faqFilterNm: "가입/변경/해지"},
-        {faqFilterId: "1202000", faqFilterNm: "휴대폰 분실/습득"},
-        {faqFilterId: "1203000", faqFilterNm: "일시정지"}
+      faqCategoryId: '1200000', faqCategoryNm: '가입/변경/해지', subFilters: [
+        {faqFilterId: '1201000', faqFilterNm: '가입/변경/해지'},
+        {faqFilterId: '1202000', faqFilterNm: '휴대폰 분실/습득'},
+        {faqFilterId: '1203000', faqFilterNm: '일시정지'}
         ]
     },
     {
-      faqCategoryId: "1300000", faqCategoryNm: "요금조회/납부", subFilters: [
-        {faqFilterId: "1301000", faqFilterNm: "모바일"},
-        {faqFilterId: "1302000", faqFilterNm: "인터넷 요금"},
-        {faqFilterId: "1303000", faqFilterNm: "전화요금"}
+      faqCategoryId: '1300000', faqCategoryNm: '요금조회/납부', subFilters: [
+        {faqFilterId: '1301000', faqFilterNm: '모바일'},
+        {faqFilterId: '1302000', faqFilterNm: '인터넷 요금'},
+        {faqFilterId: '1303000', faqFilterNm: '전화요금'}
         ]
     },
     {
-      faqCategoryId: "1400000", faqCategoryNm: "T로밍", subFilters: [
-        {faqFilterId: "1401000", faqFilterNm: "데이터 로밍"},
-        {faqFilterId: "1402000", faqFilterNm: "요금/로밍 쿠폰"},
-        {faqFilterId: "1403000", faqFilterNm: "이용방법/장애"}
+      faqCategoryId: '1400000', faqCategoryNm: 'T로밍', subFilters: [
+        {faqFilterId: '1401000', faqFilterNm: '데이터 로밍'},
+        {faqFilterId: '1402000', faqFilterNm: '요금/로밍 쿠폰'},
+        {faqFilterId: '1403000', faqFilterNm: '이용방법/장애'}
         ]
     },
     {
-      faqCategoryId: "1500000", faqCategoryNm: "T멤버십", subFilters: [
-        {faqFilterId: "1501000", faqFilterNm: "카드발급"},
-        {faqFilterId: "1502000", faqFilterNm: "신청/변경/해지"},
-        {faqFilterId: "1503000", faqFilterNm: "T멤버십 활용/혜택"},
-        {faqFilterId: "1504000", faqFilterNm: "포인트/활용/혜택"},
-        {faqFilterId: "1505000", faqFilterNm: "T멤버십 기타"}
+      faqCategoryId: '1500000', faqCategoryNm: 'T멤버십', subFilters: [
+        {faqFilterId: '1501000', faqFilterNm: '카드발급'},
+        {faqFilterId: '1502000', faqFilterNm: '신청/변경/해지'},
+        {faqFilterId: '1503000', faqFilterNm: 'T멤버십 활용/혜택'},
+        {faqFilterId: '1504000', faqFilterNm: '포인트/활용/혜택'},
+        {faqFilterId: '1505000', faqFilterNm: 'T멤버십 기타'}
         ]
     },
     {
-      faqCategoryId: "1600000", faqCategoryNm: "앱/부가서비스", subFilters: [
-        {faqFilterId: "1601000", faqFilterNm: "부가서비스"},
-        {faqFilterId: "1602000", faqFilterNm: "앱 이용안내"}
+      faqCategoryId: '1600000', faqCategoryNm: '앱/부가서비스', subFilters: [
+        {faqFilterId: '1601000', faqFilterNm: '부가서비스'},
+        {faqFilterId: '1602000', faqFilterNm: '앱 이용안내'}
         ]
     },
     {
-      faqCategoryId: "1700000", faqCategoryNm: "통화품질개선", subFilters: [
-        {faqFilterId: "1701000", faqFilterNm: "통화품질"},
-        {faqFilterId: "1702000", faqFilterNm: "인터넷 기술장애/품질"},
-        {faqFilterId: "1703000", faqFilterNm: "휴대폰 안내"}
+      faqCategoryId: '1700000', faqCategoryNm: '통화품질개선', subFilters: [
+        {faqFilterId: '1701000', faqFilterNm: '통화품질'},
+        {faqFilterId: '1702000', faqFilterNm: '인터넷 기술장애/품질'},
+        {faqFilterId: '1703000', faqFilterNm: '휴대폰 안내'}
         ]
     },
     {
-      faqCategoryId: "1800000", faqCategoryNm: "T월드 다이렉트", subFilters: [
-        {faqFilterId: "1801000", faqFilterNm: "휴대폰 구매/혜택"},
-        {faqFilterId: "1802000", faqFilterNm: "T월드 다이렉트 구매/이동"},
-        {faqFilterId: "1803000", faqFilterNm: "T월드 다이렉트 배송"},
-        {faqFilterId: "1804000", faqFilterNm: "T월드 다이렉트 교환/반품"},
-        {faqFilterId: "1805000", faqFilterNm: "휴대폰가격공시 기타"}
+      faqCategoryId: '1800000', faqCategoryNm: 'T월드 다이렉트', subFilters: [
+        {faqFilterId: '1801000', faqFilterNm: '휴대폰 구매/혜택'},
+        {faqFilterId: '1802000', faqFilterNm: 'T월드 다이렉트 구매/이동'},
+        {faqFilterId: '1803000', faqFilterNm: 'T월드 다이렉트 배송'},
+        {faqFilterId: '1804000', faqFilterNm: 'T월드 다이렉트 교환/반품'},
+        {faqFilterId: '1805000', faqFilterNm: '휴대폰가격공시 기타'}
         ]
     },
     {
-      faqCategoryId: "1900000", faqCategoryNm: "T월드 이용안내", subFilters: [
-        {faqFilterId: "1901000", faqFilterNm: "모바일 T World"},
-        {faqFilterId: "1902000", faqFilterNm: "회원/계정"}
+      faqCategoryId: '1900000', faqCategoryNm: 'T월드 이용안내', subFilters: [
+        {faqFilterId: '1901000', faqFilterNm: '모바일 T World'},
+        {faqFilterId: '1902000', faqFilterNm: '회원/계정'}
         ]
     }
   ],
@@ -572,7 +572,7 @@ Tw.POPUP_TPL = {
         { 'radio-attr': 'id="06" name="r2"',
           'label-attr':'id="06" data-center="C299910000" data-img="place-img-08" value="부산항 국제여객터미널 2층 로밍센터"' +
               ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 19:30"',
-          txt: '부산항 국제여객터미널 2층 로밍센터' },
+          txt: '부산항 국제여객터미널 2층 로밍센터' }
       ]
     }
   ],
@@ -698,7 +698,19 @@ Tw.MYT_TPL = {
     '{{/if}}' +
     '<span class="info-sub">{{svcNum}}</span>' +
     '<span class="price">{{data}}{{unit}}</span>' +
-    '</span></span></button></li>'
+    '</span></span></button></li>',
+    '5GX_CLEAR_TEMP': '<hr class="cont-sp type1" aria-hidden="true" />' +
+      '<!-- .cont-box -->' +
+      '<div class="cont-box nogaps-hoz">' +
+      '    <div class="og-my5G-wrap">' +
+      '        <div class="og-my5G-txt">' +
+      '            <p>데이터 시간권을<br> 모두 사용하셨습니다.</p>' +
+      '            <p class="txt-s mt12">고객님께서 사용하시는 데이터는<br> 기본 제공데이터에서 차감됩니다.</p>' +
+      '        </div>' +
+      '        <img class="tod-w100 vt mt18" src="{{CDN}}/img/t_m5g/og_5gx_nodata.png" alt="">' +
+      '    </div>' +
+      '</div>' +
+      '<!-- //.cont-box -->'
   },
   FARE_SUBMAIN: {
     CHILD_LIME_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
