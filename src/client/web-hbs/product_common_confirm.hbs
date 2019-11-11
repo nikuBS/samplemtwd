@@ -319,11 +319,11 @@
                                             <li>
                                                 <div class="checkbox type01 all fe-checkbox_style" role="checkbox" aria-checked="false" title="모두동의">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox" value="" aria-hidden="true"/>
+                                                    <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox" value="" aria-hidden="true" aria-labelledby="aria-comp-checkbox-all"/>
                                                     <!-- 체크상태일 경우 checked="checked" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox-all" aria-hidden="true">
+                                                    <div class="comp-list-layout" aria-hidden="true">
                                                         <p class="layout-text all-chk">
-                                                            <span class="mtext">모두동의</span>
+                                                            <span class="mtext" id="aria-comp-checkbox-all">모두동의</span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -333,11 +333,11 @@
                                             <li>
                                                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true"/>
+                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" aria-labelledby="aria-comp-checkbox-0"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout">
                                                         <div class="layout-text">
-                                                            <span class="mtext">지원금 차액 정산금 동의(필수)</span>
+                                                            <span class="mtext" id="aria-comp-checkbox-0">지원금 차액 정산금 동의(필수)</span>
                                                             <span class="stext mt10">요금제를 변경하시면 지원금 차액이 다음 달 청구 요금에 반영(지원금 반환 또는 추가 지원)되어 계산됩니다.</span>
                                                             <div class="basic-list">
                                                                 <ul>
@@ -386,11 +386,11 @@
                                             <li>
                                                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" />
+                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" aria-labelledby="aria-comp-checkbox-1"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox-0">
+                                                    <div class="comp-list-layout">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulationInfo.scrbStplAgreeTitNm}}</span>
+                                                            <span class="mtext" id="aria-comp-checkbox-1">{{stipulationInfo.scrbStplAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
                                                                     {{{stipulationInfo.scrbStplAgreeCttSummary}}}
@@ -407,11 +407,11 @@
                                             <li>
                                                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" />
+                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" aria-labelledby="aria-comp-checkbox-2"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox-1">
+                                                    <div class="comp-list-layout">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulationInfo.psnlInfoCnsgAgreeTitNm}}</span>
+                                                            <span class="mtext" id="aria-comp-checkbox-2">{{stipulationInfo.psnlInfoCnsgAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
                                                                     {{{stipulationInfo.psnlInfoCnsgCttSummary}}}
@@ -428,11 +428,11 @@
                                             <li>
                                                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true"/>
+                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" aria-labelledby="aria-comp-checkbox-3"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox-2">
+                                                    <div class="comp-list-layout">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulationInfo.psnlInfoOfrAgreeTitNm}}</span>
+                                                            <span class="mtext" id="aria-comp-checkbox-3">{{stipulationInfo.psnlInfoOfrAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
                                                                     {{{stipulationInfo.psnlInfoOfrCttSummary}}}
@@ -449,11 +449,11 @@
                                             <li>
                                                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" />
+                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" aria-labelledby="aria-comp-checkbox-4"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox-3">
+                                                    <div class="comp-list-layout">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulationInfo.adInfoOfrAgreeTitNm}}</span>
+                                                            <span class="mtext" id="aria-comp-checkbox-4">{{stipulationInfo.adInfoOfrAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">{{{stipulationInfo.adInfoOfrCttSummary}}}</span>
                                                             </span>
@@ -468,11 +468,11 @@
                                             <li>
                                                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" />
+                                                    <input type="checkbox" name="checkbox" value="" class="fe-checkbox_agree_item fe-checkbox_agree_need" aria-hidden="true" aria-labelledby="aria-comp-checkbox-5"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox-4">
+                                                    <div class="comp-list-layout">
                                                         <p class="layout-text">
-                                                            <span class="mtext">{{stipulationInfo.termStplAgreeTitNm}}</span>
+                                                            <span class="mtext" id="aria-comp-checkbox-5">{{stipulationInfo.termStplAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">{{{stipulationInfo.termStplAgreeCttSummary}}}</span>
                                                             </span>
