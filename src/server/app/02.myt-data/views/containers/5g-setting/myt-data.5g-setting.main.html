@@ -13,7 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<% var { svcInfo, pageInfo, pageType, duedate } = renderCommonInfo;%>
+<% var { svcInfo, pageInfo, pageType } = renderCommonInfo;%>
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '데이터 시간권 설정', svcInfo: svcInfo }); %>
@@ -24,15 +24,16 @@
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
             <% include ../../components/5g-setting/myt-data.5g-setting.pm.html %>
-            <%
-                const pages = {
-                    'IN_USE':       '../../components/5g-setting/myt-data.5g-setting.inuse.html',     // 이용중
-                    'NO_USE':       '../../components/5g-setting/myt-data.5g-setting.set.html',       // 미이용
-                    'END':          '../../components/5g-setting/myt-data.5g-setting.end.html',       // 사용시간 모두 소진
-                    'BOOST_PARK':   '../../components/5g-setting/myt-data.5g-setting.boostpark.html'  // 부스트 파크
-                };
-            %>
-            <%- include(pages[pageType], renderCommonInfo); %>
+            <div class="5gx-contents">
+                <%
+                    const pages = {
+                        'IN_USE':       '../../components/5g-setting/myt-data.5g-setting.inuse.html',     // 이용중
+                        'UN_USE':       '../../components/5g-setting/myt-data.5g-setting.set.html',       // 미이용
+                        'BOOST_PARK':   '../../components/5g-setting/myt-data.5g-setting.boostpark.html'  // 부스트 파크
+                    };
+                %>
+                <%- include(pages[pageType], renderCommonInfo); %>
+            </div>
             <% include ../../components/5g-setting/myt-data.5g-setting.common.html %>
         </div>
         <!-- //190909 [OP002-3626] 수정_02 -->

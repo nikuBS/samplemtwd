@@ -29,7 +29,6 @@ Tw.MyTData5gSettingMainInuse.prototype = {
   // 데이터 시간권 사용중 페이지 내 '사용 가능 시간' 페이지 진입 시, API 호출하도록 수정
   _loadAvailableTime: function () {
     this.reqCnt = 0;
-    // server 에서 사용가능시간을 조회하도록 변경하여 client 에서 조회하는 부분 제외
     this._initAvailableTime();
     this._requestAvailableTime();
   },
@@ -42,12 +41,7 @@ Tw.MyTData5gSettingMainInuse.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._startTimer();
-    // 시간가능시간 정보가 없는 경우는 다시 조회, 시간이 있으면 화면에 바로 노출
-    if(this._settingData.remainTime) {
-      this._setAvailableTime(this._settingData.remainTime);
-    } else {
-      this._loadAvailableTime();
-    }
+    this._loadAvailableTime();
   },
 
   /**
@@ -97,6 +91,9 @@ Tw.MyTData5gSettingMainInuse.prototype = {
     if (time.min > 0) {
       time.html += '<b>' + time.min + '</b>' + Tw.VOICE_UNIT.MIN;
     }
+    if (time.hour === 0 && time.min === 0) {
+      time.html += '<b>' + time.min + '</b>' + Tw.VOICE_UNIT.MIN;
+    }
     this.$availableDate.html(time.html);
     this.$deductDate.removeClass('none');
     this.$deductInquiry.addClass('none');
@@ -107,12 +104,10 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * @desc 사용가능 시간 조회
    */
   _requestAvailableTime: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
     Tw.MyTData5gSetting.prototype.requestAvailableTime(this.reqCnt++)
       .done($.proxy(this._onSuccessCallback, this))
       .fail(function () {
         Tw.MyTData5gSetting.prototype.onFail();
-        Tw.CommonHelper.endLoading('.container');
       });
   },
 
@@ -128,7 +123,6 @@ Tw.MyTData5gSettingMainInuse.prototype = {
     }
     if (!resp.result || Tw.FormatHelper.isEmpty(resp.result.dataRemQty) || resp.result.brwsPsblYn !== 'Y' || resp.result.cnvtPsblYn !== 'Y') {
       // 요청 후 결과값이 전달되지 않은 경우 재호출
-      Tw.CommonHelper.endLoading('.container');
       // 최대 3회 호출.
       if (this.reqCnt < 3) {
         window.setTimeout($.proxy(this._requestAvailableTime, this), 1000);
@@ -140,7 +134,6 @@ Tw.MyTData5gSettingMainInuse.prototype = {
       return;
     }
     this._setAvailableTime(resp.result.dataRemQty);
-    Tw.CommonHelper.endLoading('.container');
   },
 
   /**
@@ -210,11 +203,10 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * @desc 사용종료 api callback
    */
   _procConfirmRes: function (resp) {
-    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
       return Tw.Error(resp.code, resp.msg).pop();
     }
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
     Tw.MyTData5gSetting.prototype.requestGetConversions()
       .done($.proxy(this._onSuccessCouponEnded, this))
       .fail(Tw.CommonHelper.endLoading('.container'));
@@ -225,31 +217,24 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * @param resp
    * @private
    */
-  _onSuccessCouponEnded: function (/*resp*/) {
+  _onSuccessCouponEnded: function (resp) {
     // 서버사이드에서 API 요청 처리를 하여 client 에서 제외
-    // var result = resp.result || [];
-    // if (result.length > 0 && result[0].currUseYn === 'Y') {
-    //   setTimeout($.proxy(function () {
-    //     // 스윙에 정보가 설정되지 않는 문제로 인하여 딜레이 추가
-    //     Tw.MyTData5gSetting.prototype.requestGetConversions()
-    //       .done($.proxy(this._onSuccessCouponEnded, this))
-    //       .fail(Tw.CommonHelper.endLoading('.container'));
-    //   }, this), 1000);
-    // } else {
-    //   // 성공 후 잔여량 API 정리
-    //   Tw.MyTData5gSetting.prototype.clearResidualQuantity()
-    //     .done($.proxy(function () {
-    //       Tw.CommonHelper.endLoading('.container');
-    //       this._historyService.replaceURL('/myt-data/5g-setting');
-    //     }, this));
-    // }
-    // 성공 후 잔여량 API 정리
-    Tw.MyTData5gSetting.prototype.clearResidualQuantity()
-      .done($.proxy(function () {
-        Tw.CommonHelper.endLoading('.container');
-        // 불필요한 query 제거
-        this._historyService.replaceURL('/myt-data/5g-setting');
-      }, this));
+    var result = resp.result || [];
+    if (!result || (result.length > 0 && result[0].currUseYn === 'Y')) {
+      setTimeout($.proxy(function () {
+        // 스윙에 정보가 설정되지 않는 문제로 인하여 딜레이 추가
+        Tw.MyTData5gSetting.prototype.requestGetConversions()
+          .done($.proxy(this._onSuccessCouponEnded, this))
+          .fail(Tw.CommonHelper.endLoading('.container'));
+      }, this), 1000);
+    } else {
+      // 성공 후 잔여량 API 정리
+      Tw.MyTData5gSetting.prototype.clearResidualQuantity()
+        .done($.proxy(function () {
+          this._historyService.replaceURL('/myt-data/5g-setting');
+        }, this))
+        .fail(Tw.CommonHelper.endLoading('.container'));
+    }
   },
 
   /**
