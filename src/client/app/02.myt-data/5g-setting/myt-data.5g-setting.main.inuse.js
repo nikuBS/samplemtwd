@@ -37,10 +37,11 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * 초기화
    * @private
    */
-  _initialize: function() {
+  _initialize: function () {
     this._cachedElement();
     this._bindEvent();
-    this._startTimer();
+    // interval 로 값을 감소시켜 시간 체크하는 경우 오차 범위 넓은 문제로 사용하지 않음
+    // this._startTimer();
     this._loadAvailableTime();
   },
 
@@ -48,7 +49,7 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * 시간권 가능시간 조회중 노출
    * @private
    */
-  _initAvailableTime: function() {
+  _initAvailableTime: function () {
     this.$deductDate.addClass('none');
     this.$deductInquiry.removeClass('none');
     this.$deductInquiry.find('[data-inquiry=text]').removeClass('none');
@@ -59,7 +60,7 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * 시간권 가능시간 조회 후 실패시 조회하기 버튼 노출
    * @private
    */
-  _failedAvailableTime: function() {
+  _failedAvailableTime: function () {
     this.$deductDate.addClass('none');
     this.$deductInquiry.removeClass('none');
     this.$deductInquiry.find('[data-inquiry=text]').addClass('none');
@@ -71,7 +72,7 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * @param dataRemQty
    * @private
    */
-  _setAvailableTime: function(dataRemQty) {
+  _setAvailableTime: function (dataRemQty) {
     // 단위변경 분 -> 초
     var availableTime = Tw.FormatHelper.convVoiceFormat(dataRemQty * 60);
     var time = {
@@ -119,6 +120,8 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    */
   _onSuccessCallback: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
+      // 조회 실패시 조회버튼 노출
+      this._failedAvailableTime();
       return Tw.Error(resp.code, resp.msg).pop();
     }
     if (!resp.result || Tw.FormatHelper.isEmpty(resp.result.dataRemQty) || resp.result.brwsPsblYn !== 'Y' || resp.result.cnvtPsblYn !== 'Y') {
@@ -146,6 +149,7 @@ Tw.MyTData5gSettingMainInuse.prototype = {
     this.$deductInquiry = this.$container.find('[data-target=inquiry]');
     this.$availableDate = this.$container.find('[data-id=available-date]');
     this.startTime = Tw.DateHelper.convDateFormat(this._usingInfo.convStaDtm);
+    this.endTime = Tw.DateHelper.convDateFormat(this._usingInfo.convEndDtm);
   },
 
   /**
@@ -163,20 +167,23 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * @desc 사용종료 confirm
    */
   _onClickTerminate: function (e) {
+    var curDate = new Date();
     // 정기점검 중이면 토스트 띄움
+    // TODO: 현재 BE 작업이 되어있지 않고 차후 기획부터 진행 예정 (미정)
     if (!this.$container.find('.fe-pm').hasClass('none')) {
       Tw.CommonHelper.toast(Tw.ALERT_MSG_5G.TOAST_PM);
       return;
     }
 
     // 시간권 사용시작 후 1분 이내 종료 불가
-    if (Tw.DateHelper.getDiffByUnit(new Date(), this.startTime, 'minutes') < 1) {
+    if (Tw.DateHelper.getDiffByUnit(curDate, this.startTime, 'minutes') < 1) {
       this._popupService.openAlert(Tw.ALERT_MSG_5G.ALERT_A2);
       return;
     }
 
-    // 사용가능 시간이 1분이내 인 경우 종료불가
-    if (this.remTime < 2) {
+    // 사용가능 시간이 1분 이내 인 경우 종료불가
+    // 종료시간 대비 현재 시간을 비교
+    if (Tw.DateHelper.getDiffByUnit(this.endTime, curDate, 'minutes') < 1) {
       this._popupService.openAlert(Tw.ALERT_MSG_5G.ALERT_A3);
       return;
     }

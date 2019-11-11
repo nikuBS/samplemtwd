@@ -128,6 +128,14 @@ Tw.MyTData5gSettingMain.prototype = {
     $comment.text($comment.data('defText'));
   },
 
+  _clearRemainTime: function() {
+    // 3회 호출해도 값이 없으면 조회하기 버튼 노출
+    this.$usedTime.eq(0).children().eq(0).removeClass('block').hide().next().removeClass('none');
+    // 다아얼 상단 텍스트 문구 변경 (조회 실패시 '사용 가능 시간을 다시 조회해 주세요.)
+    var text = this.$timePicked.children().eq(0).data('failText');
+    this.$timePicked.children().eq(0).text(text);
+  },
+
   /**
    * 사용가능시간 정보 설정
    * @param time
@@ -376,6 +384,7 @@ Tw.MyTData5gSettingMain.prototype = {
    */
   _start5g: function () {
     // 정기점검 중이면 토스트 띄움
+    // TODO: 현재 BE 작업이 되어있지 않고 차후 기획부터 진행 예정 (미정)
     if (!this.$container.find('.fe-pm').hasClass('none')) {
       Tw.CommonHelper.toast(Tw.ALERT_MSG_5G.TOAST_PM);
       return;
@@ -465,6 +474,7 @@ Tw.MyTData5gSettingMain.prototype = {
    */
   _onAtSuccessCallback: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
+      this._clearRemainTime();
       return Tw.Error(resp.code, resp.msg).pop();
     }
     if (!resp.result || Tw.FormatHelper.isEmpty(resp.result.dataRemQty) || resp.result.brwsPsblYn !== 'Y' || resp.result.cnvtPsblYn !== 'Y') {
@@ -473,11 +483,7 @@ Tw.MyTData5gSettingMain.prototype = {
         window.setTimeout($.proxy(this._requestAvailableTime, this), 1000);
         return;
       }
-      // 3회 호출해도 값이 없으면 조회하기 버튼 노출
-      this.$usedTime.eq(0).children().eq(0).removeClass('block').hide().next().removeClass('none');
-      // 다아얼 상단 텍스트 문구 변경 (조회 실패시 '사용 가능 시간을 다시 조회해 주세요.)
-      var text = this.$timePicked.children().eq(0).data('failText');
-      this.$timePicked.children().eq(0).text(text);
+      this._clearRemainTime();
       return;
     }
     if (+resp.result.dataRemQty === 0) {
