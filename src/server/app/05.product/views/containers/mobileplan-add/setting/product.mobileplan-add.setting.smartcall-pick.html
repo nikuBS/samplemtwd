@@ -37,8 +37,8 @@
                                     <% smartCallPick.forEach(function(row){ %>
                                     <li>
                                         <div class="checkbox type01 <%= row.checked ? 'checked' : null %>" role="checkbox" aria-checked="<%= row.checked ? true : false %>"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" name="subprod" value="<%= row.value %>" title="상품 선택" aria-labelledby="aria-comp-checkbox1" <%= row.checked ? "checked" : null %> /><!-- 체크상태일 경우 checked="false" -->
-                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                            <input type="checkbox" name="subprod" value="<%= row.value %>" title="상품 선택" aria-labelledby="aria-comp-checkbox<%= row.prodNum %>" <%= row.checked ? "checked" : null %> /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox<%= row.prodNum %>">
                                                 <div class="layout-text fusion-family ">
                                                     <span class="mtext"><span class="stit"><%= row.prodNm %>
                                                         <% if(row.checked){ %><span class="badge-pic badge-merge ml6"><span class="blind">스마트콜Pick 이용중</span></span><% } %>
