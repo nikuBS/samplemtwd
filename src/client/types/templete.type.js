@@ -699,9 +699,7 @@ Tw.MYT_TPL = {
     '<span class="info-sub">{{svcNum}}</span>' +
     '<span class="price">{{data}}{{unit}}</span>' +
     '</span></span></button></li>',
-    '5GX_CLEAR_TEMP': '<hr class="cont-sp type1" aria-hidden="true" />' +
-      '<!-- .cont-box -->' +
-      '<div class="cont-box nogaps-hoz">' +
+    '5GX_CLEAR_TEMP': '<div class="cont-box nogaps-hoz">' +
       '    <div class="og-my5G-wrap">' +
       '        <div class="og-my5G-txt">' +
       '            <p>데이터 시간권을<br> 모두 사용하셨습니다.</p>' +
@@ -709,8 +707,7 @@ Tw.MYT_TPL = {
       '        </div>' +
       '        <img class="tod-w100 vt mt18" src="{{CDN}}/img/t_m5g/og_5gx_nodata.png" alt="">' +
       '    </div>' +
-      '</div>' +
-      '<!-- //.cont-box -->'
+      '</div>'
   },
   FARE_SUBMAIN: {
     CHILD_LIME_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
