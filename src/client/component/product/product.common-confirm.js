@@ -326,7 +326,6 @@ Tw.ProductCommonConfirm.prototype = {
     else {
       this._popupService.close();
     }
-    location.reload();
   },
 
   _openConfirmAlert: function(e) {

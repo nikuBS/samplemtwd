@@ -159,6 +159,7 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
     }
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this.$btnSetupOk.prop('disabled', false);
+    this.$btnSetupOk.blur();
 
     this._apiService.request(Tw.API_CMD.BFF_10_0017, {
       joinTermCd: '01'
