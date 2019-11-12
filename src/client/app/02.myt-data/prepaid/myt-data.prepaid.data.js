@@ -9,6 +9,7 @@
  * @namespace
  * @desc 선불폰 데이터 충전 namespace
  * @param rootEl - dom 객체
+1 * @param skpayInfo
  */
 Tw.MyTDataPrepaidData = function (rootEl, skpayInfo) {
   this.$container = rootEl;
@@ -164,6 +165,7 @@ Tw.MyTDataPrepaidData.prototype = {
   /**
    * @function
    * @desc actionsheet data 생성
+   * @param isSkpay
    * @param event
    */
   _openSelectPop: function (isSkpay, event) {
@@ -190,6 +192,7 @@ Tw.MyTDataPrepaidData.prototype = {
    * @function
    * @desc actionsheet event binding
    * @param $target
+   * @param isSkpay
    * @param $layer
    */
   _selectPopupCallback: function ($target, isSkpay, $layer) {
@@ -206,7 +209,8 @@ Tw.MyTDataPrepaidData.prototype = {
    * @function
    * @desc actionsheet select 값 처리
    * @param $target
-   * @param $layer
+   * @param isSkpay
+   * @param event
    */
   _setSelectedValue: function ($target, isSkpay, event) {
     var $selectedValue = $(event.target);
@@ -272,6 +276,7 @@ Tw.MyTDataPrepaidData.prototype = {
   /**
    * @function
    * @desc set layer data and event binding
+   * @param isSkpay
    * @param $layer - 팝업 객체
    * @private
    */
@@ -295,6 +300,7 @@ Tw.MyTDataPrepaidData.prototype = {
    * @function
    * @desc set layer data
    * @param $layer - 팝업 객체
+   * @param isSkpay
    */
   _setLayerData: function ($layer, isSkpay) {
     var remainData = this.$data.attr('data-value');
@@ -321,6 +327,7 @@ Tw.MyTDataPrepaidData.prototype = {
    * @function
    * @desc event binding
    * @param $layer - 팝업 객체
+   * @param isSkpay
    */
   _setEvent: function ($layer, isSkpay) {
     $layer.on('click', '.fe-popup-close', $.proxy(this._close, this));
@@ -418,7 +425,7 @@ Tw.MyTDataPrepaidData.prototype = {
    * @param e
    */
   _skpayPopDetail: function (e) {
-    var $elButton = $(e.currentTarget);
+    // var $elButton = $(e.currentTarget);
     var previousAmount = Number($('.fe-remain-amount').data('remainAmount'));
     var rechargeAmount = Number($('.fe-select-amount-skpay').data('amount'));
     var afterAmount = previousAmount + rechargeAmount;
