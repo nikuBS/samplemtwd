@@ -35,11 +35,9 @@ Tw.ValidationHelper = (function () {
    * @param {String} : hong-gil.dong@gmail.com
    * @returns {Boolean}
    */
-  /*jshint -W101*/
   function isEmail(str) {
     return Tw.ValidationHelper.regExpTest(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, str);
   }
-  /*jshint +W101*/
 
   /**
    * @param {String} : 000000
@@ -64,7 +62,10 @@ Tw.ValidationHelper = (function () {
 
     ptn = new RegExp(ptn.replace(/.$/, '')); // 맨마지막의 글자를 하나 없애고 정규식으로 만든다.
 
-    return ptn.test(str);
+    if (ptn.test(str)) {
+      return true;
+    }
+    return false;
   }
 
   function isSeriesNum(string, maxSeries) {
@@ -125,12 +126,18 @@ Tw.ValidationHelper = (function () {
 
   /* input 값의 길이가 기준값보다 적은 경우 */
   function checkMoreLength($target, length) {
-    return $.trim($target.val()).length >= length;
+    if ($.trim($target.val()).length < length) {
+      return false;
+    }
+    return true;
   }
 
   /* input 값이 param보다 적은 경우 */
   function checkIsMore(value, minVal) {
-    return parseInt($.trim(value), 10) >= minVal;
+    if (parseInt($.trim(value), 10) < minVal) {
+      return false;
+    }
+    return true;
   }
 
   /* input 값이 param보다 적은 경우 alert 띄우고 값 변경해주는 function */
@@ -180,42 +187,63 @@ Tw.ValidationHelper = (function () {
   /* 카드 유효기간 체크하는 function */
   function checkYear($targetY) {
     var value = $targetY.val();
-    return !(value.length < 4 || value < new Date().getFullYear());
+    if (value.length < 4 || value < new Date().getFullYear()) {
+      return false;
+    }
+    return true;
   }
 
   function checkMonth($targetM, $targetY) {
     var value = $targetM.val();
     var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
-    return !(months.indexOf(value) === -1 || value.length < 2 ||
-      (parseInt($targetY.val(), 10) === new Date().getFullYear() && value < new Date().getMonth() + 1));
-
+    if (months.indexOf(value) === -1 || value.length < 2 ||
+      (parseInt($targetY.val(), 10) === new Date().getFullYear() && value < new Date().getMonth() + 1)) {
+      return false;
+    }
+    return true;
   }
 
   function isYearInvalid($target) {
     var value = $target.val();
-    return value.length < 4 || value < new Date().getFullYear();
+    if (value.length < 4 || value < new Date().getFullYear()) {
+      return true;
+    }
+    return false;
   }
 
   function isMonthInvalid($target) {
     var value = $target.val();
     var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-    return months.indexOf(value) === -1 || value.length < 2;
+
+    if (months.indexOf(value) === -1 || value.length < 2) {
+      return true;
+    }
+    return false;
   }
 
   function checkExpiration($targetY, $targetM) {
-    return !(parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
-      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1);
+    if (parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
+      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1) {
+      return false;
+    }
+    return true;
   }
 
   /* 배수 체크하는 function */
   function checkMultiple(value, standard) {
-    return parseInt($.trim(value), 10) % standard === 0;
+    if (parseInt($.trim(value), 10) % standard !== 0) {
+      return false;
+    }
+    return true;
   }
 
   /* 연속숫자 체크하는 function */
   function checkIsStraight(value, max) {
-    return !isStraightPassword($.trim(value.toString()), max);
+    if (isStraightPassword($.trim(value.toString()), max)) {
+      return false;
+    }
+    return true;
   }
 
   /* 동일 숫자 반복 체크하는 function */
@@ -231,17 +259,26 @@ Tw.ValidationHelper = (function () {
       Tw.Popup.openAlert(message);
     }
 
-    return !isSame;
+    if (isSame) {
+      return false;
+    }
+    return true;
   }
 
   /* 동일 값 체크하는 function */
   function checkIsSame(value, standard) {
-    return $.trim(value.toString()) === standard;
+    if ($.trim(value.toString()) !== standard) {
+      return false;
+    }
+    return true;
   }
 
   /* 다른 값 체크하는 function */
   function checkIsDifferent(value, standard) {
-    return $.trim(value.toString()) !== standard;
+    if ($.trim(value.toString()) === standard) {
+      return false;
+    }
+    return true;
   }
 
   function showAndHideErrorMsg($target, isValid, message) {
@@ -266,8 +303,8 @@ Tw.ValidationHelper = (function () {
 
   /**
    * 버전 유효성 체크(3자리 : major.minor.patch -> 예 : 5.11.3)
-   * @param {*} criteria 
-   * @param {*} version 
+   * @param {*} criteria
+   * @param {*} version
    * @param {*} operator (1: 같음, 2: 다름, 3: 미만, 4: 이하, 5: 이상 6: 초과)
    */
   function checkVersionValidation(criteria, version, operator) {
@@ -283,10 +320,10 @@ Tw.ValidationHelper = (function () {
     // 같음
     if(operator === 1) {
       return criteria === version;
-    // 다름
+      // 다름
     } else if(operator === 2) {
       return criteria !== version;
-    // 이상 또는 이하 인 경우 같은
+      // 이상 또는 이하 인 경우 같은
     } else if((operator === 4 || operator === 5) && criteria === version) {
       return true;
     }
@@ -299,21 +336,21 @@ Tw.ValidationHelper = (function () {
       // 미만
       if(operator === 3) {
         if(target1 > target2) return true;
-      // 이하
+        // 이하
       } else if(operator === 4) {
         if(target1 > target2) {
           return true;
         } else if(target1 < target2){
           return false;
         }
-      // 이상
+        // 이상
       } else if(operator === 5) {
         if(target1 < target2) {
           return true;
         } else if(target1 > target2){
           return false;
         }
-      // 초과
+        // 초과
       } else if(operator === 6) {
         if(target1 < target2) return true;
       }
