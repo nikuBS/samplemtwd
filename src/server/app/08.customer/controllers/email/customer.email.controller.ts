@@ -69,7 +69,7 @@ class CustomerEmail extends TwViewController {
       case 'complete':
         res.render('email/customer.email.complete.html', Object.assign(
           responseData,
-          { email: decodeURIComponent(req.query.email) }
+          { email: req.query.email }
         ));
         break;
       // 서비스문의 재문의 케이스
