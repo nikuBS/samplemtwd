@@ -9,6 +9,7 @@
  * @namespace
  * @desc 선불폰 음성 1회 충전 namespace
  * @param rootEl - dom 객체
+ * @param skpayInfo
  */
 Tw.MyTDataPrepaidVoice = function (rootEl, skpayInfo) {
   this.$container = rootEl;
@@ -115,7 +116,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
   /**
    * @function
    * @desc email address API 응답 처리 (실패)
-   * @param err
    */
   _emailFail: function () {
     this.$emailAddress = '';
@@ -230,22 +230,23 @@ Tw.MyTDataPrepaidVoice.prototype = {
   /**
    * @function
    * @desc 신용카드 번호 유효성 검증
-   * @param e
+   * @param event
    */
-  _validateCard: function (e) {
-    var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind').attr('aria-hidden', 'true');
-
-    if ( !this._validation.checkMoreLength(this.$cardNumber, 15) ) {
-      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
-      $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
+  _validateCard: function (event) {
+    var $target = $(event.currentTarget).closest('li');
+    if (!this._validation.checkMoreLength(this.$cardNumber, 14)) {
+      $target.find('.error-txt:not(.blind)')
+        .addClass('blind').attr('aria-hidden', 'true');
+      $target.find('.error-txt:eq(0)')
+        .removeClass('blind').attr('aria-hidden', 'false');
     } else {
       this._getCardInfo();
     }
-
-    if ( this.$cardNumber.val() === '' ) {
-      $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
-      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
+    if (this.$cardNumber.val() === '') {
+      $target.find('.error-txt:not(.blind)')
+        .addClass('blind').attr('aria-hidden', 'true');
+      $target.find('.error-txt:eq(1)')
+        .removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -254,9 +255,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @desc 신용카드번호 앞 6자리로 카드사 조회 API 호출
    */
   _getCardInfo: function () {
-    var isValid = this._validation.checkMoreLength(this.$cardNumber, 15);
-
-    if ( isValid ) {
+    var isValid = this._validation.checkMoreLength(this.$cardNumber, 14);
+    if (isValid) {
       var htParams = {
         cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)
       };
@@ -272,11 +272,21 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @param res
    */
   _getCardCode: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-    } else {
-      var $credit_error = this.$cardNumber.closest('li').find('.error-txt').get(2);
-      $($credit_error).removeClass('blind').attr('aria-hidden', 'false');
+    if (res.code !== Tw.API_CODE.CODE_00) {
+      var $noCardInfo = this.$cardNumber.closest('li').find('.error-txt:eq(2)');
+      if (!$noCardInfo.hasClass('.blind')) {
+        // 보여지고 있는 에러메시지 숨김
+        this.$cardNumber.closest('li').find('.error-txt:not(.blind)')
+          .addClass('blind')
+          .attr('aria-hidden', 'true');
+        $noCardInfo.removeClass('blind')
+          .attr('aria-hidden', 'false');
+      }
       this.$btnRequestCreditCard.prop('disabled', true);
+    } else {
+      this.$cardNumber.closest('li').find('.error-txt:not(.blind)')
+        .addClass('blind')
+        .attr('aria-hidden', 'true');
     }
   },
 
@@ -303,11 +313,13 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @param e
    */
   _validatePwd: function (e) {
-    var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind').attr('aria-hidden', 'true');
-
-    if ( this.$cardPwd.val() === '' ) {
-      $error.removeClass('blind').attr('aria-hidden', 'false');
+    var $target = $(e.currentTarget).closest('li').find('.error-txt');
+    $target.addClass('blind')
+      .attr('aria-hidden', 'true');
+    // 비밀번호가 비어있거나 2자리를 입력하지 않은 경우
+    if (!this._validation.checkMoreLength(this.$cardPwd, 2)) {
+      $target.removeClass('blind')
+        .attr('aria-hidden', 'false');
     }
   },
 
@@ -325,8 +337,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @desc input null check 후 버튼 활성화/비활성화 처리
    */
   _checkIsAbled: function () {
-    if ( this.$creditAmount.data('amount') && this.$cardNumber.val() !== '' &&
-      this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPwd.val() !== '' ) {
+    if (this.$creditAmount.data('amount') && this.$cardNumber.val() !== '' &&
+      this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPwd.val() !== '') {
       this.$btnRequestCreditCard.prop('disabled', false);
     } else {
       this.$btnRequestCreditCard.prop('disabled', true);
@@ -337,7 +349,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @desc input null check 후 버튼 활성화/비활성화 처리
    */
   _checkSkpayIsAbled: function () {
-    if ( this.$skpayAmount.data('amount')) {
+    if (this.$skpayAmount.data('amount')) {
       this.$btnRequestSKpay.prop('disabled', false);
     } else {
       this.$btnRequestSKpay.prop('disabled', true);
@@ -351,13 +363,13 @@ Tw.MyTDataPrepaidVoice.prototype = {
    */
   _validateCreditCard: function (e) {
     var $elButton = $(e.currentTarget);
-    var isValid = this._validation.checkMoreLength(this.$cardNumber, 15) &&
+    var isValid = this._validation.checkMoreLength(this.$cardNumber, 14) &&
       this._validation.checkLength(this.$cardY.val(), 4) &&
       this._validation.checkLength(this.$cardM.val(), 2) &&
       this._validation.checkYear(this.$cardY) &&
       this._validation.checkMonth(this.$cardM, this.$cardY);
 
-    if ( isValid ) {
+    if (isValid) {
       var htParams = {
         cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)
       };
@@ -366,7 +378,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
         .done($.proxy(this._getCreditCardInfo, this, $elButton));
     }
   },
-    /**
+  /**
    * @function
    * @desc SK pay 결제 준비
    * @param e
@@ -392,7 +404,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       }
     }, null, null, null, $elButton);
   },
-    /**
+  /**
    * @function
    * @desc SK Pay 결제 요청
    */
@@ -412,7 +424,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.skpayInfo.afterAmount = this.skpayInfo.previousAmount + this.skpayInfo.rechargeAmount;
     new Tw.MyTDataPrepaySKPaySdk({
       $element: this.$container,
-      data : {
+      data: {
         skpayInfo: this.skpayInfo,
         title: 'voice',
         requestSum: this.skpayInfo.rechargeAmount
@@ -426,20 +438,15 @@ Tw.MyTDataPrepaidVoice.prototype = {
    */
   _validatePrepaidCard: function () {
     var arrValid = $.map($('#tab2-tab [required]'), function (elInput) {
-      if ( $(elInput).val().length !== 0 ) {
-        return true;
-      }
-      return false;
+      return ($(elInput).val().length !== 0);
     });
 
     var isValid = !_.contains(arrValid, false);
-
-    if ( isValid ) {
+    if (isValid) {
       this.$btnRequestPrepaidCard.prop('disabled', false);
     } else {
       this.$btnRequestPrepaidCard.prop('disabled', true);
     }
-
     return isValid;
   },
 
@@ -466,7 +473,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @param res
    */
   _getCreditCardInfo: function ($elButton, res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       var result = res.result;
       var previousAmount = Number($('.fe-remain-amount').data('remainAmount'));
       var rechargeAmount = Number($('.fe-select-amount').data('amount'));
@@ -489,7 +496,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
           emailAddress: this.$emailAddress
         }
       }, null, $.proxy(this._afterRecharge, this), null, $elButton);
-    } else if ( res.code === 'BIL0080' ) {
+    } else if (res.code === 'BIL0080') {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD, null, null, null, null, $elButton);
     } else {
       Tw.Error(res.code, res.msg).pop(null, $elButton);
@@ -503,7 +510,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @param resp
    */
   _getPrepaidCardInfo: function ($elButton, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       var previousAmount = Number(resp.result.curAmt);
       var rechargeAmount = Number(resp.result.cardAmt);
       var afterAmount = previousAmount + rechargeAmount;
@@ -524,7 +531,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
           rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
         }
       }, null, $.proxy(this._afterRecharge, this), null, $elButton);
-    } else if ( resp.code === 'BIL0102' ) {
+    } else if (resp.code === 'BIL0102') {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD, null, null, null, null, $elButton);
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $elButton);
@@ -579,7 +586,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $($elButton).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
 
-    if ( Tw.FormatHelper.isEmpty($($elButton).attr('data-amount')) ) {
+    if (Tw.FormatHelper.isEmpty($($elButton).attr('data-amount'))) {
       $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
@@ -634,7 +641,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var htParams = {
       amt: Number($('.fe-select-amount').data('amount')).toString(),
       cardNum: this.$cardNumber.val(),
-      expireYY: this.$cardY.val().substr(2,2),
+      expireYY: this.$cardY.val().substr(2, 2),
       expireMM: this.$cardM.val(),
       pwd: this.$cardPwd.val()
     };
@@ -660,7 +667,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @param res
    */
   _onCompleteRechargeByCreditCard: function ($target, res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       Tw.CommonHelper.endLoading('.popup-page');
       this._rechargeSuccess = true;
       this._popupService.close();
