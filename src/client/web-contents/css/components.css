@@ -19653,7 +19653,8 @@ a.bt-link-tx.underline.small {
 .widget-box .horizontal-slide .horizontal-list.brand_link > li {
   display: table-cell;
   padding-left: 1.88rem;
-  float: none !important; }
+  float: none !important; 
+  white-space:nowrap;} /* 191114 [OP002-3617] [M][멤버십]제휴사 카테고리 변경/추가 영향도 */ 
 
 .widget-box .horizontal-slide .horizontal-list.brand_link > li:first-of-type {
   padding-left: 16px; }
@@ -23842,6 +23843,11 @@ a.bt-link-tx.underline.small {
   height: auto;
   margin: 0;
   padding-bottom: 1.25rem; }
+
+/* 191114 [OP002-3617] [M][멤버십]제휴사 카테고리 변경/추가 영향도 [s] */ 
+.category-box-wrap .cont-layer .select-list li button {
+	word-break:break-all;}
+/* 191114 [OP002-3617] [M][멤버십]제휴사 카테고리 변경/추가 영향도 [e] */ 
 
 .category-box-wrap .cont-layer .select-list li:before {
   margin: 0 auto 0.44rem; }
@@ -35711,3 +35717,29 @@ body.apphome .section-box {
 /* 191022 [OP002-4368] KDB x T high5 적금 현황 조회 */
 .tod-listDown-btn .announcement-box .bt-wrap.block {display:block;}
 .tod-listDown-btn .announcement-box .bt-wrap.block .bt-link-tx {margin-top:-0.625rem;}
+
+/* 191105 [OP002-4670]  T월드 결합상품 카테고리 추가 */
+.tod-primaryItem-Wrap .h-tit{font-size: 1rem; margin-bottom:0.875rem;}
+.tod-primaryItem-Wrap .slick-list {-webkit-border-radius: 0.94rem !important; border-radius: 0.94rem !important; overflow: hidden}
+.tod-unit-item-intro li[class^="uint-item"]:first-child{border-top:0;}
+.tod-unit-item-intro li[class^="uint-item"]{position:relative;border-top:1px solid #f2f2f2;}
+.tod-unit-item-intro li[class^="uint-item"] > a{display:block; padding:1.25rem 1rem; box-sizing: border-box;}
+.tod-unit-item-intro .title-wrap > span{display:block;}
+.tod-unit-item-intro .title-wrap .txt-01{font-size: 0.875rem; color: #178bce; line-height:1;}
+.tod-unit-item-intro .title-wrap .txt-02{font-size: 1.313rem; padding-top: 0.94rem; line-height:1;}
+.tod-unit-item-intro .title-wrap .txt-03{font-size: 0.813rem; color: #959595; line-height:1.2; padding-top: 0.75rem;}
+.tod-unit-item-intro li[class^="uint-item"]:after{content:''; display:inline-block; position: absolute; right:1rem; top:50%; width:4.625rem; height: 4.875rem;-webkit-transform: translateY(-50%); transform: translateY(-50%);}
+.tod-unit-item-intro .uint-item-01:after{background: url(/img/product/icon-unit-01.png) 0 0 no-repeat; background-size: 100%;}
+.tod-unit-item-intro .uint-item-02:after{background: url(/img/product/icon-unit-02.png) 0 0 no-repeat; background-size: 100%;} 
+.tod-unit-item-intro .uint-item-03:after{background: url(/img/product/icon-unit-03.png) 0 0 no-repeat; background-size: 100%;}
+.tod-unit-item-list{margin-bottom: 1.25rem;}
+.tod-unit-item-list li{padding-bottom: 0.6rem;}
+.tod-unit-item-list li > a, .tod-unit-item-list li > button{display:block; width:100%;}
+.tod-unit-item-info{position:relative; padding:1.25rem 1rem; text-align:left; border-radius:0.38rem; border: 1px solid #e1e2e4; background:#fff;}
+.tod-unit-item-info .title-wrap {padding-bottom: 0.938rem;}
+.tod-unit-item-info .title-wrap .name{display:inline-block;font-size:1rem; line-height: 1;}
+.tod-unit-item-info .title-wrap .desc{font-size:0.813rem; line-height: 1.2; color:#666; padding-top: 0.625rem;}
+.tod-unit-item-info .discount-wrap{position:absolute; top:1.25rem; right:1rem;}
+.tod-unit-item-info .discount-wrap .txt{font-size:1rem; line-height: 1; color:#f76252;}
+.tod-unit-item-info .type-wrap{padding-top: 0.82rem; line-height:1; border-top:1px solid #f2f2f2;}
+.tod-unit-item-info .type-wrap .txt{font-size: 0.75rem; color: #666;}
