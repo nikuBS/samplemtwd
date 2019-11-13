@@ -178,7 +178,15 @@ Tw.ProductRoamingSearchResult.prototype = {
 
         // 이용가능 서비스가 있는 경우 로밍 요금 조회 요청.
         if(this.manageType.length > 0) {
-            this.reqParams.manageType = this.manageType[0].type;
+
+            // 3G 자동로밍 선택이 가능할 경우 기본 노출로 설정
+            var defaultType = 0;
+            for (var key in this.manageType) {
+                if (this.manageType[key].type === 'W') {
+                    defaultType = key;
+                }
+            }
+            this.reqParams.manageType = this.manageType[defaultType].type;
             this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
             Tw.Logger.info('this.reqParams : ', this.reqParams);
             this._getCountryRoamingRate(this.reqParams, this);
