@@ -81,10 +81,11 @@ Tw.MyTData5gSettingMainInuse.prototype = {
       html: ''
     };
     // 사용가능시간이 최대 시간인 12시간을 초과한 경우
-    if (dataRemQty > 720) {
-      time.hour = 12;
-      time.min = 0;
-    }
+    // 사용 중인 경우에도 남은 사용 가능 시간 그대로 노출
+    // if (dataRemQty > 720) {
+    //   time.hour = 12;
+    //   time.min = 0;
+    // }
     // 시 또는 분이 0이 아닌 경우에만 시간 단위 노출
     if (time.hour > 0) {
       time.html += '<b>' + time.hour + '</b>' + Tw.VOICE_UNIT.HOURS + ' ';
