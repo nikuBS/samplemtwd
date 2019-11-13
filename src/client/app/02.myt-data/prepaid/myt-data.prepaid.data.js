@@ -9,7 +9,7 @@
  * @namespace
  * @desc 선불폰 데이터 충전 namespace
  * @param rootEl - dom 객체
-1 * @param skpayInfo
+ * @param skpayInfo
  */
 Tw.MyTDataPrepaidData = function (rootEl, skpayInfo) {
   this.$container = rootEl;
