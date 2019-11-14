@@ -7,7 +7,7 @@
 /**
  * @constructor
  * @desc 초기화를 위한 class
- * @param {HTMLDivElement} rootEl 최상위 element
+ * @param {Object} params.rootEl 최상위 element
  */
 Tw.MyTData5gSetting = function (params) {
   this.$container = params.rootEl;
@@ -20,12 +20,18 @@ Tw.MyTData5gSetting.prototype = {
   _initialize: function () {
     this._cachedElement();
     this._bindEvent();
+    // 부스트파크권이 사용중이 아닌 경우에만 다른 화면 노출
+    if (this._settingData.pageType !== 'BOOST_PARK') {
+      this._moveToInstance();
+    }
+  },
+  _moveToInstance: function () {
     // page 유형에 따라 호출하는 인스턴스 분리
     // [OP002-4982] - 5gx 관련 기능 개선 및 오류 수정
     // CDRS 잔여량 5분 캐시로딩으로 시간권 잔여량 실제 잔여량과 차이나는 이슈 수정
     // 데이터 시간권 사용중 페이지 내 '사용 가능 시간' 페이지 진입 시, API 호출하도록 수정
     switch ( this._settingData.pageType ) {
-      case  'NO_USE':
+      case 'UN_USE':
         new Tw.MyTData5gSettingMain(this.$container, this._settingData);
         break;
       case 'IN_USE':

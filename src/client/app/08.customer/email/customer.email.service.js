@@ -283,7 +283,7 @@ Tw.CustomerEmailService.prototype = {
    */
   _onSuccessRequest: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer/emailconsult/complete?email=' + $('.fe-service_email').val());
+      this._history.replaceURL('/customer/emailconsult/complete?email=' + encodeURIComponent($('.fe-service_email').val()));
     } else {
       Tw.Error(res.code, res.msg).pop($.proxy(this._handleButtonAbled, this, $target), $target);
     }

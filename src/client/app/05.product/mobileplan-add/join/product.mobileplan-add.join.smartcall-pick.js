@@ -159,6 +159,7 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
     }
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this.$btnSetupOk.prop('disabled', false);
+    //this.$btnSetupOk.blur(); 레이어팝업이라 설정완료 버튼 포커스 제거 필요없음
 
     this._apiService.request(Tw.API_CMD.BFF_10_0017, {
       joinTermCd: '01'
