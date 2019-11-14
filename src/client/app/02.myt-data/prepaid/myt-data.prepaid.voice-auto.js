@@ -133,7 +133,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       var $error = $(e.currentTarget).closest('li').find('.error-txt');
       $error.addClass('blind').attr('aria-hidden', 'true');
 
-      if (!this._validation.checkMoreLength($cardNumber, 15)) {
+      if (!this._validation.checkMoreLength($cardNumber, 14)) {
         $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
         $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
       } else {
@@ -156,7 +156,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _getCardInfo: function (e, param) {
     var cardNumber = $('.fe-card-number');
 
-    var isValid = this._validation.checkMoreLength(cardNumber, 15);
+    var isValid = this._validation.checkMoreLength(cardNumber, 14);
 
     if ( isValid ) {
       var htParams = {
@@ -437,7 +437,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
    * @param e
    */
   _requestRechargeAuto: function (e) {
-    var isValid = this._validation.checkMoreLength($('.fe-card-number'), 15) &&
+    var isValid = this._validation.checkMoreLength($('.fe-card-number'), 14) &&
       this._validation.checkLength($('.fe-card-y').val(), 4) &&
       this._validation.checkLength($('.fe-card-m').val(), 2) &&
       this._validation.checkYear($('.fe-card-y')) &&
