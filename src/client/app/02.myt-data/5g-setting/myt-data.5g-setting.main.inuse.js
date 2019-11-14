@@ -169,23 +169,31 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    */
   _onClickTerminate: function (e) {
     var curDate = new Date();
+    var startDiffSec = Tw.DateHelper.getDiffByUnit(curDate, this.startTime, 'seconds');
+    var endDiffSec = Tw.DateHelper.getDiffByUnit(this.endTime, curDate, 'seconds');
     // 정기점검 중이면 토스트 띄움
     // TODO: 현재 BE 작업이 되어있지 않고 차후 기획부터 진행 예정 (미정)
     if (!this.$container.find('.fe-pm').hasClass('none')) {
       Tw.CommonHelper.toast(Tw.ALERT_MSG_5G.TOAST_PM);
       return;
     }
-
-    // 시간권 사용시작 후 1분 이내 종료 불가
-    if (Tw.DateHelper.getDiffByUnit(curDate, this.startTime, 'minutes') < 1) {
+    // 시간권 사용시작 후 1분 이내 종료 불가 (분 -> 초 변경)
+    if (startDiffSec < 60) {
       this._popupService.openAlert(Tw.ALERT_MSG_5G.ALERT_A2);
       return;
     }
-
-    // 사용가능 시간이 1분 이내 인 경우 종료불가
+    // 사용가능 시간이 1분 이내 인 경우 종료불가 (분 -> 초 변경)
     // 종료시간 대비 현재 시간을 비교
-    if (Tw.DateHelper.getDiffByUnit(this.endTime, curDate, 'minutes') < 1) {
+    if (endDiffSec > 0 && endDiffSec < 60) {
       this._popupService.openAlert(Tw.ALERT_MSG_5G.ALERT_A3);
+      return;
+    }
+    // 시간권 사용 종료시간이 지나간 경우 (ex: 20분종료 인데 21분인 경우)
+    // 확인 시 화면 새로고침
+    if (endDiffSec <= 0) {
+      this._popupService.openAlert(Tw.ALERT_MSG_5G.ALERT_A4, '', '', $.proxy(function(){
+        this._historyService.reload();
+      }, this));
       return;
     }
 
