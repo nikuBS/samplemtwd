@@ -63,6 +63,7 @@ import CommonUtilIntro from './controllers/util/common.util.intro.controller';
 import CommonInappError from './controllers/util/common.util.inapp-error.controller';
 import CommonMemberSignupRoute from './controllers/member/common.member.signup.route.controller';
 import CommonUtil5gIntro from './controllers/util/common.util.5g-intro.controller';
+import CommonMemberLineVirtualNumberDenial from './controllers/member/common.member.line.virtual-number-denial.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -102,6 +103,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/member/line/biz-register', controller: CommonMemberLineBizRegister });
     this.controllers.push({ url: '/member/line/empty', controller: CommonMemberLineEmpty });
     this.controllers.push({ url: '/member/line/register', controller: CommonMemberLineRegister });
+    this.controllers.push({ url: '/member/line/virtual-number-denial', controller: CommonMemberLineVirtualNumberDenial });
 
     // member
     this.controllers.push({ url: '/member/manage', controller: CommonMemberManage });

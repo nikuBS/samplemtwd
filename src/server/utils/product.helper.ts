@@ -399,6 +399,45 @@ class ProductHelper {
       return CDN + url;
     }
   }
+
+  /**
+   * 상품유형에 따른 가입 가능한 회선유형 반환
+   * @param prodTypCd 상품유형 코드
+   */
+  static getAllowedSvcAttrCd(prodTypCd: any): any {
+    if (['AB', 'C', 'H_P', 'H_A', 'F', 'G'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 'm',
+        svcAttrCds: ['M1', 'M2', 'M3', 'M4']
+      };
+    }
+
+    if (['D_I', 'E_I'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S1']
+      };
+    }
+
+    if (['D_P', 'E_P'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S3']
+      };
+    }
+
+    if (['D_T', 'E_T'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S2']
+      };
+    }
+
+    return {
+      group: null,
+      svcAttrCds: []
+    };
+  }
 }
 
 export default ProductHelper;
