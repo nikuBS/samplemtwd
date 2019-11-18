@@ -23,7 +23,15 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
   }
 
   /* 접근이 허용되는 상품코드 */
-  private readonly _prodIdList = ['NA00006518', 'NA00006531', 'NA00006616', 'NA00006617', 'NA00006618', 'NA00006619'];
+  private readonly _prodIdList = [
+    'NA00006518',
+    'NA00006531',
+    'NA00006616',
+    'NA00006617',
+    'NA00006618',
+    'NA00006619',
+    'NA00006802', // 분할_오큘러스고_신청
+  ];
 
   /**
    * @desc 화면 렌더링
