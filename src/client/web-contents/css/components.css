@@ -35714,6 +35714,18 @@ body.apphome .section-box {
 /* 191004 [OP002-4203] 관련 로밍 수정 */
 .rm-main-recomm .productinfoscroll-box .product-info .type{font-size:.75rem}
 
+/* 191008 [OP002-4314] 공지사항 등록요청 */
+.tod-virtual .comp-box .list-box .ico-wrap{position: absolute;left: 0;display: inline-block;-webkit-box-sizing: border-box;box-sizing: border-box;width: 2.75rem;height: 2.75rem;border: 1px solid #c1c1c1;border-radius: 50%;}
+.tod-virtual .comp-box .list-box .ico-wrap i{position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);}
+.tod-virtual .comp-box .list-box .list-text {display: inherit!important;}
+.tod-virtual .comp-box .list-box {padding: 1.25rem 0 1.25rem 3.5rem!important;}
+.tod-virtual .comp-box .list-box .list-text .tit1{display:block; font-size:1rem;}
+.tod-virtual .comp-box .list-box .list-text .sub-tit{display: block; font-size: 0.81rem; color: #959595; padding-top:0.31rem;}
+.tod-virtual .comp-box .list-box .list-text .sub-tit .pnum {position: relative; right: 0; margin-right: 1.06rem; }
+.tod-virtual .comp-box .list-box .list-text .sub-tit .pnum:before {position: absolute;right: -0.5rem;top: 0.25rem;content: '';display: inline-block;width: 0.06rem;height:0.63rem;background: #e5e5e5; }
+.tod-virtual .comp-box .list-box .list-btn {vertical-align:middle!important;}
+.announcement-box .tit{font-size:0.75rem;padding-bottom:1.313rem;font-weight: 600;}
+
 /* 191022 [OP002-4368] KDB x T high5 적금 현황 조회 */
 .tod-listDown-btn .announcement-box .bt-wrap.block {display:block;}
 .tod-listDown-btn .announcement-box .bt-wrap.block .bt-link-tx {margin-top:-0.625rem;}
