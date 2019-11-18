@@ -182,7 +182,7 @@ Tw.CommonPostcodeLast.prototype = {
         this.$saveBtn.removeAttr('disabled');
     }
     */
-    Tw.InputHelper.inputNumberAndAlphabet(this.$selectedTab.find('.fe-dong'));
+    Tw.InputHelper.inputNumberAndAlphabetAndHangul(this.$selectedTab.find('.fe-dong'));
     Tw.InputHelper.inputNumberAndAlphabet(this.$selectedTab.find('.fe-ho'));
 
     var fe_dong = this.$selectedTab.find('.fe-dong').val();
