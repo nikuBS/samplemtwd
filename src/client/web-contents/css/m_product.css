@@ -29,7 +29,7 @@
 
 
 .plm p,
-.plm div {padding-top:10px !important; color:#000 !important;font-size:15px !important;}
+.plm div {padding-top:10px !important; color:#000 !important;font-size:15px !important; word-break: break-all;} /* 191118 [OP002-5161] 줄바꿈 추가 */ 
 .plm div *,
 .plm p * {color:#000 !important;font-size:15px !important;}
 .plm ul,
@@ -1154,3 +1154,13 @@
 .prCont-txt .txt-litype {position:relative !important; margin:12px 0 0 !important; padding:0 !important; color:#858585 !important; font-size:13px !important; line-height:20px !important;}
 .prCont-txt .txt-litype:after {content:none !important;}
 .prCont-txt .txt-color-black {color:#000 !important;}
+.prCont-txt .tod-txcolor1, [class^='idpt-'] .tod-txcolor1, [class*=' idpt-'] .tod-txcolor1 {color:#000 !important;}
+.prCont-txt .tod-txcolor2, [class^='idpt-'] .tod-txcolor2, [class*=' idpt-'] .tod-txcolor2 {color:#333 !important;}
+.prCont-txt .tod-txcolor3, [class^='idpt-'] .tod-txcolor3, [class*=' idpt-'] .tod-txcolor3 {color:#666 !important;}
+.prCont-txt .tod-txcolor4, [class^='idpt-'] .tod-txcolor4, [class*=' idpt-'] .tod-txcolor4 {color:#858585 !important;}
+.prCont-txt .tod-txcolor5, [class^='idpt-'] .tod-txcolor5, [class*=' idpt-'] .tod-txcolor5 {color:#757575 !important;}
+.prCont-txt .tod-txcolor6, [class^='idpt-'] .tod-txcolor6, [class*=' idpt-'] .tod-txcolor6 {color:#f76252 !important;}
+.prCont-txt .tod-txcolor7, [class^='idpt-'] .tod-txcolor7, [class*=' idpt-'] .tod-txcolor7 {color:#ef4b49 !important;}
+.prCont-txt .tod-txcolor8, [class^='idpt-'] .tod-txcolor8, [class*=' idpt-'] .tod-txcolor8 {color:#178bce !important;}
+.prCont-txt .tod-txcolor9, [class^='idpt-'] .tod-txcolor9, [class*=' idpt-'] .tod-txcolor9 {color:#59bcf5 !important;}
+.prCont-txt .tod-txcolor-normal, [class^='idpt-'] .tod-txcolor-normal, [class*=' idpt-'] .tod-txcolor-normal {color:inherit !important}
