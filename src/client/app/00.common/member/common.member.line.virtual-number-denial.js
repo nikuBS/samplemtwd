@@ -56,9 +56,11 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
       willDeny = true;
     }
 
+    Tw.CommonHelper.startLoading('.container', 'grey');
+
     this._apiService.request(api, {selectedSvcMgmtNum: svcMgmtNum})
       .done($.proxy(this._successRequestDeny, this, $target, willDeny))
-      .fail($.proxy(this._failRequestDeny, this));
+      .fail($.proxy(this._failRequestDeny, this, $target));
 
   },
 
@@ -69,6 +71,9 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
    * @param {*} res 
    */
   _successRequestDeny: function ($target, willDeny, resp) {
+
+    Tw.CommonHelper.endLoading('.container');
+
     if (resp.code === Tw.API_CODE.CODE_00) {
 
       if(willDeny) {
@@ -88,7 +93,8 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
    * 거부 등록/해제 실패
    * @param {} res 
    */
-  _failRequestDeny: function (res) {
+  _failRequestDeny: function ($target, res) {
+    Tw.CommonHelper.endLoading(this.$className);
     this._popupService.openAlert(Tw.ALERT_MSG_COMMON.SUCEESS_SAFETY_NUMBER_PROVIDE_FAIL);
   },
 
