@@ -600,7 +600,9 @@ export const API_CMD = {
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0080: { path: '/core-modification/v1/customer-age/calculation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0081: { path: '/core-modification/v1/campaign-reject-yn', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0081: { path: '/core-modification/:version/campaign-reject-yn', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0082: { path: '/core-modification/:version/campaign-reject-add', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0083: { path: '/core-modification/:version/campaign-reject-delete', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -1043,6 +1045,7 @@ export const API_CODE = {
   NODE_1004: '1004',  // 세션 만료
   NODE_1005: '1005',  // 세션 변경
   NODE_1006: '1006',  // 잘못된 redirect 경로(parameter : target)
+  NODE_1007: '1007',  // 가입된 모바일 회선 미존재
 
   CODE_200: '200',
   CODE_400: '400',

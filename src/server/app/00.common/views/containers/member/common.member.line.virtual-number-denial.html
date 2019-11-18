@@ -46,20 +46,25 @@
                             <div class="list-comp-thumnail tod-virtual">
                                 <ul class="comp-box">
                                     <!-- TODO: 20개까지 노출하고 더보기 버튼 노출 처리 필요 -->
-                                    <% for (var i in deniableLineList) { %>
-                                    <li class="list-box">
+                                    <% 
+                                        var cnt = 0;
+                                        for (var i in deniableLineList) { 
+                                            cnt++;
+                                    %>
+                                    <li class="list-box fe-sublist <% if( cnt > 20) { %>none<% } %>">
                                         <span class="ico-wrap"><i class="icon-cellphone-80"></i></span>
                                         <p class="list-text">
                                             <sapn class="tit1"><%= deniableLineList[i].lineNm %></sapn>                                            
                                             <span class="sub-tit"><span class="pnum"><%= deniableLineList[i].svcNum %></span><%= deniableLineList[i].eqpMdlNm %></span>
                                         </p>
                                         <div class="list-btn">
-                                            <div class="bt-alone fe-bt-denial">
+                                            <div class="bt-alone fe-bt-denial" data-svcmgmtnum="<%= deniableLineList[i].svcMgmtNum %>">
                                                 <% if (deniableLineList[i].isDenied === 'Y') { %>
-                                                <button class="btn-style4">거부</button></div>
+                                                <button class="btn-style4">거부</button>
                                                 <% } else { %>
-                                                <button class="bt-line-gray1">거부</button></div>
+                                                <button class="bt-line-gray1">거부</button>
                                                 <% } %>
+                                            </div>
                                         </div>
                                     </li>
                                     <% } %>                        
@@ -68,10 +73,12 @@
                         </div>
 
                         <!-- TODO: 더보기 버튼 클릭 시 다음 20개 추가 노출 처리 필요 -->
-                        <div class="btn-more ml16 mr16 fe-bt-more">
+                        <% if(deniableLineList.length > 20) { %>
+                        <div class="btn-more ml16 mr16 fe-more">
                             <button>더보기</button>
                         </div>
-                    </div>
+                        <% } %>
+                     </div>
                     <!--// .cont-box -->
                     
                     <!-- .cont-box -->

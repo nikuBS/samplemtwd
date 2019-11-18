@@ -1455,5 +1455,6 @@ export const ROAMING_PRODUCT_CUSTOMIZE_DATA = {
 }
 
 export const NODE_ERROR_MSG = {
-  '1006': '잘못된 접근 경로 입니다.'
+  '1006': '잘못된 접근 경로 입니다.',
+  '1007': '가입된 모바일 회선이 존재하지 않습니다.'
 };

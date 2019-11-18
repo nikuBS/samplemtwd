@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import ProductHelper from '../../../../utils/product.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_JOIN_WIRE_SVCATTRCD } from '../../../../types/string.type';
+import { MYT_JOIN_WIRE_SVCATTRCD, NODE_ERROR_MSG } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Request, Response, NextFunction, response } from 'express';
 import { Observable } from 'rxjs';
@@ -38,24 +38,35 @@ class CommonMemberLineVirtualNumberDenial extends TwViewController {
     // 모바일회선 중 svcAttrCd 적합하는 회선만 추출
     const selectedLines = allSvc[allowedSvcAttrInfo.group].filter((lineInfo) => allowedSvcAttrInfo.svcAttrCds.indexOf(lineInfo.svcAttrCd) !== -1);
 
+    if (FormatHelper.isEmpty(selectedLines)) {
+      this.error.render(res, {
+        code: API_CODE.NODE_1007,
+        msg: NODE_ERROR_MSG[API_CODE.NODE_1007],
+        pageInfo: pageInfo,
+        svcInfo: svcInfo
+      });
+    } else {
+
     // 가상번호 거부 신청여부 확인할 회선 별 Parameter들 세팅
-    const requestIsDeniedParams: Observable<any>[] = selectedLines.map((line) => this.apiService.request(API_CMD.BFF_08_0081, { svcMgmtNum: line.svcMgmtNum }));
+    const requestIsDeniedParams: Observable<any>[] = selectedLines.map((line) => this.apiService.request(
+      API_CMD.BFF_08_0081, { selectedSvcMgmtNum: line.svcMgmtNum }
+    ));
 
     Observable.combineLatest.apply(Observable, requestIsDeniedParams).subscribe((resps: any) => {
 
       // Render용 데이터 정리
       const deniableLineList: any[] = resps.map((resp, index) => {
         const lineInfo = selectedLines[index];
-
-        // TODO: dummy 데이터
-        resp = {
-          "code": "00",
-          "msg": "success",
-          "result": { "isAdditionUse": index % 2 === 1 ? "Y" : "N" }
-        }
   
         if (resp.code !== API_CODE.CODE_00) {
-          return false;
+
+          this.error.render(res, {
+            code: resp.code,
+            msg: resp.msg,
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
+          });
+
         }
         
         return (
@@ -65,14 +76,14 @@ class CommonMemberLineVirtualNumberDenial extends TwViewController {
             svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
             eqpMdlNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ? lineInfo.eqpMdlNm : '',
             isDenied: resp.result.isAdditionUse,
-  
             svcMgmtNum: lineInfo.svcMgmtNum
           }
-        )    
-      })
+        );
+      });
 
       res.render('member/common.member.line.virtual-number-denial.html', { svcInfo, pageInfo, deniableLineList });  
     });
+    }
   }
 }
 

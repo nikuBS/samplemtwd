@@ -434,6 +434,9 @@ Tw.API_CMD = {
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
   BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: Tw.API_METHOD.GET },
   BFF_08_0080: { path: '/core-modification/v1/customer-age/calculation', method: Tw.API_METHOD.GET },
+  BFF_08_0081: { path: '/core-modification/:version/campaign-reject-yn', method: Tw.API_METHOD.GET},
+  BFF_08_0082: { path: '/core-modification/:version/campaign-reject-add', method: Tw.API_METHOD.GET},
+  BFF_08_0083: { path: '/core-modification/:version/campaign-reject-delete', method: Tw.API_METHOD.GET},
 
 
   // EVENT
