@@ -461,8 +461,7 @@ Tw.CertificationSkFull.prototype = {
    */
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
-    // this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
-    this.$showTime.text(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
     if ( remainedSec <= 0 ) {
       clearInterval(this._addTimer);
     }
