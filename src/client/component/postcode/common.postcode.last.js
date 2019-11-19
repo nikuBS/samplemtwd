@@ -252,7 +252,7 @@ Tw.CommonPostcodeLast.prototype = {
       baseAddress: encodeURI(this.$mainAddress.attr('data-origin') + ' ' + this.$number.text()),
       detailAddress: encodeURI($.trim(this.$detailAddress.val())),
       ldongCd: this.$mainAddress.attr('data-ldong-cd'),
-      bldblkNm: dong,
+      bldblkNm: encodeURI(dong),
       blduntValNm: ho
     };
     // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
