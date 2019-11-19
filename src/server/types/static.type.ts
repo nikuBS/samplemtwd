@@ -927,7 +927,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
     ]
   },
   {
-    THUMB: 'webtoon_28_thumb.jpg',
+    THUMB: 'webtoon_28_thumb.png',
     TITLE: '분쟁조정제도',
     DATE: '2019.11.21.',
     IMG_LIST: [
@@ -949,7 +949,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
     ]
   },
   {
-    THUMB: 'webtoon_29_thumb.jpg',
+    THUMB: 'webtoon_29_thumb.png',
     TITLE: '이동통신단말장치 이용자보호 리콜제도 안내',
     DATE: '2019.11.21.',
     IMG_LIST: [
@@ -971,7 +971,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
     ]
   },
   {
-    THUMB: 'webtoon_30_thumb.jpg',
+    THUMB: 'webtoon_30_thumb.png',
     TITLE: '메신저 피싱 예방편',
     DATE: '2019.11.21.',
     IMG_LIST: [
@@ -1016,7 +1016,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
     ]
   },
   {
-    THUMB: 'webtoon_31_thumb.jpg',
+    THUMB: 'webtoon_31_thumb.png',
     TITLE: '방송통신상품해지 주의사항',
     DATE: '2019.11.21.',
     IMG_LIST: [
@@ -1043,7 +1043,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
     ]
   },
   {
-    THUMB: 'webtoon_32_thumb.jpg',
+    THUMB: 'webtoon_32_thumb.png',
     TITLE: '통신분쟁조정제도시행',
     DATE: '2019.11.21.',
     IMG_LIST: [
