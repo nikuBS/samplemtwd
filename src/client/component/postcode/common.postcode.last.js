@@ -183,6 +183,7 @@ Tw.CommonPostcodeLast.prototype = {
     }
     */
     Tw.InputHelper.inputNumberAndAlphabet(this.$selectedTab.find('.fe-ho'));
+    Tw.InputHelper.inputLengthCheck(this.$selectedTab.find('.fe-ho'));
     Tw.InputHelper.inputNumberAndAlphabetAndHangul(this.$selectedTab.find('.fe-dong'));
     Tw.InputHelper.inputLengthCheck(this.$selectedTab.find('.fe-dong'));
 
