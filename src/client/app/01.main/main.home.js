@@ -2331,15 +2331,16 @@ Tw.MainHome.prototype = {
     if ( Tw.FormatHelper.isEmpty(storeRecommendProds) 
           || Tw.DateHelper.convDateFormat(storeRecommendProds.expired).getTime() < new Date().getTime() 
           || this._svcMgmtNum !== storeRecommendProds.svcMgmtNum ) {
-        this._apiService.request(
-          Tw.API_CMD.BFF_10_0178, 
-          {
-            experimentExpsScrnId: Tw.EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
-            prcplnRcTyp: 'GNRL', 
-            prcplnChlTyp: Tw.BrowserHelper.isApp() ? 'MOBILE' : 'WEB'
-          })
-        .done($.proxy(this._handleRecommendProds, this, element))
-        .fail($.proxy(this._failRecommendProdsData, this));
+
+          setTimeout($.proxy(this._handleRecommendProds, this, element), 500);
+
+        // var channelIds = [Tw.EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
+        
+        // // 실시간 데이터를 위해서 항상 API를 호출한다.
+        // this._apiService.request(
+        //   Tw.API_CMD.BFF_10_0187, {channelIds: channelIds})
+        // .done($.proxy(this._handleRecommendProds, this, element))
+        // .fail($.proxy(this._failRecommendProdsData, this));
 
     } else {
       this._handleRecommendProds(element, storeRecommendProds.data);
@@ -2452,7 +2453,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _handleRecommendProds: function(element, result) { 
-    if ( !Tw.FormatHelper.isEmpty(result) ) {
+    // if ( !Tw.FormatHelper.isEmpty(result) ) {
       var time = 2000;
 
       // 찾는 중 카드 Fade out
@@ -2462,9 +2463,9 @@ Tw.MainHome.prototype = {
       // 완료 카드 Fade in
       $('.tod-mls-cont > div').eq(1).fadeIn(time);
       $('.tod-mls-ft > div').eq(1).fadeIn(time);
-    } else {
-      element.hide();
-    }
+    // } else {
+    //   element.hide();
+    // }
     this._resetHeight();
   }
 };
