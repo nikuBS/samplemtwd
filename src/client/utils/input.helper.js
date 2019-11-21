@@ -23,6 +23,11 @@ Tw.InputHelper = (function () {
     $input.val($input.val().replace(/[^A-Za-z0-9]/g, ''));
   }
 
+  function inputNumberAndAlphabetAndHangul(input) {
+    var $input = $(input);
+    $input.val($input.val().replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9]/g, ''));
+  }
+
   function inputNumberMaxLength(input) {
     var $input = $(input);
     var nLength = Number($input.attr('maxlength'));
@@ -130,17 +135,29 @@ Tw.InputHelper = (function () {
     }
   }
 
+  function inputLengthCheck(input){
+    var $input = $(input);
+    var inputText = $input.val();
+    var inputMaxLength = $input.prop("maxlength");
+    
+    if(inputText.length > inputMaxLength){
+      $input.val(inputText.substr(0, inputMaxLength));
+    }
+  }
+
   return {
     inputNumberOnly: inputNumberOnly,
     inputNumberAndAsteriskOnly: inputNumberAndAsteriskOnly,
     inputNumberAndDashOnly: inputNumberAndDashOnly,
     inputNumberAndAlphabet: inputNumberAndAlphabet,
+    inputNumberAndAlphabetAndHangul: inputNumberAndAlphabetAndHangul,
     validateNumber: validateNumber,
     inputNumKeyDown: inputNumKeyDown,
     isDeleteKey: isDeleteKey,
     getByteCount: getByteCount,
     insertDashCellPhone: insertDashCellPhone,
     inputNumberMaxLength: inputNumberMaxLength,
+    inputLengthCheck: inputLengthCheck,
     isEnter: isEnter,
     iosBlurCheck: iosBlurCheck
   };

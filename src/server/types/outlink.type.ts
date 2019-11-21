@@ -47,6 +47,41 @@ export const CUSTOMER_PROTECT_GUIDE_VIDEO = [
 
 export const CUSTOMER_PROTECT_GUIDE_LATEST = [
   {
+    TEXT: '메신저피싱 예방법',
+    LINK: 'https://blog.naver.com/kisa118/221622597440',
+    IS_EXTERNAL: true
+  },
+  {
+    TEXT: '생활 속 정보보호 실천수칙',
+    LINK: 'https://blog.naver.com/kisa118/221595590595',
+    IS_EXTERNAL: true
+  },
+  {
+    TEXT: '휴대전화 불법스팸 대응법',
+    LINK: 'https://blog.naver.com/kisa118/221444478413',
+    IS_EXTERNAL: true
+  },
+  {
+    TEXT: '개인정보유출 피해방지 9가지 방법',
+    LINK: 'https://blog.naver.com/kcc1335/221603077308',
+    IS_EXTERNAL: true
+  },
+  {
+    TEXT: '해외여행 시 데이터 이용방법 3가지',
+    LINK: 'https://blog.naver.com/kcc1335/221596235325',
+    IS_EXTERNAL: true
+  },
+  {
+    TEXT: '포털 사이트 안전하게 이용하는 방법(해외로그인)',
+    LINK: 'https://blog.naver.com/kcc1335/221453130444',
+    IS_EXTERNAL: true
+  },
+  {
+    TEXT: 'SNS 개인정보 보호 꿀팁!(페이스북,트위터)',
+    LINK: 'https://blog.naver.com/kcc1335/221402094614',
+    IS_EXTERNAL: true
+  },
+  {
     TEXT: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)',
     LINK: '/customer/damage-info/contents/page018',
     IS_EXTERNAL: false
