@@ -631,39 +631,23 @@ class MainHome extends TwViewController {
     };
 
     if (BrowserHelper.isApp(req)) {
-      return this.apiService.requestStore(SESSION_CMD.BFF_10_0178, {
-        experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS,
-        prcplnRcTyp: MLS_PRCPLN_RC_TYP,
-        prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
-      }).map((resp) => {
+      const channelIds = [EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
+      return this.apiService.requestStore(SESSION_CMD.BFF_10_0187, {channelIds: channelIds}).map((resp) => {
 
         if ( resp.code === API_CODE.CODE_00 ) {
           if ( FormatHelper.isEmpty(resp.result) ) {
             return defaultRetVal;
           } else {
-            // 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
-            const items = resp.result.items;
-            if (!FormatHelper.isEmpty(items) && items[0].prodId === prodId) {
+            const items = resp.result.results[EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS].items || [];
+            // 추천 요금이 없거나, 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
+            if (FormatHelper.isEmpty(items) 
+                || (!FormatHelper.isEmpty(items) && items[0].id === prodId)) {
               return defaultRetVal;
             } else {
-              const list = items[0].props;
-              let validPropCnt = 0;
-
-              list.map((target) => {
-                if (target.reasonCode !== '#') {
-                  validPropCnt++;
-                }
-              });
-
-              // 모든 건에 reasonCode가 "#"으로 오는 경우는 노출하지 않음
-              if (validPropCnt === 0) {
-                return defaultRetVal;
-              } else {
                 return {
                   hasRecommendProds: true,
                   nowDate: DateHelper.getShortDateNoDot(new Date(parseFloat(resp.result.timestamp) * 1000))
                 };
-              }
             }
           }
         }

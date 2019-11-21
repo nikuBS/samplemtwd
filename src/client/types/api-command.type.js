@@ -104,6 +104,7 @@ Tw.API_CMD = {
   BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: Tw.API_METHOD.GET },
   BFF_10_0178: { path: '/core-product/:version/mobiles/mls/recommend-product', method: Tw.API_METHOD.POST },
   BFF_05_0212: { path: '/core-bill/:version/bill/mls/recommend-product', method: Tw.API_METHOD.POST },
+  BFF_10_0187: { path: '/core-product/:version/mobiles/mls/recommend-items', method: Tw.API_METHOD.POST },
 
 
   // MYT
@@ -642,7 +643,9 @@ Tw.SESSION_CMD = {
   BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: Tw.API_METHOD.GET, command: 'BFF_07_0017' },
   BFF_05_0106: { path: '/core-modification/:version/bill-discounts', method: Tw.API_METHOD.GET, command: 'BFF_05_0106' },
   BFF_05_0094: { path: '/core-modification/:version/combination-discounts', method: Tw.API_METHOD.GET, command: 'BFF_05_0094' },
-  BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: Tw.API_METHOD.GET, command: 'BFF_05_0196' }
+  BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: Tw.API_METHOD.GET, command: 'BFF_05_0196' },
+  BFF_10_0178: { path: '/core-product/:version/mobiles/mls/recommend-product', method: Tw.API_METHOD.POST, command: 'BFF_10_0178' },
+  BFF_10_0187: { path: '/core-product/:version/mobiles/mls/recommend-items', method: Tw.API_METHOD.POST, command: 'BFF_10_0187' }
 };
 
 Tw.TMAP = {
