@@ -35,16 +35,8 @@ class CommonMemberLineVirtualNumberDenial extends TwViewController {
     // 부가서비스 상품 유형에 따른 가입 가능한 회선 조회
     const allowedSvcAttrInfo: any = ProductHelper.getAllowedSvcAttrCd('C');
 
-    // R : 일반 법인 이동전화, D : SKT 법인 이동전화, E : SWG기준 실사용자 등록된 법인 이동전화
-    const allowdSvcGr = ['A', 'Y'];
-
     // 모바일회선 중 svcAttrCd 적합하는 회선만 추출
-    const selectedLines = allSvc[allowedSvcAttrInfo.group].filter((lineInfo) => 
-      (
-        allowedSvcAttrInfo.svcAttrCds.indexOf(lineInfo.svcAttrCd) !== -1
-        && allowdSvcGr.indexOf(lineInfo.svcGr) !== -1
-      )
-    );
+    const selectedLines = allSvc[allowedSvcAttrInfo.group].filter((lineInfo) => allowedSvcAttrInfo.svcAttrCds.indexOf(lineInfo.svcAttrCd) !== -1);
 
     if (FormatHelper.isEmpty(selectedLines)) {
       this.error.render(res, {
