@@ -861,20 +861,20 @@ export const CUSTOMER_SITE_OPTION_TYPE = [
     className: 'ico-member',
     listIndex: 2
   },
-  {
-    cat: '회선',
-    title: 'T world에 등록된 법인명의 휴대폰번호 삭제 방법',
-    code: 'D00006',
-    className: 'ico-member',
-    listIndex: 3
-  },
-  {
-    cat: '회선',
-    title: '[법인명의 태블릿] 다회선 등록하기',
-    code: 'D00005',
-    className: 'ico-member',
-    listIndex: 4
-  },
+  // {
+  //   cat: '회선',
+  //   title: 'T world에 등록된 법인명의 휴대폰번호 삭제 방법',
+  //   code: 'D00006',
+  //   className: 'ico-member',
+  //   listIndex: 3
+  // },
+  // {
+  //   cat: '회선',
+  //   title: '[법인명의 태블릿] 다회선 등록하기',
+  //   code: 'D00005',
+  //   className: 'ico-member',
+  //   listIndex: 4
+  // },
   {
     cat: '기타',
     title: '모두에게 평등한 T world의 웹접근성 안내',
