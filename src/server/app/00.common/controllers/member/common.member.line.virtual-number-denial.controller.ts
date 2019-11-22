@@ -46,8 +46,6 @@ class CommonMemberLineVirtualNumberDenial extends TwViewController {
       )
     );
 
-    console.log('selectedLines ====>', selectedLines);
-
     if (FormatHelper.isEmpty(selectedLines)) {
       this.error.render(res, {
         code: API_CODE.NODE_1007,
