@@ -34,7 +34,7 @@ export default class ProductCombinations extends TwViewController {
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
-      idxCtgCd: PRODUCT_CODE.MOBILE_PLAN,
+      idxCtgCd: PRODUCT_CODE.MOBILE_PLAN, // 어드민 개발 시까지 임시로 설정
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
       ...(req.query.order ? { searchOrder: req.query.order } : {}),
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
