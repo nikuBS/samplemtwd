@@ -81,7 +81,7 @@ Tw.StringHelper = (function () {
 
     for (var i = 1; i < arguments.length; i++) {
       var regEx = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
-      src = src.replace(regEx, arguments[i]);
+      src = src.replace(regEx, String(arguments[i]));
     }
 
     return src;

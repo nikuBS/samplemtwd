@@ -10,6 +10,8 @@
  * @desc 소액결제/콘텐츠이용료 메인화면 namespace
  * @param rootEl - dom 객체
  * @param title - 소액결제/콘텐츠이용료
+ * @param className - 다른 객채에서 생성시 전달할 클래스명
+ * @param callback - 다른 객체에서 생성시 초기화 후 호출 할 콜백 함수
  */
 Tw.MyTFareBillPrepayMain = function (rootEl, title, className, callback) {
   this.$container = rootEl;
@@ -261,8 +263,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @function
    * @desc 이용한도 변경
    */
-  _changeLimit: function () {
-    new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title);
+  _changeLimit: function (e) {
+    new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title, $(e.currentTarget));
   },
   /**
    * @function
@@ -270,10 +272,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @returns {boolean}
    */
   _isPrepayAble: function () {
-    if (this._prepayAmount > 0) {
-      return true;
-    }
-    return false;
+    return this._prepayAmount > 0;
   },
   /**
    * @function
@@ -299,7 +298,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     /**
    * @function
    * @desc 실시간 계좌이체, 체크/신용카드 결제
-   * @param $layer
+   * @param prepayType
    */
   _goPrepayCallback: function (prepayType) {
     var url = '/myt-fare/bill/'+ this.$title;
@@ -311,7 +310,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @function
    * @desc SK Pay 결제
    */
-  _goSKpay: function ($layer) {
+  _goSKpay: function () {
     this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/skpay');
   },
   /**

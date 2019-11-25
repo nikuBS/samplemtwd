@@ -10,10 +10,12 @@
  * @desc 소액결제/콘텐츠이용료 한도변경 namespace
  * @param rootEl - dom 객체
  * @param title - 소액결제/콘텐츠이용료
+ * @param $target - 현재 객체를 호출한 엘리먼트(ex: button)의 currentTarget
  */
-Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title) {
+Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title, $target) {
   this.$container = rootEl;
   this.$title = title;
+  this.$target = $target;
   this.$isClicked = false;
   this._isUnpaid = 'N';
 
@@ -122,7 +124,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }
     this._popupService.open({
       'hbs': hbsName
-    }, $.proxy(this._openChangeLimit, this, result), null, 'change-limit'); // 한도변경 팝업
+    }, $.proxy(this._openChangeLimit, this, result), null, 'change-limit', this.$target); // 한도변경 팝업
   },
   /**
    * @function
