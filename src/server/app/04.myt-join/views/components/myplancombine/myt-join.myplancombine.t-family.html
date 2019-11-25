@@ -8,30 +8,27 @@
 
 <!-- .cont-box -->
 <% const groupInfo = combination.combinationGroup; %>
-<div class="cont-box flp-other-pd-st">
+<div class="cont-box">
     <div class="bundle-tit-wrap">
         <h3 class="tit">T끼리온가족할인</h3>
         <div class="subtxt">
             <em class="txt">총 할인금액</em>
-            <p class="val tod-txcolor6"><span class="str">-<%= groupInfo.totBasFeeDcTx %></span>원</p>
+            <p class="val tod-txcolor6"><span class="str">-<%- groupInfo.totBasFeeDcTx %></span>원</p>
         </div>
     </div>
     <div class="basic-list bg-type mt10">
         <ul>
             <li>
                 <span class="title">신청일</span>
-                <span class="tx-cont"><%= combination.combinationWirelessMemberList[0].auditDtm || groupInfo.combStaDt %></span>
+                <span class="tx-cont"><%- combination.combinationWirelessMemberList[0].auditDtm || groupInfo.combStaDt %></span>
             </li>
             <li>
-                <span class="title">가족 합산 총 가입기간
-                    <!--상세정보 는 추후개발-->
-                    <!--<a class="bt-link-tx underline ml4" href="/myt-join/combinations/joinperiod" aria-haspopup="true">상세정보</a>-->
-                </span>
-                <span class="tx-cont"><%= groupInfo.totUseYy %>년</span>
+                <span class="title">가족 합산 총 적용가입기간</span>
+                <span class="tx-cont"><%- groupInfo.totUseYy %></span>
             </li>
             <li>
                 <span class="title">결합회선</span>
-                <span class="tx-cont"><%= groupInfo.mblSvcCnt %>회선</span>
+                <span class="tx-cont"><%- groupInfo.mblSvcCnt %>회선</span>
             </li>
         </ul>
     </div>
@@ -59,21 +56,21 @@
                                         <div class="list-info">
                                             <div>
                                                 <% if (isMine) { %>
-                                                    <strong class="me"><%= member.custNm %></strong>
-                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <strong class="me"><%- member.custNm %></strong>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%- member.relClNm %></span></i>
                                                     <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
                                                 <% } else { %>
-                                                    <em class="me"><%= member.custNm %></em>
-                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <em class="me"><%- member.custNm %></em>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%- member.relClNm %></span></i>
                                                 <% } %>
                                             </div>
-                                            <div class="num"><%= member.svcNum %></div>
+                                            <div class="num"><%- member.svcNum %></div>
                                         </div>
                                         <div class="list-data">
-                                            할인 후 <span class="vol"><%= member.aftBasFeeAmtTx %></span>원
+                                            할인 후 <span class="vol"><%- member.aftBasFeeAmtTx %></span>원
                                         </div>
                                         <div class="list-arrow">
-                                            <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
+                                            <span class="ico-arrow"><span class="blind">결합가족 <%- member.custNm %> 내용 자세히 보기</span></span>
                                         </div>
                                     </div>
                                 </button>
@@ -88,20 +85,19 @@
                                                     <% if (isRep && isMine) { %>
                                                         본인(내번호)<br />
                                                     <% } else { %>
-                                                        <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
+                                                        <%- member.relClNm %><%= isMine? '(내번호)': ''%><br />
                                                     <% } %>
-                                                    <% if (isMine && isRep || groupInfo.mblSvcCnt < 2) { %><a class="bt-link-tx underline red" href="/product/callplan?prod_id=<%= prodId %>">해지</a><% } %>
+                                                    <% if (isMine && isRep || groupInfo.mblSvcCnt < 2) { %><a class="bt-link-tx underline red" href="/product/callplan?prod_id=<%- prodId %>">해지</a><% } %>
                                                 </dd>
                                             </dl>
                                         </li>
-                                        <li><dl><dt>휴대폰 가입기간</dt><dd><%= member.useYySum %>년</dd></dl></li>
-                                        <li><dl><dt>B가입기간</dt><dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].useYySum + '년' : '-' %></dd></dl></li>
-                                        <li><dl><dt>제외기간</dt><dd><%= member.totMYy ? member.totMYy+'년': '-' %></dd></dl></li>
-                                        <li><dl><dt>월정액 할인율</dt><dd><%= member.tcFeeBenf %></dd></dl></li>
-                                        <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan?prod_id=<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
-                                        <li><dl><dt>할인 전 금액</dt><dd><%= member.basFeeAmtTx %> 원</dd></dl></li>
-                                        <li><dl><dt>할인금액</dt><dd>- <%= member.basFeeDcTx %> 원</dd></dl></li>
-                                        <li><dl><dt>할인 후 금액</dt><dd><strong><%= member.aftBasFeeAmtTx %></strong> 원</dd></dl></li>
+                                        <li><dl><dt>휴대폰 적용가입기간</dt><dd><%- member.useYy %></dd></dl></li>
+                                        <li><dl><dt>인터넷 적용가입기간</dt><dd><%- member.iUseYy %></dd></dl></li>
+                                        <li><dl><dt>월정액 할인율</dt><dd><%- member.tcFeeBenf %></dd></dl></li>
+                                        <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan?prod_id=<%- member.feeProdId %>"><%- member.feeProdNm %></a></dd></dl></li>
+                                        <li><dl><dt>할인 전 금액</dt><dd><%- member.basFeeAmtTx %> 원</dd></dl></li>
+                                        <li><dl><dt>할인금액</dt><dd>- <%- member.basFeeDcTx %> 원</dd></dl></li>
+                                        <li><dl><dt>할인 후 금액</dt><dd><strong><%- member.aftBasFeeAmtTx %></strong> 원</dd></dl></li>
                                     </ul>
                                 </div>
                             </div>
@@ -116,7 +112,6 @@
 </div>
 <!--// .cont-box -->
 
-<!--<hr class="cont-sp type1" aria-hidden="true" />-->
 <!-- .cont-box --><!-- 2018-11-02 수정 -->
 <div class="cont-box noborder bgnone">
     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>

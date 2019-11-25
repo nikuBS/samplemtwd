@@ -4,7 +4,7 @@
  * @since 2018.10.30
  */
 
-Tw.MyTJoinCombinationsDataShare = function(rootEl, group) {
+Tw.MyTJoinCombinationsDataShare = function (rootEl, group) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -13,18 +13,36 @@ Tw.MyTJoinCombinationsDataShare = function(rootEl, group) {
   this._group = group;
   this._remain = Number(group.grpRemainPt);
 
-  this._bindEvent();
+  this._init();
 };
 
 Tw.MyTJoinCombinationsDataShare.prototype = {
+
+  /**
+   * @desc 초기화
+   */
+  _init: function () {
+    this._cachedElement();
+    this._bindEvent();
+  },
+
+  /**
+   * @function
+   * @desc dom caching
+   */
+  _cachedElement: function () {
+    this.$shareData = this.$container.find('.fe-select-list li');
+  },
+
   /**
    * @desc 이벤트 바인딩
    * @private
    */
-  _bindEvent: function() {
+  _bindEvent: function () {
     // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.list-comp-input li', $.proxy(this._handleSelectSubject, this));
-    this.$container.on('click', '.small li', $.proxy(this._handleSelectAmount, this));
+    this.$shareData.on('click', $.proxy(this._handleSelectAmount, this));
+    this.$container.on('click', '.fe-show-more', $.proxy(this._showMore, this));
     this.$container.on('click', '#fe-submit', $.proxy(this._handleSubmitShare, this));
   },
 
@@ -33,7 +51,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    * @param {Event} e 클릭 이벤트
    * @private
    */
-  _handleSelectSubject: function(e) { 
+  _handleSelectSubject: function (e) {
     this._subject = {
       mgmtNum: e.currentTarget.getAttribute('data-svc'),
       name: e.currentTarget.getAttribute('data-name'),
@@ -46,7 +64,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    * @param {Event} e 클릭 이벤트
    * @private
    */
-  _handleSelectAmount: function(e) {  
+  _handleSelectAmount: function (e) {
     var $target = $(e.currentTarget);
     this._selected = $target.data('amount');
 
@@ -60,7 +78,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    * @desc 나눠쓰기 버튼 선택
    * @private
    */
-  _handleSubmitShare: function() {  
+  _handleSubmitShare: function () {
     Tw.CommonHelper.startLoading('.popup-page', 'grey');
     if (!this._subject) { // 대상 설정 안되어 있는 경우
       var $subject = this.$container.find('.list-comp-input li.checked'); // 대상 리스트에서 checked된 대상 찾기
@@ -85,10 +103,18 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   },
 
   /**
+   * @desc 나눠쓰기 할 데이터양 더보기
+   */
+  _showMore: function (e) {
+    this.$shareData.removeClass('none');
+    $(e.currentTarget).hide();
+  },
+
+  /**
    * @desc 나눠쓰기 요청에 대한 응답이 돌아온 경우
    * @param {object} resp BFF 응답
    */
-  _successSubmit: function(resp) {
+  _successSubmit: function (resp) {
     Tw.CommonHelper.endLoading('.popup-page');
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -112,7 +138,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    * @desc 클로즈 팝업
    * @private
    */
-  _closeCompletePopup: function() { // 데이터 나눠쓰기 완료화면 close
+  _closeCompletePopup: function () { // 데이터 나눠쓰기 완료화면 close
     history.back();
   },
 
@@ -120,7 +146,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    * @desc 서버 요청 timeout 발생 시
    * @private
    */
-  _fail: function() {
+  _fail: function () {
     Tw.CommonHelper.endLoading('.popup-page');
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
