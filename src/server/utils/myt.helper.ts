@@ -1,4 +1,4 @@
-import { MYT_DATA_USAGE, SKIP_NAME } from '../types/string.type';
+import {MYT_DATA_USAGE, MYT_JOIN_WIRE_SET_PAUSE, MYT_STRING_KOR_TERM, SKIP_NAME} from '../types/string.type';
 import {
   DAY_BTN_STANDARD_SKIP_ID,
   INFINITY_DATA_PROD_ID,
@@ -374,6 +374,32 @@ class MyTHelper {
    */
   static isVisibleDayBtn(skipId: any): boolean {
     return DAY_BTN_STANDARD_SKIP_ID.indexOf(skipId) > -1;
+  }
+
+  /**
+   * 년도(yy), 월(mm) 값이 공백이 아닌경우만 노출. 둘다 공백 이면 하이픈(-)
+   * @param args {yy: 년, mm: 개월}
+   */
+  static getPeriod(args): string {
+    Object.assign(args, {
+      yy: args.yy ? args.yy.replace('0', '') : '',
+      mm: args.mm ? args.mm.replace('0', '') : ''
+    });
+
+    let text = '';
+    if (args.yy === '' && args.mm === '') {
+      return '-';
+    }
+    // 년도 가 공백이 아닌경우
+    if (args.yy !== '') {
+      text = args.yy + MYT_STRING_KOR_TERM.year;
+    }
+    // 개월이 공백이 아닌경우
+    if (args.mm !== '') {
+      text += ' ' + args.mm + MYT_JOIN_WIRE_SET_PAUSE.MONTH;
+    }
+
+    return text.trim();
   }
 
 }

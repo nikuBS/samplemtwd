@@ -351,11 +351,14 @@ Tw.MyTDataGiftImmediately.prototype = {
   _checkValidateSendingButton: function () {
     var isValidQty = this.$wrap_data_select_list.find('input:checked').length !== 0;
     var isValidPhone = this.$inputImmediatelyGift.val().length !== 0;
-
-    if ( isValidQty && isValidPhone ) {
-      this.$btnRequestSendingData.attr('disabled', false);
+    // [OP002-5239] 웹접근성 이슈로 인하여 aria-disabled 값 수정
+    var isDisabled = isValidQty && isValidPhone;
+    if ( isDisabled ) {
+      this.$btnRequestSendingData.attr('disabled', !isDisabled);
+      this.$btnRequestSendingData.attr('aria-disabled', !isDisabled);
     } else {
-      this.$btnRequestSendingData.attr('disabled', true);
+      this.$btnRequestSendingData.attr('disabled', isDisabled);
+      this.$btnRequestSendingData.attr('aria-disabled', isDisabled);
     }
   },
 

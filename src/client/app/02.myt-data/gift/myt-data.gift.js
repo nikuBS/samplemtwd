@@ -176,7 +176,7 @@ Tw.MyTDataGift.prototype = {
     this.$container.find('.fe-warning').hide();
   },
 
-  _remainApiError: function ($target) {
+  _remainApiError: function () {
     this.$wrapSuccessRemainApi.hide();
     this.$wrapErrorRemainApi.show();
     this.$remainBtn.show();

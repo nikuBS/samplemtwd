@@ -34,11 +34,12 @@
 </body>
 
 <% include ../../components/javascript.component.html %>
-<% if (pageId === 'tb-free') { %>
 <script>
     $(document).ready(function() {
-        new Tw.MyTJoinCombinationsTBFree($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
+      new Tw.MyTJoinCombinations($('.wrap'), {
+        pageId: '<%-pageId%>',
+        svcInfo: '<%- escape(JSON.stringify(svcInfo)) %>'
+      });
     });
 </script>
-<% } %>
 <% include ../../components/end.component.html %>
