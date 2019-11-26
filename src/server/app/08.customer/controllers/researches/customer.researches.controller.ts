@@ -56,6 +56,7 @@ export default class CustomerResearches extends TwViewController {
   private __getResearches = quizId => {
     // return of(Researches).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
+      console.log('BFF_08_0023 ====>', resp);
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,

@@ -24,14 +24,18 @@
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <!-- .poll-title -->
-                    <div class="poll-title mb30">
+                    <div class="poll-title">
                         <span class="poll-question"><%= research.info.qstnTitleNm %></span>
                         <span class="poll-date"><%= research.info.staDtm %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.info.endDtm %></span>
                         <em class="poll-condition">진행 중</em>
                     </div>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="cont-box">
                     <!-- // .poll-title -->
                     <!-- poll-chart-box -->
                     <div class="poll-chart-box">
@@ -134,29 +138,30 @@
                                 }
                             } %>
                             <% if (qIdx === 0) { %>
-                                <ul class="bt-slice mt30">
+                                <ul class="bt-slice full">
                                     <% if (qIdx === research.questions.length - 1 ) { %>
-                                        <li class="bt-blue1">
+                                        <li class="fe-bt-change bt-red1">
                                             <button class="fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
                                         </li>
                                     <% } else { %>
-                                        <li class="bt-blue1">
-                                            <button class="fe-go-next" <%= isEssential? 'disabled' : '' %>>다음으로</button>
+                                        <li class="fe-bt-change">
+                                            <button class="btn-round1 btn-style1 fe-go-next" <%= isEssential? 'disabled' : '' %>>다음</button>
                                         </li>
                                     <% } %>
                                 </ul>
                             <% } else { %>
                                 <ul class="bt-slice mt30 item-two">
-                                    <li class="bt-white2">
-                                        <button class="fe-go-prev">이전으로</button>
+                                    <!-- <li class="bt-white2"> -->
+                                    <li>
+                                        <button class="fbtn-round1 btn-style4 fe-go-prev">이전</button>
                                     </li>
                                     <% if (qIdx === research.questions.length - 1) { %>
-                                        <li class="bt-blue1">
+                                        <li class="fe-bt-change bt-red1">
                                             <button class="fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
                                         </li>
                                     <% } else { %>
-                                        <li class="bt-blue1" >
-                                            <button class="fe-go-next" <%= isEssential? 'disabled' : '' %>>다음으로</button>
+                                        <li class="fe-bt-change" >
+                                            <button class="btn-round1 btn-style1 fe-go-next" <%= isEssential? 'disabled' : '' %>>다음</button>
                                         </li>
                                     <% } %>
                                 </ul>
