@@ -361,11 +361,10 @@ Tw.MyTDataGiftImmediately.prototype = {
     var isDisabled = isValidQty && isValidPhone;
     if ( isDisabled ) {
       this.$btnRequestSendingData.attr('disabled', !isDisabled);
-      // TODO: 일정 확인 후 주석 해제
-      // this.$btnRequestSendingData.attr('aria-disabled', !isDisabled);
+      this.$btnRequestSendingData.attr('aria-disabled', !isDisabled);
     } else {
       this.$btnRequestSendingData.attr('disabled', isDisabled);
-      // this.$btnRequestSendingData.attr('aria-disabled', isDisabled);
+      this.$btnRequestSendingData.attr('aria-disabled', isDisabled);
     }
   },
 
