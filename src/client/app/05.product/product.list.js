@@ -47,6 +47,7 @@ Tw.ProductList.prototype = {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$orderBtn.click(_.debounce($.proxy(this._openOrderPopup, this), 300));
     this.$container.find('.fe-select-filter').click(_.debounce($.proxy(this._handleClickChangeFilters, this), 300));
+    this.$combinationsOrderBtn.click(_.debounce($.proxy(this._openCombinationsOrderPopup, this), 300));
   },
 
   /**
@@ -59,6 +60,7 @@ Tw.ProductList.prototype = {
     this.$list = this.$container.find('ul.extraservice-list');
     this.$orderBtn = this.$container.find('.fe-select-order');
     this.$filters = this.$container.find('.fe-select-filter');
+    this.$combinationsOrderBtn = this.$container.find('.fe-select-order-combinations');//결합상품 용 임시 카테고리 노출처리
   },
 
   /**
@@ -188,6 +190,36 @@ Tw.ProductList.prototype = {
   },
 
   /**
+   * @desc 리스팅 순서 변경 팝업 오픈(결합상품)
+   * @private
+   */
+  _openCombinationsOrderPopup: function() {
+    var searchType = this._params.searchOrder || this.DEFAULT_ORDER;
+    var list = _.map(Tw.PRODUCT_LIST_COMBINATIONS_ORDER, function(item) {
+      if (item['radio-attr'].indexOf(searchType) >= 0) {
+        return $.extend({}, item, {
+          'radio-attr': item['radio-attr'] + ' checked'
+        });
+      }
+
+      return item;
+    });
+
+    this._popupService.open(
+      {
+        hbs: 'actionsheet01', // hbs의 파일명
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        layer: true,
+        data: [{ list: list }]
+      },
+      $.proxy(this._handleOpenOrderPopup, this),
+      undefined,
+      'order',
+      this.$orderBtn
+    );
+  },
+
+  /**
    * @desc 리스팅 순서 변경 팝업 오픈 시 이벤트 바인딩
    * @param {$object} $layer 팝업 레이어 jquery 객체
    * @private
@@ -208,6 +240,12 @@ Tw.ProductList.prototype = {
     var orderType = $target.data('order');
 
     if (this._params.searchOrder === orderType) {
+      return;
+    }
+    if ('security' === orderType) {//결합상품 보안 선택 시 페이지 이동
+      var url ='https://m.shop.tworld.co.kr/offering-getAdtCapsSecurHome/submain';
+      Tw.CommonHelper.openUrlExternal(url);
+      this._popupService.close();
       return;
     }
 
