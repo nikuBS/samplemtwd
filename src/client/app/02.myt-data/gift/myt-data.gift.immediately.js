@@ -246,14 +246,20 @@ Tw.MyTDataGiftImmediately.prototype = {
         return Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
       }
     }
-
+    // [OP002-5325] 선물하기 시 바로선물하기 인지 자동선물인지 구분하기 위해 필드 추가
+    var requestParams = {
+      tmpSvcMgmtNum: this._tmpSvcMgmtNum,
+      dataType: 'gift'
+    };
     if ( isCellPhone ) {
       // 입력된 번호의 형식이 휴대폰 번호인 경우
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
+      requestParams.befrSvcNum = svcNum;
     } else {
       // 최근 사용한 번호 선택시(입력된 번호가 휴대폰 번호 형식에 맞지 않음)
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
+      requestParams.opDtm = this.opDtm;
     }
+    this._apiService.request(Tw.API_CMD.BFF_06_0019, requestParams)
+      .done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
   },
 
   /**
