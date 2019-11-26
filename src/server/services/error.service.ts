@@ -12,6 +12,7 @@ interface ErrorOptions {
   title?: string;
   code?: any;
   msg?: any;
+  subMsg?: any;
   isBackCheck?: boolean;
   svcInfo: any;
   pageInfo?: any;
@@ -38,6 +39,7 @@ class ErrorService {
       title: options.title || 'Error',
       code: options.code || '',
       msg: this._replaceBreakLines(options.msg) || '',
+      subMsg: this._replaceBreakLines(options.subMsg) || '',
       svcInfo: options.svcInfo || null,
       isBackCheck: options.isBackCheck || false,
       pageInfo: options.pageInfo

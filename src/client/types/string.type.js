@@ -1430,7 +1430,7 @@ Tw.CUSTOMER_EMAIL = {
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
-  MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
+  MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
 };
 
 Tw.CUSTOMER_NEAR_POPUP = {
@@ -2137,4 +2137,11 @@ Tw.WIRE_NUMBER_CHANGE = {
 
 Tw.PRODUCT_JOIN_OCB = {
   POPUP : '혜택 안내'
+};
+
+Tw.MYT_FARE_BILL = {
+  ERROR: {
+    UNUSUAL_CUSTOMER_MSG: '휴대폰 결제 특이 차단 중인 고객은 해당 메뉴를 이용하실 수 없습니다.',
+    UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.'
+  }
 };
