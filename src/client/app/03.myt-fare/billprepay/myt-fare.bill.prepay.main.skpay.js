@@ -30,16 +30,20 @@ Tw.MyTFareBillPrepayMainSKpay.prototype = {
       data: data,
       btnfloating: { 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
-      $.proxy(this._bindEventPayment, this, e), 
+      $.proxy(this._bindEventPayment, this),
       $.proxy(this._closePayment, this, e),
       'paymentselect',
-      this.$target);
+      $(e.currentTarget));
   },
     /**
    * @function
    * @desc actionsheet event binding
    */
-  _closePayment: function (e, $layer) {
+  _closePayment: function (e) {
+    if (this.skpay === '') {
+      return;
+    }
+
     if(this.skpay === 'skpay') {
       this._checkAgree(e);
     } else {
@@ -50,14 +54,28 @@ Tw.MyTFareBillPrepayMainSKpay.prototype = {
    * @function
    * @desc actionsheet event binding
    */
-  _bindEventPayment: function (e, $layer) {
+  _bindEventPayment: function ($layer) {
     this.skpay = '';
-    $layer.on('click', '.fe-skpay', $.proxy(this._clickPayment, this, 'skpay'));
-    $layer.on('click', '.fe-card', $.proxy(this._clickPayment, this, 'card'));
-    $layer.on('click', '.fe-account', $.proxy(this._clickPayment, this, 'account'));
+    $layer.on('click', '.fe-skpay, .fe-card, .fe-account', $.proxy(this._clickPayment, this));
   },
-  _clickPayment: function (payName) {
-    this.skpay = payName;
+
+  /**
+   * @function
+   * @param e
+   * @desc 액션시트 (SK pay 결제, 실시간 계좌이체 결제, 체크/신용카드 결제) 클릭시 동작
+   */
+  _clickPayment: function (e) {
+    var hasClass = function (className) {
+      return $(e.currentTarget).hasClass(className);
+    };
+
+    if (hasClass('fe-skpay')) {
+      this.skpay = 'skpay';
+    } else if (hasClass('fe-card')) {
+      this.skpay = 'card';
+    } else {
+      this.skpay = 'account';
+    }
     this._popupService.close();
   },
   _checkAgree: function (e) {
@@ -83,7 +101,7 @@ Tw.MyTFareBillPrepayMainSKpay.prototype = {
         var type = '77'; // 멤버십 약관관련 팝업
         new Tw.MyTFareBillSkpayAgreePop({ 
           $element: this.$container,
-          callback: $.proxy(this._agreeViewCallback, this, e)
+          callback: $.proxy(this._agreeViewCallback, this)
         }).open(type, e);
       }
     } else {
@@ -105,14 +123,14 @@ Tw.MyTFareBillPrepayMainSKpay.prototype = {
    * @function
    * @desc SK Pay 제3자 동의여부 약관 동의
    */
-  _agreeViewCallback: function (e, $layer) {
+  _agreeViewCallback: function () {
     var date = {
       skpayMndtAgree: 'Y',
       skpaySelAgree: 'Y',
       gbn: 'I'
     };
     this._apiService.request(Tw.API_CMD.BFF_07_0096, date)
-      .done($.proxy(this._skpayAgreeSuccess, this, e))
+      .done($.proxy(this._skpayAgreeSuccess, this))
       .fail($.proxy(this._skpayAgreeFail, this));
   },
   /**
@@ -120,7 +138,7 @@ Tw.MyTFareBillPrepayMainSKpay.prototype = {
    * @desc 제 3자 동의 조회 API 응답 처리 (성공)
    * @param res
    */
-  _skpayAgreeSuccess: function (e, res) {
+  _skpayAgreeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._callbackSKpay();
     } else {
