@@ -8,11 +8,12 @@
  * @class
  * @desc 공통 > 인증 > 인증 선택
  */
-Tw.CertificationSelect = function () {
+Tw.CertificationSelect = function ($target) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
 
+  this._$target = $target;
   this._certMethod = null;
   this._openCert = false;
   this._niceKind = null;
@@ -402,7 +403,8 @@ Tw.CertificationSelect.prototype = {
         methods: methods
       },
       layer: true
-    }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
+    }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this),
+      'certSelect', this._$target);
   },
 
   /**
@@ -472,7 +474,8 @@ Tw.CertificationSelect.prototype = {
         cntClass: this._methodCnt === 1 ? 'one' : this._methodCnt === 2 ? 'two' : 'three',
         methods: methods
       }
-    }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
+    }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this),
+      'certSelect', this._$target);
   },
 
   /**
@@ -496,11 +499,13 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
         this._certNice = new Tw.CertificationNice();
-        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, this._niceKind, this._prodAuthKey, $.proxy(this._completeCert, this));
+        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, this._niceKind,
+          this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.IPIN:
         this._certNice = new Tw.CertificationNice();
-        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind, this._prodAuthKey, $.proxy(this._completeCert, this));
+        this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind,
+          this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PASSWORD:
         this._certPassword = new Tw.CertificationPassword();
@@ -508,7 +513,8 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
         this._certPublic = new Tw.CertificationPublic();
-        this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, $.proxy(this._completeCert, this));
+        this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey,
+          this._command, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
         this._certBio = new Tw.CertificationBio();
@@ -517,7 +523,8 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
         this._certFinance = new Tw.CertificationFinance();
-        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, this._command, this._authBlock, $.proxy(this._completeCert, this));
+        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey,
+          this._command, this._authBlock, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_REFUND:
         (new Tw.CertificationSkSmsRefund()).openSmsPopup($.proxy(this._completeCert, this));
