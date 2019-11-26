@@ -9,6 +9,7 @@ Tw.CustomerResearches = function(rootEl, researches) {
 
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._historyService = new Tw.HistoryService(this.$container);
 
   this._cachedElement();
   this._bindEvent();
@@ -50,12 +51,13 @@ Tw.CustomerResearches.prototype = {
     this.$container.find('.fe-submit').click(_.debounce($.proxy(this._handleSubmit, this), 300));
     this.$container.on('change', 'ul.survey-researchbox > li input', $.proxy(this._handleChangeSelect, this));
     this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
-    this.$container.on('click', '.bt-more', $.proxy(this._handleLoadMore, this));
+    this.$container.on('click', '.fe-bt-more', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.fe-nResearch li.category-type', $.proxy(this._setSelect, this));
     this.$container.on('click', '.fe-nResearch .fe-submit', $.proxy(this._handleSubmit, this));
     this.$container.on('click', '.fe-nResearch .acco-tit', $.proxy(this._toggleShowDetail, this));
     this.$container.on('click', 'a', $.proxy(this._clearForm, this));
     this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
+    this.$container.on('click', '.fe-join-research, .fe-result-research', $.proxy(this._joinResearch, this));
   },
 
   /**
@@ -174,7 +176,8 @@ Tw.CustomerResearches.prototype = {
   _setEnableSubmit: function(e) { 
     var $target = $(e.currentTarget);
     var $root = $target.parents('li.acco-box');
-    var $btn = $root.find('.item-two > .bt-blue1 button');
+    // var $btn = $root.find('.item-two > .bt-blue1 button');
+    var $btn = $root.find('.item-two > li .fe-submit');
 
     if ($btn.attr('disabled')) {
       $btn.attr('disabled', false);
@@ -260,5 +263,16 @@ Tw.CustomerResearches.prototype = {
     } else {
       $target.addClass('on');
     }
+  },
+
+  /**
+   * @function
+   * @desc 외부 브라우저 이동
+   * @param $event
+   * @private
+   */
+  _joinResearch: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.goLoad(url);
   }
 };
