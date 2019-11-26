@@ -936,7 +936,7 @@ Tw.ALERT_MSG_CUSTOMER = {
 };
 
 Tw.CUSTOMER_RESEARCHES_BUTTONS = {
-  NEXT: '다음으로',
+  NEXT: '다음',
   SUBMIT: '참여하기'
 };
 

@@ -58,7 +58,7 @@ Tw.CustomerResearch.prototype = {
     var $root = this.$questions[this._currentIdx],
       next = e.currentTarget.getAttribute('data-next-question'),
       isEtc = e.currentTarget.getAttribute('data-is-etc'),
-      $btn = $root.find('.bt-blue1 button'),
+      $btn = $root.find('.fe-bt-change button'),
       $etc = $root.find('.fe-etc-area'),
       enable = !$root.data('is-essential'),
       $selected = $root.find('li.checked');
@@ -227,7 +227,7 @@ Tw.CustomerResearch.prototype = {
 
     this.$maxLength.text(Tw.FormatHelper.addComma(String(byteCount)));  // 입력 바이트 노출
 
-    var $btn = $root.find('.bt-blue1 button');
+    var $btn = $root.find('.fe-bt-change button');
 
     if (target.value.length === 0) {
       if (this._nextIdx !== this._currentIdx) {
