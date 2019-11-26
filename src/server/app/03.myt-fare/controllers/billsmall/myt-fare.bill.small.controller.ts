@@ -35,11 +35,13 @@ class MyTFareBillSmall extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getHistory(),
-      this.getPasswordStatus()
-    ).subscribe(([microHistory, passwordStatus]) => {
+      this.getPasswordStatus(),
+      this.getUnusualStatus()
+    ).subscribe(([microHistory, passwordStatus, unusualStatus]) => {
       res.render('billsmall/myt-fare.bill.small.html', {
         usedYn: this.getHistoryInfo(microHistory),
         passwordInfo: this.getPasswordInfo(passwordStatus),
+        unusualYn: unusualStatus, // 특이고객 여부
         svcInfo: svcInfo, // 회선 정보 (필수)
         pageInfo: pageInfo, // 페이지 정보 (필수)
         currentMonth: this.getCurrentMonth() // 현재월 조회
@@ -92,6 +94,16 @@ class MyTFareBillSmall extends TwViewController {
    */
   private getPasswordStatus(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0085, {});
+  }
+
+  /**
+   * @desc 특이고객 유/무
+   * @returns Observable<any>
+   */
+  private getUnusualStatus(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0103, {}).map( resp => {
+      return (resp.code === API_CODE.CODE_00 && resp.result.spcl_sp_yn === 'Y') ? 'Y' : 'N';
+    });
   }
 
   /**

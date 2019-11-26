@@ -17,12 +17,14 @@ Tw.ErrorService.prototype = {
    * @desc code, msg 선언
    * @param code
    * @param msg
+   * @param subMsg
    * @returns {Tw.ErrorService}
    */
-  _init: function(code, msg) {
+  _init: function(code, msg, subMsg) {
     this._data = {
       code: code || '',
-      msg: this._replaceBreakLines(msg)
+      msg: this._replaceBreakLines(msg),
+      subMsg: this._replaceBreakLines(subMsg)
     };
 
     return this;
