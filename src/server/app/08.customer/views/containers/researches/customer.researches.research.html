@@ -30,8 +30,12 @@
                     <!-- .poll-title -->
                     <div class="poll-title">
                         <span class="poll-question"><%= research.info.qstnTitleNm %></span>
+                        <% 
+                            if(research.info.qstnId !== '28') { 
+                        %>
                         <span class="poll-date"><%= research.info.staDtm %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.info.endDtm %></span>
                         <em class="poll-condition">진행 중</em>
+                        <%  } %>
                     </div>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true">
