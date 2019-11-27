@@ -1825,7 +1825,7 @@ Tw.ROAMING_RECEIVE_CODE = {
                 officeHour: '<strong>업무시간</strong> | 06:00 ~ 21:30' },
   1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10',
                 officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
-  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
+  1430471483: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
                 officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
   C299910000: { code: 'C299910000', name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
                 officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30' },
