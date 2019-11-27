@@ -382,8 +382,8 @@ class MyTHelper {
    */
   static getPeriod(args): string {
     Object.assign(args, {
-      yy: args.yy ? args.yy.replace('0', '') : '',
-      mm: args.mm ? args.mm.replace('0', '') : ''
+      yy: args.yy ? String(args.yy) : '',
+      mm: args.mm ? String(args.mm) : ''
     });
 
     let text = '';
@@ -391,11 +391,11 @@ class MyTHelper {
       return '-';
     }
     // 년도 가 공백이 아닌경우
-    if (args.yy !== '') {
+    if (args.yy !== '' && args.yy !== '0') {
       text = args.yy + MYT_STRING_KOR_TERM.year;
     }
     // 개월이 공백이 아닌경우
-    if (args.mm !== '') {
+    if (args.mm !== '' && args.mm !== '0') {
       text += ' ' + args.mm + MYT_JOIN_WIRE_SET_PAUSE.MONTH;
     }
 
