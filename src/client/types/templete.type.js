@@ -619,7 +619,7 @@ Tw.POPUP_TPL = {
             ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 21:30"',
           txt: '김해공항 3층 로밍센터' },
         { 'radio-attr': 'name="r2"',
-          'label-attr':'id="12" data-center="C399900000" data-booth="1430455436"' +
+          'label-attr':'id="12" data-center="C399900000" data-booth="1430471483"' +
             ' data-img="place-img-06" value="대구공항 2층 로밍센터"' +
             ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00"',
           txt: '대구공항 2층 로밍센터' },
