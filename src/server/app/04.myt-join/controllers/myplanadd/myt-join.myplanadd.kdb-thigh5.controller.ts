@@ -16,8 +16,6 @@ const DGRADE_PROD_ID: any = [
   '04',   // 24개월 고금리
 ];
 const DGRADE_DAY_MAX = 44;
-const AUTOPAY_12MONTH_MAX = 12;
-const AUTOPAY_24MONTH_MAX = 24;
 
 class MyTJoinMyPlanAddKdbTHigh5 extends TwViewController {
   constructor() {
@@ -42,18 +40,7 @@ class MyTJoinMyPlanAddKdbTHigh5 extends TwViewController {
         dGradeDayPercent = 100;
       }
 
-      let autoPayDrwCntPercent = 0;
-      if (result.joinTermCd === '01') {
-        autoPayDrwCntPercent = parseInt(result.autoPayDrwCnt, 10) / AUTOPAY_12MONTH_MAX * 100;
-      } else {
-        autoPayDrwCntPercent = parseInt(result.autoPayDrwCnt, 10) / AUTOPAY_24MONTH_MAX * 100;
-      }
-
-      const data: any = { autoPayBillAdd: false };
-      if (result.autoPayBill === 'Y' && 
-      ((result.joinTermCd === '01' && result.autoPayDrwCnt >= 10) || (result.joinTermCd === '02' && result.autoPayDrwCnt >= 20))) {
-        data.autoPayBillAdd = true;
-      }
+      console.log("result : " + JSON.stringify(result));
 
       res.render('myplanadd/myt-join.myplanadd.kdb-thigh5.html', {
         scrbDt: DateHelper.getShortDate(result.scrbDt),
@@ -63,10 +50,6 @@ class MyTJoinMyPlanAddKdbTHigh5 extends TwViewController {
         dGradeDay: parseInt(result.dGradeDay, 10),
         thigh5HeroYn: result.thigh5HeroYn,
         dGradeDayPercent,
-        autoPayDrwCntPercent,
-        autoPayDrwCnt: result.autoPayDrwCnt,
-        autoPayBill: result.autoPayBill,
-        autoPayBillAdd: data.autoPayBillAdd,
         svcInfo,
         pageInfo
       });

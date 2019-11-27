@@ -69,17 +69,24 @@
 								<span class="stit">우대 혜택</span>
 								<span class="use">우대금리 I 2%</span>
                             </li>
-                            <% if ( dGradeYn === 'Y' || autoPayBillAdd ) { %> 
+                            <!--
+                            아래의 경우만 노출
+                            'NC00000082',   // 12개월 고금리
+							'NC00000084',   // 24개월 고금리
+							모든 사용자에게 임시 노출
+							-->
+                            <% if (true || dGradeYn === 'Y') { %> 
                             <li>
 								<span class="stit">추가 혜택<button id="TC000087" page-id="" class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
-								<span class="use">우대금리 II 1%</span>
+								<span class="use">조건 충족 시<br/> 우대금리 II 1%</span>
                             </li>
                             <% } %>
 						</ul>
 					</div>
 				</div><!-- //.cont-box -->
 				<hr class="cont-sp type1" aria-hidden="true">
-                <% if (dGradeYn === 'Y' || autoPayBillAdd ) { %>
+				<!-- 191022 [OP002-4368] 수정_02 -->
+                <% if (dGradeYn === 'Y') { %>
 				<div class="cont-box">
 					<div class="ti-caption-type01 pb24">
 						<h3 class="tit">우대금리 II 제공 조건</h3>
@@ -101,8 +108,7 @@
 								</div>
 							</div>
 						</li>
-						<% if (autoPayBill === 'Y') { %>
-						<li class="graphbox-li">
+						<li class="graphbox-li none"><!-- 현재 자동이체 데이터가 존재하지 않아 향후 작업시 class에 none를 제거하고 구현해야함 -->
 							<h4 class="graphbox-title mb10">자동이체 조건<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">자동이체 조건 Tip</span></i></button></h4>
 							<!-- 자동이체 납입 횟수 노출 Case1 - 회색라인 (12개월 만기 상품일때 납입 횟수 1회~9회 일 경우 / 24개월 만기 상품일때 납입 횟수 1회~19회 일 경우) -->
 							<div class="tod-graph-wrap">
@@ -111,21 +117,33 @@
 										<p class="data-title">자동이체 납입 횟수</p>
 									</div>
 									<div class="date-info defer_time">
-										<p class="data-state"><span class="blind">납입 횟수</span><span class="str tod-txcolor6"><%= autoPayDrwCnt %></span><span class="blind">만기</span><span class="str">/<%= joinTermCd %></span> 회</p>
+										<p class="data-state"><span class="blind">납입 횟수</span><span class="str tod-txcolor6">3</span><span class="blind">만기</span><span class="str">/12</span> 회</p>
 									</div>
 								</div>
 								<div class="bar-chart-hoz">
-								<% if ((joinTermCd === 12 && autoPayDrwCnt < 10) || (joinTermCd === 24 && autoPayDrwCnt < 20)) { %>
-									<span class="data-bar tod-gray" style="width:<%= autoPayDrwCntPercent %>%"></span><!-- 회색라인 class="tod-gray" Case1 - (12개월 만기 상품일때 납입 횟수 1회~9회 일 경우 / 24개월 만기 상품일때 납입 횟수 1회~19회 일 경우) -->
-								<% }else{ %>
-									<span class="data-bar tod-green" style="width:<%= autoPayDrwCntPercent %>%"></span><!-- 녹색라인 class="tod-green" Case2 - (12개월 만기 상품일때 납입 횟수 10회 이상일 경우 / 24개월 만기 상품일때 납입 횟수 20회 이상일 경우) -->
-								<% } %>
+									<span class="data-bar tod-gray" style="width:25%"></span><!-- 회색라인 class="tod-gray" -->
 								</div>
 							</div>
+							<!-- //자동이체 납입 횟수 노출 Case1 - 회색라인 (12개월 만기 상품일때 납입 횟수 1회~9회 일 경우 / 24개월 만기 상품일때 납입 횟수 1회~19회 일 경우)  -->
+							<!-- 자동이체 납입 횟수 노출 Case2 - 녹색라인 (12개월 만기 상품일때 납입 횟수 10회 이상일 경우 / 24개월 만기 상품일때 납입 횟수 20회 이상일 경우) -->
+							<div class="tod-graph-wrap">
+								<div class="tod-time-info">
+									<div class="date-info use_time">
+										<p class="data-title">자동이체 납입 횟수</p>
+									</div>
+									<div class="date-info defer_time">
+										<p class="data-state"><span class="blind">납입 횟수</span><span class="str tod-txcolor6">11</span><span class="blind">만기</span><span class="str">/12</span> 회</p>
+									</div>
+								</div>
+								<div class="bar-chart-hoz">
+									<span class="data-bar tod-green" style="width:91.6%"></span><!-- 녹색라인 class="tod-green" -->
+								</div>
+							</div>
+							<!-- //자동이체 납입 횟수 노출 Case2 - 녹색라인 (12개월 만기 상품일때 납입 횟수 10회 이상일 경우 / 24개월 만기 상품일때 납입 횟수 20회 이상일 경우) -->
 						</li>
-						<% } %>
 					</ul>
 				</div>
+				<!-- //191022 [OP002-4368] 수정_02 -->
 				<hr class="cont-sp type1" aria-hidden="true">
                 <% } %>
 				<div class="cont-box nogaps">
