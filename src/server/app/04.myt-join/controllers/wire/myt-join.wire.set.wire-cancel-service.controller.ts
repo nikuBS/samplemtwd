@@ -11,11 +11,12 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
-import moment = require('moment');
+// import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE } from '../../../../types/string.type';
-import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
+// import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
+import { MYT_JOIN_CO_TYPE } from '../../../../types/bff.type';
 
 class MyTJoinWireSetWireCancelService extends TwViewController {
   constructor() {
@@ -112,7 +113,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
             'FEE_PROD_ID': 'NT00000327',
             'ADDR_ID': '100000011217791',
             'SVC_DTL_CL_NM': 'BTV',
-            'CO_CL_CD': 'B',
+            'CO_CL_CD': MYT_JOIN_CO_TYPE.BROADBAND,
             'REP_SVC_MGMT_NUM': '7271600813',
             'RCV_OPER_ST_NM': '',
             'SVC_MGMT_NUM': '7286359873',
@@ -142,7 +143,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
             'FEE_PROD_ID': 'NT00000299',
             'ADDR_ID': '100000011217791',
             'SVC_DTL_CL_NM': 'BTV',
-            'CO_CL_CD': 'B',
+            'CO_CL_CD': MYT_JOIN_CO_TYPE.BROADBAND,
             'REP_SVC_MGMT_NUM': '7271600813',
             'RCV_OPER_ST_NM': '',
             'SVC_MGMT_NUM': '7286359872',
@@ -221,7 +222,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
       let skbdYn = 'N';
       for ( let i = 0; i < thisMain._resDataInfo.wireList.length ; i++ ) {
         if ( thisMain._resDataInfo.wireList[i].SVC_MGMT_NUM === svcInfo.svcMgmtNum ) {
-          if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ) {
+          if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === MYT_JOIN_CO_TYPE.BROADBAND ) {
             skbdYn = 'Y';
             break;
           }

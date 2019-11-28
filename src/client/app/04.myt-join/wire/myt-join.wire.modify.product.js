@@ -34,10 +34,9 @@ Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
 
 Tw.MyTJoinWireModifyProduct.prototype = {
   _init: function () {
-    if(this.resData.resDataInfo.coClCd === 'B'){
+    if (this.resData.resDataInfo.coClCd === Tw.MYT_JOIN_CO_TYPE.BROADBAND) {
       // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
       (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._history);
-
       return;
     }
     this._bindEvent();

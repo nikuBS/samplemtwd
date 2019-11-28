@@ -192,6 +192,11 @@ export enum MYT_FARE_HISTORY_MICRO_TYPE_NAME {
   '03' = '자동결제'
 }
 
+export enum MYT_JOIN_CO_TYPE {
+  TWORLD = 'T',
+  BROADBAND = 'B'
+}
+
 export enum HOME_SMART_CARD {
   // H01 = '자녀 사용량 조회',
   '00001' = '요금 안내서',
@@ -790,143 +795,228 @@ export const MLS_PRODUCT_BENEFIT = {
   }
 };
 
+export const MLS_USER_PROFILE_KEYS = {
+  data_use_ratio_max: { type: 'ratio', name: '데이터 최대 사용 비율'},
+  // bas_ofr_data_gb_qty_val: {type: 'GB', name: '고객 기본제공 데이터'},
+  data_use_ratio_bf_m0: {type: 'ratio', name: '1개월 전 데이터 사용 비율'},
+  data_use_ratio_bf_m1: {type: 'ratio', name: '2개월 전 데이터 사용 비율'},
+  data_use_ratio_bf_m2: {type: 'ratio', name: '3개월 전 데이터 사용 비율'},
+  bf_m0_ym: {type: 'YYYYMM', name: '전월의 연월'},
+  data_use_night_ratio_median_yn: {type: 'Y/N', name: '심야시간 데이터 사용 비율 중간값 이상 여부'},
+  data_use_night_ratio: {type: 'ratio', name: '심야시간 데이터 사용 비율'},
+  data_use_night_ratio_median: { type: 'ratio', name: '심야시간 데이터 사용 비율 중간값'},
+  additional_svc_ansim_option_scrb_type: { type: 'P/F', name: '안심옵션 가입 형태'},
+  // additional_svc_oksusu_scrb_type: {type: 'P/F', name: 'OKSUSU 가입 형태'},
+  additional_svc_pooq_scrb_type: {type: 'P/F', name: 'POOQ 가입 형태'},
+  app_use_traffic_video_ratio_median_yn: {type: 'Y/N', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값 이상 여부'},
+  app_use_traffic_video_ratio: {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율'},
+  app_use_traffic_video_ratio_median: {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값'},
+  additional_svc_flo_scrb_type: {type: 'P/F', name: 'FLO 가입 형태'},
+  additional_svc_melon_scrb_type: {type: 'P/F', name: 'Melon 가입 형태'},
+  // additional_svc_bugs_scrb_type: {type: 'P/F', name: 'Bugs 가입 형태'},
+  app_use_traffic_music_ratio_median_yn: {type: 'Y/N', name: '전체 데이터 대비 음악 데이터 사용비율 중간값 이상 여부'},
+  app_use_traffic_music_ratio: {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용량 비율'},
+  app_use_traffic_music_ratio_median: {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용비율 중간값'},
+  additional_svc_allcare_scrb_type: {type: 'P/F', name: 'T All 케어 가입 형태'},
+  // membership_vip_yn: {type: 'Y/N', name: '멤버십VIP여부'},
+  membership_cnt_ratio_median_yn: {type: 'Y/N', name: '멤버십 사용건수 중간값 이상 여부'},
+  membership_amt_ratio_median_yn: {type: 'Y/N', name: '멤버십 사용금액 중간값 이상 여부'},
+  mbr_use_discount_amt_cum: {type: 'amt', name: '연간 누적 멤버십 할인금액'},
+  mbr_discount_amt_cum_chocolate: {type: 'amt', name: '멤버십- T멤버십 초콜릿 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_bakery: {type: 'amt', name: '멤버십-베이커리 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_sports: {type: 'amt', name: '멤버십-스포츠 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_jeju: {type: 'amt', name: '멤버십-제주도 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_food_and_beverage: {type: 'amt', name: '멤버십- F&B카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_education: {type: 'amt', name: '멤버십-교육 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_transportation: {type: 'amt', name: '멤버십-교통 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_mobile_and_media: {type: 'amt', name: '멤버십-모바일&미디어 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_beauty_and_fashion: {type: 'amt', name: '멤버십-뷰티&패션 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_shopping: {type: 'amt', name: '멤버십-쇼핑 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_movie: {type: 'amt', name: '멤버십-영화관 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_coffee: {type: 'amt', name: '멤버십-커피 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_family_restaurant: {type: 'amt', name: '멤버십-패밀리레스토랑 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_pizza: {type: 'amt', name: '멤버십-피자 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_convenience_store: {type: 'amt', name: '멤버십-편의점 카테고리 연간 누적 할인금액'},
+  mbr_discount_amt_cum_theme_park: {type: 'amt', name: '멤버십-테마파크 카테고리 연간 누적 할인금액'}
+};
+
 export const MLS_DETAIL_MAPPING = {
-  prcpln_01: {
-    type: 'data',
-    tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요',
-    profile_key: {
-      bas_ofr_data_gb_qty_val : {type: 'GB', name: '고객 기본제공 데이터', required: false},
-      data_use_ratio_max : {type: 'ratio', name: '데이터 최대 사용 비율', required: true},
-      data_use_ratio_bf_m0 : {type: 'ratio', name: '1개월 전 데이터 사용 비율', required: true},
-      data_use_ratio_bf_m1 : {type: 'ratio', name: '2개월 전 데이터 사용 비율', required: true},
-      data_use_ratio_bf_m2 : {type: 'ratio', name: '3개월 전 데이터 사용 비율', required: true},
-      bf_m0_ym : {type: 'YYYYMM', name: '전월의 연월', required: true}
-    }
-  },
-  prcpln_02: {
-    type: 'data',
-    tooltip: '추천요금제는 <strong>심야시간에 기본 데이터를 4배 더</strong> 드려요',
-    profile_key: {
-      data_use_night_ratio : {type: 'ratio', name: '심야시간 데이터 사용 비율', required: true},
-      data_use_night_ratio_median : {type: 'ratio', name: '심야시간 데이터 사용 비율 중간값', required: true},
-      data_use_night_ratio_median_yn : {type: 'Y/N', name: '심야시간 데이터 사용 비율 중간값 이상 여부', required: true},
-    }
-  },
-  prcpln_03: {
-    type: 'data',
-    tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요.',
-    profile_key: {
-      additional_svc_ansim_option_scrb_type : {type: 'P/F', name: '안심옵션 가입 형태', required: false}
-    }
-  },
-  prcpln_04: {
-    type: 'video',
-    tooltip: '추천요금제는 <strong>wavve를 무료로</strong> 즐길 수 있어요',
-    profile_key: {
-      additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
-      additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false}
-    }
-  },
-  prcpln_05: {
-    type: 'video',
-    tooltip: '추천요금제는 <strong>데이터 걱정없이 wavve를 무료로</strong> 이용할 수 있어요',
-    profile_key: {
-      app_use_traffic_video_ratio : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율', required: true},
-      app_use_traffic_video_ratio_median : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값', required: true},
-      app_use_traffic_video_ratio_median_yn : {type: 'Y/N', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값 이상 여부', required: false}
-    }
-  },
-  prcpln_06: {
-    type: 'video',
-    tooltip: '추천요금제로 <strong>스포츠 생중계를 무료로</strong> 즐겨보세요',
-    profile_key: {
-      additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
-      additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false},
-    }
-  },
-  prcpln_07: {
-    type: 'music',
-    tooltip: '추천요금제는 <strong>FLO를 무료로</strong> 즐길 수 있어요',
-    profile_key: {
-      additional_svc_flo_scrb_type : {type: 'ratio', name: 'FLO 가입 형태', required: false},
-      additional_svc_melon_scrb_type : {type: 'ratio', name: 'Melon 가입 형태', required: false},
-      additional_svc_bugs_scrb_type : {type: 'ratio', name: 'Bugs 가입 형태', required: false}
-    }
-  },
-  prcpln_08: {
-    type: 'music',
-    tooltip: '추천요금제는 <strong>FLO를 데이터 걱정없이</strong> 이용할 수 있어요',
-    profile_key: {
-      app_use_traffic_music_ratio : {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용량 비율', required: true},
-      app_use_traffic_music_ratio_median : {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용비율 중간값', required: true},
-      app_use_traffic_music_ratio_median_yn : {type: 'Y/N', name: '전체 데이터 대비 음악 데이터 사용비율 중간값 이상 여부', required: false}
-    }
-  },
-  prcpln_09: {
-    type: 'music',
-    tooltip: '추천요금제로 <strong>FLO 할인 받고</strong>, 새로운 음악을 찾아보세요',
-    profile_key: {
-      additional_svc_flo_scrb_type : {type: 'P/F', name: 'FLO 가입 형태', required: false},
-      additional_svc_melon_scrb_type : {type: 'P/F', name: 'Melon 가입 형태', required: false},
-      additional_svc_bugs_scrb_type : {type: 'P/F', name: 'Bugs 가입 형태', required: false}
-    }
-  },
-  prcpln_10: {
-    type: 'insurance',
-    tooltip: {
-      paid: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
-      free: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
+  data: [
+    {
+      reason_code: 'prcpln_01',
+      priority : 1,
+      desc: '(총 사용량 – 쿠폰/선물사용량 > 제공량) 대비 80% 이상 사용',
+      criteria_condition: 'AND',
+      tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요',
+      profile_keys: [
+        { key: 'data_use_ratio_max', required: true, criteria : {operator: 5, value: 0.8}},
+        // { key: 'bas_ofr_data_gb_qty_val', required: false},
+        { key: 'data_use_ratio_bf_m0', required: true},
+        { key: 'data_use_ratio_bf_m1', required: true},
+        { key: 'data_use_ratio_bf_m2', required: true},
+        { key: 'bf_m0_ym', required: true}
+      ]
     },
-    profile_key: {
-      additional_svc_allcare_scrb_type : {
-        type: 'P/F',
-        name: 'T All 케어 가입 형태',
-        required: true,
-      }
-    }
-  },
-  prcpln_12: {
-    type: 'insurance',
-    tooltip: {
-      paid: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
-      free: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
+    {
+      reason_code: 'prcpln_02',
+      priority : 2,
+      desc: '데이터 심야데이터(00시~07시)사용 비중이 중간값 대비 높은 사용',
+      criteria_condition: 'AND',
+      tooltip: '추천요금제는 <strong>심야시간에 기본 데이터를 4배 더</strong> 드려요',
+      profile_keys: [
+        { key: 'data_use_night_ratio_median_yn', required: true, criteria : {operator: 1, value: 'Y'}},
+        { key: 'data_use_night_ratio', required: true},
+        { key: 'data_use_night_ratio_median', required: true}
+      ]
     },
-    profile_key: {
-      additional_svc_allcare_scrb_type : {
-        type: 'P/F',
-        name: 'T All 케어 가입 형태',
-        required: true,
-        paid_tooltip: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
-        free_tooltip: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
-      }
+    {
+      reason_code: 'prcpln_03',
+      priority : 3,
+      desc: 'UpSell 가망',
+      criteria_condition: 'AND',
+      tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요.',
+      profile_keys: [
+        { key: 'additional_svc_ansim_option_scrb_type', required: true, criteria : {operator: 1, value: 'paid'}}
+      ]
     }
-  },
-  prcpln_14: {
-    type: 'membership',
-    tooltip: '1년에 영화 6회 무료! T멤버십 VIP 혜택을 드리는 추천요금제 어떠세요?',
-    profile_key: {
-      membership_vip_yn : {type: 'Y/N', name: '멤버십VIP여부', required: false},
-      membership_cnt_ratio_median_yn : {type: 'Y/N', name: '멤버십 사용건수 중간값 이상 여부', required: false},
-      membership_amt_ratio_median_yn : {type: 'Y/N', name: '멤버십 사용금액 중간값 이상 여부', required: false},
-      mbr_use_discount_amt_cum : {type: 'amt', name: '연간 누적 멤버십 할인금액', title: '총계', required: true},
-      mbr_discount_amt_cum_chocolate : {type: 'amt', name: '멤버십- T멤버십 초콜릿 카테고리 연간 누적 할인금액', title: '초콜릿', required: false},
-      mbr_discount_amt_cum_bakery : {type: 'amt', name: '멤버십-베이커리 카테고리 연간 누적 할인금액', title: '베이커리', required: false},
-      mbr_discount_amt_cum_sports : {type: 'amt', name: '멤버십-스포츠 카테고리 연간 누적 할인금액', title: '스포츠', required: false},
-      mbr_discount_amt_cum_jeju : {type: 'amt', name: '멤버십-제주도 카테고리 연간 누적 할인금액', title: '제주도', required: false},
-      mbr_discount_amt_cum_food_and_beverage : {type: 'amt', name: '멤버십- F&B카테고리 연간 누적 할인금액', title: 'F&B', required: false},
-      mbr_discount_amt_cum_education : {type: 'amt', name: '멤버십-교육 카테고리 연간 누적 할인금액', title: '교육', required: false},
-      mbr_discount_amt_cum_transportation : {type: 'amt', name: '멤버십-교통 카테고리 연간 누적 할인금액', title: '교통', required: false},
-      mbr_discount_amt_cum_mobile_and_media : {type: 'amt', name: '멤버십-모바일&미디어 카테고리 연간 누적 할인금액', title: '모바일&미디어', required: false},
-      mbr_discount_amt_cum_beauty_and_fashion : {type: 'amt', name: '멤버십-뷰티&패션 카테고리 연간 누적 할인금액', title: '뷰티&패션', required: false},
-      mbr_discount_amt_cum_shopping : {type: 'amt', name: '멤버십-쇼핑 카테고리 연간 누적 할인금액', title: '쇼핑', required: false},
-      mbr_discount_amt_cum_movie : {type: 'amt', name: '멤버십-영화관 카테고리 연간 누적 할인금액', title: '영화관', required: false},
-      mbr_discount_amt_cum_coffee : {type: 'amt', name: '멤버십-커피 카테고리 연간 누적 할인금액', title: '커피', required: false},
-      mbr_discount_amt_cum_family_restaurant : {type: 'amt', name: '멤버십-패밀리레스토랑 카테고리 연간 누적 할인금액', title: '패밀리레스토랑', required: false},
-      mbr_discount_amt_cum_pizza : {type: 'amt', name: '멤버십-피자 카테고리 연간 누적 할인금액', title: '피자', required: false},
-      mbr_discount_amt_cum_convenience_store : {type: 'amt', name: '멤버십-편의점 카테고리 연간 누적 할인금액', title: '편의점', required: false},
-      mbr_discount_amt_cum_theme_park : {type: 'amt', name: '멤버십-테마파크 카테고리 연간 누적 할인금액', title: '테마파크', required: false}
+  ],
+  video: [
+    {
+      reason_code: 'prcpln_04',
+      priority : 1,
+      desc: 'POOQ 가입 & 유료 사용',
+      criteria_condition: 'OR',
+      tooltip: '추천요금제는 <strong>wavve를 무료로</strong> 즐길 수 있어요',
+      profile_keys: [
+        // { key: 'additional_svc_oksusu_scrb_type', required: false, criteria : {operator: 1, value: 'paid'}},
+        { key: 'additional_svc_pooq_scrb_type', required: true, criteria : {operator: 1, value: 'paid'}}
+      ]
+    },
+    {
+      reason_code: 'prcpln_05',
+      priority : 2,
+      desc: '전체 데이터 대비 동영상앱 사용비율이 중간값 이상',
+      criteria_condition: 'AND',
+      tooltip: '추천요금제는 <strong>데이터 걱정없이 wavve를 무료로</strong> 이용할 수 있어요',
+      profile_keys: [
+        { key: 'app_use_traffic_video_ratio_median_yn', required: true, criteria : {operator: 1, value: 'Y'}},
+        { key: 'app_use_traffic_video_ratio', required: true},
+        { key: 'app_use_traffic_video_ratio_median', required: true}
+      ]
+    },
+    {
+      reason_code: 'prcpln_06',
+      priority : 3,
+      desc: 'POOQ 미가입',
+      criteria_condition: 'AND',
+      tooltip: '추천요금제로 <strong>스포츠 생중계를 무료로</strong> 즐겨보세요',
+      profile_keys: [
+        // { key: 'additional_svc_oksusu_scrb_type', required: false, criteria : {operator: 1, value: 'N/A'}},
+        { key: 'additional_svc_pooq_scrb_type', required: true, criteria : {operator: 1, value: 'N/A'}}
+      ]
     }
-  }
+  ],
+  music: [
+    {
+      reason_code: 'prcpln_07',
+      priority : 1,
+      desc: '멜론, FLO 서비스 가입 & 유료사용',
+      criteria_condition: 'OR',
+      tooltip: '추천요금제는 <strong>FLO를 무료로</strong> 즐길 수 있어요',
+      profile_keys: [
+        { key: 'additional_svc_flo_scrb_type', required: false, criteria : {operator: 1, value: 'paid'}},
+        { key: 'additional_svc_melon_scrb_type', required: false, criteria : {operator: 1, value: 'paid'}}
+        // { key: 'additional_svc_bugs_scrb_type', required: false, criteria : {operator: 1, value: 'paid'}}
+      ]
+    },
+    {
+      reason_code: 'prcpln_08',
+      priority : 2,
+      desc: '전체 데이터 대비 음악앱 사용 비율이 중간값 이상',
+      criteria_condition: 'AND',
+      tooltip: '추천요금제는 <strong>FLO를 데이터 걱정없이</strong> 이용할 수 있어요',
+      profile_keys: [
+        { key: 'app_use_traffic_music_ratio_median_yn', required: true, criteria : {operator: 1, value: 'Y'}},
+        { key: 'app_use_traffic_music_ratio', required: true},
+        { key: 'app_use_traffic_music_ratio_median', required: true}
+      ]
+    },
+    {
+      reason_code: 'prcpln_09',
+      priority : 3,
+      desc: '멜론, FLO 미가입',
+      criteria_condition: 'AND',
+      tooltip: '추천요금제로 <strong>FLO 할인 받고</strong>, 새로운 음악을 찾아보세요',
+      profile_keys: [
+        { key: 'additional_svc_flo_scrb_type', required: true, criteria : {operator: 1, value: 'N/A'}},
+        { key: 'additional_svc_melon_scrb_type', required: true, criteria : {operator: 1, value: 'N/A'}}
+        // { key: 'additional_svc_bugs_scrb_type', required: false, criteria : {operator: 1, value: 'N/A'}}
+      ]
+    }
+  ],
+  insurance: [
+    {
+      reason_code: 'prcpln_10',
+      priority : 1,
+      desc: '휴대폰 보험 가입 & 유료',
+      // 맥스, 스페셜
+      valid_prodIds: ['NA00006539', 'NA00006538'],
+      criteria_condition: 'AND',
+      tooltip: {
+        NA00006538: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
+        NA00006539: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
+      },
+      profile_keys: [
+        { key: 'additional_svc_allcare_scrb_type', required: true, criteria : {operator: 1, value: 'paid'}}
+      ]
+    },
+    {
+      reason_code: 'prcpln_12',
+      priority : 2,
+      desc: '휴대폰 보험 가입 & 유료',
+      // 맥스, 스페셜
+      valid_prodIds: ['NA00006539', 'NA00006538'],
+      criteria_condition: 'AND',
+      tooltip: {
+        NA00006538: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
+        NA00006539: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
+      },
+      profile_keys: [
+        { key: 'additional_svc_allcare_scrb_type', required: true, criteria : {operator: 1, value: 'paid'}}
+      ]
+    }
+  ],
+  membership: [
+    {
+      reason_code: 'prcpln_14',
+      priority : 1,
+      desc: '멤버십 사용건수 중간값 이상 OR 사용액 중간값 이상 & VIP 아닌 경우',
+      criteria_condition: 'OR',
+      tooltip: '1년에 영화 6회 무료! T멤버십 VIP 혜택을 드리는 추천요금제 어떠세요?',
+      profile_keys: [
+        // { key: 'membership_vip_yn', required: false, criteria : {operator: 1, value: 'Y'}},
+        { key: 'membership_cnt_ratio_median_yn', required: true, criteria : {operator: 1, value: 'Y'}},
+        { key: 'membership_amt_ratio_median_yn', required: true, criteria : {operator: 1, value: 'Y'}},
+        { key: 'mbr_use_discount_amt_cum', title: '총계', required: true},
+        { key: 'mbr_discount_amt_cum_chocolate', title: '초콜릿', required: false},
+        { key: 'mbr_discount_amt_cum_bakery', title: '베이커리', required: false},
+        { key: 'mbr_discount_amt_cum_sports', title: '스포츠', required: false},
+        { key: 'mbr_discount_amt_cum_jeju', title: '제주도', required: false},
+        { key: 'mbr_discount_amt_cum_food_and_beverage', title: 'F&B', required: false},
+        { key: 'mbr_discount_amt_cum_education', title: '교육', required: false},
+        { key: 'mbr_discount_amt_cum_transportation', title: '교통', required: false},
+        { key: 'mbr_discount_amt_cum_mobile_and_media', title: '모바일&미디어', required: false},
+        { key: 'mbr_discount_amt_cum_beauty_and_fashion', title: '뷰티&패션', required: false},
+        { key: 'mbr_discount_amt_cum_shopping', title: '쇼핑', required: false},
+        { key: 'mbr_discount_amt_cum_movie', title: '영화관', required: false},
+        { key: 'mbr_discount_amt_cum_coffee', title: '커피', required: false},
+        { key: 'mbr_discount_amt_cum_family_restaurant', title: '패밀리레스토랑', required: false},
+        { key: 'mbr_discount_amt_cum_pizza', title: '피자', required: false},
+        { key: 'mbr_discount_amt_cum_convenience_store', title: '편의점', required: false},
+        { key: 'mbr_discount_amt_cum_theme_park', title: '테마파크', required: false}
+      ]
+    }
+  ]
 };
 
 // Exceptional MLS Return Values

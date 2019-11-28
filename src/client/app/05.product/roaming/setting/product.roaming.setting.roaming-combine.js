@@ -15,13 +15,12 @@
  * @param {String} prodId - 상품 id
  * @returns {void}
  */
-Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,prodId) {
+Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodBffInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
   this._nativeService = Tw.Native;
-  this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodBffInfo = prodBffInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;

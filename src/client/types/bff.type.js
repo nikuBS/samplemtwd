@@ -64,6 +64,8 @@ Tw.MYT_FARE_HISTORY_MICRO_METHOD = {
   '03': '자동결제'
 };
 
+Tw.MYT_JOIN_CO_TYPE = Tw.MYT_FARE_BILL_CO_TYPE;
+
 Tw.MYT_PAYMENT_HISTORY_TYPE = ['', 'direct', 'auto', 'auto-all', 'micro-prepay', 'content-prepay', 'point-reserve', 'point-auto'];
 
 Tw.AUTH_LOGIN_TYPE = {
@@ -291,7 +293,7 @@ Tw.MYT_DATA_FAMILYDATA_CHANGE_DATA_CODE = {
   RCG0067: 'NOT_THIS_MONTH',  // 이번 달 공유 내역 아님
   RCG0068: 'NOT_MINE',  // 내 공유 내역 아님
   RCG0069: 'NOT_SAME_PLAN' , // 공유 당시와 동일한 요금제가 아님
-  RCG0070: 'GREATER_THAN_CHANGABLE' // 변경하려는 데이터 양이 공유 데이터 양보다 큼 
+  RCG0070: 'GREATER_THAN_CHANGABLE' // 변경하려는 데이터 양이 공유 데이터 양보다 큼
 };
 
 Tw.MYT_DATA_FAMILYDATA_SHARE_DATA_CODE = {

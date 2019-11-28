@@ -936,7 +936,7 @@ Tw.ALERT_MSG_CUSTOMER = {
 };
 
 Tw.CUSTOMER_RESEARCHES_BUTTONS = {
-  NEXT: '다음으로',
+  NEXT: '다음',
   SUBMIT: '참여하기'
 };
 
@@ -1430,7 +1430,7 @@ Tw.CUSTOMER_EMAIL = {
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
-  MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
+  MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
 };
 
 Tw.CUSTOMER_NEAR_POPUP = {
@@ -1825,7 +1825,7 @@ Tw.ROAMING_RECEIVE_CODE = {
                 officeHour: '<strong>업무시간</strong> | 06:00 ~ 21:30' },
   1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10',
                 officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
-  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
+  1430471483: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
                 officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
   C299910000: { code: 'C299910000', name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
                 officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30' },
@@ -2137,4 +2137,11 @@ Tw.WIRE_NUMBER_CHANGE = {
 
 Tw.PRODUCT_JOIN_OCB = {
   POPUP : '혜택 안내'
+};
+
+Tw.MYT_FARE_BILL = {
+  ERROR: {
+    UNUSUAL_CUSTOMER_MSG: '휴대폰 결제 특이 차단 중인 고객은 해당 메뉴를 이용하실 수 없습니다.',
+    UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.'
+  }
 };

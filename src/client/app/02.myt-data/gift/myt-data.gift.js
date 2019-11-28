@@ -62,7 +62,7 @@ Tw.MyTDataGift.prototype = {
     this.wrap_available_product = this.$container.find('.fe-layer_available_product');
     this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
     this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
-    this.$wrap_auto_select_list = $('.fe-auto_select_list');
+    // this.$wrap_auto_select_list = $('.fe-auto_select_list');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
     this.$remainQty = $('.fe-remain_data');
     this.$remainTxt = $('.fe-txt-remain');
@@ -131,21 +131,19 @@ Tw.MyTDataGift.prototype = {
     var code = res.code;
     if ( code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
+      var apiDataQty = result.dataRemQty;
+      var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
       if ( result.giftRequestAgainYn === 'N' ) { // 재시도 가능여부 판단. N인경우 looping 중지, reqCnt 0부터 다시 요청
-        if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
+        if ( Tw.FormatHelper.isEmpty(apiDataQty) ) {
           this._remainApiError($target);
         } else if ( Number(result.dataRemQty) < this.limitedGiftUsageQty ) { // 데이터 잔여량이 기본 잔여 데이터(500mb)보다 작은 경우
           this.$container.trigger('showUnableGift', limitErrorCode);
-          var apiDataQty = res.result.dataRemQty;
-          var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
           this.currentRemainDataInfo = apiDataQty;
           this.$remainQty.text(dataQty.data + dataQty.unit);
           this._procShortageError();
         } else {
           // API DATA SUCCESS
           this._remainApiSuccess();
-          var apiDataQty = res.result.dataRemQty;
-          var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
           this.currentRemainDataInfo = apiDataQty;
           this.$remainQty.text(dataQty.data + dataQty.unit);
           this._setAmountUI(Number(apiDataQty));
@@ -176,7 +174,7 @@ Tw.MyTDataGift.prototype = {
     this.$container.find('.fe-warning').hide();
   },
 
-  _remainApiError: function ($target) {
+  _remainApiError: function () {
     this.$wrapSuccessRemainApi.hide();
     this.$wrapErrorRemainApi.show();
     this.$remainBtn.show();

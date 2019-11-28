@@ -146,6 +146,7 @@ export const API_CMD = {
   BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0178: { path: '/core-product/:version/mobiles/mls/recommend-product', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0212: { path: '/core-bill/:version/bill/mls/recommend-product', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0187: { path: '/core-product/:version/mobiles/mls/recommend-items', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // MYT
   BFF_05_0001: { path: '/:version/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true, store: true },
   BFF_05_0002: { path: '/core-balance/:version/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -524,6 +525,7 @@ export const API_CMD = {
   BFF_07_0100: { path: '/core-bill/:version/skpay-prepay/use-contents-prepay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0101: { path: '/core-bill/:version/skpay-prepay/micro-prepay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0102: { path: '/core-bill/:version/affiliatecard-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0103: { path: '/core-bill/:version/micro-prepay/spec-sp-yn', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -1015,6 +1017,7 @@ export const SESSION_CMD = {
   BFF_05_0061: 'BFF_05_0061',
   BFF_07_0017: 'BFF_07_0017',
   BFF_10_0178: 'BFF_10_0178',
+  BFF_10_0187: 'BFF_10_0187',
   BFF_05_0106: 'BFF_05_0106',
   BFF_05_0094: 'BFF_05_0094',
   BFF_05_0196: 'BFF_05_0196'

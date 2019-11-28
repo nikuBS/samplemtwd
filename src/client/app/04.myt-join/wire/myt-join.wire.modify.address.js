@@ -44,10 +44,9 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
 
 Tw.MyTJoinWireModifyAddress.prototype = {
   _init: function () {
-    if(this.resData.resDataInfo.coClCd === 'B'){
+    if (this.resData.resDataInfo.coClCd === Tw.MYT_JOIN_CO_TYPE.BROADBAND) {
       // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
       (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._history);
-
       return;
     }
     this._cachedElement();
@@ -336,7 +335,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     // this.addressFormData.zip     = resp.zip;    // 주의!! API에 없는 필드를 넣으면 오류남!!
     this.addressFormData.basAddr = resp.zip + " " + resp.main;
     this.addressFormData.dtlAddr = resp.detail;
-    
+
     this._formValidateionChk();
   },
   //--------------------------------------------------------------------------[Validation]

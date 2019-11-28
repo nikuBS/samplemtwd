@@ -619,7 +619,7 @@ Tw.POPUP_TPL = {
             ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 21:30"',
           txt: '김해공항 3층 로밍센터' },
         { 'radio-attr': 'name="r2"',
-          'label-attr':'id="12" data-center="C399900000" data-booth="1430455436"' +
+          'label-attr':'id="12" data-center="C399900000" data-booth="1430471483"' +
             ' data-img="place-img-06" value="대구공항 2층 로밍센터"' +
             ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00"',
           txt: '대구공항 2층 로밍센터' },
@@ -777,6 +777,13 @@ Tw.PRODUCT_LIST_ORDER = [
   { txt: '추천순', 'radio-attr': 'data-order="recommand"', 'label-attr': ' ' },
   { txt: '높은 가격순', 'radio-attr': 'data-order="highprice"', 'label-attr': ' ' },
   { txt: '낮은 가격순', 'radio-attr': 'data-order="lowprice"', 'label-attr': ' ' }
+];
+
+Tw.PRODUCT_LIST_COMBINATIONS_ORDER = [
+  { txt: '전체', 'radio-attr': 'data-order="recommand"', 'label-attr': ' ' },
+  { txt: '패밀리형', 'radio-attr': 'data-order="family"', 'label-attr': ' ' },
+  { txt: '개인형', 'radio-attr': 'data-order="solo"', 'label-attr': ' ' },
+  { txt: '보안', 'radio-attr': 'data-order="security"', 'label-attr': ' ' }
 ];
 
 Tw.TERMS_ACTION = {

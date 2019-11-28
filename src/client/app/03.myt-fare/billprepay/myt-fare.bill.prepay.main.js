@@ -192,7 +192,21 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
     this.$container.on('click', '.fe-set-password', $.proxy(this._setPassword, this));
+    this.$container.on('click', '[data-unusual-state]', $.proxy(this._unusualBlock, this));
   },
+
+  /**
+   * @function
+   * @param e
+   * @desc 특이고객 차단
+   */
+  _unusualBlock: function (e) {
+    if ($(e.currentTarget).data('unusualState') === 'Y') {
+      e.stopImmediatePropagation(); // 다른 이벤트 중지
+      Tw.Error('', Tw.MYT_FARE_BILL.ERROR.UNUSUAL_CUSTOMER_MSG, Tw.MYT_FARE_BILL.ERROR.UNUSUAL_CUSTOMER_SUB_MSG).page();
+    }
+  },
+
   /**
    * @function
    * @desc API 응답 이후 event binding
@@ -311,7 +325,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @function
    * @desc SK Pay 결제
    */
-  _goSKpay: function ($layer) {
+  _goSKpay: function () {
     this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/skpay');
   },
   /**

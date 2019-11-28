@@ -55,40 +55,42 @@ class CommonMemberLineVirtualNumberDenial extends TwViewController {
       });
     } else {
 
-      // 가상번호 거부 신청여부 확인할 회선 별 Parameter들 세팅
-      const requestIsDeniedParams: Observable<any>[] = selectedLines.map((line) => this.apiService.request(
-        API_CMD.BFF_08_0081, { selectedSvcMgmtNum: line.svcMgmtNum }
-      ));
+    // 가상번호 거부 신청여부 확인할 회선 별 Parameter들 세팅
+    const requestIsDeniedParams: Observable<any>[] = selectedLines.map((line) => this.apiService.request(
+      API_CMD.BFF_08_0081, { selectedSvcMgmtNum: line.svcMgmtNum }
+    ));
 
-      Observable.combineLatest.apply(Observable, requestIsDeniedParams).subscribe((resps: any) => {
+    Observable.combineLatest.apply(Observable, requestIsDeniedParams).subscribe((resps: any) => {
 
-        // Render용 데이터 정리
-        const deniableLineList: any[] = resps.map((resp, index) => {
-          const lineInfo = selectedLines[index];
-    
-          if (resp.code !== API_CODE.CODE_00) {
-            this.error.render(res, {
-              code: resp.code,
-              msg: resp.msg,
-              pageInfo: pageInfo,
-              svcInfo: svcInfo
-            });
+      // Render용 데이터 정리
+      const deniableLineList: any[] = resps.map((resp, index) => {
+        const lineInfo = selectedLines[index];
+  
+        if (resp.code !== API_CODE.CODE_00) {
+
+          this.error.render(res, {
+            code: resp.code,
+            msg: resp.msg,
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
+          });
+
+        }
+        
+        return (
+          {
+            // 회선명은 별명을 우선적으로 노출, 없으면 기본값 노출
+            lineNm: lineInfo.nickNm || MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
+            svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
+            eqpMdlNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ? lineInfo.eqpMdlNm : '',
+            isDenied: resp.result.isAdditionUse,
+            svcMgmtNum: lineInfo.svcMgmtNum
           }
-          
-          return (
-            {
-              // 회선명은 별명을 우선적으로 노출, 없으면 기본값 노출
-              lineNm: lineInfo.nickNm || MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
-              svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
-              eqpMdlNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ? lineInfo.eqpMdlNm : '',
-              isDenied: resp.result.isAdditionUse,
-              svcMgmtNum: lineInfo.svcMgmtNum
-            }
-          );
-        });
-
-        res.render('member/common.member.line.virtual-number-denial.html', { svcInfo, pageInfo, deniableLineList });  
+        );
       });
+
+      res.render('member/common.member.line.virtual-number-denial.html', { svcInfo, pageInfo, deniableLineList });  
+    });
     }
   }
 }

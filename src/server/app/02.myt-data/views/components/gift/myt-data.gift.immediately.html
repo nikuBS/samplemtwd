@@ -68,6 +68,8 @@
                             <span class="fe-txt-remain">조회중 입니다</span><button class="f-type bt-link-tx underline fe-btn-remain" style="display:none" tabindex="0">조회하기</button>
                         </em>
                         <em class="tx f-type fe-remain-api" style="display: none" aria-hidden="true"><span class="ff-tg-medium fe-remain_data"></span></em>
+                        <!--<em class="tx f-type fe-remain-api" style="display: none"><span class="ff-tg-medium fe-remain_data"></span></em>-->
+                        <!-- 191115 웹접근성 수정_01 -->
                     </li>
                     <li><strong class="ti">선물하기 남은 횟수</strong>
                         <em class="tx f-type c-point"><span>T끼리 <span class="tx-regular"><%= senderInfo.dataGiftCnt %>회</span><span class="tx-regular">
@@ -88,6 +90,8 @@
                 <div class="widget">
                     <div class="widget-box radio">
                         <ul class="select-list fe-immediately_data_select_list" role="taplist">
+                            <!--  [OP002-5239] 웹접근성 이슈 disabled 인 경우 aria-disabled 값도 true 설정필 -->
+                            <!-- aria-disabled="true" -->
                             <li class="radiobox btn-type02 disabled" role="tap-1" aria-checked="true">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="1024" title="1GB" aria-labelledby="aria-comp-radio1">
