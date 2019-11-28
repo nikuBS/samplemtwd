@@ -6857,8 +6857,11 @@
 .graphlist-wrap .graphbox-li.unlimited .amountdata-num .date-info .data-title, .graphlist-wrap .graphbox-li.unlimited .amountdata-num .date-info .data-state .str {
   color: #b2b2b2; }
 
+/* 191128 [OP002-5469] KDB x T high5 적금 현황 조회 2차 */
+/*
 .graphlist-wrap .graphbox-li:only-child {
-  border-bottom: 1px solid #f2f2f2; /* 191022 [OP002-4368] KDB x T high5 적금 현황 조회 */}
+  border-bottom: 1px solid #f2f2f2;}
+*/ 
 
 .lineinfo-list li {
   overflow: hidden;
