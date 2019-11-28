@@ -67,9 +67,6 @@ import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.te
 import ProductWireplanReservationCancel from './controllers/wireplan/product.wireplan.reservation-cancel.controller';
 import ProductWireplanOkCashback from './controllers/wireplan/join/product.wireplan.join.ocb.controller';
 
-import ProductCombination from './controllers/combinations/product.combinations.controller';
-import ProductCombinations from './controllers/combinations/product.combinations.list.controller';
-
 import ProductRoaming from './controllers/roaming/product.roaming.controller';
 import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
 import ProductRoamingSearchBefore from './controllers/roaming/product.roaming.do.search-before.controller';
@@ -175,9 +172,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
     // this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
     this.controllers.push({ url: '/wireplan/join/ocb', controller: ProductWireplanOkCashback });
-
-    this.controllers.push({ url: '/combinations', controller: ProductCombination });
-    this.controllers.push({ url: '/combinations/list', controller: ProductCombinations });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
