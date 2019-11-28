@@ -192,6 +192,11 @@ export enum MYT_FARE_HISTORY_MICRO_TYPE_NAME {
   '03' = '자동결제'
 }
 
+export enum MYT_JOIN_CO_TYPE {
+  TWORLD = 'T',
+  BROADBAND = 'B'
+}
+
 export enum HOME_SMART_CARD {
   // H01 = '자녀 사용량 조회',
   '00001' = '요금 안내서',
