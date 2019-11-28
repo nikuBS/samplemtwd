@@ -144,8 +144,9 @@ Tw.MyTDataGiftMonthly.prototype = {
     if ( isValidPhone ) { // 유효한 번호인 경우 API 호출
       this._apiService.request(Tw.API_CMD.BFF_06_0019, {
         befrSvcNum: this.befrSvcNum,
-        tmpSvcMgmtNum: this._tmpSvcMgmtNum,
-        dataType: 'auto' // [OP002-5325] 선물하기 시 바로선물하기 인지 자동선물인지 구분하기 위해 필드 추가
+        tmpSvcMgmtNum: this._tmpSvcMgmtNum
+        // 12월 1주차 반영예정 [OP002-5325]
+        // dataType: 'auto' // [OP002-5325] 선물하기 시 바로선물하기 인지 자동선물인지 구분하기 위해 필드 추가
       })
         .done($.proxy(this._onSuccessReceiveUserInfo, this, $(e.currentTarget)));
     }
