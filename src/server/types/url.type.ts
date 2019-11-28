@@ -97,8 +97,6 @@ export const URL = {
   '/product/wireplan/internet': { login: false, id: 'WP_01', title: '인터넷' },
   '/product/wireplan/phone': { login: false, id: 'WP_01', title: '전화' },
   '/product/wireplan/tv': { login: false, id: 'WP_01', title: 'TV' },
-  '/product/combinations': { login: false, id: 'CP', title: '결합상품' },
-  '/product/combinations/list': { login: false, id: 'CP_01', title: '결합상품' },
   '/product/apps': { login: false, id: 'TA', title: 'T apps' },
   '/product/roaming/join/roaming-setup': { login: true, id: 'RM_11_01_02_02', title: '가입' },
   '/product/roaming/join/roaming-begin-setup': { login: true, id: 'RM_11_01_02_03', title: '가입' },

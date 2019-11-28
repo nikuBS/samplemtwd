@@ -37,7 +37,6 @@ Tw.ProductSubmain.prototype = {
    */
   _bindEvent: function() {
     this.$container.on('click', '.fe-go-plan', this._goPlan);
-    this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
 
     // 광고성 정보 수신동의 배너 이벤트
     this.$container.on('click', '#fe-bt-close-ad-rcv-agree-banner', $.proxy( function() { this.$adRcvAgreeBanner.addClass('none'); }, this ));
@@ -144,18 +143,6 @@ Tw.ProductSubmain.prototype = {
     if (url) {
       window.location.href = url;
     }
-  },
-
-  /**
-   * @function
-   * @desc 외부 브라우저 랜딩 처리
-   * @param $event 이벤트 객체
-   * @return {void}
-   * @private
-   */
-  _onClickExternal: function ($event) {
-    var url = $($event.currentTarget).data('url');
-      Tw.CommonHelper.openUrlExternal(url);
   },
 
   /**
