@@ -779,6 +779,13 @@ Tw.PRODUCT_LIST_ORDER = [
   { txt: '낮은 가격순', 'radio-attr': 'data-order="lowprice"', 'label-attr': ' ' }
 ];
 
+Tw.PRODUCT_LIST_COMBINATIONS_ORDER = [
+  { txt: '전체', 'radio-attr': 'data-order="recommand"', 'label-attr': ' ' },
+  { txt: '패밀리형', 'radio-attr': 'data-order="family"', 'label-attr': ' ' },
+  { txt: '개인형', 'radio-attr': 'data-order="solo"', 'label-attr': ' ' },
+  { txt: '보안', 'radio-attr': 'data-order="security"', 'label-attr': ' ' }
+];
+
 Tw.TERMS_ACTION = {
   46: {
     data: [{
