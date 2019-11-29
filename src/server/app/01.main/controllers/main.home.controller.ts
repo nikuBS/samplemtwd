@@ -639,10 +639,10 @@ class MainHome extends TwViewController {
             retVal.hasRecommendProds = true;
             const items = resp.result.results[EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS].items || [];
             // 추천 요금이 없거나, 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
-            // if (FormatHelper.isEmpty(items) 
-            //     || (!FormatHelper.isEmpty(items) && items[0].id === prodId)) {
-            //       retVal.hasRecommendProds = false;
-            // }
+            if (FormatHelper.isEmpty(items) 
+                || (!FormatHelper.isEmpty(items) && items[0].id === prodId)) {
+                  retVal.hasRecommendProds = false;
+            }
           }
         }
         return retVal;
