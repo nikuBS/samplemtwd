@@ -134,7 +134,9 @@ export default class MainRecommendProduct extends TwViewController {
       FormatHelper.sortObjArrAsc(kindObj, 'priority');
       let isKindShow = false;
 
-      kindObj.map((reason) => {
+      kindObj.map((reasonObj) => {
+
+        const reason = Object.assign({}, reasonObj);
 
         result[reason.reason_code] = false;
         reason['check_get_all_profiles'] = true;
@@ -304,7 +306,7 @@ export default class MainRecommendProduct extends TwViewController {
         result['membership']['isShow'] = false;
 
         // membershop 이외의 보여질 category가 앖다면..
-        if (!!result.has_category) {
+        if (!result.has_category) {
           result.has_category = false;
         }
       }

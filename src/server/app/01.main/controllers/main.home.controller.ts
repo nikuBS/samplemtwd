@@ -632,7 +632,7 @@ class MainHome extends TwViewController {
 
     if (BrowserHelper.isApp(req)) {
       const channelIds = [EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
-      return this.apiService.requestStore(SESSION_CMD.BFF_10_0187, {channelIds: channelIds}).map((resp) => {
+      return this.apiService.request(API_CMD.BFF_10_0187, {channelIds: channelIds}).map((resp) => {
 
         if ( resp.code === API_CODE.CODE_00 ) {
           if ( !FormatHelper.isEmpty(resp.result) ) {

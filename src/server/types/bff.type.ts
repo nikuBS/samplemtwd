@@ -708,7 +708,8 @@ export const MYT_SUSPEND_REASON_CODE = {
 export const MYT_SUSPEND_MILITARY_RECEIVE_CD = ['5000341', '5000342', '5000349', '5000350' ];
 
 export const EXPERIMENT_EXPS_SCRN_ID = {
-  RECOMMEND_PRODS: 'MTW_M000184_01'
+  // RECOMMEND_PRODS: 'MTW_M000184_01'
+  RECOMMEND_PRODS: 'tw_fee_no_equip'
 };
 
 export const MLS_PRODUCT_BENEFIT = {
@@ -851,9 +852,9 @@ export const MLS_DETAIL_MAPPING = {
       profile_keys: [
         { key: 'data_use_ratio_max', required: true, criteria : {operator: 5, value: 0.8}},
         // { key: 'bas_ofr_data_gb_qty_val', required: false},
-        { key: 'data_use_ratio_bf_m0', required: true},
-        { key: 'data_use_ratio_bf_m1', required: true},
-        { key: 'data_use_ratio_bf_m2', required: true},
+        { key: 'data_use_ratio_bf_m0', required: true, criteria : {operator: 5, value: 0}},
+        { key: 'data_use_ratio_bf_m1', required: true, criteria : {operator: 5, value: 0}},
+        { key: 'data_use_ratio_bf_m2', required: true, criteria : {operator: 5, value: 0}},
         { key: 'bf_m0_ym', required: true}
       ]
     },
