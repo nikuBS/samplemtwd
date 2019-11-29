@@ -239,9 +239,6 @@ export default class MainRecommendProduct extends TwViewController {
               result.has_category = true;
             }
 
-            console.log('result.isKindShow ' + kind + '====>', isKindShow);
-            console.log('result.has_category ' + kind + '====>', result.has_category);
-
           }
         }
       });
