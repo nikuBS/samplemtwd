@@ -852,9 +852,9 @@ export const MLS_DETAIL_MAPPING = {
       profile_keys: [
         { key: 'data_use_ratio_max', required: true, criteria : {operator: 5, value: 0.8}},
         // { key: 'bas_ofr_data_gb_qty_val', required: false},
-        { key: 'data_use_ratio_bf_m0', required: true},
-        { key: 'data_use_ratio_bf_m1', required: true},
-        { key: 'data_use_ratio_bf_m2', required: true},
+        { key: 'data_use_ratio_bf_m0', required: true, criteria : {operator: 5, value: 0}},
+        { key: 'data_use_ratio_bf_m1', required: true, criteria : {operator: 5, value: 0}},
+        { key: 'data_use_ratio_bf_m2', required: true, criteria : {operator: 5, value: 0}},
         { key: 'bf_m0_ym', required: true}
       ]
     },
