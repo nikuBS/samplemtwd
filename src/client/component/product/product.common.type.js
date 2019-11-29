@@ -7,7 +7,7 @@
 Tw.PRODUDT = Tw.PRODUDT||{};
 Tw.PRODUDT.PROMOTIONS = {
   POOQ:{
-    USED: 'Y',
+    USED: 'N',
     PRODS:{
       'NA00006516': { //Pooq 콘텐츠 팩
         SUB_PROD: ['NA00006545', 'NA00006546', 'NA00006657', 'NA00006517']
@@ -198,7 +198,7 @@ Tw.PRODUDT.PROMOTIONS = {
     FREE_PRODS: ['NA00006539', 'NA00006538', 'NA00006405', 'NA00006404', 'NA00006403']
   },
   FLO:{
-    USED: 'Y',
+    USED: 'N',
     PRODS:{
       'NA00006520': { // FLO 앤 데이터
                   //    인증코드       적립        할인(100원)    요금제 혜택...
