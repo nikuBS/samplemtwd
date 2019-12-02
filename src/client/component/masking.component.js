@@ -12,6 +12,7 @@
 Tw.MaskingComponent = function () {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._popupService = new Tw.PopupService();
 
   this.$btMasking = null;
   this._url = '';
@@ -54,7 +55,7 @@ Tw.MaskingComponent.prototype = {
         prodProcType: ''
       });
 
-      var cert = new Tw.CertificationSelect();
+      var cert = new Tw.CertificationSelect(this.$btMasking);
       cert.open(params, this._url, null, null, $.proxy(this._completeCert, this));
     }
   },
@@ -67,7 +68,7 @@ Tw.MaskingComponent.prototype = {
    */
   _failGetData: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this.$btMasking);
   },
 
   /**
@@ -107,6 +108,6 @@ Tw.MaskingComponent.prototype = {
    */
   _failMaskingComplete: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this.$btMasking);
   }
 };

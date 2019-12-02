@@ -9,8 +9,9 @@
  * @desc 공통 > 인증 > 법인폰 비밀번호 인증
  * @constructor
  */
-Tw.CertificationBiz = function () {
+Tw.CertificationBiz = function ($target) {
   this._popupService = Tw.Popup;
+  this._$target = $target;
 };
 Tw.CertificationBiz.prototype = {
   /**
@@ -21,7 +22,7 @@ Tw.CertificationBiz.prototype = {
     this._popupService.open({
       hbs: 'CO_CE_02_03_01_01',
       layer: true
-    }, $.proxy(this._onOpenBizCert, this));
+    }, $.proxy(this._onOpenBizCert, this), null, '', this._$target);
   },
 
   /**

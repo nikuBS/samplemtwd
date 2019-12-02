@@ -8,11 +8,12 @@
  * @class
  * @desc 공통 > 인증 > 인증 선택
  */
-Tw.CertificationSelect = function () {
+Tw.CertificationSelect = function ($target) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
 
+  this._$target = $target;
   this._certMethod = null;
   this._openCert = false;
   this._niceKind = null;
@@ -39,7 +40,13 @@ Tw.CertificationSelect = function () {
   this._optionCert = false;
   this._onSelectPopup = false;
 
-  this._certSk = new Tw.CertificationSk();
+  this._certSk = new Tw.CertificationSk($target);
+  this._certNice = new Tw.CertificationNice($target);
+  this._certPassword = new Tw.CertificationPassword($target);
+  this._certPublic = new Tw.CertificationPublic($target);
+  this._certBio = new Tw.CertificationBio($target);
+  this._certFinance = new Tw.CertificationFinance($target);
+  this._certSmsRefund = new Tw.CertificationSkSmsRefund($target);
 };
 
 
@@ -107,7 +114,7 @@ Tw.CertificationSelect.prototype = {
    */
   _failGetSvcInfo: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -142,7 +149,7 @@ Tw.CertificationSelect.prototype = {
    */
   _failGetAuthMethodBlock: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -296,7 +303,8 @@ Tw.CertificationSelect.prototype = {
 
     if ( this._methodCnt === 1 ) {
       if ( this._authBlock[this._opMethods] === 'Y' ) {
-        this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+        this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG,
+          Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE, '', null, '', this._$target);
       } else {
         this._openCertPopup(this._opMethods);
       }
@@ -403,7 +411,7 @@ Tw.CertificationSelect.prototype = {
       },
       layer: true
     }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this),
-      'certSelect');
+      'certSelect', this._$target);
   },
 
   /**
@@ -448,7 +456,8 @@ Tw.CertificationSelect.prototype = {
     }, this));
 
     if ( Tw.FormatHelper.isEmpty(enableMethod) ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_BLOCK.TITLE,
+        Tw.BUTTON_LABEL.CLOSE, null, '', this._$target);
       return;
     }
     var checkBlock = _.filter(enableMethod, $.proxy(function (method) {
@@ -456,10 +465,12 @@ Tw.CertificationSelect.prototype = {
     }, this));
 
     if ( Tw.FormatHelper.isEmpty(checkBlock) ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG,
+        Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE, '', null, '', this._$target);
       return;
     } else if ( !Tw.FormatHelper.isEmpty(before) && checkBlock.length === 1 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG,
+        Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE, '', null, '', this._$target);
       return;
     }
 
@@ -474,7 +485,7 @@ Tw.CertificationSelect.prototype = {
         methods: methods
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this),
-      'certSelect');
+      'certSelect', this._$target);
   },
 
   /**
@@ -497,39 +508,33 @@ Tw.CertificationSelect.prototype = {
           this._opMethods, this._optMethods, isWelcome, this._methodCnt);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
-        this._certNice = new Tw.CertificationNice();
         this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, this._niceKind,
           this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.IPIN:
-        this._certNice = new Tw.CertificationNice();
         this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind,
           this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PASSWORD:
-        this._certPassword = new Tw.CertificationPassword();
         this._certPassword.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
-        this._certPublic = new Tw.CertificationPublic();
         this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey,
           this._command, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
-        this._certBio = new Tw.CertificationBio();
         this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, this._svcInfo,
           $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-        this._certFinance = new Tw.CertificationFinance();
         this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey,
           this._command, this._authBlock, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_REFUND:
-        (new Tw.CertificationSkSmsRefund()).openSmsPopup($.proxy(this._completeCert, this));
+        this._certSmsRefund.openSmsPopup($.proxy(this._completeCert, this));
         break;
       default:
-        this._popupService.openAlert('Not Supported');
+        this._popupService.openAlert('Not Supported', '', '', null, '', this._$target);
         break;
 
     }
@@ -693,7 +698,6 @@ Tw.CertificationSelect.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._optionCert ) {
         this._optionCert = false;
-        this._certPassword = new Tw.CertificationPassword();
         this._certPassword.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
       } else {
         resp.authKind = this._authKind;
