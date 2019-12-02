@@ -8,12 +8,11 @@
  * @class
  * @desc 공통 > 인증 > 인증 선택
  */
-Tw.CertificationSelect = function ($target) {
+Tw.CertificationSelect = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
 
-  this._$target = $target;
   this._certMethod = null;
   this._openCert = false;
   this._niceKind = null;
@@ -404,7 +403,7 @@ Tw.CertificationSelect.prototype = {
       },
       layer: true
     }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this),
-      'certSelect', this._$target);
+      'certSelect');
   },
 
   /**
@@ -475,7 +474,7 @@ Tw.CertificationSelect.prototype = {
         methods: methods
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this),
-      'certSelect', this._$target);
+      'certSelect');
   },
 
   /**

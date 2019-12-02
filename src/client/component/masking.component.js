@@ -54,7 +54,7 @@ Tw.MaskingComponent.prototype = {
         prodProcType: ''
       });
 
-      var cert = new Tw.CertificationSelect(this.$btMasking);
+      var cert = new Tw.CertificationSelect();
       cert.open(params, this._url, null, null, $.proxy(this._completeCert, this));
     }
   },
