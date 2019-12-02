@@ -41,7 +41,7 @@ Tw.ApiService.prototype = {
           return err;
         });
     }
-    
+
 
   },
 
@@ -126,15 +126,14 @@ Tw.ApiService.prototype = {
     }
 
     if ( resp.code === Tw.API_CODE.NODE_1005 ) {
-      var params = 'sess_invalid=Y'
-        + '&pre_server_se=' + resp.result.preServerSession
-        + '&cur_server_se=' + resp.result.curServerSession
-        + '&url=' + resp.result.url
-        + '&command_path=' + resp.result.commandPath
-        + '&point=' + resp.result.point
-        + '&target=' + resp.result.target;
-
-      this._historyService.replaceURL('/common/member/logout/expire?' + params);
+      var options = 'sess_invalid=Y' +
+        '&pre_server_se=' + resp.result.preServerSession +
+        '&cur_server_se=' + resp.result.curServerSession +
+        '&url=' + resp.result.url +
+        '&command_path=' + resp.result.commandPath +
+        '&point=' + resp.result.point +
+        '&target=' + resp.result.target;
+      this._historyService.replaceURL('/common/member/logout/expire?' + options);
       return;
     }
 

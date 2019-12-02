@@ -9,11 +9,12 @@
  * @desc 공통 > 인증 > SMS 인증 (S,R)
  * @constructor
  */
-Tw.CertificationSk = function () {
+Tw.CertificationSk = function ($target) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
 
+  this._$target = $target;
   this._svcInfo = null;
   this._authUrl = null;
   this._authKind = null;
@@ -87,10 +88,10 @@ Tw.CertificationSk.prototype = {
    * @param callback
    */
   checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
-    if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
+    if (Tw.FormatHelper.isEmpty(this._allSvcInfo)) {
       this._getAllSvcInfo($.proxy(this._onSuccessAllSvcInfoCheck, this, svcInfo, opMethods, optMethods, methodCnt, callback));
     } else {
-      if ( !this._checkEnableCase(this._allSvcInfo, svcInfo, opMethods, optMethods, methodCnt) ) {
+      if (!this._checkEnableCase(this._allSvcInfo, svcInfo, opMethods, optMethods, methodCnt)) {
         callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
       } else {
         callback({ code: Tw.API_CODE.CERT_SMS_ENABLE });
@@ -118,7 +119,7 @@ Tw.CertificationSk.prototype = {
    */
   _failAllSvcInfo: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -133,9 +134,9 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _onSuccessAllSvcInfoCheck: function (svcInfo, opMethods, optMethods, methodCnt, callback, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       this._allSvcInfo = resp.result;
-      if ( !this._checkEnableCase(resp.result, svcInfo, opMethods, optMethods, methodCnt) ) {
+      if (!this._checkEnableCase(resp.result, svcInfo, opMethods, optMethods, methodCnt)) {
         callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
       } else {
         callback({ code: Tw.API_CODE.CERT_SMS_ENABLE });
@@ -157,13 +158,13 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _checkEnableCase: function (allSvc, svcInfo, opMethods, optMethods, methodCnt) {
-    if ( Tw.FormatHelper.isEmpty(allSvc.m) ) {
+    if (Tw.FormatHelper.isEmpty(allSvc.m)) {
       return false;
     }
 
-    if ( svcInfo.smsUsableYn === 'N' || svcInfo.svcStCd === Tw.SVC_STATE.SP ) {
-      if ( methodCnt === 1 ) {
-        if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+    if (svcInfo.smsUsableYn === 'N' || svcInfo.svcStCd === Tw.SVC_STATE.SP) {
+      if (methodCnt === 1) {
+        if (!Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1) {
           this._defaultKeyin = true;
         } else {
           return false;
@@ -197,7 +198,7 @@ Tw.CertificationSk.prototype = {
     this._prodAuthKey = prodAuthKey;
     this._methodCnt = methodCnt;
 
-    if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
+    if (Tw.FormatHelper.isEmpty(this._allSvcInfo)) {
       this._getAllSvcInfo($.proxy(this._onSuccessAllSvcInfo, this, opMethods, optMethods, isWelcome, methodCnt));
     } else {
       this._parseAllSvcInfo(this._allSvcInfo, opMethods, optMethods, isWelcome, methodCnt);
@@ -215,7 +216,7 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       this._allSvcInfo = resp.result;
       this._parseAllSvcInfo(resp.result, opMethods, optMethods, isWelcome, methodCnt);
     } else {
@@ -230,7 +231,7 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _checkSmsType: function (opMethods) {
-    if ( opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1 ) {
+    if (opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1) {
       this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE;
     } else {
       this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS;
@@ -244,11 +245,11 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _checkOption: function (optMethods) {
-    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+    if (!Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1) {
       this._enableKeyin = true;
     }
-    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 &&
-      Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+    if (!Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 &&
+      Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid()) {
       this._securityAuth = true;
     }
   },
@@ -267,13 +268,13 @@ Tw.CertificationSk.prototype = {
     this._checkSmsType(opMethods);
     this._checkOption(optMethods);
 
-    if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE ) {
+    if (this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) {
       var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
       _.map(category, $.proxy(function (line) {
         var curLine = allSvc[Tw.LINE_NAME[line]];
-        if ( !Tw.FormatHelper.isEmpty(curLine) ) {
+        if (!Tw.FormatHelper.isEmpty(curLine)) {
           _.map(curLine, $.proxy(function (target) {
-            if ( target.repSvcYn === 'Y' ) {
+            if (target.repSvcYn === 'Y') {
               this._svcInfo = target;
             }
           }, this));
@@ -294,7 +295,7 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _openSmsOnly: function (opMethods, optMethods, isWelcome, methodCnt) {
-    if ( !this._checkEnableCase(this._allSvcInfo, this._svcInfo, opMethods, optMethods, methodCnt) ) {
+    if (!this._checkEnableCase(this._allSvcInfo, this._svcInfo, opMethods, optMethods, methodCnt)) {
       this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
       return;
     }
@@ -310,7 +311,7 @@ Tw.CertificationSk.prototype = {
         svcNum: Tw.FormatHelper.conTelFormatWithDash(this._svcInfo.svcNum),
         enableKeyin: this._enableKeyin
       }
-    }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
+    }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms', this._$target);
   },
 
   /**
@@ -356,7 +357,7 @@ Tw.CertificationSk.prototype = {
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btConfirm.on('click', _.debounce($.proxy(this._onClickConfirm, this), 500));
 
-    if ( this._defaultKeyin ) {
+    if (this._defaultKeyin) {
       this.$checkKeyin.trigger('click');
       this.$checkKeyin.attr('disabled', true);
     } else {
@@ -375,11 +376,11 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _onCloseSmsOnly: function () {
-    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+    if (!Tw.FormatHelper.isEmpty(this._addTimer)) {
       clearInterval(this._addTimer);
     }
 
-    if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
+    if (!Tw.FormatHelper.isEmpty(this._callbackParam)) {
       this._callback(this._callbackParam);
     } else {
       this._callback({ code: Tw.API_CODE.CERT_CANCEL });
@@ -393,11 +394,11 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _onInputMdn: function ($event) {
-    if ( !Tw.FormatHelper.isEmpty($event) ) {
+    if (!Tw.FormatHelper.isEmpty($event)) {
       Tw.InputHelper.inputNumberOnly($event.target);
     }
     var mdnLength = this.$inputMdn.val().length;
-    if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
+    if (mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN) {
       this.$btCert.attr('disabled', false);
       this.$btReCert.attr('disabled', false);
     } else {
@@ -414,11 +415,11 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _onInputCert: function ($event) {
-    if ( !Tw.FormatHelper.isEmpty($event) ) {
+    if (!Tw.FormatHelper.isEmpty($event)) {
       Tw.InputHelper.inputNumberOnly($event.target);
     }
     var inputCert = this.$inputCert.val();
-    if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
+    if (inputCert.length >= Tw.DEFAULT_CERT_LEN) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
     }
     this._checkEnableConfirmButton();
@@ -432,16 +433,16 @@ Tw.CertificationSk.prototype = {
    */
   _checkEnableConfirmButton: function () {
     var inputCert = this.$inputCert.val();
-    if ( this._onKeyin ) {
+    if (this._onKeyin) {
       var inputMdn = this.$inputMdn.val();
       var mdnLength = inputMdn ? inputMdn.length : 0;
-      if ( inputCert.length >= Tw.DEFAULT_CERT_LEN && (mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN) ) {
+      if (inputCert.length >= Tw.DEFAULT_CERT_LEN && (mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN)) {
         this.$btConfirm.attr('disabled', false);
       } else {
         this.$btConfirm.attr('disabled', true);
       }
     } else {
-      if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
+      if (inputCert.length >= Tw.DEFAULT_CERT_LEN) {
         this.$btConfirm.attr('disabled', false);
       } else {
         this.$btConfirm.attr('disabled', true);
@@ -480,12 +481,12 @@ Tw.CertificationSk.prototype = {
 
     this.$btCert.attr('disabled', true);
     this.$btCertAdd.attr('disabled', true);
-    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+    if (!Tw.FormatHelper.isEmpty(this._addTimer)) {
       clearInterval(this._addTimer);
     }
     this.$showTime.val('');
 
-    if ( $target.is(':checked') ) {
+    if ($target.is(':checked')) {
       this._onKeyin = true;
       this.$inputMdn.prop('readonly', false);
       this.$inputMdn.val('');
@@ -511,7 +512,7 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _checkCertType: function () {
-    if ( this._securityAuth ) {
+    if (this._securityAuth) {
       this._getMdn();
     } else {
       this._requestCert();
@@ -534,7 +535,7 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _onMdn: function (resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+    if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
       this._securityMdn = resp.params.mdn;
     } else {
       this._securityMdn = 'usim';
@@ -548,10 +549,10 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _requestCert: function () {
-    if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ) {
+    if (this._authKind === Tw.AUTH_CERTIFICATION_KIND.R) {
       this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_PRDASTA_AUTH' : 'NFM_MWB_PRDASTA_AUTH';
       this._sendCert();
-    } else if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.A ) {
+    } else if (this._authKind === Tw.AUTH_CERTIFICATION_KIND.A) {
       this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNMASK_AUTH' : 'NFM_MWB_CMNMASK_AUTH';
       this._sendCert();
     } else {
@@ -569,9 +570,9 @@ Tw.CertificationSk.prototype = {
    */
   _successGetUrlMeta: function (resp) {
     this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( resp.result.auth && resp.result.auth.jobCode ) {
-        if ( Tw.FormatHelper.isEmpty(this._jobCode) ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
+      if (resp.result.auth && resp.result.auth.jobCode) {
+        if (Tw.FormatHelper.isEmpty(this._jobCode)) {
           this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
         }
       }
@@ -587,7 +588,7 @@ Tw.CertificationSk.prototype = {
    */
   _failGetUrlMeta: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -596,7 +597,7 @@ Tw.CertificationSk.prototype = {
    * @param reCert
    */
   _sendCert: function (reCert) {
-    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+    if (Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid()) {
       this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadySms, this, reCert));
     } else {
       this._sendCertApi(reCert);
@@ -607,10 +608,9 @@ Tw.CertificationSk.prototype = {
    * @function
    * @desc 자동문자완성 준비완료 콜백
    * @param reCert
-   * @param resp
    * @private
    */
-  _onReadySms: function (reCert, resp) {
+  _onReadySms: function (reCert) {
     this._sendCertApi(reCert);
   },
 
@@ -621,14 +621,14 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _sendCertApi: function (reCert) {
-    if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
+    if (this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) {
       this._apiService.request(Tw.API_CMD.BFF_01_0014, {
         jobCode: this._jobCode,
         receiverNum: this._onKeyin ? this.$inputMdn.val() : '',
         mdn: this._securityMdn
       }).done($.proxy(this._successCert, this, reCert))
         .fail($.proxy(this._failCert, this));
-    } else if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE ) {
+    } else if (this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) {
       this._apiService.request(Tw.API_CMD.BFF_01_0057, {
         jobCode: this._jobCode,
         mdn: this._securityMdn
@@ -648,37 +648,39 @@ Tw.CertificationSk.prototype = {
   _successCert: function (reCert, resp) {
     this._clearCertError();
     this._clearConfirmError();
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       this._seqNo = resp.result.seqNo;
       this.$btCertAdd.attr('disabled', false);
       this._getCertNum();
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
-      if ( !reCert ) {
+      if (!reCert) {
         this.$btCert.addClass('none');
         this.$btReCert.removeClass('none');
       }
-      if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      if (!Tw.FormatHelper.isEmpty(this._addTimer)) {
         clearInterval(this._addTimer);
       }
       this._addTime = new Date();
       this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
-      if ( resp.result.corpPwdAuthYn === 'Y' ) {
-        new Tw.CertificationBiz().open();
+      if (resp.result.corpPwdAuthYn === 'Y') {
+        this._certBiz = new Tw.CertificationBiz(this._$target);
+        this._certBiz.open();
       }
-    } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
+    } else if (resp.code === this.SMS_ERROR.ATH2003) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
-    } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
+    } else if (resp.code === this.SMS_ERROR.ATH2006) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCnt);
-    } else if ( resp.code === this.SMS_ERROR.ATH2000 ) {
-      if ( this._methodCnt === 1 ) {
-        this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2000, null, null, $.proxy(this._onCloseMdnCertFail, this));
+    } else if (resp.code === this.SMS_ERROR.ATH2000) {
+      if (this._methodCnt === 1) {
+        this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2000, '', '',
+          $.proxy(this._onCloseMdnCertFail, this), '', this._$target);
       } else {
-        this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2000);
+        this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2000, '', '', null, '', this._$target);
       }
 
-    } else if ( resp.code === this.SMS_ERROR.ATH8007 ) {
+    } else if (resp.code === this.SMS_ERROR.ATH8007) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertStop);
-    } else if ( resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162 ) {
+    } else if (resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -694,7 +696,7 @@ Tw.CertificationSk.prototype = {
    */
   _failCert: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -703,7 +705,7 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _getCertNum: function () {
-    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+    if (Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid()) {
       this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
     }
   },
@@ -715,7 +717,7 @@ Tw.CertificationSk.prototype = {
    * @private
    */
   _onCertNum: function (resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+    if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
       this.$inputCert.val(resp.params.cert);
       this._onInputCert();
     }
@@ -740,7 +742,7 @@ Tw.CertificationSk.prototype = {
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
     this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
-    if ( remainedSec <= 0 ) {
+    if (remainedSec <= 0) {
       clearInterval(this._addTimer);
     }
   },
@@ -782,14 +784,14 @@ Tw.CertificationSk.prototype = {
    */
   _successCertAdd: function (resp) {
     this._clearConfirmError();
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
-      if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      if (!Tw.FormatHelper.isEmpty(this._addTimer)) {
         clearInterval(this._addTimer);
       }
       this._addTime = new Date();
       this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
-    } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
+    } else if (resp.code === this.SMS_ERROR.ATH1221) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -804,7 +806,7 @@ Tw.CertificationSk.prototype = {
    */
   _failCertAdd: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -833,23 +835,23 @@ Tw.CertificationSk.prototype = {
    */
   _successConfirm: function (resp) {
     this._clearConfirmError();
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       this._callbackParam = resp;
       this._popupService.close();
-    } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
+    } else if (resp.code === this.SMS_ERROR.ATH2007) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirm);
-    } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
+    } else if (resp.code === this.SMS_ERROR.ATH2008) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmTime);
-    } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
+    } else if (resp.code === this.SMS_ERROR.ATH2011) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCnt);
-    } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
-    } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009);
-    } else if ( resp.code === this.SMS_ERROR.ATH2013 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013);
-    } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
+    } else if (resp.code === this.SMS_ERROR.ATH2001) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001, '', '', null, '', this._$target);
+    } else if (resp.code === this.SMS_ERROR.ATH2009) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009, '', '', null, '', this._$target);
+    } else if (resp.code === this.SMS_ERROR.ATH2013) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013, '', '', null, '', this._$target);
+    } else if (resp.code === this.SMS_ERROR.ATH2014) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, '', '', null, '', this._$target);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -863,7 +865,7 @@ Tw.CertificationSk.prototype = {
    */
   _failConfirm: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**

@@ -9,9 +9,11 @@
  * @desc 공통 > 인증 > NICE/IPIN 인증
  * @constructor
  */
-Tw.CertificationNice = function () {
+Tw.CertificationNice = function ($target) {
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
+  this._$target = $target;
   this._callback = null;
   this._prodAuthKey = null;
 
@@ -81,7 +83,7 @@ Tw.CertificationNice.prototype = {
    */
   _successGetDomain: function (path, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.openUrlInApp(resp.result.domain + path, 'status=1,toolbar=1');
+      Tw.CommonHelper.openUrlInApp(resp.result.domain + path, 'status=1,toolbar=1', '');
     }
   },
 
@@ -93,7 +95,7 @@ Tw.CertificationNice.prototype = {
    */
   _failGetDomain: function(error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**

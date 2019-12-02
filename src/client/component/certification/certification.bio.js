@@ -9,10 +9,11 @@
  * @desc 공통 > 인증 > 생체인증
  * @constructor
  */
-Tw.CertificationBio = function () {
+Tw.CertificationBio = function ($target) {
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
 
+  this._$target = $target;
   this._callback = null;
   this._authUrl = null;
   this._authKind = null;
@@ -71,7 +72,7 @@ Tw.CertificationBio.prototype = {
   _openRegisterPopup: function () {
     this._popupService.openConfirmButton(Tw.POPUP_CONTENTS.BIO_REGISTER, null,
       $.proxy(this._onConfirmRegister, this), $.proxy(this._onCloseRegister, this),
-      Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+      Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,  this._$target);
   },
 
   /**
@@ -133,7 +134,8 @@ Tw.CertificationBio.prototype = {
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
       this._callback({ code: Tw.API_CODE.CERT_SELECT, target: Tw.AUTH_CERTIFICATION_METHOD.BIO });
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.BIOMETRICS_CERT_FAIL);
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.BIOMETRICS_CERT_FAIL,
+        '', '', null, '',  this._$target);
       // Tw.Error(resp.resultCode, resp.errorMessage).pop();
     }
   },
