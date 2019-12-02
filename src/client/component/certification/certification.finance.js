@@ -9,10 +9,11 @@
  * @desc 공통 > 인증 > 금융거래인
  * @constructor
  */
-Tw.CertificationFinance = function () {
+Tw.CertificationFinance = function ($target) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
 
+  this._$target = $target;
   this._svcInfo = null;
   this._authUrl = null;
   this._callback = null;
@@ -62,7 +63,8 @@ Tw.CertificationFinance.prototype = {
     this._authBlock = authBlock;
 
     if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH] === 'Y' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE,
+        '', null, '', this._$target);
       return;
     }
     this._fidoType();
@@ -124,7 +126,8 @@ Tw.CertificationFinance.prototype = {
     }, this));
 
     if ( Tw.FormatHelper.isEmpty(checkBlock) ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE,
+      '', null, '', this._$target);
       return;
     }
 
@@ -134,7 +137,7 @@ Tw.CertificationFinance.prototype = {
       data: {
         methods: methods
       }
-    }, $.proxy(this._onOpenFinancePopup, this), $.proxy(this._onCloseFinancePopup, this), 'finance');
+    }, $.proxy(this._onOpenFinancePopup, this), $.proxy(this._onCloseFinancePopup, this), 'finance', this._$target);
   },
 
   /**
@@ -170,7 +173,7 @@ Tw.CertificationFinance.prototype = {
    * @private
    */
   _onClickSkSms: function () {
-    this._certSkFull = new Tw.CertificationSkFull();
+    this._certSkFull = new Tw.CertificationSkFull(this._$target);
     this._certSkFull.open(this._authUrl, this._authKind, $.proxy(this._completeIdentification, this));
   },
 
@@ -180,7 +183,7 @@ Tw.CertificationFinance.prototype = {
    * @private
    */
   _onClickKtSms: function () {
-    this._certNice = new Tw.CertificationNice();
+    this._certNice = new Tw.CertificationNice(this._$target);
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, '',
       $.proxy(this._completeIdentification, this));
   },
@@ -191,7 +194,7 @@ Tw.CertificationFinance.prototype = {
    * @private
    */
   _onClickLgSms: function () {
-    this._certNice = new Tw.CertificationNice();
+    this._certNice = new Tw.CertificationNice(this._$target);
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, '',
       $.proxy(this._completeIdentification, this));
   },
@@ -202,7 +205,7 @@ Tw.CertificationFinance.prototype = {
    * @private
    */
   _onClickIpin: function () {
-    this._certNice = new Tw.CertificationNice();
+    this._certNice = new Tw.CertificationNice(this._$target);
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, null, '', $.proxy(this._completeIdentification, this));
   },
 
@@ -231,7 +234,7 @@ Tw.CertificationFinance.prototype = {
    * @private
    */
   _onCheckFido: function (resp) {
-    this._certBio = new Tw.CertificationBio();
+    this._certBio = new Tw.CertificationBio(this._$target);
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, this._svcInfo,
         $.proxy(this._completeIdentification, this), true, this._fidoTarget);
@@ -264,7 +267,7 @@ Tw.CertificationFinance.prototype = {
     this._popupService.open({
       hbs: 'CO_CE_02_05_02',
       layer: true
-    }, $.proxy(this._onOpenPublicPopup, this), $.proxy(this._onClosePublicPopup, this), 'public-terms');
+    }, $.proxy(this._onOpenPublicPopup, this), $.proxy(this._onClosePublicPopup, this), 'public-terms', this._$target);
   },
 
   /**
@@ -312,7 +315,7 @@ Tw.CertificationFinance.prototype = {
    * @private
    */
   _onClickConfirm: function () {
-    this._certPublic = new Tw.CertificationPublic();
+    this._certPublic = new Tw.CertificationPublic(this._$target);
     this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, $.proxy(this._completePublicCert, this));
   },
 

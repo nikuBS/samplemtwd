@@ -9,11 +9,12 @@
  * @desc 공통 > 인증 > 공인인증
  * @constructor
  */
-Tw.CertificationPublic = function () {
+Tw.CertificationPublic = function ($target) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
+  this._$target = $target;
   this._authUrl = null;
   this._command = null;
   this._callback = null;
@@ -64,7 +65,7 @@ Tw.CertificationPublic.prototype = {
     this._popupService.open({
       hbs: 'CO_CE_02_04_01_01',
       layer: true
-    }, $.proxy(this._onOpenTerms, this), $.proxy(this._onCloseTerms, this));
+    }, $.proxy(this._onOpenTerms, this), $.proxy(this._onCloseTerms, this), '', this._$target);
   },
 
   /**
@@ -152,7 +153,7 @@ Tw.CertificationPublic.prototype = {
    */
   _failAppMessage: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -258,6 +259,6 @@ Tw.CertificationPublic.prototype = {
    */
   _failComplete: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   }
 };
