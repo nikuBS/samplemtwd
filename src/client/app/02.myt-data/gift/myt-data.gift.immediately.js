@@ -248,8 +248,8 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
     // [OP002-5325] 선물하기 시 바로선물하기 인지 자동선물인지 구분하기 위해 필드 추가
     var requestParams = {
-      tmpSvcMgmtNum: this._tmpSvcMgmtNum
-      // dataType: 'gift' // 12월 1주차 반영예정 [OP002-5325]
+      tmpSvcMgmtNum: this._tmpSvcMgmtNum,
+      dataType: 'gift' // 12월 1주차 반영예정 [OP002-5325]
     };
     if ( isCellPhone ) {
       // 입력된 번호의 형식이 휴대폰 번호인 경우
