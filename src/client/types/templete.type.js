@@ -781,9 +781,8 @@ Tw.PRODUCT_LIST_ORDER = [
 
 Tw.PRODUCT_LIST_COMBINATIONS_ORDER = [
   { txt: '전체', 'radio-attr': 'data-order="recommand"', 'label-attr': ' ' },
-  { txt: '패밀리형', 'radio-attr': 'data-order="family"', 'label-attr': ' ' },
-  { txt: '개인형', 'radio-attr': 'data-order="solo"', 'label-attr': ' ' },
-  { txt: '보안', 'radio-attr': 'data-order="security"', 'label-attr': ' ' }
+  { txt: '가족형', 'radio-attr': 'data-order="family"', 'label-attr': ' ' },
+  { txt: '개인형', 'radio-attr': 'data-order="solo"', 'label-attr': ' ' }
 ];
 
 Tw.TERMS_ACTION = {
