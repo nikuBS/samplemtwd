@@ -34,15 +34,24 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @desc Bind events to elements.
    */
   _bindEvent: function () {
-    this.$container.on('click', '[data-id="bt-reset"]', $.proxy(this._onClickReset, this));
-    this.$container.on('click', '[data-id="bt-resuspend"]', $.proxy(this._onClickResuspend, this));
-    this.$container.on('click', '#bt-cancel-resuspend', $.proxy(this._onClickCancelResuspend, this));
+    /* this.$container.find('ul.bt-slice') */
+    this.$container.find('.bt-slice')
+      // 장기일시정지-신청:처리불가-다시 신청하기
+      .on('click', '[data-id="bt-request-longterm"]', $.proxy(this._onRequestLongTermClicked, this))
+      .on('click', '[data-id="bt-release"]', $.proxy(this._onReleaseClicked, this))
+      .on('click', '[data-id="bt-resuspend"]', $.proxy(this._onResuspendClicked, this))
+      .on('click', '[data-id="bt-cancel-resuspend"]', $.proxy(this._onCancelResuspendClicked, this));
+    /*
+    this.$container.on('click', '[data-id="bt-release"]', $.proxy(this._onReleaseClicked, this));
+    this.$container.on('click', '[data-id="bt-resuspend"]', $.proxy(this._onResuspendClicked, this));
+    this.$container.on('click', '[data-id="bt-cancel-resuspend"]', $.proxy(this._onCancelResuspendClicked, this));
+    */
   },
   /**
    * @function
    * @desc Event listener for the button click on [data-id="bt-resuspend"] 재신청 버튼
    */
-  _onClickResuspend: function (event) {
+  _onResuspendClicked: function (event) {
     this._popupService.open({
           hbs: 'MS_03_05_04',
           data: {
@@ -138,9 +147,9 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
   /**
    * @function
-   * @desc Event listener for the button click on #bt-cancel-resuspend(재신청 취소)
+   * @desc Event listener for the button click on [data-id="bt-cancel-resuspend"](재신청 취소)
    */
-  _onClickCancelResuspend: function () {
+  _onCancelResuspendClicked: function () {
     this._popupService.open({
       hbs: 'MS_03_05_06',
       data: {
@@ -186,12 +195,18 @@ Tw.MyTJoinSuspendStatus.prototype = {
       Tw.Error(res.code, res.msg).pop();
     }
   },
-  // Reset(해제하기)
   /**
    * @function
-   * @desc Event listener for the button click on [data-id="bt-reset"](해제하기)
+   * @private Event listener for the button click on [data-id="bt-request-longterm"](장기일시정지 신청하기), ([장기일시정지]다시 신청하기)
    */
-  _onClickReset: function () {
+  _onRequestLongTermClicked: function () {
+    this._historyService.goLoad('/myt-join/submain/suspend#long-term');
+  },
+  /**
+   * @function
+   * @desc Event listener for the button click on [data-id="bt-release"](해제하기)
+   */
+  _onReleaseClicked: function () {
     this._popupService.open({
       hbs: 'MS_03_05_05',
       data: {
@@ -293,28 +308,28 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @param popup 파일 업로드 다이얼로그 element
    */
   _openCommonFileDialog: function (count, popup) {
-    if ( !this._fileDialog ) {
-      this._fileDialog = new Tw.MytJoinSuspendUpload();
+    if ( !this._dialogSelectFile ) {
+      this._dialogSelectFile = new Tw.MytJoinSuspendUpload();
     }
 
-    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, this._files, null, popup);
+    this._dialogSelectFile.show($.proxy(this._onDialogSelectFileConfirmed, this), count, this._files, null, popup);
   },
   /**
    * @function
    * @desc 파일업로드 다이얼로그 Callback function
    * @param files 업로드 된 파일
    */
-  _onCommonFileDialogConfirmed: function (files) {
+  _onDialogSelectFileConfirmed: function (files) {
     this._files = files;
     if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
-      var convFileList = _.compact(this._files).map(function (item) {
+      var filesScan = _.compact(this._files).map(function (file) {
         return {
-          fileSize: item.size,
-          fileName: item.name,
-          filePath: item.path
+          fileSize: file.size,
+          fileName: file.name,
+          filePath: file.path
         };
       });
-      this._requestUscan(convFileList);
+      this._requestUscan(filesScan);
     } else {
       this._requestUpload(this._files);
     }
@@ -343,15 +358,14 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _successUploadFile: function (res) {
     // USCAN upload
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var convFileList = res.result.map(function (item) {
+      var filesScan = res.result.map(function (file) {
         return {
-          fileSize: item.size,
-          fileName: item.name,
-          filePath: item.path
+          fileSize: file.size,
+          fileName: file.name,
+          filePath: file.path
         };
       });
-
-      this._requestUscan(convFileList);
+      this._requestUscan(filesScan);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -359,15 +373,16 @@ Tw.MyTJoinSuspendStatus.prototype = {
   /**
    * @function
    * @desc USCAN 요청
-   * @param convFileList
+   * @param scanFiles
    * @private
    */
-  _requestUscan: function (convFileList) {
-    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
-      recvFaxNum: 'skt257@sk.com',
-      proMemo: '', // TBD 필수값임 확인필요
-      scanFiles: convFileList
-    })
+  _requestUscan: function (scanFiles) {
+    this._apiService
+      .request(Tw.API_CMD.BFF_01_0046, {
+        recvFaxNum: 'skt257@sk.com',
+        proMemo: '', // TBD 필수값임 확인필요
+        scanFiles: scanFiles
+      })
       .done($.proxy(this._onSuccessUscanUpload, this))
       .fail($.proxy(this._onError, this));
   },
