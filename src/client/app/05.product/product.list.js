@@ -242,12 +242,13 @@ Tw.ProductList.prototype = {
     if (this._params.searchOrder === orderType) {
       return;
     }
-    if ('security' === orderType) {//결합상품 보안 선택 시 페이지 이동
-      var url ='https://m.shop.tworld.co.kr/offering-getAdtCapsSecurHome/submain';
-      Tw.CommonHelper.openUrlExternal(url);
-      this._popupService.close();
-      return;
-    }
+    // 결합상품 > 보안 카테고리 삭제로 주석처리(추후 다시 추가될 수 있음)
+    // if ('security' === orderType) {//결합상품 보안 선택 시 페이지 이동
+    //   var url ='https://m.shop.tworld.co.kr/offering-getAdtCapsSecurHome/submain';
+    //   Tw.CommonHelper.openUrlExternal(url);
+    //   this._popupService.close();
+    //   return;
+    // }
 
     this._params.searchOrder = orderType;
     delete this._params.searchLastProdId;
