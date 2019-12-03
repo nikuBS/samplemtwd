@@ -4,58 +4,33 @@
 * @since 2018-10-26
 * 장기일시정지 tab content(MS_03_05_03)
 %>
-<div class="cont-box nogaps">
-    <div class="wrap-gaps-top">
-        <h3>장기일시정지 사유</h3>
-    </div>
-    <div class="list-comp-input tod-type2">
-        <div class="widget">
-            <div class="widget-box radio">
-                <ul class="select-list" role="group">
-                    <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="radio" name="radio04" value="military" title="장기일시정지 사유" aria-labelledby="aria-comp-radio7" checked data-role="fe-suspend-type"/><!-- 체크상태일 경우 checked="checked" -->
-                        <div class="comp-list-layout" id="aria-comp-radio7">
-                            <p class="layout-text">
-                                <span class="mtext">군입대</span>
-                                <!-- 190503_추가_02 [#7633/DV001-21789]-->
-                                <span class="simple-form type1 tod-side-chbox">
-                                    (<span class="custom-form"><input type="checkbox" name="soldier_ch" value="" id="soldier-active" data-id="fe-military-type"><span class="c-type1"></span></span>
-                                    <label for="soldier-active">현역 외</label>)
-                                </span>
-                                <!-- //190503_추가_02 [#7633/DV001-21789] -->
-                            </p>
-                        </div>
-                    </li>
-                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="radio" name="radio04" value="abroad" title="장기일시정지 사유" aria-labelledby="aria-comp-radio8" data-role="fe-suspend-type" /><!-- 체크상태일 경우 checked="checked" -->
-                        <div class="comp-list-layout" id="aria-comp-radio8">
-                            <p class="layout-text">
-                                <span class="mtext">해외체류</span>
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box fe-military fe-period" >
-    <h3>장기일시정지 기간<button class="tip-view" id="MS_03_05_03_tip_01" title="장기일시정지 기간 TIP보기" aria-haspopup="true">TIP</button></h3>
-    <div class="inputbox date-selcet" data-role="fe-date-select">
-        <span class="date-type"><input type="date" value=<%= suspend.today %> data-role="fe-from-dt" title="장기일시정지 기간 시작날짜 선택"/></span>
-        <span class="bar">~</span>
-        <span class="date-type"><input type="date" value=<%= suspend.twoYears %> data-role="fe-to-dt" title="장기일시정지 기간 종료날짜 선택"/></span>
-    </div>
-</div>
-
-<div class="cont-box fe-abroad fe-date">
-    <h3>장기일시정지 시작일<button class="tip-view" id="MS_03_05_03_tip_04" title="장기일시정지 시작일 TIP보기" aria-haspopup="true">TIP</button></h3>
-    <div class="inputbox date-selcet" data-role="fe-date-select">
-        <span class="date-type"><input type="date" value=<%= suspend.today %> data-role="fe-from-dt" title="장기일시정지 시작날짜 선택" /></span>
+<div class="cont-box pd0">
+    <div class="widget">
+        <div class="widget-box accordion">
+            <div class="acco-cover">
+                <div class="acco-style tod-renew-bgnone">
+                    <div class="acco-list pt0">
+                        <div class="acco-box on">
+                            <div class="acco-tit">
+                                <button role="button" aria-pressed="true">장기일시정지 안내</button>
+                                <span class="tod-coach-mark"><strong class="point">장기일시정지 신청 전</strong> 꼭 확인하세요! <button class="close"><span class="blind">닫기</span></button></span>
+                            </div>
+                            <div class="acco-cont">
+                                <ul class="announcement-box">
+                                    <li class="announcement-bullet type01">평일 오후 5시까지 접수된 건은 당일 처리되며, 이후의 접수 건은 ‘다음 영업일’부터 순차적으로 처리됩니다. <br>※ 접수건수가 많아지면 업무처리가 지연될 수 있습니다. <br>이에, 정지 시작일이 신청일자보다 늦어질 수 있습니다.</li>
+                                    <li class="announcement-bullet type01">입증에 필요한 서류가 부족하거나 일아보기 어려울 경우 요청하신 일시정지가 적용되지 않을 수 있습니다. 이 경우 해당 서류를 다시 제출해주셔야 합니다.</li>
+                                    <li class="announcement-bullet type01">접수 후 처리 결과는 [나의 가입정보] 내 ‘일시정지 현황’ 에서 확인하실 수 있습니다.</li>
+                                    <li class="announcement-bullet type01">장기 일시정지 군입대 "현역"과 "현역 외"를 함께 이용하시는 고객 중 장기일시정지 기간이 같을 경우 재 신청이 불가하오니 가까운 지점/대리점 및 고객센터로 문의 바랍니다.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!--// .cont-box -->
@@ -63,27 +38,29 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps fe-abroad">
-    <div class="wrap-gaps-top">
-        <h3>장기일시정지 수신설정</h3>
-    </div>
+<div class="cont-box nogaps">
+    <div class="wrap-gaps-top"><h3>장기일시정지 사유</h3></div>
     <div class="list-comp-input tod-type2">
         <div class="widget">
             <div class="widget-box radio">
-                <ul class="select-list" role="group">
-                    <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="radio" name="radio01" value="" title="장기일시정지 수신설정" aria-labelledby="aria-comp-radio9" checked="checked" data-role="fe-suspend-all"/><!-- 체크상태일 경우 checked="checked" -->
-                        <div class="comp-list-layout" id="aria-comp-radio9">
+                <ul class="select-list" role="presentation">
+                    <li class="radiobox type01 checked" role="presentation" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio04" value="military" title="장기일시정지 사유" aria-labelledby="aria-comp-radio7" checked data-role="fe-suspend-type"/><!-- 체크상태일 경우 checked="checked" -->
+                        <div class="comp-list-layout">
                             <p class="layout-text">
-                                <span class="mtext">걸기/받기 모두 정지</span>
+                                <span class="mtext" id="aria-comp-radio7">군입대</span>
+                                <span class="simple-form type1 tod-side-chbox">
+                                    (<span class="custom-form"><input type="checkbox" name="soldier_ch" value="" id="soldier-active" data-id="fe-military-type"><span class="c-type1"></span></span>
+                                    <label for="soldier-active">현역 외</label>)
+                                </span>
                             </p>
                         </div>
                     </li>
-                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="radio" name="radio01" value="" title="장기일시정지 수신설정" aria-labelledby="aria-comp-radio10" /><!-- 체크상태일 경우 checked="checked" -->
-                        <div class="comp-list-layout" id="aria-comp-radio10">
+                    <li class="radiobox type01" role="presentation" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio04" value="abroad" title="장기일시정지 사유" aria-labelledby="aria-comp-radio8" data-role="fe-suspend-type"/><!-- 체크상태일 경우 checked="checked" -->
+                        <div class="comp-list-layout">
                             <p class="layout-text">
-                                <span class="mtext">걸기만 정지</span>
+                                <span class="mtext" id="aria-comp-radio8">해외체류</span>
                             </p>
                         </div>
                     </li>
@@ -92,22 +69,105 @@
         </div>
     </div>
 </div>
-<hr class="cont-sp type1 fe-abroad" aria-hidden="true"/>
+<!--// .cont-box -->
 
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- .cont-box -->
+<div class="cont-box fe-military fe-period">
+    <h3>장기일시정지 기간<button class="tip-view" id="MS_03_05_03_tip_01" title="장기일시정지 기간 TIP보기" aria-haspopup="true">TIP</button></h3>
+    <div class="inputbox date-selcet" data-role="fe-date-select">
+        <span class="date-type"><input type="date" value="<%- suspend.today %>" data-role="fe-from-dt" title="장기일시정지 기간 시작날짜 선택"/></span>
+        <span class="bar">~</span>
+        <span class="date-type"><input type="date" value="<%- suspend.twoYears %>" data-role="fe-to-dt" title="장기일시정지 기간 종료날짜 선택"/></span>
+    </div>
+    <!-- TODO: -->
+    <span id="aria-exp-desc1" class="error-txt" style="display: none;">시작일은 오늘 이후로 지정할 수 있습니다.</span>
+    <span id="aria-exp-desc2" class="error-txt" style="display: none;">종료일은 시작일 이후로 지정할 수 있습니다.</span>
+    <span id="aria-exp-desc3" class="error-txt" style="display: none;">종료일은 설정한 시작일로부터 24개월을 초과하여 설정할 수 없습니다.</span>
+</div>
+<!--// .cont-box -->
+<!-- .cont-box -->
+<div class="cont-box fe-abroad fe-date">
+    <h3>장기일시정지 시작일<button class="tip-view" id="MS_03_05_03_tip_04" title="장기일시정지 시작일 TIP보기" aria-haspopup="true">TIP</button></h3>
+    <div class="inputbox date-selcet" data-role="fe-date-select">
+        <span class="date-type"><input type="date" value="<%- suspend.today %>" data-role="fe-from-dt" title="장기일시정지 시작일 선택"/></span>
+    </div>
+    <!-- TODO: -->
+    <span id="aria-exp-desc4" class="error-txt" style="display: none;">시작일은 오늘 이후로 지정할 수 있습니다.</span>
+    <span id="aria-exp-desc5" class="error-txt" style="display: none;">시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.</span>
+</div>
+<!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- .cont-box -->
+<div class="cont-box nogaps fe-abroad">
+    <div class="wrap-gaps-top"><h3>장기일시정지 수신설정</h3></div>
+    <div class="list-comp-input tod-type2">
+        <div class="widget">
+            <div class="widget-box radio">
+                <ul class="select-list" role="group">
+                    <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio01" value="" title="장기일시정지 수신설정" aria-labelledby="aria-comp-radio9" checked="checked" data-role="fe-suspend-all"/><!-- 체크상태일 경우 checked="checked" -->
+                        <div class="comp-list-layout">
+                            <p class="layout-text">
+                                <span class="mtext" id="aria-comp-radio9">걸기/받기 모두 정지</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio01" value="" title="장기일시정지 수신설정" aria-labelledby="aria-comp-radio10"/><!-- 체크상태일 경우 checked="checked" -->
+                        <div class="comp-list-layout">
+                            <p class="layout-text">
+                                <span class="mtext" id="aria-comp-radio10">걸기만 정지</span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--// .cont-box -->
+
+<hr class="cont-sp type1 fe-military" aria-hidden="true"/>
+
+<script id="fe-tmpl-upload-item" type="text/x-handlebars-template">
+    {{#each files}}
+    <li data-index="{{@index}}">
+        <p class="text">{{name}}</p>
+        <div class="bt-alone"><button class="btn-round3 btn-style3">삭제</button></div>
+    </li>
+    {{/each}}
+</script>
 <!-- .cont-box -->
 <div class="cont-box fe-military">
     <h3>필요서류 첨부</h3>
-    <p class="sub-txt">
-        입영통지서 등 군입증명서류, 신분증 2종 제출
-        <span class="right-item"><button class="bt-link-tx underline fe-upload-file" data-type="fe-military">파일 첨부하기</button></span>
-    </p>
+    <div class="inquiryform-wrap">
+        <div class="fileplus-wrap mt0">
+            <p class="text tod-txcolor3">입영통지서 등 군입증명서류, 신분증 2종 제출</p><!-- Case1.군입대 -->
+            <div class="bt-alone tod-type1"><button class="btn-round2 btn-style3 fe-upload-file" data-type="fe-military">파일 첨부</button></div>
+        </div>
+        <ul class="filename-list">
+        </ul>
+    </div>
 </div>
+<!--// .cont-box -->
+
+<hr class="cont-sp type1 fe-abroad" aria-hidden="true"/>
+
+<!-- .cont-box -->
 <div class="cont-box fe-abroad">
     <h3>필요서류 첨부</h3>
-    <p class="sub-txt">
-        항공권 사본 등 해외체류입증 서류 1종 제출
-        <span class="right-item"><button class="bt-link-tx underline fe-upload-file" data-type="fe-abroad">파일 첨부하기</button></span>
-    </p>
+    <div class="inquiryform-wrap">
+        <div class="fileplus-wrap mt0">
+            <p class="text tod-txcolor3">항공권 사본 등 해외체류입증 서류 1종 제출</p><!-- Case2.해외 체류 -->
+            <div class="bt-alone tod-type1"><button class="btn-round2 btn-style3 fe-upload-file" data-type="fe-abroad">파일 첨부</button></div>
+        </div>
+        <ul class="filename-list">
+        </ul>
+    </div>
 </div>
 <!--// .cont-box -->
 
@@ -118,17 +178,19 @@
     <h3>추가 연락처(선택)<button class="tip-view" id="MS_03_05_03_tip_02" title="추가 연락처(선택) TIP보기" aria-haspopup="true">TIP</button></h3>
     <div class="inputbox bt-add inp-btn mt14">
         <span class="input">
-            <input type="tel" placeholder="숫자만 입력" title="추가 연락처 (선택) 입력" data-id="fe-input-tel" maxlength="13">
+            <input type="tel" placeholder="숫자만 입력" title="추가 연락처(선택) 숫자만 입력" data-id="fe-input-tel" maxlength="13"/>
             <button class="cancel"><span class="blind">삭제</span></button>
         </span>
-        <% if(isApp) { %>
+        <%_ if (isApp) { _%>
         <span class="bt-box3">
-            <button type="button" class="fe-btn_native_contact btn-round2 btn-style3">주소록</button>
+            <button type="button" class="btn-round2 btn-style3 fe-btn_native_contact">주소록</button>
         </span>
-        <% } %>
+        <%_ } _%>
     </div>
-    <div class="inputbox bt-add mt14">
-         <button class="bt-dropdown big" title="관계 선택" aria-haspopup="true" data-id="fe-relation">관계<span class="ico"><span class="blind">추가 연락처 관계 선택</span></span></button>
+    <div class="inputbox mt14 bt-add">
+        <span class="input">
+            <button class="bt-dropdown big" aria-haspopup="true" title="관계 선택" data-id="fe-relation">관계<span class="ico"><span class="blind">추가 연락처 관계 선택</span></span></button>
+        </span>
     </div>
 </div>
 <!--// .cont-box -->
@@ -140,26 +202,30 @@
     <h3>추가 이메일 주소(선택)</h3>
     <div class="inputbox bt-add mt14">
         <span class="input">
-            <input type="text" placeholder="이메일 입력" value="" title="추가 이메일 주소(선택) 입력"
-                   aria-labelledby="aria-citation-email" aria-describedby="" data-id="fe-input-email"/>
+            <input type="text" placeholder="이메일 입력" value="" title="추가 이메일 주소(선택) 입력" aria-labelledby="aria-citation-email" aria-describedby="" data-id="fe-input-email"/>
             <button class="cancel"><span class="blind">삭제</span></button>
         </span>
     </div>
 </div>
 <!--// .cont-box -->
-<!-- .cont-box -->
+
 <hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- .cont-box -->
 <div class="cont-box noborder bgnone">
     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
     <ul class="pg-chk-list02">
-        <li><button class="btn-tip" id="MS_03_05_03_tip_03" aria-haspopup="true">장기일시정지 안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+        <li>
+            <button class="btn-tip" id="MS_03_05_03_tip_03" aria-haspopup="true">장기일시정지 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+        </li>
     </ul>
 </div>
+<!--// .cont-box -->
 
 <div class="bt-fixed-area">
     <ul class="bt-slice full">
         <li class="bt-red1">
-            <button disabled data-id="fe-bt-suspend">접수하기</button>
+            <button data-id="fe-bt-suspend" disabled>접수하기</button>
         </li>
     </ul>
 </div>
