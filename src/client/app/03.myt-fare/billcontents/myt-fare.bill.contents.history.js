@@ -68,10 +68,11 @@ Tw.MyTFareBillContentsHitstory.prototype = {
    * - myt-fare.bill.contents.history.html 참고
    */
   _cachedElement: function () {
+    var $listDefault = $('#list-default');
     this.$btnShowList = this.$container.find('.fe-show-list'); // 조회하기 버튼
     this.$tempListWrap = Handlebars.compile($('#fe-list-wrap').html());
-    this.$tempList = Handlebars.compile($('#list-default').html());
-    Handlebars.registerPartial('list', $('#list-default').html());
+    this.$tempList = Handlebars.compile($listDefault.html());
+    Handlebars.registerPartial('list', $listDefault.html());
     Handlebars.registerPartial('empty', $('#list-empty').html()); // 내역 없을 시 
   },
 
@@ -261,7 +262,8 @@ Tw.MyTFareBillContentsHitstory.prototype = {
   _showSelectMonth: function (e) {
     /**
      * @function 
-     * @param {Object} {hbs: hbs 의 파일명, layer: 레이어 여부, title: 액션시트 제목, data: 데이터 리스트, btnfloating: {txt: 닫기버튼 문구, attr: 닫기버튼 attribute, class: 닫기버튼 클래스}}
+     * @param {Object} {hbs: hbs 의 파일명, layer: 레이어 여부, title: 액션시트 제목, data: 데이터 리스트,
+     *        btnfloating: {txt: 닫기버튼 문구, attr: 닫기버튼 attribute, class: 닫기버튼 클래스}}
      * @param {function} function_open_call_back 액션시트 연 후 호출 할 function
      * @param {function} function_close_call_back 액션시트 닫힌 후 호출할 function
      * @param {string} 액션시트 열 때 지정할 해쉬값, 기본값 popup{n}
@@ -358,7 +360,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
   /**
    * @desc listDate 키값을 기준으로 listId 를 찾아 반환
-   * @param {date>number} listDate 
+   * @param {number} listDate
    * @param {number} listId 
    * @returns {object}
    */
@@ -374,15 +376,14 @@ Tw.MyTFareBillContentsHitstory.prototype = {
         }
       }, {});
     } else {
-      result = {}
+      result = {};
     }
     return result;
   },
 
   /**
    * @desc 상세보기 팝업에서 이벤트 바인드 
-   * @param {object} thisData 
-   * @param {Element} $template 
+   * @param {Element} $template
    */
   _detailPageCallback: function ($template) {
     // 외부 링크 클릭시 이벤트
@@ -448,8 +449,9 @@ Tw.MyTFareBillContentsHitstory.prototype = {
       }
       tempArr.push({
         txt: year + Tw.PERIOD_UNIT.YEAR + ' ' + month + Tw.PERIOD_UNIT.MONTH,
-        'radio-attr': 'data-index="' + (i - 1) + '"' + 
-                      'data-year = \''+ year + '\' data-month=\''+ month + '\'' 
+        'radio-attr':Tw.StringHelper.stringf('id="{0}" data-index="{1}" data-year="{2}" data-month="{3}"',
+          'dt'+i, (i - 1), year, month),
+        'label-attr': 'for="dt' + i + '"'
       });
       keyArr.push(this._getStrYearMonth(year, month));
     }
@@ -478,7 +480,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
    * @param {number} prev_month 
    * @param {number} year 
    * @param {number} month 
-   * @return {Object<{fromDt: YYYYMM01, toDt: YYYYMM31}>}
+   * @return {fromDt: YYYYMM01, toDt: YYYYMM31}
    */
   _getQueryFromTo: function(prev_year, prev_month, year, month) {
     var firstDate = prev_year + (prev_month.toString().length < 2 ? '0' : '') + prev_month + '01';
@@ -486,7 +488,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     return {
       fromDt: firstDate,
       toDt: Tw.DateHelper.getEndOfMonth(firstEndDate, 'YYYYMMDD', 'YYYYMMDD')
-    }
+    };
   },
 
   /**
@@ -500,6 +502,6 @@ Tw.MyTFareBillContentsHitstory.prototype = {
      * @param {element} 팝업 닫힌 후 포커스 이동할 DOM 객체 (웹접근성 반영)
      */
     Tw.Error(res.code, res.msg).pop(null, $target);
-  },
+  }
 
 };
