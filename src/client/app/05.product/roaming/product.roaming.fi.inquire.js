@@ -409,7 +409,7 @@ Tw.ProductRoamingFiInquire.prototype = {
         res.result.rominfo.receive_center_officeHour = this._receiveObj[res.result.rominfo.rental_booth_org_id].officeHour;
       }
       res.result.rominfo.return_center_img = this._returnObj[res.result.rominfo.rtn_sale_org_id].img;
-      res.result.rominfo.return_center_officeHour = this._returnObj[res.result.rominfo.rental_sale_org_id].officeHour;
+      res.result.rominfo.return_center_officeHour = this._returnObj[res.result.rominfo.rtn_sale_org_id].officeHour;
       res.result.rominfo.show_rtn_sale_org_nm = this._returnObj[res.result.rominfo.rtn_sale_org_id].name;
       // res.result.rominfo.show_rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id].name;
       if(Tw.FormatHelper.isEmpty(this._receiveObj[res.result.rominfo.rental_booth_org_id])) {
