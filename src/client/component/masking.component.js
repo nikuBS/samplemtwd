@@ -12,7 +12,7 @@
 Tw.MaskingComponent = function () {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
 
   this.$btMasking = null;
   this._url = '';

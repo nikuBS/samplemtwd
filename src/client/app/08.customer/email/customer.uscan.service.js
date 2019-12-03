@@ -9,11 +9,11 @@
  * @desc 이메일전송 파일첨부 필요시 호출, 유스캔 API 호출
  */
 Tw.CustomerUscanService = function () {
-  this._popupService = Tw.PopupService;
+  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._history = new Tw.HistoryService();
   this._init();
-}
+};
 
 Tw.CustomerUscanService.prototype = {
   _init: function () {
