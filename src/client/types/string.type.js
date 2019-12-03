@@ -143,7 +143,8 @@ Tw.POPUP_CONTENTS = {
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
   TPLAN_WATCH: '스마트워치 회선<br>',
-  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.'
+  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.',
+  REMOVE_UPLOAD_ITEM: '첨부파일을 삭제하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {
@@ -1516,12 +1517,12 @@ Tw.BRANCH_SEARCH_OPTIONS = {
 
 Tw.UPLOAD_FILE = {
   WARNING_A00: '파일 업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
-  WARNING_A01: '첨부파일 용량은 최대 2MB까지 첨부하실 수 있습니다.',
+  WARNING_A01: '첨부파일 용량은 최대 3MB까지 첨부하실 수 있습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf, png)파일을 첨부하실 수 있습니다.',
   BUTTON_ADD: '파일 찾기',
   BUTTON_DELETE: '삭제',
-  CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해 주세요.',
+  CONFIRM_A01: '첨부파일의 용량이 총 3MB를 초과하여 등록할 수 없습니다. 다시 확인해 주세요.',
   CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해 주세요.',
   EMAILINFO_01: '첨부파일 용량은 1개 파일당 3MB 첨부가능합니다.',
   EMAILINFO_02: '첨부파일은 최대 5개까지 등록하실 수 있습니다.',

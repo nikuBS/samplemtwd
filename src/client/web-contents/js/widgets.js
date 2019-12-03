@@ -676,7 +676,16 @@ skt_landing.widgets = {
           vfile = $(this).find('.fileview');
       if (vfile) {
         file.on('change', function () {
-          vfile.val($(this).val());
+          if (this.files && this.files.length > 0) {
+            // 파일을 선택하면,  "C:\fakepath\my-file.doc"말고 파일 이름만 나오도록 (위 조건은 실제는 필요없음)
+            // NOTE: 1개일 때는 자동으로 ", "가 붙지 않는다. (this.multiple 확인)
+            vfile.val(_.map(this.files, function(file) {
+              return file.name;
+            }).join(', '));
+          } else {
+            // 대비 및 최적화로 넣어 놓는다.
+            vfile.val($(this).val());
+          }
         });
       }
     });
