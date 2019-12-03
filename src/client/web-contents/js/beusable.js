@@ -7,5 +7,5 @@ window.addEventListener("load", function(){
                 d.getElementsByTagName("head")[0].appendChild(b);
             }
         };w.__beusablerumclient__.load(a);
-    })(window, document, "//rum.beusable.net/script/b191127e155151u276/9e5826ccda");
+    })(window, document, "//sktrum.beusable.net/script/b191127e155151u276/9e5826ccda");
 }, false);
