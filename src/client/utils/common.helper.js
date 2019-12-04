@@ -40,6 +40,32 @@ Tw.CommonHelper = (function () {
   };
 
   /**
+   * @desc 외부 링크 열기(SSO)
+   * @param  {string} url
+   * @param  {object} service
+   * @param  {string} option
+   * @public
+   */
+  var openSsoUrlExternal = function (url, option) {
+
+    // 암호화 호출
+    Tw.Api.request(Tw.NODE_CMD.GET_SSO_URL, {
+      url: encodeURIComponent(url)
+    })
+      .done($.proxy(function(res) {
+        if ( res.code === Tw.API_CODE.CODE_00 ) {
+          url = decodeURIComponent(res.result);
+          Tw.Logger.info('[openSsoUrlExternal url]', url);
+        }
+        openUrlExternal(url, option);
+      }, this))
+      .fail($.proxy(function(error) {
+        Tw.Logger.error(error);
+        openUrlExternal(url, option);
+      }, this));
+  };
+
+  /**
    * @desc 내부 링크 열기
    * @param  {string} url
    * @param  {string} option
@@ -448,6 +474,7 @@ Tw.CommonHelper = (function () {
 
   return {
     openUrlExternal: openUrlExternal,
+    openSsoUrlExternal: openSsoUrlExternal,
     openUrlInApp: openUrlInApp,
     toggle: toggle,
     toast: toast,

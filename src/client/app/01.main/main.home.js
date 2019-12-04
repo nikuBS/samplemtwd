@@ -181,6 +181,7 @@ Tw.MainHome.prototype = {
   _bindEventLanding: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
     this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
+    this.$container.on('click', '.fe-home-sso-external', $.proxy(this._onClickSsoExternal, this));
     this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
     this.$container.on('click', '.fe-home-replace', $.proxy(this._onClickReplace, this));
   },
@@ -251,6 +252,18 @@ Tw.MainHome.prototype = {
     // } else {
       Tw.CommonHelper.openUrlExternal(url);
     // }
+  },
+
+  /**
+   * @function
+   * @desc 외부 브라우저 랜딩 처리(SSO)
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickSsoExternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    Tw.CommonHelper.openSsoUrlExternal(url);
   },
 
   /**
