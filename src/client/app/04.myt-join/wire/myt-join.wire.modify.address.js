@@ -203,12 +203,14 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       },
       $.proxy(this.select_buildingEvtOpen, this, $target),
       $.proxy(this.select_buildingEvtClose, this, $target),
-      hashName);
+      hashName, $target);
   },
 
   //--------------------------------------------------------------------------[SVC]
   // 건물 유형 팝업 오픈
   select_buildingEvtOpen: function( $target, $layer ) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+
     // Tw.Logger.info('[팝업 open > $target > 클릭한 버튼]', $target);
     // Tw.Logger.info('[팝업 open > $layer > 레이어 팝업]', $layer);
 

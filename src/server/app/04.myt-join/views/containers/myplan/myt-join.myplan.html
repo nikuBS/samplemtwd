@@ -2,30 +2,32 @@
 * @file myt-join.myplan.html
 * @author Ji Hun Yang (jihun202@sk.com)
 * @since 2018.09.19
-%>
-<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+_%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); _%>
 <body>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
-<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 요금제', svcInfo: svcInfo }); %>
-    <!-- #contents -->
-    <div class="container-wrap" id="contents">
-        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-        <%- include('../../components/myplan/myt-join.myplan.' + feeMainTemplate + '.html') %>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
     </div>
-    <!--// #contents -->
-    <!-- #footer -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
-    <!--// #footer -->
-</div>
+    <!--// #skip_navigation -->
+    <div class="wrap" data-menuId="<%- pageInfo.menuId %>">
+        <%- include('../components/header.component.html', { title: '나의 요금제', svcInfo: svcInfo }); _%>
+        <!-- #contents -->
+        <%- include('../../components/myplan/myt-join.myplan.' + feeMainTemplate + '.html') _%>
+        <!--// #contents -->
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
+        </footer>
+        <!--// #footer -->
+    </div>
+    <% include ../../components/javascript.component.html _%>
+    <script>
+        $(document).ready(function () {
+            new Tw.MyTJoinMyPlan({ $element: $('[data-id=sub-container]') });
+        });
+    </script>
 </body>
-<% include ../components/javascript.component.html %>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html _%>
