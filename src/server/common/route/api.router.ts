@@ -20,6 +20,8 @@ import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/r
 import DateHelper from '../../utils/date.helper';
 import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
+import CryptoHelper from '../../utils/crypto.helper';
+import { SSO_SERVICE_LIST } from '../../types/config.type';
 
 const os = require('os');
 
@@ -102,6 +104,7 @@ class ApiRouter {
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
     GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethodsBlock },
+    GET_SSO_URL: { path: '/common/sso-url', method: API_METHOD.GET, target: this.getSsoUrl }
   };
 
   /**
@@ -1337,6 +1340,58 @@ class ApiRouter {
     }, (error) => {
       res.json(error);
     });
+  }
+
+  /**
+   * SSO를 위한 URL 가져오기
+   * @param req
+   * @param res
+   * @param next
+   */
+  private getSsoUrl(req: Request, res: Response, next: NextFunction) {
+
+    let url: any = decodeURIComponent((req.query.url || ''));
+    this.logger.info(this, '[getSsoUrl] original url', url);
+
+    const serviceList: any = SSO_SERVICE_LIST.filter(function(item) {    
+      return (url.indexOf(item.host) !== -1);
+    });
+
+    if (FormatHelper.isEmpty(serviceList) || serviceList.length < 1) {
+      res.json({
+        code: API_CODE.CODE_404
+      });
+      return;
+    }
+
+    const service = serviceList[0];
+    const loginService = new LoginService();
+    const svcInfo = loginService.getSvcInfo(req);
+
+    if (FormatHelper.isEmpty(svcInfo)) {
+      res.json({
+        code: API_CODE.CODE_404
+      });
+      return;
+    }
+
+    const value = svcInfo[service.session_key];
+
+    if (FormatHelper.isEmpty(value)) {
+      res.json({
+        code: API_CODE.CODE_404
+      });
+    } else {
+      url += url.indexOf('?') === -1 ? '?' : '&';
+      url += service.sso_param + '=' + CryptoHelper.encrypt(value, service.encrpyt_key, service.encrpyt_algorigm, service.encrpyt_iv);
+
+      this.logger.info(this, '[getSsoUrl] return url', url);
+      res.json({
+        code: API_CODE.CODE_00,
+        result: encodeURIComponent(url)
+      });
+      return;
+    }
   }
   
 }
