@@ -48,21 +48,25 @@ Tw.CommonHelper = (function () {
    */
   var openSsoUrlExternal = function (url, option) {
 
-    // 암호화 호출
-    Tw.Api.request(Tw.NODE_CMD.GET_SSO_URL, {
-      url: encodeURIComponent(url)
-    })
-      .done($.proxy(function(res) {
-        if ( res.code === Tw.API_CODE.CODE_00 ) {
-          url = decodeURIComponent(res.result);
-          Tw.Logger.info('[openSsoUrlExternal url]', url);
-        }
+    if ( Tw.BrowserHelper.isApp() ) {
+      // 암호화 호출
+      Tw.Api.request(Tw.NODE_CMD.GET_SSO_URL, {
+        url: encodeURIComponent(url)
+      })
+        .done($.proxy(function(res) {
+          if ( res.code === Tw.API_CODE.CODE_00 ) {
+            url = decodeURIComponent(res.result);
+            Tw.Logger.info('[openSsoUrlExternal url]', url);
+          }
+          openUrlExternal(url, option);
+        }, this))
+        .fail($.proxy(function(error) {
+          Tw.Logger.error(error);
+          openUrlExternal(url, option);
+        }, this));
+      } else {
         openUrlExternal(url, option);
-      }, this))
-      .fail($.proxy(function(error) {
-        Tw.Logger.error(error);
-        openUrlExternal(url, option);
-      }, this));
+      }
   };
 
   /**
