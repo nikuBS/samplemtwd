@@ -102,7 +102,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     if (this._files) {
       this._popupService.openModalTypeA(Tw.POPUP_TITLE.CONFIRM, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.MESSAGE,
         Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, $.proxy(this._onOpenTypeChange, this, type),
-        $.proxy(this._changeSuspendType, this, type), null, null, null, $(e.currentTarget));
+        $.proxy(this._changeSuspendType, this, type), null, null, null, $(e.target));
     } else {
       this._changeSuspendType(type);
     }
@@ -399,7 +399,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(this._suspendOptions));
     } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg,
-        null, null, null, null, $(event.currentTarget));
+        null, null, null, null, this.$btSuspend);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
