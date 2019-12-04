@@ -252,7 +252,17 @@ Tw.MyTDataGiftMonthly.prototype = {
   _checkValidateSendingButton: function () {
     var isValidQty = this.$wrap_auto_select_list.find('input:checked').length !== 0;
     var isValidPhone = this.$input_auto_gift.val().length !== 0;
-
+    // [OP002-5239] 웹접근성 이슈로 인하여 aria-disabled 값 수정
+    if (isValidQty) {
+      this.$wrap_auto_select_list.find('input:not(checked)')
+        .parents('li')
+        .attr('aria-checked', !isValidQty)
+        .attr('aria-disabled', isValidQty);
+      this.$wrap_auto_select_list.find('input:checked')
+        .parents('li')
+        .attr('aria-checked', isValidQty)
+        .attr('aria-disabled', !isValidQty);
+    }
     if ( isValidQty && isValidPhone ) {
       this.$btnRequestSendingAuto.attr('disabled', false);
     } else {

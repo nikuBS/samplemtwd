@@ -358,13 +358,20 @@ Tw.MyTDataGiftImmediately.prototype = {
     var isValidQty = this.$wrap_data_select_list.find('input:checked').length !== 0;
     var isValidPhone = this.$inputImmediatelyGift.val().length !== 0;
     // [OP002-5239] 웹접근성 이슈로 인하여 aria-disabled 값 수정
-    var isDisabled = isValidQty && isValidPhone;
-    if ( isDisabled ) {
-      this.$btnRequestSendingData.attr('disabled', !isDisabled);
-      this.$btnRequestSendingData.attr('aria-disabled', !isDisabled);
+    if (isValidQty) {
+      this.$wrap_data_select_list.find('input:not(checked)')
+        .parents('li')
+        .attr('aria-checked', !isValidQty)
+        .attr('aria-disabled', isValidQty);
+      this.$wrap_data_select_list.find('input:checked')
+        .parents('li')
+        .attr('aria-checked', isValidQty)
+        .attr('aria-disabled', !isValidQty);
+    }
+    if ( isValidQty && isValidPhone ) {
+      this.$btnRequestSendingData.attr('disabled', false);
     } else {
-      this.$btnRequestSendingData.attr('disabled', isDisabled);
-      this.$btnRequestSendingData.attr('aria-disabled', isDisabled);
+      this.$btnRequestSendingData.attr('disabled', true);
     }
   },
 
