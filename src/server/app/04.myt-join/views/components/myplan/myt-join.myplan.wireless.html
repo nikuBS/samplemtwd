@@ -1,64 +1,77 @@
-<div class="container-wrap">
-    <div class="container">
-
-        <% if (feePlan.feePlanProd.prodLinkYn === 'Y' && feePlan.feePlanProd.linkProdId) { %>
-        <a class="plan-compact-info" href="/product/callplan?prod_id=<%= feePlan.feePlanProd.linkProdId %>">
-            <%- include('./myt-join.myplan.wireless.header-info.html') %>
+<div id="contents" class="container-wrap">
+    <div class="container" data-id="sub-container">
+        <%_ if ( feePlan.feePlanProd.prodLinkYn === 'Y' && feePlan.feePlanProd.linkProdId ) { _%>
+        <a href="/product/callplan?prod_id=<%- feePlan.feePlanProd.linkProdId %>" class="plan-compact-info">
+            <% include ./myt-join.myplan.wireless.header-info.html _%>
         </a>
-        <% } else { %>
+        <%_ } else { _%>
         <div class="plan-compact-info">
-            <%- include('./myt-join.myplan.wireless.header-info.html') %>
+            <% include ./myt-join.myplan.wireless.header-info.html _%>
         </div>
-        <% } %>
-
-        <% if ( svcInfo.svcAttrCd === 'M1' ) { %>
+        <%_
+        }
+        if ( svcInfo.svcAttrCd === 'M1' ) {
+        _%>
         <!-- .cont-box -->
         <div class="cont-box nogaps">
-            <ul class="btn-link-list">
+            <ul class="btn-link-list" data-id="routers">
+                <!--<li class="last-line"><button>나의 혜택 보기</button></li>-->
                 <li class="last-line"><a href="/benefit/my">나의 혜택 보기</a></li>
-                <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
-                <% for (var i in feePlan.feePlanProd.btnList) { %>
-                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.linkProdId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
-                <% } %>
-                <% } else { %>
+                <%_
+                if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) {
+                for (var i in feePlan.feePlanProd.btnList) {
+                _%>
+                <!--<li class="last-line"><button><%= feePlan.feePlanProd.btnList[i].btnNm %></button></li>-->
+                <li class="last-line"><button data-id="bt-goto" data-href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%- feePlan.feePlanProd.linkProdId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></button></li>
+                <%_
+                }
+                } else {
+                // NOTE: 아래 "옵션 변경"은 수정하지 말고, 그대로 유지 (2019-09-26 기획 의도)
+                _%>
                 <li class="last-line"><button class="disabled" disabled>옵션 변경</button></li>
-                <% } %>
+                <%_ } _%>
             </ul>
         </div>
         <!--// .cont-box -->
-        <% } %>
-
-        <% if ( feePlan.optionAndDiscountProgramList.length > 0 ) { %>
-        <!-- <hr class="cont-sp type1" aria-hidden="true"/> --> <!-- //190611_삭제02 -->
+        <%_
+        }
+        if ( feePlan.optionAndDiscountProgramList.length > 0 ) {
+        _%>
+        <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- .cont-box -->
         <div class="cont-box nogaps-btm">
             <h3 class="tit-type7">옵션/할인 프로그램</h3>
             <div class="separate-link-list">
-                <ul>
-                    <% for (var i in feePlan.optionAndDiscountProgramList) { %>
+                <ul data-id="routers">
+                    <%_
+                    for (var i in feePlan.optionAndDiscountProgramList) {
+                        var program = feePlan.optionAndDiscountProgramList[i];
+                    _%>
                     <li>
-                        <div class="txt-area">
-                            <span class="tit" id="aria-separate-list<%= i %>"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
-                            <span class="join-date">가입일 <%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span>
-                            <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
-                            <a title="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>" href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="bt-link-tx underline">
-                                <%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>
-                            </a>
-                            <% } %>
+                        <div class="txt-area" id="aria-separate-list<%- i %>">
+                            <span class="tit"><%= program.prodNm %></span>
+                            <span class="join-date">가입일 <%= program.scrbDt %></span>
+                            <%_
+                            for (var j in program.btnList) {
+                            var btn = program.btnList[j];
+                            _%>
+                            <button class="bt-link-tx underline" title="<%= btn.btnNm %>" data-id="bt-goto" data-href="<%= btn.btnLinkUrl %>?prod_id=<%- program.linkProdId %>">가입내역 조회</button>
+                            <%_ } _%>
                         </div>
-                        <% if ( feePlan.optionAndDiscountProgramList[i].prodLinkYn === 'Y' ) { %>
-                        <a href="/product/callplan?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="btn" aria-labelledby="aria-separate-list<%= i %>">상세보기</a>
-                        <% } %>
+                        <%_ if ( program.prodLinkYn === 'Y' ) { _%>
+                        <button class="btn" aria-labelledby="aria-separate-list<%- i %>" title="상세보기" data-id="bt-goto" data-href="/product/callplan?prod_id=<%- program.linkProdId %>">상세보기</button>
+                        <%_ } _%>
                     </li>
-                    <% } %>
+                    <%_ } _%>
                 </ul>
             </div>
         </div>
         <!--// .cont-box -->
-        <% } %>
+        <%_ } _%>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
         <!-- .cont-box -->
-        <!-- 190611_수정01 -->
         <div class="cont-box">
             <!-- <ul class="full-link-list">
                     <li>
@@ -72,33 +85,30 @@
             <div class="ti-caption-type01 pb24">
                 <h3 class="tit">요금제 변경</h3>
             </div>
-            <% if ( isFeeAlarm ) { %>
-            <ul class="bt-slice item-two">
-                <li><a href="/myt-join/myplan/alarm" type="button" class="btn-round1 btn-style4">변경 가능일 알림</a></li>
-                <li><a href="/product/mobileplan" type="button" class="btn-round1 btn-style4">요금제 변경하기</a></li>
+            <%_ if ( isFeeAlarm ) { _%>
+            <ul class="bt-slice item-two" data-id="actions">
+                <li><button class="btn-round1 btn-style4" data-id="bt-alarm-available">변경 가능일 알림</button></li>
+                <li><button class="btn-round1 btn-style4" data-id="bt-change-plan">요금제 변경하기</button></li>
             </ul>
-            <% } else { %>
-            <ul class="bt-slice">
-                <li><a href="/product/mobileplan"  class="btn-round1 btn-style4">요금제 변경하기</a></li>
+            <%_ } else { _%>
+            <ul class="bt-slice" data-id="actions">
+                <li><button class="btn-round1 btn-style4" data-id="bt-change-plan">요금제 변경하기</button></li>
             </ul>
-            <% } %>
+            <%_ } _%>
         </div>
         <!--// .cont-box -->
-        <% if ( tipList ) { %>
+
+        <%_ if ( tipList ) { _%>
         <!-- .cont-box -->
         <div class="cont-box noborder bgnone">
             <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
             <ul class="pg-chk-list02">
-                <% for ( var i in tipList) { %>
-                <li>
-                    <button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
-                        <%= tipList[i].title %><i class="icon-badge-tip"><span class="blind">tip</span></i>
-                    </button>
-                </li>
-                <% } %>
+                <%_ for (var i in tipList) { _%>
+                <li><button class="btn-tip" aria-haspopup="true" id="<%- tipList[i].code %>" page-id="<%- pageInfo.menuId %>"><%= tipList[i].title %><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                <%_ } _%>
             </ul>
         </div>
         <!--// .cont-box -->
-        <% } %>
+        <%_ } _%>
     </div>
 </div>
