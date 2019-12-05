@@ -1,6 +1,6 @@
-<% if(locals.type && locals.type === 'popup') { %>
+<%_ if (locals.type && locals.type === 'popup') { _%>
 <!-- #header -->
-<div class="header-wrap noborder<% if (locals.headerClass) { %> <%= locals.headerClass %> <% } %>">
+<div class="header-wrap noborder<% if (locals.headerClass) { %> <%= locals.headerClass %><% } %>">
     <div class="page-header noborder">
         <div class="header-ti">
             <h1><%- title %></h1>
@@ -16,8 +16,10 @@
         <% } %>
     </div>
 </div>
+<!--// #header -->
 <% } else { %>
-<div id="header" class="header-wrap <% if(locals.home) { %> home <% } %>">
+<!-- #header -->
+<div id="header" class="header-wrap<% if (locals.home) { %> home<% } %>">
     <% if (locals.home && locals.home === 'web') { %>
     <div class="h-belt">
         <div class="h-default">
@@ -281,7 +283,6 @@
     </div> -->
 </div>
 <!-- // #common-menu -->
-
 <script id="fe-tpl-menu" type="text/x-handlebars-template">
     {{#each list}}
     <div class="section-gnb">
@@ -427,4 +428,4 @@
     </div>
     {{/each}}
 </script>
-<% } %>
+<%_ } _%>

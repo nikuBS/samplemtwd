@@ -256,16 +256,16 @@ Tw.MyTJoinSubMain.prototype = {
    * @function
    * @desc 닉네임 변경
    */
-  _onChangeNickName: function () {
-    var nickNm = this.data.svcInfo.nickNm;
-    var svcMgmtNum = this.data.svcInfo.svcMgmtNum;
-    this._nicknamePopup.openNickname(nickNm, svcMgmtNum, $.proxy(this._onCloseNickNAmePopup, this));
+  _onChangeNickName: function (event) {
+    var $target = $(event.currentTarget);
+    var svcInfo = this.data.svcInfo;
+    this._nicknamePopup.openNickname(svcInfo.nickNm, svcInfo.svcMgmtNum, $.proxy(this._onNicknamePopupClosed, this), $target);
   },
   /**
    * @function
    * @desc _onChangeNickName() close 콜백
    */
-  _onCloseNickNAmePopup: function () {
+  _onNicknamePopupClosed: function () {
     this._historyService.reload();
   },
   /**

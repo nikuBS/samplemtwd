@@ -1,46 +1,46 @@
 <div class="plan">
     <strong class="tit" data-tracker="V" data-tracker_tw_prod_id="<%= feePlan.feePlanProd.prodId %>" data-tracker_tw_prod_nm="<%= feePlan.feePlanProd.prodNm %>"><%= feePlan.feePlanProd.prodNm %></strong>
-    <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
-    <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %>원</span>
-    <% } %>
-    <% if ( feePlan.feePlanProd.basFeeInfo && feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
-    <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %></span>
-    <% } %>
+    <%_ if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { _%>
+    <span class="val"><%- feePlan.feePlanProd.basFeeInfo.value %>원</span>
+    <%_
+    }
+    if ( feePlan.feePlanProd.basFeeInfo && feePlan.feePlanProd.basFeeInfo.isNaN ) {
+    _%>
+    <span class="val"><%- feePlan.feePlanProd.basFeeInfo.value %></span>
+    <%_ } _%>
 </div>
 <div class="sub">
-    <% if ( feePlan.feePlanProd.prodFltNm ) { %>
+    <%_ if ( feePlan.feePlanProd.prodFltNm ) { _%>
     <span class="hash">#<%= feePlan.feePlanProd.prodFltNm %></span>
-    <% } %>
-    <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
+    <%_
+    }
+    if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) {
+    _%>
     <span class="rest">월정액(부가세 포함)</span>
-    <% } %>
+    <%_ } _%>
 </div>
-<% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
+<%_ if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { _%>
 <div class="service-wrap">
     <div class="service">
-        <% if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { %>
+        <%_ if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { _%>
         <span class="sv-spec data">
-            <% if ( feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ) { %>
-            <i class="ico-data-plan" title="데이터"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value %>
-            <% } else { %>
-            <i class="ico-data-plan" title="데이터"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value.data + feePlan.feePlanProd.basOfrDataQtyCtt.value.unit %>
-            <% } %>
+            <i class="ico-data-plan" title="데이터"></i><%- feePlan.feePlanProd.basOfrDataQtyCtt.value.data ? ( feePlan.feePlanProd.basOfrDataQtyCtt.value.data + (feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ? '' : feePlan.feePlanProd.basOfrDataQtyCtt.value.unit)) : feePlan.feePlanProd.basOfrDataQtyCtt.value %>
         </span>
-        <% } %>
-        <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) { %>
+        <%_
+        }
+        if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) {
+        _%>
         <span class="sv-spec">
-            <i class="ico-phone-plan" title="통화"></i><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %>
+            <i class="ico-phone-plan" title="통화"></i><%- feePlan.feePlanProd.basOfrVcallTmsCtt.value %>
         </span>
-        <% } %>
-        <% if ( feePlan.feePlanProd.basOfrCharCntCtt ) { %>
+        <%_
+        }
+        if ( feePlan.feePlanProd.basOfrCharCntCtt ) {
+        _%>
         <span class="sv-spec">
-            <% if ( feePlan.feePlanProd.basOfrCharCntCtt.isNaN ) { %>
-            <i class="ico-msg-plan" title="문자"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value %>
-            <% } else { %>
-            <i class="ico-msg-plan" title="문자"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value + feePlan.feePlanProd.basOfrCharCntCtt.unit %>
-            <% } %>
+            <i class="ico-msg-plan" title="문자"></i><%- feePlan.feePlanProd.basOfrCharCntCtt.value + (feePlan.feePlanProd.basOfrCharCntCtt.isNaN ? '' : feePlan.feePlanProd.basOfrCharCntCtt.unit) %>
         </span>
-        <% } %>
+        <%_ } _%>
     </div>
 </div>
-<% } %>
+<%_ } _%>

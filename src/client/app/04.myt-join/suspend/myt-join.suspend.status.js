@@ -60,7 +60,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
             reason: this._params.reason
           }
         }, $.proxy(this._onOpenResuspendPopup, this), $.proxy(this._onCloseResuspendPopup, this),
-        'resuspend', $(event.currentTarget));
+        'resuspend', $(event.target));
   },
   /**
    * @function
@@ -206,7 +206,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @function
    * @desc Event listener for the button click on [data-id="bt-release"](해제하기)
    */
-  _onReleaseClicked: function () {
+  _onReleaseClicked: function (event) {
     this._popupService.open({
       hbs: 'MS_03_05_05',
       data: {
@@ -215,7 +215,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         reason: this._params.status.reason,
         longterm: this._params.status.type === 'long-term'
       }
-    }, $.proxy(this._onOpenResetPopup, this), null, 'reset');
+    }, $.proxy(this._onOpenResetPopup, this), null, 'reset', $(event.target));
   },
   /**
    * @function

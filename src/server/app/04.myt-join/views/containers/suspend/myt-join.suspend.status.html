@@ -25,9 +25,9 @@ _%>
                 <div class="cont-box">
                     <div class="charge-guide-wrap">
                         <div class="charge-cont">
-                                <span class="sub-disc01">
-                                    <span class="elem">회선번호</span>
-                                </span>
+                                    <span class="sub-disc01">
+                                        <span class="elem">회선번호</span>
+                                    </span>
                             <span class="tit-tgothic"><%- phoneNum %></span>
                             <span class="sub-disc04"><%= svcInfo.eqpMdlNm %></span>
                         </div>
@@ -62,9 +62,9 @@ _%>
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
     <% include ../../components/javascript.component.html _%>
     <script>
-      $(document).ready(function () {
-        new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({status, progress}) %>);
-      });
+        $(document).ready(function () {
+            new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({status, progress}) %>);
+        });
     </script>
 </body>
 <% include ../../components/end.component.html _%>
