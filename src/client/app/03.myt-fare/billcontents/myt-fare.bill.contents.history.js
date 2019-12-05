@@ -294,6 +294,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
    * @returns {void}
    */
   _openMonthSelectHandler: function ($sheet) {
+    Tw.CommonHelper.focusOnActionSheet($sheet);
     // 해당 년 월 선택
     var year = parseFloat(this.selectedYear), month = parseFloat(this.selectedMonth);
 
