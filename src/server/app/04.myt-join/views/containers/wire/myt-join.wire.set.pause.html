@@ -40,18 +40,18 @@
                         </div>
                         <% if (wirePauseInfo.svc_st_cd === 'AC') { %>
                         <div class="form-type mt30 date-selcet" style="display: block;">
-                            <span class="form-title">정지 시작일</span>
+                            <span class="form-title" id="aria-label-start">정지 시작일</span>
                             <!--<button class="bt-dropdown big fe-btn-start-date" title="정지 시작일" aria-haspopup="true">당일 이후로 선택<span class="ico"></span></button>-->
                             <div class="date-type" style="display: block;width: auto;">
-                                <input type="date" class="fe-input-start-date" min="<%= startDate.min %>" max="<%= startDate.max %>" value="<%= startDate.min %>" >
+                                <input type="date" class="fe-input-start-date" min="<%= startDate.min %>" max="<%= startDate.max %>" value="<%= startDate.min %>" aria-labelledby="aria-label-start"/>
                             </div>
                             <div class="cont-noti mt20">
                                 <span class="type1">정지 시작일은 오늘부터 30일 이내에서만 지정할 수 있습니다.</span>
                             </div>
-                            <span class="form-title">정지 종료일</span>
+                            <span class="form-title" id="aria-label-end">정지 종료일</span>
                             <!--<button class="bt-dropdown big fe-btn-end-date" title="정지 종료일" aria-haspopup="true">선택<span class="ico"></span></button>-->
                             <div class="date-type" style="display: block;width: auto;">
-                                <input type="date" class="fe-input-end-date">
+                                <input type="date" class="fe-input-end-date" aria-labelledby="aria-label-end">
                             </div>
                         </div>
                         <div class="cont-noti mt20">

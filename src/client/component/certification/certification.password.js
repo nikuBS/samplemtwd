@@ -9,12 +9,13 @@
  * @desc 공통 > 인증 > 비밀번호 인
  * @constructor
  */
-Tw.CertificationPassword = function () {
+Tw.CertificationPassword = function ($target) {
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
+  this._$target = $target;
   this._authUrl = null;
   this._callback = null;
   this._authKind = null;
@@ -98,7 +99,7 @@ Tw.CertificationPassword.prototype = {
    */
   _failGetDomain: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -150,7 +151,7 @@ Tw.CertificationPassword.prototype = {
    */
   _failConfirmPasswordCert: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**

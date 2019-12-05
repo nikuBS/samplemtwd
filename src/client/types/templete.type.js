@@ -500,14 +500,14 @@ Tw.POPUP_TPL = {
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
-        { txt: '최근 납부 내역', 'radio-attr': 'name="myTHistory" value="0" checked' },
-        { txt: '즉시납부', 'radio-attr': 'name="myTHistory" value="1"' },
-        { txt: '자동납부', 'radio-attr': 'name="myTHistory" value="2"' },
-        { txt: '자동 납부 통합인출', 'radio-attr': 'name="myTHistory" value="3"', onlyType: 'M'},
-        { txt: '소액결제 선결제', 'radio-attr': 'name="myTHistory" value="4"', onlyType: 'M' },
-        { txt: '콘텐츠 이용요금 선결제', 'radio-attr': 'name="myTHistory" value="5"', onlyType: 'M' },
-        { txt: '포인트 납부 예약', 'radio-attr': 'name="myTHistory" value="6"', onlyType: 'M' },
-        { txt: '포인트 자동납부', 'radio-attr': 'name="myTHistory" value="7"', onlyType: 'M' }
+        { 'label-attr': 'for="0"', txt: '최근 납부 내역',       'radio-attr': 'id="0" name="myTHistory" value="0" checked' },
+        { 'label-attr': 'for="1"', txt: '즉시납부',            'radio-attr': 'id="1" name="myTHistory" value="1"' },
+        { 'label-attr': 'for="2"', txt: '자동납부',            'radio-attr': 'id="2" name="myTHistory" value="2"' },
+        { 'label-attr': 'for="3"', txt: '자동 납부 통합인출',    'radio-attr': 'id="3" name="myTHistory" value="3"', onlyType: 'M'},
+        { 'label-attr': 'for="4"', txt: '소액결제 선결제',       'radio-attr': 'id="4" name="myTHistory" value="4"', onlyType: 'M' },
+        { 'label-attr': 'for="5"', txt: '콘텐츠 이용요금 선결제', 'radio-attr': 'id="5" name="myTHistory" value="5"', onlyType: 'M' },
+        { 'label-attr': 'for="6"', txt: '포인트 납부 예약',     'radio-attr': 'id="6" name="myTHistory" value="6"', onlyType: 'M' },
+        { 'label-attr': 'for="7"', txt: '포인트 자동납부',      'radio-attr': 'id="7" name="myTHistory" value="7"', onlyType: 'M' }
       ]
     }
   ],
@@ -781,9 +781,8 @@ Tw.PRODUCT_LIST_ORDER = [
 
 Tw.PRODUCT_LIST_COMBINATIONS_ORDER = [
   { txt: '전체', 'radio-attr': 'data-order="recommand"', 'label-attr': ' ' },
-  { txt: '패밀리형', 'radio-attr': 'data-order="family"', 'label-attr': ' ' },
-  { txt: '개인형', 'radio-attr': 'data-order="solo"', 'label-attr': ' ' },
-  { txt: '보안', 'radio-attr': 'data-order="security"', 'label-attr': ' ' }
+  { txt: '가족형', 'radio-attr': 'data-order="family"', 'label-attr': ' ' },
+  { txt: '개인형', 'radio-attr': 'data-order="solo"', 'label-attr': ' ' }
 ];
 
 Tw.TERMS_ACTION = {

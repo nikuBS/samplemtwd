@@ -181,6 +181,7 @@ Tw.MainHome.prototype = {
   _bindEventLanding: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
     this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
+    this.$container.on('click', '.fe-home-sso-external', $.proxy(this._onClickSsoExternal, this));
     this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
     this.$container.on('click', '.fe-home-replace', $.proxy(this._onClickReplace, this));
   },
@@ -255,6 +256,18 @@ Tw.MainHome.prototype = {
 
   /**
    * @function
+   * @desc 외부 브라우저 랜딩 처리(SSO)
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickSsoExternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    Tw.CommonHelper.openSsoUrlExternal(url);
+  },
+
+  /**
+   * @function
    * @desc
    * @param res
    * @private
@@ -293,18 +306,7 @@ Tw.MainHome.prototype = {
    */
   _onClickInternal: function ($event) {
     var url = $($event.currentTarget).data('url');
-    var exUrlNoti = $($event.currentTarget).data('ex_url_noti') || '';
-
-    if(url.indexOf('m.sktelecom5gx.com') !== -1 && !Tw.FormatHelper.isEmpty(exUrlNoti) ) {
-      this._popupService.open(
-        { 
-          hbs: 'service-block',
-          pop_name: 'service-block'
-        }, 
-        null, null);
-    } else{
-      this._historyService.goLoad(url);
-    }
+    this._historyService.goLoad(url);
 
     $event.preventDefault();
     $event.stopPropagation();

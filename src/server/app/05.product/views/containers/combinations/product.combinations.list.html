@@ -27,22 +27,18 @@
                 <div class="sort-area">
                     <span class="total-qnt tod-txcolor8">총 <strong class="num tod-txcolor8">
                         <% if (params.searchOrder === 'family') { %>
-                            7
+                            3
                         <% } else if (params.searchOrder === 'solo') { %>
-                            6
-                        <% } else if (params.searchOrder === 'security') { %>
-                            1
+                            4
                         <% } else { %>
-                            9
+                            5
                         <% } %>
                     </strong>건</span>
-                    <button class="btn-select fe-select-order-combinations" title="전체 / 패밀리형 / 개인형 / 보안 유형 선택" aria-haspopup="true">
+                    <button class="btn-select fe-select-order-combinations" title="전체 / 가족형 / 개인형 유형 선택" aria-haspopup="true">
                         <% if (params.searchOrder === 'family') { %>
-                            패밀리형
+                            가족형
                         <% } else if (params.searchOrder === 'solo') { %>
                             개인형
-                        <% } else if (params.searchOrder === 'security') { %>
-                            보안
                         <% } else { %>
                             전체
                         <% } %>
@@ -52,48 +48,7 @@
                 <div class="cont-box bgnone nogaps-hoz">
                     <!-- list -->
                     <ul class="tod-unit-item-list">
-                        <% if (params.searchOrder !== 'solo') { %>
-                        <li>
-                            <!--상품정보 샘플 : start -->
-                            <a href="/product/callplan?prod_id=TW20000012">
-                                <div class="tod-unit-item-info">
-                                    <!-- 상품명 + 할인혜택 내용 -->
-                                    <div class="title-wrap">
-                                        <strong class="name">가족나눔데이터</strong>
-                                        <p class="desc">가족 이동전화를 결합해서 추가 제공된<br> 데이터를 나눠 쓰는 혜택</p>
-                                    </div>
-                                    <!-- 할인유형 : 데이터제공 / 통신비할인 / 통신비 + 기타할인 -->
-                                    <div class="discount-wrap">
-                                        <span class="tod-blind">할인유형</span>
-                                        <strong class="txt">데이터 제공</strong>
-                                    </div>
-                                    <!-- 결합형태-->
-                                    <div class="type-wrap">
-                                        <span class="tod-blind">결합형태</span>
-                                        <span class="txt">휴대폰 + 휴대폰</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- //상품정보 샘플 : end -->        
-                        </li>
-                        <li>
-                            <a href="/product/callplan?prod_id=TW20000010">
-                                <div class="tod-unit-item-info">
-                                    <div class="title-wrap">
-                                        <strong class="name">T끼리 온가족할인</strong>
-                                        <p class="desc">가입기간이 오래될수록 할인되는 월정액<br>(최대 30%할인)</p>
-                                    </div>
-                                    <div class="discount-wrap">
-                                        <span class="tod-blind">할인유형</span>
-                                        <strong class="txt">통신비 할인</strong>
-                                    </div>
-                                    <div class="type-wrap">
-                                        <span class="tod-blind">결합형태</span>
-                                        <span class="txt">휴대폰 + 휴대폰</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                    <% if (params.searchOrder !== 'solo') { %>
                         <% if (params.searchOrder !== 'family') { %>    
                         <li>
                             <a href="/product/callplan?prod_id=TW00000009">
@@ -118,7 +73,7 @@
                                 <div class="tod-unit-item-info">
                                     <div class="title-wrap">
                                         <strong class="name">TB끼리 TV플러스</strong>
-                                        <p class="desc">이동전화와 Btv(IPTV)를 결합하면<br>최대 2,200원 추가 요금할인</p>
+                                        <p class="desc">이동전화와 B tv(IPTV)를 결합하면<br>최대 2,200원 추가 요금할인</p>
                                     </div>
                                     <div class="discount-wrap">
                                         <span class="tod-blind">할인유형</span>
@@ -151,24 +106,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/product/callplan?prod_id=TW00000062">
-                                <div class="tod-unit-item-info">
-                                    <div class="title-wrap">
-                                        <strong class="name">T+B인터넷</strong>
-                                        <p class="desc">이동전화와 인터넷을 결합하면 이동전화와<br>인터넷 기본료를 최대 50% 할인</p>
-                                    </div>
-                                    <div class="discount-wrap">
-                                        <span class="tod-blind">할인유형</span>
-                                        <strong class="txt">통신비 할인</strong>
-                                    </div>
-                                    <div class="type-wrap">
-                                        <span class="tod-blind">결합형태</span>
-                                        <span class="txt">휴대폰 + 인터넷</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
                             <a href="/product/callplan?prod_id=TW20000008">
                                 <div class="tod-unit-item-info">
                                     <div class="title-wrap">
@@ -202,24 +139,8 @@
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="/product/callplan?prod_id=NA00006283">
-                                <div class="tod-unit-item-info">
-                                    <div class="title-wrap">
-                                        <strong class="name">T&amp;캡스</strong>
-                                        <p class="desc">이동전화와 ADT캡스(SOHO) 1회선 결합하면 <br>이동전화 및 ADT캡스 할인</p>
-                                    </div>
-                                    <div class="discount-wrap">
-                                        <strong class="txt">통신비+기타 할인</strong>
-                                    </div>
-                                    <div class="type-wrap">
-                                        <span class="txt">휴대폰 + 보안서비스</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <% } %>
-                        <% if (params.searchOrder === 'solo') { %>
+                    <% } %>
+                    <% if (params.searchOrder === 'solo') { %>
                         <li>
                             <a href="/product/callplan?prod_id=TW00000009">
                                 <div class="tod-unit-item-info">
@@ -239,29 +160,11 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/product/callplan?prod_id=TW00000062">
-                                <div class="tod-unit-item-info">
-                                    <div class="title-wrap">
-                                        <strong class="name">T+B인터넷</strong>
-                                        <p class="desc">이동전화와 인터넷을 결합하면 이동전화와<br>인터넷 기본료를 최대 50% 할인</p>
-                                    </div>
-                                    <div class="discount-wrap">
-                                        <span class="tod-blind">할인유형</span>
-                                        <strong class="txt">통신비 할인</strong>
-                                    </div>
-                                    <div class="type-wrap">
-                                        <span class="tod-blind">결합형태</span>
-                                        <span class="txt">휴대폰 + 인터넷</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
                             <a href="/product/callplan?prod_id=TW00000016">
                                 <div class="tod-unit-item-info">
                                     <div class="title-wrap">
                                         <strong class="name">TB끼리 TV플러스</strong>
-                                        <p class="desc">이동전화와 Btv(IPTV)를 결합하면<br>최대 2,200원 추가 요금할인</p>
+                                        <p class="desc">이동전화와 B tv(IPTV)를 결합하면<br>최대 2,200원 추가 요금할인</p>
                                     </div>
                                     <div class="discount-wrap">
                                         <span class="tod-blind">할인유형</span>
@@ -270,22 +173,6 @@
                                     <div class="type-wrap">
                                         <span class="tod-blind">결합형태</span>
                                         <span class="txt">휴대폰 + IPTV</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/product/callplan?prod_id=NA00006283">
-                                <div class="tod-unit-item-info">
-                                    <div class="title-wrap">
-                                        <strong class="name">T&amp;캡스</strong>
-                                        <p class="desc">이동전화와 ADT캡스(SOHO) 1회선 결합하면 <br>이동전화 및 ADT캡스 할인</p>
-                                    </div>
-                                    <div class="discount-wrap">
-                                        <strong class="txt">통신비+기타 할인</strong>
-                                    </div>
-                                    <div class="type-wrap">
-                                        <span class="txt">휴대폰 + 보안서비스</span>
                                     </div>
                                 </div>
                             </a>
@@ -324,7 +211,7 @@
                                 </div>
                             </a>
                         </li>
-                        <% } %>
+                    <% } %>
                     </ul>
                     <!-- //list -->
                 </div>

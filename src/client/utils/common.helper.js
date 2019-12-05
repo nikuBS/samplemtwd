@@ -40,6 +40,36 @@ Tw.CommonHelper = (function () {
   };
 
   /**
+   * @desc 외부 링크 열기(SSO)
+   * @param  {string} url
+   * @param  {object} service
+   * @param  {string} option
+   * @public
+   */
+  var openSsoUrlExternal = function (url, option) {
+
+    if ( Tw.BrowserHelper.isApp() ) {
+      // 암호화 호출
+      Tw.Api.request(Tw.NODE_CMD.GET_SSO_URL, {
+        url: encodeURIComponent(url)
+      })
+        .done($.proxy(function(res) {
+          if ( res.code === Tw.API_CODE.CODE_00 ) {
+            url = decodeURIComponent(res.result);
+            Tw.Logger.info('[openSsoUrlExternal url]', url);
+          }
+          openUrlExternal(url, option);
+        }, this))
+        .fail($.proxy(function(error) {
+          Tw.Logger.error(error);
+          openUrlExternal(url, option);
+        }, this));
+      } else {
+        openUrlExternal(url, option);
+      }
+  };
+
+  /**
    * @desc 내부 링크 열기
    * @param  {string} url
    * @param  {string} option
@@ -50,7 +80,7 @@ Tw.CommonHelper = (function () {
     openUrl(url, Tw.NTV_BROWSER.INAPP, option, title);
   };
 
-  
+
   /**
    * @desc 토스트 띄우기
    * @param  {string} message
@@ -65,7 +95,7 @@ Tw.CommonHelper = (function () {
     }
   };
 
-  
+
   /**
    * @desc toggle 버튼
    * @param  {$object} selector
@@ -90,7 +120,7 @@ Tw.CommonHelper = (function () {
 
   /**
    * @desc getter
-   * @param {string} key 
+   * @param {string} key
    * @public
    */
   var getLocalStorage = function (key) {
@@ -109,7 +139,7 @@ Tw.CommonHelper = (function () {
 
   /**
    * @desc getter
-   * @param {string} key 
+   * @param {string} key
    * @public
    */
   var getSessionStorage = function (key) {
@@ -127,7 +157,7 @@ Tw.CommonHelper = (function () {
 
   /**
    * @desc getter
-   * @param {string} key 
+   * @param {string} key
    * @public
    */
   var getCookie = function (key) {
@@ -313,7 +343,7 @@ Tw.CommonHelper = (function () {
 
   /**
    * @desc 이용약관 팝업 열기
-   * @param {string} code 
+   * @param {string} code
    * @public
    */
   var openTermLayer = function (code) {
@@ -337,7 +367,7 @@ Tw.CommonHelper = (function () {
 
   /**
    * @desc 이용약관 팝업 열기
-   * @param {string} code 
+   * @param {string} code
    * @public
    */
   var openTermLayer2 = function (code) {  // T World 이용약관
@@ -396,14 +426,41 @@ Tw.CommonHelper = (function () {
     document.createElement('img').setAttribute('src', url);
   };
 
+  /**
+   *
+   * @param {jQuery} $popupLayer
+   */
   var focusOnActionSheet = function($popupLayer) {
-    if (!Tw.FormatHelper.isEmpty($popupLayer.find('span.txt:eq(0)'))) {
+    // WARNING: jQuery DOM object를 인자로 하기 때문에, isEmpty()로 확인하면 안됨
+    // NOTE: 궁극적으로 둘 중 하나라도 나와야 하기 때문
+    /*
+    if ($popupLayer.find('span.txt:eq(0)').length > 0) { // if (!Tw.FormatHelper.isEmpty($popupLayer.find('span.txt:eq(0)'))) {
       setTimeout(function () {
         $popupLayer.find('span.txt:eq(0)').focus();
       }, 300);
     } else {
       setTimeout(function () {
         $popupLayer.find('input:eq(0)').focus();
+      }, 300);
+    }
+    */
+    // 첫번째 제목을 선택
+    var $target = $popupLayer.find('span.txt').eq(0);
+    // Selector를 한번에 호출하는 것보다, 끊어서 호출하는 것이 좋음
+    if ($target.length === 0) {
+      // 첫번째 입력 대상을 선택
+      $target = $popupLayer.find('input').eq(0);
+    }
+    /*
+    // li를 선택하도록 하는 코드
+    if ($target.length === 0) {
+      // 첫번째 목록의 첫번째 항목을 선택 (김동환 바이널씨 2019-12-04)
+      $target = $popupLayer.find('ul').eq(0).children('li').eq(0);
+    }
+    */
+    if ($target.length) {
+      setTimeout(function () {
+        $target.focus();
       }, 300);
     }
   };
@@ -448,6 +505,7 @@ Tw.CommonHelper = (function () {
 
   return {
     openUrlExternal: openUrlExternal,
+    openSsoUrlExternal: openSsoUrlExternal,
     openUrlInApp: openUrlInApp,
     toggle: toggle,
     toast: toast,

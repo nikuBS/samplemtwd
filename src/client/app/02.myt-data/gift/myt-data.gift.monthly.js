@@ -144,9 +144,8 @@ Tw.MyTDataGiftMonthly.prototype = {
     if ( isValidPhone ) { // 유효한 번호인 경우 API 호출
       this._apiService.request(Tw.API_CMD.BFF_06_0019, {
         befrSvcNum: this.befrSvcNum,
-        tmpSvcMgmtNum: this._tmpSvcMgmtNum
-        // 12월 1주차 반영예정 [OP002-5325]
-        // dataType: 'auto' // [OP002-5325] 선물하기 시 바로선물하기 인지 자동선물인지 구분하기 위해 필드 추가
+        tmpSvcMgmtNum: this._tmpSvcMgmtNum,
+        dataType: 'auto' // [OP002-5325] 선물하기 시 바로선물하기 인지 자동선물인지 구분하기 위해 필드 추가
       })
         .done($.proxy(this._onSuccessReceiveUserInfo, this, $(e.currentTarget)));
     }
@@ -253,7 +252,17 @@ Tw.MyTDataGiftMonthly.prototype = {
   _checkValidateSendingButton: function () {
     var isValidQty = this.$wrap_auto_select_list.find('input:checked').length !== 0;
     var isValidPhone = this.$input_auto_gift.val().length !== 0;
-
+    // [OP002-5239] 웹접근성 이슈로 인하여 aria-disabled 값 수정
+    if (isValidQty) {
+      this.$wrap_auto_select_list.find('input:not(checked)')
+        .parents('li')
+        .attr('aria-checked', !isValidQty)
+        .attr('aria-disabled', isValidQty);
+      this.$wrap_auto_select_list.find('input:checked')
+        .parents('li')
+        .attr('aria-checked', isValidQty)
+        .attr('aria-disabled', !isValidQty);
+    }
     if ( isValidQty && isValidPhone ) {
       this.$btnRequestSendingAuto.attr('disabled', false);
     } else {

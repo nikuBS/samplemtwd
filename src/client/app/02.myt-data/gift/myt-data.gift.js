@@ -171,7 +171,8 @@ Tw.MyTDataGift.prototype = {
   _procShortageError: function () {
     this.$wrapSuccessRemainApi.show();
     this.$wrapErrorRemainApi.hide();
-    this.$container.find('.fe-warning').hide();
+    // 기본제공량 부족 시에도 기본 알림문구는 그대로 노출이 필요
+    // this.$container.find('.fe-warning').hide();
   },
 
   _remainApiError: function () {

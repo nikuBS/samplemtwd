@@ -61,8 +61,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
    * @private
    */
   _bindEvent: function () {
-    this.$container.on('click', '[data-target="select_product"]', $.proxy(this.$select_productEvt, this));
-    this.$container.on('click', '[data-target="select_product_bill"]', $.proxy(this.$select_product_billEvt, this));
+    this.$container.on('click', '[data-target="select_product"]', $.proxy(this._onSelectProductClicked, this));
+    this.$container.on('click', '[data-target="select_product_bill"]', $.proxy(this._onSelectProductBillClicked, this));
 
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('keyup', '[data-target="input_phone"]', $.proxy(this.input_phoneEvt, this));
@@ -106,7 +106,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
    * 상품 선택 버튼 클릭시 -> 상품선택 액션시트 팝업
    * @param event
    */
-  $select_productEvt: function(event) {
+  _onSelectProductClicked: function(event) {
     Tw.Logger.info('[상품 선택]', event);
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_select_a_type';
@@ -132,14 +132,14 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       },
       $.proxy(this.select_productEvtOpen, this, $target),
       $.proxy(this.select_productEvtClose, this, $target),
-      hashName);
+      hashName, $target);
   },
 
   /**
    * 요금상품 선택버튼 클릭시 -> 요금상품 선택 액션시트 팝업
    * @param event
    */
-  $select_product_billEvt: function(event) {
+  _onSelectProductBillClicked: function(event) {
     Tw.Logger.info('[요금상품 선택]', event);
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_select_a_type';
@@ -168,7 +168,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       },
       $.proxy(this.select_product_billEvtOpen, this, $target),
       $.proxy(this.select_product_billEvtClose, this, $target),
-      hashName);
+      hashName, $target);
   },
 
   /**
@@ -206,6 +206,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   //--------------------------------------------------------------------------[SVC]
   // 상품선택 클릭시 실행
   select_productEvtOpen: function( $target, $layer ) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+
     var tempData = this.productFormData.prodMediaNm;
     var indexOfVal = this.productBillSelect.type.indexOf(tempData);
 

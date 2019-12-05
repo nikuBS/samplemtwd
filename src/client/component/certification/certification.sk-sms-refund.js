@@ -4,11 +4,12 @@
  * @since 2018-11-29
  */
 
-Tw.CertificationSkSmsRefund = function () {
+Tw.CertificationSkSmsRefund = function ($target) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
 
+  this._$target = $target;
   this._gender = undefined; // 2: female, 1: male
   this._isCertRequestSuccess = false;
   this._certBtnStatus = 0; // 0: 받기, 1: 다시받기
@@ -40,7 +41,7 @@ Tw.CertificationSkSmsRefund.prototype = {
 
     this._popupService.open({
       hbs: 'MN_01_04_04'
-    }, $.proxy(this._onOpenSmsPopup, this));
+    }, $.proxy(this._onOpenSmsPopup, this), null, '', this._$target);
   },
 
   /**
@@ -315,9 +316,9 @@ Tw.CertificationSkSmsRefund.prototype = {
           }
         } else {
           if ( res.code === this.SMS_CERT_ERROR.ATH2011 ) {
-            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
+            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011, '', '', null, '', this._$target);
           } else if ( res.code === this.SMS_CERT_ERROR.ATH2014 ) {
-            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
+            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, '', '', null, '', this._$target);
           } else if (!!this.SMS_CERT_ERROR[res.code]) {
             this._showCertNumberError(res.code);
           } else {

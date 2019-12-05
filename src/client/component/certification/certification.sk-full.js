@@ -9,11 +9,12 @@
  * @desc 공통 > 금융거래인증 > SMS 인증
  * @constructor
  */
-Tw.CertificationSkFull = function () {
+Tw.CertificationSkFull = function ($target) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
 
+  this._$target = $target;
   this.mdn = '';
   this.certSeq = '';
   this._jobCode = null;
@@ -90,7 +91,7 @@ Tw.CertificationSkFull.prototype = {
     this._popupService.open({
       hbs: 'CO_CE_02_05_01_01_01',
       layer: true
-    }, $.proxy(this._onOpenSmsFull, this), $.proxy(this._onCloseSmsFull, this), 'sms-full');
+    }, $.proxy(this._onOpenSmsFull, this), $.proxy(this._onCloseSmsFull, this), 'sms-full', this._$target);
 
   },
 
@@ -306,7 +307,7 @@ Tw.CertificationSkFull.prototype = {
    */
   _failGetUrlMeta: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -326,10 +327,9 @@ Tw.CertificationSkFull.prototype = {
    * @function
    * @desc 자동문자완성 준비완료 콜백
    * @param reCert
-   * @param resp
    * @private
    */
-  _onReadySms: function (reCert, resp) {
+  _onReadySms: function (reCert) {
     this._sendCertApi(reCert);
   },
 
@@ -402,7 +402,7 @@ Tw.CertificationSkFull.prototype = {
    */
   _failCert: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -502,7 +502,7 @@ Tw.CertificationSkFull.prototype = {
    */
   _failCertAdd: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
@@ -554,13 +554,13 @@ Tw.CertificationSkFull.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCnt);
     } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001, '', '', null, '', this._$target);
     } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009, '', '', null, '', this._$target);
     } else if ( resp.code === this.SMS_ERROR.ATH2013 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013, '', '', null, '', this._$target);
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, '', '', null, '', this._$target);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -574,7 +574,7 @@ Tw.CertificationSkFull.prototype = {
    */
   _failConfirm: function (error) {
     Tw.Logger.error(error);
-    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, '', '', null, '', this._$target);
   },
 
   /**
