@@ -4,6 +4,7 @@
 * @since 2018-10-26
 * 장기일시정지 tab content(MS_03_05_03)
 %>
+<%#
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
@@ -34,7 +35,7 @@
     </div>
 </div>
 <!--// .cont-box -->
-
+_%>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
@@ -135,7 +136,7 @@
 
 <script id="fe-tmpl-upload-item" type="text/x-handlebars-template">
     {{#each files}}
-    <li data-index="{{@index}}">
+    <li data-iid="{{_iid}}">
         <p class="text">{{name}}</p>
         <div class="bt-alone"><button class="btn-round3 btn-style3">삭제</button></div>
     </li>
@@ -215,9 +216,7 @@
 <div class="cont-box noborder bgnone">
     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
     <ul class="pg-chk-list02">
-        <li>
-            <button class="btn-tip" id="MS_03_05_03_tip_03" aria-haspopup="true">장기일시정지 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
-        </li>
+        <li><button class="btn-tip" aria-haspopup="true" id="MS_03_05_03_tip_03">장기일시정지 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
     </ul>
 </div>
 <!--// .cont-box -->
