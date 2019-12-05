@@ -455,6 +455,7 @@ Tw.MyTFareInfoHistory.prototype = {
    * @returns {void}
    */
   _openTypeSelectHandler: function ($container) {
+    Tw.CommonHelper.focusOnActionSheet($container);
     this.$typeSelectActionsheetButtons = $container.find('.ac-list>li');
     $(this.$typeSelectActionsheetButtons[0]).find('input').prop('checked', false);
     $(this.$typeSelectActionsheetButtons[this.currentActionsheetIndex]).find('input').prop('checked', true);
