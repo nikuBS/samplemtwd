@@ -2100,6 +2100,8 @@ li.checkbox.type01 {
 .headingbox-wrap .tod-have-pos .tod-coach-mark{top:1.6875rem}
 .headingbox-wrap .tod-have-pos .tod-coach-mark:after{right:16%}
 
-
-
-
+/* 191120 [OP002-5134] 코치 마크 */
+.acco-tit .tod-coach-mark{top:auto;right:auto;bottom:-2rem;left:1rem}
+.accordion .acco-list .acco-box .acco-tit .tod-coach-mark .close, .accordion .acco-list .acco-box .acco-tit .tod-coach-mark button.close, .accordion .tod-renew-bgnone:not(.btn-hold) .acco-list .acco-box .acco-tit .tod-coach-mark .close{position:absolute;width:1.9375rem;height:2.5625rem;padding:0}
+.accordion .acco-list .acco-box .acco-tit .tod-coach-mark .close::after{content:none}
+.acco-tit .tod-coach-mark::after{left:2.5rem}
