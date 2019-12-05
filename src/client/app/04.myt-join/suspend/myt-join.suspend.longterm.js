@@ -21,7 +21,7 @@ Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
-  this._fileDialog = null;
+  this._dlgSelectFile = null;
   this._uscanCompleted = false;
   this._cachedElement();
   this._requestSvcInfo();
@@ -156,39 +156,47 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   /**
    * @function
    * @desc 파일 업로드 다이얼로그(CS_04_01_L02) open
-   * @param e
+   * @param {Object} event
    */
-  _openCommonFileDialog: function (e) {
-    var count, popup;
-    if (!this._fileDialog) {
-      this._fileDialog = new Tw.MytJoinSuspendUpload();
+  _openCommonFileDialog: function (event) {
+    var $target = $(event.target);
+    var count, options;
+    if (!this._dlgSelectFile) {
+      this._dlgSelectFile = new Tw.MytJoinSuspendUpload();
     }
-    if ($(e.target).data('type') === 'fe-military') {
-      popup = {
+    if ($target.data('type') === 'fe-military') {
+      options = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
         hash: 'tip'
       };
       count = 2;
     } else {
-      popup = {
+      options = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
         hash: 'tip'
       };
       count = 1;
     }
-    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this),
-      count, this._files, null, popup, $(e.currentTarget));
+    this._dlgSelectFile.show($.proxy(this._onDlgSelectFileSelected, this),
+      count, this._files, null, options, $target);
   },
   /**
    * @function
    * @desc 파일 첨부 완료 시 일시정지 버튼 활성화
    * @param files
    */
-  _onCommonFileDialogConfirmed: function (files) {
+  _onDlgSelectFileSelected: function (files) {
     this._files = files;
-    this._$filenameList.html(this._templateUploadItem({files: this._files}));
+    this._$filenameList.html(this._templateUploadItem({
+      files: _.map(this._files, function (file, index) {
+        // WARNING: 서버로 전달되어도, 혼동이 없는 값이어야 하고, File class와 중복되지 않아야 한다.
+        // WARNING: 삭제할 때, 위치를 구분하기 위한 값이지, 실제 index는 아니다.
+        file._iid = index;
+        return file;
+      })
+    }));
     this._uscanCompleted = false;
     this.$btSuspend.prop('disabled', false);
   },
@@ -573,9 +581,9 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       var $target = $(event.target).closest('li');
       this._popupService.openConfirm(Tw.POPUP_CONTENTS.REMOVE_UPLOAD_ITEM, Tw.POPUP_TITLE.CONFIRM,
         $.proxy(function ($target) {
-          var indexItem = $target.data('index');
+          var _iid = $target.data('iid');
           // 목록에서 제거
-          this._files.splice(indexItem, 1);
+          this._files.splice(_.findIndex(this._files, {_iid: _iid}), 1);
           // DOM에서 제거
           $target.remove();
           this._popupService.close();
