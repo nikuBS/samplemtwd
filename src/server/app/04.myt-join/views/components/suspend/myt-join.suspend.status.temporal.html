@@ -2,10 +2,8 @@
 * @file myt-join.suspend.status.temporal.html
 * @author Hyeryoun Lee
 * @since 2018-11-23
-_%>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
-<div class="ti-caption-gray tod-caption-white">
+%>
+<div class="ti-caption-gray">
     <h3 class="tit">일시정지 신청정보</h3>
 </div>
 <!-- .cont-box -->
@@ -15,28 +13,24 @@ _%>
             <ul>
                 <li>
                     <span class="title">상태</span>
-                    <span class="tx-cont tx-bold">
-                    <%_ if (locals.militaryAC) { _%>
-                    <%# MS_03_05_03_01_case12 _%>
-                    장기일시정지의 일시해제
-                    <%_ } else if (locals.reservedYn) { _%>
-                    일시정지 예약
-                    <%_ } else { _%>
-                    <%- (type === 'long-term') ? '장기' : '' %>일시정지 중
-                    <%_ } _%>
-                    </span>
+                    <%if(locals.militaryAC){ %>
+                    <span class="tx-cont tx-bold">장기일시정지의 일시해제</span>
+                    <% } else if(locals.reservedYn){ %>
+                    <span class="tx-cont tx-bold">일시정지 예약</span>
+                    <% } else { %>
+                    <span class="tx-cont tx-bold"><% if(type === 'long-term'){ %>장기<% } %>일시정지 중</span>
+                    <% } %>
                 </li>
                 <li>
-                    <span class="title"><%- (type === 'long-term') ? '장기' : '' %>일시정지 기간</span>
-                    <span class="tx-cont"><%- period.from %>~<%- period.to || '' %></span>
+                    <span class="title"><% if(type === 'long-term'){ %>장기<% } %>일시정지 기간</span>
+                    <span class="tx-cont"><%= period.from %>~<% if(period.to) { %><%= period.to %><% } %></span>
                 </li>
-                <%_ if (locals.resuspendDt) { _%>
-                <%# MS_03_05_03_01_case11 _%>
+                <% if(locals.resuspendDt){ %>
                 <li>
                     <span class="title">장기일시정지 재시작일자</span>
-                    <span class="tx-cont"><%- resuspendDt %></span>
+                    <span class="tx-cont"><%= resuspendDt %></span>
                 </li>
-                <%_ } _%>
+                <% } %>
                 <li>
                     <span class="title">사유</span>
                     <span class="tx-cont"><%= reason %></span>
@@ -44,41 +38,44 @@ _%>
             </ul>
         </div>
     </div>
-    <%_ if (locals.resuspend) { _%>
-    <%# MS_03_05_03_01_case11 _%>
+    <% if(locals.resuspend){ %>
     <ul class="bt-slice mt20 mb20">
-        <li>
-            <button class="btn-round1 btn-style4" data-id="bt-cancel-resuspend">재신청 취소하기</button>
+        <li class="bt-white2">
+            <button id="bt-cancel-resuspend">재신청 취소하기</button>
         </li>
     </ul>
-    <%_ } else if (isProgressing && type === 'temporary') { _%>
-    <%# MS_03_05_03_01_case10 _%>
+    <% } else if(isProgressing && type === 'temporary'){ %>
     <ul class="bt-slice mt20 mb20">
-        <li>
-
-            <button class="btn-round1 btn-style4" data-id="bt-release">해제하기</button>
+        <li class="bt-white2">
+            <button data-id="bt-reset">해제하기</button>
         </li>
     </ul>
-    <%_ } else { _%>
-    <ul class="bt-slice mt20 mb20 item-<%- (!resetable || (type !== 'temporary' && !resuspendable)) ? 'one' : 'two' %>">
-        <%_ if (type === 'temporary') { _%>
-        <%# MS_03_05_03_01_case1 _%>
-        <li>
-            <button class="btn-round1 btn-style4" data-id="bt-request-longterm">장기일시정지 신청하기</button>
+    <% } else { %>
+    <% if(!resetable || (type !== 'temporary' && !resuspendable)){ %>
+    <ul class="bt-slice mt20 mb20 item-one">
+    <% } else { %>
+    <ul class="bt-slice mt20 mb20 item-two">
+    <% } %>
+        <% if(type === 'temporary' ){ %>
+        <li class="bt-white2">
+          <a href="/myt-join/submain/suspend#long-term">장기일시정지 신청하기</a>
         </li>
-        <%_ } else if (resuspendable) { _%>
-        <%# MS_03_05_03_01_case12 _%>
-        <li>
-            <button class="btn-round1 btn-style4" data-id="bt-resuspend"<%- invaild_resuspend ? ' disabled' : '' %>>재신청하기</button>
+        <% } else { %>
+             <% if(resuspendable){ %>
+                <li class="bt-white2">
+                 <% if(invaild_resuspend){ %>
+                    <button data-id="bt-resuspend" disabled >재신청하기</button>
+                 <% } else { %>
+                    <button data-id="bt-resuspend" >재신청하기</button>
+                 <% } %>
+                </li>
+             <% } %>
+        <% } %>
+        <% if(resetable){ %>
+        <li class="bt-white2">
+            <button data-id="bt-reset">해제하기</button>
         </li>
-        <%_ } _%>
-        <%_ if (resetable) { _%>
-        <%# MS_03_05_03_01_case1 _%>
-        <li>
-            <button class="btn-round1 btn-style1" data-id="bt-release">해제하기</button>
-        </li>
-        <%_ } _%>
+        <% } %>
     </ul>
-    <%_ } _%>
+    <% } %>
 </div>
-<!--// .cont-box -->

@@ -53,10 +53,6 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$militaryType = this.$container.find('[data-id="fe-military-type"]');
     // [OP002-4422] 일시정지 기간 입력 시 vaildation check
     this.$inputDateSelect = this.$container.find('[data-role="fe-date-select"]');
-    this._$filenameList = this.$container.find('.filename-list');
-    // 업로드된 파일 목록 나열
-    var $tmplUploadItem = this.$container.find('#fe-tmpl-upload-item');
-    this._templateUploadItem = Handlebars.compile($tmplUploadItem.html());
   },
   /**
    * @function
@@ -66,14 +62,12 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$btUpload.on('click', $.proxy(this._openCommonFileDialog, this));
     this.$optionType.on('change', $.proxy(this._onSuspendTypeChanged, this));
     this.$inputTel.on('keyup', $.proxy(Tw.InputHelper.insertDashCellPhone, this, this.$inputTel));
-    this.$btRelation.on('click', $.proxy(this._onSelectRelationClicked, this));
+    this.$btRelation.on('click', $.proxy(this._onClickRelation, this));
     this.$btSuspend.on('click', _.debounce($.proxy(this._onClickSuspend, this), 500));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     // [OP002-4422] 일시정지 기간 입력 시 vaildation check
     this.$inputDateSelect.on('focus', 'input[type="date"]', $.proxy(this._onFocusDateSelect, this));
     this.$inputDateSelect.on('change', 'input[type="date"]', $.proxy(this._onChangeDateSelect, this));
-    // 지금은 삭제를 위한 버튼 하나밖에 없기 때문에, selector를 단순화했다.
-    this._$filenameList.on('click', 'button', $.proxy(this._onUploadItemDeleteClicked, this));
     this._changeSuspendType('military');
   },
   /**
@@ -83,7 +77,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   _requestSvcInfo: function () {
     Tw.Api.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(function (resp) {
-        if (resp.code === Tw.API_CODE.CODE_00) {
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
           this._svcInfo = resp.result;
           this._bindEvent();
         } else {
@@ -99,10 +93,10 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onSuspendTypeChanged: function (e) {
     var type = e.target.value;
-    if (this._files) {
+    if ( this._files ) {
       this._popupService.openModalTypeA(Tw.POPUP_TITLE.CONFIRM, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.MESSAGE,
         Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, $.proxy(this._onOpenTypeChange, this, type),
-        $.proxy(this._changeSuspendType, this, type), null, null, null, $(e.target));
+        $.proxy(this._changeSuspendType, this, type), null, null, null,  $(e.currentTarget));
     } else {
       this._changeSuspendType(type);
     }
@@ -116,7 +110,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this._files = null;
     this._uscanCompleted = false;
     this._popupService.close();
-    if (type === 'military') {
+    if ( type === 'military' ) {
       this.$container.find('.fe-military').show();
       this.$container.find('.fe-military').attr('aria-hidden', false);
       this.$container.find('.fe-abroad').hide();
@@ -148,7 +142,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     setTimeout($.proxy(function () {
       this.$optionType.filter('[value!="' + type + '"]').parent().addClass('checked');
       this.$optionType.filter('[value="' + type + '"]').parent().removeClass('checked');
-      if (type === 'military') {
+      if( type === 'military' ){
         this.$militaryType.prop('checked', false);
       }
     }, this), 100);
@@ -160,10 +154,10 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _openCommonFileDialog: function (e) {
     var count, popup;
-    if (!this._fileDialog) {
+    if ( !this._fileDialog ) {
       this._fileDialog = new Tw.MytJoinSuspendUpload();
     }
-    if ($(e.target).data('type') === 'fe-military') {
+    if ( $(e.target).data('type') === 'fe-military' ) {
       popup = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
@@ -179,7 +173,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       count = 1;
     }
     this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this),
-      count, this._files, null, popup, $(e.currentTarget));
+      count, this._files, null, popup,  $(e.currentTarget));
   },
   /**
    * @function
@@ -188,7 +182,6 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
-    this._$filenameList.html(this._templateUploadItem({files: this._files}));
     this._uscanCompleted = false;
     this.$btSuspend.prop('disabled', false);
   },
@@ -200,7 +193,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   _requestUpload: function (files) {
     var formData = new FormData();
     formData.append('dest', Tw.UPLOAD_TYPE.SUSPEND);
-    _.each(files, $.proxy(function (file) {
+    _.map(files, $.proxy(function (file) {
       formData.append('file', file);
     }, this));
     this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
@@ -214,7 +207,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _successUploadFile: function (res) {
     // USCAN upload
-    if (res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       var convFileList = res.result.map(function (item) {
         return {
           fileSize: item.size,
@@ -248,7 +241,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @param res
    */
   _onSuccessUscanUpload: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._uscanCompleted = true;
       this._requestSuspend();
     } else {
@@ -267,22 +260,18 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @function
    * @desc 관계 입력항목 선택 시 actionsheet 보임
    */
-  _onSelectRelationClicked: function (event) {
+  _onClickRelation: function () {
     var options = $.extend(true, [], Tw.SUSPEND_RELATION.list);
-    var selected = _.find(options, {'radio-attr': 'data-value="' + this.$btRelation.val() + '"'});
-    if (selected) {
+    var selected = _.find(options, { 'radio-attr' : 'data-value="'+this.$btRelation.val()+ '"' });
+    if ( selected ) {
       selected['radio-attr'] += ' checked';
     }
     this._popupService.open({
       hbs: 'actionsheet01',
       layer: true,
-      btnfloating: {
-        'attr': 'type="button" data-role="fe-bt-close"',
-        'class': 'tw-popup-closeBtn',
-        'txt': Tw.BUTTON_LABEL.CLOSE
-      },
-      data: [{list: _.assign(options, selected)}]
-    }, $.proxy(this._selectRelationCallback, this), null, 'select-relation', $(event.target));
+      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
+      data:  [ {list :  _.assign(options, selected)}]
+    }, $.proxy(this._selectRelationCallback, this), null, null,  $(event.currentTarget));
   },
   /**
    * @function
@@ -314,11 +303,11 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onClickSuspend: function (/* event */) {
     var option = {};
-    // 사용자 입력으로 기한을 체크하기 때문에 접수하기 버튼 입력 이후 처리하는 부분 제거
-    if (this.$optionType.filter('[checked]').val() === 'military') { // 군입대
+      // 사용자 입력으로 기한을 체크하기 때문에 접수하기 버튼 입력 이후 처리하는 부분 제거
+    if ( this.$optionType.filter('[checked]').val() === 'military' ) { // 군입대
       var $period = this.$container.find('.fe-military.fe-period');
       option.svcChgRsnCd = this.$militaryType.prop('checked') ?
-        Tw.MYT_SUSPEND_REASON_CODE.SEMI_MILITARY_ : Tw.MYT_SUSPEND_REASON_CODE.MILITARY;
+        Tw.MYT_SUSPEND_REASON_CODE.SEMI_MILITARY_: Tw.MYT_SUSPEND_REASON_CODE.MILITARY;
       option.fromDt = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       option.toDt = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
     } else { // 해외체류
@@ -328,21 +317,21 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     option.icallPhbYn = this.$optionSuspendAll.attr('checked') ? 'Y' : 'N';
 
     // 추가연락처
-    if (!_.isEmpty(this.$inputTel.val())) {
-      option.cntcNum = this.$inputTel.val().replace(/-/gi, '');
+    if ( !_.isEmpty(this.$inputTel.val()) ) {
+      option.cntcNum = this.$inputTel.val().replace(/-/gi, '' );
       option.cntcNumRelNm = this.$btRelation.val();
     }
 
-    if (!_.isEmpty(this.$inputEmail.val())) {
+    if ( !_.isEmpty(this.$inputEmail.val()) ) {
       option.email = this.$inputEmail.val();
     }
     this._suspendOptions = option;
 
-    if (this._uscanCompleted) { // 인증 취소 후 재시도 시 중복 업로드 방지
+    if( this._uscanCompleted ){ // 인증 취소 후 재시도 시 중복 업로드 방지
       this._requestSuspend();
     } else {
       // 모바일웹 4.4 버젼은 파일 업로드 미지원
-      if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
+      if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
         var convFileList = _.compact(this._files).map(function (item) {
           return {
             fileSize: item.size,
@@ -362,8 +351,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _requestSuspend: function () {
     //[OP002-692] 장기일시정지 안내 TIP 팝업 사용
-    var tooltip = _.find(Tw.Tooltip.getContentList() || [], {mtwdTtipId: 'MS_03_05_03_tip_03'});
-    if (!_.isEmpty(tooltip)) {
+    var tooltip =  _.find( Tw.Tooltip.getContentList() || [], { mtwdTtipId: 'MS_03_05_03_tip_03' });
+    if(!_.isEmpty(tooltip)) {
       this._popupService.open({
           url: '/hbs/',
           hbs: 'popup',
@@ -382,7 +371,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @function
    * @desc 신청 툴팁팝업 close callback
    */
-  _onPopupClose: function () {
+  _onPopupClose: function(){
     this._apiService.request(Tw.API_CMD.BFF_05_0197, this._suspendOptions)
       .done($.proxy(this._onSuccessRequest, this))
       .fail($.proxy(this._onError, this));
@@ -393,13 +382,13 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @param res
    */
   _onSuccessRequest: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._suspendOptions.command = 'longterm';
       this._suspendOptions.svcNum = this._svcInfo.svcNum;
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(this._suspendOptions));
-    } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
+    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg,
-        null, null, null, null, this.$btSuspend);
+        null, null, null, null,  $(event.currentTarget));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -419,7 +408,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @param response
    */
   _onContact: function (response) {
-    if (response.resultCode === Tw.NTV_CODE.CODE_00) {
+    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
       var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       this.$inputTel.val(formatted);
@@ -457,7 +446,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @param event
    * @private
    */
-  _onFocusDateSelect: function (event) {
+  _onFocusDateSelect: function(event) {
     var role = event.target.getAttribute('data-role');
     var isMilitary = this.$optionType.filter('[checked]').val() === 'military';
     var value = event.target.value;
@@ -485,7 +474,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @param event
    * @private
    */
-  _onChangeDateSelect: function (event) {
+  _onChangeDateSelect: function(event) {
     var isMilitary = this.$optionType.filter('[checked]').val() === 'military';
     var targetRole = event.target.getAttribute('data-role');
     if (!event.target.value) {
@@ -496,33 +485,34 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         } else {
           event.target.value = this.militaryToDate;
         }
-      } else {
+      }  else {
         event.target.value = this.abroadFromeDate;
       }
       return false;
     }
     //validation check
-    var from, to, diff, $period, msg;
+    var from, diff, $period, msg;
+    var unitType = 'days';
+    var curDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDD');
+    var to = Tw.DateHelper.getCurrentShortDate();
     if (isMilitary) {
       // 군입대
-      var curDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDD');
       $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
+      to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
+      // diff !== 0, 한달 이내인 경우 0
+      if (diff) {
+        unitType = 'months';
+      }
+      // 종료 날짜가 시작날짜와 동일한 월인 경우 요일로 계산하여 처리
+      diff = Tw.DateHelper.getDiffByUnit(from, to, unitType) * -1;
       if (from < curDate) {
         // 시작일이 현재일보다 이전을 선택한 경우
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
-      } else {
-        to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
-        if (from > to) {
-          // 시작일이 종료일보다 이전인 경우
-          msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
-        } else {
-          // 장기일시정지 기간이 24개월을 넘기는 경우
-          diff = Tw.DateHelper.getDiffByUnit(to, from, 'months');
-          if (diff > 24) {
-            msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD;
-          }
-        }
+      } else if (diff < 0) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
+      } else if (unitType === 'months' && diff > 24) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD;
       }
       if (msg) {
         if (targetRole === 'fe-from-dt') {
@@ -543,16 +533,11 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       // 해외체류
       $period = this.$container.find('.fe-abroad.fe-date');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      to = Tw.DateHelper.getCurrentShortDate();
-      if (from < to) {
-        // 시작일이 오늘보다 이전인 경우
+      diff = Tw.DateHelper.getDiffByUnit(from, to, unitType);
+      if (diff < 0) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
-      }  else {
-        diff = Tw.DateHelper.getDiffByUnit(from, to, 'days');
-        // 시작일이 오늘보다 30일 이후는 신청 안되도록 처리
-        if (diff > 30) {
-          msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01;
-        }
+      } else if (diff > 30) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01;
       }
       if (msg && targetRole === 'fe-from-dt') {
         event.target.value = this.abroadFromeDate;
@@ -563,25 +548,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     }
     if (msg) {
       // 날짜를 잘못 선택한 경우
-      this._popupService.openAlert(msg, null, null, null, null, $(event.target));
-    }
-  },
-
-  _onUploadItemDeleteClicked: function (event) {
-    // Nullable이기에, 과한 대응을 해놓는다.
-    if (this._files && this._files.length) {
-      var $target = $(event.target).closest('li');
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.REMOVE_UPLOAD_ITEM, Tw.POPUP_TITLE.CONFIRM,
-        $.proxy(function ($target) {
-          var indexItem = $target.data('index');
-          // 목록에서 제거
-          this._files.splice(indexItem, 1);
-          // DOM에서 제거
-          $target.remove();
-          this._popupService.close();
-        }, this, $target),
-        $.proxy(this._popupService.close, this._popupService), $target
-      );
+      this._popupService.openAlert(msg, null, null, null, null, $(event.currentTarget));
     }
   }
 };
