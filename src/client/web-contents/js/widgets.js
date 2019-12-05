@@ -1,4 +1,4 @@
-$(document).on('ready', function () {
+﻿$(document).on('ready', function () {
   skt_landing.widgets.widget_init();
 });
 /**
@@ -1000,7 +1000,7 @@ skt_landing.widgets = {
         }
         $(this).closest('.acco-cover').toggleClass('on');
       });
-      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box:not(".none-event") > .acco-tit button:not(".btn-tip")').on('click', function (event) {
+      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box:not(".none-event") > .acco-tit button:not(".btn-tip,.close")').on('click', function (event) {  // 191121 [OP002-5134] 예외 클래스 추가
 
         if (_this.find('> .acco-cover').hasClass('toggle')) {
           $(this).closest('.acco-box').siblings().removeClass('on');
