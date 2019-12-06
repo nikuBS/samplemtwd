@@ -29,7 +29,8 @@ Tw.MytJoinSuspendUpload.prototype = {
     oldFiles = oldFiles || [];
     this._acceptExt = ['jpg', 'jpeg', 'png', 'docx', 'doc', 'pdf', 'hwp'];
     this._fileInfo = _.map(this._fileInfo, function (info, idx) {
-      return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx] });
+      // web 접근성 퍼일 element의 index 시작 변경 0 ->1
+      return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx], titleIndex: idx + 1  });
     });
     if ( tooltip ) {
       this._showUploadTip(tooltip, $focusEl);
