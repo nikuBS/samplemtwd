@@ -2105,3 +2105,17 @@ li.checkbox.type01 {
 .accordion .acco-list .acco-box .acco-tit .tod-coach-mark .close, .accordion .acco-list .acco-box .acco-tit .tod-coach-mark button.close, .accordion .tod-renew-bgnone:not(.btn-hold) .acco-list .acco-box .acco-tit .tod-coach-mark .close{position:absolute;width:1.9375rem;height:2.5625rem;padding:0}
 .accordion .acco-list .acco-box .acco-tit .tod-coach-mark .close::after{content:none}
 .acco-tit .tod-coach-mark::after{left:2.5rem}
+
+/* 191202 [OP002-5208] 아코디언 스타일 추가 */
+.tod-widget-wrap .widget + .widget{margin-top:1rem}
+.accordion .acco-cover .acco-style.tod-round-blue .acco-list{padding-top:0}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box{border-radius:1rem}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit{border-radius:inherit;font-size:1rem;color:#fff;background-color:#178bce}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box.on .acco-tit{border-bottom-right-radius:initial;border-bottom-left-radius:initial}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit .tit{font-size:1rem;color:#fff}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit .tod-add-text{margin-left:0.5rem}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit{font-size:1rem;color:#fff;font-size:0.9375rem}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box > .acco-tit + .acco-cont{padding:0}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont{border-bottom-right-radius:inherit;border-bottom-left-radius:inherit;background-color:#fff}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box > .acco-tit button:after{-webkit-transform:rotate(-90deg);transform:rotate(-90deg);background-position:0 -29.75rem}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box.on > .acco-tit button:after{-webkit-transform:rotate(90deg);transform:rotate(90deg);background-position:0 -29.75rem}
