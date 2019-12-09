@@ -65,7 +65,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     this.$template.$domTaxListWrapper.append(initedListTemplate);
 
     this.$listWrapper = this.$container.find('#fe-tax-list-wrapper');
-    this.$btnListViewMorewrapper = this.$listWrapper.find('.bt-more');
+    this.$btnListViewMorewrapper = this.$listWrapper.find('.fe-more-view');
     this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updateTaxList, this)); // 더보기버튼
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
     // 세금계산서 재발급 버튼 클릭 이벤트
@@ -143,16 +143,17 @@ Tw.MyTFareInfoBillTax.prototype = {
    * - myt-fare.info.bill-tax.html 참고
    */
   _cachedElement: function () {
+    var $templateTaxItems = $('#fe-template-tax-items');
     this.$template = {
       $domTaxListWrapper: this.$container.find('#fe-tax-list-wrapper'),
 
-      $templateTaxItem: Handlebars.compile($('#fe-template-tax-items').html()),
+      $templateTaxItem: Handlebars.compile($templateTaxItems.html()),
       $listTaxWrapper: Handlebars.compile($('#fe-template-tax-list').html()),
 
 
       $emptyList: Handlebars.compile($('#list-empty').html())
     };
-    Handlebars.registerPartial('taxList', $('#fe-template-tax-items').html());
+    Handlebars.registerPartial('taxList', $templateTaxItems.html());
 
   },
   _bindEvent: function () {
