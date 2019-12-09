@@ -32,8 +32,8 @@
                     </div>
                 </div>
 
-                <div class="cont-box gaps-style01 noborder">
-                    <%- data.content %>
+                <div class="cont-box gaps-style01 noborder" id="fe-notice-content">
+
                 </div>
 
             </div>
@@ -48,7 +48,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerSvcInfoNoticeView($('.wrap'));
+    new Tw.CustomerSvcInfoNoticeView($('.wrap'), '<%- data.content %>');
   });
 </script>
 <% include ../../components/end.component.html %>
