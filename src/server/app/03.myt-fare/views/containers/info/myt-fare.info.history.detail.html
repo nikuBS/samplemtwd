@@ -20,9 +20,9 @@
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-            <hr class="cont-sp type1" aria-hidden="true" />
             <div class="container" id="fe-detail-wrapper">
-
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!--상황에 맞는 handlebars 템플릿 들어가는곳-->
             </div>
         </div>
 
@@ -185,12 +185,16 @@
             </div>
         </div>
         <!--// 즉시납부 포인트 / 카드 -->
-        {{#if dataIsBankOrCard}}
-        {{else}}
-        <div class="myt-note-wrap type2">
-            <span class="tit">※OK캐쉬백 /T포인트 <span class="tx-bold vbl">납부취소는 납부 후 20일 이내</span>에만 가능합니다.</span>
+        {{#unless dataIsBankOrCard}}
+        <!--// .cont-box -->
+        <div class="cont-box noborder bgnone">
+            <div class="announcement-box">
+                <!-- 191209 [OP002-5565] 수정01 -->
+                <p class="announcement-txt">OK캐쉬백/T포인트 <span class="tx-bold">납부취소는 납부 후 31일 이내</span>에만 가능합니다. <br>(자세한 문의는 고객센터로 문의해주세요.)</p>
+                <!-- //191209 [OP002-5565] 수정01 -->
+            </div>
         </div>
-        {{/if}}
+        {{/unless}}
     </script>
     <script id="fe-payment-detail-skpay" type="text/x-handlebars-template">
         <!-- 즉시납부 SKPAY -->
@@ -236,12 +240,16 @@
             </div>
         </div>
         <!--// 즉시납부 포인트 / 카드 -->
-        {{#if dataIsBankOrCard}}
-        {{else}}
-        <div class="myt-note-wrap type2">
-            <span class="tit">※OK캐쉬백 /T포인트 <span class="tx-bold vbl">납부취소는 납부 후 20일 이내</span>에만 가능합니다.</span>
+        {{#unless dataIsBankOrCard}}
+        <!--// .cont-box -->
+        <div class="cont-box noborder bgnone">
+            <div class="announcement-box">
+                <!-- 191209 [OP002-5565] 수정01 -->
+                <p class="announcement-txt">OK캐쉬백/T포인트 <span class="tx-bold">납부취소는 납부 후 31일 이내</span>에만 가능합니다. <br>(자세한 문의는 고객센터로 문의해주세요.)</p>
+                <!-- //191209 [OP002-5565] 수정01 -->
+            </div>
         </div>
-        {{/if}}
+        {{/unless}}
     </script>
     <script id="fe-payment-detail-bank" type="text/x-handlebars-template">
         <!-- 즉시납부내역 은헹 -->
