@@ -35780,7 +35780,6 @@ body.apphome .section-box {
 .tod-icon.tod-icon-save01::before{width:0.875rem;height:0.875rem;top:0.1rem;left:0.2rem;background-image:url(/img/ico/icon-save01.png)}
 .tod-icon.tod-icon-dot-gray01{width:2rem;height:2rem}
 .tod-icon.tod-icon-dot-gray01::before{width:0.1562rem;height:0.9687rem;top:50%;left:50%;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%);background-image:url(/img/ico/icon-dot-gray01.png)}
-
 .ti-caption-gray .tod-icon{color:#333;font-size:0.8125rem}
 
 .tod-line-management .sortlist .ui-state-default{padding-right:0.71875rem;overflow:visible}
@@ -35792,17 +35791,20 @@ body.apphome .section-box {
 .tod-line-management .sortlist .ui-state-default .state-bt .bt-sort.up{top:0.6875rem}
 .tod-line-management .sortlist .ui-state-default .state-bt .bt-sort.down{bottom:0.6875rem}
 
-.tod-line-management .sortlist #sortable-disabled .ui-state-default{border-top:1px solid #e2f0f9;background-color:#eef8ff}
-.tod-line-management .sortlist #sortable-disabled .ui-state-default .title{color:#979ea3}
-.tod-line-management .sortlist #sortable-disabled .ui-state-default .line{color:#b2b8bc}
-.tod-line-management .sortlist #sortable-disabled .tod-icon.tod-icon-notice02{width:100%;margin-top:1rem;font-size:0.75rem;color:#666}
-
 .tod-line-management .tod-line-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center; align-items:center;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap}
 .tod-line-management .tod-line-info .icon{line-height:0}
 .tod-line-management .tod-line-info .icon [class^="icon"]{width:1.25rem;height:1.25rem}
 .tod-line-management .tod-line-info .title{padding:0.0625rem 0 0 0.4375rem;font-size:0.9375rem}
 .tod-line-management .tod-line-info .line{padding:0.0625rem 0 0 0.4375rem;font-size:0.75rem;color:#666}
 .tod-line-management .tod-line-info .badge-co{top:auto;padding-left:0.4375rem}
+
+.tod-line-management .sortlist .ui-state-default.tod-add-line{display:none;}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line{display:block;}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line{background-color:#eef8ff}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line::after{border-bottom-color:#e2f0f9}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .title{color:#979ea3}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .line{color:#b2b8bc}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .tod-icon.tod-icon-notice02{width:100%;margin-top:1rem;font-size:0.75rem;color:#666}
 
 .tod-icon.tod-icon-dot-gray01{display:none}
 .sortlist.tod-sortlist-arranged .tod-icon.tod-icon-dot-gray01{display:block}
@@ -35818,7 +35820,6 @@ body.apphome .section-box {
 .tod-manage-wrap .tod-manage-layer .tod-list li{box-sizing:border-box;padding:0.75rem;border-top:1px solid #f2f2f2;font-size:0.875rem;color:#000}
 .tod-manage-wrap .tod-manage-layer .tod-list li:first-child{padding-top:0.9375rem;border-top:0}
 .tod-manage-wrap .tod-manage-layer .tod-list li:last-child{padding-bottom:0.9375rem}
-.sortlist #sortable-disabled .tod-manage-wrap{display:none}
 
 .cont-actionsheet .lineManagement-header.tod-type01{position:static}
 .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title2, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 {width:75%} 
