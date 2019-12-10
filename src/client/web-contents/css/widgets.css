@@ -2110,12 +2110,16 @@ li.checkbox.type01 {
 .tod-widget-wrap .widget + .widget{margin-top:1rem}
 .accordion .acco-cover .acco-style.tod-round-blue .acco-list{padding-top:0}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box{border-radius:1rem}
-.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit{border-radius:inherit;font-size:1rem;color:#fff;background-color:#178bce}
-.accordion .acco-style.tod-round-blue .acco-list .acco-box.on .acco-tit{border-bottom-right-radius:initial;border-bottom-left-radius:initial}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit{border-radius:1rem;font-size:1rem;color:#fff;background-color:#178bce}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box.on .acco-tit{border-bottom-right-radius:0;border-bottom-left-radius:0}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit .tit{font-size:1rem;color:#fff}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit .tod-add-text{margin-left:0.5rem}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit{font-size:1rem;color:#fff;font-size:0.9375rem}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box > .acco-tit + .acco-cont{padding:0}
-.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont{border-bottom-right-radius:inherit;border-bottom-left-radius:inherit;background-color:#fff}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:#fff}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box > .acco-tit button:after{-webkit-transform:rotate(-90deg);transform:rotate(-90deg);background-position:0 -29.75rem}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box.on > .acco-tit button:after{-webkit-transform:rotate(90deg);transform:rotate(90deg);background-position:0 -29.75rem}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:transparent;overflow:visible}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .btn-more{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:#fff}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist li:last-child, .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist .ui-state-default:last-child{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist li:nth-child(9)~li, .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist .ui-state-default:nth-child(9)~.ui-state-default {border-bottom-right-radius:0;border-bottom-left-radius:0}

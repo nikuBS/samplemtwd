@@ -5574,3 +5574,9 @@ body.apphome .main-membershop-box {
 .tod-main-banner-box .banner-text-wrap{display:table-cell;vertical-align:middle;font-size:0.75rem;text-align:left}
 .tod-main-banner-box .banner-text-wrap .title{display:block}
 .tod-main-banner-box .banner-text-wrap .title + .desc{display:block;padding-top:0.125rem}
+
+/* 191202 [OP002-5208] 개선-회선 관리 추가 */
+.cont-actionsheet .lineManagement-header.tod-type01{position:static}
+.cont-actionsheet .ac-list .type1 > a .table-cell.cell-title2, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 {width:75%} 
+.cont-actionsheet .ac-list .type1 > a .table-cell.cell-title2 .add-txt, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 .add-txt{display:block;font-size:0.75rem;color:#959595}
+.cont-actionsheet .ac-list .type1 .table-cell.top{vertical-align:top}
