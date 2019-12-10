@@ -239,6 +239,17 @@
                 </ul>
             </div>
         </div>
+        <!--// 즉시납부 포인트 / 카드 -->
+        {{#unless dataIsBankOrCard}}
+            <!--// .cont-box -->
+            <div class="cont-box noborder bgnone">
+                <div class="announcement-box">
+                    <!-- 191209 [OP002-5565] 수정01 -->
+                    <p class="announcement-txt">OK캐쉬백/T포인트 <span class="tx-bold">납부취소는 납부 후 31일 이내</span>에만 가능합니다. <br>(자세한 문의는 고객센터로 문의해주세요.)</p>
+                    <!-- //191209 [OP002-5565] 수정01 -->
+                </div>
+            </div>
+        {{/unless}}
     </script>
     <script id="fe-payment-detail-bank" type="text/x-handlebars-template">
         <!-- 즉시납부내역 은헹 -->
