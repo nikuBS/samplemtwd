@@ -1,5 +1,5 @@
-<%_ if (locals.type && locals.type === 'popup') { _%>
 <!-- #header -->
+<%_ if (locals.type && locals.type === 'popup') { _%>
 <div class="header-wrap noborder<% if (locals.headerClass) { %> <%= locals.headerClass %><% } %>">
     <div class="page-header noborder">
         <div class="header-ti">
@@ -16,9 +16,7 @@
         <% } %>
     </div>
 </div>
-<!--// #header -->
 <% } else { %>
-<!-- #header -->
 <div id="header" class="header-wrap<% if (locals.home) { %> home<% } %>">
     <% if (locals.home && locals.home === 'web') { %>
     <div class="h-belt">
