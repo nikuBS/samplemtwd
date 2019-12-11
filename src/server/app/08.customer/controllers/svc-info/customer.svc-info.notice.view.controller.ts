@@ -30,7 +30,7 @@ class CustomerSvcInfoNoticeView extends TwViewController {
     return Object.assign(resultData, {
       date: DateHelper.getShortDateWithFormat(resultData.fstRgstDtm, 'YYYY.M.DD'),  // 날짜 포맷
       type: FormatHelper.isEmpty(CUSTOMER_NOTICE_CTG_CD[resultData.ntcCtgCd]) ? '' : CUSTOMER_NOTICE_CTG_CD[resultData.ntcCtgCd], // 게시물 유형
-      content: resultData.ntcCtt
+      content: resultData.ntcCtt // 일부 태그 삭제되는 현상으로 Dirty HTML 방지 삭제
     });
   }
 
