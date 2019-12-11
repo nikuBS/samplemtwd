@@ -1,3 +1,5 @@
+{{!-- MS_03_05_02/MS_03_05_05 합본 --}}
+<!-- .popup hbs -->
 <div class="popup-page nobg tw-popup fixed-bottom" data-menuId="M000314"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
     <div class="header-wrap">
@@ -12,61 +14,63 @@
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
             <!-- .cont-box -->
-            <div class="cont-box nogaps bgnone">
+            <div class="cont-box nogaps bgnone noborder">
+                <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="charge-guide-wrap">
                         <div class="charge-cont">
-                                    <span class="sub-disc01">
-                                        <span class="elem">회선번호</span>
-                                    </span>
-                            <span class="tit-tgothic">{{ data.svcInfo.svcNum }}</span>
-                            <span class="sub-disc04">{{ data.svcInfo.eqpMdlNm }}</span>
+                            <span class="sub-disc01">
+                                <span class="elem">회선번호</span>
+                            </span>
+                            <span class="tit-tgothic">{{data.svcInfo.svcNum}}</span>
+                            <span class="sub-disc04">{{data.svcInfo.eqpMdlNm}}</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true"/>
+                <!--// .cont-box -->
 
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-btm">
-                <h3>{{#if data.longterm}}장기{{/if}}일시정지 정보</h3>
-                <div class="info-list-type1">
-                    <div class="basic-list mt10">
-                        <ul>
-                            <li>
-                                <span class="title">{{#if data.longterm}}장기{{/if}}일시정지 기간</span>
-                                <span class="tx-cont">{{ data.period.from }}~{{ data.period.to }}</span>
-                            </li>
-                            <li>
-                                <span class="title">사유</span>
-                                <span class="tx-cont">{{ data.reason }}</span>
-                            </li>
-                        </ul>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3>{{#if data.longterm}}장기{{/if}}일시정지 정보</h3>
+                    <div class="info-list-type1">
+                        <div class="basic-list mt10">
+                            <ul>
+                                <li>
+                                    <span class="title">{{#if data.longterm}}장기{{/if}}일시정지 기간</span>
+                                    <span class="tx-cont">{{data.period.from}}~{{data.period.to}}</span>
+                                </li>
+                                <li>
+                                    <span class="title">사유</span>
+                                    <span class="tx-cont">{{data.reason}}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!--// .cont-box -->
+                <!--// .cont-box -->
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box noborder bgnone">
-                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-                <ul class="pg-chk-list02">
-                    {{#if data.longterm}}
-                        <li><button class="btn-tip" id="MS_03_05_03_tip_03" page-id="M000312" aria-haspopup="true">장기일시정지 안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    {{else}}
-                        <li><button class="btn-tip" id="MS_03_05_01_tip_05" page-id="M000312" aria-haspopup="true">일시정지 신청안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                        <li><button class="btn-tip" id="MS_03_05_01_tip_06" page-id="M000312" aria-haspopup="true">일시정지 기간안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                        <li><button class="btn-tip" id="MS_03_05_01_tip_07" page-id="M000312" aria-haspopup="true">일시정지 요금안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    {{/if}}
-                </ul>
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        {{#if data.longterm}}
+                        <li><button class="btn-tip" aria-haspopup="true" id="MS_03_05_03_tip_03" page-id="M000312">장기일시정지 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        {{else}}
+                        <li><button class="btn-tip" aria-haspopup="true" id="MS_03_05_01_tip_05" page-id="M000312">일시정지 신청안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button class="btn-tip" aria-haspopup="true" id="MS_03_05_01_tip_06" page-id="M000312">일시정지 기간안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button class="btn-tip" aria-haspopup="true" id="MS_03_05_01_tip_07" page-id="M000312">일시정지 요금안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        {{/if}}
+                    </ul>
+                </div>
+                <!--// .cont-box -->
             </div>
             <!--// .cont-box -->
         </div>
-
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
                 <li class="bt-red1">
@@ -80,3 +84,4 @@
     <button class="prev-step tw-popup-closeBtn">취소</button>
     <!--// .popup-closeBtn -->
 </div>
+<!-- // .popup hbs -->

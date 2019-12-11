@@ -96,11 +96,11 @@ class MyTJoinSuspendStatus extends TwViewController {
         } else {
           status['resuspendable'] = true;
           // DV001-21787 현역과 현역외의 장기일시정지의 일시해제가 동시 적용하는 경우에 대한 처리
-          status['invaild_resuspend'] = false;
+          status['notallow_resuspend'] = false;
           if ( (suspendStatus.armyDt && suspendStatus.armyDt !== '')
             && (suspendStatus.armyExtDt && suspendStatus.armyExtDt !== '') ) {
             if ( suspendStatus.armyDt === suspendStatus.armyExtDt ) {
-              status['invaild_resuspend'] = true;
+              status['notallow_resuspend'] = true;
             } else if ( suspendStatus.armyExtDt < suspendStatus.armyDt ) {
               status['reason'] =  MYT_SUSPEND_REASON['5000341']; // 현역
             }
