@@ -1712,7 +1712,7 @@ skt_landing.dev = {
             options = selector;
             selector = null;
         }
-        var $target = $(selector)[0] == $( "#sortable-enabled" )[0] ? $(selector) : $( "#sortable-enabled" );
+        var $target = $(selector).length === 1 ? $(selector) : $( "#sortable-enabled" ); // 191211 [OP002-5208] 수정
         var defaults = {
             axis: 'y',
             handle: '.ico-move'
