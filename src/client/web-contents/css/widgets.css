@@ -2122,4 +2122,3 @@ li.checkbox.type01 {
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:transparent;overflow:visible}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .btn-more{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:#fff}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist li:last-child, .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist .ui-state-default:last-child{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem}
-.accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist li:nth-child(9)~li, .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist .ui-state-default:nth-child(9)~.ui-state-default {border-bottom-right-radius:0;border-bottom-left-radius:0}
