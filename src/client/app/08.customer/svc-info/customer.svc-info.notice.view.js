@@ -8,7 +8,7 @@
  * @class
  * @param rootEl - 컨테이너 레이어
  */
-Tw.CustomerSvcInfoNoticeView = function(rootEl, noticeContent) {
+Tw.CustomerSvcInfoNoticeView = function(rootEl) {
   // 컨테이너 레이어 설정
   this.$container = rootEl;
 
@@ -16,13 +16,6 @@ Tw.CustomerSvcInfoNoticeView = function(rootEl, noticeContent) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-
-  this._noticeContent = noticeContent;
-
-  this._cachedElement();
-
-  // 공지사항 내용 HTML 추가
-  this.$noticeContent.html(this._fixHtml(this._noticeContent));
 
   // 이벤트 바인딩
   this._bindEvent();
@@ -32,14 +25,6 @@ Tw.CustomerSvcInfoNoticeView = function(rootEl, noticeContent) {
 };
 
 Tw.CustomerSvcInfoNoticeView.prototype = {
-
-  /**
-   * @function
-   * @desc Element 캐싱
-   */
-  _cachedElement: function() {
-    this.$noticeContent = this.$container.find('#fe-notice-content');
-  },
 
   /**
    * @function
@@ -82,19 +67,6 @@ Tw.CustomerSvcInfoNoticeView.prototype = {
    */
   _openExternalUrl: function(href) {
     Tw.CommonHelper.openUrlExternal(href);
-  },
-
-  /**
-   * @function
-   * @desc Dirty Html 방지
-   * @param html - Html 마크업 코드
-   * @returns {*}
-   */
-  _fixHtml: function(html) {
-    console.log(html);
-    var doc = document.createElement('div');
-    doc.innerHTML = html;
-
-    return doc.innerHTML;
   }
+
 };
