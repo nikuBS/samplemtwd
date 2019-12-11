@@ -35790,6 +35790,7 @@ body.apphome .section-box {
 .tod-line-management .sortlist .ui-state-default .state-bt{left:0}
 .tod-line-management .sortlist .ui-state-default .state-bt .bt-sort.up{top:0.6875rem}
 .tod-line-management .sortlist .ui-state-default .state-bt .bt-sort.down{bottom:0.6875rem}
+.tod-line-management .sortlist .ui-state-default .btn-more, .tod-line-management .sortlist > li:last-child > .btn-more{border-top:0}
 
 .tod-line-management .tod-line-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center; align-items:center;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap}
 .tod-line-management .tod-line-info .icon{line-height:0}
@@ -35798,8 +35799,8 @@ body.apphome .section-box {
 .tod-line-management .tod-line-info .line{padding:0.0625rem 0 0 0.4375rem;font-size:0.75rem;color:#666}
 .tod-line-management .tod-line-info .badge-co{top:auto;padding-left:0.4375rem}
 
-.tod-line-management .sortlist .ui-state-default.tod-add-line{display:none;}
-.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line{display:block;}
+.tod-line-management .sortlist .ui-state-default.tod-add-line{display:none}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line{display:block}
 .sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line{background-color:#eef8ff}
 .sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line::after{border-bottom-color:#e2f0f9}
 .sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .title{color:#979ea3}
