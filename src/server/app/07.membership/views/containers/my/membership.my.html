@@ -36,25 +36,28 @@
                             <% if( myInfoData.cardChangeShown ) { %>
                                 <button id="fe-card-change" class="bt-link-tx underline ml6">카드 종류 변경</button></span>
                             <% } %>
+                            <% if (isExpectRating) { %> <!--OP002-5730_[M][멤버십[FE]] 2020년 멤버십 등급 안내 적용 isExpectRating이 true이면-->
+                            <button class="ico-noti-bgb fe-rating-external" data-url="http://bit.ly/2sdBZ02" style="vertical-align:text-top;" title="새 창" role="link">2020년 T멤버십 예상 등급 조회 하러 가기</button><!-- 2019-11-29 추가 --><!-- 2019-12-11 수정 -->
+                            <% } %>
                         </div>
                     </div>
                     <div class="info-detail">
                         <div class="basic-list">
                             <ul>
                                 <li>
-                                    <span class="title">등급 적용연도</span>
+                                    <span class="title">등급 적용 연도</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 -->
                                     <span class="tx-cont"><%= myInfoData.getReqYear %></span>
                                 </li>
                                 <li>
-                                    <span class="title">등급 산정기간</span>
-                                    <span class="tx-cont"><%= myInfoData.showEstimateGradeStart %>~<%= myInfoData.showEstimateGradeEnd %></span>
+                                    <span class="title">등급 산정 기간</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 -->
+                                    <span class="tx-cont"><%= myInfoData.showEstimateGradeStart %>~<%= myInfoData.showEstimateGradeEnd %></span><!--2017. 10.~2018. 9.로 띄어쓰기 적용 해야 함-->
                                 </li>
                                 <li>
-                                    <span class="title">지난해 납부금액</span>
+                                    <span class="title">지난해 납부 금액</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 -->
                                     <span class="tx-cont"><span class="tx-emp">총 <%= myInfoData.showPayAmtScor %>원</span></span>
                                 </li>
                                 <li>
-                                    <span class="title">T멤버십 가입기간</span>
+                                    <span class="title">T멤버십 가입 기간</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 -->
                                     <span class="tx-cont"><%= myInfoData.scrbPrd %>개월</span>
                                 </li>
                                 <li>
@@ -101,8 +104,8 @@
                     <div class="widget">
                         <div class="widget-box toggle">
                             <div class="bt-detail type1">
-                                <span class="tx-title">이용내역<button aria-haspopup="true" id="BE_02_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">이용내역 tip</span></i></button></span>
-                                <button id="fe-period" class="bt-toggle date" role="button" aria-pressed="false" title="이용내역 더보기"><!-- 이용기간 날짜 --></button>
+                                <span class="tx-title">이용 내역<button aria-haspopup="true" id="BE_02_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">이용 내역 tip</span></i></button></span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 -->
+                                <button id="fe-period" class="bt-toggle date" role="button" aria-pressed="false" title="이용내역 더보기"><!-- 이용기간 날짜 --></button><!-- button title 이용 내역 띄어쓰기 --><!-- 2019-11-29 수정 -->
                             </div>
                             <div class="toggler">
                                     <span class="form-wrap multi-type">
