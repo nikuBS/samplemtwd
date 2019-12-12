@@ -173,6 +173,16 @@ Tw.SVC_ATTR_E = {
   POINT_CAM: 'O1'
 };
 
+Tw.SVC_ATTR_ICO_CLASS = {
+  M1: 'icon-cellphone',
+  M2: 'icon-cellphone',
+  M3: 'icon-wifi',
+  M5: 'icon-wifi',
+  S1: 'icon-internet',
+  S2: 'icon-pc',
+  S3: 'icon-call',
+};
+
 Tw.POINT_NM = {
   OK: 'OK캐쉬백',
   T: 'T포인트',

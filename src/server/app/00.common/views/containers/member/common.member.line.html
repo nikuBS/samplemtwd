@@ -21,230 +21,43 @@
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
-            <!-- .cont-box -->
-            <% if (lineList.m) { %>
-            <% if (lineList.m.length > 0) { %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <!-- .accordion -->
-                <div class="widget line">
-                    <!-- .widget -->
-                    <div class="widget-box accordion">
-                        <h3 class="tit-a">
-                            <button role="button" aria-pressed="">모바일<span class="num ff-tg-bolder"><%= lineList.mCnt %></span></button>
-                        </h3>
-                        <div class="acco-cover toggle fe-line-cover <% if(showParam.m) { %> on <% } %>"><!-- toggle : 한개만 열기 -->
-                            <div class="bt-whole"><button role="button" aria-pressed="<%= showParam.m %>"><span class="blind">내용 열기</span></button></div>
-                            <div class="list-edit-bt"><a a href="/common/member/line/edit?category=m" class="edit">편집</a></div>
-                            <div class="acco-style">
-                                <ul id="fe-list-m" class="acco-list fe-line-list">
-                                    <% lineList.m.map((line, index) => { %>
-                                    <% if(index < showParam.defaultCnt) { %>
-                                    <li class="acco-box fe-line <% if(line.repSvcYn === 'Y') { %> pin <% } %> <% if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
-                                        <div class="acco-tit">
-                                            <button role="button" aria-pressed="false">
-                                                <span class="txt fe-show-name"><%= line.showName %><% if(line.repSvcYn === 'Y') { %><span class="badge-co t-standard"><span class="blind">기준</span></span><% } %></span>
-                                                <span class="line"><%= line.showDetail %></span>
-                                            </button>
-                                        </div>
-                                        <div class="acco-cont">
-                                            <div class="line-change-cont">
-                                                <ul>
-                                                    <li>
-                                                        <dl>
-                                                            <dt><%= line.showSvcAttrCd %></dt>
-                                                            <dd><%= line.eqpMdlNm %></dd>
-                                                        </dl>
-                                                    </li>
-                                                    <li>
-                                                        <dl>
-                                                            <dt>가입일자</dt>
-                                                            <dd><%= line.showSvcScrbDtm %></dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                                <div class="inputbox nickname-wrap readonly placeholder" style="width:100%">
-                                                        <span class="input">
-                                                            <% if(line.nickNm === line.showName) { %>
-                                                            <input class="fe-input-nickname" type="text" value="<%= line.nickNm %>" maxlength="" title="닉네임" readonly>
-                                                            <% } else { %>
-                                                            <input class="fe-input-nickname" type="text" placeholder="닉네임 입력" maxlength="" title="닉네임" readonly>
-                                                            <% } %>
-                                                        </span>
-                                                    <span class="space"></span>
-                                                    <span class="bt-box"><button class="fe-bt-nickname">닉네임 설정</button></span>
-                                                </div>
-                                                <% if(index !== 0) { %>
-                                                <button class="change-first-bt mt30 fe-change-first">기준회선으로 등록하기</button>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <% } %>
-                                    <% }) %>
-                                </ul>
-                            </div>
-                            <% if (lineList.mCnt > showParam.defaultCnt) { %>
-                            <div class="bt-more">
-                                <button class="fe-bt-more" role="button" title="" data-category="m">더보기</button>
-                            </div>
-                            <% } %>
-                        </div>
-                    </div>
-                    <!--// .widget -->
+            <!-- <div class="cont-box bgnone noborder pb0">
+                <div class="banner-area">
+                    <button type="button"><img src="<%=CDN%>/img/myt/img-banner-skbroadband01.png" alt="T world에서 SK브로드밴드 가입 상품을 이용해보세요. SK브로드밴드 가입 상품 확인하기"></button>
                 </div>
-                <!--// .accordion -->
+            </div> -->
+            <div class="ti-caption-gray bgnone">
+                <!-- 회선관리_리스트 -->
+                <button type="button" class="tod-icon tod-icon-notice01 fe-bt-guide"><span>이용안내</span></button>
+                <span class="num"><button type="button" data-url="/common/member/line/edit" class="tod-icon tod-icon-array01 fe-seq-edit"><span>순서편집</span></button></span>
             </div>
-            <!--// .cont-box -->
-            <% } %>
-            <% } %>
-            <% if (lineList.s) { %>
-            <% if (lineList.s.length > 0) { %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
+            <div class="cont-box bgnone pt0 pb60 mb60 noborder tod-widget-wrap">
                 <!-- .accordion -->
-                <div class="widget line">
-                    <!-- .widget -->
-                    <div class="widget-box accordion">
-                        <h3 class="tit-a">
-                            <button role="button" aria-pressed="">인터넷/IPTV/집전화<span class="num ff-tg-bolder"><%= lineList.sCnt %></span></button>
-                        </h3>
-                        <div class="acco-cover toggle fe-line-cover <% if(showParam.s) { %> on <% } %>"><!-- toggle : 한개만 열기 -->
-                            <div class="bt-whole"><button role="button" aria-pressed="<%= showParam.s %>"><span class="blind">내용 열기</span></button></div>
-                            <div class="list-edit-bt"><a a href="/common/member/line/edit?category=s" class="edit">편집</a></div>
-                            <div class="acco-style">
-                                <ul id="fe-list-s" class="acco-list">
-                                    <% lineList.s.map((line, index) => { %>
-                                    <% if(index < showParam.defaultCnt) { %>
-                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
-                                        <div class="acco-tit"><button role="button" aria-pressed="false">
-                                            <span class="ico"></span>
-                                            <span class="txt fe-show-name"><%= line.showName %></span>
-                                            <span class="line"><%= line.showDetail %></span>
-                                        </button></div>
-                                        <div class="acco-cont">
-                                            <div class="line-change-cont">
-                                                <ul>
-                                                    <li>
-                                                        <dl>
-                                                            <dt><%= line.showSvcAttrCd %></dt>
-                                                            <dd><%= line.eqpMdlNm %></dd>
-                                                        </dl>
-                                                    </li>
-                                                    <li>
-                                                        <dl>
-                                                            <dt>가입일자</dt>
-                                                            <dd><%= line.showSvcScrbDtm %></dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                                <div class="inputbox nickname-wrap readonly placeholder" style="width:100%">
-                                                        <span class="input">
-                                                            <% if(line.nickNm === line.showName) { %>
-                                                            <input class="fe-input-nickname" type="text" value="<%= line.nickNm %>" maxlength="" title="닉네임" readonly>
-                                                            <% } else { %>
-                                                            <input class="fe-input-nickname" type="text" placeholder="닉네임 입력" maxlength="" title="닉네임" readonly>
-                                                            <% } %>
-                                                        </span>
-                                                    <span class="space"></span>
-                                                    <span class="bt-box"><button class="fe-bt-nickname">닉네임 설정</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <% } %>
-                                    <% }) %>
-                                </ul>
-                            </div>
-                            <% if (lineList.sCnt > showParam.defaultCnt) { %>
-                            <div class="bt-more">
-                                <button class="fe-bt-more" role="button" title="" data-category="s">더보기</button>
-                            </div>
-                            <% } %>
-                        </div>
-                    </div>
-                    <!--// .widget -->
+                <% 
+                    if (lineList.m && lineList.m.length > 0) { 
+                        const tmpList = lineList.m;
+                        const tmpCnt = lineList.mCnt;
+                        const tmpTitle = lineList.mTitle;
+                        const tmpCategory = 'm';
+                %>
+                <% include ../../components/common.member.line.component.html %>
+                <% } %>
+                <% 
+                    if (lineList.s && lineList.s.length > 0) { 
+                        const tmpList = lineList.s;
+                        const tmpCnt = lineList.sCnt;
+                        const tmpTitle = lineList.sTitle;
+                        const tmpCategory = 's';
+                %>
+                <% include ../../components/common.member.line.component.html %>
+                <% } %>
+                <div class="myt-note-wrap pt25 pl0 pr0" style="font-size:0.75rem">
+                    <span class="tit pr14">사용중인 법인명의 회선이 보이지 않으신가요?</span>
+                    <button class="bt-link-tx underline fe-bt-biz-guide">이용안내</button>
+                    <!-- <a href="#" class="bt-link-tx underline fe-bt-guide">알아보기</a> -->
                 </div>
-                <!--// .accordion -->
             </div>
-            <!--// .cont-box -->
-            <% } %>
-            <% } %>
-            <% if (lineList.o) { %>
-            <% if (lineList.oCnt > 0) { %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <!-- .accordion -->
-                <div class="widget line">
-                    <!-- .widget -->
-                    <div class="widget-box accordion">
-                        <h3 class="tit-a">
-                            <button role="button" aria-pressed="">보안솔루션<span class="num ff-tg-bolder"><%= lineList.oCnt %></span></button>
-                        </h3>
-                        <div class="acco-cover toggle fe-line-cover <%= showParam.o %>"><!-- toggle : 한개만 열기 -->
-                            <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
-                            <div class="list-edit-bt"><a a href="/common/member/line/edit?category=o" class="edit">편집</a></div>
-                            <div class="acco-style">
-                                <ul id="fe-list-o" class="acco-list">
-                                    <% lineList.o.map((line, index) => { %>
-                                    <% if(index < showParam.defaultCnt) { %>
-                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
-                                        <div class="acco-tit"><button role="button" aria-pressed="false">
-                                            <span class="ico"></span>
-                                            <span class="txt fe-show-name"><%= line.showName %></span>
-                                            <span class="line"><%= line.showDetail %></span>
-                                        </button></div>
-                                        <div class="acco-cont">
-                                            <div class="line-change-cont">
-                                                <ul>
-                                                    <li>
-                                                        <dl>
-                                                            <dt><%= line.showSvcAttrCd %></dt>
-                                                            <dd><%= line.eqpMdlNm %></dd>
-                                                        </dl>
-                                                    </li>
-                                                    <li>
-                                                        <dl>
-                                                            <dt>가입일자</dt>
-                                                            <dd><%= line.showSvcScrbDtm %></dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                                <div class="inputbox nickname-wrap readonly placeholder" style="width:100%">
-                                                        <span class="input">
-                                                            <% if(line.nickNm === line.showName) { %>
-                                                            <input class="fe-input-nickname" type="text" value="<%= line.nickNm %>" maxlength="" title="닉네임" readonly>
-                                                            <% } else { %>
-                                                            <input class="fe-input-nickname" type="text" placeholder="닉네임 입력" maxlength="" title="닉네임" readonly>
-                                                            <% } %>
-                                                        </span>
-                                                    <span class="space"></span>
-                                                    <span class="bt-box"><button class="fe-bt-nickname">닉네임 설정</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <% } %>
-                                    <% }) %>
-                                </ul>
-                            </div>
-                            <% if (lineList.oCnt > showParam.defaultCnt) { %>
-                            <div class="bt-more">
-                                <button class="fe-bt-more" role="button" title="" data-category="o">더보기</button>
-                            </div>
-                            <% } %>
-                        </div>
-                    </div>
-                    <!--// .widget -->
-                </div>
-                <!--// .accordion -->
-            </div>
-            <!--// .cont-box -->
-            <% } %>
-            <% } %>
         </div>
     </div>
     <!--// #contents -->
@@ -252,50 +65,49 @@
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script id="fe-menu-tmpl" type="text/x-handlebars-template">
+    <div class="tod-manage-layer" id="fe-manage-menu" data-svcmgmtnum="{{ svcmgmtnum }}">
+        <ul class="tod-list">
+            {{#if isMobile}}
+            <li><button type="button" class="fe-change-first" {{#if isRepSvcYn}}disabled{{/if}} >기준회선 등록</button></li>
+            {{/if}}
+            <li><button type="button" class="fe-bt-nickname">닉네임 설정</button></li>
+            <li><button type="button" class="fe-bt-remove">회선등록 해지</button></li>
+        </ul>
+    </div>
+</script>
+
 <script id="fe-line-tmpl" type="text/x-handlebars-template">
     {{#each list}}
-    <li class="acco-box fe-line {{#if isRepSvcYn}} pin {{/if}} {{#unless isExpsYn}} none-event {{/unless}}"  data-svcMgmtNum="{{ svcMgmtNum }}">
-        <div class="acco-tit"><button class="fe-bt-detail" role="button" aria-pressed="false">
-            <span class="ico"></span>
-            <span class="txt fe-show-name">{{ showName }}</span>
-            <span class="line">{{ showDetail }}</span>
-        </button></div>
-        <div class="acco-cont">
-            <div class="line-change-cont">
-                <ul>
-                    <li>
-                        <dl>
-                            <dt>{{ showSvcAttrCd }}</dt>
-                            <dd>{{ eqpMdlNm }}</dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>가입일자</dt>
-                            <dd>{{ showSvcScrbDtm }}</dd>
-                        </dl>
-                    </li>
-                </ul>
-                <div class="inputbox nickname-wrap readonly placeholder" style="width:100%">
-                    <span class="input">
-                        {{#if useNickName}}
-                        <input class="fe-input-nickname" type="text" value="{{ nickNm }}" maxlength="" title="닉네임" readonly>
-                        {{else}}
-                        <input class="fe-input-nickname" type="text" value="닉네임 입력" maxlength="" title="닉네임" readonly>
-                        {{/if}}
-                    </span>
-                    <span class="space"></span>
-                    <span class="bt-box"><button class="fe-bt-nickname">닉네임 설정</button></span>
-                </div>
-                <button class="change-first-bt mt30 fe-change-first">기준회선으로 등록하기</button>
+    <li class="fe-line ui-state-default {{#if isRepSvcYn}} tod-t-standard fe-line-standard{{/if}} {{#if isExpsYn}} fe-item-active{{/if}} {{#unless isExpsYn}}tod-add-line fe-item-inactive{{/unless}}>" 
+        data-svcmgmtnum="{{ svcMgmtNum }}" data-svcgr="{{ svcGr }}">
+        <div class="state-box">
+            <div class="tod-line-info">
+                <span class="icon">
+                    <i class="{{ ico }}-48">
+                        <span class="blind">{{ showName }}</span>
+                    </i>
+                </span>
+                <span class="title fe-show-name">{{ showName }}</span>
+                <span class="line">{{ showDetail }}</span>
+                {{#if isRepSvcYn}}
+                <span class="badge-co t-standard"><span class="blind">기준</span></span>
+                {{/if}}
+                <p class="tod-icon tod-icon-notice02 fe-show-inactive {{#if isExpsYn}}none{{/if}}">원활한 서비스 이용을 위해 회선을 등록해 주세요.</p>
             </div>
+            <button type="button" class="tod-btn-add btn-round2 btn-style3 fe-show-inactive fe-bt-add {{#if isExpsYn}}none{{/if}}">회선등록</button>
+        </div>
+        <div class="tod-manage-wrap on fe-show-active {{#unless isExpsYn}} none {{/unless}}">
+            <button type="button" class="tod-btn-manage tod-icon tod-icon-dot-gray01 fe-manage-line" data-index="{{@ index }}">
+                <span class="tod-blind">회선관리 메뉴</span>
+            </button>
         </div>
     </li>
     {{/each}}
 </script>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLine($('#commonLine'), '<%= showParam.defaultCnt %>');
+    new Tw.CommonMemberLine($('#commonLine'), '<%= showParam.defaultCnt %>', '<%= showParam.totalExposedCnt %>');
   });
 </script>
 <% include ../../components/end.component.html %>

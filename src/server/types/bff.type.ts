@@ -46,6 +46,16 @@ export const SVC_CDNAME = {
   O1: 'pointcam'
 };
 
+export const SVC_CD_ICO_CLASS = {
+  M1: 'icon-cellphone',
+  M2: 'icon-cellphone',
+  M3: 'icon-wifi',
+  M5: 'icon-wifi',
+  S1: 'icon-internet',
+  S2: 'icon-pc',
+  S3: 'icon-call',
+};
+
 export const SVC_CATEGORY = {
   m: '모바일',
   s: '인터넷/집전화/IPTV',

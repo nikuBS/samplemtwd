@@ -17,6 +17,7 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="box-suggest">
@@ -25,13 +26,13 @@
                             <p class="suggest-ti">T world의 회원이 되신 것을 <em class="tx-bold">환영합니다.</em></p>
                             <ul class="suggest-list mt32">
                                 <li>SK텔레콤에 가입하신 <%= lineData.totalCnt %>개 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
-                                <li>선택하신 회선들은 ‘회원정보 > 회선관리’ 메뉴에서 보실 수 있습니다.</li>
+                                <li>선택하신 회선은 <span class="tod-txcolor6">‘회원정보 &gt; 회선관리’</span> 메뉴에서 보실수 있습니다.</li>
                             </ul>
                             <% } else { %>
                             <p class="suggest-ti">등록되지 않은 회선이<br/><em class="tx-bold"><%= lineData.totalCnt %>개</em> 있습니다.</p>
                             <ul class="suggest-list mt32">
                                 <li>아래 가입 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
-                                <li>선택하신 회선들은 ‘회원정보 > 회선관리’ 메뉴에서 보실 수 있습니다.</li>
+                                <li>선택하신 회선들은 <span class="tod-txcolor6">‘회원정보 &gt; 회선관리’</span> 메뉴에서 보실 수 있습니다.</li><!-- 191202 [OP002-5208] 수정_01 -->
                             </ul>
                             <% } %>
                         </div>
@@ -39,7 +40,8 @@
                 </div>
                 <!--// .cont-box -->
 
-                <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="ti-caption-gray tod-caption-white"><!-- 2018-09-19 클래스명 변경 -->
                     <h3 class="tit">이용할 회선 선택</h3>
                 </div>
                 <!-- .cont-box -->
@@ -77,7 +79,7 @@
                         </div>
                     </div>
                     <% if(lineData.totalCnt > 20) { %>
-                    <div class="bt-more">
+                    <div class="btn-more ml16 mr16">
                         <button id="fe-bt-more">더보기</button>
                     </div>
                     <% } %>
