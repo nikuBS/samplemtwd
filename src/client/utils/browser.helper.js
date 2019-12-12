@@ -88,6 +88,17 @@ Tw.BrowserHelper = (function () {
    * @returns {string}
    * @public
    */
+  var getOsVersion = function (ua) {
+    ua = (ua || navigator.userAgent).toLowerCase();
+    var match = ua.match(/osversion[:]([0-9\.]*)/);
+    return match ? match[1] : undefined;
+  };
+
+  /**
+   * @desc getter
+   * @returns {string}
+   * @public
+   */
   var getIosVersion = function () {
     var match = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/),
         version;
@@ -113,6 +124,7 @@ Tw.BrowserHelper = (function () {
     isIosChrome: isIosChrome,
     getUserAgent: getUserAgent,
     getAndroidVersion: getAndroidVersion,
-    getIosVersion: getIosVersion
+    getIosVersion: getIosVersion,
+    getOsVersion: getOsVersion
   };
 })();
