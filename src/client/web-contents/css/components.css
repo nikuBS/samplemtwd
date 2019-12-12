@@ -35819,8 +35819,8 @@ body.apphome .section-box {
 .sortlist.tod-sortlist-arranged .tod-t-standard .tod-line-info .title{font-weight:bold} /* 기준회선 */
 
 .tod-manage-wrap .tod-manage-layer{display:none}
-.tod-manage-wrap.on .tod-manage-layer{z-index:1;position:absolute;top:2.8125rem;right:0.9375rem;display:block;border-radius:0.375rem;-webkit-box-shadow:0px 4px 14px 2px rgba(0, 0, 0, 0.22);box-shadow:0px 4px 14px 2px rgba(0, 0, 0, 0.22);background-color:#fff}
-.tod-manage-wrap .tod-manage-layer .tod-list li{box-sizing:border-box;padding:0.75rem;border-top:1px solid #f2f2f2;font-size:0.875rem;color:#000}
+.tod-manage-wrap.on .tod-manage-layer{z-index:40;position:absolute;top:2.8125rem;right:0.9375rem;display:block;border-radius:0.375rem;-webkit-box-shadow:0px 4px 14px 2px rgba(0, 0, 0, 0.22);box-shadow:0px 4px 14px 2px rgba(0, 0, 0, 0.22);background-color:#fff}/* 191212 [OP002-5208] 수정_01 */
+.tod-manage-wrap .tod-manage-layer .tod-list li{box-sizing:border-box;min-width:6.25rem;padding:0.75rem;border-top:1px solid #f2f2f2;font-size:0.875rem;color:#000}/* 191212 [OP002-5208] 수정_02 */
 .tod-manage-wrap .tod-manage-layer .tod-list li:first-child{padding-top:0.9375rem;border-top:0}
 .tod-manage-wrap .tod-manage-layer .tod-list li:last-child{padding-bottom:0.9375rem}
 .tod-manage-wrap .tod-manage-layer .tod-list li > button, .tod-manage-wrap .tod-manage-layer .tod-list li > a{font-size:inherit;line-height:inherit;letter-spacing:inherit;color:inherit}
