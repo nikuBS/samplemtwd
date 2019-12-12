@@ -75,7 +75,6 @@ Tw.CommonMemberLine.prototype = {
    */
   _openGuidePopup: function ($event) {
 
-    console.log('_openGuidePopup');
     var $target;
     if(Tw.FormatHelper.isEmpty($event)) {
       $target = $($event.currentTarget);
@@ -94,7 +93,6 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _onLoadGuideView: function (resp) {
-    console.log('_onLoadGuideView');
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && resp.params.value === 'N' ) {
         this._openGuidePopup();
       }
