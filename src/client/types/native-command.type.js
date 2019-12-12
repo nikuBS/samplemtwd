@@ -100,6 +100,7 @@ Tw.NTV_STORAGE = {
   COACH_MYTFARE_BILL_SELECT: 'coachMyTFareBillSelect',
   COACH_MYTDATA_HOTDATA_SHARE: 'coachMyTDataHotDataShare',
   COACH_PRODUCT_MOBILEPLAN_TOTAL: 'coachProductMobilePlanTotal',
+  COMMON_MEMBER_LINE_GUIDE: 'commonMemberLineGuide',
   XTVID: 'xtvId'
 };
 

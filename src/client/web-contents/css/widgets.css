@@ -2117,8 +2117,8 @@ li.checkbox.type01 {
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-tit{font-size:1rem;color:#fff;font-size:0.9375rem}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box > .acco-tit + .acco-cont{padding:0}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:#fff}
-.accordion .acco-style.tod-round-blue .acco-list .acco-box > .acco-tit button:after{-webkit-transform:rotate(-90deg);transform:rotate(-90deg);background-position:0 -29.75rem}
-.accordion .acco-style.tod-round-blue .acco-list .acco-box.on > .acco-tit button:after{-webkit-transform:rotate(90deg);transform:rotate(90deg);background-position:0 -29.75rem}
+.accordion .acco-style.tod-round-blue .acco-list .acco-box > .acco-tit button:after{-webkit-transform:rotate(90deg);transform:rotate(90deg);background-position:0 -29.75rem}/* 191212 [OP002-5208] 수정_01 */
+.accordion .acco-style.tod-round-blue .acco-list .acco-box.on > .acco-tit button:after{-webkit-transform:rotate(-90deg);transform:rotate(-90deg);background-position:0 -29.75rem}/* 191212 [OP002-5208] 수정_02 */
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:transparent;overflow:visible}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .btn-more{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem;background-color:#fff}
 .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist > ul > li:last-child, .accordion .acco-style.tod-round-blue .acco-list .acco-box .acco-cont .sortlist .ui-state-default:last-child{border-bottom-right-radius:1rem;border-bottom-left-radius:1rem}

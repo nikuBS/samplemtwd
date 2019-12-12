@@ -14,11 +14,13 @@
 Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._nicknamePopup = new Tw.NicknameComponent();
   this._historyService = new Tw.HistoryService();
   this._defaultCnt = defaultCnt;
   this._totalExposedCnt = Tw.FormatHelper.isEmpty(totalExposedCnt) ? 0 : Number(totalExposedCnt);
+  this.lineMarketingLayer = new Tw.LineMarketingComponent();
   this._marketingSvc = '';
 
   this._changeList = false;
@@ -26,6 +28,9 @@ Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this.$showMenuBtn = null;
 
   this._bindEvent();
+  // if(Tw.BrowserHelper.isApp()) {
+  //   this._checkGuidePopup();
+  // }
 };
 
 Tw.CommonMemberLine.prototype = {
@@ -57,6 +62,11 @@ Tw.CommonMemberLine.prototype = {
     $('#fe-manage-menu').detach();
   },
 
+
+  _checkGuidePopup: function() {
+    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE }, $.proxy(this._onLoadGuideView, this));
+  },
+
   /**
    * @function
    * @desc 회선관리 이용안내 팝업 오픈
@@ -64,11 +74,34 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _openGuidePopup: function ($event) {
-    var $target = $($event.currentTarget);
+
+    console.log('_openGuidePopup');
+    var $target;
+    if(Tw.FormatHelper.isEmpty($event)) {
+      $target = $($event.currentTarget);
+    }
+
     this._popupService.open({
       hbs: 'CO_01_05_02_08',
       layer: true
-    }, $.proxy(null, this), null, 'guide', $target);
+    }, $.proxy(null, this), $.proxy(this._onCloseGuideOppup, this), 'guide', $target);
+  },
+
+  /**
+   * @function
+   * @desc 
+   * @param resp
+   * @private
+   */
+  _onLoadGuideView: function (resp) {
+    console.log('_onLoadGuideView');
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && resp.params.value === 'N' ) {
+        this._openGuidePopup();
+      }
+  },
+
+  _onCloseGuideOppup: function () {
+    // this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
   },
 
   /**
