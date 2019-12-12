@@ -424,6 +424,29 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @desc 무료문자 클릭시 native 로 무료문자 호출, 회원정보, 선불폰 사용여부에 따른 alert 처리
    */
   _onFreeSMS: function () {
+
+    // OP002-5783 : [VOC]문자보내기 AOS10 대응
+    var osVersion = Tw.BrowserHelper.isAndroid() ? Tw.BrowserHelper.getAndroidVersion() : Tw.BrowserHelper.getIosVersion;
+    var majorVersion = 0;
+
+    if ( !Tw.FormatHelper.isEmpty(osVersion) ) {
+      majorVersion = osVersion.split('.')[0];
+      if(Tw.FormatHelper.isNumber(majorVersion)) {
+        majorVersion = Number(majorVersion);
+      }
+    }
+
+    if(Tw.BrowserHelper.isAndroid() && (majorVersion > 9 || Number(Tw.BrowserHelper.getOsVersion()) > 28 )) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.OPTIMIZING_AOS10,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_optimizing_aos10'
+      );
+      return;
+    }
+
     if (this._memberType === 1) {
       this._popupService.openAlert(
         Tw.MENU_STRING.FREE_SMS,
