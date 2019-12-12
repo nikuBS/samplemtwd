@@ -229,7 +229,7 @@ Tw.CommonMemberLineEdit.prototype = {
    * @private
    */
   _closeMarketingOfferPopup: function () {
-    this._historyService.reload();
+    this._historyService.goBack();
   },
 
   /**
