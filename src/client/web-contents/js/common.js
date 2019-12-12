@@ -1712,6 +1712,7 @@ skt_landing.dev = {
             options = selector;
             selector = null;
         }
+        console.log('$(selector) ====>', $(selector));
         var $target = $(selector).length === 1 ? $(selector) : $( "#sortable-enabled" ); // 191211 [OP002-5208] 수정
         var defaults = {
             axis: 'y',

@@ -1,0 +1,59 @@
+<div class="widget">
+    <!-- .widget -->
+    <div class="widget-box accordion">
+        <div class="acco-cover on">
+            <div class="acco-style tod-round-blue <% if (tmpCnt > showParam.defaultCnt) { %> tod-add-btn <% } %>">
+                <ul class="acco-list fe-line-cover">                                    
+                    <li class="acco-box on">
+                        <div class="acco-tit">
+                            <button role="button" aria-pressed="false"> 
+                                <h3 class="tit"><%=tmpTitle%><span class="tod-add-text"><span class="num"><%= tmpCnt %></span>개</span></h3>
+                            </button>
+                        </div>
+                        <div class="acco-cont">
+                            <div class="tod-line-management">
+                                <div class="sortlist tod-sortlist-arranged">
+                                    <ul id="sortable-enabled" class="connectedSortable enabled ui-sortable fe-item-list" data-category="<%=tmpCategory%>" data-totcount = "<%=tmpCnt%>" data-pageno="1">
+                                        <% tmpList.map((line, index) => { %>
+                                        <% if(index < showParam.defaultCnt) { %>
+                                        <li class="fe-line ui-state-default <% if(line.repSvcYn === 'Y') { %>tod-t-standard fe-line-standard<% }%> <% if(line.expsYn === 'Y') { %> fe-item-active<% } else {%> tod-add-line fe-item-inactive<% } %>" 
+                                            data-svcmgmtnum="<%=line.svcMgmtNum %>" data-svcgr="<%=line.svcGr %>">
+                                            <div class="state-box">
+                                                <div class="tod-line-info">
+                                                    <span class="icon">
+                                                        <i class="<%=line.ico%>-48">
+                                                            <span class="blind"><%= line.showName %></span>
+                                                        </i>
+                                                    </span>
+                                                    <span class="title fe-show-name"><%= line.showName %></span>
+                                                    <span class="line"><%= line.showDetail %></span>
+                                                    <% if(line.repSvcYn === 'Y') { %>
+                                                    <span class="badge-co t-standard"><span class="blind">기준</span></span>
+                                                    <% }%>
+                                                    <p class="tod-icon tod-icon-notice02 fe-show-inactive <% if(line.expsYn === 'Y') { %>none<% } %>">원활한 서비스 이용을 위해 회선을 등록해 주세요.</p>
+                                                </div>
+                                                <button type="button" class="tod-btn-add btn-round2 btn-style3 fe-show-inactive fe-bt-add <% if(line.expsYn === 'Y') { %>none<% } %>">회선등록</button>
+                                            </div>
+                                            <div class="tod-manage-wrap on fe-show-active <% if(line.expsYn === 'N') { %>none<% } %>"><!-- .on  -->
+                                                <button type="button" class="tod-btn-manage tod-icon tod-icon-dot-gray01 fe-manage-line" data-index="<%=index%>">
+                                                    <span class="tod-blind">회선관리 메뉴</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <% } %>
+                                        <% }) %>
+                                    </ul>
+                                </div>
+                            </div>
+                            <% if (tmpCnt > showParam.defaultCnt) { %>
+                            <div class="btn-more">
+                                <button class="fe-bt-more" role="button">더보기</button>
+                            </div>
+                            <% } %>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
