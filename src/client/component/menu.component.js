@@ -426,7 +426,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   _onFreeSMS: function () {
 
     // OP002-5783 : [VOC]문자보내기 AOS10 대응
-    var osVersion = Tw.BrowserHelper.isAndroid() ? Tw.BrowserHelper.getAndroidVersion() : Tw.BrowserHelper.getIosVersion;
+    var osVersion = Tw.BrowserHelper.isAndroid() ? Tw.BrowserHelper.getAndroidVersion() : (Tw.BrowserHelper.isIos() ? Tw.BrowserHelper.getIosVersion() : '0.0.0');
     var majorVersion = 0;
 
     if ( !Tw.FormatHelper.isEmpty(osVersion) ) {
