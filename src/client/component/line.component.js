@@ -85,9 +85,11 @@ Tw.LineComponent.prototype = {
    * @private
    */
   _getLineList: function ($target) {
-    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._successGetLineList, this, $target))
-      .fail($.proxy(this._failGetLineList, this));
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_ALL_SVC, params: {}},
+      { command: Tw.API_CMD.BFF_03_0029, params: {}}
+    ]).done($.proxy(this._successGetLineList, this, $target))
+      .fail($.proxy(this._failTosStoreBanner, this));
   },
 
   /**
@@ -97,16 +99,22 @@ Tw.LineComponent.prototype = {
    * @param resp
    * @private
    */
-  _successGetLineList: function ($target, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._lineList = this._parseLineList(resp.result);
+  _successGetLineList: function ($target, allSvcResp, exposableResp) {
+
+    var  totNonCnt = 0;
+    if ( exposableResp.code === Tw.API_CODE.CODE_00 ) {
+      totNonCnt = exposableResp.result.totalCnt;
+    }
+
+    if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) {
+      this._lineList = this._parseLineList(allSvcResp.result);
       if ( this._index > 1 ) {
-        this._openListPopup(this._lineList, $target);
+        this._openListPopup(this._lineList, totNonCnt, $target);
       } else if ( this._index === 1 ){
         this._historyService.goLoad('/common/member/line');
       }
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(allSvcResp.code, allSvcResp.msg).pop();
     }
   },
 
@@ -128,10 +136,12 @@ Tw.LineComponent.prototype = {
    * @param $target
    * @private
    */
-  _openListPopup: function (lineData, $target) {
+  _openListPopup: function (lineData, totNonCnt, $target) {
     this._popupService.open({
       hbs: 'actionsheet_line',
       layer: true,
+      hasNonExpsLine: totNonCnt > 0, 
+      totNonCnt: totNonCnt,
       data: lineData,
       btMore: this._index > Tw.DEFAULT_LIST_COUNT
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line', $target);
