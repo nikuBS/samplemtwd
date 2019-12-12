@@ -28,9 +28,7 @@ Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this.$showMenuBtn = null;
 
   this._bindEvent();
-  // if(Tw.BrowserHelper.isApp()) {
-  //   this._checkGuidePopup();
-  // }
+  this._checkGuidePopup();
 };
 
 Tw.CommonMemberLine.prototype = {
@@ -64,7 +62,17 @@ Tw.CommonMemberLine.prototype = {
 
 
   _checkGuidePopup: function() {
-    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE }, $.proxy(this._onLoadGuideView, this));
+    if(Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE }, $.proxy(this._onLoadGuideView, this));
+    } else {
+      // cookie check
+      var commonMemberLineGuideb = Tw.CommonHelper.getCookie(Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE);
+      if(Tw.FormatHelper.isEmpty(commonMemberLineGuideb) || commonMemberLineGuideb === 'N') {
+        this._openGuidePopup();
+      } else {
+        Tw.CommonHelper.setCookie(Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, 'Y', 365);
+      }
+    }
   },
 
   /**
@@ -74,9 +82,8 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _openGuidePopup: function ($event) {
-
     var $target;
-    if(Tw.FormatHelper.isEmpty($event)) {
+    if(!Tw.FormatHelper.isEmpty($event)) {
       $target = $($event.currentTarget);
     }
 
@@ -93,13 +100,17 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _onLoadGuideView: function (resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && resp.params.value === 'N' ) {
+    if ( resp.resultCode !== Tw.NTV_CODE.CODE_00) {
         this._openGuidePopup();
-      }
+    }
   },
 
   _onCloseGuideOppup: function () {
-    // this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
+    if(Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
+    } else {
+      Tw.CommonHelper.setCookie(Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, 'Y', 365);
+    }
   },
 
   /**
@@ -569,13 +580,13 @@ Tw.CommonMemberLine.prototype = {
     Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
 
-      if(!isAdd) {
-        this._marketingSvc = resp.result.offerSvcMgmtNum;
-        Tw.Logger.info('[marketingSvc]', this._marketingSvc);
-        this._checkRepSvc(svcNumList, resp.result, msg, $target);
-      } else {
-        this._popupService.openAlert(msg, null, null, $.proxy(this._editCallback, this));
-      }
+      // if(!isAdd) {
+      this._marketingSvc = resp.result.offerSvcMgmtNum;
+      Tw.Logger.info('[marketingSvc]', this._marketingSvc);
+      this._checkRepSvc(svcNumList, resp.result, msg, $target);
+      // } else {
+      //   this._popupService.openAlert(msg, null, null, $.proxy(this._editCallback, this));
+      // }
 
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
