@@ -3,6 +3,7 @@ import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import moment from 'moment';
 import {LOGIN_TYPE} from '../../../../types/bff.type';
 /**
  * @file membership.info.grade.controller.ts
@@ -16,6 +17,8 @@ class MembershipInfoGrade extends TwViewController {
     super();
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    // 예상등급 조회 가능 날짜 확인
+    const isExpectRating = this.getIsExpectRating();
 
     const data = {
       isLogin: !FormatHelper.isEmpty(svcInfo),
@@ -35,7 +38,8 @@ class MembershipInfoGrade extends TwViewController {
         res.render('info/membership.info.grade.html', {
           svcInfo,
           pageInfo,
-          data
+          data,
+          isExpectRating
         });
 
       });
@@ -47,6 +51,20 @@ class MembershipInfoGrade extends TwViewController {
       });
     }
   }
+
+  // 예상등급 조회 가능 날짜 확인
+  private getIsExpectRating(): any {
+    const curTime = moment();
+    const startTime = moment('2019-12-18 09:00:00.000');
+    const endTime = moment('2019-12-31 24:00:00.000');
+    let isExpectRating = false;
+
+    if (curTime > startTime && curTime < endTime) {
+      isExpectRating = true;
+    }
+    return isExpectRating;
+  }
+
 }
 
 export default MembershipInfoGrade;

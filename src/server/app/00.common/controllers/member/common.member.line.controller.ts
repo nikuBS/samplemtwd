@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { LINE_NAME, SVC_ATTR_E, SVC_ATTR_NAME } from '../../../../types/bff.type';
+import { LINE_NAME, SVC_ATTR_E, SVC_ATTR_NAME, SVC_CD_ICO_CLASS, SVC_CATEGORY } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
@@ -35,21 +35,22 @@ class CommonMemberLine extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest([
       this.apiService.request(API_CMD.BFF_03_0004, { svcCtg: LINE_NAME.MOBILE, pageSize: DEFAULT_LIST_COUNT }),
-      this.apiService.request(API_CMD.BFF_03_0004, {
-        svcCtg: LINE_NAME.INTERNET_PHONE_IPTV,
-        pageSize: DEFAULT_LIST_COUNT
-      })
-    ]).subscribe(([mobile, internet]) => {
+      this.apiService.request(API_CMD.BFF_03_0004, { svcCtg: LINE_NAME.INTERNET_PHONE_IPTV, pageSize: DEFAULT_LIST_COUNT}),
+      this.apiService.request(API_CMD.BFF_03_0030, { svcCtg: LINE_NAME.MOBILE })
+    ]).subscribe(([mobile, internet, exposed]) => {
       if ( mobile.code === API_CODE.CODE_00 ) {
         if ( mobile.result.totalCnt === '0' ) {
           res.render('member/common.member.line.empty.html', { svcInfo, pageInfo });
         } else {
           const lineInfo = this.parseLineList({
             totalCnt: mobile.result.totalCnt,
+            totalExposedCnt : exposed.result.totalCnt,
             mCnt: mobile.result.mCnt,
             sCnt: mobile.result.sCnt,
             m: mobile.result.m,
-            s: internet.result.s
+            s: internet.result.s,
+            mTitle: SVC_CATEGORY.m,
+            sTitle: SVC_CATEGORY.s
           });
           res.render('member/common.member.line.html', Object.assign(lineInfo, {
             svcInfo, pageInfo
@@ -73,7 +74,7 @@ class CommonMemberLine extends TwViewController {
    * @param lineList
    */
   private parseLineList(lineList): any {
-    const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+    const category = ['MOBILE', 'INTERNET_PHONE_IPTV'];
     const list: string[] = [];
 
     category.map((line) => {
@@ -84,7 +85,7 @@ class CommonMemberLine extends TwViewController {
       }
     });
 
-    return { lineList, showParam: this.setShowList(list, lineList.totalCnt) };
+    return { lineList, showParam: this.setShowList(list, lineList.totalCnt, lineList.totalExposedCnt) };
   }
 
   /**
@@ -107,6 +108,7 @@ class CommonMemberLine extends TwViewController {
       line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR_NAME[line.svcAttrCd] : line.nickNm;
       line.showDetail = category === LINE_NAME.MOBILE ? FormatHelper.conTelFormatWithDash(line.svcNum) :
         line.svcAttrCd === SVC_ATTR_E.TELEPHONE ? FormatHelper.conTelFormatWithDash(line.svcNum) : line.addr;
+        line.ico = SVC_CD_ICO_CLASS[line.svcAttrCd];
     });
   }
 
@@ -115,11 +117,13 @@ class CommonMemberLine extends TwViewController {
    * @param list
    * @param totalCount
    */
-  private setShowList(list, totalCount): any {
+  private setShowList(list, totalCount, totalExposedCnt): any {
     const showParam = {
       m: false,
       s: false,
       o: false,
+      totalCount: totalCount,
+      totalExposedCnt: totalExposedCnt,
       defaultCnt: DEFAULT_LIST_COUNT
     };
 

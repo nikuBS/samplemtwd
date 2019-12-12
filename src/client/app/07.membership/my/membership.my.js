@@ -47,6 +47,7 @@ Tw.MembershipMy.prototype = {
     this.$inquire.on('click', $.proxy(this._getUseHistory,this));
     this.$more.on('click', $.proxy(this._onMore,this));
     this.$goUpdate.on('click', $.proxy(this._goUpdate,this));
+    this.$container.on('click', '.fe-rating-external', $.proxy(this._onClickExternal, this));  // 멤버십 등급 안내
   },
 
   /**
@@ -370,6 +371,34 @@ Tw.MembershipMy.prototype = {
 
   _onFail: function(err) {
     Tw.Error(err.code,err.msg).pop();
+  },
+
+  /**
+   * @function
+   * @desc 외부 브라우저 랜딩 처리
+   * @param e 이벤트 객체
+   * @returns {*|void}
+   * @private
+   */
+  _onClickExternal: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // 앱이 아닐땐 과금 팝업 띄울 필요 없으므로 즉시 외부 링크 실행
+    if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl($(e.currentTarget).data('url'));
+    }
+
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).data('url')));
+  },
+
+  /**
+   * @function
+   * @desc 외부 링크 실행
+   * @param url - 링크 값
+   */
+  _openExternalUrl: function(url) {
+    Tw.CommonHelper.openUrlExternal(url);
   }
 
 };

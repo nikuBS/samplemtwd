@@ -12,11 +12,15 @@ import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
+import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
 export default class MembershipMy extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    // 예상등급 조회 가능 날짜 확인
+    const isExpectRating = this.getIsExpectRating();
+
     Observable.combineLatest(
       this.getMyInfoData(),
       this.getMembershipData()
@@ -35,7 +39,8 @@ export default class MembershipMy extends TwViewController {
         myInfoData: myInfoData,
         membershipData: membershipData,
         svcInfo: svcInfo,
-        pageInfo: pageInfo
+        pageInfo: pageInfo,
+        isExpectRating
       });
     });
   }
@@ -80,8 +85,8 @@ export default class MembershipMy extends TwViewController {
     myInfoData.mbrGrStr = MEMBERSHIP_GROUP[myInfoData.mbrGrCd];
     myInfoData.mbrTypStr = MEMBERSHIP_TYPE[myInfoData.mbrTypCd];
     myInfoData.todayDate = DateHelper.getCurrentShortDate();
-    myInfoData.showEstimateGradeStart = DateHelper.getShortDateWithFormat(myInfoData.estimateGradeStart, 'YYYY.M.', 'YYYYMM');
-    myInfoData.showEstimateGradeEnd = DateHelper.getShortDateWithFormat(myInfoData.estimateGradeEnd, 'YYYY.M.', 'YYYYMM');
+    myInfoData.showEstimateGradeStart = DateHelper.getShortDateWithFormat(myInfoData.estimateGradeStart, 'YYYY. M.', 'YYYYMM');
+    myInfoData.showEstimateGradeEnd = DateHelper.getShortDateWithFormat(myInfoData.estimateGradeEnd, 'YYYY. M.', 'YYYYMM');
 
     // 멤버십 종류가 Leaders Club 또는 SK Family 인 경우 재발급 신청 Hide
     if ( myInfoData.mbrTypStr === 'Leaders Club' || myInfoData.mbrTypStr === 'SK Family' ) {
@@ -91,6 +96,19 @@ export default class MembershipMy extends TwViewController {
     }
 
     return myInfoData;
+  }
+
+  // 예상등급 조회 가능 날짜 확인
+  private getIsExpectRating(): any {
+    const curTime = moment();
+    const startTime = moment('2019-12-18 09:00:00.000');
+    const endTime = moment('2019-12-31 24:00:00.000');
+    let isExpectRating = false;
+
+    if (curTime > startTime && curTime < endTime) {
+      isExpectRating = true;
+    }
+    return isExpectRating;
   }
 
 }

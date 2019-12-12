@@ -66,6 +66,11 @@ Tw.CommonPostcodeLast.prototype = {
     this._initVariables($addressObject.tabId);
     this._initData($addressObject);
     this._bindEvent($addressObject);
+
+    // web 접근성 강제 focus 이동
+    setTimeout($.proxy(function () {
+      this.$selectedTab.find('#fe-first-focus').focus();
+     }, this), 300);
   },
   /**
    * @function

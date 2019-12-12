@@ -23,17 +23,21 @@
                             <div class="widget-box file">
                             <span class="inputbox bt-add inp-btn" data-index={{@index}}>
                                 <span class="input">
+                                    <!-- web 접근성 퍼일 element의 index 시작 변경 0 ->1 -->
                                     <input class="fileview" type="text" placeholder="파일 첨부"
-                                           title="첨부파일 {{ @index }}" style="pointer-events: none;" value={{oldFile.name}} >
+                                           title="첨부파일 {{titleIndex}}" style="pointer-events: none;" value={{oldFile.name}} >
                                 </span>
                                 <span class="space"></span>
-                                <span class="bt-box tod-type1">
+                                <!-- web 접근성 focus가 전체가 되지 않도록 수정 -->
+                                <span class="bt-box tod-type1" style="position:relative;">
                                     {{#if oldFile.name}}
-                                        <button type="button" class="fe-file-button btn-round2 btn-style3" >삭제</button>
+                                        <!-- web 접근성 forcus 적용 안되도록 수정-->
+                                        <button type="button" class="fe-file-button btn-round2 btn-style3" aria-hidden="true">삭제</button>
                                         <input class="file" type="file" value="파일찾기" disabled
                                                style="pointer-events: none;" {{{attr}}} />
                                     {{else}}
-                                        <button type="button" class="fe-file-button btn-round2 btn-style3">파일 찾기</button>
+                                        <!-- web 접근성 forcus 적용 안되도록 수정-->
+                                        <button type="button" class="fe-file-button btn-round2 btn-style3" aria-hidden="true">파일 찾기</button>
                                         <input class="file" type="file" value="파일찾기" title="파일 찾기" {{{attr}}} />
                                     {{/if}}
                                 </span>

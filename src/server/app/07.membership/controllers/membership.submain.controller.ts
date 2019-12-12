@@ -10,6 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
+import moment from 'moment';
 import { MEMBERSHIP_GROUP , MEMBERSHIP_TYPE } from '../../../types/bff.type';
 
 export default class MembershipSubmain extends TwViewController {
@@ -19,6 +20,9 @@ export default class MembershipSubmain extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (this.isLogin(svcInfo)) {
+      // 예상등급 조회 가능 날짜 확인
+      const isExpectRating = this.getIsExpectRating();
+
       // 멤버십 등급 준회원, 선불폰, 유선서비스 가입자 인 경우
       if (svcInfo.svcGr === 'P' || svcInfo.svcGr === 'I' || svcInfo.svcGr === 'T' || svcInfo.svcGr === 'U'
           || svcInfo.svcGr === '') {
@@ -35,13 +39,13 @@ export default class MembershipSubmain extends TwViewController {
         Observable.combineLatest(
             // this.getMembershipCheck(svcInfo),
             this.getMembershipData(),
-            this.getPopBrandData()
+            this.getPopBrandData(),
         ).subscribe(([membershipData, popBrandData]) => {
 
           this.logger.info(this, 'new membershipData : ', membershipData);
 
           res.render('membership.submain.html',
-              { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipData, popBrandData });
+              { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipData, popBrandData, isExpectRating });
         });
       }
     } else {
@@ -116,6 +120,19 @@ export default class MembershipSubmain extends TwViewController {
         return null;
       }
     });
+  }
+
+  // 예상등급 조회 가능 날짜 확인
+  private getIsExpectRating(): any {
+    const curTime = moment();
+    const startTime = moment('2019-12-18 09:00:00.000');
+    const endTime = moment('2019-12-31 24:00:00.000');
+    let isExpectRating = false;
+
+    if (curTime > startTime && curTime < endTime) {
+      isExpectRating = true;
+    }
+    return isExpectRating;
   }
 
 }
