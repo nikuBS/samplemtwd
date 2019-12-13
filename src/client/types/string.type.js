@@ -143,7 +143,8 @@ Tw.POPUP_CONTENTS = {
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
   TPLAN_WATCH: '스마트워치 회선<br>',
-  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.'
+  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.',
+  REMOVE_UPLOAD_ITEM: '첨부파일을 삭제하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {
@@ -840,8 +841,8 @@ Tw.ALERT_MSG_PRODUCT = {
   PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.',
   NEED_LINE: '등록된 회선이 있어야 이용 가능합니다.\n회선 등록 후 계속하시겠습니까?',
   BPCP: 'BPCP URL이 설정되어 있지 않습니다.',
-  FLO_PROMOTION_INFO: { TITLE: '프로모션 유의사항 안내', 
-                  MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>', 
+  FLO_PROMOTION_INFO: { TITLE: '프로모션 유의사항 안내',
+                  MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>',
                   BTN_TEXT: 'T멤버십 할인내역 확인하기' }
 };
 

@@ -6,16 +6,16 @@
 /**
  * @class
  * @desc 일시정지 신청현황(MS_03_05_03_01)
- * @param tabEl tab content wrapper
- * @param params
+ * @param {jQuery} rootEl - wrapper element
+ * @param {Object} params
  */
 Tw.MyTJoinSuspendStatus = function (rootEl, params) {
   this.$container = rootEl;
+  this._data = params;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
-  this._params = params;
   this._getSvcInfo();
   this._cachedElement();
 };
@@ -34,24 +34,24 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @desc Bind events to elements.
    */
   _bindEvent: function () {
-    this.$container.on('click', '[data-id="bt-reset"]', $.proxy(this._onClickReset, this));
-    this.$container.on('click', '[data-id="bt-resuspend"]', $.proxy(this._onClickResuspend, this));
-    this.$container.on('click', '#bt-cancel-resuspend', $.proxy(this._onClickCancelResuspend, this));
+    this.$container.on('click', '[data-id=bt-release]', $.proxy(this._onBtReleaseClicked, this));
+    this.$container.on('click', '[data-id=bt-resuspend]', $.proxy(this._onBtResuspendClicked, this));
+    this.$container.on('click', '[data-id=bt-cancel-resuspend]', $.proxy(this._onBtCancelResuspendClicked, this));
   },
   /**
    * @function
    * @desc Event listener for the button click on [data-id="bt-resuspend"] 재신청 버튼
    */
-  _onClickResuspend: function (event) {
+  _onBtResuspendClicked: function (event) {
     this._popupService.open({
-          hbs: 'MS_03_05_04',
-          data: {
-            svcInfo: this._svcInfo,
-            period: this._params.status.period,
-            reason: this._params.reason
-          }
-        }, $.proxy(this._onOpenResuspendPopup, this), $.proxy(this._onCloseResuspendPopup, this),
-        'resuspend', $(event.currentTarget));
+        hbs: 'MS_03_05_04',
+        data: {
+          svcInfo: this._svcInfo,
+          period: this._data.status.period,
+          reason: this._data.reason
+        }
+      }, $.proxy(this._onOpenResuspendPopup, this), $.proxy(this._onCloseResuspendPopup, this),
+      'resuspend', $(event.target));
   },
   /**
    * @function
@@ -70,7 +70,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @function
    * @desc Resuspend(장기일시정지 재신청) 팝업 close Callback
    */
-  _onCloseResuspendPopup: function() {
+  _onCloseResuspendPopup: function () {
     // 초기화
     this._popupDate.off();
     this._popupResuspendBtn.off();
@@ -85,16 +85,16 @@ Tw.MyTJoinSuspendStatus.prototype = {
    */
   _onChangeDateSelect: function (event) {
     var value = event.target.value;
-    var from = this._popupDate.val().replace(/-/g, '');
-    var diff = Tw.DateHelper.getDiffByUnit(from,  Tw.DateHelper.getCurrentShortDate(), 'days');
     if (!value) {
       event.target.value = this._popupDefaultValue;
       return false;
     }
-    if (diff < 0) {// 시작일이 오늘 이전일 경우
+    var from = this._popupDate.val().replace(/-/g, '');
+    var diff = Tw.DateHelper.getDiffByUnit(from, Tw.DateHelper.getCurrentShortDate(), 'days');
+    if (diff < 0) { // 시작일이 오늘 이전일 경우
       event.target.value = this._popupDefaultValue;
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
-          null, null, null, null, $(event.currentTarget));
+        null, null, null, null, $(event.target));
     }
   },
   /**
@@ -105,15 +105,16 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _requestResuspend: function ($popup) {
     var fromDate = $popup.find('input[type="date"]').val();
     var diff = Tw.DateHelper.getDiffByUnit(fromDate, Tw.DateHelper.getCurrentShortDate(), 'days');
-    if ( diff < 0 ) {
+    if (diff < 0) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
       return;
-    } else if ( diff > 30 ) {
+    }
+    if (diff > 30) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
       return;
     }
 
-    var params = { fromDt: fromDate.replace(/-/g, '') };
+    var params = {fromDt: fromDate.replace(/-/g, '')};
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
       .done($.proxy(this._onSuccessResuspend, this, params))
       .fail($.proxy(this._onError, this));
@@ -125,12 +126,12 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @private
    */
   _onSuccessResuspend: function (params, res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       params.command = 'resuspend';
       params.svcNum = this._svcInfo.svcNum;
-      params.toDt = this._params.status.period.to;
+      params.toDt = this._data.status.period.to;
       this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param(params));
-    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+    } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -138,15 +139,15 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
   /**
    * @function
-   * @desc Event listener for the button click on #bt-cancel-resuspend(재신청 취소)
+   * @desc Event listener for the button click on [data-id=bt-cancel-resuspend](재신청 취소)
    */
-  _onClickCancelResuspend: function () {
+  _onBtCancelResuspendClicked: function () {
     this._popupService.open({
       hbs: 'MS_03_05_06',
       data: {
         svcInfo: this._svcInfo,
-        period: this._params.status.period,
-        resuspend: this._params.status.resuspendDt
+        period: this._data.status.period,
+        resuspend: this._data.status.resuspendDt
       }
     }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelResuspend');
   },
@@ -163,7 +164,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @desc Cancel resuspend(재신청 취소) 요청
    */
   _requestCancelResuspend: function () {
-    var params = { isReserveCancel: 'Y' };
+    var params = {isReserveCancel: 'Y'};
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
       .done($.proxy(this._onSuccessRequestCancel, this, params))
       .fail($.proxy(this._onError, this));
@@ -176,11 +177,11 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @private
    */
   _onSuccessRequestCancel: function (params, res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       params.command = 'cancel-resuspend';
       params.svcInfo = this._svcInfo.svcNum;
       this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param(params));
-    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+    } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -189,16 +190,16 @@ Tw.MyTJoinSuspendStatus.prototype = {
   // Reset(해제하기)
   /**
    * @function
-   * @desc Event listener for the button click on [data-id="bt-reset"](해제하기)
+   * @desc Event listener for the button click on [data-id="bt-release"](해제하기)
    */
-  _onClickReset: function () {
+  _onBtReleaseClicked: function () {
     this._popupService.open({
       hbs: 'MS_03_05_05',
       data: {
         svcInfo: this._svcInfo,
-        period: this._params.status.period,
-        reason: this._params.status.reason,
-        longterm: this._params.status.type === 'long-term'
+        period: this._data.status.period,
+        reason: this._data.status.reason,
+        longterm: this._data.status.type === 'long-term'
       }
     }, $.proxy(this._onOpenResetPopup, this), null, 'reset');
   },
@@ -226,11 +227,11 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @private
    */
   _onSuccessRequestReset: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
-      this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param({ command: 'reset' }));
-    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+      this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param({command: 'reset'}));
+    } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -252,7 +253,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @private
    */
   _successSvcInfo: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
       this._svcInfo = _.clone(resp.result);
       this._svcInfo.svcNum = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g, ''));
       this._bindEvent();
@@ -269,20 +270,20 @@ Tw.MyTJoinSuspendStatus.prototype = {
     var popup = {};
     var count = 0;
 
-    if ( Tw.MYT_SUSPEND_MILITARY_RECEIVE_CD.indexOf(this._params.progress.receiveCdreceiveCd ) !== -1) {
-        popup = {
-          content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
-          title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
-          hash: 'tip'
-        };
-        count = 2;
-      } else {
-        popup = {
-          content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
-          title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
-          hash: 'tip'
-        };
-        count = 1;
+    if (Tw.MYT_SUSPEND_MILITARY_RECEIVE_CD.indexOf(this._data.progress.receiveCdreceiveCd) !== -1) {
+      popup = {
+        content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
+        title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
+        hash: 'tip'
+      };
+      count = 2;
+    } else {
+      popup = {
+        content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
+        title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
+        hash: 'tip'
+      };
+      count = 1;
     }
     this._openCommonFileDialog(count, popup);
   },
@@ -293,7 +294,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @param popup 파일 업로드 다이얼로그 element
    */
   _openCommonFileDialog: function (count, popup) {
-    if ( !this._fileDialog ) {
+    if (!this._fileDialog) {
       this._fileDialog = new Tw.MytJoinSuspendUpload();
     }
 
@@ -306,7 +307,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    */
   _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
-    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
       var convFileList = _.compact(this._files).map(function (item) {
         return {
           fileSize: item.size,
@@ -342,7 +343,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    */
   _successUploadFile: function (res) {
     // USCAN upload
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       var convFileList = res.result.map(function (item) {
         return {
           fileSize: item.size,
@@ -377,7 +378,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @param res
    */
   _onSuccessUscanUpload: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       this._requestReupload();
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -390,7 +391,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    */
   _requestReupload: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0195, {
-      seq: this._params.progress.seq
+      seq: this._data.progress.seq
     })
       .done($.proxy(this._onSuccessReupload, this))
       .fail($.proxy(this._onError, this));
@@ -401,7 +402,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @param res
    */
   _onSuccessReupload: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.reload();
     } else {
       Tw.Error(res.code, res.msg).pop();

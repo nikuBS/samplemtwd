@@ -6,23 +6,22 @@
 /**
  * @class
  * @desc [장기/일시정지] 처리를 위한 class
- * @param {Object} rootEl - 최상위 element Object
+ * @param {jQuery} rootEl - wrapper element
  * @param {Object} params - 회선 정보 등 서버에서 전달하는 값
  * @returns {void}
  */
 Tw.MyTJoinSuspend = function (rootEl, params) {
   this.$container = rootEl;
+  this._data = params;
+  this._temp = null;
+  this._long = null;
   this.TYPE = {
     TEMPORARY: '#temporary',
     LONG_TERM: '#long-term'
   };
-  this._params = params;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
   this._popupService = Tw.Popup;
-
-  this._temp = null;
-  this._long = null;
   this._cachedElement();
   this._bindEvent();
   this._checkUnused2gUser();
@@ -53,7 +52,7 @@ Tw.MyTJoinSuspend.prototype = {
    * @desc 2G 장기 미사용으로 이용정지 예약이 걸린 사용자 체크
    */
   _checkUnused2gUser: function () {
-    if ( this._params.suspend.unused2gUser ) {
+    if ( this._data.suspend.unused2gUser ) {
       this._popupService.openAlert( Tw.MYT_JOIN_SUSPEND.ERROR.UNUSED_2G_USER, null, null, $.proxy(this._goBack, this));
     }
   },
@@ -72,7 +71,7 @@ Tw.MyTJoinSuspend.prototype = {
    */
   _setInitialTab: function () {
     var type;
-    if ( this._params.suspend.status ) {
+    if ( this._data.suspend.status ) {
       type = this.TYPE.LONG_TERM;
     } else {
       type = window.location.hash || this.TYPE.TEMPORARY;
@@ -90,7 +89,7 @@ Tw.MyTJoinSuspend.prototype = {
    */
   _onTabChanged: function (e) {
     var hash = e.target.getAttribute('href');
-    if ( this._params.suspend.status && hash === this.TYPE.TEMPORARY ) {
+    if ( this._data.suspend.status && hash === this.TYPE.TEMPORARY ) {
       e.stopPropagation();
       return false;
     }
@@ -118,7 +117,7 @@ Tw.MyTJoinSuspend.prototype = {
         break;
       case this.TYPE.LONG_TERM:
         if ( !this._long ) {
-          this._long = new Tw.MyTJoinSuspendLongTerm(this.$tabLong, this._params);
+          this._long = new Tw.MyTJoinSuspendLongTerm(this.$tabLong, this._data);
         }
         this.$tabTemp.attr('aria-hidden', true);
         this.$tabLong.attr('aria-hidden', false);
