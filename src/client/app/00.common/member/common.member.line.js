@@ -21,6 +21,7 @@ Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this._defaultCnt = defaultCnt;
   this._totalExposedCnt = Tw.FormatHelper.isEmpty(totalExposedCnt) ? 0 : Number(totalExposedCnt);
   this.lineMarketingLayer = new Tw.LineMarketingComponent();
+  new Tw.XtractorService(this.$container);
   this._marketingSvc = '';
 
   this._changeList = false;
