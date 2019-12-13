@@ -152,10 +152,12 @@ Tw.ProductAppsDetail.prototype = {
    * @private
    */
   _handleOpenImgDetail: function(e) {
+    var popupIndex = $(e.currentTarget).data('index');
     this._popupService.open(
       {
         hbs: 'TA_02_01',
-        images: this._images
+        images: this._images,
+        initialslide: popupIndex
       },
       undefined,
       undefined,
