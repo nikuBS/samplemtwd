@@ -51,7 +51,9 @@ export default class ProductAppsDetail extends TwViewController {
           });
         }
 
-        res.render('apps/product.apps.detail.html', { svcInfo, pageInfo, isApp: BrowserHelper.isApp(req), apps, app, prodInfo });
+        res.render('apps/product.apps.detail.html', { 
+          svcInfo, pageInfo, isApp: BrowserHelper.isApp(req), apps, app, prodInfo, isProductCallplan: true 
+        });
       }
     );
   }
@@ -68,6 +70,7 @@ export default class ProductAppsDetail extends TwViewController {
       }
 
       const images: Array<string> = [],
+            imagesAlt: Array<string> = [],
         icon = resp.result.appIconImgUrl;
       return {
         ...resp.result,
@@ -78,10 +81,17 @@ export default class ProductAppsDetail extends TwViewController {
           }
 
           return arr;
-        }, images)
+        }, images),
+        imagesAlt: (resp.result.scrshotList || []).reduce((arr, img) => {
+          if (img.scrshotImgAlt && img.scrshotImgAlt !== '') {
+            arr.push(img.scrshotImgAlt);
+          }
+
+          return arr;
+        }, imagesAlt)
       };
     });
-  };
+  }
 
   /**
    * @desc 추천 앱 가져오기 요청
@@ -101,7 +111,7 @@ export default class ProductAppsDetail extends TwViewController {
         };
       });
     });
-  };
+  }
 
   /**
    * @desc admin 상품 정보 가져오기 요청

@@ -10,10 +10,10 @@
             <button class="bt action" id="fe-open-btn">앱 실행하기</button>
         {{else}}
             {{#if isIos}}
-                {{#if stores.appStore}}<button class="bt apple" data-market="appStore">앱스토어</button>{{/if}}
+                {{#if stores.appStore}}<button class="bt apple" data-market="appStore" title="새창">앱스토어</button>{{/if}}
             {{else}}
-                {{#if stores.playStore}}<button class="bt google" data-market="playStore">구글 Play 스토어</button>{{/if}}
-                {{#if stores.oneStore}}<button class="bt one-store" data-market="oneStore">원스토어</button>{{/if}}
+                {{#if stores.playStore}}<button class="bt google" data-market="playStore" title="새창">구글 Play 스토어</button>{{/if}}
+                {{#if stores.oneStore}}<button class="bt one-store" data-market="oneStore" title="새창">원스토어</button>{{/if}}
             {{/if}}
         {{/if}}
     </div>
