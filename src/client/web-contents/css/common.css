@@ -9682,3 +9682,12 @@ button:focus span {
 .popup .popup-info .tod-btns .btn{width:100%; line-height: 3.125rem; font-size: 0.938rem; font-weight: #700;} 
 .popup .popup-info .tod-btns > li:first-child .btn{text-align: left; padding-left: 1.5rem;}
 .popup .popup-info .tod-btns > li:last-child .btn{text-align: right; padding-right: 1.5rem;}
+
+/* 191209 [OP002-5498] 유선 업무처리 동의 프로세스 */
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents{background:#ff9000; padding-bottom:2.9375rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .inner-contents{color:#fff; font-size:23px; line-height:1.8125rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .inner-contents .ico{width:10.625rem; height:5.4375rem; background-image:url('/img/myt/line-sel-pop.png'); background-size:100%; margin:-5.375rem 0 2.375rem 0}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box{background:#fff; }
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box .btn-floating.disagree{color:#666; font-size:0.8125rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box .btn-floating{color:#000; font-size:1rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .need-agree{display:inline-block; color:#fff; font-size:0.8125rem; margin-top:1.25rem}
