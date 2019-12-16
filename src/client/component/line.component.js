@@ -9,7 +9,7 @@
  * @desc 공통 > 회선변경
  * @constructor
  */
-Tw.LineComponent = function ($container, selector) {
+Tw.LineComponent = function ($container, selector, isToast) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
@@ -28,6 +28,7 @@ Tw.LineComponent = function ($container, selector) {
 
   this._svcMgmtNum = '';
   this._mdn = '';
+  this._isToast = isToast || false;
 
   // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
   if ( !Tw.FormatHelper.isEmpty($container)) {
@@ -185,6 +186,10 @@ Tw.LineComponent.prototype = {
    * @private
    */
   _onOpenListPopup: function ($popupContainer) {
+
+    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+    new Tw.XtractorService($popupContainer);
+
     Tw.CommonHelper.focusOnActionSheet($popupContainer);
 
     this.$list = $popupContainer.find('.fe-item');
@@ -336,10 +341,9 @@ Tw.LineComponent.prototype = {
    * @private
    */
   _onOpenChildPopup: function ($popupContainer) {
-
-    console.log('$popupContainer ====>', $popupContainer);
     Tw.CommonHelper.focusOnActionSheet($popupContainer);
-
+    
+    new Tw.XtractorService($popupContainer);
     $popupContainer.on('click', '.fe-go-child', $.proxy(this._goUrl, this));
   },
 
@@ -460,7 +464,17 @@ Tw.LineComponent.prototype = {
       this._callback(resp);
     } else {
       if ( resp.code === Tw.CALLBACK_CODE.SUCCESS ) {
-        this._historyService.reload();
+
+        // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+        if(Tw.BrowserHelper.isApp() && this._isToast) {
+          Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+
+          setTimeout($.proxy(function () {
+            this._historyService.reload();
+          }, this), 500);
+        } else {
+          this._historyService.reload();
+        }
       }
     }
   },
