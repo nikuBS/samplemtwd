@@ -203,8 +203,8 @@ class MyTJoinSubmainController extends TwViewController {
           data.myPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
           data.myPausedState.state = true;
           if (data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
-              || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
-              || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY) {
+            || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
+            || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY) {
             data.myLongPausedState = {
               state: true,
               opState: data.myPausedState.svcChgRsnNm.replace(MYT_SUSPEND_STATE_EXCLUDE, ''),
@@ -213,7 +213,7 @@ class MyTJoinSubmainController extends TwViewController {
             };
           }
         } else if (((data.myPausedState.armyDt && data.myPausedState.armyDt !== '')
-            || (data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== ''))) {
+          || (data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== ''))) {
           data.myLongPausedState = {
             state: true
           };
@@ -244,7 +244,7 @@ class MyTJoinSubmainController extends TwViewController {
           }
           // 장기일시정지 처리완료 상태에서 멈추는 문제 해결 (장기일시정지, 처리완료, 신청일이 오늘 포함 이전이면, 새로 신청가능한 것으로
           if (data.myLongPausedState.opStateCd === 'C' && fromDt <= DateHelper.getCurrentShortDate()) {
-            data.myLongPausedState.svcAvailable = true;
+            data.myLongPausedState.stateReleased = true;
           }
         }
 

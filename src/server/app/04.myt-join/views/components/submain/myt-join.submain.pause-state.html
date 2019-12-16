@@ -14,7 +14,6 @@ _%>
         <li>
             <button data-id="pause_c">
                 <span class="inner">
-                    <p><%- JSON.stringify(data.myLongPausedState && data.myLongPausedState || {}) %></p>
                 <%_
                 if (data.myPausedState.svcStCd === 'AC') {
                     if (data.myLongPausedState && data.myLongPausedState.state) {
@@ -25,7 +24,7 @@ _%>
                     <span class="text">장기일시정지 해제 중</span>
                         <%_
                         } else {
-                            if (longStateCd === 'C' && data.myLongPausedState.svcAvailable) {
+                            if (longStateCd === 'C' && data.myLongPausedState.stateReleased) {
                                 // data.myPausedState.svcStCd === 'AC', 장기일시정지 (data.myLongPausedState), 처리 완료(C), 날짜가 이시 시작됨
                         _%>
                     <span class="tit">일시정지</span>
