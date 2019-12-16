@@ -527,11 +527,11 @@ export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
 };
 
 export const MYT_JOIN_WIRE_HIST_DTL_TIT_MAP = {
-  '167': '신규가입 상세내역',
-  '162': '설치장소 변경 상세내역',
-  '168': '가입상품 변경 상세내역',
   '143': '약정기간 변경 상세내역',
-  '153': '요금상품 변경 상세내역'
+  '153': '요금상품 변경 상세내역',
+  '162': '설치장소 변경 상세내역',
+  '167': '신규가입 상세내역',
+  '168': '가입상품 변경 상세내역'
 };
 
 export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
@@ -555,10 +555,10 @@ export const MYT_JOIN_THIGH5_PREFERENTIAL = {
     NC00000080: 'T high5 0히어로 캐시백 1%'   // NC00000080 : ?값이 어떻게 올지 확인필요
   },
   KDB:{
-    '01': '우대금리 I 2%',  // NC00000083: 
-    '02': '조건 충족 시 우대금리 II 1%',  // NC00000082: 
-    '03': '우대금리 I 2%',  // NC00000085: 
-    '04': '조건 충족 시 우대금리 II 1%',  // NC00000084: 
+    '01': '우대금리 I 2%',  // NC00000083:
+    '02': '조건 충족 시 우대금리 II 1%',  // NC00000082:
+    '03': '우대금리 I 2%',  // NC00000085:
+    '04': '조건 충족 시 우대금리 II 1%',  // NC00000084:
   }
 };
 
@@ -1439,7 +1439,7 @@ export const SMART_CALL_PICK = [
 ];
 
 export const ROAMING_CUSTOMIZED_MESSAGE = {
-  
+
   SIXTY_DAY: '60일 안의 날짜를 선택하세요.'
 }
 

@@ -19,21 +19,20 @@ Tw.MyTJoinWire.prototype = {
    * @private
    */
   _bindEvent: function () {
-    $('#btnGifts').click($.proxy(function(){
+    this.$container.on('click', '[data-id=bt-gifts]', $.proxy(function () {
       this._historyService.goLoad('/myt-join/submain/wire/gifts');
-    },this));
-    $('#btnDiscRefund').click($.proxy(function(){
+    }, this));
+    this.$container.on('click', '[data-id=bt-discount-refund]', $.proxy(function () {
       this._historyService.goLoad('/myt-join/submain/wire/discountrefund');
-    },this));
-    $('#btnHist').click($.proxy(function(){
+    }, this));
+    this.$container.on('click', '[data-id=bt-history]', $.proxy(function () {
       this._historyService.goLoad('/myt-join/submain/wire/history');
-    },this));
-    $('#btnAs').click($.proxy(function(){
+    }, this));
+    this.$container.on('click', '[data-id=bt-as]', $.proxy(function () {
       this._historyService.goLoad('/myt-join/submain/wire/as');
-    },this));
-    $('#btnNetphone').click($.proxy(function(){
+    }, this));
+    this.$container.on('click', '[data-id=bt-inetphone]', $.proxy(function () {
       this._historyService.goLoad('/myt-join/submain/wire/inetphone');
-    },this));
+    }, this));
   }
-
 };
