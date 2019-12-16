@@ -330,3 +330,17 @@ Tw.RECOMMEND_PRODS_PRIORITY = {
   insurance: '4',
   membership: '5'
 };
+
+// 브로드밴드 서비스 유형 별 코드
+Tw.BROADBAND_SVC_CODE = {
+  INTERNET: 'I',
+  IPTV: 'T',
+  PHONE: 'P'
+}
+
+// 브로드밴드 서비스 유형 별 이름
+Tw.BROADBAND_SVC_CODE_NAME = {
+  I: '인터넷',
+  T: 'IPTV',
+  P: '집전화'
+}

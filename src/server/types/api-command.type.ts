@@ -342,7 +342,9 @@ export const API_CMD = {
   BFF_05_0211: { path: '/core-modification/:version/wire-phone/numchange/change/put', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   // [OP002-4379]
   BFF_05_0213: { path: '/core-bill/:version/bill-pay/cdr-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-
+  BFF_05_0214: { path: '/core-modification/:version/wire-list-not-agreement', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0215: { path: '/sbk-tworld-processing-agreement-update', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/:version/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
