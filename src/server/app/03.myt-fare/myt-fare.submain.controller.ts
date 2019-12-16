@@ -15,6 +15,8 @@ import {API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR, SESSION_CMD
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import {SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
+// OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+import CommonHelper from '../../utils/common.helper';
 
 class MyTFareSubmainController extends TwViewController {
   constructor() {
@@ -39,6 +41,9 @@ class MyTFareSubmainController extends TwViewController {
       // [OP002-3317] 자녀 요금조회
       childLineInfo: childInfo
     };
+
+    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+    CommonHelper.addCurLineInfo(data.svcInfo);
 
     // 페이지url 통합으로 삭제 DV001-16372
     /*if ( req.params && req.params[0] === '/usagefee' ) {

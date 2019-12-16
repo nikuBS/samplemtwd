@@ -16,6 +16,9 @@ import {MYT_JOIN_SUBMAIN_TITLE} from '../../types/title.type';
 import {MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE, SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import BrowserHelper from '../../utils/browser.helper';
+// OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+import CommonHelper from '../../utils/common.helper';
+
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -52,6 +55,8 @@ class MyTJoinSubmainController extends TwViewController {
       currLineIconClass: this.getLineIconClassName(svcInfo.svcAttrCd),
       isApp: BrowserHelper.isApp(req) // App 여부
     };
+    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+    CommonHelper.addCurLineInfo(data.svcInfo);
     // 상태값 참조 : http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=53477532
     // 10: 신청/60: 초기화 -> 비밀번호 설정 유도
     // 20: 사용중/21:신청+등록완료 -> 회선 변경 시 비번 입력 필요, 비밀번호 변경 가능
@@ -203,8 +208,8 @@ class MyTJoinSubmainController extends TwViewController {
           data.myPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
           data.myPausedState.state = true;
           if (data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
-              || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
-              || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY) {
+            || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
+            || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY) {
             data.myLongPausedState = {
               state: true,
               opState: data.myPausedState.svcChgRsnNm.replace(MYT_SUSPEND_STATE_EXCLUDE, ''),
@@ -213,7 +218,7 @@ class MyTJoinSubmainController extends TwViewController {
             };
           }
         } else if (((data.myPausedState.armyDt && data.myPausedState.armyDt !== '')
-            || (data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== ''))) {
+          || (data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== ''))) {
           data.myLongPausedState = {
             state: true
           };
@@ -244,7 +249,7 @@ class MyTJoinSubmainController extends TwViewController {
           }
           // 장기일시정지 처리완료 상태에서 멈추는 문제 해결 (장기일시정지, 처리완료, 신청일이 오늘 포함 이전이면, 새로 신청가능한 것으로
           if (data.myLongPausedState.opStateCd === 'C' && fromDt <= DateHelper.getCurrentShortDate()) {
-            data.myLongPausedState.svcAvailable = true;
+            data.myLongPausedState.stateReleased = true;
           }
         }
 

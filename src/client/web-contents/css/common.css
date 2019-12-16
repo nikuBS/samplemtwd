@@ -9683,6 +9683,21 @@ button:focus span {
 .popup .popup-info .tod-btns > li:first-child .btn{text-align: left; padding-left: 1.5rem;}
 .popup .popup-info .tod-btns > li:last-child .btn{text-align: right; padding-right: 1.5rem;}
 
+/* 191108 [OP002-3705] 혜택/할인 카테고리 및 UI 개선 */
+.tod-benefit-list {margin-bottom:-0.438rem;}
+.tod-benefit-list:after {clear:both; display:block; content:' ';}
+.tod-benefit-list li {position:relative; float:left; width:calc(50% - 0.343rem); height:9.688rem; margin-bottom:0.438rem; cursor:pointer; border:1px solid #e3e4e6; border-radius:0.3rem; background-color:#fff;}
+.tod-benefit-list li .link {display: block; width:100%; height:100%; padding:0.9rem 0.938rem; box-sizing:border-box;}
+.tod-benefit-list li:nth-child(even) {float:right;}
+.tod-benefit-list li .tag-field {margin-bottom:0.5rem;}
+.tod-benefit-list li .tag-field .tag {color:#858585;  font-size:0.75rem;}
+.tod-benefit-list li .text-field .title {margin-bottom:0.25rem; font-weight:600; font-size:0.938rem;}
+.tod-benefit-list li .text-field .text {color:#666; font-size:0.75rem;}
+.tod-benefit-list li .state-tx01 {position:absolute; top:0; right:0;}
+.tod-benefit-list li .state-tx01 span {display:inline-block; vertical-align:top; width:2.125rem; height:1rem; line-height:1rem; text-align:center; color:#fff; font-size:0.625rem; border-radius:3px; background-color:#f86253;}
+.tod-benefit-list li .img-filed {width:4.188rem; height:4.188rem; position:absolute; bottom:0; right:0; text-align:right;}
+.tod-benefit-list li .img-filed img {width:100%; height:100%;}
+
 /* 191209 [OP002-5498] 유선 업무처리 동의 프로세스 */
 .popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents{background:#ff9000; padding-bottom:2.9375rem}
 .popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .inner-contents{color:#fff; font-size:23px; line-height:1.8125rem}

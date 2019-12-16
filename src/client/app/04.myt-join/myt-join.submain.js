@@ -25,6 +25,9 @@ Tw.MyTJoinSubMain = function (rootEl, params) {
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
   new Tw.XtractorService(this.$container);
+
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line');
 };
 
 Tw.MyTJoinSubMain.prototype = {
@@ -376,7 +379,7 @@ Tw.MyTJoinSubMain.prototype = {
         // [OP002-1526]
         if (stateMyPaused.fromDt === '99991231') {
           // 2G 장기 미사용 이용정지 화면 진입 불가
-          this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR.UNUSED_2G_USER, null, null);
+          this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR.UNUSED_2G_USER);
         } else {
           // 신청현황: 일시정지 예약중
           this._historyService.goLoad('submain/suspend/status');
@@ -391,7 +394,7 @@ Tw.MyTJoinSubMain.prototype = {
     }
     if (stateMyLongPaused && stateMyLongPaused.state) {
       // 장기일시정지 처리완료 상태에서 멈추는 문제 해결 (장기일시정지, 처리완료, 신청일이 오늘 포함 이전이면, 새로 신청가능한 것으로
-      if (stateMyLongPaused.opStateCd !== 'C' || !stateMyLongPaused.svcAvailable) {
+      if (stateMyLongPaused.opStateCd !== 'C' || !stateMyLongPaused.stateReleased) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
         return;
