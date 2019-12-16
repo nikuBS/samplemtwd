@@ -273,12 +273,13 @@
                                         <% if (isSearch && result.regionInfoList.length > 0) { %>
                                         <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
                                         <li>
-                                            <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
-                                                <dt><%= result.regionInfoList[i].storeName %></dt>
-                                                <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
-                                                    <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span class="blind">매장으로 전화하기</span></a>
-                                                </dd>
-                                            </dl>
+                                            <!-- 191021 웹접근성 수정_01 -->
+                                            <button class="bt-dtxt type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
+                                                <span class="dtxt-t"><%= result.regionInfoList[i].storeName %></span>
+                                                <span class="dtxt-d"><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %></span>
+                                            </button>
+                                            <!-- //191021 웹접근성 수정_01 -->
+                                            <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span class="blind">매장으로 전화하기</span></a>
                                         </li>
                                         <% } %>
                                         <% } %>
@@ -379,7 +380,7 @@
                                                         </div>
 
                                                         <div class="link-long">
-                                                            <a href="https://tbooking.svctop.co.kr" class="disabled" aria-haspopup="true" target="_blank" title="지점 방문 예약 바로가기">
+                                                            <a href="https://tbooking.svctop.co.kr" class="disabled" aria-haspopup="true" target="_blank" title="지점 방문 예약 바로가기 새창">
                                                                 <span class="ico-wrap">
                                                                     <img src="<%=CDN%>/img/ico/ico_reserve.png" alt="" style=" width: 2.75rem;height: 2.75rem;">
                                                                 </span>

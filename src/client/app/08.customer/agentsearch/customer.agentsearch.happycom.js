@@ -146,6 +146,7 @@ Tw.CustomerAgentHappycom.prototype = {
    * @private
    */
   _handleOpenSelectFilterPopup: function($layer) {
+   Tw.CommonHelper.focusOnActionSheet($layer);
     // 파라미터의 선택된 필터값을 새로운 옵션값에 설정해준다.(팝업에서 필터 선택 시 기존값과 비교하기 위함이다.)
     $.extend(true, this._newOptions, this._options);
 
@@ -236,6 +237,7 @@ Tw.CustomerAgentHappycom.prototype = {
       data: list,
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      Tw.CommonHelper.focusOnActionSheet($root);
       /* 팝업 오픈 시 이전에 선택된 지역 체크 */
       $root.find('input#' + this.selectedLocationCode).attr('checked', true);
       

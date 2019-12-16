@@ -19,7 +19,9 @@
         <!-- CS_16_01_복사한것 -->
         <div id="contents" class="container-wrap">
             <div class="container">
-                <h2 class="blind">내용</h2>
+                <!-- 190905 웹접근성 수정_01 -->
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <!-- //190905 웹접근성 수정_01 -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
@@ -106,13 +108,13 @@
                                     <% if (result.regionInfoList.length > 0) { %>
                                     <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
                                     <li>
-                                        <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
-                                            <dt><%= result.regionInfoList[i].storeName %></dt>
-                                            <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
-                                                <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
-                                                <!-- <button class="bt-tel" onclick="document.location.href='tel:<%= result.regionInfoList[i].tel %>'"><span role="img" class="blind">매장으로 전화하기</span></button>  -->
-                                            </dd>
-                                        </dl>
+                                        <!-- 191021 웹접근성 수정_01 -->
+                                        <button class="bt-dtxt type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
+                                            <span class="dtxt-t"><%= result.regionInfoList[i].storeName %></span>
+                                            <span class="dtxt-d"><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %></span>
+                                        </button>
+                                        <!-- //191021 웹접근성 수정_01 -->
+                                        <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span class="blind">매장으로 전화하기</span></a>
                                     </li>
                                     <% } %>
                                     <% } %>
@@ -170,11 +172,13 @@
 <script type="text/template" id="tpl_search_result_item">
   {{#list}}
   <li>
-      <dl class="type02 fe-branch-detail" value={{locCode}}>
-          <dt>{{storeName}}</dt>
-          <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a></dd>
-          <!-- <dd>{{searchAddr}}<br>{{jibunAddr}}<button class="bt-tel" onclick="document.location.href='tel:{{tel}}'"><span role="img" class="blind">매장으로 전화하기</span></button></dd> -->
-      </dl>
+      <!-- 191021 웹접근성 수정_01 -->
+      <button class="bt-dtxt type02 fe-branch-detail" value={{locCode}}>
+          <span class="dtxt-t">{{storeName}}</span>
+          <span class="dtxt-d">{{searchAddr}}<br>({{jibunAddr}})</span>
+      </button>
+      <!-- //191021 웹접근성 수정_01 -->
+      <a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a>
   </li>
   {{/list}}
 </script>

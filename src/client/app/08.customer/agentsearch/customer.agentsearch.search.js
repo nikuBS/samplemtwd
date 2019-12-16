@@ -235,6 +235,7 @@ Tw.CustomerAgentsearch.prototype = {
         hbs: 'CS_02_01_01'
       },
       $.proxy(function ($root) {
+        Tw.CommonHelper.focusOnActionSheet($root);
         new Tw.CustomerAgentsearchSearchOptions(
           $root, this._options, $.proxy(this._onOptionsChanged, this));
       }, this),
@@ -321,6 +322,7 @@ Tw.CustomerAgentsearch.prototype = {
       data: list,
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      Tw.CommonHelper.focusOnActionSheet($root);
       $root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
       }, this));
@@ -365,6 +367,7 @@ Tw.CustomerAgentsearch.prototype = {
       data: list,
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      Tw.CommonHelper.focusOnActionSheet($root);
       $root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
       }, this));
@@ -476,6 +479,7 @@ Tw.CustomerAgentsearch.prototype = {
       data: list,
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      Tw.CommonHelper.focusOnActionSheet($root);
       $root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
       }, this));
