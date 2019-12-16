@@ -71,7 +71,7 @@
 					</div>
                 </div>
                 <!-- //cont-box -->
-                
+
                 <!-- 190613_추가01 -->
                 <div class="cont-box bgnone tod-alram-box">
                     <div class="shadow-box">
@@ -107,101 +107,127 @@
                 <!-- //190613_추가01 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                
+
 				<!-- cont-box -->
                 <div class="cont-box nogaps-btm">
                 	<h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 / 할인</h3>
-            		<!-- .widget -->
-					<div class="horizon-fullbox tod-horizon-shadow"><!-- 190613 UX정합성 수정 (class="horizon-fullbox tod-horizon-shadow" 추가) --><!-- 19.03.08 스크립트 안되게 widget 제거 -->
-						<div class="widget-box horizontal">
-							<div class="horizontal-slide slide-nopd"><!-- 19.03.08 slide-nopd 추가 -->
-								<ul class="horizontal-list benefit-link space-nowrap"><!-- 19.03.14 space-nowrap 추가 -->
-									<li><button type="button" class="unit on">전체</a></li>
-									<li><button type="button" class="unit">요금할인</button></li>
-									<li><button type="button" class="unit">결합할인</button></li>
-									<li><button type="button" class="unit">장기가입혜택</button></li>
-									<li><button type="button" class="unit">참여혜택</button></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<!-- .widget -->
+                    <!-- 191108 [OP002-3705] 수정_01 -->
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box toggle">
+                            <div class="tod-benefit-wrap short"><!-- 2줄 이하일때 short 클래스 추가 -->
+                                <ul class="tod-benefit-link">
+                                    <li><button type="button" class="unit on">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
+                                    <li><button type="button" class="unit">#요금할인</button></li>
+                                    <li><button type="button" class="unit">#휴대폰+유무선 결합 할인</button></li>
+                                    <li><button type="button" class="unit">#장기가입혜택</button></li>
+                                    <li><button type="button" class="unit">#참여혜택</button></li>
+                                </ul>
+                            </div>
+
+                            <div class="tod-benefit-wrap">
+                                <ul class="tod-benefit-link">
+                                    <li><button type="button" class="unit on">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
+                                    <li><button type="button" class="unit">#요금할인</button></li>
+                                    <li><button type="button" class="unit">#휴대폰+유무선 결합 할인</button></li>
+                                    <li><button type="button" class="unit">#장기가입혜택</button></li>
+                                </ul>
+                                <button class="bt-toggle" role="button" aria-pressed="false" title="카테고리"></button><!-- 토글내용 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                <div class="toggler">
+                                    <ul class="tod-benefit-link">
+                                        <li><button type="button" class="unit">#포인트 활용</button></li>
+                                        <li><button type="button" class="unit">#데이터 충전</button></li>
+                                        <li><button type="button" class="unit">#특화 혜택</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //191108 [OP002-3705] 수정_01 -->
+                    <!-- //.widget -->
                 </div>
                 <!--// cont-box -->
                 <!-- cont-box -->
-                <div class="cont-box nogaps-top bgnone"><!--2019-02-24 수정 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps -->
-                	<ul class="discountbenefit-list">
-                        <li class="category-type mt16">
-                            <button type="button" class="link">
-                                <div class="text-field">
-                                    <h3 class="title">T끼리 온가족 할인</h3>
-                                    <p class="text">가족들의 가입일 합산에 따라<br />최대 50% 요금할인 지원</p>
-                                </div>
+                <!-- 191108 [OP002-3705] 수정_02 -->
+                <div class="cont-box bgnone"><!--2019-02-24 수정 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps -->
+                	<ul class="tod-benefit-list">
+                        <li>
+                            <a class="link">
                                 <div class="tag-field">
-                                    <span class="tag">#가족 가입 합산</span>
-                                    <span class="tag">#통신비 할인</span>
+                                    <span class="tag">#통신 요금 할인</span>
                                 </div>
-                                <div class="img-field"><img src="/img/discount/img_discount02.png" alt=""></div>
-                            </button>
-                        </li>
-                        <li class="category-type">
-                            <button type="button" class="link">
                                 <div class="text-field">
-                                    <h3 class="title">T 아너스 클럽</h3>
-                                    <p class="text">SKT장기고객만의 특별한 혜택</p>
+                                    <h3 class="title">선택약정할인제도</h3>
+                                    <p class="text">최대 25% 추가 요금 할인</p>
                                 </div>
-                                <div class="tag-field">
-                                    <span class="tag">#2년 이상 가입</span>
-                                    <span class="tag">#특별혜택 증정</span>
-                                </div>
-                                <i class="state-tx01"><span class="blind">이용 중</span></i>
-                                <div class="img-field"><img src="/img/discount/img_discount16.png" alt=""></div>
-                            </button>
+                                <i class="state-tx01"><span>이용 중</span></i>
+                                <div class="img-filed"><img src="/img/discount/ico_discount01.png" alt=""></div>
+                            </a>
                         </li>
-                        <li class="category-type">
-                            <button type="button" class="link">
+                        <li>
+                            <a class="link">
+                                <div class="tag-field">
+                                    <span class="tag">#통신 요금 할인</span>
+                                </div>
                                 <div class="text-field">
-                                    <h3 class="title">척척할인</h3>
-                                    <p class="text">제휴사 상품 일정금액 구매 시,<br />최대 38만원 할인 가능 혜택</p>
+                                    <h3 class="title">T건강습관 X AIA Vitality</h3>
+                                    <p class="text">목표 달성 및 제휴 상품<br> 구매 시 혜택 제공</p>
                                 </div>
-                                <div class="tag-field">
-                                    <span class="tag">#제휴상품 구매시</span>
-                                    <span class="tag">#통신비 할인</span>
-                                </div>
-                                <div class="img-field"><img src="/img/discount/img_discount18.png" alt=""></div>
-                            </button>
+                                <i class="state-tx01"><span>이용 중</span></i>
+                                <div class="img-filed"><img src="/img/discount/ico_discount02.png" alt=""></div>
+                            </a>
                         </li>
-                        <li class="category-type">
-                            <button type="button" class="link">
+                        <li>
+                            <a class="link">
+                                <div class="tag-field">
+                                    <span class="tag">#특화 혜택</span>
+                                </div>
+                                <div class="text-field">
+                                    <h3 class="title">복지고객할인</h3>
+                                    <p class="text">복지대상 요금 할인</p>
+                                </div>
+                                <div class="img-filed"><img src="/img/discount/ico_discount03.png" alt=""></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="link">
+                                <div class="tag-field">
+                                    <span class="tag">#데이터 충전</span>
+                                </div>
                                 <div class="text-field">
                                     <h3 class="title">데이터 충전소</h3>
-                                    <p class="text">제휴이벤트 응모하고 데이터를<br />무료로 충전 받는 혜택</p>
+                                    <p class="text">제휴이벤트 응모 시 데이터 무료 충전</p>
                                 </div>
-                                <div class="tag-field">
-                                    <span class="tag">#이벤트 응모시</span>
-                                    <span class="tag">#무료데이터 제공</span>
-                                </div>
-                                <div class="img-field"><img src="/img/discount/img_discount17.png" alt=""></div>
-                            </button>
+                                <div class="img-filed"><img src="/img/discount/ico_discount04.png" alt=""></div>
+                            </a>
                         </li>
-                        <li class="category-type">
-                            <button type="button" class="link">
-                                <div class="text-field">
-                                    <h3 class="title">T+B전화/인터넷전화<br />제목 두줄 케이스</h3>
-                                    <p class="text">결합시 휴대폰 월정액 &<br />전화/인터넷전화 기본료 할인</p>
-                                </div>
+                        <li>
+                            <a class="link">
                                 <div class="tag-field">
-                                    <span class="tag">#개인 / 가족결합</span>
-                                    <span class="tag">#휴대폰+전화</span>
+                                    <span class="tag">#휴대폰+유무선 결합 할인</span>
                                 </div>
-                                <div class="img-field"><img src="/img/discount/img_discount13.png" alt=""></div>
-                            </button>
+                                <div class="text-field">
+                                    <h3 class="title">한가족할인</h3>
+                                    <p class="text">결합시 초고속 인터넷 기본료 할인</p>
+                                </div>
+                                <div class="img-filed"><img src="/img/discount/ico_discount05.png" alt=""></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="link">
+                                <div class="tag-field">
+                                    <span class="tag">#통신 요금 할인</span>
+                                </div>
+                                <div class="text-field">
+                                    <h3 class="title">척척할인</h3>
+                                    <p class="text">제휴이벤트 응모 시 데이터 무료 충전</p>
+                                </div>
+                                <div class="img-filed"><img src="/img/discount/ico_discount06.png" alt=""></div>
+                            </a>
                         </li>
                     </ul>
-                    <div class="btn-more no-border">
-                        <button>더 보기</button>
-                    </div>
                 </div>
+                <!-- //191108 [OP002-3705] 수정_02 -->
                 <!--// cont-box -->
 
                 <!-- cont-box -->

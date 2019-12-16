@@ -20603,15 +20603,19 @@ a.bt-link-tx.underline.small {
 .shop-info .shop-txt > ul > li:last-child {
   border-bottom: 0; }
 
-.shop-info .shop-txt .type01 dt, .shop-info .shop-txt .type02 dt, .shop-info .shop-txt .type03 dt {
+.shop-info .shop-txt .type01 dt, .shop-info .shop-txt .type02 dt, .shop-info .shop-txt .type03 dt,
+.shop-info .shop-txt .type01 .dtxt-t, .shop-info .shop-txt .type02 .dtxt-t, .shop-info .shop-txt .type03 .dtxt-t {/* 190905 [] 웹접근성 수정 */
+  display: block;
   font-size: 0.81rem;
   margin-bottom: 0.63rem; }
 
-.shop-info .shop-txt .type01 dd, .shop-info .shop-txt .type02 dd, .shop-info .shop-txt .type03 dd {
+.shop-info .shop-txt .type01 dd, .shop-info .shop-txt .type02 dd, .shop-info .shop-txt .type03 dd,
+.shop-info .shop-txt .type01 .dtxt-d, .shop-info .shop-txt .type02 .dtxt-d, .shop-info .shop-txt .type03 .dtxt-d {/* 190905 [] 웹접근성 수정 */
+  display: block;
   font-size: 0.81rem;
   color: #858585; }
 
-.shop-info .shop-txt .type01 dd .bt-tel, .shop-info .shop-txt .type02 dd .bt-tel, .shop-info .shop-txt .type03 dd .bt-tel {
+.shop-info .shop-txt .bt-tel{/* 190905 [] 웹접근성 수정 */
   display: inline-block;
   width: 2rem;
   height: 2rem;
@@ -20620,6 +20624,13 @@ a.bt-link-tx.underline.small {
   right: 0;
   background: url(/img/customer/bg-tel-64.png) no-repeat 0 0;
   background-size: 2rem 2rem; }
+
+.shop-info .shop-txt .bt-dtxt {/* 190905 [] 웹접근성 수정 (추가) */
+  display: block;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
 
 .shop-info .shop-txt .type02 {
   /* 매장 전화 */
@@ -35768,6 +35779,17 @@ body.apphome .section-box {
 .tod-unit-item-info .discount-wrap .txt{font-size:1rem; line-height: 1; color:#f76252;}
 .tod-unit-item-info .type-wrap{padding-top: 0.82rem; line-height:1; border-top:1px solid #f2f2f2;}
 .tod-unit-item-info .type-wrap .txt{font-size: 0.75rem; color: #666;}
+
+/* 191108 [OP002-3705] 혜택/할인 카테고리 및 UI 개선 */
+.tod-benefit-wrap {position:relative; padding-right:2.8rem; padding-bottom:0.5rem;}
+.tod-benefit-wrap.short {padding-right:0;}
+.tod-benefit-wrap .tod-benefit-link li {display:inline-block;}
+.tod-benefit-wrap .tod-benefit-link li .unit {display: inline-block; height: 1.875rem; line-height: 1.875rem; padding:0 0.75rem; background-color: #fff; border-radius: 0.9375rem; font-size: 0.75rem; color: #666; margin: 0 0.3rem 0.73rem 0; border:1px solid #e5e5e5;}
+.tod-benefit-wrap .tod-benefit-link li .unit.on {border:1px solid #178bce; color:#fff; background-color:#178bce;}
+.tod-benefit-wrap .bt-toggle {position:absolute; bottom:1.23rem; right:0; display: inline-block; width:2.563rem; height:1.875rem; border-radius: 0.9375rem; background:#bcbec1;}
+.tod-benefit-wrap .bt-toggle:after {content:'더보기'; display:inline-block; width:100%; height:1.875rem; vertical-align:top; font-size:0; background:url(/img/discount/ico_more.png) no-repeat 50% 50%; background-size:1rem auto;}
+.tod-benefit-wrap .bt-toggle.open:after {content:'닫기'; font-size:0.75rem; line-height:1.875rem; color:#fff; text-align:center; background-image:none;}
+.tod-benefit-wrap.short .bt-toggle {display:none;}
 
 /* 191202 [OP002-5208] 개선-회선 관리 추가_02 */
 .tod-icon{position:relative;}
