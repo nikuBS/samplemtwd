@@ -226,6 +226,8 @@ Tw.API_CMD = {
   BFF_05_0211: { path: '/core-modification/:version/wire-phone/numchange/change/put', method: Tw.API_METHOD.PUT },
   // [OP002-4379]
   BFF_05_0213: { path: '/core-bill/:version/bill-pay/cdr-pattern', method: Tw.API_METHOD.GET },
+  BFF_05_0214: { path: '/core-modification/:version/wire-list-not-agreement', method: Tw.API_METHOD.GET },
+  BFF_05_0215: { path: '/sbk-tworld-processing-agreement-update', method: Tw.API_METHOD.PUT },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
