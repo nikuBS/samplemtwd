@@ -63,8 +63,8 @@
                                 <!-- 웹접근성 수정 -->
                             </div>
                             <!-- <div class="tod-fright"><button class="btn-round2 btn-style3" id="fe-btn-view-list">리스트보기</button></div> -->
-                            <div class="tod-bt-alone"><a href="#list" class="btn-round2 btn-style3 none" id="fe-btn-view-list">리스트보기</a></div>
-                            <div class="tod-bt-alone"><a href="#map" class="btn-round2 btn-style3 none" id="fe-btn-view-map">지도보기</a></div>
+                            <div class="tod-bt-alone"><button data-url="#list" class="btn-round2 btn-style3 none" id="fe-btn-view-list">리스트보기</button></div>
+                            <div class="tod-bt-alone"><button data-url="#map" class="btn-round2 btn-style3 none" id="fe-btn-view-map">지도보기</button></div>
                             <!-- <div class="tod-fright"><button class="btn-round2 btn-style3 none" id="fe-btn-view-map">지도보기</button></div> -->
                             <!-- this.$inputFile.css('display', 'none'); -->
                         </div>
@@ -157,12 +157,13 @@
 <script type="text/template" id="tpl_list_item">
     {{#list}}
   <li class='fe-type-{{storeType}}'>
-      <dl class="type02 fe-list" value={{locCode}}>
-          <dt>{{storeName}}</dt>
-          <dd>{{searchAddr}}<br />({{jibunAddr}})
-              <a class="bt-tel" href="tel:{{tel}}"><span role="img" class="blind">매장으로 전화하기</span></a>
-          </dd>
-      </dl>
+      <!-- 191021 웹접근성 수정_01 -->
+      <button class="bt-dtxt type02 fe-list" value={{locCode}}>
+          <span class="dtxt-t">{{storeName}}</span>
+          <span class="dtxt-d">{{searchAddr}}<br>({{jibunAddr}})</span>
+      </button>
+      <!-- //191021 웹접근성 수정_01 -->
+      <a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a>
   </li>
   {{/list}}
 </script>

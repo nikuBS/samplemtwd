@@ -8,16 +8,20 @@
                 <div class="txt tod-txcolor1">
                     <span class="tx-bold">‘행복커뮤니티 센터 찾기’</span>를 이용해<br> 프로그램을 예약하고<br> 예약 내용을 확인해보세요.
                     <button type="button" id="TC000068" class="btn-tip ml0" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
-                        <i class="icon-badge-tip"><span class="blind">TC000068</span></i>
+                        <!-- 190712 [OP002-1430] 수정_02 -->
+                        <i class="icon-badge-tip"><span class="blind">행복커뮤니티 센터 프로그램 이용안내 tip</span></i>
+                        <!-- //190712 [OP002-1430] 수정_02 -->
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 190905 웹접근성 수정_01 -->
     <ul class="bt-slice item-two">
-        <li><button data-external="" class="btn-round1 btn-style4 fs13 fe-reserve">스마트폰 교실 예약하기</button></li>
-        <li><button data-external="http://www.sktacademy.co.kr/MOBILECLASS/reserve/Reserve_V.asp" class="btn-round1 btn-style1 fs13">나의 예약 조회하기</button></li>
+        <li><button data-external="" class="btn-round1 btn-style4 fs13 fe-reserve" title="새창">스마트폰 교실 예약하기</button></li>
+        <li><button data-external="http://www.sktacademy.co.kr/MOBILECLASS/reserve/Reserve_V.asp" class="btn-round1 btn-style1 fs13" title="새창">나의 예약 조회하기</button></li>
     </ul>
+    <!-- //190905 웹접근성 수정_01 -->
 </div>
 <!--// .cont-box -->
 
@@ -72,12 +76,12 @@
             <ul class="fe-result-list">
                 <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
                 <li>
-                    <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
-                        <dt><%= result.regionInfoList[i].storeName %></dt>
-                        <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
-                            <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
-                        </dd>
-                    </dl>
+                    <button class="bt-dtxt type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
+                        <span class="dtxt-t"><%= result.regionInfoList[i].storeName %></span>
+                        <span class="dtxt-d"><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
+                        </span>
+                    </button>
+                    <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span class="blind">매장으로 전화하기</span></a>
                 </li>
                 <% } %>
             </ul>

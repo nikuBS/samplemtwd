@@ -13,6 +13,8 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
   this.isLogin = (isLogin === 'true');
   this.isLocationAccess = false;  // 앱일때 GPS ON 여부 및 모바일 웹일때 위치 액세스 가능 여부
   this.isPopupNoResult = false;
+
+  this._historyService = new Tw.HistoryService();
   
   // 처음에 표시할 위치가 있을 경우 query param을 이용
   this.paramData = Tw.UrlHelper.getQueryParams();
@@ -127,8 +129,8 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$container.on('click', '#fe-myLocation', $.proxy(this._onMyLocationClicked, this)); // 내 위치 버튼 클릭 이벤트
     this.$container.on('click', '#fe-change-region', $.proxy(this._onRegionChangeClicked, this)); // 위치 변경 버튼 클릭 이벤트
     this.$typeOption.on('click', $.proxy(this._onTypeOption, this));
-    // this.$container.on('click', '#fe-btn-view-list', $.proxy(this._switchToList, this));
-    // this.$container.on('click', '#fe-btn-view-map', $.proxy(this._switchToMap, this));
+    this.$container.on('click', '#fe-btn-view-list', _.debounce($.proxy(this._onShowListMap, this), 300));
+    this.$container.on('click', '#fe-btn-view-map', _.debounce($.proxy(this._onShowListMap, this), 300));
     this.$btnMore.on('click', $.proxy(this._onMore, this));
     this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
   },
@@ -764,6 +766,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     this._popupService.open({
       hbs: 'CS_02_03_L01'
     }, $.proxy(function (container) {
+      Tw.CommonHelper.focusOnActionSheet(container);
       new Tw.CustomerAgentsearchRegion(container, this._currentDo, this._currentGu, this._regions,
         $.proxy(this._onRegionChanged, this));
     }, this));
@@ -809,10 +812,10 @@ Tw.CustomerAgentsearchNear.prototype = {
    */
   _onTypeOption: function () {
     var list = [{
-        value: Tw.BRANCH.SELECT_BRANCH_TYPE[0],
-        option: 'fe-type',
-        attr: 'value="0"'
-      },
+      value: Tw.BRANCH.SELECT_BRANCH_TYPE[0],
+      option: 'fe-type',
+      attr: 'value="0" '
+    },
       {
         value: Tw.BRANCH.SELECT_BRANCH_TYPE[1],
         option: 'fe-type',
@@ -824,6 +827,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         attr: 'value="2"'
       }
     ];
+
     list[this._currentBranchType].option = 'checked';
 
     this._popupService.open({
@@ -834,6 +838,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         list: list
       }]
     }, $.proxy(function (root) {
+      Tw.CommonHelper.focusOnActionSheet(root);
       root.on('click', 'li button', $.proxy(function (e) {
         this._popupService.close();
         this._currentBranchType = parseInt(e.currentTarget.value, 10);
@@ -908,6 +913,10 @@ Tw.CustomerAgentsearchNear.prototype = {
     if (!this._listInitilized || this.isMyLocationCliked) {
       this._initList();
     }
+    if (this.isShowListMap === true) {
+      this.$showMap.focus();
+    }
+    this.isShowListMap = false;
   },
 
   /**
@@ -930,6 +939,10 @@ Tw.CustomerAgentsearchNear.prototype = {
       this._initMap();
       this._onBranchTypeChanged();
     }
+    if (this.isShowListMap === true) {
+      this.$showList.focus();
+    }
+    this.isShowListMap = false;
   },
 
   /**
@@ -947,5 +960,17 @@ Tw.CustomerAgentsearchNear.prototype = {
       // Tw.Logger.info('thomas_check _onHashChange List 내부');
       this._switchToList();
     }
+  },
+
+  /**
+   * @function
+   * @desc 리스트기보기 버튼 클릭
+   */
+  _onShowListMap: function (e) {
+    // window.location.href = '#' + $(e.currentTarget).data('url');
+    var url = $(e.currentTarget).data('url');
+    this.isShowListMap = true;
+    this._historyService.goLoad(url);
   }
+
 };
