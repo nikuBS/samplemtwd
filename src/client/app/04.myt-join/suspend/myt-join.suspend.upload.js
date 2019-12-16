@@ -18,7 +18,7 @@ Tw.MytJoinSuspendUpload = function () {
  * @const
  * @readonly
  */
-Tw.MytJoinSuspendUpload.DEFAULT_FILE = {'attr': 'name="file" accept="image/bmp, image/x-windows-bmp, image/gif, image/jpeg, image/pjpeg, image/png, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf, application/unknown, .bmp, .gif, .jpg, .jpeg, .png, .doc, .docx, .hwp, .pdf"'};
+Tw.MytJoinSuspendUpload.DEFAULT_FILE = {'attr': 'name="file" accept="image/bmp, image/x-windows-bmp, image/gif, image/jpeg, image/pjpeg, image/png, .bmp, .gif, .jpg, .jpeg, .png"'};
 Tw.MytJoinSuspendUpload.prototype = {
   /**
    *
@@ -33,7 +33,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     oldFiles = oldFiles || [];
     this._callback = callback;
     this._fileCount = fileCount || 1;
-    this._acceptExt = ['bmp', 'gif', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'hwp', 'pdf'];
+    this._acceptExt = ['bmp', 'gif', 'jpg', 'jpeg', 'png'];
     this._fileInfos = _.map(fileInfos || new Array(this._fileCount), function (fileInfo, index) {
       return _.defaults(fileInfo, Tw.MytJoinSuspendUpload.DEFAULT_FILE, {oldFile: oldFiles[index]});
     });
@@ -180,7 +180,7 @@ Tw.MytJoinSuspendUpload.prototype = {
       return false;
     }
     // file suffix validation.
-    if (!/\.(bmp|gif|jpg|jpeg|png|doc|docx|hwp|pdf)$/ig.test(file.name)) {
+    if (!/\.(bmp|gif|jpg|jpeg|png)$/ig.test(file.name)) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
       return false;
     }
