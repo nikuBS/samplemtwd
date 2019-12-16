@@ -18,11 +18,14 @@ _%>
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container" data-id="submain-container">
-                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+                <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo }); %>
+                <!-- <hr class="cont-sp type1" aria-hidden="true"> -->
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="my-subscription-wrap">
-                        <div class="my-device-type">
+                        <!-- OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+                        <!-- <div class="my-device-type">
                             <span class="ico-wrap">
                                 <i class="icon-<%- data.currLineIconClass %>-48">
                                     <span class="blind"></span>
@@ -39,8 +42,9 @@ _%>
                                 <%_ } _%>
                             </div>
                             <div class="p-num"><span class="blind">회선정보</span><%- (['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) > -1) ? data.svcInfo.addr : data.svcInfo.svcNum %></div>
-                        </div>
-                        <div class="basic-list mt20">
+                        </div> -->
+                        <!-- // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+                        <div class="basic-list tod-basic-list">
                             <ul>
                                 <%- include('../components/submain/myt-join.submain.more-info.html', data) _%>
                             </ul>

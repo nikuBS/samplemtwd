@@ -38,6 +38,8 @@ import {
   UNLIMIT_CODE
 } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
+// OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+import CommonHelper from '../../utils/common.helper';
 
 // 실시간잔여량 공제항목
 const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -84,6 +86,9 @@ class MytDataSubmainController extends TwViewController {
       bpcpServiceId: req.query.bpcpServiceId || '',
       eParam: req.query.eParam || ''
     };
+
+    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+    CommonHelper.addCurLineInfo(data.svcInfo);
 
     this.isPPS = data.svcInfo.svcAttrCd === 'M2';
     Observable.combineLatest(

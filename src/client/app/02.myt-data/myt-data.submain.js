@@ -29,6 +29,9 @@ Tw.MyTDataSubMain = function (params) {
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
   new Tw.XtractorService(this.$container);
+
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line');
 };
 
 Tw.MyTDataSubMain.prototype = {

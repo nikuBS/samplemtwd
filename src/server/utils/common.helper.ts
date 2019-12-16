@@ -1,3 +1,7 @@
+
+import StringHelper from '../utils/string.helper';
+import {SVC_ATTR_NAME, LINE_SVC_ATTR_ICO_FILE_NM} from '../types/bff.type';
+
 class CommonHelper {
 
   static getPaging (uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
@@ -39,6 +43,19 @@ class CommonHelper {
         res.clearCookie(key);
       }
     }
+  }
+
+  /**
+   * OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+   * 회선선택 영역에 출력될 데이터를 생성한다.
+   * @param req 
+   * @param res 
+   * @param preFix 
+   */
+  static addCurLineInfo(svcInfo) {
+    svcInfo['lineNickNm'] = ['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1 ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : svcInfo.nickNm;
+    svcInfo['add'] = ['S1', 'S2'].indexOf(svcInfo.svcAttrCd) === -1 ? StringHelper.phoneStringToDash(svcInfo.svcNum) : svcInfo.addr;
+    svcInfo['ico'] = LINE_SVC_ATTR_ICO_FILE_NM[svcInfo.svcAttrCd];
   }
 }
 
