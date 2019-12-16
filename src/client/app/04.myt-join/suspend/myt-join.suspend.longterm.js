@@ -72,6 +72,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$militaryType = this.$container.find('[data-id="fe-military-type"]');
     // [OP002-4422] 일시정지 기간 입력 시 validation check
     this.$inputDateSelect = this.$container.find('[data-role="fe-date-select"]');
+    this._$coachMark = this.$container.find('.tod-coach-mark'); // .find('button.close');
     // 업로드된 파일 목록 나열
     this._$filenameList = this.$container.find('.filename-list');
     var $tmplUploadItem = this.$container.find('#fe-tmpl-upload-item');
@@ -92,6 +93,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$inputDateSelect
       .on('focus', 'input[type="date"]', $.proxy(this._onFocusDateSelect, this))
       .on('change', 'input[type="date"]', $.proxy(this._onChangeDateSelect, this));
+    this._$coachMark.find('button.close').on('click', $.proxy(this._onCoachMarkCloseClicked, this));
     // 지금은 삭제를 위한 버튼 하나밖에 없기 때문에, selector를 단순화했다.
     this._$filenameList.on('click', 'button', $.proxy(this._onUploadItemDeleteClicked, this));
     this._changeSuspendType('military');
@@ -634,7 +636,9 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       this._popupService.openAlert(msg, null, null, null, null, $(event.target));
     }
   },
-
+  _onCoachMarkCloseClicked: function () {
+    this._$coachMark.hide();
+  },
   _onUploadItemDeleteClicked: function (event) {
     // Nullable이기에, 과한 대응을 해놓는다.
     if (this._files && this._files.length) {
