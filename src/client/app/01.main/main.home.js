@@ -79,6 +79,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   // Still Don't know why. temporal fix for link issue.
   $('.help-list li a').on('click', $.proxy(this._onClickInternal, this));
 
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
   // this._lineComponent = new Tw.LineComponent();
   this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line');
 };
