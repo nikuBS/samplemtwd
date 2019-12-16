@@ -426,25 +426,28 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   _onFreeSMS: function () {
 
     // OP002-5783 : [VOC]문자보내기 AOS10 대응
-    var osVersion = Tw.BrowserHelper.isAndroid() ? Tw.BrowserHelper.getAndroidVersion() : (Tw.BrowserHelper.isIos() ? Tw.BrowserHelper.getIosVersion() : '0.0.0');
-    var majorVersion = 0;
+    if(Tw.BrowserHelper.isAndroid()) {
+      var osVersion = Tw.BrowserHelper.getAndroidVersion();
+      var majorVersion = 0;
 
-    if ( !Tw.FormatHelper.isEmpty(osVersion) ) {
-      majorVersion = osVersion.split('.')[0];
-      if(Tw.FormatHelper.isNumber(majorVersion)) {
-        majorVersion = Number(majorVersion);
+      if ( !Tw.FormatHelper.isEmpty(osVersion) ) {
+        majorVersion = osVersion.split('.')[0];
+        if(Tw.FormatHelper.isNumber(majorVersion)) {
+          majorVersion = Number(majorVersion);
+        }
       }
-    }
 
-    if(Tw.BrowserHelper.isAndroid() && (majorVersion > 9 || Number(Tw.BrowserHelper.getOsVersion()) > 28 )) {
-      this._popupService.openAlert(
-        Tw.MENU_STRING.OPTIMIZING_AOS10,
-        '',
-        Tw.BUTTON_LABEL.CONFIRM,
-        null,
-        'menu_optimizing_aos10'
-      );
-      return;
+      if(Tw.BrowserHelper.isAndroid() && (majorVersion > 9 || Number(Tw.BrowserHelper.getOsVersion()) > 28 )) {
+        this._popupService.openAlert(
+          Tw.MENU_STRING.OPTIMIZING_AOS10,
+          '',
+          Tw.BUTTON_LABEL.CONFIRM,
+          null,
+          'menu_optimizing_aos10'
+        );
+        return;
+      }
+
     }
 
     if (this._memberType === 1) {
