@@ -585,6 +585,7 @@ Tw.MembershipSubmain.prototype = {
    * @param $popupContainer
    */
   _onOpenBarcode: function (cardNum, $popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       membershipBarcode.JsBarcode(cardNum, {
