@@ -350,10 +350,10 @@
                                 <ul class="slider">
                                     <li>
                                         <ul class="quick-menu-list">
-                                            <li><button class="bt new fe-home-external" data-url="https://m.sktelecom5gx.com" data-xt_eid="CMMA_A2_B6-181" data-xt_csid="NO" data-xt_action="BC"><i class="icon-5gx"></i>5GX</button></li>
-                                            <li><a href="/product/mobileplan" class="bt" data-xt_eid="CMMA_A2_B6-147" data-xt_csid="NO" data-xt_action="BC"><i class="icon-price-plan-80"></i>요금제</a></li>
-                                            <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B6-148" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"></i>부가서비스</a></li>
-                                            <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B6-149" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
+                                            <li><button class="bt new fe-home-external" title="새창" tabindex="0 data-url="https://m.sktelecom5gx.com" data-xt_eid="CMMA_A2_B6-181" data-xt_csid="NO" data-xt_action="BC"><i class="icon-5gx"></i>5GX</button></li>
+                                            <li><a href="/product/mobileplan" title="요금제" role="link" tabindex="0 class="bt" data-xt_eid="CMMA_A2_B6-147" data-xt_csid="NO" data-xt_action="BC"><i class="icon-price-plan-80"></i>요금제</a></li>
+                                            <li><a href="/product/mobileplan-add" title="부가서비스" tabindex="0 role="link" class="bt" data-xt_eid="CMMA_A2_B6-148" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"></i>부가서비스</a></li>
+                                            <li><a href="/product/wireplan" title="인터넷/집전화/IPTV" tabindex="0 role="link" class="bt" data-xt_eid="CMMA_A2_B6-149" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
                                             <!--<li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B6-150" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>-->
                                         </ul>
                                     </li>
@@ -520,7 +520,7 @@
                                         <ul class="help-list">
                                             <% help.map((target) => { %>
                                             <li>
-                                                <button data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-174" data-xt_csid="NO" data-xt_action="BC">
+                                                <button data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-174" data-xt_csid="NO" data-xt_action="BC" role="link">
                                                     <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt=""></span>
                                                     <%- target.mainExpsTitNm %>
                                                 </button>
@@ -553,7 +553,7 @@
                         <div class="slider-box">
                             <ul class="slider">
                                 <li>
-                                    <a data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B6-173" data-xt_csid="NO" data-xt_action="BC">
+                                    <a data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B6-173" data-xt_csid="NO" data-xt_action="BC" role="link">
                                         <span class="notice-list-ti"><%= redisData.mainNotice[0].ntcTitNm %></span>
                                         <span class="ico"></span>
                                     </a>
