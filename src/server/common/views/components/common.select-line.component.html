@@ -1,9 +1,12 @@
+<%  if(svcInfo.loginType === 'T') { %>
 <div class="tod-line-sel-box">
-    <button type="button" class="line-sel-btn fe-bt-line" data-svcmgmtnum="<%=svcInfo.svcMgmtNum%>" data-xt_eid="CMMA_A3-B13-28" data-xt_csid="CS_ID" data-xt_action="BC">
+    <button type="button" class="line-sel-btn fe-bt-line" data-svcmgmtnum="<%=svcInfo.svcMgmtNum%>" data-xt_eid="<%=xtEid.multiple%>" data-xt_csid="CS_ID" data-xt_action="BC">
+    <!-- <button type="button" class="line-sel-btn fe-bt-line" data-svcmgmtnum="<%=svcInfo.svcMgmtNum%>" data-xt_eid="<%=(parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? xtEid.multiple: xtEid.single %>" data-xt_csid="CS_ID" data-xt_action="BC">  -->
         <i class="sel-ico">
-            <img src="<%=CDN%>/img/myt/<%= svcInfo.ico _%>" alt="">
+            <img src="<%=CDN%>/img/myt/<%= svcInfo.ico _%>" aria-hidden="true">
         </i>
         <span class="item"><%= svcInfo.lineNickNm _%></span>
         <span class="detail-info"><%= svcInfo.add _%></span>
     </button>
 </div>
+<%  } %>
