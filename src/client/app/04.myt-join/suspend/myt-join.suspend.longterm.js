@@ -93,10 +93,13 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$inputDateSelect
       .on('focus', 'input[type="date"]', $.proxy(this._onFocusDateSelect, this))
       .on('change', 'input[type="date"]', $.proxy(this._onChangeDateSelect, this));
-    this._$coachMark.find('button.close').on('click', $.proxy(this._onCoachMarkCloseClicked, this));
+    var onCoachMarkCloseClicked = $.proxy(this._onCoachMarkCloseClicked, this);
+    this._$coachMark.find('button.close').on('click', onCoachMarkCloseClicked);
     // 지금은 삭제를 위한 버튼 하나밖에 없기 때문에, selector를 단순화했다.
     this._$filenameList.on('click', 'button', $.proxy(this._onUploadItemDeleteClicked, this));
     this._changeSuspendType('military');
+    // 닫지 않아도 5초내 닫히도록 한다.
+    setInterval(onCoachMarkCloseClicked, 5000);
   },
   /**
    * @function
@@ -467,6 +470,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._suspendOptions.command = 'longterm';
       this._suspendOptions.svcNum = this._svcInfo.svcNum;
+      // TODO: Popup으로 표현되어야 한다.
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(this._suspendOptions));
     } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg,

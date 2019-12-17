@@ -34,9 +34,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @desc Bind events to elements.
    */
   _bindEvent: function () {
-    this.$container.on('click', '[data-id=bt-release]', $.proxy(this._onBtReleaseClicked, this));
-    this.$container.on('click', '[data-id=bt-resuspend]', $.proxy(this._onBtResuspendClicked, this));
-    this.$container.on('click', '[data-id=bt-cancel-resuspend]', $.proxy(this._onBtCancelResuspendClicked, this));
+    this.$container.on('click', '[data-id=bt-release]', $.proxy(this._onBtReleaseClicked, this))
+      .on('click', '[data-id=bt-resuspend]', $.proxy(this._onBtResuspendClicked, this))
+      .on('click', '[data-id=bt-cancel-resuspend]', $.proxy(this._onBtCancelResuspendClicked, this))
+      .on('click', '[data-id=bt-request-longterm]', $.proxy(this._onBtRequestLongtermClicked, this));
   },
   /**
    * @function
@@ -130,6 +131,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
       params.command = 'resuspend';
       params.svcNum = this._svcInfo.svcNum;
       params.toDt = this._data.status.period.to;
+      // TODO: Popup으로 표현되어야 한다.
       this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param(params));
     } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
@@ -180,12 +182,20 @@ Tw.MyTJoinSuspendStatus.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       params.command = 'cancel-resuspend';
       params.svcInfo = this._svcInfo.svcNum;
+      // TODO: Popup으로 표현되어야 한다.
       this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param(params));
     } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+  /**
+   * @function
+   * @desc Event listener for the button click on [data-id=bt-request-longterm](장기일시정지 신청하기)
+   */
+  _onBtRequestLongtermClicked: function () {
+    this._historyService.goLoad('/myt-join/submain/suspend#long-term');
   },
   // Reset(해제하기)
   /**
@@ -230,6 +240,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
+      // TODO: Popup으로 표현되어야 한다.
       this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param({command: 'reset'}));
     } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
