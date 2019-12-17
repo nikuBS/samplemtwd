@@ -210,6 +210,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     Tw.CommonHelper.endLoading('.container');
     if (res.code === Tw.API_CODE.CODE_00) {
       params.command = 'temporary';
+      // TODO: Popup으로 표현되어야 한다.
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
