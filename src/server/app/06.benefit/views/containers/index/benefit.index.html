@@ -6,6 +6,8 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/index/benefit.index.component.html %>
+<% include ../../components/index/benefit.index.category.template.component.html %>
+
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -79,8 +81,43 @@
                 <!-- cont-box -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 / 할인</h3>
+                    <!-- 191108 [OP002-3705] 수정_01 -->
                     <!-- .widget -->
-                    <div class="horizon-fullbox tod-horizon-shadow"><!-- 190613 UX정합성 수정 (class="horizon-fullbox tod-horizon-shadow" 추가) -->
+                    <div class="widget">
+                        <div class="widget-box toggle">
+                            <div id="fe-category" class="tod-benefit-wrap">
+                                <ul class="tod-benefit-link" id="fe-category-list_1">
+                                    <!-- <li><button type="button" aria-selected="true" class="unit on" data-category="" data-url="/benefit/submain">#전체</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01421" data-url="/benefit/submain/discount">#요금할인</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01422" data-url="/benefit/submain/combinations">#휴대폰+유무선 결합 할인</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01423" data-url="/benefit/submain/long-term">#장기가입혜택</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01424" data-url="/benefit/submain/participation">#참여혜택</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01714" data-url="/benefit/submain/purchase">#구매혜택</button></li> -->
+
+                                    <li><button type="button" aria-selected="true" class="unit on" data-category="">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
+                                    <!-- <li><button type="button" aria-selected="false" class="unit" data-category="F01421">#요금할인</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01422">#휴대폰+유무선 결합 할인</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01423">#장기가입혜택</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01424">#참여혜택</button></li>
+                                    <li><button type="button" aria-selected="false" class="unit" data-category="F01714">#구매혜택</button></li>  -->
+                                </ul>
+                                <button id="fe-btn-more-category" class="bt-toggle" role="button" aria-pressed="false" title="카테고리" style="display: none;"></button><!-- 토글내용 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                <div class="toggler">
+                                    <ul class="tod-benefit-link" id="fe-category-list_2">
+                                        <!-- <li><button type="button" aria-selected="false" class="unit" data-category="F01421" data-url="/benefit/submain/discount">#임_요금할인</button></li>
+                                        <li><button type="button" aria-selected="false" class="unit" data-category="F01424" data-url="/benefit/submain/participation">#임_참여혜택</button></li>
+                                        <li><button type="button" aria-selected="false" class="unit" data-category="F01714" data-url="/benefit/submain/purchase">#임_구매혜택</button></li> -->
+
+                                        <!-- <li><button type="button" aria-selected="false" class="unit" data-category="F01421">#임_요금할인</button></li>
+                                        <li><button type="button" aria-selected="false" class="unit" data-category="F01424">#임_참여혜택</button></li>
+                                        <li><button type="button" aria-selected="false" class="unit" data-category="F01714">#임_구매혜택</button></li> -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="horizon-fullbox tod-horizon-shadow">
                         <div class="widget-box horizontal">
                             <div id="fe-category" class="horizontal-slide slide-nopd">
                                 <ul class="horizontal-list benefit-link space-nowrap" role="tablist">
@@ -93,15 +130,20 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                     <!-- .widget -->
+                    <!-- //191108 [OP002-3705] 수정_01 -->
                 </div>
                 <!--// cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- .cont-box -->
                 <div id="fe-prod-list-area" class="cont-box nogaps-top bgnone"><!--2019-02-24 수정 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps -->
 
-                    <ul id="fe-list" class="discountbenefit-list">
+                    <ul id="fe-list" class="tod-benefit-list">
+                    <!-- <ul id="fe-list" class="discountbenefit-list"> -->
                         <!-- 상품 리스트 area-->
                     </ul>
 

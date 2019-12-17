@@ -28,163 +28,230 @@
     // #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap search-height fe-header-wrap"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
-        <div class="h-belt"><!-- border-bottom : 1px -->
-            <!-- 191001 [OP002-4009] 수정01 -->
-            <div class="sch-form tod-sch-form">
-                <form action="#" role="search" id="frm" onsubmit="return false;">
-                    <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
-                    <span class="inputbox">
-                        <span class="input">
-                            <input id="keyword" class="fe-nofocus-move" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" type="search" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
-                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                        </span>
+    <div id="header" class="searchbox-header fe-nofocus-move fe-header-wrap">
+        <!-- 191001 [OP002-4009] 수정01 -->
+        <div class="sch-form tod-sch-form">
+            <form action="#" role="search" id="frm" onsubmit="return false;">
+                <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+                <span class="inputbox">
+                    <span class="input">
+                        <input id="keyword" class="fe-nofocus-move" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" type="search" value="<%= decodeURIComponent(keyword) %>">
+                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </span>
-                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                </form>
-            </div>
-            <!-- //191001 [OP002-4009] 수정01 -->
-            <div class="resultsearch-box">
-                <span class="custom-form">
-                  <% if(keyword===inKeyword){ %>
-                    <input type="checkbox" id="resultsearch" name="resultsearch">
-                    <span class="c-type1"></span></span>
-                    <label for="resultsearch">결과 내 재검색</label>
-                  <% }else{ %>
-                    <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
-                    <span class="c-type1"></span></span>
-                    <label for="resultsearch" class="on">결과 내 재검색</label>
-                  <% } %>
-                <!-- <label for="resultsearch" class="on">결과 내 재검색</label> -->
-            </div>
+                </span>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            </form>
         </div>
+        <!-- //191001 [OP002-4009] 수정01 -->
+        <!-- <div class="resultsearch-box">
+            <span class="custom-form">
+                <% if(keyword===inKeyword){ %>
+                <input type="checkbox" id="resultsearch" name="resultsearch">
+                <span class="c-type1"></span></span>
+                <label for="resultsearch">결과 내 재검색</label>
+                <% }else{ %>
+                <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
+                <span class="c-type1"></span></span>
+                <label for="resultsearch" class="on">결과 내 재검색</label>
+                <% } %>
+        </div> -->
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap none fe-container-wrap">
-        <div class="container">
-
-            <% if(searchInfo.suggestQuery.length>0){ %>
-            <div class="cont-box noborder gaps-style03">
-                <p class="re-searchword">
-                    혹시 이것을 찾으시나요? <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(searchInfo.suggestQuery) %>" data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %><%= recognizeLastChar(searchInfo.suggestQuery) %>로 검색하기</a>
-                </p>
-            </div>
-            <% } %>
-
-            <!-- .cont-box -->
+    <div id="contents" class="container-wrap fe-container-wrap">
+        <div class="search-content container">
+            <!-- 연관 검색어 -->
             <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
-            <div class="connection-searchword">
-                <dl class="searchword-list">
-                    <dt class="tit">연관</dt>
-                    <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
-                    <dd>
-                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
-                            <%= relatedKeyword.result.Word[i] %>
-                        </a>
-                    </dd>
-                    <% } %>
-                </dl>
-            </div>
-            <% } %>
-            <% if(searchInfo.suggestQuery.length>0||(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0)){ %>
-            <!--
-            <hr class="cont-sp type1" aria-hidden="true">
-            -->
-            <% } %>
-
-            <% if(accessQuery.category=='shortcut'&&searchInfo.search[0]&&searchInfo.search[0].shortcut){ %>
-            <div class="cont-box nogaps-btm">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">바로가기</h2>
-                    <div class="numberbox"><span class="num"><%= searchInfo.totalcount %></span>건
+            <div class="cont-box nogaps">
+                <div class="tod-related-keywords tod-horizon-shadow">
+                    <p class="tit"><span>연관<span class="blind">검색어</span></span></p>
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list">
+                                <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
+                                    <li>
+                                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                                            <%= relatedKeyword.result.Word[i] %>
+                                        </a>
+                                    </li>
+                                <% } %>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="keyword-search-list">
+            </div>
+            <% } %>
+            <!-- //연관 검색어 -->
+
+            <!-- 전체 검색결과 건수 및 결과 내 재검색 -->
+            <div class="cont-box bgnone noborder pb10 tod-re-searchbox">
+                <h2 class="tit">검색결과 총 <span class="num fe-total-count"></span>건</h2>
+                <div class="inputbox tod-searchtype1">
+                    <span class="input">
+                        <!-- <input id="resultSearchKeyword" type="text" placeholder="결과 내 재검색" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?'':inKeyword.replace(keyword,'').trim()) %>"> -->
+                        <input id="resultSearchKeyword" type="text" placeholder="결과 내 재검색" title="검색어 입력">
+                    </span>
+                    <button class="btn-search"><span class="blind">검색</span></button>
+                </div>
+            </div>
+            <!-- //전체 검색결과 건수 및 결과 내 재검색 -->
+
+            <!-- 카테고리 탭 -->
+            <div class="tod-srhcategory-scrwrap">
+
+            </div>
+            <!-- //카테고리 탭 -->
+
+            <% if(accessQuery.category=='shortcut'&&searchInfo.search[0]&&searchInfo.search[0].shortcut){ %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm shortcut">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">바로가기</h3>
+                </div>
+                <div class="keyword-search-list tod-srhtype1">
                     <ul id="shortcut_list">
 
                     </ul>
                 </div>
+                <% if(searchInfo.search[0].shortcut.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">바로가기</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
             <!--// .cont-box -->
             <% if(accessQuery.category=='rate'&&searchInfo.search[0]&&searchInfo.search[0].rate){ %>
-            <div class="cont-box bgnone noborder nogaps-btm rate">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">요금제</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm rate">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">요금제</h3>
+                    <div class="tod-fright fe-sort rate">
+                        <button class="btn-select fe-btn-sort-rate" title="정렬 기준 선택" aria-haspopup="true" value="A">추천순<span class="ico"></span></button>
                     </div>
                 </div>
-            </div>
-
-            <div class="cont-box bgnone noborder gaps-style05 rate">
-                <ul class="extraservice-list" id="rate_list">
+                <ul class="extraservice-list tod-srhtype1" id="rate_list">
 
                 </ul>
+                <% if(searchInfo.search[0].rate.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">요금제</span>더보기</button>
+                </div>
+                <% } %>
             </div>
 
             <% } %>
 
             <% if(accessQuery.category=='troaming'&&searchInfo.search[0]&&searchInfo.search[0].troaming){ %>
-            <!--<hr class="cont-sp type1" aria-hidden="true">-->
-            <div class="cont-box bgnone noborder nogaps-btm troaming">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">T로밍</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm troaming">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">T로밍</h3>
+                    <div class="tod-fright fe-sort troaming">
+                        <button class="btn-select fe-btn-sort-troaming" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                     </div>
                 </div>
-            </div>
-
-            <div class="cont-box bgnone noborder gaps-style07 troaming">
-                <ul class="extraservice-list" id="troaming_list">
+                <ul class="extraservice-list tod-srhtype1" id="troaming_list">
 
                 </ul>
+                <% if(searchInfo.search[0].troaming.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">T로밍</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
 
             <% if(accessQuery.category=='service'&&searchInfo.search[0]&&searchInfo.search[0].service){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box bgnone noborder nogaps-btm service">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">부가서비스</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
+            <div class="cont-box nogaps-btm service">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">부가서비스</h3>
+                    <div class="tod-fright fe-sort service">
+                        <button class="btn-select fe-btn-sort-service" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                     </div>
                 </div>
-            </div>
-
-            <div class="cont-box bgnone noborder gaps-style06 service">
-                <ul class="extraservice-list" id="service_list">
+                <ul class="extraservice-list tod-srhtype1" id="service_list">
 
                 </ul>
+                <% if(searchInfo.search[0].service.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">부가서비스</span>더보기</button>
+                </div>
+                <% } %>
             </div>
+            <% } %>
+
+            <% if(accessQuery.category=='tapp'&&searchInfo.search[0]&&searchInfo.search[0].tapp){ %>
             <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm tapp">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">T앱</h3>
+                </div>
+                <div class="tapplist-wrap tapplist-wrap02"><!-- 19.03.18 tapplist-wrap02 추가 -->
+                    <ul class="list" id="tapp_list">
+
+                    </ul>
+                </div>
+                <% if(searchInfo.search[0].tapp.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">T앱</span>더보기</button>
+                </div>
+                <% } %>
+            </div>
             <% } %>
 
             <% if(accessQuery.category=='tv_internet'&&searchInfo.search[0]&&searchInfo.search[0].tv_internet){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box bgnone noborder nogaps-btm tv_internet">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
+            <div class="cont-box nogaps-btm tv_internet">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">인터넷 · 집전화 · IPTV</h3>
+                    <div class="tod-fright fe-sort tv_internet">
+                        <button class="btn-select fe-btn-sort-tv_internet" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                     </div>
                 </div>
-            </div>
-
-            <div class="cont-box bgnone noborder gaps-style06 tv_internet">
-                <ul class="extraservice-list" id="tv_internet_list">
+                <ul class="extraservice-list tod-srhtype1" id="tv_internet_list">
 
                 </ul>
+                <% if(searchInfo.search[0].tv_internet.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">인터넷 · 집전화 · IPTV</span>더보기</button>
+                </div>
+                <% } %>
             </div>
-            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
             <% if(accessQuery.category=='direct'&&searchInfo.search[0]&&searchInfo.search[0].direct){ %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm direct">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">T월드 다이렉트</h3>
+                    <div class="tod-fright">
+                        <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].direct.sort %>">
+                            <%=
+                                searchInfo.search[0].direct.sort==='R'?'정확도순':
+                                searchInfo.search[0].direct.sort==='D'?'최신순':
+                                searchInfo.search[0].direct.sort==='L'?'낮은가격순':'높은가격순'
+                            %>
+                            <span class="ico"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="direct-shop-wrap tod-srhtype1">
+                    <ul id="direct_list">
 
-            <div class="cont-box bgnone noborder gaps-style03">
+                    </ul>
+                </div>
+                <% if(searchInfo.search[0].direct.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">T월드 다이렉트</span>더보기</button>
+                </div>
+                <% } %>
+            </div>
+
+            <!-- <div class="cont-box bgnone noborder gaps-style03">
                 <div class="contheader-box">
                     <div class="totalfilter-wrap"></div>
                     <div class="filter-select">
@@ -208,209 +275,198 @@
                 </div>
                 <div class="direct-shop-wrap">
                     <ul id="direct_list">
-                        <!--<li>
-                            <a href="" class="link">
-                                <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰"></div>
-                                <div class="cont">
-                                    <div class="tit">[타거스]<span class="highlight-text">링버클</span> 충전/싱크 라이트닝 USB 8핀 케이블 9cm</div>
-                                    <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
-                                </div>
-                            </a>
-                        </li> -->
+
                     </ul>
 
                 </div>
-            </div>
-            <hr class="cont-sp type1" aria-hidden="true">
+            </div> -->
             <% } %>
             <!--// .cont-box -->
 
             <% if(accessQuery.category=='tmembership'&&searchInfo.search[0]&&searchInfo.search[0].tmembership){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-
-            <!-- .cont-box -->
-            <div class="cont-box pb0 tmembership">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">T멤버십</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+            <div class="cont-box nogaps-btm tmembership">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">T멤버십</h3>
                 </div>
-                <div class="t-membership-wrap">
+                <div class="t-membership-wrap tod-srhtype1">
                     <ul id="tmembership_list">
 
                     </ul>
                 </div>
+                <% if(searchInfo.search[0].tmembership.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">T멤버십</span>더보기</button>
+                </div>
+                <% } %>
             </div>
-            <!--// .cont-box -->
             <% } %>
 
             <% if(accessQuery.category=='event'&&searchInfo.search[0]&&searchInfo.search[0].event){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps-btm bgnone noborder event">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">진행 중인 이벤트</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+            <div class="cont-box nogaps-btm event">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">진행 중인 이벤트</h3>
                 </div>
-                <div class="event-list">
+                <div class="event-list tod-srhtype1">
                     <ul id="event_list">
 
                     </ul>
                 </div>
+                <% if(searchInfo.search[0].event.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">진행 중인 이벤트</span>더보기</button>
+                </div>
+                <% } %>
             </div>
-            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
             <% if(accessQuery.category=='sale'&&searchInfo.search[0]&&searchInfo.search[0].sale){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box bgnone noborder gaps-style09 list sale">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">혜택/할인</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+            <div class="cont-box nogaps-btm list sale">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">혜택/할인</h3>
                 </div>
-                <ul class="discountbenefit-list" id="sale_list">
+                <ul class="tod-benefit-list tod-srhtype1" id="sale_list">
 
                 </ul>
+                <% if(searchInfo.search[0].sale.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">혜택/할인</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
 
             <% if(accessQuery.category=='as_outlet'&&searchInfo.search[0]&&searchInfo.search[0].as_outlet){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <!-- 지점 · 대리점, A/S센터 -->
             <div class="cont-box nogaps-btm as_outlet">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">지점/대리점, A/S센터</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">지점/대리점, A/S센터</h3>
                 </div>
-                <ul class="service-guide-s" id="as_outlet_list">
+                <ul class="service-guide-s tod-srhtype1" id="as_outlet_list">
 
                 </ul>
+                <% if(searchInfo.search[0].as_outlet.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">지점/대리점, A/S센터</span>더보기</button>
+                </div>
+                <% } %>
             </div>
-            <hr class="cont-sp type1" aria-hidden="true">
-            <!-- //지점 · 대리점, A/S센터 -->
             <% } %>
             <% if(accessQuery.category=='question'&&searchInfo.search[0]&&searchInfo.search[0].question){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm question">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">자주 하는 질문</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">자주 하는 질문</h3>
                 </div>
-                <ul class="service-guide-s" id="question_list">
+                <ul class="service-guide-s tod-srhtype1" id="question_list">
 
                 </ul>
+                <% if(searchInfo.search[0].question.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">자주 하는 질문</span>더보기</button>
+                </div>
+                <% } %>
             </div>
-            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
             <% if(accessQuery.category=='notice'&&searchInfo.search[0]&&searchInfo.search[0].notice){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm notice">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">공지사항</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">공지사항</h3>
                 </div>
-                <ul class="service-guide-s" id="notice_list">
+                <ul class="service-guide-s tod-srhtype1" id="notice_list">
 
                 </ul>
+                <% if(searchInfo.search[0].notice.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">공지사항</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
             <% if(accessQuery.category=='prevent'&&searchInfo.search[0]&&searchInfo.search[0].prevent){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm prevent">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">이용자 피해예방 주의보</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">이용자 피해예방 주의보</h3>
                 </div>
-                <ul class="service-guide-s" id="prevent_list">
+                <ul class="service-guide-s tod-srhtype1" id="prevent_list">
 
                 </ul>
+                <% if(searchInfo.search[0].prevent.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">이용자 피해예방 주의보</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
             <% if(accessQuery.category=='manner'&&searchInfo.search[0]&&searchInfo.search[0].manner){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm manner">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">이럴 땐 이렇게 하세요</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">이럴 땐 이렇게 하세요</h3>
                 </div>
-                <ul class="service-guide-s" id="manner_list">
+                <ul class="service-guide-s tod-srhtype1" id="manner_list">
 
                 </ul>
+                <% if(searchInfo.search[0].manner.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">이럴 땐 이렇게 하세요</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
             <% if(accessQuery.category=='serviceInfo'&&searchInfo.search[0]&&searchInfo.search[0].serviceInfo){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm serviceInfo">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">서비스 이용안내</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">서비스 이용안내</h3>
                 </div>
-                <ul class="service-guide-s" id="serviceInfo_list">
+                <ul class="service-guide-s tod-srhtype1" id="serviceInfo_list">
 
                 </ul>
+                <% if(searchInfo.search[0].serviceInfo.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">서비스 이용안내</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
             <% if(accessQuery.category=='siteInfo'&&searchInfo.search[0]&&searchInfo.search[0].siteInfo){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm siteInfo">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">사이트 이용방법</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">사이트 이용방법</h3>
                 </div>
-                <ul class="site-guide-s" id="siteInfo_list">
+                <ul class="site-guide-s tod-srhtype1" id="siteInfo_list">
 
                 </ul>
+                <% if(searchInfo.search[0].siteInfo.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">사이트 이용방법</span>더보기</button>
+                </div>
+                <% } %>
             </div>
             <% } %>
-            <% if(searchInfo.totalcount>20){ %>
-            <div class="newpaging-wrap">
-                <div class="prev">
-                    <% if(pageNum==1){ %>
-                        <button type="button" disabled class="prev-btn" >이전</button>
-                    <% }else{ %>
-                        <button type="button" class="prev-btn page-change"
-                        value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= Number(pageNum)-1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">
-                            이전
-                        </button>
-                    <!-- category=direct&keyword=갤럭시&arrange=P&pageNum-->
-                    <% } %>
+            <% if(accessQuery.category=='bundle'&&searchInfo.search[0]&&searchInfo.search[0].bundle){ %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm bundle">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">결합상품</h3>
                 </div>
-                <div  class="numberbox">
-                    <div class="number" id="page_selector">
-                        <% var totalPageNum = parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0) %>
-                        <strong class="str"><%= pageNum %></strong> / <%= totalPageNum %>
-                    </div>
+                <ul class="extraservice-list tod-srhtype1" id="bundle_list">
+                    
+                </ul>
+                <% if(searchInfo.search[0].bundle.count > 20) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">결합상품</span>더보기</button>
                 </div>
-                <div class="next">
-                    <% if(pageNum==totalPageNum){ %>
-                        <button type="button" disabled class="next-btn">다음</button>
-                    <% }else{ %>
-                        <button type="button" class="next-btn page-change"
-                                value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= Number(pageNum)+1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">>
-                            다음
-                        </button>
-                    <% } %>
-                </div>
+                <% } %>
             </div>
             <% } %>
+            
 
             
             <!-- 배너 -->
