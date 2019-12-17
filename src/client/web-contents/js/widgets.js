@@ -665,7 +665,7 @@ skt_landing.widgets = {
    * skt_landing.widgets.widget_file();
    */
   widget_file: function (ta) {
-    var input = ta ? $(ta).find('.widget-box.file') : $('.widget-box.file');
+    var input = ta ? $(ta).find('.widget-box.file') : $('.widget-box.file'), filebox; // 191217 [OP002-5134] 수정
     input.each(function () {
       if ($(this).data('event') == undefined) {
         $(this).data('event', 'bind')
@@ -676,7 +676,10 @@ skt_landing.widgets = {
           vfile = $(this).find('.fileview');
       if (vfile) {
         file.on('change', function () {
-          vfile.val($(this).val());
+          // 191217 [OP002-5134] START
+          filebox = $(this).val().split('\\');
+          vfile.val(filebox[filebox.length - 1]);
+          // 191217 [OP002-5134] END
         });
       }
     });

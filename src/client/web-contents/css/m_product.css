@@ -1205,3 +1205,31 @@
 .prCont-txt .tod-txcolor8, [class^='idpt-'] .tod-txcolor8, [class*=' idpt-'] .tod-txcolor8 {color:#178bce !important;}
 .prCont-txt .tod-txcolor9, [class^='idpt-'] .tod-txcolor9, [class*=' idpt-'] .tod-txcolor9 {color:#59bcf5 !important;}
 .prCont-txt .tod-txcolor-normal, [class^='idpt-'] .tod-txcolor-normal, [class*=' idpt-'] .tod-txcolor-normal {color:inherit !important}
+
+/* 191219 [OP002-5812] 모바일티월드 Retention 상품 메뉴 신규 생성 및 수정 */ 
+.tod-month-benefit {margin-top:1.5625rem}
+.tod-month-benefit .month{font-size:0.8125rem; color:#333; margin-bottom:1.875rem; font-weight:500}
+.tod-month-benefit .total-price{font-size:0.75rem; text-align:center; color:#666; border:1px solid #eaeaea; background:#fff; height:27px; box-sizing:border-box; line-height:1.625rem}
+.tod-month-benefit .price-kind{overflow:hidden; margin-top:0.6875rem;}
+.tod-month-benefit .price-kind .price{width:50%; float:left; }
+.tod-month-benefit .price-kind .price .box{text-align:center; box-sizing:border-box; font-size:0.75rem; color:#57637f; padding:0.75rem 0 0.5rem; border:0.0625rem solid #eaeaea; color:#57637f; background:#fff}
+.tod-month-benefit .price-kind .price .percent{display:block; font-size:15px; font-weight:500;}
+.tod-month-benefit .price-kind .price.bg .box{color:#fff; background:#57637f; border-color:#57637f}
+.tod-month-benefit .month-view{margin-top:0.75rem;}
+.tod-month-benefit .month-view .term-wrap{margin-top:1rem;}
+.tod-month-benefit .month-view .term-wrap .term{display:inline-block; position:relative; width:100%;float:left; height:64px; background:url('/img/product/dashed-bg.png') repeat-x left 1.25rem; }
+.tod-month-benefit .month-view .term-wrap .term:before{content:''; width:0.625rem; height:0.625rem; box-sizing:border-box; background:#fff; border:0.1875rem solid #57637f; position:absolute; top:1rem; left:-0.3125rem; border-radius:100%;}
+.tod-month-benefit .month-view .term-wrap .term.first:before{left:0}
+.tod-month-benefit .month-view .term-wrap .term:after{content:''; display:inline-block; width:0.5rem; height:0.5rem; border:1px solid #a3a3a3; border-top:none; border-left:none; -webkit-transform:rotate(-45deg); transform:rotate(-45deg); position:absolute; right:0.125rem; top:1rem}
+.tod-month-benefit .month-view .term-wrap .term.first:after{right:0.4375rem}
+.tod-month-benefit .month-view .term-wrap .term.first:before{border-color:#b6b6b6}
+.tod-month-benefit .month-view .term-wrap .term .month{font-size:0.6875rem; color:#57637f; position:absolute; right:0px; top:-0.1875rem}
+.tod-month-benefit .month-view .term-wrap .term.first .month{right:-1.1875rem}
+.tod-month-benefit .month-view .term-wrap .term .state{display:inline-block; color:#666; font-size:12px; padding-top:2rem; width:100%; }
+.idpt-benefit .tod-club-list{margin:0 -1rem }
+.idpt-benefit .tod-club-list > li{border-bottom:1px solid #f2f2f2}
+.idpt-benefit .tod-club-list a{display:block; padding:1rem 1rem 0.8125rem ; position:relative}
+.idpt-benefit .tod-club-list a:after{content:''; display:inline-block; background:url('/img/product/link-arr.png') no-repeat left top; background-size:100%; width:0.375rem; height:0.6875rem; position:absolute; right:1rem; top:50%; -webkit-transform:translateY(-50%); transform:translateY(-50%) }
+@media screen and (max-width:320px){
+	.break{display:none}
+}

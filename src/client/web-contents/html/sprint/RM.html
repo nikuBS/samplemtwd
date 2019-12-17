@@ -39,7 +39,7 @@
     	$('.rm-main-recomm-more-btn button').click(function(){
     		if( $(this).hasClass('active') ){
     			$(this).removeClass('active');
-    			$('.rm-main-recomm li:nth-child(n+4)').hide();    			
+    			$('.rm-main-recomm>li:nth-child(n+4)').hide();    			
     			$('.rm-main-recomm-more-btn button').text('더 보기');
     		} else {
     			$(this).addClass('active');
