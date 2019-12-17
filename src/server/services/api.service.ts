@@ -432,6 +432,19 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setChildInfo(this.req, this.res, resp.result);
+          // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대(세션에 등록 자녀회선 수 추가)
+          // const expsSvcCnt = FormatHelper.isNumber(this.req.session.svcInfo.expsSvcCnt) ? this.req.session.svcInfo.expsSvcCnt : 0;
+          // const childSvcCnt = FormatHelper.isEmpty(resp.result) ? 0 : resp.result.length;
+          // const selectableExpsSvcCnt = parseInt(expsSvcCnt, 10) + parseInt(childSvcCnt, 10);
+
+          // const curSvcInfo = {
+          //   childSvcCnt: childSvcCnt + '',
+          //   selectableExpsSvcCnt: selectableExpsSvcCnt + ''
+          // };
+          // Object.assign(curSvcInfo, this.req.session.svcInfo);
+          // return Observable.combineLatest(
+          //   this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
+          //   this.loginService.setChildInfo(this.req, this.res, resp.result));
         } else {
           // return this.loginService.setChildInfo(this.req, this.res, null);
           throw resp;
@@ -497,6 +510,19 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setChildInfo(this.req, this.res, resp.result);
+          // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대(세션에 등록 자녀회선 수 추가)
+          // const expsSvcCnt = FormatHelper.isNumber(this.req.session.svcInfo.expsSvcCnt) ? this.req.session.svcInfo.expsSvcCnt : 0;
+          // const childSvcCnt = FormatHelper.isEmpty(resp.result) ? 0 : resp.result.length;
+          // const selectableExpsSvcCnt = parseInt(expsSvcCnt, 10) + parseInt(childSvcCnt, 10);
+
+          // const curSvcInfo = {
+          //   childSvcCnt: childSvcCnt + '',
+          //   selectableExpsSvcCnt: selectableExpsSvcCnt + ''
+          // };
+          // Object.assign(curSvcInfo, this.req.session.svcInfo);
+          // return Observable.combineLatest(
+          //   this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
+          //   this.loginService.setChildInfo(this.req, this.res, resp.result));
         } else {
           // return this.loginService.setChildInfo(this.req, this.res, null);
           throw resp;
