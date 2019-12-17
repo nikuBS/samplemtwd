@@ -35527,8 +35527,8 @@ body.apphome .section-box {
 
 /* 190718 [] */
 /* 191001 수정 [s] */
-.rm-main-recomm .productinfoscroll-box ul li{width:8rem;min-width:8rem}
-.rm-main-recomm .productinfoscroll-box ul li .product-info{width:8rem}
+.rm-main-recomm .productinfoscroll-box ul li{width:8rem;min-width:8rem}/* 191216 로밍 메인 UI 변경 */
+.rm-main-recomm .productinfoscroll-box ul li .product-info{width:8rem}/* 191216 로밍 메인 UI 변경 */
 .rm-main-recomm .productinfoscroll-box ul li .product-info .info i{display:block}
 .rm-prd-info .productinfoscroll-box .horizontal-list li{width:13rem}
 .rm-prd-info .productinfoscroll-box .horizontal-list li .product-info{width:13rem}
@@ -35899,10 +35899,9 @@ body.apphome .section-box {
 	.tod-join-txt-wrap .ico{width:6.75rem; -webkit-transform:translateY(-34%); transform:translateY(-34%)}
 	.tod-no-sbline-wrap{padding-top:1.875rem}
 	.tod-no-sbline-wrap .tod-no-sbline-txt{font-size:1.375rem; line-height:1.625rem}
-}
-
+} 
 
 /* 191216 로밍 메인 UI 변경 */
 .rm-main-recomm li:nth-child(n+4){display:none}
 .rm-main-recomm-more-btn{margin:.63rem -1rem 0;padding:0 1rem}
-.rm-main-recomm-more-btn button{display:block;width:100%;height:3.38rem;border-top:1px solid #f2f2f2;color:#000;font-size:.943rem;text-align:center;line-height:3.38rem} 
+.rm-main-recomm-more-btn button{display:block;width:100%;height:3.38rem;border-top:1px solid #f2f2f2;color:#000;font-size:.943rem;text-align:center;line-height:3.38rem}
