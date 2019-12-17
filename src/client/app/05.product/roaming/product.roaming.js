@@ -37,6 +37,7 @@ Tw.ProductRoaming.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-link-internal', $.proxy(this._onClickInternal, this));
     this.$formInfoBtnList.on('click', $.proxy(this._onClickFormInfo, this));
+    this.$container.on('click', '.rm-main-recomm-more-btn button', $.proxy(this._onClickMoreToggleBtn, this));
   },
   /**
    * @function
@@ -145,5 +146,24 @@ Tw.ProductRoaming.prototype = {
 
     this.$headerContainers.hide().filter('[data-key="' + this.idxSelect + '"]').show();
     this.$contentContainers.hide().filter('[data-key="' + this.idxSelect + '"]').show();
+  },
+
+  /**
+   * @function
+   * @desc 더보기 숨기기 버튼 클릭 핸들러
+   */
+  _onClickMoreToggleBtn: function(e) {
+    var $target = $(e.currentTarget);
+
+    if( $target.hasClass('active') ){
+      $target.removeClass('active');
+      $('.rm-main-recomm>li:nth-child(n+4)').hide();
+      $target.text('더 보기');
+    } else {
+      $target.addClass('active');
+      $('.rm-main-recomm>li').show();
+      $target.text('숨기기');
+    }
   }
+
 };
