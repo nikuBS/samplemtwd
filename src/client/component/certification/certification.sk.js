@@ -491,6 +491,7 @@ Tw.CertificationSk.prototype = {
       this.$inputMdn.prop('readonly', false);
       this.$inputMdn.val('');
       this.$inputMdn.parents('#fe-inputbox-mdn').removeClass('readonly');
+      this.$inputMdn.attr('aria-hidden', false);
       this.$btReCert.addClass('none');
       this.$btCert.removeClass('none');
       this.$inputMdn.siblings('.cancel').removeClass('none');
@@ -498,6 +499,7 @@ Tw.CertificationSk.prototype = {
       this._onKeyin = false;
       this.$inputMdn.prop('readonly', true);
       this.$inputMdn.val(Tw.FormatHelper.conTelFormatWithDash(this._svcInfo.svcNum));
+      this.$inputMdn.attr('aria-hidden', true);
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
       this.$btCert.addClass('none');
       this.$btReCert.removeClass('none');
@@ -840,6 +842,9 @@ Tw.CertificationSk.prototype = {
       this._popupService.close();
     } else if (resp.code === this.SMS_ERROR.ATH2007) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirm);
+      // OP002-5660 : [FE] (W-1911-065-02) 2019 App./모바일웹접근성 샘플링 결과 반영
+      this.$inputCert.val('');
+      this.$inputCert.focus();
     } else if (resp.code === this.SMS_ERROR.ATH2008) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmTime);
     } else if (resp.code === this.SMS_ERROR.ATH2011) {

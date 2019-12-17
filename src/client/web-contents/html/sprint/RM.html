@@ -37,8 +37,15 @@
     <script type="text/javascript">
     jQuery(function(){
     	$('.rm-main-recomm-more-btn button').click(function(){
-    		$('.rm-main-recomm li').show();
-    		$('.rm-main-recomm-more-btn').hide();
+    		if( $(this).hasClass('active') ){
+    			$(this).removeClass('active');
+    			$('.rm-main-recomm li:nth-child(n+4)').hide();    			
+    			$('.rm-main-recomm-more-btn button').text('더 보기');
+    		} else {
+    			$(this).addClass('active');
+    			$('.rm-main-recomm li').show();
+    			$('.rm-main-recomm-more-btn button').text('숨기기');    			
+    		}
     	});    	
     });
     </script>

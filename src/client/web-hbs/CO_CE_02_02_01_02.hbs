@@ -43,6 +43,7 @@
                                                     <ul class="select-list" role="group">
                                                         <li class="checkbox type01" id="aria-comp-checkbox1" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                             <input id="fe-check-keyin" type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
+                                                            <span class="tod-blind">휴대폰번호</span>
                                                             <span class="text">직접입력</span>
                                                         </li>
                                                     </ul>
@@ -52,7 +53,7 @@
                                     </div>
                                     <span id="fe-inputbox-mdn" class="inputbox bt-add inp-btn w163 readonly"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                         <span class="input">
-                                            <input id="fe-input-mdn" class="input-scroll-fix" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="SK텔레콤 휴대폰 번호" value="{{data.svcNum}}" title="SK텔레콤 휴대폰 번호" aria-labelledby="aria-citation-sms" aria-describedby="" readonly /><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                            <input id="fe-input-mdn" class="input-scroll-fix" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="SK텔레콤 휴대폰 번호" value="{{data.svcNum}}" title="SK텔레콤 휴대폰 번호" aria-labelledby="aria-citation-sms" aria-describedby="" readonly aria-hidden="true"/><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
                                             <button href="javascript:void(0)" class="cancel fe-bt-mdn-delete"><span class="blind">삭제</span></button>
                                         </span>
                                         <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
@@ -71,7 +72,7 @@
                                 <div class="form-cell linebox">
 
                                     <p id="aria-citation-cert" class="form-ti title">인증번호</p>
-                                    <p class="txt">전송 받으신 인증번호를 입력해주세요. <input id="fe-sms-time" class="sms-time" type="text" readonly="readonly" value=""></p>
+                                    <p class="txt">전송 받으신 인증번호를 입력해주세요. <input id="fe-sms-time" class="sms-time" type="text" readonly="readonly" value="" aria-hidden="true"></p>
                                     <span class="inputbox bt-add inp-btn w163"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                         <span class="input">
                                             <input id="fe-input-cert" class="input-scroll-fix" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="6" placeholder="인증번호 6자리 입력" value="" title="인증번호 6자리 입력" aria-labelledby="aria-citation-cert" aria-describedby="" /><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
