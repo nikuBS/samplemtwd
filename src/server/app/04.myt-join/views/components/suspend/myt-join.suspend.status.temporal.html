@@ -17,10 +17,7 @@ _%>
                 <li>
                     <span class="title">상태</span>
                     <span class="tx-cont tx-bold">
-                    <%_
-                    if (locals.militaryAC) {
-                      // MS_03_05_03_01_case12
-                    _%>
+                    <%_ if (locals.militaryAC) { _%>
                     장기일시정지의 일시해제
                     <%_ } else if (locals.reservedYn) { _%>
                     일시정지 예약
@@ -33,10 +30,7 @@ _%>
                     <span class="title"><%- (type === 'long-term') ? '장기' : '' %>일시정지 기간</span>
                     <span class="tx-cont"><%- period.from %>~<%- period.to || '' %></span>
                 </li>
-                <%_
-                if (locals.resuspendDt) {
-                  // MS_03_05_03_01_case11
-                _%>
+                <%_ if (locals.resuspendDt) { _%>
                 <li>
                     <span class="title">장기일시정지 재시작일자</span>
                     <span class="tx-cont"><%- resuspendDt %></span>
@@ -49,19 +43,13 @@ _%>
             </ul>
         </div>
     </div>
-    <%_
-    if (locals.resuspend) {
-        // MS_03_05_03_01_case11
-    _%>
+    <%_ if (locals.resuspend) { _%>
     <ul class="bt-slice mt20 mb20">
         <li>
             <button class="btn-round1 btn-style4" data-id="bt-cancel-resuspend">재신청 취소하기</button>
         </li>
     </ul>
-    <%_
-    } else if (isProgressing && type === 'temporary') {
-        // MS_03_05_03_01_case10
-    _%>
+    <%_ } else if (isProgressing && type === 'temporary') { _%>
     <ul class="bt-slice mt20 mb20">
         <li>
             <button class="btn-round1 btn-style1" data-id="bt-release">해제하기</button>
@@ -69,24 +57,17 @@ _%>
     </ul>
     <%_ } else { _%>
     <ul class="bt-slice mt20 mb20 item-<%- (!resetable || (type !== 'temporary' && !resuspendable)) ? 'one' : 'two' %>">
-        <%_
-        if (type === 'temporary') {
-          // MS_03_05_03_01_case1
-        _%>
+        <%_ if (type === 'temporary') { _%>
         <li>
             <button class="btn-round1 btn-style4" data-id="bt-request-longterm">장기일시정지 신청하기</button>
         </li>
-        <%_
-        } else if (resuspendable) {
-          // MS_03_05_03_01_case12
-        _%>
+        <%_ } else if (resuspendable) {_%>
         <li>
             <button class="btn-round1 btn-style4" data-id="bt-resuspend"<%- notallow_resuspend ? ' disabled' : '' %>>재신청하기</button>
         </li>
         <%_
         }
         if (resetable) {
-            // MS_03_05_03_01_case1
         _%>
         <li>
             <button class="btn-round1 btn-style1" data-id="bt-release">해제하기</button>

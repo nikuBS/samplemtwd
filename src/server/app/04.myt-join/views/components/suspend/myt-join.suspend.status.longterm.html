@@ -44,10 +44,7 @@ _%>
                     <span class="title">사유</span>
                     <span class="tx-cont"><%= locals.progressReason || '' %></span>
                 </li>
-                <%_
-                if (opStateCd !== 'F') {
-                  // MS_03_05_03_01_case04
-                _%>
+                <%_ if (opStateCd !== 'F') { _%>
                 <li>
                     <span class="title">필요서류</span>
                     <span class="tx-cont"><%- opDtm %> 첨부</span>
@@ -73,10 +70,7 @@ _%>
             </ul>
         </div>
     </div>
-    <%_
-    if (opStateCd === 'F') { _%>
-      // MS_03_05_03_01_case04
-    _%>
+    <%_ if (opStateCd === 'F') { _%> _%>
     <ul class="bt-slice mt20 mb20">
         <li>
             <button class="btn-round1 btn-style4" data-id="bt-request-longterm">다시 신청하기</button>
