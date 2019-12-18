@@ -12,17 +12,25 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 import StringHelper from '../../../../utils/string.helper';
+import LoggerService from '../../../../services/logger.service';
 
 class CommonSearchMore extends TwViewController {
+  private readonly log;
   constructor() {
     super();
+    this.log = new LoggerService();
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query =  StringHelper.encodeURIAllCase(req.query.keyword) || null;
     const collection = req.query.category || null;
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const pageNum = req.query.page || 1;
-    const sort = req.query.arrange || 'R';
+    // const sort = req.query.arrange || 'R';
+    const sort = req.query.sort || 'A';
+
+    this.log.info(this, '[common.search.more.controller] req.query : ', req.query);
+    this.log.info(this, '[common.search.more.controller] req.query.sort : ', sort);
+
     let requestObj, researchCd, researchQuery, searchApi;
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
       requestObj = { query , collection , pageNum , sort };
@@ -107,7 +115,8 @@ class CommonSearchMore extends TwViewController {
           accessQuery : req.query,
           step : step,
           nowUrl : req.originalUrl,
-          paramObj : req.query
+          paramObj : req.query,
+          sort: sort
         });
       }
     });

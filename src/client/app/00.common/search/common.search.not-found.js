@@ -55,6 +55,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     // this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
     this.$container.on('click','.search-element',$.proxy(this._keywordSearch,this));
+    this.$container.on('click', '#fe-btn-feedback', $.proxy(this._showClaimPopup, this));
     this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
     this.$inputElement = this.$container.find('#search_keyword');
     this.$container.on('scroll',$.proxy(function () {
@@ -71,11 +72,28 @@ $.extend(Tw.CommonSearchNotFound.prototype,
   /**
    * @function
    * @member
+   * @desc 검색 개선 의견 보내기 팝업 출력
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
+  _showClaimPopup : function(evt){
+    this._popupService.open({
+      hbs: 'HO_05_02_02_01_01', 
+      layer: true,
+      data: null
+    }, $.proxy(this._bindEventForRequestKeyword, this),
+      //$.proxy(this._showAndHidePopKeywordList,this), 'requestKeyword');
+      $.proxy(this._removeInputDisabled,this), 'requestKeyword',$(evt.currentTarget));
+  },
+  /**
+   * @function
+   * @member
    * @desc 검색의견 설문조사 팝업 출력
    * @param {Object} btnEvt - 이벤트 객체
    * @returns {void}
    */
-  _showClaimPopup : function(btnEvt){
+  __showClaimPopup : function(btnEvt){
+    // 검색풀질개선 요건 이후 미사용 처리 (20191216)
     //var $selectedClaim = $(btnEvt.currentTarget);
     //$selectedClaim.parents('.opinion-selectbox').addClass('selected');
     if($(btnEvt.currentTarget).data('type')===52){
@@ -141,9 +159,9 @@ $.extend(Tw.CommonSearchNotFound.prototype,
   _bindEventForRequestKeyword : function(popupObj){
     //keyword request
     //this._showAndHidePopKeywordList();
-    this.$inputElement.attr('disabled','disabled');
+    // this.$inputElement.attr('disabled','disabled');
     this.$requestKeywordPopup = $(popupObj);
-    this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A40,this._requestKeyword));
+    this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A40,this._improveInvest));
     this.$requestKeywordPopup.on('keyup','.input-focus',$.proxy(this._activateRequestKeywordBtn,this));
     this.$requestKeywordPopup.on('click','.cancel',$.proxy(this._activateRequestKeywordBtn,this));
     this._changeAriaHidden('open');
@@ -264,6 +282,45 @@ $.extend(Tw.CommonSearchNotFound.prototype,
    * @returns {void}
    */
   _claimCallback : function (res,srchId, evt) {
+    Tw.Logger.info('[_claimCallBack]','');
+    if(res.code===Tw.API_CODE.CODE_00){
+
+      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.REQUEST_IMPROVE);
+      // this._popupService.openModalTypeAOneButton(Tw.ALERT_MSG_SEARCH.REQUEST_IMPROVE, null, null, null, null, null, null, null, $(evt.currentTarget));
+
+
+      //openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName, evt) {
+      // this._popupService.openModalTypeATwoButton(alertObj.TITLE, null, null, alertObj.BUTTON,
+      //   null,
+      //   $.proxy(doRequest,this,event),
+      //   null,null,$(event.currentTarget));
+
+
+
+      var $selectedEl = this.$container.find('.opinion-selectbox');
+      $selectedEl.each(function (idx) {
+        if($selectedEl.eq(idx).data('type')===srchId){
+          $selectedEl.eq(idx).children('.btn').hide();
+          $selectedEl.eq(idx).children('.text').text(Tw.ALERT_MSG_SEARCH.REQUEST_CLAIM);
+          $selectedEl.eq(idx).removeClass();
+        }
+      });
+      this._popupService.close();
+    }else{
+      this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
+    }
+  },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 설문조사 요청 콜백
+   * @param {Object} res - 응답 객체
+   * @param {Object} srchId - 설문 타입 code
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
+  __claimCallback : function (res,srchId, evt) {
+    // 검색품질개선 요건 이후 미사용 (191216)
     if(res.code===Tw.API_CODE.CODE_00){
       var $selectedEl = this.$container.find('.opinion-selectbox');
       $selectedEl.each(function (idx) {

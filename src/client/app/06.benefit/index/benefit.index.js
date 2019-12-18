@@ -30,6 +30,8 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this._userId = null;
   this._loginType = '';
 
+  this._data = '';
+  this._categoryListArray = new Array();
   this._init();
 };
 
@@ -39,16 +41,85 @@ Tw.BenefitIndex.prototype = {
    * @desc 최초 실행
    */
   _init: function () {
+    Tw.Logger.info('[_init] 호출', '');
+    var _this = this;
+
     this._initVariables();
     this._bindEvent();
     this._registerHelper();
 
-    // 환경변수 로딩이 완료된 이후 혜택할인 관련 API 호출되도록 수정
-    if (!Tw.Environment.init) {
-      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._allRequest, this));
-    } else {
-      this._allRequest();
-    }
+    // 혜택/할인 카테고리 리스트 조회
+    this._apiService.request(Tw.API_CMD.BFF_10_0033, {}, {}, ['F01420'])
+    .done($.proxy(function (res) {
+      Tw.Logger.info('[_init] BFF_10_0033 호출 결과', res);
+      if (res.code === Tw.API_CODE.CODE_00) {
+
+        if (res.result.filters.length > 0) {
+          var source = $('#benefitCategoryList').html();
+          var template = Handlebars.compile(source);
+
+          var categoryListArray1 = new Array();
+          var categoryListArray2 = new Array();
+
+          for (var idx in res.result.filters) {
+            this._categoryListArray.push(res.result.filters[idx]);
+
+            if (idx < 5) {
+              categoryListArray1.push( res.result.filters[idx] );
+            } else {
+              categoryListArray2.push( res.result.filters[idx] );
+            }
+          }
+
+          Tw.Logger.info('[_init] 전체 카테고리 리스트', this._categoryListArray);
+
+          if ( !Tw.FormatHelper.isEmpty( categoryListArray1 ) ) {
+            var output = template({
+              list: categoryListArray1
+            });
+        
+            this.$categoryTab.find('#fe-category-list_1').append(output);
+          }
+          if ( !Tw.FormatHelper.isEmpty( categoryListArray2 ) ) {
+            var output = template({
+              list: categoryListArray2
+            });
+
+            this.$container.find('#fe-btn-more-category').attr('style', '');
+            // this.$container.find('#fe-btn-more-category').removeAttribute('style');
+            this.$categoryTab.find('#fe-category-list_2').append(output);
+          }
+
+
+          // 환경변수 로딩이 완료된 이후 혜택할인 관련 API 호출되도록 수정
+          if (!Tw.Environment.init) {
+            $(window).on(Tw.INIT_COMPLETE, $.proxy(this._allRequest, this));
+          } else {
+            this._allRequest();
+          }
+
+          if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
+            this._initBpcp();
+          }
+        }        
+      } else {
+        // BFF_08_0080 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+        // Tw.Error(res.code, res.msg).pop();
+        // return;
+      }
+    }, this))
+    .fail(function (err) {
+      // BFF_08_0080 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+      // Tw.Error(err.code, err.msg).pop();
+      // return;
+    });
+
+    // // 환경변수 로딩이 완료된 이후 혜택할인 관련 API 호출되도록 수정
+    // if (!Tw.Environment.init) {
+    //   $(window).on(Tw.INIT_COMPLETE, $.proxy(this._allRequest, this));
+    // } else {
+    //   this._allRequest();
+    // }
 
     if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
       this._initBpcp();
@@ -99,6 +170,7 @@ Tw.BenefitIndex.prototype = {
   _bindEvent: function () {
     // this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
+    this.$container.on('click', '[data-category]', $.proxy(this._onCategory, this));
     this.$container.on('change', '[data-check-disabled]', $.proxy(this._onCheckDisabled, this));
     this.$container.on('click', '.fe-plus, .fe-minus', $.proxy(this._onVariations, this));
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
@@ -120,9 +192,14 @@ Tw.BenefitIndex.prototype = {
    * @desc API 요청모음
    */
   _allRequest: function () {
+    Tw.Logger.info('[_allRequest] 호출', '');
     // 미 로그인, 준회원, 유선인 경우 [혜택/할인] 리스트만 조회한다.
     if (!this._isAbleDiscountInfoReq()) {
-      this._switchTab(this._convertPathToCategory());
+      // TO-DO 미로그인, 준회원, 유선인 경우에 대한 처리 필요
+      // this._switchTab(this._convertPathToCategory());
+      var categoryArray = new Array();
+      categoryArray.push('');
+      this._reqProductList_dev(categoryArray);
     } else {
       this._loginType = this._svcInfo.loginType;
 
@@ -187,6 +264,14 @@ Tw.BenefitIndex.prototype = {
       this._alertCharge(externalUrl[_benefitId]);
     } else if ('TW20000019' === _benefitId) {
       this._bpcpService.open(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
+    } else if (['TW20000028', 'TW20000029', 'TW20000031'].indexOf(_benefitId) > -1) {
+      var externalUrl = {
+        TW20000028: '/myt-data/giftdata',
+        TW20000029: '/membership/membership_info/mbrs_0001',
+        TW20000031: '/myt-data/recharge/coupon'
+      };
+
+      location.href = externalUrl[_benefitId];
     } else {
       location.href = '/product/callplan?prod_id=' + _benefitId;
     }
@@ -417,6 +502,291 @@ Tw.BenefitIndex.prototype = {
 
   /**
    * @function
+   * @desc 페이지 이동
+   * @param {Object} e
+   */
+  _onCategory: function (e) {
+    // '#전체' 카테고리
+    var defaultTarget = this.$categoryTab.find('[data-category=""]');
+
+    var selectedCategoryArray =[];
+
+    if(defaultTarget.hasClass('on')) {
+      // 기존에 전체 선택되어 상태
+      defaultTarget.removeClass('on').attr('aria-selected', false);
+    }
+
+    _.each(this.$categoryTab.find('.on'), $.proxy(function (target) {
+      var $target = $(target);
+      selectedCategoryArray.push($target.data('category'));
+    }, this));
+    Tw.Logger.info('[_onCategory] 기 선택된 카테고리ID 리스트 갯수', selectedCategoryArray.length, '기 선택된 카테고리ID 리스트', selectedCategoryArray);
+
+    // #전체 를 선택하는 경우
+    if ($(e.currentTarget).data('category') === '') {
+      Tw.Logger.info('[_onCategory] #전체 카테고리 선택하고자 하는 경우', '');
+
+      // 현재 선택 활성화된 카테고리에 대해서 선택 비활성화 처리
+      this.$categoryTab.find('.on').removeClass('on').attr('aria-selected', false);
+
+      // [선택된 카테고리 리스트] 초기화 후 '#전체' 카테고리만 추가
+      selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'ALL');
+              
+      // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+      this._reqProductList_dev(selectedCategoryArray);
+    } 
+    // 그 외 특정 카테고리를 선택하는 경우
+    else {
+      for (var idx in this._categoryListArray) {
+        if ($(e.currentTarget).data('category') === this._categoryListArray[idx].prodFltId) {
+
+          // 해당 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택 해제하는 경우
+          if ( this._checkSelected(this._categoryListArray[idx].prodFltId) ) {
+            Tw.Logger.info('[_onCategory] #' + this._categoryListArray[idx].prodFltNm + ' 카테고리 선택해제하고자 하는 경우', '');
+
+            // 해당 카테고리 선택 비활성화 처리
+            $(e.currentTarget).removeClass('on').attr('aria-selected', false);
+            
+            // [선택된 카테고리 리스트] 에서 '#요금할인(F01421)' 제거
+            selectedCategoryArray = this._removeCategory(selectedCategoryArray, this._categoryListArray[idx].prodFltId);
+            Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+
+            // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+            this._reqProductList_dev(selectedCategoryArray);
+          }
+          // 해당 카테고리가 선택되지 않은 상태에서 클릭하여 선택하는 경우
+          else {
+            Tw.Logger.info('[_onCategory] #' + this._categoryListArray[idx].prodFltNm + ' 카테고리 선택하고자 하는 경우', '');
+
+            // 해당 카테고리 선택 활성화 처리
+            $(e.currentTarget).addClass('on').attr('aria-selected', true);
+
+            // [선택된 카테고리 리스트] 에 '#요금할인(F01421)' 추가
+            selectedCategoryArray.push($(e.currentTarget).data('category'));
+            Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+            
+            // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+            this._reqProductList_dev(selectedCategoryArray);
+          }
+        }
+      }
+    }
+
+
+
+
+    // switch($(e.currentTarget).data('category')) {
+      
+    //   case '':  // #전체
+    //     Tw.Logger.info('[_onCategory] #전체 카테고리 선택하고자 하는 경우', '');
+
+    //     // 현재 선택 활성화된 카테고리에 대해서 선택 비활성화 처리
+    //     this.$categoryTab.find('.on').removeClass('on').attr('aria-selected', false);
+
+    //     // [선택된 카테고리 리스트] 초기화 후 '#전체' 카테고리만 추가
+    //     selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'ALL');
+                
+    //     // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //     this._reqProductList_dev(selectedCategoryArray);
+
+    //     break;
+    //   case 'F01421':  // #요금할인
+    //     // '#요금할인' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택 해제하는 경우
+    //     if (this._checkSelected('F01421')) {
+    //       Tw.Logger.info('[_onCategory] #요금할인 카테고리 선택해제하고자 하는 경우', '');
+
+    //       // '#요금할인' 카테고리 선택 비활성화 처리
+    //       $(e.currentTarget).removeClass('on').attr('aria-selected', false);
+          
+    //       // [선택된 카테고리 리스트] 에서 '#요금할인(F01421)' 제거
+    //       selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'F01421');
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     } 
+    //     // '#요금할인' 카테고리가 선택되지 않은 상태에서 클릭하여 선택하는 경우
+    //     else {
+    //       Tw.Logger.info('[_onCategory] #요금할인 카테고리 선택하고자 하는 경우', '');
+
+    //       // '#요금할인' 카테고리 선택 활성화 처리
+    //       $(e.currentTarget).addClass('on').attr('aria-selected', true);
+
+    //       // [선택된 카테고리 리스트] 에 '#요금할인(F01421)' 추가
+    //       selectedCategoryArray.push($(e.currentTarget).data('category'));
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+          
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     }
+    //     break;
+    //   case 'F01422':  // #휴대폰+유무선 결합 할인
+    //     // '#휴대폰+유무선 결합 할인' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택 해제하는 경우
+    //     if (this._checkSelected('F01422')) {
+    //       Tw.Logger.info('[_onCategory] #휴대폰+유무선 결합 할인 카테고리 선택해제하고자 하는 경우', '');
+
+    //       // '#휴대폰+유무선 결합 할인' 카테고리 선택 비활성화 처리
+    //       $(e.currentTarget).removeClass('on').attr('aria-selected', false);
+          
+    //       // [선택된 카테고리 리스트] 에서 '#휴대폰+유무선 결합 할인(F01422)' 제거
+    //       selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'F01422');
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     } 
+    //     // '#휴대폰+유무선 결합 할인' 카테고리가 선택되지 않은 상태에서 클릭하여 선택하는 경우
+    //     else {
+    //       Tw.Logger.info('[_onCategory] 휴대폰+유무선 결합 할인 카테고리 선택하고자 하는 경우', '');
+
+    //       // '#휴대폰+유무선 결합 할인' 카테고리 선택 활성화 처리
+    //       $(e.currentTarget).addClass('on').attr('aria-selected', true);
+
+    //       // [선택된 카테고리 리스트] 에 '#휴대폰+유무선 결합 할인(F01422)' 추가
+    //       selectedCategoryArray.push($(e.currentTarget).data('category'));
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+          
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     }
+    //     break;
+    //   case 'F01423':  // #장기가입혜택
+    //     // '#장기가입혜택' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택 해제하는 경우
+    //     if (this._checkSelected('F01423')) {
+    //       Tw.Logger.info('[_onCategory] #장기가입혜택 카테고리 선택해제하고자 하는 경우', '');
+
+    //       // '#장기가입혜택' 카테고리 선택 비활성화 처리
+    //       $(e.currentTarget).removeClass('on').attr('aria-selected', false);
+          
+    //       // [선택된 카테고리 리스트] 에서 '#장기가입혜택(F01423)' 제거
+    //       selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'F01423');
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     } 
+    //     // '#장기가입혜택' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택하는 경우
+    //     else {
+    //       Tw.Logger.info('[_onCategory] #장기가입혜택 카테고리 선택하고자 하는 경우', '');
+
+    //       // '#장기가입혜택' 카테고리 선택 활성화 처리
+    //       $(e.currentTarget).addClass('on').attr('aria-selected', true);
+
+    //       // [선택된 카테고리 리스트] 에서 '#장기가입혜택(F01423)' 추가
+    //       selectedCategoryArray.push($(e.currentTarget).data('category'));
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+          
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     }
+    //     break;
+    //   case 'F01424':  // #참여혜택
+    //     // '#참여혜택' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택 해제하는 경우
+    //     if (this._checkSelected('F01424')) {
+    //       Tw.Logger.info('[_onCategory] #참여혜택 카테고리 선택해제하고자 하는 경우', '');
+
+    //       // '#참여혜택' 카테고리 선택 비활성화 처리
+    //       $(e.currentTarget).removeClass('on').attr('aria-selected', false);
+          
+    //       // [선택된 카테고리 리스트] 에서 '#참여혜택(F01424)' 제거
+    //       selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'F01424');
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     } 
+    //     // '#참여혜택' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택하는 경우
+    //     else {
+    //       Tw.Logger.info('[_onCategory] #참여혜택 카테고리 선택하고자 하는 경우', '');
+
+    //       // '#참여혜택' 카테고리 선택 활성화 처리
+    //       $(e.currentTarget).addClass('on').attr('aria-selected', true);
+
+    //       // [선택된 카테고리 리스트] 에서 '#참여혜택(F01424)' 추가
+    //       selectedCategoryArray.push($(e.currentTarget).data('category'));
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+          
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     }
+    //     break;
+    //   case 'F01714':  // #구매혜택
+    //     // '#구매혜택' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택 해제하는 경우
+    //     if (this._checkSelected('F01714')) {
+    //       Tw.Logger.info('[_onCategory] #구매혜택 카테고리 선택해제하고자 하는 경우', '');
+
+    //       // '#구매혜택' 카테고리 선택 비활성화 처리
+    //       $(e.currentTarget).removeClass('on').attr('aria-selected', false);
+          
+    //       // [선택된 카테고리 리스트] 에서 '#구매혜택(F01714)' 제거
+    //       selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'F01714');
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     } 
+    //     // '#구매혜택' 카테고리가 선택되어 있는 상태에서 한번 더 클릭하여 선택하는 경우
+    //     else {
+    //       Tw.Logger.info('[_onCategory] #구매혜택 카테고리 선택하고자 하는 경우', '');
+
+    //       // '#구매혜택' 카테고리 선택 활성화 처리
+    //       $(e.currentTarget).addClass('on').attr('aria-selected', true);
+
+    //       // [선택된 카테고리 리스트] 에서 '#구매혜택(F01714)' 추가
+    //       selectedCategoryArray.push($(e.currentTarget).data('category'));
+    //       Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
+          
+    //       // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+    //       this._reqProductList_dev(selectedCategoryArray);
+    //     }
+    //     break;      
+    // }
+  },
+
+  /**
+   * @function
+   * @desc 카테고리 선택 활성화 여부 체크
+   * @param {String} category
+   */
+  _checkSelected: function (category) {
+    var _checkSelected = false;
+    if (this.$categoryTab.find('[data-category="' + category + '"]').hasClass('on')) {
+      _checkSelected = true;
+    }
+    return _checkSelected;
+  },
+
+  /**
+   * @function
+   * @desc 카테고리 선택 비활성화 처리
+   * @param {Array} categoryArray - 활성화되어 있는 카테고리 리스트
+   * @param {String} category - 비활성화 하고자하는 카테고리 코드
+   */
+  _removeCategory: function (categoryArray, category) {
+    Tw.Logger.info('[_removeCategory] 비활성화 하고자하는 카테고리 코드', category);
+
+    // 카테고리 리스트 전체 비우기
+    if (category === 'ALL') {
+      categoryArray.splice(0, categoryArray.length);
+    } 
+    // 카테고리 리스트 배열에서 특정 카테고리 항목 제거
+    else {
+      var idx = categoryArray.indexOf(category);
+      categoryArray.splice(idx, idx+1);
+    }
+
+    // 활성화된 카테고리가 존재하지 않을 경우 default 로 '#전체' 카테고리를 리스트에 추가
+    if (Tw.FormatHelper.isEmpty(categoryArray)) {
+      categoryArray.push('');
+
+      this.$categoryTab.find('[data-category=""]').addClass('on').attr('aria-selected', true);
+    }
+
+    return categoryArray;
+  },
+
+  /**
+   * @function
    * @desc 핸들바스 파일에서 사용할 펑션 등록
    */
   _registerHelper: function () {
@@ -601,8 +971,17 @@ Tw.BenefitIndex.prototype = {
     this.$point.prepend(Tw.FormatHelper.addComma(data.point.toString()));
     this.$benefit.text(this.$benefit.text() + ' ' + data.benefitDiscount + Tw.BENEFIT.INDEX.COUNT_SUFFIX);
 
+    this._data = data;
+
     // DV001-18387 : 상단 나의혜택 할인영역이 먼저 노출 후 하단 혜택 리스트 노출한다.
-    this._switchTab(this._convertPathToCategory());
+    // this._switchTab(this._convertPathToCategory());
+    
+    // this.$categoryTab.find('[data-category]').removeClass('on').attr('aria-selected', false);
+    // this.$categoryTab.find('[data-category="{0}"]'.replace('{0}', categoryId)).addClass('on').attr('aria-selected', true);
+
+    var categoryArray = new Array();
+    categoryArray.push('');
+    this._reqProductList_dev(categoryArray);
   },
 
   /**
@@ -615,7 +994,7 @@ Tw.BenefitIndex.prototype = {
     this.$categoryTab.find('[data-category]').removeClass('on').attr('aria-selected', false);
     this.$categoryTab.find('[data-category="{0}"]'.replace('{0}', categoryId)).addClass('on').attr('aria-selected', true);
 
-    this._reqProductList(categoryId);
+    this._reqProductList_dev(categoryId);
     this.$combinationPreview.addClass('none');
     this.$discountResult.addClass('none');
 
@@ -656,6 +1035,83 @@ Tw.BenefitIndex.prototype = {
       })
       .done($.proxy(this._successProductList, this, category))
       .fail($.proxy(this._onFail, this));
+  },
+
+  /**
+   * @function
+   * @desc 상품 리스트 조회요청
+   * @param {String} category
+   */
+  _reqProductList_dev: function (categoryArray) {
+    Tw.Logger.info('[_reqProductList_dev] [선택된 카테고리 리스트]', categoryArray);
+
+    var requestCommand = [];
+
+    // 최초 접속시 (#전체 / 별도 선택된 카테고리가 없는 경우)
+    if (Tw.FormatHelper.isEmpty(categoryArray)) {
+      Tw.Logger.info('[_reqProductList_dev] 최초 접속시', categoryArray);
+
+      var param = { command: Tw.API_CMD.BFF_10_0054 };
+      param.params = { idxCtgCd: 'F01400', benefitCtgCd: '', searchListCount: 50 };
+      
+      requestCommand.push(param);
+      Tw.Logger.info('[_reqProductList_dev] requestCommand', requestCommand);
+    } 
+    // 특정 카테고리가 선택된 경우
+    else {
+      Tw.Logger.info('[_reqProductList_dev] 특정 카테고리가 선택된 경우', categoryArray);
+
+      for (var idx in categoryArray) {
+        var param = { command: Tw.API_CMD.BFF_10_0054 };
+        param.params = { idxCtgCd: 'F01400', benefitCtgCd: categoryArray[idx], searchListCount: 50 };
+  
+        requestCommand.push(param);
+      }      
+      Tw.Logger.info('[_reqProductList_dev] requestCommand', requestCommand);
+    }
+
+    // this._apiService.requestArray([
+    //   { command: Tw.API_CMD.BFF_04_0006, params: {} },
+    //   { command: Tw.API_CMD.BFF_04_0007, params: {} }
+    // ]).done($.proxy(this._successMicroContentsData, this, element))
+    //   .fail($.proxy(this._failMicroContentsData, this));
+
+    this._apiService.requestArray(requestCommand)
+      // .done($.proxy(this._successProductList_dev, this, categoryArray))
+      .done($.proxy(this._successProductList_dev, this))
+      .fail($.proxy(this._onFail, this));
+
+    // if (categoryArray.length > 1) {
+    //   this._apiService
+    //   .requestArray(Tw.API_CMD.BFF_10_0054, {
+    //     idxCtgCd: 'F01400',
+    //     benefitCtgCd: category,
+    //     searchListCount: 50
+    //   })
+    // } else {
+
+    // }
+    // this._apiService
+    //   .request(Tw.API_CMD.BFF_10_0054, {
+    //     idxCtgCd: 'F01400',
+    //     benefitCtgCd: category,
+    //     searchListCount: 50
+    //   })
+    //   .done($.proxy(this._successProductList_dev, this, category, command))
+    //   .fail($.proxy(this._onFail, this));
+
+    // if (command === 'remove') {
+    //   this._successProductList_dev(category, 'remove', null);
+    // } else {
+    //   this._apiService
+    //     .request(Tw.API_CMD.BFF_10_0054, {
+    //       idxCtgCd: 'F01400',
+    //       benefitCtgCd: category,
+    //       searchListCount: 50
+    //     })
+    //     .done($.proxy(this._successProductList_dev, this, category, command))
+    //     .fail($.proxy(this._onFail, this));
+    // }    
   },
 
   /**
@@ -702,19 +1158,190 @@ Tw.BenefitIndex.prototype = {
 
   /**
    * @function
+   * @desc _reqProductList() 성공시 콜백
+   * @param {String} category
+   * @param {JSON} resp
+   */
+  _successProductList_dev: function (categoryArray) {
+  // _successProductList_dev: function (categoryArray, resp) {
+    Tw.Logger.info('[_successProductList_dev] categoryArray', categoryArray);
+    Tw.Logger.info('[_successProductList_dev] arguments', arguments);
+    // console.log('[_successProductList_dev] categoryArray : ' + categoryArray);
+    // console.log('arguments.length : ' + arguments.length);
+    
+    if (arguments.length > 0) {
+      var mergedResult;
+      
+      for ( var idx = 0; idx < arguments.length; idx++ ) {
+        // console.log('arguments[' + idx + '] : ' + arguments[idx]);
+        console.log('arguments[' + idx + '].code : ' + arguments[idx].code);
+
+        if (arguments[idx].code !== Tw.API_CODE.CODE_00) {
+          this._onFail(arguments[idx]);
+          return;
+        }
+
+        // console.log('mergedResult.length : ' + mergedResult.length);
+
+        if (Tw.FormatHelper.isEmpty(mergedResult)) {
+          // mergedResult.push(arguments[idx].result.list);
+          mergedResult = arguments[idx].result.list;
+        } else {
+          // mergedResult.push(arguments[idx].result.list);
+
+          for ( var i = 0; i < arguments[idx].result.list.length; i++ ) {
+            mergedResult.push(arguments[idx].result.list[i]);
+          }
+        }
+        
+        Tw.Logger.info('[_successProductList_dev] mergedResult', mergedResult);
+      }
+
+      this.$list.empty();     // #fe-list
+
+      /**
+       * 리스트 수신 후 처리순서
+       * 1. 혜택/할인 리스트 노출
+       * 2. [다른 페이지를 찾고 계신가요?] 노출
+       * 3. 현재 탭으로 스크롤 이동
+       */
+      this.$benefitListArea.removeClass('none');  // #fe-benefit-list-area (혜택/할인 리스트)
+      this.$anotherPage.removeClass('none');      // #fe-another-page (다른 페이지를 찾고 계신가요)
+      // this._setScrollLeft(this._convertPathToCategory())
+
+
+      this._renderList(categoryArray, mergedResult);
+
+
+        // 더보기 설정
+        // this._moreViewSvc.init({
+        //   list: arguments[idx].result.list,
+        //   btnMore: this.$container.find('.btn-more'),
+        //   callBack: $.proxy(this._renderList, this, categoryArray),
+        //   isOnMoreView: true
+        // });
+    }
+
+    // if (resp.code !== Tw.API_CODE.CODE_00) {
+    //   this._onFail(resp);
+    //   return;
+    // }
+
+    // this.$list.empty();     // #fe-list
+
+    // /**
+    //  * 리스트 수신 후 처리순서
+    //  * 1. 혜택/할인 리스트 노출
+    //  * 2. [다른 페이지를 찾고 계신가요?] 노출
+    //  * 3. 현재 탭으로 스크롤 이동
+    //  */
+    // this.$benefitListArea.removeClass('none');  // #fe-benefit-list-area (혜택/할인 리스트)
+    // this.$anotherPage.removeClass('none');      // #fe-another-page (다른 페이지를 찾고 계신가요)
+    // // this._setScrollLeft(this._convertPathToCategory());
+
+    // // 더보기 설정
+    // this._moreViewSvc.init({
+    //   list: resp.result.list,
+    //   btnMore: this.$container.find('.btn-more'),
+    //   callBack: $.proxy(this._renderList, this, categoryArray),
+    //   isOnMoreView: true
+    // });
+
+
+
+
+
+
+
+
+
+
+    // if (command === 'remove') {
+    //   console.log ('기존 선택되어 있던 카테고리 개수 : ' + this.$categoryTab.find('.on').length);
+
+    //   if (this.$categoryTab.find('.on').length < 1) {
+    //     this.$list.empty();     // #fe-list
+
+    //     // 특정 카테고리가 하나만 선택된 상태에서 해제할 경우 전체카테고리로 돌아가기 위한 로직 처리 필요
+    //     // TO-DO
+    //   } else {
+    //     /**
+    //      * 리스트 수신 후 처리순서
+    //      * 1. 혜택/할인 리스트 노출
+    //      * 2. [다른 페이지를 찾고 계신가요?] 노출
+    //      * 3. 현재 탭으로 스크롤 이동
+    //      */
+    //     this.$benefitListArea.removeClass('none');  // #fe-benefit-list-area (혜택/할인 리스트)
+    //     this.$anotherPage.removeClass('none');      // #fe-another-page (다른 페이지를 찾고 계신가요)
+    //     // this._setScrollLeft(this._convertPathToCategory());
+
+    //     // 더보기 설정
+    //     this._moreViewSvc.init({
+    //       list: resp.result.list,
+    //       btnMore: this.$container.find('.btn-more'),
+    //       callBack: $.proxy(this._renderList, this, category, command),
+    //       isOnMoreView: true
+    //     });
+    //   }
+    // } else {
+    //   if (resp.code !== Tw.API_CODE.CODE_00) {
+    //     this._onFail(resp);
+    //     return;
+    //   }
+
+    //   if (category === '') {  // 전체 혜택을 선택한 경우 리스트 초기화 후 컨텐츠 불러옴
+    //     this.$list.empty();     // #fe-list
+    //   } else if (this.$categoryTab.find('.on').length === 1) {
+    //     this.$list.empty();     // #fe-list
+    //   }
+
+    //   /**
+    //    * 리스트 수신 후 처리순서
+    //    * 1. 혜택/할인 리스트 노출
+    //    * 2. [다른 페이지를 찾고 계신가요?] 노출
+    //    * 3. 현재 탭으로 스크롤 이동
+    //    */
+    //   this.$benefitListArea.removeClass('none');  // #fe-benefit-list-area (혜택/할인 리스트)
+    //   this.$anotherPage.removeClass('none');      // #fe-another-page (다른 페이지를 찾고 계신가요)
+    //   // this._setScrollLeft(this._convertPathToCategory());
+
+    //   // 더보기 설정
+    //   this._moreViewSvc.init({
+    //     list: resp.result.list,
+    //     btnMore: this.$container.find('.btn-more'),
+    //     callBack: $.proxy(this._renderList, this, category, command),
+    //     isOnMoreView: true
+    //   });
+    // }
+  },
+
+  /**
+   * @function
    * @desc 상품 리스트 렌더
    * @param {String} category
    * @param {JSON} res
    */
-  _renderList: function (category, res) {
+  _renderList: function (categoryArray, res) {
+    console.log('[_renderList] categoryArray : ' + categoryArray);
+
     var source = $('#productList').html();
     this.$prodListArea.removeClass('nogaps-top').addClass(this._getCssMore(res.nextCnt));
     var template = Handlebars.compile(source);
+
     var output = template({
-      list: res.list,
-      category: category
+      // list: res.list,
+      list: res,
+      category: categoryArray
     });
+
     this.$list.append(output);
+    // if (command === 'remove') {
+    //   this.$list.remove(output);
+    // } else {
+    //   this.$list.append(output);
+    // }
+    
+    console.log(this.$list.find('li').length);
   },
 
   /**
