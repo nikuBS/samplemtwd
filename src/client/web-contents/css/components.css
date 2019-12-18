@@ -35870,37 +35870,6 @@ body.apphome .section-box {
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
 .my-subscription-wrap .basic-list.tod-basic-list ul li button.bt-link-tx.underline{padding:0 !important}
 
-/* 191209 [OP002-5498] 유선 업무처리 동의 프로세스 */
-.tod-join-txt-wrap .txt-desc{margin-bottom:0}
-.tod-join-txt-wrap .ico{display:block; width:11.1875rem; height:9.1875rem; margin:1.25rem auto 0; }
-.tod-join-txt-wrap .ico img{width:100%; height:auto}
-.tod-agree-item-wrap{min-height:-webkit-calc(100vh - 32.5rem); min-height:calc(100vh - 32.5rem)}
-.tod-agree-item-wrap .tit-desc{font-weight:400}
-.tod-agree-item-wrap .txt-desc{font-size:0.8125rem; line-height:1rem}
-.tod-agree-item-wrap .agreement-btn{color:#178bce; text-decoration:underline}
-.tod-agree-item-wrap .star-refer{font-size:0.75rem; line-height:1rem; color:#666; position:relative; padding-left:0.625rem; color:#757575}
-.tod-agree-item-wrap .star-refer:before{content:'*'; position:absolute; left:0; top:0.125rem; }
-.tod-sb-join-tit{font-size:1rem; font-weight:500; color:#000; line-height:1.5rem; margin-bottom:0.9375rem}
-.tod-sb-join-txt{font-size:0.8125rem; line-height:1rem; color:#666;}
-.tod-sb-join-txt em{color:#000; text-decoration:underline}
-.tod-sb-join-list {margin-top:0.5625rem}
-.tod-sb-join-list .join-item{border-bottom:0.0625rem solid #f2f2f2; padding:1.3125rem 0 1.1875rem}
-.tod-sb-join-list .join-item:last-child{border-bottom:none}
-.tod-sb-join-list .join-item .line-item{display:inline-block; font-size:0.9375rem; color:#000; padding-left:0.6875rem; vertical-align:middle }
-.tod-sb-join-list .join-item i{vertical-align:middle}
-.tod-sb-join-list .join-item .detail-info{display:inline-block; color:#666; font-size:0.75rem; padding-left:0.3125rem; vertical-align:middle}
-.agree-chk-wrap.tod-only-tit-wrap .list-comp-input-agree .select-list > li > div .comp-list-layout .layout-text{padding:1.25rem 0 1.25rem}
-.tod-no-sbline-wrap{padding:1.1875rem 0 ; text-align:center; }
-.tod-no-sbline-wrap .tod-no-sbline-txt{text-align:center; font-size:1.5625rem; line-height:1.875rem; font-weight:500; }
-.tod-no-sbline-wrap .ico{display:inline-block; width:10.875rem; height:9.6875rem; margin-top:1.875rem}
-.tod-no-sbline-wrap .ico img{width:100%; height:100%}
-@media screen and (max-width:320px){
-	.tod-join-txt-wrap{padding-right:5.625rem}
-	.tod-join-txt-wrap .ico{width:6.75rem; -webkit-transform:translateY(-34%); transform:translateY(-34%)}
-	.tod-no-sbline-wrap{padding-top:1.875rem}
-	.tod-no-sbline-wrap .tod-no-sbline-txt{font-size:1.375rem; line-height:1.625rem}
-} 
-
 /* 191216 로밍 메인 UI 변경 */
 .rm-main-recomm>li:nth-child(n+4){display:none}
 .rm-main-recomm-more-btn{margin:.63rem -1rem 0;padding:0 1rem}
