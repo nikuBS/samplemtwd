@@ -13,10 +13,14 @@ import {API_CMD, API_CODE, API_VERSION} from '../../../../types/api-command.type
 import StringHelper from '../../../../utils/string.helper';
 import MyTDataHotData from '../../../02.myt-data/controllers/usage/myt-data.hotdata.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
+import LoggerService from '../../../../services/logger.service';
+import { request } from 'https';
 
 class CommonSearch extends TwViewController {
+  private readonly log;
   constructor() {
     super();
+    this.log = new LoggerService();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -24,6 +28,9 @@ class CommonSearch extends TwViewController {
     const collection = 'all';
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
+
+    // this.log.info(this, '[common.search.in-result.controller] req.query : ', req.query);  // keyword=소액결제, in_keyword=내역, step=3
+   
     let requestObj, researchCd, researchQuery, searchApi ;
     /**
      * 검색 결과 출력
@@ -32,7 +39,7 @@ class CommonSearch extends TwViewController {
      * @param thisObj 해당 객체
      * @returns void
      */
-    function showSearchResult(searchResult, relatedKeyword , thisObj) {
+    function showSearchResult(searchResult, relatedKeyword , requestObj , thisObj) {
       if ( searchResult.result.totalcount === 0 || from === 'empty' ) {
         Observable.combineLatest(
           thisObj.apiService.request(API_CMD.BFF_08_0070, {}, {}),
@@ -68,6 +75,7 @@ class CommonSearch extends TwViewController {
           inKeyword : searchResult.result.researchQuery,
           step : step,
           from : from,
+          sort : requestObj.sort,
           nowUrl : req.originalUrl
         });
       }
@@ -83,12 +91,22 @@ class CommonSearch extends TwViewController {
       searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
       return searchResult;
     }
+
+    // const sort = 'A';  // 추천순 (Admin)
+    // const sort = 'D';  // 최신순 (Date)
+    // const sort = 'H';  // 높은가격순 (HighPrice)
+    // const sort = 'L';  // 낮은가격순 (LowPrice)
+    // const sort = 'C';  // 클릭순 (Click)
+    // const sort = 'R';  // 정확도순 (Rank)
+    const sort = 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A';
+    // const sort = 'shortcut-A.rate-H.service-H.tv_internet-L.troaming-A.tapp-A.direct-A.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A';
+
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
-      requestObj = { query , collection };
+      requestObj = { query , collection , sort };
     } else {
       researchCd = 1;
       researchQuery = StringHelper.encodeURIAllCase(req.query.in_keyword) || null;
-      requestObj = { query , collection , researchQuery , researchCd};
+      requestObj = { query , collection , researchQuery , researchCd , sort };
     }
 
     if (BrowserHelper.isApp(req)) {
@@ -105,6 +123,8 @@ class CommonSearch extends TwViewController {
     if (!FormatHelper.isEmpty(svcInfo)) {
       requestObj.userId = svcInfo.userId;
     }
+
+    requestObj.sort = sort;
 
     Observable.combineLatest(
       this.apiService.request( searchApi , requestObj, {}),
@@ -126,9 +146,10 @@ class CommonSearch extends TwViewController {
         if (!FormatHelper.isEmpty(searchResult.result.search[0].immediate.data)) {
           searchResult = removeImmediateData(searchResult);
         }
-        showSearchResult(searchResult, relatedKeyword , this);
+        showSearchResult(searchResult, relatedKeyword , requestObj , this);
       } else {
         searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
+        searchResult.result.search[0].immediate.data[0].nameData = svcInfo.mbrNm;
         switch (Number(searchResult.result.search[0].immediate.data[0].DOCID)) {
           case 2:
             this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
@@ -138,7 +159,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = resultData.result;
               }
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             });
             break;
           case 4:
@@ -151,9 +172,9 @@ class CommonSearch extends TwViewController {
               }
             }, () => {
               searchResult = removeImmediateData(searchResult);
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             }, () => {
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             });
             break;
           case 5:
@@ -166,7 +187,7 @@ class CommonSearch extends TwViewController {
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
                 searchResult.result.search[0].immediate.data[0].barcode = FormatHelper.addCardSpace(resultData.result.mbrCardNum);
               }
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             });
             break;
           case 7:
@@ -178,7 +199,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = resultData.result;
               }
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             });
             break;
           case 8:
@@ -190,7 +211,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = resultData.result;
               }
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             });
             break;
           case 9:
@@ -202,7 +223,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = resultData.result;
               }
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             });
             break;
           case 10:
@@ -214,12 +235,12 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = resultData.result;
               }
-              showSearchResult(searchResult, relatedKeyword , this);
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
             });
             break;
           default:
             searchResult.result.search[0].immediate.data[0].subData = svcInfo.prodNm;
-            showSearchResult(searchResult, relatedKeyword , this);
+            showSearchResult(searchResult, relatedKeyword , requestObj , this);
             break;
         }
       }

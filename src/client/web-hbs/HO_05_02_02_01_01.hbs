@@ -4,14 +4,50 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>검색의견 신청</h1>
+                <h1>검색 개선 의견 접수</h1><!-- 191127 [OP002-4532] 수정_01 -->
             </div>
         </div>
     </div>
     <!--// #header -->
     <!-- .container-wrap -->
     <div class="container-wrap">
-        <h2 class="blind">내용</h2>
+
+<!-- 191127 [OP002-4532] 수정_02 -->
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box noborder">
+                <p class="infoplus-search">고객님의 소중한 의견을 반영하여<br> 더 좋은 검색 서비스를 제공하겠습니다.</p>
+                <div class="option-box">
+                    <div class="inputbox textarea-type">
+                        <div class="input">
+                            <textarea autocorrect="off" class="input-focus inner-tx" rows="4" placeholder="예) 5G 요금제 검색이 잘 되지 않아요." maxlength="20" title="개선 의견 내용 입력"></textarea>
+                            <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        </div>
+                        <div class="byte byte-maximum">
+                            <p class="text">최대 20자까지 가능합니다.</p>
+                            <span class="byte-current">0</span>/<span class="byte-total">20</span>자
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button disabled="" class="request_claim">등록하기</button>
+                </li>
+            </ul>
+        </div>
+        <!-- //191127 [OP002-4532] 수정_02 -->
+
+
+
+
+
+
+
+        {{!-- <h2 class="blind">내용</h2>
         <div class="container">
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
@@ -39,7 +75,10 @@
                     <button disabled="" class="request_claim">신청하기</button>
                 </li>
             </ul>
-        </div>
+        </div> --}}
+
+
+
     </div>
     <!--// .container-wrap -->
     <!-- .popup-closeBtn -->
