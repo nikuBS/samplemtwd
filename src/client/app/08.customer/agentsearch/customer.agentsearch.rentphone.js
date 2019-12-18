@@ -84,6 +84,7 @@ Tw.CustomerAgentsearchRentPhone.prototype = {
    * @param  {Object} $root - actionsheet 의 최상위 elem
    */
   _onActionSheetOpened: function ($root) {
+    Tw.CommonHelper.focusOnActionSheet($root);
     $root.on('click', '.btn-floating', $.proxy(function () {
       this._popupService.close();
     }, this));

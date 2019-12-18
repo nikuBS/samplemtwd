@@ -19,8 +19,10 @@ export enum API_VERSION {
 
 export const API_CMD = {
   // search
-  SEARCH_APP: { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
-  SEARCH_WEB: { path: '/search/tworld/mobile-web', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  // SEARCH_APP: { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  // SEARCH_WEB: { path: '/search/tworld/mobile-web', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_APP: { path: '/search/tworld/mobile-app2', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB: { path: '/search/tworld/mobile-web2', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   RELATED_KEYWORD: { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   POPULAR_KEYWORD: { path: '/search/tworld/popword', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   SEARCH_AUTO_COMPLETE: { path: '/search/tworld/autocomplete', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
@@ -605,6 +607,7 @@ export const API_CMD = {
   BFF_08_0081: { path: '/core-modification/:version/campaign-reject-yn', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0082: { path: '/core-modification/:version/campaign-reject-add', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0083: { path: '/core-modification/:version/campaign-reject-delete', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0084: { path: '/core-modification/:version/search/invst-improve', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

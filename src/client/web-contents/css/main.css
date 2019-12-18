@@ -5580,3 +5580,12 @@ body.apphome .main-membershop-box {
 .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title2, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 {width:75%} 
 .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title2 .add-txt, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 .add-txt{display:block;font-size:0.75rem;color:#959595}
 .cont-actionsheet .ac-list .type1 .table-cell.top{vertical-align:top}
+
+/* 191204 [OP002-5303] 회선관리 및 선택영역 강화 */
+.cont-actionsheet .ac-list .type1 .table-cell > span.add .badge.tod-child{background-image:url('/img/common/badge/badge_family_04.svg'); }
+.cont-actionsheet .ac-list .type1.tod-bg{background:#e6f2fb; padding:0.6875rem 0.75rem 0.625rem 1rem; box-sizing:border-box; height:2.75rem}
+.cont-actionsheet .ac-list .type1.tod-bg > button{vertical-align:top}
+.cont-actionsheet .ac-list .type1.tod-bg .table-cell > span.add{white-space:nowrap;}
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico4 {background: url('/img/svg/icon_80px_realtime_data.svg') no-repeat 0 0;background-size: 100% 100%; }
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/svg/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }

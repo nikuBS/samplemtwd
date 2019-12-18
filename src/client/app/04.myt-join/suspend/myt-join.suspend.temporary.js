@@ -6,7 +6,7 @@
 /**
  * @class
  * @desc [장기/일시정지] 처리를 위한 class
- * @param {Object} tabEl - tab content wrapper
+ * @param {jQuery} tabEl - tab content wrapper
  * @param {Object} params - 서버에서 전달하는 값
  * @returns {void}
  */
@@ -35,7 +35,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @returns {void}
    */
   _cachedElement: function () {
-    this.$optionSuspendAll = this.$container.find('[data-role="fe-suspend-all"]');
+    this.$rdoCallBlockAll = this.$container.find('[data-role="fe-call-block-all"]');
     this.$optionReceiveCall = this.$container.find('[data-role="fe-accept-call-beforehand"]');
     this.$dateFrom = this.$container.find('[data-role="fe-date-from"]');
     this.$dateTo = this.$container.find('[data-role="fe-date-to"]');
@@ -81,7 +81,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @param response
    */
   _onContact: function (response) {
-    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
+    if (response.resultCode === Tw.NTV_CODE.CODE_00) {
       var params = response.params;
       var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       this.$inputTel.val(formatted);
@@ -96,14 +96,14 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @param e
    */
   _onClickResetNotification: function (e) {
-    if ( e.currentTarget.getAttribute('data-noti') === 'true' ) {
+    if (e.currentTarget.getAttribute('data-noti') === 'true') {
       this.$restoreNotiGroup.show();
       this.$restoreNotiGroup.attr('aria-hidden', false);
-      if ( !this.$checkEmailNoti.attr('checked') ) {
+      if (!this.$checkEmailNoti.attr('checked')) {
         this.$checkEmailNoti.click();
       }
 
-      if ( !this.$checkSMSnoti.attr('checked') ) {
+      if (!this.$checkSMSnoti.attr('checked')) {
         this.$checkSMSnoti.click();
       }
       this._checkSuspendable(true);
@@ -121,7 +121,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @private
    */
   _onNotiMethodChanged: function (e) {
-    if ( e.currentTarget.checked ) {
+    if (e.currentTarget.checked) {
       $(e.currentTarget).parent().find('.comp-list-layout input,button').removeAttr('disabled');
     } else {
       $(e.currentTarget).parent().find('.comp-list-layout input,button').attr('disabled', 'disabled');
@@ -134,15 +134,15 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @param notice 버튼 활성화 체크 여부
    */
   _checkSuspendable: function (notice) {
-    if ( !notice ) {
+    if (!notice) {
       this.$btSuspend.removeAttr('disabled');
     }
     // 이메일 또는 문자로 안내 선택, 둘 다 선택하지 않은 경우
-    else if ( !this.$checkEmailNoti.prop('checked') && !this.$checkSMSnoti.prop('checked') ) {
+    else if (!this.$checkEmailNoti.prop('checked') && !this.$checkSMSnoti.prop('checked')) {
       this.$btSuspend.attr('disabled', '');
-    } else if ( this.$checkEmailNoti.prop('checked') && _.isEmpty(this.$inputEmail.val()) ) {
+    } else if (this.$checkEmailNoti.prop('checked') && _.isEmpty(this.$inputEmail.val())) {
       this.$btSuspend.attr('disabled', '');
-    } else if ( this.$checkSMSnoti.prop('checked') && _.isEmpty(this.$inputTel.val()) ) {
+    } else if (this.$checkSMSnoti.prop('checked') && _.isEmpty(this.$inputTel.val())) {
       this.$btSuspend.attr('disabled', '');
     } else {
       this.$btSuspend.removeAttr('disabled');
@@ -157,13 +157,13 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   _onClickBtnSuspend: function () {
     // validation check
     // 일시정지 종료일 안내 타입별 입력값 확인
-    if ( this.$radioResetNotification.filter('[data-noti="true"]').attr('checked') ) {
-      if ( this.$checkEmailNoti.attr('checked') && !Tw.ValidationHelper.isEmail(this.$inputEmail.val()) ) {
+    if (this.$radioResetNotification.filter('[data-noti="true"]').attr('checked')) {
+      if (this.$checkEmailNoti.attr('checked') && !Tw.ValidationHelper.isEmail(this.$inputEmail.val())) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_EMAIL,
           null, null, null, null, $(event.currentTarget));
         return;
       }
-      if ( this.$checkSMSnoti.attr('checked') && !Tw.ValidationHelper.isCellPhone(this.$inputTel.val()) ) {
+      if (this.$checkSMSnoti.attr('checked') && !Tw.ValidationHelper.isCellPhone(this.$inputTel.val())) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PHONE_NUMBER,
           null, null, null, null, $(event.currentTarget));
         return;
@@ -182,15 +182,15 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     var params = {
       fromDt: this.$dateFrom.val().replace(/-/g, ''),
       toDt: this.$dateTo.val().replace(/-/g, ''),
-      icallPhbYn: this.$optionSuspendAll.attr('checked') ? 'Y' : 'N',
+      icallPhbYn: this.$rdoCallBlockAll.attr('checked') ? 'Y' : 'N',
       autoCnvtPrefrYn: this.$optionReceiveCall.attr('checked') ? 'Y' : 'N'
     };
-    if ( this.$radioResetNotification.filter('[data-noti="true"]').attr('checked') ) {
-      if ( this.$checkEmailNoti.attr('checked') ) {
+    if (this.$radioResetNotification.filter('[data-noti="true"]').attr('checked')) {
+      if (this.$checkEmailNoti.attr('checked')) {
         params.emailAddr = this.$inputEmail.val();
       }
 
-      if ( this.$checkSMSnoti.attr('checked') ) {
+      if (this.$checkSMSnoti.attr('checked')) {
         // [OP002-4647] 일시정지 시 문자로 안내 번호입력 후 신청번호 오류
         // API 요청 시 잘못된 인자값으로 전달
         // params.smsSvcNum = this.$inputTel.val();
@@ -208,12 +208,13 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    */
   _onSuccessRequestSuspend: function (params, res) {
     Tw.CommonHelper.endLoading('.container');
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if (res.code === Tw.API_CODE.CODE_00) {
       params.command = 'temporary';
+      // TODO: Popup으로 표현되어야 한다.
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
-    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+    } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg,
         null, null, null, null, $(event.currentTarget));
     } else {
@@ -235,8 +236,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @returns {boolean}
    */
   hasChanged: function () {
-    var changed =
-      !this.$optionSuspendAll.attr('checked') ||
+    return !this.$rdoCallBlockAll.attr('checked') ||
       !this.$optionReceiveCall.attr('checked') ||
       !this.$radioResetNotification.filter('[data-noti="true"]').attr('checked') ||
       !this.$checkEmailNoti.attr('checked') ||
@@ -244,8 +244,6 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       !_.isEmpty(this.$inputTel.val()) ||
       !_.isEmpty(this.$inputEmail.val()) ||
       this._defaultDate !== this.$dateTo.val();
-    return changed;
-
   },
 
   /**
@@ -254,7 +252,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @param event
    * @private
    */
-  _onFocusDateSelect: function(event) {
+  _onFocusDateSelect: function (event) {
     var role = event.target.getAttribute('data-role');
     var value = event.target.value;
     if (role === 'fe-date-to') {
@@ -270,8 +268,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
    * @param event
    * @private
    */
-  _onChangeDateSelect: function(event) {
-    var targetRole = event.target.getAttribute('data-role');
+  _onChangeDateSelect: function (event) {
+    var $target = $(event.target);
+    var targetRole = $target.data('role'); // $target.attr('data-role');
     if (!event.target.value) {
       // input 내 빈값인(삭제) 경우 - 기존 선택된 날짜로 초기화 시켜준다.
       if (targetRole === 'fe-date-from') {
@@ -281,20 +280,22 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       }
     }
     //validation check
-    var msg = '';
-    // duration check
+    var msg;
     var from = this.$container.find('[data-role="fe-date-from"]').val().replace(/-/g, '');
-    var to = this.$container.find('[data-role="fe-date-to"]').val().replace(/-/g, '');
-    var diff = Tw.DateHelper.getDiffByUnit(from,  Tw.DateHelper.getCurrentShortDate(), 'days');
+    // duration check
+    var diff = Tw.DateHelper.getDiffByUnit(from, Tw.DateHelper.getCurrentShortDate(), 'days');
     if (diff < 0) {
       // 시작일이 오늘 이전일 경우
       msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
-    } else if (to < from) {
-      // 종료일자가 시작일 이전일 경우
-      msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
     } else if (diff > 93) {
       // -일시정지는 1회 최대 93일 까지 신청 가능
       msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_02;
+    } else {
+      var to = this.$container.find('[data-role="fe-date-to"]').val().replace(/-/g, '');
+      if (to < from) {
+        // 종료일자가 시작일 이전일 경우
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
+      }
     }
     if (msg) {
       // 날짜가 맞지 않는 경우
@@ -303,9 +304,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       } else {
         event.target.value = this.toDate;
       }
-      this._popupService.openAlert(msg, null, null, null, null, $(event.currentTarget));
+      this._popupService.openAlert(msg, null, null, null, null, $target);
     } else {
-      // 정상으로 날짜를 선택한 경우 변경값을 저장해준다.
+      // 날짜를 맞게 선택한 경우, 변경값을 저장해준다.
       if (targetRole === 'fe-date-from') {
         this.fromDate = event.target.value;
       } else {

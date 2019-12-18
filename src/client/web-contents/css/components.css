@@ -20603,15 +20603,19 @@ a.bt-link-tx.underline.small {
 .shop-info .shop-txt > ul > li:last-child {
   border-bottom: 0; }
 
-.shop-info .shop-txt .type01 dt, .shop-info .shop-txt .type02 dt, .shop-info .shop-txt .type03 dt {
+.shop-info .shop-txt .type01 dt, .shop-info .shop-txt .type02 dt, .shop-info .shop-txt .type03 dt,
+.shop-info .shop-txt .type01 .dtxt-t, .shop-info .shop-txt .type02 .dtxt-t, .shop-info .shop-txt .type03 .dtxt-t {/* 190905 [] 웹접근성 수정 */
+  display: block;
   font-size: 0.81rem;
   margin-bottom: 0.63rem; }
 
-.shop-info .shop-txt .type01 dd, .shop-info .shop-txt .type02 dd, .shop-info .shop-txt .type03 dd {
+.shop-info .shop-txt .type01 dd, .shop-info .shop-txt .type02 dd, .shop-info .shop-txt .type03 dd,
+.shop-info .shop-txt .type01 .dtxt-d, .shop-info .shop-txt .type02 .dtxt-d, .shop-info .shop-txt .type03 .dtxt-d {/* 190905 [] 웹접근성 수정 */
+  display: block;
   font-size: 0.81rem;
   color: #858585; }
 
-.shop-info .shop-txt .type01 dd .bt-tel, .shop-info .shop-txt .type02 dd .bt-tel, .shop-info .shop-txt .type03 dd .bt-tel {
+.shop-info .shop-txt .bt-tel{/* 190905 [] 웹접근성 수정 */
   display: inline-block;
   width: 2rem;
   height: 2rem;
@@ -20620,6 +20624,13 @@ a.bt-link-tx.underline.small {
   right: 0;
   background: url(/img/customer/bg-tel-64.png) no-repeat 0 0;
   background-size: 2rem 2rem; }
+
+.shop-info .shop-txt .bt-dtxt {/* 190905 [] 웹접근성 수정 (추가) */
+  display: block;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
 
 .shop-info .shop-txt .type02 {
   /* 매장 전화 */
@@ -35516,8 +35527,8 @@ body.apphome .section-box {
 
 /* 190718 [] */
 /* 191001 수정 [s] */
-.rm-main-recomm .productinfoscroll-box ul li{width:13rem}
-.rm-main-recomm .productinfoscroll-box ul li .product-info{width:13rem}
+.rm-main-recomm .productinfoscroll-box ul li{width:9rem;min-width:9rem}/* 191216 로밍 메인 UI 변경 */
+.rm-main-recomm .productinfoscroll-box ul li .product-info{width:9rem}/* 191216 로밍 메인 UI 변경 */
 .rm-main-recomm .productinfoscroll-box ul li .product-info .info i{display:block}
 .rm-prd-info .productinfoscroll-box .horizontal-list li{width:13rem}
 .rm-prd-info .productinfoscroll-box .horizontal-list li .product-info{width:13rem}
@@ -35725,7 +35736,7 @@ body.apphome .section-box {
 .rm-autosafe-qna dd{float:left;margin-left:1rem}
 
 /* 191004 [OP002-4203] 관련 로밍 수정 */
-.rm-main-recomm .productinfoscroll-box .product-info .type{font-size:.75rem}
+.rm-main-recomm .productinfoscroll-box .product-info .type{font-size:.75rem;word-break:break-all}
 
 /* 191008 [OP002-4314] 공지사항 등록요청 */
 .tod-virtual .comp-box .list-box .ico-wrap{position: absolute;left: 0;display: inline-block;-webkit-box-sizing: border-box;box-sizing: border-box;width: 2.75rem;height: 2.75rem;border: 1px solid #c1c1c1;border-radius: 50%;}
@@ -35768,6 +35779,17 @@ body.apphome .section-box {
 .tod-unit-item-info .discount-wrap .txt{font-size:1rem; line-height: 1; color:#f76252;}
 .tod-unit-item-info .type-wrap{padding-top: 0.82rem; line-height:1; border-top:1px solid #f2f2f2;}
 .tod-unit-item-info .type-wrap .txt{font-size: 0.75rem; color: #666;}
+
+/* 191108 [OP002-3705] 혜택/할인 카테고리 및 UI 개선 */
+.tod-benefit-wrap {position:relative; padding-right:2.8rem; padding-bottom:0.5rem;}
+.tod-benefit-wrap.short {padding-right:0;}
+.tod-benefit-wrap .tod-benefit-link li {display:inline-block;}
+.tod-benefit-wrap .tod-benefit-link li .unit {display: inline-block; height: 1.875rem; line-height: 1.875rem; padding:0 0.75rem; background-color: #fff; border-radius: 0.9375rem; font-size: 0.75rem; color: #666; margin: 0 0.3rem 0.73rem 0; border:1px solid #e5e5e5;}
+.tod-benefit-wrap .tod-benefit-link li .unit.on {border:1px solid #178bce; color:#fff; background-color:#178bce;}
+.tod-benefit-wrap .bt-toggle {position:absolute; bottom:1.23rem; right:0; display: inline-block; width:2.563rem; height:1.875rem; border-radius: 0.9375rem; background:#bcbec1;}
+.tod-benefit-wrap .bt-toggle:after {content:'더보기'; display:inline-block; width:100%; height:1.875rem; vertical-align:top; font-size:0; background:url(/img/discount/ico_more.png) no-repeat 50% 50%; background-size:1rem auto;}
+.tod-benefit-wrap .bt-toggle.open:after {content:'닫기'; font-size:0.75rem; line-height:1.875rem; color:#fff; text-align:center; background-image:none;}
+.tod-benefit-wrap.short .bt-toggle {display:none;}
 
 /* 191202 [OP002-5208] 개선-회선 관리 추가_02 */
 .tod-icon{position:relative;}
@@ -35830,3 +35852,25 @@ body.apphome .section-box {
 .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title2, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 {width:75%}
 .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title2 .add-txt, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 .add-txt{display:block;font-size:0.75rem;color:#959595}
 .cont-actionsheet .ac-list .type1 .table-cell.top{vertical-align:top}
+
+/* 191204 [OP002-5303] 회선관리 및 선택영역 강화 */
+.tod-line-sel-box .line-sel-btn{display:inline-block; width:100%; padding:1rem; box-sizing:border-box; background:-webkit-linear-gradient(left, #f7645c 0%,#f65b7e 100%); background: linear-gradient(to right, #f7645c 0%,#f65b7e 100%); text-align:left; color:#fff; position:relative }
+.tod-line-sel-box .line-sel-btn .sel-ico{display:inline-block; vertical-align:middle; width:1.1875rem; height:1.25rem; margin-right:0.4375rem }
+.tod-line-sel-box .line-sel-btn .sel-ico img{width:100%; height:100%; }
+.tod-line-sel-box .line-sel-btn .item{display:inline-block; vertical-align:middle; font-size:0.9375rem; font-weight:500; line-height:1.25rem; margin-right:0.4375rem  }
+.tod-line-sel-box .line-sel-btn .detail-info{display:inline-block; max-width:-webkit-calc(100% - 8.625rem); max-width:calc(100% - 8.625rem); vertical-align:middle; line-height:1.25rem; font-size:0.8125rem; white-space:nowrap; text-overflow:ellipsis; box-sizing:border-box; }
+.tod-line-sel-box .line-sel-btn:after{content:''; display:inline-block; position:absolute; right:1rem; top:50%; transform:translateY(-50%); width:0.875rem; height:0.4375rem; background:url('/img/common/ico-white-arr-down.png') no-repeat 50% 50% ; background-size:100% auto ;  }
+.tod-line-sel-box + .cont-sp.type1{display:none}
+.cont-actionsheet .ac-list .type1 .table-cell > span.add .badge.tod-child{background-image:url('/img/common/badge/badge_family_04.svg'); }
+.cont-actionsheet .ac-list .type1.tod-bg{background:#e6f2fb; padding:0.6875rem 0.75rem 0.625rem 1rem; box-sizing:border-box; height:2.75rem}
+.cont-actionsheet .ac-list .type1.tod-bg > button{vertical-align:top}
+.cont-actionsheet .ac-list .type1.tod-bg .table-cell > span.add{white-space:nowrap;}
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico4 {background: url('/img/svg/icon_80px_realtime_data.svg') no-repeat 0 0;background-size: 100% 100%; }
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/svg/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
+.my-subscription-wrap .basic-list.tod-basic-list ul li button.bt-link-tx.underline{padding:0 !important}
+
+/* 191216 로밍 메인 UI 변경 */
+.rm-main-recomm>li:nth-child(n+4){display:none}
+.rm-main-recomm-more-btn{margin:.63rem -1rem 0;padding:0 1rem}
+.rm-main-recomm-more-btn button{display:block;width:100%;height:3.38rem;border-top:1px solid #f2f2f2;color:#000;font-size:.943rem;text-align:center;line-height:3.38rem}

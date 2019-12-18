@@ -39,7 +39,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._twdUrl = '';
   this.mbrNm = mbrNm || '';
 
-  this._lineComponent = new Tw.LineComponent();
+  // this._lineComponent = new Tw.LineComponent();
 
   // if ( location.hash === '#store' ) {
   //   setTimeout($.proxy(function () {
@@ -78,6 +78,10 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
 
   // Still Don't know why. temporal fix for link issue.
   $('.help-list li a').on('click', $.proxy(this._onClickInternal, this));
+
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+  // this._lineComponent = new Tw.LineComponent();
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line');
 };
 
 Tw.MainHome.prototype = {
@@ -158,7 +162,7 @@ Tw.MainHome.prototype = {
     this.$elMembership.on('click', _.debounce($.proxy(this._onClickBarcode, this), 500));
     this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     // this.$container.find('.fe-bt-go-recharge').click(_.debounce($.proxy(this._onClickBtRecharge, this),500));
-    this.$container.on('click', '.fe-bt-line', _.debounce($.proxy(this._onClickLine, this), 500));
+    // this.$container.on('click', '.fe-bt-line', _.debounce($.proxy(this._onClickLine, this), 500));
     this.$container.on('click', '#fe-bt-data-link', _.debounce($.proxy(this._onClickDataLink, this), 500));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
@@ -345,11 +349,11 @@ Tw.MainHome.prototype = {
    * @return {void}
    * @private
    */
-  _onClickLine: function ($event) {
-    var $target = $($event.currentTarget);
-    // var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
-    this._lineComponent.onClickLine(this._svcMgmtNum, $target);
-  },
+  // _onClickLine: function ($event) {
+  //   var $target = $($event.currentTarget);
+  //   // var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
+  //   this._lineComponent.onClickLine(this._svcMgmtNum, $target);
+  // },
 
   /**
    * @function

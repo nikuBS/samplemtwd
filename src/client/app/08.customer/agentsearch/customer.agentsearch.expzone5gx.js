@@ -89,6 +89,8 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
    */
   _handleOpenSelectFilterPopup: function($layer) {
 
+     Tw.CommonHelper.focusOnActionSheet($layer);
+
     /* fiveOptionType가 0이라면 전체를 선택, 그외는 fiveOptionType-1 번째를 선택-eq(0) 부터 시작 */
     /*     var $checkbox = this.fiveOptionType == 0 ? this.$container.find('.select-list li input') : this.$container.find('.select-list li:eq(' + (parseInt(this.fiveOptionType) - 1) + ') input');
     $checkbox.attr('checked', true).closest('.checkbox').addClass('checked').attr('aria-checked',true);  */
@@ -182,6 +184,7 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
       data: list,
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      Tw.CommonHelper.focusOnActionSheet($root);
       /* 팝업 오픈 시 이전에 선택된 지역 체크 */
       $root.find('input#' + this.selectedLocationCode).attr('checked', true);
       

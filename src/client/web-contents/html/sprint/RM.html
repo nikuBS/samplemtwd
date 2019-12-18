@@ -33,6 +33,23 @@
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
     
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+    <!-- 191213 추가 [OP002-5769] -->
+    <script type="text/javascript">
+    jQuery(function(){
+    	$('.rm-main-recomm-more-btn button').click(function(){
+    		if( $(this).hasClass('active') ){
+    			$(this).removeClass('active');
+    			$('.rm-main-recomm>li:nth-child(n+4)').hide();    			
+    			$('.rm-main-recomm-more-btn button').text('더 보기');
+    		} else {
+    			$(this).addClass('active');
+    			$('.rm-main-recomm li').show();
+    			$('.rm-main-recomm-more-btn button').text('숨기기');    			
+    		}
+    	});    	
+    });
+    </script>
+    <!-- // 191213 [OP002-5769] -->
 </head>
 
 
@@ -163,9 +180,11 @@
 				<div class="cont-box nogaps-btm widget noborder">
                     <div class="headingbox-wrap">
                         <h3 class="title">인기 로밍 요금제</h3>
-                        <div class="btn">
+                        <!-- 191213 삭제 [OP002-5769] -->
+                        <!--<div class="btn">
                             <a class="bt-link-tx underline">전체 로밍 요금제</a>
-                        </div>
+                        </div>-->
+                        <!-- // 191213 삭제 [OP002-5769] -->
                     </div>
                     <div class="widget-box toggle01">
                         <ul class="representcharge-list rm-main-recomm">
@@ -173,7 +192,7 @@
                                 <button role="button" aria-pressed="false" class="representcharge-info">
                                     <h4 class="title">baro 3/4/7GB</h4>
                                     <div class="img-box"><img class="lte" src="/img/product/rm-main-ico-baro.png" alt=""></div>
-                                    <p class="text">전 세계에서 최대 7일/30일동안 넉넉한 데이터와 고품질의 baro 통화를 이용하는 요금제입니다.</p>
+                                    <p class="text">전 세계에서 최대 7일/30일동안 넉넉한 데이터와 고품질의 baro 통화를 이용하는 요금제</p><!-- 191213 수정 [OP002-5769] -->
                                 </button>
                                 <div class="productinfoscroll-box slide-nopd">
                                     <!-- .widget -->
@@ -225,7 +244,7 @@
                                 <button role="button" aria-pressed="false" class="representcharge-info">
                                     <h4 class="title">baro OnePass 300/500</h4><!-- 190813 수정 -->
                                     <div class="img-box"><img class="lte" src="/img/product/rm-main-ico-baro.png" alt=""></div>
-                                    <p class="text">전 세계에서 1일 단위로 데이터와 고품질의 baro 통화를 이용하는 요금제입니다.</p>
+                                    <p class="text">전 세계에서 1일 단위로 데이터와 고품질의 baro 통화를 이용하는 요금제</p><!-- 191213 수정 [OP002-5769] -->
                                 </button>
                                 <div class="productinfoscroll-box slide-nopd"><!-- 2019.03.18 slide-nopd 추가-->
                                     <!-- .widget -->
@@ -290,9 +309,9 @@
                             </li>
                             <li>
                                 <button role="button" aria-pressed="false" class="representcharge-info">
-                                    <h4 class="title">baro OnePass VIP – 데이터 무제한</h4><!-- 190813 수정 -->
+                                    <h4 class="title">baro OnePass VIP/Data VIP</h4><!-- 191213 [OP002-5769] 수정 -->
                                     <div class="img-box"><img class="lte" src="/img/product/rm-main-ico-baro.png" alt=""></div>
-                                    <p class="text">전 세계에서 1일 단위로 데이터 무제한과 고품질의 baro 통화를 이용하는 요금제입니다.</p>
+                                    <p class="text">전 세계에서 1일 단위로 데이터 무제한과 고품질의 baro 통화를 이용하는 요금제</p><!-- 191213 수정 [OP002-5769] -->
                                 </button>
                                 <div class="productinfoscroll-box slide-nopd">
                                     <!-- .widget -->
@@ -351,8 +370,108 @@
                                     <!-- .widget -->
                                 </div>
                             </li>
+                            <!-- 191213 추가 [OP002-5769] -->
+                            <li>
+                                <button role="button" aria-pressed="false" class="representcharge-info">
+                                    <h4 class="title">T괌사이판 국내처럼/5천원</h4>
+                                    <div class="img-box"><img class="lte" src="/img/product/rm-main-ico-guamsaipan.png" alt=""></div>
+                                    <p class="text">괌, 사이판에서 요금 걱정 없이 안심하고 사용하실 수 있는 요금제</p>
+                                </button>
+                                <div class="productinfoscroll-box slide-nopd">
+                                    <!-- .widget -->
+                                    <div class="widget"> 
+                                        <div class="widget-box horizontal">
+                                            <div class="horizontal-slide slide-nopd">
+                                                <ul class="horizontal-list">
+	                                                <li data-url="/product/callplan?prod_id=NA00006226" class="fe-go-plan fe-link-internal">
+	                                                    <button type="button" class="product-info">
+	                                                        <div class="product-info-btn">
+	                                                            <h5 class="title">T괌사이판 국내처럼</h5>
+	                                                            <p class="info"><span class="money money-noleft">무료</span><i>(부가세 포함)</i></p>
+	                                                        </div>
+	                                                        <div class="type">
+	                                                            <span class="str">상세참조</span>
+	                                                        </div>
+	                                                    </button>
+	                                                </li>
+	                                                <li data-url="/product/callplan?prod_id=NA00006229" class="fe-go-plan fe-link-internal">
+	                                                    <button type="button" class="product-info">
+	                                                        <div class="product-info-btn">
+	                                                            <h5 class="title">T괌사이판 5천원</h5>
+	                                                            <p class="info"><span class="money money-noleft">5,000</span>원/10일<i>(부가세 포함)</i></p>
+	                                                        </div>
+	                                                        <div class="type">
+	                                                            <span class="str">500MB/일</span>
+	                                                        </div>
+	                                                    </button>
+	                                                </li>
+	                                            </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .widget -->
+                                </div>
+                            </li>
+                            <li>
+                                <button role="button" aria-pressed="false" class="representcharge-info">
+                                    <h4 class="title">T로밍 LongPass 2/3/5GB</h4>
+                                    <div class="img-box"><img class="lte" src="/img/product/rm-main-ico-longpass.png" alt=""></div>
+                                    <p class="text">30일 동안 데이터를 이용할 수 있는 데이터 로밍 요금제</p>
+                                </button>
+                                <div class="productinfoscroll-box slide-nopd">
+                                    <!-- .widget -->
+                                    <div class="widget"> 
+                                        <div class="widget-box horizontal">
+                                            <div class="horizontal-slide slide-nopd">
+                                                <ul class="horizontal-list" style="width: 896px;">
+	                                                <li data-url="/product/callplan?prod_id=NA00005300" class="fe-go-plan fe-link-internal">
+	                                                    <button type="button" class="product-info">
+	                                                        <div class="product-info-btn">
+	                                                            <h5 class="title">T로밍 LongPass 2GB</h5>
+	                                                            <p class="info"><span class="money money-noleft">40,000</span>원/30일<i>(부가세 포함)</i></p>
+	                                                        </div>
+	                                                        <div class="type">
+	                                                            <span class="str">2GB</span>
+	                                                        </div>
+	                                                    </button>
+	                                                </li>
+	                                                <li data-url="/product/callplan?prod_id=NA00005505" class="fe-go-plan fe-link-internal">
+	                                                    <button type="button" class="product-info">
+	                                                        <div class="product-info-btn">
+	                                                            <h5 class="title">T로밍 LongPass 3GB</h5>
+	                                                            <p class="info"><span class="money money-noleft">50,000</span>원/30일<i>(부가세 포함)</i></p>
+	                                                        </div>
+	                                                        <div class="type">
+	                                                            <span class="str">3GB</span>
+	                                                        </div>
+	                                                    </button>
+	                                                </li>
+	                                                <li data-url="/product/callplan?prod_id=NA00005252" class="fe-go-plan fe-link-internal">
+	                                                    <button type="button" class="product-info">
+	                                                        <div class="product-info-btn">
+	                                                            <h5 class="title">T로밍 LongPass 5GB</h5>
+	                                                            <p class="info"><span class="money money-noleft">65,000</span>원/30일<i>(부가세 포함)</i></p>
+	                                                        </div>
+	                                                        <div class="type">
+	                                                            <span class="str">5GB</span>
+	                                                        </div>
+	                                                    </button>
+	                                                </li>	                                                
+	                                            </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .widget -->
+                                </div>
+                            </li>
+                            <!-- // 191213 추가 [OP002-5769] -->
                         </ul>
                     </div>
+                    <!-- 191213 추가 [OP002-5769] -->
+                    <div class="rm-main-recomm-more-btn">
+	                    <button role="button" aria-pressed="false">더 보기</button>
+                    </div>
+                    <!-- // 191213 추가 [OP002-5769] -->
 				</div>
 				<!-- // 190618 수정 (인기 로밍 요금제 UI 변경 및 컨텐츠 위치 수정) -->
 				

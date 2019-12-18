@@ -21,6 +21,7 @@ Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this._defaultCnt = defaultCnt;
   this._totalExposedCnt = Tw.FormatHelper.isEmpty(totalExposedCnt) ? 0 : Number(totalExposedCnt);
   this.lineMarketingLayer = new Tw.LineMarketingComponent();
+  new Tw.XtractorService(this.$container);
   this._marketingSvc = '';
 
   this._changeList = false;
@@ -46,8 +47,8 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-change-first', $.proxy(this._onChangeFirst, this));
     this.$container.on('click', '.fe-bt-more', $.proxy(this._onClickMore, this));
     this.$container.on('click', '.fe-seq-edit', $.proxy(this._onClickInternal, this));
-    this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickEdit, this, true));
-    this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickEdit, this, false));
+    this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickEdit, this));
+    this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickEdit, this));
   },
 
   /**
@@ -249,6 +250,7 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _successMoreData: function (category, $target, $list, resp) {
+    Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var pageNo = $list.data('pageno');
       var totalCnt = $list.data('totcount');
@@ -413,10 +415,10 @@ Tw.CommonMemberLine.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
       Tw.Logger.info('[marketingSvc]', this._marketingSvc);
-      this._checkRepSvc(svcNumList, resp.result, Tw.ALERT_MSG_AUTH.L02, $target);
+      this._checkRepSvc(svcNumList, Tw.ALERT_MSG_AUTH.L02, $target);
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
-      this._failEditLineList();
+      // this._failEditLineList();
     }
   },
 
@@ -435,7 +437,7 @@ Tw.CommonMemberLine.prototype = {
    * @param $event
    * @private
    */
-  _onClickEdit: function(isAdd, $event) {
+  _onClickEdit: function($event) {
 
     $event.preventDefault();
     $event.stopPropagation();
@@ -459,7 +461,7 @@ Tw.CommonMemberLine.prototype = {
         svcNumList.push($(line).data('svcmgmtnum'));
       }, this));
 
-      this._openEditConfirmPopup(isAdd, svcNumList, category, checkMsg, successMsg, $target);
+      this._openEditConfirmPopup(svcNumList, category, checkMsg, successMsg, $target);
 
     // 해지
     } else {      
@@ -507,7 +509,7 @@ Tw.CommonMemberLine.prototype = {
         svcNumList.push(line.svcMgmtNum);
       }, this));
 
-      this._openEditConfirmPopup(false, svcNumList, category, checkMsg, successMsg, $target);
+      this._openEditConfirmPopup(svcNumList, category, checkMsg, successMsg, $target);
     } else {
       this._failEditLineList();
     }
@@ -520,13 +522,13 @@ Tw.CommonMemberLine.prototype = {
    * @param $target
    * @private
    */
-  _openEditConfirmPopup: function (isAdd, svcNumList, category, checkMsg, successMsg, $target) {
+  _openEditConfirmPopup: function (svcNumList, category, checkMsg, successMsg, $target) {
 
     if(!Tw.FormatHelper.isEmpty(checkMsg)) {
-      this._popupService.openConfirmButton(checkMsg, null, $.proxy(this._onConfirmEditPopup, this, isAdd, svcNumList, category, successMsg, $target),
+      this._popupService.openConfirmButton(checkMsg, null, $.proxy(this._onConfirmEditPopup, this, svcNumList, category, successMsg, $target),
       $.proxy(this._onCancelEditPopup, this, $target), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES, $target);
     } else {
-      this._onConfirmEditPopup(isAdd, svcNumList, category, successMsg, $target);
+      this._onConfirmEditPopup(svcNumList, category, successMsg, $target);
     }
   },
 
@@ -556,7 +558,7 @@ Tw.CommonMemberLine.prototype = {
    * @param $target
    * @private
    */
-  _onConfirmEditPopup: function (isAdd, svcNumList, category, successMsg, $target) {
+  _onConfirmEditPopup: function (svcNumList, category, successMsg, $target) {
     this._popupService.close();
     var lineList = svcNumList.join('~');
     Tw.Logger.info('[_onConfirmEditPopup lineList ]', lineList);
@@ -564,7 +566,7 @@ Tw.CommonMemberLine.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: category, svcMgmtNumArr: lineList }
-    }).done($.proxy(this._successEditLineList, this, isAdd, svcNumList, successMsg, $target))
+    }).done($.proxy(this._successEditLineList, this, svcNumList, successMsg, $target))
       .fail($.proxy(this._failEditLineList, this));
   },
 
@@ -576,21 +578,17 @@ Tw.CommonMemberLine.prototype = {
    * @param resp
    * @private
    */
-  _successEditLineList: function (isAdd, svcNumList, msg, $target, resp) {
+  _successEditLineList: function (svcNumList, msg, $target, resp) {
     Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
 
-      // if(!isAdd) {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
       Tw.Logger.info('[marketingSvc]', this._marketingSvc);
-      this._checkRepSvc(svcNumList, resp.result, msg, $target);
-      // } else {
-      //   this._popupService.openAlert(msg, null, null, $.proxy(this._editCallback, this));
-      // }
+      this._checkRepSvc(svcNumList, msg, $target);
 
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
-      this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, null, null, $.proxy(this._editCallback, this));
+      // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, null, null, $.proxy(this._editCallback, this));
     }
   },
 
@@ -624,12 +622,16 @@ Tw.CommonMemberLine.prototype = {
    * @param $target
    * @private
    */
-  _checkRepSvc: function (svcNumList, result, msg, $target) {
+  _checkRepSvc: function (svcNumList, msg, $target) {
+    this._popupService.openAlert(msg, null, null, $.proxy(this._onCloseChangeRepSvc, this, svcNumList, $target), null, $target);
+
+    /*
     if ( result.repSvcChgYn === 'Y' ) {
       this._popupService.openAlert(msg, null, null, $.proxy(this._onCloseChangeRepSvc, this, svcNumList, $target), null, $target);
     } else {
       this._checkMarketingOffer(svcNumList, $target);
     }
+    */
   },
 
   /**
@@ -671,6 +673,7 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _successGetMarketingOffer: function (showName, svcNum, resp) {
+    Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.agr201Yn = resp.result.agr201Yn;
       this.agr203Yn = resp.result.agr203Yn;

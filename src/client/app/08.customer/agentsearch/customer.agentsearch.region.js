@@ -135,6 +135,7 @@ Tw.CustomerAgentsearchRegion.prototype = {
       data: [{ list: regionList }],
       btnfloating : { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function (root) {
+      Tw.CommonHelper.focusOnActionSheet(root);
       root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
       }, this));

@@ -10,6 +10,10 @@ Tw.API_VERSION = {
   V2: 'v2'
 };
 
+Tw.API_SERVER = {
+  SEARCH: 'SEARCH_SERVER'
+};
+
 Tw.API_CMD = {
   BFF_LOGIN_ERROR: { path: '/core-auth/v1/login-histories', method: Tw.API_METHOD.POST},
   BFF_03_0003_C: { path: '/svc-catalog/detail', method: Tw.API_METHOD.GET },
@@ -438,6 +442,7 @@ Tw.API_CMD = {
   BFF_08_0081: { path: '/core-modification/:version/campaign-reject-yn', method: Tw.API_METHOD.GET},
   BFF_08_0082: { path: '/core-modification/:version/campaign-reject-add', method: Tw.API_METHOD.GET},
   BFF_08_0083: { path: '/core-modification/:version/campaign-reject-delete', method: Tw.API_METHOD.GET},
+  BFF_08_0084: { path: '/core-modification/:version/search/invst-improve', method: Tw.API_METHOD.POST},
 
 
   // EVENT
@@ -464,6 +469,7 @@ Tw.API_CMD = {
   BFF_10_0022: { path: '/core-product/:version/mobiles/additions-sets/:args0', method: Tw.API_METHOD.DELETE },
   BFF_10_0031: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
   BFF_10_0032: { path: '/core-product/:version/submain/filters', method: Tw.API_METHOD.GET },
+  BFF_10_0033: { path: '/core-product/:version/submain/filters/:args0/sub-lists', method: Tw.API_METHOD.GET },
   BFF_10_0034: { path: '/core-product/:version/mobiles/fee-plans/young-plan-sets', method: Tw.API_METHOD.GET },
   BFF_10_0035: { path: '/core-product/:version/mobiles/additions/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0036: { path: '/core-product/:version/mobiles/additions/:args0', method: Tw.API_METHOD.DELETE },
@@ -569,6 +575,10 @@ Tw.API_CMD = {
   //SEARCH
   SEARCH_AUTO_COMPLETE: { path: '/search/tworld/autocomplete', method: Tw.API_METHOD.GET },
   STACK_SEARCH_USER_CLICK: { path: '/search/tworld/log/save', method: Tw.API_METHOD.GET },
+  // SEARCH_APP: { path: '/search/tworld/mobile-app', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  // SEARCH_WEB: { path: '/search/tworld/mobile-web', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_APP: { path: '/search/tworld/mobile-app2', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB: { path: '/search/tworld/mobile-web2', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },

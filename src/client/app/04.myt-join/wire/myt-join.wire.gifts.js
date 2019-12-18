@@ -5,17 +5,24 @@
  * @since 2018.10.08
  * Summary: 사은품 내역 조회
  */
-Tw.MyTJoinWireGifts = function (rootEl, strInitData, svcInfo) {
+/**
+ *
+ * @param {jQuery} rootEl
+ * @param {Object} data
+ * @param {Object} svcInfo
+ * @constructor
+ */
+Tw.MyTJoinWireGifts = function (rootEl, data, svcInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   // svcInfo 값 추가 [DV001-14262]
-  this._svcInfo = JSON.parse(svcInfo);
+  this._svcInfo = svcInfo;
 
   this._bindEvent();
   this._registerHelper();
-  this._initListUi(JSON.parse(strInitData));
+  this._initListUi(data);
 };
 
 Tw.MyTJoinWireGifts.prototype = {
@@ -38,28 +45,29 @@ Tw.MyTJoinWireGifts.prototype = {
   /**
    * templates
    */
-  _listContBox: null,
+  _tmplListBox: null,
   _listMoreBtn: null,
-  _listItemTmplt: null,
+  _tmplListItem: null,
 
   /**
    * 초기화 데이터 ui로 변경
+   * @param {Object} data
    * @private
    */
-  _initListUi: function (initData) {
+  _initListUi: function (data) {
     // hasSKTWire:SK브로드밴드 가입여부(Y/N), resultValue:사은품 여부(Y/N)
-    if ( 'Y' === initData.hasSKTWire ) {
+    if ( 'Y' === data.hasSKTWire ) {
       // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
       (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
       //return;
     }
 
     // init templates
-    this._listContBox = $('#list-cont-box-tmplt').html();
-    this._listMoreBtn = $('.bt-more');
-    this._listItemTmplt = Handlebars.compile($('#list-cont-item-tmplt').html());
+    this._tmplListBox = $.trim($('#list-cont-box-tmplt').html());
+    this._listMoreBtn = $('.btn-more');
+    this._tmplListItem = Handlebars.compile($.trim($('#list-cont-item-tmplt').html()));
 
-    this._listTotCnt = initData.totalCnt;
+    this._listTotCnt = parseInt(data.totalCnt, 10);
     if ( this._listTotCnt <= 0 ) {
       $('#divListBox').hide().attr('aria-hidden', true);
       $('#divNoListBox').show().attr('aria-hidden', false);
@@ -67,7 +75,7 @@ Tw.MyTJoinWireGifts.prototype = {
     else {
       $('#divListBox').show().attr('aria-hidden', false);
       $('#divNoListBox').hide().attr('aria-hidden', true);
-      this._printList(initData.giftProvideList);
+      this._printList(data.giftProvideList);
     }
   },
 
@@ -76,11 +84,10 @@ Tw.MyTJoinWireGifts.prototype = {
    * @private
    */
   _bindEvent: function () {
-    // 더보기 버튼 클릭시
-    this.$container.on('click', '.bt-more', $.proxy(this._requestNextData, this));
-
     // 배송조회
     this.$container.on('click', '.bt-alone', $.proxy(this._goDelivPage, this));
+    // 더보기 버튼 클릭시
+    this.$container.on('click', '.btn-more', $.proxy(this._requestNextData, this));
   },
 
   /**
@@ -88,7 +95,7 @@ Tw.MyTJoinWireGifts.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('shortDate', Tw.DateHelper.getShortDate);
+    Handlebars.registerHelper('convertShortDate', Tw.DateHelper.getShortDate);
   },
 
   /**
@@ -101,24 +108,24 @@ Tw.MyTJoinWireGifts.prototype = {
       return;
     }
 
-    var $listBox = $('.history-list ul', this.$container);
+    var $listBox = this.$container.find('.history-list').find('ul');
 
     for ( var i = 0; i < list.length; i++ ) {
-      list[i].giftNm = list[i].giftNm ? list[i].giftNm : (this._svcInfo.prodNm + Tw.MYT_JOIN.WIRE_GIFT);
-      list[i].isComp = ('03' === list[i].giftOpStCd);
-      list[i].hasDlvUrl = (['01', '05', '07'].indexOf(list[i].giftOpStCd) !== -1);
-      if ( ['01', '05', '07'].indexOf(list[i].giftOpStCd) > -1 ) {
+      var item = list[i];
+      item.giftNm = item.giftNm || (this._svcInfo.prodNm + Tw.MYT_JOIN.WIRE_GIFT);
+      item.hasDlvUrl = false;
+      if ( ['01', '05', '07'].indexOf(item.giftOpStCd) > -1 ) {
+        item.isComp = false;
         // 01 배송접수, 05 반품 요청, 07 재배송 접수 건에 한해서 배송조회 버튼 노출 (기존)
         // 주소지 정보가 없는 경우 추가 (변경) [DV001-14262]
         // url이 없는 경우 노출 안함 DV001-15784
-        if ( list[i].pdlvBasAddr && list[i].dlvUrl ) {
-          list[i].hasDlvUrl = true;
+        if ( item.pdlvBasAddr && item.dlvUrl ) {
+          item.hasDlvUrl = true;
         }
-        else {
-          list[i].hasDlvUrl = false;
-        }
+      } else {
+        item.isComp = ('03' === item.giftOpStCd);
       }
-      $listBox.append(this._listItemTmplt(list[i]));
+      $listBox.append(this._tmplListItem(item));
     }
 
     this._list = this._list.concat(list);
@@ -163,11 +170,11 @@ Tw.MyTJoinWireGifts.prototype = {
    * @private
    */
   _showOrHideMoreBtn: function () {
-    if ( parseInt(this._listTotCnt, 10) > this._list.length ) {
-      $('.bt-more').show().attr('aria-hidden', false);
+    if ( this._listTotCnt > this._list.length ) {
+      $('.btn-more').show().attr('aria-hidden', false);
     }
     else {
-      $('.bt-more').hide().attr('aria-hidden', true);
+      $('.btn-more').hide().attr('aria-hidden', true);
     }
   },
 

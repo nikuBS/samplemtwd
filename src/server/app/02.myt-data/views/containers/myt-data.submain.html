@@ -23,6 +23,8 @@
     <div id="contents" class="container-wrap" data-id="wrapper">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container" data-id="submain-container">
+            <!-- OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+            <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22"} }); %>
             <%- include('../components/submain/myt-data.submain.remnant.html', data) %>
 
             <% if (data.svcInfo.svcAttrCd === 'M1') { %>

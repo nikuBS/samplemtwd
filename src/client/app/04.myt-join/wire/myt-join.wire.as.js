@@ -5,7 +5,14 @@
  * @since 2018.10.08
  * Summary: 인터넷/집전화/IPTV 장애/AS 신청내역 목록 조회
  */
-Tw.MyTJoinWireAS = function (rootEl, strInitData) {
+/**
+ *
+ * @param {jQuery} rootEl
+ * @param {Object} data
+ * @param {Array} data.history
+ * @constructor
+ */
+Tw.MyTJoinWireAS = function (rootEl, data) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -13,7 +20,7 @@ Tw.MyTJoinWireAS = function (rootEl, strInitData) {
 
   this._bindEvent();
   this._registerHelper();
-  this._initListUi(JSON.parse(strInitData));
+  this._initListUi(data); // this._initListUi(JSON.parse(data));
 };
 
 Tw.MyTJoinWireAS.prototype = {
@@ -41,29 +48,32 @@ Tw.MyTJoinWireAS.prototype = {
   /**
    * templates
    */
-  _listContBox : null,
-  _listMoreBtn : null,
-  _listItemTmplt : null,
-  _listYearDivTmplt : null,
+  _tmplListBox: null,
+  // _listMoreBtn: null,
+  _tmplListItem: null,
+  _tmplYearDiv: null,
 
   /**
    * 초기화 데이터 ui로 변경
+   * @param {Object} data
+   * @param {number} [data.totalCnt]
+   * @param {Array} [data.history]
    * @private
    */
-  _initListUi: function(initData) {
-
-    // init templates
-    this._listContBox = $('#list-cont-box-tmplt').html();
-    this._listMoreBtn = $('#bt-more-tmplt').html();
-    this._listNoData = $('#no-data-tmplt').html();
-    this._listItemTmplt = Handlebars.compile($('#list-cont-item-tmplt').html());
-    this._listYearDivTmplt = Handlebars.compile($('#list-year-div-tmplt').html());
-
-    this._listTotCnt = initData.totalCnt;
-    this._printList(initData.history);
-    if(!initData.history || initData.history.length === 0){
-      $('#cont-boxes').html(this._listNoData);
+  _initListUi: function (data) {
+    if (!data.history || data.history.length === 0) {
+      $('#cont-boxes').html($.trim($('#no-data-tmplt').html()));
+      return;
     }
+    this._$contBoxes = $('#cont-boxes');
+    // init templates
+    this._tmplListBox = $.trim($('#list-cont-box-tmplt').html());
+    // this._listMoreBtn = $.trim($('#bt-more-tmplt').html());
+    this._tmplListItem = Handlebars.compile($.trim($('#list-cont-item-tmplt').html()));
+    this._tmplYearDiv = Handlebars.compile($.trim($('#list-year-div-tmplt').html()));
+
+    this._listTotCnt = parseInt(data.totalCnt, 10);
+    this._printList(data.history);
   },
 
   /**
@@ -71,12 +81,10 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _bindEvent: function () {
-
     // 목록 클릭시 - 화면이동
     this.$container.on('click', '.history-list li', $.proxy(this._showListDetail, this));
-
     // 더보기 버튼 클릭시
-    this.$container.on('click', '.bt-more', $.proxy(this._requestNextData, this));
+    this.$container.on('click', '.btn-more', $.proxy(this._onBtMoreClicked, this));
   },
 
   /**
@@ -84,46 +92,53 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('noYearDate', Tw.DateHelper.getShortDate);
+    Handlebars.registerHelper('convertShortDate', Tw.DateHelper.getShortDate);
   },
 
   /**
    * 목록 출력
+   * @param {Array} list
    * @private
    */
   _printList: function (list) {
-    if( !list || list.length === 0 ){
+    if (!list || list.length === 0) {
       this._removeMoreBtn();
       //this._showOrHideMoreBtn();
       return;
     }
-    var $contBoxes = $('#cont-boxes');
-    var $lastBox = $('.cont-box ul', $contBoxes).last();
+    var $contBoxes = this._$contBoxes;
+    // var $lastBox = $('.cont-box ul', $contBoxes).last();
+    var $lastBox = $contBoxes.find('.cont-box').find('ul').last();
 
-    for( var i = 0; i < list.length; i++ ){
-
-      if( this._lastYear !== list[i].troubleDt.substr(0,4) ){
+    for (var i = 0; i < list.length; i++) {
+      var item = list[i];
+      var yearLast = item.troubleDt.substr(0, 4);
+      if (this._lastYear !== yearLast) {
         // 연도 출력
-        this._lastYear = list[i].troubleDt.substr(0,4);
-        // $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
-        $contBoxes.append(this._listContBox);
-        $lastBox = $('.cont-box ul', $contBoxes).last();
+        this._lastYear = yearLast;
+        // $contBoxes.append(this._tmplYearDiv({year: this._lastYear}));
+        $contBoxes.append(this._tmplListBox);
+        // $lastBox = $('.cont-box ul', $contBoxes).last();
+        $lastBox = $contBoxes.find('.cont-box').find('ul').last();
       }
-
-      $lastBox.append(this._listItemTmplt( list[i] ));
+      $lastBox.append(this._tmplListItem(item));
     }
 
     // 당년도인 경우 숨김
-    var nowYear = new Date().getFullYear();
-    $('.data-select-wrap').each(function(){
-      if($(this).text().trim() === String(nowYear)){
-        $(this).hide();
+    var yearNow = String(new Date().getFullYear());
+    $('.data-select-wrap').each(function () {
+      var $this = $(this);
+      if ($this.text().trim() === yearNow) {
+        $this.hide();
       }
     });
 
     this._list = this._list.concat(list);
-    this._addMoreBtn();
-    //this._showOrHideMoreBtn();
+
+    if (this._listTotCnt > this._list.length) {
+      this._addMoreBtn();
+      //this._showOrHideMoreBtn();
+    }
   },
 
 
@@ -131,17 +146,17 @@ Tw.MyTJoinWireAS.prototype = {
    * 다음 데이터 호출
    * @private
    */
-  _requestNextData: function () {
+  _onBtMoreClicked: function () {
     this._removeMoreBtn();
     Tw.CommonHelper.startLoading('.container', 'grey');
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0156, { page: String(this._nowPageNum+1) })
+    this._apiService.request(Tw.API_CMD.BFF_05_0156, {page: String(this._nowPageNum + 1)})
       .done($.proxy(function (resp) {
         this._nowPageNum += 1;
 
-        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+        if (!resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
           this._showErrorAlert(resp.code, resp.msg);
-          return ;
+          return;
         }
 
         this._printList(resp.result.history);
@@ -150,7 +165,7 @@ Tw.MyTJoinWireAS.prototype = {
       .fail($.proxy(this._requestFail, this));
   },
 
-  _showErrorAlert: function(code, msg){
+  _showErrorAlert: function (code, msg) {
     Tw.Error(code, msg).pop();
     Tw.CommonHelper.endLoading('.container');
   },
@@ -163,17 +178,16 @@ Tw.MyTJoinWireAS.prototype = {
    * 더보기버튼 삭제
    * @private
    */
-  _removeMoreBtn: function(){
+  _removeMoreBtn: function () {
     $('.bt-more').remove();
   },
   /**
    * 더보기버튼 추가
    * @private
    */
-  _addMoreBtn: function(){
-    if( parseInt(this._listTotCnt, 10) > this._list.length ) {
-      $('.cont-box').last().append(this._listMoreBtn);
-    }
+  _addMoreBtn: function () {
+    // $('.cont-box').last().append(this._listMoreBtn);
+    this._$contBoxes.append($.trim($('#bt-more-tmplt').html()));
   },
 
   /**
@@ -181,36 +195,33 @@ Tw.MyTJoinWireAS.prototype = {
    * @private
    */
   _showOrHideMoreBtn: function () {
-    if( parseInt(this._listTotCnt, 10) > this._list.length ) {
-      $('.bt-more').show().attr('aria-hidden', false);
-    } else {
-      $('.bt-more').hide().attr('aria-hidden', true);
-    }
+    $('.bt-more').hide().attr('aria-hidden', this._listTotCnt <= this._list.length);
   },
 
   /**
    * 상세화면으로 이동
    * @private
    */
-  _showListDetail: function(event) {
-    var num = event.currentTarget.getAttribute('data-no');
+  _showListDetail: function (event) {
+    var no = String($(event.currentTarget).data('no'));
+    /*var num = event.currentTarget.getAttribute('data-no');
     var item = null;
-    for(var i = 0; i < this._list.length; i++){
-      if(this._list[i].troubleNum === num.toString()){
+    for (var i = 0; i < this._list.length; i++) {
+      if (this._list[i].troubleNum === num.toString()) {
         item = this._list[i];
         break;
       }
     }
-    var url = './asdetail?' +
-      'troubleNum='+num+'&' +
-      'troubleDt='+item.troubleDt+'&' +
-      'svcNm='+item.svcNm+'&' +
-      'troubleDetail='+item.troubleDetail+'&' +
-      'stNm='+item.stNm;
-    this._historyService.goLoad(url);
+    */
+    var itemDetail = _.find(this._list, function (item) {
+      return item.troubleNum === no;
+    });
+    this._historyService.goLoad('./asdetail?' + $.param({
+      troubleNum: no,
+      troubleDt: itemDetail.troubleDt,
+      svcNm: itemDetail.svcNm,
+      troubleDetail: itemDetail.troubleDetail,
+      stNm: itemDetail.stNm
+    }));
   }
-
-
-
 };
-

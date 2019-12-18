@@ -143,7 +143,8 @@ Tw.POPUP_CONTENTS = {
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
   TPLAN_WATCH: '스마트워치 회선<br>',
-  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.'
+  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.',
+  REMOVE_UPLOAD_ITEM: '첨부파일을 삭제하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {
@@ -840,8 +841,8 @@ Tw.ALERT_MSG_PRODUCT = {
   PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.',
   NEED_LINE: '등록된 회선이 있어야 이용 가능합니다.\n회선 등록 후 계속하시겠습니까?',
   BPCP: 'BPCP URL이 설정되어 있지 않습니다.',
-  FLO_PROMOTION_INFO: { TITLE: '프로모션 유의사항 안내', 
-                  MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>', 
+  FLO_PROMOTION_INFO: { TITLE: '프로모션 유의사항 안내',
+                  MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>',
                   BTN_TEXT: 'T멤버십 할인내역 확인하기' }
 };
 
@@ -1523,12 +1524,12 @@ Tw.BRANCH_SEARCH_OPTIONS = {
 
 Tw.UPLOAD_FILE = {
   WARNING_A00: '파일 업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
-  WARNING_A01: '첨부파일 용량은 최대 2MB까지 첨부하실 수 있습니다.',
+  WARNING_A01: '첨부파일 용량은 최대 3MB까지 첨부하실 수 있습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
-  WARNING_A03: 'MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf, png)파일을 첨부하실 수 있습니다.',
+  WARNING_A03: '이미지(jpg, jpeg, gif, png)파일을 첨부할 수 있습니다.',
   BUTTON_ADD: '파일 찾기',
   BUTTON_DELETE: '삭제',
-  CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해 주세요.',
+  CONFIRM_A01: '첨부파일의 용량이 총 3MB를 초과하여 등록할 수 없습니다. 다시 확인해 주세요.',
   CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해 주세요.',
   EMAILINFO_01: '첨부파일 용량은 1개 파일당 3MB 첨부가능합니다.',
   EMAILINFO_02: '첨부파일은 최대 5개까지 등록하실 수 있습니다.',
@@ -1989,7 +1990,8 @@ Tw.ALERT_MSG_SEARCH = {
   ALERT_4_A40: { TITLE: '입력하신 의견을 등록하시겠습니까?', MSG: '', BUTTON: '닫기' },
   ALERT_4_A41: { TITLE: '선택하신 내용을 접수하시겠습니까?', MSG: '', BUTTON: '닫기' },
   KEYWORD_ERR: '검색어를 입력해 주세요.',
-  REQUEST_CLAIM: '검색의견 신청이 접수되었습니다.'
+  REQUEST_CLAIM: '검색의견 신청이 접수되었습니다.',
+  REQUEST_IMPROVE: '등록이 완료되었습니다.'
 };
 
 Tw.PRODUCT_TFAMILY = {
@@ -2034,7 +2036,9 @@ Tw.SEARCH_FILTER_STR = {
   POP: '인기순',
   NEW: '최신순',
   LOW: '낮은 가격순',
-  HIGH: '높은 가격순'
+  HIGH: '높은 가격순',
+  ADMIN: '추천순',
+  CLICK: '클릭순'
 };
 
 Tw.PRODUCT_AUTH_ALERT_STR = {

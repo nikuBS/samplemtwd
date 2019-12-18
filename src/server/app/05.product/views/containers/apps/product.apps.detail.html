@@ -18,7 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap bp-80" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: app.prodNm, svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -43,11 +43,9 @@
                         <div class="widget"> 
                             <div class="widget-box horizontal">
                                 <div class="horizontal-slide slide-nopd">
-                                    <ul class="horizontal-list screen-img-box" id="fe-images" aria-haspopup="true">
-                                        <% app.images.map(image => { %>
-                                        <li>
-                                            <div class="item"><img src="<%= image %>" alt="" class="thum" /></div>
-                                        </li>
+                                    <ul class="horizontal-list screen-img-box" aria-haspopup="true">
+                                        <% app.images.map((image, index) => { %>
+                                        <li><button class="bt" id="fe-images" data-index="<%= index %>"><img src="<%= image %>" alt="<%= app.imagesAlt[index] %>"></button></li>
                                         <% }); %>
                                     </ul>
                                 </div>

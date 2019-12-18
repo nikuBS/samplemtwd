@@ -16,8 +16,16 @@
         var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
         return endCharIdx>0 ? '으' : '';
     }
+
+    var in_keyword;
+    if(keyword !== inKeyword) {
+        in_keyword = inKeyword.replace(keyword, '');
+        in_keyword = in_keyword.trim();
+        in_keyword = encodeURIComponent(in_keyword);
+    }
     keyword = encodeURIComponent(keyword);
     inKeyword = encodeURIComponent(inKeyword);
+    
 
 %>
 <!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
@@ -29,237 +37,310 @@
     // #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap search-height fe-nofocus-move fe-header-wrap"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
-        <div class="h-belt"><!-- border-bottom : 1px -->
-            <!-- 191001 [OP002-4009] 수정01 -->
-            <div class="sch-form tod-sch-form">
-                <form action="#" role="search" id="frm" onsubmit="return false;">
-                    <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
-                    <span class="inputbox">
-                        <span class="input">
-                            <input id="keyword" class="fe-nofocus-move" type="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
-                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                        </span>
+    <div id="header" class="searchbox-header fe-nofocus-move fe-header-wrap fe-aria-hidden-el">
+        <!-- 191001 [OP002-4009] 수정01 -->
+        <div class="sch-form tod-sch-form">
+            <form action="#" role="search" id="frm" onsubmit="return false;">
+                <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+                <span class="inputbox">
+                    <span class="input">
+                        <!-- <input id="keyword" class="fe-nofocus-move" type="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>"> -->
+                        <input id="keyword" class="fe-nofocus-move" type="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword) %>">
+                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </span>
-                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                </form>
-            </div>
-            <!-- //191001 [OP002-4009] 수정01 -->
-            <div class="resultsearch-box">
-                <span class="custom-form">
-                    <% if(keyword===inKeyword){ %>
-                      <input type="checkbox" id="resultsearch" name="resultsearch">
-                      <span class="c-type1"></span></span>
-                      <label for="resultsearch">결과 내 재검색</label>
-                    <% }else{ %>
-                      <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
-                      <span class="c-type1"></span></span>
-                      <label for="resultsearch" class="on">결과 내 재검색</label>
-                    <% } %>
-                <!-- <label for="resultsearch" class="on">결과 내 재검색</label> -->
-            </div>
+                </span>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            </form>
         </div>
+        <!-- //191001 [OP002-4009] 수정01 -->
+        <!-- 
+        <div class="resultsearch-box">
+            <span class="custom-form">
+            <% if(keyword===inKeyword){ %>
+                <input type="checkbox" id="resultsearch" name="resultsearch">
+                <span class="c-type1"></span></span>
+                <label for="resultsearch">결과 내 재검색</label>
+            <% }else{ %>
+                <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
+                <span class="c-type1"></span></span>
+                <label for="resultsearch" class="on">결과 내 재검색</label>
+            <% } %>
+        </div> 
+        -->
     </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap fe-container-wrap">
-        <div class="container none">
-            <% if(searchInfo.suggestQuery.length>0){ %>
-            <div class="cont-box noborder gaps-style03">
-                <p class="re-searchword">
-                    혹시 이것을 찾으시나요? <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(searchInfo.suggestQuery) %>" data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %><%= recognizeLastChar(searchInfo.suggestQuery) %>로 검색하기</a>
-                </p>
-            </div>
-            <% } %>
-
+               
+        
+        <div class="search-content container">
+            <!-- 연관 검색어 -->
             <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
-            <div class="connection-searchword">
-                <dl class="searchword-list">
-                    <dt class="tit">연관</dt>
-                    <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
-                    <dd>
-                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
-                            <%= relatedKeyword.result.Word[i] %>
-                        </a>
-                    </dd>
-                    <% } %>
-                </dl>
+            <div class="cont-box nogaps">
+                <div class="tod-related-keywords tod-horizon-shadow">
+                    <p class="tit"><span>연관<span class="blind">검색어</span></span></p>
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list">
+                                <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
+                                    <li>
+                                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                                            <%= relatedKeyword.result.Word[i] %>
+                                        </a>
+                                    </li>
+                                <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <% } %>
-            <% if(searchInfo.suggestQuery.length>0||(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0)){ %>
-            <hr class="cont-sp type1" aria-hidden="true">
-            <% } %>
+            <!-- //연관 검색어 -->
+            
 
 <!--즉답검색결과[S]-->
             <% if(searchInfo.search[0].immediate.data.length>0){ %>
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
             <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
-            <p class="paymentcharge-box type01">
-                이용하고 계신
-                <a href="/myt-join/submain" class="phonnumber list-data"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <%= searchInfo.search[0].immediate.data[0].mainData %>
-                </a>회선의<br>요금제는<span class="str">
-                <a class="list-data" href="/myt-join/myplan"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %></strong>
-                </a>입니다.</span>
-            </p>
+            <div class="cont-box bgnone noborder">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 요금제 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의 요금제는<br> 
+                            <em class="highlight">
+                                <a class="list-data" href="/myt-join/myplan" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                    <%= searchInfo.search[0].immediate.data[0].subData %>
+                                </a>
+                            </em> 
+                            입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
-            <p class="paymentcharge-box type02">
-                이용하고 계신
-                <a href="/myt-join/submain" class="phonnumber list-data"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <%= searchInfo.search[0].immediate.data[0].mainData %>
-                </a>회선의<br>총 데이터 잔여량은<span class="str">
-                <a class="list-data" href="/myt-data/hotdata"><strong class="money fe-data-remaind"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    </strong>
-                </a>입니다.</span>
-            </p>
+            <div class="cont-box bgnone noborder">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 데이터 잔여량 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의<br> 총 데이터 잔여량은  
+                            <em class="highlight">
+                                <a class="list-data fe-data-remaind" href="/myt-data/hotdata" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
-            <p class="paymentcharge-box type03 none">
-                이용하고 계신
-                <a href="/myt-join/submain" class="phonnumber list-data"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <%= searchInfo.search[0].immediate.data[0].mainData %>
-                </a>회선의<br>실시간 이용요금은<span class="str">
-                <a class="list-data" href="/myt-fare/bill/hotbill"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <strong class="money fe-realtime-fee"></strong>
-                </a>입니다.</span>
-            </p>
+            <div class="cont-box bgnone noborder">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 실시간 이용요금 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의 실시간 이용요금은<br>  
+                            <em class="highlight">
+                                <a class="list-data fe-realtime-fee" href="/myt-fare/bill/hotbill" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
-            <p class="paymentcharge-box type04">
-                이용하고 계신
-                <a href="/myt-join/submain" class="phonnumber list-data"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <%= searchInfo.search[0].immediate.data[0].mainData %>
-                </a>회선의<br>소액결제 이용요금은<span class="str">
-                <a class="list-data" href="/myt-fare/bill/small"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
-                </a>입니다.</span>
-            </p>
+            <div class="cont-box bgnone noborder">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 소액결제 이용요금 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의 소액결제 이용요금은<br> 
+                            <em class="highlight">
+                                <a class="list-data" href="/myt-fare/bill/small" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                    <%= searchInfo.search[0].immediate.data[0].subData %>원
+                                </a>
+                            </em> 
+                            입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==5){ %>
-            <p class="paymentcharge-box type05">
-                고객님의 T멤버십 등급은
-                <a class="list-data" href="/membership/my"><span class="phonnumber"
-                  data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>"><%=
-                searchInfo.search[0].immediate.data[0].mainData === 'V'?'VIP':
-                searchInfo.search[0].immediate.data[0].mainData === 'G'?'Gold':
-                searchInfo.search[0].immediate.data[0].mainData === 'S'?'Silver':'일반'
-                %></span></a>
-                이며<br>올해 받으신 총 혜택은<span class="str">
-                <a class="list-data" href="/membership/my"
-                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>">
-                    <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
-                </a>입니다.</span>
-            </p>
-            <div class="search-barcode">
-                <img id="membership-barcode" data-cardNum="<%= searchInfo.search[0].immediate.data[0].barcode %>" alt="barcode"/>
-                <p class="bar-code-num"></p>
+            <div class="cont-box bgnone noborder">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 T멤버십 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            T멤버십 등급은 
+                            <em class="highlight">
+                                <a href="/membership/my" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>">
+                                    <%= 
+                                    searchInfo.search[0].immediate.data[0].mainData === 'V'?'VIP':
+                                    searchInfo.search[0].immediate.data[0].mainData === 'G'?'Gold':
+                                    searchInfo.search[0].immediate.data[0].mainData === 'S'?'Silver':'일반'
+                                    %>
+                                </a> 
+                            </em>
+                            이며,<br> 올해 받으신 혜택은 
+                            <a class="list-data" href="/membership/my" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>">
+                                <%= searchInfo.search[0].immediate.data[0].subData %>원
+                            </a>
+                            입니다.
+                        </p>
+                        <div class="search-barcode">
+                            <img id="membership-barcode" data-cardNum="<%= searchInfo.search[0].immediate.data[0].barcode %>" alt="barcode"/>
+                            <p class="bar-code-num"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==7){ %>
-                <p class="paymentcharge-box type06"><!-- 190910 [OP002-3773] 추가_01 부가서비스유형 -->
-                    이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>
-                    회선의<br>이용 중인 부가서비스는<br>
-                    <span class="str">
-                        무료 
-                        <a class="list-data" href="/myt-join/additions">
-                            <strong class="money fe-unpaid-additions-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                        </a>
-                        , 유료 
-                        <a class="list-data" href="/myt-join/additions">
-                            <strong class="money fe-paid-additions-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                        </a>
-                        <br>입니다.
-                    </span>
-                </p>
+            <div class="cont-box bgnone noborder">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 부가서비스 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의 이용 중인 부가서비스는<br>  
+                            <em class="highlight">
+                                무료 
+                                <a class="list-data fe-unpaid-additions-cnt" href="/myt-join/additions" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                                , 유료 
+                                <a class="list-data fe-paid-additions-cnt" href="/myt-join/additions" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==8){ %>
-                <p class="paymentcharge-box type02"><!-- 190910 [OP002-3773] 추가_02 음성잔여량 유형 -->
-                    이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>
-                    회선의<br>총 음성 잔여량은
-                    <span class="str">
-                        <a class="list-data" href="/myt-data/hotdata">
-                            <strong class="money fe-voice-remaind" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                        </a>
-                        입니다.
-                    </span>
-                </p>
+            <div class="cont-box bgnone noborder">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 음성 잔여량 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의<br> 총 음성 잔여량은  
+                            <em class="highlight">
+                                <a class="list-data fe-voice-remaind" href="/myt-data/hotdata" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==9){ %>
-                <p class="paymentcharge-box type03" id="fe-fee-agrmnt-info-case1" style="display: none;"><!-- 190910 [OP002-3773] 추가_03 요금약정 할인 유형 - 1개의 약정 -->
-                    이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>
-                    회선은<br>
-                    <a class="list-data" href="/myt-join/myplancombine/infodiscount">
-                        <strong class="money fe-fee-agrmnt-name" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                    </a>
-                    <br>사용 중이며 약정종료일은
-                    <strong class="fe-fee-agrmnt-end-dt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                    입니다.
-                    
-                </p>
+            <div class="cont-box bgnone noborder" id="fe-fee-agrmnt-info-case1" style="display: none;">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선은<br>
+                            <em class="highlight">
+                                <a class="list-data fe-fee-agrmnt-name" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            사용 중이며<br>약정종료일은
+                            <strong class="fe-fee-agrmnt-end-dt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                            입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-                <p class="paymentcharge-box type03" id="fe-fee-agrmnt-info-case2" style="display: none;"><!-- 190910 [OP002-3773] 가_03 요금약정 할인 유형 - 2개 이상인 경우 -->
-                    이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>
-                    회선은<br>
-                    <a class="s_money" href="/myt-join/myplancombine/infodiscount">
-                        <strong class="fb fe-fee-agrmnt-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                    </a>
-                   의 요금약정 정보가 있습니다.
-                </p>
+            <div class="cont-box bgnone noborder" id="fe-fee-agrmnt-info-case2" style="display: none;">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선은<br>
+                            <em class="highlight">
+                                <a class="list-data fe-fee-agrmnt-cnt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            의 요금약정 정보가 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==10){ %>
-                <p class="paymentcharge-box type03" id="fe-eqp-installment-info-case1" style="display: none;"><!-- 190910 [OP002-3773] 추가_04 단말기 할부금 유형 - 1개의 단말기 -->
-                    이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>
-                    회선의<br>단말기 총 잔여 할부금은<br>
-                    <span class="str">
-                        <a class="list-data" href="/myt-join/myplancombine/infodiscount">
-                            <strong class="money fe-remain-eqp-installment-amt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                        </a>
-                        이며<br>
-                        <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                        남았습니다.
-                    </span>
-                </p>
-               
-                <p class="paymentcharge-box type03" id="fe-eqp-installment-info-case2" style="display: none;"><!-- 190910 [OP002-3773] 추가_04 단말기 할부금 유형 - 2개 이상인 경우 02-->
-                    이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>
-                    회선의<br>가장 최근 구매한 단말기 총 잔여 할부금은<br>
-                    <a class="list-data" href="/myt-join/myplancombine/infodiscount">
-                        <strong class="money fe-remain-eqp-installment-amt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                    </a>
-                    이며<br>
-                    <span class="str">
-                        <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                        남았습니다.
-                    </span>
-                    <br>
-                    그 외 기기상환정보 : 
-                    <a class="list-data s_money" href="/myt-join/myplancombine/infodiscount">
-                        <strong class="fe-remain-eqp-installment-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
-                    </a>
-                </p>
-            <% } %>
+            <div class="cont-box bgnone noborder" id="fe-eqp-installment-info-case1" style="display: none;">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의 단말기 잔여 할부금은<br>
+                            <em class="highlight">
+                                <a class="list-data fe-remain-eqp-installment-amt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            이며 
+                            <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                            남았습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cont-box bgnone noborder" id="fe-eqp-installment-info-case2" style="display: none;">
+                <div class="tod-search-mytbox">
+                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
+                    <div class="text-area">
+                        <p class="text">
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            </a> 
+                            회선의<br>가장 최근 구매한 단말기 잔여 할부금은
+                            <em class="highlight">
+                                <a class="list-data fe-remain-eqp-installment-amt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                </a>
+                            </em> 
+                            이며 
+                            <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                            남았습니다.
+                            <br>
+                            그 외 기기상환정보 : 
+                            <strong class="fe-remain-eqp-installment-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <% } %>
 <!--즉답검색결과[E]-->
+            <% } else { %>
+
 
 
 <!--스마트검색결과[S]-->
@@ -281,8 +362,54 @@
             </div>
             <% } %>
 <!--스마트검색결과[E]-->
+            <% } %>
 
+            <!-- 전체 검색결과 건수 및 결과 내 재검색 -->
+            <div class="cont-box bgnone noborder pb10 tod-re-searchbox">
+                <h2 class="tit">검색결과 총 <span class="num fe-total-count"></span>건</h2>
+                <div class="inputbox tod-searchtype1">
+                    <span class="input">
+                        <!-- <input id="resultSearchKeyword" type="text" placeholder="결과 내 재검색" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?'':inKeyword.replace(keyword,'').trim()) %>"> -->
+                        <input id="resultSearchKeyword" type="search" placeholder="결과 내 재검색" title="검색어 입력" value>
+                    </span>
+                    <button class="btn-search"><span class="blind">검색</span></button>
+                </div>
+            </div>
+            <!-- //전체 검색결과 건수 및 결과 내 재검색 -->
 
+            <!-- 카테고리 탭 -->
+            <div class="tod-srhcategory-scrwrap"><!-- 스크롤 위치가 카테고리 탭을 지나가면 해당 영역 상단 고정. class="fixed" 추가 -->
+                <!-- <div class="tod-horizon-shadow">
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide slide-nopd tod-hoz-tabtype1">
+                                <ul class="horizontal-list" style="width: 2413px;">
+                                    <li class="fe-category all on"><button>전체<span class="num fe-total-count"></span></button></li>
+                                    <li class="fe-category shortcut"><button>바로가기<span class="num fe-shortcut-count"></span></button></li>
+                                    <li class="fe-category rate"><button>요금제<span class="num fe-rate-count"></span></button></li>
+                                    <li class="fe-category service"><button>부가서비스<span class="num fe-service-count"></span></button></li>
+                                    <li class="fe-category tv_internet"><button>인터넷/집전화/IPTV<span class="num fe-tv_internet-count"></span></button></li>
+                                    <li class="fe-category bundle"><button>결합상품<span class="num fe-bundle-count"></span></button></li>
+                                    <li class="fe-category troaming"><button>T로밍<span class="num fe-troaming-count"></span></button></li>
+                                    <li class="fe-category tapp"><button>T앱<span class="num fe-tapp-count"></span></button></li>
+                                    <li class="fe-category direct"><button>T월드 다이렉트<span class="num fe-direct-count"></span></button></li>
+                                    <li class="fe-category tmembership"><button>T멤버십<span class="num fe-tmembership-count"></span></button></li>
+                                    <li class="fe-category event"><button>진행중인 이벤트<span class="num fe-event-count"></span></button></li>
+                                    <li class="fe-category sale"><button>혜택/할인<span class="num fe-sale-count"></span></button></li>
+                                    <li class="fe-category as_outlet"><button>지점/대리점, A/S센터<span class="num fe-as_outlet-count"></span></button></li>
+                                    <li class="fe-category question"><button>자주 하는 질문<span class="num fe-question-count"></span></button></li>
+                                    <li class="fe-category notice"><button>공지사항<span class="num fe-notice-count"></span></button></li>
+                                    <li class="fe-category prevent"><button>이용자 피해예방 주의보<span class="num fe-prevent-count"></span></button></li>
+                                    <li class="fe-category manner"><button>이럴 땐 이렇게 하세요<span class="num fe-manner-count"></span></button></li>
+                                    <li class="fe-category serviceInfo"><button>서비스 이용안내<span class="num fe-serviceInfo-count"></span></button></li>
+                                    <li class="fe-category siteInfo"><button>사이트 이용방법<span class="num fe-siteInfo-count"></span></button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <!-- //카테고리 탭 -->
 
 
             <!--// #contents -->
@@ -297,7 +424,27 @@
         </div>
         <!-- // 배너 -->
 
+        <hr class="cont-sp type1" aria-hidden="true">
+    
+        <!-- 검색 개선 의견 보내기 -->
+        <div class="cont-box nogaps-hoz">
+            <div class="tod-search-feedback">
+                <p class="text-ti srch">원하는 검색결과를 찾지 못하셨나요?</p>
+                <ul class="bt-slice item-two mt10">
+                    <li><button type="button" id="fe-btn-feedback" class="btn-round2 btn-style3">검색 개선 의견 보내기</button></li>
+                </ul>
+            </div>
+        </div>
+        <!-- //검색 개선 의견 보내기 -->
+
+        <div class="tod-pagetop-area">
+            <button type="button" id="fe-btn-top" class="btn-top"><img src="<%= CDN %>/img/search/btn_pagetop.png" alt="화면 상단으로 이동"></button>
+        </div>
+
     </div>
+
+    
+
 <!--바로가기검색결과[S]-->
     <script type="text/x-handlebars-template" id="smart_template">
         <li class="last-line">
@@ -311,24 +458,29 @@
         <hr class="cont-sp type1 shortcut" aria-hidden="true">
 
         <!-- .cont-box -->
-        <div class="cont-box nogaps-btm shortcut">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">바로가기</h2>
-                <div class="numberbox"><span class="num"><%= searchInfo.search[2].shortcut.count %></span>건
-                    <% if(searchInfo.search[2].shortcut.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm shortcut" id="searchlist_shortcut">
+
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[2].shortcut.count>5){ %>
+                    <a class="shortcut" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        바로가기 <span class="num"><%= searchInfo.search[2].shortcut.count %></span>
+                    <% if(searchInfo.search[2].shortcut.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <div class="keyword-search-list">
+            <div class="keyword-search-list tod-srhtype1">
                 <ul id="shortcut_list">
-
+                                        
                 </ul>
             </div>
+            <% if(searchInfo.search[2].shortcut.count>5){ %>
+            <div class="btn-more">
+                <button class="shortcut" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">바로가기</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 shortcut" aria-hidden="true">
     </script>
@@ -338,26 +490,31 @@
 <!--요금제 검색결과[S]-->
     <script type="text/x-handlebars-template" id="rate_base">
         <hr class="cont-sp type1 rate" aria-hidden="true"/>
-        <div class="cont-box bgnone noborder nogaps-btm rate">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">요금제</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[3].rate.count %></span>건
-                    <% if(searchInfo.search[3].rate.count>10){%>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+
+        <div class="cont-box list nogaps-btm rate" id="searchlist_rate">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[3].rate.count>5){%>
+                    <!-- <a class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1%>"> -->
+                        <a class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        요금제 <span class="num"><%= searchInfo.search[3].rate.count %></span>
+                    <% if(searchInfo.search[3].rate.count>5){%>
                     </a>
                     <% } %>
+                </h3>
+                <div class="tod-fright fe-sort rate">
+                    <button class="btn-select fe-btn-sort-rate" title="정렬 기준 선택" aria-haspopup="true" value="A">추천순<span class="ico"></span></button>
                 </div>
             </div>
-        </div>
-
-        <div class="cont-box list bgnone noborder gaps-style05 rate">
-            <ul class="extraservice-list" id="rate_list">
-
+            <ul class="extraservice-list tod-srhtype1" id="rate_list">
+                
             </ul>
+            <% if(searchInfo.search[3].rate.count>5){%>
+            <div class="btn-more">
+                <button class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">요금제</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 rate" aria-hidden="true"/>
     </script>
@@ -366,26 +523,30 @@
 <!--부가서비스 검색결과[S]-->
     <script type="text/x-handlebars-template" id="service_base">
         <hr class="cont-sp type1 service" aria-hidden="true"/>
-        <div class="cont-box bgnone noborder nogaps-btm service">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">부가서비스</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[4].service.count %></span>건
-                    <% if(searchInfo.search[4].service.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+
+        <div class="cont-box list nogaps-btm service" id="searchlist_service">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[4].service.count>5){ %>
+                    <a class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        부가서비스 <span class="num"><%= searchInfo.search[4].service.count %></span>
+                    <% if(searchInfo.search[4].service.count>5){ %>
                     </a>
                     <% } %>
+                </h3>
+                <div class="tod-fright fe-sort service">
+                    <button class="btn-select fe-btn-sort-service" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                 </div>
             </div>
-        </div>
-
-        <div class="cont-box list bgnone noborder gaps-style06 service">
-            <ul class="extraservice-list" id="service_list">
+            <ul class="extraservice-list tod-srhtype1" id="service_list">
 
             </ul>
+            <% if(searchInfo.search[4].service.count>5){ %>
+            <div class="btn-more">
+                <button class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">부가서비스</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 service" aria-hidden="true">
     </script>
@@ -394,54 +555,61 @@
 <!--TV인터넷 검색결과[S]-->
     <script type="text/x-handlebars-template" id="tv_internet_base">
         <hr class="cont-sp type1 tv_internet_list" aria-hidden="true"/>
-        <div class="cont-box bgnone noborder nogaps-btm tv_internet">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[5].tv_internet.count %></span>건
-                    <% if(searchInfo.search[5].tv_internet.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+
+        <div class="cont-box list nogaps-btm tv_internet" id="searchlist_tv_internet">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[5].tv_internet.count>5){ %>
+                    <a class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        인터넷 · 집전화 · IPTV <span class="num"><%= searchInfo.search[5].tv_internet.count %></span>
+                    <% if(searchInfo.search[5].tv_internet.count>5){ %>
                     </a>
                     <% } %>
+                </h3>
+                <div class="tod-fright fe-sort tv_internet">
+                    <button class="btn-select fe-btn-sort-tv_internet" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                 </div>
             </div>
-        </div>
-
-        <div class="cont-box list bgnone noborder gaps-style06 tv_internet">
-            <ul class="extraservice-list" id="tv_internet_list">
+            <ul class="extraservice-list tod-srhtype1" id="tv_internet_list">
 
             </ul>
+            <% if(searchInfo.search[5].tv_internet.count>5){ %>
+            <div class="btn-more">
+                <button class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">인터넷 · 집전화 · IPTV</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
-        <hr class="cont-sp type1 tv_internet_list" aria-hidden="true"/>
+        <hr class="cont-sp type1 tv_internet_list" aria-hidden="true">
     </script>
 <!--TV인터넷 검색결과[E]-->
 
 <!--T로밍 검색결과[S]-->
     <script type="text/x-handlebars-template" id="troaming_base">
         <hr class="cont-sp type1 troaming" aria-hidden="true"/>
-        <div class="cont-box bgnone noborder nogaps-btm troaming">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">T로밍</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[6].troaming.count %></span>건
-                    <% if(searchInfo.search[6].troaming.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm troaming" id="searchlist_troaming">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[6].troaming.count>5){ %>
+                    <a class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        T로밍 <span class="num"><%= searchInfo.search[6].troaming.count %></span>
+                    <% if(searchInfo.search[6].troaming.count>5){ %>
                     </a>
                     <% } %>
+                </h3>
+                <div class="tod-fright fe-sort troaming">
+                    <button class="btn-select fe-btn-sort-troaming" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                 </div>
             </div>
-        </div>
-
-        <div class="cont-box list bgnone noborder gaps-style07 troaming">
-            <ul class="extraservice-list" id="troaming_list">
+            <ul class="extraservice-list tod-srhtype1" id="troaming_list">
 
             </ul>
+            <% if(searchInfo.search[6].troaming.count>5){ %>
+            <div class="btn-more">
+                <button class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T로밍</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 troaming" aria-hidden="true"/>
     </script>
@@ -451,53 +619,67 @@
     <!-- .cont-box -->
     <script type="text/x-handlebars-template" id="tapp_base">
         <hr class="cont-sp type1 tapp" aria-hidden="true">
-        <div class="cont-box list nogaps-btm tapp">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">T앱</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[7].tapp.count %></span>건
+        <div class="cont-box list nogaps-btm tapp" id="searchlist_tapp">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[7].tapp.count>8){ %>
+                    <a class="tapp" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tapp&keyword='+keyword:inResultViewUrl+'?category=tapp&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        T앱 <span class="num"><%= searchInfo.search[7].tapp.count %></span>
+                    <% if(searchInfo.search[7].tapp.count>8){ %>
+                    </a>
+                    <% } %>
+                </h3>
+                <% if(searchInfo.search[7].tapp.count>8){ %>
+                <div class="tod-fright">
+                    <button class="bt-link-tx underline list-data" href="/product/apps">T앱 전체보기</button>
                 </div>
+                <% } %>
             </div>
-            <div class="tapplist-wrap tapplist-wrap02">
+            <div class="tapplist-wrap tapplist-wrap02"><!-- 19.03.18 tapplist-wrap02 추가 -->
                 <ul class="list" id="tapp_list">
 
                 </ul>
-                <div class="tappbtn-wrap">
-                    <button class="btn list-data" href="/product/apps">T앱 전체보기</button>
-                </div>
             </div>
+            <% if(searchInfo.search[7].tapp.count>8){ %>
+            <div class="btn-more">
+                <button class="tapp" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tapp&keyword='+keyword:inResultViewUrl+'?category=tapp&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T앱</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 tapp" aria-hidden="true">
     </script>
 <!--T앱 검색결과[E]-->
 
-
 <!--다이렉트샵 검색결과[S]-->
     <!-- .cont-box -->
     <script type="text/x-handlebars-template" id="direct_base">
         <hr class="cont-sp type1 direct" aria-hidden="true">
-        <div class="cont-box list pb0 direct">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">T world 다이렉트</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[8].direct.count %></span>건
-                    <% if(searchInfo.search[8].direct.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm direct" id="searchlist_direct">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[8].direct.count>5){ %>
+                    <a class="direct" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        T월드 다이렉트 <span class="num"><%= searchInfo.search[8].direct.count %></span>
+                    <% if(searchInfo.search[8].direct.count>5){ %>
                     </a>
                     <% } %>
+                </h3>
+                <div class="tod-fright">
+                    <button class="bt-link-tx underline list-data direct-element home" href="https://m.shop.tworld.co.kr" title="새창">다이렉트샵 가기</button>
                 </div>
             </div>
-            <div class="direct-shop-wrap">
+            <div class="direct-shop-wrap tod-srhtype1">
                 <ul id="direct_list">
 
                 </ul>
-                <div class="btn-more">
-                    <a href="https://m.shop.tworld.co.kr" title="새창열림" class="list-data direct-element home">다이렉트샵 가기</a>
-                </div>
             </div>
+            <% if(searchInfo.search[8].direct.count>5){ %>
+            <div class="btn-more">
+                <button class="direct" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T월드 다이렉트</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 direct" aria-hidden="true">
     </script>
@@ -510,25 +692,28 @@
     <!-- .cont-box -->
     <script  type="text/x-handlebars-template" id="tmembership_base" >
         <hr class="cont-sp type1 tmembership" aria-hidden="true">
-        <div class="cont-box list pb0 tmembership">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">T멤버십</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[9].tmembership.count %></span>건
-                    <% if(searchInfo.search[9].tmembership.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=tmembership&keyword='+keyword:inResultViewUrl+'?category=tmembership&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm tmembership" id="searchlist_tmembership">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[9].tmembership.count>5){ %>
+                    <a class="tmembership" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tmembership&keyword='+keyword:inResultViewUrl+'?category=tmembership&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        T멤버십 <span class="num"><%= searchInfo.search[9].tmembership.count %></span>
+                    <% if(searchInfo.search[9].tmembership.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <div class="t-membership-wrap">
+            <div class="t-membership-wrap tod-srhtype1">
                 <ul id="tmembership_list">
 
                 </ul>
             </div>
+            <% if(searchInfo.search[9].tmembership.count>5){ %>
+            <div class="btn-more">
+                <button class="tmembership" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tmembership&keyword='+keyword:inResultViewUrl+'?category=tmembership&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T멤버십</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 tmembership" aria-hidden="true">
     </script>
@@ -539,25 +724,28 @@
     <!-- .cont-box -->
     <script type="text/x-handlebars-template" id="event_base">
         <hr class="cont-sp type1 event" aria-hidden="true">
-        <div class="cont-box list nogaps-btm bgnone noborder event">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">진행 중인 이벤트</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[10].event.count %></span>건
-                    <% if(searchInfo.search[10].event.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box nogaps-btm list event" id="searchlist_event">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[10].event.count>5){ %>
+                    <a class="event" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        진행 중인 이벤트 <span class="num"><%= searchInfo.search[10].event.count %></span>
+                    <% if(searchInfo.search[10].event.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <div class="event-list">
+            <div class="event-list tod-srhtype1">
                 <ul id="event_list">
 
                 </ul>
             </div>
+            <% if(searchInfo.search[10].event.count>5){ %>
+            <div class="btn-more">
+                <button class="event" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">진행 중인 이벤트</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 event" aria-hidden="true">
     </script>
@@ -568,23 +756,26 @@
     <!-- 혜택 · 할인 -->
     <script type="text/x-handlebars-template" id="sale_base">
         <hr class="cont-sp type1 sale" aria-hidden="true">
-        <div class="cont-box bgnone noborder gaps-style09 list sale">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">혜택/할인</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[11].sale.count %></span>건
-                    <% if(searchInfo.search[11].sale.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box nogaps-btm list sale" id="searchlist_sale">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[11].sale.count>5){ %>
+                    <a class="sale" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        혜택/할인 <span class="num"><%= searchInfo.search[11].sale.count %></span>
+                    <% if(searchInfo.search[11].sale.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <ul class="discountbenefit-list" id="sale_list">
+            <ul class="tod-benefit-list tod-srhtype1" id="sale_list">
 
             </ul>
+            <% if(searchInfo.search[11].sale.count>5){ %>
+            <div class="btn-more">
+                <button class="sale" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">혜택/할인</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <!-- //혜택 · 할인 -->
 
@@ -599,80 +790,58 @@
 
 <!--지점/대리점 검색결과[S]-->
     <!-- 지점 · 대리점, A/S센터 -->
-    <script id="as_outlet_base" type="text/x-handlebars-template">
+    <script type="text/x-handlebars-template" id="as_outlet_base">
         <hr class="cont-sp type1 as_outlet" aria-hidden="true">
-        <div class="cont-box list nogaps-btm as_outlet">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">지점/대리점, A/S센터</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[12].as_outlet.count %></span>건
-                    <% if(searchInfo.search[12].as_outlet.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=as_outlet&keyword='+keyword:inResultViewUrl+'?category=as_outlet&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm as_outlet" id="searchlist_as_outlet">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[12].as_outlet.count>5){ %>
+                    <a class="as_outlet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=as_outlet&keyword='+keyword:inResultViewUrl+'?category=as_outlet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        지점/대리점, A/S센터 <span class="num"><%= searchInfo.search[12].as_outlet.count %></span>
+                    <% if(searchInfo.search[12].as_outlet.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <ul class="service-guide-s" id="as_outlet_list">
+            <ul class="service-guide-s tod-srhtype1" id="as_outlet_list">
 
             </ul>
+            <% if(searchInfo.search[12].as_outlet.count>5){ %>
+            <div class="btn-more">
+                <button class="as_outlet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=as_outlet&keyword='+keyword:inResultViewUrl+'?category=as_outlet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">지점/대리점, A/S센터</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <hr class="cont-sp type1 as_outlet" aria-hidden="true">
     </script>
     <!-- //지점 · 대리점, A/S센터 -->
 <!--지점/대리점 검색결과[E]-->
 
-<!--자주하는질문 검색결과[S]-->
-    <!-- 자주하는 질문 -->
-    <script type="text/x-handlebars-template" id="question_base">
-        <hr class="cont-sp type1 question" aria-hidden="true">
-        <div class="cont-box list nogaps-btm question">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">자주 하는 질문</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[15].question.count %></span>건
-                    <%if(searchInfo.search[15].question.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
-                    </a>
-                    <% } %>
-                </div>
-            </div>
-            <ul class="service-guide-s" id="question_list">
-
-            </ul>
-        </div>
-        <!-- //자주하는 질문 -->
-
-        <hr class="cont-sp type1 question" aria-hidden="true">
-    </script>
-<!--자주하는질문 검색결과[E]-->
-
 <!--공지사항 검색결과[S]-->
     <!-- 공지사항 -->
     <script type="text/x-handlebars-template" id="notice_base">
         <hr class="cont-sp type1 notice" aria-hidden="true">
-        <div class="cont-box list nogaps-btm notice">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">공지사항</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[13].notice.count %></span>건
-                    <% if(searchInfo.search[13].notice.count>10){  %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm notice" id="searchlist_notice">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[13].notice.count>5){  %>
+                    <a class="notice" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        공지사항 <span class="num"><%= searchInfo.search[13].notice.count %></span>
+                    <% if(searchInfo.search[13].notice.count>5){  %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <ul class="service-guide-s" id="notice_list">
+            <ul class="service-guide-s tod-srhtype1" id="notice_list">
 
             </ul>
+            <% if(searchInfo.search[13].notice.count>5){  %>
+            <div class="btn-more">
+                <button class="notice" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">공지사항</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <!-- //공지사항 -->
 
@@ -681,54 +850,91 @@
 <!--공지사항 검색결과[E]-->
 
 <!--이용자 피해예방 주의보 검색결과[S]-->
-    <script type="text/x-handlebars-template" id="prevent_base">
-        <!-- 이용자 피해예방 주의보 -->
-        <hr class="cont-sp type1 prevent" aria-hidden="true">
-        <div class="cont-box list nogaps-btm prevent">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">이용자 피해예방 주의보</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[14].prevent.count %></span>건
-                    <% if(searchInfo.search[14].prevent.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
-                    </a>
-                    <% } %>
-                </div>
-            </div>
-            <ul class="service-guide-s" id="prevent_list">
-
-            </ul>
+<script type="text/x-handlebars-template" id="prevent_base">
+    <!-- 이용자 피해예방 주의보 -->
+    <hr class="cont-sp type1 prevent" aria-hidden="true">
+    <div class="cont-box list nogaps-btm prevent" id="searchlist_prevent">
+        <div class="tod-searchlist-head">
+            <h3 class="tit">
+                <% if(searchInfo.search[14].prevent.count>5){ %>
+                <a class="prevent" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                <% } %>
+                    이용자 피해예방 주의보 <span class="num"><%= searchInfo.search[14].prevent.count %></span>
+                <% if(searchInfo.search[14].prevent.count>5){ %>
+                </a>
+                <% } %>
+            </h3>
         </div>
-        <!-- //이용자 피해예방 주의보 -->
+        <ul class="service-guide-s tod-srhtype1" id="prevent_list">
 
-        <hr class="cont-sp type1 prevent" aria-hidden="true">
-    </script>
+        </ul>
+        <% if(searchInfo.search[14].prevent.count>5){ %>
+        <div class="btn-more">
+            <button class="prevent" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">이용자 피해예방 주의보</span>전체보기<i class="ico-arrow-r"></i></button>
+        </div>
+        <% } %>
+    </div>
+    <!-- //이용자 피해예방 주의보 -->
+
+    <hr class="cont-sp type1 prevent" aria-hidden="true">
+</script>
 <!--이용자 피해예방 주의보 검색결과[E]-->
 
-<!--이럴 땐 이렇게 하세요 검색결과[S]-->
-    <script id="manner_base" type="text/x-handlebars-template">
-        <!-- 이럴 땐 이렇게 하세요 -->
-        <hr class="cont-sp type1 manner" aria-hidden="true">
-        <div class="cont-box list nogaps-btm manner">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">이럴 땐 이렇게 하세요</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[16].manner.count %></span>건
-                    <% if(searchInfo.search[16].manner.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+<!--자주하는질문 검색결과[S]-->
+    <!-- 자주하는 질문 -->
+    <script type="text/x-handlebars-template" id="question_base">
+        <hr class="cont-sp type1 question" aria-hidden="true">
+        <div class="cont-box list nogaps-btm question" id="searchlist_question">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <%if(searchInfo.search[15].question.count>5){ %>
+                    <a class="question" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        자주 하는 질문 <span class="num"><%= searchInfo.search[15].question.count %></span>
+                    <%if(searchInfo.search[15].question.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <ul class="service-guide-s" id="manner_list">
+            <ul class="service-guide-s tod-srhtype1" id="question_list">
 
             </ul>
+            <%if(searchInfo.search[15].question.count>5){ %>
+            <div class="btn-more">
+                <button class="question" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">자주 하는 질문</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
+        </div>
+        <!-- //자주하는 질문 -->
+
+        <hr class="cont-sp type1 question" aria-hidden="true">
+    </script>
+<!--자주하는질문 검색결과[E]-->
+
+<!--이럴 땐 이렇게 하세요 검색결과[S]-->
+    <script type="text/x-handlebars-template" id="manner_base">
+        <!-- 이럴 땐 이렇게 하세요 -->
+        <hr class="cont-sp type1 manner" aria-hidden="true">
+        <div class="cont-box list nogaps-btm manner" id="searchlist_manner">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[16].manner.count>5){ %>
+                    <a class="manner" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        이럴 땐 이렇게 하세요 <span class="num"><%= searchInfo.search[16].manner.count %></span>
+                    <% if(searchInfo.search[16].manner.count>5){ %>
+                    </a>
+                    <% } %>
+                </h3>
+            </div>
+            <ul class="service-guide-s tod-srhtype1" id="manner_list">
+
+            </ul>
+            <% if(searchInfo.search[16].manner.count>5){ %>
+            <div class="btn-more">
+                <button class="manner" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">이럴 땐 이렇게 하세요</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <!-- //이럴 땐 이렇게 하세요 -->
 
@@ -740,23 +946,26 @@
     <!-- 서비스 이용안내 -->
     <script type="text/x-handlebars-template" id="serviceInfo_base">
         <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
-        <div class="cont-box list nogaps-btm serviceInfo">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">서비스 이용안내</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>건
-                    <% if(searchInfo.search[17].serviceInfo.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm serviceInfo" id="searchlist_serviceInfo">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[17].serviceInfo.count>5){ %>
+                    <a class="serviceInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        서비스 이용안내 <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>
+                    <% if(searchInfo.search[17].serviceInfo.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <ul class="service-guide-s" id="serviceInfo_list">
+            <ul class="service-guide-s tod-srhtype1" id="serviceInfo_list">
 
             </ul>
+            <% if(searchInfo.search[17].serviceInfo.count>5){ %>
+            <div class="btn-more">
+                <button class="serviceInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">서비스 이용안내</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <!-- //서비스 이용안내 -->
 
@@ -765,31 +974,66 @@
 <!--서비스 이용안내 검색결과[E]-->
 
 <!--사이트 이용안내 검색결과[S]-->
-    <script id="siteInfo_base" type="text/x-handlebars-template">
+    <script type="text/x-handlebars-template" id="siteInfo_base">
         <!-- 사이트 이용안내 -->
         <hr class="cont-sp type1 siteInfo" aria-hidden="true">
-        <div class="cont-box list nogaps-btm siteInfo">
-            <div class="searchnumbox-wrap">
-                <h2 class="tit">사이트 이용방법</h2>
-                <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>건
-                    <% if(searchInfo.search[18].siteInfo.count>10){ %>
-                    <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                        더보기
+        <div class="cont-box list nogaps-btm siteInfo" id="searchlist_siteInfo">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchInfo.search[18].siteInfo.count>5){ %>
+                    <a class="siteInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        사이트 이용방법 <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>
+                    <% if(searchInfo.search[18].siteInfo.count>5){ %>
                     </a>
                     <% } %>
-                </div>
+                </h3>
             </div>
-            <ul class="site-guide-s" id="siteInfo_list">
+            <ul class="site-guide-s tod-srhtype1" id="siteInfo_list">
 
             </ul>
+            <% if(searchInfo.search[18].siteInfo.count>5){ %>
+            <div class="btn-more">
+                <button class="siteInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">사이트 이용방법</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
         </div>
         <!-- //사이트 이용안내 -->
         <hr class="cont-sp type1 siteInfo" aria-hidden="true">        
     </script>
 <!--사이트 이용안내 검색결과[E]-->
+
+<!--결합상품 검색결과[S]-->
+<script type="text/x-handlebars-template" id="bundle_base">
+    <!-- 결합상품 -->
+    <hr class="cont-sp type1 bundle" aria-hidden="true">
+    <div class="cont-box list nogaps-btm bundle" id="searchlist_bundle">
+        <div class="tod-searchlist-head">
+            <h3 class="tit">
+                <% if(searchInfo.search[20].bundle.count>5){ %>
+                <a class="bundle" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=bundle&keyword='+keyword:inResultViewUrl+'?category=bundle&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                <% } %>
+                    결합상품 <span class="num"><%= searchInfo.search[20].bundle.count %></span>
+                <% if(searchInfo.search[20].bundle.count>5){ %>
+                </a>
+                <% } %>
+            </h3>
+        </div>
+        <ul class="extraservice-list tod-srhtype1" id="bundle_list">
+
+        </ul>
+        <% if(searchInfo.search[20].bundle.count>5){ %>
+        <div class="btn-more">
+            <button class="bundle" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=bundle&keyword='+keyword:inResultViewUrl+'?category=bundle&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">결합상품</span>전체보기<i class="ico-arrow-r"></i></button>
+        </div>
+        <% } %>
+    </div>
+    <!-- //결합상품 -->
+    <hr class="cont-sp type1 bundle" aria-hidden="true">        
+</script>
+<!--결합상품 검색결과[E]-->
+
+
 </div>
 
 <% include ../../components/javascript.component.html %>

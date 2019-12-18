@@ -76,7 +76,7 @@ class MyTJoinWireAS extends TwViewController {
         const result = resp.result;
 
         if ( resp.code === API_CODE.CODE_00 ) {
-          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result};
+          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result };
           res.render('wire/myt-join.wire.as.html', option);
         } else {
           return this.error.render(res, {

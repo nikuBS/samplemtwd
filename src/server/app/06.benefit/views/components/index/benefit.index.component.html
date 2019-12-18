@@ -5,24 +5,24 @@
 -->
 <script id="productList" type="text/x-handlebars-template">
     {{#list}}
-    <li class="category-type">
-        <button type="button" class="link" data-benefit-id="{{benefitId}}">
+    <li>
+        <a class="link" data-benefit-id="{{benefitId}}">
+            <div class="tag-field">
+            {{#each tagList}}
+                <span class="tag">#{{tagNm}}</span>
+            {{/each}}
+            </div>
             <div class="text-field">
                 <h3 class="title">{{benefitNm}}</h3>
                 <p class="text">{{benefitDesc}}</p>
             </div>
-            <div class="tag-field">
-                {{#each tagList}}
-                    <span class="tag">#{{tagNm}}</span>
-                {{/each}}
-            </div>
             {{#ifCond useYn '===' '사용중' }}
-                <i class="state-tx01"><span class="blind">이용 중</span></i>
+            <i class="state-tx01"><span>이용 중</span></i>
             {{/ifCond}}
             {{#isNotEmpty imgFullPath}}
-                <div class="img-field"><img src="{{cdn imgFullPath}}" alt=""></div>
+            <div class="img-filed"><img src="{{cdn imgFullPath}}" alt=""></div>
             {{/isNotEmpty}}
-        </button>
+        </a>
     </li>
     {{/list}}
 </script>

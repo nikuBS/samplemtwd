@@ -42,7 +42,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Get remain days to the given date
-   * @param {Date|string} date YYYYMMDDhhmmss
+   * @param {Date|string} [date] YYYYMMDDhhmmss
    * @returns {number} : 30
    * @public
    */
@@ -51,7 +51,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date|string} date YYYYMMDD
+   * @param {Date|string} [date] YYYYMMDD
    * @returns {string} : 20180601
    * @public
    */

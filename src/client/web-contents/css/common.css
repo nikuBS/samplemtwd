@@ -7096,13 +7096,15 @@ a.ui-button:active,
   padding: 0 0 0.75rem 0;
   border-top: 0; }
 
-.direct-shop-wrap li a {
-  display: block; }
+.direct-shop-wrap li >a, .direct-shop-wrap li >button {/* 191125 [OP002-4532] 통합검색 결과 UI개선 */
+  display: block;
+  width: 100%; }
 
-.direct-shop-wrap .cont {
+.direct-shop-wrap .cont {/* 191125 [OP002-4532] 통합검색 결과 UI개선 */
   display: table-cell;
   padding: 0 0 0 0.75rem;
-  vertical-align: middle; }
+  vertical-align: middle;
+  text-align: left; }
 
 .direct-shop-wrap .img {
   display: table-cell;
@@ -9682,3 +9684,124 @@ button:focus span {
 .popup .popup-info .tod-btns .btn{width:100%; line-height: 3.125rem; font-size: 0.938rem; font-weight: #700;} 
 .popup .popup-info .tod-btns > li:first-child .btn{text-align: left; padding-left: 1.5rem;}
 .popup .popup-info .tod-btns > li:last-child .btn{text-align: right; padding-right: 1.5rem;}
+
+/* 191108 [OP002-3705] 혜택/할인 카테고리 및 UI 개선 */
+.tod-benefit-list {margin-bottom:-0.438rem;}
+.tod-benefit-list:after {clear:both; display:block; content:' ';}
+.tod-benefit-list li {position:relative; float:left; width:calc(50% - 0.343rem); height:9.688rem; margin-bottom:0.438rem; cursor:pointer; border:1px solid #e3e4e6; border-radius:0.3rem; background-color:#fff;}
+.tod-benefit-list li .link {display: block; width:100%; height:100%; padding:0.9rem 0.938rem; box-sizing:border-box;}
+.tod-benefit-list li:nth-child(even) {float:right;}
+.tod-benefit-list li .tag-field {margin-bottom:0.5rem;}
+.tod-benefit-list li .tag-field .tag {color:#858585;  font-size:0.75rem;}
+.tod-benefit-list li .text-field .title {margin-bottom:0.25rem; font-weight:600; font-size:0.938rem;}
+.tod-benefit-list li .text-field .text {color:#666; font-size:0.75rem;}
+.tod-benefit-list li .state-tx01 {position:absolute; top:0; right:0;}
+.tod-benefit-list li .state-tx01 span {display:inline-block; vertical-align:top; width:2.125rem; height:1rem; line-height:1rem; text-align:center; color:#fff; font-size:0.625rem; border-radius:3px; background-color:#f86253;}
+.tod-benefit-list li .img-filed {width:4.188rem; height:4.188rem; position:absolute; bottom:0; right:0; text-align:right;}
+.tod-benefit-list li .img-filed img {width:100%; height:100%;}
+
+/* 191127 [OP002-4532] 통합검색 결과 UI개선 */
+.btn-more.noborder {border-top:0;}
+.btn-more.tod-nogaps {margin-left:-1rem; margin-right:-1rem;}
+.btn-more.tod-nogaps-white {background:#fff; margin-left:-1rem; margin-right:-1rem;}
+.btn-more i.ico-arrow-r {display:inline-block; vertical-align:middle; width:1rem; height:1rem; margin:0 0 0.125rem 0.25rem; background:url('/img/svg/icon_32px_arrowmore_black.svg') no-repeat 0 0; background-size:1rem 1rem;}
+
+.inputbox.tod-searchtype1 .input input {width:100%; height:1.625rem; padding:0 1.875rem 0 0.8125rem; background:#fff; border:none; border-radius:0.8125rem; font-size:0.75rem; -webkit-appearance:none; appearance:none;}
+.inputbox.tod-searchtype1 .input input::-webkit-input-placeholder {font-size:inherit;}
+.inputbox.tod-searchtype1 .input input[type='search']::-webkit-search-cancel-button {display:none;}
+.inputbox.tod-searchtype1 .input .cancel {display:none !important; right:1.875rem;}
+.inputbox.tod-searchtype1 .btn-search {position:absolute; top:0; bottom:0; right:0; width:1.875rem; background:url('/img/svg/icon_48px_titlebar_search.svg') no-repeat 50% 50%; background-size:1rem 1rem;}
+.tod-re-searchbox:after {content:''; display:block; clear:both;}
+.tod-re-searchbox .tit {float:left; padding:0.375rem 0 0.125rem 0; font-size:0.8125rem;}
+.tod-re-searchbox .inputbox.tod-searchtype1 {float:right; width:46%;}
+
+.horizontal-slide.tod-hoz-tabtype1 {padding:0 !important;}
+.horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li:first-child {padding-left:1rem;}
+.horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li:last-child {padding-right:1rem;}
+.horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li >a, .horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li >button {position:relative; display:block; padding:0 0.875rem; font-size:1rem; line-height:3.125rem; white-space:nowrap;}
+.horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li .num {margin-left:0.25rem;}
+.horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li:not(.on) .num {color:#858585;}
+.horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li.on >a, .horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li.on >button {color:#ef4b49;}
+.horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li.on >a:after, .horizontal-slide.tod-hoz-tabtype1 .horizontal-list >li.on >button:after {content:''; position:absolute; bottom:0; left:0; right:0; border-bottom:0.125rem solid;}
+.tod-srhcategory-scrwrap {height:3.188rem;}
+.tod-srhcategory-scrwrap .widget {background:#fff; border-bottom:1px solid #e5e5e5;}
+.tod-srhcategory-scrwrap.fixed .widget {position:fixed; z-index:2; top:4.13rem; left:0; right:0;}
+
+.tod-highlight-text {background-color:#ffe5e4; color:#ea1310;}
+.tod-related-keywords {position:relative; z-index:0; overflow:hidden;}
+.tod-related-keywords .tit {position:absolute; z-index:1; left:0; top:50%; -webkit-transform:translateY(-50%); transform:translateY(-50%); padding:0 0.625rem 0.03125rem 1rem; background:#fff;}
+.tod-related-keywords .tit >span {display:inline-block; padding:0.09375rem 0.5rem 0; border:1px solid #ebebeb; border-radius:0.6875rem; color:#666; font-size:0.75rem; line-height:1.15625rem;}
+.tod-related-keywords .widget-box .horizontal-slide {padding:0 0 0 3.75rem;}
+.tod-related-keywords .widget-box .horizontal-slide .horizontal-list {padding:0.5625rem 0;}
+.tod-related-keywords .widget-box .horizontal-slide .horizontal-list >li button, .tod-related-keywords .widget-box .horizontal-slide .horizontal-list >li a {display:inline-block; padding:0 0.375rem; font-size:0.75rem; line-height:1.375rem; white-space:nowrap;}
+.tod-related-keywords .widget-box .horizontal-slide .horizontal-list >li:last-child {padding-right:0.625rem;}
+.tod-search-mytbox {background:#fff; border-radius:0.625rem; overflow:hidden; box-shadow:0 0.0625rem 0.9375rem rgba(0,0,0,.03);}
+.tod-search-mytbox .tit {display:block; margin:0 1.063rem; padding:1.125rem 0 0.75rem 1.625rem; background:url('/img/svg/icon_48px_my.svg') no-repeat 0 1rem; background-size:1.25rem 1.25rem; font-size:0.75rem; font-weight:500;}
+.tod-search-mytbox .text-area {margin:0 1.063rem; padding:1.063rem 0 2rem; border-top:1px solid #f2f2f2; text-align:center;}
+.tod-search-mytbox .text-area .text {font-size:1.125rem; line-height:1.5; color:#858585; font-weight:500;}
+.tod-search-mytbox .text-area .text .highlight {position:relative; display:inline-block; padding:0 0.25rem; background:#f76556; background:-webkit-linear-gradient(left, #f76556 0%, #f65984 100%); background:linear-gradient(to right, #f76556 0%, #f65984 100%); color:#fff;}
+.tod-search-mytbox .text-area .text .highlight >a, .tod-search-mytbox .text-area .text .highlight >button {font-size:inherit; color:inherit; text-decoration:underline;}
+.tod-search-mytbox .text-area .text .pnum {color:#000; font-size:inherit; font-weight:inherit; text-decoration:underline;}
+.tod-search-mytbox .text-area .text-s {margin-top:0.875rem; color:#666; font-size:0.9375rem; font-weight:500;}
+.tod-search-mytbox .barcode-area {padding:0.875rem 1.875rem; background:#f8f8f8; border-top:1px solid #f2f2f2;}
+.tod-search-mytbox .barcode-area img {width:100%; vertical-align:top;}
+.tod-search-mytbox .barcode-area .codenum {text-align:center; font-size:0.875rem; line-height:1.875rem; word-spacing:0.25rem;}
+.tod-searchlist-head {border-bottom:1px solid #e5e5e5;}
+.tod-searchlist-head:after {content:''; display:block; clear:both;}
+.tod-searchlist-head .tit {float:left; padding:0 0 0.625rem; font-size:1rem; font-weight:bold;}
+.tod-searchlist-head .tit >a, .tod-searchlist-head .tit >button {display:inline-block; padding-right:1.313rem; background:url('/img/svg/icon_32px_arrowmore.svg') no-repeat right 45%; background-size:1rem 1rem; font-size:inherit; font-weight:inherit;}
+.tod-searchlist-head .tit .num {padding:0 0.125rem; color:#858585; font-weight:normal;}
+.tod-searchlist-head .btn-select {display:inline-block; vertical-align:top; height:1.5rem; margin:0 0 0.5rem; padding-right:1.25rem; background:url('/img/svg/icon_32px_arrowdown.svg') no-repeat right 45%; background-size:1rem 1rem; color:#000; font-size:0.8125rem; line-height:1.5rem; font-weight:500;}
+.tod-searchlist-head .bt-link-tx.underline {margin:0 0 0.5rem; padding:0 !important; font-size:0.75rem; height:1.5rem;}
+.tod-search-feedback {padding:2rem 0 2.5rem; text-align:center;}
+.tod-search-feedback .text-ti {font-size:1rem; font-weight:500;}
+.tod-search-feedback .text-ti.srch:before {content:''; display:inline-block; vertical-align:middle; width:1.125rem; height:1.125rem; margin:0 0.3125rem 0.125rem 0; background:url('/img/svg/icon_48px_titlebar_search.svg') no-repeat 0 0; background-size:100% 100%;}
+.tod-search-feedback .bt-slice > li .btn-round2 {padding:0;}
+.tod-search-feedback.noresult {padding:2.625rem 0 2.75rem; text-align:center;}
+.tod-search-feedback.noresult .text {margin-top:0.625rem; font-size:0.8125rem;}
+.tod-pagetop-area {padding:1.25rem 0 2.5rem; text-align:center;}
+.tod-pagetop-area .btn-top {display:inline-block; vertical-align:top;}
+.tod-pagetop-area img {height:0.75rem; vertical-align:top;}
+
+.tapplist-wrap.tapplist-wrap02 .list li >a, .tapplist-wrap.tapplist-wrap02 .list li >button {display:inline-block; font-size:initial;}
+.extraservice-list >.category-type .products-detailitext-spec {padding:0.375rem 0 0.625rem;}
+.extraservice-list >.category-type .products-detailitext-spec .spec-text {display:inline-block; padding:0.09375rem 0.5rem 0 1.5rem; background:#f5f5f5 url('/img/ico/ico-speed-plan.png') no-repeat 0.3125rem 50%; background-size:0.94rem; border-radius:0.125rem; color:#666; font-size:0.75rem; line-height:1.40625rem;}
+.extraservice-list.tod-srhtype1 >.category-type:first-child {border-top:0;}
+.extraservice-list.tod-srhtype1 >.category-type {border-top:1px solid #f2f2f2; margin:0; border-radius:0; background:none; box-shadow:none;}
+.extraservice-list.tod-srhtype1 >.category-type .link, .extraservice-list.tod-srhtype1 >.category-type.no-link {padding:1.438rem 0 0.8125rem 0;}
+.extraservice-list.tod-srhtype1 >.category-type .products-titleinfo .info {color:#000;}
+.extraservice-list.tod-srhtype1 >.category-type .products-detailinfo {margin:0.375rem 0; border:0; padding:0; font-size:0.75rem; line-height:1rem; overflow:hidden; max-height:2rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.extraservice-list.tod-srhtype1 >.category-type .products-detailinfo02 {margin:0; border:0; height:auto; min-height:0; padding:0.375rem 0;}
+.extraservice-list.tod-srhtype1 >.category-type .products-detailinfo02 .category-type {font-size:0.75rem;}
+.extraservice-list.tod-srhtype1 >.category-type .products-detailinfo02 .category-type .gb {color:inherit;}
+.extraservice-list.tod-srhtype1 >.category-type .products-detailitext {margin:0; border:0;}
+.extraservice-list.tod-srhtype1 >.category-type .taglist-wrap {margin:0; padding:0.625rem 0;}
+.extraservice-list.tod-srhtype1 >.category-type .taglist-wrap:before {content:'TAG'; display:inline-block; margin-right:0.375rem; padding:0.09375rem 0.3125rem 0; background:#858585; border-radius:0.125rem; color:#fff; font-size:0.7rem; line-height:0.90625rem;}
+.extraservice-list.tod-srhtype1 >.category-type .taglist-wrap .tag-text {color:#666; font-size:0.75rem;}
+.keyword-search-list.tod-srhtype1 li button, .keyword-search-list.tod-srhtype1 li a {width:100%;}
+.keyword-search-list.tod-srhtype1 li .main-category {line-height:1.2rem; overflow:hidden; max-height:2.4rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.direct-shop-wrap.tod-srhtype1 .tit {line-height:1.2rem; overflow:hidden; max-height:2.4rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.t-membership-wrap.tod-srhtype1 .cont-wrap {display:table; table-layout:fixed; width:100%;}
+.t-membership-wrap.tod-srhtype1 .cont-wrap .tit {line-height:1.2rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.t-membership-wrap.tod-srhtype1 .cont-wrap .txt1 {font-size:0.75rem; line-height:1rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.service-guide-s.tod-srhtype1 li .b-cont .bt-t {padding-right:0;}
+.service-guide-s.tod-srhtype1 li .b-cont .tx {color:#666; font-size:0.75rem; line-height:1rem;}
+.service-guide-s.tod-srhtype1 li .b-cont .tx:not(.ellipsis) {overflow:hidden; max-height:2rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.service-guide-s.tod-srhtype1 li .b-cont .ti {line-height:1.2rem;}
+.service-guide-s.tod-srhtype1 li .b-cont .ti:not(.ellipsis) {overflow:hidden; max-height:2.4rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.site-guide-s.tod-srhtype1 li .b-cont .img-box img {width:2rem; height:2rem;}
+.site-guide-s.tod-srhtype1 li .b-cont .ti {line-height:1.2rem; overflow:hidden; max-height:2.4rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.site-guide-s.tod-srhtype1 li .b-cont .tx {margin-top:0.19rem; color:#666; font-size:0.75rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.event-list.tod-srhtype1 {padding-top:1.25rem; padding-bottom:1.25rem;}
+.event-list.tod-srhtype1 ul li .event-info {border:1px solid #e5e5e5; border-top:0; border-bottom-left-radius:inherit; border-bottom-right-radius:inherit;}
+.tod-benefit-list.tod-srhtype1 {margin:0;}
+.tod-benefit-list.tod-srhtype1 li {float:none; width:100%; height:auto; margin:0; border:0; border-radius:0; border-top:1px solid #f2f2f2;}
+.tod-benefit-list.tod-srhtype1 li:first-child {border-top:0;}
+.tod-benefit-list.tod-srhtype1 li .link {padding:1.125rem 4.8125rem 1.25rem 0.25rem;}
+.tod-benefit-list.tod-srhtype1 li .text-field .title {display:block; line-height:1.2rem; font-size:1rem; overflow:hidden; max-height:2.4rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.tod-benefit-list.tod-srhtype1 li .text-field .text {display:block; margin-top:0.375rem; line-height:1rem; overflow:hidden; max-height:2rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:ellipsis;}
+.tod-benefit-list.tod-srhtype1 li .tag-field {white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.tod-benefit-list.tod-srhtype1 li .tag-field .tag {color:#000;}
+.tod-benefit-list.tod-srhtype1 li .img-filed {bottom:auto; top:50%; margin-top:-2.094rem; width:4.188rem; height:4.188rem;}
+/* //191127 [OP002-4532] 통합검색 결과 UI개선 */
+

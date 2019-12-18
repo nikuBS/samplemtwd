@@ -6,7 +6,6 @@
 /**
  * @class
  * @desc 일시정지신청/현황에서 사용하는 File Upload Dialog
- * @returns {void}
  */
 Tw.MytJoinSuspendUpload = function () {
   this._popupService = Tw.Popup;
@@ -19,20 +18,26 @@ Tw.MytJoinSuspendUpload = function () {
  * @const
  * @readonly
  */
-
-Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/gif, image/jpeg, image/png, .doc, .docx, .pdf, .hwp, .png"' };
+Tw.MytJoinSuspendUpload.DEFAULT_FILE = {'attr': 'name="file" accept="image/bmp, image/x-windows-bmp, image/gif, image/jpeg, image/pjpeg, image/png, .bmp, .gif, .jpg, .jpeg, .png"'};
 Tw.MytJoinSuspendUpload.prototype = {
-  show: function (callback, fileCount, oldFiles, fileInfo, tooltip, $focusEl) {
+  /**
+   *
+   * @param {Function} callback
+   * @param {Number} [fileCount]
+   * @param {Array} [oldFiles]
+   * @param {Array} [fileInfos]
+   * @param {Object} [tooltip]
+   * @param {jQuery} [$focusEl]
+   */
+  show: function (callback, fileCount, oldFiles, fileInfos, tooltip, $focusEl) {
+    oldFiles = oldFiles || [];
     this._callback = callback;
     this._fileCount = fileCount || 1;
-    this._fileInfo = fileInfo || new Array(this._fileCount);
-    oldFiles = oldFiles || [];
-    this._acceptExt = ['jpg', 'jpeg', 'png', 'docx', 'doc', 'pdf', 'hwp'];
-    this._fileInfo = _.map(this._fileInfo, function (info, idx) {
-      // web 접근성 퍼일 element의 index 시작 변경 0 ->1
-      return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx], titleIndex: idx + 1  });
+    this._acceptExt = ['bmp', 'gif', 'jpg', 'jpeg', 'png'];
+    this._fileInfos = _.map(fileInfos || new Array(this._fileCount), function (fileInfo, index) {
+      return _.defaults(fileInfo, Tw.MytJoinSuspendUpload.DEFAULT_FILE, {oldFile: oldFiles[index]});
     });
-    if ( tooltip ) {
+    if (tooltip) {
       this._showUploadTip(tooltip, $focusEl);
     } else {
       this._showUploadPopup();
@@ -62,7 +67,7 @@ Tw.MytJoinSuspendUpload.prototype = {
    */
   _showUploadPopup: function () {
     // 모바일웹 4.4 버젼은 파일 업로드 미지원
-    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
       // Not Supported File Upload
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_SUPPORT_FILE_UPLOAD);
       return;
@@ -70,14 +75,12 @@ Tw.MytJoinSuspendUpload.prototype = {
 
     this._popupService.open({
       hbs: 'CS_04_01_L02',
-      inputfile_num: this._fileInfo,
+      inputfile_num: this._fileInfos,
       warning_msg: [
-        { 'txt': Tw.UPLOAD_FILE.WARNING_A01, 'point': '' },
-        { 'txt': Tw.UPLOAD_FILE.WARNING_A03, 'point': 'bold' }
+        {'txt': Tw.UPLOAD_FILE.WARNING_A01, 'point': ''},
+        {'txt': Tw.UPLOAD_FILE.WARNING_A03, 'point': ''}
       ]
-
     }, $.proxy(this._openUploadFile, this), $.proxy(this._reset, this), 'upload');
-
   },
   /**
    * @function
@@ -94,18 +97,18 @@ Tw.MytJoinSuspendUpload.prototype = {
 
     this.$btUpload.attr('disabled', true);
 
-    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
       this.$inputFile.css('display', 'none');
       this._nativeUploaded = [this._fileCount];
     }
   },
 
   _openCustomFileChooser: function ($target) {
-    if ( this._isLowerVersionAndroid() ) {
+    if (this._isLowerVersionAndroid()) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
         dest: 'suspend',
         acceptExt: this._acceptExt,
-        limitSize: Tw.MAX_FILE_SIZE.toString()
+        limitSize: String(Tw.MAX_UPLOAD_FILE_SIZE)
       }, $.proxy(this._nativeFileChooser, this, $target));
     }
   },
@@ -117,19 +120,19 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @param response
    */
   _nativeFileChooser: function ($target, response) {
-    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
+    if (response.resultCode === Tw.NTV_CODE.CODE_00) {
       var params = response.params;
       var fileInfo = params.fileData.result[0];
 
-      if ( fileInfo ) {
+      if (fileInfo) {
         var $elFileName = $target.find('input.fileview');
         $elFileName.val(fileInfo.originalName);
       }
       this._nativeUploaded[$target.data('index')] = fileInfo;
       this._setFileButton($target, false);
-    } else if ( response.resultCode === Tw.NTV_CODE.CODE_01 ) {
+    } else if (response.resultCode === Tw.NTV_CODE.CODE_01) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A01);
-    } else if ( response.resultCode === Tw.NTV_CODE.CODE_02 ) {
+    } else if (response.resultCode === Tw.NTV_CODE.CODE_02) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
     }
   },
@@ -151,12 +154,14 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @param event
    */
   _onChangeFile: function (event) {
-    var currentFile = event.currentTarget;
-    var file = currentFile.files;
-    if ( file.length !== 0 ) {
-      var $inputBox = $(currentFile).parents('.inputbox');
-      if ( !this._validateFile(file[0]) ) {
-        $(currentFile).val('');
+    var input = event.target;
+    var files = input.files;
+    if (files.length !== 0) {
+      var $input = $(input);
+      var $inputBox = $input.closest('.inputbox');
+      var file = files[0];
+      if (!this._validateFile(file)) {
+        $input.val('');
         this._setFileButton($inputBox, true);
       } else {
         this._setFileButton($inputBox, false);
@@ -170,12 +175,12 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @returns {boolean}
    */
   _validateFile: function (file) {
-    if ( file.size > Tw.MAX_FILE_SIZE ) {
+    if (file.size > Tw.MAX_UPLOAD_FILE_SIZE) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A01);
       return false;
     }
     // file suffix validation.
-    if ( !/(.gif|.bmp|.jpg|.jpeg|.doc|.pdf|.hwp|.docx|.png)$/ig.test(file.name) ) {
+    if (!/\.(bmp|gif|jpg|jpeg|png)$/ig.test(file.name)) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
       return false;
     }
@@ -186,18 +191,28 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @desc Event listener for the button click on #fe-upload-ok(파일업로드)
    */
   _onClickOk: function () {
-    if ( this._callback ) {
-
-      if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if (this._callback) {
+      if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
         this._callback(this._nativeUploaded, true);
       } else {
-        var uploadFile = [];
+        /*
+        var files = [];
         this.$inputFile.each(function () {
           if ( this.files.length !== 0 ) {
-            uploadFile.push(this.files[0]);
+            files.push(this.files[0]);
           }
         });
-        this._callback(uploadFile);
+        */
+        // NOTE: 채워진 File 값만 추려서 보냄 (실제 추릴 필요 없음. this._fileCount를 만족해야 첨부가능하기 때문)
+        /*
+        var files = _.filter(_.map(this._fileInfos, function (fileInfo) {
+          return fileInfo && fileInfo.oldFile;
+        }), function (fileInfo) { return !!fileInfo; });
+        */
+        var files = _.map(this._fileInfos, function (fileInfo) {
+          return fileInfo && fileInfo.oldFile;
+        });
+        this._callback(files);
       }
     }
     this._popupService.close();
@@ -211,12 +226,11 @@ Tw.MytJoinSuspendUpload.prototype = {
   _onClickFileButton: function (e) {
     var $btFile = $(e.target);
     var $inputBox = $btFile.parents('.inputbox');
-    if ( $inputBox.find('input.file').attr('disabled') ) {// 파일삭제
+    if ($inputBox.find('input.file').attr('disabled')) {// 파일삭제
       // 파일삭제시 input 처리
       this._setFileButton($inputBox, true);
-
     } else {
-      if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
         this._openCustomFileChooser($inputBox);
       }
     }
@@ -238,15 +252,20 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @private
    */
   _setFileButton: function ($inputBox, addable) {
-    if ( addable ) {
+    var index = $inputBox.attr('data-index');
+    var $inputFile = $inputBox.find('input.file');
+    var $buttonFile = $inputBox.find('.fe-file-button');
+    if (addable) {
+      delete this._fileInfos[index].oldFile;
       $inputBox.find('input.fileview').val('');
-      $inputBox.find('input.file').prop('files', null);
-      $inputBox.find('input.file').val('');
-      $inputBox.find('input.file').removeAttr('disabled').css('pointer-events', 'all');
-      $inputBox.find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_ADD);
+      $inputFile.prop('files', null);
+      $inputFile.val('');
+      $inputFile.removeAttr('disabled').css('pointer-events', 'all');
+      $buttonFile.text(Tw.UPLOAD_FILE.BUTTON_ADD);
     } else {
-      $inputBox.find('input.file').attr('disabled', '').css('pointer-events', 'none');
-      $inputBox.find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_DELETE);
+      this._fileInfos[index].oldFile = $inputFile[0].files[0];
+      $inputFile.attr('disabled', '').css('pointer-events', 'none');
+      $buttonFile.text(Tw.UPLOAD_FILE.BUTTON_DELETE);
     }
     this._checkEnableConfirm();
   },
@@ -255,8 +274,6 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @desc 완료 조건 체크(파일 업로드 갯수 체크)
    */
   _checkEnableConfirm: function () {
-    var self = this;
-    var disable = this.$inputFile.filter('[disabled]').length === this._fileCount ? false : true;
-    self.$btUpload.attr('disabled', disable);
+    this.$btUpload.attr('disabled', this.$inputFile.filter('[disabled]').length !== this._fileCount);
   }
 };

@@ -5,7 +5,13 @@
  * @since 2018.10.08
  * Summary: 인터넷/집전화/IPTV 신청현황 목록 조회
  */
-Tw.MyTJoinWireHistory = function (rootEl, strInitData) {
+/**
+ *
+ * @param {jQuery} rootEl
+ * @param {Array} data
+ * @constructor
+ */
+Tw.MyTJoinWireHistory = function (rootEl, data) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -13,17 +19,49 @@ Tw.MyTJoinWireHistory = function (rootEl, strInitData) {
 
   this._bindEvent();
   this._registerHelper();
-  this._initListUi(JSON.parse(strInitData));
+  this._initListUi(data);
 };
 
 Tw.MyTJoinWireHistory.prototype = {
 
+  /* jshint -W116 */
+  _compareOperators: {
+    '==': function (l, r) {
+      return l == r;
+    },
+    '===': function (l, r) {
+      return l === r;
+    },
+    '!=': function (l, r) {
+      return l != r;
+    },
+    '!==': function (l, r) {
+      return l !== r;
+    },
+    '<': function (l, r) {
+      return l < r;
+    },
+    '>': function (l, r) {
+      return l > r;
+    },
+    '<=': function (l, r) {
+      return l <= r;
+    },
+    '>=': function (l, r) {
+      return l >= r;
+    },
+    'typeof': function (l, r) {
+      return typeof l == r;
+    }
+  },
+  /* jshint +W116 */
+
   // API TYPEs
-  _ATYPE_167 : '167',  // 신규가입상세내역
-  _ATYPE_162 : '162',  // 설치장소변경상세
-  _ATYPE_168 : '168',  // 가입상품변경 상세내역
-  _ATYPE_143 : '143',  // 유선 약정기간 상세내역
-  _ATYPE_153 : '153',  // 요금상품변경 상세내역
+  _ATYPE_143: '143',  // 유선 약정기간 상세내역
+  _ATYPE_153: '153',  // 요금상품변경 상세내역
+  _ATYPE_162: '162',  // 설치장소변경상세
+  _ATYPE_167: '167',  // 신규가입상세내역
+  _ATYPE_168: '168',  // 가입상품변경 상세내역
 
   /**
    * 현재 페이지 번호
@@ -33,7 +71,7 @@ Tw.MyTJoinWireHistory.prototype = {
   /**
    * 현재 페이지 번호
    */
-  _nowPageNum: 1,
+  _curPageNum: 0,
 
   /**
    * 목록 전체 count
@@ -58,81 +96,110 @@ Tw.MyTJoinWireHistory.prototype = {
   /**
    * templates
    */
-  _listContBox : null,
-  _listMoreBtn : null,
-  _listItemTmpltMap : {},
-  _listYearDivTmplt : null,
+  _tmplListBox: null,
+  // _listMoreBtn: null,
+  _tmplListItem: {},
+  _tmplYearDiv: null,
 
   /**
    * 초기화 데이터 ui로 변경
+   * @param {Array} data
    * @private
    */
-  _initListUi: function(initData) {
-    if(!initData || initData.length === 0){
-      this._listNoData = $('#no-data-tmplt').html();
-      $('#cont-boxes').html(this._listNoData);
+  _initListUi: function (data) {
+    if (!data || data.length === 0) {
+      $('#cont-boxes').html($.trim($('#no-data-tmplt').html()));
       return;
     }
 
+    this._$contBoxes = $('#cont-boxes');
     // init templates
-    this._listContBox = $('#list-cont-box-tmplt').html();
-    this._listMoreBtn = $('#bt-more-tmplt').html();
-    this._listItemTmpltMap[this._ATYPE_167] = Handlebars.compile($('#list-cont-item-tmplt-'+this._ATYPE_167).html());
-    this._listItemTmpltMap[this._ATYPE_162] = Handlebars.compile($('#list-cont-item-tmplt-'+this._ATYPE_162).html());
-    this._listItemTmpltMap[this._ATYPE_168] = Handlebars.compile($('#list-cont-item-tmplt-'+this._ATYPE_168).html());
-    this._listItemTmpltMap[this._ATYPE_143] = Handlebars.compile($('#list-cont-item-tmplt-'+this._ATYPE_143).html());
-    this._listItemTmpltMap[this._ATYPE_153] = Handlebars.compile($('#list-cont-item-tmplt-'+this._ATYPE_153).html());
-    this._listYearDivTmplt = Handlebars.compile($('#list-year-div-tmplt').html());
+    this._tmplListBox = $.trim($('#list-cont-box-tmplt').html());
+    // this._listMoreBtn = $.trim($('#bt-more-tmplt').html());
+    this._tmplListItem[this._ATYPE_143] = Handlebars.compile($.trim($('#list-cont-item-tmplt-' + this._ATYPE_143).html()));
+    this._tmplListItem[this._ATYPE_153] = Handlebars.compile($.trim($('#list-cont-item-tmplt-' + this._ATYPE_153).html()));
+    this._tmplListItem[this._ATYPE_162] = Handlebars.compile($.trim($('#list-cont-item-tmplt-' + this._ATYPE_162).html()));
+    this._tmplListItem[this._ATYPE_167] = Handlebars.compile($.trim($('#list-cont-item-tmplt-' + this._ATYPE_167).html()));
+    this._tmplListItem[this._ATYPE_168] = Handlebars.compile($.trim($('#list-cont-item-tmplt-' + this._ATYPE_168).html()));
+    this._tmplYearDiv = Handlebars.compile($.trim($('#list-year-div-tmplt').html()));
 
-    this._list = initData;
+    this._list = data;
     this._listTotCnt = this._list.length;
     this._insertDateFieldAndSort();
 
     // 페이징 목록 만들기, 날짜 입력
-    var page = 0;
-    var pageSize = 20;
-    for(var i = 0; i < this._list.length; i++){
-
-      if(i % pageSize === 0){
-        page++;
-      }
-      if(!this._pagingList[page]){
-        this._pagingList[page] = [];
-      }
-      this._list[i].dataNo = i;
-      this._pagingList[page].push(this._list[i]);
-
+    this._pagingList = [];
+    var countItem = this._list.length;
+    var indexPage = 0;
+    var pageSize = 15;
+    // 역순으로 넣어야 한다.
+    var indexItem = 0;
+    var iterator = $.proxy(function (item, index) {
+      item.dataNo = indexItem + index;
       // 날짜 및 데이터 변경
-      if ( this._list[i].atype === '167' || this._list[i].atype === '168' ) {
-        this._list[i].svcPrefrDtm = Tw.DateHelper.getCurrentDateTime(this._list[i].svcPrefrDtm);
+      if (item.atype === this._ATYPE_167 || item.atype === this._ATYPE_168) {
+        item.svcPrefrDtm = Tw.DateHelper.getCurrentDateTime(item.svcPrefrDtm);
+      } else if (item.atype === this._ATYPE_162) {
+        item.onOffName = Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE[item.onOff];
+        item.setPrefrDt = Tw.DateHelper.getShortDate(item.setPrefrDt);
       }
-      if ( this._list[i].atype === '162') {
-        this._list[i].onOffName = Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE[this._list[i].onOff];
-        this._list[i].setPrefrDt = Tw.DateHelper.getShortDate(this._list[i].setPrefrDt);
-      }
+      return item;
+    }, this);
+    while (indexItem < countItem) {
+      this._pagingList[indexPage] = _.map(this._list.slice(indexItem, indexItem + pageSize), iterator);
+      indexPage += 1;
+      indexItem += pageSize;
     }
-    this._totPageNum = page;
+    /*
+    for (var i = 0; i < this._list.length; i += 1) {
+      var item = this._list[i];
+      var paging;
+      // 항목이 20개가 한 페이지
+      // if (j % pageSize === 0) {
+      if (!paging) {
+        paging = [];
+      } else {
+        if (paging.length === pageSize) {
+          this._pagingList.push(paging);
+          paging = [];
+        }
+      }
+      paging.push(item);
+      item.dataNo = i;
+      // 날짜 및 데이터 변경
+      if (item.atype === this._ATYPE_167 || item.atype === this._ATYPE_168) {
+        item.svcPrefrDtm = Tw.DateHelper.getCurrentDateTime(item.svcPrefrDtm);
+      } else if (item.atype === this._ATYPE_162) {
+        item.onOffName = Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE[item.onOff];
+        item.setPrefrDt = Tw.DateHelper.getShortDate(item.setPrefrDt);
+      }
+      this._pagingList[page] = paging;
+    }
+    */
+    this._totPageNum = indexPage;
 
-    this._printList(this._pagingList[1]);
+    this._printList(this._pagingList[0]);
   },
 
   /**
    * 날짜필드를 통일하고, 전체 list를 날짜기준으로 sort
    * @private
    */
-  _insertDateFieldAndSort: function(){
-    for(var i = 0; i < this._list.length; i++){
-      if(this._list[i].atype === this._ATYPE_162){
-        this._list[i].dt = this._list[i].occrDt;
+  _insertDateFieldAndSort: function () {
+    _.each(this._list, function (item) {
+      if (item.atype === this._ATYPE_162) {
+        item.dt = item.occrDt;
       } else {
-        this._list[i].dt = this._list[i].rcvDt;
+        item.dt = item.rcvDt;
       }
-    }
-    this._list.sort(function(a,b){
-      if (a.dt.substr(0,8) > b.dt.substr(0,8)) {
+    }, this);
+    this._list.sort(function (a, b) {
+      var dtA = a.dt.substr(0, 8);
+      var dtB = b.dt.substr(0, 8);
+      if (dtA > dtB) {
         return -1;
       }
-      if (a.dt.substr(0,8) < b.dt.substr(0,8)) {
+      if (dtA < dtB) {
         return 1;
       }
       return 0;
@@ -144,12 +211,10 @@ Tw.MyTJoinWireHistory.prototype = {
    * @private
    */
   _bindEvent: function () {
-
     // 목록 클릭시 - 화면이동
-    this.$container.on('click', '.history-list li[data-no]', $.proxy(this._showListDetail, this));
-
+    this.$container.on('click', '.history-list li', $.proxy(this._showListDetail, this));
     // 더보기 버튼 클릭시
-    this.$container.on('click', '.bt-more', $.proxy(this._nextData, this));
+    this.$container.on('click', '.btn-more', $.proxy(this._onBtnMoreClicked, this));
   },
 
   /**
@@ -157,61 +222,91 @@ Tw.MyTJoinWireHistory.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('noYearDate', Tw.DateHelper.getShortDate);
+    Handlebars.registerHelper('convertShortDate', Tw.DateHelper.getShortDate);
+    Handlebars.registerHelper('ifv', (function () {
+      var operators = Tw.MyTJoinWireHistory.prototype._compareOperators;
+      return function (lvalue, operator, rvalue, options) {
+        var result;
+
+        if (arguments.length < 3) {
+          throw new Error('Handlerbars Helper "ifv" needs 2 parameters');
+        }
+
+        if (options === undefined) {
+          options = rvalue;
+          rvalue = operator;
+          operator = '===';
+        }
+
+        if (!operators[operator]) {
+          throw new Error('Handlerbars Helper "ifv" doesn\'t know the operator ' + operator);
+        }
+
+        result = operators[operator](lvalue, rvalue);
+
+        if (result) {
+          return options.fn(this);
+        }
+        return options.inverse(this);
+      };
+    })());
   },
 
   /**
    * 목록 출력
+   * @pram {Array} list
    * @private
    */
   _printList: function (list) {
-    if( !list || list.length === 0 ){
+    if (!list || list.length === 0) {
       this._removeMoreBtn();
-      //this._showOrHideMoreBtn();
       return;
     }
-    var $contBoxes = $('#cont-boxes');
-    var $lastBox = $('.history-list:last ul:eq(0)', $contBoxes);
+    var $contBoxes = this._$contBoxes;
+    // var $lastBox = $('.history-list:last ul:eq(0)', $contBoxes);
+    // var $lastBox = $('.history-list').last().find('ul').eq(0), $contBoxes);
+    var $lastBox = $contBoxes.find('.history-list').last().find('ul');
 
-    for( var i = 0; i < list.length; i++ ){
-
-      if( this._lastYear !== list[i].dt.substr(0,4) ){
+    for (var i = 0, count = list.length; i < count; i += 1) {
+      var item = list[i];
+      var yearLast = item.dt.substr(0, 4);
+      if (this._lastYear !== yearLast) {
         // 연도 출력
-        this._lastYear = list[i].dt.substr(0,4);
-        // $contBoxes.append(this._listYearDivTmplt({year: this._lastYear}));
-        $contBoxes.append(this._listContBox);
+        this._lastYear = yearLast;
+        // $contBoxes.append(this._tmplYearDiv({year: this._lastYear}));
+        $contBoxes.append(this._tmplListBox);
         $lastBox = $('.history-list:last ul:eq(0)', $contBoxes);
       }
-
-      $lastBox.append(this._listItemTmpltMap[list[i].atype]( list[i] ));
+      $lastBox.append(this._tmplListItem[item.atype](item));
     }
 
     // 당년도인 경우 숨김
-    var nowYear = new Date().getFullYear();
-    $('.data-select-wrap').each(function(){
-      if($(this).text().trim() === String(nowYear)){
-        $(this).hide().attr('aria-hidden', true);
+    var yearNow = String(new Date().getFullYear());
+    $('.data-select-wrap').each(function () {
+      var $this = $(this);
+      if ($this.text().trim() === yearNow) {
+        $this.hide().attr('aria-hidden', true);
       }
     });
 
-    this._addMoreBtn();
-    //this._showOrHideMoreBtn();
+    if (this._curPageNum + 1 < this._totPageNum) {
+      this._addMoreBtn();
+    }
 
     // 동적 list 추가시 tip버튼 이벤트 bind
     Tw.Tooltip.separateInit();
   },
 
-
   /**
    * 다음 데이터 호출
    * @private
    */
-  _nextData: function () {
+  _onBtnMoreClicked: function () {
     this._removeMoreBtn();
     Tw.CommonHelper.startLoading('.container', 'grey');
 
-    this._nowPageNum += 1;
-    this._printList(this._pagingList[this._nowPageNum]);
+    this._curPageNum += 1;
+    this._printList(this._pagingList[this._curPageNum]);
 
     Tw.CommonHelper.endLoading('.container');
   },
@@ -220,46 +315,50 @@ Tw.MyTJoinWireHistory.prototype = {
    * 더보기버튼 삭제
    * @private
    */
-  _removeMoreBtn: function(){
-    $('.bt-more').remove();
+  _removeMoreBtn: function () {
+    $('.btn-more').remove();
   },
+
   /**
    * 더보기버튼 추가
    * @private
    */
-  _addMoreBtn: function(){
-    if( this._nowPageNum < this._totPageNum ) {
-      $('.cont-box').last().append(this._listMoreBtn);
-    }
+  _addMoreBtn: function () {
+    // $('.cont-box').last().append(this._listMoreBtn);
+    this._$contBoxes.append($.trim($('#bt-more-tmplt').html()));
   },
-
 
   /**
    * 상세화면으로 이동
+   * @param {Object} event
    * @private
    */
-  _showListDetail: function(event) {
+  _showListDetail: function (event) {
     // tip 버튼, tip label 클릭시 리턴
-    if($('.fe-tip').index(event.target) !== -1 || $('.fe-tip').parent().index(event.target) !== -1 ){
+    var $tip = $('.fe-tip');
+    if ($tip.index(event.target) !== -1 || $tip.parent().index(event.target) !== -1) {
       return;
     }
 
-    var num = event.currentTarget.getAttribute('data-no');
-    var item = null;
-    for(var i = 0; i < this._list.length; i++){
-      if(this._list[i].dataNo === parseInt(num, 10)){
-        item = this._list[i];
+    var no = parseInt($(event.currentTarget).data('no'), 10);
+    /*
+    var itemDetail = null;
+
+    for (var i = 0; i < this._list.length; i++) {
+      if (this._list[i].dataNo === no) {
+        itemDetail = this._list[i];
         break;
       }
     }
-
-    var param = {
-      key : item.detailkey,
-      atype : item.atype,
-      dt : item.dt
-    };
-    this._historyService.goLoad('/myt-join/submain/wire/historydetail?'+$.param(param));
-
+    */
+    var itemDetail = _.find(this._list, function (item) {
+      return item.dataNo === no;
+    });
+    this._historyService.goLoad('/myt-join/submain/wire/historydetail?' + $.param({
+      key: itemDetail.detailkey,
+      atype: itemDetail.atype,
+      dt: itemDetail.dt
+    }));
     // this._historyService.goLoad('/myt-join/submain/wire/historydetail?data='+encodeURI(JSON.stringify(item)));
   }
 };

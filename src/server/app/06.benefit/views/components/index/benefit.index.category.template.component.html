@@ -1,0 +1,14 @@
+<!--
+* @file benefit.index.category.template.component.html
+* @author 이전일 (skt.P069509@partner.sk.com)
+* @since 2019.12.04
+-->
+<script id="benefitCategoryList" type="text/x-handlebars-template">
+    {{#list}}
+    <li>
+        <button type="button" aria-selected="false" class="unit" data-category="{{prodFltId}}">
+            #{{prodFltNm}}
+        </button>
+    </li>
+    {{/list}}
+</script>

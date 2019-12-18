@@ -100,7 +100,7 @@ class RedisService {
       cookie: { maxAge: 60 * 60 * 1000, httpOnly: false }, // 1hours
       secret: 'sktechx',
       saveUninitialized: false, // don't create session until something stored,
-      resave: true, // don't save session if unmodified
+      resave: false, // don't save session if unmodified
       rolling: true,
     });
     return this.middleWare;

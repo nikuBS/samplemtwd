@@ -20,11 +20,11 @@ class MyTJoinWireHistory extends TwViewController {
   }
 
   // BFF API TYPEs
-  static _ATYPE_167: String = '167';  // 신규가입상세내역
-  static _ATYPE_162: String = '162';  // 설치장소변경상세
-  static _ATYPE_168: String = '168';  // 가입상품변경 상세내역
   static _ATYPE_143: String = '143';  // 유선 약정기간 상세내역
   static _ATYPE_153: String = '153';  // 요금상품변경 상세내역
+  static _ATYPE_162: String = '162';  // 설치장소변경상세
+  static _ATYPE_167: String = '167';  // 신규가입상세내역
+  static _ATYPE_168: String = '168';  // 가입상품변경 상세내역
 
   private _list: Array<Object> = [];
 
@@ -317,7 +317,7 @@ class MyTJoinWireHistory extends TwViewController {
       if ( Array.isArray(list) ) {
 
         list = list.reduce((prev, cur) => {
-          // 빈값을 제외하고 
+          // 빈값을 제외하고
           if (!FormatHelper.isEmpty(cur) && Object.keys(cur).length !== 0) {
             // 객체에 추가해 리턴
             prev.push({

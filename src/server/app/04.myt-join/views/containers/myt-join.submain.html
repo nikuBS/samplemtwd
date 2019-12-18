@@ -2,113 +2,109 @@
 * @file myt-join.submain.html
 * @author Kim InHwan (skt.p132150@partner.sk.com)
 * @since 2018.10.05
-%>
-
-<%- include('../components/start.component.html', { pageInfo: data.pageInfo }); %>
+_%>
+<%- include('../components/start.component.html', { pageInfo: data.pageInfo }); _%>
 <body>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
-<div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
-    <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 가입정보', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); %>
-    <!--// #header -->
-
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-        <div class="container" data-id="submain-container">
-            <hr class="cont-sp type1" aria-hidden="true">
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="my-subscription-wrap">
-                    <div class="my-device-type">
-                        <span class="ico-wrap">
-                            <i class="icon-<%= data.currLineIconClass %>-48">
-                                <span class="blind"></span>
-                            </i>
-                        </span>
-                        <div class="user-info">
-                            <span class="username"><span class="blind">가입자명</span><%= data.svcInfo.mbrNm %></span>
-                            <span class="device"><span class="blind">닉네임 / 디바이스 펜네임</span>
-                                <% if(data.svcInfo.nickNm) { %>
-                                <%= data.svcInfo.nickNm %>
-                                <% } else { %>
-                                <%= data.svcInfo.eqpMdlNm %>
-                                <% } %>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap" data-menuId="<%- data.pageInfo.menuId %>">
+        <%- include('../components/header.component.html', { title: '나의 가입정보', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); _%>
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container" data-id="submain-container">
+                <!-- OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+                <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3-B13-29", multiple : "CMMA_A3-B13-28"} }); %>
+                <!-- <hr class="cont-sp type1" aria-hidden="true"> -->
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="my-subscription-wrap">
+                        <!-- OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+                        <!-- <div class="my-device-type">
+                            <span class="ico-wrap">
+                                <i class="icon-<%- data.currLineIconClass %>-48">
+                                    <span class="blind"></span>
+                                </i>
                             </span>
-                            <% if (data.type === 0 || data.type === 1) { %>
-                            <button type="button" class="btn-edit" data-id="change-nick" title="닉네임 등록 페이지 이동">
-                                <i class="icon-name-edit-32"><span class="blind">name edit</span></i>
-                                <span class="blind">닉네임 등록 페이지 이동</span>
-                            </button>
-                            <% } %>
+                            <div class="user-info">
+                                <span class="username"><span class="blind">가입자명</span><%= data.svcInfo.mbrNm %></span>
+                                <span class="device"><span class="blind">닉네임 / 디바이스 펜네임</span><%= data.svcInfo.nickNm || data.svcInfo.eqpMdlNm _%></span>
+                                <%_ if (data.type === 0 || data.type === 1) { _%>
+                                <button type="button" class="btn-edit" data-id="change-nick" title="닉네임 등록 페이지 이동">
+                                    <i class="icon-name-edit-32"><span class="blind">name edit</span></i>
+                                    <span class="blind">닉네임 등록 페이지 이동</span>
+                                </button>
+                                <%_ } _%>
+                            </div>
+                            <div class="p-num"><span class="blind">회선정보</span><%- (['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) > -1) ? data.svcInfo.addr : data.svcInfo.svcNum %></div>
+                        </div> -->
+                        <!-- // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+                        <div class="basic-list tod-basic-list">
+                            <ul>
+                                <%- include('../components/submain/myt-join.submain.more-info.html', data) _%>
+                            </ul>
                         </div>
-                        <div class="p-num"><span class="blind">회선정보</span>
-                            <%  if ( ['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) > -1 ) { %>
-                            <%= data.svcInfo.addr %>
-                            <% } else { %>
-                            <%= data.svcInfo.svcNum %>
-                            <% } %>
-                        </div>
-                    </div>
-
-                    <div class="basic-list mt20">
-                        <ul>
-                            <%- include('../components/submain/myt-join.submain.more-info.html', data) %>
-                        </ul>
                     </div>
                 </div>
-            </div>
-            <!--// .cont-box -->
-            <%- include('../components/submain/myt-join.submain.prod-info.html', data) %>
-            <!--포켓파이 회선 M3 추가 OP002-1517-->
-            <% if (data.type === 0 || data.svcInfo.svcAttrCd === 'M3') { %>
-                <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
-            <% } else if (data.type === 2) { %>
-                <%- include('../components/submain/myt-join.submain.wire-more-info.html', data) %>
-            <% } %>
+                <!--// .cont-box -->
 
-            <hr class="cont-sp type1" aria-hidden="true" data-id="banners-empty" />
-            <div class="cont-box nogaps noborder" data-id="banners">
-                <div class="main-slide-banner slide-pagingtype pg-rtop">
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box">
-                            <div class="slider-box">
-                                <ul class="slider" data-id="banner-list" data-location="M"></ul>
+                <%- include('../components/submain/myt-join.submain.prod-info.html', data) _%>
+
+                <!--포켓파이 회선 M3 추가 OP002-1517-->
+                <%_
+                if (data.type === 0 || data.svcInfo.svcAttrCd === 'M3') {
+                    if (data.myPausedState || data.isOldNumber || data.isNotChangeNumber) {
+                _%>
+                <%- include('../components/submain/myt-join.submain.pause-state.html', data) _%>
+                <%_
+                    }
+                } else if (data.type === 2) {
+                _%>
+                <%- include('../components/submain/myt-join.submain.wire-more-info.html', data) _%>
+                <%_ } _%>
+
+                <hr class="cont-sp type1" aria-hidden="true" data-id="banners-empty" />
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder" data-id="banners">
+                    <div class="main-slide-banner slide-pagingtype pg-rtop">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box">
+                                <div class="slider-box">
+                                    <ul class="slider" data-id="banner-list" data-location="M"></ul>
+                                </div>
                             </div>
                         </div>
+                        <!--// .widget -->
                     </div>
-                    <!--// .widget -->
                 </div>
-            </div>
-            <!-- //.cont-box -->
+                <!-- //.cont-box -->
 
-            <% if (data.type !== 1) { %>
-                <% if (data.otherLines.length > 0) { %>
+                <%_
+                if (data.type !== 1) {
+                    if (data.otherLines.length > 0) {
+                _%>
                 <hr class="cont-sp type1" aria-hidden="true"/>
+
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm" data-id="other-lines">
                     <div class="ti-caption-type01 pb0">
                         <h2 class="tit">다른 회선 정보
-                            <button type="button" class="btn-tip" id="TC000004" page-id="<%= data.pageInfo.menuId %>"
-                                    title="다른 회선 정보" aria-haspopup="true">
-                                <i class="icon-badge-tip"><span class="blind">tip</span></i>
-                            </button>
+                            <button type="button" class="btn-tip" aria-haspopup="true" id="TC000004" page-id="<%- data.pageInfo.menuId %>" title="다른 회선 정보"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                         </h2>
                     </div>
                     <ul class="my-line-info">
-                        <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
-                        <% for (var i=0; i < length; i++) { %>
-                        <%- include('../components/submain/myt-join.submain.other-line.html', { data: data.otherLines[i] }); %>
-                        <% } %>
+                        <%_ for (var i = 0, length = Math.min(data.otherLines.length, 20); i < length; i += 1) { _%>
+                        <%- include('../components/submain/myt-join.submain.other-line.html', { data: data.otherLines[i] }); _%>
+                        <%_ } _%>
                     </ul>
-                    <% if (length === 20) { %>
+                    <%_ if (data.otherLines.length >= 20) { _%>
                     <!-- 다른 회선이 총 20개 이상인 경우 -->
                     <div class="btn-more">
                         <button type="button">더보기</button>
@@ -116,126 +112,125 @@
                     <% } %>
                 </div>
                 <!-- .cont-box -->
-                <% } %>
-            <% } %>
+                <%_
+                    }
+                }
+                _%>
 
-            <!-- .cont-box -->
-            <div class="cont-box noborder bgnone">
-                <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
-                <%
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <%_
                     const eid = data.xtEid;
                     <!--PPS 회선이 아닌경우는 현재 영역 비노출-->
-                    if(data.type !== 1){
-                %>
-                <ul class="pg-link-list" data-id="other-pages">
-                    <!--유선(인터넷,집전화,IPTV)-->
-                    <% if (data.type === 2){ %>
-                    <li>
-                        <a href="/myt-join/submain/wire/discountrefund" data-xt_eid="<%=eid.discountrefund%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-my-40"></i>나의 가입정보 &gt; 할인 반환금 조회
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/myt-join/submain/wire/gifts" data-xt_eid="<%=eid.gifts%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-my-40"></i>나의 가입정보 &gt; 사은품 조회
-                        </a>
-                    </li>
-                    <%}%>
-                    <!--PPS 제외 인 경우-->
-                    <% if ([0, 2, 3].indexOf(data.type) > -1) { %>
-                    <li>
-                        <a href="/myt-fare/billguide/guide" data-xt_eid="<%=eid.guide%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 > 요금안내서
-                        </a>
-                    </li>
-                        <!--휴대폰/포켓파이/티로그인 인 경우-->
-                        <% if ([0, 3].indexOf(data.type) > -1) { %>
+                    if (data.type !== 1) {
+                    _%>
+                    <ul class="pg-link-list" data-id="other-pages">
+                        <!--유선(인터넷,집전화,IPTV)-->
+                        <%_ if (data.type === 2) { _%>
                         <li>
-                            <a href="/myt-data/hotdata" data-xt_eid="<%=eid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">
-                                <i class="icon-history-40"><span class="blind"></span></i>나의 데이터/통화 > 실시간 잔여량
+                            <a href="/myt-join/submain/wire/discountrefund" data-xt_eid="<%= eid.discountrefund %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-my-40"></i>나의 가입정보 &gt; 할인 반환금 조회
                             </a>
                         </li>
                         <li>
-                            <a href="/benefit/my" data-xt_eid="<%=eid.myBenefit%>" data-xt_csid="NO" data-xt_action="BC">
-                                <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 나의 혜택/할인
+                            <a href="/myt-join/submain/wire/gifts" data-xt_eid="<%= eid.gifts %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-my-40"></i>나의 가입정보 &gt; 사은품 조회
                             </a>
                         </li>
                         <%}%>
+                        <!--PPS 제외 인 경우-->
+                        <%_ if (data.type === 0 || data.type === 2 || data.type === 3) { _%>
                         <li>
-                            <a href="/benefit/submain/combinations" data-xt_eid="<%=eid.combiDiscount%>" data-xt_csid="NO" data-xt_action="BC">
+                            <a href="/myt-fare/billguide/guide" data-xt_eid="<%= eid.guide %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 &gt; 요금안내서
+                            </a>
+                        </li>
+                        <!--휴대폰/포켓파이/티로그인 인 경우-->
+                            <%_ if (data.type === 0 || data.type === 3) { _%>
+                        <li>
+                            <a href="/myt-data/hotdata" data-xt_eid="<%= eid.hotdata %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-history-40"><span class="blind"></span></i>나의 데이터/통화 &gt; 실시간 잔여량
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/benefit/my" data-xt_eid="<%= eid.myBenefit %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 나의 혜택/할인
+                            </a>
+                        </li>
+                            <%_ } _%>
+                        <li>
+                            <a href="/benefit/submain/combinations" data-xt_eid="<%= eid.combiDiscount %>" data-xt_csid="NO" data-xt_action="BC">
                                 <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 결합할인
                             </a>
                         </li>
                         <!--휴대폰/포켓파이/티로그인 인 경우-->
-                        <% if ([0, 3].indexOf(data.type) > -1) { %>
+                            <%_ if (data.type === 0 || data.type === 3) { _%>
                         <li>
-                            <a href="/myt-join/myplan/alarm" data-xt_eid="<%=eid.alarm%>" data-xt_csid="NO" data-xt_action="BC">
+                            <a href="/myt-join/myplan/alarm" data-xt_eid="<%= eid.alarm %>" data-xt_csid="NO" data-xt_action="BC">
                                 <i class="icon-my-40"><span class="blind"></span></i>요금제 변경 가능일 알림
                             </a>
                         </li>
-                        <%}%>
-                    <%}%>
-                    <!--유선(인터넷,집전화,IPTV)-->
-                    <%if (data.type === 2){%>
-                    <li>
-                        <a href="/product/wireplan/service-area" data-xt_eid="<%=eid.serviceArea%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-internet-40"></i>서비스 가능지역 조회
-                        </a>
-                    </li>
-                    <%}%>
-                </ul>
-                <%}%>
-                <ul class="pg-link-list" data-id="other-pages">
-                    <li class="tod-linktype2">
-                        <a href="/common/member/manage" data-xt_eid="<%=eid.manage%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-member-40"></i>회원정보 <span class="stxt">회원정보와 가입한 회선을 확인하세요</span>
-                        </a>
-                    </li>
-                    <!--휴대폰/포켓파이/티로그인 인 경우-->
-                    <% if (data.isApp && [0, 3].indexOf(data.type) > -1) { %>
-                    <li class="tod-linktype2">
-                        <button data-id="certify-popup" data-xt_eid="<%=eid.certificates%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-certify-40"></i>공인인증센터 <span class="stxt">공인인증서 등록/변경 하세요</span>
-                        </button>
-                    </li>
-                    <!--PPS-->
-                    <%} if (data.type === 1) { %>
-                    <li class="tod-linktype2">
-                        <a href="/benefit/submain" data-xt_eid="<%=eid.benefit%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-discount-40"></i>혜택/할인 <span class="stxt">고객님을 위한 다양한 혜택을 확인하세요</span>
-                        </a>
-                    </li>
-                    <li class="tod-linktype2">
-                        <a href="/product/mobileplan" data-xt_eid="<%=eid.mobileplan%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-price-plan-40"></i>요금제 <span class="stxt">내게 맞는 요금제로 변경하세요</span>
-                        </a>
-                    </li>
-                    <!--유선(인터넷,집전화,IPTV)-->
-                    <%} else if(data.type === 2) {%>
-                    <li class="tod-linktype2">
-                        <a href="/product/wireplan" data-xt_eid="<%=eid.wireplan%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-internet-40"></i>인터넷/전화/IPTV <span class="stxt">내게 맞는 결합상품을 확인하세요</span>
-                        </a>
-                    </li>
-                    <%}%>
-                </ul>
+                            <%_
+                            }
+                        }
+                        _%>
+                        <!--유선(인터넷,집전화,IPTV)-->
+                        <%_ if (data.type === 2) { _%>
+                        <li>
+                            <a href="/product/wireplan/service-area" data-xt_eid="<%= eid.serviceArea %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-internet-40"></i>서비스 가능지역 조회
+                            </a>
+                        </li>
+                        <%_ } _%>
+                    </ul>
+                    <%_ } _%>
+                    <ul class="pg-link-list" data-id="other-pages">
+                        <li class="tod-linktype2">
+                            <a href="/common/member/manage" data-xt_eid="<%= eid.manage %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-member-40"></i>회원정보 <span class="stxt">회원정보와 가입한 회선을 확인하세요</span>
+                            </a>
+                        </li>
+                        <!--휴대폰/포켓파이/티로그인 인 경우-->
+                        <%_ if (data.isApp && (data.type === 0 || data.type === 3)) { _%>
+                        <li class="tod-linktype2">
+                            <button data-id="certify-popup" data-xt_eid="<%= eid.certificates %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-certify-40"></i>공인인증센터 <span class="stxt">공인인증서 등록/변경 하세요</span>
+                            </button>
+                        </li>
+                        <!--PPS-->
+                        <%_ } else if (data.type === 1) { _%>
+                        <li class="tod-linktype2">
+                            <a href="/benefit/submain" data-xt_eid="<%= eid.benefit %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-discount-40"></i>혜택/할인 <span class="stxt">고객님을 위한 다양한 혜택을 확인하세요</span>
+                            </a>
+                        </li>
+                        <li class="tod-linktype2">
+                            <a href="/product/mobileplan" data-xt_eid="<%= eid.mobileplan %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-price-plan-40"></i>요금제 <span class="stxt">내게 맞는 요금제로 변경하세요</span>
+                            </a>
+                        </li>
+                        <!--유선(인터넷,집전화,IPTV)-->
+                        <%_ } else if (data.type === 2) { _%>
+                        <li class="tod-linktype2">
+                            <a href="/product/wireplan" data-xt_eid="<%= eid.wireplan %>" data-xt_csid="NO" data-xt_action="BC">
+                                <i class="icon-internet-40"></i>인터넷/전화/IPTV <span class="stxt">내게 맞는 결합상품을 확인하세요</span>
+                            </a>
+                        </li>
+                        <%_ } _%>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
             </div>
-            <!--// .cont-box -->
         </div>
+        <!--// #contents -->
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); _%>
     </div>
-    <!--// #contents -->
-    <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
-</div>
-<% include ../components/javascript.component.html %>
+    <% include ../components/javascript.component.html _%>
+    <script>
+        $(document).ready(function () {
+            new Tw.MyTJoinSubMain($('[data-id=submain-container]'), <%- JSON.stringify(data) %>);
+        });
+    </script>
 </body>
-<script>
-    // client 작업 중
-    var data = '<%- JSON.stringify(data) %>';
-    $(document).ready(function () {
-      new Tw.MyTJoinSubMain({
-        $element: $('[data-id=submain-container]'),
-        data: JSON.parse(data)
-      });
-    });
-</script>
-<% include ../components/end.component.html %>
+<% include ../components/end.component.html _%>
