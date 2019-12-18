@@ -484,7 +484,7 @@ Tw.CommonMemberLine.prototype = {
       $item.removeClass('fe-item-active').addClass('fe-item-inactive');
 
       // 현재 사용중인 회선 정보를 가져온 후 해지 요청된 회선을 제외하여 처리한다.
-      this._apiService.request(Tw.API_CMD.BFF_03_0030, {})
+      this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
         .done($.proxy(this._getExposedSvcNumListForRemove, this, svcMgmtNum, category, checkMsg, successMsg, $target))
         .fail($.proxy(this._failEditLineList, this));
     }
