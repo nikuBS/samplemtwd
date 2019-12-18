@@ -39,6 +39,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,cdn,accessQuery,step,paramObj,
   this._bpcpService = Tw.Bpcp;
   this._showMoreCnt = 0;
   this._hasMoreContents = true;
+  this._storedResult = null;
   this._init();
 };
 Tw.CommonSearchMore.prototype = new Tw.CommonSearch();
@@ -110,6 +111,7 @@ $.extend(Tw.CommonSearchMore.prototype,
     if(this._searchInfo.search.length<=0){
       return;
     }
+
     this._storedResult = this._searchInfo.search[0][this._category].data;
 
     
@@ -641,6 +643,10 @@ $.extend(Tw.CommonSearchMore.prototype,
         
         Tw.Logger.info('[_sortRate] (res.result.search[0])[0]', res.result.search[0][collection]);
         
+        _this._storedResult = res.result.search[0][collection].data;
+        _this._hasMoreContents = true;
+        $('.btn-more').show();
+
         var sortedRateResultArr = res.result.search[0][collection].data;
         // var sortedRateResultArr = (res.result.search[0])[0].data;
         // var sortedRateResultArr = res.result.search[0].rate.data;
@@ -662,6 +668,17 @@ $.extend(Tw.CommonSearchMore.prototype,
 
         this._sort = sort;
         Tw.Logger.info('this._sort : ', this._sort);
+
+        // 더보기 횟수 초기화
+        this._showMoreCnt = 0;
+
+        // // reqOptions.sortCd 에 변경사항 적용
+        // this._reqOptions.sortCd = this._reqOptions.sortCd.replace(
+        //   collection + '-' + this._reqOptions.sortCd.substring( this._reqOptions.sortCd.indexOf(collection + '-') + collection.length + 1, this._reqOptions.sortCd.indexOf(collection + '-') + collection.length + 2 ), 
+        //   collection + '-' + sort
+        // );
+
+
         
         // var selectedSubTab = _.find(this._sortCd[0].list, {
         //   subTabCd: sort
@@ -744,14 +761,30 @@ $.extend(Tw.CommonSearchMore.prototype,
     var searchApi = Tw.BrowserHelper.isApp() ? Tw.API_CMD.SEARCH_APP : Tw.API_CMD.SEARCH_WEB;
     var query = this._searchInfo.query;
     var researchQuery = this._searchInfo.researchQuery;
-
     var reqOptions;
 
     if (query !== researchQuery) {
       researchQuery = researchQuery.replace(query, '').trim();
-      reqOptions = {query: encodeURIComponent(query), collection: 'all', pageNum: 1, researchCd: 1, sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A', researchQuery: encodeURIComponent(researchQuery)};
+      
+      if(Tw.BrowserHelper.isApp()) {
+        if(Tw.BrowserHelper.isAndroid()) {
+          reqOptions = {query: encodeURIComponent(query), collection: 'all', researchCd: 1, sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A', researchQuery: encodeURIComponent(researchQuery), device: 'A'};
+        } else {
+          reqOptions = {query: encodeURIComponent(query), collection: 'all', researchCd: 1, sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A', researchQuery: encodeURIComponent(researchQuery), device: 'I'};
+        }
+      } else {
+        reqOptions = {query: encodeURIComponent(query), collection: 'all', researchCd: 1, sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A', researchQuery: encodeURIComponent(researchQuery)};
+      }
     } else {
-      reqOptions = {query: encodeURIComponent(query), collection: 'all', pageNum: 1, sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A'};
+      if(Tw.BrowserHelper.isApp()) {
+        if(Tw.BrowserHelper.isAndroid()) {
+          reqOptions = {query: encodeURIComponent(query), collection: 'all', sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A', device: 'A'};
+        } else {
+          reqOptions = {query: encodeURIComponent(query), collection: 'all', sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A', device: 'I'};
+        }
+      } else {
+        reqOptions = {query: encodeURIComponent(query), collection: 'all', sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A'};
+      }
     }
 
     this._apiService.request(searchApi, reqOptions)
