@@ -244,7 +244,8 @@ Tw.CommonSearch.prototype = {
         var categoryStr = '.fe-' + keyName + '-count';
 
         if ( contentsCnt < 1 ) {
-          this.$container.find(categoryStr).parents('li').hide();
+          // this.$container.find(categoryStr).parents('li').hide();
+          this.$container.find(categoryStr).parents('li').remove();
         } else {
           this.$container.find(categoryStr).text(contentsCnt);
         }
