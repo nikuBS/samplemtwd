@@ -809,7 +809,8 @@ $.extend(Tw.CommonSearchMore.prototype,
             // Tw.Logger.info('[' + keyName + ']', this.$container.find(categoryStr));
 
             if ( contentsCnt < 1 ) {
-              this.$container.find(categoryStr).parents('li').hide();
+              // this.$container.find(categoryStr).parents('li').hide();
+              this.$container.find(categoryStr).parents('li').remove();
             } else {
               this.$container.find(categoryStr).text(contentsCnt);
 
@@ -841,7 +842,8 @@ $.extend(Tw.CommonSearchMore.prototype,
 
         this.$container.find(tempStr).addClass('on');
 
-        var $horizontalSlide = $('.horizontal-slide');
+        // var $horizontalSlide = $('.horizontal-slide');
+        var $horizontalSlide = $('#fe-category-area');
         var $categoryOn = $horizontalSlide.find('li.on');
         var leftPosition = $categoryOn.offset().left - (($horizontalSlide.width() / 2) - ($categoryOn.width() / 2));
         

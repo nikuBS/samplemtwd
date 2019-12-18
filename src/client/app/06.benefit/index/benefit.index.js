@@ -33,6 +33,18 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this._data = '';
   this._categoryListArray = new Array();
   this._init();
+
+  $(document).ready(function () {
+    //카테고리 탭
+    setTimeout(function () {
+      $('body, html').scrollTop(1);
+      // Tw.Logger.info('111','');
+      setTimeout(function () { 
+        $('body, html').scrollTop(0); 
+        // Tw.Logger.info('222','');
+      }, 0);
+    }, 0);
+  });
 };
 
 Tw.BenefitIndex.prototype = {
@@ -1325,7 +1337,7 @@ Tw.BenefitIndex.prototype = {
     console.log('[_renderList] categoryArray : ' + categoryArray);
 
     var source = $('#productList').html();
-    this.$prodListArea.removeClass('nogaps-top').addClass(this._getCssMore(res.nextCnt));
+    // this.$prodListArea.removeClass('nogaps-top').addClass(this._getCssMore(res.nextCnt));
     var template = Handlebars.compile(source);
 
     var output = template({
