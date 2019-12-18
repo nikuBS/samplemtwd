@@ -175,11 +175,10 @@ $.extend(Tw.CommonSearchMore.prototype,
     this.$container.on('click','#page_selector',$.proxy(this._openPageSelector,this));
     
 
-    this.$categorySlide = this.$container.find('#fe-category-slide');
+    this.$categorySlide = $('#fe-category-slide');
     this.$categorySlide.addClass('horizontal');
-    Tw.Logger.info('[_nextInit] this.$categorySlide.attr("class") : ', this.$categorySlide.attr('class'));
-    Tw.Logger.info('[_nextInit] this.$categorySlide.parents("div") : ', this.$categorySlide.parents('div')[0]);
-    skt_landing.widgets.widget_horizontal(this.$categorySlide.parents('div')[0]);
+    $('#fe-category-slide').removeData('event');
+    skt_landing.widgets.widget_horizontal($('.widget'));
 
 
     this.$container.on('scroll',$.proxy(function () {
@@ -842,8 +841,7 @@ $.extend(Tw.CommonSearchMore.prototype,
 
         this.$container.find(tempStr).addClass('on');
 
-        // var $horizontalSlide = $('.horizontal-slide');
-        var $horizontalSlide = $('#fe-category-area');
+        var $horizontalSlide = $('.horizontal-slide');
         var $categoryOn = $horizontalSlide.find('li.on');
         var leftPosition = $categoryOn.offset().left - (($horizontalSlide.width() / 2) - ($categoryOn.width() / 2));
         
@@ -1015,16 +1013,6 @@ $.extend(Tw.CommonSearchMore.prototype,
           // 더보기할 컨텐츠가 없으면 (모두 노출된 상태)
           $('.btn-more').hide();
         }
-
-        // 카테고리 스와이프 영역 width 를 잡아주도록 처리한다.
-        this.$categorySlide = this.$container.find('#fe-category-slide');
-        Tw.Logger.info('[_nextInit] this.$categorySlide.attr("class") : ', this.$categorySlide.attr('class'));
-        this.$categorySlide.removeClass('horizontal');
-        this.$categorySlide.addClass('horizontal');
-        Tw.Logger.info('[_nextInit] this.$categorySlide.attr("class") : ', this.$categorySlide.attr('class'));
-        Tw.Logger.info('[_nextInit] this.$categorySlide.parents("div") : ', this.$categorySlide.parents('div'));
-        this.$categorySlide.removeData('event');
-        skt_landing.widgets.widget_horizontal(this.$categorySlide.parents('div')[0]);
 
       } else {
         Tw.Logger.info('[_sortRate] search api 리턴 오류!!!', res.code);
