@@ -25,6 +25,7 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this._svcMgmtNum = svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '';
   this._bpcpServiceId = bpcpServiceId;
   this._eParam = eParam;
+  this._agreePopup = null;
 
   this._isAdult = false;
   this._userId = null;
@@ -295,13 +296,13 @@ Tw.BenefitIndex.prototype = {
    */
   _modAgree: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn: 'Y' })
-      .done(function () {
+      .done($.proxy(function () {
         $('#agree-banner-area').hide();
-        $('#agree-popup-area').hide();
+        // $('#agree-popup-area').hide();
         var toastMsg = '수신동의가 완료되었습니다.';
         // Tw.CommonHelper.toast(toastMsg);
         Tw.Popup.toast(toastMsg);
-      })
+      }, this))
       .fail($.proxy(this._onFail, this));
   },
 
@@ -311,13 +312,14 @@ Tw.BenefitIndex.prototype = {
    */
   _modAgreePop: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn: 'Y' })
-      .done(function () {
+      .done($.proxy(function () {
         $('#agree-banner-area').hide();
-        $('#agree-popup-area').hide();
+        // $('#agree-popup-area').hide();
+        this._onCloseAgreePopup();
         var toastMsg = '수신동의가 완료되었습니다.';
         // Tw.CommonHelper.toast(toastMsg);
         Tw.Popup.toast(toastMsg);
-      })
+      }, this))
       .fail(function (err) {
         Tw.Error(err.code, err.msg).pop();
       });
@@ -336,7 +338,8 @@ Tw.BenefitIndex.prototype = {
    * @desc T world 광고정보수신동의 팝업 약관 상세보기
    */
   _showAgreePopDetail: function () {
-    $('#agree-popup-area').hide();
+    // $('#agree-popup-area').hide();
+    this._onCloseAgreePopup();
     Tw.CommonHelper.openTermLayer2('03');
   },
 
@@ -353,7 +356,8 @@ Tw.BenefitIndex.prototype = {
    * @desc T world 광고정보수신동의 팝업 닫기
    */
   _closeAgreePop: function () {
-    $('#agree-popup-area').hide();
+    // $('#agree-popup-area').hide();
+    this._onCloseAgreePopup();
   },
 
   /**
@@ -367,7 +371,8 @@ Tw.BenefitIndex.prototype = {
       this._setCookie('hideTwdAdRcvAgreePop', this._userId, 365 * 10);
     }
 
-    $('#agree-popup-area').hide();
+    // $('#agree-popup-area').hide();
+    this._onCloseAgreePopup();
   },
 
   /**
@@ -945,7 +950,8 @@ Tw.BenefitIndex.prototype = {
 
               // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
               if (Tw.FormatHelper.isEmpty(storedData)) {
-                $('#agree-popup-area').show();
+                // $('#agree-popup-area').show();
+                this._onOpenAgreePopup();
                 // return;
               }
               // 그 외 경우 처리
@@ -958,7 +964,8 @@ Tw.BenefitIndex.prototype = {
                 if (Tw.DateHelper.convDateFormat(storedData.expireTime) < now) { // 만료시간이 지난 데이터 일 경우
                   // console.log('만료시점이 지난 경우 (노출)');
                   // 광고 정보 수신동의 팝업 노출
-                  $('#agree-popup-area').show();
+                  // $('#agree-popup-area').show();
+                  this._onOpenAgreePopup();
                 } else {
                   // console.log('만료시점 이전인 경우 (비노출)');
                 }
@@ -971,7 +978,8 @@ Tw.BenefitIndex.prototype = {
               } else {
                 // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
                 // 광고 정보 수신동의 팝업 노출
-                $('#agree-popup-area').show();
+                // $('#agree-popup-area').show();
+                this._onOpenAgreePopup();
               }
             }
           }
@@ -1430,5 +1438,28 @@ Tw.BenefitIndex.prototype = {
    */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+
+  /**
+   * @function
+   * @desc 광고성정보수신동의 팝업 open
+   */
+  _onOpenAgreePopup: function() {
+    var template = $('#fe-agree-popup'); // 각각의 메뉴 추가를 위한 handlebar template
+    this._agreePopup = Handlebars.compile(template.html());
+    this.$container.attr('aria-hidden', 'false');
+    this.$container.find('#contents').after(this._agreePopup({ }));
+    this._popupService._addHash(null, 'ad-info-agreement');
+  },
+
+  /**
+   * @function
+   * @desc 광고성정보수신동의 팝업 close
+   */
+  _onCloseAgreePopup: function () {
+    this.$container.attr('aria-hidden', 'true');
+    if ( window.location.hash.indexOf('ad-info-agreement') !== -1 ) {
+      this._historyService.goBack();
+    }
   }
 };

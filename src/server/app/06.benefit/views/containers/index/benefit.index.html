@@ -252,10 +252,16 @@
 
         </div>
     </div>
-    <!--// #contents -->
 
+    
+    <!--// .popup hbs -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo,pageInfo: pageInfo });
+    %>
+</div>
+</body>
+<script id="fe-agree-popup" type="text/x-handlebars-template">
     <!-- .popup hbs -->
-    <div class="popup tw-popup" style="display: none;" id="agree-popup-area">
+    <div class="popup tw-popup">
         <div class="popup-info tod-eventpop-type1" role="alertdialog" aria-describedby="alertText">
             <div class="popup-header">
                 <button type="button" class="btn-tooltip-close fe-pop-close">닫기</button>
@@ -279,12 +285,8 @@
         </div>
         <div class="popup-blind"></div>
     </div>
-    <!--// .popup hbs -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo,pageInfo: pageInfo });
-    %>
-</div>
-</body>
-
+    <!--// #contents -->
+</script>
 <script>
   $(document).ready(function () {
     new Tw.BenefitIndex(
