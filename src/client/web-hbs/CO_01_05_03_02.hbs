@@ -1,0 +1,63 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>SK브로드밴드 서비스 이용 동의</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <p class="tod-sb-join-tit">SK브로드밴드 서비스 이용 가능 회선 총 <em class="tod-txcolor6">{{totalLineCount}}</em>건</p>
+                <p class="tod-sb-join-txt">전체 상품에 대한 동의처리가 이루어지며, <em>부분 동의 및 철회는 고객센터(114)를 통해 가능합니다.</em></p>
+                <ul class="tod-sb-join-list">
+                    {{#each disagreedLine}}
+                    <li class="join-item fe-disagree-line{{isNone}}" value="{{serialNumber}}">
+                        <div class="join-wrap">
+                            {{#if isInternet}}<i class="icon-internet-40">{{/if}}
+                            {{#if isIptv}}<i class="icon-pc-40">{{/if}}
+                            {{#if isPhone}}<i class="icon-call-40">{{/if}}
+                            </i><span class="line-item">{{svcName}}</span><span class="detail-info">{{address}}</span>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+                <div class="btn-more fe-bt-more {{#if noMore}}none{{/if}}">
+                    <button>더 보기</button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <!-- .cont-box -->
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list02">
+                    <li>
+                        <button class="btn-tip" id="TC000094" aria-haspopup="true">유의사항 및 동의 철회 안내<i class="icon-badge-tip"><span class="blind">유의사항 및 동의 철회 안내 tip</span></i></button>
+                    </li>
+                </ul>
+            </div>
+            <!-- //.cont-box -->
+            
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1 fe-bt-agreement">
+                        <button>동의 완료</button> <!-- disabled -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step fe-bt-close">팝업 페이지 닫기</button>
+    <!--// .popup-closeBtn -->
+</div>
+<!-- // .popup hbs -->

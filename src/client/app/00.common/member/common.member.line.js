@@ -28,11 +28,58 @@ Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this.$showNickname = null;
   this.$showMenuBtn = null;
 
+  this._init();
   this._bindEvent();
   this._checkGuidePopup();
 };
 
 Tw.CommonMemberLine.prototype = {
+
+  /**
+   * @function
+   * @desc 최초실행
+   * @private
+   */
+  _init: function () {
+    this.$popCert = this.$container.find('#fe-pop-agreement');
+
+    // 모바일App
+    if (Tw.BrowserHelper.isApp()) {
+      var storedData = Tw.CommonHelper.getLocalStorage('hideSkbAgreePop_' + this._userId);
+
+      // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
+      if (Tw.FormatHelper.isEmpty(storedData)) {
+        this.$popCert.show();
+      }
+      // 그 외 경우 처리
+      else {
+        storedData = JSON.parse(storedData);
+
+        var now = new Date();
+        now = Tw.DateHelper.convDateFormat(now);
+
+        if (Tw.DateHelper.convDateFormat(storedData.expireTime) < now) { // 만료시간이 지난 데이터 일 경우
+          // console.log('만료시점이 지난 경우 (노출)');
+          // SK브로드밴드 서비스 이용 동의 팝업 노출
+          this.$popCert.show();
+        } else {
+          // console.log('만료시점 이전인 경우 (비노출)');
+        }
+      }
+    }
+    // 모바일웹
+    else {
+      if (Tw.CommonHelper.getCookie('hideSkbAgreePop_' + this._userId) !== null) {
+        // console.log('다음에 보기 처리 이력 존재');              
+      } else {
+        // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
+        // SK브로드밴드 서비스 이용 동의 팝업 노출
+        this.$popCert.show();
+      }
+    }
+
+  },
+
   /**
    * @function
    * @desc 이벤트 바인딩
@@ -49,6 +96,9 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-seq-edit', $.proxy(this._onClickInternal, this));
     this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickEdit, this));
     this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickEdit, this));
+    this.$container.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
+    this.$container.on('click', '.fe-pop-close', $.proxy(this._closePopup, this));
+    this.$container.on('click', '.fe-pop-hide', $.proxy(this._hidePopup, this));
   },
 
   /**
@@ -139,7 +189,7 @@ Tw.CommonMemberLine.prototype = {
     $popupContainer.on('click', '#fe-bt-biz-signup', $.proxy(this._onClickBizSignup, this));
   },
 
-    /**
+  /**
    * @function
    * @desc 내부 경로로 이동
    * @private
@@ -717,5 +767,56 @@ Tw.CommonMemberLine.prototype = {
    */
   _onCloseMarketingOfferPopup: function () {
     this._closeMarketingOfferPopup();
+  },
+
+  /**
+   * @function
+   * @desc SK브로드밴드 서비스 이용 동의 팝업 닫기
+   * @private
+   */
+  _closePopup: function () {
+    this.$popCert.hide();
+  },
+
+  /**
+   * @function
+   * @desc SK브로드밴드 서비스 이용 동의 팝업 다음에 하기 버튼 클릭
+   * @private
+   */
+  _hidePopup: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._setLocalStorage('hideSkbAgreePop', this._userId, 365 * 10);
+    } else {
+      this._setCookie('hideSkbAgreePop', this._userId, 365 * 10);
+    }
+    this.$popCert.hide();
+  },
+
+  /**
+   * @function
+   * @desc 다음에 하기 처리 (Native localstorage 영역에 저장, 반영구적으로 비노출)
+   */
+  _setLocalStorage: function (key, userId, expiredays) {
+    var keyName = key + '_' + userId;
+    var today = new Date();
+
+    today.setDate(today.getDate() + expiredays);
+
+    Tw.CommonHelper.setLocalStorage(keyName, JSON.stringify({
+      expireTime: today
+    }));
+  },
+
+  /**
+   * @function
+   * @desc 다음에 보기 쿠키 처리 (반영구적으로 비노출)
+   */
+  _setCookie: function (key, userId, expiredays) {
+    var cookieName = key + '_' + userId;
+    var today = new Date();
+
+    today.setDate(today.getDate() + expiredays);
+
+    document.cookie = cookieName + '=Y; path=/; expires=' + today.toGMTString() + ';';
   },
 };
