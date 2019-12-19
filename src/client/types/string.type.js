@@ -483,7 +483,9 @@ Tw.ALERT_MSG_COMMON = {
   CERT_FAIL: '인증에 실패하였습니다.',
   SUCEESS_SAFETY_NUMBER_PROVIDE_DENY : '안심번호 제공 거부 등록이 완료되었습니다.<br />감사합니다.',
   SUCEESS_SAFETY_NUMBER_PROVIDE_FAIL : '안심번호 제공 거부가 실패하였습니다.<br />잠시 후 다시 시도해 주시기 바랍니다.',
-  SUCEESS_SAFETY_NUMBER_PROVIDE : '안심번호 제공 거부가 해제되었습니다.'
+  SUCEESS_SAFETY_NUMBER_PROVIDE : '안심번호 제공 거부가 해제되었습니다.',
+  BROADBAND_AGREEMENT_UNDER_FOURTEEN : '미성년자는 이동전화 가입시 등록된 법정대리인의 동의가 필요합니다. 고객센터(114)로 문의하세요.',
+  BROADBAND_AGREEMENT_CANCEL_ALERT : 'SK브로드밴드 서비스 이용 동의에 미동의시 SK브로드밴드 가입 상품에 대해 T world에서 서비스 이용을 하실 수 없습니다.<br /><br />동의하지 않으시겠습니까?'
 };
 
 Tw.ALERT_MSG_HOME = {
