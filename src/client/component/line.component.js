@@ -145,7 +145,8 @@ Tw.LineComponent.prototype = {
       totNonCnt: totNonCnt,
       data: lineData,
       btMore: this._index > Tw.DEFAULT_LIST_COUNT,
-      onlyMobile: onlyMobile
+      onlyMobile: onlyMobile,
+      cdn: Tw.Environment.cdn
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line', $target);
   },
 
