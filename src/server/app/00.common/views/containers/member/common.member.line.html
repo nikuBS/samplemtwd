@@ -21,11 +21,13 @@
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
-            <!-- <div class="cont-box bgnone noborder pb0">
+            <div class="cont-box bgnone noborder pb0">
                 <div class="banner-area">
-                    <button type="button"><img src="<%=CDN%>/img/myt/img-banner-skbroadband01.png" alt="T world에서 SK브로드밴드 가입 상품을 이용해보세요. SK브로드밴드 가입 상품 확인하기"></button>
+                    <button type="button" class="tod-w100 fe-bt-internal" data-url="/common/member/line/skb-svc-agreement">
+                        <img src="<%=CDN%>/img/myt/img-banner-skbroadband01.png" alt="T world에서 SK브로드밴드 가입 상품을 이용해보세요. SK브로드밴드 가입 상품 확인하기">
+                    </button>
                 </div>
-            </div> -->
+            </div>
             <div class="ti-caption-gray bgnone">
                 <!-- 회선관리_리스트 -->
                 <button type="button" class="tod-icon tod-icon-notice01 fe-bt-guide" data-xt_eid="CMMA_A11_B1_C5_D16-1" data-xt_csid="CS_ID" data-xt_action="BC"><span>이용안내</span></button>
@@ -59,6 +61,29 @@
                 </div>
             </div>
         </div>
+        <!-- .popup hbs -->
+        <div class="popup tw-popup" style="display: none;" id="fe-pop-agreement">
+            <div class="popup-info tod-eventpop-type1 sel-line-pop" role="alertdialog" aria-describedby="alertText">
+                <div class="popup-header fe-pop-close">
+                    <button type="button" class="btn-tooltip-close">닫기</button>
+                </div>
+                <!-- Case1 광고성 정보 수신 동의 안내 -->
+                <div class="popup-contents" id="alertText">
+                    <div class="inner-contents">
+                        <i class="ico"></i>
+                        <strong class="text-ti-big">T world에서<br>SK브로드밴드 가입<br>상품을 이용해보세요.</strong>
+                        <span class="need-agree">서비스 이용 동의 필요</span>
+                    </div>
+                </div>
+                <ul class="bt-box bt-slice item-two">
+                    <li class="fe-pop-hide"><button class="btn-floating disagree">다음에 하기</button></li>
+                    <li><button class="btn-floating agree fe-bt-internal" data-url="/common/member/line/skb-svc-agreement">네, 좋아요!</button></li>
+                </ul>
+                <!-- //Case1 광고성 정보 수신 동의 안내 -->
+            </div>
+            <div class="popup-blind"></div>
+        </div>
+        <!--// .popup hbs -->
     </div>
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>

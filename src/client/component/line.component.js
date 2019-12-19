@@ -137,13 +137,15 @@ Tw.LineComponent.prototype = {
    * @private
    */
   _openListPopup: function (lineData, totNonCnt, $target) {
+    var onlyMobile = lineData.length === 1 && lineData[0].isMobile
     this._popupService.open({
       hbs: 'actionsheet_line',
       layer: true,
       hasNonExpsLine: totNonCnt > 0, 
       totNonCnt: totNonCnt,
       data: lineData,
-      btMore: this._index > Tw.DEFAULT_LIST_COUNT
+      btMore: this._index > Tw.DEFAULT_LIST_COUNT,
+      onlyMobile: onlyMobile
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line', $target);
   },
 
@@ -162,6 +164,7 @@ Tw.LineComponent.prototype = {
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
     $popupContainer.on('click', '.fe-radio-line', _.debounce($.proxy(this._onSelectLine, this), 500));
     $popupContainer.on('click', '#fe-bt-line', $.proxy(this._onClickLineButton, this));
+    $popupContainer.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
   },
 
   /**
@@ -201,11 +204,16 @@ Tw.LineComponent.prototype = {
       if ( !Tw.FormatHelper.isEmpty(curLine) ) {
         var showService = this._index < Tw.DEFAULT_LIST_COUNT ? '' : 'none';
         var list = this._convLineData(curLine, line);
+        var isWire = Tw.LINE_NAME[line] === 's';
+        var isMobile = Tw.LINE_NAME[line] === 'm';
         result.push({
           title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]],
           cnt: list.length,
           list: list,
-          showService: showService
+          showService: showService,
+          cntYn: list.length === '0',
+          isWire: isWire,
+          isMobile: isMobile
         });
       }
     }, this));
@@ -373,5 +381,15 @@ Tw.LineComponent.prototype = {
    */
   _completeCustomerLogin: function (resp) {
     this._completeLogin(resp);
+  },
+
+  /**
+   * @function
+   * @desc 내부 경로로 이동
+   * @private
+   */
+  _onClickInternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.goLoad(url);
   }
 };
