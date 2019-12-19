@@ -168,6 +168,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$agreeWrap.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyCheck, this));
     this.$formData.on('keyup input', 'input', $.proxy(this._procEnableApplyCheck, this));
     this.$combineExplain.on('change', 'input[type=checkbox]', $.proxy(this._onChangeCombineExplain, this));
+    this.$container.on('click', '.fe-btn-internal', $.proxy(this._onClickInternal, this));
   },
 
   /**
@@ -1004,5 +1005,23 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     this._historyService.goBack();
+  },
+
+  /**
+   * @desc go to url
+   * @param {string} url 
+   * @public
+   */
+  _goLoad: function (url) {
+    window.location.href = url;
+  },
+   /**
+   * @function
+   * @desc 내부 경로로 이동
+   * @private
+   */
+  _onClickInternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._goLoad(url);
   }
 };
