@@ -269,9 +269,9 @@ Tw.LineComponent.prototype = {
           cnt: list.length,
           list: list,
           showService: showService,
-          cntYn: list.length === '0',
           isWire: isWire,
-          isMobile: isMobile
+          isMobile: isMobile,
+          cdn: Tw.Environment.cdn
         });
       }
     }, this));
