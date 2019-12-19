@@ -203,6 +203,8 @@ Tw.LineComponent.prototype = {
       var curLine = lineList[Tw.LINE_NAME[line]];
       if ( !Tw.FormatHelper.isEmpty(curLine) ) {
         var showService = this._index < Tw.DEFAULT_LIST_COUNT ? '' : 'none';
+        var isWire = Tw.LINE_NAME[line] === 's';
+        var isMobile = Tw.LINE_NAME[line] === 'm';
         var list = this._convLineData(curLine, line);
 
         // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
@@ -225,8 +227,6 @@ Tw.LineComponent.prototype = {
           list = list.concat(childInfos);
         }
 
-        var isWire = Tw.LINE_NAME[line] === 's';
-        var isMobile = Tw.LINE_NAME[line] === 'm';
         result.push({
           title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]],
           cnt: list.length,
