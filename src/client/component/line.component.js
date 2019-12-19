@@ -204,6 +204,27 @@ Tw.LineComponent.prototype = {
       if ( !Tw.FormatHelper.isEmpty(curLine) ) {
         var showService = this._index < Tw.DEFAULT_LIST_COUNT ? '' : 'none';
         var list = this._convLineData(curLine, line);
+
+        // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+        if(line === 'MOBILE' && !Tw.FormatHelper.isEmpty(childLineList)) {
+
+          var childInfos = [];
+          _.map(childLineList, $.proxy(function (childLine) {
+            childInfos.push({
+              index: this._index++,
+              txt: childLine.eqpMdlNm,
+              option: this._selectedMgmt.toString() === childLine.svcMgmtNum ? 'checked' : '',
+              badge: false,
+              showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
+              add: Tw.FormatHelper.conTelFormatWithDash(childLine.svcNum),
+              svcMgmtNum: childLine.svcMgmtNum,
+              icon: 'ico7',
+              child: true
+            });
+          }, this));
+          list = list.concat(childInfos);
+        }
+
         var isWire = Tw.LINE_NAME[line] === 's';
         var isMobile = Tw.LINE_NAME[line] === 'm';
         result.push({
