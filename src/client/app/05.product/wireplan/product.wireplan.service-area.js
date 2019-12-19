@@ -17,6 +17,7 @@ Tw.ProductWireServiceArea.prototype = {
   _bindEvent: function() {
     this.$submitBtn.on('click', $.proxy(this._handleSearchArea, this));
     this.$container.on('click', '#fe-post-btn', $.proxy(this._openPostcode, this));
+    this.$container.on('click', '.fe-btn-internal', $.proxy(this._onClickInternal, this));
   },
 
   _cachedElement: function() {
@@ -42,6 +43,10 @@ Tw.ProductWireServiceArea.prototype = {
     $addr.find('#fe-detail-addr').text(result.detail);
 
     this.$submitBtn.removeAttr('disabled');
+
+    this.$container.find('.fe-noti-box, .fe-noti-line').removeClass('none');
+    this.$container.find('.fe-noti-line').removeClass('none');
+    this.$container.find('.fe-link-box').addClass('none');
   },
 
   _handleSearchArea: function() {
@@ -98,5 +103,25 @@ Tw.ProductWireServiceArea.prototype = {
       delete this._ressearch;
       this._openPostcode();
     }
+  },
+
+  /**
+   * @desc go to url
+   * @param {string} url 
+   * @public
+   */
+  _goLoad: function (url) {
+    window.location.href = url;
+  },
+  
+   /**
+   * @function
+   * @desc 내부 경로로 이동
+   * @private
+   */
+  _onClickInternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._goLoad(url);
   }
+
 };
