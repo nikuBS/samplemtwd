@@ -485,7 +485,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       },
       RM_11_01_01_02_tip_03_04 : {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
-        target : ['NA00005632','NA00005634','NA00005635']
+        target : ['NA00005632','NA00005634','NA00005635','NA00006826']
       },
       RM_11_01_01_02_tip_03_05 : {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,

@@ -601,6 +601,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       case 'NA00005632':
       case 'NA00005634':
       case 'NA00005635':
+      case 'NA00006826':
         this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_04');
         break;
       case 'NA00005821':
