@@ -58,7 +58,7 @@ Tw.CustomerFaqCategory.prototype = {
    * @desc depth 1 or depth2 카테고리 버튼 선택 시 선택가능한 목록을 보여주는 actionsheet 노출
    * @param  {Number} depth - 선택된 depth 1 or 2
    */
-  _onDropDownClicked: function (depth) {
+  _onDropDownClicked: function (depth, e) {
     var data = depth === 1 ? this._depth1obj : this._depth2obj;
     if (depth === 2) {
       data = _.filter(data, $.proxy(function (item) {
@@ -105,6 +105,7 @@ Tw.CustomerFaqCategory.prototype = {
       }],
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      Tw.CommonHelper.focusOnActionSheet($root);
       $root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
       }, this));
@@ -112,7 +113,10 @@ Tw.CustomerFaqCategory.prototype = {
         var $checked = $(e.currentTarget);
         this._onCategoryChanged(depth, $checked.attr('title'), $checked.val());
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
   /**

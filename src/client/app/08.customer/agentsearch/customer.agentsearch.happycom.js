@@ -228,7 +228,7 @@ Tw.CustomerAgentHappycom.prototype = {
    * @function
    * @desc 지역선택 시 actionsheet로 옵션 표기해줌
    */
-  _onLocationCategory: function () {
+  _onLocationCategory: function (e) {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_LOCATION;
 
     this._popupService.open({
@@ -250,7 +250,10 @@ Tw.CustomerAgentHappycom.prototype = {
 
         this._historyService.goLoad(this._getSearchUrl(this._searchType.LOCATION));
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
 

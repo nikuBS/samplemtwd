@@ -281,7 +281,7 @@ Tw.CustomerDocument.prototype = {
    */
   _setTargetDisabled: function ($target) {
     $target.addClass('off');
-    $target.find('button').addClass('none-event');
+    $target.find('button').addClass('none-event').prop('disaled', true);
   },
   /**
    * @function
@@ -360,6 +360,6 @@ Tw.CustomerDocument.prototype = {
    */
   _openList: function ($target) {
     $target.removeClass('off').addClass('on');
-    $target.find('button').removeClass('none-event');
+    $target.find('button').removeClass('none-event').prop('disaled', false);
   }
 };
