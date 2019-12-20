@@ -120,6 +120,7 @@ Tw.CommonMemberLineSkbSvcAgreement.prototype = {
         this._popupService.open({
           hbs: 'CO_01_05_03_02_NO_BROADBAND_LINE',
           layer: true,
+          cdn: Tw.Environment.cdn
         }, $.proxy(this._noLinePopupOpenCallback, this), null, 'no-line');
       } else { // 미동의 회선이 있는 경우
         // 티월드동의 동의처리 2단계 팝업 호출
