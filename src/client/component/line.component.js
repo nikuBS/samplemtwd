@@ -9,7 +9,7 @@
  * @desc 공통 > 회선변경
  * @constructor
  */
-Tw.LineComponent = function ($container, selector, isToast) {
+Tw.LineComponent = function ($container, selector, isToast, $closeFocusEle) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
@@ -29,6 +29,8 @@ Tw.LineComponent = function ($container, selector, isToast) {
   this._svcMgmtNum = '';
   this._mdn = '';
   this._isToast = isToast || false;
+  // OP002-5925 : [FE] (W-1911-065-02) 2019 App./모바일웹접근성 샘플링 결과 반영(수정)
+  this._$closeFocusEle = $closeFocusEle;
 
   // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
   if ( !Tw.FormatHelper.isEmpty($container)) {
@@ -169,6 +171,11 @@ Tw.LineComponent.prototype = {
    * @private
    */
   _openListPopup: function (lineData, totNonCnt, $target) {
+
+    // OP002-5925 : [FE] (W-1911-065-02) 2019 App./모바일웹접근성 샘플링 결과 반영(수정)
+    if(!Tw.FormatHelper.isEmpty(this._$closeFocusEle)) {
+      $target = this._$closeFocusEle;
+    }
     var onlyMobile = lineData.length === 1 && lineData[0].isMobile
     this._popupService.open({
       hbs: 'actionsheet_line',
