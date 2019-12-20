@@ -29,6 +29,7 @@ Tw.LineComponent = function ($container, selector, isToast, $closeFocusEle) {
   this._svcMgmtNum = '';
   this._mdn = '';
   this._isToast = isToast || false;
+  // OP002-5925 : [FE] (W-1911-065-02) 2019 App./모바일웹접근성 샘플링 결과 반영(수정)
   this._$closeFocusEle = $closeFocusEle;
 
   // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
@@ -171,6 +172,7 @@ Tw.LineComponent.prototype = {
    */
   _openListPopup: function (lineData, totNonCnt, $target) {
 
+    // OP002-5925 : [FE] (W-1911-065-02) 2019 App./모바일웹접근성 샘플링 결과 반영(수정)
     if(!Tw.FormatHelper.isEmpty(this._$closeFocusEle)) {
       $target = this._$closeFocusEle;
     }

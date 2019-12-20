@@ -342,6 +342,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var $target = $($event.currentTarget);
     // if ( this._isMultiLine ) {
       if ( !this._lineComponent ) {
+        // OP002-5925 : [FE] (W-1911-065-02) 2019 App./모바일웹접근성 샘플링 결과 반영(수정)
         this._lineComponent = new Tw.LineComponent(null, null, false, this.$gnbBtn);
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해
