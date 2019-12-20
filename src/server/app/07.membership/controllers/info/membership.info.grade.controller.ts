@@ -47,7 +47,8 @@ class MembershipInfoGrade extends TwViewController {
       res.render('info/membership.info.grade.html', {
         svcInfo,
         pageInfo,
-        data
+        data,
+        isExpectRating: false
       });
     }
   }

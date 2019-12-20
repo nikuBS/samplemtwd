@@ -169,13 +169,16 @@ Tw.LineComponent.prototype = {
    * @private
    */
   _openListPopup: function (lineData, totNonCnt, $target) {
+    var onlyMobile = lineData.length === 1 && lineData[0].isMobile
     this._popupService.open({
       hbs: 'actionsheet_line',
       layer: true,
       hasNonExpsLine: totNonCnt > 0, 
       totNonCnt: totNonCnt,
       data: lineData,
-      btMore: this._index > Tw.DEFAULT_LIST_COUNT
+      btMore: this._index > Tw.DEFAULT_LIST_COUNT,
+      onlyMobile: onlyMobile,
+      cdn: Tw.Environment.cdn
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line', $target);
   },
 
@@ -198,6 +201,7 @@ Tw.LineComponent.prototype = {
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
     $popupContainer.on('click', '.fe-radio-line', _.debounce($.proxy(this._onSelectLine, this), 500));
     $popupContainer.on('click', '#fe-bt-line', $.proxy(this._onClickLineButton, this));
+    $popupContainer.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
   },
 
   /**
@@ -236,6 +240,8 @@ Tw.LineComponent.prototype = {
       var curLine = lineList[Tw.LINE_NAME[line]];
       if ( !Tw.FormatHelper.isEmpty(curLine) ) {
         var showService = this._index < Tw.DEFAULT_LIST_COUNT ? '' : 'none';
+        var isWire = Tw.LINE_NAME[line] === 's';
+        var isMobile = Tw.LINE_NAME[line] === 'm';
         var list = this._convLineData(curLine, line);
 
         // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
@@ -262,7 +268,10 @@ Tw.LineComponent.prototype = {
           title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]],
           cnt: list.length,
           list: list,
-          showService: showService
+          showService: showService,
+          isWire: isWire,
+          isMobile: isMobile,
+          cdn: Tw.Environment.cdn
         });
       }
     }, this));
@@ -487,5 +496,15 @@ Tw.LineComponent.prototype = {
    */
   _completeCustomerLogin: function (resp) {
     this._completeLogin(resp);
+  },
+
+  /**
+   * @function
+   * @desc 내부 경로로 이동
+   * @private
+   */
+  _onClickInternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.goLoad(url);
   }
 };

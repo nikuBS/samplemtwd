@@ -61,10 +61,10 @@ Tw.MembershipInfoGrade.prototype = {
 
     // 앱이 아닐땐 과금 팝업 띄울 필요 없으므로 즉시 외부 링크 실행
     if (!Tw.BrowserHelper.isApp()) {
-      return this._openExternalUrl($(e.currentTarget).data('url'));
+      return this._openExternalUrl($(e.currentTarget).data('urlgrade'));
     }
 
-    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).data('url')));
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).data('urlgrade')));
   },
 
   /**

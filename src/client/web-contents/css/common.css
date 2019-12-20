@@ -9805,3 +9805,12 @@ button:focus span {
 .tod-benefit-list.tod-srhtype1 li .img-filed {bottom:auto; top:50%; margin-top:-2.094rem; width:4.188rem; height:4.188rem;}
 /* //191127 [OP002-4532] 통합검색 결과 UI개선 */
 
+/* 191209 [OP002-5498] 유선 업무처리 동의 프로세스 */
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents{background:#ff9000; padding-bottom:2.9375rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .inner-contents{color:#fff; font-size:23px; line-height:1.8125rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .inner-contents .ico{width:10.625rem; height:5.4375rem; background-image:url('/img/myt/line-sel-pop.png'); background-size:100%; margin:-5.375rem 0 2.375rem 0}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box{background:#fff; }
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box .btn-floating.disagree{color:#666; font-size:0.8125rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box .btn-floating{color:#000; font-size:1rem}
+.popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .need-agree{display:inline-block; color:#fff; font-size:0.8125rem; margin-top:1.25rem}
+.complete-title.tod-higher-pt{padding-top:100px !important}

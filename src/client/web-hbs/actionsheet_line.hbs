@@ -36,6 +36,15 @@
                             {{/if}}
                             <div class="ac-tit fe-title {{showService}}">{{title}} ({{cnt}})</div>
                             <ul class="ac-list fe-service {{showService}}">
+                                {{#if isWire}}
+                                <li class="type1 pt0 pb0">
+                                    <div class="banner-area">
+                                        <button type="button" class="block fe-bt-internal" data-url="/common/member/line/skb-svc-agreement">
+                                            <img src="{{cdn}}/img/myt/img-banner-skbroadband02.png" alt="SK브로드밴드 가입 상품이 확인되지 않으시나요? 확인해보기">
+                                        </button>
+                                    </div>
+                                </li>
+                                {{/if}}
                                 {{#each list}}
                                     <li class="type1 focus-elem fe-item {{showLine}} {{#if child}} tod-bg {{/if}}">
                                         {{#unless child}}
@@ -76,6 +85,19 @@
                                 {{/each}}
                             </ul>
                         {{/each}}
+                            {{#if onlyMobile}}
+                            <hr aria-hidden="true"/>
+                            <div class="ac-tit fe-title">인터넷/집전화/IPTV</div>
+                            <ul class="ac-list fe-service">
+                                <li class="type1 pt0 pb0">
+                                    <div class="banner-area">
+                                        <button type="button" class="block fe-bt-internal" data-url="/common/member/line/skb-svc-agreement">
+                                            <img src="{{cdn}}/img/myt/img-banner-skbroadband02.png" alt="SK브로드밴드 가입 상품이 확인되지 않으시나요? 확인해보기">
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                            {{/if}}
                         {{#if btMore}}
                             <div class="btn-more">
                                 <button id="fe-bt-more" type="button">더보기</button>

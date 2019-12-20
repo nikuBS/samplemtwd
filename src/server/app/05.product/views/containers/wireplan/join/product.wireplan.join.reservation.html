@@ -13,14 +13,16 @@
 <!--// #skip_navigation -->
 <div class="wrap step" data-type_cd="<%= typeCd %>" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
-    <div class="popup-page nobg tw-popup fixed-bottom txt-screed"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
+    <div class="popup-page nobg tw-popup fixed-bottom h60"><!-- 190831 리디자인_01 : h60 추가 --> <!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '가입상담 예약', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap" id="contents">
-            <h2 class="blind">내용</h2>
+            <h2 class="blind">내용</h2> 
+            
             <% if ( combineRequireDocumentInfo ) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="fe-combine_is_exists">
                 <div class="cont-box rt-bt-type">
                     <div class="announcement-box">
@@ -30,14 +32,14 @@
                         <%= combineRequireDocumentInfo.btnText %>
                     </a></div>
                 </div>
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
             </div>
             <% } %>
 
-            <div class="container">
 
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
+                <!-- 
                 <div class="cont-box">
                     <div class="charge-guide-wrap">
                         <div class="charge-cont">
@@ -48,8 +50,25 @@
                         </div>
                     </div>
                 </div>
+                -->
                 <!--// .cont-box -->
-
+                
+                <!-- .cont-box -->
+                <div class="cont-box">
+                       <div class="charge-guide-wrap">
+                            <div class="charge-cont">
+                                <span class="sub-disc01">
+                                    <!-- 190831 리디자인_05 : class="icon-badge-tip" , <span class="blind">TIP</span> --> 
+                                    <span class="elem">상담신청상품 선택 
+                                        <button type="button" title="상담신청상품 선택 정보보기"  class="btn-tip fe-non_combine_tip" aria-haspopup="true" aria-hidden="true" style="display: none" page-id="M000425" id="WP_02_01_tip_01"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button>
+                                    </span>
+                                    <!-- //190831 리디자인_05 -->
+                                </span>
+                                <button class="bt-dropdown text-type01 tit-tx  fe-btn_select_type_cd" title="상담신청상품 선택" aria-haspopup="true"><%= typeName %></button>
+                            </div>
+                        </div>
+                </div>
+                <!--// .cont-box -->               
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
@@ -171,14 +190,16 @@
                     <hr class="cont-sp type1" aria-hidden="true"/>
 
                     <!-- .cont-box -->
-                    <div class="cont-box nogaps-btm">
-                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list02">
+                    <!-- 190831 리디자인_04 -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
                             <li>
-                                <button type="button" class="tip-view-btn" id="WP_02_01_tip_02" page-id="M000425" aria-haspopup="true">가입상담예약 안내<span class="tip-view">TIP</span></button>
+                                <button type="button" class="btn-tip" id="WP_02_01_tip_02" page-id="M000425" aria-haspopup="true">가입상담예약 안내<<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                             </li>
                         </ul>
                     </div>
+                    <!-- //190831 리디자인_04 -->
                     <!--// .cont-box -->
                 </div>
             </div>
