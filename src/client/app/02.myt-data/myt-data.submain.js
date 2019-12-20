@@ -31,7 +31,7 @@ Tw.MyTDataSubMain = function (params) {
   new Tw.XtractorService(this.$container);
 
   // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
-  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true);
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
 };
 
 Tw.MyTDataSubMain.prototype = {

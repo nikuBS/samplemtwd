@@ -762,14 +762,17 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @function
    * @desc 위치변경 클릭 시 layer popup 발생시킴
    */
-  _onRegionChangeClicked: function () {
+  _onRegionChangeClicked: function (e) {
     this._popupService.open({
       hbs: 'CS_02_03_L01'
     }, $.proxy(function (container) {
       Tw.CommonHelper.focusOnActionSheet(container);
       new Tw.CustomerAgentsearchRegion(container, this._currentDo, this._currentGu, this._regions,
         $.proxy(this._onRegionChanged, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
   /**
@@ -810,7 +813,7 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @function
    * @desc 전체/지점/대리점 option 선택을 위한 actionsheet 발생
    */
-  _onTypeOption: function () {
+  _onTypeOption: function (e) {
     var list = [{
       value: Tw.BRANCH.SELECT_BRANCH_TYPE[0],
       option: 'fe-type',
@@ -846,7 +849,10 @@ Tw.CustomerAgentsearchNear.prototype = {
           this._onBranchTypeChanged(e);
         }, this), 300);
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
   /**

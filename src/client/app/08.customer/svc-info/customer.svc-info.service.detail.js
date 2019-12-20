@@ -182,6 +182,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
    * @param {element} $container 
    */
   _ActionSheetBindEvent: function ($container) {
+    Tw.CommonHelper.focusOnActionSheet($container);
     this.$selectButtons = $container.find('.ac-list>li');
     
     // 현재 값 선택 (checked)

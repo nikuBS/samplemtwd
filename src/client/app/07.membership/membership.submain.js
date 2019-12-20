@@ -585,7 +585,9 @@ Tw.MembershipSubmain.prototype = {
    * @param $popupContainer
    */
   _onOpenBarcode: function (cardNum, $popupContainer) {
-    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+    setTimeout(function(){  // 닫기 버튼에 포커스를 주어야함.
+      $popupContainer.find('button:eq(0)').focus();
+    }, 100);
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       membershipBarcode.JsBarcode(cardNum, {

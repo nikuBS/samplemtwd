@@ -63,7 +63,7 @@
                                     <% if(isCustomGuidedProd){ %>
                                     <%= customGuide.selectableStartDate %>
                                     <% } else { %>
-                                    1개월 이내의 날짜를 선택하세요.
+                                    30일 안의 날짜를 선택하세요.
                                     <% } %>
                                 </li>
                                 <li id="aria-timeset1" class="announcement-bullet type01">한국시각 기준 00시~23시입니다.</li>
@@ -93,10 +93,10 @@
                 <div class="cont-box">
                     <h5 class="tit f-m16"><%= prodApiInfo.preinfo.reqProdInfo.prodNm.replace(' 기간형','') %> 선물</h5>
                     <p class="tip-gift">(선택사항) 데이터를 제공 받으실 SKT 휴대전화 회선을 등록해주세요.
-                        <br>* 휴대폰번호를 입력하시면 baro Box 이용기간 동안 사용 가능한 로밍 데이터 300MB(3G/LTE)가 제공됩니다.
-                        <br>* 법인 명의 baro Box – 법인, 개인명의, SKT 휴대전화 회선 등록 가능
-                        <br>* 개인 명의 baro Box – 본인 명의 SKT 휴대전화 회선 등록 가능
-                    </p>
+                        <br>* 휴대폰번호를 입력하시면 baro Box 이용기간 동안 사용 가능한 로밍 데이터 500MB(3G/LTE)가 제공됩니다.
+                        <br>* 법인 명의 baro Box - 법인, 개인명의, SKT 휴대전화 회선 등록 가능
+                        <br>* 개인 명의 baro Box - 본인 명의 SKT 휴대전화 회선 등록 가능
+                    </p><!-- 191213 수정 [OP002-5828] -->
                     <div class="tel-area">
                         <span class="subtit">휴대폰번호</span>
                         <div class="tel-box">
@@ -116,7 +116,7 @@
                         <ul class="announcement-box">
                             <li class="announcement-bullet type01">추가로 제공되는 로밍데이터를 원치 않으시거나 이미 가입하신 로밍 데이터 요금제가 있으신 경우, 휴대폰 번호를 빈칸으로 두고 가입하시기 바랍니다.
                                 <br>
-                                로밍데이터 300MB를 다 사용하시면 상품이 해지되며 ‘데이터로밍무조건차단’에 자동 가입됩니다.
+                                로밍데이터 500MB를 다 사용하시면 상품이 해지되며 ‘데이터로밍무조건차단’에 자동 가입됩니다.<!-- 191213 수정 [OP002-5828] -->
                             </li>
                         </ul>
                     </div>

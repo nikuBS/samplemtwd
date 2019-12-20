@@ -52,7 +52,7 @@ Tw.CustomerAgentsearchRentPhone.prototype = {
    * @function
    * @desc 카네고리 선택 시 actionsheet 노출
    */
-  _onCategoryClicked: function () {
+  _onCategoryClicked: function (e) {
     var count = 1;
     this._popupService.open({
       hbs: 'actionsheet01',
@@ -75,7 +75,9 @@ Tw.CustomerAgentsearchRentPhone.prototype = {
         attr: 'type="button"',
         txt: Tw.BUTTON_LABEL.CLOSE
       }
-    }, $.proxy(this._onActionSheetOpened, this), $.proxy(this._onActionSheetClosed, this));
+    }, $.proxy(this._onActionSheetOpened, this), $.proxy(this._onActionSheetClosed, this), 
+    null,
+    $(e.currentTarget));
   },
 
   /**
@@ -128,6 +130,8 @@ Tw.CustomerAgentsearchRentPhone.prototype = {
   _onMoreClicked: function () {
     var len = this._currentList.length - this._currentShowingCount > 20 ?
       this._currentShowingCount + 20 : this._currentList.length;
+    var lastItem = this.$listArea.find('li:last');
+    
 
     var items = '';
     for (var i = this._currentShowingCount; i < len; i += 1) {
@@ -135,6 +139,7 @@ Tw.CustomerAgentsearchRentPhone.prototype = {
     }
 
     this.$listArea.append(items);
+    lastItem.next().find('button:eq(0)').focus(); //추가된 목록에 포커스
 
     this._currentShowingCount = this._currentShowingCount + (len - this._currentShowingCount);
     if (this._currentShowingCount >= this._currentList.length) {
@@ -148,11 +153,17 @@ Tw.CustomerAgentsearchRentPhone.prototype = {
    * @param  {Object} item 각 임대폰 매장의 정보 객체
    */
   _getItemCompiled: function (item) {
-    return '<li class="fe-shop" data-id="' + item.locCode +'"><dl class="type02">' +
-      '<dt>' + item.storeName + '</dt>' +
-      '<dd>' + item.searchAddr + '<br>' + item.jibunAddr +
-      '<a href="tel://' + item.tel + '" class="bt-tel">' +
-      '<span role="img" class="blind">매장으로 전화하기</span></a></dd></dl></li>';
+    var arr = [];
+
+    arr.push('<li class="fe-shop" data-id="' + item.locCode +'">');
+    arr.push(' <button class="bt-dtxt type02">');
+    arr.push('      <span class="dtxt-t">' + item.storeName +'</span>');
+    arr.push('      <span class="dtxt-d">' + item.searchAddr +'<br>' + item.jibunAddr +'</span>');
+    arr.push('  </button>');
+    arr.push('  <a href="tel://' + item.tel +'" class="bt-tel"><span class="blind">매장으로 전화하기</span></a>');
+    arr.push('</li>');
+
+    return arr.join('');
   },
 
   /**

@@ -98,7 +98,7 @@ Tw.CustomerFaq.prototype = {
    * @function
    * @desc 검색 카테고리 액션시트 팝업 오픈
    */
-  _onSearchCategory: function () {
+  _onSearchCategory: function (e) {
     var list = Tw.POPUP_TPL.CUSTOMER_FAQ_SEARCH_CATEGORY;
 
     this._popupService.open({
@@ -107,6 +107,7 @@ Tw.CustomerFaq.prototype = {
       data: list,
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      Tw.CommonHelper.focusOnActionSheet($root);
       /* 팝업 오픈 시 이전에 선택된 지역 체크 */
       $root.find('input#' + this.selectedSearchCategory).attr('checked', true);
       
@@ -118,8 +119,12 @@ Tw.CustomerFaq.prototype = {
         this.selectedSearchCategory = $(e.currentTarget).attr('id');
         // Tw.Logger.info('[this.selectedSearchCategory는 : ]', this.selectedSearchCategory);
         // this._historyService.goLoad(this._getSearchUrl(this._searchType.LOCATION));
+        this._popupService.close();
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   }
 
 
