@@ -55,7 +55,7 @@
         <div class="totalfilter-wrap">
             <span class="total">총 <span class="number-text fe-total-count"><%= result.totalCount %></span>개</span>
             <% const _dateInClass = optionsText === '전체' ? '':'date-in'; %>
-            <button type="button" class="filter-btn fe-select-filter <%=_dateInClass%>" aria-haspopup="true"><!-- 필터 선택값 노출시 .date-in 클래스 추가 -->
+            <button type="button" class="filter-btn fe-select-filter <%=_dateInClass%>" title="조건 선택" aria-haspopup="true"><!-- 필터 선택값 노출시 .date-in 클래스 추가 -->
                 <span class="datebox"><%= optionsText %></span>
             </button>
         </div>
