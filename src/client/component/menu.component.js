@@ -342,7 +342,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var $target = $($event.currentTarget);
     // if ( this._isMultiLine ) {
       if ( !this._lineComponent ) {
-        this._lineComponent = new Tw.LineComponent();
+        this._lineComponent = new Tw.LineComponent(null, null, false, this.$gnbBtn);
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해
       this._lineComponent.onClickLine(this._svcMgmtNum, $target);
