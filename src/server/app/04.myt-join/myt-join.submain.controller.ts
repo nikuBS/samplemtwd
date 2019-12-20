@@ -151,16 +151,6 @@ class MyTJoinSubmainController extends TwViewController {
       data.myPausedState = myps; // 일시정지
       data.myLongPausedState = mylps; // 장기일시정지
 
-      // 개통일자
-      if (data.myHistory) {
-        if (data.myHistory.length > 0) {
-          const h_chgDt = data.myHistory[0].chgDt;
-          // 개통일자 DV001-13951 (마스킹시 ****.**.** 이와 같이 변경)
-          data.hsDate = this.isMasking(h_chgDt) ? this.dateMaskingReplace(h_chgDt) : DateHelper.getShortDate(h_chgDt);
-        } else {
-          data.hsDate = null;
-        }
-      }
       // 부가, 결합상품 노출여부
       if (data.myAddProduct && Object.keys(data.myAddProduct).length > 0) {
         data.isAddProduct = true;
@@ -332,12 +322,6 @@ class MyTJoinSubmainController extends TwViewController {
     const difference_ms = (date1_ms - date2_ms);
     // Convert back to days and return
     return Math.round(difference_ms / ONE_DAY);
-  }
-
-  dateMaskingReplace(target): string {
-    const reg1 = /\B((?=([\*]{2})(?![\*])))/g;
-    const reg2 = /\B((?=([\.\*]{5})(?![\.\*])))/g;
-    return target.replace(reg1, '.').replace(reg2, '.');
   }
 
   isMasking(target): boolean {
