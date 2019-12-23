@@ -496,7 +496,6 @@ Tw.CertificationSk.prototype = {
       this.$btCert.removeClass('none');
       this.$inputMdn.siblings('.cancel').removeClass('none');
       this.$showTime.attr('aria-hidden',true);
-      this.$btCertAdd.attr('aria-hidden',true);
     } else {
       this._onKeyin = false;
       this.$inputMdn.prop('readonly', true);
@@ -507,7 +506,6 @@ Tw.CertificationSk.prototype = {
       this.$btReCert.removeClass('none');
       this.$inputMdn.siblings('.cancel').addClass('none');
       this.$showTime.attr('aria-hidden',true);
-      this.$btCertAdd.attr('aria-hidden',true);
     }
     this._checkEnableConfirmButton();
   },
@@ -657,7 +655,6 @@ Tw.CertificationSk.prototype = {
     if (resp.code === Tw.API_CODE.CODE_00) {
       this._seqNo = resp.result.seqNo;
       this.$btCertAdd.attr('disabled', false);
-      this.$btCertAdd.attr('aria-hidden',false);
       this._getCertNum();
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
       if (!reCert) {
