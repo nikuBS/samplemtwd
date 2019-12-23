@@ -49,8 +49,8 @@ _%>
                         <%# 최종가입점: "마스킹 해제 전" *** 로 표기 / "마스킹 해제 후" 데이타 노출 _%>
                         <div class="ti-caption-type01 pb0">
                             <h3 class="tit">최종가입점</h3>
-                            <%# 대리점인 경우, 위치찾기 _%>
-                            <%_ if (details.fstScrbOrgNm) { _%>
+                            <%# 대리점인 경우 (판매점이 우선하기 때문에, 판매점 정보가 없어야 함), 위치찾기 _%>
+                            <%_ if (!details.saleOrgNm && details.fstScrbOrgNm) { _%>
                             <div class="tod-fright">
                                 <a href="/customer/agentsearch/search?type=name&storeType=0&keyword=<%= details.fstScrbOrgNm %>" class="bt-link-tx underline small">위치찾기</a>
                             </div>
@@ -58,21 +58,38 @@ _%>
                         </div>
                         <div class="basic-list bg-type">
                             <ul>
+                                <%_ if (details.saleOrgNm) { _%>
+                                <%# 판매점인 경우 _%>
                                 <li>
                                     <span class="title">가입점</span>
-                                    <span class="tx-cont"><%= details.fstScrbOrgNm || details.saleOrgNm || '' %></span>
+                                    <span class="tx-cont"><%= details.saleOrgNm %></span>
                                 </li>
-                                <%# 판매점인 경우, 가입상담자가 없는 경우 _%>
-                                <%_ if (!details.fstScrbOrgNm || details.selrNm) { _%>
+                                <%# 가입상담자가 있는 경우 _%>
+                                    <%_ if (details.selrNm) { _%>
                                 <li>
                                     <span class="title">가입상담자</span>
-                                    <span class="tx-cont"><%= details.selrNm || '' %></span>
+                                    <span class="tx-cont"><%= details.selrNm %></span>
                                 </li>
-                                <%_ } _%>
+                                    <%_ } _%>
+                                    <%_ if (details.cntcPhonNum) { _%>
                                 <li>
                                     <span class="title">연락처</span>
-                                    <span class="tx-cont"><%- details.fstScrbPhonNum || details.cntcPhonNum || '' %></span>
+                                    <span class="tx-cont"><%- details.cntcPhonNum %></span>
                                 </li>
+                                    <%_ } _%>
+                                <%_ } else { _%>
+                                <%# 대리점인 경우 _%>
+                                <li>
+                                    <span class="title">가입점</span>
+                                    <span class="tx-cont"><%= details.fstScrbOrgNm %></span>
+                                </li>
+                                    <%_ if (details.fstScrbPhonNum) { _%>
+                                <li>
+                                    <span class="title">연락처</span>
+                                    <span class="tx-cont"><%- details.fstScrbPhonNum %></span>
+                                </li>
+                                    <%_ } _%>
+                                <%_ } _%>
                             </ul>
                         </div>
                         <%# //최종가입점 _%>
