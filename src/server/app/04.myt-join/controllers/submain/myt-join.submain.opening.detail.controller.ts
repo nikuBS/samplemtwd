@@ -51,6 +51,8 @@ class MyTJoinOpeningDetail extends TwViewController {
             chgNm: history.chgCd
           };
         });
+      } else {
+        options['histories'] = null;
       }
       res.render('submain/myt-join.submain.opening.detail.html', options);
     });
