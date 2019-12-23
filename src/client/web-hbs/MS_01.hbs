@@ -34,77 +34,95 @@ _%>
 
             <!-- .cont-box -->
             <div class="cont-box">
-                <!-- 개통/변경이력 -->
+                <%# 개통/변경이력 _%>
                 <div class="ti-caption-type01 pb10">
                     <h3 class="tit">개통/변경이력</h3>
                 </div>
 
-                <!-- 2007년 3월 1일 이전가입자 인 경우 -->
-                {{#if true}}
+                <%_ if (histories) { _%>
+                <%# 2007년 3월 1일 이후 가입자 인 경우, "마스킹 해제 전" *** 로 표기 / "마스킹 해제 후" 데이타 노출 _%>
+                <div class="basic-list bg-type mb30">
+                    <ul>
+                        <%_
+                        for (var i = 0, count = histories.length; i < count; i += 1) {
+                        var history = histories[i];
+                        _%>
+                        <li>
+                            <span class="title"><%= history.chgNm %></span>
+                            <span class="tx-cont"><%- history.chgDt %></span>
+                        </li>
+                        <%_ } _%>
+                    </ul>
+                </div>
+                <%_ } else { _%>
+                <%# 2007년 3월 1일 이전가입자 인 경우 _%>
                 <div class="basic-list bg-type mb30">
                     <p>2007년 3월 1일 이전 가입 고객은 SK텔레콤 지점/대리점에서 확인 가능합니다.</p>
                 </div>
-                {{/if}}
+                <%_ } _%>
+                <%# //개통/변경이력 _%>
 
-                <!-- 이후 가입자 : <마스킹 해제 전>  *** 로 표기 / <마스킹 해제 후> 데이타 노출 -->
-                <div class="basic-list bg-type mb30">
-                    <ul>
-                        <li>
-                            <span class="title">신규가입</span>
-                            <span class="tx-cont">{{'2011.07.06'}}</span>
-                        </li>
-                        <li>
-                            <span class="title">명의변경</span>
-                            <span class="tx-cont">{{'2011.07.06'}}</span>
-                        </li>
-                        <li>
-                            <span class="title">기기변경</span>
-                            <span class="tx-cont">{{'2011.07.06'}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <!-- //개통/변경이력 -->
-
-                <!-- 최종가입점 : <마스킹 해제 전>  *** 로 표기 / <마스킹 해제 후> 데이타 노출 -->
+                <%# 최종가입점: "마스킹 해제 전" *** 로 표기 / "마스킹 해제 후" 데이타 노출 _%>
                 <div class="ti-caption-type01 pb0">
                     <h3 class="tit">최종가입점</h3>
-                    {{#if true}}
+                    <%# 대리점인 경우 (판매점이 우선하기 때문에, 판매점 정보가 없어야 함), 위치찾기 _%>
+                    <%_ if (!details.saleOrgNm && details.fstScrbOrgNm) { _%>
                     <div class="tod-fright">
-                        <a href="/customer/agentsearch/detail?code=" class="bt-link-tx underline small">위치찾기</a>
+                        <a href="/customer/agentsearch/search?type=name&storeType=0&keyword=<%= details.fstScrbOrgNm %>" class="bt-link-tx underline small">위치찾기</a>
                     </div>
-                    {{/if}}
+                    <%_ } _%>
                 </div>
                 <div class="basic-list bg-type">
                     <ul>
+                        <%_ if (details.saleOrgNm) { _%>
+                        <%# 판매점인 경우 _%>
                         <li>
                             <span class="title">가입점</span>
-                            <span class="tx-cont">{{'신촌지점'}}</span>
+                            <span class="tx-cont"><%= details.saleOrgNm %></span>
                         </li>
+                        <%# 가입상담자가 있는 경우 _%>
+                        <%_ if (details.selrNm) { _%>
                         <li>
                             <span class="title">가입상담자</span>
-                            <span class="tx-cont">{{'김동환'}}</span>
+                            <span class="tx-cont"><%= details.selrNm %></span>
                         </li>
+                        <%_ } _%>
+                        <%_ if (details.cntcPhonNum) { _%>
                         <li>
                             <span class="title">연락처</span>
-                            <span class="tx-cont">{{'02-934-7425'}}</span>
+                            <span class="tx-cont"><%- details.cntcPhonNum %></span>
                         </li>
+                        <%_ } _%>
+                        <%_ } else { _%>
+                        <%# 대리점인 경우 _%>
+                        <li>
+                            <span class="title">가입점</span>
+                            <span class="tx-cont"><%= details.fstScrbOrgNm %></span>
+                        </li>
+                        <%_ if (details.fstScrbPhonNum) { _%>
+                        <li>
+                            <span class="title">연락처</span>
+                            <span class="tx-cont"><%- details.fstScrbPhonNum %></span>
+                        </li>
+                        <%_ } _%>
+                        <%_ } _%>
                     </ul>
                 </div>
-                <!-- //최종가입점 -->
+                <%# //최종가입점 _%>
             </div>
             <!--// .cont-box -->
 
-            <!-- 꼭 확인해 주세요 -->
+            <!-- .cont-box -->
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
-                    <li><button class="btn-tip" aria-haspopup="true" id="MS_01_tip_01">개통/변경이력 조회란?<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="MS_01_tip_02">기기변경  이력<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="MS_01_tip_03">장기가입 고객 선정기준일 정보<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="MS_01_tip_04">기타 자세한 문의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" aria-haspopup="true" id="TC000097">개통/변경이력 조회란?<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" aria-haspopup="true" id="TC000098">기기변경 이력<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" aria-haspopup="true" id="TC000099">장기가입 고객 선정기준일 정보<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" aria-haspopup="true" id="TC000100">기타 자세한 문의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                 </ul>
             </div>
-
+            <!--// .cont-box -->
         </div>
     </div>
     <!--// .container-wrap -->
