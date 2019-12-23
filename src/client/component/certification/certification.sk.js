@@ -495,6 +495,8 @@ Tw.CertificationSk.prototype = {
       this.$btReCert.addClass('none');
       this.$btCert.removeClass('none');
       this.$inputMdn.siblings('.cancel').removeClass('none');
+      this.$showTime.attr('aria-hidden',true);
+      this.$btCertAdd.attr('aria-hidden',true);
     } else {
       this._onKeyin = false;
       this.$inputMdn.prop('readonly', true);
@@ -504,6 +506,8 @@ Tw.CertificationSk.prototype = {
       this.$btCert.addClass('none');
       this.$btReCert.removeClass('none');
       this.$inputMdn.siblings('.cancel').addClass('none');
+      this.$showTime.attr('aria-hidden',true);
+      this.$btCertAdd.attr('aria-hidden',true);
     }
     this._checkEnableConfirmButton();
   },
@@ -653,6 +657,7 @@ Tw.CertificationSk.prototype = {
     if (resp.code === Tw.API_CODE.CODE_00) {
       this._seqNo = resp.result.seqNo;
       this.$btCertAdd.attr('disabled', false);
+      this.$btCertAdd.attr('aria-hidden',false);
       this._getCertNum();
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
       if (!reCert) {
@@ -744,6 +749,7 @@ Tw.CertificationSk.prototype = {
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
     this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    this.$showTime.attr('aria-hidden',false);
     if (remainedSec <= 0) {
       clearInterval(this._addTimer);
     }

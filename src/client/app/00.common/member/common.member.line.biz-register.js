@@ -444,6 +444,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
     this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    this.$showTime.attr('aria-hidden',false);
     if ( remainedSec <= 0 ) {
       clearInterval(this._addTimer);
     }
