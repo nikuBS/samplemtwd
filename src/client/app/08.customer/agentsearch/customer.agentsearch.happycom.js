@@ -132,8 +132,7 @@ Tw.CustomerAgentHappycom.prototype = {
       {
         hbs: 'CS_17_01_L01',
         layer: true
-      },
-      $.proxy(this._handleOpenSelectFilterPopup, this)
+      }, $.proxy(this._handleOpenSelectFilterPopup, this), null, 'filter', $target
     );
 
   },  // end of _openFilterPopup
