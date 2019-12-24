@@ -127,7 +127,8 @@ Tw.CustomerAgentHappycom.prototype = {
    * @desc 사용자가 필터 클릭 시
    * @param {Event} e 클릭 이벤트 객체
    */
-  _openFilterPopup: function() {
+  _openFilterPopup: function(e) {
+    var $target = $(e.currentTarget);
     this._popupService.open(
       {
         hbs: 'CS_17_01_L01',
