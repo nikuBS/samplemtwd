@@ -423,34 +423,6 @@ gulp.task('mp4', function () {
   .pipe(gulp.dest(dist + 'mp4'));
 });
 
-gulp.task('js-stats', function () {
-  return gulp.src(['src/client/web-contents/js/beusable.js'])
-    .pipe(sort())
-    .pipe(logger({
-      before: 'Starting sort js-stats',
-      after: 'Complete sort js-stats',
-      showChange: true
-    }))
-    .pipe(concat('stats.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(rename('stats.min.js'))
-    .pipe(rev())
-    .pipe(logger({
-      before: 'Starting  hash js-stats',
-      after: 'Complete hash js-stats',
-      showChange: true
-    }))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(rev.manifest(dist + 'tmp/stats-manifest.json', {
-      merge: true
-    }))
-    .pipe(gulp.dest('.'));
-});
-
 gulp.task('post-clean', function () {
   return gulp.src(dist + 'tmp')
     .pipe(clean());
@@ -487,7 +459,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'js-stats', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
 gulp.task('run', ['server', 'watch']);
