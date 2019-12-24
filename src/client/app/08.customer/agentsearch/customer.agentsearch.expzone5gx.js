@@ -75,10 +75,8 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
         hbs: 'CS_16_01_L01',
         filters: this.fiveOptionType,
         layer: true
-      },
-      $.proxy(this._handleOpenSelectFilterPopup, this)
+      }, $.proxy(this._handleOpenSelectFilterPopup, this), null, 'filter', $target
     );
-
   },  // end of _openZoneFilterPopup
 
 

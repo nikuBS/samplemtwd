@@ -118,6 +118,7 @@ Tw.CustomerDocument.prototype = {
     var $titleNode = $parentTarget.find('.acco-title');
     $titleNode.find('.question').hide();
     $titleNode.find('.result-txt').text($target.attr('title')).show();
+    $titleNode.find('button').attr('title', $target.attr('title'));
     $titleNode.attr('id', $target.attr('id'));
   },
   /**
