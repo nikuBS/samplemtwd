@@ -21,7 +21,7 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
     const prodId = req.query.prod_id || null;
-    const promotionProdIdArr = ['NA00005632', 'NA00005634', 'NA00005635'];  //프로모션 상품 id
+    const promotionProdIdArr = ['NA00005632', 'NA00005634', 'NA00005635', 'NA00006826'];  //프로모션 상품 id
     const isPromotion = promotionProdIdArr.indexOf(prodId) > -1;
 
     if (FormatHelper.isEmpty(prodId)) {

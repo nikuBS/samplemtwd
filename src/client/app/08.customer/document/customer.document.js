@@ -118,6 +118,7 @@ Tw.CustomerDocument.prototype = {
     var $titleNode = $parentTarget.find('.acco-title');
     $titleNode.find('.question').hide();
     $titleNode.find('.result-txt').text($target.attr('title')).show();
+    $titleNode.find('button').attr('title', $target.attr('title'));
     $titleNode.attr('id', $target.attr('id'));
   },
   /**
@@ -281,7 +282,7 @@ Tw.CustomerDocument.prototype = {
    */
   _setTargetDisabled: function ($target) {
     $target.addClass('off');
-    $target.find('button').addClass('none-event');
+    $target.find('button').addClass('none-event').prop('disaled', true);
   },
   /**
    * @function
@@ -360,6 +361,6 @@ Tw.CustomerDocument.prototype = {
    */
   _openList: function ($target) {
     $target.removeClass('off').addClass('on');
-    $target.find('button').removeClass('none-event');
+    $target.find('button').removeClass('none-event').prop('disaled', false);
   }
 };

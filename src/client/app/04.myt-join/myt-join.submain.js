@@ -27,7 +27,7 @@ Tw.MyTJoinSubMain = function (rootEl, params) {
   new Tw.XtractorService(this.$container);
 
   // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
-  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true);
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
 };
 
 Tw.MyTJoinSubMain.prototype = {
@@ -154,6 +154,7 @@ Tw.MyTJoinSubMain.prototype = {
     this.$joinService.on('click', $.proxy(this._onMovedJoinService, this));
     this.$nickNmBtn.on('click', $.proxy(this._onChangeNickName, this));
     this.$certifyBtn.on('click', $.proxy(this._onOpenCertifyPopup, this));
+    this.$container.find('[data-id=br-opening-detail]').on('click', $.proxy(this._onOpeningDetailClicked, this));
   },
 
   _initialize: function () {
@@ -694,5 +695,45 @@ Tw.MyTJoinSubMain.prototype = {
     } else {
       this._historyService.goLoad('/myt-join/submain/wire/numchange');
     }
+  },
+  /**
+   *
+   * @private
+   */
+  _onOpeningDetailClicked: function () {
+    this._historyService.goLoad('/myt-join/submain/opening-detail');
   }
+  /*
+  // Popup으로 구현했을 때,
+  /!*
+   *
+   * @param {Object} event
+   * @private
+   *!/
+  _onOpeningDetailClicked: function (event) {
+    this._popupService.open({
+      hbs: 'MS_01',
+      data: {
+      }
+    }, $.proxy(this._onOpenDetailOpened, this), $.proxy(this._onOpenDetailClosed, this), 'detail',
+      $(event.target));
+  },
+  /!**
+   *
+   * @param {jQuery} $popup
+   * @private
+   *!/
+  _onOpenDetailOpened: function ($popup) {
+    this._dlgOpenDetail = new Tw.MyTJoinMoreInfoDetail($popup, {
+      onClosed: $.proxy(function () {}, this)
+    });
+  },
+  /!**
+   *
+   * @private
+   *!/
+  _onOpenDetailClosed: function () {
+    delete this._dlgOpenDetail;
+  }
+  */
 };

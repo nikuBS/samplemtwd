@@ -303,7 +303,7 @@ Tw.CustomerAgentsearch.prototype = {
    * @function
    * @desc 지하철 탭에서 지역선택 시 actionsheet로 옵션 표기해줌
    */
-  _onTubeArea: function () {
+  _onTubeArea: function (e) {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
     if (!Tw.FormatHelper.isEmpty(this._selectedTubeAreaCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
@@ -336,14 +336,17 @@ Tw.CustomerAgentsearch.prototype = {
         this._selectedTubeNameCode = null;
         this._popupService.close();
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
   /**
    * @function
    * @desc 지하철 탭에서 노선 선택 시 actionsheet 로 선택 가능한 노선 표시
    */
-  _onTubeLine: function () {
+  _onTubeLine: function (e) {
     if (!this._selectedTubeAreaCode) {
       this._popupService.openAlert('지역을 선택해 주세요.');
       return;
@@ -385,7 +388,10 @@ Tw.CustomerAgentsearch.prototype = {
 
 
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
     /**
@@ -452,7 +458,7 @@ Tw.CustomerAgentsearch.prototype = {
    * @function
    * @desc 지하철 탭에서 역명 선택 시 actionsheet 로 선택 가능한 역명 표시
    */
-  _onTubeName: function () {
+  _onTubeName: function (e) {
     if (!this._selectedTubeAreaCode || !this._selectedTubeLineCode) {
       this._popupService.openAlert('지역 및 노선을 선택해 주세요.');
       return;
@@ -491,7 +497,10 @@ Tw.CustomerAgentsearch.prototype = {
         this.$btnSearchTube.removeAttr('disabled');
         this._popupService.close();
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
 

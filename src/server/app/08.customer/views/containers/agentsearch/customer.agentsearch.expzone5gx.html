@@ -71,9 +71,9 @@
                             
                             <!-- 2019.02.20 옵션바로 사용할 경우 date-in 클래스 제거, 전체일때 파란색 border line 제거 -->
                             <% if (params.fiveOptionType == 0) { %>
-                                <button type="button" class="filter-btn aria-haspopup fe-select-filter" aria-haspopup="true">
+                                <button type="button" class="filter-btn aria-haspopup fe-select-filter" title="조건 선택" aria-haspopup="true">
                             <% } else { %>
-                                <button type="button" class="filter-btn aria-haspopup date-in fe-select-filter" aria-haspopup="true">
+                                <button type="button" class="filter-btn aria-haspopup date-in fe-select-filter" title="조건 선택" aria-haspopup="true">
                             <% } %>
                                 <span class="datebox"><%= fiveOptionName %></span>
                             <!-- <span class="datebox">5GX 체험존</span>

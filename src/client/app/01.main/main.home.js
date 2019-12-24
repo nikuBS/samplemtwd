@@ -81,7 +81,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
 
   // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
   // this._lineComponent = new Tw.LineComponent();
-  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line');
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', false, null);
 };
 
 Tw.MainHome.prototype = {

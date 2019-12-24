@@ -51,9 +51,12 @@
                     <div class="h-home-logo">
                         <button type="button" class="icon-gnb-bi"><span class="blind">홈으로</span></button>
                     </div>
+                    
                     <div class="h-home-tit">
-                        <button type="button" class="twrold on" aria-selected="true">T world</button> <!-- 활성화시 .on // --><!-- 접근성-선택되었을때 'true' 변경 Grand open 접근성-->
-                        <button type="button" class="directshop" aria-selected="false">Shop</button> <!-- 활성화시 .on // --><!-- 접근성-선택되었을때 'true' 변경 Grand open 접근성-->
+                        <!-- 191113 웹접근성 수정_01 : title 추가 -->
+                        <button type="button" class="twrold on" aria-selected="true" title="선택됨">T world</button><!-- 활성화시 .on // --><!-- 접근성-선택되었을때 'true' 변경 Grand open 접근성-->
+                        <button type="button" class="directshop" aria-selected="false" title="">Shop</button><!-- 활성화시 .on // --><!-- 접근성-선택되었을때 'true' 변경 Grand open 접근성-->
+                        <!-- // 191113 웹접근성 수정_01 : title 추가 -->
                     </div>
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
@@ -160,7 +163,7 @@
                                     <ul class="slider">
                                         <li>
                                             <ul class="quick-menu-list">
-                                                <li><button class="bt new"><i class="icon-5gx"></i>5GX</button></li><!-- 2019.03.20 추가 -->
+                                                <li><button class="bt new" title="새창" role="link"><i class="icon-5gx"></i>5GX</button></li><!-- 191113 웹접근성 수정_02 : title 추가, role 추가 --><!-- 2019.03.20 추가 -->
                                                 <li><button class="bt"><i class="icon-price-plan-80"></i>요금제</button></li><!-- 2019.03.15 icon-charge-80 -> icon-price-plan-80 class 수정 -->
                                                 <li><button class="bt"><i class="icon-vas-80"></i>부가서비스</button></li><!-- 2019.03.15 부가상품 -> 부가서비스 텍스트 수정 -->
                                                 <li><button class="bt"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</button></li> <!-- 2019.03.05 인터넷/전화/IPTV -> 인터넷/집전화/IPTV 텍스트 수정-->
@@ -476,7 +479,7 @@
                             <div class="slider-box">
                                 <ul class="slider">
                                     <li>
-                                        <button>
+                                        <button role="link"><!-- 191113 웹접근성 수정_03 : role 추가 -->
                                             <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
                                             <span class="ico"></span>
                                         </button>
@@ -488,7 +491,6 @@
                     <!--// .widget -->
                 </div>
                 <!-- //공지사항 -->
-
             </div>
         </div>
         <!--// #contents -->

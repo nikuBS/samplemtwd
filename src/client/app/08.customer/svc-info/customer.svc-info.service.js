@@ -132,6 +132,7 @@ Tw.CustomerSvcinfoService.prototype = {
    * @param {element} $container 
    */
   _ActionSheetBindEvent: function ($container) {
+    Tw.CommonHelper.focusOnActionSheet($container);
     this.$selectButtons = $container.find('.ac-list>li');
 
     // check 

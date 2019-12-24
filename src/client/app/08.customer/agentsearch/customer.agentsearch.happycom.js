@@ -127,13 +127,13 @@ Tw.CustomerAgentHappycom.prototype = {
    * @desc 사용자가 필터 클릭 시
    * @param {Event} e 클릭 이벤트 객체
    */
-  _openFilterPopup: function() {
+  _openFilterPopup: function(e) {
+    var $target = $(e.currentTarget);
     this._popupService.open(
       {
         hbs: 'CS_17_01_L01',
         layer: true
-      },
-      $.proxy(this._handleOpenSelectFilterPopup, this)
+      }, $.proxy(this._handleOpenSelectFilterPopup, this), null, 'filter', $target
     );
 
   },  // end of _openFilterPopup
@@ -228,7 +228,7 @@ Tw.CustomerAgentHappycom.prototype = {
    * @function
    * @desc 지역선택 시 actionsheet로 옵션 표기해줌
    */
-  _onLocationCategory: function () {
+  _onLocationCategory: function (e) {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_LOCATION;
 
     this._popupService.open({
@@ -250,7 +250,10 @@ Tw.CustomerAgentHappycom.prototype = {
 
         this._historyService.goLoad(this._getSearchUrl(this._searchType.LOCATION));
       }, this));
-    }, this));
+    }, this), 
+    null, 
+    null,
+    $(e.currentTarget));
   },
 
 

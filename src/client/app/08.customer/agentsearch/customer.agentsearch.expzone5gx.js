@@ -75,10 +75,8 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
         hbs: 'CS_16_01_L01',
         filters: this.fiveOptionType,
         layer: true
-      },
-      $.proxy(this._handleOpenSelectFilterPopup, this)
+      }, $.proxy(this._handleOpenSelectFilterPopup, this), null, 'filter', $target
     );
-
   },  // end of _openZoneFilterPopup
 
 
@@ -174,7 +172,7 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
    * @function
    * @desc 지역선택 시 actionsheet로 옵션 표기해줌
    */
-  _onLocationCategory: function () {
+  _onLocationCategory: function (e) {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_LOCATION;
 
 
@@ -199,7 +197,10 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
         url += '&locationOrder=' + (this.selectedLocationCode ? this.selectedLocationCode : '1') + '&locationOrderName=' + selectedLocationName;
         this._historyService.goLoad(url);
       }, this));
-    }, this));
+    }, this), 
+    null,
+    null,
+    $(e.currentTarget));
   },
 
 
