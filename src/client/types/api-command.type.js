@@ -232,6 +232,7 @@ Tw.API_CMD = {
   BFF_05_0213: { path: '/core-bill/:version/bill-pay/cdr-pattern', method: Tw.API_METHOD.GET },
   BFF_05_0214: { path: '/core-modification/:version/wire-list-not-agreement', method: Tw.API_METHOD.GET },
   BFF_05_0215: { path: '/core-modification/:version/skb-tworld-processing-agreement-update', method: Tw.API_METHOD.PUT },
+  BFF_05_0216: { path: '/core-modification/:version/mobile-join-info', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
