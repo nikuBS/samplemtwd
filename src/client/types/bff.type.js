@@ -177,7 +177,6 @@ Tw.SVC_ATTR_ICO_CLASS = {
   M1: 'icon-cellphone',
   M2: 'icon-cellphone',
   M3: 'icon-wifi',
-  M4: 'icon-wifi',
   M5: 'icon-wifi',
   S1: 'icon-internet',
   S2: 'icon-pc',
