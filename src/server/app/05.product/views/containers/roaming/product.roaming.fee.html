@@ -73,7 +73,7 @@
             <% const products = roamingPlanData.products; %>
             <% if (products) { %>
             <div class="cont-box nogaps-hoz">
-                <ul class="recommendedrate-list mt0 no-icon-type" id="fe-roaming-list">
+                <ul class="recommendedrate-list mt0 no-icon-type rm-recommendedrate-list" id="fe-roaming-list"> <!-- 191227 수정 [OP002-6034] -->
                     <% products.map(plan => { %>
                     <li class="type01">
                         <a href="/product/callplan?prod_id=<%= plan.prodId %>" class="product-infolink">
