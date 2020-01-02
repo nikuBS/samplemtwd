@@ -35874,7 +35874,6 @@ body.apphome .section-box {
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/svg/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
 .my-subscription-wrap .basic-list.tod-basic-list ul li button.bt-link-tx.underline{padding:0 !important}
-.tod-line-sel-box .line-sel-btn.side-arr:after{background:url('/img/common/ico-white-arr-right.png') no-repeat left top; background-size:100%; width:0.5rem; height:0.875rem; } /* 191204 [OP002-5303] - 추가 */
 
 /* 191209 [OP002-5498] 유선 업무처리 동의 프로세스 */
 .tod-join-txt-wrap .txt-desc{margin-bottom:0}
