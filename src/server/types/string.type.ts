@@ -1441,7 +1441,7 @@ export const SMART_CALL_PICK = [
 export const ROAMING_CUSTOMIZED_MESSAGE = {
 
   SIXTY_DAY: '60일 안의 날짜를 선택하세요.'
-};
+}
 
 export const ROAMING_PRODUCT_CUSTOMIZE_DATA = {
   NA00006487:{ // baro OnePass VIP 기간형
@@ -1452,10 +1452,9 @@ export const ROAMING_PRODUCT_CUSTOMIZE_DATA = {
     selectableStartDateRange: 60,
     selectableStartDate: ROAMING_CUSTOMIZED_MESSAGE.SIXTY_DAY
   }
-};
+}
 
 export const NODE_ERROR_MSG = {
   '1006': '잘못된 접근 경로 입니다.',
-  '1007': '가입된 모바일 회선이 존재하지 않습니다.',
-  '1008' : '만 14세 미만 미성년자는<br>이용하실 수 없는 메뉴입니다.'
+  '1007': '가입된 모바일 회선이 존재하지 않습니다.'
 };
