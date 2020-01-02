@@ -166,8 +166,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   _goChildBillInfo: function(event) {
     var childLine = $(event.currentTarget).data('svc-mgmt-num');
-    var dt = this.resData.reqQuery.date ||
-      Tw.DateHelper.getEndOfMonth(this.resData.billpayInfo.invDt, 'YYYYMMDD', 'YYYYMMDD');
+    var dt = this.resData.reqQuery.date || '';
     this._history.goLoad('/myt-fare/billguide/child?line='+childLine+'&date='+dt);
   },
   /**

@@ -237,10 +237,11 @@
                     <ul class="my-line-info" data-target="hbChildListArea">
                     </ul>
                 </div>
-                <hr class="cont-sp type1" aria-hidden="true"/>
             </div>
             <!--// .cont-box -->
 
+            <%if ([roamDonaCallBtnYn.callgiftYn,roamDonaCallBtnYn.roamingYn,roamDonaCallBtnYn.donationYn].indexOf('Y') > -1) {%>
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
@@ -274,8 +275,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
+            <%}%>
 
             <!-- .cont-box -->
             <div class="cont-box noborder bgnone">
@@ -283,19 +283,9 @@
                 <ul class="pg-chk-list02">
                     <li><button id="MF_02_01_tip_01" type="button" class="btn-tip" aria-haspopup="tree">이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button id="MF_02_01_tip_02" type="button" class="btn-tip" aria-haspopup="tree">로밍 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <!--
-                    <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="이용요금 안내">이용요금 안내<span class="tip-view">TIP</span></button></li>
-                    <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="로밍 이용요금 안내">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>
-                    -->
                 </ul>
             </div>
             <!--// .cont-box -->
-
-            <!-- TBD
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <img src="<%= CDN %>/img/dummy/DC_02_TBD3.jpg" alt="페이지 바로가기 노출 영역" style="width:100%;vertical-align:top;"/>
-             -->
-
         </div>
     </div>
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
