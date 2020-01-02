@@ -148,14 +148,17 @@ class MyTFareBillGuideChild extends TwViewController {
         // "OP002-2986 로 청구 데이터 안들어올 수 있으므로 디폴트 세팅 해준다." 참고 (myt-fare.bill.guide.controller.ts)
         this.makeDefData();
       } else {
-        // OP002-5998 조회월에 해당하는 청구 데이터가 없는경우. result.invAmtList[0] 데이터를 가져오게 되는경우 조회월과 상이한 날짜가 될 수 있으므로 제거함.
-        thisMain._billpayInfo = result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date); /*|| result.invAmtList[0];*/
+        // reqQuery.date 값이 있는경우 무조건 해당 청구월의 데이터만 가져오며, 값이 없는 경우 청구데이터 중 최근 1건 result.invAmtList[0] 의 데이터를 가져온다.
+        if (FormatHelper.isEmpty(thisMain.reqQuery.date)) {
+          thisMain._billpayInfo = result.invAmtList[0];
+        } else {
+          thisMain._billpayInfo = result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date);
+        }
+
         if (FormatHelper.isEmpty(thisMain._billpayInfo)) {
           this.makeDefData();
-          thisMain._billpayInfo.invDtArr = result.invAmtList.map(item => item.invDt);
         } else {
           // 청구월 목록
-          thisMain._billpayInfo.invDtArr = result.invAmtList.map(item => item.invDt);
           thisMain._commDataInfo.selClaimDt = thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt));
           thisMain._commDataInfo.selClaimDtM = thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt));
           thisMain._commDataInfo.selStaDt = thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt));
@@ -163,6 +166,7 @@ class MyTFareBillGuideChild extends TwViewController {
           thisMain._commDataInfo.discount = FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt))));
           thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt);
         }
+        thisMain._billpayInfo.invDtArr = result.invAmtList.map(item => item.invDt);
       }
       // 미납요금
       thisMain._unpaidBillsInfo = result.unPayAmtList;
@@ -176,15 +180,18 @@ class MyTFareBillGuideChild extends TwViewController {
       thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain.renderView(res, 'billguide/myt-fare.bill.guide.child.html', {
-        reqQuery: thisMain.reqQuery,
+        data : {
+          reqQuery: thisMain.reqQuery,
+          svcMgmtNum: svcInfo.svcMgmtNum,
+          billpayInfo: thisMain._billpayInfo,
+          commDataInfo: thisMain._commDataInfo,
+          intBillLineInfo: thisMain._intBillLineInfo,
+          showConditionInfo: thisMain._showConditionInfo,
+          unpaidBillsInfo: thisMain._unpaidBillsInfo || null
+        },
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
-        billpayInfo: thisMain._billpayInfo,
-        commDataInfo: thisMain._commDataInfo,
-        intBillLineInfo: thisMain._intBillLineInfo,
         childLineInfo: thisMain._childLineInfo,
-        showConditionInfo: thisMain._showConditionInfo,
-        unpaidBillsInfo: thisMain._unpaidBillsInfo || null,
         allSvc: allSvc
       });
     }, function(err) {
