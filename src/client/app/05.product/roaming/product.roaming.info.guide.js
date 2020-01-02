@@ -63,6 +63,7 @@ Tw.ProductRoamingGuide.prototype = {
       this.$container.on('click', '#fe-rm-info-slide3', $.proxy(this._goGuamSaipan, this));      // T괌사이판 국내처럼
       this.$container.on('click', '#fe-rm-info-slide4', $.proxy(this._goLteGuide, this));           // 자동로밍
       this.$container.on('click', '#fe-rm-info-slide5', $.proxy(this._goDataRoaming, this));        // SMS 문자, 데이터 로밍
+        this.$container.on('click', '#fe-rm-info-slide6', $.proxy(this._goFeeInfoRoaming, this));        // 로밍상품 이용안내
       this.$container.on('click', '#fe-rm-faq', $.proxy(this._goLoadFaq, this));                    // 자주하는 질문
       // this.$container.on('click', '.fe-roaming-button', $.proxy(this._goLoadRoamingGuide, this));
       this.$container.on('click', '#fe-rm-smart-guide', $.proxy(this._goDownLoadGuide, this, 'smart')); // 로밍안내서 다운받기 스마트폰
@@ -104,6 +105,9 @@ Tw.ProductRoamingGuide.prototype = {
   },
   _goDataRoaming : function () {
     this._history.goLoad('/product/roaming/info/data-roaming');
+  },
+  _goFeeInfoRoaming : function () {
+    this._history.goLoad('/product/roaming/fee-info');
   },
   _goLoadFaq : function () {
     this._history.goLoad('/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D');
