@@ -1055,7 +1055,6 @@ export const API_CODE = {
   NODE_1005: '1005',  // 세션 변경
   NODE_1006: '1006',  // 잘못된 redirect 경로(parameter : target)
   NODE_1007: '1007',  // 가입된 모바일 회선 미존재
-  NODE_1008: '1008',  // 만 14세 미만 미성년자는\n이용하실 수 없는 메뉴입니다.
 
   CODE_200: '200',
   CODE_400: '400',
