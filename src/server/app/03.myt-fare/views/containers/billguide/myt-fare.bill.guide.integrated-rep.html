@@ -364,10 +364,10 @@
                     <ul class="my-line-info" data-target="hbChildListArea">
                     </ul>
                 </div>
-                <hr class="cont-sp type1" aria-hidden="true"/>
             </div>
             <!--// .cont-box -->
-
+            <%if ([roamDonaCallBtnYn.callgiftYn,roamDonaCallBtnYn.roamingYn,roamDonaCallBtnYn.donationYn].indexOf('Y') > -1) {%>
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
@@ -401,8 +401,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
+            <%}%>
 
             <!-- .cont-box -->
             <div class="cont-box noborder bgnone">
@@ -413,12 +412,6 @@
                 </ul>
             </div>
             <!--// .cont-box -->
-
-            <!-- TBD
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <img src="<%= CDN %>/img/dummy/DC_02_TBD3.jpg" alt="페이지 바로가기 노출 영역" style="width:100%;vertical-align:top;"/>
-             -->
-
         </div>
     </div>
     <!--// #contents -->

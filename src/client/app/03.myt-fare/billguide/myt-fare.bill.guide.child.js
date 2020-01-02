@@ -6,7 +6,7 @@
  * Summary: 자녀회선 이용요금 조회화면 처리
  */
 Tw.MyTFareBillGuideChild = function (rootEl, resData) {
-  this.resData = resData;
+  this.resData = JSON.parse(window.unescape(resData));
   // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
@@ -29,7 +29,7 @@ Tw.MyTFareBillGuideChild.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    if(this.resData.billpayInfo && this.resData.billpayInfo.usedAmountDetailList){
+    if (this.resData.billpayInfo && this.resData.billpayInfo.usedAmountDetailList) {
       this.resData.billpayInfo.unPayAmtList = this.resData.unpaidBillsInfo;
       this._getUseBillsInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
     }
@@ -242,45 +242,46 @@ Tw.MyTFareBillGuideChild.prototype = {
    * @private
    */
   _getUseBillsInfoInit: function (res) {
+    if ( res.code !== Tw.API_CODE.CODE_00 ) {
+      return;
+    }
+
     var thisMain = this;
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    var useAmtDetailInfo = $.extend(true, {}, res.result.usedAmountDetailList);
 
-      var useAmtDetailInfo = $.extend(true, {}, res.result.usedAmountDetailList);
+    useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
+      item.invAmt = Tw.FormatHelper.addComma(item.billInvAmt);
+      return item;
+    });
+    // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
+    var resData = useAmtDetailInfo;
+    var groupKeyArr = ['billItmLclNm', 'billItmMclNm'];
+    var priceKey = 'billInvAmt';
+    var rootNodes = {};
+    rootNodes.useSvcType = this._useSvcTypeFun();
+    rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
 
-      useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
-        item.invAmt = Tw.FormatHelper.addComma(item.billInvAmt);
-        return item;
-      });
-      // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
-      var resData = useAmtDetailInfo;
-      var groupKeyArr = ['billItmLclNm', 'billItmMclNm'];
-      var priceKey = 'billInvAmt';
-      var rootNodes = {};
-      rootNodes.useSvcType = this._useSvcTypeFun();
-      rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
+    _.map(rootNodes.useBill, function (val) {
+      val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
+    });
 
-      _.map(rootNodes.useBill, function (val) {
-        val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
-      });
+    // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
+    this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
 
-      // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
-      this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
+    //위젯 아코디언 초기화
+    skt_landing.widgets.widget_accordion($('.widget'));
+    this._insertAsteMark();
 
-      //위젯 아코디언 초기화
-      skt_landing.widgets.widget_accordion($('.widget'));
-      this._insertAsteMark();
-
-      // 미납요금 계산
-      if( res.result.unPayAmtList && res.result.unPayAmtList.length > 0){
-        var unpayList = res.result.unPayAmtList;
-        var unpayTot = 0;
-        for(var i = 0; i < unpayList.length; i++){
-          unpayTot += parseInt(this._comUnComma(unpayList[i].colBat), 10);
-        }
-        if(unpayTot > 0){
-          $('#spanUnpaidTot').text(Tw.FormatHelper.convNumFormat(unpayTot) + ' ' + Tw.CURRENCY_UNIT.WON);
-          $('#divUnpaidBill').show().attr('aria-hidden', false);
-        }
+    // 미납요금 계산
+    if( res.result.unPayAmtList && res.result.unPayAmtList.length > 0){
+      var unpayList = res.result.unPayAmtList;
+      var unpayTot = 0;
+      for(var i = 0; i < unpayList.length; i++){
+        unpayTot += parseInt(this._comUnComma(unpayList[i].colBat), 10);
+      }
+      if(unpayTot > 0){
+        $('#spanUnpaidTot').text(Tw.FormatHelper.convNumFormat(unpayTot) + ' ' + Tw.CURRENCY_UNIT.WON);
+        $('#divUnpaidBill').show().attr('aria-hidden', false);
       }
     }
   },
