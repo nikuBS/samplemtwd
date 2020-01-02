@@ -35874,6 +35874,7 @@ body.apphome .section-box {
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/svg/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
 .my-subscription-wrap .basic-list.tod-basic-list ul li button.bt-link-tx.underline{padding:0 !important}
+.tod-line-sel-box .line-sel-btn.side-arr:after{background:url('/img/common/ico-white-arr-right.png') no-repeat left top; background-size:100%; width:0.5rem; height:0.875rem; } /* 191204 [OP002-5303] - 추가 */
 
 /* 191209 [OP002-5498] 유선 업무처리 동의 프로세스 */
 .tod-join-txt-wrap .txt-desc{margin-bottom:0}
@@ -35913,9 +35914,9 @@ body.apphome .section-box {
 
 /* 191227 로밍 메인 개선 [OP002-6034] */
 .rm-main-recomm-hdtx{padding-top:.3125rem;font-size:.8125rem;color:#959595}
-.rm-main-recomm-item .item{display:block;margin-top:.3125rem;padding:1.125rem .9375rem;background-color:#e6f2fb;border-radius:.2rem}
+.rm-main-recomm-item .item{display:block;width:100%;margin-top:.3125rem;padding:1.125rem .9375rem;background-color:#e6f2fb;border-radius:.2rem;text-align:left}
 .rm-main-recomm-item .item:first-child{margin:0}
-.rm-main-recomm-item .item h4{font-weight:bold}
+.rm-main-recomm-item .item h4{font-size:1rem;font-weight:bold;padding-bottom:.17rem}
 .rm-main-recomm-item .item span{margin-right:.9375rem;padding-left:1.5rem;font-size:.8125rem;color:#3198d4;background:url(/img/product/rm-main-ico-global.png) no-repeat 0 0;background-size:.875rem auto}
 .rm-main-recomm-item .item span+span{background-image:url(/img/product/rm-main-ico-cal.png)}
 .rm-main-recomm-item .item span+span+span{background-image:url(/img/product/rm-main-ico-data.png)}
