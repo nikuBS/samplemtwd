@@ -157,7 +157,8 @@ Tw.ProductRoaming.prototype = {
 
     if( $target.hasClass('active') ){
       $target.removeClass('active');
-      $('.rm-main-recomm>li:nth-child(n+4)').hide();
+      // $('.rm-main-recomm>li:nth-child(n+4)').hide();
+      $('.rm-main-recomm>li').hide(); /* 191227 수정 [OP002-6034] */
       $target.text('더 보기');
     } else {
       $target.addClass('active');
