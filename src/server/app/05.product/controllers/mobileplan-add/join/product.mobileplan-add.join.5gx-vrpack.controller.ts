@@ -76,7 +76,8 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
         ...renderCommonInfo, prodId,
         isApp: BrowserHelper.isApp(req),
         basicInfo: basicInfo.result,
-        joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+        joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result),
+        prodTitle: joinTermInfo.result.preinfo.reqProdInfo.prodNm
       });
     });
   }
