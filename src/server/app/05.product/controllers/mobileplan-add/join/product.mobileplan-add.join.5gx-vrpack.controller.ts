@@ -31,6 +31,8 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
     'NA00006618',
     'NA00006619',
     'NA00006802', // 분할_오큘러스고_신청
+    'NA00006858',
+    'NA00006856'
   ];
 
   /**
@@ -74,7 +76,8 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
         ...renderCommonInfo, prodId,
         isApp: BrowserHelper.isApp(req),
         basicInfo: basicInfo.result,
-        joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+        joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result),
+        prodTitle: joinTermInfo.result.preinfo.reqProdInfo.prodNm
       });
     });
   }
