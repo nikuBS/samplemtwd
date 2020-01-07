@@ -1462,7 +1462,7 @@ class ApiRouter {
         }
   
         // 잔여 데이터 객체 생성
-        let remainedData: any = {
+        const remainedData: any = {
           isEmpty: true,
           unlimit: false, // 무제한 여부
           unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
@@ -1596,7 +1596,7 @@ class ApiRouter {
   
   
         // 잔여 음성 객체 생성
-        let remainedVoice: any = {
+        const remainedVoice: any = {
           isEmpty: true,
           unlimit: false, // 무제한 여부
           unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
@@ -1646,7 +1646,7 @@ class ApiRouter {
   
   
         // 잔여 SMS 객체 생성
-        let remainedSms: any = {
+        const remainedSms: any = {
           isEmpty: true,
           unlimit: false, // 무제한 여부
           unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
@@ -1697,28 +1697,28 @@ class ApiRouter {
 
         // 단위 변경 및 표기 양식 설정
         // 최종 Response 객체 선언 (Widget 표기용)
-        let responseRemains = {
+        const responseRemains = {
           svcMgmtNum: svcMgmtNum,
           data: {
-            dataSkipId: dataCode, // 조회한 데이터 공제코드
+            skipId: dataCode, // 조회한 데이터 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
             sharedRemainedPercentage: 0, // 총 제공량 대비 잔여 T가족모아데이터의 비율
           },
           voice: {
-            voiceSkipId: voiceCode, // 조회한 음성 공제코드
+            skipId: voiceCode, // 조회한 음성 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           },
           sms: {
-            smsSkipId: smsCode, // 조회한 SMS 공제코드
+            skipId: smsCode, // 조회한 SMS 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           }
-        }
+        };
         
         // 잔여 데이터 Response 양식 설정
         if ( remainedData.isEmpty === false ) {
@@ -1787,6 +1787,20 @@ class ApiRouter {
             }
           }
         }
+
+        // 잔여량 백분율 변환(소수점 두자리)
+        Object.keys(responseRemains).map((key) => {
+          const keyObj = responseRemains[key];
+          if (!FormatHelper.isEmpty(keyObj['remainedPercentage'])) {
+            const value = keyObj['remainedPercentage'];
+            keyObj['remainedPercentage'] = Number((value * 100).toFixed(2));
+          }
+
+          if (!FormatHelper.isEmpty(keyObj['sharedRemainedPercentage'])) {
+            const value = keyObj['sharedRemainedPercentage'];
+            keyObj['sharedRemainedPercentage'] = Number((value * 100).toFixed(2));
+          }
+        });
 
         return res.json(responseRemains);
       });

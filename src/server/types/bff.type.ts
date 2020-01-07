@@ -1050,4 +1050,4 @@ export const MLS_ERROR = {
 
 export const WIDGET_ERROR = {
   SVCMGMTNUM_INVALID: { code: 'WIDGET0001', msg: '유효하지 않은 서비스관리번호 입니다.'}
-}
+};
