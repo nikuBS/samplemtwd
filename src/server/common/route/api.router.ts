@@ -1801,8 +1801,9 @@ class ApiRouter {
             keyObj['sharedRemainedPercentage'] = Number((value * 100).toFixed(2));
           }
         });
+        resp.result = responseRemains;
 
-        return res.json(responseRemains);
+        return res.json(resp);
       });
     });
   }
