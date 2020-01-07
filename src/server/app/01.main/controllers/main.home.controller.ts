@@ -392,6 +392,12 @@ class MainHome extends TwViewController {
       const totSvc = +billData.charge.paidAmtMonthSvcCnt;
       const billName = repSvc ? 'charge' : 'used';
 
+      const invMonth = +DateHelper.getCurrentMonth(billData[billName].invDt);
+      let billMonth = +invMonth + 1;
+      if (invMonth === 12) {
+        billMonth = 1;
+      }
+
       return {
         showBill: true,
         isBroadband: false,
@@ -403,7 +409,8 @@ class MainHome extends TwViewController {
         invEndDt: DateHelper.getShortDate(billData[billName].invDt),
         invStartDt: DateHelper.getShortFirstDate(billData[billName].invDt),
         invMonth: DateHelper.getCurrentMonth(billData[billName].invDt),
-        billMonth: +DateHelper.getCurrentMonth(billData[billName].invDt) + 1,
+        // billMonth: +DateHelper.getCurrentMonth(billData[billName].invDt) + 1,
+        billMonth: billMonth
       };
     }
     return null;
