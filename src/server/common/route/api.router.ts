@@ -14,7 +14,8 @@ import * as fs from 'fs';
 import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
-import { NODE_API_ERROR } from '../../types/string.type';
+import { NODE_API_ERROR, WIDGET_REMAINS_CODE, UNLIMIT_NAME } from '../../types/string.type';
+import { UNIT, UNIT_E, TPLAN_SHARE_LIST, WIDGET_ERROR } from '../../types/bff.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
@@ -104,7 +105,10 @@ class ApiRouter {
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
     GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethodsBlock },
-    GET_SSO_URL: { path: '/common/sso-url', method: API_METHOD.GET, target: this.getSsoUrl }
+    GET_SSO_URL: { path: '/common/sso-url', method: API_METHOD.GET, target: this.getSsoUrl },
+
+    // 위젯 잔여량 조회
+    GET_WIDGET_REMAINS: { path: '/widget/remains', method: API_METHOD.GET, target: this.getWidgetRemains }
   };
 
   /**
@@ -1394,6 +1398,414 @@ class ApiRouter {
     }
   }
   
+  /**
+   * 위젯 잔여량 조회 및 정제
+   * @param req
+   * @param res
+   * @param next
+   */
+  private getWidgetRemains(req: Request, res: Response, next: NextFunction) {
+    // Console 테스트 용1 : $.ajax('http://localhost:3000/api/widget/remains?svcMgmtNum=7253819428&dataCode=DD3J5&voiceCode=DD3J8&smsCode=DD3IZ') 김강타 본회선
+    // Console 테스트 용2 : $.ajax('http://localhost:3000/api/widget/remains?svcMgmtNum=7045659333&dataCode=DD3J5&voiceCode=DD3J8&smsCode=DD3IZ') 김강타 부회선
+    // Console 테스트 용3 : $.ajax('http://localhost:3000/api/widget/remains?svcMgmtNum=7039762321&dataCode=DD3II&voiceCode=DD3IJ&smsCode=DD3IB') 전형득 수석님 1번 회선
+
+    const apiService = new ApiService();
+    apiService.setCurrentReq(req, res);
+
+    // 조회대상 회선 및 공제코드 변수 생성
+    // TODO: 상용 반영 시 Query들 Header로 입력받도록 수정 필요
+    let svcMgmtNum: any = req.headers.svcMgmtNum || req.query.svcMgmtNum || null;
+    let dataCode: any = req.headers.dataCode || req.query.dataCode || null;
+    let voiceCode: any = req.headers.voiceCode || req.query.voiceCode || null;
+    let smsCode: any = req.headers.smsCode || req.query.smsCode || null;
+
+    // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
+    apiService.request(API_CMD.BFF_01_0002, {}).subscribe((resp) => {
+      if ( resp.code !== '00' ) {
+        return res.json(resp);
+      }
+
+      // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
+      if ( svcMgmtNum === null ) {
+        if ( resp.result && resp.result.m && resp.result.m.length > 0 ) {
+          svcMgmtNum = resp.result.m[0].svcMgmtNum;
+        }
+      }
+
+      // 서비스관리번호 유효성 체크 Flag
+      let isValidSvcMgmtNum = false;
+
+      // 모바일 회선 리스트에서 조회
+      if ( resp.result && resp.result.m ) {
+        resp.result.m.map((line) => {
+          if ( line.svcMgmtNum === svcMgmtNum ) {
+            isValidSvcMgmtNum = true;
+          }
+        });
+      }
+
+      // 서비스관리번호 조회되지 않을 경우 Error Return
+      if ( !isValidSvcMgmtNum ) {
+        return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
+      }
+
+      // 잔여량 조회 BFF 호출
+      apiService.request(API_CMD.BFF_05_0001, {}, { 'T-svcMgmtNum': svcMgmtNum }).subscribe((resp) => {
+      //apiService.request(API_CMD.BFF_01_0002, {}).subscribe((resp) => { // 잔여량 조회 횟수 제한으로 테스트 시 다른 BFF 호출
+  
+        // 목업 데이터 (전형득 수석님 1번 회선)
+        // resp = {"code":"00","msg":"success","result":{"dataTopUp":"N","ting":"N","dataDiscount":"N","gnrlData":[{"prodId":"POT10","prodNm":"T가족모아데이터","skipId":"POT10","skipNm":"T가족모아데이터","unlimit":"0","total":"9999999","used":"0","remained":"5555555","unit":"140","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"FD004","skipNm":"데이터리필","unlimit":"0","total":"4194304","used":"1327544","remained":"2866760","unit":"140","rgstDtm":"20191201070304","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3II","skipNm":"데이터통화 4GB 무료","unlimit":"0","total":"4194304","used":"936","remained":"2254654","unit":"110","rgstDtm":"","exprDtm":""}],"spclData":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IC","skipNm":"데이터서비스 이용 음성통화","unlimit":"0","total":"4194304","used":"15772","remained":"4178532","unit":"140","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IK","skipNm":"한도초과후 데이터 무료","unlimit":"1","total":"무제한","used":"무제한","remained":"무제한","unit":"140","rgstDtm":"","exprDtm":""}],"voice":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IJ","skipNm":"영상, 부가전화 300분","unlimit":"0","total":"18000","used":"53","remained":"17947","unit":"240","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IG","skipNm":"SKT 고객간 음성 무제한","unlimit":"M","total":"무제한","used":"12460","remained":"무제한","unit":"240","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IH","skipNm":"집전화·이동전화 음성 무제한","unlimit":"M","total":"무제한","used":"878","remained":"무제한","unit":"240","rgstDtm":"","exprDtm":""}],"sms":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IB","skipNm":"SMS/MMS/ⓜ메신저 기본제공","unlimit":"B","total":"기본제공","used":"기본제공","remained":"기본제공","unit":"310","rgstDtm":"","exprDtm":""}],"etc":[]}};
+  
+        // 잔여량 조회 실패 시 Error return
+        if ( resp.code !== '00' ) {
+          return res.json(resp);
+        }
+  
+        // 잔여 데이터 객체 생성
+        const remainedData: any = {
+          isEmpty: true,
+          unlimit: false, // 무제한 여부
+          unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
+          total : 0, // 제공량
+          remained: 0, // 잔여량
+          sharedRemained: 0, // T가족모아데이터 잔여량
+          unit: '' // 단위
+        };
+  
+        // 요청받은 데이터 공제코드가 없을 경우 합산 데이터(기본값)로 설정
+        if ( dataCode === null ) {
+          if ( resp.result && resp.result.gnrlData && resp.result.gnrlData.length > 0 ) {
+            dataCode = WIDGET_REMAINS_CODE.DATA_SUM;
+          }
+        }
+  
+        // 데이터에서 공제코드 검색
+        // 요청받은 공제코드가 합산 데이터일 경우
+        if ( dataCode === WIDGET_REMAINS_CODE.DATA_SUM ) {
+          if ( resp.result && resp.result.gnrlData ) {
+            resp.result.gnrlData.map((data) => {
+              // KB 단위 잔여량만 합산
+              if ( data.unit === UNIT_E.DATA ) {
+                remainedData.isEmpty = false;
+  
+                // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
+                switch (data.unlimit) {
+                  // 무제한
+                  case '1':
+                  case 'M':
+                    remainedData.unlimit = true;
+                    return;
+                  // 기본제공
+                  case 'B':
+                    remainedData.unlimit_default = true;
+                    return;
+                }
+  
+                // 각 항목 별 제공량 합산
+                remainedData.total += +data.total;
+                
+                // 각 항목 별 잔여량 합산 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                  remainedData.remained += +data.remained;
+                } else {
+                  remainedData.sharedRemained += +data.remained;
+                }
+  
+                // 단위 설정 (합산은 무조건 KB)
+                remainedData.unit = UNIT_E.DATA;
+              }
+            });
+          }
+        } else { // 요청받은 공제코드가 합산 데이터가 아닐 경우
+          // 범용 데이터에서 공제코드 검색
+          if ( resp.result && resp.result.gnrlData ) {
+            resp.result.gnrlData.map((data) => {
+              // 요청한 공제코드가 있을 경우 잔여량 입력
+              if ( data.skipId === dataCode ) {
+                remainedData.isEmpty = false;
+                
+                // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
+                switch (data.unlimit) {
+                  // 무제한
+                  case '1':
+                  case 'M':
+                    remainedData.unlimit = true;
+                    return;
+                  // 기본제공
+                  case 'B':
+                    remainedData.unlimit_default = true;
+                    return;
+                }
+  
+                // 제공량 입력
+                remainedData.total = +data.total;
+                
+                // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                  remainedData.remained = +data.remained;
+                } else {
+                  remainedData.sharedRemained = +data.remained;
+                }
+  
+                // 단위 설정
+                remainedData.unit = data.unit;
+              }
+            });
+          }
+  
+          // 범용 데이터에서 찾지 못했을 경우 특수 데이터에서 공제코드 검색
+          if ( remainedData.isEmpty === true ) {
+            if ( resp.result && resp.result.spclData ) {
+              resp.result.spclData.map((data) => {
+                // 요청한 공제코드가 있을 경우 잔여량 입력
+                if ( data.skipId === dataCode ) {
+                  remainedData.isEmpty = false;
+                  
+                  // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
+                  switch (data.unlimit) {
+                    // 무제한
+                    case '1':
+                    case 'M':
+                      remainedData.unlimit = true;
+                      return;
+                    // 기본제공
+                    case 'B':
+                      remainedData.unlimit_default = true;
+                      return;
+                  }
+  
+                  // 제공량 입력
+                  remainedData.total = +data.total;
+                  
+                  // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                  if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                    remainedData.remained = +data.remained;
+                  } else {
+                    remainedData.sharedRemained = +data.remained;
+                  }
+      
+                  // 단위 설정
+                  remainedData.unit = data.unit;
+                }
+              });
+            }
+          }
+        }
+        // 잔여 데이터 조회 및 객체(remainedData) 설정 완료
+  
+  
+  
+        // 잔여 음성 객체 생성
+        const remainedVoice: any = {
+          isEmpty: true,
+          unlimit: false, // 무제한 여부
+          unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
+          total : 0, // 제공량
+          remained: 0, // 잔여량
+          unit: '' // 단위
+        };
+  
+        // 요청받은 음성 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
+        if ( voiceCode === null ) {
+          if ( resp.result && resp.result.voice && resp.result.voice.length > 0 ) {
+            voiceCode = resp.result.voice[0].skipId;
+          }
+        }
+  
+        // 음성에서 공제코드 검색
+        if ( resp.result && resp.result.voice ) {
+          resp.result.voice.map((voice) => {
+            // 요청한 공제코드가 있을 경우 잔여량 입력
+            if ( voice.skipId === voiceCode ) {
+              remainedVoice.isEmpty = false;
+              
+              // 음성 항목이 무제한 또는 기본제공일 경우 Flag 설정
+              switch (voice.unlimit) {
+                // 무제한
+                case '1':
+                case 'M':
+                  remainedVoice.unlimit = true;
+                  return;
+                // 기본제공
+                case 'B':
+                  remainedVoice.unlimit_default = true;
+                  return;
+              }
+              
+              // 제공량 및 잔여량 입력
+              remainedVoice.total = +voice.total;
+              remainedVoice.remained = +voice.remained;
+  
+              // 단위 설정
+              remainedVoice.unit = voice.unit;
+            }
+          });
+        }
+        // 잔여 음성 조회 및 객체(remainedVoice) 설정 완료
+  
+  
+  
+        // 잔여 SMS 객체 생성
+        const remainedSms: any = {
+          isEmpty: true,
+          unlimit: false, // 무제한 여부
+          unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
+          total : 0, // 제공량
+          remained: 0, // 잔여량
+          unit: '' // 단위
+        };      
+  
+        // 요청받은 SMS 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
+        if ( smsCode === null ) {
+          if ( resp.result && resp.result.sms && resp.result.sms.length > 0 ) {
+            smsCode = resp.result.sms[0].skipId;
+          }
+        }
+        
+        // SMS에서 공제코드 검색
+        if ( resp.result && resp.result.sms ) {
+          resp.result.sms.map((sms) => {
+            // 요청한 공제코드가 있을 경우 잔여량 입력
+            if ( sms.skipId === smsCode ) {
+              remainedSms.isEmpty = false;
+              
+              // SMS 항목이 무제한 또는 기본제공일 경우 Flag 설정
+              switch (sms.unlimit) {
+                // 무제한
+                case '1':
+                case 'M':
+                  remainedSms.unlimit = true;
+                  return;
+                // 기본제공
+                case 'B':
+                  remainedSms.unlimit_default = true;
+                  return;
+              }
+  
+              // 제공량 및 잔여량 입력
+              remainedSms.total = +sms.total;
+              remainedSms.remained = +sms.remained;
+  
+              // 단위 설정
+              remainedSms.unit = sms.unit;
+            }
+          });
+        }
+        // 잔여 SMS 조회 및 객체(remainedSms) 설정 완료
+  
+  
+
+        // 단위 변경 및 표기 양식 설정
+        // 최종 Response 객체 선언 (Widget 표기용)
+        const responseRemains = {
+          svcMgmtNum: svcMgmtNum,
+          data: {
+            skipId: dataCode, // 조회한 데이터 공제코드
+            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
+            sharedRemainedPercentage: 0, // 총 제공량 대비 잔여 T가족모아데이터의 비율
+          },
+          voice: {
+            skipId: voiceCode, // 조회한 음성 공제코드
+            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
+          },
+          sms: {
+            skipId: smsCode, // 조회한 SMS 공제코드
+            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
+          }
+        };
+        
+        // 잔여 데이터 Response 양식 설정
+        if ( remainedData.isEmpty === false ) {
+          responseRemains.data.isValid = true;
+          if ( remainedData.unlimit === true ) { // 잔여 데이터가 무제한인 경우
+            responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
+            responseRemains.data.remainedPercentage = 1;
+          } else if ( remainedData.unlimit_default === true ) { // 잔여 데이터가 기본제공인 경우
+            responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
+            responseRemains.data.remainedPercentage = 1;
+          } else { // 잔여 데이터가 무제한이 아닌 경우
+            if ( remainedData.unit === UNIT_E.DATA ) { // 잔여 데이터의 단위가 'KB'인 경우
+              responseRemains.data.remainedValue = FormatHelper.convDataFormatWithUnit(remainedData.remained + remainedData.sharedRemained, UNIT[remainedData.unit]); // 용량 단위 변경 및 단위 텍스트 추가
+              responseRemains.data.remainedPercentage = remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
+              responseRemains.data.sharedRemainedPercentage = remainedData.total !== 0 ? remainedData.sharedRemained / remainedData.total : 0;
+            } else if ( remainedData.unit === UNIT_E.FEE ) { // 잔여 데이터의 단위가 '원'인 경우
+              responseRemains.data.remainedValue = FormatHelper.getFeeContents(remainedData.remained + remainedData.sharedRemained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.data.remainedPercentage = remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
+              responseRemains.data.sharedRemainedPercentage = remainedData.total !== 0 ? remainedData.sharedRemained / remainedData.total : 0;
+            } else { // 잔여 데이터의 단위가 'KB' 또는 '원'이 아닌 경우
+              responseRemains.data.isValid = false;
+            }
+          }
+        }
+  
+        // 잔여 음성 Response 양식 설정
+        if ( remainedVoice.isEmpty === false ) {
+          responseRemains.voice.isValid = true;
+          if ( remainedVoice.unlimit === true ) { // 잔여 음성이 무제한인 경우
+            responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
+            responseRemains.voice.remainedPercentage = 1;
+          } else if ( remainedVoice.unlimit_default === true ) { // 잔여 음성이 기본제공인 경우
+            responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
+            responseRemains.voice.remainedPercentage = 1;
+          } else { // 잔여 음성이 무제한이 아닌 경우
+            if ( remainedVoice.unit === UNIT_E.VOICE ) { // 잔여 음성의 단위가 '초'인 경우
+              responseRemains.voice.remainedValue = FormatHelper.convVoiceMinFormatWithUnit( Math.floor(remainedVoice.remained / 60) ); // 시간 단위 변경 및 단위 텍스트 추가
+              responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
+            } else if ( remainedVoice.unit === UNIT_E.FEE ) { // 잔여 음성의 단위가 '원'인 경우
+              responseRemains.voice.remainedValue = FormatHelper.getFeeContents(remainedVoice.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
+            } else { // 잔여 음성의 단위가 '초' 또는 '원'이 아닌 경우
+              responseRemains.voice.isValid = false;
+            }
+          }
+        }
+  
+        // 잔여 SMS Response 양식 설정
+        if ( remainedSms.isEmpty === false ) {
+          responseRemains.sms.isValid = true;
+          if ( remainedSms.unlimit === true ) { // 잔여 SMS가 무제한인 경우
+            responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
+            responseRemains.sms.remainedPercentage = 1;
+          } else if ( remainedSms.unlimit_default === true ) { // 잔여 SMS가 기본제공인 경우
+            responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
+            responseRemains.sms.remainedPercentage = 1;
+          } else { // 잔여 SMS가 무제한이 아닌 경우
+            if ( remainedSms.unit === UNIT_E.SMS || remainedSms.unit === UNIT_E.SMS_2 ) { // 잔여 SMS의 단위가 '건'인 경우
+              responseRemains.sms.remainedValue = FormatHelper.convNumFormat(remainedSms.remained); // 3자리 콤마 및 단위 텍스트 추가
+              responseRemains.sms.remainedPercentage = remainedSms.total !== 0 ? remainedSms.remained / remainedSms.total : 0;
+            } else if ( remainedSms.unit === UNIT_E.FEE ) { // 잔여 SMS의 단위가 '원'인 경우
+              responseRemains.sms.remainedValue = FormatHelper.getFeeContents(remainedSms.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.sms.remainedPercentage = remainedSms.total !== 0 ? remainedSms.remained / remainedSms.total : 0;
+            } else { // 잔여 SMS의 단위가 '건' 또는 '원'이 아닌 경우
+              responseRemains.sms.isValid = false;
+            }
+          }
+        }
+
+        // 잔여량 백분율 변환(소수점 두자리)
+        Object.keys(responseRemains).map((key) => {
+          const keyObj = responseRemains[key];
+          if (!FormatHelper.isEmpty(keyObj['remainedPercentage'])) {
+            const value = keyObj['remainedPercentage'];
+            keyObj['remainedPercentage'] = Number((value * 100).toFixed(2));
+          }
+
+          if (!FormatHelper.isEmpty(keyObj['sharedRemainedPercentage'])) {
+            const value = keyObj['sharedRemainedPercentage'];
+            keyObj['sharedRemainedPercentage'] = Number((value * 100).toFixed(2));
+          }
+        });
+
+        return res.json(responseRemains);
+      });
+    });
+  }
 }
 
 export default ApiRouter;
