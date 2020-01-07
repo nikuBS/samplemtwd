@@ -3606,6 +3606,13 @@
   background: url(/img/svg/icon_80px_coupon_refill.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-combine-40 {
+display: inline-block;
+width: 1.25rem;
+height: 1.25rem;
+background: url(/img/svg/icon_40px_combine.svg) no-repeat 0 0;
+background-size: 100% 100%; } /* 191220 [OP002-5903] 추가_01  */
+
 /* 191202 [OP002-5208] 개선-회선 관리 추가_01 */
 .icon-call-48 {
   display: inline-block;

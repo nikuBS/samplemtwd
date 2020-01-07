@@ -1067,14 +1067,22 @@ Tw.MainHome.prototype = {
         return null;
       }
     } else if ( billData.code === Tw.API_CODE.CODE_00 ) {
+      var invMonth = Tw.DateHelper.getCurrentMonth(billData.result.invDt);
+      if(invMonth === '12') {
+        billMonth = '1';
+      } else {
+        billMonth = +invMonth+ 1
+      }
       return {
         showData: true,
         isActRep: this._isActRep,
         useAmtTot: billData.result.amt,
         invEndDt: Tw.DateHelper.getShortDate(billData.result.invDt),
         invStartDt: Tw.DateHelper.getShortFirstDate(billData.result.invDt),
-        invMonth: Tw.DateHelper.getCurrentMonth(billData.result.invDt),
-        billMonth: +Tw.DateHelper.getCurrentMonth(billData.result.invDt) + 1
+        // invMonth: Tw.DateHelper.getCurrentMonth(billData.result.invDt),
+        // billMonth: +Tw.DateHelper.getCurrentMonth(billData.result.invDt) + 1
+        invMonth: invMonth,
+        billMonth: billMonth
       };
     } else {
       return {
