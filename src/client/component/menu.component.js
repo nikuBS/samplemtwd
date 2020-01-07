@@ -741,8 +741,18 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var info = resp.result;
     var total = info.amt;
     var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
+
     if (month) {
-      month = parseInt(month[1], 10) + 1 + Tw.DATE_UNIT.MONTH_S;
+      // month = parseInt(month[1], 10) + 1 + Tw.DATE_UNIT.MONTH_S;
+      month = parseInt(month[1], 10);
+
+      if(month === 12) {
+        month = 1;
+      } else {
+        month = month + 1;
+      }
+
+      month = month + Tw.DATE_UNIT.MONTH_S;
       $(elem).text(
         month + ' ' + total + Tw.CURRENCY_UNIT.WON);
     } else {
