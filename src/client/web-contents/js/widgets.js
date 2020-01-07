@@ -385,6 +385,7 @@ skt_landing.widgets = {
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: false,
+        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         focusOnSelect: true,
         focusOnChange: true
       })
@@ -414,6 +415,7 @@ skt_landing.widgets = {
         variableWidth: false,
         focusOnSelect: true,
         focusOnChange: true,
+        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         responsive: [{
           settings: {
             centerPadding: 0
@@ -476,6 +478,7 @@ skt_landing.widgets = {
         variableWidth: false,
         focusOnSelect: true,
         focusOnChange: true,
+        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         responsive: [{
           settings: {
             centerPadding: 0
@@ -807,6 +810,7 @@ skt_landing.widgets = {
           centerMode: false,
           focusOnSelect: false,
           touchMove: true,
+          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           customPaging: function (slider, i) {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
@@ -834,6 +838,7 @@ skt_landing.widgets = {
           centerMode: false,
           focusOnSelect: false,
           touchMove: true,
+          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           customPaging: function (slider, i) {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
@@ -894,6 +899,7 @@ skt_landing.widgets = {
         swipe: false,
         vertical: true,
         verticalSwiping: true,
+        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         autoplay: true,
         autoplaySpeed: 5000
       });
