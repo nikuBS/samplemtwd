@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 41 41" style="enable-background:new 0 0 41 41;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#666666;stroke-width:1.9;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#666666;stroke-width:1.9;stroke-linecap:round;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#666666;stroke-width:1.8;stroke-linecap:round;stroke-miterlimit:10;}
+</style>
+<title>icon_40px_vas</title>
+<desc>Created with Sketch.</desc>
+<g>
+	<path class="st0" d="M22.5,37.7H7.1c-1,0-1.9-0.8-1.9-1.9V3.1c0-1,0.8-1.9,1.9-1.9H28c1,0,1.9,0.8,1.9,1.9V24"/>
+	<line class="st1" x1="15.5" y1="5.5" x2="20.5" y2="5.5"/>
+	<line class="st1" x1="5.7" y1="32.2" x2="19.5" y2="32.2"/>
+	<g>
+		<circle class="st0" cx="27.6" cy="31.6" r="8.1"/>
+		<g>
+			<line class="st2" x1="24.1" y1="31.6" x2="31.1" y2="31.6"/>
+			<line class="st2" x1="27.6" y1="28.1" x2="27.6" y2="35.1"/>
+		</g>
+	</g>
+</g>
+</svg>
