@@ -7,7 +7,7 @@
 Tw.PRODUDT = Tw.PRODUDT||{};
 Tw.PRODUDT.PROMOTIONS = {
   POOQ:{
-    USED: 'Y',
+    USED: 'N',
     PRODS:{
       'NA00006516': { //Pooq 콘텐츠 팩
         SUB_PROD: ['NA00006545', 'NA00006546', 'NA00006657', 'NA00006517']
@@ -100,8 +100,7 @@ Tw.PRODUDT.PROMOTIONS = {
           }else if (data.joinDate1 !== 'N' && 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
             return 'NONE_FREE_1' + '_' + successNum; //100원 프로모션 이벤트 가입일 M+2
           }else{
-            // 코인팝업 임시제거 return 'NONE_FREE_2'; ////5000코인 지급 팝업
-            return null;
+            return 'NONE_FREE_2'; ////5000코인 지급 팝업
           }
         }else{
           return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지
@@ -116,8 +115,7 @@ Tw.PRODUDT.PROMOTIONS = {
       }else if(data.joinDate1 !== 'N' && 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
         return 'NONE_FREE_1' + '_' + successNum; //100원 프로모션 이벤트 가입일 M+2
       }else{
-        // 코인팝업 임시제거 return 'NONE_FREE_2'; ////5000코인 지급 팝업
-        return null;
+        return 'NONE_FREE_2'; ////5000코인 지급 팝업
       }
       
       //else if(2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
@@ -280,27 +278,23 @@ Tw.PRODUDT.PROMOTIONS = {
           return null;
         } else if (data.joinDate1 !== 'N') {
           if ( 2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ){
-            // OCB 지금 임시제거 return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
-            return null;
+            return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
           } else {
             return 'NONE_FREE_2'; // 100원 프로모션 이벤트 가입일 M+2 or X (Case_02)
           }
         } else{
-          // OCB 지금 임시제거 return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
-          return null;
+          return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
         }
       } else if ( data.coinDate !== 'N') { // OCB 가입 NA6655
         return null;
       } else if( data.joinDate1 !== 'N') {
         if( 2 <= moment(month).diff(data.joinDate1.substr(0,6) + '01', 'month')){
-          // OCB 지금 임시제거 return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
-          return null;
+          return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
         } else {
           return 'NONE_FREE_2';
         }
       } else {
-        // OCB 지금 임시제거 return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
-        return null;
+        return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
       }
 
       return null;
