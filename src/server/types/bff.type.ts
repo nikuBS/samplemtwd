@@ -1047,7 +1047,3 @@ export const MLS_PRCPLN_RC_TYP = 'GNRL';
 export const MLS_ERROR = {
   MLS0001: {code: 'MLS0001', msg: '나에게 꼭 맞는 추천 요금제가 없습니다.'}
 };
-
-export const WIDGET_ERROR = {
-  SVCMGMTNUM_INVALID: { code: 'WIDGET0001', msg: '유효하지 않은 서비스관리번호 입니다.'}
-}
