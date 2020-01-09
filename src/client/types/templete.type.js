@@ -1042,9 +1042,9 @@ Tw.MYT_PREPAID_ALARM = {
 };
 
 Tw.PRODUCT_APPS_ORDER = [
-  { txt: '최신순', 'radio-attr': 'data-prop="storRgstDtm"' },
-  { txt: '추천순', 'radio-attr': 'data-prop="idxExpsSeq"' },
-  { txt: '가나다순', 'radio-attr': 'data-prop="prodNm"' }
+  { 'label-attr': 'for="0"', txt: '최신순', 'radio-attr': 'id="0" data-prop="storRgstDtm"' },
+  { 'label-attr': 'for="1"', txt: '추천순', 'radio-attr': 'id="1" data-prop="idxExpsSeq"' },
+  { 'label-attr': 'for="2"', txt: '가나다순', 'radio-attr': 'id="2" data-prop="prodNm"' }
 ];
 
 Tw.SUSPEND_RELATION = {

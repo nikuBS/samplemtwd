@@ -34,7 +34,7 @@
                                 <li>
                                     <label for="{{menuId}}" class="bt fe-label-menu" aria-checked="{{#if quickAdded}}true{{else}}false{{/if}}"><!-- 체크 상태일 경우 aria-checked="true" -->
                                         {{menuNm}}
-                                        <span class="custom-form"><input class="fe-input-menu" type="checkbox" id="{{menuId}}"><span class="c-type1" {{#if quickAdded}}checked="checked"{{/if}} data-menuid="{{menuId}}"></span></span><!-- 체크상태일 경우 checked="checked" -->
+                                        <span class="custom-form"><input class="fe-input-menu" type="checkbox" id="{{menuId}}" {{#if quickAdded}}checked="checked"{{/if}} data-menuid="{{menuId}}"><span class="c-type1"></span></span><!-- 체크상태일 경우 checked="checked" -->
                                     </label>
                                 </li>
                                 {{/each}}

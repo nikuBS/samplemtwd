@@ -168,20 +168,6 @@
                             <i class="icon-my-40"><span class="blind"></span></i>나의 가입정보 &gt; 나의 부가서비스
                         </button>
                     </li>
-                    <!--유선이 아닌경우-->
-                    <%} if(!data.svcInfo.svcAttrCd.startsWith('S')) {%>
-                    <li>
-                        <button data-href="/benefit/submain/discount" data-xt_eid="<%=eid.discount%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 요금할인
-                        </button>
-                    </li>
-                    <!--유선인 경우-->
-                    <%} if(data.svcInfo.svcAttrCd.startsWith('S')) {%>
-                    <li>
-                        <button data-href="/benefit/submain/combinations" data-xt_eid="<%=eid.combiDiscount%>" data-xt_csid="NO" data-xt_action="BC">
-                            <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 결합할인
-                        </button>
-                    </li>
                     <%}%>
                 </ul>
                 <ul class="pg-link-list" data-id="other-pages">
@@ -194,6 +180,13 @@
                     </li>
                     <!--유선이 아닌경우-->
                     <%} if(!data.svcInfo.svcAttrCd.startsWith('S')) {%>
+                    <%      if('M2' === data.svcInfo.svcAttrCd) {%>
+                    <li class="tod-linktype2">
+                        <button data-href="/benefit/submain" data-xt_eid="<%=eid.discount%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-discount-40"></i>혜택/할인 <span class="stxt">고객님을 위한 다양한 혜택을 확인하세요</span>
+                        </button>
+                    </li>
+                    <%      }%>
                     <li class="tod-linktype2">
                         <button data-href="/product/mobileplan" data-xt_eid="<%=eid.mobileplan%>" data-xt_csid="NO" data-xt_action="BC">
                             <i class="icon-price-plan-40"></i>요금제 <span class="stxt">내게 맞는 요금제로 변경하세요</span>
@@ -201,6 +194,11 @@
                     </li>
                     <!--유선인 경우-->
                     <%} if(data.svcInfo.svcAttrCd.startsWith('S')) {%>
+                    <li class="tod-linktype2">
+                        <button data-href="/benefit/submain" data-xt_eid="<%=eid.combiDiscount%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-discount-40"></i>혜택/할인 <span class="stxt">고객님을 위한 다양한 혜택을 확인하세요</span>
+                        </button>
+                    </li>
                     <li class="tod-linktype2">
                         <button data-href="/product/wireplan" data-xt_eid="<%=eid.wireplan%>" data-xt_csid="NO" data-xt_action="BC">
                             <i class="icon-internet-40"></i>인터넷/전화/IPTV <span class="stxt">내게 맞는 결합상품을 확인하세요</span>

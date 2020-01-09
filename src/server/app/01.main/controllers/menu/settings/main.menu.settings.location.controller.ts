@@ -9,21 +9,29 @@ import TwViewController from '../../../../../common/controllers/tw.view.controll
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../../utils/format.helper';
+import { NODE_ERROR_MSG } from '../../../../../types/string.type'; 
 
 export default class MainMenuSettingsLocation extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
-    this.isLocationTermAgreed(res, svcInfo, pageInfo).subscribe(
-      (isAgree) => {
-        if (!FormatHelper.isEmpty(isAgree)) {
-          res.render('menu/settings/main.menu.settings.location.html', {
-            svcInfo, pageInfo, isAgree
-          });
-        }
-      },
-      (err) => this.showError(res, svcInfo, pageInfo, err.code, err.msg)
-    );
+
+    this.checkIsOverFourteen(res, svcInfo, pageInfo).subscribe((isOverFourteen) => {
+      if (isOverFourteen) {
+        this.isLocationTermAgreed(res, svcInfo, pageInfo).subscribe(
+          (isAgree) => {
+            if (!FormatHelper.isEmpty(isAgree)) {
+              res.render('menu/settings/main.menu.settings.location.html', {
+                svcInfo, pageInfo, isAgree
+              });
+            }
+          },
+          (err) => this.showError(res, svcInfo, pageInfo, err.code, err.msg)
+        );
+      } else {
+        this.showError(res, svcInfo, pageInfo, API_CODE.NODE_1006, NODE_ERROR_MSG[API_CODE.NODE_1008]);
+      }
+    });
   }
 
   /**
@@ -45,6 +53,24 @@ export default class MainMenuSettingsLocation extends TwViewController {
       }
       this.showError(res, svcInfo, pageInfo, resp.code, resp.msg);
       return null;
+    });
+  }
+
+    /**
+   * @function
+   * @desc 14세 이상 확인
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - page 정보
+   * @returns Observable BFF로 조회된 결과를 Observable로 return
+   */
+  private checkIsOverFourteen(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_08_0080, {/*mbrChlId : svcInfo.mbrChlId*/}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        return resp.result.age >= 14 ? true : false;
+      }
+      this.showError(res, svcInfo, pageInfo, resp.code, resp.msg);
+      return false;
     });
   }
 
