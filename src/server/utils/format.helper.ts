@@ -135,33 +135,6 @@ class FormatHelper {
     };
   }
 
-  /**
-   * @desc convert data unit and return to string including unit text
-   * @param  {number | string} data data
-   * @param  {DATA_UNIT} curUnit current unit
-   * @return {object} { data, unit }
-   * @static
-   */
-  static convDataFormatWithUnit(data: any, curUnit: string): any {
-    const units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB, DATA_UNIT.TB], maxIdx = units.length - 1;
-    let unitIdx = units.findIndex(value => value === curUnit);
-
-    if ( !isFinite(data) ) {
-      return {
-        data: data,
-        unit: curUnit
-      };
-    }
-    data = +data;
-
-    while ( data >= 1024 && unitIdx < maxIdx ) {
-      data /= 1024;
-      unitIdx++;
-    }
-
-    return FormatHelper.convNumFormat(data) + units[unitIdx];
-  }
-
   static convNumFormat(number: number): string {
     if ( number < 1 ) {
       return FormatHelper.setDecimalPlace(number, 2).toString();
