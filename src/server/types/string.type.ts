@@ -1464,4 +1464,4 @@ export const NODE_ERROR_MSG = {
 
 export const WIDGET_REMAINS_CODE = {
   DATA_SUM: 'DATA_SUM'
-};
+}
