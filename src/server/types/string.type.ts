@@ -17,7 +17,9 @@ export const UNLIMIT_NAME = {
   '1': '무제한',
   B: '기본제공',
   M: '무제한',
-  REMAIN: '남음'
+  REMAIN: '남음',
+  WIDGET_UNLIMIT: '무제한', // 위젯 내 '무제한' 표기
+  WIDGET_UNLIMIT_DEFAULT: '기본제공' // 위젯 내 '기본제공' 표기 (무제한 표기 방식의 일종)
 };
 
 // 요금 안내서 설정 > 안내서 유형(복합은 컨트롤러에서 만들고 단수만 표현한다)
@@ -1521,3 +1523,6 @@ export const TARGET_AGENT_LIST = [
   'iPhone11_8',   // 아이폰XR  (3차)
   'iPhone8_4'   // 아이폰 SE 2020 (3차)
 ];
+export const WIDGET_REMAINS_CODE = {
+  DATA_SUM: 'DATA_SUM'
+}
