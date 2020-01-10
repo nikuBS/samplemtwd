@@ -15,19 +15,23 @@ Tw.MyTJoinWireDiscountRefund = function (rootEl) {
   this._listTmpl = Handlebars.compile($('#list-tmplt').html());
   this._totTmpl = Handlebars.compile($('#tot-tmplt').html());
 
+  this._cachedElement();
   this._bindEvent();
   this._registerHelper();
 };
 
 Tw.MyTJoinWireDiscountRefund.prototype = {
 
+  _cachedElement: function () {
+    this._$btnSearch = $('[data-id=btn-search]');
+  },
 
   /**
    * 이벤트 바인딩
    * @private
    */
   _bindEvent: function () {
-    $('#btn-search').click($.proxy(this._requestData, this));
+    this._$btnSearch.click($.proxy(this._requestData, this));
   },
 
   /**
@@ -45,7 +49,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    */
   _requestData: function() {
 
-    $('#btn-search').attr('disabled', true);
+    this._$btnSearch.attr('disabled', true);
     $('#divEmpty').hide().attr('aria-hidden', true);
     $('.info-list-type1').hide().attr('aria-hidden', true);
     $('#divLoading').show().attr('aria-hidden', false);
@@ -54,7 +58,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
       .done($.proxy(function (resp) {
 
-        $('#btn-search').attr('disabled', false);
+        this._$btnSearch.attr('disabled', false);
         Tw.CommonHelper.endLoading('#divLoading');
         $('#divLoading').hide().attr('aria-hidden', true);
 
@@ -93,7 +97,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
       }, this))
       .fail(function (err) {
 
-        $('#btn-search').attr('disabled', false);
+        this._$btnSearch.attr('disabled', false);
         Tw.CommonHelper.endLoading('#divLoading');
         $('#divLoading').hide().attr('aria-hidden', true);
         Tw.Error(err.status, err.statusText);
