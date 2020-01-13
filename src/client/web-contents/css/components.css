@@ -35931,7 +35931,8 @@ body.apphome .section-box {
 
 /* 200109 괌사이판 국내처럼 나의 T로밍 이용현황 개발 건 [OP002-6221] */
 .list-comp-lineinfo.type5 li{overflow:visible}
-.use-info-box:nth-child(n+1) .info-list{margin-top:0}
+.list-comp-lineinfo .use-info-box+.use-info-box{padding-top:.94rem}
+.list-comp-lineinfo .use-info-box+.use-info-box .info-list{margin-top:0}
 .use-info-box .use-info-rm-all{margin:1rem -1rem;padding:1rem;background-color:#e6f2fb}
 .use-info-box .use-info-rm-all .info-list li dd{color:#3b98e6}
 .list-comp-lineinfo li .use-info-box:nth-child(n+8){display:none}
