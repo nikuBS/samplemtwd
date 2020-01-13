@@ -22,7 +22,12 @@
                             <span class="info-title"><%= prodList[keyProd].prodNm %></span>
                             <% if (prodList[keyProd].remainedDays) { %>
                             <span class="info-txt">이용중인 T로밍 잔여기간</span>
-                            <span class="info-date"><span><%= prodList[keyProd].remainedDays %>일</span> 남음</span>
+                            <% var baroBoxGift = ["NA00006390", "NA00006388", "NA00006828", "NA00006389"] %>
+                                <% if (!(baroBoxGift.includes(prodList[keyProd].prodId))) { %>
+                                <span class="info-date"><span><%= prodList[keyProd].remainedDays %>일</span> 남음</span>
+                                <% } else { %>
+                                <span class="info-date">baro Box 이용 기간</span><!-- 200108 수정 [OP002-6243] -->
+                                <% } %>
                             <% } %>
                             <span class="info-sub">가입일 <%= prodList[keyProd].scrbDt %></span>
                         </span>
