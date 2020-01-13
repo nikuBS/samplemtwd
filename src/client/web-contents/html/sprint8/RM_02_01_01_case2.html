@@ -32,11 +32,11 @@
     	$('.use-info-rm-more-btn button').click(function(){
     		if( $(this).hasClass('active') ){
     			$(this).removeClass('active');
-    			$('.list-comp-lineinfo li .use-info-box:nth-child(n+8)').hide();
+    			$('.list-comp-lineinfo li .use-info-box ul:nth-child(n+7)').hide();
     			$('.use-info-rm-more-btn button').text('더 보기');
     		} else {
     			$(this).addClass('active');
-    			$('.list-comp-lineinfo li .use-info-box').show();
+    			$('.list-comp-lineinfo li .use-info-box ul').show();
     			$('.use-info-rm-more-btn button').text('숨기기');    			
     		}
     	});    	
@@ -114,7 +114,8 @@
                     										</div>
 											                <div class="use-info-box">
 											                    <span class="info-title">사용량 정보</span>
-											                    <div class="use-info-rm-all">
+											                    <!-- 200113 삭제 [OP002-6250] -->
+											                    <!--<div class="use-info-rm-all">
 											                    	<ul class="info-list">
 											                        <li>
 											                            <dl>
@@ -129,7 +130,8 @@
 											                            </dl>
 											                        </li>
 											                        </ul>
-											                    </div>
+											                    </div>-->
+											                    <!-- // 200113 삭제 [OP002-6250] -->
 											                    <ul class="info-list">
 											                        <li>
 											                            <dl>
@@ -149,9 +151,7 @@
 											                                <dd><strong>1GB</strong> 사용</dd>
 											                            </dl>
 											                        </li>
-											                    </ul>
-											                </div>
-											                <div class="use-info-box">
+											                    </ul>											                
 											                    <ul class="info-list">
 											                        <li>
 											                            <dl>
@@ -172,8 +172,6 @@
 											                            </dl>
 											                        </li>
 											                    </ul>
-											                </div>
-											                <div class="use-info-box">
 											                    <ul class="info-list">
 											                        <li>
 											                            <dl>
@@ -193,9 +191,7 @@
 											                                <dd><strong>150MB</strong> 사용</dd>
 											                            </dl>
 											                        </li>
-											                    </ul>
-											                </div>
-											                <div class="use-info-box">
+											                    </ul>											                
 											                    <ul class="info-list">
 											                        <li>
 											                            <dl>
@@ -216,8 +212,6 @@
 											                            </dl>
 											                        </li>
 											                    </ul>
-											                </div>
-											                <div class="use-info-box">
 											                    <ul class="info-list">
 											                        <li>
 											                            <dl>
@@ -238,8 +232,6 @@
 											                            </dl>
 											                        </li>
 											                    </ul>
-											                </div>
-											                <div class="use-info-box">
 											                    <ul class="info-list">
 											                        <li>
 											                            <dl>
@@ -271,6 +263,11 @@
 									                	<li>데이터 완전 무제한 요금제 이용 : 데이터 사용량·속도 제한 없이 완전 무제한으로 사용하실 수 있습니다.<br><span>대표 요금제 : 5GX프라임, 5GX플래티넘, T플랜 Data인피니티</span></li>
 									                	<li>데이터 무제한형 요금제 이용 : 국내 요금제의 기본제공 데이터를 다 쓰면 매일 추가 데이터 1GB 제공, 이후 최대 400kbps 속도로 계속 사용하실 수 있습니다.<br><span>대표 요금제 : 5GX스탠다드, 0플랜(라지), T플랜(라지/패밀리), band 데이터(퍼펙트/퍼펙트S), T시그니처(Classic/Master)</span></li>
 									                	<li>데이터 한도형 요금제 이용 : 기본제공 데이터를 다 쓰면 최대 400kbps 속도로 계속 이용하실 수 있습니다.</li>
+									                	<!-- 200113 추가 [OP002-6250] -->
+									                	<li>선물 받은 데이터, 리필 데이터, T가족모아 공유 데이터도 사용할 수 있습니다.</li>
+									                	<li>데이터 쿠폰, 국내 옵션요금제의 데이터는 이용하실 수 없습니다.</li>
+									                	<li>함께쓰기 요금제는 모회선 기본제공량을 공유하여 이용하실 수 있으며, 기본제공량을 다 쓴 후에는 최대 400kbps 속도로 계속 이용하실 수 있습니다. 단, 모회선 요금제가 3G 데이터 무제한 요금제인 경우 모회선 데이터를 이용하실 수 없습니다.</li>
+									                	<!-- // 200113 추가 [OP002-6250] -->									                	
 									                	<li><span>상세 국내 요금제 유형에 대한 문의는 고객센터 (국내: 02-6343-9000/해외: +82-2-6343-9000)를 통해서 확인해주세요.</span></li>
 									                	<li><span>실제 데이터 사용량과 다소 차이가 있을 수 있으니 참고용으로 활용하시기 바랍니다.</span></li>
 									                	</ul>

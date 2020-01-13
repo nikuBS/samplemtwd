@@ -22,7 +22,12 @@
                             <span class="info-title"><%= prodList[keyProd].prodNm %></span>
                             <% if (prodList[keyProd].remainedDays) { %>
                             <span class="info-txt">이용중인 T로밍 잔여기간</span>
-                            <span class="info-date"><span><%= prodList[keyProd].remainedDays %>일</span> 남음</span>
+                            <% var baroBoxGift = ["NA00006390", "NA00006388", "NA00006828", "NA00006389"] %>
+                                <% if (!(baroBoxGift.includes(prodList[keyProd].prodId))) { %>
+                                <span class="info-date"><span><%= prodList[keyProd].remainedDays %>일</span> 남음</span>
+                                <% } else { %>
+                                <span class="info-date">baro Box 이용 기간</span><!-- 200108 수정 [OP002-6243] -->
+                                <% } %>
                             <% } %>
                             <span class="info-sub">가입일 <%= prodList[keyProd].scrbDt %></span>
                         </span>
@@ -124,26 +129,22 @@
                     </ul>
                     <% } %> <!-- for -->
                 </div>
-                <div class="rm-tip-list">
+                <div class="use-info-rm-more-btn">
+                    <button role="button" aria-pressed="false" class="">더 보기</button>
+                </div>
+
+                <div class="guamsaipan-noti">
                     <ul>
-                        <li>
-                            데이터 한도형 상품 가입 고객의 경우 기본 데이터 소진 후 속도제어(400kbps 이하) 상태에서 지속 사용 가능합니다.
-                            <p>대표 요금제 : 0플랜(스몰, 미디엄), T플랜(스몰, 미디엄), band 데이터(세이브, 1.2G, 2.2G, 3.5G, 6.5G)</p>
-                        </li>
-                        <li>
-                            데이터 무제한 상품 가입 고객의 경우 기본 데이터 소진 후 한국시간 기준 00시~24시 기준으로 매일 1GB 추가 제공되며, 추가제공된 1GB 소진 후 속도제어(400kbps 이하) 상태로 지속 사용가능합니다.
-                            <p>대표 요금제 : 0플랜(라지), T플랜(라지, 패밀리), band 데이터(퍼펙트, 퍼펙트S), T 시그니처(Classic, Master) </p>
-                        </li>
-                        <li>
-                            완전 무제한 요금제 상품 가입 고객의 경우 용량 및 속도 제한 없이 무제한 이용 가능합니다.
-                            <p>대표 요금제 : T플랜 Data인피니티</p>
-                        </li>
-                        <li>
-                            <p>상세 국내 요금제 유형에 대한 문의는 고객센터(국내: 02-6343-9000 / 해외: +82-2-6343-9000)를 통해서 확인해주세요.</p>
-                        </li>
-                        <li>
-                            <p>실제 데이터 사용량과 다소 차이가 있을 수 있으니 참고용으로 활용하시기 바랍니다.</p>
-                        </li>
+                        <li>데이터 완전 무제한 요금제 이용 : 데이터 사용량·속도 제한 없이 완전 무제한으로 사용하실 수 있습니다.<br><span>대표 요금제 : 5GX프라임, 5GX플래티넘, T플랜 Data인피니티</span></li>
+                        <li>데이터 무제한형 요금제 이용 : 국내 요금제의 기본제공 데이터를 다 쓰면 매일 추가 데이터 1GB 제공, 이후 최대 400kbps 속도로 계속 사용하실 수 있습니다.<br><span>대표 요금제 : 5GX스탠다드, 0플랜(라지), T플랜(라지/패밀리), band 데이터(퍼펙트/퍼펙트S), T시그니처(Classic/Master)</span></li>
+                        <li>데이터 한도형 요금제 이용 : 기본제공 데이터를 다 쓰면 최대 400kbps 속도로 계속 이용하실 수 있습니다.</li>
+                        <!-- 200113 추가 [OP002-6250] -->
+                        <li>선물 받은 데이터, 리필 데이터, T가족모아 공유 데이터도 사용할 수 있습니다.</li>
+                        <li>데이터 쿠폰, 국내 옵션요금제의 데이터는 이용하실 수 없습니다.</li>
+                        <li>함께쓰기 요금제는 모회선 기본제공량을 공유하여 이용하실 수 있으며, 기본제공량을 다 쓴 후에는 최대 400kbps 속도로 계속 이용하실 수 있습니다. 단, 모회선 요금제가 3G 데이터 무제한 요금제인 경우 모회선 데이터를 이용하실 수 없습니다.</li>
+                        <!-- // 200113 추가 [OP002-6250] -->
+                        <li><span>상세 국내 요금제 유형에 대한 문의는 고객센터 (국내: 02-6343-9000/해외: +82-2-6343-9000)를 통해서 확인해주세요.</span></li>
+                        <li><span>실제 데이터 사용량과 다소 차이가 있을 수 있으니 참고용으로 활용하시기 바랍니다.</span></li>
                     </ul>
                 </div>
                 <% } %> <!-- if -->

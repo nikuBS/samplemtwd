@@ -43,6 +43,7 @@ Tw.ProductRoamingMyUse.prototype = {
   _bindEvent: function () {
     this.$tabLinker.on('click', this.FE.TAB, $.proxy(this._onTabChanged, this));
     this.$container.on('click', this.FE.LINK_BTN, $.proxy(this._onLinkBtn, this));
+    this.$container.on('click', '.use-info-rm-more-btn button', $.proxy(this._onClickMoreToggleBtn, this));
   },
   /**
    * @function
@@ -103,5 +104,29 @@ Tw.ProductRoamingMyUse.prototype = {
    */
   _openExternalUrl: function(url) {
     Tw.CommonHelper.openUrlExternal(url);
+  },
+
+  /**
+   * @function
+   * @desc 더보기 숨기기 버튼 클릭 핸들러
+   */
+  _onClickMoreToggleBtn: function(e) {
+    var $target = $(e.currentTarget);
+
+    if( $target.hasClass('active') ){
+      $target.removeClass('active');
+      // $('.rm-main-recomm>li:nth-child(n+4)').hide();
+      // $('.rm-main-recomm>li').hide(); /* 191227 수정 [OP002-6034] */
+      $('.list-comp-lineinfo li .use-info-box ul:nth-child(n+7)').hide();
+      // $('.use-info-box .info-list:nth-child(n+7)').hide();
+      $target.text('더 보기');
+    } else {
+      $target.addClass('active');
+      // $('.rm-main-recomm>li').show();
+      $('.list-comp-lineinfo li .use-info-box ul').show();
+      // $('.use-info-box .info-list').show();
+      $target.text('숨기기');
+    }
   }
+
 };
