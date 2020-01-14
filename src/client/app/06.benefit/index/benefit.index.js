@@ -11,7 +11,7 @@
  * @param {String} bpcpServiceId
  * @param {String} eParam
  */
-Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam, ctgCd) {
+Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -25,7 +25,6 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam, ctgCd) {
   this._svcMgmtNum = svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '';
   this._bpcpServiceId = bpcpServiceId;
   this._eParam = eParam;
-  this._ctgCd = ctgCd;
   this._agreePopup = null;
 
   this._isAdult = false;
@@ -35,6 +34,18 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam, ctgCd) {
   this._data = '';
   this._categoryListArray = new Array();
   this._init();
+
+  $(document).ready(function () {
+    //카테고리 탭
+    setTimeout(function () {
+      $('body, html').scrollTop(1);
+      // Tw.Logger.info('111','');
+      setTimeout(function () { 
+        $('body, html').scrollTop(0); 
+        // Tw.Logger.info('222','');
+      }, 0);
+    }, 0);
+  });
 };
 
 Tw.BenefitIndex.prototype = {
@@ -53,7 +64,7 @@ Tw.BenefitIndex.prototype = {
     // 혜택/할인 카테고리 리스트 조회
     this._apiService.request(Tw.API_CMD.BFF_10_0033, {}, {}, ['F01420'])
     .done($.proxy(function (res) {
-      Tw.Logger.info('[_init] BFF_10_0033 호출 결과', res);
+      Tw.Logger.info('[_init] BFF_10_0033 호출 결과', res);      
       if (res.code === Tw.API_CODE.CODE_00) {
 
         if (res.result.filters.length > 0) {
@@ -537,9 +548,9 @@ Tw.BenefitIndex.prototype = {
 
       // [선택된 카테고리 리스트] 초기화 후 '#전체' 카테고리만 추가
       selectedCategoryArray = this._removeCategory(selectedCategoryArray, 'ALL');
-
-      // // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
-      // this._reqProductList_dev(selectedCategoryArray);
+              
+      // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+      this._reqProductList_dev(selectedCategoryArray);
     } 
     // 그 외 특정 카테고리를 선택하는 경우
     else {
@@ -557,8 +568,8 @@ Tw.BenefitIndex.prototype = {
             selectedCategoryArray = this._removeCategory(selectedCategoryArray, this._categoryListArray[idx].prodFltId);
             Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
 
-            // // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
-            // this._reqProductList_dev(selectedCategoryArray);
+            // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+            this._reqProductList_dev(selectedCategoryArray);
           }
           // 해당 카테고리가 선택되지 않은 상태에서 클릭하여 선택하는 경우
           else {
@@ -571,29 +582,13 @@ Tw.BenefitIndex.prototype = {
             selectedCategoryArray.push($(e.currentTarget).data('category'));
             Tw.Logger.info('[_onCategory] 선택된 카테고리ID 리스트', selectedCategoryArray);
             
-            // // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
-            // this._reqProductList_dev(selectedCategoryArray);
+            // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
+            this._reqProductList_dev(selectedCategoryArray);
           }
         }
       }
     }
 
-    if (Tw.FormatHelper.isEmpty(selectedCategoryArray)) {
-      this.$container.find('#selected_category').val('');
-    } else {
-      var tempStr = '';
-      for (var idx in selectedCategoryArray) {
-        if (idx < selectedCategoryArray.length - 1) {
-          tempStr = tempStr + selectedCategoryArray[idx] + '|';
-        } else {
-          tempStr = tempStr + selectedCategoryArray[idx];
-        }
-      }
-      this.$container.find('#selected_category').val(tempStr);
-    }
-
-    // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
-    this._reqProductList_dev(selectedCategoryArray);
 
 
 
@@ -785,10 +780,7 @@ Tw.BenefitIndex.prototype = {
    * @param {String} category - 비활성화 하고자하는 카테고리 코드
    */
   _removeCategory: function (categoryArray, category) {
-    Tw.Logger.info('[_removeCategory] 활성화되어 있는 카테고리 코드 리스트', categoryArray);
     Tw.Logger.info('[_removeCategory] 비활성화 하고자하는 카테고리 코드', category);
-
-    var tempStr = this.$container.find('#selected_category').val();
 
     // 카테고리 리스트 전체 비우기
     if (category === 'ALL') {
@@ -796,25 +788,12 @@ Tw.BenefitIndex.prototype = {
     } 
     // 카테고리 리스트 배열에서 특정 카테고리 항목 제거
     else {
-      Tw.Logger.info('[_removeCategory] 카테고리 리스트 배열에서 특정 카테고리 항목 제거', '');
       var idx = categoryArray.indexOf(category);
       categoryArray.splice(idx, idx+1);
-      Tw.Logger.info('[_removeCategory] 카테고리 특정 카테고리 비활성화 후 활성화된 카테고리 코드 리스트', categoryArray);
-
-      if (tempStr.indexOf(category) > -1) {
-        tempStr = tempStr.replace(category, '');
-
-        if (tempStr.indexOf('||') > -1) {
-          tempStr = tempStr.replace('||', '|');
-        }
-
-        this.$container.find('#selected_category').val(tempStr);
-      }
     }
 
     // 활성화된 카테고리가 존재하지 않을 경우 default 로 '#전체' 카테고리를 리스트에 추가
     if (Tw.FormatHelper.isEmpty(categoryArray)) {
-      Tw.Logger.info('[_removeCategory] 활성화된 카테고리가 존재하지 않을 경우 default 로 "#전체" 카테고리를 리스트에 추가', '');
       categoryArray.push('');
 
       this.$categoryTab.find('[data-category=""]').addClass('on').attr('aria-selected', true);
@@ -1086,25 +1065,10 @@ Tw.BenefitIndex.prototype = {
   _reqProductList_dev: function (categoryArray) {
     Tw.Logger.info('[_reqProductList_dev] [선택된 카테고리 리스트]', categoryArray);
 
-    Tw.Logger.info('[_reqProductList_dev] [Dom 에 저장되어 있는 선택했던 카테고리 리스트]', this.$container.find('#selected_category').val());
-    Tw.Logger.info('[_reqProductList_dev] [url에 포함된 카테고리 코드]', this._ctgCd.ctgCd);
-
-    if (this.$container.find('#selected_category').val() !== '') {
-      var tempStr = this.$container.find('#selected_category').val();
-
-      categoryArray = tempStr.split('|');
-    } else {
-      if (!Tw.FormatHelper.isEmpty(this._ctgCd)) {
-        categoryArray = new Array();
-        categoryArray.push(this._ctgCd.ctgCd);
-        history.replaceState({}, '혜택/할인 < 혜택/할인1', '/benefit/submain');
-      }
-    }
-
     var requestCommand = [];
 
     // 최초 접속시 (#전체 / 별도 선택된 카테고리가 없는 경우)
-    if (Tw.FormatHelper.isEmpty(categoryArray) || categoryArray[0] === '') {
+    if (Tw.FormatHelper.isEmpty(categoryArray)) {
       Tw.Logger.info('[_reqProductList_dev] 최초 접속시', categoryArray);
 
       var param = { command: Tw.API_CMD.BFF_10_0054 };
@@ -1117,37 +1081,13 @@ Tw.BenefitIndex.prototype = {
     else {
       Tw.Logger.info('[_reqProductList_dev] 특정 카테고리가 선택된 경우', categoryArray);
 
-      var selectedCategoryString = '';
-
       for (var idx in categoryArray) {
         var param = { command: Tw.API_CMD.BFF_10_0054 };
         param.params = { idxCtgCd: 'F01400', benefitCtgCd: categoryArray[idx], searchListCount: 50 };
   
         requestCommand.push(param);
-
-        // 다른 페이지에서 특정 카테고리를 선택된 채로 호출하거나 
-        // 특정 카테고리가 선택된 상태에서 상품 상세로 이동 후 뒤로가기 시 기존 선택된 상태를 유지하기 위해서 
-        // 선택된 카테고리 정보를 쿠키에 설정
-        if (idx < categoryArray.length - 1) {
-          selectedCategoryString = selectedCategoryString + categoryArray[idx] + '|';
-        } else {
-          selectedCategoryString = selectedCategoryString + categoryArray[idx];
-        }
-
-        if (!this.$categoryTab.find('[data-category="' + categoryArray[idx] + '"]').hasClass('on')) {
-          this.$categoryTab.find('[data-category="' + categoryArray[idx] + '"]').addClass('on').attr('aria-selected', true);
-
-          if (this.$categoryTab.find('[data-category="' + categoryArray[idx] + '"]').parents('ul').attr('id') === 'fe-category-list_2') {
-            this.$container.find('#fe-category-2nd').attr('style', 'display: block;');
-            this.$container.find('#fe-btn-more-category').attr('class', 'bt-toggle open').attr('aria-pressed', 'true');
-          }
-        }
-      } // end for
-      this.$categoryTab.find('[data-category=""]').removeClass('on').attr('aria-selected', false);
+      }      
       Tw.Logger.info('[_reqProductList_dev] requestCommand', requestCommand);
-
-      this.$container.find('#selected_category').val(selectedCategoryString);
-      Tw.Logger.info('[_reqProductList_dev] this.$container.find("#selected_category").val() : ', this.$container.find('#selected_category').val());
     }
 
     // this._apiService.requestArray([
