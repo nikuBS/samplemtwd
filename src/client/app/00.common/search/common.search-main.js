@@ -361,6 +361,8 @@ Tw.CommonSearchMain.prototype = {
    * @returns {void}
    */
   _doSearch : function (searchKeyword) {
+    Tw.Logger.info('[common.search-main][_doSearch]', '');
+
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
       this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
       return;
@@ -369,6 +371,8 @@ Tw.CommonSearchMain.prototype = {
       this._closeKeywordListBase();
     }
     setTimeout($.proxy(function () {
+      // Tw.Logger.info('[common.search-main] [_doSearch]', '"doSearch" Cookie 셋팅');
+      // Tw.CommonHelper.setCookie('doSearch', 'Y');
       this._addRecentlyKeywordList(searchKeyword);
       this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1));
     },this),100);

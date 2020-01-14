@@ -21,6 +21,9 @@ class CommonSearchMore extends TwViewController {
     this.log = new LoggerService();
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+
+    // /common/search/more?keyword=요금제&step=3&category=rate&sort=A
+
     const query =  StringHelper.encodeURIAllCase(req.query.keyword) || null;
     const collection = req.query.category || null;
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
@@ -28,8 +31,13 @@ class CommonSearchMore extends TwViewController {
     // const sort = req.query.arrange || 'R';
     const sort = req.query.sort || 'A';
 
-    this.log.info(this, '[common.search.more.controller] req.query : ', req.query);
-    this.log.info(this, '[common.search.more.controller] req.query.sort : ', sort);
+    this.log.info(this, '[common.search.more.controller] ------------------------------------------------------', '');
+    this.log.info(this, '[common.search.more.controller] req.query : ', req.query);   // keyword=요금제, step=3, category=rate, sort=A
+    this.log.info(this, '[common.search.more.controller] req.query.sort : ', req.query.sort);
+    this.log.info(this, '[common.search.more.controller] req.query.page : ', req.query.page);
+    this.log.info(this, '[common.search.more.controller] pageNum : ', pageNum);
+    this.log.info(this, '[common.search.more.controller] sort : ', sort);
+    this.log.info(this, '[common.search.more.controller] ------------------------------------------------------', '');
 
     let requestObj, researchCd, researchQuery, searchApi;
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
@@ -105,6 +113,8 @@ class CommonSearchMore extends TwViewController {
           });
         });
       } else {
+        this.log.info(this, '[common.search.more.controller] sort : ', sort);
+
         res.render('search/common.search.more.html', {
           pageInfo: pageInfo,
           searchInfo : searchResult.result,
@@ -116,8 +126,9 @@ class CommonSearchMore extends TwViewController {
           step : step,
           nowUrl : req.originalUrl,
           paramObj : req.query,
-          sort: sort
+          sort: sort || 'A'
         });
+        this.log.info(this, '[common.search.more.controller] requestObj.sort : ', requestObj.sort);
       }
     });
 
