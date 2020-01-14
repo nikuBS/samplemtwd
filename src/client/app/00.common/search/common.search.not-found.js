@@ -87,7 +87,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded keyword : ', '[' + encodedKeyword + ']');
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded inKeyword : ', '[' + encodedInKeyword + ']');
     
-    window.XtractorScript.xtrSearchResult(encodedKeyword, encodedInKeyword, 0);
+    window.XtractorScript.xtrSearchResult(encodedKeyword, encodedInKeyword, '0');
   },
   /**
    * @function
