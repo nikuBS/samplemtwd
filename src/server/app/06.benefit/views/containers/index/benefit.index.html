@@ -90,7 +90,7 @@
                                     <li><button type="button" aria-selected="true" class="unit on" data-category="">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
                                 </ul>
                                 <button id="fe-btn-more-category" class="bt-toggle" role="button" aria-pressed="false" title="카테고리" style="display: none;"></button><!-- 토글내용 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
-                                <div class="toggler">
+                                <div class="toggler" id="fe-category-2nd">
                                     <ul class="tod-benefit-link" id="fe-category-list_2">
                                     </ul>
                                 </div>
@@ -219,7 +219,7 @@
             </div>
             <!--// 결합할인 금액 미리보기 입력부분-->
 
-
+            <input type="text" style="display: none" id="selected_category"/>
             <!-- 다른 페이지를 찾고 계신가요? area-->
             <!-- cont-box -->
             <div id="fe-another-page" class="cont-box noborder bgnone none">
@@ -293,7 +293,8 @@
       $('.wrap'),
       JSON.parse('<%- JSON.stringify(svcInfo)%>'),
       '<%=bpcpServiceId%>',
-      '<%=eParam%>'
+      '<%=eParam%>',
+      JSON.parse('<%- JSON.stringify(ctgCd)%>')
     );
   });
 </script>
