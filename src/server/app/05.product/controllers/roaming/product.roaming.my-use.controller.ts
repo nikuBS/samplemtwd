@@ -38,6 +38,11 @@ export default class ProductRoamingMyUse extends TwViewController {
         return this.error.render(res, { ...error, svcInfo, pageInfo });
       }
 
+      // 괌사이판 국내처럼 사용량 정보 더보기 버튼 노출을 위한 최소 리스트는 5개
+      const minMoreButton = 5;
+      const moreButton = troamingLikeHome.length > minMoreButton ? true : false;
+
+
       // 사용자가 T괌사이판 국내처럼 로밍 상품에 가입하지 않은경우 troamingLikeHome에 데이터가 들어가지 않음
       if (troamingLikeHome.length > 0) {
         this.updateRemainedDays(roamingFeePlan, troamingLikeHome[0], true);
@@ -46,7 +51,7 @@ export default class ProductRoamingMyUse extends TwViewController {
       }
 
       res.render('roaming/product.roaming.my-use.html',
-        { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, troamingData, troamingLikeHome});
+        { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, troamingData, troamingLikeHome, moreButton});
     });
   }
 
