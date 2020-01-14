@@ -15,7 +15,7 @@
  * @param {String} keyword – 검색어
  * @returns {void}
  */
-Tw.CommonSearchNotFound = function (rootEl,surveyList,step,from,keyword) {
+Tw.CommonSearchNotFound = function (rootEl,surveyList,step,from,keyword,inKeyword) {
   //this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
@@ -27,6 +27,7 @@ Tw.CommonSearchNotFound = function (rootEl,surveyList,step,from,keyword) {
   this.$ariaHiddenEl = this.$container.find('.fe-aria-hidden-el');
   this._from = from;
   this._keyword = keyword;
+  this._inKeyword = inKeyword;
   this._init();
   /*
   HO_05_02_02_01_01.hbs : 검색 의견 신청 텍스트
@@ -67,7 +68,26 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     if(this._from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
       this._addRecentlyKeyword(decodeURIComponent(this._keyword));
     }
+    
     new Tw.XtractorService(this.$container);
+
+    var keyword = decodeURIComponent(this._keyword);
+    var inKeyword = decodeURIComponent(this._inKeyword);
+    
+    if (keyword !== inKeyword) {
+      inKeyword = inKeyword.replace(keyword, '');
+      inKeyword = inKeyword.trim();
+    }
+
+    var encodedKeyword = encodeURIComponent(keyword);
+    var encodedInKeyword = encodeURIComponent(inKeyword);
+
+    // Tw.Logger.info('[common.search.not-found] [_nextInit] decoded keyword : ', '[' + keyword + ']');
+    // Tw.Logger.info('[common.search.not-found] [_nextInit] decoded inKeyword : ', '[' + inKeyword + ']');
+    // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded keyword : ', '[' + encodedKeyword + ']');
+    // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded inKeyword : ', '[' + encodedInKeyword + ']');
+    
+    window.XtractorScript.xtrSearchResult(encodedKeyword, encodedInKeyword, 0);
   },
   /**
    * @function
