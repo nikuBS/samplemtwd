@@ -213,6 +213,18 @@ class CommonSearch extends TwViewController {
                 });
               }
             });
+          } else {
+            res.render('search/common.search.html', {
+              pageInfo: pageInfo,
+              searchInfo : searchResult.result,
+              keyword : searchResult.result.query,
+              relatedKeyword : relatedKeyword,
+              inKeyword : searchResult.result.researchQuery,
+              step : step,
+              from : from,
+              sort : requestObj.sort,
+              nowUrl : req.originalUrl
+            });
           }
 
         } else {
