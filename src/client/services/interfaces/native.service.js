@@ -10,6 +10,7 @@ Tw.NativeService = function () {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._gnb = null;
+  this._isOpenExitPopup = false;
 
   this._init();
 };
@@ -125,7 +126,10 @@ Tw.NativeService.prototype = {
         if ( !!this._gnb && this._gnb.isOpened() ) {
           this._gnb.close();
         } else {
-          this._popupService.openConfirm(Tw.ALERT_MSG_COMMON.EXIT_APP, null, $.proxy(this._exitApp, this));
+          if (this._isOpenExitPopup === false) {
+            this._isOpenExitPopup = true;
+            this._popupService.openConfirm(Tw.ALERT_MSG_COMMON.EXIT_APP, null, $.proxy(this._exitApp, this), $.proxy(this._closeExitPopup, this));
+          }
         }
       } else {
         if ( $('.fe-no-back').length === 0 ) {
@@ -215,5 +219,14 @@ Tw.NativeService.prototype = {
    */
   _exitApp: function () {
     this.send(Tw.NTV_CMD.EXIT, {});
+  },
+
+  /**
+   * @function
+   * @desc 앱 confirm popup close 요청
+   * @private
+   */
+  _closeExitPopup: function () {
+    this._isOpenExitPopup = false;
   }
 };

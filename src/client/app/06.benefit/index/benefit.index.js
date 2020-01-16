@@ -64,7 +64,7 @@ Tw.BenefitIndex.prototype = {
     // 혜택/할인 카테고리 리스트 조회
     this._apiService.request(Tw.API_CMD.BFF_10_0033, {}, {}, ['F01420'])
     .done($.proxy(function (res) {
-      Tw.Logger.info('[_init] BFF_10_0033 호출 결과', res);
+      Tw.Logger.info('[_init] BFF_10_0033 호출 결과', res);      
       if (res.code === Tw.API_CODE.CODE_00) {
 
         if (res.result.filters.length > 0) {

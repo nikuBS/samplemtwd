@@ -25,9 +25,22 @@ class CommonSearch extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query =  StringHelper.encodeURIAllCase(req.query.keyword);
-    const collection = 'all';
+    let collection = 'all';
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
+    const pageNum = req.query.page || 1;
+    const sortCd = req.query.sort || 'A';
+    let redirectParam = req.query.redirect || 'Y';
+    const _this = this;
+    // const sort = 'A';  // 추천순 (Admin)
+    // const sort = 'D';  // 최신순 (Date)
+    // const sort = 'H';  // 높은가격순 (HighPrice)
+    // const sort = 'L';  // 낮은가격순 (LowPrice)
+    // const sort = 'C';  // 클릭순 (Click)
+    // const sort = 'R';  // 정확도순 (Rank)
+    let sort = 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A';
+    // const sort = 'shortcut-A.rate-H.service-H.tv_internet-L.troaming-A.tapp-A.direct-A.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A';
+
 
     // this.log.info(this, '[common.search.in-result.controller] req.query : ', req.query);  // keyword=소액결제, in_keyword=내역, step=3
    
@@ -40,6 +53,11 @@ class CommonSearch extends TwViewController {
      * @returns void
      */
     function showSearchResult(searchResult, relatedKeyword , requestObj , thisObj) {
+      _this.logger.info(_this, '[common.search.controller] [showSearchResult]', '###########################################################');
+      _this.logger.info(_this, '[common.search.controller] [showSearchResult]', '');
+      _this.logger.info(_this, '[common.search.controller] [showSearchResult] redirectParam : ', redirectParam);
+      _this.logger.info(_this, '[common.search.controller] [showSearchResult]', '###########################################################');
+
       if ( searchResult.result.totalcount === 0 || from === 'empty' ) {
         Observable.combineLatest(
           thisObj.apiService.request(API_CMD.BFF_08_0070, {}, {}),
@@ -67,17 +85,161 @@ class CommonSearch extends TwViewController {
         });
 
       } else {
-        res.render('search/common.search.html', {
-          pageInfo: pageInfo,
-          searchInfo : searchResult.result,
-          keyword : searchResult.result.query,
-          relatedKeyword : relatedKeyword,
-          inKeyword : searchResult.result.researchQuery,
-          step : step,
-          from : from,
-          sort : requestObj.sort,
-          nowUrl : req.originalUrl
-        });
+
+        if (redirectParam !== 'N') {
+          let redirectYn = 'Y';
+          let tempCollection = '';
+          _this.logger.info(_this, '[common.search.controller] #################################################', '');
+          _this.logger.info(_this, '[common.search.controller] req.query : ', req.query);
+  
+          const tempAccessQuery = req.query;
+  
+          for (let idx = 0; idx < searchResult.result.search.length; idx++) {
+            const keyName =  Object.keys(searchResult.result.search[idx])[0];
+            const contentsCnt = Number(searchResult.result.search[idx][keyName].count);
+            const rank = Number(searchResult.result.search[idx][keyName].rank);
+  
+            if (contentsCnt > 0) {
+              if (keyName === 'shortcut') {
+                redirectYn = 'N';
+              }
+              if (rank === 1) {
+                tempCollection = keyName;
+              }
+            }
+          }
+  
+          _this.logger.info(_this, '[common.search.controller] redirectYn : ', redirectYn);
+          _this.logger.info(_this, '[common.search.controller] 리다이렉트할 컬렉션 : ', tempCollection);
+
+          if (redirectYn === 'Y') {
+            collection = tempCollection;
+            _this.logger.info(_this, '[common.search.controller] 리다이렉트할 컬렉션 : ', collection);
+  
+            // tempAccessQuery = tempAccessQuery + '&category=' + collection;
+            tempAccessQuery.category = collection;
+  
+            const startIdx = sort.indexOf(collection + '-') + collection.length + 1;
+            sort = sort.substring(startIdx, startIdx + 1);
+  
+            _this.logger.info(_this, '[common.search.controller] 리다이렉트할 컬렉션 정렬기준 : ', sort);
+            
+  
+            // tempAccessQuery = tempAccessQuery + '&sort=' + sort;
+            tempAccessQuery.sort = sort;
+  
+            _this.logger.info(_this, '[common.search.controller] tempAccessQuery : ', tempAccessQuery);
+            _this.logger.info(_this, '[common.search.controller] #################################################', '');
+  
+            if (FormatHelper.isEmpty(req.query.in_keyword)) {
+              requestObj = { query , collection , pageNum , sort };
+            } else {
+              researchCd = 1;
+              researchQuery = StringHelper.encodeURIAllCase(req.query.in_keyword) || '';
+              requestObj = { query , collection , researchQuery , researchCd , pageNum , sort };
+            }
+  
+            if (BrowserHelper.isApp(req)) {
+              searchApi = API_CMD.SEARCH_APP;
+              if ( BrowserHelper.isIos(req) ) {
+                requestObj.device = 'I';
+              } else {
+                requestObj.device = 'A';
+              }
+            } else {
+              searchApi = API_CMD.SEARCH_WEB;
+            }
+        
+            if (!FormatHelper.isEmpty(svcInfo)) {
+              requestObj.userId = svcInfo.userId;
+            }
+  
+  
+  
+  
+            Observable.combineLatest(
+              _this.apiService.request( searchApi, requestObj, {}),
+              _this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
+            ).subscribe(([ _searchResult, _relatedKeyword ]) => {
+              if (_searchResult.code !== 0 || _relatedKeyword.code !== 0) {
+                return _this.error.render(res, {
+                  svcInfo: svcInfo,
+                  pageInfo: pageInfo,
+                  code: _searchResult.code !== 0 ? _searchResult.code : _relatedKeyword.code,
+                  msg: _searchResult.code !== 0 ? _searchResult.msg : _relatedKeyword.msg
+                });
+              }
+              if (FormatHelper.isEmpty(svcInfo) && _searchResult.result.totalcount === 1 && collection === 'shortcut' && _searchResult.result.search[0].shortcut.data[0].DOCID === 'M000083') {
+                _searchResult.result.totalcount = 0;
+              }
+              if ( _searchResult.result.totalcount === 0 ) {
+                Observable.combineLatest(
+                  _this.apiService.request(API_CMD.BFF_08_0070, {}, {}),
+                  _this.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
+                ).subscribe(([surveyList, popularKeyword]) => {
+                  if (surveyList.code !== API_CODE.CODE_00 || popularKeyword.code !== 0) {
+                    return _this.error.render(res, {
+                      svcInfo: svcInfo,
+                      pageInfo: pageInfo,
+                      code: surveyList.code !== API_CODE.CODE_00 ? surveyList.code : popularKeyword.code,
+                      msg: surveyList.code !== API_CODE.CODE_00 ? surveyList.msg : popularKeyword.msg
+                    });
+                  }
+                  res.render('search/common.search.not-found.html', {
+                    pageInfo: pageInfo,
+                    popularKeyword : popularKeyword.result,
+                    keyword : _searchResult.result.query,
+                    relatedKeyword : _relatedKeyword,
+                    inKeyword : _searchResult.result.researchQuery,
+                    surveyList : surveyList,
+                    suggestQuery : _searchResult.result.suggestQuery,
+                    step : step,
+                    from : null
+                  });
+                });
+              } else {
+                res.render('search/common.search.more.html', {
+                  pageInfo: pageInfo,
+                  searchInfo : _searchResult.result,
+                  keyword : _searchResult.result.query,
+                  pageNum : pageNum,
+                  relatedKeyword : _relatedKeyword,
+                  inKeyword : _searchResult.result.researchQuery,
+                  accessQuery : tempAccessQuery,
+                  step : step,
+                  nowUrl : req.originalUrl,
+                  paramObj : tempAccessQuery,
+                  sort: sort || 'A'
+                });
+              }
+            });
+          } else {
+            res.render('search/common.search.html', {
+              pageInfo: pageInfo,
+              searchInfo : searchResult.result,
+              keyword : searchResult.result.query,
+              relatedKeyword : relatedKeyword,
+              inKeyword : searchResult.result.researchQuery,
+              step : step,
+              from : from,
+              sort : requestObj.sort,
+              nowUrl : req.originalUrl
+            });
+          }
+
+        } else {
+          res.render('search/common.search.html', {
+            pageInfo: pageInfo,
+            searchInfo : searchResult.result,
+            keyword : searchResult.result.query,
+            relatedKeyword : relatedKeyword,
+            inKeyword : searchResult.result.researchQuery,
+            step : step,
+            from : from,
+            sort : requestObj.sort,
+            nowUrl : req.originalUrl
+          });
+        }
       }
     }
     /**
@@ -91,15 +253,6 @@ class CommonSearch extends TwViewController {
       searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
       return searchResult;
     }
-
-    // const sort = 'A';  // 추천순 (Admin)
-    // const sort = 'D';  // 최신순 (Date)
-    // const sort = 'H';  // 높은가격순 (HighPrice)
-    // const sort = 'L';  // 낮은가격순 (LowPrice)
-    // const sort = 'C';  // 클릭순 (Click)
-    // const sort = 'R';  // 정확도순 (Rank)
-    const sort = 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A';
-    // const sort = 'shortcut-A.rate-H.service-H.tv_internet-L.troaming-A.tapp-A.direct-A.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A';
 
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
       requestObj = { query , collection , sort };

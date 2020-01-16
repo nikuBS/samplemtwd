@@ -38,10 +38,20 @@ export default class ProductRoamingMyUse extends TwViewController {
         return this.error.render(res, { ...error, svcInfo, pageInfo });
       }
 
-      this.updateRemainedDays(roamingFeePlan, troamingData);
+      // 괌사이판 국내처럼 사용량 정보 더보기 버튼 노출을 위한 최소 리스트는 5개
+      const minMoreButton = 5;
+      const moreButton = troamingLikeHome.length > minMoreButton ? true : false;
+
+
+      // 사용자가 T괌사이판 국내처럼 로밍 상품에 가입하지 않은경우 troamingLikeHome에 데이터가 들어가지 않음
+      if (troamingLikeHome.length > 0) {
+        this.updateRemainedDays(roamingFeePlan, troamingLikeHome[0], true);
+      } else {
+      this.updateRemainedDays(roamingFeePlan, troamingData, false);
+      }
 
       res.render('roaming/product.roaming.my-use.html',
-        { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, troamingData, troamingLikeHome});
+        { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, troamingData, troamingLikeHome, moreButton});
     });
   }
 
@@ -49,16 +59,30 @@ export default class ProductRoamingMyUse extends TwViewController {
    * 로밍 잔여일 업데이트
    * @param roamingFeePlan 로밍 요금제 (SWING 정보 사용)
    * @param troamingData 로밍 데이터 (ICAS 정보 사용)
+   * @param isTroamingLikeHome troamingData가 troamingLikeHome 인지 여부
    */
-  private updateRemainedDays(roamingFeePlan: any, troamingData: any) {
+  private updateRemainedDays(roamingFeePlan: any, troamingData: any, isTroamingLikeHome: boolean) {
+
+    // T괌사이판 국내처럼 일때 이용중인 T로밍 잔여기간에 대한 계산은 BFF_05_0202 의 리스트중 하나의 항목에 대한 rgstDtm 와 exprDtm를 사용
+    // (리스트 모든 항목의 rgstDtm와 exprDtm의 날짜는 T괌사이판 국내처럼의 값으로 모두 동일하게 셋팅됨)
+    // 리스트 output은 prodId 및 prodNm은 T괌사이판 국내처럼이 들어가지 않음
     roamingFeePlan.roamingProdList.forEach(prod => {
       prod.remainedDays = null;
-      if ( troamingData && (prod.prodId === troamingData.prodId) ) {
+      if (isTroamingLikeHome) { // T괌사이판 국내처럼 일때
         if ( !FormatHelper.isEmpty(troamingData.rgstDtm) ) {
           prod.remainedDays = DateHelper.getDiffByUnit(
             DateHelper.getCurrentShortDate(troamingData.exprDtm),
             DateHelper.getCurrentShortDate(),
             'days').toString();
+        }
+      } else {
+        if ( troamingData && (prod.prodId === troamingData.prodId) ) {
+          if ( !FormatHelper.isEmpty(troamingData.rgstDtm) ) {
+            prod.remainedDays = DateHelper.getDiffByUnit(
+                DateHelper.getCurrentShortDate(troamingData.exprDtm),
+                DateHelper.getCurrentShortDate(),
+                'days').toString();
+          }
         }
       }
     });
