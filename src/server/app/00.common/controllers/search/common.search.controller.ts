@@ -85,6 +85,11 @@ class CommonSearch extends TwViewController {
         });
 
       } else {
+        // 2020.01.16 이전일 [S]
+        // OP002-5939 의 경우 요건 담당 매니저 최종 컨펌이 나지 않아 
+        // shortcut 검색결과가 없는 경우 rank 값이 가장 높은 컬렉션으로 리다이렉트 시키는 부분은 제외처리함.
+        redirectParam = 'N';
+        // 2020.01.16 이전일 [E]
 
         if (redirectParam !== 'N') {
           let redirectYn = 'Y';
