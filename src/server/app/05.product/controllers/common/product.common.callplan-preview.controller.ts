@@ -14,7 +14,7 @@ import {
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
-import { BENEFIT_SUBMAIN_CATEGORY, PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
+import { BENEFIT_SUBMAIN_CATEGORY, PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST , LIVE_CHAT_CHECK_PROD_ID} from '../../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
@@ -549,6 +549,7 @@ class ProductCommonCallplanPreview extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
+      liveChatCheckProdId = LIVE_CHAT_CHECK_PROD_ID.indexOf(prodId) > -1,
       renderCommonInfo = {
         svcInfo: svcInfo,
         pageInfo: pageInfo,
@@ -644,6 +645,7 @@ class ProductCommonCallplanPreview extends TwViewController {
           bpcpServiceId: '',
           eParam: '',
           svcProdId: svcProdId,
+          liveChatCheckProdId, // 실시간 채팅 상담 추가 상품
           channelGuidmsgInfo: this._channelScrbtermGuidmsg(BrowserHelper.isApp(req), channelGuidmsgInfo)  // 채널별 가입/해지 안내문구 조회
         }].reduce((a, b) => {
           return Object.assign(a, b);
