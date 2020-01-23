@@ -15,6 +15,9 @@ export const SSO_SERVICE_LIST = [
         host: 'sktelecom5gx.com',
         session_key: SSO_KEY.USER_ID,
         sso_param: 'enc_sso_login_id',
+        etc_params: {
+            enc_svc_mgmt_num : 'svcMgmtNum'
+        },
         encrpyt_algorigm: CryptoHelper.ALGORITHM.AES128CBC,
         encrpyt_key : 'MTW-TD-7551e058f', 
         encrpyt_iv: 'MTW-TD-7551e058f'
