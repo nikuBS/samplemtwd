@@ -27,12 +27,16 @@ Tw.CustomerEmailCategory.prototype = {
   _init: function () {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY; // 카테고리 리스트
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY; // 카테고리 리스트
+    this._wireSvcCnt = 0;
 
     /**
+     * 유선회선 보유여부를 확인하기 위해 GET_ALL_SVC API 호출
      * 카테고리 정보 API 호출 this.category에 결과값 저장
      */
-    this._apiService.request(Tw.API_CMD.BFF_08_0010, {})
-      .done($.proxy(this._onLoadQuestionList, this));
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_ALL_SVC, params: {}},
+      { command: Tw.API_CMD.BFF_08_0010, params: {}}
+    ]).done($.proxy(this._onLoadQuestionList, this));
   },
 
   /**
@@ -68,11 +72,17 @@ Tw.CustomerEmailCategory.prototype = {
    * @desc 카테고리 정보 API 호출 후 결과값 this.category에 저장
    * @param {JSON} res 
    */
-  _onLoadQuestionList: function (res) {    
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.category = res.result;
+  _onLoadQuestionList: function (allSvcRes, ctgRes) {
+    if ( allSvcRes.code === Tw.API_CODE.CODE_00 ) {
+      this._wireSvcCnt = parseInt(allSvcRes.result.s.length, 10);
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(allSvcRes.code, allSvcRes.msg).pop();
+    }
+
+    if ( ctgRes.code === Tw.API_CODE.CODE_00 ) {
+      this.category = ctgRes.result;
+    } else {
+      Tw.Error(ctgRes.code, ctgRes.msg).pop();
     }
   },
 
@@ -337,7 +347,12 @@ Tw.CustomerEmailCategory.prototype = {
     
     // 선택된 카테고리가 인터넷일경우 안내 문구 노출 or 비노출
     if ( sDepth1Value === 'internet' ) {
-      this.$wrap_quality_category.find('.emailconsulting-wrap').show().attr('aria-hidden', false);
+      if ( this._wireSvcCnt < 1 ) {
+        this._popupService.openAlert(Tw.CUSTOMER_EMAIL.RETRY_SERVICE);
+        return;
+      } else {
+        this.$wrap_quality_category.find('.emailconsulting-wrap').show().attr('aria-hidden', false);
+      }
     } else {
       this.$wrap_quality_category.find('.emailconsulting-wrap').hide().attr('aria-hidden', true);
     }
