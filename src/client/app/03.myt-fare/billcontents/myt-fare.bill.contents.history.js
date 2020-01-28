@@ -140,7 +140,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
     // 월선택 액션시트
     if (!this.$selectMonth) {
-      this.$selectMonth = this.$container.find('.fe-month-selector'); 
+      this.$selectMonth = this.$container.find('.fe-month-selector');
       this.$selectMonth.on('click', $.proxy(this._showSelectMonth, this));
     }
 
@@ -270,7 +270,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
      * @param {Object} $target 액션시트 닫힐 때 포커스 될 엘리먼트 여기에서는 카테고리 선택 버튼
      * @desc 라디오 선택 콤보박스 형태
      */
-    return this._popupService.open({
+    this._popupService.open({
       hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
       title: Tw.POPUP_TITLE.SELECT,
@@ -307,7 +307,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
       .end().siblings().attr('aria-selected', false);
 
     // 클릭 이벤트 바인드
-    $sheet.find('li').on('click', $.proxy(this._updateContentsPayList, this));
+    $sheet.on('click', 'input[type=radio]', $.proxy(this._updateContentsPayList, this));
   },
 
   /**
@@ -318,11 +318,12 @@ Tw.MyTFareBillContentsHitstory.prototype = {
    * @returns {void}
    */
   _updateContentsPayList: function (e) {
-    var year = $(e.currentTarget).find('input').data('year') || this.data.curYear;
-    var month = $(e.currentTarget).find('input').data('month') || this.data.curMonth; 
+    var $radio = $(e.target);
+    var year = $radio.data('year') || this.data.curYear;
+    var month = $radio.data('month') || this.data.curMonth;
     //선택표기
-    $(e.currentTarget).attr('aria-selected', true).siblings().attr('aria-selected', false);
-    $(e.currentTarget).find('input[type=radio]').prop('checked', true);
+    $radio.closest('li').attr('aria-selected', true)
+      .siblings().attr('aria-selected', false);
     // 선택 text
     this.$selectMonth.text(month + Tw.PERIOD_UNIT.MONTH);
 
@@ -336,7 +337,6 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.$selectMonth = null;
 
     this._showWholeList();
-
   },
 
   /**
