@@ -85,9 +85,7 @@ class MyTFareBillGuide extends TwViewController {
   };
 
   private _urlTplInfo: any = {
-    combineRepresentPage: 'billguide/myt-fare.bill.guide.integrated-rep.html', // 통합청구(대표)
-    combineCommonPage: 'billguide/myt-fare.bill.guide.integrated-normal.html', // 통합청구(일반)
-    individualPage: 'billguide/myt-fare.bill.guide.individual.html', // 개별청구
+    commonPage: 'billguide/myt-fare.bill.guide.html', // 공통 페이지
     prepaidPage: 'billguide/myt-fare.bill.guide.pps.html', // PPS(선불폰)
     companyPage: 'billguide/myt-fare.bill.guide.solution.html', // 기업솔루션(포인트캠)
     skbroadbandPage: 'billguide/myt-fare.bill.guide.skbd.html' // sk브로드밴드(인터넷/IPTV/집전화)
@@ -210,7 +208,7 @@ class MyTFareBillGuide extends TwViewController {
             invAmtList: [],
             unPayAmtList: [],
             unPaidTotSum: []
-          }
+          };
           Object.assign(thisMain._useFeeInfo, resArr[0].result);
           // 현재는 param이 없지만 추후 추가를 위해 넣어둠
           if ( resArr[0].result.invAmtList && resArr[0].result.invAmtList.length > 0) {
@@ -223,8 +221,6 @@ class MyTFareBillGuide extends TwViewController {
           thisMain._commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(thisMain._useFeeInfo.repSvcNm);  // 통합청구대표 이름
           thisMain._commDataInfo.svcType = thisMain.getSvcType(thisMain._billpayInfo.usedAmountDetailList[0].svcNm);  // 서비스 타입(한글)
         }
-
-        let viewName ;
 
         // 청구 시작, 종료일
         thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -240,16 +236,25 @@ class MyTFareBillGuide extends TwViewController {
         // 청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
         thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
-        const data = {
-          reqQuery: thisMain.reqQuery,
+        const data: any = {
+          data : {
+            reqQuery: thisMain.reqQuery,
+            svcMgmtNum: svcInfo.svcMgmtNum,
+            svcAttrCd: svcInfo.svcAttrCd,
+            allSvc: allSvc,
+            billpayInfo: thisMain._billpayInfo,
+            commDataInfo: thisMain._commDataInfo,
+            intBillLineInfo: thisMain._intBillLineInfo,
+            childLineInfo: thisMain._childLineInfo
+          },
           svcInfo: svcInfo,
           pageInfo: thisMain.pageInfo,
-          billpayInfo: thisMain._billpayInfo,
-          useFeeInfo: thisMain._useFeeInfo,
-          commDataInfo: thisMain._commDataInfo,
-          intBillLineInfo: thisMain._intBillLineInfo,
-          childLineInfo: thisMain._childLineInfo,
-          allSvc: allSvc
+          useFeeInfo: thisMain._useFeeInfo
+        };
+
+        const existBill = (listName) => {
+          const obj = thisMain._billpayInfo;
+          return obj.useAmtTot !== 0 || (obj[listName] || []).length > 0;
         };
 
         if ( svcInfo.actRepYn === 'N' ) {
@@ -258,33 +263,20 @@ class MyTFareBillGuide extends TwViewController {
           thisMain._typeChk = 'A6';
 
           // 사용요금/청구요금이 존재하는지
-          thisMain._billpayInfo.existBill = (thisMain._billpayInfo.usedAmountDetailList && thisMain._billpayInfo.usedAmountDetailList.length > 0);
-
-          viewName = thisMain._urlTplInfo.combineCommonPage;
+          thisMain._billpayInfo.existBill = existBill('usedAmountDetailList');
 
         } else if ( svcInfo.actRepYn === 'Y' ) {
 
           // 조회일자에 맞는 서비스리스트
           const daySvcList = thisMain._billpayInfo.invSvcList.find(item => item.invDt === thisMain._billpayInfo.invDt) || {};
-
+          // 사용요금/청구요금이 존재하는지
+          thisMain._billpayInfo.existBill = existBill('paidAmtDetailList');
 
           // 개별청구 회선
           if ( daySvcList.svcList && daySvcList.svcList.length === 1 ) {
 
             thisMain.logger.info(thisMain, '[ 개별청구회선 ]', daySvcList.svcList.length);
             thisMain._typeChk = 'A4';
-
-            // 요금납부버튼 무조건 노출로 삭제
-            // thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
-
-            // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
-            // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
-            // data['showConditionInfo'] = thisMain._showConditionInfo;
-
-            viewName = thisMain._urlTplInfo.individualPage;
-
-
-
           // 통합청구 회선
           } else {
 
@@ -301,16 +293,12 @@ class MyTFareBillGuide extends TwViewController {
               // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
               // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
               // data['showConditionInfo'] = thisMain._showConditionInfo;
-
-              // 사용요금/청구요금이 존재하는지
-              thisMain._billpayInfo.existBill = (thisMain._billpayInfo.paidAmtDetailList && thisMain._billpayInfo.paidAmtDetailList.length > 0);
-
-              viewName = thisMain._urlTplInfo.combineRepresentPage;
             }
           }
         }
 
-        thisMain.reqButtonView(res, viewName, data);
+        data.typeChk = thisMain._typeChk;
+        thisMain.reqButtonView(res, thisMain._urlTplInfo.commonPage, data);
 
         thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
         thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
@@ -772,7 +760,7 @@ class MyTFareBillGuide extends TwViewController {
   // -------------------------------------------------------------[클리이어튼로 전송]
   public renderView(res: Response, view: string, data: any): any {
     this.logger.info(this, '[ HTML ] : ', view);
-    data.allSvc = this.getAllSvcClone(data.allSvc);
+    data.allSvc = this.getAllSvcClone(data.data.allSvc);
     res.render(view, data);
   }
 
