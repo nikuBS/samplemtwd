@@ -48,6 +48,11 @@ class CustomerEmail extends TwViewController {
   render(req: AddUserAgent, res: Response, _next: NextFunction, svcInfo: any, allSvc: any, _childInfo: any, pageInfo: any): void {
     const page = req.params.page; // 페이지
 
+    // this.logger.info (this, '[customer.email.controller] #########################################################################', '');
+    // this.logger.info (this, '[customer.email.controller] req.params : ', req.params);
+    // this.logger.info (this, '[customer.email.controller] req.params.page : ', req.params.page);
+    // this.logger.info (this, '[customer.email.controller] #########################################################################', '');
+
     /**
      * @desc 전달할 데이터 정의
      */
@@ -103,9 +108,26 @@ class CustomerEmail extends TwViewController {
       case 'history':
         this.getEmailHistory() // 상담내역 조회
           .subscribe((response) => {
+            const resultList: any = [];
+
+            // this.logger.info (this, '[customer.email.controller] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++', '');
+            // this.logger.info (this, '[customer.email.controller] response.result 전체 건수 : ', response.result.length);
+            // this.logger.info (this, '[customer.email.controller] 지금으로부터 6개월 이전 : ', DateHelper.convDateCustomFormat(DateHelper.getPast6MonthsShortDate(), 'YYYYMMDD'));
+
+            for (let idx = 0; idx < response.result.length; idx++) {
+              // this.logger.info (this, '[customer.email.controller] rgstDt : ', DateHelper.convDateCustomFormat(response.result[idx].rgstDt, 'YYYYMMDD'));
+              
+              // 등록일 (rgstDt) 이 현재 일자를 기준으로 6개월 이전인 경우 노출하지 않음 (OP002-6350) 
+              if (DateHelper.convDateCustomFormat(response.result[idx].rgstDt, 'YYYYMMDD') >= DateHelper.convDateCustomFormat(DateHelper.getPast6MonthsShortDate(), 'YYYYMMDD')) {
+                // this.logger.info (this, '[customer.email.controller] 쏘옥 ', idx + 1 );
+                resultList.push(response.result[idx]);
+              }
+            }
+            // this.logger.info (this, '[customer.email.controller] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++', '');
+
             res.render('email/customer.email.history.html',
               Object.assign({}, responseData, {
-                inquiryList: response.result,
+                inquiryList: resultList,
                 convertDate: this.convertDate
               })
             );

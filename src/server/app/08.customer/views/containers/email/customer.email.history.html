@@ -40,7 +40,7 @@
                             <% if ( inquiry.supInqId !== '' ) { %>
                             <em class="again">재문의</em>
                             <% } %>
-                            <strong class="tit"><%=inquiry.title%></strong>
+                            <strong class="tit"><%=inquiry.title.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&lt/g, '<').replace(/&gt/g, '>')%></strong>
                             <span class="date-state">
                                 <em class="date"><%-convertDate(inquiry.rgstDt)%></em>
                                 <% if ( inquiry.answYn == 'Y' ) { %>
@@ -54,7 +54,7 @@
                 <% }) %>
                 </ul>
                 <% if ( inquiryList.length >= 20 ) { %>
-                <div class="bt-more fe-history-more">
+                <div class="btn-more mr16 ml16 fe-history-more">
                     <button>더보기</button>
                 </div>
                 <% } %>

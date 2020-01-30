@@ -1375,15 +1375,24 @@ class ApiRouter {
       return;
     }
 
-    const value = svcInfo[service.session_key];
+    let value = svcInfo[service.session_key];
 
     if (FormatHelper.isEmpty(value)) {
       res.json({
         code: API_CODE.CODE_404
       });
     } else {
-      url += url.indexOf('?') === -1 ? '?' : '&';
-      url += service.sso_param + '=' + CryptoHelper.encrypt(value, service.encrpyt_key, service.encrpyt_algorigm, service.encrpyt_iv);
+      url = url.concat(
+        url.indexOf('?') === -1 ? '?' : '&', 
+        service.sso_param, 
+        '=', 
+        CryptoHelper.encrypt(value, service.encrpyt_key, service.encrpyt_algorigm, service.encrpyt_iv)
+      );
+      
+      Object.keys(service.etc_params).map((param) => {
+        value = svcInfo[service.etc_params[param]];
+        url = url.concat('&', param, '=', CryptoHelper.encrypt(value, service.encrpyt_key, service.encrpyt_algorigm, service.encrpyt_iv));
+      });
 
       this.logger.info(this, '[getSsoUrl] return url', url);
       res.json({

@@ -588,6 +588,18 @@ body.hidden {
   color: inherit;
   text-decoration: underline; }
 
+/* 200110 [OP002-6247] Footer 전화번호 A -> Button 태그로 변경  */
+#common-menu .footer .f-info button {
+  font-size:0.69rem;
+  font-weight:400;
+  font-family:"Apple SD Gothic Neo","애플 SD 산돌고딕 Neo",Roboto,"Noto Sans KR",sans-serif;
+  font-style:normal;
+  line-height:1.13rem;
+  letter-spacing:-0.03em;
+  color: inherit;
+  text-decoration: underline; }
+/* //200110 [OP002-6247] Footer 전화번호 A -> Button 태그로 변경  */
+
 #common-menu .footer .f-ltd {
   display: block;
   height: 0.75rem;
