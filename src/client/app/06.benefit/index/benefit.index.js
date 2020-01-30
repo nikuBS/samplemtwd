@@ -951,9 +951,9 @@ Tw.BenefitIndex.prototype = {
   
         requestCommand.push(param);
 
-        // 다른 페이지에서 특정 카테고리를 선택된 채로 호출하거나 
-        // 특정 카테고리가 선택된 상태에서 상품 상세로 이동 후 뒤로가기 시 기존 선택된 상태를 유지하기 위해서 
-        // 선택된 카테고리 정보를 쿠키에 설정
+        // 다른 페이지에서 특정 카테고리를 선택된 채로 호출하거나 특정 카테고리가 선택된 상태에서 
+        // 상품 상세로 이동 후 뒤로가기 시 기존 선택된 상태를 유지하기 위해서 
+        // 선택된 카테고리 정보를 hidden 개체에 설정
         if (idx < categoryArray.length - 1) {
           selectedCategoryString = selectedCategoryString + categoryArray[idx] + '|';
         } else {
