@@ -26,13 +26,13 @@ class CustomerAgentsearchNear extends TwViewController {
         
     acceptAgeObserver.subscribe((isAcceptAge) => {
  
-    /* 앱 이면서 비 로그인인 경우 로그인 페이지로 리다이렉트 */
-    if(BrowserHelper.isApp(req) && !svcInfo){
-      res.redirect("/common/tid/login?target=/customer/agentsearch/near");
+      /* 앱 이면서 비 로그인인 경우 로그인 페이지로 리다이렉트 */
+      if (BrowserHelper.isApp(req) && !svcInfo) {
+        res.redirect('/common/tid/login?target=/customer/agentsearch/near');
+      } else {
+        res.render('agentsearch/customer.agentsearch.near.html', { svcInfo, pageInfo, isAcceptAge });
       }
-
-    res.render('agentsearch/customer.agentsearch.near.html', { svcInfo, pageInfo, isAcceptAge });
-    })  // end of acceptAgeObserver.subscribe((isAcceptAge) => {
+    });  // end of acceptAgeObserver.subscribe((isAcceptAge) => {
   }
   
 
@@ -52,7 +52,7 @@ class CustomerAgentsearchNear extends TwViewController {
       }
 
       this.error.render(resp, {
-        title : "checkAge14",
+        title : 'checkAge14',
         code: resp.code,
         msg: resp.msg,
         // pageInfo: pageInfo,
