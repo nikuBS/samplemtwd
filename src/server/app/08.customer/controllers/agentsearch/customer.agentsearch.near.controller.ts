@@ -26,9 +26,10 @@ class CustomerAgentsearchNear extends TwViewController {
         
     acceptAgeObserver.subscribe((isAcceptAge) => {
  
-      /* 앱 이면서 비 로그인인 경우 로그인 페이지로 리다이렉트 */
+      /* 앱 이면서 비 로그인인 경우 로그인 페이지로 리다이렉트 - 공통에서 가이드 */
       if (BrowserHelper.isApp(req) && !svcInfo) {
-        res.redirect('/common/tid/login?target=/customer/agentsearch/near');
+        // res.redirect('/common/tid/login?target=/customer/agentsearch/near');
+        res.render('error.login-block.html', { target: req.baseUrl + req.url });
       } else {
         res.render('agentsearch/customer.agentsearch.near.html', { svcInfo, pageInfo, isAcceptAge });
       }
