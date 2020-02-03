@@ -11,6 +11,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import {LOGIN_TYPE} from '../../../../types/bff.type';
 
 class CustomerAgentsearchNear extends TwViewController {
 
@@ -20,19 +21,24 @@ class CustomerAgentsearchNear extends TwViewController {
     /* 로그인인 경우 - 이면 아래 if조건을 타고 아니면 true를 전달해서 실행 - OP002-2058  */
     let acceptAgeObserver = new Observable(subscriber => { subscriber.next(true); } );
     // if(BrowserHelper.isApp(req) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum)){
-    if(svcInfo){  // 로그인한 사용자인 경우에만 나이조회(모웹,웹 구분 없음)
+    if (svcInfo && (svcInfo.loginType !== LOGIN_TYPE.EASY)) {
+      // 로그인이며 간편로그인이 아닌 사용자인 경우에만 나이조회(모웹,웹 구분 없음), 간편로그인인 경우는 위치정보 동의가 되지 않기 때문에
       acceptAgeObserver = this.checkAge(svcInfo);
     }
         
     acceptAgeObserver.subscribe((isAcceptAge) => {
- 
+
       /* 앱 이면서 비 로그인인 경우 로그인 페이지로 리다이렉트 - 공통에서 가이드 */
       if (BrowserHelper.isApp(req) && !svcInfo) {
         // res.redirect('/common/tid/login?target=/customer/agentsearch/near');
         res.render('error.login-block.html', { target: req.baseUrl + req.url });
+      } else if (BrowserHelper.isApp(req) && (svcInfo.loginType === LOGIN_TYPE.EASY)) {
+        // 앱이면서 간편로그인인 경우  간편로그인 없는 일반 로그인 페이지로 이동
+        res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
       } else {
         res.render('agentsearch/customer.agentsearch.near.html', { svcInfo, pageInfo, isAcceptAge });
       }
+
     });  // end of acceptAgeObserver.subscribe((isAcceptAge) => {
   }
   
