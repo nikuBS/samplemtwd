@@ -15,6 +15,7 @@ Tw.ProductMobilePlanAddDowngrade = function(rootEl, data, openEvent, confirmCall
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._bpcpService = Tw.Bpcp;
+  this._xTractorService = new Tw.XtractorService(rootEl);
 
   this._data = data;
   this._openEvent = openEvent;
