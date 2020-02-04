@@ -9,8 +9,15 @@
     ) {
 
     const tagsClass = relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ? 'nogaps-btm widget' : '';
-    let similarPath = '/' + basicInfo.prodTypListPath + (similarProductInfo && similarProductInfo.benefitPath ? '/' + similarProductInfo.benefitPath : '');
-    if ( (isMobileplan || isMobileplanAdd || isRoaming) && similarProductInfo ) {
+
+    let similarPath = '';
+    if ( isDiscount || isCombine ) {
+        similarPath = '/' + basicInfo.prodTypListPath;
+    } else {
+        similarPath = '/' + basicInfo.prodTypListPath + (similarProductInfo && similarProductInfo.benefitPath ? '/' + similarProductInfo.benefitPath : '');
+    }
+    
+    if ( (isMobileplan || isMobileplanAdd || isRoaming || isDiscount || isCombine ) && similarProductInfo  ) {
         similarPath += '?filters=' + similarProductInfo.prodFltIds;
     }
 %>
@@ -21,7 +28,7 @@
         <a href="<%= similarPath %>" class="suggest-tag-link">
             <p class="text">
                 유사한 <%= similarProductInfo.titleNm %> 찾아보세요!
-                <span class="textnumber">(<span class="number"><%= similarProductInfo.prodCnt %></span>개) </span>
+                <span class="textnumber">(<span class="number"><%= similarProductInfo.prodCnt %></span>개)</span>
             </p>
             <% if (similarProductInfo.list) { %>
             <div class="taglist-wrap">
