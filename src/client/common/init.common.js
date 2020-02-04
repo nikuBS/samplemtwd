@@ -52,6 +52,7 @@ Tw.Init.prototype = {
     Tw.Tooltip = new Tw.TooltipService();
     Tw.Bpcp = new Tw.BpcpService();
     Tw.Tracker = Tw.TrackerService.newInstance();
+    Tw.Survey = new Tw.SurveyService();
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;
