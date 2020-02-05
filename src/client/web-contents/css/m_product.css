@@ -1233,3 +1233,12 @@
 @media screen and (max-width:320px){
 	.break{display:none}
 }
+
+/* 200203 [OP002-6382] 디어유 티월드 입점 요청 - 테이블 새로운 유형 */
+.idpt-benefit .idpt-tbl-discount.dear-u thead {background:#ededed;}
+.idpt-benefit .idpt-tbl-discount.dear-u thead tr:first-child th {color:#666;}
+.idpt-benefit .idpt-tbl-discount.dear-u tbody {background:#fff;}
+.idpt-benefit .idpt-tbl-discount.dear-u tbody tr td.apply {background:#5f76bc; font-weight: 600; color:#fff;}
+.idpt-benefit .idpt-tbl-discount.dear-u tbody tr td:last-child {padding:0.8125rem 1rem 0.8125rem 0.5rem; text-align:right;}
+.prCont-txt ol.num li {padding-left:0 !important;}
+.prCont-txt ol.num li:after {display:none;}
