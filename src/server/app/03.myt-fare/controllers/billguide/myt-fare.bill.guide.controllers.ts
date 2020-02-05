@@ -392,7 +392,9 @@ class MyTFareBillGuide extends TwViewController {
         pageInfo: thisMain.pageInfo,
         ppsInfo: thisMain._ppsInfo,
         commDataInfo: thisMain._commDataInfo,
-        allSvc: allSvc
+        data: {
+          allSvc: allSvc
+        }
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -757,7 +759,7 @@ class MyTFareBillGuide extends TwViewController {
     });
   }
 
-  // -------------------------------------------------------------[클리이어튼로 전송]
+  // -------------------------------------------------------------[클리이어트로 전송]
   public renderView(res: Response, view: string, data: any): any {
     this.logger.info(this, '[ HTML ] : ', view);
     data.allSvc = this.getAllSvcClone(data.data.allSvc);
