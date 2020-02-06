@@ -35941,3 +35941,6 @@ body.apphome .section-box {
 .status-list-box .guamsaipan-noti li{font-size:.8125rem;color:#000;line-height:1rem;padding-left:0.63rem;margin-top:0.63rem;position:relative;border:0}
 .status-list-box .guamsaipan-noti li:before{content:'';width:.19rem;height:.19rem;background:#666;border-radius:50%;position:absolute;left:0;top:0.38rem}
 .status-list-box .guamsaipan-noti li span{color:#666}
+
+/* 200131 baro Box 수정 건 [OP002-6500] */
+.idpt-baro-list li span{color:#f76252}

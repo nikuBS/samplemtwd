@@ -18,6 +18,7 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._xTractorService = new Tw.XtractorService(rootEl);
 
   // 공통 변수 선언
   this._prodId = prodId;

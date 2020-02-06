@@ -391,8 +391,8 @@ class MyTFareBillGuide extends TwViewController {
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
         ppsInfo: thisMain._ppsInfo,
-        commDataInfo: thisMain._commDataInfo,
-        allSvc: allSvc
+        commDataInfo: thisMain._commDataInfo
+        // data: allSvc // 2020.02.06 미사용으로 삭제함.
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -757,10 +757,12 @@ class MyTFareBillGuide extends TwViewController {
     });
   }
 
-  // -------------------------------------------------------------[클리이어튼로 전송]
+  // -------------------------------------------------------------[클리이어트로 전송]
   public renderView(res: Response, view: string, data: any): any {
     this.logger.info(this, '[ HTML ] : ', view);
-    data.allSvc = this.getAllSvcClone(data.data.allSvc);
+    if (data.data) {
+      data.data.allSvc = this.getAllSvcClone(data.data.allSvc);
+    }
     res.render(view, data);
   }
 
