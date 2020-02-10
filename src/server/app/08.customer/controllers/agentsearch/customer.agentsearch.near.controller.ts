@@ -11,6 +11,8 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import {LOGIN_TYPE} from '../../../../types/bff.type';
+import {NODE_ERROR_MSG} from '../../../../types/string.type';
 
 class CustomerAgentsearchNear extends TwViewController {
 
@@ -20,19 +22,27 @@ class CustomerAgentsearchNear extends TwViewController {
     /* 로그인인 경우 - 이면 아래 if조건을 타고 아니면 true를 전달해서 실행 - OP002-2058  */
     let acceptAgeObserver = new Observable(subscriber => { subscriber.next(true); } );
     // if(BrowserHelper.isApp(req) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum)){
-    if(svcInfo){  // 로그인한 사용자인 경우에만 나이조회(모웹,웹 구분 없음)
+    if (svcInfo && (svcInfo.loginType !== LOGIN_TYPE.EASY)) {
+      // 로그인이며 간편로그인이 아닌 사용자인 경우에만 나이조회(모웹,웹 구분 없음), 간편로그인인 경우는 위치정보 동의가 되지 않기 때문에
       acceptAgeObserver = this.checkAge(svcInfo);
     }
-        
+
     acceptAgeObserver.subscribe((isAcceptAge) => {
- 
+
       /* 앱 이면서 비 로그인인 경우 로그인 페이지로 리다이렉트 - 공통에서 가이드 */
       if (BrowserHelper.isApp(req) && !svcInfo) {
         // res.redirect('/common/tid/login?target=/customer/agentsearch/near');
         res.render('error.login-block.html', { target: req.baseUrl + req.url });
+      } else if (BrowserHelper.isApp(req) && (svcInfo.loginType === LOGIN_TYPE.EASY)) {
+        // 앱이면서 간편로그인인 경우  간편로그인 없는 일반 로그인 페이지로 이동
+        res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
+      } else if (svcInfo && FormatHelper.isEmpty(isAcceptAge)) {
+        // 앱, 웹 구분없이 로그인 했으나 나이가 없는 있는 경우 에러 페이지로 이동 (간편로그인은 로그인 페이지로 가기 때문에 일반로그인만 아래코드 적용됨)
+        this.showError(res, svcInfo, pageInfo, API_CODE.NODE_1010, NODE_ERROR_MSG[API_CODE.NODE_1010]);
       } else {
         res.render('agentsearch/customer.agentsearch.near.html', { svcInfo, pageInfo, isAcceptAge });
       }
+
     });  // end of acceptAgeObserver.subscribe((isAcceptAge) => {
   }
   
@@ -49,7 +59,8 @@ class CustomerAgentsearchNear extends TwViewController {
     return this.apiService.request(API_CMD.BFF_08_0080, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         // this.logger.info(this, '[ 현재 나이 정보는 resp.result.age] : ', resp.result.age);
-        return resp.result.age >= 14 ? true : false;
+        // return resp.result.age >= 14 ? true : false;
+        return FormatHelper.isEmpty(resp.result.age) ? undefined : resp.result.age  >= 14 ? true : false;
       }
 
       this.error.render(resp, {
@@ -63,6 +74,24 @@ class CustomerAgentsearchNear extends TwViewController {
       return undefined;
     });
   } // end of checkAge
+
+  /**
+   * @function
+   * @desc 에러 페이지 출력
+   * @param {any} res - Response 정보
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} code - 에러코드
+   * @param  {any} msg - 출력할 에러 메시지
+   * @returns string
+   */
+  private showError(res: Response, svcInfo: any, pageInfo: any, code: string, msg: string) {
+    this.error.render(res, {
+      code: code,
+      msg: msg,
+      pageInfo: pageInfo,
+      svcInfo: svcInfo
+    });
+  }
 
 
 
