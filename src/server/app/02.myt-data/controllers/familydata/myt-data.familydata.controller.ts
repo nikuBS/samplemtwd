@@ -31,10 +31,10 @@ export default class MyTDataFamily extends TwViewController {
    * @param  {Request} req
    * @param  {Response} res
    * @param  {NextFunction} _next
-   * @param  {any} svcInfo
-   * @param  {any} _allSvc
-   * @param  {any} _childInfo
-   * @param  {any} pageInfo
+   * @param  {Object} svcInfo
+   * @param  {Object} _allSvc
+   * @param  {Object} _childInfo
+   * @param  {Object} pageInfo
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(this._getFamilyData(svcInfo), this._getHistory()).subscribe(([familyInfo, histories]) => {
@@ -67,10 +67,8 @@ export default class MyTDataFamily extends TwViewController {
           msg: resp.msg
         };
       }
-
-      const representation = resp.result.mbrList.find(member => member.repYn === 'Y');
-      const mine = resp.result.mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
-
+      const representation = resp.result.mbrList.filter(member => member.repYn === 'Y');
+      const mine = resp.result.mbrList.filter(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
       if (!mine) {
         return {
           code: '',
@@ -91,9 +89,6 @@ export default class MyTDataFamily extends TwViewController {
         total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total,
         // 한도 있는 경우 총량 - 자신의 사용량, 가족 남은 양 중 최소, 한도 없는 경우 총 남은 양(BFF 데이터에서 종종 remained 값이 다르게 내려오는 경우가 있어 방어 코드)
         remained = data.hasLimit ? Math.min(total - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
-
-
-
       return {
         ...resp.result,
         total: Number(resp.result.total) > 0 ? FormatHelper.convDataFormat(resp.result.total, DATA_UNIT.GB) : DATA_ZERO,
@@ -110,15 +105,23 @@ export default class MyTDataFamily extends TwViewController {
           svcNum: FormatHelper.conTelFormatWithDash(mine.svcNum),
           data: data
         },
-        mbrList: resp.result.mbrList.map(member => {
-          return {
+        mbrList: resp.result.mbrList.map(member => ({
             ...member,
             used: Number(member.used) > 0 ? FormatHelper.convDataFormat(member.used, DATA_UNIT.MB) : DATA_ZERO,
             shared: Number(member.shared) > 0 ? FormatHelper.convDataFormat(member.shared, DATA_UNIT.GB) : DATA_ZERO,
             limitation: FormatHelper.addComma(member.limitation),
             svcNum: FormatHelper.conTelFormatWithDash(member.svcNum)
-          };
-        })
+          }
+        )),
+        // OP002-6669 VOC T가족모아 탈퇴한 구성원 정보 노출 - 데이터 구조는 아직 미정
+        dropMbrList: resp.result.dropMbrList.map(member => ({
+            ...member,
+            used: Number(member.used) > 0 ? FormatHelper.convDataFormat(member.used, DATA_UNIT.MB) : DATA_ZERO,
+            shared: Number(member.shared) > 0 ? FormatHelper.convDataFormat(member.shared, DATA_UNIT.GB) : DATA_ZERO,
+            limitation: FormatHelper.addComma(member.limitation),
+            svcNum: FormatHelper.conTelFormatWithDash(member.svcNum)
+          }
+        ))
       };
     });
   }
