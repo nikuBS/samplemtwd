@@ -25,7 +25,6 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$btnTermsAgree = this.$container.find('.comp-list-layout');
     this.$openAgreeView = this.$container.find('.agree-view');
     this.$agreeCheckOne = this.$container.find('#fe-check1');
-    this.$agreeCheckTwo = this.$container.find('#fe-check2');
     this.$inputPhone = this.$container.find('#flab01');
     this.$inputSdate = this.$container.find('#flab02');
     this.$inputEdate = this.$container.find('#flab03');
@@ -64,11 +63,8 @@ Tw.ProductRoamingFiReservation.prototype = {
     var self = this;
     setTimeout(function(){
       self.$agreeCheckOne.attr('aria-checked', false);
-      self.$agreeCheckTwo.attr('aria-checked', false);
       self.$agreeCheckOne.removeClass('checked');
-      self.$agreeCheckTwo.removeClass('checked');
       self.$agreeCheckOne.find('input').prop('checked', false);
-      self.$agreeCheckTwo.find('input').prop('checked', false);
     },50);
   },
 
@@ -423,7 +419,7 @@ Tw.ProductRoamingFiReservation.prototype = {
       }
 
       // 이용약관 동의 체크, 국가 선택, 핸드폰 번호 입력, 예약 시작/종료일 모두 체크 되어야만 하단 버튼 활성화
-      if(self.$agreeCheckOne.hasClass('checked') && self.$agreeCheckTwo.hasClass('checked') && countryCheck && inputPhoneCheck && dateCheck){
+      if(self.$agreeCheckOne.hasClass('checked') && countryCheck && inputPhoneCheck && dateCheck){
         self.$btnRegister.removeAttr('disabled');
       }else{
         self.$btnRegister.attr('disabled','disabled');
