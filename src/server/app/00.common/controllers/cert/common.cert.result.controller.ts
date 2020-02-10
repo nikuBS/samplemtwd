@@ -43,20 +43,17 @@ class CommonCertResult extends TwViewController {
    * @param pageInfo
    */
   private checkCertKind(req, res, certType, certKind, pageInfo) {
-
     if ( certType === NICE_TYPE.IPIN ) {
-      const encData = req.method === 'POST' ? req.body.enc_data : req.query.enc_data;
       if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0048, { enc_data: encData }, pageInfo);
+        this.sendResult(req, res, API_CMD.BFF_01_0048, { enc_data: req.body.enc_data }, pageInfo);
       } else {
-        this.sendResult(req, res, API_CMD.BFF_01_0023, { enc_data: encData }, pageInfo);
+        this.sendResult(req, res, API_CMD.BFF_01_0023, { enc_data: req.body.enc_data }, pageInfo);
       }
     } else if ( certType === NICE_TYPE.NICE ) {
-      const encodeData = req.method === 'POST' ? req.body.EncodeData : req.query.EncodeData;
       if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0050, { EncodeData: encodeData }, pageInfo);
+        this.sendResult(req, res, API_CMD.BFF_01_0050, { EncodeData: req.body.EncodeData }, pageInfo);
       } else {
-        this.sendResult(req, res, API_CMD.BFF_01_0025, { EncodeData: encodeData }, pageInfo);
+        this.sendResult(req, res, API_CMD.BFF_01_0025, { EncodeData: req.body.EncodeData }, pageInfo);
       }
     } else {
       res.render('cert/common.cert.result.html', {
