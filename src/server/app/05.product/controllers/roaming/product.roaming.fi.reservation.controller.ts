@@ -48,7 +48,7 @@ export default class ProductRoamingFiReservation extends TwViewController {
     private checkIsOverFourteen(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
         return this.apiService.request(API_CMD.BFF_08_0080, {/*mbrChlId : svcInfo.mbrChlId*/}).map((resp) => {
             if (resp.code === API_CODE.CODE_00) {
-                return resp.result.age >= 18 ? true : false;
+                return resp.result.age >= 19 ? true : false;
             }
             this.showError(res, svcInfo, pageInfo, resp.code, resp.msg);
             return false;
