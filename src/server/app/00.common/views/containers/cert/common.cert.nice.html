@@ -17,8 +17,7 @@
     // 인증 요청 전 이 팝업을 close 시킨다.
     var userAgentString = Tw.BrowserHelper.getUserAgent();
     var chromeAgent = userAgentString.indexOf("Chrome") > -1; 
-    alert('chromeAgent ====> ' + chromeAgent);
-    if(chromeAgent && Tw.FormatHelper.isEmpty(window.opener)) {
+    if((chromeAgent || Tw.BrowserHelper.isIosChrome()) & Tw.FormatHelper.isEmpty(window.opener)) {
       alert('==== close popup ====');
       window.open('','_self').close();
     } else {
