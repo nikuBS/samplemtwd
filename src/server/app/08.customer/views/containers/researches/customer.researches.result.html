@@ -27,32 +27,25 @@
                 <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
-                    <!-- .poll-title -->
-                    <div class="poll-title">
-                        <span class="poll-question"><%= result.bnnrRsrchTitleNm %></span>
-                        <% 
-                            if(result.hintExUrl !== '28') { 
-                        %>
-                        <span class="poll-date"><%= result.staDtm %><span class="blind">에서</span><span class="vt" aria-hidden="true">~</span><%= result.endDtm %></span>
-                        <em class="poll-condition"><%= result.isProceeding ? '진행 중' : '종료'%></em>
-                        <%
-                            }
-                        %>
+                    <!-- .tod-poll-title -->
+                    <div class="tod-poll-title">
+                        <span class="poll-type">[<%= result.bnnrRsrchTypCd === 'P' ? '투표' : '퀴즈' %>]</span><!-- 투표, 퀴즈 -->
+                        <span class="poll-question"><%= result.bnnrRsrchTitleNm %></span>                        
                     </div>
-                    <!-- // .poll-title -->
+                    <!-- // .tod-poll-title -->
                 </div>
                 <!-- // .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <!-- poll-chart-box -->
-                    <div class="poll-chart-box">
+                    <div class="poll-chart-box tod-poll-chart-box">
                         <% result.examples.map((exam, idx) => { 
                             let color = '';
                             if (result.bnnrRsrchTypCd === 'Q') {
-                                color = exam.isAnswer ? 'red' : 'gray1'
+                                color = exam.isAnswer ? 'red' : 'gray'
                             } else {
-                                color = result.maxIdx === idx ? 'red' : 'blue1'
+                                color = result.maxIdx === idx ? 'red' : 'gray'
                             } %>
                         <div class="poll-chart-sbox">
                             <dl class="poll-chart-txt <%= exam.isAnswer ? 'correct' : '' %>">
@@ -66,15 +59,17 @@
                             </dl>
                             <div class="bar-chart-hoz">
                                 <span class="data-bar <%= color %>" style="width:<%= exam.rate %>%;"></span>
-                            </div><br/>
+                            </div>
                         </div>
                         <% }); %>
+                    </div>
                     <!-- // poll-chart-box -->
-                    <!-- delight -->
-                    <% if (result.motMsgHtmlCtt) { %><%- result.motMsgHtmlCtt %><% } %>
-                    <!-- // delight -->
                 </div>
                 <!-- // .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- delight -->
+                <% if (result.motMsgHtmlCtt) { %><%- result.motMsgHtmlCtt %><% } %>
+                <!-- // delight -->
             </div>
         </div>
         <!--// #contents -->
