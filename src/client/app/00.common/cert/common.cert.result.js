@@ -44,11 +44,6 @@ Tw.CommonCertResult.prototype = {
    * @private
    */
   _closeWeb: function (code, msg) {
-    Tw.Logger.info(window.opener);
-    if(Tw.FormatHelper.isEmpty(window.opener)) {
-      alert('==== window.opener is null or undefined ====');
-    }
-    
     if ( code === Tw.API_CODE.CODE_00 ) {
       if ( this._target === Tw.AUTH_CERTIFICATION_METHOD.PASSWORD ) {
         window.opener.onPopupCallbackPassword({ code: code, msg: msg });
