@@ -8,23 +8,11 @@
     <input type="hidden" name="m" value="checkplusSerivce"/>
     <input type="hidden" name="EncodeData" value="<%= data %>"/>
 </form>
-<div class="wrap"></div>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-
-    // chrome 팝업 차단 해제 시 window.opener을 찾지 못하여 인증완료되지 못하는 오류 수정
-    // 인증 요청 전 이 팝업을 close 시킨다.
-    var userAgentString = Tw.BrowserHelper.getUserAgent();
-    var chromeAgent = userAgentString.indexOf("Chrome") > -1; 
-    if((chromeAgent || Tw.BrowserHelper.isIosChrome()) & Tw.FormatHelper.isEmpty(window.opener)) {
-      alert('==== close popup ====');
-      window.open('','_self').close();
-    } else {
-      var $applyForm = $('#applyForm');
-      $applyForm.submit();
-    }
-
+    var $applyForm = $('#applyForm');
+    $applyForm.submit();
   });
 </script>
 <% include ../../components/end.component.html %>

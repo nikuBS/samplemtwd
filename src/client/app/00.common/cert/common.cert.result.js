@@ -44,27 +44,15 @@ Tw.CommonCertResult.prototype = {
    * @private
    */
   _closeWeb: function (code, msg) {
-    alert(window.opener);
     if ( code === Tw.API_CODE.CODE_00 ) {
-      var userAgentString = Tw.BrowserHelper.getUserAgent();
-      var chromeAgent = userAgentString.indexOf("Chrome") > -1; 
-      if((chromeAgent || Tw.BrowserHelper.isIosChrome()) && Tw.FormatHelper.isEmpty(window.opener)) {
-        alert('==== close popup ====');
-        window.open('','_self').close();
-        return;
-      }
-
       if ( this._target === Tw.AUTH_CERTIFICATION_METHOD.PASSWORD ) {
         window.opener.onPopupCallbackPassword({ code: code, msg: msg });
       } else {
         window.opener.onPopupCallback({ code: code, msg: msg });
       }
-      // window.close();
-      window.open('','_self').close();
+      window.close();
     } else {
-      // for test
-      window.opener.onPopupCallback({ code: code, msg: msg });
-      // Tw.Error(code, msg).page();
+      Tw.Error(code, msg).page();
     }
   },
 
