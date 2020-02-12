@@ -11,8 +11,21 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var $applyForm = $('#applyForm');
-    $applyForm.submit();
+
+    // chrome 팝업 차단 해제 시 window.opener을 찾지 못하여 인증완료되지 못하는 오류 수정
+    // 인증 요청 전 이 팝업을 close 시킨다.
+    function onCloseCert () {
+      window.close();
+    }
+
+    if(Tw.FormatHelper.isEmpty(window.opener)) {
+      alert('==== window.opener is null or undefined ====');
+      Tw.Popup.openAlert(Tw.POPUP_CONTENTS.POPUP_BLOCKED, null, null, $.proxy(this.onCloseCert, this));
+    } else {
+      var $applyForm = $('#applyForm');
+      $applyForm.submit();
+    }
+    
   });
 </script>
 <% include ../../components/end.component.html %>
