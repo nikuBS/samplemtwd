@@ -35838,8 +35838,10 @@ body.apphome .section-box {
 }
 .tod-poll-box .custom-img { display: block; margin-bottom: 0.625rem;}
 .tod-poll-box .custom-img img{width: 100%;}
-.tod-poll-box .has-image > li:nth-child(even){padding-left: 0;}
-.tod-poll-box .division-two.has-image > li:nth-child(even){padding-left: 0.31rem;}
+.tod-poll-box .has-image > li:nth-child(odd){padding-right: 0 !important;}
+.tod-poll-box .has-image > li:nth-child(even){padding-left: 0 !important;}
+.tod-poll-box .division-two.has-image > li:nth-child(odd){padding-right: 0.31rem !important;}
+.tod-poll-box .division-two.has-image > li:nth-child(even){padding-left: 0.31rem !important;}
 /* poll.progress-bar */
 .tod-progress-tit{font-size: 0.938rem; margin-bottom: 1.25rem;}
 .tod-progress-comp .progress-bar{position:relative; height: 1.25rem;}
