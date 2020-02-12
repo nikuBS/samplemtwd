@@ -59,8 +59,7 @@ Tw.CommonCertResult.prototype = {
       } else {
         window.opener.onPopupCallback({ code: code, msg: msg });
       }
-      // window.close();
-      window.open('','_self').close();
+      window.close();
     } else {
       // for test
       window.opener.onPopupCallback({ code: code, msg: msg });
