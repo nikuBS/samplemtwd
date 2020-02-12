@@ -81,7 +81,8 @@ Tw.CustomerResearch.prototype = {
     if (this._surveyType !== undefined) {
       console.log('[_handleSelectAnswer]', '퀴즈 또는 투표');
 
-      var $btn = $root.find('.fe-poll-quiz-submit');
+      // var $btn = $root.find('.fe-poll-quiz-submit');
+      var $btn = $('.fe-poll-quiz-submit');
       var enable = true;
 
       $checkedLi.attr('aria-checked', false);              // 선택한 항목 외 라디오박스 체크 비활성화
@@ -380,7 +381,8 @@ Tw.CustomerResearch.prototype = {
     } 
     // 투표 또는 퀴즈 인 경우
     else {
-      var $btn = $root.find('.fe-poll-quiz-submit');
+      // var $btn = $root.find('.fe-poll-quiz-submit');
+      var $btn = $('.fe-poll-quiz-submit');
 
       if (!target.value.length) {
         $btn.attr('disabled', true);
@@ -483,7 +485,9 @@ Tw.CustomerResearch.prototype = {
     var $target = $(e.currentTarget),
       $root = $target.parents('li.acco-box');
 
-    var $this = $target.parents('div.poll-box');
+    // var $this = $target.parents('div.poll-box');
+    var $this = $('div.poll-box');
+
     var researchId = $this.data('research-id');
     var researchTypCd = $this.data('type-code');
     var researchAnswerNum = $this.data('answer-num');
