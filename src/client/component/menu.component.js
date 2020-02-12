@@ -472,6 +472,19 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       );
       return;
     }
+
+    // 무료 문자 점검 Alert
+    var nowDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDDhhmmss')
+    if (nowDate >= Tw.MENU_STRING.FREE_SMS_OVERHAUL.start && nowDate <= Tw.MENU_STRING.FREE_SMS_OVERHAUL.end) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS_OVERHAUL.msg,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms_overhaul'
+      );
+      return;
+    }
     Tw.CommonHelper.openFreeSms();
     return false;
   },
