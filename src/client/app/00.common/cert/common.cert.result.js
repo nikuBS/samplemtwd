@@ -46,13 +46,6 @@ Tw.CommonCertResult.prototype = {
   _closeWeb: function (code, msg) {
     alert(window.opener);
     if ( code === Tw.API_CODE.CODE_00 ) {
-      var userAgentString = Tw.BrowserHelper.getUserAgent();
-      var chromeAgent = userAgentString.indexOf("Chrome") > -1; 
-      if(chromeAgent && Tw.FormatHelper.isEmpty(window.opener)) {
-        window.open('','_self').close();
-        return;
-      }
-      
       if ( this._target === Tw.AUTH_CERTIFICATION_METHOD.PASSWORD ) {
         window.opener.onPopupCallbackPassword({ code: code, msg: msg });
       } else {
