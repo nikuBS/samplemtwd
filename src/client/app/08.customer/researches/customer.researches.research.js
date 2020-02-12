@@ -98,6 +98,11 @@ Tw.CustomerResearch.prototype = {
           enable = $etc.text().length > 0;
         } else {
           $etc.attr('disabled', true).val('');
+
+          if (!this.$maxLength) {
+            this.$maxLength = $root.find('.max-byte em');
+          }
+          this.$maxLength.text(0);  // 입력 바이트 노출
         }
       }
 
@@ -122,6 +127,11 @@ Tw.CustomerResearch.prototype = {
             // console.log('test area 비활성화 처리');
             $root.find('.fe-etc-area').attr('disabled', true).val('');
             isEtc = 'false';
+
+            if (!this.$maxLength) {
+              this.$maxLength = $root.find('.max-byte em');
+            }
+            this.$maxLength.text(0);  // 입력 바이트 노출
           }
 
         } else {
