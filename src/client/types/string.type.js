@@ -935,7 +935,8 @@ Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A02: '이미 예약하신 정보가 있습니다. 전화상담 예약은 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬글이<br /> 등록되었습니다.',
   ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
-  ALERT_RESEARCHES_A02: '설문에 참여해 주셔서 감사합니다.'
+  ALERT_RESEARCHES_A02: '참여해 주셔서 감사합니다.',
+  ALERT_RESEARCHES_A03: '오답입니다. 다시 참여해주세요.'
 };
 
 Tw.CUSTOMER_RESEARCHES_BUTTONS = {
@@ -2163,4 +2164,9 @@ Tw.MYT_FARE_BILL = {
     UNUSUAL_CUSTOMER_MSG: '휴대폰 결제 특이 차단 중인 고객은 해당 메뉴를 이용하실 수 없습니다.',
     UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.'
   }
+};
+
+Tw.SURVEY_CATEGORY_STR = {
+  ING: '진행 중 설문조사',
+  END: '종료 설문조사'
 };
