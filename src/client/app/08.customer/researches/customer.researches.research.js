@@ -582,8 +582,7 @@ Tw.CustomerResearch.prototype = {
    * @private
    */
   _closeResearch: function() {
-    // console.log('[_closeResearch] document.referrer', document.referrer);
-    location.href = document.referrer;
+    location.href = '/customer/svc-info/researches';
     // history.back();
   }
 };
