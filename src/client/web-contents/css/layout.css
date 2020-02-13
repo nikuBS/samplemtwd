@@ -109,9 +109,18 @@ body.hidden {
   color: #666;
   text-align: center; }
 
-#gnb {
+/* 200211 [OP002-6721] 수정 - IOS 하단메뉴 짤림 결함 수정 */
+/*#gnb {
   position: relative;
   z-index: 30; }
+*/
+
+#gnb {
+  position: absolute;
+  left:0;
+  bottom:0;
+  z-index: 30; }
+/* //200211 [OP002-6721] 수정 - IOS 하단메뉴 짤림 결함 수정 */
 
 #gnb .q-wrap {
   position: fixed;

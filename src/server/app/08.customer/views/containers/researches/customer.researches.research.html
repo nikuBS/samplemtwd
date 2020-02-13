@@ -16,6 +16,9 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
+    <% 
+        if( !(research.info === null || research.info === undefined) ) {
+    %>
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>" data-research-id="<%= research.info.qstnId %>">
         <!-- #header -->
         <%- include('../../../common/views/components/header.component.html', { title: '설문조사 진행', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
@@ -27,158 +30,361 @@
                 <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
-                    <!-- .poll-title -->
-                    <div class="poll-title">
-                        <span class="poll-question"><%= research.info.qstnTitleNm %></span>
-                        <% 
-                            if(research.info.qstnId !== '28') { 
-                        %>
-                        <span class="poll-date"><%= research.info.staDtm %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.info.endDtm %></span>
-                        <em class="poll-condition">진행 중</em>
-                        <%  } %>
-                    </div>
-                </div>
-                <hr class="cont-sp type1" aria-hidden="true">
-                <div class="cont-box">
-                    <!-- // .poll-title -->
-                    <!-- poll-chart-box -->
-                    <div class="poll-chart-box">
-                        <div class="poll-chart-sbox">
-                            <dl class="poll-chart-txt">
-                                <dt>진행률</dt>
-                                <dd>0%</dd>
-                            </dl>
-                            <div class="bar-chart-hoz">
-                                <span class="data-bar blue2" style="width:0%"></span>
-                            </div><br/>
+                    
+                        <%  const END_INDEX = '99';
+                            let number = 1;
+                            research.questions.map((question, qIdx) => { 
+                                const isEssential = question.mndtAnswYn === 'Y';
+                                let hasEnd = false; %>
+                    <!-- .poll-box -->
+                    <div class="<%= number++ %> poll-box tod-poll-box <%= qIdx === 0 ? '': 'none' %>" aria-hidden="<%= qIdx !== 0 %>" data-is-essential="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
+                        <!-- ##### 질문 ##### -->
+                        <div class="tod-poll-title-wrap">
+                            <!-- .tod-poll-title -->
+                            <div class="tod-poll-title">
+                                <span class="poll-question"><%= question.inqDtlCtt %></span>
+                            </div>
+                            <!-- //.tod-poll-title -->
+                        </div>
+                        <!-- #####  설문 유형 영역  ##### -->                        
+                            <%  switch (question.inqItmTypCd) {
+                                case '0': {
+                                    let i = 0;
+                                    let etcIdx = -1; %>
+                        <!-- .tod-poll-comp -->
+                        <div class="tod-poll-comp radio"><!-- 단일선택 : radio -->
+                            <div class="tod-poll-comp-inner">
+                                <ul class="select-list fieldset-panel <%= question.inqSortMthdCd === 'T' ? 'division-two' : '' %>">
+                                <%  for (let idx in question.examples) {
+                                        const exam = question.examples[idx];
+
+                                        if (exam.isEtc) {
+                                            etcIdx = idx;
+                                        }
+
+                                        if (exam.nxtInqItmNum === END_INDEX) {
+                                            hasEnd = true;
+                                        }
+
+                                        const content = exam.isEtc ? '기타' : exam.content %>
+                                    <li class="radiobox" aria-checked="false">
+                                        <label for="radio<%= qIdx %>_<%=i%>">
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio<%= qIdx %>_<%=i%>" name="radio<%= qIdx %>" title="<%= content %>"  data-next-question="<%= exam.nxtInqItmNum %>"  data-is-etc="<%= exam.isEtc %>"><span class="r-type1"></span><!-- 체크상태일 경우 checked="checked" -->
+                                            </span>
+                                            <span class="custom-txt"><%= content %></span>
+                                        </label>
+                                    </li>
+                                <%  
+                                        i++;
+                                    } 
+                                %>
+                                </ul>
+                                <% if (etcIdx > 0) { %>
+                                <!-- text-area -->
+                                <div class="poll-textarea mt10">   
+                                    <textarea class="poll-area mt10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택 시 내용을 입력해주세요." title="내용 입력" disabled></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                                <% break;
+                                }
+
+                                case '1': {
+                                    let i = 0;
+                                    let etcIdx = -1; 
+                                %>
+                        <!-- .tod-poll-comp -->
+                        <div class="tod-poll-comp check"><!-- 단일선택 : radio -->
+                            <div class="tod-poll-comp-inner">
+                                <ul class="select-list fieldset-panel <%= question.inqSortMthdCd === 'T' ? 'division-two' : '' %>">
+                            <%      for (let idx in question.examples) {
+                                        const exam = question.examples[idx];
+                                        
+                                        if (exam.isEtc) {
+                                            etcIdx = idx;
+                                        }
+
+                                        if (exam.nxtInqItmNum === END_INDEX) {
+                                            hasEnd = true;
+                                        }
+
+                                        const content = exam.isEtc ? '기타' : exam.content 
+                            %>
+                                    <li class="checkbox" aria-checked="false">
+                                        <label for="check<%= qIdx %>_<%=i%>">
+                                            <span class="custom-form">
+                                                <input type="checkbox" id="check<%= qIdx %>_<%=i%>" name="checkbox" title="<%= content %>"  data-is-etc="<%= exam.isEtc %>"><span class="c-type1"></span>
+                                            </span>
+                                            <span class="custom-txt"><%= content %></span>    
+                                        </label>  
+                                    </li>
+                            <%  
+                                        i++;
+                                    }
+                            %>
+                                </ul>
+                            <%      if (etcIdx > 0) { %>
+                                <!-- text-area -->
+                                <div class="poll-textarea mt10">   
+                                    <textarea class="poll-area mt10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택 시 내용을 입력해주세요." title="내용 입력" disabled></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                </div>
+                            <%      } %>
                         </div>
                     </div>
-                    <!-- // poll-chart-box -->
-                    <% const END_INDEX = '99';
-                        research.questions.map((question, qIdx) => { 
-                        const isEssential = question.mndtAnswYn === 'Y';
-                        let hasEnd = false; %>
-                        <div class="poll-box <%= qIdx === 0 ? '': 'none' %>" aria-hidden="<%= qIdx !== 0 %>" data-is-essential="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
-                            <div class="poll-sub-tit"><%= question.inqDtlCtt %></div>
-                            <% switch (question.inqItmTypCd) { 
-                                case '0': {
-                                let etcIdx = -1; %>
-                                <div class="widget">
-                                    <div class="widget-box radio">
-                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'T' ? 'division-two' : '' %>" role="radiogroup">
-                                            <% for (let idx in question.examples) { 
-                                                const exam = question.examples[idx];
-                                                if (exam.isEtc) {
-                                                    etcIdx = idx;
-                                                }
-
-                                                if (exam.nxtInqItmNum === END_INDEX) {
-                                                    hasEnd = true;
-                                                }
-
-                                                const content = exam.isEtc ? '기타' : exam.content %>
-                                                <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <% if (exam.image) { %>
-                                                        <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
-                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx %>-radio<%= idx %>" data-next-question="<%= exam.nxtInqItmNum %>" data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
-                                                        <div class="poll-text" id="aria-comp-q<%= qIdx %>-radio<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
-                                                    <% } else { %>
-                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>"  data-next-question="<%= exam.nxtInqItmNum %>"  data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
-                                                        <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
-                                                    <% } %>
-                                                </li>
-                                            <% } %>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <% if (etcIdx > 0) { %>
-                                    <textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea>
-                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
-                                <% } %>
-                                <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
-                                <% break;
+                            <%      break;
                                 }
-                                case '1': {
-                                let etcIdx = -1; %>
-                                <div class="widget">
-                                    <div class="widget-box check">
-                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'T' ? 'division-two' : '' %>" role="group">
-                                            <% for (let idx in question.examples) { 
-                                                const exam = question.examples[idx];
-                                                if (exam.isEtc) {
-                                                    etcIdx = idx;
-                                                }
-
-                                                if (exam.nxtInqItmNum === END_INDEX) {
-                                                    hasEnd = true;
-                                                }
-
-                                                const content = exam.isEtc ? '기타' : exam.content %>
-                                                <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <% if (exam.image) { %>
-                                                        <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
-                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx%>-checkbox<%= idx %>" data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
-                                                        <div class="poll-text" id="aria-comp-q<%= qIdx%>-checkbox<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
-                                                    <% } else { %>
-                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>"  data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
-                                                        <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
-                                                    <% } %>
-                                                </li>
-                                            <% } %>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <% if (etcIdx > 0) { %>
-                                    <textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea>
-                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
-                                <% } %>
-                                <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
-                                <% break;
-                                }
-                                case '2': {%> 
-                                <textarea class="poll-area mt10 mb10" cols="20" rows="3" placeholder="내용을 입력해주세요."></textarea>
-                                <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
-                                <% break;
+                                case '2': { %>
+                    <div class="poll-textarea mt10">   
+                        <textarea class="poll-area mt10 fe-etc-area" cols="20" rows="3" placeholder="내용을 입력해주세요." title="내용 입력"></textarea>
+                        <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                    </div>
+                            <%      break;
                                 }
                             } %>
-                            <% if (qIdx === 0) { %>
-                                <ul class="bt-slice full">
-                                    <% if (qIdx === research.questions.length - 1 ) { %>
-                                        <li class="fe-bt-change bt-red1">
-                                            <button class="fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
-                                        </li>
-                                    <% } else { %>
-                                        <li class="fe-bt-change">
-                                            <button class="btn-round1 btn-style1 fe-go-next" <%= isEssential? 'disabled' : '' %>>다음</button>
-                                        </li>
-                                    <% } %>
-                                </ul>
-                            <% } else { %>
-                                <ul class="bt-slice mt30 item-two">
-                                    <!-- <li class="bt-white2"> -->
-                                    <li>
-                                        <button class="fbtn-round1 btn-style4 fe-go-prev">이전</button>
-                                    </li>
-                                    <% if (qIdx === research.questions.length - 1) { %>
-                                        <li class="fe-bt-change bt-red1">
-                                            <button class="fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
-                                        </li>
-                                    <% } else { %>
-                                        <li class="fe-bt-change" >
-                                            <button class="btn-round1 btn-style1 fe-go-next" <%= isEssential? 'disabled' : '' %>>다음</button>
-                                        </li>
-                                    <% } %>
-                                </ul>
-                            <% } %>
-                        </div>
-                    <% }); %>
+                        <%  if (qIdx === 0) { %>
+                    <ul class="bt-slice mt30">
+                        <%      if (qIdx === research.questions.length - 1 ) { %>
+                            <li class="fe-bt-change">
+                                <button class="btn-round1 btn-style1 fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
+                            </li>
+                        <%      } else { %>
+                            <li class="fe-bt-change">
+                                <button class="btn-round1 btn-style1 fe-go-next" <%= isEssential? 'disabled' : '' %>>다음으로</button>
+                            </li>
+                        <%      } %>
+                    </ul>
+                        <%  } else { %>
+                    <ul class="bt-slice mt30 item-two">
+                        <!-- <li class="bt-white2"> -->
+                        <li>
+                            <button class="btn-round1 btn-style4 fe-go-prev">이전으로</button>
+                        </li>
+                        <%      if (qIdx === research.questions.length - 1) { %>
+                        <li class="fe-bt-change">
+                            <button class="btn-round1 btn-style1 fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
+                        </li>
+                        <%      } else { %>
+                        <li class="fe-bt-change" >
+                            <button class="btn-round1 btn-style1 fe-go-next" <%= isEssential? 'disabled' : '' %>>다음으로</button>
+                        </li>
+                        <%      } %>
+                    </ul>
+                        <%  } %>
                     </div>
+                    <!-- // .poll-box -->
+                    <%  }); %>
                 </div>
                 <!-- // .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <h3 class="tod-progress-tit"><%=research.info.qstnTitleNm%></h3>
+                    <!--  진행바 progress -->          
+                    <div class="tod-progress-comp">
+                        <div class="progress-bar">
+                            <span class="progress-bar-succ orange data-bar" style="width:0%"><em class="progress-value">30%</em></span><!-- style="width:30%" 수치 조정 -->
+                        </div>
+                    </div>
+                    <!--  //progress -->
+                </div>
+                <!-- //.cont-box -->
             </div>
         </div>
         <!--// #contents -->
-    
+    <% 
+        } else {
+            let bnnrRsrchTypNm = '';
+
+            if (research.research[0].bnnrRsrchTypCd === 'Q') bnnrRsrchTypNm = '퀴즈';
+            else if (research.research[0].bnnrRsrchTypCd === 'P') bnnrRsrchTypNm = '투표';
+    %>
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>" >
+        <!-- #header -->
+        <%- include('../../../common/views/components/header.component.html', { title: '설문조사 진행', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <!-- .poll-title -->
+                    <div class="tod-poll-title">
+                        <span class="poll-type">[<%= bnnrRsrchTypNm %>]</span>
+                        <span class="poll-question"><%= research.research[0].bnnrRsrchTitleNm %></span>
+                    </div>
+                    <!-- // .poll-title -->
+                </div>
+                <!-- // .cont-box -->
+            <% if (research.research[0].bnnrRsrchTypCd === 'Q' && research.research[0].hintExUrl) { %>
+                <!-- 힌트가 있는 경우 -->
+                <div class="tod-poll-hint-box">
+                    <a href="#" class="bt-link-tx underline fe-hint" data-hint-url="<%= research.research[0].hintExUrl %>">힌트보기</a>
+                </div>
+            <% } else { %>
+                <!-- 힌트가 없는 경우 구분라인이 들어감. -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+            <% } %>
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <!-- .poll-box -->
+                    <div class="poll-box tod-poll-box" data-research-id="<%= research.research[0].bnnrRsrchId %>" data-type-code="<%= research.research[0].bnnrRsrchTypCd %>" data-answer-num="<%= research.research[0].canswNum %>">
+            <%
+                const examCount = research.research[0].examples.length;
+                if (examCount > 0) {
+                    if (research.research[0].bnnrRsrchRpsTypCd === 'R') {   <!-- R : 단일선택 / C : 다중선택 -->
+            %>
+                        <div class="tod-poll-comp radio">
+                            <div class="tod-poll-comp-inner">
+            <%
+                        if (research.research[0].bnnrRsrchSortMthdCd === 'D') {   <!-- 단일 + 좌우정렬 -->
+                            if (research.research[0].exImgFilePathNm1 !== undefined) {      <!-- 단일 + 좌우정렬 + 이미지 -->
+            %>
+                                <ul class="select-list fieldset-panel division-two has-image">
+            <%
+                            } else {    <!-- 단일 + 좌우정렬 + 텍스트 -->
+            %>
+                                <ul class="select-list fieldset-panel division-two">
+            <%                      
+                            }
+                            research.research[0].examples.map((exam, idx) =>  {
+                                if (exam.image) {   <!-- 단일 + 좌우 + 이미지 -->
+            %>
+                                    <li class="category-type" aria-checked="false">
+                                        <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">
+                                            <span class="custom-img"><img src="https://cdnm-stg.tworld.co.kr<%= exam.image %>" alt=""></span>
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>" name="radio<%= research.research[0].bnnrRsrchId %>" data-is-etc="<%= exam.isEtc %>"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt"><%= exam.content %></span>
+                                        </label>
+                                        <%- exam.motHtml %>
+                                    </li>
+                    <%
+                                } else {        <!-- 단일 + 좌우 + 텍스트 -->
+                    %>
+                                    <li class="category-type" aria-checked="false">
+                                        <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>" name="radio<%= research.research[0].bnnrRsrchId %>" data-is-etc="<%= exam.isEtc %>"><span class="r-type1"></span>
+                                            </span>
+                                            <span class="custom-txt"><%= exam.content %></span>
+                                        </label>
+                                        <%- exam.motHtml %>
+                                    </li>
+                    <%
+                                }
+                            });
+                    %>
+                                </ul>
+                    <%
+                            if (research.research[0].examples[examCount - 1].isEtc) {
+                    %>
+                                <div class="poll-textarea mt10">   
+                                    <textarea class="poll-area mt10 fe-etc-area" data-etc-idx="<%= examCount %>" cols="20" rows="3" placeholder="기타항목 선택 시 내용을 입력해주세요." title="내용 입력" disabled></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                </div>
+                    <%
+                            }
+
+                            if (research.research[0].motMsgHtmlCtt) {
+                    %>
+                                <div class="tod-poll-moticode-box">
+                                    <%- research.research[0].motMsgHtmlCtt %>
+                                </div>
+                    <%
+                            }
+                    %>
+                            </div>
+                        </div>
+                    <%
+                        } else {    <!-- 단일 + 수직정렬 -->
+                            if (research.research[0].exImgFilePathNm1 !== undefined) {      <!-- 단일 + 수직정렬 + 이미지 -->
+                    %>
+                                <ul class="select-list fieldset-panel has-image">
+                    <%
+                            } else {    <!-- 단일 + 수직정렬 + 텍스트 -->
+                    %>
+                                <ul class="select-list fieldset-panel">
+                    <%
+                            }
+                            research.research[0].examples.map((exam, idx) =>  {
+                                if (exam.image) {   <!-- 단일 + 수직 + 이미지 -->
+                    %>
+                                    <li class="category-type" aria-checked="false">
+                                        <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">     
+                                            <span class="custom-img"><img src="https://cdnm-stg.tworld.co.kr<%= exam.image %>" alt=""></span>
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>" name="radio<%= research.research[0].bnnrRsrchId %>" data-is-etc="<%= exam.isEtc %>"><span class="r-type1"></span>
+                                            </span>
+                                                <span class="custom-txt"><%= exam.content %></span>
+                                        </label>
+                                        <div class="tod-poll-moticode-box">
+                                        <%- exam.motHtml %>
+                                        </div>
+                                    </li>
+                    <%
+                                } else {    <!-- 단일 + 수직 + 텍스트 -->
+                    %>
+                                    <li class="category-type" aria-checked="true">
+                                        <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>" name="radio<%= research.research[0].bnnrRsrchId %>" data-is-etc="<%= exam.isEtc %>"><span class="r-type1"></span>
+                                            </span>
+                                            <span class="custom-txt"><%= exam.content %></span>    
+                                        </label>
+                                        <%- exam.motHtml %>
+                                    </li>
+                    <%
+                                }
+                            });
+                    %>
+                                </ul>
+                        <%
+                            if (research.research[0].examples[examCount - 1].isEtc) {
+                        %>
+                                <div class="poll-textarea mt10">   
+                                    <textarea class="poll-area mt10 fe-etc-area" data-etc-idx="<%= examCount %>" cols="20" rows="3" placeholder="기타항목 선택 시 내용을 입력해주세요." title="내용 입력" disabled></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                </div>
+                        <%
+                            }
+
+                            if (research.research[0].motMsgHtmlCtt) {
+                        %>
+                                <div class="tod-poll-moticode-box">
+                                    <%- research.research[0].motMsgHtmlCtt %>
+                                </div>
+                        <%
+                            }
+                        %>
+                            </div>
+                        </div>
+                    <%
+                        }
+                    }
+                }
+            %>
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- button -->
+        <ul class="bt-slice full">
+            <li class="bt-red1">
+                <button class="fe-poll-quiz-submit" disabled>참여하기</button>
+            </li>
+        </ul>
+        <!-- //button -->
+    <% 
+        }
+    %>
         <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>

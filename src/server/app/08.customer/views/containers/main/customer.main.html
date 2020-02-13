@@ -175,27 +175,30 @@
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box slider1">
-                        <ul class="slider">
-                        <% researchList.map( item => { %>
-                            <li>
-                                <div class="operation-guide-banner01"> 
-                                    <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
-                                    <ul>
-                                    <% if ( item.bnnrRsrchTypCd === 'R' ) { %>
-                                        <li><button class="fe-survey-btn banner-bt" data-link="/customer/svc-info/researches?id=<%-item.hintExUrl%>">설문 참여하기</button></li>
-                                    <% } else if ( item.bnnrRsrchTypCd === 'P' ) { %>
-                                        <li><button class="fe-survey-btn banner-bt" data-link="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>">설문 참여하기</button></li>
-                                    <% } else if ( item.bnnrRsrchTypCd === 'Q' ) { %>
-                                        <li><button class="fe-survey-btn banner-bt" data-link="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>">설문 참여하기</button></li>
-                                    <% } %>
-                                    </ul>
-                                    <% if (item.custCntrSubmImgflPathNm) { %>
-                                    <img src="<%=CDN%><%=item.custCntrSubmImgflPathNm%>" alt="<%=item.bnnrRsrchTitleNm%>" /> 
-                                    <% } %>
+                        <div class="slider-box">
+                            <ul class="slider">
+                            <% researchList.map( item => { %>
+                                <div>
+                                    <div>
+                                        <li style="width: 100%; display: inline-block;">
+                                        <% if ( item.bnnrRsrchTypCd === 'R' ) { %>
+                                            <button class="fe-survey-btn" data-link="/customer/svc-info/researches?id=<%-item.hintExUrl%>">
+                                        <% } else if ( item.bnnrRsrchTypCd === 'P' ) { %>
+                                            <button class="fe-survey-btn" data-link="/customer/svc-info/researches?pid=<%-item.bnnrRsrchId%>">
+                                        <% } else if ( item.bnnrRsrchTypCd === 'Q' ) { %>
+                                            <button class="fe-survey-btn" data-link="/customer/svc-info/researches?qid=<%-item.bnnrRsrchId%>">
+                                        <% } %>
+
+                                        <% if (item.custCntrSubmImgflPathNm) { %>
+                                                <img src="<%=CDN%><%=item.custCntrSubmImgflPathNm%>" alt="<%=item.bnnrRsrchTitleNm%>" />
+                                        <% } %>
+                                            </button>
+                                        </li>
+                                    </div>
                                 </div>
-                            </li>
-                        <% }) %>
-                        </ul>
+                            <% }) %>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <!--// .widget -->

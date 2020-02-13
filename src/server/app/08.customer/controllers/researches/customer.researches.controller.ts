@@ -33,8 +33,56 @@ export default class CustomerResearches extends TwViewController {
 
         res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
       });
+    } else if (req.query.qid) {
+      this.__getQuizAndPoll(req.query.qid, req.query.ctgCd).subscribe(research => {
+        if (research.code) {
+          return this.error.render(res, {
+            pageInfo: pageInfo,
+            svcInfo,
+            code: research.code,
+            msg: research.msg
+          });
+        }
+
+        // this.logger.info(this, '[customer.researches.controller] %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', '');
+        // this.logger.info(this, '[customer.researches.controller] 설문조사 번호 : ', research.research[0].bnnrRsrchId);
+        // this.logger.info(this, '[customer.researches.controller] 설문조사 유형 : ', research.research[0].bnnrRsrchTypCd === 'Q' ? '퀴즈' : '투표');
+        // this.logger.info(this, '[customer.researches.controller] 단일/다중선택 여부 : ', research.research[0].bnnrRsrchRpsTypCd === 'R' ? '단일선택' : '다중선택');
+        // this.logger.info(this, '[customer.researches.controller] 정렬방식 : ', research.research[0].bnnrRsrchSortMthdCd === 'D' ? '좌우정렬' : '수직정렬');
+        // this.logger.info(this, '[customer.researches.controller] 텍스트/이미지 여부 : ', research.research[0].exImgFilePathNm1 !== undefined ? '이미지' : '텍스트');
+        // this.logger.info(this, '[customer.researches.controller] API Return : ', research.research[0]);
+        // this.logger.info(this, '[customer.researches.controller] %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', '');
+
+        res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
+      });
+    } else if (req.query.pid) {
+      this.__getQuizAndPoll(req.query.pid, req.query.ctgCd).subscribe(research => {
+        if (research.code) {
+          return this.error.render(res, {
+            pageInfo: pageInfo,
+            svcInfo,
+            code: research.code,
+            msg: research.msg
+          });
+        }
+
+        // this.logger.info(this, '[customer.researches.controller] %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', '');
+        // this.logger.info(this, '[customer.researches.controller] 설문조사 번호 : ', research.research[0].bnnrRsrchId);
+        // this.logger.info(this, '[customer.researches.controller] 설문조사 유형 : ', research.research[0].bnnrRsrchTypCd === 'Q' ? '퀴즈' : '투표');
+        // this.logger.info(this, '[customer.researches.controller] 단일/다중선택 여부 : ', research.research[0].bnnrRsrchRpsTypCd === 'R' ? '단일선택' : '다중선택');
+        // this.logger.info(this, '[customer.researches.controller] 정렬방식 : ', research.research[0].bnnrRsrchSortMthdCd === 'D' ? '좌우정렬' : '수직정렬');
+        // this.logger.info(this, '[customer.researches.controller] 텍스트/이미지 여부 : ', research.research[0].exImgFilePathNm1 !== undefined ? '이미지' : '텍스트');
+        // this.logger.info(this, '[customer.researches.controller] API Return : ', research.research[0]);
+        // this.logger.info(this, '[customer.researches.controller] %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', '');
+
+        res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
+      });
     } else {
-      this.__getResearches(req.query.quiz).subscribe(researches => {
+      this.__getResearches(req.query.quiz, req.query.ctgCd).subscribe(researches => {
+        // this.logger.info(this, '[customer.researches.controller] ###############################################################', '');
+        // this.logger.info(this, '[customer.researches.controller] researches : ', researches);
+        // this.logger.info(this, '[customer.researches.controller] ###############################################################', '');
+
         if (researches.code) {
           return this.error.render(res, {
             pageInfo: pageInfo,
@@ -43,6 +91,19 @@ export default class CustomerResearches extends TwViewController {
             msg: researches.msg
           });
         }
+
+        // 등록일자 기준 내림차순으로 정렬 (2020.1.1, 2019.12.31, ...)
+        researches.researches.sort( function (first, second) {
+          const conv1st = parseInt(DateHelper.getCurrentShortDate(first['staDtm']), 10);
+          const conv2nd = parseInt(DateHelper.getCurrentShortDate(second['staDtm']), 10);          
+
+          return conv2nd - conv1st;
+        });
+
+        // this.logger.info(this, '[customer.researches.controller] ###############################################################', '');
+        // this.logger.info(this, '[customer.researches.controller] researches : ', researches);
+        // this.logger.info(this, '[customer.researches.controller] ###############################################################', '');
+
         res.render('researches/customer.researches.html', { svcInfo, pageInfo, ...researches });
       });
     }
@@ -53,8 +114,11 @@ export default class CustomerResearches extends TwViewController {
    * @param {string} quizId 고객센터 서브메인에서 접근한 경우, 해당 설문 id가 리스트 기본 노출 범위(20개) 이후에 있을 경우, 해당 설문조사까지 자동으로 노출되도록 하기 위함(기획 요청)
    * @private
    */
-  private __getResearches = quizId => {
-    // return of(Researches).map(resp => {
+  private __getResearches(quizId, ctgCd) {
+    // this.logger.info(this, '[customer.researches.controller] #################################################################################', '');
+    // this.logger.info(this, '[customer.researches.controller] quizId : ', quizId);
+    // this.logger.info(this, '[customer.researches.controller] ctgCd : ', ctgCd);
+    // this.logger.info(this, '[customer.researches.controller] #################################################################################', '');
     return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -101,8 +165,13 @@ export default class CustomerResearches extends TwViewController {
             };
           })
           .filter(research => {
-            return research.bnnrRsrchTypCd !== 'R' || research.isProceeding;
+            if (ctgCd === 'E') {  // 종료된 설문조사
+              return !research.isProceeding && research.bnnrRsrchTypCd !== 'R'; // [OP002-4585] 종료 설문조사에서는 설문조사(R) 리스트는 노출하지 않음.
+            } else {  // 진행중 설문조사
+              return research.isProceeding;
+            }
           }),
+        ctgCd: ctgCd,
         showCount: quizIdx && quizIdx !== -1 ? Math.floor(quizIdx / DEFAULT_LIST_COUNT + 1) * DEFAULT_LIST_COUNT : DEFAULT_LIST_COUNT
       };
     });
@@ -155,4 +224,66 @@ export default class CustomerResearches extends TwViewController {
       };
     });
   }
+
+  /**
+   * @desc 퀴즈/투표 가져오기 요청
+   * @param {string} quizId 고객센터 서브메인에서 접근한 경우, 해당 설문 id가 리스트 기본 노출 범위(20개) 이후에 있을 경우, 해당 설문조사까지 자동으로 노출되도록 하기 위함(기획 요청)
+   * @private
+   */
+  private __getQuizAndPoll(id, ctgCd) {
+      // this.logger.info(this, '[customer.researches.controller] ################################################################################', '');
+      // this.logger.info(this, '[customer.researches.controller] [__getQuizAndPoll] id : ', id);
+      // this.logger.info(this, '[customer.researches.controller] ctgCd : ', ctgCd);
+      // this.logger.info(this, '[customer.researches.controller] ################################################################################', '');
+      return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
+        if (resp.code !== API_CODE.CODE_00) {
+          return {
+            code: resp.code,
+            msg: resp.msg
+          };
+        }
+          
+        return {
+          research: resp.result
+            .map(research => {
+
+              if (research.bnnrRsrchId === id) {
+                
+                const examples: Array<{}> = [];
+                let i = 1,
+                  exam = research['exCtt' + i],
+                  hasHtml = false;
+    
+                while (exam) {
+                  const isEtc = exam === 'QSTNETC';
+                  hasHtml = hasHtml || research['motExCtt' + i];
+    
+                  examples.push({
+                    content: isEtc ? ETC_CENTER : exam || '',
+                    image: research['exImgFilePathNm' + i],
+                    motHtml: research['motExCtt' + i],
+                    isEtc
+                  });
+                  i++;
+                  exam = research['exCtt' + i];
+                }
+    
+                return {
+                  ...research,
+                  examples,
+                  hasHtml,
+                  staDtm: DateHelper.getShortDate(research.staDtm),
+                  endDtm: DateHelper.getShortDate(research.endDtm),
+                  isProceeding: DateHelper.getDifference(research.endDtm) > 0
+                };
+              }
+            })
+            .filter(research => {
+              if (research !== undefined) {
+                return research;
+              }
+            }),
+        };
+      });
+    }
 }

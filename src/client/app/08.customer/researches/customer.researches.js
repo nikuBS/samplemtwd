@@ -4,12 +4,13 @@
  * @since 2019.04.10
  */
 
-Tw.CustomerResearches = function(rootEl, researches) {
+Tw.CustomerResearches = function(rootEl, researches, ctgCd) {
   this.$container = rootEl;
 
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService(this.$container);
+  this._ctgCd = ctgCd;
 
   this._cachedElement();
   this._bindEvent();
@@ -17,12 +18,33 @@ Tw.CustomerResearches = function(rootEl, researches) {
 };
 
 Tw.CustomerResearches.prototype = {
+  _surveyCtgCd: [
+    {
+      list: [
+        {
+          txt: Tw.SURVEY_CATEGORY_STR.ING,
+          'radio-attr': 'class="focus-elem" ctgCd="I"',
+          'label-attr': ' ',
+          ctgCd: 'I'
+        },
+        {
+          txt: Tw.SURVEY_CATEGORY_STR.END,
+          'radio-attr': 'class="focus-elem" ctgCd="E"',
+          'label-attr': ' ',
+          ctgCd: 'E'
+        }
+      ]
+    }
+  ],
+
   /**
    * @desc 설문조사 데이터 변경
    * @param {Array} researches
    * @private
    */
   _init: function(researches) {
+    // console.log('_init');
+    var _this = this;
     this._tmpl = Handlebars.compile($('#fe-templ-researches').html());
     this._researches = _.map(researches, function(research) {
       return $.extend(research, {
@@ -41,6 +63,28 @@ Tw.CustomerResearches.prototype = {
       });
     });
     this._leftCount = researches.length;
+
+    if (Tw.FormatHelper.isEmpty(this._ctgCd)) {
+      this._ctgCd = 'I';
+    }
+    
+    _.each(this._surveyCtgCd[0].list, function (item) {
+      if (item.ctgCd === _this._ctgCd) {
+        item['radio-attr'] = item['radio-attr'] + ' checked';
+      }
+    });
+
+    var selectedCtg = _.find(this._surveyCtgCd[0].list, {
+      ctgCd: this._ctgCd
+    });
+    // console.log('[customer.researches] [_init] selectedCtg', selectedCtg);
+
+    var ctgValue = selectedCtg ? selectedCtg.txt : this._surveyCtgCd[0].list[0].txt;
+    // console.log('[customer.researches] [_init] ctgValue', ctgValue);
+    this.$container.find('.bt-select').text(ctgValue);
+
+    // console.log('[customer.researches] [_init] researches', researches);
+    // this._checkParticipatedSurvey();
   },
 
   /**
@@ -57,7 +101,8 @@ Tw.CustomerResearches.prototype = {
     this.$container.on('click', '.fe-nResearch .acco-tit', $.proxy(this._toggleShowDetail, this));
     this.$container.on('click', 'a', $.proxy(this._clearForm, this));
     this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
-    this.$container.on('click', '.fe-join-research, .fe-result-research', $.proxy(this._joinResearch, this));
+    this.$container.on('click', '.fe-join-research, .fe-result-research, .fe-join-pollquiz', $.proxy(this._joinResearch, this));
+    this.$container.on('click', '.bt-select', $.proxy(this._changeSurveyCategory, this));
   },
 
   /**
@@ -65,7 +110,8 @@ Tw.CustomerResearches.prototype = {
    * @private
    */
   _cachedElement: function() {
-    this.$list = this.$container.find('.acco-list');
+    // this.$list = this.$container.find('.acco-list');
+    this.$list = this.$container.find('.tod-poll-list');
   },
 
   /**
@@ -162,8 +208,10 @@ Tw.CustomerResearches.prototype = {
         this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, undefined, undefined, $target);
         break;
       case 'SUCCESSY':
-      case 'SUCCESSN':
         this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, undefined, undefined, $target);
+        break;
+      case 'SUCCESSN':
+        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A03, undefined, undefined, undefined, undefined, $target);
         break;
     }
   },
@@ -210,8 +258,14 @@ Tw.CustomerResearches.prototype = {
    * @private
    */
   _handleLoadMore: function(e) {  
+    // console.log('[_handleLoadMore] this._leftCount', this._leftCount);
+    // console.log('[_handleLoadMore] Tw.DEFAULT_LIST_COUNT', Tw.DEFAULT_LIST_COUNT);
+
     this._leftCount = this._leftCount - Tw.DEFAULT_LIST_COUNT;
     var list = this._researches;
+
+    // console.log('[_handleLoadMore] this._leftCount', this._leftCount);
+    // console.log('[_handleLoadMore] this._researches', this._researches);
 
     if (this._leftCount > 0) {  // 남은 데이터가 20개 이상일 경우
       list = this._researches.slice(0, Tw.DEFAULT_LIST_COUNT);
@@ -219,6 +273,8 @@ Tw.CustomerResearches.prototype = {
     } else {
       $(e.currentTarget).remove();  // 더보기 버튼 제거
     }
+
+    // console.log('[_handleLoadMore] this._tmpl({ researches: list })', this._tmpl({ researches: list }));
 
     this.$list.append(this._tmpl({ researches: list }));
   },
@@ -274,5 +330,73 @@ Tw.CustomerResearches.prototype = {
   _joinResearch: function ($event) {
     var url = $($event.currentTarget).data('url');
     this._historyService.goLoad(url);
+  },
+
+  /**
+   * @function
+   * @desc 카테고리 정렬기준 변경
+   * @param 
+   */
+  _changeSurveyCategory : function (e) {
+    this._popupService.open({
+      hbs: 'actionsheet01',
+      layer: true,
+      btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+      data: this._surveyCtgCd
+    }, $.proxy(this._onOpenCategoryActionSheet, this), null, 'select-category', this.$container.find('.bt-select'));
+  },
+
+  /**
+   * @function
+   * @desc 등급선택 액션시트 오픈
+   * @param {Object} $container
+   */
+  _onOpenCategoryActionSheet: function ($container) {
+    $container.find('li input').change($.proxy(function (event) {
+      var ctgCd = $(event.currentTarget).attr('ctgCd');
+      // console.log('[customer.researches] [_onOpenCategoryActionSheet] $(event.currentTarget).attr("ctgCd")', $(event.currentTarget).attr('ctgCd'));
+
+      var options = {
+        ctgCd: ctgCd
+      };
+
+      _.each(this._surveyCtgCd[0].list, function (item) {
+        item['radio-attr'] = 'id="' + ctgCd + '-radio"' + 'class="focus-elem" ctgCd="'+item.ctgCd+'"' + (item.ctgCd === ctgCd ? 'checked' : '');
+      });
+
+      this._popupService.close();
+      this._changeList(options);
+    }, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($container);
+  },
+
+  /**
+   * @function
+   * @desc 진행중/종료 설문조사 리스트 변경
+   * @param {Object} options
+   */
+  _changeList: function (options) {
+    window.location.href = '/customer/svc-info/researches?ctgCd=' + options.ctgCd;
+  },
+
+  /**
+   * @function
+   * @desc 기 참여한 설문조사에 대해서는 '참여완료' 뱃지 적용
+   * @private
+   */
+  _checkParticipatedSurvey: function () {
+    var participateInfo = this._participateInfo;
+
+    for (var idx in participateInfo) {
+      var participateInfoObj = participateInfo[idx];
+      var targetObj = this.$container.find('[data-research-id="' + participateInfoObj.researchId +'"]').find('.poll-question');
+
+      var questionTitle = targetObj.text() + '(참여완료))';
+      targetObj.text(questionTitle);
+
+      console.log('[customer.researches] [_checkParticipatedSurvey] targetObj : ', targetObj);
+    }
   }
 };

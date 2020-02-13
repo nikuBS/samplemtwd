@@ -35803,6 +35803,61 @@ body.apphome .section-box {
 .tod-benefit-wrap .bt-toggle.open:after {content:'닫기'; font-size:0.75rem; line-height:1.875rem; color:#fff; text-align:center; background-image:none;}
 .tod-benefit-wrap.short .bt-toggle {display:none;}
 
+/* 191126 [OP002-4586] 설문조사 UI/기능 개선 */
+/* poll.list */
+.tod-poll-list li{margin-top: 0.625rem;}
+.tod-poll-list li:first-child{margin-top: 0;}
+.tod-poll-item{border-radius: 0.38rem; border: 1px solid #e1e2e4; background: #fff;}
+.tod-poll-item .poll-item-conts{padding: 1.25rem;}
+.tod-poll-item .poll-item-btns{overflow:hidden; border-top:1px solid #f2f2f2;}
+.tod-poll-item .poll-item-btns button{padding:0.938rem; width:100%; box-sizing: border-box;}
+.tod-poll-item .poll-item-btns button:disabled{color:#959595;}
+.tod-poll-item .col--1 .col{width:100%;}
+.tod-poll-item .col--2 .col{width:50%; float: left; box-sizing: border-box;}
+.tod-poll-item .col--2 .col:first-child{margin-left: -1; border-right:1px solid #f2f2f2;}
+.tod-poll-item .poll-item-question{margin-top: 0.75rem;}
+.tod-poll-item .poll-item-desc{margin-top: 1.25rem; color: #666;}
+.tod-poll-item .poll-item-option{font-size:0;}
+.tod-poll-item .poll-item-option > span{display:inline-block; margin-right: 0.5rem;}
+.tod-poll-item .poll-type{position:relative; font-size: 0.875rem; padding-right: 0.5rem;}
+.tod-poll-item .poll-type:after{content: ''; display: block; position: absolute; right: 0; top: .27rem; width: 0; height: .75rem; border-left: 1px solid #f2f2f2;}
+.tod-poll-item .poll-date{font-size:0.813rem; color: #666;}
+.tod-poll-item .label{margin-top:-2px; padding: 0.25rem 0.25rem 0.188rem; border-radius: 2px; color:#fff; font-size: 10px; line-height:1;}
+.tod-poll-item .poll-able{background-color:#f76252;}
+.tod-poll-item .poll-disable{background-color:#8d8f99;}
+/* poll.view */
+.tod-poll-title {font-size: 1rem;}
+.tod-poll-box .tod-poll-title-wrap{padding-bottom: 1.25rem; margin-bottom: 1.25rem; border-bottom: 1px solid #f2f2f2;}
+.tod-poll-box .fieldset-panel > li{margin-bottom: 0.938rem;}
+.tod-poll-box .fieldset-panel.has-image > li{margin-bottom: 1.25rem;}
+.tod-poll-box .custom-txt{display: inline-block; width: 88%; text-align:left; vertical-align: top; padding-left: 0.313rem; word-break: break-all;}
+.tod-poll-box .division-two .custom-txt{width: 80%;}
+@media screen and (max-width: 320px) {
+  .tod-poll-box .custom-txt{font-size: 0.813;}
+  .tod-poll-box .division-two .custom-txt{width: 70%;}
+}
+.tod-poll-box .custom-img { display: block; margin-bottom: 0.625rem;}
+.tod-poll-box .custom-img img{width: 100%;}
+.tod-poll-box .has-image > li:nth-child(odd){padding-right: 0 !important;}
+.tod-poll-box .has-image > li:nth-child(even){padding-left: 0 !important;}
+.tod-poll-box .division-two.has-image > li:nth-child(odd){padding-right: 0.31rem !important;}
+.tod-poll-box .division-two.has-image > li:nth-child(even){padding-left: 0.31rem !important;}
+/* poll.progress-bar */
+.tod-progress-tit{font-size: 0.938rem; margin-bottom: 1.25rem;}
+.tod-progress-comp .progress-bar{position:relative; height: 1.25rem;}
+.tod-progress-comp .progress-bar:before {position: absolute; left: 0; top: 0; width: 100%; height: 1.25rem; content: ''; background-color: #f1f1f1; border-radius: 0.625rem;}
+.tod-progress-comp .progress-bar .progress-bar-succ{position: absolute; left: 0; top: 0; display: inline-block; height: 1.25rem; line-height: 1.25rem; border-radius: 0.625rem; text-align: right; vertical-align: top;}
+.tod-progress-comp .progress-bar-succ.orange{background: linear-gradient(0.25turn, #fd685a, #fd685a, #ec4846);}
+.tod-progress-comp .progress-value{display:inline-block; position: absolute; right: 0.625rem; top: 0; font-size:0.75rem; color: #fff;}
+/* poll.poll-chart-box add */
+.tod-poll-chart-box .poll-chart-sbox{margin-bottom: 1.25rem;}
+.tod-poll-chart-box .poll-selected .poll-chart-txt > dt {color: #000 !important;}
+/* poll.poll-hint-box*/
+.tod-poll-hint-box{padding: 1rem; font-size: 0;}
+.tod-poll-hint-box .bt-link-tx.underline{font-size: 0.813rem; line-height: 1; margin-top: 0; padding: 0 !important;}
+/* poll.poll-moti-box*/
+.tod-poll-moticode-box{margin-top:0.75rem;}
+
 /* 191202 [OP002-5208] 개선-회선 관리 추가_02 */
 .tod-icon{position:relative;}
 .tod-icon::before{content:'';position:absolute;top:0;left:0;display:block;background-position:0 0;background-repeat:no-repeat;background-size:100% auto}
