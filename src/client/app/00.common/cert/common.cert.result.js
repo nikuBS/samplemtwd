@@ -50,9 +50,11 @@ Tw.CommonCertResult.prototype = {
       } else {
         window.opener.onPopupCallback({ code: code, msg: msg });
       }
-      window.close();
+      // window.close();
+      // chrome, Firefox에서는 popup 자신이 close가 불가능(opner만 close 가능) 하기 때문에, 현재 창을 다시 연 후 close 한다.
+      window.open('','_self').close();
     } else {
-      Tw.Error(code, msg).page();
+      Tw.Error(code, msg, null, true).page();
     }
   },
 

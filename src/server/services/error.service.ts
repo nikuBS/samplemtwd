@@ -14,6 +14,7 @@ interface ErrorOptions {
   msg?: any;
   subMsg?: any;
   isBackCheck?: boolean;
+  isPopupCheck?: boolean;
   svcInfo: any;
   pageInfo?: any;
 }
@@ -42,6 +43,7 @@ class ErrorService {
       subMsg: this._replaceBreakLines(options.subMsg) || '',
       svcInfo: options.svcInfo || null,
       isBackCheck: options.isBackCheck || false,
+      isPopupCheck: !!options.isPopupCheck || false,
       pageInfo: options.pageInfo
     });
   }
