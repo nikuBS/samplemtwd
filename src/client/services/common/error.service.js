@@ -20,11 +20,12 @@ Tw.ErrorService.prototype = {
    * @param subMsg
    * @returns {Tw.ErrorService}
    */
-  _init: function(code, msg, subMsg) {
+  _init: function(code, msg, subMsg, isPopupCheck) {
     this._data = {
       code: code || '',
       msg: this._replaceBreakLines(msg),
-      subMsg: this._replaceBreakLines(subMsg)
+      subMsg: this._replaceBreakLines(subMsg),
+      isPopupCheck: !!isPopupCheck || false
     };
 
     return this;

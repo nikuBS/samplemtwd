@@ -2170,3 +2170,5 @@ Tw.SURVEY_CATEGORY_STR = {
   ING: '진행 중 설문조사',
   END: '종료 설문조사'
 };
+
+Tw.ALLOW_POPUP_ERROR_MSG = '팝업 설정으로 인하여 일시적인 오류가 발생하였습니다.<br>다시 시도해 주세요.';

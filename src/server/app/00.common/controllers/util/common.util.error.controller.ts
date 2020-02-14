@@ -15,14 +15,16 @@ class CommonError extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const code = req.query.code || '',
       msg = req.query.msg || '',
-      subMsg = req.query.subMsg || '';
+      subMsg = req.query.subMsg || '',
+      isPopupCheck = !!req.query.isPopupCheck || false;
 
     this.error.render(res, {
       code: code,
       msg: msg,
       subMsg: subMsg,
       pageInfo: pageInfo,
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      isPopupCheck: isPopupCheck
     });
   }
 }
