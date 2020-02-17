@@ -1,7 +1,9 @@
 /**
  * @file T가족모아 데이터 < 나의 데이터/통화 < MyT
  * @author Jiyoung Jo
+ * @editor Kim In Hwan
  * @since 2018.10.01
+ * @edit 2020.2.16
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -10,12 +12,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
-
-const DATA_ZERO = {
-  data: 0,
-  unit: DATA_UNIT.KB
-};
-
+import { UNIT_E } from '../../../../types/bff.type';
 
 /**
  * @class
@@ -31,10 +28,10 @@ export default class MyTDataFamily extends TwViewController {
    * @param  {Request} req
    * @param  {Response} res
    * @param  {NextFunction} _next
-   * @param  {any} svcInfo
-   * @param  {any} _allSvc
-   * @param  {any} _childInfo
-   * @param  {any} pageInfo
+   * @param  {Object} svcInfo
+   * @param  {Object} _allSvc
+   * @param  {Object} _childInfo
+   * @param  {Object} pageInfo
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(this._getFamilyData(svcInfo), this._getHistory()).subscribe(([familyInfo, histories]) => {
@@ -67,10 +64,16 @@ export default class MyTDataFamily extends TwViewController {
           msg: resp.msg
         };
       }
-
-      const representation = resp.result.mbrList.find(member => member.repYn === 'Y');
-      const mine = resp.result.mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
-
+      const { mbrList, dropMbrList, total, used, remained } = resp.result;
+      const representation = mbrList.find(member => member.repYn === 'Y');
+      const mine = mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
+      const dropMbrInfo = {
+        isDropMbrList: (dropMbrList && dropMbrList.length > 0),
+        usedData: 0,
+        totalData: 0,
+        outputTotal: {},
+        outputUsed: {}
+      };
       if (!mine) {
         return {
           code: '',
@@ -82,43 +85,52 @@ export default class MyTDataFamily extends TwViewController {
         hasLimit: mine.limitedYn === 'Y',
         used: Number(mine.used),
         remained: Number(mine.remained),
-        total: Number(resp.result.total) * 1024,
-        totalUsed: Number(resp.result.used),
-        totalRemained: Number(resp.result.remained),
+        total: Number(total) * 1024,
+        totalUsed: Number(used),
+        totalRemained: Number(remained),
         myLimitation: Number(mine.limitation) * 1024 || 0
-      },
+      };
         // 한도 있는 경우 한도, 가족 공유 데이터 양 중 최소, 한도 없는 경우 가족 총 공유 데이터가 total
-        total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total,
+      const usedTotal = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total;
         // 한도 있는 경우 총량 - 자신의 사용량, 가족 남은 양 중 최소, 한도 없는 경우 총 남은 양(BFF 데이터에서 종종 remained 값이 다르게 내려오는 경우가 있어 방어 코드)
-        remained = data.hasLimit ? Math.min(total - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
-
-
+      const usedRemained = data.hasLimit ?
+        Math.min(usedTotal - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
+      // 탈퇴원 그룹원이 있는 경우 - OP002-6669
+      if (dropMbrInfo.isDropMbrList) {
+        // 탈퇴한 구성원 총이용 데이터
+        dropMbrList.find(dropItem => dropMbrInfo.usedData += Number(dropItem.used));
+        // 탈퇴 그룹원 총 공유 데이터  ( 총공유된 데이터 - 포함된 구성원 데이터 합)
+        dropMbrInfo.totalData = usedTotal - data.totalUsed;
+        dropMbrInfo.outputTotal = FormatHelper.convDataFormat(dropMbrInfo.totalData, DATA_UNIT.MB);
+        dropMbrInfo.outputUsed = FormatHelper.convDataFormat(dropMbrInfo.usedData, DATA_UNIT.MB);
+      }
 
       return {
         ...resp.result,
-        total: Number(resp.result.total) > 0 ? FormatHelper.convDataFormat(resp.result.total, DATA_UNIT.GB) : DATA_ZERO,
-        used: FormatHelper.addComma(resp.result.used),
-        remained: FormatHelper.addComma(resp.result.remained),
+        total: FormatHelper.convDataFormat(total, DATA_UNIT.GB),
+        used: FormatHelper.addComma(used),
+        remained: FormatHelper.addComma(remained),
         isRepresentation: !!representation ? representation.svcMgmtNum === svcInfo.svcMgmtNum : false,
         mine: {
           ...mine,
-          ratio: data.hasLimit && data.myLimitation === 0 ? 0 : Math.floor(remained / total * 100),
-          remained: remained > 0 ? FormatHelper.convDataFormat(remained, DATA_UNIT.MB) : DATA_ZERO,
+          ratio: data.hasLimit && data.myLimitation === 0 ? 0 : Math.floor(usedRemained / usedTotal * 100),
+          remained: FormatHelper.convDataFormat(usedRemained, DATA_UNIT.MB),
           used: FormatHelper.convDataFormat(Number(mine.used), DATA_UNIT.MB),
           shared: FormatHelper.addComma(mine.shared),
           limitation: FormatHelper.addComma(mine.limitation),
           svcNum: FormatHelper.conTelFormatWithDash(mine.svcNum),
-          data: data
+          data
         },
-        mbrList: resp.result.mbrList.map(member => {
-          return {
+        mbrList: mbrList.map(member => ({
             ...member,
-            used: Number(member.used) > 0 ? FormatHelper.convDataFormat(member.used, DATA_UNIT.MB) : DATA_ZERO,
-            shared: Number(member.shared) > 0 ? FormatHelper.convDataFormat(member.shared, DATA_UNIT.GB) : DATA_ZERO,
+            used: FormatHelper.convDataFormat(member.used, DATA_UNIT.MB),
+            shared: FormatHelper.convDataFormat(member.shared, DATA_UNIT.GB),
             limitation: FormatHelper.addComma(member.limitation),
             svcNum: FormatHelper.conTelFormatWithDash(member.svcNum)
-          };
-        })
+          }
+        )),
+        // OP002-6669 VOC T가족모아 탈퇴한 구성원 정보 노출
+        dropMbrInfo
       };
     });
   }
@@ -132,9 +144,9 @@ export default class MyTDataFamily extends TwViewController {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
-
-      const histories = resp.result.mySharePot;
-      return histories ? histories.length : 0;
+      // mySharePot - histories
+      const { mySharePot } = resp.result;
+      return mySharePot ? mySharePot.length : 0;
     });
   }
 }
