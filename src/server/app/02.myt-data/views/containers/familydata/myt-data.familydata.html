@@ -111,21 +111,23 @@
                                 </div>
                             </li>
                         <% }); %>
-                        <% familyInfo.dropMbrList.map(member => {
-                        <li class="tod-leave-member">
-                            <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
-                            <div class="info">
-                                <span class="stit">탈퇴 그룹원</span>
-                                <span class="r-txt"><span class="ff-type1">15GB</span>이용</span>
-                            </div>
-                            <div class="detail">
-                                <dl>
-                                    <dt>공유한 데이터</dt>
-                                    <dd>20GB</dd>
-                                </dl>
-                            </div>
-                        </li>
-                        <% }); %>
+                        <% if (familyInfo.dropMbrInfo.isDropMbrList) { %>
+                        <!-- 200109 [OP002-3839] 추가01 -->
+                            <li class="tod-leave-member">
+                                <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                                <div class="info">
+                                    <span class="stit">탈퇴 그룹원</span>
+                                    <span class="r-txt"><span class="ff-type1">총 <%= familyInfo.dropMbrInfo.outputUsed.data + familyInfo.dropMbrInfo.outputUsed.unit %></span>이용</span>
+                                </div>
+                                <div class="detail">
+                                    <dl>
+                                        <dt>공유한 총 데이터</dt>
+                                        <dd><%= familyInfo.dropMbrInfo.outputTotal.data + familyInfo.dropMbrInfo.outputTotal.unit %></dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <!-- //200109 [OP002-3839] 추가01 -->
+                        <% } %>
                     </ul>
                 </div>
             </div>
