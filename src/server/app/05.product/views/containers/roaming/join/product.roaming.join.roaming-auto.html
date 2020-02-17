@@ -131,7 +131,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.ProductRoamingJoinRoamingAuto($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>', <%- JSON.stringify(prodApiInfo) %>,'<%- svcInfo.svcNum %>', '<%- prodId %>', '<%- expireDate %>')
+      new Tw.ProductRoamingJoinRoamingAuto($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>', <%- JSON.stringify(prodApiInfo) %>,'<%- svcInfo.svcNum %>', '<%- prodId %>', '<%- expireDate %>', '<%- serverDate%>')
     });
 </script>
 <% include ../../../components/end.component.html %>

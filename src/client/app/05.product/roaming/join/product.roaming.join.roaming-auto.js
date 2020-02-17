@@ -15,7 +15,7 @@
  * @param {String} expireDate - 상품 서비스 기간
  * @returns {void}
  */
-Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svcNum,prodId,expireDate) {
+Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svcNum,prodId,expireDate,serverDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
@@ -30,7 +30,8 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svc
   this._dateFormat = 'YYYYMMDD';
   this._dateSelectRange = 30;
   this._twoMonthFlag = false;
-  this._currentDate = Tw.DateHelper.getCurrentShortDate();
+  //this._currentDate = Tw.DateHelper.getCurrentShortDate();
+  this._currentDate = serverDate;
   this._init();
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_confirm'));
 };
