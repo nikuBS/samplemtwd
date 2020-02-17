@@ -123,7 +123,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.ProductRoamingSettingRoamingAuto($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%- JSON.stringify(prodBffInfo) %>, '<%- prodId %>', '<%- expireDate %>')
+      new Tw.ProductRoamingSettingRoamingAuto($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%- JSON.stringify(prodBffInfo) %>, '<%- prodId %>', '<%- expireDate %>', '<%- serverDate%>')
     });
 </script>
 <% include ../../../components/end.component.html %>
