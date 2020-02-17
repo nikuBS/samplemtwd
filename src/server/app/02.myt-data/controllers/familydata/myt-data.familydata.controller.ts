@@ -130,15 +130,7 @@ export default class MyTDataFamily extends TwViewController {
           }
         )),
         // OP002-6669 VOC T가족모아 탈퇴한 구성원 정보 노출
-        dropMbrInfo,
-        dropMbrList: dropMbrList.map(member => ({
-            ...member,
-            used: FormatHelper.convDataFormat(member.used, DATA_UNIT.MB),
-            shared: FormatHelper.convDataFormat(member.shared, DATA_UNIT.GB),
-            limitation: FormatHelper.addComma(member.limitation),
-            svcNum: FormatHelper.conTelFormatWithDash(member.svcNum)
-          }
-        ))
+        dropMbrInfo
       };
     });
   }
