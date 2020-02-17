@@ -104,7 +104,9 @@ class ApiRouter {
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
     GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethodsBlock },
-    GET_SSO_URL: { path: '/common/sso-url', method: API_METHOD.GET, target: this.getSsoUrl }
+    GET_SSO_URL: { path: '/common/sso-url', method: API_METHOD.GET, target: this.getSsoUrl },
+    // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
+    GET_SESSION_INFO: { path: '/common/session/info', method: API_METHOD.GET, target: this.getSessionInfo }
   };
 
   /**
@@ -1400,6 +1402,31 @@ class ApiRouter {
         result: encodeURIComponent(url)
       });
       return;
+    }
+  }
+
+  /**
+   * session 정보 확인
+   * @param req
+   */
+  private getSessionInfo(req, res) {
+    const twm = req.query.twm;
+    const key = REDIS_KEY.SESSION + twm;
+    let ret = {};
+
+    // 임시로 kjh1234@gmail.com로 로그인 된 경우만 조회 가능하도록 추가
+    if ( !FormatHelper.isEmpty(req.session.svcInfo) && req.session.svcInfo.userId === 'kjh1234@gmail.com') {
+      this.redisService.getData(key)
+        .switchMap((resp) => {
+          ret = Object.assign(ret, resp);
+          return this.redisService.getTTL(key); 
+        })
+        .subscribe((resp) => {
+          ret['result']['ttl'] = resp.result;
+          res.json(ret);
+        });
+    } else {
+      res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
   }
   
