@@ -450,6 +450,8 @@ class ApiService {
           throw resp;
         }
       })
+      // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
+      .switchMap((resp) => this.loginService.setLoginHistory(this.req))
       .map((resp) => {
         return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo(this.req) };
       });
