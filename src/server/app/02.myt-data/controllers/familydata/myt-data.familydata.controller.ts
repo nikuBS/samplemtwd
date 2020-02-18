@@ -22,7 +22,7 @@ export default class MyTDataFamily extends TwViewController {
   constructor() {
     super();
   }
-  
+
   /**
    * @desc 화면 랜더링
    * @param  {Request} req
@@ -77,6 +77,7 @@ export default class MyTDataFamily extends TwViewController {
         isDropMbrList: (dropMbrList && dropMbrList.length > 0),
         usedData: 0,
         totalData: 0,
+        totalShared: 0,
         outputTotal: {},
         outputUsed: {}
       };
@@ -96,14 +97,16 @@ export default class MyTDataFamily extends TwViewController {
         Math.min(usedTotal - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
       // 기존 구성원에 탈퇴한 회원 목록이 포함되어 노출되는 경우가 있어 코드 추가
       // existYn : Y <- 현재 구성원  N <- 탈퇴한 구성원
-      const nMbrList = mbrList.filter(member => member.existYn === 'Y');
+      const nMbrList = mbrList.filter((member) => member.existYn === 'Y');
       // 탈퇴원 그룹원이 있는 경우 - OP002-6669
       if (dropMbrInfo.isDropMbrList) {
-        // 탈퇴한 구성원 총이용 데이터
-        dropMbrList.find(dropItem => dropMbrInfo.usedData += Number(dropItem.used));
-        // 탈퇴 그룹원 총 공유 데이터  ( 총공유된 데이터 - 포함된 구성원 데이터 합)
-        dropMbrInfo.totalData = usedTotal - data.totalUsed;
-        dropMbrInfo.outputTotal = FormatHelper.convDataFormat(dropMbrInfo.totalData, DATA_UNIT.MB);
+        // 탈퇴한 구성원 총 이용 데이터
+        dropMbrList.filter((dropItem) => dropMbrInfo.usedData += Number(dropItem.used));
+        // 구성원 총 공유 데이터
+        nMbrList.filter((item) => dropMbrInfo.totalShared += Number(item.shared));
+        // 탈퇴 그룹원 총 공유 데이터  ( 총 공유된 데이터 - 포함된 구성원 공유 데이터 합)
+        dropMbrInfo.totalData = usedTotal - dropMbrInfo.totalShared;
+        dropMbrInfo.outputTotal = FormatHelper.convDataFormat(dropMbrInfo.totalData, DATA_UNIT.GB);
         dropMbrInfo.outputUsed = FormatHelper.convDataFormat(dropMbrInfo.usedData, DATA_UNIT.MB);
       }
 
