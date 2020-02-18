@@ -1412,17 +1412,19 @@ class ApiRouter {
   private getSessionInfo(req, res) {
     const twm = req.query.twm;
     const key = REDIS_KEY.SESSION + twm;
-    let ret = {};
+    const ret = {};
 
     // 임시로 kjh1234@gmail.com로 로그인 된 경우만 조회 가능하도록 추가
     if ( !FormatHelper.isEmpty(req.session.svcInfo) && req.session.svcInfo.userId === 'kjh1234@gmail.com') {
       this.redisService.getData(key)
         .switchMap((resp) => {
-          ret = Object.assign(ret, resp);
+          ret['userId'] = resp.result.svcInfo.userId;
+          ret['cookie'] = resp.result.cookie;
+          ret['loginHst'] = resp.result.loginHst;
           return this.redisService.getTTL(key); 
         })
         .subscribe((resp) => {
-          ret['result']['ttl'] = resp.result;
+          ret['ttl'] = resp.result;
           res.json(ret);
         });
     } else {
