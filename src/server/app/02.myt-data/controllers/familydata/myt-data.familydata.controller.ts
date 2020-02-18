@@ -65,8 +65,14 @@ export default class MyTDataFamily extends TwViewController {
         };
       }
       const { mbrList, dropMbrList, total, used, remained } = resp.result;
-      const representation = mbrList.find(member => member.repYn === 'Y');
       const mine = mbrList.find(member => member.svcMgmtNum === svcInfo.svcMgmtNum);
+      if (!mine) {
+        return {
+          code: '',
+          msg: ''
+        };
+      }
+      const representation = mbrList.find(member => member.repYn === 'Y');
       const dropMbrInfo = {
         isDropMbrList: (dropMbrList && dropMbrList.length > 0),
         usedData: 0,
@@ -74,13 +80,6 @@ export default class MyTDataFamily extends TwViewController {
         outputTotal: {},
         outputUsed: {}
       };
-      if (!mine) {
-        return {
-          code: '',
-          msg: ''
-        };
-      }
-
       const data = {
         hasLimit: mine.limitedYn === 'Y',
         used: Number(mine.used),
@@ -95,6 +94,9 @@ export default class MyTDataFamily extends TwViewController {
         // 한도 있는 경우 총량 - 자신의 사용량, 가족 남은 양 중 최소, 한도 없는 경우 총 남은 양(BFF 데이터에서 종종 remained 값이 다르게 내려오는 경우가 있어 방어 코드)
       const usedRemained = data.hasLimit ?
         Math.min(usedTotal - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
+      // 기존 구성원에 탈퇴한 회원 목록이 포함되어 노출되는 경우가 있어 코드 추가
+      // existYn : Y <- 현재 구성원  N <- 탈퇴한 구성원
+      const nMbrList = mbrList.filter(member => member.existYn === 'Y');
       // 탈퇴원 그룹원이 있는 경우 - OP002-6669
       if (dropMbrInfo.isDropMbrList) {
         // 탈퇴한 구성원 총이용 데이터
@@ -121,7 +123,7 @@ export default class MyTDataFamily extends TwViewController {
           svcNum: FormatHelper.conTelFormatWithDash(mine.svcNum),
           data
         },
-        mbrList: mbrList.map(member => ({
+        mbrList: nMbrList.map(member => ({
             ...member,
             used: FormatHelper.convDataFormat(member.used, DATA_UNIT.MB),
             shared: FormatHelper.convDataFormat(member.shared, DATA_UNIT.GB),
