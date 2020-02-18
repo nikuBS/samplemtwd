@@ -95,6 +95,7 @@ export default class MyTDataFamily extends TwViewController {
       const usedRemained = data.hasLimit ?
         Math.min(usedTotal - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
       // 기존 구성원에 탈퇴한 회원 목록이 포함되어 노출되는 경우가 있어 코드 추가
+      // existYn : Y <- 현재 구성원  N <- 탈퇴한 구성원
       const nMbrList = mbrList.filter(member => member.existYn === 'Y');
       // 탈퇴원 그룹원이 있는 경우 - OP002-6669
       if (dropMbrInfo.isDropMbrList) {
