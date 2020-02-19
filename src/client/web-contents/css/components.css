@@ -35999,3 +35999,14 @@ body.apphome .section-box {
 
 /* 200131 baro Box 수정 건 [OP002-6500] */
 .idpt-baro-list li span{color:#f76252}
+
+/* 200109 [OP002-3839] 가족모아 화면 개선 요청 */
+.tod-leave-member .info,
+.use-state-wrap .tod-leave-member .info p,
+.tod-leave-member .detail {color:#858585}
+.tod-leave-member .icon{opacity:0.7}
+.tod-leave-member .detail{margin-top:-0.9375rem}
+.tod-leave-member .detail:after{content:''; display:block; clear:both}
+.use-state-wrap .tod-leave-member .detail dt{width:6.5rem}
+.use-state-wrap .tod-leave-member .detail dl{padding-top:0}
+.use-state-wrap .tod-leave-member .info:after{content:''; display:block; clear:both}

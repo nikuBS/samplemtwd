@@ -9,6 +9,7 @@ import TwViewController from '../../../../../common/controllers/tw.view.controll
 import {NextFunction, Request, Response} from 'express';
 import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
+import DateHelper from '../../../../../utils/date.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
@@ -17,6 +18,9 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
   constructor() {
     super();
   }
+
+  private serverDate = DateHelper.getCurrentShortDate();
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
     const prodId = req.query.prod_id || null;
@@ -63,7 +67,8 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
         prodId : prodId,
         expireDate : expireDate,
         pageInfo : pageInfo,
-        isUseTogether : isUseTogether
+        isUseTogether : isUseTogether,
+        serverDate : this.serverDate
       });
     });
 

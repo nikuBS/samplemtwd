@@ -14,7 +14,7 @@
  * @param {String} expireDate - 상품 서비스 기간
  * @returns {void}
  */
-Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodTypeInfo,prodBffInfo,prodId,expireDate) {
+Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodTypeInfo,prodBffInfo,prodId,expireDate,serverDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
@@ -29,7 +29,8 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodTypeInfo,prodBffInfo,
   this.$tooltipBody = this.$container.find('#tip_body');
   this._twoMonthFlag = false;
   this._dateSelectRange = 30; //시작일 기본 출력 범위 30일
-  this._currentDate = Tw.DateHelper.getCurrentShortDate();
+  //this._currentDate = Tw.DateHelper.getCurrentShortDate();
+  this._currentDate = serverDate;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._init();
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_setting'));

@@ -10,6 +10,8 @@ import BrowserHelper from '../utils/browser.helper';
 import DateHelper from '../utils/date.helper';
 import CommonHelper from '../utils/common.helper';
 import { API_CODE } from '../types/api-command.type';
+import RedisService from '../services/redis.service';
+import {REDIS_KEY} from '../types/redis.type';
 
 /**
  * 세션정보를 다루는 service
@@ -17,8 +19,10 @@ import { API_CODE } from '../types/api-command.type';
 class LoginService {
   static instance;
   private logger = new LoggerService();
+  private redisService: RedisService;
 
   constructor() {
+    this.redisService = RedisService.getInstance();
   }
 
   /**
@@ -116,8 +120,13 @@ class LoginService {
       }
       this.setXtractorCookie(req, res, svcInfo);
 
-      req.session.save(() => {
+      req.session.save((err) => {
         this.logger.debug(this, '[setSvcInfo]', req.session.svcInfo);
+
+        // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
+        if ( !FormatHelper.isEmpty(err) ) {
+          this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+        }
         observer.next(req.session.svcInfo);
         observer.complete();
       });
@@ -218,8 +227,14 @@ class LoginService {
   public setAllSvcInfo(req, res, allSvcInfo: any): Observable<any> {
     return Observable.create((observer) => {
       req.session.allSvcInfo = allSvcInfo;
-      req.session.save(() => {
+      req.session.save((err) => {
         this.logger.debug(this, '[setAllSvcInfo]', req.session.allSvcInfo);
+
+        // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
+        if ( !FormatHelper.isEmpty(err) ) {
+          this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+        }
+
         observer.next(req.session.allSvcInfo);
         observer.complete();
       });
@@ -254,8 +269,13 @@ class LoginService {
   public setChildInfo(req, res, childInfo: any): Observable<any> {
     return Observable.create((observer) => {
       req.session.childInfo = childInfo;
-      req.session.save(() => {
+      req.session.save((err) => {
         this.logger.debug(this, '[setChildInfo]', req.session.childInfo);
+
+        // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
+        if ( !FormatHelper.isEmpty(err) ) {
+          this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+        }
         observer.next(req.session.childInfo);
         observer.complete();
       });
@@ -374,7 +394,10 @@ class LoginService {
         req.session.save((err) => {
           // err 값이 return 되는 case
           if ( !FormatHelper.isEmpty(err) ) {
-            this.logger.error(this, '[OP002-3955] - CASE01', err);
+            // this.logger.error(this, '[OP002-3955] - CASE01', req.path, err);
+
+            // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
+            this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
           }
 
           // save 후 session 값이 달라지는 case
@@ -677,6 +700,47 @@ class LoginService {
     } catch (err) {
       this.logger.error(context, 'Fail to write login fail log');
     }
+  }
+
+  /**
+   * 현재 session으로 로그인 된 이력을 저장한다.
+   * @param req
+   * @param svcMgmtNum
+   */
+  public setLoginHistory(req): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(req) ) {
+        if ( FormatHelper.isEmpty(req.session.loginHst) ) {
+          req.session.loginHst = [];
+        }
+
+        this.redisService.getTTL(REDIS_KEY.SESSION + this.getSessionId(req))
+        .subscribe((resp) => {
+          if ( resp.code === API_CODE.CODE_00 ) {
+            req.session.loginHst.push({
+              seq: req.session.loginHst.length + 1,
+              oldExpires: req.session.cookie.expires,
+              timestamp : new Date(),
+              ttl: resp.result
+            });
+
+            req.session.save((err) => {
+              this.logger.debug(this, '[setLoginHistory]', req.session);
+
+              if ( !FormatHelper.isEmpty(err) ) {
+                this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+              }
+
+              observer.next(req.session.masking);
+              observer.complete();
+            });
+          } else {
+            observer.next({});
+            observer.complete();
+          }
+        });
+      }
+    });
   }
 }
 

@@ -251,6 +251,45 @@ class RedisService {
       });
     });
   }
+
+  /**
+   * redis TTL 조회
+   * @param key
+   */
+  public getTTL(key): Observable<any> {
+    return this.getRedisTTL(key, this.client);
+  }
+
+
+  /**
+   * redis TTL 조회
+   * @param key
+   * @param client
+   */
+  private getRedisTTL(key, client): Observable<any> {
+    this.logger.error(this, '[Get TTL]', key);
+    return Observable.create((observer) => {
+      client.ttl(key, (err, reply) => {
+
+        const resp = {
+          code: API_CODE.REDIS_SUCCESS,
+          msg: 'success',
+          result: null
+        };
+
+        if ( FormatHelper.isEmpty(reply) ) {
+          resp.code = API_CODE.REDIS_EMPTY;
+          resp.msg = NODE_API_ERROR[API_CODE.REDIS_EMPTY];
+        } else {
+          resp.result = reply;
+        }
+
+        this.logger.error(this, '[Get TTL]', key, resp);
+        observer.next(resp);
+        observer.complete();
+      });
+    });
+  }
 }
 
 export default RedisService;
