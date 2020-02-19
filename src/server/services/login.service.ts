@@ -125,7 +125,7 @@ class LoginService {
 
         // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
         if ( !FormatHelper.isEmpty(err) ) {
-          this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+          this.logger.error(this, '[OP002-6700 setSvcInfo]', req.path, req.session.svcInfo.userId, req.session.cookie, err);
         }
         observer.next(req.session.svcInfo);
         observer.complete();
@@ -232,7 +232,7 @@ class LoginService {
 
         // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
         if ( !FormatHelper.isEmpty(err) ) {
-          this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+          this.logger.error(this, '[OP002-6700 setAllSvcInfo]', req.path, req.session.svcInfo.userId, req.session.cookie, err);
         }
 
         observer.next(req.session.allSvcInfo);
@@ -274,7 +274,7 @@ class LoginService {
 
         // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
         if ( !FormatHelper.isEmpty(err) ) {
-          this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+          this.logger.error(this, '[OP002-6700 setChildInfo]', req.path, req.session.svcInfo.userId, req.session.cookie, err);
         }
         observer.next(req.session.childInfo);
         observer.complete();
@@ -397,7 +397,7 @@ class LoginService {
             // this.logger.error(this, '[OP002-3955] - CASE01', req.path, err);
 
             // OP002-6700 : [FE] Session 오류 디버깅을 위한 로그 추가-1
-            this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+            this.logger.error(this, '[OP002-6700 setNoticeType]', req.path, req.session.svcInfo.userId, req.session.cookie, err);
           }
 
           // save 후 session 값이 달라지는 case
@@ -728,7 +728,7 @@ class LoginService {
               this.logger.debug(this, '[setLoginHistory]', req.session);
 
               if ( !FormatHelper.isEmpty(err) ) {
-                this.logger.error(this, '[OP002-6700]', req.path, req.session.cookie, err);
+                this.logger.error(this, '[OP002-6700 setLoginHistory]', req.path, req.session.svcInfo.userId, req.session.cookie, err);
               }
 
               observer.next(req.session.masking);
