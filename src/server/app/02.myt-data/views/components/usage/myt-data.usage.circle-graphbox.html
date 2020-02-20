@@ -47,7 +47,10 @@
                             <strong><%- items[i].remained %></strong>
                             <% } else {
                                 for (var j = 0; j < items[i].showRemaineds.length; j++) { %>
-                                <strong><%- items[i].showRemaineds[j].data + items[i].showRemaineds[j].unit %></strong>
+                                <strong>
+                                    <em><%- items[i].showRemaineds[j].data %></em>
+                                    <em><%- items[i].showRemaineds[j].unit %></em>
+                                </strong>
                                 <% } %> 남음
                             <% } %>
                         </span>
@@ -61,7 +64,10 @@
                             if (!items[i].isUsedUnlimited) { %>
                             <span class="use">
                                 <%_ for (var j = 0; j < items[i].showUseds.length; j++) { _%>
-                                <strong><%= items[i].showUseds[j].data %><%= items[i].showUseds[j].unit %></strong>
+                                <strong>
+                                    <em><%- items[i].showUseds[j].data %></em>
+                                    <em><%- items[i].showUseds[j].unit %></em>
+                                </strong>
                                 <%_
                                 }
                                 if (items[i].isDailyUsed) {
