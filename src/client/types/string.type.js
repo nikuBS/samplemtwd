@@ -1501,7 +1501,14 @@ Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
 
 Tw.BRANCH = {
   SELECT_REGION: '지역설정',
-  SELECT_BRANCH_TYPE: ['전체', '지점', '대리점'],
+  SELECT_BRANCH_RADIUS: {
+    0: {name: '전체', id: '1'},
+    1: {name: '지점', id: '2'},
+    2: {name: '대리점', id: '3'},
+    3: {name: '500m 반경', id: '4', zoom: 15, distance: 500},
+    4: {name: '1km 반경', id: '5', zoom : 14, distance: 1000},
+    5: {name: '3km 반경', id: '6', zoom: 13, distance: 3000}
+  },
   PERMISSION_TITLE: '위치정보 이용 동의 안내',
   PERMISSION_DETAIL: 'T world에서 내 위치 정보를 사용하기 위해서는 위치 정보 이용에 동의하셔야 합니다.',
   VIEW_LOCATION_TERM: '위치기반 서비스 이용약관 전문보기',

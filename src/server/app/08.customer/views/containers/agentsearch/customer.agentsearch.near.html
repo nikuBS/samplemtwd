@@ -30,36 +30,19 @@
                         <!-- .shop-step -->
                         <div class="shop-box">
                             <!-- .shop-step -->
-                            <div class="shop-step tod-shop-header mb20">
-                                <span class="step-tx"><em id="fe-region1"></em><span class="arrow">&gt;</span><em id="fe-region2"></em>
-                                <button class="btn-tip top-area-tip" id="TC000071" aria-haspopup="true" title="내 위치와 가까운 매장 안내"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                            <div class="shop-step tod-shop-header">
+                                <span class="step-tx">현재위치: <em id="fe-region1"></em><span class="arrow">&gt;</span><em id="fe-region2"></em>&nbsp
+<!--                                <button class="btn-tip top-area-tip" id="TC000071" aria-haspopup="true" title="내 위치와 가까운 매장 안내"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>-->
+                                    <button class="my-locate" id="fe-myLocation" title="내 위치"></button>
                                 </span>  <!-- 이곳의 기존 소스 화살표 나오는 부분 검토필요 -->
-                                <div class="tod-area-btnwrap">
-                                    <button class="btn-round2 btn-style3 tod-ico-btn" id="fe-myLocation"><span>내 위치</span></button>
-                                    <button class="btn-round2 btn-style3" id="fe-change-region">위치 변경</button>
-                                </div>
                             </div>
-                            <!-- <div class="shop-step">
-                                <span class="step-tx"><em id="fe-region1"></em><em id="fe-region2"></em></span>
-                                <div class="bt-alone"><button class="bt-bg-blue1" id="fe-change-region">위치변경</button></div>
-                            </div> -->
-                            <!-- // .shop-step -->
-                            <!-- filter -->
-
-                            
-
-                            <!-- <div class="shop-filter">
-                                <div class="inline">
-                                    <button class="bt-dropdown text-type01" title="매장 선택" aria-haspopup="true">전체</button>
-                                </div>
-                            </div> -->
                         </div>
 
                         <!-- 190520_추가 01-->
                         <div class="shop-result">
                             <span class="count">총 <em id="fe-result-count"></em>개</span>
                             <div class="inline">
-                                <button class="bt-dropdown text-type01 tod-cate-sel" title="매장 선택" aria-haspopup="true">전체</button>
+                                <button class="bt-dropdown text-type01 tod-cate-sel" title="매장 선택" aria-haspopup="true">전체 / 500m 반경</button>
                                 <!-- 웹접근성 수정 -->
                             </div>
                             <!-- <div class="tod-fright"><button class="btn-round2 btn-style3" id="fe-btn-view-list">리스트보기</button></div> -->
@@ -159,7 +142,7 @@
   <li class='fe-type-{{storeType}}'>
       <!-- 191021 웹접근성 수정_01 -->
       <button class="bt-dtxt type02 fe-list" value={{locCode}}>
-          <span class="dtxt-t">{{storeName}}</span>
+          <span class="dtxt-t">{{storeName}}</span><span class="ml4 tod-txcolor8">{{distance}}</span>
           <span class="dtxt-d">{{searchAddr}}<br>({{jibunAddr}})</span>
       </button>
       <!-- //191021 웹접근성 수정_01 -->
