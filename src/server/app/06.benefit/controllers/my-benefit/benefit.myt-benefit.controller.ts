@@ -41,14 +41,14 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0132, {}), // /core-bill/:version/rainbow-points
       this.apiService.request(API_CMD.BFF_05_0175, {}), // /core-bill/:version/no-contract-plan-points
       this.apiService.request(API_CMD.BFF_05_0115, {}), // cookiz: BIL0070  (/core-bill/:version/cookiz-ting-points)
-      this.apiService.request(API_CMD.BFF_05_0120, {}), // military: BIL0071
+      // this.apiService.request(API_CMD.BFF_05_0120, {}), // military: BIL0071
       this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인 (/core-modification/:version/bill-discounts)
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인 (/core-modification/:version/combination-discounts)
       this.apiService.request(API_CMD.BFF_05_0196, {}), // (/core-modification/:version/loyalty-benefits)
       this.apiService.request(API_CMD.BFF_06_0001, {}), // 리필쿠폰 내역 (/core-recharge/:version/refill-coupons)
       this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회 (/:version/my-t/my-info)
-    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, refillCoupons, joininfo]) => {
-
+    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, /*military,*/ bill, combination, loyalty, refillCoupons, joininfo]) => {
+        // OP002-6291 지켜줘서 고마워 현역플랜 혜택할인에서 제외
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
         const apiError = this.error.apiError(
           [/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, loyalty, refillCoupons, joininfo]);
@@ -85,9 +85,9 @@ class BenefitMyBenefit extends TwViewController {
         if ( cookiz.code === API_CODE.CODE_00 ) {
           options['cookiz'] = this._dataPreprocess(cookiz.result.usblPoint);
         }
-        if ( military.code === API_CODE.CODE_00 ) {
-          options['military'] = this._dataPreprocess(military.result.usblPoint);
-        }
+        // if ( military.code === API_CODE.CODE_00 ) {
+        //   options['military'] = this._dataPreprocess(military.result.usblPoint);
+        // }
         options['total'] = FormatHelper.addComma(this._total + '');
 
         options['count'] = 0;
