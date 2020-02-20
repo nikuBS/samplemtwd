@@ -35858,6 +35858,11 @@ body.apphome .section-box {
 /* poll.poll-moti-box*/
 .tod-poll-moticode-box{margin-top:0.75rem;}
 
+/* 191202 [OP002-5251] 개선 - 지도 축소시 매장 노출 */
+.shop-info .shop-step.tod-shop-header {margin-left:-1.25rem; margin-right:-1.25rem; margin-bottom:0; padding:0 1.25rem 1rem; border-bottom:1px solid #f2f2f2;}
+.shop-info .shop-step.tod-shop-header .step-tx {font-size:0.938rem;}
+.shop-info .shop-step.tod-shop-header .my-locate {display:inline-block; width:2rem; height:2rem; border-radius:2rem; border:1px solid #f2f2f2; -webkit-box-sizing:border-box; box-sizing:border-box; text-align:center; line-height:2rem; vertical-align:middle;background:url(/img/ico/tod-gps-ico.png)no-repeat 50% 50%; background-size:0.8125rem 0.8125rem;}
+
 /* 191202 [OP002-5208] 개선-회선 관리 추가_02 */
 .tod-icon{position:relative;}
 .tod-icon::before{content:'';position:absolute;top:0;left:0;display:block;background-position:0 0;background-repeat:no-repeat;background-size:100% auto}
