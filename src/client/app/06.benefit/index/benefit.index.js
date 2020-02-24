@@ -201,7 +201,7 @@ Tw.BenefitIndex.prototype = {
     if (!this._isAbleDiscountInfoReq()) {
       // TO-DO 미로그인, 준회원, 유선인 경우에 대한 처리 필요
       // this._switchTab(this._convertPathToCategory());
-      this._reqProductList_dev(['']);
+      this._reqProductList(['']);
     } else {
       this._loginType = this._svcInfo.loginType;
 
@@ -518,7 +518,7 @@ Tw.BenefitIndex.prototype = {
       this.$container.find('#selected_category').val(tempStr);
     }
     // [선택된 카테고리 리스트] 에 등록된 카테고리에 매핑된 컨텐츠들을 모두 가져온다.
-    this._reqProductList_dev(selectedCategoryArray);
+    this._reqProductList(selectedCategoryArray);
   },
 
   /**
@@ -662,7 +662,7 @@ Tw.BenefitIndex.prototype = {
     }
     // 결합할인
     if (this._benefitInfo.combination && this._benefitInfo.combination.prodNm.trim().length > 0) {
-      data.benefitDiscount += Number(this._benefitInfo.combination.etcCnt);
+      data.benefitDiscount += Number(this._benefitInfo.combination.etcCnt) + 1;
     }
     // 장기 가입 여부 확인
     if (this._benefitInfo.align && this._benefitInfo.align.longjoin) {
@@ -732,17 +732,17 @@ Tw.BenefitIndex.prototype = {
     this._data = data;
 
     // DV001-18387 : 상단 나의혜택 할인영역이 먼저 노출 후 하단 혜택 리스트 노출한다.
-    this._reqProductList_dev(['']);
+    this._reqProductList(['']);
   },
   /**
    * @function
    * @desc 상품 리스트 조회요청
    * @param {Array} categoryArray
    */
-  _reqProductList_dev: function (categoryArray) {
-    Tw.Logger.info('[_reqProductList_dev] [선택된 카테고리 리스트]', categoryArray);
-    Tw.Logger.info('[_reqProductList_dev] [Dom 에 저장되어 있는 선택했던 카테고리 리스트]', this.$container.find('#selected_category').val());
-    Tw.Logger.info('[_reqProductList_dev] [url에 포함된 카테고리 코드]', this._filters.filters);
+  _reqProductList: function (categoryArray) {
+    Tw.Logger.info('[_reqProductList] [선택된 카테고리 리스트]', categoryArray);
+    Tw.Logger.info('[_reqProductList] [Dom 에 저장되어 있는 선택했던 카테고리 리스트]', this.$container.find('#selected_category').val());
+    Tw.Logger.info('[_reqProductList] [url에 포함된 카테고리 코드]', this._filters.filters);
 
     if (this.$container.find('#selected_category').val() !== '') {
       var tempStr = this.$container.find('#selected_category').val();
@@ -764,15 +764,15 @@ Tw.BenefitIndex.prototype = {
     var param = { command: Tw.API_CMD.BFF_10_0054 };
     // 최초 접속시 (#전체 / 별도 선택된 카테고리가 없는 경우)
     if (Tw.FormatHelper.isEmpty(categoryArray) || categoryArray[0] === '') {
-      Tw.Logger.info('[_reqProductList_dev] 최초 접속시', categoryArray);
+      Tw.Logger.info('[_reqProductList] 최초 접속시', categoryArray);
       param.params = { idxCtgCd: 'F01400', benefitCtgCd: '', searchListCount: 50 };
       requestCommand.push(param);
-      Tw.Logger.info('[_reqProductList_dev] requestCommand', requestCommand);
+      Tw.Logger.info('[_reqProductList] requestCommand', requestCommand);
     } else {
       // 특정 카테고리가 선택된 경우
-      Tw.Logger.info('[_reqProductList_dev] 특정 카테고리가 선택된 경우', categoryArray);
+      Tw.Logger.info('[_reqProductList] 특정 카테고리가 선택된 경우', categoryArray);
       var selectedCategoryString = '';
-      for ( var idx in categoryArray ) {
+      for (var idx = 0; idx < categoryArray.length; idx++) {
         var selectCategory = categoryArray[idx];
         param.params = { idxCtgCd: 'F01400', benefitCtgCd: selectCategory, searchListCount: 50 };
         requestCommand.push(param);
@@ -795,15 +795,15 @@ Tw.BenefitIndex.prototype = {
         }
       } // end for
       this.$categoryTab.find('[data-category=""]').removeClass('on').attr('aria-selected', false);
-      Tw.Logger.info('[_reqProductList_dev] requestCommand', requestCommand);
+      Tw.Logger.info('[_reqProductList] requestCommand', requestCommand);
 
       this.$container.find('#selected_category').val(selectedCategoryString);
-      Tw.Logger.info('[_reqProductList_dev] this.$container.find("#selected_category").val() : ', this.$container.find('#selected_category').val());
+      Tw.Logger.info('[_reqProductList] this.$container.find("#selected_category").val() : ', this.$container.find('#selected_category').val());
     }
 
     this._apiService.requestArray(requestCommand)
-      // .done($.proxy(this._successProductList_dev, this, categoryArray))
-      .done($.proxy(this._successProductList_dev, this))
+      // .done($.proxy(this._successProductList, this, categoryArray))
+      .done($.proxy(this._successProductList, this))
       .fail($.proxy(this._onFail, this));
   },
   /**
@@ -811,9 +811,9 @@ Tw.BenefitIndex.prototype = {
    * @desc _reqProductList() 성공시 콜백
    * @param {Object} response
    */
-  _successProductList_dev: function (response) {
+  _successProductList: function (response) {
     // arguments  처리할 필요가 없고 인자값으로 문자열을 받지 않고 있 코드 수정 - KimInHwan
-    Tw.Logger.info('[_successProductList_dev] response', response);
+    Tw.Logger.info('[_successProductList] response', response);
     var mergedResult = [];
     if (response.code !== Tw.API_CODE.CODE_00) {
       this._onFail(response);
@@ -854,7 +854,9 @@ Tw.BenefitIndex.prototype = {
         }
       }
       // 결합할인 표기
+      if (this._benefitInfo.combination && this._benefitInfo.combination.prodNm.length > 0) {
 
+      }
       // 특화혜택 표기
       var specialBenefit = ['NC00000079', 'NC00000081', 'TW20000027'].indexOf(benefitObj.benefitId);
       if (specialBenefit > -1) {
@@ -885,9 +887,9 @@ Tw.BenefitIndex.prototype = {
       mergedResult.push(benefitObj);
     }
 
-    Tw.Logger.info('[_successProductList_dev] mergedResult', mergedResult);
+    Tw.Logger.info('[_successProductList] mergedResult', mergedResult);
     mergedResult = Tw.FormatHelper.removeDuplicateElement(mergedResult);
-    Tw.Logger.info('[_successProductList_dev] mergedResult (중복제거) ', mergedResult);
+    Tw.Logger.info('[_successProductList] mergedResult (중복제거) ', mergedResult);
     this.$list.empty();     // #fe-list
     /**
      * 리스트 수신 후 처리순서

@@ -192,8 +192,17 @@
                         <li>
                             <span class="stit">데이터 리필쿠폰 <% if(coupons > 0) { %> <%= coupons %>장 <% }%></span>
                             <div class="sta">
-                                <span>장기가입 혜택</span>
+                                <span>데이터 충전</span>
                                 <span><a class="bt-link-tx underline" href="/myt-data/recharge/coupon" role="button">쿠폰조회</a></span>
+                            </div>
+                        </li>
+                        <% } %>
+                        <% if(locals.dataGift) { %>
+                        <li>
+                            <span class="stit">T끼리 데이터 선물하기</span>
+                            <div class="sta">
+                                <span>데이터 충전</span>
+                                <span><a class="bt-link-tx underline" href="/myt-data/giftdata" role="button">자세히보기</a></span>
                             </div>
                         </li>
                         <% } %>
