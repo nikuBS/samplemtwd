@@ -25,7 +25,13 @@
         </div>
         <% } else{ %>
         <div class="btn fe-btn_wrap">
-            <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
+            <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
+                <% if (isMobileplanAdd || isDiscount) { %>
+                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
+                <% } else { %>
+                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>요금제 변경</button>
+                <% } %>
+            <% } %>
         </div>
         <% } %>
     <% } %>
@@ -51,8 +57,12 @@
         </div>
         <% } else{ %>
         <div class="btn fe-btn_wrap">
-            <% if ( !isDiscount ) { %>
+            <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
+                <% if (isMobileplanAdd || isDiscount) { %>
                 <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
+                <% } else { %>
+                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>요금제 변경</button>
+                <% } %>
             <% } %>
         </div>
         <% } %>
