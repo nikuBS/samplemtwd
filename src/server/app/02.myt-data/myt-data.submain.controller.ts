@@ -44,22 +44,6 @@ import CommonHelper from '../../utils/common.helper';
 // 실시간잔여량 공제항목
 const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
-// TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
-/*
-const parseTimesWithString = (times: any) => {
-  // 시간과 분이 서로 의무적으로 존재해야 하는 것은 아니므로, 각각의 조건문으로 분리하여 처리한다.
-  if (times.hours) {
-    times.formatted = `${times.hours}시`;
-  } else {
-    times.formatted = '';
-  }
-  if (times.min) {
-    times.formatted = `${times.string} ${times.min}분`;
-  }
-  return times;
-};
-*/
-
 class MytDataSubmainController extends TwViewController {
   constructor() {
     super();
@@ -95,16 +79,9 @@ class MytDataSubmainController extends TwViewController {
       this._getRemnantData(data.svcInfo),
       this._getDataPresent(),
       this._getRefillCoupon(),
-      this._reqRefillGiftHistory()
-      // this._getPrepayCoupon(),
-      /*this._getDataChargeBreakdown(),
-      this._getDataPresentBreakdown(),
-      this._getTingPresentBreakdown(),
-      this._getEtcChargeBreakdown(),
-      this._getRefillPresentBreakdown(),
-      this._getRefillUsedBreakdown()*/
-      // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId),
-    ).subscribe(([remnant, present, refill, refillGiftHistory /*dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd*/ /*,banner*/]) => {
+      this._reqRefillGiftHistory(),
+      this._getProductGroup()
+    ).subscribe(([remnant, present, refill, refillGiftHistory, prodGroup ]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -138,7 +115,9 @@ class MytDataSubmainController extends TwViewController {
         }
         // T가족모아 가입가능한 요금제
         // 실시간잔여량에 가족모아 데이터가 있는 경우 [DV001-13997])
-        data.isTmoaInsProdId = TPLAN_PROD_ID.indexOf(data.svcInfo.prodId) > -1;
+        // data.isTmoaInsProdId = TPLAN_PROD_ID.indexOf(data.svcInfo.prodId) > -1;
+        // OP-6858 가족모아 가입가능한 요금제 조회 후 항목에서 비교
+        data.isTmoaInsProdId = prodGroup.prodList.findIndex( item => item.prodId === data.svcInfo.prodId) > -1;
         if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
           // 가입
           data.isTmoaData = true;
@@ -794,7 +773,7 @@ class MytDataSubmainController extends TwViewController {
   // 데이터한도요금제 충전내역
   _getDataChargeBreakdown() {
     let url = API_CMD.BFF_06_0042;
-    let params = {};
+    let params;
     if ( this.isPPS ) {
       url = API_CMD.BFF_06_0063;
       params = {
@@ -831,7 +810,7 @@ class MytDataSubmainController extends TwViewController {
   // 팅/쿠키즈/안심음성 충전내역
   _getEtcChargeBreakdown() {
     let url = API_CMD.BFF_06_0032;
-    let params = {};
+    let params;
     if ( this.isPPS ) {
       url = API_CMD.BFF_06_0062;
       params = {
@@ -903,17 +882,17 @@ class MytDataSubmainController extends TwViewController {
       }
     });
   }
-
-  // PPS 자동알람설정내역
-  _getPPSAutoAlarm() {
-    return this.apiService.request(API_CMD.BFF_06_0075, {});
+  // 관련상품그룹 조회
+  _getProductGroup() {
+    return this.apiService.request(API_CMD.BFF_10_0188, {}, {}, ['NA6031_PRC_PLN', 1])
+      .map( resp => {
+        if (resp.code === API_CODE.CODE_00) {
+          return resp.result;
+        } else {
+          return null;
+        }
+      });
   }
-
-  // PPS 음성자동충전내역
-  _getPPSAutoInfo() {
-    return this.apiService.request(API_CMD.BFF_06_0060, {});
-  }
-
   // 충전 선물 이력 건수 조회
   _reqRefillGiftHistory(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0077, {
@@ -927,54 +906,12 @@ class MytDataSubmainController extends TwViewController {
         return null;
       }
     });
-    // return Observable.create((observer) => {
-    //   setTimeout(() => {
-    //     const resp = {
-    //       'code': '00',
-    //       'msg': 'success',
-    //       'result' : {
-    //         'rifilSndCnt': '1',
-    //         'rifilUseCnt': '1',
-    //         'tdataSndCnt': '1',
-    //         'tdataRcvCnt': '1',
-    //         'tingIneeCnt': '1',
-    //         'lmtChrgCnt': '1',
-    //         'tingGiftRcvCnt': '1',
-    //         'tingGiftSndCnt': '1'
-    //       }
-    //     };
-    //     if (resp.code === API_CODE.CODE_00) {
-    //       observer.next(null);
-    //       observer.complete();
-    //     } else {
-    //       observer.error(resp);
-    //     }
-    //   }, 500);
-    // });
   }
 
   _render(res, data) {
     // 음성충전알람서비스 신청 내역 - 13차
     if ( this.isPPS ) {
       // DV001-13280 - 음성자동충전, 자동알림 신청과 관계없이 버튼 노출
-      // Observable.combineLatest(
-      //   this._getPPSAutoAlarm(),
-      //   this._getPPSAutoInfo()
-      // ).subscribe(([alarm, info]) => {
-      //   if ( alarm.code === API_CODE.CODE_00 ) {
-      //     // 음성 자동 충전 되어 있지 않은 경우 버튼 노출
-      //     if ( alarm.result.typeCd === 0 ) {
-      //       data.ppsAlarm = true;
-      //     }
-      //   }
-      //   if ( info.code === API_CODE.CODE_00 ) {
-      //     // 자동알람 신청이 되어 있지 않은 경우 버튼 노출
-      //     if ( FormatHelper.isEmpty(info.result.amtCd) ) {
-      //       data.ppsInfo = true;
-      //     }
-      //   }
-      //   res.render('myt-data.submain.html', { data });
-      // });
       res.render('myt-data.submain.html', { data });
     } else {
       /**
