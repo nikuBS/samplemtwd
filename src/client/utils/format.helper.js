@@ -59,7 +59,7 @@ Tw.FormatHelper = (function () {
 
   /**
    * @desc add comma to numbers every three digits
-   * @param {number} value
+   * @param {String} value
    * @returns {string}
    * @public
    */

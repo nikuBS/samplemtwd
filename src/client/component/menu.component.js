@@ -37,9 +37,8 @@ Tw.MenuComponent = function (notAboutMenu) {
     this.$svcNumber = undefined;
 
     this._isLogin = false;
-    this._svcMgmtNum = undefined;
     this._isMultiLine = false;
-    this._svcAttr = undefined;
+    this._svcInfo = undefined;
     this._tid = undefined;
     this._memberType = undefined; // 0: normal, 1: number unregistered, 2: no svc
     this._isPPS = false;
@@ -286,8 +285,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
             this._isLogin = res.result.isLogin;
             if ( this._isLogin ) {
               this._isMultiLine = parseInt(res.result.userInfo.expsSvcCnt, 10)  > 1;
-              this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
-              this._svcAttr = res.result.userInfo.svcAttrCd;
+              this._svcInfo = res.result.userInfo;
               this._tid = res.result.userInfo.userId;
               this._isSimpleLogin = res.result.userInfo.loginType !== 'T';
             }
@@ -319,7 +317,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   /**
    * @function
    * @desc t알림 클릭시 알림 리스트 화면 노출, 클릭한 경우 t알림 모두 확인한 것으로 간주하고 빨간점 제거
-   * @param  {} e
+   * @param  {Object} e
    */
   _onTNoti: function (e) { // T-noti 클릭하여 진입 시 아이콘에 빨간 점 제거
     if ( !this._tNotifyComp ) {
@@ -346,7 +344,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         this._lineComponent = new Tw.LineComponent(null, null, false, this.$gnbBtn);
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해
-      this._lineComponent.onClickLine(this._svcMgmtNum, $target);
+      this._lineComponent.onClickLine(this._svcInfo.svcMgmtNum, $target);
     // }
   },
 
@@ -474,7 +472,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     }
 
     // 무료 문자 점검 Alert
-    var nowDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDDHHmmss')
+    var nowDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDDHHmmss');
     if (nowDate >= Tw.MENU_STRING.FREE_SMS_OVERHAUL.start && nowDate <= Tw.MENU_STRING.FREE_SMS_OVERHAUL.end) {
       this._popupService.openAlert(
         Tw.MENU_STRING.FREE_SMS_OVERHAUL.msg,
@@ -512,7 +510,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @function
    * @desc 가공된 정보를 바탕으로 실제 메뉴를 그려 주는 부분, 로그인/회원정보 등을 바탕으로 보여줄 부분과 숨길 부분들을 처리
    * @param  {Boolean} isLogin - 현재 로그인 여부
-   * @param  {Boolean} userInfo - 현재 사용자 정보
+   * @param  {Object} userInfo - 현재 사용자 정보
    * @param  {Object} menu - 계층으로 표현된 메뉴트리 정보
    */
   _modifyMenu: function (isLogin, userInfo, menu) {
@@ -679,7 +677,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
                   $(elem).remove();
                 }
               })
-              .fail(function (err) {
+              .fail(function () {
                 $(elem).remove();
               });
             break;
@@ -687,7 +685,14 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           this._apiService.requestArray([
               { command: Tw.SESSION_CMD.BFF_05_0106 }, // /bypass/core-modification/v1/bill-discounts
               { command: Tw.SESSION_CMD.BFF_05_0094 }, // /bypass/core-modification/v1/combination-discounts
-              { command: Tw.SESSION_CMD.BFF_05_0196 } // /bypass/core-modification/v1/loyalty-benefits
+              { command: Tw.SESSION_CMD.BFF_05_0196 }, // /bypass/core-modification/v1/loyalty-benefits
+               // OP002-6291 혜택할인 변경 myT에서 받고 있는 혜택과 연동 필요(이용중)
+              // 할인/혜택 카테고리_데이터 충전
+              { command: Tw.API_CMD.BFF_05_0217, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } },
+              // 할인/혜택 카테고리_특화 혜택
+              { command: Tw.API_CMD.BFF_05_0218, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } },
+              // 할인/혜택 카테고리_고객 맞춤형 혜택
+              { command: Tw.API_CMD.BFF_05_0219, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } }
             ])
             .done($.proxy(this._showBenefitDiscountInfo, this, elem))
             .fail(function () {
@@ -746,7 +751,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   /**
    * @function
    * @desc 이용요금 표시
-   * @param  {Obejct} elem - 이용요금 표기할 elem
+   * @param  {Element} elem - 이용요금 표기할 elem
    * @param  {Object} resp - BFF 조회 후 받은 response
    * @param  {Boolean} needToStore - true일 경우 해당 정보 local storage 에 cache
    */
@@ -776,7 +781,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       var storeData = {
         data: resp,
         expired: Tw.DateHelper.add5min(new Date()),
-        svcMgmtNum: this._svcMgmtNum
+        svcMgmtNum: this._svcInfo.svcMgmtNum
       };
       Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_BILL, JSON.stringify(storeData));
     }
@@ -790,8 +795,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    */
   tideUpMenuInfo: function (menuInfo, userInfo) {
     // expsSeq에 따라 한번 정렬해줌
-    var sorted = [];
-    sorted = _.chain(menuInfo)
+    var sorted =  _.chain(menuInfo)
       .filter(function (item) {
         if ( item.menuId === 'M000344' ) {
           item.expsSeq = '100';
@@ -804,10 +808,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       .sortBy(function (item) {
         return parseInt(item.expsSeq, 10);
       }).value();
-
     // array 형태를 json 객체 형태로 변환
-    var category = [];
-    category = _.reduce(sorted, function (memo, item) {
+    var category = _.reduce(sorted, function (memo, item) {
       item.children = [];
       memo[item.menuId] = item;
       return memo;
@@ -836,10 +838,10 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           item.showThis = true;
         }
 
-        item.isIcon = item.iconImgUseYn === 'Y' ? true : false;
-        item.isBg = item.bgimgUseYn === 'Y' ? true : false;
-        item.hasChildren = item.children.length > 0 ? true : false;
-        item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
+        item.isIcon = (item.iconImgUseYn === 'Y');
+        item.isBg = (item.bgimgUseYn === 'Y');
+        item.hasChildren = (item.children.length > 0 );
+        item.isDesc = (item.menuDescUseYn === 'Y');
         item.isLink = !!item.menuUrl && item.menuUrl !== '/';
         item.isExternalLink = !!item.menuUrl && item.menuUrl.indexOf('http') !== -1;
         if (item.isLink || !!this.XTRACTOR_CODE[item.menuId]) { // 통계코드 추가
@@ -848,14 +850,14 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
         // OP002-4354 H/C
         // item.isNew = item.isNewImgUseYn === 'Y' ? true : false;
-        var isNewMenuId = Tw.Environment.environment === 'prd' ? 'M002208' : 'M001962'
-        item.isNew = item.menuId === isNewMenuId ? true : false;
+        var isNewMenuId = Tw.Environment.environment === 'prd' ? 'M002208' : 'M001962';
+        item.isNew = (item.menuId === isNewMenuId);
 
         if(this.TRACKER_CODES.indexOf(item.menuId) > -1){
           item.tracker = {
             menuId: item.menuId,
             menuNm: item.menuNm
-          }
+          };
         }
         // if ( !!item.urlAuthClCd ) {
         //   if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
@@ -1072,36 +1074,59 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     }
     return true;
   },
-  
+
   /**
    * @function
    * @desc 나의 혜택/할인 정보 값 설정
+   * @param elem
+   * @param bill
+   * @param combination
+   * @param loyalty
+   * @param refill
+   * @param special
+   * @param align
    */
-  _showBenefitDiscountInfo: function (elem) {
+  _showBenefitDiscountInfo: function (elem, bill, combination, loyalty, refill, special, align) {
     var benefitDiscount = 0;
-    var resp;
-
-    if ((resp = arguments[1]).code === Tw.API_CODE.CODE_00) {
+    if (bill.code === Tw.API_CODE.CODE_00) {
       // 요금할인
-      benefitDiscount += resp.result.priceAgrmtList.length;
-      // 요금할인- 복지고객
-      benefitDiscount += (resp.result.wlfCustDcList && resp.result.wlfCustDcList.length > 0) ? resp.result.wlfCustDcList.length : 0;
+      benefitDiscount += bill.result.priceAgrmtList.length;
     }
-
-    // 결합할인
-    if ((resp = arguments[2]).code === Tw.API_CODE.CODE_00) {
-      var resp1 = resp.result;
-      if (resp1.prodNm.trim() !== '') {
-        benefitDiscount += Number(resp1.etcCnt) + 1;
+    // 고객 맞춤
+    if (align.code === Tw.API_CODE.CODE_00) {
+      // 복지
+      if (align.wlfCusDc) {
+        // 요금할인- 복지고객
+        benefitDiscount += (bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0) ?
+          bill.result.wlfCustDcList.length : 0;
+      }
+      // 장기가입
+      if (align.longjoin) {
+        // 장기가입 혜택 건수
+        if (loyalty.code === Tw.API_CODE.CODE_00) {
+          // 장기가입 요금
+          benefitDiscount += (loyalty.result.dcList && loyalty.result.dcList.length > 0) ?
+            loyalty.result.dcList.length : 0;
+        }
       }
     }
-
-    // 장기가입 혜택 건수
-    if ((resp = arguments[3]).code === Tw.API_CODE.CODE_00) {
-      // 장기가입 쿠폰
-      benefitDiscount += (resp.result.benfList && resp.result.benfList.length > 0) ? 1 : 0;
-      // 장기가입 요금
-      benefitDiscount += (resp.result.dcList && resp.result.dcList.length > 0) ? resp.result.dcList.length : 0;
+    // 결합할인
+    if (combination.code === Tw.API_CODE.CODE_00) {
+      if (combination.result.prodNm.trim().length > 0) {
+        benefitDiscount += Number(combination.result.etcCnt) + 1;
+      }
+    }
+    // 데이터 충전 (쿠폰, 선물)
+    if (refill.code === Tw.API_CODE.CODE_00) {
+      // 쿠폰
+      benefitDiscount += (refill.result.benfList && refill.result.benfList.length > 0)? 1 : 0;
+      // 선물
+      benefitDiscount += (refill.result.dataGiftYN)? 1 : 0;
+    }
+    // 특화 혜택
+    if (special.code === Tw.API_CODE.CODE_00) {
+      benefitDiscount += special.result.thight5 ? 1 : 0;
+      benefitDiscount += special.result.kdbthigh5 ? 1 : 0;
     }
 
     if(benefitDiscount > 0) {

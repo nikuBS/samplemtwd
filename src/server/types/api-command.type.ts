@@ -347,6 +347,10 @@ export const API_CMD = {
   BFF_05_0214: { path: '/core-modification/:version/wire-list-not-agreement', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0215: { path: '/core-modification/:version/skb-tworld-processing-agreement-update', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0216: { path: '/core-modification/:version/mobile-join-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  // [OP002-6291]
+  BFF_05_0217: { path: '/core-modification/:version/data-refill', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0218: { path: '/core-modification/:version/specialized-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0219: { path: '/core-modification/:version/custum-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
