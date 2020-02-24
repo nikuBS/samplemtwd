@@ -666,9 +666,6 @@ Tw.BenefitIndex.prototype = {
     }
     // 장기 가입 여부 확인
     if (this._benefitInfo.align && this._benefitInfo.align.longjoin) {
-      // 장기가입 혜택 건수
-      data.benefitDiscount +=
-        (this._benefitInfo.loyalty.benfList && this._benefitInfo.loyalty.benfList.length > 0) ? 1 : 0; // 쿠
       // 장기가입 요금
       data.benefitDiscount +=
         (this._benefitInfo.loyalty.dcList && this._benefitInfo.loyalty.dcList.length > 0) ?
