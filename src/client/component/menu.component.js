@@ -1091,6 +1091,12 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     if (bill.code === Tw.API_CODE.CODE_00) {
       // 요금할인
       benefitDiscount += bill.result.priceAgrmtList.length;
+      // 클럽
+      benefitDiscount += bill.result.clubYN ? 1 : 0;
+      // 척척
+      benefitDiscount += bill.result.chucchuc ? 1 : 0;
+      // T끼리플러스
+      benefitDiscount += bill.result.tplus ? 1 : 0;
     }
     // 고객 맞춤
     if (align.code === Tw.API_CODE.CODE_00) {

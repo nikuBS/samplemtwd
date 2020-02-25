@@ -184,7 +184,7 @@ Tw.BenefitIndex.prototype = {
     this.$container.on('click', '.fe-pop-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
     this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
     this.$container.on('click', '.fe-pop-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
-    this.$container.on('click', '.fe-close', $.proxy(function() {
+    this.$container.on('click', '.fe-close', $.proxy(function () {
       $('#agree-banner-area').hide();
     }, this));   // T world 광고정보수신동의 배너 닫기
     this.$container.on('click', '.fe-pop-close', $.proxy(this._onCloseAgreePopup, this));   // T world 광고정보수신동의 팝업 닫기
@@ -635,7 +635,7 @@ Tw.BenefitIndex.prototype = {
    * 상단 > 나의 혜택.할인 정보 값 설정
    */
   _successMyBenefitDiscountInfo: function () {
-    for (var idx = 0; idx < arguments.length; idx++) {
+    for ( var idx = 0; idx < arguments.length; idx++ ) {
       if (arguments[idx].code === Tw.API_CODE.CODE_00) {
         this._benefitInfo[Object.keys(this._benefitInfo)[idx]] = arguments[idx].result;
       }
@@ -655,10 +655,16 @@ Tw.BenefitIndex.prototype = {
       data.benefitDiscount += this._benefitInfo.bill.priceAgrmtList.length; // 요금할인
       // 복지혜택 가입 여부 확인
       if (this._benefitInfo.align && this._benefitInfo.align.wlfCusDc) {
-      data.benefitDiscount +=
-        (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) ?
-          this._benefitInfo.bill.wlfCustDcList.length : 0; // 요금할인 - 복지고객
+        data.benefitDiscount +=
+          (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) ?
+            this._benefitInfo.bill.wlfCustDcList.length : 0; // 요금할인 - 복지고객
       }
+      // 클럽
+      data.benefitDiscount += this._benefitInfo.bill.clubYN ? 1 : 0;
+      // 척척
+      data.benefitDiscount += this._benefitInfo.bill.chucchuc ? 1 : 0;
+      // T끼리플러스
+      data.benefitDiscount += this._benefitInfo.bill.tplus ? 1 : 0;
     }
     // 결합할인
     if (this._benefitInfo.combination && this._benefitInfo.combination.prodNm.trim().length > 0) {
@@ -769,7 +775,7 @@ Tw.BenefitIndex.prototype = {
       // 특정 카테고리가 선택된 경우
       Tw.Logger.info('[_reqProductList] 특정 카테고리가 선택된 경우', categoryArray);
       var selectedCategoryString = '';
-      for (var idx = 0; idx < categoryArray.length; idx++) {
+      for ( var idx = 0; idx < categoryArray.length; idx++ ) {
         var selectCategory = categoryArray[idx];
         param.params = { idxCtgCd: 'F01400', benefitCtgCd: selectCategory, searchListCount: 50 };
         requestCommand.push(param);
@@ -819,7 +825,7 @@ Tw.BenefitIndex.prototype = {
     for ( var i = 0; i < response.result.list.length; i++ ) {
       var benefitFltNmList = [];
       var benefitObj = response.result.list[i];
-      if (benefitObj.benefitFltNm.indexOf(',') > -1) {
+      if (benefitObj.benefitFltNm && benefitObj.benefitFltNm.indexOf(',') > -1) {
         var benefitFltNmArray = benefitObj.benefitFltNm.split(',');
         for ( var j = 0; j < benefitFltNmArray.length; j++ ) {
           benefitFltNmList.push({ benefitFltNmObj: benefitFltNmArray[j] });
@@ -843,27 +849,39 @@ Tw.BenefitIndex.prototype = {
       }
       // 요금할인 표기
       if (this._benefitInfo.bill && this._benefitInfo.bill.priceAgrmtList.length > 0) {
-        for(var idx = 0; idx < this._benefitInfo.bill.priceAgrmtList.length; idx++) {
+        for ( var idx = 0; idx < this._benefitInfo.bill.priceAgrmtList.length; idx++ ) {
           var billBenefit = this._benefitInfo.bill.priceAgrmtList[idx];
-          if (billBenefit.prodId === benefitObj.benefitId) {
+          // T 지원금 예외
+          var supportBenefit = ['TSupportAgree'].indexOf(billBenefit.prodId) > -1;
+          if (supportBenefit && benefitObj.benefitId === 'TW20000015') {
             benefitObj.useYn = true;
+          } else {
+            if (billBenefit.prodId === benefitObj.benefitId) {
+              benefitObj.useYn = true;
+            }
           }
         }
       }
-      // 결합할인 표기
-      if (this._benefitInfo.combination && this._benefitInfo.combination.prodNm.length > 0) {
-
+      // 클럽할인
+      var clubBenefit = ['TW20000032'].indexOf(benefitObj.benefitId) > -1;
+      if (this._benefitInfo.bill && this._benefitInfo.bill.clubYN && clubBenefit) {
+        benefitObj.useYn = this._benefitInfo.bill.clubYN;
       }
-      // 특화혜택 표기
+      // 척척할인
+      var chucchucBenefit = ['NA00005696'].indexOf(benefitObj.benefitId) > -1;
+      if (this._benefitInfo.bill && this._benefitInfo.bill.chucchuc && chucchucBenefit) {
+        benefitObj.useYn = this._benefitInfo.bill.chucchuc;
+      }
+      // T끼리 할인
+      var tplusBenefit = ['TW00000058'].indexOf(benefitObj.benefitId) > -1;
+      if (this._benefitInfo.bill && this._benefitInfo.bill.tplus && tplusBenefit ) {
+        benefitObj.useYn = this._benefitInfo.bill.tplus;
+      }
+      //특화혜택 표기
       var specialBenefit = ['NC00000079', 'NC00000081', 'TW20000027'].indexOf(benefitObj.benefitId);
       if (specialBenefit > -1) {
         if (this._benefitInfo.special) {
-          if (specialBenefit === 0 || specialBenefit === 3) {
-            benefitObj.useYn = (this._benefitInfo.special.thigh5);
-          }
-          if (specialBenefit === 1) {
-            benefitObj.useYn = (this._benefitInfo.refill.kdbthigh5);
-          }
+          benefitObj.useYn = (this._benefitInfo.special.thigh5 || this._benefitInfo.special.kdbthigh5);
         }
       }
       // 장기고객할인
