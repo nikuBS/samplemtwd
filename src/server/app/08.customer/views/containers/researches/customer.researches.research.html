@@ -265,9 +265,17 @@
                                             </span>
                                              <span class="custom-txt"><%= exam.content %></span>
                                         </label>
+
+            <%
+                                    if (exam.motHtml !== '<p>&nbsp;</p>') {
+            %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+            <%
+                                    }
+            %>
+
                                     </li>
                     <%
                                 } else {        <!-- 단일 + 좌우 + 텍스트 -->
@@ -279,9 +287,15 @@
                                             </span>
                                             <span class="custom-txt"><%= exam.content %></span>
                                         </label>
+            <%
+                                    if (exam.motHtml !== '<p>&nbsp;</p>') {
+            %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+            <%
+                                    }
+            %>
                                     </li>
                     <%
                                 }
@@ -330,9 +344,15 @@
                                             </span>
                                                 <span class="custom-txt"><%= exam.content %></span>
                                         </label>
+                    <%
+                                    if (exam.motHtml !== '<p>&nbsp;</p>') {
+                    %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+                    <%
+                                    }
+                    %>
                                     </li>
                     <%
                                 } else {    <!-- 단일 + 수직 + 텍스트 -->
@@ -344,9 +364,15 @@
                                             </span>
                                             <span class="custom-txt"><%= exam.content %></span>    
                                         </label>
+                    <%
+                                    if (exam.motHtml !== '<p>&nbsp;</p>') {
+                    %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+                    <%
+                                    }
+                    %>
                                     </li>
                     <%
                                 }
