@@ -221,7 +221,9 @@ export default class MainRecommendProduct extends TwViewController {
 
             // 추천 요금제가 대상일 경우만 노출
             if (reason.valid_prodIds.indexOf(prodId) !== -1) {
-              tooltip = (typeof reason.tooltip === 'object') ? reason.tooltip[prodId] : tooltip;
+              if ( kind === 'insurance') {
+                tooltip = reason.tooltip[prodId];
+              }
             } else {
               isKindShow = false;
             }
