@@ -31,7 +31,6 @@ import {
   SVC_ATTR_E,
   SVC_ATTR_NAME,
   SVC_CDGROUP,
-  TPLAN_PROD_ID,
   TPLAN_SHARE_ID,
   UNIT,
   UNIT_E,
@@ -81,7 +80,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillCoupon(),
       this._reqRefillGiftHistory(),
       this._getProductGroup()
-    ).subscribe(([remnant, present, refill, refillGiftHistory, prodGroup ]) => {
+    ).subscribe(([remnant, present, refill, refillGiftHistory, prodList ]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -117,7 +116,7 @@ class MytDataSubmainController extends TwViewController {
         // 실시간잔여량에 가족모아 데이터가 있는 경우 [DV001-13997])
         // data.isTmoaInsProdId = TPLAN_PROD_ID.indexOf(data.svcInfo.prodId) > -1;
         // OP-6858 가족모아 가입가능한 요금제 조회 후 항목에서 비교
-        data.isTmoaInsProdId = prodGroup.prodList.findIndex( item => item.prodId === data.svcInfo.prodId) > -1;
+        data.isTmoaInsProdId =  prodList && prodList.findIndex( item => item.prodId === data.svcInfo.prodId) > -1;
         if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
           // 가입
           data.isTmoaData = true;
@@ -887,7 +886,7 @@ class MytDataSubmainController extends TwViewController {
     return this.apiService.request(API_CMD.BFF_10_0188, {}, {}, ['NA6031_PRC_PLN', 1])
       .map( resp => {
         if (resp.code === API_CODE.CODE_00) {
-          return resp.result;
+          return resp.result.prodList;
         } else {
           return null;
         }
