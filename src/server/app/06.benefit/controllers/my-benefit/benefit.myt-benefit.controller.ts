@@ -46,14 +46,14 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인 (combination-discounts)
       this.apiService.request(API_CMD.BFF_05_0196, {}), // 장기가입혜택 (loyalty-benefits)
       // 할인/혜택 카테고리_데이터 충전
-      this.apiService.request(API_CMD.BFF_05_0217, {}, {svcMgmtNum, svcNum}),
+      this.apiService.request(API_CMD.BFF_05_0217, {}, { svcMgmtNum, svcNum }),
       // 할인/혜택 카테고리_특화 혜택
-      this.apiService.request(API_CMD.BFF_05_0218, {}, {svcMgmtNum, svcNum}),
+      this.apiService.request(API_CMD.BFF_05_0218, {}, { svcMgmtNum, svcNum }),
       // 할인/혜택 카테고리_고객 맞춤형 혜
       this.apiService.request(API_CMD.BFF_05_0219, {}, {svcMgmtNum, svcNum}),
       this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회 (/:version/my-t/my-info)
     ).subscribe(([membership, ocb, rainbow, cookiz, noContract, bill, combination,
-                                 loyalty, refillCoupons, special, align, joininfo]) => {
+                   loyalty, refillCoupons, special, align, joininfo]) => {
         // OP002-6291 지켜줘서 고마워 현역플랜 혜택할인에서 제외
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
         const apiError = this.error.apiError(
@@ -92,27 +92,41 @@ class BenefitMyBenefit extends TwViewController {
         if ( cookiz.code === API_CODE.CODE_00 ) {
           options['cookiz'] = this._dataPreprocess(cookiz.result.usblPoint);
         }
-        // if ( military.code === API_CODE.CODE_00 ) {
-        //   options['military'] = this._dataPreprocess(military.result.usblPoint);
-        // }
         options['total'] = FormatHelper.addComma(this._total + '');
-
         options['count'] = 0;
 
+        const billList = bill.result.priceAgrmtList.filter(item => {
+          if ( item.prodId !== bill.result.clubCd || item.prodId !== bill.result.tplusCd ||
+            item.prodId !== bill.result.chucchucCd ) {
+            return item;
+          }
+        });
+
         // 요금할인
-        if ( bill.result.priceAgrmtList.length > 0 ) {
+        if ( billList > 0 ) {
           options['bill'] = {
-            total: bill.result.priceAgrmtList.length,
-            item: bill.result.priceAgrmtList[0].prodNm
+            total: billList.length,
+            item: billList[0].prodNm
           };
-          options['count'] += bill.result.priceAgrmtList.length;
+          options['count'] += billList.length;
         }
-        // 요금할인- 복지고객
-        if ( align.result.wlfCusDc ) {
-          options['welfare'] = {
-            total: bill.result.wlfCustDcList.length
+        // club상품
+        if ( bill.result.clubYN ) {
+          options['club'] = {
+            name: bill.result.clubNm
           };
-          options['count'] += bill.result.wlfCustDcList.length;
+          options['count'] += 1;
+        }
+
+        // 척척 할인
+        if ( bill.result.chucchuc ) {
+          options['ggodDiscount'] = true;
+          options['count'] += 1;
+        }
+        // T끼리 Plus 상품
+        if ( bill.result.tplus ) {
+          options['tplus'] = true;
+          options['count'] += 1;
         }
 
         // 결합할인
@@ -133,16 +147,27 @@ class BenefitMyBenefit extends TwViewController {
           options['count'] += 1;
         }
         // 데이터 선물하기
-        if (refillCoupons.result.dataGiftYN) {
+        if ( refillCoupons.result.dataGiftYN ) {
           options['dataGift'] = true;
           options['count'] += 1;
+        }
+        // 특화혜택
+        if ( special.result.thigh5 || special.result.kdbthigh5 ) {
+          const thighCount = (special.result.thigh5 && special.result.kdbthigh5) ? 2 : 1;
+          options['special'] = { thighCount };
+          options['count'] += thighCount;
+        }
+
+        // 요금할인- 복지고객
+        if ( align.result.wlfCusDc ) {
+          options['welfare'] = true;
+          options['count'] += bill.result.wlfCustDcList.length;
         }
         // 장기가입 요금
         if ( align.result.longjoin ) {
           // 장기요금할인 복수개 가능여부 확인 필요
-          const dc = loyalty.result.dcList[0];
-          options['loyalty'] = `${dc.dcItmTypNm} ${dc.dcAmt}${dc.dcUnit}`;
-          options['count'] += 1;
+          options['loyalty'] = true;
+          options['count'] += loyalty.result.dcList.length;
         }
 
         let duration = joininfo.result.scrbYrMthCnt || '';
@@ -152,15 +177,15 @@ class BenefitMyBenefit extends TwViewController {
         }
         options['days'] = duration;
 
-        if (duration !== null && !FormatHelper.isEmpty(duration)) {
+        if ( duration !== null && !FormatHelper.isEmpty(duration) ) {
           const durationArr = duration.split(' ');
-          if (durationArr.length > 1) {
+          if ( durationArr.length > 1 ) {
             options['year'] = durationArr[0].replace('년', '');
             options['month'] = durationArr[1].replace('개월', '');
           } else {
-            if (durationArr[0].indexOf('년') > -1) {
+            if ( durationArr[0].indexOf('년') > -1 ) {
               options['year'] = durationArr[0].replace('년', '');
-            } else if (durationArr[0].indexOf('개월') > -1) {
+            } else if ( durationArr[0].indexOf('개월') > -1 ) {
               options['month'] = durationArr[0].replace('개월', '');
             }
           }
