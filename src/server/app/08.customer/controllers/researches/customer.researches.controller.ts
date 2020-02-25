@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { ETC_CENTER } from '../../../../types/string.type';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 /**
  * @class 
@@ -253,6 +254,11 @@ export default class CustomerResearches extends TwViewController {
                 let i = 1,
                   exam = research['exCtt' + i],
                   hasHtml = false;
+
+                // this.logger.info(this, '[customer.researches.controller] #################################################################################', '');
+                // this.logger.info(this, '[customer.researches.controller] research["motExCtt" + i] : ', research['motExCtt' + i]);
+                // this.logger.info(this, '[customer.researches.controller] isEmpty : ', FormatHelper.isEmpty(research['motExCtt' + i]));
+                // this.logger.info(this, '[customer.researches.controller] #################################################################################', '');
     
                 while (exam) {
                   const isEtc = exam === 'QSTNETC';
@@ -261,7 +267,7 @@ export default class CustomerResearches extends TwViewController {
                   examples.push({
                     content: isEtc ? ETC_CENTER : exam || '',
                     image: research['exImgFilePathNm' + i],
-                    motHtml: research['motExCtt' + i],
+                    motHtml: FormatHelper.isEmpty(research['motExCtt' + i]) ? '' : research['motExCtt' + i],
                     isEtc
                   });
                   i++;
