@@ -103,7 +103,7 @@ class BenefitMyBenefit extends TwViewController {
         });
 
         // 요금할인
-        if ( billList > 0 ) {
+        if ( billList.length > 0 ) {
           options['bill'] = {
             total: billList.length,
             item: billList[0].prodNm
@@ -120,7 +120,7 @@ class BenefitMyBenefit extends TwViewController {
 
         // 척척 할인
         if ( bill.result.chucchuc ) {
-          options['ggodDiscount'] = true;
+          options['goodDiscount'] = true;
           options['count'] += 1;
         }
         // T끼리 Plus 상품
