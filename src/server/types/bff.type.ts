@@ -855,6 +855,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_01',
       priority : 1,
       desc: '(총 사용량 – 쿠폰/선물사용량 > 제공량) 대비 80% 이상 사용',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
       criteria_condition: 'AND',
       tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요',
       profile_keys: [
@@ -870,6 +871,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_02',
       priority : 2,
       desc: '데이터 심야데이터(00시~07시)사용 비중이 중간값 대비 높은 사용',
+      valid_prodIds: ['NA00006536', 'NA00006535'],
       criteria_condition: 'AND',
       tooltip: '추천요금제는 <strong>심야시간에 기본 데이터를 4배 더</strong> 드려요',
       profile_keys: [
@@ -882,6 +884,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_03',
       priority : 3,
       desc: 'UpSell 가망',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
       criteria_condition: 'AND',
       tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요.',
       profile_keys: [
@@ -894,6 +897,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_04',
       priority : 1,
       desc: 'POOQ 가입 & 유료 사용',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537'],
       criteria_condition: 'OR',
       tooltip: '추천요금제는 <strong>wavve를 무료로</strong> 즐길 수 있어요',
       profile_keys: [
@@ -905,6 +909,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_05',
       priority : 2,
       desc: '전체 데이터 대비 동영상앱 사용비율이 중간값 이상',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537'],
       criteria_condition: 'AND',
       tooltip: '추천요금제는 <strong>데이터 걱정없이 wavve를 무료로</strong> 이용할 수 있어요',
       profile_keys: [
@@ -917,6 +922,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_06',
       priority : 3,
       desc: 'POOQ 미가입',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537'],
       criteria_condition: 'AND',
       tooltip: '추천요금제로 <strong>스포츠 생중계를 무료로</strong> 즐겨보세요',
       profile_keys: [
@@ -930,6 +936,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_07',
       priority : 1,
       desc: '멜론, FLO 서비스 가입 & 유료사용',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
       criteria_condition: 'OR',
       tooltip: '추천요금제는 <strong>FLO를 무료로</strong> 즐길 수 있어요',
       profile_keys: [
@@ -942,6 +949,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_08',
       priority : 2,
       desc: '전체 데이터 대비 음악앱 사용 비율이 중간값 이상',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
       criteria_condition: 'AND',
       tooltip: '추천요금제는 <strong>FLO를 데이터 걱정없이</strong> 이용할 수 있어요',
       profile_keys: [
@@ -954,6 +962,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_09',
       priority : 3,
       desc: '멜론, FLO 미가입',
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
       criteria_condition: 'AND',
       tooltip: '추천요금제로 <strong>FLO 할인 받고</strong>, 새로운 음악을 찾아보세요',
       profile_keys: [
@@ -1001,6 +1010,7 @@ export const MLS_DETAIL_MAPPING = {
       priority : 1,
       desc: '멤버십 사용건수 중간값 이상 OR 사용액 중간값 이상 & VIP 아닌 경우',
       criteria_condition: 'OR',
+      valid_prodIds: ['NA00006539', 'NA00006538'],
       tooltip: '1년에 영화 6회 무료! T멤버십 VIP 혜택을 드리는 추천요금제 어떠세요?',
       profile_keys: [
         // { key: 'membership_vip_yn', required: false, criteria : {operator: 1, value: 'Y'}},
