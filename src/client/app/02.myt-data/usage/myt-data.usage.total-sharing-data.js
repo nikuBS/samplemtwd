@@ -206,7 +206,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._setDataTxt(this._$tfamilySharing, Tw.FormatHelper.convDataFormat(data, Tw.DATA_UNIT.GB));
     } else {
       this._tFamilySharingErrCode = tFamilySharingResp.code;
-      if (this._options.isTmoaInsProdId) {
+      if (this._options.isTmoaInsProdId === 'true') {
       // if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) {
         // T가족모아 가입 가능한 요금제이나 미가입
         this._$tfamilySharing.show();
