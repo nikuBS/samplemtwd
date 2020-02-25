@@ -8,7 +8,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, SESSION_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTHelper from '../../../../utils/myt.helper';
 import FormatHelper from '../../../../utils/format.helper';
@@ -24,7 +24,8 @@ class MyTDataUsageTotalSharingData extends TwViewController {
     Observable.combineLatest(
       this.reqBalances(),
       this.reqBalanceAddOns(),
-    ).subscribe(([_balancesResp, balanceAddOnsResp]) => {
+      this.getProductGroup()
+    ).subscribe(([_balancesResp, balanceAddOnsResp, prodList]) => {
       const balancesResp = JSON.parse(JSON.stringify(_balancesResp));
       const apiError = this.error.apiError([
         balancesResp, balanceAddOnsResp
@@ -52,6 +53,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
 
       const option = {
         balanceAddOns: balanceAddOnsResp.result,
+        isTmoaInsProdId: prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1,
         defaultData, // : defaultData || {},
         svcInfo: svcInfo || {},
         pageInfo: pageInfo || {}
@@ -82,6 +84,22 @@ class MyTDataUsageTotalSharingData extends TwViewController {
       pageInfo: pageInfo,
       svcInfo
     });
+  }
+
+  /**
+   * 관련상품그룹 조회 - 공유POT그룹 가입가능 요금제
+   * @return {Observable}
+   */
+  private getProductGroup(): Observable<any> {
+    // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+    return this.apiService.request(API_CMD.BFF_10_0188, {}, {}, ['NA6031_PRC_PLN', 1])
+      .map( resp => {
+        if (resp.code === API_CODE.CODE_00) {
+          return resp.result.prodList;
+        } else {
+          return null;
+        }
+      });
   }
 }
 

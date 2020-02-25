@@ -80,7 +80,9 @@ class MainHome extends TwViewController {
             this.getProductGroup()
           ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList]) => {
             // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-            usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+            if (usageData.data) {
+              usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+            }
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             recommendProdsData = recommendProdsResult;
@@ -104,7 +106,9 @@ class MainHome extends TwViewController {
             this.getProductGroup()
           ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList]) => {
             // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-            usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+            if (usageData.data) {
+              usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+            }
             homeData.usageData = usageData;
             res.render(`main.home-${flag}.html`, {
               svcInfo,
