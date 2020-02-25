@@ -226,7 +226,9 @@ export const API_CMD = {
     bypass: false
   },
   BFF_05_0093: { path: '/core-bill/:version/micro-pay/cphist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0094: { path: '/core-modification/:version/combination-discounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
+  BFF_05_0094: { path: '/core-modification/:version/combination-discounts',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true
+  },
   BFF_05_0096: { path: '/core-product/:version/benefit-suggestions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0098: { path: '/core-membership/:version/card-vip-benefit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0100: { path: '/core-bill/:version/rainbow-point-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -340,12 +342,16 @@ export const API_CMD = {
   BFF_05_0207: { path: '/core-product/:version/services/combinations/:args0/personally-terminations',
     method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0209: { path: '/core-modification/:version/wire-phone/numchange/change', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0210: { path: '/core-modification/:version/wire-phone/numchange/change/number', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0210: { path: '/core-modification/:version/wire-phone/numchange/change/number',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
   BFF_05_0211: { path: '/core-modification/:version/wire-phone/numchange/change/put', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   // [OP002-4379]
   BFF_05_0213: { path: '/core-bill/:version/bill-pay/cdr-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0214: { path: '/core-modification/:version/wire-list-not-agreement', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0215: { path: '/core-modification/:version/skb-tworld-processing-agreement-update', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0215: { path: '/core-modification/:version/skb-tworld-processing-agreement-update',
+    method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true
+  },
   BFF_05_0216: { path: '/core-modification/:version/mobile-join-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // [OP002-6291]
   BFF_05_0217: { path: '/core-modification/:version/data-refill', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -439,8 +445,12 @@ export const API_CMD = {
   BFF_06_0080: { path: '/core-recharge/:version/5g-data-conversions', method: API_METHOD.POST, server: API_SERVER.BFF, native: true, bypass: true },
   BFF_06_0081: { path: '/core-recharge/:version/5g-data-conversions', method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true, bypass: true },
   BFF_06_0082: { path: '/core-recharge/:version/5g-data-reservations', method: API_METHOD.POST, server: API_SERVER.BFF, native: true, bypass: true },
-  BFF_06_0083: { path: '/core-recharge/:version/5g-data-reservations', method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true, bypass: true },
-  BFF_06_0084: { path: '/core-recharge/:version/5g-data-conversion-histories', method: API_METHOD.GET, server: API_SERVER.BFF, native: true, bypass: true },
+  BFF_06_0083: { path: '/core-recharge/:version/5g-data-reservations',
+    method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true, bypass: true
+  },
+  BFF_06_0084: { path: '/core-recharge/:version/5g-data-conversion-histories',
+    method: API_METHOD.GET, server: API_SERVER.BFF, native: true, bypass: true
+  },
   BFF_06_0085: { path: '/core-bill/:version/skpay-pps/auth-grant', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0086: { path: '/core-bill/:version/skpay-pps/pps-recharge', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0087: { path: '/core-bill/:version/skpay-pps/pps-data', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -959,6 +969,10 @@ export const API_CMD = {
     path: '/core-product/:version/mobiles/additions-sets/smartcallpick-sets',
     method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0188: {
+    path: '/core-product/:version/mobiles/fee-plans/:args0/getPossibleProdInfo/:args1',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -1088,44 +1102,12 @@ export const API_LOGIN_ERROR = {
   ICAS3235: 'ICAS3235' // 휴면계정
 };
 
-export const API_MYT_ERROR_CODE = [
-  'BLN0001', // 잔여기본통화 조회횟수 초과
-  'BLN0002', // 조회불가대상
-  'BLN0003', // 정지이력
-  'BLN0004' // 조회불가대상
-];
-
-export const API_MYT_ERROR = {
-  BIL0011: 'BIL0011', // SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다.
-  MBR0001: 'MBR0001', // 타인명의로 카드가 발급되었습니다.
-  MBR0002: 'MBR0002' // 발급된 카드정보가 없습니다.
-};
-
-export const API_GIFT_ERROR = [
-  'RCG0001', // 제공자 선물하기 불가 상태
-  'RCG0002', // 제공자 선물하기 불가 요금제
-  'RCG0003', // 제공자 당월 선물가능 횟수 초과 (월2회)
-  'RCG0004', // 제공자 당월 선물가능 용량 미달
-  'RCG0005', // 제공자가 미성년자이면 선물하기 불가
-  'RCG0006', // 수혜자 선물수신 불가상태
-  'RCG0007', // 수혜자 선물수신 불가 요금제
-  'RCG0008', // 수혜자 당월 선물수신 횟수 초과 (월2회)
-  'RCG0011', // 제공자 회선과 수혜자 회선이 동일한 경우
-  'RCG0013', // 그 외 기타에러
-  'RCG0015' // 기타 불가
-];
-
 export const API_ADD_SVC_ERROR = {
   // 부가서비스(소액결제, 콘텐츠이용)
   BIL0030: 'BIL0030', // 휴대폰 결제 이용동의 후 사용 가능한 메뉴입니다
   BIL0031: 'BIL0031', // 미성년자는 이용할 수 없습니다
   BIL0033: 'BIL0033', // 휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다
   BIL0034: 'BIL0034' // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
-};
-
-export const API_T_FAMILY_ERROR = {
-  BLN0010: 'BLN0010', // T가족모아 가입 가능한 요금제이나 미가입
-  BLN0011: 'BLN0011' // 	T가족모아 가입 불가능한 요금제
 };
 
 export const API_TAX_REPRINT_ERROR = {
