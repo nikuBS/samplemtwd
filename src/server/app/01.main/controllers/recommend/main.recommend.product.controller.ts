@@ -189,7 +189,7 @@ export default class MainRecommendProduct extends TwViewController {
                     cipher = 1;
                   }
 
-                  value = value.toFixed(cipher);
+                  value = (value > 100) ? 100 : value.toFixed(cipher);
 
                 // 금액은 1000단위 구분자 추가(단, 멤베십은 아래 로직에서 처리)
                 } else if ( kind !== 'membership' && profile.type === 'amt') {
@@ -205,8 +205,8 @@ export default class MainRecommendProduct extends TwViewController {
               // 전월계산
               if ( profile.key === 'bf_m0_ym') {
                 result['date_use_ratio_m0'] = DateHelper.getCurrentMonth(resp[profile.key]);
-                result['date_use_ratio_m1'] = (result['date_use_ratio_m0'] === 1 ? 12 : result['date_use_ratio_m0'] - 1);
-                result['date_use_ratio_m2'] = (result['date_use_ratio_m1'] === 1 ? 12 : result['date_use_ratio_m1'] - 1);
+                result['date_use_ratio_m1'] = (Number(result['date_use_ratio_m0']) === 1 ? 12 : result['date_use_ratio_m0'] - 1);
+                result['date_use_ratio_m2'] = (Number(result['date_use_ratio_m1']) === 1 ? 12 : result['date_use_ratio_m1'] - 1);
               }
             // API 결과에 출력에 필요한 key가 포함 안 되는 경우..
             } else if ((resp.hasOwnProperty(profileObj.key) === false || FormatHelper.isEmpty(resp[profileObj.key])) && profileObj.required ) {
@@ -219,15 +219,13 @@ export default class MainRecommendProduct extends TwViewController {
             isKindShow = true;
             let tooltip = reason.tooltip;
 
-            // 보험
-            if ( kind === 'insurance') {
-
-              // 추천 요금제가 보험 추천 대상일 경우만 노출
-              if (reason.valid_prodIds.indexOf(prodId) !== -1) {
+            // 추천 요금제가 대상일 경우만 노출
+            if (reason.valid_prodIds.indexOf(prodId) !== -1) {
+              if ( kind === 'insurance') {
                 tooltip = reason.tooltip[prodId];
-              } else {
-                isKindShow = false;
               }
+            } else {
+              isKindShow = false;
             }
 
             result[kind] = {

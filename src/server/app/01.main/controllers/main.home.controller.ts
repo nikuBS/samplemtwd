@@ -15,12 +15,10 @@ import {
     LINE_NAME,
     LOGIN_TYPE,
     MEMBERSHIP_GROUP,
-    MLS_PRCPLN_RC_TYP,
     MYT_FARE_BILL_CO_TYPE,
     PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
     PRODUCT_5GX_TICKET_TIME_SKIP_ID,
     SVC_ATTR_E,
-    TPLAN_PROD_ID,
     TPLAN_SHARE_LIST,
     UNIT,
     UNIT_E,
@@ -78,8 +76,13 @@ class MainHome extends TwViewController {
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
             this.getRecommendProds(req, svcInfo.prodId),
-            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
-          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown]) => {
+            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+            this.getProductGroup()
+          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList]) => {
+            // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+            if (usageData.data) {
+              usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+            }
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             recommendProdsData = recommendProdsResult;
@@ -99,8 +102,13 @@ class MainHome extends TwViewController {
           Observable.combineLatest(
             this.getUsageData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
-          ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown]) => {
+            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+            this.getProductGroup()
+          ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList]) => {
+            // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+            if (usageData.data) {
+              usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+            }
             homeData.usageData = usageData;
             res.render(`main.home-${flag}.html`, {
               svcInfo,
@@ -146,7 +154,7 @@ class MainHome extends TwViewController {
   /**
    * redis에서 스마트 카드 순서를 가져옴
    * @param {string} svcMgmtNum
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getSmartCardOrder(svcMgmtNum: string): Observable<any> {
     if ( FormatHelper.isEmpty(svcMgmtNum) ) {
@@ -205,7 +213,7 @@ class MainHome extends TwViewController {
    * 홈화면 렌더링에 필요한 redis 데이터 요청
    * @param {string} noticeCode
    * @param {string} svcMgmtNum
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getRedisData(noticeCode: string, svcMgmtNum: string): Observable<any> {
     return Observable.combineLatest(
@@ -226,7 +234,7 @@ class MainHome extends TwViewController {
 
   /**
    * 홈화면 Welcome Message 요청
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getNoti(): Observable<any> {
     return this.redisService.getData(REDIS_KEY.HOME_NOTI)
@@ -241,7 +249,7 @@ class MainHome extends TwViewController {
   /**
    * 홈화면 공지사항 요청
    * @param {string} noticeCode
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getHomeNotice(noticeCode: string): Observable<any> {
     return this.redisService.getData(REDIS_KEY.HOME_NOTICE + noticeCode)
@@ -255,7 +263,7 @@ class MainHome extends TwViewController {
 
   /**
    * 홈화면 이럴땐 이렇게 하세요 데이터 요청
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getHomeHelp(): Observable<any> {
     let result = null;
@@ -294,7 +302,7 @@ class MainHome extends TwViewController {
   /**
    * 홈화면 멤버십 카드 정보 요청
    * @param {object} svcInfo
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getMembershipData(svcInfo: any): Observable<any> {
     let membershipData = {
@@ -329,7 +337,7 @@ class MainHome extends TwViewController {
   /**
    * 홈화면 요금안내서 데이터 요청
    * @param {object} svcInfo
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getBillData(svcInfo: any): Observable<any> {
     let billData = {
@@ -419,7 +427,7 @@ class MainHome extends TwViewController {
   /**
    * 홈화면 실시간 사용량 요청
    * @param {object} svcInfo
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getUsageData(svcInfo: any): Observable<any> {
     let usageData = {
@@ -466,7 +474,8 @@ class MainHome extends TwViewController {
 
     if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
       this.mergeData(usageData.gnrlData, result.data);
-      result.data['isTplanProd'] = TPLAN_PROD_ID.indexOf(svcInfo.prodId) !== -1;
+      // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+      // result.data['isTplanProd'] = TPLAN_PROD_ID.indexOf(svcInfo.prodId) !== -1;
     }
 
     etcKinds.map((kind, index) => {
@@ -628,7 +637,7 @@ class MainHome extends TwViewController {
    * 내게맞는요금제 추천
    * @param {Request} req
    * @param {any} prodId
-   * @return {Observable<any>}
+   * @return {Observable}
    */
   private getRecommendProds(req: Request, prodId: any): Observable<any>  {
 
@@ -675,6 +684,23 @@ class MainHome extends TwViewController {
       }
       return resp.result.twdAdRcvAgreeYn !== 'Y';
     });
+  }
+
+
+  /**
+   * 관련상품그룹 조회 - 공유POT그룹 가입가능 요금제
+   * @return {Observable}
+   */
+  private getProductGroup(): Observable<any> {
+    // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+    return this.apiService.request(API_CMD.BFF_10_0188, {}, {}, ['NA6031_PRC_PLN', 1])
+      .map( resp => {
+        if (resp.code === API_CODE.CODE_00) {
+          return resp.result.prodList;
+        } else {
+          return null;
+        }
+      });
   }
 }
 

@@ -189,70 +189,6 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       .requestArray([{ command: Tw.NODE_CMD.GET_SVC_INFO }, { command: Tw.API_CMD.BFF_06_0044 }])
       .done($.proxy(this._onDoneTFamilySharing, this))
       .fail($.proxy(this._onFailTFamilySharing, this));
-
-    // this._onDoneTFamilySharing({
-    //   'code': '00',
-    //   'msg': 'success',
-    //   'result': {
-    //     'total': '0',
-    //     'used': '20000',
-    //     'remained': '0',
-    //     'adultYn': 'Y',
-    //     'mbrList': [
-    //       {
-    //         'svcNum': '****',
-    //         'svcMgmtNum': '3',
-    //         'custNm': '한정남',
-    //         'repYn': 'N',
-    //         'prodId': '99991231',
-    //         'prodNm': '23595920180830103216NA00005958패밀리',
-    //         'shrblYn': '',
-    //         'shared': '0',
-    //         'limitedYn': 'N',
-    //         'limitation': ''
-    //       },
-    //       {
-    //         'svcNum': '****',
-    //         'svcMgmtNum': '3',
-    //         'custNm': '박윤심',
-    //         'repYn': 'N',
-    //         'prodId': '99991231',
-    //         'prodNm': '23595920180830103216NA00005955스몰',
-    //         'shrblYn': '',
-    //         'shared': '0',
-    //         'limitedYn': 'N',
-    //         'limitation': ''
-    //       },
-    //       {
-    //         'svcNum': '****',
-    //         'svcMgmtNum': '3',
-    //         'custNm': '한희진',
-    //         'repYn': 'N',
-    //         'prodId': '99991231',
-    //         'prodNm': '23595920180830103216NA00005627주말엔 팅 세이브',
-    //         'shrblYn': '',
-    //         'shared': '0',
-    //         'limitedYn': 'N',
-    //         'limitation': ''
-    //       }
-    //     ]
-    //   }
-    // });
-
-    // this._onDoneTFamilySharing({
-    //   'traceId': 'a34b10e0012dd7af',
-    //   'spanId': 'a34b10e0012dd7af',
-    //   'clientDebugMessage': 'a34b10e0012dd7af*',
-    //   'msg': '오류 입니다.',
-    //   'orgDebugMessage': 'BLN0011',
-    //   'hostname': 'bff-spring-mobile-7d89d75d67-zxwrq',
-    //   'code': 'BLN0011',
-    //   'orgHostname': 'core-balance-deployment-84648b4d5c-kzwjq',
-    //   'orgAppName': 'core-balance',
-    //   'appName': 'bff-spring-mobile',
-    //   'orgSpanId': '31ca5eb98ef897db',
-    //   'debugMessage': '200 '
-    // });
   },
 
   /**
@@ -270,7 +206,8 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._setDataTxt(this._$tfamilySharing, Tw.FormatHelper.convDataFormat(data, Tw.DATA_UNIT.GB));
     } else {
       this._tFamilySharingErrCode = tFamilySharingResp.code;
-      if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) {
+      if (this._options.isTmoaInsProdId === 'true') {
+      // if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) {
         // T가족모아 가입 가능한 요금제이나 미가입
         this._$tfamilySharing.show();
         this._$tfamilySharing.attr('aria-hidden','false');

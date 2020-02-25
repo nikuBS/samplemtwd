@@ -35832,16 +35832,18 @@ body.apphome .section-box {
 .tod-poll-box .fieldset-panel.has-image > li{margin-bottom: 1.25rem;}
 .tod-poll-box .custom-txt{display: inline-block; width: 88%; text-align:left; vertical-align: top; padding-left: 0.313rem; word-break: break-all;}
 .tod-poll-box .division-two .custom-txt{width: 80%;}
-@media screen and (max-width: 320px) {
-  .tod-poll-box .custom-txt{font-size: 0.813;}
+@media screen and (max-width: 360px) {
+  .tod-poll-box li .custom-txt{font-size: 0.96rem;}
   .tod-poll-box .division-two .custom-txt{width: 70%;}
-}
+} /* 200214 [OP002-6841] 수정 */
 .tod-poll-box .custom-img { display: block; margin-bottom: 0.625rem;}
 .tod-poll-box .custom-img img{width: 100%;}
 .tod-poll-box .has-image > li:nth-child(odd){padding-right: 0 !important;}
 .tod-poll-box .has-image > li:nth-child(even){padding-left: 0 !important;}
 .tod-poll-box .division-two.has-image > li:nth-child(odd){padding-right: 0.31rem !important;}
 .tod-poll-box .division-two.has-image > li:nth-child(even){padding-left: 0.31rem !important;}
+.tod-poll-box .division-two .li-other{width:100% !important;} /* 200214 [OP002-6841] 추가 */
+.tod-poll-box .division-two.has-image li.li-other{padding-left: 0 !important;} /* 200214 [OP002-6841] 추가 */
 /* poll.progress-bar */
 .tod-progress-tit{font-size: 0.938rem; margin-bottom: 1.25rem;}
 .tod-progress-comp .progress-bar{position:relative; height: 1.25rem;}

@@ -63,8 +63,13 @@
                                     <!-- case, date, label(참여가능 / 참여완료) -->
                                     <div class="poll-item-option">
                                         <span class="poll-type"><%= bnnrRsrchTypNm %></span>
-                                        <span class="poll-date"><%= research.staDtm %>~<%= research.endDtm %></span>
-                                <% if (ctgCd !== 'E') { %>
+                                <%  if (research.procPrdInfoBltnYn === 'Y') {   %>
+                                    <span class="poll-date"><%= research.staDtm %>~<%= research.endDtm %></span>
+                                <%
+                                    }
+
+                                    if (ctgCd !== 'E') {
+                                %>
                                     <% if (research.cmplYn === 'N') { %>
                                         <span class="label poll-able">참여가능</span>
                                     <% } else if (research.cmplYn === 'Y') { %>
