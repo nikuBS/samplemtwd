@@ -234,7 +234,7 @@ Tw.CommonSearch.prototype = {
     this.$inputElement.on('keyup',$.proxy(this._inputChangeEvent,this));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-gnb-search, .fe-search-link',$.proxy(this._doSearch,this));
-    this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
+    this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
     Tw.Logger.info('[common.search] [_nextInit]', '검색창 이벤트 바인딩 완료');
 
     this.$inputElementResultSearch = this.$container.find('#resultSearchKeyword');

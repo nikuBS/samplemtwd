@@ -116,7 +116,7 @@ $.extend(Tw.CommonSearchMore.prototype,
     this.$container.on('click','.page-change',$.proxy(this._pageChange,this));
     this.$container.on('click','.fe-category',$.proxy(this._changeCategory,this));
     // this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
-    this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
+    this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
     
     this.$container.on('click','.fe-btn-more',$.proxy(this._showMore,this));
     this.$container.on('change','.resultsearch-box > .custom-form > input',$.proxy(
