@@ -757,11 +757,11 @@ export const MLS_PRODUCT_BENEFIT = {
       img: '/img/t_myPlan/plan_bene_ico05.png'
     },
     membership: {desc: 0},
-    flo: {desc: '연 47,400원 상당의 FLO 월정액'},
+    flo: {desc: 0},
     pooq: {desc: 0},
     insurance: {desc: 0},
     safe: {desc: 0},
-    total: {desc: 47400}
+    total: {desc: 0}
   },
   // T플랜 안심4G
   NA00006536: {
@@ -936,7 +936,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_07',
       priority : 1,
       desc: '멜론, FLO 서비스 가입 & 유료사용',
-      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006536', 'NA00006535'],
       criteria_condition: 'OR',
       tooltip: '추천요금제는 <strong>FLO를 무료로</strong> 즐길 수 있어요',
       profile_keys: [
@@ -949,7 +949,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_08',
       priority : 2,
       desc: '전체 데이터 대비 음악앱 사용 비율이 중간값 이상',
-      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006536', 'NA00006535'],
       criteria_condition: 'AND',
       tooltip: '추천요금제는 <strong>FLO를 데이터 걱정없이</strong> 이용할 수 있어요',
       profile_keys: [
@@ -962,7 +962,7 @@ export const MLS_DETAIL_MAPPING = {
       reason_code: 'prcpln_09',
       priority : 3,
       desc: '멜론, FLO 미가입',
-      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006537', 'NA00006536', 'NA00006535'],
+      valid_prodIds: ['NA00006539', 'NA00006538', 'NA00006536', 'NA00006535'],
       criteria_condition: 'AND',
       tooltip: '추천요금제로 <strong>FLO 할인 받고</strong>, 새로운 음악을 찾아보세요',
       profile_keys: [
