@@ -1101,13 +1101,13 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     // 고객 맞춤
     if (align.code === Tw.API_CODE.CODE_00) {
       // 복지
-      if (align.wlfCustDc) {
+      if (align.result.wlfCustDc) {
         // 요금할인- 복지고객
         benefitDiscount += (bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0) ?
           bill.result.wlfCustDcList.length : 0;
       }
       // 장기가입
-      if (align.longjoin) {
+      if (align.result.longjoin) {
         // 장기가입 혜택 건수
         if (loyalty.code === Tw.API_CODE.CODE_00) {
           // 장기가입 요금
