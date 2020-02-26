@@ -1131,7 +1131,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     }
     // 특화 혜택
     if (special.code === Tw.API_CODE.CODE_00) {
-      benefitDiscount += special.result.thight5 ? 1 : 0;
+      benefitDiscount += special.result.thigh5 ? 1 : 0;
       benefitDiscount += special.result.kdbthigh5 ? 1 : 0;
     }
 
