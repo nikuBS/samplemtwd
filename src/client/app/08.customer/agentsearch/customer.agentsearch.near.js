@@ -16,6 +16,7 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
+  this.isPopupNoResult = false;
   // 위치 변경 관련 두개 파일 git에서 삭제 해야 함, CS_02_03_L01.hbs , customer.agentsearch.region.js
 
   // 처음에 표시할 위치가 있을 경우 query param을 이용
@@ -65,7 +66,7 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
   // 14세 미만일때 팝업 보여주고 지점 대리점 찾기 화면으로 이동
   this.isAcceptAge = (isAcceptAge === 'true');  // 문자 true를 boolean으로 변경
   if(!this.isAcceptAge){
-    this._popupService.openAlert(Tw.CUSTOMER_NEAR_POPUP.AGE_CONTENT, Tw.CUSTOMER_NEAR_POPUP.AGE_TITLE, '확인', $.proxy(function(){this._historyService.replaceURL('/customer/agentsearch/search');}, this));
+    this._popupService.openAlert(Tw.CUSTOMER_NEAR_POPUP.AGE_CONTENT, Tw.CUSTOMER_NEAR_POPUP.AGE_TITLE, '확인', $.proxy(function(){this._historyService.replaceURL('/customer/agentsearch');}, this));
   }else{
     if( !Tw.Environment.init ) {
       $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생후 나머지 처리
@@ -170,7 +171,10 @@ Tw.CustomerAgentsearchNear.prototype = {
             // if (!this.isLogin && this.isMyLocationCliked) { // 비로그인 이면서 GPS 차단 및 내위치 버튼 눌렀을때 현재 페이지 유지
 
              // 모웹 + 위치 정보 확인 불가능한 경우 메시지 출력 후 지점.대리점 찾기로 이동
-             this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._historyService.goBack, this));
+             // this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인',
+        // $.proxy(this._historyService.replaceURL('/customer/agentsearch'), this));
+             this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(function(){this._historyService.replaceURL('/customer/agentsearch');}, this));
+
 
             // break;
         //   case error.POSITION_UNAVAILABLE:
@@ -222,7 +226,7 @@ Tw.CustomerAgentsearchNear.prototype = {
                 return;
               }
               // 과금팝업 미 동의 시 이전 또는 지점 대리점 찾기로 이동 함
-              this._historyService.goBack();
+              this._historyService.replaceURL('/customer/agentsearch');
             }, this)
           );
         } else {  // 로그인 이면서 과금 팝업 쿠키값 받아 올수 있을때
@@ -272,7 +276,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
         // Tw.Logger.info('_askCurrentLocationApp res ===', res);
         if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1) { // 네이티브에서 현재위치 조회 불가인 경우
-            this._historyService.goBack();
+          this._historyService.replaceURL('/customer/agentsearch');
           // this._onCurrentLocation({ // 현재 위치 확인 불가 시 중구 위치로 설정
           //   longitude: this.locationCoorinates.longitudeDefaultY,
           //   latitude: this.locationCoorinates.latitudeDefaultX
@@ -335,7 +339,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       $.proxy(function () {
         if (this.locationDisagree) { // 위치정보 팝업 미동의 시 앱웹 구분없이 로그인 했을때는 지점 대리점 찾기 화면으로 이동
           // 지점 대리점 찾기 화면으로 이동
-          this._historyService.goBack();
+          this._historyService.replaceURL('/customer/agentsearch');
           //   this._onCurrentLocation({
           //     longitude: this.locationCoorinates.longitudeDefaultY,
           //     latitude: this.locationCoorinates.latitudeDefaultX
@@ -455,7 +459,9 @@ Tw.CustomerAgentsearchNear.prototype = {
           // 위치와 주변 매장 정보를 가져 온 뒤 화면 초기화
           this._onHashChange();
           // 리스트보기, 지도보기 클릭 시, 확인 필요
-          $(window).on('hashchange', $.proxy(this._onHashChange, this));
+          // if (this._historyService.getHash().indexOf('#popup1') === -1) {
+            $(window).on('hashchange', $.proxy(this._onHashChange, this));
+          // }
         } else {
           Tw.Error(res.code, res.msg).pop();
         }
@@ -587,8 +593,8 @@ Tw.CustomerAgentsearchNear.prototype = {
       // if (shops.length == 0 && this._regionChanged) {
       // this.isPopupNoResult = false;
       // if (shops.length == 0 && !this.isPopupNoResult) {
-      if (shops.length === 0) {
-        // this.isPopupNoResult = true;
+      if (shops.length === 0 && !this.isPopupNoResult) {
+        this.isPopupNoResult = true;
         this._popupService.openAlert('검색 결과가 없습니다.<br>다른 지역을 선택해 주세요.');
         // this._regionChanged = false;
       }
