@@ -888,7 +888,7 @@ Tw.BenefitIndex.prototype = {
       var longJoiner = ['TW00000061'].indexOf(benefitObj.benefitId);
       if (longJoiner > -1) {
         if (this._benefitInfo.align) {
-          benefitObj.useYn = (this._benefitInfo.align.lognjoin);
+          benefitObj.useYn = (this._benefitInfo.align.longjoin);
         }
       }
       // 복지고객할인
