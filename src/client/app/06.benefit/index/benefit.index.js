@@ -654,7 +654,7 @@ Tw.BenefitIndex.prototype = {
     if (this._benefitInfo.bill) {
       data.benefitDiscount += this._benefitInfo.bill.priceAgrmtList.length; // 요금할인
       // 복지혜택 가입 여부 확인
-      if (this._benefitInfo.align && this._benefitInfo.align.wlfCusDc) {
+      if (this._benefitInfo.align && this._benefitInfo.align.wlfCustDc) {
         data.benefitDiscount +=
           (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) ?
             this._benefitInfo.bill.wlfCustDcList.length : 0; // 요금할인 - 복지고객

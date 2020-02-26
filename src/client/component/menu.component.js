@@ -1101,7 +1101,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     // 고객 맞춤
     if (align.code === Tw.API_CODE.CODE_00) {
       // 복지
-      if (align.wlfCusDc) {
+      if (align.wlfCustDc) {
         // 요금할인- 복지고객
         benefitDiscount += (bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0) ?
           bill.result.wlfCustDcList.length : 0;
