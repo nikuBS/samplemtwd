@@ -1243,14 +1243,3 @@
 .prCont-txt ol.num li {padding-left:0 !important;}
 .prCont-txt ol.num li:after {display:none;}
 
-/* 200221 [OP002-6887] 제휴카드 페이지 변경 */
-.tod-sale-list > .item{display:flex; border-bottom:1px dotted #ddd; padding:2rem 0; text-align:center; align-items: center; position:relative}
-.tod-sale-list > .item > div{flex:1 0 50%; }
-.tod-sale-list > .item .sale-item .ico{display:inline-block; width:3.4375rem; height:3.1875rem; }
-.tod-sale-list > .item .sale-item .ico img{width:100%; height:auto; }
-.tod-sale-list > .item .sale-txt{display:block; font-size:0.75rem; color:#666; line-height:0.9375rem; margin-top:0.1875rem}
-.tod-sale-list > .item .price{height:4.8125rem; background:#fafafa; font-size:1.0625rem; color:#6d7583; box-sizing:border-box; padding-top:1.125rem }
-.tod-sale-list > .item .price .card-type{display:block; font-size:0.8125rem; }
-.tod-sale-list > .item:not(:last-child):after{content:''; display:inline-block; width:1.6875rem; height:1.25rem; background:url('/img/product/card-bene-plus_m.png') no-repeat left top; background-size:100%;  position:absolute; bottom:-0.6875rem; left:50%; margin-left:-0.8438rem}
-.tod-result-box{background:#ecf0f6; color:#57637f; text-align:center; padding:1.6875rem 0; font-size:1.25rem }
-.idpt-benefit .inside-box.tod-no-border{border:none}
