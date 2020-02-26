@@ -16,6 +16,7 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
+  // 매장 결과 없을 때 hash change로 인하여 팝업이 여러번 뜨는 현상 중지 플래그
   this.isPopupNoResult = false;
   // 위치 변경 관련 두개 파일 git에서 삭제 해야 함, CS_02_03_L01.hbs , customer.agentsearch.region.js
 
@@ -595,7 +596,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       // if (shops.length == 0 && !this.isPopupNoResult) {
       if (shops.length === 0 && !this.isPopupNoResult) {
         this.isPopupNoResult = true;
-        this._popupService.openAlert('검색 결과가 없습니다.<br>다른 지역을 선택해 주세요.');
+        this._popupService.openAlert('검색 결과가 없습니다.<br>검색 반경을 변경하거나<br>지점/대리점 찾기를 이용해주시기 바랍니다.');
         // this._regionChanged = false;
       }
     // } // OP002-5499 삭제
@@ -703,7 +704,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       // this.$container.find('.bt-top').addClass('none');
       this.$container.find('#fe-empty-result').removeClass('none');
       if (!this.$divMap.hasClass('none')) {
-        this._popupService.openAlert('검색 결과가 없습니다.<br>다른 지역을 선택해 주세요.');
+        this._popupService.openAlert('검색 결과가 없습니다.<br>검색 반경을 변경하거나<br>지점/대리점 찾기를 이용해주시기 바랍니다.');
       }
     } else {
       // this.$container.find('.bt-top').removeClass('none');
@@ -790,6 +791,7 @@ Tw.CustomerAgentsearchNear.prototype = {
             // this._isBranchClicked = true;
             this._popupService.close();
             setTimeout($.proxy(function () {
+              this.isPopupNoResult = false;
               $.proxy(this._init(), this);
               // $.proxy(this._requestCurrentPosition();, this);
               // $.proxy(this._onCurrentLocation(this._location), this);
