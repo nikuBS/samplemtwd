@@ -623,9 +623,9 @@ Tw.CustomerAgentsearchNear.prototype = {
     // if (!this._listInitilized) {
       for (var i = 0; i < this._nearShops.length; i++) {
         // break 대신 차라리 플래그
-        // if (this._nearShops[i].distance.indexOf('m') !== -1){
-        //   break;
-        // }
+        if (this._nearShops[i].distance.indexOf('m') !== -1){
+          break;
+        }
         var distance = parseInt(this._nearShops[i].distance, 10);
         if (distance >= 1000) {
           this._nearShops[i].distance = (distance / 1000).toFixed(1) + 'km';
