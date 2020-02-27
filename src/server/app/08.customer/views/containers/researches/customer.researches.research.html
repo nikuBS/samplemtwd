@@ -257,7 +257,7 @@
                             research.research[0].examples.map((exam, idx) =>  {
                                 if (exam.image) {   <!-- 단일 + 좌우 + 이미지 -->
             %>
-                                    <li class="category-type" aria-checked="false">
+                                    <li class="category-type <%= exam.isEtc ? 'li-other' : '' %>" aria-checked="false">
                                         <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">
                                             <span class="custom-img"><img src="https://cdnm-stg.tworld.co.kr<%= exam.image %>" alt=""></span>
                                             <span class="custom-form">
@@ -265,23 +265,37 @@
                                             </span>
                                              <span class="custom-txt"><%= exam.content %></span>
                                         </label>
+
+            <%
+                                    if (exam.motHtml !== '') {
+            %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+            <%
+                                    }
+            %>
+
                                     </li>
                     <%
                                 } else {        <!-- 단일 + 좌우 + 텍스트 -->
                     %>
-                                    <li class="category-type" aria-checked="false">
+                                    <li class="category-type <%= exam.isEtc ? 'li-other' : '' %>" aria-checked="false">
                                         <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">
                                             <span class="custom-form">
                                                 <input type="radio" id="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>" name="radio<%= research.research[0].bnnrRsrchId %>" data-is-etc="<%= exam.isEtc %>"><span class="r-type1"></span>
                                             </span>
                                             <span class="custom-txt"><%= exam.content %></span>
                                         </label>
+            <%
+                                    if (exam.motHtml !== '') {
+            %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+            <%
+                                    }
+            %>
                                     </li>
                     <%
                                 }
@@ -322,7 +336,7 @@
                             research.research[0].examples.map((exam, idx) =>  {
                                 if (exam.image) {   <!-- 단일 + 수직 + 이미지 -->
                     %>
-                                    <li class="category-type" aria-checked="false">
+                                    <li class="category-type <%= exam.isEtc ? 'li-other' : '' %>" aria-checked="false">
                                         <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">     
                                             <span class="custom-img"><img src="https://cdnm-stg.tworld.co.kr<%= exam.image %>" alt=""></span>
                                             <span class="custom-form">
@@ -330,23 +344,35 @@
                                             </span>
                                                 <span class="custom-txt"><%= exam.content %></span>
                                         </label>
+                    <%
+                                    if (exam.motHtml !== '') {
+                    %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+                    <%
+                                    }
+                    %>
                                     </li>
                     <%
                                 } else {    <!-- 단일 + 수직 + 텍스트 -->
                     %>
-                                    <li class="category-type" aria-checked="true">
+                                    <li class="category-type <%= exam.isEtc ? 'li-other' : '' %>" aria-checked="false">
                                         <label for="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>">
                                             <span class="custom-form">
                                                 <input type="radio" id="radio<%= research.research[0].bnnrRsrchId %>_<%= idx %>" name="radio<%= research.research[0].bnnrRsrchId %>" data-is-etc="<%= exam.isEtc %>"><span class="r-type1"></span>
                                             </span>
                                             <span class="custom-txt"><%= exam.content %></span>    
                                         </label>
+                    <%
+                                    if (exam.motHtml !== '') {
+                    %>
                                         <div class="tod-poll-moticode-box">
                                         <%- exam.motHtml %>
                                         </div>
+                    <%
+                                    }
+                    %>
                                     </li>
                     <%
                                 }

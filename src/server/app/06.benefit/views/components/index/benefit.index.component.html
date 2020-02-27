@@ -16,7 +16,7 @@
                 <h3 class="title">{{benefitNm}}</h3>
                 <p class="text">{{benefitDesc}}</p>
             </div>
-            {{#ifCond useYn '===' '사용중' }}
+            {{#ifCond useYn '===' true}}
             <i class="state-tx01"><span>이용 중</span></i>
             {{/ifCond}}
             {{#isNotEmpty imgFullPath}}

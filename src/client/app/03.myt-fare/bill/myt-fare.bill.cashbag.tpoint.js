@@ -126,7 +126,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     $target.find('button').attr('aria-selected', 'true');
     $target.siblings().find('button').attr('aria-selected', 'false');
 
-    var $targetId = $target.attr('id');
+    var $targetId = $target.find('button').attr('id');
     this._initVariables($targetId);
     this._checkIsAbled();
   },
@@ -480,10 +480,6 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   _makeRequestDataForAuto: function () {
     var autoType = this._getAutoType();
     var cardNumber = $.trim(this.$pointCardNumber.val());
-
-    if (this.$autoInfo.is(':visible')) {
-      cardNumber = this.$pointCardNumber.attr('id');
-    }
 
     var reqData = {
       reqClCd: autoType,

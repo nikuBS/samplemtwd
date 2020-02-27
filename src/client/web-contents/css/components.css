@@ -35832,16 +35832,18 @@ body.apphome .section-box {
 .tod-poll-box .fieldset-panel.has-image > li{margin-bottom: 1.25rem;}
 .tod-poll-box .custom-txt{display: inline-block; width: 88%; text-align:left; vertical-align: top; padding-left: 0.313rem; word-break: break-all;}
 .tod-poll-box .division-two .custom-txt{width: 80%;}
-@media screen and (max-width: 320px) {
-  .tod-poll-box .custom-txt{font-size: 0.813;}
+@media screen and (max-width: 360px) {
+  .tod-poll-box li .custom-txt{font-size: 0.96rem;}
   .tod-poll-box .division-two .custom-txt{width: 70%;}
-}
+} /* 200214 [OP002-6841] 수정 */
 .tod-poll-box .custom-img { display: block; margin-bottom: 0.625rem;}
 .tod-poll-box .custom-img img{width: 100%;}
 .tod-poll-box .has-image > li:nth-child(odd){padding-right: 0 !important;}
 .tod-poll-box .has-image > li:nth-child(even){padding-left: 0 !important;}
 .tod-poll-box .division-two.has-image > li:nth-child(odd){padding-right: 0.31rem !important;}
 .tod-poll-box .division-two.has-image > li:nth-child(even){padding-left: 0.31rem !important;}
+.tod-poll-box .division-two .li-other{width:100% !important;} /* 200214 [OP002-6841] 추가 */
+.tod-poll-box .division-two.has-image li.li-other{padding-left: 0 !important;} /* 200214 [OP002-6841] 추가 */
 /* poll.progress-bar */
 .tod-progress-tit{font-size: 0.938rem; margin-bottom: 1.25rem;}
 .tod-progress-comp .progress-bar{position:relative; height: 1.25rem;}
@@ -35857,6 +35859,11 @@ body.apphome .section-box {
 .tod-poll-hint-box .bt-link-tx.underline{font-size: 0.813rem; line-height: 1; margin-top: 0; padding: 0 !important;}
 /* poll.poll-moti-box*/
 .tod-poll-moticode-box{margin-top:0.75rem;}
+
+/* 191202 [OP002-5251] 개선 - 지도 축소시 매장 노출 */
+.shop-info .shop-step.tod-shop-header {margin-left:-1.25rem; margin-right:-1.25rem; margin-bottom:0; padding:0 1.25rem 1rem; border-bottom:1px solid #f2f2f2;}
+.shop-info .shop-step.tod-shop-header .step-tx {font-size:0.938rem;}
+.shop-info .shop-step.tod-shop-header .my-locate {display:inline-block; width:2rem; height:2rem; border-radius:2rem; border:1px solid #f2f2f2; -webkit-box-sizing:border-box; box-sizing:border-box; text-align:center; line-height:2rem; vertical-align:middle;background:url(/img/ico/tod-gps-ico.png)no-repeat 50% 50%; background-size:0.8125rem 0.8125rem;}
 
 /* 191202 [OP002-5208] 개선-회선 관리 추가_02 */
 .tod-icon{position:relative;}
@@ -36010,3 +36017,40 @@ body.apphome .section-box {
 .use-state-wrap .tod-leave-member .detail dt{width:6.5rem}
 .use-state-wrap .tod-leave-member .detail dl{padding-top:0}
 .use-state-wrap .tod-leave-member .info:after{content:''; display:block; clear:both}
+
+/* 200224 첫 로밍 할인 프로모션 [OP002-6942] */
+.loaming-slide .horizontal-list li:nth-of-type(7) .ico{background:url(/img/product/ico-loam-slide-promo.png);background-size:100%}
+.rm-first-promo .rm-first-promo-top{text-align:center}
+.rm-first-promo .rm-first-promo-top h1{font-size:1.125rem;line-height:2.0625rem}
+.rm-first-promo .rm-first-promo-top h1 img{width:18.625rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-section1{background-color:#e9f0f5}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-section2{background-color:#d6e6ff;padding:5rem 2.1875rem 4.65rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-section3{background-color:#6174ff}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-img img{width:22.5rem;margin-bottom:-3.3rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-info{text-align:left}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-info span{float:left;width:3.0625rem;position:relative;top:-.14rem;margin-right:.625rem;padding:.2rem 0 .2rem 0.6875rem;background-color:#354ae4;color:#fff;letter-spacing:.9rem;border-radius:1rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch{position:relative;top:-2.3125rem;height:12.1875rem;background-color:#4d5fe3;margin:0 1.25rem;text-align:center;border-radius:1rem;color:#96bffe}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch em{display:block;padding-top:2.375rem;color:#fff;font-size:1.0625rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch .btn-srch{background-color:#fff;color:#3a4bca;font-size:1rem;padding:.59rem 3.3125rem .52rem;border-radius:2rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch .srch-result{position:absolute;top:0;left:0;right:0;bottom:0;background-color:#4d5fe2;border-radius:1rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch .srch-result em{font-size:1.125rem;padding-top:3.625rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch .srch-result .btn-srch{padding:.59375rem 1rem;font-weight:bold}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch .btn-srch span{display:inline-block;line-height:1.3rem;padding-right:1.6rem;background:#fff url(/img/product/rm-first-promo-btn.png) no-repeat right center;background-size:1.21875rem auto}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-srch .btn-close{position:absolute;top:.9375rem;right:.9375rem;width:1.125rem;height:1.125rem;background:url(/img/product/rm-first-promo-close.png) no-repeat 0 0;background-size:100% auto}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table h2{color:#fff;font-size:1.0625rem}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table table{background-color:#fff}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table th{background-color:#4c5edf;height:2.75rem;color:#fff;font-weight:bold}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table th:first-child{border-right:1px solid #6174ff}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table th:nth-child(3){background-color:#f76252}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table th span{font-weight:normal}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table tr:nth-child(2n) td{background-color:#f7f7f7}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table td{padding:.625rem 0}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table td span{color:#354ae4}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table td:first-child{padding-left:1.25rem;text-align:left}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table td:nth-child(2){color:#999}
+.rm-first-promo .rm-first-promo-top .rm-first-promo-table td:nth-child(3){color:#f76252;font-weight:bold}
+.rm-first-promo .rm-first-promo-notice h2{font-weight:bold}
+.rm-first-promo .rm-first-promo-notice .bul-list li:before{background-color:#354ae4}
+.rm-first-promo .rm-first-promo-notice .bul-list li li{padding:0 0 0 .3rem;margin:0;text-indent:-.3rem}
+.rm-first-promo .rm-first-promo-notice .bul-list li li:before{display:none}
+.rm-first-promo .rm-first-promo-notice .bul-list li span{color:#999}

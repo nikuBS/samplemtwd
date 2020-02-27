@@ -207,9 +207,60 @@
                                             <span class="custom-txt">긴텍스트 긴텍스트 긴텍스트 긴텍스트</span>
                                         </label>
                                     </li>
-                                    <li> 
-                                        <label for="check3-5">
+                                    <li class="li-other"> 
+                                        <label for="check3-5"><!-- 200214 [OP002-6841] 추가 : 좌우정렬 타입 / 기타 영역 class="li-other" 추가 -->
                                             <span class="custom-form"><input type="checkbox" id="check3-5" name="check3"><span class="c-type1"></span></span>
+                                            <span class="custom-txt">기타</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                                
+                                <!-- text-area -->
+                                <div class="poll-textarea mt10">   
+                                    <textarea class="poll-area" cols="20" rows="3" placeholder="기타항목 선택 시 내용을 입력해주세요." title="내용 입력"></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//.tod-poll-comp -->
+
+                        <!-- .tod-poll-comp -->
+                        <div class="tod-poll-comp check"><!-- 다중 선택 : check -->
+                            <div class="tod-poll-comp-inner">
+                                <ul class="select-list fieldset-panel division-two has-image">
+                                    <li>
+                                        <label for="check3_1-1">     
+                                            <span class="custom-img"><img src="/img/dummy/dummy_poll03.jpg" alt=""/></span>
+                                            <span class="custom-form">
+                                                <input type="checkbox" id="check3_1-1" name="check3_1"><span class="c-type1"></span>
+                                            </span>
+                                            <span class="custom-txt">다중 선택 /  이미지 + text / 좌우정렬</span>
+                                        </label>
+                                    </li>
+                                    <li> 
+                                        <label for="check3_1-2">
+                                            <span class="custom-img"><img src="/img/dummy/dummy_poll03.jpg" alt=""/></span>
+                                            <span class="custom-form">
+                                                <input type="checkbox" id="check3_1-2" name="check3_1"><span class="c-type1"></span>
+                                            </span>
+                                            <span class="custom-txt">
+                                                일이삼사오육칠팔구십 일이삼사오육칠팔구십
+                                            </span>
+                                           
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="check3_1-3">     
+                                            <span class="custom-img"><img src="/img/dummy/dummy_poll03.jpg" alt=""/></span>
+                                            <span class="custom-form">
+                                                <input type="checkbox" id="check3_1-3" name="check3_1"><span class="c-type1"></span>
+                                            </span>
+                                            <span class="custom-txt">긴텍스트 긴텍스트 긴텍스트 긴텍스트</span>
+                                        </label>
+                                    </li>
+                                    <li class="li-other"> 
+                                        <label for="check3_1-4"><!-- 200214 [OP002-6841] 추가 : 좌우정렬 타입 / 기타 영역 class="li-other" 추가 -->
+                                            <span class="custom-form"><input type="checkbox" id="check3_1-4" name="check3_1"><span class="c-type1"></span></span>
                                             <span class="custom-txt">기타</span>
                                         </label>
                                     </li>
@@ -333,6 +384,56 @@
                         </div>
                         <!-- .tod-poll-comp -->
 
+                         <!-- .tod-poll-comp -->
+                        <div class="tod-poll-comp radio"><!-- 단일선택 : radio -->
+                            <div class="tod-poll-comp-inner">
+
+                                <ul class="select-list fieldset-panel division-two"><!-- 좌우정렬 : division-two -->
+                                    <li>
+                                        <label for="rad1_1-1">
+                                            <span class="custom-form">
+                                                <input type="radio" id="rad1_1-1" name="rad1_1"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt">단일선택 /  text / 좌우정렬</span>    
+                                        </label>  
+                                    </li>
+                                    <li>
+                                        <label for="rad1_1-2">
+                                            <span class="custom-form">
+                                                <input type="radio" id="rad1_1-2" name="rad1_1"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt">일이삼사오육칠팔구</span>    
+                                        </label> 
+                                    </li>
+                                    <li>
+                                        <label for="rad1_1-3">
+                                            <span class="custom-form">
+                                                <input type="radio" id="rad1_1-3" name="rad1_1"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt">일이삼사오육칠팔구</span>    
+                                        </label>   
+                                    </li>
+                                    <li class="li-other">
+                                        <label for="rad1_1-4">
+                                            <span class="custom-form">
+                                                <input type="radio" id="rad1_1-4" name="rad1_1"><span class="r-type1"></span>
+                                            </span>
+                                            <span class="custom-txt">기타</span>    
+                                        </label> 
+                                    </li>
+                                </ul>
+                                <!-- ################### moti html 영역 ###################### -->
+                                <div class="tod-poll-moticode-box">
+                                    <div><img src="/img/dummy/dmy-poll-moti-area2.png" alt="" style="width:100%;"></div>
+                                </div>
+                                <!-- ################### //moti html 영역 ###################### -->
+
+                            </div>
+                        </div>
+                        <!-- .tod-poll-comp -->
+
+
+
                         <!-- ##### 유형 : radio 단일선택 / 텍스트 / 수직정렬  #### -->
                         <!-- .tod-poll-comp -->
                         <div class="tod-poll-comp radio"><!-- 단일선택 : radio -->
@@ -427,13 +528,79 @@
                                              <span class="custom-txt">일이삼사오육칠팔구십</span>
                                         </label>
                                     </li>
-                                    <li> 
+                                    <li class="li-other"> 
                                         <label for="radio3-5">
                                             <span class="custom-form">
                                                 <input type="radio" id="radio3-5" name="rad3"><span class="r-type1"></span>
                                             </span>
                                              <span class="custom-txt">기타</span>
                                         </label>
+                                    </li>
+                                </ul>
+                                
+                                <!-- text-area -->
+                                <div class="poll-textarea mt10">   
+                                    <textarea class="poll-area" cols="20" rows="3" placeholder="기타항목 선택 시 내용을 입력해주세요." title="내용 입력"></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//.tod-poll-comp -->
+
+                         <!-- .tod-poll-comp -->
+                        <div class="tod-poll-comp radio"><!-- 단일선택 : radio -->
+                            <div class="tod-poll-comp-inner">
+                                <ul class="select-list fieldset-panel division-two has-image">
+                                    <li>
+                                        <label for="radio3_2-1">     
+                                            <span class="custom-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></span>
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio3_2-1" name="rad3_2"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt">단일선택 / 이미지 + text / 좌우정렬 </span>
+                                        </label>
+                                        <!-- ################### moti html 영역 ###################### -->
+                                        <div class="tod-poll-moticode-box">
+                                            <div><img src="/img/dummy/dmy-poll-moti-area2.png" alt="" style="width:100%;"></div>
+                                        </div>
+                                         <!-- ################### //moti html 영역 ###################### -->
+                                    </li>
+                                    <li> 
+                                        <label for="radio3_2-2">     
+                                            <span class="custom-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></span>
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio3_2-2" name="rad3_2"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt">일이삼사오육칠팔구십</span>
+                                        </label>
+                                        <!-- ################### moti html 영역 ###################### -->
+                                        <div class="tod-poll-moticode-box">
+                                            <div><img src="/img/dummy/dmy-poll-moti-area2.png" alt="" style="width:100%;"></div>
+                                        </div>
+                                         <!-- ################### //moti html 영역 ###################### -->
+
+                                    </li>
+                                    <li>
+                                        <label for="radio3_2-3">     
+                                            <span class="custom-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></span>
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio3_2-3" name="rad3_2"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt">일이삼사오육칠팔구십</span>
+                                        </label>
+                                    </li>
+                                    <li class="li-other"> 
+                                        <label for="radio3_2-4">
+                                            <span class="custom-form">
+                                                <input type="radio" id="radio3_2-4" name="rad3_2"><span class="r-type1"></span>
+                                            </span>
+                                             <span class="custom-txt">기타</span>
+                                        </label>
+                                        <!-- ################### moti html 영역 ###################### -->
+                                        <div class="tod-poll-moticode-box">
+                                            <div><img src="/img/dummy/dmy-poll-moti-area2.png" alt="" style="width:100%;"></div>
+                                        </div>
+                                         <!-- ################### //moti html 영역 ###################### -->
                                     </li>
                                 </ul>
                                 

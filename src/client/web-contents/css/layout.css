@@ -5527,3 +5527,6 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 @media all and (max-width:320px){
     .tod-floating{width:calc(100% - 2rem - 2.4375rem)}
 }
+
+/* 200213 [OP002-6809] 웹접근성 수정 */
+.popup-page .prev-step.tod-prev-step{text-indent:0}

@@ -78,7 +78,7 @@ Tw.CommonSearchMain.prototype = {
    */
   _bindEvent : function () {
     // this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
-    this.$container.on('touchstart', '.close-area', $.proxy(this._closeSearch, this));
+    this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
     this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
@@ -245,12 +245,13 @@ Tw.CommonSearchMain.prototype = {
    * @desc 검색창에 입력한 검색어로 검색 실행하기
    * @returns {void}
    */
-  _searchByInputValue : function () {
+  _searchByInputValue : function ($event) {
+    var $target = $($event.currentTarget);
     var searchKeyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
       searchKeyword = this.$container.find('#selected_keyword').val();
     }
-    this._doSearch(searchKeyword);
+    this._doSearch(searchKeyword, $target);
   },
   /**
    * @function
@@ -275,7 +276,7 @@ Tw.CommonSearchMain.prototype = {
       },this),100);
 
     }else{
-      this._doSearch($target.data('param'));
+      this._doSearch($target.data('param'), $target);
     }
   },
   /**
@@ -285,10 +286,11 @@ Tw.CommonSearchMain.prototype = {
    * @param {Object} linkEvt - 이벤트 객체
    * @returns {Object}
    */
-  _searchByRecWord : function(){
+  _searchByRecWord : function($event){
+    var $target = $($event.currentTarget);
     var recWord = this.$container.find('#fe-rec-keyword').val();
     if(!Tw.FormatHelper.isEmpty(recWord) && recWord.trim().length>0){
-      this._doSearch(recWord);
+      this._doSearch(recWord, $target);
     }
   },
   /**
@@ -298,7 +300,7 @@ Tw.CommonSearchMain.prototype = {
    */
   _showMorePopularSearchWord : function(){
     _.each(this.$container.find('.fe-popularword-list-content'), $.proxy(this._showMoreContent, this));
-
+    $(this.$container.find('.fe-popularword-list-content')[5]).find('a').focus();
     document.querySelector('#fe-btn-more').setAttribute('style', 'display: none');
     document.querySelector('#fe-btn-fold').setAttribute('style', 'display: block');
   },
@@ -319,11 +321,14 @@ Tw.CommonSearchMain.prototype = {
    * @member
    * @desc 인기 검색어 6위-10위 접기
    */
-  _hideMorePopularSearchWord : function () {
+  _hideMorePopularSearchWord : function ($event) {
+    var $target = $($event.currentTarget);
     _.each(this.$container.find('.fe-popularword-list-content'), $.proxy(this._hideMoreContent, this));
 
     document.querySelector('#fe-btn-more').setAttribute('style', 'display: block');
     document.querySelector('#fe-btn-fold').setAttribute('style', 'display: none');
+
+    $('#fe-btn-more').focus();
   },
   /**
    * @function
@@ -360,11 +365,12 @@ Tw.CommonSearchMain.prototype = {
    * @param {String} searchKeyword - 키워드
    * @returns {void}
    */
-  _doSearch : function (searchKeyword) {
+  _doSearch : function (searchKeyword, $target) {
     Tw.Logger.info('[common.search-main][_doSearch]', '');
 
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
+      // this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$target);
       return;
     }
     if(this._historyService.getHash()==='#input_P'){

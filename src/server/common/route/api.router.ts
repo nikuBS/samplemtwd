@@ -518,7 +518,7 @@ class ApiRouter {
     const svcMgmtNum = svcInfo.svcMgmtNum || 'null';
     const userId = svcInfo.userId;
 
-    let bannerLink = null;
+    let bannerLink = {};
     let serialNums = '';
     let targetSerial = '';
 
@@ -610,6 +610,14 @@ class ApiRouter {
         Object.assign(resp.result, bannerLink);
         return res.json(resp);
       }, (err) => {
+
+        // 오류가 발생하면 데이터가 없는 것이기 때문에, admin banner을 출력하도록 유도한다.
+        if (!FormatHelper.isEmpty(bannerLink)) {
+          bannerLink['tosLnkgYn'] = 'N';
+        }
+
+        Object.assign(err, {code: API_CODE.CODE_00, msg: 'success'});
+        Object.assign(err.result, bannerLink);
         return res.json(err);
       });
   }
