@@ -23,6 +23,7 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam, filters) {
   this._isLogin = !Tw.FormatHelper.isEmpty(svcInfo);
   this._svcInfo = svcInfo;
   this._svcMgmtNum = svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '';
+  this._svcNum = svcInfo && svcInfo.svcNum ? svcInfo.svcNum : '';
   this._bpcpServiceId = bpcpServiceId;
   this._filters = filters;
   this._agreePopup = null;
@@ -43,11 +44,11 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam, filters) {
     { command: Tw.API_CMD.BFF_05_0196 }, // loyalty-benefits (장기가입혜택)
     // OP002-6291 혜택할인 변경 myT에서 받고 있는 혜택과 연동 필요(이용중)
     // 할인/혜택 카테고리_데이터 충전
-    { command: Tw.API_CMD.BFF_05_0217, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcInfo.svcNum } },
+    { command: Tw.API_CMD.BFF_05_0217, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcNum } },
     // 할인/혜택 카테고리_특화 혜택
-    { command: Tw.API_CMD.BFF_05_0218, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcInfo.svcNum } },
+    { command: Tw.API_CMD.BFF_05_0218, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcNum } },
     // 할인/혜택 카테고리_고객 맞춤형 혜택
-    { command: Tw.API_CMD.BFF_05_0219, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcInfo.svcNum } }
+    { command: Tw.API_CMD.BFF_05_0219, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcNum } }
   ];
   this.defaultRequestUrls_T = this.defaultRequestUrls.concat([
     { command: Tw.API_CMD.BFF_11_0001 }, // /bypass/core-membership/v1/card/home
@@ -888,7 +889,7 @@ Tw.BenefitIndex.prototype = {
       var longJoiner = ['TW00000061'].indexOf(benefitObj.benefitId);
       if (longJoiner > -1) {
         if (this._benefitInfo.align) {
-          benefitObj.useYn = (this._benefitInfo.align.lognjoin);
+          benefitObj.useYn = (this._benefitInfo.align.longjoin);
         }
       }
       // 복지고객할인
