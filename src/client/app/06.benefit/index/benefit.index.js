@@ -839,8 +839,10 @@ Tw.BenefitIndex.prototype = {
       // 데이터리필, 데이터선물하기 표기
       var dataRecharged = ['TW20000031', 'TW20000028'].indexOf(benefitObj.benefitId);
       if (dataRecharged > -1) {
-        if (dataRecharged === 0) {
-          benefitObj.useYn = (this._benefitInfo.loyalty.benfList && this._benefitInfo.loyalty.benfList.length > 0);
+        if (this._benefitInfo.loyalty) {
+          if (dataRecharged === 0) {
+            benefitObj.useYn = (this._benefitInfo.loyalty.benfList && this._benefitInfo.loyalty.benfList.length > 0);
+          }
         }
         /* api 이슈로 수
         if (this._benefitInfo.refill) {
@@ -889,15 +891,19 @@ Tw.BenefitIndex.prototype = {
       // 장기고객할인
       var longJoiner = ['TW00000061'].indexOf(benefitObj.benefitId);
       if (longJoiner > -1) {
-        if (this._benefitInfo.loyalty.dcList && this._benefitInfo.loyalty.dcList.length > 0) {
-          benefitObj.useYn = (this._benefitInfo.loyalty.dcList.length > 0);
+        if (this._benefitInfo.loyalty) {
+          if (this._benefitInfo.loyalty.dcList && this._benefitInfo.loyalty.dcList.length > 0) {
+            benefitObj.useYn = (this._benefitInfo.loyalty.dcList.length > 0);
+          }
         }
       }
       // 복지고객할인
       var welfare = ['TW20000016'].indexOf(benefitObj.benefitId);
       if (welfare > -1) {
-        if (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) {
-          benefitObj.useYn = (this._benefitInfo.bill.wlfCustDcList.length > 0);
+        if (this._benefitInfo.bill) {
+          if (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) {
+            benefitObj.useYn = (this._benefitInfo.bill.wlfCustDcList.length > 0);
+          }
         }
       }
 
