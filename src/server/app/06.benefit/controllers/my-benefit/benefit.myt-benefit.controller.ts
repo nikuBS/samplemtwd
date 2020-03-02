@@ -46,20 +46,20 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인 (combination-discounts)
       this.apiService.request(API_CMD.BFF_05_0196, {}), // 장기가입혜택 (loyalty-benefits)
       // 할인/혜택 카테고리_데이터 충전
-      this.apiService.request(API_CMD.BFF_05_0217, {}, { svcMgmtNum, svcNum }),
+      // this.apiService.request(API_CMD.BFF_05_0217, {}, { svcMgmtNum, svcNum }),
       // 할인/혜택 카테고리_특화 혜택
-      this.apiService.request(API_CMD.BFF_05_0218, {}, { svcMgmtNum, svcNum }),
+      // this.apiService.request(API_CMD.BFF_05_0218, {}, { svcMgmtNum, svcNum }),
       // 할인/혜택 카테고리_고객 맞춤형 혜
-      this.apiService.request(API_CMD.BFF_05_0219, {}, {svcMgmtNum, svcNum}),
+      // this.apiService.request(API_CMD.BFF_05_0219, {}, {svcMgmtNum, svcNum}),
       this.apiService.request(API_CMD.BFF_06_0001, {}), // 리필쿠폰 내역 (/core-recharge/:version/refill-coupons)
       this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회 (/:version/my-t/my-info)
     ).subscribe(([membership, ocb, rainbow, cookiz, noContract, bill, combination,
-                   loyalty, dataRefill, special, align, coupons, joininfo]) => {
+                   loyalty, /* dataRefill, special, align, */ coupons, joininfo]) => {
         // OP002-6291 지켜줘서 고마워 현역플랜 혜택할인에서 제외
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
         const apiError = this.error.apiError(
-          [ocb, rainbow, noContract, bill, combination, loyalty, dataRefill,
-            special, align, coupons, joininfo]);
+          [ocb, rainbow, noContract, bill, combination, loyalty, /* dataRefill,
+            special, align,*/ coupons, joininfo]);
         if ( !FormatHelper.isEmpty(apiError) ) {
           return this.error.render(res, {
             title: MY_BENEFIT.MAIN,
@@ -140,32 +140,32 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 데이터 쿠폰
-        if ( dataRefill.result.benfList.length > 0 &&
-          dataRefill.result.benfList.findIndex((item) => {
+      if ( loyalty.result.benfList.length > 0 &&
+        loyalty.result.benfList.findIndex((item) => {
             return item.benfCd === '1';
           }) > -1 ) {
           options['coupons'] = coupons.result.length;
           options['count'] += 1;
         }
         // 데이터 선물하기
-        if ( dataRefill.result.dataGiftYN ) {
-          options['dataGift'] = true;
-          options['count'] += 1;
-        }
+        // if ( dataRefill.result.dataGiftYN ) {
+        //   options['dataGift'] = true;
+        //   options['count'] += 1;
+        // }
         // 특화혜택
-        if ( special.result.thigh5 || special.result.kdbthigh5 ) {
-          const thighCount = (special.result.thigh5 && special.result.kdbthigh5) ? 2 : 1;
-          options['special'] = { thighCount };
-          options['count'] += thighCount;
-        }
+        // if ( special.result.thigh5 || special.result.kdbthigh5 ) {
+        //   const thighCount = (special.result.thigh5 && special.result.kdbthigh5) ? 2 : 1;
+        //   options['special'] = { thighCount };
+        //   options['count'] += thighCount;
+        // }
 
         // 요금할인- 복지고객
-        if ( align.result.wlfCustDc ) {
+        if ( bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0 ) {
           options['welfare'] = true;
           options['count'] += bill.result.wlfCustDcList.length;
         }
         // 장기가입 요금
-        if ( align.result.longjoin ) {
+        if ( loyalty.result.dcList && loyalty.result.dcList.length > 0 ) {
           // 장기요금할인 복수개 가능여부 확인 필요
           options['loyalty'] = true;
           options['count'] += loyalty.result.dcList.length;

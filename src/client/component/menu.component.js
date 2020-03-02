@@ -685,14 +685,14 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           this._apiService.requestArray([
               { command: Tw.SESSION_CMD.BFF_05_0106 }, // /bypass/core-modification/v1/bill-discounts
               { command: Tw.SESSION_CMD.BFF_05_0094 }, // /bypass/core-modification/v1/combination-discounts
-              { command: Tw.SESSION_CMD.BFF_05_0196 }, // /bypass/core-modification/v1/loyalty-benefits
+              { command: Tw.SESSION_CMD.BFF_05_0196 } // /bypass/core-modification/v1/loyalty-benefits
                // OP002-6291 혜택할인 변경 myT에서 받고 있는 혜택과 연동 필요(이용중)
-              // 할인/혜택 카테고리_데이터 충전
-              { command: Tw.API_CMD.BFF_05_0217, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } },
+              // 할인/혜택 카테고리_데이터 충전 - api이슈로 주석
+              // { command: Tw.API_CMD.BFF_05_0217, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } },
               // 할인/혜택 카테고리_특화 혜택
-              { command: Tw.API_CMD.BFF_05_0218, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } },
+              // { command: Tw.API_CMD.BFF_05_0218, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } },
               // 할인/혜택 카테고리_고객 맞춤형 혜택
-              { command: Tw.API_CMD.BFF_05_0219, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } }
+              // { command: Tw.API_CMD.BFF_05_0219, headers: { svcMgmtNum: this._svcInfo.svcMgmtNum, svcNum: this._svcInfo.svcNum } }
             ])
             .done($.proxy(this._showBenefitDiscountInfo, this, elem))
             .fail(function () {
@@ -1086,7 +1086,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @param special
    * @param align
    */
-  _showBenefitDiscountInfo: function (elem, bill, combination, loyalty, refill, special, align) {
+  _showBenefitDiscountInfo: function (elem, bill, combination, loyalty/* , refill, special, align */) {
     var benefitDiscount = 0;
     if (bill.code === Tw.API_CODE.CODE_00) {
       // 요금할인
@@ -1097,9 +1097,12 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       benefitDiscount += bill.result.chucchuc ? 1 : 0;
       // T끼리플러스
       benefitDiscount += bill.result.tplus ? 1 : 0;
+      // 요금할인- 복지고객
+      benefitDiscount += (bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0) ?
+        bill.result.wlfCustDcList.length : 0;
     }
     // 고객 맞춤
-    if (align.code === Tw.API_CODE.CODE_00) {
+    /* if (align.code === Tw.API_CODE.CODE_00) {
       // 복지
       if (align.result.wlfCustDc) {
         // 요금할인- 복지고객
@@ -1115,6 +1118,14 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
             loyalty.result.dcList.length : 0;
         }
       }
+    }*/
+    // 장기가입
+    if (loyalty.code === Tw.API_CODE.CODE_00) {
+      // 장기가입 요금
+      benefitDiscount += (loyalty.result.dcList && loyalty.result.dcList.length > 0) ?
+        loyalty.result.dcList.length : 0;
+      // 쿠폰
+      benefitDiscount += (loyalty.result.benfList && loyalty.result.benfList.length > 0)? 1 : 0;
     }
     // 결합할인
     if (combination.code === Tw.API_CODE.CODE_00) {
@@ -1122,7 +1133,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         benefitDiscount += Number(combination.result.etcCnt) + 1;
       }
     }
-    // 데이터 충전 (쿠폰, 선물)
+    /* // 데이터 충전 (쿠폰, 선물)
     if (refill.code === Tw.API_CODE.CODE_00) {
       // 쿠폰
       benefitDiscount += (refill.result.benfList && refill.result.benfList.length > 0)? 1 : 0;
@@ -1133,7 +1144,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     if (special.code === Tw.API_CODE.CODE_00) {
       benefitDiscount += special.result.thigh5 ? 1 : 0;
       benefitDiscount += special.result.kdbthigh5 ? 1 : 0;
-    }
+    }*/
 
     if(benefitDiscount > 0) {
       $(elem).text(benefitDiscount + Tw.BENEFIT.INDEX.COUNT_SUFFIX);
