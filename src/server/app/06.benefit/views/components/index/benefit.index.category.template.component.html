@@ -5,8 +5,8 @@
 -->
 <script id="benefitCategoryList" type="text/x-handlebars-template">
     {{#list}}
-    <li>
-        <button type="button" aria-selected="false" class="unit" data-category="{{prodFltId}}">
+    <li role="presentation">
+        <button type="button" aria-selected="false" role="tab" class="unit" data-category="{{prodFltId}}">
             #{{prodFltNm}}
         </button>
     </li>

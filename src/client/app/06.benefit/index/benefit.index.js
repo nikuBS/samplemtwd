@@ -105,6 +105,7 @@ Tw.BenefitIndex.prototype = {
             if (!Tw.FormatHelper.isEmpty(categoryListArray2)) {
               this.$container.find('#fe-btn-more-category').attr('style', '');
               // this.$container.find('#fe-btn-more-category').removeAttribute('style');
+              this.$categoryTab.removeClass('short');
               this.$categoryTab.find('#fe-category-list_2').append(template({
                 list: categoryListArray2
               }));
