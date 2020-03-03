@@ -114,34 +114,38 @@
                     <!-- 191108 [OP002-3705] 수정_01 -->
                     <!-- .widget -->
                     <div class="widget">
+                        <!-- 200213 2020웹접근성 수정 01 _ 리스트 속성 추가 -->
                         <div class="widget-box toggle">
                             <div class="tod-benefit-wrap short"><!-- 2줄 이하일때 short 클래스 추가 -->
-                                <ul class="tod-benefit-link">
-                                    <li><button type="button" class="unit on">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
-                                    <li><button type="button" class="unit">#요금할인</button></li>
-                                    <li><button type="button" class="unit">#휴대폰+유무선 결합 할인</button></li>
-                                    <li><button type="button" class="unit">#장기가입혜택</button></li>
-                                    <li><button type="button" class="unit">#참여혜택</button></li>
+                                <ul class="tod-benefit-link" role="tablist">
+                                    <li role="presentation"><button type="button" class="unit on" role="tab" aria-selected="true">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
+                                    <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#요금할인</button></li>
+                                    <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#휴대폰+유무선 결합 할인</button></li>
+                                    <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#장기가입혜택</button></li>
+                                    <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#참여혜택</button></li>
                                 </ul>
                             </div>
 
                             <div class="tod-benefit-wrap">
-                                <ul class="tod-benefit-link">
-                                    <li><button type="button" class="unit on">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
-                                    <li><button type="button" class="unit">#요금할인</button></li>
-                                    <li><button type="button" class="unit">#휴대폰+유무선 결합 할인</button></li>
-                                    <li><button type="button" class="unit">#장기가입혜택</button></li>
+                                <ul class="tod-benefit-link" role="tablist">
+                                    <li role="presentation"><button type="button" class="unit on" role="tab" aria-selected="true">#전체</button></li><!-- 클릭시 on 추가, 삭제-->
+                                    <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#요금할인</button></li>
+                                    <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#휴대폰+유무선 결합 할인</button></li>
+                                    <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#장기가입혜택</button></li>
                                 </ul>
-                                <button class="bt-toggle" role="button" aria-pressed="false" title="카테고리"></button><!-- 토글내용 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                <!-- 200213 2020웹접근성 수정 02 _ 버튼 위치 변경 / 버튼 변경 -->
                                 <div class="toggler">
-                                    <ul class="tod-benefit-link">
-                                        <li><button type="button" class="unit">#포인트 활용</button></li>
-                                        <li><button type="button" class="unit">#데이터 충전</button></li>
-                                        <li><button type="button" class="unit">#특화 혜택</button></li>
+                                    <ul class="tod-benefit-link" role="tablist">
+                                        <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#포인트 활용</button></li>
+                                        <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#데이터 충전</button></li>
+                                        <li role="presentation"><button type="button" class="unit" role="tab" aria-selected="false">#특화 혜택</button></li>
                                     </ul>
                                 </div>
+                                <button class="bt-toggle tod-more" aria-pressed="false"><span class="tod-blind">더보기</span></button> <!-- 더보기/닫기 text toggle --> <!-- 토글내용 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                <!-- //200213 2020웹접근성 수정 02 _ 버튼 위치 변경 / 버튼 변경 -->
                             </div>
                         </div>
+                        <!-- //200213 2020웹접근성 수정 01 -->
                     </div>
                     <!-- //191108 [OP002-3705] 수정_01 -->
                     <!-- //.widget -->
