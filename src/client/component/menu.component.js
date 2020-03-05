@@ -848,10 +848,17 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           item.xtrCode = this.XTRACTOR_CODE[item.menuId];
         }
 
-        // OP002-4354 H/C
-        // item.isNew = item.isNewImgUseYn === 'Y' ? true : false;
-        var isNewMenuId = Tw.Environment.environment === 'prd' ? 'M002208' : 'M001962';
-        item.isNew = (item.menuId === isNewMenuId);
+        item.isNew = Tw.FormatHelper.isEmpty(item.newIconExpsYn) ? false : item.newIconExpsYn === 'Y' ? true : false;
+        
+        // expose & not empty start, end date
+        if (item.newIconExpsYn === 'Y' && !Tw.FormatHelper.isEmpty(item.newIconExpsStaDt) && !Tw.FormatHelper.isEmpty(item.newIconExpsEndDt)) {
+          var currentDate = Tw.DateHelper.getCurrentShortDate(new Date());
+
+          if(!(currentDate >= item.newIconExpsStaDt && currentDate <= item.newIconExpsEndDt)) {
+            item.isNew = false;
+          }
+        }
+
 
         if(this.TRACKER_CODES.indexOf(item.menuId) > -1){
           item.tracker = {
