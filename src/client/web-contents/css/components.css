@@ -36054,3 +36054,6 @@ body.apphome .section-box {
 .rm-first-promo .rm-first-promo-notice .bul-list li li{padding:0 0 0 .3rem;margin:0;text-indent:-.3rem}
 .rm-first-promo .rm-first-promo-notice .bul-list li li:before{display:none}
 .rm-first-promo .rm-first-promo-notice .bul-list li span{color:#999}
+
+/* 200213 [OP002-6805] 웹접근성 수정 */
+.tod-benefit-wrap .bt-toggle.tod-more{background:#8D8F99}

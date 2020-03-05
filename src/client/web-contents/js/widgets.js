@@ -1194,15 +1194,16 @@ skt_landing.widgets = {
       $(this).on('click', function () {
         var _this = $(this);
         var toggler = _this.closest('.toggle').find('.toggler');
-        if (toggler.is(':hidden')) {
-          toggler.slideDown();
-          _this.attr('aria-pressed', 'true');
-          _this.addClass('open');
-        } else {
-          toggler.slideUp();
-          _this.attr('aria-pressed', 'false');
-          _this.removeClass('open');
-        }
+        // 200213 2020웹접근성 수정 START
+		if (toggler.is(':hidden')) {
+			toggler.slideDown().find('ul > li > button, a').eq(0).focus();
+			_this.attr('aria-pressed', 'true').addClass('open').find('span.tod-blind').html('닫기');
+		} else {
+			toggler.slideUp();
+			_this.attr('aria-pressed', 'false').removeClass('open').find('span.tod-blind').html('더보기');
+		}
+		// 200213 2020웹접근성 수정 END
+
       })
     })
   },

@@ -22,6 +22,7 @@ Tw.MyTFareHotBill = function (rootEl, params) {
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
   this._lines = params.lines;
+  this._reqCount = 0;
   this._init();
 };
 
@@ -138,7 +139,7 @@ Tw.MyTFareHotBill.prototype = {
     if ( this._isPrev ) {
       params.gubun = 'Q';
     } else if ( child ) {
-      params.childSvcMgmtNum = child.svcMgmtNum;
+      params.childSvcMgmtNum = child;
     }
 
     this._apiService
@@ -186,10 +187,16 @@ Tw.MyTFareHotBill.prototype = {
       }
     } else {
       if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
-        //Hotbill 요청 내역 존재하지 않는 애러일 경우 재요청한다
-        this._sendBillRequest();
+        //Hotbill 요청 내역 존재하지 않는 애러일 경우 재요청한다.
+        if (this._reqCount++ < 2) {
+          this._sendBillRequest(child);
+        } else {
+          this._reqCount = 0;
+          this._onErrorReceivedBillData(resp);
+        }
         return;
       }
+
       this._onErrorReceivedBillData(resp);
     }
   },
@@ -380,6 +387,7 @@ Tw.MyTFareHotBill.prototype = {
    * @function
    * @desc 다른 회선 클릭 시 회선변경 확인.
    * @param target the selected line
+   * @param event
    * @private
    */
   _confirmSwitchLine: function (target, event) {
