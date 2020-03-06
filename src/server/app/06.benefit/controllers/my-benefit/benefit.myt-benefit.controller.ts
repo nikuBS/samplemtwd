@@ -41,6 +41,7 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_07_0041, {}), // (오케이캐시백)
       this.apiService.request(API_CMD.BFF_05_0132, {}), // rainbow-points(레인보우포인트)
       this.apiService.request(API_CMD.BFF_05_0115, {}), // cookiz: BIL0070 (cookiz-ting-points)
+      this.apiService.request(API_CMD.BFF_05_0120, {}), // military: BIL0071
       this.apiService.request(API_CMD.BFF_05_0175, {}), // no-contract-plan-points (무약정플랜)
       this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인 (bill-discounts)
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인 (combination-discounts)
@@ -53,7 +54,7 @@ class BenefitMyBenefit extends TwViewController {
       // this.apiService.request(API_CMD.BFF_05_0219, {}, {svcMgmtNum, svcNum}),
       this.apiService.request(API_CMD.BFF_06_0001, {}), // 리필쿠폰 내역 (/core-recharge/:version/refill-coupons)
       this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회 (/:version/my-t/my-info)
-    ).subscribe(([membership, ocb, rainbow, cookiz, noContract, bill, combination,
+    ).subscribe(([membership, ocb, rainbow, cookiz, military, noContract, bill, combination,
                    loyalty, /* dataRefill, special, align, */ coupons, joininfo]) => {
         // OP002-6291 지켜줘서 고마워 현역플랜 혜택할인에서 제외
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
@@ -89,7 +90,10 @@ class BenefitMyBenefit extends TwViewController {
         if ( noContract.result.muPointYn === 'Y' ) {
           options['noContract'] = this._dataPreprocess(noContract.result.muPoint);
         }
-
+        // OP002-7102
+        if ( military.code === API_CODE.CODE_00 ) {
+          options['military'] = this._dataPreprocess(military.result.usblPoint);
+        }
         if ( cookiz.code === API_CODE.CODE_00 ) {
           options['cookiz'] = this._dataPreprocess(cookiz.result.usblPoint);
         }
