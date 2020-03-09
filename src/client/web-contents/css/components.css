@@ -36059,6 +36059,7 @@ body.apphome .section-box {
 .tod-benefit-wrap .bt-toggle.tod-more{background:#8D8F99}
 
 /* 200218 [OP002-6444] 신어드민 개발로 인한 OSMU 스타일 */
+.terms_area {position:relative;}
 .terms_area .hidden {position:absolute !important;width:1px;height:1px;margin:-1px;clip:rect(0,0,0,0);overflow:hidden;color:transparent;}
 .terms_area .h5 {margin-top:0.3125rem;}
 .terms_area .h10 {margin-top:0.625rem;}
