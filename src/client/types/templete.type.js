@@ -870,6 +870,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   {
     title: '휴대폰',
     category: 'CELL',
+    gubun: '1',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000273' },
       { title: '단말기 관련', ofrCtgSeq: '5000274' },
@@ -883,6 +884,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   {
     title: '인터넷/전화/IPTV',
     category: 'INTERNET',
+    gubun: '1',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000141' },
       { title: '장애/고장신고', ofrCtgSeq: '5000143' },
@@ -894,8 +896,9 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   {
-    title: 'T world 다이렉트',
+    title: 'T월드 다이렉트',
     category: 'DIRECT',
+    gubun: '1',
     list: [
       { title: '휴대폰 구매', ofrCtgSeq: '07' },
       { title: '기타 문의', ofrCtgSeq: '10' },
@@ -907,18 +910,29 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   {
     title: '초콜릿',
     category: 'CHOCO',
+    gubun: '1',
     list: [
       { title: '상품문의', ofrCtgSeq: '010700' },
       { title: '교환/반품', ofrCtgSeq: '010600' },
       { title: '취소문의', ofrCtgSeq: '010800' },
       { title: '이용문의', ofrCtgSeq: '010900' }
     ]
+  },
+  {
+    title: '휴대폰 통화품질 상담',
+    category: 'cell',
+    gubun: '2'
+  },
+  {
+    title: '인터넷/전화/IPTV 통화품질 상담',
+    category: 'internet',
+    gubun: '2'
   }
 ];
 
 Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
-  { title: '휴대폰', category: 'cell' },
-  { title: '인터넷/전화/IPTV', category: 'internet' }
+  { title: '휴대폰 통화품질 상담', category: 'cell' },
+  { title: '인터넷/전화/IPTV 통화품질 상담', category: 'internet' }
 ];
 
 Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {

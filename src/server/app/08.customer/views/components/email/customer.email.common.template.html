@@ -1,6 +1,6 @@
 <div class="cont-box">
     <div class="inquiryform-wrap">
-        <p class="title">연락가능번호를 작성해주세요.</p>
+        <p class="title">연락가능번호를 작성해주세요.(필수)</p>
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list fe-<%-type%>-cntcNumClCd" role="radiogroup">
@@ -44,11 +44,11 @@
                 </ul>
             </div>
         </div>
-        <p class="title">답변 받으실 이메일 주소를 적어 주세요.</p>
+        <p class="title">답변 받으실 이메일 주소를 적어 주세요.(필수)</p>
         <div class="inputbox">
             <div class="input">
-                <input type="email" placeholder="답변 받으실 이메일" title="답변 받으실 이메일 입력" value="" aria-labelledby="aria-exp-label1"
-                       aria-describedby="aria-exp-desc1" class="fe-<%-type%>_email" maxlength="30">
+                <input type="email" placeholder="문의내용에 대한 답변 이메일이 발송됩니다." title="답변 받으실 이메일 입력" value="" aria-labelledby="aria-exp-label1"
+                       aria-describedby="aria-exp-desc1" class="fe-<%-type%>_email" maxlength="30" required>
                 <button class="cancel fe-text-cancel" style="display: none;"><span class="blind">삭제</span></button>
             </div>
         </div>

@@ -32,6 +32,8 @@ Tw.CustomerEmailTemplate.prototype = {
    * @return {void}
    */
   _init: function () {
+    console.log('[customer.email.template.js] [_init]', '');
+    this._loggedList = window['VALIDATE_FORM'] = window['VALIDATE_FORM']? window['VALIDATE_FORM'] : [];
     this.tempTitle = '';
     this.tempContent = '';
     this.prevTemplate = ''; // 이전에 노출되고 있었던 템플릿 이름을 저장할 용도
@@ -112,25 +114,47 @@ Tw.CustomerEmailTemplate.prototype = {
    * @param {object} serviceCategory { depth1: '', depth2: '' }
    */
   _changeServiceTemplate: function (e, serviceCategory) {
+    console.log('[customer.email.template.js] [_changeServiceTemplate]', '');
+    console.log('[customer.email.template.js] [_changeServiceTemplate] serviceCategory : ', serviceCategory);  // {depth1: "CELL", depth2: "5000117"}
+
     e.stopPropagation();
     e.preventDefault();
 
     // 템플릿 변경 전 제목, 내용 value 값 저장 -> 템플릿 교체 후 value 값 채워넣을 용도
-    this._beforeChangeTemp(this.$wrap_tpl_service);
+    this._beforeChangeTemp(this.$wrap_tpl_service);   // .fe-wrap_tpl_service
+
+    console.log('[customer.email.template.js] [_changeServiceTemplate] this.$wrap_tpl_service : ', this.$wrap_tpl_service);
 
     // 변경할 템플릿 정보 얻기
     var Temp = this._getServiceTemplate(serviceCategory);
+
+    console.log('[customer.email.template.js] [_changeServiceTemplate] Temp : ', Temp);
     
+    console.log('[customer.email.template.js] [_changeServiceTemplate] this.prevTemplate (이전 템플릿) : ', this.prevTemplate);
+    console.log('[customer.email.template.js] [_changeServiceTemplate] Temp.tempName (변경할 템플릿) : ', Temp.tempName);
+
     // 이전 템플릿과 현재 템플릿이 같으면 return 
     if (this.prevTemplate === Temp.tempName) {
       return ;
     }
 
+    if (this._loggedList.indexOf(this.prevTemplate + '-TITLE') !== -1) {
+      var idx = this._loggedList.indexOf(this.prevTemplate + '-TITLE');
+      this._loggedList.splice(idx, 1);
+    }
+
+    if (this._loggedList.indexOf(this.prevTemplate + '-CONTENT') !== -1) {
+      var idx = this._loggedList.indexOf(this.prevTemplate + '-CONTENT');
+      this._loggedList.splice(idx, 1);
+    }
+    
     // 템플릿
     this.$wrap_tpl_service.html(
       // 템플릿 오브젝트 [템플릿 이름]
       this.templateObj[this.serviceTemplateCase[Temp.tempName]].temp(Temp.add_obj)
     );
+
+    console.log('[customer.email.template.js] [_changeServiceTemplate] this.$wrap_tpl_service.html() : ', this.$wrap_tpl_service.html());
     
     // 템플릿 변경 후 제목, 내용 입력 
     this._afterChangeTemp(this.$wrap_tpl_service, Temp.tempName);
@@ -158,17 +182,26 @@ Tw.CustomerEmailTemplate.prototype = {
    * @param {object} opt  {qualityCategory: '', qualityType: { [isWibro or isPhone]: boolean }}
    */
   _changeQualityTemplate: function (e, opt) {
+    console.log('[customer.email.template.js] [_changeQualityTemplate]', '');
     e.stopPropagation();
     e.preventDefault();
 
+    console.log('[customer.email.template.js] [_changeQualityTemplate] opt : ', opt);
+
     var qualityCategory = opt.qualityCategory || 'cell', // 기본선택값 cell 
         qualityType= opt.qualityType;
+
+    console.log('[customer.email.template.js] [_changeQualityTemplate] this.$wrap_tpl_quality : ', this.$wrap_tpl_quality.html());
+
+    console.log('[customer.email.template.js] [_changeQualityTemplate] qualityCategory.depth1 : ', qualityCategory.depth1);
 
     // 템플릿 변경 전 제목, 내용 value 값 저장 -> 템플릿 교체 후 value 값 채워넣을 용도
     this._beforeChangeTemp(this.$wrap_tpl_quality);
 
     // 변경할 템플릿 정보 얻기
     var Temp = this._getQualityTemplate(qualityCategory.depth1, qualityType);
+
+    console.log('[customer.email.template.js] [_changeQualityTemplate] Temp : ', Temp);
 
     // 이전 템플릿과 현재 템플릿이 같으면 return 
     if (this.prevTemplate === Temp) {
@@ -180,6 +213,8 @@ Tw.CustomerEmailTemplate.prototype = {
       // 템플릿 오브젝트 [템플릿 이름]
       this.templateObj[this.qualityTemplateCase[Temp]].temp()
     );
+
+    console.log('[customer.email.template.js] [_changeQualityTemplate] this.$wrap_tpl_quality : ', this.$wrap_tpl_quality.html());
 
     // 템플릿 변경 후 제목, 내용 입력 
     this._afterChangeTemp(this.$wrap_tpl_quality, qualityCategory.depth1);
@@ -208,6 +243,7 @@ Tw.CustomerEmailTemplate.prototype = {
    * @return {obejct} {tempName: '', add_obj: {} or {placeHolder:'', isDefaultValue: boolean}}
    */
   _getServiceTemplate: function (category) {
+    console.log('[customer.email.template.js] [_getServiceTemplate]', '');
    // get cur temp
    var tempName = category.depth1;
    var add_obj = {};
@@ -247,6 +283,9 @@ Tw.CustomerEmailTemplate.prototype = {
    * @return {string} 
    */
   _getQualityTemplate: function (category, type) {
+    console.log('[customer.email.template.js] [_getQualityTemplate]', '');
+    console.log('[customer.email.template.js] [_getQualityTemplate] category : ', category);
+    console.log('[customer.email.template.js] [_getQualityTemplate] type : ', type);
     if (category === 'cell') {
       if (type && type.isWibro) {
         return 'wibro';
@@ -270,10 +309,14 @@ Tw.CustomerEmailTemplate.prototype = {
    * @param {element} $tempContainer 서비스 템플릿 wrapper or 품질 템플릿 wrapper
    */
   _beforeChangeTemp: function ($tempContainer) {
+    console.log('[customer.email.template.js] [_beforeChangeTemp]', '');
     // 제목
     this.tempTitle = $('.fe-text_title', $tempContainer).val();
     // 내용
     this.tempContent = $('.fe-text_content', $tempContainer).val();
+
+    console.log('[customer.email.template.js] [_beforeChangeTemp] this.tempTitle : ', this.tempTitle);
+    console.log('[customer.email.template.js] [_beforeChangeTemp] this.tempContent : ', this.tempContent);
   },
 
   /**
@@ -283,13 +326,25 @@ Tw.CustomerEmailTemplate.prototype = {
    * @param {string} tempName 
    */
   _afterChangeTemp: function($tempContainer, tempName) {
+    console.log('[customer.email.template.js] [_afterChangeTemp]', '');
+    console.log('[customer.email.template.js] [_afterChangeTemp] tempName : ', tempName);
+    
     // apply saved title - 제목 적용
     $('.fe-text_title', $tempContainer).val($('.fe-text_title', $tempContainer).val() || this.tempTitle);
+
+    console.log('[customer.email.template.js] [_afterChangeTemp] $(".fe-text_title").val() : ', $('.fe-text_title').val());
+
+    console.log('[customer.email.template.js] [_afterChangeTemp] this._isApplySavedContent(tempName) : ', this._isApplySavedContent(tempName));
+
+    console.log('[customer.email.template.js] [_afterChangeTemp] this.tempContent : ', this.tempContent);
+
     // apply saved content - 내용 적용
     if (this._isApplySavedContent(tempName)) {
       $('.fe-text_content', $tempContainer).val(this.tempContent);
     }
 
+    console.log('[customer.email.template.js] [_afterChangeTemp] $(".fe-text_content").val() : ', $('.fe-text_content').val());
+    
     // title, content init 초기화
     this.tempTitle = '';
     this.tempContent = '';
@@ -302,6 +357,7 @@ Tw.CustomerEmailTemplate.prototype = {
    * @returns {boolean}
    */
   _isApplySavedContent: function (tempName) {
+    console.log('[customer.email.template.js] [_isApplySavedContent]', '');
     // 예외케이스 (초콜렛은 모두 같은 케이스 & 멤버십 = 500275), 기본적용 콘텐츠가 있는 케이스
     // 기존입력value 유지 케이스
     // 이전이후가 같은 내용이있는 컨텐츠거나, 
@@ -320,6 +376,7 @@ Tw.CustomerEmailTemplate.prototype = {
    * @returns {string | null}
    */
   _getContentCase: function (tempName) {
+    console.log('[customer.email.template.js] [_getContentCase]', '');
     return Tw.CUSTOMER_EMAIL_FILLED_CONTENT_CASE[tempName] || null;
   },
 
@@ -329,6 +386,7 @@ Tw.CustomerEmailTemplate.prototype = {
    * @param {object} serviceCategory {depth1:'', depth2:''}
    */
   _setTemplatePlaceholder: function (serviceCategory) {
+    console.log('[customer.email.template.js] [_setTemplatePlaceholder]', '');
     if ( serviceCategory.depth2 === '5000275' ) { // 멤버십 케이스 : 채워져있는 내용이 있음
       return Tw.CUSTOMER_EMAIL.MEMBERSHIP_PLACEHOLDER;
     } else {
@@ -342,6 +400,7 @@ Tw.CustomerEmailTemplate.prototype = {
    * @param {event} e 
    */
   _onChangeQualityLineType: function (e) {
+    console.log('[customer.email.template.js] [_onChangeQualityLineType]', '');
     var nTabIndex = $(e.currentTarget).index() || 0;
     var category = this.$container.triggerHandler('getCategory');
 
@@ -373,6 +432,7 @@ Tw.CustomerEmailTemplate.prototype = {
    * @returns {object} {key: {name: key, temp: value}, ...}
    */
   _addNameObj: function (obj) {
+    console.log('[customer.email.template.js] [_addNameObj]', '');
     for (var i in obj) {
       obj[i] = {
         name: i,
