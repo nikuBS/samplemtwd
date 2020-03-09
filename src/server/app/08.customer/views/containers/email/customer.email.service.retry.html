@@ -26,15 +26,14 @@
                 <div class="component">
                     <div class="component-box tabs">
                         <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
-                            <div class="tab-linker">
+                            <!-- <div class="tab-linker">
                                 <ul role="tablist">
                                     <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>서비스 문의</a></li>
-                                    <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
                                         <button disabled>통화품질 상담</button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
 
                             <!-- 190607 [OP002-414] 추가_01 -->
                             <hr class="cont-sp type1" aria-hidden="true">
@@ -57,11 +56,7 @@
                                         <div class="blind fe-inqid" aria-hidden='true'><%-inquiryInfo.inqId%></div>
                                         <div class="cont-box nogaps-btm">
                                                 <h3 class="tit-type2">
-                                                    <% if ( inquiryInfo.inqClCd === 'B' ) { %>
-                                                    <span class="tx-bold fe-category_depth1">휴대폰</span>
-                                                    <% } else { %>
-                                                    <span class="tx-bold fe-category_depth1">인터넷/집전화/TV</span>
-                                                    <% } %>
+                                                    <span class="tx-bold fe-category_depth1">휴대폰, 인터넷/집전화/IPTV</span>
                                                     <span class="tx-normal">서비스의</span><br>
                                                     <span class="tx-bold fe-category_depth2"><%-inquiryInfo.ofrCtgNm%></span> <span class="tx-normal">대해</span><br>
                                                     <span class="tx-normal">문의합니다.</span>
