@@ -33,12 +33,12 @@
 <body>
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page tw-popup  fixed-bottom h60">
+        <div class="popup-page tw-popup fixed-bottom h120">
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
                     <div class="header-ti">
-                        <h1>혜택 안내</h1>
+                        <h1>상품 안내</h1>
                     </div>
                 </div>
             </div>
@@ -52,26 +52,53 @@
                     <div class="cont-box noborder">
                         <!-- offering -->
                         <div class="tod-offer-wrap tc">
-                            <div class="offer-ico-img mb20 pt50">
-                                <span class="ico-img"><img src="/img/ico/ico-comp-apl.png" alt=""></span>
+                            <p class="offer-tit offer-txt-3">
+                                <span class="tx-medium">
+                                    wavve를 즐길 수 있는 다른 이용권들이 있어요! <br>
+                                    다른 상품으로 변경 하시겠어요?
+                                </span>
+                            </p>
+                          
+                            <div class="tod-offer-prd-options mt20">
+                                <fieldset>
+                                    <legend>상품변경 옵션선택</legend>
+                                    <div class="item">
+                                        <span class="custom-form"><input type="radio" id="rad1-1" name="rad1" checked><span class="r-type1"></span></span>
+                                        <label for="rad1-1">
+                                            <strong class="label-tit">wavve 앤 데이터 플러스 (12,300원) :</strong>
+                                            실시간 방송 / VOD 2인용 + 일 1GB<br>(소진 시 3Mbps)
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <span class="custom-form"><input type="radio" id="rad1-2" name="rad1"><span class="r-type1"></span></span>
+                                        <label for="rad1-2">
+                                            <strong class="label-tit">wavve 앤 데이터 (9,900원) :</strong>
+                                            실시간 방송 / VOD 1인용 + 일 1GB<br>(소진 시 3Mbps)
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <span class="custom-form"><input type="radio" id="rad1-3" name="rad1"><span class="r-type1"></span></span>
+                                        <label for="rad1-3">
+                                            <strong class="label-tit">wavve 앤 콘텐츠 팩 플러스 (10,300원) :</strong>
+                                            실시간 방송 / VOD 2인용
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <span class="custom-form"><input type="radio" id="rad1-4" name="rad1"><span class="r-type1"></span></span>
+                                        <label for="rad1-4">
+                                            <strong class="label-tit">wavve 앤 콘텐츠 팩 (7,900원) :</strong>
+                                            실시간 방송 / VOD 1인용
+                                        </label>
+                                    </div>
+                                </fieldset>
                             </div>
-                            <p class="offer-tit">
-                                감사합니다.
-                            </p>
-
-                            <!-- 200302 [OP002-6974] 수정_01 -->
+                    
                             <p class="offer-txt-2 mt20">
-                                OK캐쉬백은 신청하신 월 기준<br>
-                                2개월 뒤 10일 일괄 지급 됩니다.<br>
-                                <span class="tod-txcolor4">(중도 해지 혹은 기존에 FLO 상품 유지로<br>OK캐쉬백을 받으신 경우 지급 되지 않습니다.)</span>
+                                <span class="tx-medium">
+                                    wavve의 Quick VOD, 알고 계신가요?<br>
+                                    본방 시작 5분만에 업로드된다는 사실!
+                                </span>
                             </p>
-                            <!-- //200302 [OP002-6974] 수정_01 -->
-
-                            <!-- 190909 [OP002-3806] 수정_02 -->
-                            <p class="offer-txt-2 mt30">OK캐쉬백 회원이 아닌 경우에는 <br>OK캐쉬백 적립이 불가능 합니다.</p>
-                            <p class="offer-txt-2 mt10">OK캐쉬백 회원 여부를 꼭 확인해 주세요.<br><span class="tod-txcolor4">(OK캐쉬백 회원은 전화번호 기준입니다.)</span></p>			
-                            <p class="mt20"><a href="http://m.okcashbag.com" target="_blank" class="bt-link-tx underline" title="새창 열림">OK캐쉬백 모바일페이지 바로가기</a></p>
-                            <!-- //190909 [OP002-3806] 수정_02 -->
                         </div>
                         <!-- //offering -->
                     </div>
@@ -80,7 +107,12 @@
 
                 <!-- 하단 fixed 버튼 -->
                 <div class="bt-fixed-area tod-offer-bt-area">
-                    <button type="button" class="btn-floating btn-style2">닫기</button>
+                    <ul class="bt-slice full">
+                        <li class="bt-red1"><a href="#">선택 상품으로 변경하기</a></li>
+                        <li class="bt-offer">
+                            <span><a href="#" class="tod-offer-link">해지하기</a></span>
+                        </li>
+                    </ul>
                 </div>
                 <!-- //하단 fixed 버튼 -->
             </div>
