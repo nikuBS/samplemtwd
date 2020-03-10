@@ -276,67 +276,100 @@ Tw.PRODUDT.PROMOTIONS = {
         action: 'POPUP2',
         hbs1: 'RO_3.1',
         hbs2: 'RO_3.1.1',
-        hbs3: 'RO_4.9.1'
+        hbs3: 'RO_4.9.1',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내'
       },
       'FREE_1_2':{
         action: 'POPUP2',
         hbs1: 'RO_3.1',
         hbs2: 'RO_3.1.2',
-        hbs3: 'RO_4.9.1'
+        hbs3: 'RO_4.9.1',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내'
       },
       'NONE_FREE_1_1_1':{
         action: 'POPUP3',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.1',
         hbs3: 'RO_4.9.3',
-        hbs4: 'RO_3.3'
+        hbs4: 'RO_3.3',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내',
+        titleNm4: '혜택안내'
       },
       'NONE_FREE_1_1_2':{
         action: 'POPUP2',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.1',
-        hbs3: 'RO_4.9.2'
+        hbs3: 'RO_4.9.2',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내'
       },
       'NONE_FREE_1_1_3':{
         action: 'POPUP3',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.1',
         hbs3: 'RO_4.9.3',
-        hbs4: 'RO_4.2'
+        hbs4: 'RO_4.2',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내',
+        titleNm4: '혜택안내'
       },
       'NONE_FREE_1_2_1':{
         action: 'POPUP3',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.2',
         hbs3: 'RO_4.9.3',
-        hbs4: 'RO_3.3'
+        hbs4: 'RO_3.3',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내',
+        titleNm4: '혜택안내'
       },
       'NONE_FREE_1_2_2':{
         action: 'POPUP2',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.2',
-        hbs3: 'RO_4.9.2'
+        hbs3: 'RO_4.9.2',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내'
       },
       'NONE_FREE_1_2_3':{
         action: 'POPUP3',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.2',
         hbs3: 'RO_4.9.3',
-        hbs4: 'RO_4.2'
+        hbs4: 'RO_4.2',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내',
+        titleNm4: '혜택안내'
       },
       'NONE_FREE_2_1':{
         action: 'POPUP2',
         hbs1: 'RO_4.9.2',
-        hbs2: 'RO_3.3'
+        hbs2: 'RO_3.3',
+        titleNm1: '상품안내',
+        titleNm2: '혜택안내'
       },
       'NONE_FREE_2_2':{
         action: 'POPUP',
-        hbs: 'RO_4.9.1'
+        hbs: 'RO_4.9.1',
+        titleNm: '상품안내'
       },
       'NONE_FREE_2_3':{
         action: 'POPUP2',
         hbs1: 'RO_4.9.2',
-        hbs2: 'RO_4.2'
+        hbs2: 'RO_4.2',
+        titleNm1: '상품안내',
+        titleNm2: '혜택안내'
       }
     },
     /**
@@ -606,47 +639,69 @@ Tw.PRODUDT.PROMOTIONS = {
         action: 'POPUP2',
         hbs1: 'RO_3.9',
         hbs2: 'RO_3.1.3',
-        hbs3: 'RO_4.4.1'
+        hbs3: 'RO_4.4.1',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내'
       },
       'NONE_FREE_1':{  // 50% 할인혜택 이용시 안내 (Case_03)
         action: 'POPUP2',
         hbs1: 'RO_3.8',
         hbs2: 'RO_3.1.3',
-        hbs3: 'RO_4.4.1'
+        hbs3: 'RO_4.4.1',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내'
       },
       'NONE_FREE_2_1':{ // 100원 프로모션(Case_02), OCB지급 N
         action: 'POPUP3',
         hbs1: 'RO_3.4',
         hbs2: 'RO_3.1.3',
         hbs3: 'RO_4.4.3',
-        hbs4: 'RO_3.5'
+        hbs4: 'RO_3.5',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내',
+        titleNm4: '혜택안내'
       },
       'NONE_FREE_2_2':{ // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+2 이상
         action: 'POPUP2',
         hbs1: 'RO_3.4',
         hbs2: 'RO_3.1.3',
-        hbs3: 'RO_4.4.2'
+        hbs3: 'RO_4.4.2',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내'
       },
       'NONE_FREE_2_3':{ // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+1 이하
         action: 'POPUP3',
         hbs1: 'RO_3.4',
         hbs2: 'RO_3.1.3',
         hbs3: 'RO_4.4.3',
-        hbs4: 'RO_4.6'
+        hbs4: 'RO_4.6',
+        titleNm1: '혜택안내',
+        titleNm2: '혜택안내',
+        titleNm3: '상품안내',
+        titleNm4: '혜택안내'
       },
       'NONE_FREE_3_1':{ // OCB지급 N
         action: 'POPUP2',
         hbs1: 'RO_4.4.2',
-        hbs2: 'RO_3.5'
+        hbs2: 'RO_3.5',
+        titleNm1: '상품안내',
+        titleNm2: '혜택안내'
       },
       'NONE_FREE_3_2':{ // OCB지급 Y , 가입월 M+2 이상
         action: 'POPUP',
-        hbs: 'RO_4.4.1'
+        hbs: 'RO_4.4.1',
+        titleNm: '상품안내'
       },
       'NONE_FREE_3_3':{ // OCB지급 Y , 가입월 M+1 이하
         action: 'POPUP2',
         hbs1: 'RO_4.4.2',
-        hbs2: 'RO_4.6'
+        hbs2: 'RO_4.6',
+        titleNm1: '상품안내',
+        titleNm2: '혜택안내'
       }
     }
   }
