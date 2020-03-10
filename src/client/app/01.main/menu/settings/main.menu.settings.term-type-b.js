@@ -38,7 +38,7 @@ Tw.MainMenuSettingsTermTypeB.prototype = {
         this._popupService.open({
           hbs: 'HO_04_05_01_02_01',
           title: res.result.title,
-          content: res.result.content,
+          content: res.result.content.replace(/{{cdn}}/gi, Tw.Environment.cdn),
           nogaps: viewId === '71' ? true : false  // '트래픽 관리 정보 공개양식' 인 경우 nogaps class 적용
         });
       } else {
