@@ -100,12 +100,12 @@ Tw.PRODUDT.PROMOTIONS = {
         } else if (Tw.PRODUDT.PROMOTIONS.POOQ.SECOND_PROD.indexOf(data.svcProdId) > -1 && data.joinDate2 !== 'N') { //POOQ 할인 2코드 & NA6404, NA6538
           if ( !data.flo && data.certDate !== 'N'){ //FLO 부가서비스 가입 없이 Only NA00006517 or NA00006523 or NA00006578 or NA00006585
             return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지(Case_01)
-          } else if (data.prodId === 'NA00006516' && data.joinDate != 'N' && data.floContentsDate !== 'N') { //Only NA00006517 + NA00006600
+          } else if (data.prodId === 'NA00006516' && data.joinDate !== 'N' && data.floContentsDate !== 'N') { //Only NA00006517 + NA00006600
             if (data.coinDate !== 'N') { //코인지급내역
               if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
                 return 'NONE_FREE_2_3'; ////코인 미지급 팝업
               }else{
-                'NONE_FREE_2_2';
+                return 'NONE_FREE_2_2';
               }
             } else {
               return 'NONE_FREE_2_1'; ////10000코인 지급 팝업
@@ -119,7 +119,7 @@ Tw.PRODUDT.PROMOTIONS = {
             if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
               return 'NONE_FREE_2_3'; ////코인 미지급 팝업
             }else{
-              'NONE_FREE_2_2';
+              return 'NONE_FREE_2_2';
             }
           } else {
             return 'NONE_FREE_2_1'; ////10000코인 지급 팝업
@@ -135,7 +135,7 @@ Tw.PRODUDT.PROMOTIONS = {
               if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
                 return 'NONE_FREE_2_3'; ////코인 미지급 팝업
               }else{
-                'NONE_FREE_2_2';
+                return 'NONE_FREE_2_2';
               }
             } else {
               return 'NONE_FREE_2_1'; ////10000코인 지급 팝업
@@ -145,20 +145,18 @@ Tw.PRODUDT.PROMOTIONS = {
               if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
                 return 'NONE_FREE_1' + '_' + successNum + '_3'; //100원 프로모션(Case_02) 상품변경옵션 코인 미지급 팝업
               }else{
-                'NONE_FREE_1' + '_' + successNum + '_2'; //100원 프로모션(Case_02) 상품변경옵션 기존 해지 프로세스
+                return 'NONE_FREE_1' + '_' + successNum + '_2'; //100원 프로모션(Case_02) 상품변경옵션 기존 해지 프로세스
               }
             } else {
               return 'NONE_FREE_1' + '_' + successNum + '_1'; //100원 프로모션(Case_02) 상품변경옵션 10000코인 지급 팝업
             }
-
-            return 'NONE_FREE_1' + '_' + successNum; //100원 프로모션(Case_02)
           }
         } else {
           if (data.coinDate !== 'N') { //코인지급내역
             if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
               return 'NONE_FREE_2_3'; ////코인 미지급 팝업
             }else{
-              'NONE_FREE_2_2';
+              return 'NONE_FREE_2_2';
             }
           } else {
             return 'NONE_FREE_2_1'; ////10000코인 지급 팝업
@@ -459,7 +457,7 @@ Tw.PRODUDT.PROMOTIONS = {
 
           if ( !data.pooq &&  data.certDate !== 'N' ){ // POOQ 부가서비스 가입 없이 Only NA00006521 or NA00006600
             return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
-          } else if ( data.prodId === 'NA00006599' && data.joinDate != 'N' && data.pooqContentsDate !== 'N' ) { // Only NA00006517 + NA00006600
+          } else if ( data.prodId === 'NA00006599' && data.joinDate !== 'N' && data.pooqContentsDate !== 'N' ) { // Only NA00006517 + NA00006600
             return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
           } else if ( data.coinDate !== 'N' ) { // OCB지급 Y
             if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
