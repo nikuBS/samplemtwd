@@ -33,7 +33,6 @@ Tw.CustomerEmailService.prototype = {
    * @desc 실행시 폼 밸리데이션 호출
    */
   _init: function () {
-    console.log('[customer.email.service.js] [_init]', '');
     this._loggedList = window['VALIDATE_FORM'] = window['VALIDATE_FORM']? window['VALIDATE_FORM'] : [];
     this._validateForm();
   },
@@ -68,7 +67,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {event} e 
    */
   _request: function (e) {
-    console.log('[customer.email.service.js] [_request]', '');
     // 전화번호 검증 
     if ( !this._isValidServicePhone() ) {
       this._popupService.openAlert(
@@ -139,7 +137,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {element} $target 등록버튼 엘리먼트
    */
   _requestCall: function ($target) {
-    console.log('[customer.email.service.js] [_requestCall]', '');
     var serviceCategory = this.$service_depth1.data('service-depth1'); // 선택된 카테고리
     $target.prop('disabled', true); // 등록하기 버튼 비활성화 (API 중복 호출 방지)
     switch ( serviceCategory ) {
@@ -166,7 +163,6 @@ Tw.CustomerEmailService.prototype = {
    * @returns {object} params
    */
   _makeParams: function () {
-    console.log('[customer.email.service.js] [_makeParams]', '');
     var arrPhoneNumber = $('.fe-service_phone').val().split('-');
 
     var params = {
@@ -188,7 +184,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {element} $target 등록하기 버튼 포커스 관련
    */
   _requestCell: function ($target) {
-    console.log('[customer.email.service.js] [_requestCell]', '');
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var $elInputLine = this.$wrap_tpl_service.find('.fe-service-line');
     var elInputlineVal = $elInputLine.is('button') ? $elInputLine.text() : $elInputLine.val();
@@ -218,7 +213,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {element} $target 등록하기 버튼 포커스 관련
    */
   _requestInternet: function ($target) {
-    console.log('[customer.email.service.js] [_requestInternet]', '');
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
@@ -247,7 +241,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {element} $target 등록하기 버튼 포커스 관련
    */
   _requestDirect: function ($target) {
-    console.log('[customer.email.service.js] [_requestDirect]', '');
     var depth2Category = this.$service_depth2.data('serviceDepth2');
     var htParams;
 
@@ -276,7 +269,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {element} $target 등록하기 버튼 포커스 관련
    */
   _requestChocolate: function ($target) {
-    console.log('[customer.email.service.js] [_requestChocolate]', '');
     var htParams = $.extend(this._makeParams(), {
       category: this.$service_depth2.data('serviceDepth2') // 2카테고리
     });
@@ -292,7 +284,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {JSON} res 
    */
   _onSuccessRequest: function ($target, res) {
-    console.log('[customer.email.service.js] [_onSuccessRequest]', '');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._history.replaceURL('/customer/emailconsult/complete?email=' + encodeURIComponent($('.fe-service_email').val()));
     } else {
@@ -306,7 +297,6 @@ Tw.CustomerEmailService.prototype = {
    * + 추가로 2카테고리가 선택되어있어야 함
    */
   _validateForm: function () {
-    console.log('[customer.email.service.js] [_validateForm]', '');
     var arrValid = [];
 
     this.$wrap_tpl_service.find('[required]').each(function (nIndex, item) {
@@ -339,27 +329,13 @@ Tw.CustomerEmailService.prototype = {
       $('.fe-service-register').prop('disabled', false);
     } else {
       $('.fe-service-register').prop('disabled', true);
-
-      // console.log('몇번 호출?');
-      // // 2번째 카테고리가 비노출이 아니면
-      // if ($('.fe-service_depth2').attr('aria-hidden') !== "true") {
-      //   // 2번째 카테고리가 선택되지 않았으면
-      //   if ($('.fe-service_depth2').attr('is-selected') !== "true") {
-      //     this._popupService.openAlert(Tw.CUSTOMER_EMAIL.RETRY_CATEGORY);
-      //     return;
-      //   }
-      // }
     }
   },
 
 
   _validateFormByTitle: function () {
-    console.log('[customer.email.service.js] [_validateFormByTitle]', '');
     var key = $('.fe-service_depth1').data('service-depth1') + '-TITLE';
     
-    console.log('[customer.email.service.js] [_validateFormByTitle] key : ', key);
-    console.log('[customer.email.service.js] [_validateFormByTitle] this._loggedList : ', this._loggedList);
-
     // 2번째 카테고리가 비노출이 아니면
     if ($('.fe-service_depth2').attr('aria-hidden') !== "true") {
       // 2번째 카테고리가 선택되지 않았으면
@@ -376,11 +352,7 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _validateFormByContent: function () {
-    console.log('[customer.email.service.js] [_validateFormByContent]', '');
     var key = $('.fe-service_depth1').data('service-depth1') + '-CONTENT';
-
-    console.log('[customer.email.service.js] [_validateFormByContent] key : ', key);
-    console.log('[customer.email.service.js] [_validateFormByContent] this._loggedList : ', this._loggedList);
 
     // 2번째 카테고리가 비노출이 아니면
     if ($('.fe-service_depth2').attr('aria-hidden') !== "true") {
@@ -403,7 +375,6 @@ Tw.CustomerEmailService.prototype = {
    * @returns {boolean}
    */
   _isValidServicePhone: function () {
-    console.log('[customer.email.service.js] [_isValidServicePhone]', '');
     var sPhone = $('.fe-service_phone').val();
 
     return Tw.ValidationHelper.isCellPhone(sPhone) || Tw.ValidationHelper.isTelephone(sPhone);
@@ -415,7 +386,6 @@ Tw.CustomerEmailService.prototype = {
    * @returns {boolean}
    */
   _isValidServiceEmail: function () {
-    console.log('[customer.email.service.js] [_isValidServiceEmail]', '');
     var sEmail = $('.fe-service_email').val();
 
     return Tw.ValidationHelper.isEmail(sEmail);
@@ -437,7 +407,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {element} $target 
    */
   _handleButtonAbled: function ($target) {
-    console.log('[customer.email.service.js] [_handleButtonAbled]', '');
     $target.prop('disabled', false);
   },
 };

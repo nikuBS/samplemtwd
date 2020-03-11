@@ -30,7 +30,6 @@ Tw.CustomerEmail.prototype = {
    * @return {void}
    */
   _init: function () {
-    console.log('[customer.email.js] [_init]', '');
     // 해쉬값이 qauility 로 오면 두번째 탭인 통화품질상담 탭으로 이동
     if ( window.location.hash === '#quality' ) {
       this._goQualityTab();
@@ -85,7 +84,6 @@ Tw.CustomerEmail.prototype = {
    * @param {evnt} e 
    */
   _TabClick: function (e) {
-    console.log('[customer.email.js] [_TabClick]', '');
     e.stopPropagation();
     // 재문의 케이스일 경우 children button 예외처리
     if($(e.currentTarget).children().is('a')){
@@ -99,7 +97,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _TabLinker: function (e) {
-    console.log('[customer.email.js] [_TabLinker]', '');
     e.preventDefault(); // 링크이동되는 것을 막음
     e.stopPropagation();
     // 기본 적용 기능 li 에 aria-selected 를 주고 닫음 , 보이스오버로 읽히게 하려면 a 에 주어야 함
@@ -134,7 +131,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onChangeReceiveContact: function (e) {
-    console.log('[customer.email.js] [_onChangeReceiveContact]', '');
     var radioIndex = $(e.currentTarget).index(); // 클릭한 라디오 인덱스 0: 휴대폰. 1: 일반전화 customer.email.common.template.html 참조
     var $wrap_inquiry = $(e.currentTarget).closest('.inquiryform-wrap');
     var $phoneInput = $(e.currentTarget).parentsUntil('.inquiryform-wrap').parent().find('.fe-service_phone, .fe-quality_phone');
@@ -156,7 +152,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onClickBtnAddr: function (e) {
-    console.log('[customer.email.js] [_onClickBtnAddr]', '');
     var $elInput = $(e.currentTarget).closest('.inputbox').find('input'); // 주소록 전화번호가 입력될 input
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this, $elInput)); // _onContact -> 주소록 선택 후 콜백 function
   },
@@ -168,7 +163,6 @@ Tw.CustomerEmail.prototype = {
    * @param {JSON} response 주소록으로부터 응답값
    */
   _onContact: function ($elInput, response) {
-    console.log('[customer.email.js] [_onContact]', '');
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
       // keyup trigger:  $elInput fe-phone 클래스 _onKeyUpPhoneNumber 함수를 호출함
@@ -183,7 +177,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onKeyUpPhoneNumber: function (e) {
-    console.log('[customer.email.js] [_onKeyUpPhoneNumber]', '');
     var $elPhone = $(e.currentTarget); // 이벤트 대상
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val())); // xxxxxxxxxx -> xxx-xxx-xxxx 
     var $elErrorPhone = $elPhone.closest('.inputbox').siblings('.fe-error-phone'); // 밸리데이션 문구 
@@ -208,7 +201,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onKeyUpValidNumber: function (e) {
-    console.log('[customer.email.js] [_onKeyUpValidNumber]', '');
     var $elNumber = $(e.currentTarget);
     var number = !!$elNumber.val() ? $elNumber.val() : '';
     var sNumber = number.match(/\d+/g);
@@ -222,7 +214,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onKeyUpValidNumberUpperCase: function (e) {
-    console.log('[customer.email.js] [_onKeyUpValidNumberUpperCase]', '');
     var $el = $(e.currentTarget);
     var value = !!$el.val() ? $el.val() : '';
     var sValue = value.match(/[\dA-Z]+/gi);
@@ -236,7 +227,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e
    */
   _onKeyUpEmail: function (e) {
-    console.log('[customer.email.js] [_onKeyUpEmail]', '');
     var $elEmail = $(e.currentTarget);
     var $elErrorEmail = $elEmail.closest('.inputbox').siblings('.fe-error-email'); // 이메일 밸리데이션 문구
 
@@ -255,7 +245,6 @@ Tw.CustomerEmail.prototype = {
    * @returns {boolean}
    */
   _isValidPhone: function (sPhoneNumber) {
-    console.log('[customer.email.js] [_isValidPhone]', '');
     return Tw.ValidationHelper.isTelephone(sPhoneNumber) || Tw.ValidationHelper.isCellPhone(sPhoneNumber);
   },
 
@@ -266,7 +255,6 @@ Tw.CustomerEmail.prototype = {
    * @returns {boolean}
    */
   _isValidCell: function (sPhoneNumber) {
-    console.log('[customer.email.js] [_isValidCell]', '');
     return Tw.ValidationHelper.isCellPhone(sPhoneNumber);
   },
 
@@ -277,7 +265,6 @@ Tw.CustomerEmail.prototype = {
    * @returns {boolean}
    */
   _isValidTel: function (sPhoneNumber) {
-    console.log('[customer.email.js] [_isValidTel]', '');
     return Tw.ValidationHelper.isTelephone(sPhoneNumber);
   },
 
@@ -288,7 +275,6 @@ Tw.CustomerEmail.prototype = {
    * @returns {boolean}
    */
   _isValidEmail: function (sEmail) {
-    console.log('[customer.email.js] [_isValidEmail]', '');
     return Tw.ValidationHelper.isEmail(sEmail);
   },
 
@@ -299,7 +285,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onTextInputClear: function (e) {
-    console.log('[customer.email.js] [_onTextInputClear]', '');
     var valiClass = ''
     if ($(e.currentTarget).siblings('input').attr('class').indexOf('email') >= 0 ) {
       valiClass = 'fe-error-email';
@@ -315,9 +300,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onChangeTitle: function (e) {
-    console.log('[customer.email.js] [_onChangeTitle]', '');
-    console.log('[customer.email.js] [_onChangeTitle] $(".fe-service_depth2").attr("aria-hidden")', $('.fe-service_depth2').attr('aria-hidden'));
-
     var nMaxTitle = 20;
     var $elTarget = $(e.currentTarget);
     var sMaxValue = !!$elTarget.val() ? $elTarget.val().slice(0, nMaxTitle) : $elTarget.val();
@@ -339,7 +321,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _onChangeContent: function (e) {
-    console.log('[customer.email.js] [_onChangeContent]', '');
     var nMaxContent = 12000;
     var $elTarget = $(e.currentTarget);
     var sMaxValue = !!$elTarget.val() ? $elTarget.val().slice(0, nMaxContent) : $elTarget.val();
@@ -360,7 +341,6 @@ Tw.CustomerEmail.prototype = {
    * @desc 통화품질상담 탭으로 이동
    */
   _goQualityTab: function () {
-    console.log('[customer.email.js] [_goQualityTab]', '');
     var $tab1 = this.$container.find('#tab1');
     var $tab2 = this.$container.find('#tab2');
     // 해당 속성을 바꾸면 widgets.js 에서 로딩시 하위 노출 콘텐츠를 바꿔준다. (로딩 순서)
@@ -374,11 +354,8 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _openFaq: function (e) {
-    console.log('[customer.email.js] [_openFaq]', '');
     e.preventDefault();
     var isCell = $('.fe-service_depth1').data('serviceDepth1') === 'CELL'; // 선택된 카테고리가 핸드폰인지 여부 
-
-    console.log('[customer.email.js] [_openFaq] isCell (선택된 카테고리가 핸드폰인지 여부) : ', isCell);
 
     /**
      * @function 
@@ -406,7 +383,6 @@ Tw.CustomerEmail.prototype = {
    * @param {element} $template 팝업 객체
    */
   _handleLinkControll: function ($template) {
-    console.log('[customer.email.js] [_handleLinkControll]', '');
     // 링크형식 클릭이벤트 바인드
     $template.on('click', '.link-long a', $.proxy(this._clickFaqLink, this));
   },
@@ -417,7 +393,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _clickFaqLink: function (e) {
-    console.log('[customer.email.js] [_clickFaqLink]', '');
     e.preventDefault();
     e.stopPropagation();
     this._history.replaceURL($(e.currentTarget).attr('href'));
@@ -429,7 +404,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _openSMSAlert: function (e) {
-    console.log('[customer.email.js] [_openSMSAlert]', '');
     // 체크되었을때만 팝업이 노출
     if ( $(e.currentTarget).prop('checked') ) {
       /**
@@ -457,7 +431,6 @@ Tw.CustomerEmail.prototype = {
    * @param {event} e 
    */
   _stepBack: function (e) {
-    console.log('[customer.email.js] [_stepBack]', '');
     var confirmed = false;
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -483,7 +456,6 @@ Tw.CustomerEmail.prototype = {
    * @param {string} sCode 
    */
   _openTermLayer: function (sCode) {
-    console.log('[customer.email.js] [_openTermLayer]', '');
     Tw.CommonHelper.openTermLayer(sCode);
   }
 };

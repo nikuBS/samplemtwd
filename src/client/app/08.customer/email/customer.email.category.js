@@ -21,16 +21,12 @@ Tw.CustomerEmailCategory = function (rootEl) {
 };
 
 Tw.CustomerEmailCategory.prototype = {
-
   service: { depth1: 'CELL', depth2: '' }, // 서비스 카테고리 저장 초기 기본값 설정 핸드폰(CELL)
   quality: { depth1: '' }, // 품질 카테고리 
 
   _init: function () {
-    console.log('[customer.email.category.js] [_init]', '');
-
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY; // 서비스문의 카테고리 리스트
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY; // 통화ㅜ품질 상담 카테고리 리스트
-
     this._wireSvcCnt = 0;
 
     /**
@@ -78,8 +74,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {JSON} res 
    */
   _onLoadQuestionList: function (allSvcRes, ctgRes) {
-    console.log('[customer.email.category.js] [_onLoadQuestionList]', '');
-
     if ( allSvcRes.code === Tw.API_CODE.CODE_00 ) {
       this._wireSvcCnt = parseInt(allSvcRes.result.s.length, 10);
     } else {
@@ -101,8 +95,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {event} e 
    */
   _onClickService1Depth: function (e) {
-    console.log('[customer.email.category.js] [_onClickService1Depth]', '');
-
     e.stopPropagation();
     e.preventDefault();
 
@@ -113,9 +105,6 @@ Tw.CustomerEmailCategory.prototype = {
      * @param {number} index 인덱스
      */
     var fnSelectLine = function (item, index) {
-      console.log('[customer.email.category.js] [_onClickService1Depth] item : ', item);
-      console.log('[customer.email.category.js] [_onClickService1Depth] this.service.depth1 : ', this.service.depth1);
-
       return {
         txt: item.title, 
         // 'radio-attr': 'data-index="' + index + '" data-gubun="' + item.gubun + '" data-code="'+ item.category +'"' + (this.service.depth1 === item.category ? ' checked' : ''),
@@ -142,18 +131,13 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {event} e 
    */
   _onClickService2Depth: function (e) {
-    console.log('[customer.email.category.js] [_onClickService2Depth]', '');
     e.stopPropagation();
     e.preventDefault();
 
     var sDepth1Category = this.$select_service_depth1.data('service-depth1');
 
-    console.log('[customer.email.category.js] [_onClickService2Depth] sDepth1Category (첫번째 문의유형 카테고리) : ', sDepth1Category);
-
     if ( sDepth1Category && this.category[sDepth1Category] ) {
       var service2DepthList = this.category[sDepth1Category];
-
-      console.log('[customer.email.category.js] [_onClickService2Depth] service2DepthList (두번째 문의유형 리스트) : ', service2DepthList);
 
     /**
      * @function 
@@ -168,8 +152,6 @@ Tw.CustomerEmailCategory.prototype = {
           'label-attr': ' '
         };
       };
-
-      console.log('[customer.email.category.js] [_onClickService2Depth] fnSelectLine (액션시트로 전달될 값) : ', fnSelectLine);
 
       this._popupService.open({
           hbs: 'actionsheet01',
@@ -227,21 +209,11 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {element} $layer 
    */
   _handleServiceChange1Depth: function ($layer) {
-    console.log('[customer.email.category.js] [_handleServiceChange1Depth]', '');
-    console.log('[customer.email.category.js] [_handleServiceChange1Depth] $layer : ', $layer);
-
     // $layer.on('change', 'li input', $.proxy(this._onSelectService1Depth, this));
     $layer.on('change', 'li input.gubun1', $.proxy(this._onSelectService1Depth, this));
     $layer.on('change', 'li input.gubun2', $.proxy(this._onSelectQuality1Depth, this));
 
     this._onWebAccessPopup($layer); // 접근성 관련
-
-    // var $layer1 = $($layer).find('li input.gubun1');
-    // var $layer2 = $($layer).find('li input.gubun2');    
-
-    // $layer1.on('change', 'li input', $.proxy(this._onSelectService1Depth, this));
-    // $layer2.on('change', 'li input', $.proxy(this._onSelectQuality1Depth, this));
-    // this._onWebAccessPopup($layer); // 접근성 관련
   },
 
   /**
@@ -250,9 +222,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {element} $layer 
    */
   _handleServiceChange2Depth: function ($layer) {
-
-    console.log('[customer.email.category.js] [_handleServiceChange2Depth] $layer : ', $layer);
-
     $layer.on('change', 'li input', $.proxy(this._onSelectService2Depth, this));
     this._onWebAccessPopup($layer); // 접근성 관련
   },
@@ -263,7 +232,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {element} $layer 
    */
   _handleQualityChange1Depth: function ($layer) {
-    console.log('[customer.email.category.js] [_handleQualityChange1Depth]', '');
     $layer.on('change', 'li input', $.proxy(this._onSelectQuality1Depth, this));
     this._onWebAccessPopup($layer); // 접근성 관련
   },
@@ -273,38 +241,9 @@ Tw.CustomerEmailCategory.prototype = {
    * @desc 카테고리 라디오버튼 클릭 
    */
   _onWebAccessPopup: function ($layer) {
-    console.log('[customer.email.category.js] [_onWebAccessPopup]', '');
     $layer.on('click', 'li', $.proxy(this._onCommonClickService, this));
     this._onCommonFocus($layer); // 접근성 관련
-
-    // --------------------------------------------------
-    // $layer.on('click', 'li input.gubun1', $.proxy(this._onCommonClickService, this));
-    // $layer.on('click', 'li input.gubun2', $.proxy(this._onCommonClickService, this));
-    // this._onCommonFocus($layer); // 접근성 관련
-
-
-    // --------------------------------------------------
-    // console.log('[customer.email.category.js] [_onWebAccessPopup] $layer (data-gubun=1) : ', $layer.find('li input.gubun1'));
-    // console.log('[customer.email.category.js] [_onWebAccessPopup] $layer (data-gubun=2) : ', $layer.find('li input.gubun2'));
-
-    // var $layer1 = $layer.find('li input.gubun1');
-    // var $layer2 = $layer.find('li input.gubun2');    
-
-    // $layer1.on('click', 'li', $.proxy(this._onCommonClickService, this));
-    // $layer2.on('click', 'li', $.proxy(this._onCommonClickService, this));
-    // this._onCommonFocus($layer); // 접근성 관련
   },
-
-  // /**
-  //  * @function [웹접근성]
-  //  * @desc 카테고리 라디오버튼 클릭 
-  //  */
-  // _onWebAccessPopup: function ($layer1, $layer2) {
-  //   console.log('[customer.email.category.js] [_onWebAccessPopup]', '');
-  //   $layer1.on('click', 'li', $.proxy(this._onCommonClickService, this));
-  //   $layer2.on('click', 'li', $.proxy(this._onCommonClickService, this));
-  //   this._onCommonFocus($layer1, $layer2); // 접근성 관련
-  // },
 
   /**
    * @function
@@ -312,20 +251,8 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {element} $layer 카테고리 선택 액션시트 엘리먼트 객체
    */
   _onCommonFocus: function ($layer) {
-    console.log('[customer.email.category.js] [_onCommonFocus]', '');
     Tw.CommonHelper.focusOnActionSheet($layer); 
   },
-
-  // /**
-  //  * @function
-  //  * @desc IOS 팝업 초점이동 보완 카테고리 선택 액션시트로 초점가도록
-  //  * @param {element} $layer 카테고리 선택 액션시트 엘리먼트 객체
-  //  */
-  // _onCommonFocus: function ($layer1, $layer2) {
-  //   console.log('[customer.email.category.js] [_onCommonFocus]', '');
-  //   Tw.CommonHelper.focusOnActionSheet($layer1); 
-  //   Tw.CommonHelper.focusOnActionSheet($layer2); 
-  // },
 
   /**
    * @function [웹접근성]
@@ -333,19 +260,10 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {*} e 
    */
   _onCommonClickService: function(e) {
-    console.log('[customer.email.category.js] [_onCommonClickService]', '');
     e.stopPropagation();
     e.preventDefault();
-
-    // console.log('[customer.email.category.js] [_onCommonClickService] $(e.currentTarget) : ', $(e.currentTarget));
-    // console.log('[customer.email.category.js] [_onCommonClickService] $(e.currentTarget).siblings() : ', $(e.currentTarget).siblings());
-
     $(e.currentTarget).siblings().find('input').prop('checked', false);
     $(e.currentTarget).find('input').prop('checked', true).trigger('change');
-
-    console.log('[customer.email.category.js] [_onCommonClickService] $(e.currentTarget) : ', $(e.currentTarget));
-    console.log('[customer.email.category.js] [_onCommonClickService] $(e.currentTarget).find("input").prop("checked") : ', $(e.currentTarget).find('input').prop('checked'));
-    console.log('[customer.email.category.js] [_onCommonClickService] $(e.currentTarget).siblings().find("input").prop("checked") : ', $(e.currentTarget).siblings().find('input').prop('checked'));
   },
 
   /**
@@ -354,7 +272,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {event} e 
    */
   _onSelectService1Depth: function (e) {
-    console.log('[customer.email.category.js] [_onSelectService1Depth]', '');
     e.stopPropagation();
     e.preventDefault();
 
@@ -368,15 +285,9 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth1.data('service-depth1', sDepth1Value);
     this.service.depth1 = sDepth1Value; // 서비스 카테고리 prop
 
-    console.log('[customer.email.category.js] [_onSelectService1Depth] sDepth1Value (선택 카테고리 코드) : ', sDepth1Value);
-    console.log('[customer.email.category.js] [_onSelectService1Depth] this.service.depth1 : ', this.service.depth1);
-
     var $tab1 = $('#tab1-tab');
     var $tab2 = $('#tab2-tab');
 
-    console.log('[customer.email.category.js] [_onSelectService1Depth] $tab1 : ', $tab1);
-    console.log('[customer.email.category.js] [_onSelectService1Depth] $tab2 : ', $tab2);
-    
     // 선택된 카테고리가 휴대폰이나 인터넷일 경우 자주하는 질문 버튼 보임 or 숨김
     if ( sDepth1Value === 'CELL' || sDepth1Value === 'INTERNET' ) {
       this.$wrap_tpl_faq.show().attr('aria-hidden', false);
@@ -423,20 +334,13 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {event} e 
    */
   _onSelectService2Depth: function (e) {
-    console.log('[customer.email.category.js] [_onSelectService2Depth]', '');
     e.stopPropagation();
     e.preventDefault();
 
     // 선택 카테고리 코드
     var sDepth2Value = $(e.currentTarget).data('code').toString();
-
-    console.log('[customer.email.category.js] [_onSelectService2Depth] sDepth2Value (선택 카테고리 코드) : ', sDepth2Value);
-
     // 선택 카테고리 문구
     var sDepth2Text = $(e.currentTarget).parents('li').find('.txt').text();    
-
-    console.log('[customer.email.category.js] [_onSelectService2Depth] sDepth2Text (선택 카테고리 문구) : ', sDepth2Text);
-
     // 카테고리 선택 버튼 변경 볼드처리, 문구변경, data 업데이트
     this.$select_service_depth2.addClass('tx-bold');
     this.$select_service_depth2.text(sDepth2Text);
@@ -458,8 +362,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @param {event} e 
    */
   _onSelectQuality1Depth: function (e) {
-    console.log('[customer.email.category.js] [_onSelectQuality1Depth]', '');
-    console.log('[customer.email.category.js] [_onSelectQuality1Depth] e : ', e);
     e.stopPropagation();
     e.preventDefault();
 
@@ -468,9 +370,6 @@ Tw.CustomerEmailCategory.prototype = {
     // 선택 카테고리 문구
     var sDepth1Text = $(e.currentTarget).parents('li').find('.txt').text();
 
-    console.log('[customer.email.category.js] [_onSelectQuality1Depth] sDepth1Value (선택 카테고리 코드) : ', sDepth1Value);
-    console.log('[customer.email.category.js] [_onSelectQuality1Depth] sDepth1Value (선택 카테고리 문구) : ', sDepth1Text);
-    
     var $tab1 = $('#tab1-tab');
     var $tab2 = $('#tab2-tab');
 
@@ -500,9 +399,6 @@ Tw.CustomerEmailCategory.prototype = {
     this.service.depth1 = sDepth1Value; // 품질 카테고리 prop
     this.service.depth2 = '';
 
-    console.log('[customer.email.category.js] [_onSelectQuality1Depth] this.$select_service_depth1 : ', this.$select_service_depth1);
-    console.log('[customer.email.category.js] [_onSelectQuality1Depth] this.service.depth1 : ', this.service.depth1);
-
     // 템플릿 변경 이벤트 trigger
     this.$container.trigger('changeQualityTemplate', {qualityCategory: this.service}); // 해당 함수 customer.email.template.js 
 
@@ -516,7 +412,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @returns {object} 카테고리 정보 반환
    */
   _getCurrentCategory: function () {
-    console.log('[customer.email.category.js] [_getCurrentCategory]', '');
     var htCategory = {
       service: this.service,
       quality: this.quality
@@ -531,7 +426,6 @@ Tw.CustomerEmailCategory.prototype = {
    * @returns {enum {0 1}} 0: 서비스 1: 품질
    */
   _getCurrentTab: function () {
-    console.log('[customer.email.category.js] [_getCurrentTab]', '');
     return $('[role=tablist]').find('[aria-selected=true]').index();
   }
 };
