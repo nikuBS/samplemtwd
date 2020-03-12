@@ -120,7 +120,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
         if(actionType.action === 'POPUP'){
             this._popupService.open({
                 hbs: actionType.hbs,
-                titleNm: actionType.titleNm,
+                titleNm: '혜택안내',
                 xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
                 layer: true,
@@ -131,7 +131,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             this._optionPopup = false;
             this._popupService.open({
                 hbs: actionType.hbs1,
-                titleNm: actionType.titleNm1,
+                titleNm: '혜택안내',
                 xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
                 layer: true,
@@ -150,7 +150,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             this._3depthPopup = false;
             this._popupService.open({
                 hbs: actionType.hbs1,
-                titleNm: actionType.titleNm1,
+                titleNm: '혜택안내',
                 xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
                 layer: true,
@@ -177,7 +177,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             setTimeout( $.proxy(function(){
                 this._popupService.open({
                     hbs: actionType.hbs2,
-                    titleNm: actionType.titleNm2,
+                    titleNm: '혜택안내',
                     titleClass: 'no-header color-type-CUSTOM',
                     layer: true,
                     cdn: Tw.Environment.cdn,
@@ -189,7 +189,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             setTimeout( $.proxy(function(){
                 this._popupService.open({
                     hbs: actionType.hbs3,
-                    titleNm: actionType.titleNm3,
+                    titleNm: '혜택안내',
                     titleClass: 'no-header color-type-CUSTOM',
                     layer: true,
                     cdn: Tw.Environment.cdn,
@@ -214,7 +214,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             setTimeout( $.proxy(function(){
                 this._popupService.open({
                     hbs: actionType.hbs4,
-                    titleNm: actionType.titleNm4,
+                    titleNm: '혜택안내',
                     titleClass: 'no-header color-type-CUSTOM',
                     layer: true,
                     cdn: Tw.Environment.cdn,
