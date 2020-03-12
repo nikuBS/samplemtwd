@@ -226,25 +226,12 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
 
     /**
      * @function
-     * @desc OK캐쉬백 지급 안내 팝업
-     */
-    _okCashbag: function(){
-            this._popupService.open({
-                hbs: 'RO_3_7',
-                titleClass: 'no-header color-type-CUSTOM',
-                layer: true,
-                cdn: Tw.Environment.cdn
-            }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_okcashbag_contents', this._openEvent);
-    },
-
-    /**
-     * @function
      * @desc 이벤트 바인딩 - 최종 팝업에 대한 이벤트 바인딩
      * @param $popupContainer - 팝업 레이어
      */
     _bindEventContentsPopup: function($popupContainer) {
-      $popupContainer.on('click', '.popup-closeBtn', $.proxy(this._onClose, this));
-      $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._onClose, this));
+      //$popupContainer.on('click', '.popup-closeBtn', $.proxy(this._onClose, this));
+  
       this.$contentsPopup = $popupContainer;
       this._bindEvent($popupContainer);
       new Tw.XtractorService($popupContainer);
@@ -260,7 +247,6 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
       $popupContainer.on('click', '.fe-btn-link', $.proxy(this._onLink, this, $popupContainer));
       $popupContainer.on('click', '.fe-btn-linkProduct', $.proxy(this._onLinkProduct, this, $popupContainer));
       $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onClose, this));
-      $popupContainer.on('click', '.fe-btn_okcashbag', $.proxy(this._okCashbag, this));
       this.$optionSelect = this.$container.find('.option-select');
     },
 
