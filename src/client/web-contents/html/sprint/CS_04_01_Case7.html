@@ -61,15 +61,15 @@
                         <!-- .component -->
                         <div class="component">
                             <div class="component-box tabs">
-                                <div class="tab-area new01"><!-- 타입별 탭형태 변환 --><!-- 190831 리디자인_02 : new01 추가 -->
-                                    <div class="tab-linker">
+                                <div class="tab-area"><!-- //200214 [OP002-6739] 수정01 -->
+                                   <!-- 200214 [OP002-6739] 삭제01 -->
+                                   <!--  <div class="tab-linker">
                                         <ul role="tablist">
-                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">서비스 문의</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">서비스 문의</a></li>
                                             <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">통화품질 상담</a></li>
                                         </ul>
-                                    </div>
-
-                                    <!-- 190607 [OP002-414] 추가_01 -->
+                                    </div> -->
+                                    <!-- //200214 [OP002-6739] 삭제01 -->
                                     <hr class="cont-sp type1" aria-hidden="true">
                                     
                                     <div class="cont-box nogaps b-line1">
@@ -97,7 +97,9 @@
                                                         <button class="bt-dropdown big" title="초콜릿" aria-haspopup="true">초콜릿<span class="ico"></span></button> 
                                                     </div>
                                                     <div>
-                                                        <button class="bt-dropdown big mt10" title="교환/반품" aria-haspopup="true">교환/반품<span class="ico"></span></button>                                       
+                                                        <!-- 200214 [OP002-6739] 수정02 -->
+                                                        <button class="bt-dropdown big mt10" title="서비스항목을 선택해주세요." aria-haspopup="true">서비스항목을 선택해주세요.<span class="ico"></span></button>
+                                                        <!-- //200214 [OP002-6739] 수정02 -->
                                                     </div>
                                                     <!-- <div class="link-long bb0">
                                                         <a href="" class="disabled" title="질문유형과 관계있는 FAQ 정보로 이동">자주 찾는 질문을 먼저 살펴보세요.
@@ -139,7 +141,7 @@
                                                     <div class="inputbox">
                                                         <div class="input">
                                                             <input type="text" placeholder="제목 입력" title="제목 입력" value="">
-                                                            <button class="cancel""><span class="blind">삭제</span></button>
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
                                                         </div>
                                                         <span class="byte"><span class="byte-current">0</span> / <span class="byte-total">20</span>자(최대)</span>
                                                     </div>
@@ -163,7 +165,7 @@
 
                                             <div class="cont-box">
                                                 <div class="inquiryform-wrap">
-                                                    <p class="title">연락 받으실 수 있는 번호를 적어 주세요.</p>
+                                                    <p class="title">연락 받으실 수 있는 번호를 적어 주세요.(필수)</p> <!-- //200214 [OP002-6739] 수정03 -->
                                                     <div class="widget formradio-style01">
                                                         <div class="widget-box radio">
                                                             <ul class="select-list" role="radiogroup">
@@ -201,10 +203,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <p class="title">답변 받으실 이메일 주소를 적어 주세요.</p>
+                                                    <p class="title">답변 받으실 이메일 주소를 적어 주세요.(필수)</p><!-- //200214 [OP002-6739] 수정04 -->
                                                     <div class="inputbox">
                                                         <div class="input">
-                                                            <input type="email" placeholder="답변 받으실 이메일" title="답변 받으실 이메일 입력" value=""><!-- 190607 [OP002-414] 수정_01 -->
+                                                            <input type="email" placeholder="문의내용에 대한 답변 이메일이 발송됩니다." title="답변 받으실 이메일 입력" value=""><!-- //200214 [OP002-6739] 수정05 -->
                                                             <button class="cancel"><span class="blind">삭제</span></button>
                                                         </div>
                                                     </div>

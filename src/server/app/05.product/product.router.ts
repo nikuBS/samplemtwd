@@ -108,6 +108,7 @@ import ProductWireServiceArea from './controllers/wireplan/product.wireplan.serv
 import ProductWirePortability from './controllers/wireplan/product.wireplan.portability.controller';
 import ProductRoamingFeeInfo from './controllers/roaming/product.roaming.fee-info.controller';
 import ProductRoamingEventRightRoam from './controllers/roaming/product.roaming.event.right-roam.controller';
+import ProductRoamingWithBaro from './controllers/roaming/product.roaming.with-baro.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -215,6 +216,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/lookup', controller: ProductRoamingLookup });
     this.controllers.push({ url: '/roaming/fee-info', controller: ProductRoamingFeeInfo });
     this.controllers.push({ url: '/roaming/event/right-roam', controller: ProductRoamingEventRightRoam });
+    this.controllers.push({ url: '/roaming/with-baro', controller: ProductRoamingWithBaro });
 
     this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplanBackup });

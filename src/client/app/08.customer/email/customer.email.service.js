@@ -33,6 +33,7 @@ Tw.CustomerEmailService.prototype = {
    * @desc 실행시 폼 밸리데이션 호출
    */
   _init: function () {
+    this._loggedList = window['VALIDATE_FORM'] = window['VALIDATE_FORM']? window['VALIDATE_FORM'] : [];
     this._validateForm();
   },
 
@@ -56,6 +57,8 @@ Tw.CustomerEmailService.prototype = {
     this.$container.on('validateForm', $.proxy(this._validateForm, this)); // 밸리데이션 이벤트 
     this.$container.on('change keyup', '[required]', $.proxy(this._validateForm, this)); // 필수값 속성 input 변경시 밸리데이션 이벤트 - 등록하기 버튼 활성화여부
     this.$container.on('click', '.fe-service-register', _.debounce($.proxy(this._request, this), 500)); // 등록하기 버튼 클릭 중복 클릭 방지 적용
+    this.$container.on('validateFormByTitle', $.proxy(this._validateFormByTitle, this));
+    this.$container.on('validateFormByContent', $.proxy(this._validateFormByContent, this));
   },
 
   /**
@@ -64,7 +67,6 @@ Tw.CustomerEmailService.prototype = {
    * @param {event} e 
    */
   _request: function (e) {
-
     // 전화번호 검증 
     if ( !this._isValidServicePhone() ) {
       this._popupService.openAlert(
@@ -327,6 +329,43 @@ Tw.CustomerEmailService.prototype = {
       $('.fe-service-register').prop('disabled', false);
     } else {
       $('.fe-service-register').prop('disabled', true);
+    }
+  },
+
+
+  _validateFormByTitle: function () {
+    var key = $('.fe-service_depth1').data('service-depth1') + '-TITLE';
+    
+    // 2번째 카테고리가 비노출이 아니면
+    if ($('.fe-service_depth2').attr('aria-hidden') !== "true") {
+      // 2번째 카테고리가 선택되지 않았으면
+      if ($('.fe-service_depth2').attr('is-selected') !== "true") {
+        if (this._loggedList.indexOf(key) !== -1) {
+          return false;
+        } else {
+          this._loggedList.push(key);
+          this._popupService.openAlert(Tw.CUSTOMER_EMAIL.RETRY_CATEGORY);
+          return;
+        }
+      }
+    }
+  },
+
+  _validateFormByContent: function () {
+    var key = $('.fe-service_depth1').data('service-depth1') + '-CONTENT';
+
+    // 2번째 카테고리가 비노출이 아니면
+    if ($('.fe-service_depth2').attr('aria-hidden') !== "true") {
+      // 2번째 카테고리가 선택되지 않았으면
+      if ($('.fe-service_depth2').attr('is-selected') !== "true") {
+        if (this._loggedList.indexOf(key) !== -1) {
+          return false;
+        } else {
+          this._loggedList.push(key);
+          this._popupService.openAlert(Tw.CUSTOMER_EMAIL.RETRY_CATEGORY);
+          return;
+        }
+      }
     }
   },
 

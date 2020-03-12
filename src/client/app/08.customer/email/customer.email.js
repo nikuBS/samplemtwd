@@ -213,7 +213,7 @@ Tw.CustomerEmail.prototype = {
    * @desc fe-numeric-uppercase 클래스 input keyup 이벤트 / 영문대문자 + 숫자
    * @param {event} e 
    */
-  _onKeyUpValidNumberUpperCase: function (e) {    
+  _onKeyUpValidNumberUpperCase: function (e) {
     var $el = $(e.currentTarget);
     var value = !!$el.val() ? $el.val() : '';
     var sValue = value.match(/[\dA-Z]+/gi);
@@ -311,6 +311,8 @@ Tw.CustomerEmail.prototype = {
     $elLength.text(Tw.FormatHelper.convNumFormat(sMaxValue.length));
 
     this.$container.trigger('validateForm');
+
+    this.$container.trigger('validateFormByTitle');
   },
 
   /**
@@ -330,6 +332,8 @@ Tw.CustomerEmail.prototype = {
     $elLength.text(Tw.FormatHelper.convNumFormat(sMaxValue.length));
 
     this.$container.trigger('validateForm');
+
+    this.$container.trigger('validateFormByContent');
   },
 
   /**
@@ -352,6 +356,7 @@ Tw.CustomerEmail.prototype = {
   _openFaq: function (e) {
     e.preventDefault();
     var isCell = $('.fe-service_depth1').data('serviceDepth1') === 'CELL'; // 선택된 카테고리가 핸드폰인지 여부 
+
     /**
      * @function 
      * @param {Object} {hbs: hbs 의 파일명, layer: 레이어 여부, title: 액션시트 제목, data: 데이터 리스트, btnfloating: {txt: 닫기버튼 문구, attr: 닫기버튼 attribute, class: 닫기버튼 클래스}}

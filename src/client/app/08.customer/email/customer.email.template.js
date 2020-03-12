@@ -32,6 +32,7 @@ Tw.CustomerEmailTemplate.prototype = {
    * @return {void}
    */
   _init: function () {
+    this._loggedList = window['VALIDATE_FORM'] = window['VALIDATE_FORM']? window['VALIDATE_FORM'] : [];
     this.tempTitle = '';
     this.tempContent = '';
     this.prevTemplate = ''; // 이전에 노출되고 있었던 템플릿 이름을 저장할 용도
@@ -116,16 +117,26 @@ Tw.CustomerEmailTemplate.prototype = {
     e.preventDefault();
 
     // 템플릿 변경 전 제목, 내용 value 값 저장 -> 템플릿 교체 후 value 값 채워넣을 용도
-    this._beforeChangeTemp(this.$wrap_tpl_service);
+    this._beforeChangeTemp(this.$wrap_tpl_service);   // .fe-wrap_tpl_service
 
     // 변경할 템플릿 정보 얻기
     var Temp = this._getServiceTemplate(serviceCategory);
-    
+
     // 이전 템플릿과 현재 템플릿이 같으면 return 
     if (this.prevTemplate === Temp.tempName) {
       return ;
     }
 
+    if (this._loggedList.indexOf(this.prevTemplate + '-TITLE') !== -1) {
+      var idx = this._loggedList.indexOf(this.prevTemplate + '-TITLE');
+      this._loggedList.splice(idx, 1);
+    }
+
+    if (this._loggedList.indexOf(this.prevTemplate + '-CONTENT') !== -1) {
+      var idx = this._loggedList.indexOf(this.prevTemplate + '-CONTENT');
+      this._loggedList.splice(idx, 1);
+    }
+    
     // 템플릿
     this.$wrap_tpl_service.html(
       // 템플릿 오브젝트 [템플릿 이름]
@@ -285,11 +296,12 @@ Tw.CustomerEmailTemplate.prototype = {
   _afterChangeTemp: function($tempContainer, tempName) {
     // apply saved title - 제목 적용
     $('.fe-text_title', $tempContainer).val($('.fe-text_title', $tempContainer).val() || this.tempTitle);
+
     // apply saved content - 내용 적용
     if (this._isApplySavedContent(tempName)) {
       $('.fe-text_content', $tempContainer).val(this.tempContent);
     }
-
+    
     // title, content init 초기화
     this.tempTitle = '';
     this.tempContent = '';
