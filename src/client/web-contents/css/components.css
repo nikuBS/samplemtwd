@@ -36135,6 +36135,15 @@ body.apphome .section-box {
 .termsScroll .sTit1 + [class^='listType'] {margin-top:0.75rem;}
 .termsScroll * + .txtInfo {margin-top:0.625rem;}
 
+/* 200302 [OP002-6974] 추가 */
+.tod-offer-prd-options{border:1px solid #e4e4e4; overflow: hidden;}
+.tod-offer-prd-options .item{clear: both; padding: 1.25rem; text-align: left; border-bottom:1px solid #e4e4e4; overflow: hidden;}
+.tod-offer-prd-options .item:last-child{border-bottom: 0 !important;}
+.tod-offer-prd-options .custom-form, .tod-offer-prd-options label{float: left;}
+.tod-offer-prd-options .custom-form{margin-right: 1rem;}
+.tod-offer-prd-options .item > label{min-width: 80%;}
+.tod-offer-prd-options .label-tit{display:block;}
+
 /* baro와 함께 안전하게 [OP002-7129] */
 .rm-corona-top{padding:2.3125rem 0;background-color:#f9f9f9;text-align:center}
 .rm-corona-top-tx1{display:inline-block;padding:0.55rem 2.625rem 0.55rem 1.0625rem;background:#3442ff url(/img/product/rm-corona-hbg.png) no-repeat right 0.1rem;background-size:auto 1.875rem;color:#fff;border-radius:3rem;font-weight:bold}
