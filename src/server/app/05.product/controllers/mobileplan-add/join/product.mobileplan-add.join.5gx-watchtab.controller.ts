@@ -25,7 +25,7 @@ class ProductMobileplanAddJoin5gxWatchtab extends TwViewController {
   private readonly _prodIdList = ['NA00006484'];
 
   /* 접근이 허용되는 모바일 요금제 상품코드 */
-  private readonly _mobileplanIdList = ['NA00006404', 'NA00006405'];
+  // private readonly _mobileplanIdList = ['NA00006404', 'NA00006405'];
 
   /**
    * @desc 화면 렌더링
@@ -48,9 +48,9 @@ class ProductMobileplanAddJoin5gxWatchtab extends TwViewController {
     if (FormatHelper.isEmpty(prodId) || this._prodIdList.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
-    if (this._mobileplanIdList.indexOf(svcInfo.prodId) === -1) {
-      return this.error.render(res, {...renderCommonInfo, msg: MOBILEPLAN_ADD_ERROR_MSG.WATCHTAB.NON_USER});
-    }
+    // if (this._mobileplanIdList.indexOf(svcInfo.prodId) === -1) {
+    //   return this.error.render(res, {...renderCommonInfo, msg: MOBILEPLAN_ADD_ERROR_MSG.WATCHTAB.NON_USER});
+    // }
 
     Observable.combineLatest([
       this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
