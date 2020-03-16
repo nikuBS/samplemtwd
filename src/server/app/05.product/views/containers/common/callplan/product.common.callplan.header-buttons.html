@@ -25,12 +25,8 @@
         </div>
         <% } else{ %>
         <div class="btn fe-btn_wrap">
-            <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
-                <% if (isMobileplanAdd || isDiscount) { %>
-                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
-                <% } else { %>
-                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>요금제 변경</button>
-                <% } %>
+            <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
+                <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" aria-hidden="true" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>" disabled><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
             <% } %>
         </div>
         <% } %>
@@ -58,11 +54,7 @@
         <% } else{ %>
         <div class="btn fe-btn_wrap">
             <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
-                <% if (isMobileplanAdd || isDiscount) { %>
-                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
-                <% } else { %>
-                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>요금제 변경</button>
-                <% } %>
+                <button type="button" class="bt-white1 fe-btn_join fe-btn_ready_on" aria-hidden="true" style="display: none" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>" disabled><%= basicInfo.linkBtnList.join[0].linkNm %></button>
             <% } %>
         </div>
         <% } %>
