@@ -1089,11 +1089,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @param bill
    * @param combination
    * @param loyalty
-   * @param refill
-   * @param special
-   * @param align
    */
-  _showBenefitDiscountInfo: function (elem, bill, combination, loyalty/* , refill, special, align */) {
+  _showBenefitDiscountInfo: function (elem, bill, combination, loyalty) {
     var benefitDiscount = 0;
     if (bill.code === Tw.API_CODE.CODE_00) {
       // 요금할인
@@ -1107,25 +1104,12 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       // 요금할인- 복지고객
       benefitDiscount += (bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0) ?
         bill.result.wlfCustDcList.length : 0;
+      // 특화 혜택
+      benefitDiscount += bill.result.thigh5 ? 1 : 0;
+      benefitDiscount += bill.result.kdbthigh5 ? 1 : 0;
+      // 데이터 선물
+      benefitDiscount += (bill.result.dataGiftYN)? 1 : 0;
     }
-    // 고객 맞춤
-    /* if (align.code === Tw.API_CODE.CODE_00) {
-      // 복지
-      if (align.result.wlfCustDc) {
-        // 요금할인- 복지고객
-        benefitDiscount += (bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0) ?
-          bill.result.wlfCustDcList.length : 0;
-      }
-      // 장기가입
-      if (align.result.longjoin) {
-        // 장기가입 혜택 건수
-        if (loyalty.code === Tw.API_CODE.CODE_00) {
-          // 장기가입 요금
-          benefitDiscount += (loyalty.result.dcList && loyalty.result.dcList.length > 0) ?
-            loyalty.result.dcList.length : 0;
-        }
-      }
-    }*/
     // 장기가입
     if (loyalty.code === Tw.API_CODE.CODE_00) {
       // 장기가입 요금
@@ -1140,19 +1124,6 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         benefitDiscount += Number(combination.result.etcCnt) + 1;
       }
     }
-    /* // 데이터 충전 (쿠폰, 선물)
-    if (refill.code === Tw.API_CODE.CODE_00) {
-      // 쿠폰
-      benefitDiscount += (refill.result.benfList && refill.result.benfList.length > 0)? 1 : 0;
-      // 선물
-      benefitDiscount += (refill.result.dataGiftYN)? 1 : 0;
-    }
-    // 특화 혜택
-    if (special.code === Tw.API_CODE.CODE_00) {
-      benefitDiscount += special.result.thigh5 ? 1 : 0;
-      benefitDiscount += special.result.kdbthigh5 ? 1 : 0;
-    }*/
-
     if(benefitDiscount > 0) {
       $(elem).text(benefitDiscount + Tw.BENEFIT.INDEX.COUNT_SUFFIX);
     } else {

@@ -131,7 +131,11 @@ Tw.MyTDataGift.prototype = {
     var code = res.code;
     if ( code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
-      var apiDataQty = result.dataRemQty;
+      // var apiDataQty = result.dataRemQty;
+      // var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+      // OP002-6682 사용자에게 선물가능 한 용량이 아닌 잔여량으로 표시되어 수정(VOC)
+      // 선물 가능 한 용량
+      var apiDataQty = result.dataGiftPsbleQty;
       var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
       if ( result.giftRequestAgainYn === 'N' ) { // 재시도 가능여부 판단. N인경우 looping 중지, reqCnt 0부터 다시 요청
         if ( Tw.FormatHelper.isEmpty(apiDataQty) ) {
