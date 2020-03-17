@@ -39,16 +39,10 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam, filters) {
     { command: Tw.API_CMD.BFF_07_0041 }, // ocbcard-info-check-show(오케이캐시백)
     { command: Tw.API_CMD.BFF_05_0132 }, // rainbow-points(레인보우포인트)
     { command: Tw.API_CMD.BFF_05_0175 }, // no-contract-plan-points (무약정플랜)
+    // OP002-7146 혜택할인 변경 myT에서 받고 있는 혜택과 연동 요금할인으로 데이터 이동
     { command: Tw.API_CMD.BFF_05_0106 }, // bill-discounts (요금할인)
     { command: Tw.API_CMD.BFF_05_0094 }, // combination-discounts (결합할인)
     { command: Tw.API_CMD.BFF_05_0196 } // loyalty-benefits (장기가입혜택)
-    // OP002-6291 혜택할인 변경 myT에서 받고 있는 혜택과 연동 필요(이용중)
-    // 할인/혜택 카테고리_데이터 충전
-    // { command: Tw.API_CMD.BFF_05_0217, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcNum } },
-    // 할인/혜택 카테고리_특화 혜택
-    // { command: Tw.API_CMD.BFF_05_0218, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcNum } },
-    // 할인/혜택 카테고리_고객 맞춤형 혜택
-    // { command: Tw.API_CMD.BFF_05_0219, headers: { svcMgmtNum: this._svcMgmtNum, svcNum: this._svcNum } }
   ];
   this.defaultRequestUrls_T = this.defaultRequestUrls.concat([
     { command: Tw.API_CMD.BFF_11_0001 }, // /bypass/core-membership/v1/card/home
@@ -56,8 +50,7 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam, filters) {
     { command: Tw.API_CMD.BFF_03_0021 } // /bypass/core-auth/v1/tworld-term-agreements
   ]);
   this._benefitInfo = {
-    ocb: null, rainbow: null, noplan: null, bill: null, combination: null, loyalty: null,
-    /* refill: null, special: null, align: null, */ membership: null, cookiz: null, tworld: null
+    ocb: null, rainbow: null, noplan: null, bill: null, combination: null, loyalty: null, membership: null, cookiz: null, tworld: null
   };
   this._init();
 };
@@ -656,41 +649,33 @@ Tw.BenefitIndex.prototype = {
     if (this._benefitInfo.bill) {
       data.benefitDiscount += this._benefitInfo.bill.priceAgrmtList.length; // 요금할인
       // 복지혜택 가입 여부 확인
-      // if (this._benefitInfo.align && this._benefitInfo.align.wlfCustDc) {
       data.benefitDiscount +=
-        (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) ?
+        (this._benefitInfo.bill.wlfCustDc && this._benefitInfo.bill.wlfCustDcList.length > 0) ?
           this._benefitInfo.bill.wlfCustDcList.length : 0; // 요금할인 - 복지고객
-      // }
       // 클럽
       data.benefitDiscount += this._benefitInfo.bill.clubYN ? 1 : 0;
       // 척척
       data.benefitDiscount += this._benefitInfo.bill.chucchuc ? 1 : 0;
       // T끼리플러스
       data.benefitDiscount += this._benefitInfo.bill.tplus ? 1 : 0;
+      // 선물하기
+      data.benefitDiscount += this._benefitInfo.bill.dataGiftYN ? 1 : 0;
+      // 특화혜택
+      data.benefitDiscount += this._benefitInfo.bill.thigh5 ? 1 : 0;
+      data.benefitDiscount += this._benefitInfo.bill.kdbthigh5 ? 1 : 0;
     }
     // 결합할인
     if (this._benefitInfo.combination && this._benefitInfo.combination.prodNm.trim().length > 0) {
       data.benefitDiscount += Number(this._benefitInfo.combination.etcCnt) + 1;
     }
-    // 장기 가입 여부 확인 - api 이슈로 주석
-    // if (this._benefitInfo.align && this._benefitInfo.align.longjoin) {
     // 장기가입 요금
     data.benefitDiscount +=
-      (this._benefitInfo.loyalty.dcList && this._benefitInfo.loyalty.dcList.length > 0) ?
+      (this._benefitInfo.bill.longjoin && this._benefitInfo.loyalty.dcList.length > 0) ?
         this._benefitInfo.loyalty.dcList.length : 0;
     // }
-    // 데이터 리필 - 리필쿠폰, 선물하기 - api 이슈로 주석
-    // if (this._benefitInfo.refill) {
+    // 데이터 리필 - 리필쿠폰
     data.benefitDiscount +=
       (this._benefitInfo.loyalty.benfList && this._benefitInfo.loyalty.benfList.length > 0) ? 1 : 0;
-      // data.benefitDiscount +=
-      //   (this._benefitInfo.refill.dataGiftYN) ? 1 : 0;
-    // }
-    // 특화혜택 - api 이슈로 주석
-    // if (this._benefitInfo.special) {
-    //   data.benefitDiscount += this._benefitInfo.special.thigh5 ? 1 : 0;
-    //   data.benefitDiscount += this._benefitInfo.special.kdbthigh5 ? 1 : 0;
-    // }
     // 혜택.할인 건수 끝
     // 간편로그인인 경우
     if (this._loginType !== 'S') {
@@ -845,12 +830,11 @@ Tw.BenefitIndex.prototype = {
             benefitObj.useYn = (this._benefitInfo.loyalty.benfList && this._benefitInfo.loyalty.benfList.length > 0);
           }
         }
-        /* api 이슈로 수
-        if (this._benefitInfo.refill) {
+        if (this._benefitInfo.bill) {
           if (dataRecharged === 1) {
-            benefitObj.useYn = (this._benefitInfo.refill.dataGiftYN);
+            benefitObj.useYn = (this._benefitInfo.bill.dataGiftYN);
           }
-        } */
+        }
       }
       // 요금할인 표기
       if (this._benefitInfo.bill && this._benefitInfo.bill.priceAgrmtList.length > 0) {
@@ -883,28 +867,24 @@ Tw.BenefitIndex.prototype = {
         benefitObj.useYn = this._benefitInfo.bill.tplus;
       }
       //특화혜택 표기
-      // var specialBenefit = ['NC00000079', 'NC00000081', 'TW20000027'].indexOf(benefitObj.benefitId);
-      // if (specialBenefit > -1) {
-      //   if (this._benefitInfo.special) {
-      //     benefitObj.useYn = (this._benefitInfo.special.thigh5 || this._benefitInfo.special.kdbthigh5);
-      //   }
-      // }
+      var specialBenefit = ['NC00000079', 'NC00000081', 'TW20000027'].indexOf(benefitObj.benefitId);
+      if (specialBenefit > -1) {
+        if (this._benefitInfo.bill) {
+          benefitObj.useYn = (this._benefitInfo.bill.thigh5 || this._benefitInfo.bill.kdbthigh5);
+        }
+      }
       // 장기고객할인
       var longJoiner = ['TW00000061'].indexOf(benefitObj.benefitId);
       if (longJoiner > -1) {
-        if (this._benefitInfo.loyalty) {
-          if (this._benefitInfo.loyalty.dcList && this._benefitInfo.loyalty.dcList.length > 0) {
-            benefitObj.useYn = (this._benefitInfo.loyalty.dcList.length > 0);
-          }
+        if (this._benefitInfo.bill) {
+          benefitObj.useYn = (this._benefitInfo.bill.longjoin);
         }
       }
       // 복지고객할인
       var welfare = ['TW20000016'].indexOf(benefitObj.benefitId);
       if (welfare > -1) {
         if (this._benefitInfo.bill) {
-          if (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) {
-            benefitObj.useYn = (this._benefitInfo.bill.wlfCustDcList.length > 0);
-          }
+          benefitObj.useYn = (this._benefitInfo.bill.wlfCustDc);
         }
       }
 
