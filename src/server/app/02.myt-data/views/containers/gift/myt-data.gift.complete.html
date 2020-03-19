@@ -78,12 +78,12 @@
                             <span class="tx-highlight pt10"><em><%-convertTDataSet(params.dataQty).data%><%-convertTDataSet(params.dataQty).unit%></em> 선물 완료</span></p>
                     </div>
                     <div class="tx-contents">
-                        <!-- OP002-6822 데이터가 일치하지 않는 부분이 있어 차후 작업 예정
+                        <!-- OP002-6822 데이터가 일치하지 않는 부분이 있어 차후 작업 예정 -->
                         <div class="basic-list">
                             <ul>
                                 <li>
                                     <span class="title">선물할 수 있는 데이터</span>
-                                    <span class="tx-cont"><span class="tx-red1"><%-convertTDataSet(params.beforeDataQty-params.dataQty).data%><%-convertTDataSet(params.beforeDataQty-params.dataQty).unit%></span></span>
+                                    <span class="tx-cont"><span class="tx-red1"><%-convertTDataSet(params.beforeDataQty-params.dataQty).data%><%-convertTDataSet(params.beforeDataQty-params.dataQty).unit%></span> / <%-convertTDataSet(params.beforeDataQty).data%><%-convertTDataSet(params.beforeDataQty).unit%></span>
                                 </li>
                                 <% if ( senderInfo.goodFamilyMemberYn === 'Y' ) { %>
                                 <li>
@@ -102,7 +102,6 @@
                                 </li>
                                 <% } %>
                             </ul>
-                            -->
                             <!--<ul>-->
                                 <!--<li>-->
                                     <!--<span class="title">리스트의 내용이 전환되는</span>-->
@@ -113,7 +112,6 @@
                                     <!--<span class="tx-cont">한글 데이터</span>-->
                                 <!--</li>-->
                             <!--</ul>-->
-
                         </div>
                         <ul class="bt-slice item-two">
                             <li><button type="button" class="btn-round2 btn-style3 fe-btn_go_sms">문자로 알리기</button></li>

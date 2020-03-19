@@ -1343,14 +1343,14 @@ Tw.MainHome.prototype = {
       this._resetHeight();
     } else if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.giftRequestAgainYn === 'N' ) {
-        // OP002-6682 사용자에게 선물가능 한 용량이 아닌 잔여량으로 표시되어 수정(VOC)
-        // if ( !Tw.FormatHelper.isEmpty(resp.result.dataRemQty) ) {
-        if ( !Tw.FormatHelper.isEmpty(resp.result.dataGiftPsblQty) ) {
+        // OP002-6682 사용자에게 선물가능 한 용량이 아닌 잔여량으로 표시되어 수정(VOC) - 3월 4주차 연기
+        if ( !Tw.FormatHelper.isEmpty(resp.result.dataRemQty) ) {
+        // if ( !Tw.FormatHelper.isEmpty(resp.result.dataGiftPsblQty) ) {
           $loading.parent().addClass('none');
           $textBalance.parent().removeClass('none');
-          // OP002-6682 사용자에게 선물가능 한 용량이 아닌 잔여량으로 표시되어 수정(VOC)
-          // var remain = Tw.FormatHelper.convDataFormat(resp.result.dataRemQty, 'MB');
-          var remain = Tw.FormatHelper.convDataFormat(resp.result.dataGiftPsblQty, 'MB');
+          // OP002-6682 사용자에게 선물가능 한 용량이 아닌 잔여량으로 표시되어 수정(VOC)- 3월 4주차 연기
+          var remain = Tw.FormatHelper.convDataFormat(resp.result.dataRemQty, 'MB');
+          // var remain = Tw.FormatHelper.convDataFormat(resp.result.dataGiftPsblQty, 'MB');
           $textBalance.text(remain.data);
           $textBalance.parent().append(remain.unit);
 
