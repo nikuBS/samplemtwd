@@ -28,12 +28,12 @@ Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId, mo
   /**
    * @desc 요금제에 따른 분기처리
    */
-  if (mobileplanId === 'NA00006404') {
-    this._maxLine = 0;
-    this._overMaxlineAlert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A91;
-  } else if (mobileplanId === 'NA00006405') {
+  if (mobileplanId === 'NA00006405') {
     this._maxLine = 1;
     this._overMaxlineAlert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A92;
+  } else {
+    this._maxLine = 0;
+    this._overMaxlineAlert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A91;
   }
   this._cachedElement();
   this._bindEvent();

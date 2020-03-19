@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import { TERM_STRING } from '../../../../../types/string.type';
+import EnvHelper from '../../../../../utils/env.helper';
 
 export default class MainMenuSettingsTerms extends TwViewController {
 
@@ -85,6 +86,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
       serNum: id
     }).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
+        resp.result.content = resp.result.content.replace(/{{cdn}}/gi, EnvHelper.getEnvironment('CDN'));
         return resp.result;
       }
 

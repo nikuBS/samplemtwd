@@ -22,6 +22,8 @@ Tw.ProductMobilePlanAddDowngrade = function(rootEl, data, openEvent, confirmCall
   this._confirmCallback = confirmCallback;
   this._elseCallback = elseCallback;
   this._2depthPopup = false;
+  this._optionPopup = false;
+  this._3depthPopup = false;
   this._prodPrType = this._getProdType();
 
   if(!this._hasDowngrade()){
@@ -118,7 +120,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
         if(actionType.action === 'POPUP'){
             this._popupService.open({
                 hbs: actionType.hbs,
-                titleNm: '혜택안내',
+                titleNm: actionType.titleNm,
                 xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
                 layer: true,
@@ -126,16 +128,39 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_contents', this._openEvent);
         }else if(actionType.action === 'POPUP2'){
             this._2depthPopup = false;
+            this._optionPopup = false;
             this._popupService.open({
                 hbs: actionType.hbs1,
-                titleNm: '혜택안내',
+                titleNm: actionType.titleNm1,
                 xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
                 layer: true,
                 cdn: Tw.Environment.cdn
             }, $.proxy(function($popupContainer){
                 $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onNextDepth, this, $popupContainer));
+                $popupContainer.on('click', '.fe-btn_option', $.proxy(this._onOptionDepth, this, $popupContainer));
                 $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
+                this._bindEvent($popupContainer);
+                new Tw.XtractorService($popupContainer, true);
+            }, this), $.proxy(this._dgSuccess, this, actionType), 'dg_1depth_contents', this._openEvent);
+
+        }else if(actionType.action === 'POPUP3'){
+            this._2depthPopup = false;
+            this._optionPopup = false;
+            this._3depthPopup = false;
+            this._popupService.open({
+                hbs: actionType.hbs1,
+                titleNm: actionType.titleNm1,
+                xt: this._data.xt,
+                titleClass: 'no-header color-type-CUSTOM',
+                layer: true,
+                cdn: Tw.Environment.cdn
+            }, $.proxy(function($popupContainer){
+                $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onNextDepth, this, $popupContainer));
+                $popupContainer.on('click', '.fe-btn_option', $.proxy(this._onOptionDepth, this, $popupContainer));
+                $popupContainer.on('click', '.fe-btn_3depth', $.proxy(this._on3depthDepth, this, $popupContainer));
+                $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
+                this._bindEvent($popupContainer);
                 new Tw.XtractorService($popupContainer, true);
             }, this), $.proxy(this._dgSuccess, this, actionType), 'dg_1depth_contents', this._openEvent);
 
@@ -144,7 +169,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
 
     /**
      * @function
-     * @desc 팝업이 2뎁스일경우 2뎁스 팝업을 호출함
+     * @desc 팝업이 2뎁스일경우 2뎁스 팝업을 호출함 or 옵션선택 팝업일 경우 호출함
      * @return $.Deferred
      */
     _dgSuccess: function(actionType) {
@@ -152,7 +177,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             setTimeout( $.proxy(function(){
                 this._popupService.open({
                     hbs: actionType.hbs2,
-                    titleNm: '혜택안내',
+                    titleNm: actionType.titleNm2,
                     titleClass: 'no-header color-type-CUSTOM',
                     layer: true,
                     cdn: Tw.Environment.cdn,
@@ -160,6 +185,56 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
                 }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_2depth_contents', this._openEvent);
             } , this), 500);
         }
+        if(this._optionPopup){            
+            setTimeout( $.proxy(function(){
+                this._popupService.open({
+                    hbs: actionType.hbs3,
+                    titleNm: actionType.titleNm3,
+                    titleClass: 'no-header color-type-CUSTOM',
+                    layer: true,
+                    cdn: Tw.Environment.cdn,
+                    xt: this._data.xt
+                }, $.proxy(function($popupContainer){
+                    $popupContainer.on('click', '.fe-btn_3depth', $.proxy(this._on3depthDepth, this, $popupContainer));
+                    $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
+                    this._bindEvent($popupContainer);
+                    new Tw.XtractorService($popupContainer, true);
+                }, this), $.proxy(this._dgSuccess2, this, actionType), 'dg_option_contents', this._openEvent);
+            } , this), 500);
+        }
+    },
+
+    /**
+     * @function
+     * @desc 팝업이 3뎁스일경우 3뎁스 팝업을 호출함
+     * @return $.Deferred
+     */
+    _dgSuccess2: function(actionType) {
+        if(this._3depthPopup){            
+            setTimeout( $.proxy(function(){
+                this._popupService.open({
+                    hbs: actionType.hbs4,
+                    titleNm: actionType.titleNm4,
+                    titleClass: 'no-header color-type-CUSTOM',
+                    layer: true,
+                    cdn: Tw.Environment.cdn,
+                    xt: this._data.xt
+                }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_3depth_contents', this._openEvent);
+            } , this), 500);
+        }
+    },
+
+    /**
+     * @function
+     * @desc OK캐쉬백 지급 안내 팝업
+     */
+    _okCashbag: function(){
+            this._popupService.open({
+                hbs: 'RO_3_7',
+                titleClass: 'no-header color-type-CUSTOM',
+                layer: true,
+                cdn: Tw.Environment.cdn
+            }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_okcashbag_contents', this._openEvent);
     },
 
     /**
@@ -168,8 +243,8 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
      * @param $popupContainer - 팝업 레이어
      */
     _bindEventContentsPopup: function($popupContainer) {
-      //$popupContainer.on('click', '.popup-closeBtn', $.proxy(this._onClose, this));
-  
+      $popupContainer.on('click', '.popup-closeBtn', $.proxy(this._onClose, this));
+      $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._onClose, this));
       this.$contentsPopup = $popupContainer;
       this._bindEvent($popupContainer);
       new Tw.XtractorService($popupContainer);
@@ -183,7 +258,10 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
     _bindEvent: function($popupContainer) {
       $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
       $popupContainer.on('click', '.fe-btn-link', $.proxy(this._onLink, this, $popupContainer));
+      $popupContainer.on('click', '.fe-btn-linkProduct', $.proxy(this._onLinkProduct, this, $popupContainer));
       $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onClose, this));
+      $popupContainer.on('click', '.fe-btn_okcashbag', $.proxy(this._okCashbag, this));
+      this.$optionSelect = this.$container.find('.option-select');
     },
 
     /**
@@ -195,6 +273,27 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
         this._2depthPopup = true;
         $popupContainer.find('.popup-closeBtn').trigger('click');
     },
+
+    /**
+     * @function
+     * @desc 1뎁스 팝업을 종료하고 상품변경옵션 팝업을 생성할경우
+     * @return $.Deferred
+     */
+    _onOptionDepth: function($popupContainer) {
+        this._optionPopup = true;
+        $popupContainer.find('.popup-closeBtn').trigger('click');
+    },
+
+    /**
+     * @function
+     * @desc 상품변경옵션 팝업을 종료하고 3뎁스 팝업을 생성할경우
+     * @return $.Deferred
+     */
+    _on3depthDepth: function($popupContainer) {
+        this._3depthPopup = true;
+        $popupContainer.find('.popup-closeBtn').trigger('click');
+    },
+
     /**
      * @function
      * @desc 이벤트 바인딩
@@ -213,6 +312,21 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
         } else {
           window.location.href = link ;
         }
+    },
+
+    /**
+     * @function
+     * @desc 이벤트 바인딩
+     * @param $popupContainer - 팝업 레이어
+     * @param e - 이벤트 요소
+     */
+    _onLinkProduct: function($popupContainer, e){
+        e.preventDefault();
+        var $link = $(e.currentTarget);
+        var link = $link.attr('href');
+        var selectedProduct = this.$optionSelect.filter(':checked').val();
+   
+          window.location.href = link+selectedProduct ;
     },
 
     /**
