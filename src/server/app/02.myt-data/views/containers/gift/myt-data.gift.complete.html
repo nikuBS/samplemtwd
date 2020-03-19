@@ -83,7 +83,7 @@
                             <ul>
                                 <li>
                                     <span class="title">선물할 수 있는 데이터</span>
-                                    <span class="tx-cont"><span class="tx-red1"><%-convertTDataSet(params.beforeDataQty-params.dataQty).data%><%-convertTDataSet(params.beforeDataQty-params.dataQty).unit%></span></span>
+                                    <span class="tx-cont"><span class="tx-red1"><%-convertTDataSet(params.beforeDataQty-params.dataQty).data%><%-convertTDataSet(params.beforeDataQty-params.dataQty).unit%></span> / <%-convertTDataSet(params.beforeDataQty).data%><%-convertTDataSet(params.beforeDataQty).unit%></span>
                                 </li>
                                 <% if ( senderInfo.goodFamilyMemberYn === 'Y' ) { %>
                                 <li>
