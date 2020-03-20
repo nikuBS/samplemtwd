@@ -79,6 +79,33 @@ class ProductMobileplanAddJoin extends TwViewController {
               }));
             });         
           });
+      } else if (prodId === 'NA00006978') { // TODO: 분실보험990++ 본상품 사전체크를 위한 로직, 추후 삭제 필요
+        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, ['NA00006977'])
+          .subscribe((joinTermInfo) => {
+            if (joinTermInfo.code !== API_CODE.CODE_00) {
+              return this.error.render(res, Object.assign(renderCommonInfo, {
+                code: joinTermInfo.code,
+                msg: joinTermInfo.msg,
+                isBackCheck: true
+              }));
+            }
+
+            this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
+            .subscribe((joinTermInfo) => {
+              if (joinTermInfo.code !== API_CODE.CODE_00) {
+                return this.error.render(res, Object.assign(renderCommonInfo, {
+                  code: joinTermInfo.code,
+                  msg: joinTermInfo.msg,
+                  isBackCheck: true
+                }));
+              }
+    
+              res.render('mobileplan-add/join/product.mobileplan-add.join.html', Object.assign(renderCommonInfo, {
+                prodId: prodId,
+                joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+              }));
+            });         
+          });
       } else {
         this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
         .subscribe((joinTermInfo) => {
