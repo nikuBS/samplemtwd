@@ -78,9 +78,9 @@ class MytDataSubmainController extends TwViewController {
       this._getRemnantData(data.svcInfo),
       this._getDataPresent(),
       this._getRefillCoupon(),
-      this._reqRefillGiftHistory(),
-      this._getProductGroup()
-    ).subscribe(([remnant, present, refill, refillGiftHistory, prodList ]) => {
+      this._reqRefillGiftHistory()
+      // this._getProductGroup() : OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
+    ).subscribe(([remnant, present, refill, refillGiftHistory/*, prodList*/ ]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -116,7 +116,8 @@ class MytDataSubmainController extends TwViewController {
         // 실시간잔여량에 가족모아 데이터가 있는 경우 [DV001-13997])
         // data.isTmoaInsProdId = TPLAN_PROD_ID.indexOf(data.svcInfo.prodId) > -1;
         // OP-6858 가족모아 가입가능한 요금제 조회 후 항목에서 비교
-        data.isTmoaInsProdId =  prodList && prodList.findIndex( item => item.prodId === data.svcInfo.prodId) > -1;
+        // OP002-7334 : T가족모아 가입하기 버튼 비노출로 인하여 로직제거
+        // data.isTmoaInsProdId =  prodList && prodList.findIndex( item => item.prodId === data.svcInfo.prodId) > -1;
         if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
           // 가입
           data.isTmoaData = true;

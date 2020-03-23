@@ -206,16 +206,9 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._setDataTxt(this._$tfamilySharing, Tw.FormatHelper.convDataFormat(data, Tw.DATA_UNIT.GB));
     } else {
       this._tFamilySharingErrCode = tFamilySharingResp.code;
-      if (this._options.isTmoaInsProdId === 'true') {
-      // if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) {
-        // T가족모아 가입 가능한 요금제이나 미가입
-        this._$tfamilySharing.show();
-        this._$tfamilySharing.attr('aria-hidden','false');
-        this._$tfamilySharing.find('.fe-data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
-      } else {
-        this._$tfamilySharing.hide();
-        this._$tfamilySharing.attr('aria-hidden','true');
-      }
+      // OP002-7334 : T가족모아 가입하기 버튼 비노출
+      this._$tfamilySharing.hide();
+      this._$tfamilySharing.attr('aria-hidden','true');
     }
   },
 
