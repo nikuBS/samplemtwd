@@ -44,6 +44,7 @@ Tw.CustomerEmailService.prototype = {
    */
   _cachedElement: function () {
     this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service'); // 서비스문의 템플릿 wrapper
+    this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality'); // 통화품질 템플릿 wrapper
     this.$service_depth1 = this.$container.find('.fe-service_depth1'); // 1카테고리 버튼
     this.$service_depth2 = this.$container.find('.fe-service_depth2'); // 2카테고리 버튼
   },
@@ -297,38 +298,87 @@ Tw.CustomerEmailService.prototype = {
    * + 추가로 2카테고리가 선택되어있어야 함
    */
   _validateForm: function () {
-    var arrValid = [];
+    if ( $('.fe-service_depth1').attr('data-service-depth1') !== 'CELL' ) {
+      var arrValid = [];
 
-    this.$wrap_tpl_service.find('[required]').each(function (nIndex, item) {
-      if ( $(item).prop('type') === 'checkbox' ) {
-        arrValid.push($(item).prop('checked'));
+      this.$wrap_tpl_quality.find('[required]').each(function (nIndex, item) {
+        // button case (select menu를 보여주는 button)
+        if ( $(item).is('button')) {
+          arrValid.push(!Tw.FormatHelper.isEmpty($(item).data('value')));
+        }
+  
+        if ( $(item).prop('type') === 'checkbox' ) {
+          arrValid.push($(item).prop('checked'));
+        }
+  
+        if ( $(item).prop('type') === 'number') {
+          var isValidNumber = $(item).val().length !== 0 ? true : false;
+          arrValid.push(isValidNumber);
+        }
+  
+        if ( $(item).prop('type') === 'tel' ) {
+          var isPhoneNumber = (Tw.ValidationHelper.isCellPhone($(item).val()) || Tw.ValidationHelper.isTelephone($(item).val()));
+          arrValid.push(isPhoneNumber);
+        }
+  
+        if ( $(item).prop('type') === 'text' ) {
+          var isValidText = $(item).val().length !== 0 ? true : false;
+          arrValid.push(isValidText);
+        }
+  
+        if ( $(item).prop('type') === 'textarea' ) {
+          var isValidTextArea = $(item).val().length !== 0 ? true : false;
+          arrValid.push(isValidTextArea);
+        }
+      });
+
+      if ( arrValid.indexOf(false) === -1 ) {
+        console.log('통화품질 등록하기 가능', $('.fe-quality-register').prop('disabled'));
+        $('.fe-quality-register').prop('disabled', false);
+        console.log('버튼 상태 변경 후', $('.fe-quality-register').prop('disabled'));
+      } else {
+        console.log('통화품질 등록하기 불가', $('.fe-quality-register').prop('disabled'));
+        $('.fe-quality-register').prop('disabled', true);
+        console.log('버튼 상태 변경 후', $('.fe-quality-register').prop('disabled'));
       }
-
-      if ( $(item).prop('type') === 'number') {
-        var isValidNumber = $(item).val().length !== 0 ? true : false;
-        arrValid.push(isValidNumber);
-      }
-
-      if ( $(item).prop('type') === 'tel' ) {
-        var isPhoneNumber = (Tw.ValidationHelper.isCellPhone($(item).val()) || Tw.ValidationHelper.isTelephone($(item).val()));
-        arrValid.push(isPhoneNumber);
-      }
-
-      if ( $(item).prop('type') === 'text' ) {
-        var isValidText = $(item).val().length !== 0 ? true : false;
-        arrValid.push(isValidText);
-      }
-
-      if ( $(item).prop('type') === 'textarea' ) {
-        var isValidTextArea = $(item).val().length !== 0 ? true : false;
-        arrValid.push(isValidTextArea);
-      }
-    });
-
-    if ( arrValid.indexOf(false) === -1 && !!this.$service_depth2.data('serviceDepth2') ) {
-      $('.fe-service-register').prop('disabled', false);
     } else {
-      $('.fe-service-register').prop('disabled', true);
+      var arrValid = [];
+      
+      this.$wrap_tpl_service.find('[required]').each(function (nIndex, item) {
+        if ( $(item).prop('type') === 'checkbox' ) {
+          arrValid.push($(item).prop('checked'));
+        }
+  
+        if ( $(item).prop('type') === 'number') {
+          var isValidNumber = $(item).val().length !== 0 ? true : false;
+          arrValid.push(isValidNumber);
+        }
+  
+        if ( $(item).prop('type') === 'tel' ) {
+          var isPhoneNumber = (Tw.ValidationHelper.isCellPhone($(item).val()) || Tw.ValidationHelper.isTelephone($(item).val()));
+          arrValid.push(isPhoneNumber);
+        }
+  
+        if ( $(item).prop('type') === 'text' ) {
+          var isValidText = $(item).val().length !== 0 ? true : false;
+          arrValid.push(isValidText);
+        }
+  
+        if ( $(item).prop('type') === 'textarea' ) {
+          var isValidTextArea = $(item).val().length !== 0 ? true : false;
+          arrValid.push(isValidTextArea);
+        }
+      });
+
+      if ( arrValid.indexOf(false) === -1 && !!this.$service_depth2.data('serviceDepth2') ) {
+        console.log('서비스문의 등록하기 가능', $('.fe-service-register').attr('disabled'));
+        $('.fe-service-register').prop('disabled', false);
+        console.log('버튼 상태 변경 후', $('.fe-service-register').attr('disabled'));
+      } else {
+        console.log('서비스문의 등록하기 불가', $('.fe-service-register').attr('disabled'));
+        $('.fe-service-register').prop('disabled', true);
+        console.log('버튼 상태 변경 후', $('.fe-service-register').attr('disabled'));
+      }
     }
   },
 
