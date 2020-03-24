@@ -9,30 +9,17 @@
  * @param {Object} rootEl - 최상위 element
  * @param {Object} options - 설정 옵션
  */
-Tw.ProductRoaming = function(rootEl, menuId) {
+Tw.ProductRoaming = function(rootEl, options) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._xTractorService = new Tw.XtractorService(this.$container);
-  this._menuId = menuId;
 
-  // 폼나는 정보 관련
-  // this._options = options;
+  this._options = options;
 
-  // this._cachedElement();
+  this._cachedElement();
   this._bindEvent();
-
-  // this._getTosAdminRoamingBanner();
-
-  if ( !Tw.Environment.init ) {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getTosAdminRoamingBanner, this));
-  } else {
-    this._getTosAdminRoamingBanner();
-  }
-
-  // 폼나는 정보 관련
-  // this._init();
+  this._init();
 };
 
 Tw.ProductRoaming.prototype = {
@@ -41,7 +28,7 @@ Tw.ProductRoaming.prototype = {
    * @desc jQuery 객체 캐싱
    */
   _cachedElement: function () {
-    this.$formInfoBtnList = this.$container.find('.info-link-inner'); // 폼나는 정보 관련
+    this.$formInfoBtnList = this.$container.find('.info-link-inner');
   },
   /**
    * @function
@@ -49,7 +36,7 @@ Tw.ProductRoaming.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('click', '.fe-link-internal', $.proxy(this._onClickInternal, this));
-    // this.$formInfoBtnList.on('click', $.proxy(this._onClickFormInfo, this));
+    this.$formInfoBtnList.on('click', $.proxy(this._onClickFormInfo, this));
     this.$container.on('click', '.rm-main-recomm-more-btn button', $.proxy(this._onClickMoreToggleBtn, this));
   },
   /**
@@ -58,210 +45,10 @@ Tw.ProductRoaming.prototype = {
    */
   _init : function() {
     this._historyService.goHash('');
-    // 폼나는 정보 관련
-    // this.nMax = this._options.banners.centerBanners.length - 1;
-    // this.$container.find('.fe-slide-banner').show();
-    // Top배너
-    // this._renderTopBanner();
+    this.nMax = this._options.banners.centerBanners.length - 1;
+    this.$container.find('.fe-slide-banner').show();
+    this._renderTopBanner();
   },
-
-  /**
-   * @function
-   * @desc 토스 배너 정보 요청
-   * @private
-   */
-  _getTosAdminRoamingBanner: function () {
-    this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0022' } },
-      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
-    ]).done($.proxy(this._successTosAdminRoamingBanner, this))
-        .fail($.proxy(this._errorRequest, this));
-        // .fail($.proxy(this._failTosBanner, this));
-  },
-
-  /**
-   * @function
-   * @desc 토스 배너 처리
-   * @param resp
-   * @private
-   */
-  _successTosAdminRoamingBanner: function (resp, admBanner) {
-    // console.log('resp ===== ', resp);
-    // console.log('admBanner ===== ', admBanner);
-
-    var result = [{ target: 'T', banner: resp }, { target: 'C' }];
-
-    result.forEach(function(row){
-      if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
-        if(!row.banner.result.summary){
-          row.banner.result.summary = {target: row.target};
-        }
-        row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
-        row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
-      }else{
-        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
-      }
-
-      if(admBanner.code === Tw.API_CODE.CODE_00){
-        row.banner.result.imgList = row.banner.result.imgList.concat(
-            admBanner.result.banners.filter(function(admbnr){
-              return admbnr.bnnrLocCd === row.target;
-            }).map(function(admbnr){
-              admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
-              admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-              return admbnr;
-            })
-        );
-      }
-    })
-    this._drawTosAdminRoamingBanner(result);
-  },
-
-  /**
-   * @function
-   * @desc 토스 배너 응답 실패 처리
-   * @param error
-   * @private
-   */
-  // _failTosBanner: function (error) {
-  //   Tw.Logger.error(error);
-  //   // 홈화면에서 alert 제거
-  //   // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
-  //   var adminList = [{ target: '4' }, { target: 'a' }, { target: 'b' }, { target: 'c' }, { target: 'd' }];
-  //   this._getAdminBanner(adminList);
-  // },
-
-  /**
-   * @function
-   * @desc 토스 배너 렌더링
-   * @param banners
-   * @private
-   */
-  _drawTosAdminRoamingBanner: function (banners) {
-    _.map(banners, $.proxy(function (bnr) {
-      if ( bnr.banner.result.bltnYn === 'N' ) {
-        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
-      }
-
-      // if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
-      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0 ) {
-          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
-      }
-    }, this));
-
-    // var directBanner = banners.filter(function(e){
-    //   return e.target == 'S'
-    // }).map(function(e){
-    //   return e.banner.result.imgList
-    // })[0].map(function (target) {
-    //   target.chargeOrExternal = target.billYn === 'Y' ? 'fe-home-charge' : 'fe-home-external';
-    //   return target;
-    // });
-
-    // if(banner.bnnrLocCd === 'T'){
-    //   this.$container.find('#fe-header-t').remove();
-    //   this.$container.find('#fe-banner-t').remove();
-    // }else if(banner.bnnrLocCd === 'C'){
-    //   this.$container.find('#fe-header-c').remove();
-    //   this.$container.find('#fe-banner-c').remove();
-    // }
-
-
-    // if ( directBanner.length > 0 ) {
-    //   var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
-    //   this.$container.find('#fe-direct-banner ul').append(tplLine({ list: directBanner, cdn: Tw.Environment.cdn }));
-    // } else {
-    //   this.$container.find('#fe-direct-banner').addClass('none');
-    // }
-    new Tw.XtractorService(this.$container);
-
-  },
-
-
-
-
-  /**
-   * @function
-   * @desc 어드민 배너 정보 요청
-   * @param adminList
-   * @private
-   */
-  _getAdminBanner: function (adminList) {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
-        .done($.proxy(this._successBanner, this, adminList))
-        .fail($.proxy(this._failBanner, this));
-  },
-
-  /**
-   * @function
-   * @desc 어드민 배너 처리
-   * @param adminList
-   * @param resp
-   * @private
-   */
-  _successBanner: function (adminList, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      _.map(adminList, $.proxy(function (target) {
-        var banner = _.filter(resp.result.banners, function (banner) {
-          return banner.bnnrLocCd === target.target;
-        });
-        if ( banner.length > 0 ) {
-          if ( target.target === '7' ) {
-            this._membershipBanner = {
-              kind: Tw.REDIS_BANNER_TYPE.ADMIN,
-              list: banner
-            };
-          } else {
-            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, banner, target.target, $.proxy(this._successDrawBanner, this));
-          }
-        } else {
-          this.$container.find('ul.slider[data-location=' + target.target + ']').parents('div.nogaps').addClass('none');
-          // this._resetHeight();
-        }
-      }, this));
-
-      var directBanner = _.filter(resp.result.banners, function (banner) {
-        return banner.bnnrLocCd === 'S';
-      }).map(function (target) {
-        target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-        target.chargeOrExternal = target.billYn === 'Y' ? 'fe-home-charge' : 'fe-home-external';
-        return target;
-      });
-
-      if ( directBanner.length > 0 ) {
-        var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
-        this.$container.find('#fe-direct-banner ul').append(tplLine({ list: directBanner, cdn: Tw.Environment.cdn }));
-      } else {
-        this.$container.find('#fe-direct-banner').addClass('none');
-      }
-    }
-    new Tw.XtractorService(this.$container);
-  },
-
-  /**
-   * @function
-   * @desc 어드민 배너 요청 실패 처리
-   * @param error
-   * @private
-   */
-  _failBanner: function (error) {
-    Tw.Logger.error(error);
-    // 홈화면에서 alert 제거
-    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
-    new Tw.XtractorService(this.$container);
-  },
-
-  /**
-   * @function
-   * @desc 배너 렌더링 성공 callback
-   * @private
-   */
-  _successDrawBanner: function () {
-    // this._resetHeight();
-  },
-
-  // ====================================
-
   /**
    * @function
    * @desc 상단 배너 그리기
