@@ -47,6 +47,7 @@ Tw.CustomerEmailService.prototype = {
     this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality'); // 통화품질 템플릿 wrapper
     this.$service_depth1 = this.$container.find('.fe-service_depth1'); // 1카테고리 버튼
     this.$service_depth2 = this.$container.find('.fe-service_depth2'); // 2카테고리 버튼
+    this.tpl_quality_cell_content = Handlebars.compile($('#tpl_quality_cell_content').html()); // 품질 > 핸드폰 케이스에서 발생 현상 템플릿 전송시 사용
   },
 
   /**
