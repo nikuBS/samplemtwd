@@ -506,7 +506,7 @@ Tw.CustomerEmailService.prototype = {
    * + 추가로 2카테고리가 선택되어있어야 함
    */
   _validateForm: function () {
-    if ( $('.fe-service_depth1').attr('data-service-depth1') !== 'CELL' ) {
+    if ( $('.fe-service_depth1').attr('data-service-depth1') === 'cell' || $('.fe-service_depth1').attr('data-service-depth1') === 'internet' ) {
       var arrValid = [];
 
       this.$wrap_tpl_quality.find('[required]').each(function (nIndex, item) {
