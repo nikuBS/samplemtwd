@@ -134,7 +134,8 @@ Tw.CustomerEmailCategory.prototype = {
     e.stopPropagation();
     e.preventDefault();
 
-    var sDepth1Category = this.$select_service_depth1.data('service-depth1');
+    // var sDepth1Category = this.$select_service_depth1.data('service-depth1');
+    var sDepth1Category = this.$select_service_depth1.attr('data-service-depth1');
 
     if ( sDepth1Category && this.category[sDepth1Category] ) {
       var service2DepthList = this.category[sDepth1Category];
@@ -282,7 +283,9 @@ Tw.CustomerEmailCategory.prototype = {
     // 카테고리 선택 버튼 변경 볼드처리, 문구 변경, data 입력
     this.$select_service_depth1.addClass('tx-bold');
     this.$select_service_depth1.text(sDepth1Text);
-    this.$select_service_depth1.data('service-depth1', sDepth1Value);
+    // this.$select_service_depth1.data('service-depth1', sDepth1Value);
+    this.$select_service_depth1.attr('data-service-depth1', sDepth1Value);
+
     this.service.depth1 = sDepth1Value; // 서비스 카테고리 prop
 
     var $tab1 = $('#tab1-tab');
@@ -392,7 +395,8 @@ Tw.CustomerEmailCategory.prototype = {
     // 카테고리 선택 버튼 변경 볼드처리, 문구변경, data 업데이트
     this.$select_service_depth1.addClass('tx-bold');
     this.$select_service_depth1.text(sDepth1Text);
-    this.$select_service_depth1.data('select-depth1', sDepth1Value);
+    // this.$select_service_depth1.data('select-depth1', sDepth1Value);
+    this.$select_service_depth1.attr('data-service-depth1', sDepth1Value);
     this.$select_service_depth2.hide().attr('aria-hidden', true);
     this.$wrap_tpl_faq.hide().attr('aria-hidden', true);
     // this.quality.depth1 = sDepth1Value; // 품질 카테고리 prop

@@ -355,7 +355,8 @@ Tw.CustomerEmail.prototype = {
    */
   _openFaq: function (e) {
     e.preventDefault();
-    var isCell = $('.fe-service_depth1').data('serviceDepth1') === 'CELL'; // 선택된 카테고리가 핸드폰인지 여부 
+    // var isCell = $('.fe-service_depth1').data('serviceDepth1') === 'CELL'; // 선택된 카테고리가 핸드폰인지 여부 
+    var isCell = $('.fe-service_depth1').data('service-depth1') === 'CELL'; // 선택된 카테고리가 핸드폰인지 여부 /
 
     /**
      * @function 

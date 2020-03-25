@@ -23,9 +23,9 @@ class MyTDataUsageTotalSharingData extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.reqBalances(),
-      this.reqBalanceAddOns(),
-      this.getProductGroup()
-    ).subscribe(([_balancesResp, balanceAddOnsResp, prodList]) => {
+      this.reqBalanceAddOns()
+      // this.getProductGroup() OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
+    ).subscribe(([_balancesResp, balanceAddOnsResp/*, prodList*/]) => {
       const balancesResp = JSON.parse(JSON.stringify(_balancesResp));
       const apiError = this.error.apiError([
         balancesResp, balanceAddOnsResp
@@ -53,7 +53,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
 
       const option = {
         balanceAddOns: balanceAddOnsResp.result,
-        isTmoaInsProdId: prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1,
+        // isTmoaInsProdId: prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1,
         defaultData, // : defaultData || {},
         svcInfo: svcInfo || {},
         pageInfo: pageInfo || {}
