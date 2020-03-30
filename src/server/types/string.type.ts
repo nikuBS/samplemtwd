@@ -564,7 +564,7 @@ export const MYT_JOIN_THIGH5_PREFERENTIAL = {
 
 export enum CUSTOMER_NOTICE_CATEGORY {
   TWORLD = 'T world',
-  DIRECTSHOP = 'T world 다이렉트',
+  DIRECTSHOP = 'T다이렉트샵',
   MEMBERSHIP = 'T멤버십',
   ROAMING = 'T로밍',
   VIEW = '공지사항'
