@@ -379,35 +379,7 @@
 
             <!-- 카테고리 탭 -->
             <div class="tod-srhcategory-scrwrap"><!-- 스크롤 위치가 카테고리 탭을 지나가면 해당 영역 상단 고정. class="fixed" 추가 -->
-                <!-- <div class="tod-horizon-shadow">
-                    <div class="widget"> 
-                        <div class="widget-box horizontal">
-                            <div class="horizontal-slide slide-nopd tod-hoz-tabtype1">
-                                <ul class="horizontal-list" style="width: 2413px;">
-                                    <li class="fe-category all on"><button>전체<span class="num fe-total-count"></span></button></li>
-                                    <li class="fe-category shortcut"><button>바로가기<span class="num fe-shortcut-count"></span></button></li>
-                                    <li class="fe-category rate"><button>요금제<span class="num fe-rate-count"></span></button></li>
-                                    <li class="fe-category service"><button>부가서비스<span class="num fe-service-count"></span></button></li>
-                                    <li class="fe-category tv_internet"><button>인터넷/집전화/IPTV<span class="num fe-tv_internet-count"></span></button></li>
-                                    <li class="fe-category bundle"><button>결합상품<span class="num fe-bundle-count"></span></button></li>
-                                    <li class="fe-category troaming"><button>T로밍<span class="num fe-troaming-count"></span></button></li>
-                                    <li class="fe-category tapp"><button>T앱<span class="num fe-tapp-count"></span></button></li>
-                                    <li class="fe-category direct"><button>T월드 다이렉트<span class="num fe-direct-count"></span></button></li>
-                                    <li class="fe-category tmembership"><button>T멤버십<span class="num fe-tmembership-count"></span></button></li>
-                                    <li class="fe-category event"><button>진행중인 이벤트<span class="num fe-event-count"></span></button></li>
-                                    <li class="fe-category sale"><button>혜택/할인<span class="num fe-sale-count"></span></button></li>
-                                    <li class="fe-category as_outlet"><button>지점/대리점, A/S센터<span class="num fe-as_outlet-count"></span></button></li>
-                                    <li class="fe-category question"><button>자주 하는 질문<span class="num fe-question-count"></span></button></li>
-                                    <li class="fe-category notice"><button>공지사항<span class="num fe-notice-count"></span></button></li>
-                                    <li class="fe-category prevent"><button>이용자 피해예방 주의보<span class="num fe-prevent-count"></span></button></li>
-                                    <li class="fe-category manner"><button>이럴 땐 이렇게 하세요<span class="num fe-manner-count"></span></button></li>
-                                    <li class="fe-category serviceInfo"><button>서비스 이용안내<span class="num fe-serviceInfo-count"></span></button></li>
-                                    <li class="fe-category siteInfo"><button>사이트 이용방법<span class="num fe-siteInfo-count"></span></button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+ 
             </div>
             <!-- //카테고리 탭 -->
 
@@ -661,13 +633,13 @@
                     <% if(searchInfo.search[8].direct.count>5){ %>
                     <a class="direct" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                     <% } %>
-                        T월드 다이렉트 <span class="num"><%= searchInfo.search[8].direct.count %></span>
+                        T다이렉트샵 <span class="num"><%= searchInfo.search[8].direct.count %></span>
                     <% if(searchInfo.search[8].direct.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
                 <div class="tod-fright">
-                    <button class="bt-link-tx underline list-data direct-element home" href="https://m.shop.tworld.co.kr" title="새창">다이렉트샵 가기</button>
+                    <button class="bt-link-tx underline list-data direct-element home" href="https://m.shop.tworld.co.kr" title="새창">T다이렉트샵 가기</button>
                 </div>
             </div>
             <div class="direct-shop-wrap tod-srhtype1">
@@ -677,7 +649,7 @@
             </div>
             <% if(searchInfo.search[8].direct.count>5){ %>
             <div class="btn-more">
-                <button class="direct" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T월드 다이렉트</span>전체보기<i class="ico-arrow-r"></i></button>
+                <button class="direct" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T다이렉트샵</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
             <% } %>
         </div>
