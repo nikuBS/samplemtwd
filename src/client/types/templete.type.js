@@ -239,7 +239,7 @@ Tw.POPUP_TPL = {
         { 'label-attr': 'id="1500000"', 'radio-attr': 'id="1500000" name="r2" data-search-category="T멤버십"', txt: 'T멤버십' },
         { 'label-attr': 'id="1600000"', 'radio-attr': 'id="1600000" name="r2" data-search-category="앱/부가서비스"', txt: '앱/부가서비스' },
         { 'label-attr': 'id="1700000"', 'radio-attr': 'id="1700000" name="r2" data-search-category="통화품질개선"', txt: '통화품질개선' },
-        { 'label-attr': 'id="1800000"', 'radio-attr': 'id="1800000" name="r2" data-search-category="T월드 다이렉트"', txt: 'T월드 다이렉트' },
+        { 'label-attr': 'id="1800000"', 'radio-attr': 'id="1800000" name="r2" data-search-category="T다이렉트샵"', txt: 'T다이렉트샵' },
         { 'label-attr': 'id="1900000"', 'radio-attr': 'id="1900000" name="r2" data-search-category="T월드 이용안내"', txt: 'T월드 이용안내' }
       ]
     }
@@ -298,11 +298,11 @@ Tw.POPUP_TPL = {
         ]
     },
     {
-      faqCategoryId: '1800000', faqCategoryNm: 'T월드 다이렉트', subFilters: [
+      faqCategoryId: '1800000', faqCategoryNm: 'T다이렉트샵', subFilters: [
         {faqFilterId: '1801000', faqFilterNm: '휴대폰 구매/혜택'},
-        {faqFilterId: '1802000', faqFilterNm: 'T월드 다이렉트 구매/이동'},
-        {faqFilterId: '1803000', faqFilterNm: 'T월드 다이렉트 배송'},
-        {faqFilterId: '1804000', faqFilterNm: 'T월드 다이렉트 교환/반품'},
+        {faqFilterId: '1802000', faqFilterNm: 'T다이렉트샵 구매/이동'},
+        {faqFilterId: '1803000', faqFilterNm: 'T다이렉트샵 배송'},
+        {faqFilterId: '1804000', faqFilterNm: 'T다이렉트샵 교환/반품'},
         {faqFilterId: '1805000', faqFilterNm: '휴대폰가격공시 기타'}
         ]
     },
@@ -896,7 +896,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   {
-    title: 'T월드 다이렉트',
+    title: 'T다이렉트샵',
     category: 'DIRECT',
     gubun: '1',
     list: [
