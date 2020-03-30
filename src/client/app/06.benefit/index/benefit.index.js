@@ -650,7 +650,7 @@ Tw.BenefitIndex.prototype = {
       data.benefitDiscount += this._benefitInfo.bill.priceAgrmtList.length; // 요금할인
       // 복지혜택 가입 여부 확인
       data.benefitDiscount +=
-        (this._benefitInfo.bill.wlfCustDc && this._benefitInfo.bill.wlfCustDcList.length > 0) ?
+        (this._benefitInfo.bill.wlfCustDcList && this._benefitInfo.bill.wlfCustDcList.length > 0) ?
           this._benefitInfo.bill.wlfCustDcList.length : 0; // 요금할인 - 복지고객
       // 클럽
       data.benefitDiscount += this._benefitInfo.bill.clubYN ? 1 : 0;
@@ -884,7 +884,7 @@ Tw.BenefitIndex.prototype = {
       var welfare = ['TW20000016'].indexOf(benefitObj.benefitId);
       if (welfare > -1) {
         if (this._benefitInfo.bill) {
-          benefitObj.useYn = (this._benefitInfo.bill.wlfCustDc);
+          benefitObj.useYn = (this._benefitInfo.bill.wlfCustDcList.length > 0);
         }
       }
 
