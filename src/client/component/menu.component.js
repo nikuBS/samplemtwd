@@ -410,13 +410,32 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @param  {Object} e - click event
    */
   _onMenuLink: function (e) {
-    var url = e.currentTarget.value;
-    if ( url.indexOf('http') !== -1 ) {
-      Tw.CommonHelper.openUrlExternal(url);
+    var $target = $(e.currentTarget);
+    var url = $target.val();
+
+    if(Tw.BrowserHelper.isApp() && $target.hasClass('fe-show-data-charge')) {
+      Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, e));
     } else {
-      this._goOrReplace(url);
+      if ( url.indexOf('http') !== -1 ) {
+        Tw.CommonHelper.openUrlExternal(url);
+      } else {
+        this._goOrReplace(url);
+      }
     }
   },
+
+  /**
+   * @function
+   * @desc 외부 브라우저 랜딩 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickExternal: function ($event) {
+    var url = $($event.currentTarget).val();
+    Tw.CommonHelper.openUrlExternal(url);
+  },
+
 
   /**
    * @function
@@ -849,6 +868,13 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         }
 
         item.isNew = Tw.FormatHelper.isEmpty(item.newIconExpsYn) ? false : item.newIconExpsYn === 'Y' ? true : false;
+        item.isShowDataCharge = false;
+        item.exUrlNoti = item.exUrlNoti || '';
+        if(Tw.BrowserHelper.isApp()) {
+          item.isShowDataCharge = item.exUrlNoti.indexOf('MA') !== -1 ? true : false
+        // } else {
+        //   item.isShowDataCharge = item.exUrlNoti.indexOf('MW') !== -1 ? true : false
+        }
         
         // expose & not empty start, end date
         if (item.newIconExpsYn === 'Y' && !Tw.FormatHelper.isEmpty(item.newIconExpsStaDt) && !Tw.FormatHelper.isEmpty(item.newIconExpsEndDt)) {
