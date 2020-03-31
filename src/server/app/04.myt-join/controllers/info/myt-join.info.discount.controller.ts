@@ -202,7 +202,9 @@ class MytJoinInfoDiscount extends TwViewController {
             break;
           case 'NA00006349': // 2G전환요금할인(70%) (24개월(2G전환))
             priceItem.typeStr = 'FEE_TYPE_F';
-            priceItem.disProdNm2 = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_F.TIT_NM;
+            priceItem.disProdNm2 = this.trimAll(priceItem.disProdNm);
+            // priceItem.disProdNm2 = (priceItem.disProdNm || '').replace(/  /g, ' ');
+            // priceItem.disProdNm2 = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_F.TIT_NM;
             break;
           default:
             priceItem.typeStr = 'FEE_NOTYPE';
