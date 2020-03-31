@@ -35,19 +35,42 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
+<!--            <hr class="cont-sp type1" aria-hidden="true" />-->
             <% } %>
 
-            <% if (banners) { %>
-            <% if (banners.topBanners.length > 0) { %>
-            <!-- .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" id="fe-header-t"/>
+            <!-- 스와이프 top배너 - TOS 및 Admin 배너 -->
+<!--            <div class="cont-box nogaps noborder">-->
             <div class="cont-box nogaps">
+<!--                <div class="main-slide-banner slide-pagingtype">-->
                 <div class="main-charge-box advice section-swiper-box main-banner-img">
                     <!-- .widget -->
-                    <div class="widget fe-slide-banner" style="display:none;">
+                    <div class="widget">
                         <div class="widget-box">
                             <div class="slider-box">
-                                <ul class="slider" data-location="T">
+                                <ul class="slider" data-location="T" id="fe-banner-t"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!-- //스와이프 -->
+
+<!--            <hr class="cont-sp type1" aria-hidden="true" />-->
+
+            <hr class="cont-sp type1" aria-hidden="true" id="fe-header-c"/>
+            <!-- T로밍 -->
+            <div class="cont-box nogaps bgnone noborder">
+                <div class="travel-info">
+                    <div class="wrap-gaps-top">
+                        <h2>고객님을 위한 '폼'나는 정보</h2>
+                    </div>
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box">
+                            <div class="slider-box">
+                                <ul class="slider" data-location="C" id="fe-banner-c">
                                 </ul>
                             </div>
                         </div>
@@ -55,39 +78,62 @@
                     <!--// .widget -->
                 </div>
             </div>
-            <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
 
-            <% if (banners.centerBanners.length > 0) { %>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-ver-01 bgnone noborder">
-                <div class="travel-info">
-                    <div class="wrap-gaps-top">
-                        <h2>고객님을 위한 '폼'나는 정보</h2>
-                    </div>
-                    <!-- .widget -->
-                    <div class="widget fe-slide-banner" style="display:none;">
-                        <div class="widget-box horizontal">
-                            <div class="horizontal-slide">
-                                <ul class="horizontal-list info-link-box">
-                                    <% for (var index in banners.centerBanners) { %>
-                                    <li data-xt_eid="<%- banners.centerBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BV">
-                                        <button class="info-link-inner" data-index="<%=index%>" data-xt_eid="<%- banners.centerBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">
-                                            <span class="tit"><%-banners.centerBanners[index].titleNm%></span>
-                                        </button>
-                                    </li>
-                                    <% } %>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- .widget -->
-                </div>
-            </div>
-            <!--// .cont-box -->
-            <% } %>
-            <% } %>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+
+
+
+<!--            <% if (banners) { %>-->
+<!--            <% if (banners.topBanners.length > 0) { %>-->
+<!--            &lt;!&ndash; .cont-box &ndash;&gt;-->
+<!--            <div class="cont-box nogaps">-->
+<!--                <div class="main-charge-box advice section-swiper-box main-banner-img">-->
+<!--                    &lt;!&ndash; .widget &ndash;&gt;-->
+<!--                    <div class="widget fe-slide-banner" style="display:none;">-->
+<!--                        <div class="widget-box">-->
+<!--                            <div class="slider-box">-->
+<!--                                <ul class="slider" data-location="T">-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;// .widget &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;// .cont-box &ndash;&gt;-->
+<!--            <hr class="cont-sp type1" aria-hidden="true" />-->
+<!--            <% } %>-->
+
+<!--            <% if (banners.centerBanners.length > 0) { %>-->
+<!--            &lt;!&ndash; .cont-box &ndash;&gt;-->
+<!--            <div class="cont-box nogaps-ver-01 bgnone noborder">-->
+<!--                <div class="travel-info">-->
+<!--                    <div class="wrap-gaps-top">-->
+<!--                        <h2>고객님을 위한 '폼'나는 정보</h2>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; .widget &ndash;&gt;-->
+<!--                    <div class="widget fe-slide-banner" style="display:none;">-->
+<!--                        <div class="widget-box horizontal">-->
+<!--                            <div class="horizontal-slide">-->
+<!--                                <ul class="horizontal-list info-link-box">-->
+<!--                                    <% for (var index in banners.centerBanners) { %>-->
+<!--                                    <li data-xt_eid="<%- banners.centerBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BV">-->
+<!--                                        <button class="info-link-inner" data-index="<%=index%>" data-xt_eid="<%- banners.centerBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">-->
+<!--                                            <span class="tit"><%-banners.centerBanners[index].titleNm%></span>-->
+<!--                                        </button>-->
+<!--                                    </li>-->
+<!--                                    <% } %>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; .widget &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;// .cont-box &ndash;&gt;-->
+<!--            <% } %>-->
+<!--            <% } %>-->
 
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm widget noborder">
@@ -454,9 +500,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoaming($('#productRoaming'), {
-      banners: <%-JSON.stringify(banners)%>
-  });
-  });
+      new Tw.ProductRoaming($('#productRoaming'), '<%= pageInfo.menuId %>'
+      )});
 </script>
 <% include ../../components/end.component.html %>
