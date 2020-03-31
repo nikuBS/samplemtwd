@@ -365,6 +365,9 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
   FEE_TYPE_E: {
     TIT_NM: '선택약정할인제도'
   },
+  FEE_TYPE_F: {
+    TIT_NM: '2G전환요금할인(70%)'
+  },
   FEE_NOTYPE: {
     TIT_NM: '정보 없음'
   },

@@ -6,16 +6,23 @@
  * Summary: 약정정보, 기기상환 정보 조회
  */
 
-import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE, API_VERSION } from '../../../../types/api-command.type';
-import { Observable } from 'rxjs/Observable';
-import StringHelper from '../../../../utils/string.helper';
-import moment = require('moment');
+import moment from 'moment';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_FARE_BILL_GUIDE, TIME_UNIT } from '../../../../types/string.type';
+import { API_CMD, API_CODE, API_VERSION } from '../../../../types/api-command.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
+import { Observable } from 'rxjs/Observable';
+// import { MYT_JOIN_CONTRACT_TERMINAL, TIME_UNIT } from '../../../../types/string.type';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
+
+/*
+function titlePriceDC(feeType: string, start: any, end: any): string {
+  // 반올림으로 기간(개월)을 계산
+  const duration = Math.round(moment(end, 'YYYYMMDD').diff(start, 'months', true));
+  return `${MYT_JOIN_CONTRACT_TERMINAL[feeType].TIT_NM}(${duration}${TIME_UNIT.MONTH})`;
+}
+*/
 
 class MytJoinInfoDiscount extends TwViewController {
   constructor() {
@@ -164,66 +171,54 @@ class MytJoinInfoDiscount extends TwViewController {
     // -------------------------------------------------------------[1. 요금약정할인 정보]
     /*
     * 상품코드 분류(priceList.prodId)
-    * 요금약정할인24 (730) : NA00003677 | fee_type_A | 상세할인 내역보기
-    * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B | 상세할인 내역보기
-    * 선택약정할인제도 : NA00004430 | fee_type_E | 상세할인 내역보기
-    * 해당분류에 포함되지않는 경우 | fee_noType
+    * 요금약정할인24 (730): NA00003677 | FEE_TYPE_A | 상세할인 내역보기
+    * 테블릿 약정할인 12 (뉴태블릿약정): NA00003681 | FEE_TYPE_B | 상세할인 내역보기
+    * 선택약정할인제도: NA00004430 | FEE_TYPE_E | 상세할인 내역보기
+    * 2G전환요금할인(70%) (24개월(2G전환)): NA00006349 | FEE_TYPE_A | 상세할인 내역보기
+    * 해당분류에 포함되지않는 경우: FEE_NOTYPE
     */
 
     if ( this.getSizeObjOrArr(priceList) > 0 ) {
-      for ( let i = 0; i < priceList.length; i++ ) {
-
-        switch ( priceList[i].prodId ) {
-
+      let priceItem;
+      const count = priceList.length;
+      for ( let i = 0; i < count; i++ ) {
+        priceItem = priceList[i];
+        switch ( priceItem.prodId ) {
           case 'NA00003677': // 요금약정할인24 (730)
-            // 반올림으로 개월을 계산
-            const month = Math.round(
-              moment(priceList[i].agrmtDcEndDt, 'YYYYMMDD').diff(priceList[i].agrmtDcStaDt, 'months', true)
-            );
-            priceList[i].typeStr = 'fee_type_A';
-            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM + '(' + month + TIME_UNIT.MONTH + ')';
-            priceList[i].disProdNm2 = this.trimAll(priceList[i].disProdNm);
-            priceList[i].svcAgrmtDcObj = {
-              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
-              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
-            };
+            priceItem.typeStr = 'FEE_TYPE_A';
+            // 사용 되지 않는 것으로 보임.
+            // priceItem.titNm = titlePriceDC(priceItem.typeStr, priceItem.agrmtDcStaDt, priceItem.agrmtDcEndDt);
+            priceItem.disProdNm2 = this.trimAll(priceItem.disProdNm);
             break;
           case 'NA00003681': // 뉴태블릿약정
-            priceList[i].typeStr = 'fee_type_B';
-            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
-            priceList[i].svcAgrmtDcObj = {
-              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
-              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
-            };
+            priceItem.typeStr = 'FEE_TYPE_B';
+            priceItem.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
             break;
           case 'NA00004430': // 선택약정할인
-            priceList[i].typeStr = 'fee_type_E';
-            // 반올림으로 개월을 계산
-            const month2 = Math.round(
-              moment(priceList[i].agrmtDcEndDt, 'YYYYMMDD').diff(priceList[i].agrmtDcStaDt, 'months', true)
-            );
-            priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_E.TIT_NM + '(' + month2 + TIME_UNIT.MONTH + ')';
-            priceList[i].disProdNm2 = this.trimAll(priceList[i].disProdNm);
-            priceList[i].svcAgrmtDcObj = {
-              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
-              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
-            };
+            priceItem.typeStr = 'FEE_TYPE_E';
+            // 사용 되지 않는 것으로 보임.
+            // priceItem.titNm = titlePriceDC(priceItem.typeStr, priceItem.agrmtDcStaDt, priceItem.agrmtDcEndDt);
+            priceItem.disProdNm2 = this.trimAll(priceItem.disProdNm);
+            break;
+          case 'NA00006349': // 2G전환요금할인(70%) (24개월(2G전환))
+            priceItem.typeStr = 'FEE_TYPE_F';
+            priceItem.disProdNm2 = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_F.TIT_NM;
             break;
           default:
-            priceList[i].typeStr = 'fee_noType';
-            priceList[i].titNm = priceList[i].disProdNm; // 할인 상품명
-            priceList[i].svcAgrmtDcObj = {
-              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
-              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
-            };
+            priceItem.typeStr = 'FEE_NOTYPE';
+            priceItem.titNm = priceItem.disProdNm; // 할인 상품명
+            break;
         }
-
-        priceList[i].salePay = FormatHelper.addComma(priceList[i].agrmtDcAmt);
+        priceItem.svcAgrmtDcObj = {
+          svcAgrmtDcId : priceItem.svcAgrmtDcId || '',
+          svcAgrmtDcCd : priceItem.svcAgrmtDcCd || ''
+        };
+        priceItem.salePay = FormatHelper.addComma(priceItem.agrmtDcAmt);
         thisMain._proDate(
-          priceList[i],
-          priceList[i].agrmtDcStaDt,
-          priceList[i].agrmtDcEndDt);
-        thisMain._commDataInfo.feeInfo.push(priceList[i]);
+          priceItem,
+          priceItem.agrmtDcStaDt,
+          priceItem.agrmtDcEndDt);
+        thisMain._commDataInfo.feeInfo.push(priceItem);
       }
     }
 
@@ -311,7 +306,7 @@ class MytJoinInfoDiscount extends TwViewController {
         tInstallment.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM2;
         tInstallment.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM2;
       }
-      
+
       tInstallment.agreeTotMonth = tInstallment.allotMthCnt; // 약정 전체 개월수
       tInstallment.agreePay = FormatHelper.addComma(tInstallment.totAgrmtAmt); // 약정 금액
       tInstallment.penalty = FormatHelper.addComma(tInstallment.penAmt2); // 위약금

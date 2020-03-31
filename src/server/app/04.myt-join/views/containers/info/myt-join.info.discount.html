@@ -59,27 +59,31 @@
                 <h4 class="tit">요금 약정할인</h4>
             </div>
 
-            <% for(var i=0; i < commDataInfo.feeInfo.length; i++) { %>
+            <% for(var i=0, length = commDataInfo.feeInfo.length; i < length; i += 1) { %>
 
-                <% if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_A' ) {%> <%#요금약정할인24 (730) : NA00003677 | fee_type_A %>
+                <% if ( commDataInfo.feeInfo[i].typeStr == 'FEE_TYPE_A' ) { %> <%#요금약정할인24 (730): NA00003677 | FEE_TYPE_A %>
 
                     <% include ../../components/info/myt-join.info.discount.fee-type-a.html %>
 
-                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_B' ) { %> <%#테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B %>
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'FEE_TYPE_B' ) { %> <%#테블릿 약정할인 12 (뉴태블릿약정): NA00003681 | FEE_TYPE_B %>
 
                     <% include ../../components/info/myt-join.info.discount.fee-type-b.html %>
 
-                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_E' ) { %> <%#선택약정할인제도 | fee_type_E %>
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'FEE_TYPE_E' ) { %> <%#선택약정할인제도: FEE_TYPE_E %>
 
                     <% include ../../components/info/myt-join.info.discount.fee-type-e.html %>
 
-                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_noType' ) { %> <%#해단분류에 포함되지않는 경우 | fee_noType %>
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'FEE_TYPE_F' ) { %> <%#2G전환요금할인(70%) (24개월(2G전환)): NA00006349 | FEE_TYPE_F, 템플릿은 a type 사용 %>
+
+                    <% include ../../components/info/myt-join.info.discount.fee-type-a.html %>
+
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'FEE_NOTYPE' ) { %> <%#해단분류에 포함되지않는 경우: FEE_NOTYPE %>
 
                     <% include ../../components/info/myt-join.info.discount.fee-no-type.html %>
 
                 <% } %>
 
-                <% if ( i !== commDataInfo.feeInfo.length-1 ) { %>
+                <% if ( i !== length - 1 ) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <% } %>
 
