@@ -139,17 +139,15 @@ Tw.ProductRoaming.prototype = {
    */
   _drawTosAdminRoamingBanner: function (banners) {
     _.map(banners, $.proxy(function (bnr) {
-      // if ( bnr.banner.result.bltnYn === 'N') { // 배너구좌 한해서 bltnYn(게시여부)가 N인경우 영역을 없앰
-      if ( bnr.banner.result.bltnYn === 'N' || Tw.FormatHelper.isEmpty(bnr.banner.result.bltnYn)) { // 배너구좌 한해서 bltnYn(게시여부)가 N인경우 영역을 없앰
+      // 배너구좌 한해서 bltnYn(게시여부)가 N인경우 영역을 없앰
+      if ( bnr.banner.result.bltnYn === 'N') {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
-        this.$container.find('#fe-header-' + bnr.target.toLowerCase()).addClass('none');
       }
 
       // if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
       if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0 ) {
           new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
       }
-
     }, this));
 
     // var directBanner = banners.filter(function(e){
