@@ -156,7 +156,7 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 요금할인- 복지고객
-        if ( bill.result.wlfCustDc ) {
+        if ( bill.result.wlfCustDcList && bill.result.wlfCustDcList.length > 0 ) {
           options['welfare'] = true;
           options['count'] += bill.result.wlfCustDcList.length;
         }

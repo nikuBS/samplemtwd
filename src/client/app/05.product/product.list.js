@@ -420,7 +420,8 @@ Tw.ProductList.prototype = {
    * @private
    */
   _handleResetFilters: function($layer) {
-    var selectedFilters = $layer.find('li[aria-checked="true"]'),
+    //var selectedFilters = $layer.find('li[aria-checked="true"]'),
+    var selectedFilters = $layer.find('.checkbox'),
       selectedTag = $layer.find('.suggest-tag-list .link.active');
     selectedFilters.attr('aria-checked', false).removeClass('checked');
     selectedFilters.find('input').removeAttr('checked');

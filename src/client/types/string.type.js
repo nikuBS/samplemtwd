@@ -1399,7 +1399,7 @@ Tw.CUSTOMER_PRAISE_DEFAULT = {
 Tw.NOTICE = {
   TITLE: '카테고리 설정',
   TWORLD: 'T world',
-  DIRECTSHOP: 'T world 다이렉트',
+  DIRECTSHOP: 'T다이렉트샵',
   MEMBERSHIP: 'T멤버십',
   ROAMING: 'T로밍'
 };

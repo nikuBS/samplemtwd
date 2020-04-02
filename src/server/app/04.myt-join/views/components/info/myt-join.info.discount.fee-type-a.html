@@ -10,12 +10,14 @@
         <div class="dc-tit-wrap">
             <!--<h4 class="dc-tit"><%=commDataInfo.feeInfo[i].titNm %></h4>-->
             <h4 class="dc-tit"><%=commDataInfo.feeInfo[i].disProdNm2 %></h4>
+            <%_ if (commDataInfo.feeInfo[i].typeStr === 'FEE_TYPE_A') { _%>
             <button id="MS_09_tip_02" aria-haspopup="true" class="tip-view" title="요금약정할인제도 정보보기">TIP</button>
             <div class="bt-alone">
                 <button class="bt-bg-blue1 fe-prod-btn" title="요금약정할인제도" data-id="<%= commDataInfo.feeInfo[i].prodId %>">
                     상품 정보보기
                 </button>
             </div>
+            <%_ } _%>
         </div>
         <div class="contract-dc-list">
             <ul>

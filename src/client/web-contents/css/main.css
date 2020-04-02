@@ -5589,3 +5589,7 @@ body.apphome .main-membershop-box {
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico4 {background: url('/img/svg/icon_80px_realtime_data.svg') no-repeat 0 0;background-size: 100% 100%; }
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/svg/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
+
+/* 200327 [OP002-7405] 추가_01 *//*T월드 다이렉트샵 로고 및 브랜드명 변경*/
+.quick-menu-list.tod-quick-menu-list li:nth-child(2) {vertical-align:bottom;}
+.quick-menu-list.tod-quick-menu-list li .bt.tod-bt-tdirectshop i {width: 5.0313rem !important; height: 1.1563rem !important;}

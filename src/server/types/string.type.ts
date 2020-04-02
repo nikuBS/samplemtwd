@@ -365,6 +365,9 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
   FEE_TYPE_E: {
     TIT_NM: '선택약정할인제도'
   },
+  FEE_TYPE_F: {
+    TIT_NM: '2G전환요금할인(70%)'
+  },
   FEE_NOTYPE: {
     TIT_NM: '정보 없음'
   },
@@ -564,7 +567,7 @@ export const MYT_JOIN_THIGH5_PREFERENTIAL = {
 
 export enum CUSTOMER_NOTICE_CATEGORY {
   TWORLD = 'T world',
-  DIRECTSHOP = 'T world 다이렉트',
+  DIRECTSHOP = 'T다이렉트샵',
   MEMBERSHIP = 'T멤버십',
   ROAMING = 'T로밍',
   VIEW = '공지사항'
@@ -662,11 +665,11 @@ export const CUSTOMER_FAQ_SEARCH_FILTER = {
   1701000: '통화품질',
   1702000: '인터넷 기술장애/품질',
   1703000: '휴대폰 안내',
-  1800000: 'T월드 다이렉트',
+  1800000: 'T다이렉트샵',
   1801000: '휴대폰 구매/혜택',
-  1802000: 'T월드 다이렉트 구매/이동',
-  1803000: 'T월드 다이렉트 배송',
-  1804000: 'T월드 다이렉트 교환/반품',
+  1802000: 'T다이렉트샵 구매/이동',
+  1803000: 'T다이렉트샵 배송',
+  1804000: 'T다이렉트샵 교환/반품',
   1805000: '휴대폰가격공시 기타',
   1900000: 'T월드 이용안내',
   1901000: '모바일 T World',
@@ -1044,10 +1047,10 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: '다이렉트샵/멤버십/로밍 안내',
+    unitedTitle: 'T다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
-    title: 'T월드 다이렉트 이용안내',
-    text: 'T월드 다이렉트에서 구매를 원한다면',
+    title: 'T다이렉트샵 이용안내',
+    text: 'T다이렉트샵에서 구매를 원한다면',
     upperCat: true,
     sub_list: [
       {
