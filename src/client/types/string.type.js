@@ -2170,7 +2170,11 @@ Tw.PRODUCT_JOIN_OCB = {
 Tw.MYT_FARE_BILL = {
   ERROR: {
     UNUSUAL_CUSTOMER_MSG: '휴대폰 결제 특이 차단 중인 고객은 해당 메뉴를 이용하실 수 없습니다.',
-    UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.'
+    UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.',
+    MINORS_RESTRICTIONS: {
+      CODE: 'BIL0031',
+      MSG: '미성년자명의 휴대폰 고객은 사용이 제한된 메뉴입니다.'
+    }
   }
 };
 
