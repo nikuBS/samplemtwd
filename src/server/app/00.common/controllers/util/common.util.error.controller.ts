@@ -16,7 +16,8 @@ class CommonError extends TwViewController {
     const code = req.query.code || '',
       msg = req.query.msg || '',
       subMsg = req.query.subMsg || '',
-      isPopupCheck = !!req.query.isPopupCheck || false;
+      // 20.4.7 양정규 : query가 String으로 오기때문에 isPopupCheck 를 String값으로 비교하는걸로 바꿔줌.
+      isPopupCheck = req.query.isPopupCheck && req.query.isPopupCheck === 'true';
 
     this.error.render(res, {
       code: code,
