@@ -18,6 +18,7 @@ Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title, $target) {
   this.$target = $target;
   this.$isClicked = false;
   this._isUnpaid = 'N';
+  this._isAdult = true;  // OP002-7282. 미성년자 여부 추가
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -74,8 +75,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    */
   _getLimitSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._isUnpaid = res.result.isUnpaid;
-      this._changeLimit(res.result);
+      var result = res.result;
+      this._isUnpaid = result.isUnpaid;
+      this._isAdult = result.isAdult && result.isAdult.trim() === 'Y';
+      this._changeLimit(result);
     } else {
       this._fail($target, res);
     }
@@ -207,7 +210,18 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     var $amount = $target.attr('id');
     var data = Tw.POPUP_TPL.FARE_PAYMENT_SMALL_LIMIT;
     if (this.$title === 'contents') {
-      data = Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT;
+      if (this._isAdult) {
+        data = Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT;
+      } else {
+        // 20.4.7 OP002-7282. 미성년자인 경우 최대한도 10만원
+        data = [
+          {
+            list : _.filter(Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT[0].list, function(item) {
+              return parseInt(item.txt.replace(/[^0-9]/g, ''), 10) <= 10;
+            })
+          }
+        ];
+      }
     }
 
     this._popupService.open({
