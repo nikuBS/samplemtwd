@@ -203,14 +203,14 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][3],
             eid2: xtEids[data.prodId][2],
-            changeCsid: '_ASCTM',
+            changeCsid: '_CSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
         case 'NONE_FREE_2_2':
           return {xt: {
             eid1: xtEids[data.prodId][3],
-            changeCsid: '_ASCTM',
+            changeCsid: '_FSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -218,7 +218,7 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][3],
             eid2: xtEids[data.prodId][4],
-            changeCsid: '_ASCTM',
+            changeCsid: '_DSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -248,7 +248,7 @@ Tw.PRODUDT.PROMOTIONS = {
         action: 'POPUP2',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.1',
-        hbs3: 'RO_4.9.2',
+        hbs3: 'RO_4.9.1',
         titleNm1: '혜택안내',
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
@@ -257,7 +257,7 @@ Tw.PRODUDT.PROMOTIONS = {
         action: 'POPUP2',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.2',
-        hbs3: 'RO_4.9.2',
+        hbs3: 'RO_4.9.1',
         titleNm1: '혜택안내',
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
@@ -471,7 +471,7 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
               eid: xtEids[data.prodId][3],
               eid1: xtEids[data.prodId][4],
-              changeCsid: '_ASCTM',
+              changeCsid: '_CSCTM',
               closeCsid: '_ASC',
               topCloseCsId: '_CLS'
             }};
@@ -487,14 +487,14 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][4],
             eid2: xtEids[data.prodId][2],
-            changeCsid: '_ASCTM',
+            changeCsid: '_DSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
         case 'NONE_FREE_3_2':
           return {xt: {
             eid1: xtEids[data.prodId][4],
-            changeCsid: '_ASCTM',
+            changeCsid: '_FSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -502,7 +502,7 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][4],
             eid2: xtEids[data.prodId][5],
-            changeCsid: '_ASCTM',
+            changeCsid: '_ESCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -533,7 +533,7 @@ Tw.PRODUDT.PROMOTIONS = {
         action: 'POPUP2',
         hbs1: 'RO_3.4',
         hbs2: 'RO_3.1.3',
-        hbs3: 'RO_4.4.2',
+        hbs3: 'RO_4.4.1',
         titleNm1: '혜택안내',
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
