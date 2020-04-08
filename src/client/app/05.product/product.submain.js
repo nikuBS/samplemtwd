@@ -91,7 +91,7 @@ Tw.ProductSubmain.prototype = {
           })
         );
       }
-    })
+    });
     this._drawTosAdminProductBanner(result);
   },
 
@@ -102,20 +102,19 @@ Tw.ProductSubmain.prototype = {
    * @private
    */
   _drawTosAdminProductBanner: function (banners) {
-    _.map(banners, $.proxy(function (bnr) {
-      if ( bnr.banner.result.bltnYn === 'N' ) {
+    banners.forEach($.proxy(function (bnr) {
+      if (bnr.banner.result.bltnYn === 'N') {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
 
-      
-      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) 
-          && bnr.banner.result.imgList.length > 0) {
+      if (!Tw.FormatHelper.isEmpty(bnr.banner.result.summary)
+        && bnr.banner.result.imgList.length > 0) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
-      }else{
-        if(banner.bnnrLocCd === 'T'){
+      } else {
+        if (bnr.banner.bnnrLocCd === 'T') {
           this.$container.find('#fe-header-t').remove();
           this.$container.find('#fe-banner-t').remove();
-        }else if(banner.bnnrLocCd === 'C'){
+        } else if (bnr.banner.bnnrLocCd === 'C') {
           this.$container.find('#fe-header-c').remove();
           this.$container.find('#fe-banner-c').remove();
         }
