@@ -134,7 +134,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _setData: function (res) {
     var result = res.result;
     if (!Tw.FormatHelper.isEmpty(result)) {
-      this._isAdult = result.isAdultYn && result.isAdultYn.trim() === 'Y';
+      this._isAdult = result.isAdult && result.isAdult.trim() === 'Y';
       if (result.autoChrgStCd === 'U') { // 자동선결제 신청 상태일 경우
         this.$container.find('.fe-auto-wrap').removeClass('none'); // 변경 필드 노출
       } else {
