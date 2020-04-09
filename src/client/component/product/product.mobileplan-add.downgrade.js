@@ -261,7 +261,37 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
       $popupContainer.on('click', '.fe-btn-linkProduct', $.proxy(this._onLinkProduct, this, $popupContainer));
       $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onClose, this));
       $popupContainer.on('click', '.fe-btn_okcashbag', $.proxy(this._okCashbag, this));
+      $popupContainer.on('click', '.bt-link-tx', $.proxy(this._onClickCharge, this));
+      $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._onClose, this));
       this.$optionSelect = this.$container.find('.option-select');
+    },
+
+    /**
+     * @function
+     * @desc 과금 팝업 오픈 후 외부 브라우저 랜딩 처리
+     * @param $event 이벤트 객체
+     * @return {void}
+     * @private
+     */
+    _onClickCharge: function ($event) {
+        var url = $($event.currentTarget).data('url');
+        if ( Tw.BrowserHelper.isApp() ) {
+            Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, $event));
+        }else{
+            Tw.CommonHelper.openUrlExternal(url);
+        }
+    },
+
+    /**
+     * @function
+     * @desc 외부 브라우저 랜딩 처리
+     * @param $event 이벤트 객체
+     * @return {void}
+     * @private
+     */
+    _onClickExternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    Tw.CommonHelper.openUrlExternal(url);
     },
 
     /**

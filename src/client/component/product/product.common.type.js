@@ -141,15 +141,7 @@ Tw.PRODUDT.PROMOTIONS = {
               return 'NONE_FREE_2_1'; ////10000코인 지급 팝업
             }
           } else {
-            if (data.coinDate !== 'N') { //코인지급내역
-              if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
-                return 'NONE_FREE_1' + '_' + successNum + '_3'; //100원 프로모션(Case_02) 상품변경옵션 코인 미지급 팝업
-              }else{
-                return 'NONE_FREE_1' + '_' + successNum + '_2'; //100원 프로모션(Case_02) 상품변경옵션 기존 해지 프로세스
-              }
-            } else {
-              return 'NONE_FREE_1' + '_' + successNum + '_1'; //100원 프로모션(Case_02) 상품변경옵션 10000코인 지급 팝업
-            }
+              return 'NONE_FREE_1' + '_' + successNum; //100원 프로모션(Case_02) 상품변경옵션 기존 해지 프로세스
           }
         } else {
           if (data.coinDate !== 'N') { //코인지급내역
@@ -191,16 +183,7 @@ Tw.PRODUDT.PROMOTIONS = {
                 closeCsid: '_ASC',
                 topCloseCsId: '_CLS'
             }};
-        case 'NONE_FREE_1_1_1':
-          return {xt: {
-              eid: xtEids[data.prodId][1],
-              eid1: xtEids[data.prodId][3],
-              eid2: xtEids[data.prodId][2],
-              changeCsid: '_BSCTM',
-              closeCsid: '_ASC',
-              topCloseCsId: '_CLS'
-            }};
-        case 'NONE_FREE_1_1_2':
+        case 'NONE_FREE_1_1':
           return {xt: {
               eid: xtEids[data.prodId][1],
               eid1: xtEids[data.prodId][3],
@@ -208,37 +191,10 @@ Tw.PRODUDT.PROMOTIONS = {
               closeCsid: '_ASC',
               topCloseCsId: '_CLS'
             }};
-        case 'NONE_FREE_1_1_3':
+        case 'NONE_FREE_1_2':
           return {xt: {
               eid: xtEids[data.prodId][1],
               eid1: xtEids[data.prodId][3],
-              eid2: xtEids[data.prodId][4],
-              changeCsid: '_BSCTM',
-              closeCsid: '_ASC',
-              topCloseCsId: '_CLS'
-            }};
-        case 'NONE_FREE_1_2_1':
-          return {xt: {
-              eid: xtEids[data.prodId][1],
-              eid1: xtEids[data.prodId][3],
-              eid2: xtEids[data.prodId][2],
-              changeCsid: '_BSCTM',
-              closeCsid: '_ASC',
-              topCloseCsId: '_CLS'
-            }};
-        case 'NONE_FREE_1_2_2':
-          return {xt: {
-              eid: xtEids[data.prodId][1],
-              eid1: xtEids[data.prodId][3],
-              changeCsid: '_BSCTM',
-              closeCsid: '_ASC',
-              topCloseCsId: '_CLS'
-            }};
-        case 'NONE_FREE_1_2_3':
-          return {xt: {
-              eid: xtEids[data.prodId][1],
-              eid1: xtEids[data.prodId][3],
-              eid2: xtEids[data.prodId][4],
               changeCsid: '_BSCTM',
               closeCsid: '_ASC',
               topCloseCsId: '_CLS'
@@ -247,14 +203,14 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][3],
             eid2: xtEids[data.prodId][2],
-            changeCsid: '_ASCTM',
+            changeCsid: '_CSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
         case 'NONE_FREE_2_2':
           return {xt: {
             eid1: xtEids[data.prodId][3],
-            changeCsid: '_ASCTM',
+            changeCsid: '_FSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -262,7 +218,7 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][3],
             eid2: xtEids[data.prodId][4],
-            changeCsid: '_ASCTM',
+            changeCsid: '_DSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -288,67 +244,23 @@ Tw.PRODUDT.PROMOTIONS = {
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
       },
-      'NONE_FREE_1_1_1':{
-        action: 'POPUP3',
-        hbs1: 'RO_3.2',
-        hbs2: 'RO_3.1.1',
-        hbs3: 'RO_4.9.3',
-        hbs4: 'RO_3.3',
-        titleNm1: '혜택안내',
-        titleNm2: '혜택안내',
-        titleNm3: '상품안내',
-        titleNm4: '혜택안내'
-      },
-      'NONE_FREE_1_1_2':{
+      'NONE_FREE_1_1':{
         action: 'POPUP2',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.1',
-        hbs3: 'RO_4.9.2',
+        hbs3: 'RO_4.9.1',
         titleNm1: '혜택안내',
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
       },
-      'NONE_FREE_1_1_3':{
-        action: 'POPUP3',
-        hbs1: 'RO_3.2',
-        hbs2: 'RO_3.1.1',
-        hbs3: 'RO_4.9.3',
-        hbs4: 'RO_4.2',
-        titleNm1: '혜택안내',
-        titleNm2: '혜택안내',
-        titleNm3: '상품안내',
-        titleNm4: '혜택안내'
-      },
-      'NONE_FREE_1_2_1':{
-        action: 'POPUP3',
-        hbs1: 'RO_3.2',
-        hbs2: 'RO_3.1.2',
-        hbs3: 'RO_4.9.3',
-        hbs4: 'RO_3.3',
-        titleNm1: '혜택안내',
-        titleNm2: '혜택안내',
-        titleNm3: '상품안내',
-        titleNm4: '혜택안내'
-      },
-      'NONE_FREE_1_2_2':{
+      'NONE_FREE_1_2':{
         action: 'POPUP2',
         hbs1: 'RO_3.2',
         hbs2: 'RO_3.1.2',
-        hbs3: 'RO_4.9.2',
+        hbs3: 'RO_4.9.1',
         titleNm1: '혜택안내',
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
-      },
-      'NONE_FREE_1_2_3':{
-        action: 'POPUP3',
-        hbs1: 'RO_3.2',
-        hbs2: 'RO_3.1.2',
-        hbs3: 'RO_4.9.3',
-        hbs4: 'RO_4.2',
-        titleNm1: '혜택안내',
-        titleNm2: '혜택안내',
-        titleNm3: '상품안내',
-        titleNm4: '혜택안내'
       },
       'NONE_FREE_2_1':{
         action: 'POPUP2',
@@ -498,15 +410,7 @@ Tw.PRODUDT.PROMOTIONS = {
                 return 'NONE_FREE_3_1'; // OCB지급 N
               }
             } else {
-              if ( data.coinDate !== 'N' ) { // OCB지급 Y
-                if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
-                  return 'NONE_FREE_2_2'; // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+2 이상
-                }else{
-                  return 'NONE_FREE_2_3'; // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+1 이하
-                }
-              } else {
-                return 'NONE_FREE_2_1'; // 100원 프로모션(Case_02), OCB지급 N
-              }
+              return 'NONE_FREE_2'; //case02, case04, 해지
             }
           } else {
             if ( data.coinDate !== 'N' ) { // OCB지급 Y
@@ -531,15 +435,7 @@ Tw.PRODUDT.PROMOTIONS = {
               return 'NONE_FREE_3_1'; // OCB지급 N
             }
           } else {
-            if ( data.coinDate !== 'N' ) { // OCB지급 Y
-              if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
-                return 'NONE_FREE_2_2'; // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+2 이상
-              }else{
-                return 'NONE_FREE_2_3'; // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+1 이하
-              }
-            } else {
-              return 'NONE_FREE_2_1'; // 100원 프로모션(Case_02), OCB지급 N
-            }
+            return 'NONE_FREE_2'; //case02, case04, 해지
           }
         } else {
           if ( data.coinDate !== 'N' ) { // OCB지급 Y
@@ -575,32 +471,14 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
               eid: xtEids[data.prodId][3],
               eid1: xtEids[data.prodId][4],
-              changeCsid: '_ASCTM',
+              changeCsid: '_CSCTM',
               closeCsid: '_ASC',
               topCloseCsId: '_CLS'
             }};
-        case 'NONE_FREE_2_1':
+        case 'NONE_FREE_2':
           return {xt: {
             eid: xtEids[data.prodId][1],
             eid1: xtEids[data.prodId][4],
-            eid2: xtEids[data.prodId][2],
-            changeCsid: '_BSCTM',
-            closeCsid: '_ASC',
-            topCloseCsId: '_CLS'
-          }};
-        case 'NONE_FREE_2_2':
-          return {xt: {
-            eid: xtEids[data.prodId][1],
-            eid1: xtEids[data.prodId][4],
-            changeCsid: '_BSCTM',
-            closeCsid: '_ASC',
-            topCloseCsId: '_CLS'
-          }};
-        case 'NONE_FREE_2_3':
-          return {xt: {
-            eid: xtEids[data.prodId][1],
-            eid1: xtEids[data.prodId][4],
-            eid2: xtEids[data.prodId][5],
             changeCsid: '_BSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
@@ -609,14 +487,14 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][4],
             eid2: xtEids[data.prodId][2],
-            changeCsid: '_ASCTM',
+            changeCsid: '_DSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
         case 'NONE_FREE_3_2':
           return {xt: {
             eid1: xtEids[data.prodId][4],
-            changeCsid: '_ASCTM',
+            changeCsid: '_FSCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -624,7 +502,7 @@ Tw.PRODUDT.PROMOTIONS = {
           return {xt: {
             eid1: xtEids[data.prodId][4],
             eid2: xtEids[data.prodId][5],
-            changeCsid: '_ASCTM',
+            changeCsid: '_ESCTM',
             closeCsid: '_ASC',
             topCloseCsId: '_CLS'
           }};
@@ -651,36 +529,14 @@ Tw.PRODUDT.PROMOTIONS = {
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
       },
-      'NONE_FREE_2_1':{ // 100원 프로모션(Case_02), OCB지급 N
-        action: 'POPUP3',
-        hbs1: 'RO_3.4',
-        hbs2: 'RO_3.1.3',
-        hbs3: 'RO_4.4.3',
-        hbs4: 'RO_3.5',
-        titleNm1: '혜택안내',
-        titleNm2: '혜택안내',
-        titleNm3: '상품안내',
-        titleNm4: '혜택안내'
-      },
-      'NONE_FREE_2_2':{ // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+2 이상
+      'NONE_FREE_2':{ // 100원 프로모션(Case_02), OCB지급 N
         action: 'POPUP2',
         hbs1: 'RO_3.4',
         hbs2: 'RO_3.1.3',
-        hbs3: 'RO_4.4.2',
+        hbs3: 'RO_4.4.1',
         titleNm1: '혜택안내',
         titleNm2: '혜택안내',
         titleNm3: '상품안내'
-      },
-      'NONE_FREE_2_3':{ // 100원 프로모션(Case_02), OCB지급 Y , 가입월 M+1 이하
-        action: 'POPUP3',
-        hbs1: 'RO_3.4',
-        hbs2: 'RO_3.1.3',
-        hbs3: 'RO_4.4.3',
-        hbs4: 'RO_4.6',
-        titleNm1: '혜택안내',
-        titleNm2: '혜택안내',
-        titleNm3: '상품안내',
-        titleNm4: '혜택안내'
       },
       'NONE_FREE_3_1':{ // OCB지급 N
         action: 'POPUP2',

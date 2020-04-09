@@ -1,6 +1,6 @@
 Tw.SurveyService = function() {
   this._apiService = Tw.Api;    
-
+  new Tw.XtractorService($('body'));
   this._init();
 };
   

@@ -1255,3 +1255,8 @@
 .tod-result-box{background:#ecf0f6; color:#57637f; text-align:center; padding:1.6875rem 0; font-size:1.25rem }
 .idpt-benefit .inside-box.tod-no-border{border:none}
 
+
+/* 2020401 [OP002-7581] T쿠폰 상품원장 박스 높이 수정 */
+.idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li { height:8.125rem; padding:0.625rem 0.625rem; }
+.idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li:nth-child(5), .idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li:nth-child(6) {margin-bottom:0.625rem;}
+.idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li:nth-child(7), .idpt-benefit .idpt-coupon-list.t-coupon.t-c-row3 > li:nth-child(8) {margin-bottom:0;}
