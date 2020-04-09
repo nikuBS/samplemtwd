@@ -209,7 +209,9 @@ Tw.MyTDataGift.prototype = {
     var fnCheckedUI = function (nIndex, elInput) {
       var $input = $(elInput);
       var nInputMount = Number($input.val());
-      if ( nLimitMount - nInputMount < this.limitedGiftUsageQty) { // [잔여량 데이터 - 선물할 데이터량]이 500mb보다 작으면 비활성화
+      // if ( nLimitMount - nInputMount < this.limitedGiftUsageQty) { // [잔여량 데이터 - 선물할 데이터량]이 500mb보다 작으면 비활성화
+      // OP002-6682 선물하기 용량 표시 오류 건 수정
+      if ( nLimitMount < nInputMount ) { // 선물가능용량 기준으로 선물할 데이터가 큰 경우
         $input.prop('disabled', true);
         $input.parent().parent().addClass('disabled');
       } else {
