@@ -5532,9 +5532,15 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .popup-page .prev-step.tod-prev-step{text-indent:0}
 
 /* 200413 [OP002-7218] 개인화 */
+.apphome.fly .header-wrap .h-belt .h-default .h-person{display:none;}
 .header-wrap .h-belt .h-default .h-person{position:absolute; right:3.1875rem; top:0; }
-.header-wrap .h-belt .h-default .h-person .icon-gnb-person{width:2.1875rem; height:3.19rem; }
-.header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap{width:100%; height:100%; display:inline-flex; justify-content: flex-end; align-items:center;}
-.header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap .inner-btn{display:inline-block; width:1.8125rem; height:1.8125rem; background:url('/img/common/btn-person01.png') no-repeat right center; background-size:1.6875rem 1.375rem; border-radius:100%; position:relative; }
-.header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap .inner-btn:before{content:''; display:inline-block; width:1.8125rem; height:1.8125rem; position:absolute; left:0; top:0; background:url('/img/common/btn-person02.png') no-repeat right center; background-size:1.6875rem 1.375rem; }
-.apphome.fly .h-person{display:none;}
+.header-wrap .h-belt .h-default .h-person .icon-gnb-person{min-width:2.1875rem; height:3.19rem; width:auto;  }
+.header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap{width:100%; height:100%; display:inline-flex; -webkit-justify-content: flex-end; -webkit-box-pack: flex-end; justify-content: flex-end; -ms-flex-align:center; -webkit-box-align: center; align-items:center;}
+.header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap .inner-btn{display:inline-block; width:1.8125rem; height:1.8125rem; background:#fff url('/img/common/btn-person01.png') no-repeat 0.4375rem center; background-size:1.6875rem auto; border-radius:100%; position:relative; z-index:2; }
+.header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap .inner-btn:before{content:''; display:inline-block; width:1.8125rem; height:1.8125rem; position:absolute; right:-0.3125rem; top:0; background:url('/img/common/btn-person02.png') no-repeat right center; background-size:1.6875rem 1.375rem;}
+.header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap .btn-comment{display:inline-block; height:2.375rem; border-radius:2.4375rem; font-size:0.8125rem; background:#f44335; color:#fff; position:absolute; right:-0.3125rem; top:50%; z-index:1; white-space:nowrap; line-height:2.4375rem; padding:0 2.75rem 0 1.375rem; margin-top:-1.1875rem; box-sizing:border-box; -webkit-clip-path:ellipse(0rem 4.25rem at 100% 50%); clip-path:ellipse(0rem 4.25rem at 100% 50%); transition:-webkit-clip-path 0.35s ease-in-out; transition:clip-path 0.35s ease-in-out}
+/* show */
+.header-wrap .h-belt .h-default .h-person.show .icon-gnb-person .person-btn-wrap .btn-comment{-webkit-clip-path:ellipse(23.75rem 4.25rem at 100% 50%); clip-path:ellipse(23.75rem 4.25rem at 100% 50%)}
+@media screen and (max-width:320px){
+  .header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap .btn-comment{padding:0 2.5rem 0 0.625rem; font-size:0.75rem}
+}
