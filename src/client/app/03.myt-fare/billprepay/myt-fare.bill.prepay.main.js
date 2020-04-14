@@ -21,6 +21,7 @@ Tw.MyTFareBillPrepayMain = function (rootEl, title, className, callback) {
   this.$callback = callback;
   this._apiName = title === 'small' ? Tw.API_CMD.BFF_07_0073 : Tw.API_CMD.BFF_07_0081;
   this._prepayAmount = 0;
+  this._isAdult = 'Y';  // OP002-7282. 미성년자 여부 추가
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -133,6 +134,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _setData: function (res) {
     var result = res.result;
     if (!Tw.FormatHelper.isEmpty(result)) {
+      // 콘텐츠 이용요금 페이지에서만 사용
+      this._isAdult = this.$title === 'contents' && (result.isAdult || 'Y');
       if (result.autoChrgStCd === 'U') { // 자동선결제 신청 상태일 경우
         this.$container.find('.fe-auto-wrap').removeClass('none'); // 변경 필드 노출
       } else {
@@ -164,7 +167,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this.$remainAmount = this.$container.find('.fe-remain-amount');
     this.$prepayAmount = this.$container.find('.fe-prepay-amount');
     this.$setPasswordBtn = this.$container.find('.fe-set-password');
-
     this._name = this.$container.find('.fe-name').text();
   },
   /**
@@ -294,6 +296,11 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @param e
    */
   _prepay: function (e) {
+    // 20.04.06 OP002-7282 : 미성년자인 경우 에러페이지로 이동
+    if(this.$title === 'contents' && this._isAdult !== 'Y') {
+      return this._goErrorMinor();
+    }
+
     if (this._isPrepayAble()) {
       if (Tw.BrowserHelper.isApp()) { // 앱일 경우에만 이동
         new Tw.MyTFareBillPrepayMainSKpay({
@@ -341,6 +348,11 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @param e
    */
   _autoPrepay: function (e) {
+    // 20.04.06 OP002-7282 : 미성년자인 경우 에러페이지로 이동
+    if(this.$title === 'contents' && this._isAdult !== 'Y') {
+      return this._goErrorMinor();
+    }
+
     if (Tw.BrowserHelper.isApp()) {
       this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
     } else {
@@ -401,5 +413,13 @@ Tw.MyTFareBillPrepayMain.prototype = {
         return true;
       }
     }
+  },
+  /**
+   * @function
+   * @desc 미성년자인경우 사용제한 페이지로 이동
+   */
+  _goErrorMinor: function() {
+    var _error = Tw.MYT_FARE_BILL.ERROR.MINORS_RESTRICTIONS;
+    Tw.Error(_error.CODE, _error.MSG).page();
   }
 };
