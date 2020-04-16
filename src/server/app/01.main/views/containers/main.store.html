@@ -106,7 +106,7 @@
                                         <button class="bt-cont-box fe-home-internal" data-url="/product/callplan?prod_id=<%= product.prodId %>" data-xt_eid="<%= product.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">
                                             <em class="ranking"><%= product.expsSeq %></em>
                                             <strong class="ti"><%= product.prodNm %></strong>
-                                            <em class="sum">월 <span class="ff-tg-medium"><%= product.basFeeInfo %></span>원</em>
+                                            <em class="sum">월 <span class="ff-tg-medium"><%= formatHelper.addComma(product.basFeeAmt.toString()) %></span>원</em>
                                             <span class="tag">
                                                 <%= product.prodTagNm %>
                                             </span>
@@ -150,7 +150,13 @@
                                         <button class="bt-cont-box fe-home-internal" data-url="/product/callplan?prod_id=<%= product.prodId %>" data-xt_eid="<%= product.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">
                                             <div class="img-box"><img src="<%= CDN %><%= product.prodIconImgUrl %>" alt=""></div>
                                             <strong class="ti"><%= product.prodNm %></strong>
-                                            <em class="sum"><%= product.basFeeInfo %></em>
+                                            <% if(product.basFeeAmt === '상세참조'){ %>
+                                            <em class="sum">상세참조</em>
+                                            <% } else if(product.basFeeAmt === '무료'){ %>
+                                            <em class="sum">무료</em>
+                                            <% } else { %>
+                                            <em class="sum"><span class="ff-tg-medium"><%= formatHelper.addComma(product.basFeeAmt.toString()) %></span>원</em>
+                                            <% } %>
                                             <span class="tag"><%= product.addtionFltNm %></span>
                                             <span class="tx"><%= product.prodSmryDesc %></span>
                                         </button>
@@ -308,6 +314,10 @@
   $(document).ready(function () {
     new Tw.MainStore($('#mainStore'), '<%= pageInfo.menuId %>');
   });
+  function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ',');
+}
 </script>
 </body>
 <% include ../components/end.component.html %>
