@@ -726,6 +726,27 @@
             skt_landing.action.home_slider({
                 initialSlide: 0
             });
+            // 2020.04.16 스크립트 추가 START
+            var personTimer = null;
+            function personAction() {
+                clearTimeout(personTimer);
+                personTimer = setTimeout(function(){
+                    $('.h-person').addClass('show');
+                    setTimeout(function(){
+                        $('.h-person').removeClass('show');
+                    }, 3000)
+                }, 500);
+            }
+
+            $(window).on('scroll', function () {
+                if ($(this).scrollTop() === 0) {
+                    personAction();
+                } else {
+                    $('.h-person').removeClass('show');
+                }
+            });
+            personAction();
+            // 2020.04.16 스크립트 추가 END
         });
     </script>
 </body>
