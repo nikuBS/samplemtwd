@@ -28,7 +28,8 @@ export enum REDIS_KEY {
   SUBMAIN_BANNER = 'SubmainBanner:',
   AUTH_METHOD_BLOCK = 'AuthMethodBlock',
   EX_USER = 'ExUser:',
-  SESSION = 'session:'
+  SESSION = 'session:',
+  STORE_PRODUCT = 'StoreProduct:'
 }
 
 export enum REDIS_TOS_KEY {

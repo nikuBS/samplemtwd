@@ -30,13 +30,28 @@ class MainStore extends TwViewController {
   private getRedisData(noticeCode): Observable<any> {
     return Observable.combineLatest(
       this.getHomeNotice(noticeCode),
+      this.getStoreProduct(),
+      this.getStoreAddProduct(),
+      this.getStoreTappsProduct(),
       this.getHomeHelp()
-    ).map(([notice, help]) => {
+    ).map(([notice, product, productAdd, productTapps, help]) => {
       let mainNotice = null;
       if ( !FormatHelper.isEmpty(notice) ) {
         mainNotice = notice.mainNotice;
       }
-      return { mainNotice, help };
+      let mainProduct = null;
+      if ( !FormatHelper.isEmpty(product) ) {
+        mainProduct = product.storeProduct;
+      }
+      let addProduct = null;
+      if ( !FormatHelper.isEmpty(productAdd) ) {
+        addProduct = productAdd.storeProduct;
+      }
+      let tappsProduct = null;
+      if ( !FormatHelper.isEmpty(productTapps) ) {
+        tappsProduct = productTapps.storeProduct;
+      }
+      return { mainNotice, mainProduct, addProduct, tappsProduct, help };
     });
   }
 
@@ -46,6 +61,39 @@ class MainStore extends TwViewController {
         // if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         //   return resp.result;
         // }
+        return resp.result;
+      });
+  }
+
+  /**
+   * STORE 상품관리 리스트 데이터 요청(요금제)
+   * @return {Observable}
+   */
+  private getStoreProduct(): Observable<any> {
+    return this.redisService.getData(REDIS_KEY.STORE_PRODUCT + 'F01100')
+      .map((resp) => {
+        return resp.result;
+      });
+  }
+
+  /**
+   * STORE 상품관리 리스트 데이터 요청(부가서비스)
+   * @return {Observable}
+   */
+  private getStoreAddProduct(): Observable<any> {
+    return this.redisService.getData(REDIS_KEY.STORE_PRODUCT + 'F01200')
+      .map((resp) => {
+        return resp.result;
+      });
+  }
+
+  /**
+   * STORE 상품관리 리스트 데이터 요청(T앱)
+   * @return {Observable}
+   */
+  private getStoreTappsProduct(): Observable<any> {
+    return this.redisService.getData(REDIS_KEY.STORE_PRODUCT + 'F01700')
+      .map((resp) => {
         return resp.result;
       });
   }
