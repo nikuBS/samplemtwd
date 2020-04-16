@@ -5590,6 +5590,20 @@ body.apphome .main-membershop-box {
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/svg/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
 
+/* 200220 [OP002-6917] 상품관리 어드민 연동 */
+.tod-charge-product .bt-cont-box .ti {display:block; overflow:visible; padding-right:94px; max-height:none; box-sizing:border-box; text-overflow:clip; white-space:normal; word-break:break-word;}
+.tod-charge-product .bt-cont-box .tag span {display:inline-block; margin-right:4px; word-break:break-word;}
+.tod-charge-product .bt-cont-box .tag span:last-child {margin-right:0;}
+.tod-charge-product.type-list .bt-cont-box:before {display:none;}
+.tod-charge-product.type-list .bt-cont-box .ti {width:100%;}
+.tod-charge-product .bt-cont-box .img-box {position:absolute; top:1.06rem; left:0; width:2.75rem; height:2.75rem;}
+.tod-charge-product .bt-cont-box .img-box img {width:100%; height:100%;}
+.tod-main-tapp-box .app-list li .bt:before {display:none;}
+.tod-main-tapp-box .app-list li .app-ico {position:relative; display:block; width:3rem; height:3rem; margin:0 auto 0.44rem;}
+.tod-main-tapp-box .app-list li .app-ico .ico {width:100%; height:100%;}
+.tod-main-tapp-box .app-list li .app-name {word-break:break-word;}
+.tod-main-tapp-box .app-list li {align-items: flex-start;}
+
 /* 200327 [OP002-7405] 추가_01 *//*T월드 다이렉트샵 로고 및 브랜드명 변경*/
 .quick-menu-list.tod-quick-menu-list li:nth-child(2) {vertical-align:bottom;}
 .quick-menu-list.tod-quick-menu-list li .bt.tod-bt-tdirectshop i {width: 5.0313rem !important; height: 1.1563rem !important;}
