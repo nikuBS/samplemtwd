@@ -184,6 +184,30 @@ class MainHome extends TwViewController {
   }
 
   /**
+   * redis에서 개인화 진입 아이콘 노출 시간 획득
+   * @param 
+   * @return {Observable}
+   */
+  private getPersonIconDispTime(): Observable<any> {
+    return this.redisService.getData(REDIS_KEY.PERSON_TIME)
+      .map((resp) => {
+        this.logger.info(this, '[Person Time resp]', resp);
+        this.logger.info(this, '[Person Time resp.result]', resp.result);
+        return resp.result;
+        // let order = [];
+        // if ( resp.code === API_CODE.CODE_00 ) {
+        //   order = resp.result.split('~');
+        // }
+        // return order.map((segment) => {
+        //   return {
+        //     startTime: segment,
+        //     endTime: segment
+        //   };
+        // });
+      });
+  }
+
+  /**
    * svcInfo 에서 필요한 정보를 object로 구성
    * @param {object} svcInfo
    * @return {object}
@@ -220,15 +244,16 @@ class MainHome extends TwViewController {
       this.getNoti(),
       this.getHomeNotice(noticeCode),
       this.getHomeHelp(),
-      this.getSmartCardOrder(svcMgmtNum)
-    ).map(([noti, notice, help, smartCard]) => {
+      this.getSmartCardOrder(svcMgmtNum),
+      this.getPersonIconDispTime()
+    ).map(([noti, notice, help, smartCard, personDispTime]) => {
       let mainNotice = null;
       let emrNotice = null;
       if ( !FormatHelper.isEmpty(notice) ) {
         mainNotice = notice.mainNotice;
         emrNotice = notice.emrNotice;
       }
-      return { noti, mainNotice, emrNotice, help, smartCard };
+      return { noti, mainNotice, emrNotice, help, smartCard, personDispTime };
     });
   }
 
