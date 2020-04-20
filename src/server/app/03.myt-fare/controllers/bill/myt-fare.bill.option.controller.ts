@@ -96,8 +96,6 @@ class MyTFareBillOption extends TwViewController {
       data.phoneNum = FormatHelper.isEmpty(data.cntcNum) ? StringHelper.phoneStringToDash(svcInfo.svcNum)
         : StringHelper.phoneStringToDash(data.cntcNum); // 값이 있으면 cntcNum, 없으면 svcNum에 '-' 추가
       data.isAuto = true;
-      // OP002-7802 '출금일지정' 텍스트 제거
-      data.payCyclNm = (data.payCyclNm || '').replace(/[^0-9]/g, '');
     } else if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD) { // 카드자동납부일 경우
       data.cardYm = FormatHelper.makeCardYymm(data.cardEffYm); // 유효기간 표시 포맷에 맞게 수정 (YYYY/MM)
       data.fstDrwSchdDate = FormatHelper.isEmpty(data.fstDrwSchdDt) ? '' : DateHelper.getShortDate(data.fstDrwSchdDt); // 승인예정일 YYYY.M.D.
