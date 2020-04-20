@@ -29,7 +29,8 @@ export enum REDIS_KEY {
   AUTH_METHOD_BLOCK = 'AuthMethodBlock',
   EX_USER = 'ExUser:',
   SESSION = 'session:',
-  STORE_PRODUCT = 'StoreProduct:'
+  STORE_PRODUCT = 'StoreProduct:',
+  PERSON_TIME = 'person_tooltip.disp.time'
 }
 
 export enum REDIS_TOS_KEY {
