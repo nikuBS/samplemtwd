@@ -30,7 +30,7 @@ export enum REDIS_KEY {
   EX_USER = 'ExUser:',
   SESSION = 'session:',
   STORE_PRODUCT = 'StoreProduct:',
-  PERSON_TIME = 'person_tooltip.disp.time'
+  PERSON_DISABLE_TIME = 'person_icon.disable.time'
 }
 
 export enum REDIS_TOS_KEY {
