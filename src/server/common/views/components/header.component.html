@@ -32,7 +32,6 @@
                 <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop" role="link" title="" data-xt_eid="CMMA_A2_B6-139" data-xt_csid="NO" data-xt_action="BC">Shop</button>
             <!-- 활성화시 .on // -->
             </h1>
-            <% if (!redisData.personDisableTimeCheck) { %>
             <div class="h-person">  <!-- Web 개인화 추가 -->
                 <button data-url="/new/my-feed" type="button" class="icon-gnb-person">
                     <span class="person-btn-wrap">
@@ -43,7 +42,6 @@
                     </span>
                 </button>
             </div>
-            <% } %>
             <div class="h-serarch">
                 <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-140" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
             </div>
@@ -58,7 +56,6 @@
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
             </h1>
-            <% if (!redisData.personDisableTimeCheck) { %>
             <div class="h-person">  <!-- App 개인화 추가 -->
                 <button data-url="/new/my-feed" type="button" class="icon-gnb-person">
                     <span class="person-btn-wrap">
@@ -69,7 +66,6 @@
                     </span>
                 </button>
             </div>
-            <% } %>
             <div class="h-serarch">
                 <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
             </div>
