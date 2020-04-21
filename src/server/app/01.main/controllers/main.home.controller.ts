@@ -34,8 +34,6 @@ import BrowserHelper from '../../../utils/browser.helper';
  * @desc 메인화면-MY 초기화를 위한 class
  */
 class MainHome extends TwViewController {
-  private isPersonDisable: boolean = true; // 개인화 아이콘 노출 비활성화 true
-
   constructor() {
     super();
   }
@@ -186,32 +184,6 @@ class MainHome extends TwViewController {
   }
 
   /**
-   * redis에서 개인화 진입 아이콘 노출 비노출 여부(비활성화 시간을 비교)
-   * @param 
-   * @return {Observable}
-   */
-  private getPersonDisableTimeCheck(): Observable<any> {
-    return this.redisService.getData(REDIS_KEY.PERSON_DISABLE_TIME)
-      .map((resp) => {
-        let resTime = [];
-        let startTime;
-        let endTime;
-        const today = new Date().getTime();
-
-        if ( resp.code === API_CODE.CODE_00 ) {
-          resTime = resp.result.split('~');
-          startTime = DateHelper.convDateFormat(resTime[0]).getTime();
-          endTime = DateHelper.convDateFormat(resTime[1]).getTime();
-        }
-        this.logger.info(this, 'startTime', startTime);
-        this.logger.info(this, 'endTime', endTime);
-        this.isPersonDisable = today >= startTime && today <= endTime;
-        this.logger.info(this, '[Person Icon Disable]', this.isPersonDisable);
-        return this.isPersonDisable;
-      });
-  }
-
-  /**
    * svcInfo 에서 필요한 정보를 object로 구성
    * @param {object} svcInfo
    * @return {object}
@@ -249,15 +221,14 @@ class MainHome extends TwViewController {
       this.getHomeNotice(noticeCode),
       this.getHomeHelp(),
       this.getSmartCardOrder(svcMgmtNum),
-      this.getPersonDisableTimeCheck()
-    ).map(([noti, notice, help, smartCard, personDisableTimeCheck]) => {
+    ).map(([noti, notice, help, smartCard]) => {
       let mainNotice = null;
       let emrNotice = null;
       if ( !FormatHelper.isEmpty(notice) ) {
         mainNotice = notice.mainNotice;
         emrNotice = notice.emrNotice;
       }
-      return { noti, mainNotice, emrNotice, help, smartCard, personDisableTimeCheck };
+      return { noti, mainNotice, emrNotice, help, smartCard };
     });
   }
 
