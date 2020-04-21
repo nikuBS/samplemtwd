@@ -1,4 +1,4 @@
-export enum REDIS_KEY {
+export enum REDIS_KEY { 
   URL_META = 'UrlMetaNode:',
   MASKING_METHOD = 'MaskAuthMethods',
   APP_VERSION = 'AppVersion:appLoad',
