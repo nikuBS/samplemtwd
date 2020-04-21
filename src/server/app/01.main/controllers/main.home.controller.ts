@@ -220,7 +220,7 @@ class MainHome extends TwViewController {
       this.getNoti(),
       this.getHomeNotice(noticeCode),
       this.getHomeHelp(),
-      this.getSmartCardOrder(svcMgmtNum),
+      this.getSmartCardOrder(svcMgmtNum)
     ).map(([noti, notice, help, smartCard]) => {
       let mainNotice = null;
       let emrNotice = null;
