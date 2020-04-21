@@ -190,7 +190,7 @@ class MainHome extends TwViewController {
    * @param 
    * @return {Observable}
    */
-  private getPersonDisableTimeCheck(): any {
+  private getPersonDisableTimeCheck(): Observable<any> {
     return this.redisService.getData(REDIS_KEY.PERSON_DISABLE_TIME)
       .map((resp) => {
         let resTime = [];
