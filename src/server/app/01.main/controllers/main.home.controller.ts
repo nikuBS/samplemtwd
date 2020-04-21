@@ -190,7 +190,7 @@ class MainHome extends TwViewController {
    * @param 
    * @return {Observable}
    */
-  private getPersonDisableTimeCheck(): Observable<any> {
+  private getPersonDisableTimeCheck(): any {
     return this.redisService.getData(REDIS_KEY.PERSON_DISABLE_TIME)
       .map((resp) => {
         let resTime = [];
@@ -203,7 +203,8 @@ class MainHome extends TwViewController {
           startTime = DateHelper.convDateFormat(resTime[0]).getTime();
           endTime = DateHelper.convDateFormat(resTime[1]).getTime();
         }
-
+        this.logger.info(this, 'startTime', startTime);
+        this.logger.info(this, 'endTime', endTime);
         this.isPersonDisable = today >= startTime && today <= endTime;
         this.logger.info(this, '[Person Icon Disable]', this.isPersonDisable);
         return this.isPersonDisable;
