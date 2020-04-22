@@ -201,6 +201,10 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       if (!resultData || !innerIndex) {
         return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
+      // 자동납부 타입 (CARD, EASY:간편결제, BANK)
+      const getType = (bankCardCoCdNm, bankCardCoCd) => {
+        return this.isCard(bankCardCoCdNm) ? 'CARD' : (['510', '520', '530', '540'].indexOf(bankCardCoCd) > -1 ? 'EASY' : 'BANK');
+      };
 
       resultData.dataDt = DateHelper.getShortDate(resultData.drwDt); // 납부일자 YYYY.M.D.
       resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액
@@ -209,6 +213,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       resultData.dataUseTermStart = DateHelper.getShortFirstDate(resultData.lastInvDt); // 이용기간 YYYY.M.1.
       resultData.dataLastInvDt = DateHelper.getShortDate(resultData.lastInvDt); // 이용기간 ~ YYYY.M.D.
       resultData.dataIsBank = !this.isCard(resultData.bankCardCoCdNm); // 은행인지 여부(텍스트로 판단)
+      resultData.dataType = getType(resultData.bankCardCoCdNm, resultData.bankCardCoCd); // 타입 (카드, 간편결제, 은행)
       resultData.dataTitle = resultData.bankCardCoCdNm; // 은행명 / 카드사명
       resultData.dataCardBankNum = resultData.bankCardNum; // 계좌번호 / 카드번호
       resultData.dataTmthColClCd = MYT_PAYMENT_HISTORY_AUTO_TYPE[resultData.tmthColClCd]; // 구분
