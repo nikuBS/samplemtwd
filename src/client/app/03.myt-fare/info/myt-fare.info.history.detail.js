@@ -88,6 +88,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
    * - myt-fare.info.history.detail.html 참고
    */
   _cachedElement: function () {
+    this._registerHelper();
     this.$templateWrapper = this.$container.find('#fe-detail-wrapper');
 
     this.$template = {
@@ -101,6 +102,28 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
       $reservePoint: Handlebars.compile($('#fe-payment-detail-reserve-point').html()),
       $autoPoint: Handlebars.compile($('#fe-payment-detail-auto-point').html())
     };
+  },
+
+  /**
+   * hbs 헬퍼 등록
+   * @private
+   */
+  _registerHelper: function () {
+    // v1,v2가 동일한지 검사
+    Handlebars.registerHelper('if_eq', function (v1, v2, options) {
+      if ( v1 === v2 ) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    });
+
+    // v1,v2가 다른지 검사
+    Handlebars.registerHelper('if_not_eq', function (v1, v2, options) {
+      if ( v1 !== v2 ) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    });
   },
 
   /**
