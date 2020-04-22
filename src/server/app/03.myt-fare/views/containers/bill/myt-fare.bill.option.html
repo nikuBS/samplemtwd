@@ -150,7 +150,8 @@
                                 <dt>요금납부일</dt>
                                 <dd>
                                     <p class="value">매달 <span class="fe-pay-date"><%= paymentOption.payCyclNm %></span>일</p>
-                                    <% if (paymentOption.chgYn === 'Y') { %>
+                                    <!--납부유형이 "간편결제"인 경우는 "변경" 버튼 비노출 된다.-->
+                                    <% if (paymentOption.payMthdCd !== '05' && paymentOption.chgYn === 'Y') { %>
                                     <button class="bt-link-tx underline fe-change-date" id="<%= paymentOption.payCyclNm %>" title="요금 납부일 변경">변경</button>
                                     <% } %>
                                 </dd>
