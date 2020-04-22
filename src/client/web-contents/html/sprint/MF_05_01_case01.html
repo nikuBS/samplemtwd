@@ -32,7 +32,7 @@
     <div id="skipNav" class="skip_navi">
         <!-- Grand open 접근성 수정 -->
         <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#contents-area">본문 바로가기</a></li>
         </ul>
         <!-- Grand open 접근성 수정 -->
     </div>
@@ -55,7 +55,9 @@
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
+            <!-- 190820 웹접근성 수정_01 -->
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <!-- //190820 웹접근성 수정_01 -->    
             <div class="container">
             <!-- 190617 추가 -->
                 <!-- 자동납부 1% 할인 대상자 에게만 노출 -->
@@ -87,12 +89,34 @@
                     <!-- 190617 리디자인_01 -->
                 </div>
                 <!--// .cont-box -->
-                <div class="ti-caption-gray">
+
+                <!-- 190831 리디자인_01 : hr, class="ti-caption-gray tod-caption-white" -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="ti-caption-gray tod-caption-white">
                     <h3 class="tit">상세정보</h3>
                 </div>
+                <!-- //190831 리디자인_01 -->
+                
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
                     <ul class="detail-info-list">
+                        <!-- 200408 [OP002-7611] 수정_01 -->
+                        <li>
+                            <dl>
+                                <dt>연락처</dt>
+                                <dd>
+                                    <p class="value">010-93**-78**</p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>카드유효기간</dt>
+                                <dd>
+                                    <p class="value">2020/06</p>
+                                </dd>
+                            </dl>
+                        </li>
                         <li>
                             <dl>
                                 <dt>최초 승인예정일</dt>
@@ -109,22 +133,7 @@
                                 </dd>
                             </dl>
                         </li>
-                        <li>
-                            <dl>
-                                <dt>카드유효기간</dt>
-                                <dd>
-                                    <p class="value">2020/06</p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>연락처</dt>
-                                <dd>
-                                    <p class="value">010-93**-78**</p>
-                                </dd>
-                            </dl>
-                        </li>
+                        <!-- //200408 [OP002-7611] 수정_01 -->
                     </ul>
                 </div>
                 <!--// .cont-box -->
