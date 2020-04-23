@@ -131,7 +131,8 @@ export enum MYT_FARE_PAYMENT_TYPE {
   BANK = '01',
   CARD = '02',
   GIRO = '03',
-  VIRTUAL = '04'
+  VIRTUAL = '04',
+  EASY = '05' // 간편결제
 }
 
 export enum MYT_FARE_PAYMENT_CODE {

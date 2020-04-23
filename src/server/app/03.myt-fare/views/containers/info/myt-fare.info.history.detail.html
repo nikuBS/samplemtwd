@@ -352,14 +352,17 @@
                     </li>
                     <li>
                         <div class="head-text">
-                            {{#if dataIsBank}}
-                            <span class="tit">은행명</span>
-                            {{else}}
+                            {{#if_eq dataType 'CARD'}}
                             <span class="tit">카드사명</span>
-                            {{/if}}
+                            {{else if_eq dataType 'EASY'}}
+                            <span class="tit">서비스명</span>
+                            {{else}}
+                            <span class="tit">은행명</span>
+                            {{/if_eq}}
                             <span class="val">{{dataTitle}}</span>
                         </div>
                     </li>
+                    {{#if_not_eq dataType 'EASY'}}
                     <li>
                         <div class="head-text">
                             {{#if dataIsBank}}
@@ -370,6 +373,7 @@
                             <span class="val"><span class="number">{{dataCardBankNum}}</span></span>
                         </div>
                     </li>
+                    {{/if_not_eq}}
                     <li>
                         <div class="head-text">
                             <span class="tit">사유</span>

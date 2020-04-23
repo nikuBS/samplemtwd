@@ -65,11 +65,24 @@ Tw.MyTFareBillOption.prototype = {
     this.$container.on('click', '.fe-change-date', $.proxy(this._changePaymentDate, this));
     this.$container.on('click', '.fe-change-address', $.proxy(this._changeAddress, this));
   },
+
+  /**
+   * @function
+   * @desc 간편결제 여부
+   * @returns {boolean}
+   */
+  _isEasy: function () {
+    return this.$container.find('.fe-edit-area').data('payMthdCd') === '05';
+  },
+
   /**
    * @function
    * @desc 자동납부 신청/변경 페이지로 이동
    */
   _goAutoPayment: function () {
+    if (this._isEasy()) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.EASY_IMMUTABLE);
+    }
     this._historyService.goLoad('/myt-fare/bill/option/register');
   },
   /**
@@ -77,6 +90,9 @@ Tw.MyTFareBillOption.prototype = {
    * @desc 자동납부 해지 페이지로 이동
    */
   _cancelAutoPayment: function () {
+    if (this._isEasy()) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.EASY_IMMUTABLE);
+    }
     this._historyService.goLoad('/myt-fare/bill/option/cancel');
   },
   /**

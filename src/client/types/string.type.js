@@ -659,6 +659,7 @@ Tw.ALERT_MSG_MYT_FARE = {
     '<br />' +
     '휴대폰결제 비밀번호 부가서비스를 해지하러 가시겠습니까?',
   EMPTY_CARD_INFO: '자동납부로 등록된 카드정보가 없습니다.',
+  EASY_IMMUTABLE: '간편결제 자동납부 이용 중인 경우 T world에서 자동납부변경/해지가 불가합니다.<br />고객센터 또는 지점/대리점 이용 바랍니다.',
   A59: '조회 종료일 유효한 일자가 아닙니다.',
   A60: '시작일이 종료일보다 클 수 없습니다.',
   ALERT_CARD_TYPE: '카드 할부는 납부금액이 5만원 이상인 경우에 가능합니다.',
@@ -2170,7 +2171,11 @@ Tw.PRODUCT_JOIN_OCB = {
 Tw.MYT_FARE_BILL = {
   ERROR: {
     UNUSUAL_CUSTOMER_MSG: '휴대폰 결제 특이 차단 중인 고객은 해당 메뉴를 이용하실 수 없습니다.',
-    UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.'
+    UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.',
+    MINORS_RESTRICTIONS: {
+      CODE: 'BIL0031',
+      MSG: '미성년자명의 휴대폰 고객은 사용이 제한된 메뉴입니다.'
+    }
   }
 };
 

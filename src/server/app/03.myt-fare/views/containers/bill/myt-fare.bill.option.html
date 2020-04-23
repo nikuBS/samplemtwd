@@ -45,11 +45,13 @@
                         <span class="tit-small"><%= addrInfo.payNm %></span>
                         <% if (paymentOption.payMthdCd === '01') { %> <!-- 계좌이체 자동납부일 경우 은행명과 계좌번호 표시 -->
                         <span class="tit-big"><%= paymentOption.bankNm %> <em><%= paymentOption.bankNum %></em></span>
-                        <% } else { %> <!-- 카드납부일 경우 카드명과 카드번호 표시 -->
+                        <% } else if(paymentOption.payMthdCd === '02') { %> <!-- 카드납부일 경우 카드명과 카드번호 표시 -->
                         <span class="tit-big"><%= paymentOption.bankCardName %> <em><%= paymentOption.bankCardNum %></em></span>
+                        <% } else { %>  <!--간편결제 일 경우 서비스명만 표시-->
+                        <span class="tit-big"><%= paymentOption.bankNm %></span>
                         <% } %>
                     </div>
-                    <ul class="bt-slice item-two mt30">
+                    <ul class="bt-slice item-two mt30 fe-edit-area" data-pay-mthd-cd="<%- paymentOption.payMthdCd %>">
                         <li>
                             <button class="btn-round1 btn-style4 fe-auto">변경</button>
                         </li>
@@ -84,28 +86,27 @@
                 </div>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                    <!-- 계좌이체 납부일 경우 -->
-                    <% if (paymentOption.payMthdCd === '01') { %>
-                    <ul class="detail-info-list fe-auto-info" data-fst-drw-schd-dt="<%= paymentOption.fstDrwSchdDt %>">
+                    <ul class="detail-info-list">
+                        <%if (['01','03','04','05'].indexOf(paymentOption.payMthdCd) > -1) {%>
+                            <% if (paymentOption.payMthdCd === '04') { %>
+                            <li>
+                                <dl>
+                                    <dt>입금전용계좌</dt>
+                                    <dd>
+                                        <p class="value"><%= addrInfo.account %></p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <% } %>
                         <li>
                             <dl>
-                                <dt>최초 승인예정일</dt>
+                                <dt><%= paymentOption.payMthdCd === '05' ? '가입자명':'예금주명' %></dt>
                                 <dd>
-                                    <p class="value"><%= paymentOption.fstDrwSchdDate %></p>
+                                    <p class="value"><%= paymentOption.dpstCardOwnrNm %></p>
                                 </dd>
                             </dl>
                         </li>
-                        <li>
-                            <dl>
-                                <dt>요금납부일</dt>
-                                <dd>
-                                    <p class="value">매달 <span class="fe-pay-date"><%= paymentOption.payCyclNm %></span>일</p>
-                                    <% if (paymentOption.chgYn === 'Y') { %>
-                                    <button class="bt-link-tx underline fe-change-date" id="<%= paymentOption.payCyclNm %>" title="요금 납부일 변경">변경</button>
-                                    <% } %>
-                                </dd>
-                            </dl>
-                        </li>
+                        <%}%>
                         <li>
                             <dl>
                                 <dt>연락처</dt>
@@ -114,34 +115,8 @@
                                 </dd>
                             </dl>
                         </li>
-                        <li>
-                            <dl>
-                                <dt>예금주명</dt>
-                                <dd>
-                                    <p class="value"><%= paymentOption.dpstCardOwnrNm %></p>
-                                </dd>
-                            </dl>
-                        </li>
-                    </ul>
-                    <!-- 카드납부일 경우 -->
-                    <% } else if (paymentOption.payMthdCd === '02') { %>
-                    <ul class="detail-info-list">
-                        <li>
-                            <dl>
-                                <dt>최초 승인예정일</dt>
-                                <dd>
-                                    <p class="value"><%= paymentOption.fstDrwSchdDate %></p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>인출(승인)일</dt>
-                                <dd>
-                                    <p class="value">영업일 / 카드사에 따라 다름</p>
-                                </dd>
-                            </dl>
-                        </li>
+                        <!-- 카드납부일 경우 -->
+                        <%if(paymentOption.payMthdCd === '02') {%>
                         <li>
                             <dl>
                                 <dt>카드유효기간</dt>
@@ -150,44 +125,39 @@
                                 </dd>
                             </dl>
                         </li>
+                        <%}%>
                         <li>
                             <dl>
-                                <dt>연락처</dt>
+                                <dt>최초 승인예정일</dt>
                                 <dd>
-                                    <p class="value"><%= paymentOption.phoneNum %></p>
+                                    <p class="value"><%= paymentOption.fstDrwSchdDate %></p>
                                 </dd>
                             </dl>
                         </li>
-                    </ul>
-                    <!-- 지로 및 입금전용계좌 (자동납부 미사용자) -->
-                    <% } else { %>
-                    <ul class="detail-info-list">
-                        <% if (paymentOption.payMthdCd === '04') { %>
+                        <!-- 카드납부일 경우 -->
+                        <%if(paymentOption.payMthdCd === '02') {%>
                         <li>
                             <dl>
-                                <dt>입금전용계좌</dt>
+                                <dt>인출(승인)일</dt>
                                 <dd>
-                                    <p class="value"><%= addrInfo.account %></p>
+                                    <p class="value">영업일 / 카드사에 따라 다름</p>
                                 </dd>
                             </dl>
                         </li>
-                        <% } %>
+                        <%} else if (['01','05'].indexOf(paymentOption.payMthdCd) > -1) {%> <!--계좌이체, 간편결제-->
                         <li>
                             <dl>
-                                <dt>예금주명</dt>
+                                <dt>요금납부일</dt>
                                 <dd>
-                                    <p class="value"><%= addrInfo.custNm %></p>
+                                    <p class="value">매달 <span class="fe-pay-date"><%= paymentOption.payCyclNm %></span>일</p>
+                                    <!--납부유형이 "간편결제"인 경우는 "변경" 버튼 비노출 된다.-->
+                                    <% if (paymentOption.payMthdCd !== '05' && paymentOption.chgYn === 'Y') { %>
+                                    <button class="bt-link-tx underline fe-change-date" id="<%= paymentOption.payCyclNm %>" title="요금 납부일 변경">변경</button>
+                                    <% } %>
                                 </dd>
                             </dl>
                         </li>
-                        <li>
-                            <dl>
-                                <dt>연락처</dt>
-                                <dd>
-                                    <p class="value fe-phone"><%= addrInfo.phoneNum %></p>
-                                </dd>
-                            </dl>
-                        </li>
+                        <%} else {%> <!-- 지로 및 입금전용계좌 (자동납부 미사용자) -->
                         <li>
                             <dl>
                                 <dt>주소</dt>
@@ -199,8 +169,8 @@
                                 </dd>
                             </dl>
                         </li>
+                        <%}%>
                     </ul>
-                    <% } %>
                 </div>
                 <!--// .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true"/>
@@ -208,9 +178,8 @@
                 <div class="cont-box noborder bgnone">
                     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                     <ul class="pg-chk-list02">
-                        <% if (paymentOption.payMthdCd === '01' || paymentOption.payMthdCd === '02') { %>
+                        <% if (['01','02','05'].indexOf(paymentOption.payMthdCd) > -1) { %>
                         <li><button id="MF_05_01_tip_01" class="btn-tip" aria-haspopup="true">인출(승인)일 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                        <li><button id="MF_05_01_tip_02" class="btn-tip" aria-haspopup="true">자동납부 할인 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <% } else { %>
                         <li><button id="MF_05_01_02_tip_02" class="btn-tip" aria-haspopup="true">매월 5일 이후 해지 시<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <% } %>

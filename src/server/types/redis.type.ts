@@ -1,4 +1,4 @@
-export enum REDIS_KEY {
+export enum REDIS_KEY { 
   URL_META = 'UrlMetaNode:',
   MASKING_METHOD = 'MaskAuthMethods',
   APP_VERSION = 'AppVersion:appLoad',
@@ -28,7 +28,9 @@ export enum REDIS_KEY {
   SUBMAIN_BANNER = 'SubmainBanner:',
   AUTH_METHOD_BLOCK = 'AuthMethodBlock',
   EX_USER = 'ExUser:',
-  SESSION = 'session:'
+  SESSION = 'session:',
+  STORE_PRODUCT = 'StoreProduct:',
+  PERSON_DISABLE_TIME = 'person_icon.disable.time'
 }
 
 export enum REDIS_TOS_KEY {
