@@ -627,7 +627,7 @@ class MyTFareBillGuide extends TwViewController {
       return MYT_JOIN_WIRE_SVCATTRCD.S1;      // 인터넷
 
     } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S2.toLowerCase()) !== -1) {
-      return MYT_JOIN_WIRE_SVCATTRCD.S2;      // TV
+      return MYT_JOIN_WIRE_SVCATTRCD.S2;      // IPTV
 
     } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S3) !== -1
       || nm.indexOf(MYT_FARE_BILL_GUIDE.TEL_TYPE_1) !== -1 ) {
