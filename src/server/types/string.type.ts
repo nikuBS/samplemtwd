@@ -504,7 +504,7 @@ export const MYT_JOIN_WIRE_SVCATTRCD = {
   M4: 'T Login',
   M5: 'T Wibro',
   S1: '인터넷',
-  S2: 'TV',
+  S2: 'IPTV',
   S3: '집전화',
   O1: '포인트캠'
 };
@@ -550,14 +550,14 @@ export const MYT_JOIN_WIRE_SET_PAUSE = {
 };
 
 export const MYT_JOIN_THIGH5_PREFERENTIAL = {
-  DGB: {
+  DGB:{
     '01': '우대금리 2%',   // NC00000074 : 우대금리
     '02': 'T high5 캐시백 1%',   // NC00000075 : 우대금리 + 캐시백
     '03': '우대금리 2%',   // NC00000076 : 우대금리
     '04': 'T high5 캐시백 1%',   // NC00000077 : 우대금리 + 캐시백
     NC00000080: 'T high5 0히어로 캐시백 1%'   // NC00000080 : ?값이 어떻게 올지 확인필요
   },
-  KDB: {
+  KDB:{
     '01': '우대금리 I 2%',  // NC00000083:
     '02': '조건 충족 시 우대금리 II 1%',  // NC00000082:
     '03': '우대금리 I 2%',  // NC00000085:
@@ -1447,11 +1447,11 @@ export const ROAMING_CUSTOMIZED_MESSAGE = {
 };
 
 export const ROAMING_PRODUCT_CUSTOMIZE_DATA = {
-  NA00006487: { // baro OnePass VIP 기간형
+  NA00006487:{ // baro OnePass VIP 기간형
     selectableStartDateRange: 60,
     selectableStartDate: ROAMING_CUSTOMIZED_MESSAGE.SIXTY_DAY
   },
-  NA00006745: { // baro OnePass Data VIP 기간형
+  NA00006745:{ // baro OnePass Data VIP 기간형
     selectableStartDateRange: 60,
     selectableStartDate: ROAMING_CUSTOMIZED_MESSAGE.SIXTY_DAY
   }
