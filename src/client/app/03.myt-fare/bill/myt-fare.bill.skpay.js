@@ -325,7 +325,6 @@ Tw.MyTFareBillSkpay.prototype = {
       _acceptedPaymentMethods.push({ category: "CreditCard"});
       _acceptedPaymentMethods.push({ category: "DebitCard"});
       _acceptedPaymentMethods.push({ category: "DirectDebit"});
-      _acceptedPaymentMethods.push({ category: "SKpayMoney"});
   
       var dateReq = {
         "acntNum": this.acntNum, //계정번호
