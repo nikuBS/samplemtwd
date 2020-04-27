@@ -17,7 +17,7 @@
     this.$container = rootEl;
     if (!banners || banners.length <= 0) {
       if(target){
-        this.$container.find('ul.slider[data-location=' + target + ']').parents('div.nogaps').addClass('none');;
+        this.$container.find('ul.slider[data-location=' + target + ']').parents('div.nogaps').addClass('none');
       }
       return;
     }
@@ -27,7 +27,7 @@
     } else {
       this._init(type, banners, target, callback);
     }
-    
+
     this._cachedElement(target);
     this._bindEvent();
   };
@@ -117,7 +117,7 @@
   
           if(rollYn === 'Y' && this._banners.length > 1){
             //this.$banners.addClass('fe-banner-auto');
-            this.$banners.closest('.widget-box').addClass('slider1-auto').data("slider-auto", "true"); // 190610_추가
+            this.$banners.closest('.widget-box').addClass('slider1-auto').data('slider-auto', 'true'); // 190610_추가
           }
           
           // set slick
@@ -145,7 +145,7 @@
                 } else {
                   return $('<button />').attr({
                     text: i + 1,
-                    'aria-label': i + 1,
+                    'aria-label': i + 1
                   });
                 }
               }
@@ -290,7 +290,7 @@
           Tw.REDIS_DEVICE_CODE.IOS : 
         Tw.REDIS_DEVICE_CODE.MWEB;
     },
-  
+
     /**
      * @desc set data for presentation
      * @param {string} type Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
@@ -321,11 +321,11 @@
           .value();
       } else if(type === Tw.REDIS_BANNER_TYPE.ADMIN) {
         return _.chain(banners)
-          .filter(function(banner) { 
+          .filter(function(banner) {
             return (
               (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) && // only mobile
-              (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) && // not yet exposure date
-              (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)  // end of exposure date
+              // 오늘 날짜가 배너 시작일자와 종료일자에 포함되어야 함
+              (!banner.expsStaDtm && !banner.expsEndDtm || (Tw.DateHelper.isBetween(today, banner.expsStaDtm, banner.expsEndDtm)))
             );
           })
           .sort(function(a, b) {
@@ -355,18 +355,17 @@
             if(banner.kind === Tw.REDIS_BANNER_TYPE.TOS){ // 조건 여부 확인 필요
               return true;
             }
-  
+
             return (
               (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) && // only mobile
-              (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) && // not yet exposure date
-              (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)  // end of exposure date
+              // 오늘 날짜가 배너 시작일자와 종료일자에 포함되어야 함
+              (!banner.expsStaDtm && !banner.expsEndDtm || (Tw.DateHelper.isBetween(today, banner.expsStaDtm, banner.expsEndDtm)))
             );
           })
           .sort(function(a, b) {
             var prev = {kind: a.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, 
                         bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(a.tosBatCmpgnSerNum||'A').substr(0,1)]
-              }
-              , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, 
+              }, next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1,
                         bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(b.tosBatCmpgnSerNum||'A').substr(0,1)]
               };
   
@@ -386,8 +385,10 @@
             var isTos = banner.kind === Tw.REDIS_BANNER_TYPE.TOS;
             var temp = {
               isHTML: banner.bnnrTypCd === 'H',
-              isBill: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) === -1 : banner.billYn === 'Y', // TOS인경우 기존에 무조건 과금으로 입력된(확인필요함)
-              isInternalLink: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1  : banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
+              // TOS인경우 기존에 무조건 과금으로 입력된(확인필요함)
+              isBill: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) === -1 : banner.billYn === 'Y',
+              isInternalLink: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1  :
+                banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
               linkType: isTos? banner.tosImgLinkTrgtClCd : Tw.TOS_BANNER_LINK_TARGET[_.invert(Tw.BANNER_LINK_TARGET)[banner.linkTypCd]]
             };
             if(isTos){
@@ -396,7 +397,7 @@
                 bnnrImgAltCtt: banner.imgAltCtt,
                 imgLinkUrl: banner.imgLinkUrl,
                 isTos: true
-              })
+              });
             }
   
             nBanners.push($.extend({}, banner, temp));
@@ -407,4 +408,3 @@
       }
     }
   };
-  
