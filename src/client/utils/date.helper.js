@@ -374,6 +374,25 @@ Tw.DateHelper = (function () {
     return min + '분 ' + sec + '초';
   };
 
+  /**
+   * @desc 대상 날짜가 시작날짜와 종료 날짜 사이에 있는지 여부
+   * @param {date|string} target 대상날짜
+   * @param {date|string} start 시작날짜
+   * @param {date|string} end 종료날짜
+   * @returns {boolean} true | false
+   * @public
+   */
+  var isBetween = function (target, start, end) {
+    if ( !target || !start || !end ) {
+      console.error('[date.helper]', 'invalid value!!');
+      return false;
+    }
+    target = this.convDateFormat(target);
+    start = this.convDateFormat(start);
+    end = this.convDateFormat(end);
+    return moment(target).isBetween(start, end, null, '[]');
+  };
+
 
   return {
     getNewRemainDate: getNewRemainDate,
@@ -411,6 +430,7 @@ Tw.DateHelper = (function () {
     getDateCustomFormat : getDateCustomFormat,
     add5min: add5min,
     getRemainedSec: getRemainedSec,
-    convertMinSecFormat: convertMinSecFormat
+    convertMinSecFormat: convertMinSecFormat,
+    isBetween: isBetween
   };
 })();
