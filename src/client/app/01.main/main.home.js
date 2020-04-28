@@ -1068,10 +1068,11 @@ Tw.MainHome.prototype = {
       }
     } else if ( billData.code === Tw.API_CODE.CODE_00 ) {
       var invMonth = Tw.DateHelper.getCurrentMonth(billData.result.invDt);
+      var billMonth = '1';
       if(invMonth === '12') {
         billMonth = '1';
       } else {
-        billMonth = +invMonth+ 1
+        billMonth = +invMonth+ 1;
       }
       return {
         showData: true,
@@ -1275,8 +1276,11 @@ Tw.MainHome.prototype = {
 
     $btGoGift.on('click', $.proxy(this._onClickBtGift, this, sender));
     if ( !result.blockUsage ) {
-      $btBalance.on('click', $.proxy(this._onClickGiftBalance, this, element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance));
-      this._getGiftBalance(0, element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
+      $btBalance.on('click',
+        $.proxy(this._onClickGiftBalance, this, element, $textBalance, $btBalance, $loading, $textError, $btGoGift,
+          $textErrorBalance));
+      this._getGiftBalance(0, element, $textBalance, $btBalance, $loading, $textError, $btGoGift,
+        $textErrorBalance);
     }
   },
 
@@ -1908,7 +1912,7 @@ Tw.MainHome.prototype = {
           })
         );
       }
-    })
+    });
     this._drawTosAdminBanner(result);
   },
 
@@ -1957,7 +1961,7 @@ Tw.MainHome.prototype = {
           return admbnr;
         })
       );
-    })
+    });
     this._drawTosAdminBanner(result);
   },
 
@@ -1994,15 +1998,16 @@ Tw.MainHome.prototype = {
             list: bnr.banner.result.imgList
           };
         } else {
-          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
+          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target,
+            $.proxy(this._successDrawBanner, this));
         }
       }
     }, this));
 
     var directBanner = banners.filter(function(e){
-      return e.target == 'S'
+      return e.target === 'S';
     }).map(function(e){
-      return e.banner.result.imgList
+      return e.banner.result.imgList;
     })[0].map(function (target) {
       target.chargeOrExternal = 'fe-home-external';
       return target;
@@ -2346,9 +2351,9 @@ Tw.MainHome.prototype = {
 
     var storeRecommendProds = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODS));
     
-    if ( Tw.FormatHelper.isEmpty(storeRecommendProds) 
-          || Tw.DateHelper.convDateFormat(storeRecommendProds.expired).getTime() < new Date().getTime() 
-          || this._svcMgmtNum !== storeRecommendProds.svcMgmtNum ) {
+    if ( Tw.FormatHelper.isEmpty(storeRecommendProds) ||
+        Tw.DateHelper.convDateFormat(storeRecommendProds.expired).getTime() < new Date().getTime() ||
+        this._svcMgmtNum !== storeRecommendProds.svcMgmtNum ) {
 
           setTimeout($.proxy(this._handleRecommendProds, this, element), 500);
 
