@@ -195,6 +195,16 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$header.on('click', '[data-url]', this._onClickUrlButton);
 
     this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
+    // Tplace 쪽 작업중으로 임시 이벤트 생성 (상용 불가)
+    this.$nickName.on('click', _.debounce($.proxy(this._goTshopMobile, this),500));
+  },
+
+  /**
+   * @desc Tplace 로 sso login 이동. Tplace쪽 작업이 아직 안 끝나서 임시 작업분. 추후 변경 예정.
+   * @function
+   */
+  _goTshopMobile: function () {
+    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.T_SHOP_MOBILE + Tw.CommonHelper.getCookie('TWM'));
   },
 
   /**
@@ -409,7 +419,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
   /**
    * @function
-   * @desc 각가의 메뉴 클릭시 해당 화면으로 이동
+   * @desc 각각의 메뉴 클릭시 해당 화면으로 이동
    * @param  {Object} e - click event
    */
   _onMenuLink: function (e) {
@@ -874,7 +884,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         item.isShowDataCharge = false;
         item.exUrlNoti = item.exUrlNoti || '';
         if(Tw.BrowserHelper.isApp()) {
-          item.isShowDataCharge = item.exUrlNoti.indexOf('MA') !== -1 ? true : false
+          item.isShowDataCharge = item.exUrlNoti.indexOf('MA') !== -1 ? true : false;
         // } else {
         //   item.isShowDataCharge = item.exUrlNoti.indexOf('MW') !== -1 ? true : false
         }

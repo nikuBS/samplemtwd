@@ -41,5 +41,6 @@ Tw.OUTLINK = {
     discount: '/bnft?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide5&fSiteCd=1010',
     buy: '/dc-agrmt-typ?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide6&fSiteCd=1010',
     delivery: '/dvc-dlv?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide7&fSiteCd=1010'
-  }
+  },
+  T_SHOP_MOBILE: 'http://tplace.s3-website.ap-northeast-2.amazonaws.com/main?sso_login_id='
 };
