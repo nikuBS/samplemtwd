@@ -451,6 +451,7 @@ Tw.API_CMD = {
   BFF_08_0083: { path: '/core-modification/:version/campaign-reject-delete', method: Tw.API_METHOD.GET},
   BFF_08_0084: { path: '/core-modification/:version/search/invst-improve', method: Tw.API_METHOD.POST},
   BFF_08_0085: { path: '/core-modification/:version/survey/surveyFloatingList', method: Tw.API_METHOD.GET},
+  BFF_08_0086: { path: '/core-modification/:version/ifaq/iFaq-brws-cnt-incre', method: Tw.API_METHOD.POST},
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },

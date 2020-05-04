@@ -39,6 +39,7 @@ class CustomerFaqView extends TwViewController {
       res.render('faq/customer.faq.view.html', {
         svcInfo : svcInfo,
         faqInfo : faqInfo.result,
+        ifaqId : ifaqId,
         category : category,
         pageInfo : pageInfo
       });
