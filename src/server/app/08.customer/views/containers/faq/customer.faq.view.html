@@ -43,7 +43,7 @@ var categoryArr = category.split('>');
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerFaqView($('.wrap'));
+    new Tw.CustomerFaqView($('.wrap'), '<%=ifaqId%>');
   })
 </script>
 <% include ../../components/end.component.html %>
