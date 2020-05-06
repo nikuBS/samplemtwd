@@ -1,4 +1,4 @@
-/** 
+/**
  * @file main.home.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.09.06
@@ -518,7 +518,6 @@ class MainHome extends TwViewController {
     data.shareRemained = 0;
     data.myRemainedRatio = 100;
     data.shareRemainedRatio = 100;
-    data.linkUrl = '/myt-data/hotdata';
     let includeFee = false;
     let includeFeeCnt = 0;
 
@@ -572,8 +571,11 @@ class MainHome extends TwViewController {
       data.shareRemainedRatio = Math.round(data.addRemained / data.addTotal * 100);
     }
 
-    if ( data.usingFivegxTicketTime) {
+    if (data.usingFivegxTicketTime) {
       data.linkUrl = '/myt-data/5g-setting';
+    } else {
+      // data.linkUrl = '/myt-data/hotdata';
+      data.linkUrl = '/myt-data/submain';
     }
   }
 
@@ -655,7 +657,7 @@ class MainHome extends TwViewController {
             retVal.hasRecommendProds = true;
             const items = resp.result.results[EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS].items || [];
             // 추천 요금이 없거나, 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
-            if (FormatHelper.isEmpty(items) 
+            if (FormatHelper.isEmpty(items)
                 || (!FormatHelper.isEmpty(items) && items[0].id === prodId)) {
                   retVal.hasRecommendProds = false;
             }

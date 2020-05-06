@@ -60,10 +60,15 @@
                     <% } %>
 
 
-                    <% if ( !(data.cateCd === '3' && data.brandCd === '2012001689') ) { %>
+                    <% if ( !(data.cateCd === '3' && data.brandCd === '2012001689') && ( data.reptTelNo || data.hpUrl ) ) { %>
                     <h4 class="sstit">문의 및 상담</h4>
                     <ul class="benefit-list">
-                        <li>TEL : <%= data.reptTelNo %></li>
+                        <% if ( data.reptTelNo ) { %>
+                           <li>TEL : <%= data.reptTelNo %></li>
+                        <% } %>
+                        <% if ( data.hpUrl ) { %>
+                           <li>HOME : <a href="<%= data.hpUrl %>" target="blank" title="새창" class="fe-link-external"><%= data.hpUrl %></a></li>
+                        <% } %>
                     </ul>
                     <% } %>
                 </div>

@@ -39,7 +39,7 @@
                                     <% for (const item of data.list) { %>
                                     <li class="acco-list"><!-- on , off -->
                                         <div class="acco-title">
-                                            <button role="button" aria-pressed="false" class="list-q"><!-- .none-event 클릭못하게할때 -->
+                                            <button role="button" aria-pressed="false" class="list-q" data-faq-id="<%= item.ifaqId %>"><!-- .none-event 클릭못하게할때 -->
                                                 <em class="ico">질문</em><%= item.inqCtt %>
                                             </button>
                                         </div>

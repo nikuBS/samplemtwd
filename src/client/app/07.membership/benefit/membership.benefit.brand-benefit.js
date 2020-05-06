@@ -65,6 +65,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     this.$container.on('click', '.fe-btn-location', $.proxy(this._onclickGpsBtn, this));
     this.$container.on('click', '.fe-brand-info a', $.proxy(this._onClickBrandInfoLink, this));
     this.$container.on('click', '#fe-carlife-old-terms', $.proxy(function(){this.open('BE_04_01_L04');},this)); // (구)T멤버십 카라이프 혜택 보기 약관 레이어 팝업
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));  // 외부 링크 처리
   },
   
     /**
@@ -466,6 +467,34 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
       contents = contents.replace(reg, repl);
     }
     return contents;
+  },
+
+  /**
+   * @function
+   * @desc 외부 링크 연결
+   * @param e - 외부 링크 클릭 이벤트
+   * @returns {*|void}
+   */
+  _confirmExternalUrl: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // OP002-7993_기획 이종진 선임 요청으로 외부링크 이동 시 과금 팝업 노출 하지 않음
+    // 앱이 아닐땐 바로 연결
+    // if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    // }
+
+    // Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+  },
+
+  /**
+   * @function
+   * @desc 외부 링크 연결
+   * @param href - 링크 값
+   */
+  _openExternalUrl: function(href) {
+    Tw.CommonHelper.openUrlExternal(href);
   }
 
 };

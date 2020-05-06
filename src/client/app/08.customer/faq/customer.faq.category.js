@@ -51,6 +51,7 @@ Tw.CustomerFaqCategory.prototype = {
     this.$btnDepth2.on('click', $.proxy(this._onDropDownClicked, this, 2));
     this.$btnMore.on('click', $.proxy(this._loadList, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
+    this.$container.on('click', '.list-q', $.proxy(this._increaseFaqBrwsCnt, this));
   },
 
   /**
@@ -240,5 +241,28 @@ Tw.CustomerFaqCategory.prototype = {
     Tw.CommonHelper.openUrlExternal(url);
 
     return false;
+  },
+
+  /**
+   * @function
+   * @desc 해당 FAQ 의 조회수를 +1  
+   * @param  {Object} e - click event
+   */
+  _increaseFaqBrwsCnt: function (e) {
+    var faqId = $(e.currentTarget).data('faq-id');
+    
+    if ($(e.currentTarget).attr('aria-pressed') === 'true') {
+      this._apiService.request(Tw.API_CMD.BFF_08_0086, { ifaqId: faqId }, {}, [])
+        .done($.proxy(function (res) {
+          if (res.code === Tw.API_CODE.CODE_00) {
+            // console.log('조회수 증가');
+          } else {
+            Tw.Error(res.code, res.msg).pop();
+          }
+        }, this))
+        .fail(function (err) {
+          Tw.Error(err.code, err.msg).pop();
+        });
+    }
   }
 };
