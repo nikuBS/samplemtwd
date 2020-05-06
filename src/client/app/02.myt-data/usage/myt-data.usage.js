@@ -18,7 +18,6 @@ Tw.MyTDataUsage = function (rootEl, options) {
   this._requestServices();
   this._init();
   this._setCoachMark();
-
 };
 
 Tw.MyTDataUsage.prototype = {
@@ -33,6 +32,9 @@ Tw.MyTDataUsage.prototype = {
     if ( _.size(this._$sharedDataUsed) ) {
       this._setSharedDataUsed();
     }
+
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   _setSharedDataUsed: function () {
@@ -371,13 +373,14 @@ Tw.MyTDataUsage.prototype = {
    */
   _resultHandler24Data50per: function (data) {
     // 쿠폰 적용 기간
-    $('#fe-cont-discount .fe-use-date')
+    $('#fe-cont-discount').find('.fe-use-date')
       .text(Tw.DateHelper.getShortDateAndTime(data.rgstDtm) + '~' + Tw.DateHelper.getShortDateAndTime(data.exprDtm));
 
     // 사용량
     var fmtData = Tw.FormatHelper.convDataFormat(data.used, Tw.DATA_UNIT.KB);
-    $('#fe-cont-discount .fe-use-data span:eq(0)').text(fmtData.data);
-    $('#fe-cont-discount .fe-use-data span:eq(1)').text(fmtData.unit);
+    var $usage = $('#fe-cont-discount').find('.fe-use-data').find('span');
+    $usage.eq(0).text(fmtData.data);
+    $usage.eq(1).text(fmtData.unit);
   },
 
   /**
