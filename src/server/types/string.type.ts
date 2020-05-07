@@ -1464,3 +1464,18 @@ export const NODE_ERROR_MSG = {
   '1009' : '고객센터를 통해 예약 가능합니다.',
   '1010' : '이용에 불편을 드려서 죄송합니다.'
 };
+
+// 개인화 진입 아이콘의 노출 user agent list
+export const TARGET_AGENT_LIST = [
+  'iPhone12,3', 
+  'SM-N971N', 
+  'SM-N976N', 
+  'SM-G977N', 
+  'LM-V500N', 
+  'LM-V510N', 
+  'SM-A908N', 
+  'SM-G981N', 
+  'SM-G986N', 
+  'SM-G988N', 
+  'SM-F907N'
+];

@@ -25,7 +25,7 @@ import {
     UNLIMIT_CODE
 } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
-import {SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME} from '../../../types/string.type';
+import {SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME, TARGET_AGENT_LIST} from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import {CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY} from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
@@ -77,8 +77,9 @@ class MainHome extends TwViewController {
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
             this.getRecommendProds(req, svcInfo.prodId),
             this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-            this.getProductGroup()
-          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList]) => {
+            this.getProductGroup(),
+            this.getPersonData(svcInfo, req)
+          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
             // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
             if (usageData.data) {
               usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
@@ -86,6 +87,9 @@ class MainHome extends TwViewController {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             recommendProdsData = recommendProdsResult;
+            svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
+            svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
+            svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
             res.render(`main.home-${flag}.html`, {
               svcInfo,
               svcType,
@@ -103,13 +107,17 @@ class MainHome extends TwViewController {
             this.getUsageData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
             this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-            this.getProductGroup()
-          ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList]) => {
+            this.getProductGroup(),
+            this.getPersonData(svcInfo, req)
+          ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
             // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
             if (usageData.data) {
               usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
             }
             homeData.usageData = usageData;
+            svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
+            svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
+            svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
             res.render(`main.home-${flag}.html`, {
               svcInfo,
               svcType,
@@ -127,9 +135,13 @@ class MainHome extends TwViewController {
         Observable.combineLatest(
           this.getBillData(svcInfo),
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
-        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown]) => {
+          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+          this.getPersonData(svcInfo, req)
+        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
           homeData.billData = billData;
+          svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
+          svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
+          svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
           res.render(`main.home-${flag}.html`, {
             svcInfo,
             svcType,
@@ -704,6 +716,119 @@ class MainHome extends TwViewController {
         }
       });
   }
+
+  /**
+   * [feature/OP002-8022] 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
+   * @param {object} svcInfo
+   * @param {Request} req
+   * @return {Observable}
+   */
+  private getPersonData(svcInfo: any, req: Request): Observable<any> {
+    return Observable.combineLatest(
+      this.getPersonDisableTimeCheck()
+      
+    ).map(([personDisableTimeCheck]) => {
+        if (personDisableTimeCheck == null) {
+          personDisableTimeCheck = true; // 비노출
+        }
+
+        let personDisableLineTypeCheck = this.getPersonLineTypeCheck(svcInfo)
+        if (personDisableLineTypeCheck == 'undefined' || personDisableLineTypeCheck == null) {
+          personDisableLineTypeCheck = true;  // 비노출
+        }
+
+        let personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req)
+        if (personDisableAgentTypeCkeck == 'undefined' || personDisableAgentTypeCkeck == null) {
+          personDisableAgentTypeCkeck = true; // 비노출
+        }
+        return { personDisableTimeCheck, personDisableLineTypeCheck, personDisableAgentTypeCkeck };
+    });
+  }
+
+  /**
+   * redis에서 개인화 진입 아이콘 노출 여부 체크
+   * @return {Observable}
+   */
+  private getPersonDisableTimeCheck(): Observable<any> {
+    const DEFAULT_PARAM = {
+      property: REDIS_KEY.PERSON_DISABLE_TIME
+    };
+
+    let resTime: any = [];
+    let startTime: any;
+    let endTime: any;
+    const today = new Date().getTime();
+
+    return this.apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
+
+      if ( resp.code === API_CODE.CODE_00 ) {
+        resTime = resp.result.split('~');
+        startTime = DateHelper.convDateFormat(resTime[0]).getTime();
+        endTime = DateHelper.convDateFormat(resTime[1]).getTime();
+        this.logger.info(this, '[Person startTime // endTime]', startTime, endTime);
+        // 비노출 : true, 노출 : false
+        return today >= startTime && today <= endTime;
+
+      } else {
+        return null;
+
+      }
+    });
+  }
+
+  /**
+   * [feature/OP002-8022] 서비스 종류에 따른 개인화 아이콘 노출 대상 여부 체크
+   * @param {object} svcInfo
+   * @return {object}
+   */
+  private getPersonLineTypeCheck(svcInfo): any {
+    // 설명서비스등급(svcGr)	정책서	        시스템 
+    // 통화내역조회가능이동전화	 A	            A
+    // 일반개인이동전화	       B	            Y
+    // 노출 설정 
+    const lineTypeList = ['A','B','Y'];   // 노출 유형
+    const svcLineGr = svcInfo.svcGr;
+    let svcType: any;
+
+    lineTypeList.forEach(function(targetLine) {
+      let result = svcLineGr.indexOf(targetLine);
+      if (result > -1) {
+        svcType = false;  // 해당 서비스이먼 노출은 false
+      } 
+    });
+    return svcType;  // 비노출 : true, 노출 : false
+  }
+
+  /**
+   * [feature/OP002-8022] 유저 에이전트에 따른 개인화 아이콘 노출 대상 여부 체크
+   * @param {Request} req
+   * @return {object}
+   */
+  private getPersonAgentTypeCheck(req): any {
+    const userAgent: any = this.getUserAgent(req);
+    let agentTypeChk: any;
+
+    TARGET_AGENT_LIST.forEach(function(targetAgent) {
+      let result = userAgent.indexOf(targetAgent);
+      if (result > -1) {
+        agentTypeChk = false;  // 해당 당말기면 노출은 false
+      } 
+    });
+    return agentTypeChk;  // 비노출 : true, 노출 : false
+  }
+
+  /**
+   * user agent 조회
+   * @param req
+   */
+  public getUserAgent(req): string {
+    const request = req; // || this.request;
+    if ( !FormatHelper.isEmpty(request) ) {
+      return request.headers['user-agent'];
+    }
+    return '';
+  }
+  
 }
 
 export default MainHome;
