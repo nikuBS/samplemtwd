@@ -29,6 +29,9 @@ export interface ISvcInfo {
   tplaceUseAgreeYn: string; // T place 이용동의여부(Y/N)
   mbrChlId: string;         // 멤버채널ID
   // noticeType: string;
+  personTimeChk: boolean;       // 개인화 진입 아이콘 시간에 따른 비활성화 체크
+  personLineTypeChk: boolean;   // 개인화 진입 아이콘 서비스 타입에 따른 비활성화 체크
+  personAgentTypeChk: boolean;  // 개인화 진입 아이콘 에이전트 타입에 따른 비활성화 체크
 }
 
 export class SvcInfoModel implements ISvcInfo {
@@ -65,6 +68,10 @@ export class SvcInfoModel implements ISvcInfo {
   loginType: string = '';
   mbrChlId: string = '';
 
+  personTimeChk: boolean = true;
+  personLineTypeChk: boolean = true;
+  personAgentTypeChk: boolean = true;
+
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
     this.xtSvcMgmtNum = object.xtSvcMgmtNum || this.xtSvcMgmtNum;
@@ -96,5 +103,8 @@ export class SvcInfoModel implements ISvcInfo {
     this.tplaceUseAgreeYn = object.tplaceUseAgreeYn || this.tplaceUseAgreeYn;
     this.mbrChlId = object.mbrChlId || this.mbrChlId;
     // this.noticeType = object.noticeType || this.noticeType;
+    this.personTimeChk = object.personTimeChk || this.personTimeChk;
+    this.personLineTypeChk = object.personLineTypeChk || this.personLineTypeChk;
+    this.personAgentTypeChk = object.personAgentTypeChk || this.personAgentTypeChk;
   }
 }
