@@ -23,13 +23,7 @@ export default class CustomerResearches extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.query.id) {
-      // console.log('req.query.id ===== ', req.query.id); // 설문
       this._getResearch(req.query.id).subscribe(research => {
-
-        // console.log('research 렌더 하위의 가공된 ===== ', research);
-        // console.log('research 렌더 하위의 가공된 현재 타이틀 ===== ', research.info.qstnTitleNm);
-
-
         if (research.code) {
           return this.error.render(res, {
             pageInfo: pageInfo,
@@ -41,8 +35,6 @@ export default class CustomerResearches extends TwViewController {
         res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
       });
     } else if (req.query.qid) {
-      // console.log('req.query.qid ===== ', req.query.qid); // 퀴즈
-      // console.log('req.query.ctgCd ===== ', req.query.ctgCd); //
       this.__getQuizAndPoll(req.query.qid, req.query.ctgCd).subscribe(research => {
         if (research.code) {
           return this.error.render(res, {
@@ -65,8 +57,6 @@ export default class CustomerResearches extends TwViewController {
         res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
       });
     } else if (req.query.pid) {
-      // console.log('req.query.pid ===== ', req.query.pid); // 투표
-      // console.log('req.query.ctgCd ===== ', req.query.ctgCd); //
       this.__getQuizAndPoll(req.query.pid, req.query.ctgCd).subscribe(research => {
         if (research.code) {
           return this.error.render(res, {
@@ -90,7 +80,6 @@ export default class CustomerResearches extends TwViewController {
       });
     } else {
       this.__getResearches(req.query.quiz, req.query.ctgCd).subscribe(researches => {
-        // console.log('req.query.quiz ===== ', req.query.quiz); //
         // this.logger.info(this, '[customer.researches.controller] ###############################################################', '');
         // this.logger.info(this, '[customer.researches.controller] researches : ', researches);
         // this.logger.info(this, '[customer.researches.controller] ###############################################################', '');
@@ -122,7 +111,7 @@ export default class CustomerResearches extends TwViewController {
   }
 
   /**
-   * @desc 설문조사 서브메인의 리스트 가져오기 요청
+   * @desc 설문조사 가져오기 요청
    * @param {string} quizId 고객센터 서브메인에서 접근한 경우, 해당 설문 id가 리스트 기본 노출 범위(20개) 이후에 있을 경우, 해당 설문조사까지 자동으로 노출되도록 하기 위함(기획 요청)
    * @private
    */
@@ -132,7 +121,6 @@ export default class CustomerResearches extends TwViewController {
     // this.logger.info(this, '[customer.researches.controller] ctgCd : ', ctgCd);
     // this.logger.info(this, '[customer.researches.controller] #################################################################################', '');
     return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
-      // console.log('resp ===== ', resp);
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -154,12 +142,9 @@ export default class CustomerResearches extends TwViewController {
               exam = research['exCtt' + i],
               hasHtml = false;
 
-            // console.log('exam 가공전 exCtt ===== ', 'exCtt' + i); // 보기내용
-            // console.log('exam ===== ', research['exCtt' + i]); // 보기 내용 1,2,3,4
-
             while (exam) {
               const isEtc = exam === 'QSTNETC';
-              hasHtml = hasHtml || research['motExCtt' + i]; // mot보기내용 1,2,3,4
+              hasHtml = hasHtml || research['motExCtt' + i];
 
               examples.push({
                 content: isEtc ? ETC_CENTER : exam || '',
@@ -181,9 +166,6 @@ export default class CustomerResearches extends TwViewController {
             };
           })
           .filter(research => {
-
-            // console.log('research.isProceeding ===== ', research.isProceeding);
-
             if (ctgCd === 'E') {  // 종료된 설문조사
               return !research.isProceeding && research.bnnrRsrchTypCd !== 'R'; // [OP002-4585] 종료 설문조사에서는 설문조사(R) 리스트는 노출하지 않음.
             } else {  // 진행중 설문조사
@@ -197,7 +179,7 @@ export default class CustomerResearches extends TwViewController {
   }
 
   /**
-   * @desc 설문조사 가져오기 요청 (디테일)
+   * @desc 설문조사 가져오기 요청
    * @param {string} id 설문조사 id
    * @private
    */
@@ -208,32 +190,22 @@ export default class CustomerResearches extends TwViewController {
         return resp;
       }
 
-      // console.log('resp _getResearch BFF_08_0038  ===== ', resp);
-
-      // 설문 하위의 질문 리스트들
       const questions: any[] = resp.result.surveyQstnInqItm;
-      // 설문 하위의 질문 리스트에 대한 답변 리스트들
       const examples: any[] = resp.result.surveyQstnAnswItm;
 
-      // console.log('questions resp.result.surveyQstnInqItm BFF_08_0038  ===== ', resp.result.surveyQstnInqItm); // 설문 하위의 질문 리스트들
-      // console.log('examples resp.result.surveyQstnAnswItm BFF_08_0038  ===== ', resp.result.surveyQstnAnswItm); // 설문 하위의 질문 리스트에 대한 답변할 리스트들
-
-      // 설문 하위의 질문 리스트에 대한 답변 리스트들 개수
       const len = examples.length;
       for (let i = 0; i < len; i++) {
-        const example = examples[i];  // 각 답변 대입
-        const exampleIdx = Number(example.answItmNum);  // 각 답변 리스트들의 답변 번호 (1번 문항의 5개 답변이 있다면 그 5개의 답변들에 대한 고유 시퀀셜 번호, 예> 1,2,3,4,5)
-        const question = questions[Number(example.inqItmNum) - 1];  // 현재 질문, 설문하위의 질문 리스트[현재답변리스트.질문문항번호 - 1]
-        // 설문 하위의 답변 리스트에 각각의 설명들 예 5점, 또는 주변 지인 추천으로 등등, QSTNETC?
+        const example = examples[i];
+        const exampleIdx = Number(example.answItmNum);
+        const question = questions[Number(example.inqItmNum) - 1];
         const isEtc = example.answItmCtt === 'QSTNETC';
 
-        if (question) { // 현재 질문이 있으면
-          // 처음엔 question.examples이 없기 때문에 undefined이며 그것의 반대이기 때문에 TRUE 따라서 처음엔 무조건 빈객체가 생성 됨
+        if (question) {
           if (!question.examples) {
             question.examples = {};
           }
 
-          question.examples[exampleIdx] = { // 현재 질문의 examples 답변 객체의 각 항목에 ...example(resp.result정.surveyQstnAnswItm) 답변들과
+          question.examples[exampleIdx] = {
             ...example,
             content: example.answItmCtt || '',
             nextQuestion: Number(example.nxtInqItmNum),
@@ -242,7 +214,6 @@ export default class CustomerResearches extends TwViewController {
         }
       }
 
-      // 설문에 대한 마스터 정보
       const info = resp.result.surveyQstnMaster[0];
       return {
         info: {
@@ -256,7 +227,7 @@ export default class CustomerResearches extends TwViewController {
   }
 
   /**
-   * @desc 퀴즈/투표 가져오기 요청 (디테일)
+   * @desc 퀴즈/투표 가져오기 요청
    * @param {string} quizId 고객센터 서브메인에서 접근한 경우, 해당 설문 id가 리스트 기본 노출 범위(20개) 이후에 있을 경우, 해당 설문조사까지 자동으로 노출되도록 하기 위함(기획 요청)
    * @private
    */
