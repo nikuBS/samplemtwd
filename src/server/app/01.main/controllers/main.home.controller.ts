@@ -847,11 +847,13 @@ class MainHome extends TwViewController {
    * @return {object}
    */
   private getPersonAgentTypeCheck(req): any {
+    const thisMain = this;
     let userAgent: any = this.getUserAgent(req);
     let agentTypeChk: any;
     this.logger.info(this, '[Person userAgent] // [Person userAgent].toLowerCase()]', userAgent, userAgent.toLowerCase());
     TARGET_AGENT_LIST.forEach(function(targetAgent) {
-      let result = userAgent.toLowerCase().indexOf(targetAgent.toLowerCase());
+      let result = userAgent.toLowerCase().search(targetAgent.toLowerCase());
+      thisMain.logger.info(thisMain, '[userAgent.toLowerCase()] // [targetAgent.toLowerCase()] // [Person userAgent result] :: ', userAgent.toLowerCase() +' //' +targetAgent.toLowerCase()+' // '+result);
       if (result > -1) {
         agentTypeChk = false;  // 해당 당말기면 노출은 false
       } 
