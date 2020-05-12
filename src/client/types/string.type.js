@@ -942,10 +942,7 @@ Tw.ALERT_MSG_CUSTOMER = {
 
 Tw.CUSTOMER_RESEARCHES_BUTTONS = {
   NEXT: '다음',
-  SUBMIT: '참여하기',
-  TITLE: '{curSurTn}<br/>참여에 감사 드립니다.<br/><br/>',
-  // NEXT_RESEARCHE_POPUP: '{curSurTn}<br/>참여에 감사 드립니다.<br/><br/>더 나은 서비스 제공을 위해<br/>{nextSurTn}도<br/>함께 진행해 주세요!'
-  NEXT_RESEARCHE_POPUP: '더 나은 서비스 제공을 위해<br/>{nextSurTn}도<br/>함께 진행해 주세요!'
+  SUBMIT: '참여하기'
 };
 
 Tw.ALERT_MSG_TEVENT = {};

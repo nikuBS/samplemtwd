@@ -424,7 +424,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CustomerResearch($('.wrap'), JSON.parse('<%- JSON.stringify(research.info) %>'));
+        new Tw.CustomerResearch($('.wrap'));
     });
 </script>
 <% include ../../components/end.component.html %>
