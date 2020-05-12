@@ -831,9 +831,9 @@ class MainHome extends TwViewController {
     // 일반개인이동전화	       B	            Y
     let svcLineGr = svcInfo.svcGr;
     let svcType: any;
-
+    this.logger.info(this, '[Person svcLineGr] // [Person svcLineGr].toLowerCase()]', svcLineGr, svcLineGr.toLowerCase());
     TARGET_LINE_LIST.forEach(function(targetLine) {
-      let result = svcLineGr.toUpperCase().indexOf(targetLine);
+      let result = svcLineGr.toLowerCase().indexOf(targetLine.toLowerCase());
       if (result > -1) {
         svcType = false;  // 해당 서비스이먼 노출은 false
       } 
@@ -849,9 +849,9 @@ class MainHome extends TwViewController {
   private getPersonAgentTypeCheck(req): any {
     let userAgent: any = this.getUserAgent(req);
     let agentTypeChk: any;
-    this.logger.info(this, '[Person userAgent] // [Person userAgent].toUpperCase()', userAgent, userAgent.toUpperCase());
+    this.logger.info(this, '[Person userAgent] // [Person userAgent].toLowerCase()]', userAgent, userAgent.toLowerCase());
     TARGET_AGENT_LIST.forEach(function(targetAgent) {
-      let result = userAgent.toUpperCase().indexOf(targetAgent);
+      let result = userAgent.toLowerCase().indexOf(targetAgent.toLowerCase());
       if (result > -1) {
         agentTypeChk = false;  // 해당 당말기면 노출은 false
       } 
