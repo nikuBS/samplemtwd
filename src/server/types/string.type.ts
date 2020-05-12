@@ -1465,17 +1465,18 @@ export const NODE_ERROR_MSG = {
   '1010' : '이용에 불편을 드려서 죄송합니다.'
 };
 
+// 개인화 진입 아이콘의 노출 user line type list(설명서비스등급(svcGr))
+export const TARGET_LINE_LIST = [
+  'A',  // 통화내역조회가능이동전화 시스템
+  'Y'   // 일반개인이동전화 시스템
+];
+
 // 개인화 진입 아이콘의 노출 user agent list
 export const TARGET_AGENT_LIST = [
-  'iPhone12,3', 
-  'SM-N971N', 
-  'SM-N976N', 
-  'SM-G977N', 
-  'LM-V500N', 
-  'LM-V510N', 
-  'SM-A908N', 
-  'SM-G981N', 
-  'SM-G986N', 
-  'SM-G988N', 
-  'SM-F907N'
+  // 'iPhone12,3', // 아이폰 11 PRO
+  'IPHONE12,3', // 아이폰 11 PRO
+  'SM-G988N',   // 갤럭시S20울트라 5G
+  'SM-G986N',   // 갤럭시S20 플러스 5G
+  'SM-G981N',   // 갤럭시S20 5G
+  'SM-F907N'    // 갤럭시폴드 5G
 ];

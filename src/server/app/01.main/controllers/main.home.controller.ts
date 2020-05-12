@@ -25,7 +25,7 @@ import {
     UNLIMIT_CODE
 } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
-import {SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME, TARGET_AGENT_LIST} from '../../../types/string.type';
+import {SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME, TARGET_AGENT_LIST, TARGET_LINE_LIST} from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import {CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY} from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
@@ -56,7 +56,10 @@ class MainHome extends TwViewController {
       membershipData: null,
       billData: null,
     };
-
+    const personDataNoLoginMap = {
+      personTimeChk: null,
+      personAgentTypeChk: null
+    };
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
@@ -156,9 +159,28 @@ class MainHome extends TwViewController {
       }
     } else {
       // 비로그인
-      this.getRedisData(noticeCode, '').subscribe((redisData) => {
-        const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '', recommendProdsData };
-        res.render(`main.home-${flag}.html`, renderData);
+      // this.getRedisData(noticeCode, '').subscribe((redisData) => {
+      //    const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '', recommendProdsData };
+      //    res.render(`main.home-${flag}.html`, renderData);
+      // });
+
+      // [feature/OP002-8022] 미 로그인 시 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
+      Observable.combineLatest(
+        this.getRedisData(noticeCode, ''), 
+        this.getPersonDataNoLogin(req)
+      ).subscribe(([redisData, personDataNoLogin]) => {
+        personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
+        personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크  
+        res.render(`main.home-${flag}.html`, {
+          svcInfo, 
+          svcType, 
+          homeData, 
+          redisData, 
+          pageInfo, 
+          noticeType: '', 
+          recommendProdsData,
+          personDataNoLoginMap
+        });
       });
     }
   }
@@ -718,7 +740,7 @@ class MainHome extends TwViewController {
   }
 
   /**
-   * [feature/OP002-8022] 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
+   * [feature/OP002-8022] 로그인 시 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
    * @param {object} svcInfo
    * @param {Request} req
    * @return {Observable}
@@ -742,6 +764,28 @@ class MainHome extends TwViewController {
           personDisableAgentTypeCkeck = true; // 비노출
         }
         return { personDisableTimeCheck, personDisableLineTypeCheck, personDisableAgentTypeCkeck };
+    });
+  }
+
+  /**
+   * [feature/OP002-8022] 미 로그인 시 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
+   * @param {Request} req
+   * @return {Observable}
+   */
+  private getPersonDataNoLogin(req: Request): Observable<any> {
+    return Observable.combineLatest(
+      this.getPersonDisableTimeCheck()
+      
+    ).map(([personDisableTimeCheck]) => {
+        if (personDisableTimeCheck == null) {
+          personDisableTimeCheck = true; // 비노출
+        }
+
+        let personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req)
+        if (personDisableAgentTypeCkeck == 'undefined' || personDisableAgentTypeCkeck == null) {
+          personDisableAgentTypeCkeck = true; // 비노출
+        }
+        return { personDisableTimeCheck, personDisableAgentTypeCkeck };
     });
   }
 
@@ -785,13 +829,11 @@ class MainHome extends TwViewController {
     // 설명서비스등급(svcGr)	정책서	        시스템 
     // 통화내역조회가능이동전화	 A	            A
     // 일반개인이동전화	       B	            Y
-    // 노출 설정 
-    const lineTypeList = ['A','B','Y'];   // 노출 유형
-    const svcLineGr = svcInfo.svcGr;
+    let svcLineGr = svcInfo.svcGr;
     let svcType: any;
 
-    lineTypeList.forEach(function(targetLine) {
-      let result = svcLineGr.indexOf(targetLine);
+    TARGET_LINE_LIST.forEach(function(targetLine) {
+      let result = svcLineGr.toUpperCase().indexOf(targetLine);
       if (result > -1) {
         svcType = false;  // 해당 서비스이먼 노출은 false
       } 
@@ -805,11 +847,11 @@ class MainHome extends TwViewController {
    * @return {object}
    */
   private getPersonAgentTypeCheck(req): any {
-    const userAgent: any = this.getUserAgent(req);
+    let userAgent: any = this.getUserAgent(req);
     let agentTypeChk: any;
 
     TARGET_AGENT_LIST.forEach(function(targetAgent) {
-      let result = userAgent.indexOf(targetAgent);
+      let result = userAgent.toUpperCase().indexOf(targetAgent);
       if (result > -1) {
         agentTypeChk = false;  // 해당 당말기면 노출은 false
       } 
