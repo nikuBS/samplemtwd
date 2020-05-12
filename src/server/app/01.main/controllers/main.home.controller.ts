@@ -849,7 +849,7 @@ class MainHome extends TwViewController {
   private getPersonAgentTypeCheck(req): any {
     let userAgent: any = this.getUserAgent(req);
     let agentTypeChk: any;
-
+    this.logger.info(this, '[Person userAgent] // [Person userAgent].toUpperCase()', userAgent, userAgent.toUpperCase());
     TARGET_AGENT_LIST.forEach(function(targetAgent) {
       let result = userAgent.toUpperCase().indexOf(targetAgent);
       if (result > -1) {
