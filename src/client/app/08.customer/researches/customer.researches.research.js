@@ -20,6 +20,14 @@ Tw.CustomerResearch = function(rootEl, researchInfo) {
   this._cachedElement();
   this._bindEvent();
   this._init();
+
+  // setTimeout( function () {
+    // var self = this;
+    // self.$container.find('#webfocus').eq(0).focus();
+  // }, 0);
+
+  // this.$container.trigger('click', 'a[href="#abcdef"]'); // 포커스 강제
+  // this.$container.trigger('click', '.fe-replace-history'); // 포커스 강제
 };
 
 Tw.CustomerResearch.prototype = {
@@ -33,7 +41,7 @@ Tw.CustomerResearch.prototype = {
     this._questionCount = this.$questions.length;
     this._surveyType = $('div.poll-box').data('type-code');   // 퀴즈/투표 유형 (Q,P)
 
-    // console.log('this._surveyType', this._surveyType);
+    // this.$container.find('.poll-question').eq()0.focus(); // 설문조사 및 퀴즈등(설문조사만 포커스가도 되지만..) 진입 시 제목에 포커스
   },
 
   /**
@@ -304,6 +312,9 @@ Tw.CustomerResearch.prototype = {
     this._setProgress($selected.length > 0 ? this._getNextQuestion($selected) : next);  // 진행률 계산
     delete this._nextIdx;
     delete this.$maxLength;
+    // 다음으로 버튼 포커스 이동(웹 접근성)
+    // this.$container.find('.tod-poll-title').focus();
+    this.$questions[this._currentIdx].find('#webfocus').focus();
   },
 
   /**
@@ -329,6 +340,9 @@ Tw.CustomerResearch.prototype = {
     this._currentIdx = prev;
     this._setProgress(this._nextIdx); // 진행률 계산
     delete this.$maxLength;
+    // 이전으로 버튼 포커스 이동(웹 접근성)
+    // this.$container.find('.tod-poll-title').focus();
+    this.$questions[this._currentIdx].find('#webfocus').focus();
   },
 
   /**
