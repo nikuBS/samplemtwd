@@ -11,8 +11,7 @@
     <div id="skipNav" class="skip_navi">
         <ul>
             <!-- Grand open 접근성 수정 -->
-<!--            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>-->
-            <li><a href="#webfocus" class="fe-replace-history">본문 바로가기</a></li>
+            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
             <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
@@ -31,7 +30,7 @@
                 <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
-
+                    
                         <%  const END_INDEX = '99';
                             let number = 1;
                             research.questions.map((question, qIdx) => { 
@@ -42,9 +41,8 @@
                         <!-- ##### 질문 ##### -->
                         <div class="tod-poll-title-wrap">
                             <!-- .tod-poll-title -->
-<!--                            <div class="tod-poll-title" aria-live="assertive">-->
                             <div class="tod-poll-title">
-                                <span id="webfocus" class="poll-question" tabindex="0"><%= question.inqDtlCtt %></span>
+                                <span class="poll-question"><%= question.inqDtlCtt %></span>
                             </div>
                             <!-- //.tod-poll-title -->
                         </div>
@@ -190,7 +188,7 @@
                     <!--  진행바 progress -->          
                     <div class="tod-progress-comp">
                         <div class="progress-bar">
-                            <span class="progress-bar-succ orange data-bar" style="width:0%"><em class="progress-value">0%</em></span><!-- style="width:30%" 수치 조정 -->
+                            <span class="progress-bar-succ orange data-bar" style="width:0%"><em class="progress-value">30%</em></span><!-- style="width:30%" 수치 조정 -->
                         </div>
                     </div>
                     <!--  //progress -->
@@ -218,7 +216,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <!-- .poll-title -->
-                    <div id="webfocus" class="tod-poll-title" tabindex="0">
+                    <div class="tod-poll-title">
                         <span class="poll-type">[<%= bnnrRsrchTypNm %>]</span>
                         <span class="poll-question"><%= research.research[0].bnnrRsrchTitleNm %></span>
                     </div>
@@ -426,8 +424,6 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        // 설문 시작하기 했을때 설문 제목으로 포커스 이동을 위하여 (웹 접근성)
-        $(".fe-replace-history").trigger("click");
         new Tw.CustomerResearch($('.wrap'), JSON.parse('<%- JSON.stringify(research.info) %>'));
     });
 </script>
