@@ -722,7 +722,7 @@
         <!--// #contents -->
     </div>
     <script>
-        $(document).on('ready',function(){
+        $(document).on('ready', function () {
             skt_landing.action.home_slider({
                 initialSlide: 0
             });
@@ -730,10 +730,15 @@
             var personTimer = null;
             function personAction() {
                 clearTimeout(personTimer);
-                personTimer = setTimeout(function(){
+                personTimer = setTimeout(function () {
                     $('.h-person').addClass('show');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $('.h-person').removeClass('show');
+                        /* 2020.05.13 추가 */
+                        setTimeout(function () {
+                            $('.h-person .btn-comment').hide();
+                        }, 1000)
+                        /* //2020.05.13 추가 */
                     }, 3000)
                 }, 500);
             }
@@ -742,7 +747,9 @@
                 if ($(this).scrollTop() === 0) {
                     personAction();
                 } else {
+                    $('.h-person .btn-comment').show();  //2020.05.13 추가
                     $('.h-person').removeClass('show');
+
                 }
             });
             personAction();
