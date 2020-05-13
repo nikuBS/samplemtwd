@@ -2498,12 +2498,20 @@ Tw.MainHome.prototype = {
    */
   _initPersonAction: function () {
     var personTimer = null;
+
     function personAction() {
       clearTimeout(personTimer);
-      personTimer = setTimeout(function(){
+      personTimer = setTimeout(function () {
         $('.h-person').addClass('show');
-        setTimeout(function(){
+        setTimeout(function () {
           $('.h-person').removeClass('show');
+          
+          /* 2020.05.13 추가 */
+          setTimeout(function () {
+            $('.h-person .btn-comment').hide();
+          }, 1000)
+          /* //2020.05.13 추가 */
+
         }, 3000);
       }, 500);
     }
@@ -2512,6 +2520,7 @@ Tw.MainHome.prototype = {
       if ($(this).scrollTop() === 0) {
         personAction();
       } else {
+        $('.h-person .btn-comment').show();  //2020.05.13 추가
         $('.h-person').removeClass('show');
       }
     });
