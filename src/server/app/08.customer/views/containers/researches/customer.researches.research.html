@@ -428,7 +428,7 @@
     $(document).ready(function () {
         // 설문 시작하기 했을때 설문 제목으로 포커스 이동을 위하여 (웹 접근성)
         $('.fe-replace-history').trigger('click');
-        new Tw.CustomerResearch($('.wrap'));
+        new Tw.CustomerResearch($('.wrap'), JSON.parse('<%- JSON.stringify(research.info) %>'));
     });
 </script>
 <% include ../../components/end.component.html %>
