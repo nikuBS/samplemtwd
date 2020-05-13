@@ -105,7 +105,7 @@
 <script id="fe-line-tmpl" type="text/x-handlebars-template">
     {{#each list}}
     <li class="fe-line ui-state-default {{#if isRepSvcYn}} tod-t-standard fe-line-standard{{/if}} {{#if isExpsYn}} fe-item-active{{/if}} {{#unless isExpsYn}}tod-add-line fe-item-inactive{{/unless}}>" 
-        data-svcmgmtnum="{{ svcMgmtNum }}" data-svcgr="{{ svcGr }}">
+        data-svcmgmtnum="{{ svcMgmtNum }}" data-showname="{{showName}}" data-svcnum="{{svcNum}}" data-svcgr="{{ svcGr }}">
         <div class="state-box">
             <div class="tod-line-info">
                 <span class="icon">

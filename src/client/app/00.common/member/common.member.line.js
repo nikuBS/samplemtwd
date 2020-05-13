@@ -104,10 +104,9 @@ Tw.CommonMemberLine.prototype = {
   /**
    * @function
    * @desc 메뉴 팝업 닫기
-   * @param $event
    * @private
    */
-  _closeManageMenu: function ($event) {
+  _closeManageMenu: function () {
     $('#fe-manage-menu').detach();
   },
 
@@ -311,7 +310,7 @@ Tw.CommonMemberLine.prototype = {
       }
 
       $list.data('pageno', (pageNo + 1));
-      this._addList(category, resp.result[category], $target);
+      this._addList(category, resp.result[category]);
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
@@ -335,7 +334,7 @@ Tw.CommonMemberLine.prototype = {
    * @param list
    * @private
    */
-  _addList: function (category, list, $target) {
+  _addList: function (category, list) {
 
     var selector = '[data-category='+ category +'] > .fe-line:last';
     var $listLast = this.$container.find(selector);
@@ -648,7 +647,7 @@ Tw.CommonMemberLine.prototype = {
    * @param error
    * @private
    */
-  _failEditLineList: function (error) {
+  _failEditLineList: function () {
     // Tw.Logger.error(error);
     Tw.CommonHelper.endLoading('.container');
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG, null, null, $.proxy(this._editCallback, this));
@@ -699,7 +698,8 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _checkMarketingOffer: function (svcNumList, $target) {
-    if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
+    // OP002-7976 : 회선 해지시에는 수신동의 팝업창 비노출 처리.
+    if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' && !$target.hasClass('fe-bt-remove')) {
       var list = this.$container.find('.fe-line');
       var $item = list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
       if ( $item.length > 0 ) {
@@ -747,7 +747,6 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _failGetMarketingOffer: function () {
-    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -818,5 +817,5 @@ Tw.CommonMemberLine.prototype = {
     today.setDate(today.getDate() + expiredays);
 
     document.cookie = cookieName + '=Y; path=/; expires=' + today.toGMTString() + ';';
-  },
+  }
 };
