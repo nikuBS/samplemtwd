@@ -831,7 +831,7 @@ class MainHome extends TwViewController {
     // 일반개인이동전화	       B	            Y
     let svcLineGr = svcInfo.svcGr;
     let svcType: any;
-    this.logger.info(this, '[Person svcLineGr]]', svcLineGr);
+    this.logger.info(this, '[Person svcLineGr]', svcLineGr);
     TARGET_LINE_LIST.forEach(function(targetLine) {
       let result = svcLineGr.toLowerCase().indexOf(targetLine.toLowerCase());
       if (result > -1) {
