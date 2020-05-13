@@ -59,7 +59,8 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
 
   this._initEmrNotice(emrNotice, isLogin === 'true');
   this._getQuickMenu(isLogin === 'true');
-
+  this._initPersonAction();
+  
   if ( isLogin === 'true' ) {
     this._cachedElement();
     this._initWelcomeMsg();
@@ -2490,5 +2491,40 @@ Tw.MainHome.prototype = {
     //   element.hide();
     // }
     this._resetHeight();
+  },
+
+  /**
+   * @desc 개인화 말풍선 영역
+   */
+  _initPersonAction: function () {
+    var personTimer = null;
+
+    function personAction() {
+      clearTimeout(personTimer);
+      personTimer = setTimeout(function () {
+        $('.h-person').addClass('show');
+        setTimeout(function () {
+          $('.h-person').removeClass('show');
+          
+          /* 2020.05.13 추가 */
+          setTimeout(function () {
+            $('.h-person .btn-comment').hide();
+          }, 1000)
+          /* //2020.05.13 추가 */
+
+        }, 3000);
+      }, 500);
+    }
+
+    $(window).on('scroll', function () {
+      if ($(this).scrollTop() === 0) {
+        personAction();
+      } else {
+        $('.h-person .btn-comment').show();  //2020.05.13 추가
+        $('.h-person').removeClass('show');
+      }
+    });
+
+    personAction();
   }
 };
