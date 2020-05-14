@@ -727,21 +727,23 @@
                 initialSlide: 0
             });
             // 2020.04.16 스크립트 추가 START
-            var personTimer = null;
+            /* 2020.05.14 수정 */
+            var personTimer = null, hideTimer1 = null, hideTimer2 = null;
             function personAction() {
                 clearTimeout(personTimer);
-                personTimer = setTimeout(function () {
+                clearTimeout(hideTimer1);
+                clearTimeout(hideTimer2);
+                personTimer = setTimeout(function(){
                     $('.h-person').addClass('show');
-                    setTimeout(function () {
+                    hideTimer1 = setTimeout(function(){
                         $('.h-person').removeClass('show');
-                        /* 2020.05.13 추가 */
-                        setTimeout(function () {
+                        hideTimer2 = setTimeout(function(){
                             $('.h-person .btn-comment').hide();
                         }, 1000)
-                        /* //2020.05.13 추가 */
                     }, 3000)
                 }, 500);
             }
+            /* //2020.05.14 수정 */
 
             $(window).on('scroll', function () {
                 if ($(this).scrollTop() === 0) {
