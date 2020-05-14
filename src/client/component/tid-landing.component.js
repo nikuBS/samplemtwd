@@ -181,6 +181,7 @@ Tw.TidLandingComponent.prototype = {
    * @param target
    */
   goSLogin: function (target) {
+    target = target || '/main/home';
     if ( Tw.BrowserHelper.isApp() ) {
       if ( Tw.BrowserHelper.isAndroid() ) {
         this._historyService.goLoad('/common/member/slogin/aos?target=' + encodeURIComponent(target));
