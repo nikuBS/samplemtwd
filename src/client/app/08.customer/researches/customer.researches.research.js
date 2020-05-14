@@ -4,14 +4,35 @@
  * @since 2019.04.10
  */
 
-Tw.CustomerResearch = function(rootEl) {
+Tw.CustomerResearch = function(rootEl, researchInfo) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
+  this._researchInfo = researchInfo;
+
+  // console.log('this._researchInfo ===== ', this._researchInfo);
+  // console.log('후속설문 id, this._researchInfo.fwupQstnId ===== ', this._researchInfo.fwupQstnId);
+  // console.log('후속설문 제목, this._researchInfo.fwupQstnTitleNm ===== ', this._researchInfo.fwupQstnTitleNm);
+  // console.log('후속설문 기 참여 여부, this._researchInfo.fwupCmplYn ===== ', this._researchInfo.fwupCmplYn);
+  // console.log('현재 설문 제목, this._researchInfo.qstnTitleNm ===== ', this._researchInfo.qstnTitleNm);
 
   this._cachedElement();
   this._bindEvent();
   this._init();
+
+  // setTimeout( function () {
+    // var self = this;
+    // self.$container.find('#webfocus').eq(0).focus();
+  // }, 0);
+
+  // 아이폰 일때 <div class="tod-poll-title" id="webfocus">를 h3로 바꾸고 그곳에 tabindex="-1"을 넣으면 모바일에서 포커스가 가야 되지만 가지 않음
+  // if (Tw.BrowserHelper.getUserAgent().indexOf('iPhone' !== -1)) {
+  //   this.$container.find('#webfocus').eq(0).focus();
+  // }
+
+  // this.$container.trigger('click', 'a[href="#abcdef"]'); // 포커스 강제
+  // this.$container.trigger('click', '.fe-replace-history'); // 포커스 강제
 };
 
 Tw.CustomerResearch.prototype = {
@@ -25,7 +46,7 @@ Tw.CustomerResearch.prototype = {
     this._questionCount = this.$questions.length;
     this._surveyType = $('div.poll-box').data('type-code');   // 퀴즈/투표 유형 (Q,P)
 
-    // console.log('this._surveyType', this._surveyType);
+    // this.$container.find('.poll-question').eq()0.focus(); // 설문조사 및 퀴즈등(설문조사만 포커스가도 되지만..) 진입 시 제목에 포커스
   },
 
   /**
@@ -296,6 +317,9 @@ Tw.CustomerResearch.prototype = {
     this._setProgress($selected.length > 0 ? this._getNextQuestion($selected) : next);  // 진행률 계산
     delete this._nextIdx;
     delete this.$maxLength;
+    // 다음으로 버튼 포커스 이동(웹 접근성)
+    this.$container.find('.poll-box').eq(this._currentIdx).focus();
+    // this.$questions[this._currentIdx].find('#webfocus').focus();
   },
 
   /**
@@ -321,6 +345,9 @@ Tw.CustomerResearch.prototype = {
     this._currentIdx = prev;
     this._setProgress(this._nextIdx); // 진행률 계산
     delete this.$maxLength;
+    // 이전으로 버튼 포커스 이동(웹 접근성)
+    this.$container.find('.poll-box').eq(this._currentIdx).focus();
+    // this.$questions[this._currentIdx].find('#webfocus').focus();
   },
 
   /**
@@ -468,13 +495,63 @@ Tw.CustomerResearch.prototype = {
           this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._closeResearch);
           break;
         case 'SUCCESS':
-          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._closeResearch);
+          // console.log('Case 내부 다음설문 id, this._researchInfo.fwupQstnId ==== ', this._researchInfo.fwupQstnId);
+          // console.log('Case 내부 현재설문 제목, this._researchInfo.fwupQstnId ==== ', this._researchInfo.qstnTitleNm);
+          // console.log('Case 내부 다음설문 제목, this._researchInfo.fwupQstnId ==== ', this._researchInfo.fwupQstnTitleNm);
+          // console.log('Case 내부 다음설문 기 참여 여부, this._researchInfo.fwupCmplYn ==== ', this._researchInfo.fwupCmplYn);
+
+          // 다음 설문 id가 있고 다음 설문이 이미 참여하지 않았을 경우에만 true
+            if ((!Tw.FormatHelper.isEmpty(this._researchInfo.fwupQstnId)) && (this._researchInfo.fwupCmplYn === 'N')) {
+              var PopupData = Tw.CUSTOMER_RESEARCHES_BUTTONS;
+              this._popupService.openModalTypeA(  // 공유 확인 팝업
+                  PopupData.TITLE.replace('{curSurTn}', this._researchInfo.qstnTitleNm),
+                  PopupData.NEXT_RESEARCHE_POPUP.replace('{nextSurTn}', this._researchInfo.fwupQstnTitleNm),
+                  PopupData.SUBMIT,
+                  null,
+                  $.proxy(this._onNextSurvey, this),
+                  $.proxy(this._popupCloseCallback, this),
+                  'nextSurvey',
+                  undefined,
+                  this
+                  // $(e.currentTarget)  // 웹접근성 포커스 처리를 위한 jquery 객체
+              );
+          } else {  // 다음 설문 id가 없거나 이미 다음 설문을 진행한 경우
+            this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._closeResearch);
+          }
           break;
-      }
+      } // end of switch
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+
+  /**
+   * @desc 다음 설문조사가 존재하는 경우 팝업에서 참여하기 버튼 클릭 시
+   * @private
+   */
+  _onNextSurvey: function() {
+    // this._historyService.resetHistory(-1);
+    // this._popupService.close();
+    this._popupService.closeAllAndGo('/customer/svc-info/researches?id=' + this._researchInfo.fwupQstnId);
+    // this._historyService.goLoad('/customer/svc-info/researches?id=' + this._researchInfo.fwupQstnId);
+    // this._historyService.replace('/customer/svc-info/researches?id=' + this._researchInfo.fwupQstnId);
+    // this._popupService.close();
+  },
+
+
+  /**
+   * @desc 다음 설문조사가 존재하는 경우 팝업에서 취소 버튼 클릭 시
+   * @param {Event} e 클릭이벤트
+   * @private
+   */
+  _popupCloseCallback: function(e) {
+    // this._popupService.closeAllAndGo('/customer/svc-info/researches');
+    this._popupService.close();
+    this._closeResearch();
+  },
+
+
 
   /**
    * @desc 퀴즈/투표 제출
@@ -582,6 +659,8 @@ Tw.CustomerResearch.prototype = {
    * @private
    */
   _closeResearch: function() {
+    // this._popupService.closeAllAndGo('/customer/svc-info/researches');
+    // this._historyService.replace('/customer/svc-info/researches');
     location.href = '/customer/svc-info/researches';
     // history.back();
   }

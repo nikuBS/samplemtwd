@@ -942,7 +942,10 @@ Tw.ALERT_MSG_CUSTOMER = {
 
 Tw.CUSTOMER_RESEARCHES_BUTTONS = {
   NEXT: '다음',
-  SUBMIT: '참여하기'
+  SUBMIT: '참여하기',
+  TITLE: '{curSurTn}<br/>참여에 감사 드립니다.<br/><br/>',
+  // NEXT_RESEARCHE_POPUP: '{curSurTn}<br/>참여에 감사 드립니다.<br/><br/>더 나은 서비스 제공을 위해<br/>{nextSurTn}도<br/>함께 진행해 주세요!'
+  NEXT_RESEARCHE_POPUP: '더 나은 서비스 제공을 위해<br/>{nextSurTn}도<br/>함께 진행해 주세요!'
 };
 
 Tw.ALERT_MSG_TEVENT = {};
@@ -1471,7 +1474,7 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
     {
       id: 'S1',
       type: ['인터넷'],
-      child: [['T_스마트광랜(다이렉트)','T_스마트스피드(다이렉트)','T_광랜+WiFi','T_Giga인터넷라이트','T_Giga인터넷','T_Giga 프리미엄','T_Giga라이트+WiFi',
+      child: [['T_광랜 인터넷','T_스마트스피드(다이렉트)','T_광랜+WiFi','T_Giga인터넷라이트','T_Giga인터넷','T_Giga 프리미엄','T_Giga라이트+WiFi',
       'T_Giga+WiFi','T_Giga프리미엄+WiFi 1.7G','T_Giga프리미엄X2.5','T_Giga프리미엄X5','T_Giga프리미엄X10']]
     },
     {

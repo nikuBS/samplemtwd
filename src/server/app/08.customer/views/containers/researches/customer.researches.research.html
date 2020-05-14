@@ -11,7 +11,8 @@
     <div id="skipNav" class="skip_navi">
         <ul>
             <!-- Grand open 접근성 수정 -->
-            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+<!--            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>-->
+            <li><a href="#webfocus" class="fe-replace-history">본문 바로가기</a></li>
             <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
@@ -37,10 +38,11 @@
                                 const isEssential = question.mndtAnswYn === 'Y';
                                 let hasEnd = false; %>
                     <!-- .poll-box -->
-                    <div class="<%= number++ %> poll-box tod-poll-box <%= qIdx === 0 ? '': 'none' %>" aria-hidden="<%= qIdx !== 0 %>" data-is-essential="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
+                    <div class="<%= number++ %> poll-box tod-poll-box <%= qIdx === 0 ? '': 'none' %>" id="webfocus" tabindex="0" aria-hidden="<%= qIdx !== 0 %>" data-is-essential="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
                         <!-- ##### 질문 ##### -->
                         <div class="tod-poll-title-wrap">
                             <!-- .tod-poll-title -->
+<!--                            <div class="tod-poll-title" aria-live="assertive">-->
                             <div class="tod-poll-title">
                                 <span class="poll-question"><%= question.inqDtlCtt %></span>
                             </div>
@@ -188,7 +190,7 @@
                     <!--  진행바 progress -->          
                     <div class="tod-progress-comp">
                         <div class="progress-bar">
-                            <span class="progress-bar-succ orange data-bar" style="width:0%"><em class="progress-value">30%</em></span><!-- style="width:30%" 수치 조정 -->
+                            <span class="progress-bar-succ orange data-bar" style="width:0%"><em class="progress-value">0%</em></span><!-- style="width:30%" 수치 조정 -->
                         </div>
                     </div>
                     <!--  //progress -->
@@ -424,7 +426,9 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CustomerResearch($('.wrap'));
+        // 설문 시작하기 했을때 설문 제목으로 포커스 이동을 위하여 (웹 접근성)
+        $('.fe-replace-history').trigger('click');
+        new Tw.CustomerResearch($('.wrap'), JSON.parse('<%- JSON.stringify(research.info) %>'));
     });
 </script>
 <% include ../../components/end.component.html %>
