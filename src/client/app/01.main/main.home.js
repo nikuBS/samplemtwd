@@ -189,6 +189,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '.fe-home-sso-external', $.proxy(this._onClickSsoExternal, this));
     this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
     this.$container.on('click', '.fe-home-replace', $.proxy(this._onClickReplace, this));
+    this.$container.on('click', '.icon-gnb-person', $.proxy(this._onClickPersonIcoClicked, this));
   },
 
   /**
@@ -341,6 +342,17 @@ Tw.MainHome.prototype = {
 
     $event.preventDefault();
     $event.stopPropagation();
+  },
+
+  /**
+   * @function
+   * @desc 개인화 진입 아이콘 클릭 시 세션스토리지에 저장
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickPersonIcoClicked: function ($event) {
+    Tw.CommonHelper.setSessionStorage('PERSON_ICO_CLICKED', 'Y');
   },
 
   /**
@@ -2498,11 +2510,14 @@ Tw.MainHome.prototype = {
    */
   _initPersonAction: function () {
     var personTimer = null;
+    var personIcoClickYN = Tw.CommonHelper.getSessionStorage('PERSON_ICO_CLICKED'); // 한번 이상 개인화 진입 아이콘 클릭
 
     function personAction() {
       clearTimeout(personTimer);
       personTimer = setTimeout(function () {
-        $('.h-person').addClass('show');
+        // if (personIcoClickYN !== 'Y') {
+          $('.h-person').addClass('show');
+        // }
         setTimeout(function () {
           $('.h-person').removeClass('show');
           
@@ -2518,13 +2533,18 @@ Tw.MainHome.prototype = {
 
     $(window).on('scroll', function () {
       if ($(this).scrollTop() === 0) {
-        personAction();
+        if (personIcoClickYN !== 'Y') {
+          personAction();
+        }
       } else {
-        $('.h-person .btn-comment').show();  //2020.05.13 추가
+        if (personIcoClickYN !== 'Y') {
+          $('.h-person .btn-comment').show();  //2020.05.13 추가
+        }
         $('.h-person').removeClass('show');
       }
     });
-
-    personAction();
+    if (personIcoClickYN !== 'Y') {
+      personAction();
+    }
   }
 };
