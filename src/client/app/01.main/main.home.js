@@ -39,6 +39,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._twdUrl = '';
   this.mbrNm = mbrNm || '';
 
+  this.isLogin = isLogin;
   // this._lineComponent = new Tw.LineComponent();
 
   // if ( location.hash === '#store' ) {
@@ -352,7 +353,9 @@ Tw.MainHome.prototype = {
    * @private
    */
   _onClickPersonIcoClicked: function ($event) {
-    Tw.CommonHelper.setSessionStorage('PERSON_ICO_CLICKED', 'Y');
+    if (this.isLogin === 'true' ) {
+      Tw.CommonHelper.setSessionStorage('PERSON_ICO_CLICKED', 'Y');
+    }
   },
 
   /**
