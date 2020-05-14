@@ -32,7 +32,7 @@
                 <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop" role="link" title="" data-xt_eid="CMMA_A2_B6-139" data-xt_csid="NO" data-xt_action="BC">Shop</button>
             <!-- 활성화시 .on // -->
             </h1>
-            <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : (svcType.login && svcInfo.loginType !== 'S') ) { %>
+            <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : svcType.login ) { %>
                 <% if(!( (typeof svcInfo === 'undefined' || svcInfo === null || svcInfo.loginType === 'S') ? 'true' : 
                 ( (typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
                 || (typeof svcInfo.personLineTypeChk === 'undefined' || svcInfo.personLineTypeChk === null) ? 'true' : svcInfo.personLineTypeChk   
@@ -80,7 +80,7 @@
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
             </h1>
-            <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : (svcType.login && svcInfo.loginType !== 'S') ) { %>
+            <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : svcType.login ) { %>
                 <% if(!( (typeof svcInfo === 'undefined' || svcInfo === null || svcInfo.loginType === 'S') ? 'true' : 
                 ( (typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
                 || (typeof svcInfo.personLineTypeChk === 'undefined' || svcInfo.personLineTypeChk === null) ? 'true' : svcInfo.personLineTypeChk   
