@@ -5607,3 +5607,6 @@ body.apphome .main-membershop-box {
 /* 200327 [OP002-7405] 추가_01 *//*T월드 다이렉트샵 로고 및 브랜드명 변경*/
 .quick-menu-list.tod-quick-menu-list li:nth-child(2) {vertical-align:bottom;}
 .quick-menu-list.tod-quick-menu-list li .bt.tod-bt-tdirectshop i {width: 5.0313rem !important; height: 1.1563rem !important;}
+
+/* 200518 [OP002-8424] 추가 */
+.dialog-box{ display:flex; -webkit-align-items: center;  align-items: center;}
