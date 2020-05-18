@@ -7,9 +7,11 @@
  /**
   * @class
   * @desc 나의 부가서비스
+  * @param {Object} params
+  * @param {jQuery} params.$element
   */
-Tw.MyTJoinMyPlanAdd = function(rootEl) {
-  this.$container = rootEl;
+Tw.MyTJoinMyPlanAdd = function(params) {
+  this.$container = params.$element;
   this._apiService = Tw.Api;
   this._bpcpService = Tw.Bpcp;
   this._bpcpService.setData(this.$container, '/myt-join/additions');
@@ -27,6 +29,9 @@ Tw.MyTJoinMyPlanAdd.prototype = {
   _init: function() {
     this._totalCount = Number(this.$container.find('span.counts > em').text()); // 가입 부가서비스 총 갯수 저장
     this._getSvcInfo();
+
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**

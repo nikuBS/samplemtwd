@@ -7,16 +7,20 @@
  */
 
 Tw.MyTFareBillGuideIntegratedRep = function () {
+  // ES5 Inheritance
   Tw.MyTFareBillGuideCommon.apply(this, arguments);
-  this._init();
 
   this.paramDate = '';
   this.paramLine = '';
 };
 
-Tw.MyTFareBillGuideIntegratedRep.prototype = $.extend({}, Tw.MyTFareBillGuideCommon.prototype, {
+// ES5 Inheritance
+Tw.MyTFareBillGuideIntegratedRep.prototype = Object.create(Tw.MyTFareBillGuideCommon.prototype);
+Tw.MyTFareBillGuideIntegratedRep.prototype.constructor = Tw.MyTFareBillGuideIntegratedRep;
 
+Tw.MyTFareBillGuideIntegratedRep.prototype = $.extend(Tw.MyTFareBillGuideIntegratedRep.prototype, {
   _init: function () {
+    Tw.MyTFareBillGuideCommon.prototype._init.call(this);
     this._cachedElement();
     this._bindEvent();
     this._hbRegisterHelper();
@@ -337,4 +341,3 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = $.extend({}, Tw.MyTFareBillGuideCom
     return str;
   }
 });
-Tw.MyTFareBillGuideIntegratedRep.constructor = Tw.MyTFareBillGuideIntegratedRep;

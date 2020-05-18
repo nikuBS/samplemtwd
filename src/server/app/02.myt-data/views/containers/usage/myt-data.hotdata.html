@@ -5,7 +5,6 @@
 * @since 2018.11.28
 * Summary: 실시간 휴대폰 잔여량 및 부가 서비스 조회 화면
 %>
-
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -13,6 +12,7 @@
         <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
+<!--// #skip_navigation -->
 <div id="myt-data-hotdata" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 잔여량', svcInfo: svcInfo }); %>
@@ -21,7 +21,10 @@
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
+            <%- include('../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22" } }); %>
+
             <hr class="cont-sp type1" aria-hidden="true" />
+
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
@@ -33,18 +36,19 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
 
-            <% if (usageData && usageData.data && usageData.data.length > 0) { %>
-            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'data', color: 'red', typeStr: '데이터', items: usageData.data, usageData: usageData }); %>
-            <% } %>
-            <!--// .cont-box -->
+            <%_ if (usageData && usageData.data && usageData.data.length > 0) { _%>
+                <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'data', color: 'red', typeStr: '데이터', items: usageData.data, usageData: usageData }); _%>
+            <%_ } _%>
 
             <!--
             [DV001-9828] 기본제공 데이터는 없는데 데이터 함께쓰기에 가입된 경우 표시(통합공유데이터 영역이 없기때문에 바닥페이지에 표시함)
             SKTX_PRO_화면정의서_SKMT_My T_나의 데이터 통화_실시간 잔여량_DV001-9828_데이터함께쓰기표기case추가(부가....pptx
             -->
-            <% if (usageData && !usageData.hasDefaultData && balanceAddOns && balanceAddOns.dataSharing === 'Y') { %>
+            <%_ if (usageData && !usageData.hasDefaultData && balanceAddOns && balanceAddOns.dataSharing === 'Y') { _%>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
             <div id="fe-data-share" class="cont-box pb0">
                 <div class="ti-caption-type01 fe-data-share-header">
                     <h2 class="tit">데이터 함께쓰기
@@ -79,10 +83,13 @@
                 </div>
 
             </div>
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
+            <!--// .cont-box -->
+            <%_ } _%>
 
-            <% if (balanceAddOns && balanceAddOns.tdataSharing === 'Y') { %>
+            <%_ if (balanceAddOns && balanceAddOns.tdataSharing === 'Y') { _%>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
             <div id="fe-tdata-share" class="cont-box pb0">
                 <div id="fe-head-tdata-share" class="ti-caption-type01">
                     <h2 class="tit">T데이터셰어링
@@ -100,16 +107,16 @@
                             <div class="sta">
                                 <span>{{ dateFormat svcScrbDt }}</span>
                                 <span>
-                                        {{ svcStNm }}
-                                        {{#if isUsing }}
-                                        <a class="bt-link-tx underline" href="/myt-data/hotdata/cancel-tshare?cSvcMgmtNum={{cSvcMgmtNum}}" role="button">해지하기</a>
-                                        {{/if}}
-                                    </span>
+                                    {{ svcStNm }}
+                                    {{#if isUsing }}
+                                    <a class="bt-link-tx underline" href="/myt-data/hotdata/cancel-tshare?cSvcMgmtNum={{cSvcMgmtNum}}" role="button">해지하기</a>
+                                    {{/if}}
+                                </span>
                             </div>
                             <span class="use">
-                                    <strong>{{ byteFormat useAmt }}{{ byteUnit useAmt}}</strong>
-                                    사용
-                                </span>
+                                <strong>{{ byteFormat useAmt }}{{ byteUnit useAmt}}</strong>
+                                사용
+                            </span>
                         </li>
                     </script>
                     <ul class="type1" id="fe-list-tdata-share">
@@ -117,8 +124,9 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } else { %>
+            <%_ } else { _%>
+            <!--<hr class="cont-sp type1" aria-hidden="true" />-->
+
             <!--<div class="cont-box nogaps">-->
                 <!--<div class="t-data-sharing">-->
                     <!--<a class="submain-findyourplan" href="/product/callplan?prod_id=NA00002887" style="color: #fff;">-->
@@ -127,22 +135,23 @@
                     <!--</a>-->
                 <!--</div>-->
             <!--</div>-->
-            <!--<hr class="cont-sp type1" aria-hidden="true" />-->
-            <% } %>
+            <%_ } _%>
 
-            <% if (balanceAddOns && balanceAddOns.troamingSharing === 'Y') { %>
+            <%_ if (balanceAddOns && balanceAddOns.troamingSharing === 'Y') { _%>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
             <!-- .cont-box -->
             <div id="fe-troaming-share" class="cont-box pb0">
                 <div id="fe-head-troaming-share" class="ti-caption-type01 pb20">
-                    <% if (balanceAddOns && balanceAddOns.troamingData === 'Y') { %>
+                    <%_ if (balanceAddOns && balanceAddOns.troamingData === 'Y') { _%>
                     <div class="calling-plan1">
                         <a role="button" href="/product/roaming/my-use" class="wrap-link" style="padding: 0;">
                             <span class="stit">T로밍 데이터 잔여량</span>
                         </a>
                     </div>
-                    <% } else { %>
+                    <% } else { _%>
                     <h2 class="tit">T로밍 데이터 잔여량</h2>
-                    <% } %>
+                    <%_ } _%>
                     <p class="num">총 잔여량
                         <em>0</em>GB
                     </p>
@@ -203,19 +212,21 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <%_ } else if (balanceAddOns && balanceAddOns.troamingData === 'Y') { _%>
             <hr class="cont-sp type1" aria-hidden="true" />
-            <% } else {
-                if (balanceAddOns && balanceAddOns.troamingData === 'Y') { %>
-                <div class="cont-box calling-plan">
-                    <a role="button" href="/product/roaming/my-use" class="wrap-link" style="padding: 0;">
-                        <span class="stit">T로밍 데이터 잔여량</span>
-                    </a>
-                </div>
-                <hr class="cont-sp type1" aria-hidden="true" />
-                <% }
-            } %>
 
-            <% if (usageData && usageData.dataTopUp === 'Y') { %>
+            <!-- .cont-box -->
+            <div class="cont-box calling-plan">
+                <a role="button" href="/product/roaming/my-use" class="wrap-link" style="padding: 0;">
+                    <span class="stit">T로밍 데이터 잔여량</span>
+                </a>
+            </div>
+            <!--// .cont-box -->
+            <%_ } _%>
+
+            <%_ if (usageData && usageData.dataTopUp === 'Y') { _%>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
             <!-- .cont-box -->
             <div id="fe-cont-data-limit" class="cont-box pb0">
                 <div class="ti-caption-type01">
@@ -242,10 +253,11 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
+            <%_ } _%>
 
-            <% if (usageData && usageData.ting === 'Y') { %>
+            <%_ if (usageData && usageData.ting === 'Y') { _%>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
             <!-- .cont-box -->
             <div class="cont-box pb0">
                 <div class="ti-caption-type01">
@@ -268,10 +280,11 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
+            <%_ } _%>
 
-            <% if (usageData && usageData.dataDiscount === 'Y') { %>
+            <%_ if (usageData && usageData.dataDiscount === 'Y') { _%>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
             <!-- .cont-box -->
             <div class="cont-box pb0">
                 <div class="ti-caption-type01">
@@ -295,10 +308,11 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
+            <%_ } _%>
 
-            <% if (balanceAddOns && balanceAddOns.bandDataSharing === 'Y') { %>
+            <%_ if (balanceAddOns && balanceAddOns.bandDataSharing === 'Y') { _%>
+            <hr class="cont-sp type1" aria-hidden="true" />
+
             <!-- .cont-box -->
             <div class="cont-box pb0">
                 <div id="head-band-data-share" class="ti-caption-type01">
@@ -330,17 +344,23 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <%_ } _%>
+
+            <%_ if (usageData && usageData.voice && usageData.voice.length > 0) { _%>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'voice', color: 'green', typeStr: '음성통화·영상통화', items: usageData.voice }); _%>
+            <%_ } _%>
+
+            <%_ if (usageData && usageData.sms && usageData.sms.length > 0) { _%>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'sms', color: 'yellow', typeStr: '문자', items: usageData.sms }); _%>
+            <%_ } _%>
+
+            <%_ if (usageData && usageData.etc && usageData.etc.length > 0) { _%>
+            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'etc', color: 'blue', typeStr: '기타', items: usageData.etc }); _%>
+            <%_ } _%>
+
             <hr class="cont-sp type1" aria-hidden="true" />
-            <% }
-            if (usageData && usageData.voice && usageData.voice.length > 0) { %>
-            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'voice', color: 'green', typeStr: '음성통화·영상통화', items: usageData.voice }); %>
-            <% }
-            if (usageData && usageData.sms && usageData.sms.length > 0) { %>
-            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'sms', color: 'yellow', typeStr: '문자', items: usageData.sms }); %>
-            <% }
-            if (usageData && usageData.etc && usageData.etc.length > 0) { %>
-            <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'etc', color: 'blue', typeStr: '기타', items: usageData.etc }); %>
-            <% } %>
+
+            <!-- .cont-box -->
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
@@ -349,24 +369,23 @@
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_03">월중 요금상품 변경, 일시정지 시 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_04">마이벨 서비스/다다익선요금제 이용 가능 고객 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <!--접근성 수정-->
-                    <% if (isWireLess) { %>
+                    <%_ if (isWireLess) { _%>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_07">사용량 조회 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_05">이용제한/자동해지 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_06">유심 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <% } %>
+                    <%_ } _%>
                 </ul>
             </div>
-
+            <!--// .cont-box -->
         </div>
     </div>
     <!--// #contents -->
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
-
-<!--// #skip_navigation -->
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    // TODO: new Tw.MyTDataUsage($('#contents'), {
     new Tw.MyTDataUsage($('#myt-data-hotdata'), {
       svcAttrCd : '<%= svcInfo && svcInfo.svcAttrCd %>',
       hasDefaultData: '<%= usageData && usageData.hasDefaultData %>',

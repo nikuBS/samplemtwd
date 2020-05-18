@@ -6,12 +6,17 @@
  * Summay: 요금안내서 통합(일반)청구회선 조회화면 처리, 자녀 이용요금 조회
  */
 Tw.MyTFareBillGuideIntegratedNormal = function () {
+  // ES5 Inheritance
   Tw.MyTFareBillGuideCommon.apply(this, arguments);
-  this._init();
 };
 
-Tw.MyTFareBillGuideIntegratedNormal.prototype = $.extend({}, Tw.MyTFareBillGuideCommon.prototype, {
+// ES5 Inheritance
+Tw.MyTFareBillGuideIntegratedNormal.prototype = Object.create(Tw.MyTFareBillGuideCommon.prototype);
+Tw.MyTFareBillGuideIntegratedNormal.prototype.constructor = Tw.MyTFareBillGuideIntegratedNormal;
+
+Tw.MyTFareBillGuideIntegratedNormal.prototype = $.extend(Tw.MyTFareBillGuideIntegratedNormal.prototype, {
   _init: function () {
+    Tw.MyTFareBillGuideCommon.prototype._init.call(this);
     this._cachedElement();
     this._bindEvent();
     this._hbRegisterHelper();
@@ -62,4 +67,3 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = $.extend({}, Tw.MyTFareBillGuide
     }
   }
 });
-Tw.MyTFareBillGuideIntegratedNormal.constructor = Tw.MyTFareBillGuideIntegratedNormal;
