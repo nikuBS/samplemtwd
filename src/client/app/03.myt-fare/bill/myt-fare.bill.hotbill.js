@@ -48,9 +48,6 @@ Tw.MyTFareHotBill.prototype = {
         return (Tw.MyTFareHotBill.NO_BILL_FIELDS.indexOf(val) < 0) ? options.fn(this) : options.inverse(this);
       });
     }
-
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
   /**
    * @function

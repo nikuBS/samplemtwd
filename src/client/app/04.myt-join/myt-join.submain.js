@@ -8,24 +8,26 @@
 /**
  * @class
  * @desc MyT > 나의 가입정보 > submain
+ * @param {jQuery} rootEl - wrapper element
  * @param {Object} params
- * @param {jQuery} params.$element
- * @param {Object} params.data
  */
-Tw.MyTJoinSubMain = function (params) {
-  this.$container = params.$element;
-  this._data = params.data;
+Tw.MyTJoinSubMain = function (rootEl, params) {
+  this.$container = rootEl;
+  this._data = params;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._nicknamePopup = new Tw.NicknameComponent();
   // [OP002-4773] 장기일시정지 재신청 과정 간소화
-  // this._dateHelper = Tw.DateHelper;
+  this._dateHelper = Tw.DateHelper;
   this._rendered();
   this._bindEvent();
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
   new Tw.XtractorService(this.$container);
+
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
 };
 
 Tw.MyTJoinSubMain.prototype = {
@@ -158,9 +160,6 @@ Tw.MyTJoinSubMain.prototype = {
   _initialize: function () {
     //this._initBanners();
     this._getTosAdminMytJoinBanner();
-
-    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
-    this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**

@@ -15,7 +15,6 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import FormatHelper from '../../../../utils/format.helper';
-import CommonHelper from '../../../../utils/common.helper';
 
 /**
  * [실시간 사용요금] API호출 및 렌더링
@@ -33,9 +32,6 @@ class MyTFareBillHotbill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    CommonHelper.addCurLineInfo(svcInfo);
-
     this._svcInfo = svcInfo;
     this._isPrev = req.url.endsWith('/prev');
 

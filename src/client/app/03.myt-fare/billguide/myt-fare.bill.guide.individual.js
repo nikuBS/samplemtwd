@@ -6,17 +6,12 @@
  * Summay: 요금안내서 자녀 이용요금 조회화면 처리, 자녀 미납요금 버튼처리
  */
 Tw.MyTFareBillGuideIndividual = function () {
-  // ES5 Inheritance
   Tw.MyTFareBillGuideCommon.apply(this, arguments);
+  this._init();
 };
 
-// ES5 Inheritance
-Tw.MyTFareBillGuideIndividual.prototype = Object.create(Tw.MyTFareBillGuideCommon.prototype);
-Tw.MyTFareBillGuideIndividual.prototype.constructor = Tw.MyTFareBillGuideIndividual;
-
-Tw.MyTFareBillGuideIndividual.prototype = $.extend(Tw.MyTFareBillGuideIndividual.prototype, {
+Tw.MyTFareBillGuideIndividual.prototype = $.extend({}, Tw.MyTFareBillGuideCommon.prototype, {
   _init: function () {
-    Tw.MyTFareBillGuideCommon.prototype._init.call(this);
     this._cachedElement();
     this._bindEvent();
     this._hbRegisterHelper();
@@ -65,3 +60,4 @@ Tw.MyTFareBillGuideIndividual.prototype = $.extend(Tw.MyTFareBillGuideIndividual
     }
   }
 });
+Tw.MyTFareBillGuideIndividual.constructor = Tw.MyTFareBillGuideIndividual;
