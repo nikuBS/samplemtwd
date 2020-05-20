@@ -195,16 +195,6 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$header.on('click', '[data-url]', this._onClickUrlButton);
 
     this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
-    // Tplace 쪽 작업중으로 임시 이벤트 생성 (상용 불가)
-    this.$nickName.on('click', _.debounce($.proxy(this._goTshopMobile, this),500));
-  },
-
-  /**
-   * @desc Tplace 로 sso login 이동. Tplace쪽 작업이 아직 안 끝나서 임시 작업분. 추후 변경 예정.
-   * @function
-   */
-  _goTshopMobile: function () {
-    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.T_SHOP_MOBILE + Tw.CommonHelper.getCookie('TWM'));
   },
 
   /**
