@@ -70,7 +70,9 @@ Tw.CommonMemberLoginRoute.prototype = {
 
       // 로그인 상태가 아니면, sessionStorage의 TWM 값을 초기화 한다.
       if(Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) !== 'Y') {
-      	Tw.CommonHelper.removeSessionStorage(Tw.SSTORE_KEY.PRE_TWM);
+        Tw.CommonHelper.removeSessionStorage(Tw.SSTORE_KEY.PRE_TWM);
+        // 개인화 진입 아이콘 말풍선 활성화를 위해 PERSON_ICO_CLICKED 값을 초기화 한다.
+        Tw.CommonHelper.removeSessionStorage(Tw.PERSON_ICO_CLICK_KEY);
       }
 
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, {

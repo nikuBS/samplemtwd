@@ -2512,24 +2512,21 @@ Tw.MainHome.prototype = {
    * @desc 개인화 말풍선 영역
    */
   _initPersonAction: function () {
-    var personTimer = null;
+    var personTimer = null, hideTimer1 = null, hideTimer2 = null;
     var personIcoClickYN = Tw.CommonHelper.getSessionStorage('PERSON_ICO_CLICKED'); // 한번 이상 개인화 진입 아이콘 클릭
 
     function personAction() {
       clearTimeout(personTimer);
+      clearTimeout(hideTimer1);
+      clearTimeout(hideTimer2);
+
       personTimer = setTimeout(function () {
-        // if (personIcoClickYN !== 'Y') {
-          $('.h-person').addClass('show');
-        // }
-        setTimeout(function () {
+        $('.h-person').addClass('show');
+        hideTimer1 = setTimeout(function () {
           $('.h-person').removeClass('show');
-          
-          /* 2020.05.13 추가 */
-          setTimeout(function () {
+          hideTimer2 = setTimeout(function () {
             $('.h-person .btn-comment').hide();
           }, 1000)
-          /* //2020.05.13 추가 */
-
         }, 3000);
       }, 500);
     }
