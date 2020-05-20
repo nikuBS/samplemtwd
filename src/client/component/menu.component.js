@@ -204,7 +204,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @function
    */
   _goTshopMobile: function () {
-    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.T_SHOP_MOBILE + Tw.CommonHelper.getCookie('TWM'));
+    Tw.CommonHelper.openSsoUrlExternal(Tw.OUTLINK.T_SHOP_MOBILE + this._tid);
   },
 
   /**
