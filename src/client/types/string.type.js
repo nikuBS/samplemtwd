@@ -1826,9 +1826,11 @@ Tw.ROAMING_RETURN_CODE = {
   '1430452300': { name: '대구 SKT 황금점 매장', img: 'place-img-10',
                   officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
   '1430456896': { name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-02-1',
-                  officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
+                  // officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
+                  officeHour: '<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00' },
   'A100110000': { name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-01-1',
-                  officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간' },
+                  // officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간' },
+                  officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00' },
   'A100140000': { name: '김포공항 1층 로밍센터', img: 'place-img-03',
                   officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00' },
   'A900100000': { name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
@@ -1845,7 +1847,8 @@ Tw.ROAMING_RECEIVE_CODE = {
   1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f',
                 officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
   1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h',
-                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
+                // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
+                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>' },
   1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03',
                 officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00' },
   1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
@@ -1859,7 +1862,8 @@ Tw.ROAMING_RECEIVE_CODE = {
   C299910000: { code: 'C299910000', name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
                 officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30' },
   1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de',
-                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>' }
+                // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>' }
+                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>' }
 };
 
 Tw.SERVICE_AREA_TYPE = {
