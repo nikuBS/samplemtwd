@@ -19,8 +19,6 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE_SVCATTRCD } from '../../../../types/string.type';
 import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types/title.type';
-// OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-import CommonHelper from '../../../../utils/common.helper';
 
 class MyTFareBillGuide extends TwViewController {
   constructor() {
@@ -102,9 +100,6 @@ class MyTFareBillGuide extends TwViewController {
     this.pageInfo = pageInfo;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
-
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    CommonHelper.addCurLineInfo(svcInfo);
 
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);

@@ -13,7 +13,7 @@ Tw.MyTJoinMyPlan = function (params) {
   this._historyService = new Tw.HistoryService(this.$container);
   this._rendered();
   this._bindEvent();
-  this._initialize();
+  // this._initialize();
 };
 
 Tw.MyTJoinMyPlan.prototype = {
@@ -34,10 +34,11 @@ Tw.MyTJoinMyPlan.prototype = {
       .on('click', '[data-id=bt-change-plan]', $.proxy(this._onBtChangePlanClicked, this));
   },
 
+  /*
   _initialize: function () {
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    //
   },
+  */
 
   /**
    * @function _onBtGotoClicked

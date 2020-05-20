@@ -4,14 +4,12 @@
  * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * @since 2018.10.04
  * Summary: 약정정보, 기기상환 정보 출력 화면
- * @param {Object} params
- * @param {jQuery} params.$element
  */
-Tw.MyTJoinInfoDiscount = function (params) {
-  Tw.Logger.info('[Server Res Data]', params.data);
+Tw.MyTJoinInfoDiscount = function (rootEl, resData) {
+  this.resData = resData;
+  Tw.Logger.info('[Server Res Data]', resData);
 
-  this.$container = params.$element;
-  this.resData = params.data;
+  this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
@@ -47,8 +45,7 @@ Tw.MyTJoinInfoDiscount.prototype = {
     // this._popupService.openAlert(contents, title, btName);
     // this._popupService.openConfirm(contents, title, btName);
 
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+
   },
   _cachedElement: function () {
     // this.$entryTpl = $('#fe-entryTpl');

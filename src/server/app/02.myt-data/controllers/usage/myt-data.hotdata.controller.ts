@@ -20,8 +20,6 @@ import {
   SVC_ATTR_E,
   SVC_CDGROUP
 } from '../../../../types/bff.type';
-// OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-import CommonHelper from '../../../../utils/common.helper';
 
 const TEMPLATE = {
   CIRCLE: 'usage/myt-data.hotdata.html',    // 휴대폰
@@ -135,8 +133,6 @@ class MyTDataHotdata extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    CommonHelper.addCurLineInfo(svcInfo);
     // TODO: request를 1번만 할 것이므로, "Observable.combineLatest"일 필요 없음
     Observable.combineLatest(this.reqBalances()).subscribe(([respBalances]) => {
       const respUsedData = JSON.parse(JSON.stringify(respBalances));

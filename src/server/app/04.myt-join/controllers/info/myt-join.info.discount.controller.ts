@@ -15,7 +15,6 @@ import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 // import { MYT_JOIN_CONTRACT_TERMINAL, TIME_UNIT } from '../../../../types/string.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import CommonHelper from '../../../../utils/common.helper';
 
 /*
 function titlePriceDC(feeType: string, start: any, end: any): string {
@@ -43,17 +42,12 @@ class MytJoinInfoDiscount extends TwViewController {
     repaymentInfo: [] // 단말기 분할상환 정보
   };
 
-  /*
   // default: 'info/myt-join.info.discount.html'
-  private _urltplinfo: any = {
-    pagerenderview: 'info/myt-join.info.discount.html',
+  private _urlTplInfo: any = {
+    pageRenderView: 'info/myt-join.info.discount.html',
   };
-  */
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    CommonHelper.addCurLineInfo(svcInfo);
-
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
@@ -68,14 +62,14 @@ class MytJoinInfoDiscount extends TwViewController {
     // const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
 
     Promise.all([p1]).then(function(resArr) {
-      // thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView]', thisMain._urlTplInfo.pageRenderView);
 
       thisMain._resDataInfo = resArr[0].result;
 
       thisMain._dataInit();
 
-      // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-      thisMain.renderView(res, 'info/myt-join.info.discount.html', {
+      thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
+
+      thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
@@ -83,9 +77,9 @@ class MytJoinInfoDiscount extends TwViewController {
         resDataInfo: thisMain._resDataInfo
       });
     }, function(err) {
-      thisMain.logger.info(thisMain, '[ Promise.all > error ] : ', err);
+      thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
       return thisMain.error.render(res, {
-        // title: 'title',
+        title: 'title',
         code: err.code,
         msg: err.msg,
         pageInfo: pageInfo,
@@ -99,10 +93,9 @@ class MytJoinInfoDiscount extends TwViewController {
     // });
   }
 
-  // NOTE: 안씀
-  /*
+  // 안씀
   private _typeInit() {
-    /!*
+    /*
     * 타입별로 render html 정함.
     * M1.휴대폰
     * M3.포켓파이
@@ -110,37 +103,36 @@ class MytJoinInfoDiscount extends TwViewController {
     * M5.와이브로
     * S1/S2/S3.인터넷/IPTV/집전화
     * O1.보안 솔루션
-     *!/
+     */
     switch ( this._svcInfo.svcAttrCd ) {
-      case 'M1':
+      case 'M1' :
         this.logger.info(this, '[ svcAttrCd : M1 ] : ', this._svcInfo.svcAttrCd);
         this._urlTplInfo.pageRenderView = 'info/myt-join.info.discount.html';
         break;
-      case 'M3':
+      case 'M3' :
         this.logger.info(this, '[ svcAttrCd : M3 ] : ', this._svcInfo.svcAttrCd);
         this._urlTplInfo.pageRenderView = 'join/myt.join.contract-terminal.tpocketfi.html';
         break;
-      case 'M5':
-        this.logger.info(this, '[ svcAttrCd : M5 ] : ', this._svcInfo.svcAttrCd);
-        this._urlTplInfo.pageRenderView = 'join/myt.join.contract-terminal.twibro.html';
-        break;
-      case 'M4':
+      case 'M4' :
         this.logger.info(this, '[ svcAttrCd : M4 ] : ', this._svcInfo.svcAttrCd);
         this._urlTplInfo.pageRenderView = 'join/myt.join.contract-terminal.tlogin.html';
         break;
-      case 'S1':
-      case 'S2':
-      case 'S3':
+      case 'M5' :
+        this.logger.info(this, '[ svcAttrCd : M5 ] : ', this._svcInfo.svcAttrCd);
+        this._urlTplInfo.pageRenderView = 'join/myt.join.contract-terminal.twibro.html';
+        break;
+      case 'S1' :
+      case 'S2' :
+      case 'S3' :
         this.logger.info(this, '[ S1 / S2 / S3 ] : ', this._svcInfo.svcAttrCd);
         this._urlTplInfo.pageRenderView = '';
         break;
-      case 'O1':
+      case 'O1' :
         this.logger.info(this, '[ O1 ] : ', this._svcInfo.svcAttrCd);
         this._urlTplInfo.pageRenderView = '';
         break;
     }
   }
-  */
 
   /**
    * 데이터 조회 후 화면 출력을 위해 세팅

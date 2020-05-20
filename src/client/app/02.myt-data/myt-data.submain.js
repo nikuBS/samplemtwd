@@ -9,20 +9,18 @@ var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU',
 /**
  * @class
  * @desc MyT > 나의 데이터/통화
- * @param {Object} params
- * @param {jQuery} params.$element
- * @param {Object} params.data
+ * @param {JSON} params
  */
 Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
-  this.data = params.data;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._bpcpService = Tw.Bpcp;
   this._bpcpService.setData(this.$container, '/myt-data/submain');
   this._historyService = new Tw.HistoryService(this.$container);
+  this.data = params.data;
   this._bpcpServiceId = this.data.bpcpServiceId;
-  // this._eParam = this.data.eParam;
+  this._eParam = this.data.eParam;
   this._svcMgmtNum = this.data.svcInfo.svcMgmtNum;
   this._tidLanding = new Tw.TidLandingComponent();
   this._menuId = this.data.pageInfo.menuId;
@@ -31,6 +29,9 @@ Tw.MyTDataSubMain = function (params) {
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
   new Tw.XtractorService(this.$container);
+
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
 };
 
 Tw.MyTDataSubMain.prototype = {
@@ -167,9 +168,6 @@ Tw.MyTDataSubMain.prototype = {
     this._initScroll();
     //this._initBanners();
     this._getTosAdminMytDataBanner();
-
-    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
-    this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**

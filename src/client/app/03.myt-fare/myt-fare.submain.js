@@ -23,6 +23,9 @@ Tw.MyTFareSubMain = function (params) {
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
   new Tw.XtractorService(this.$container);
+
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+  this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
 };
 
 Tw.MyTFareSubMain.prototype = {
@@ -288,9 +291,6 @@ Tw.MyTFareSubMain.prototype = {
       // this._claimPaymentRequest();
       this._responseClaimPayment({result: this.data.claim, code: Tw.API_CODE.CODE_00});
     }
-
-    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
-    this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**
@@ -335,7 +335,7 @@ Tw.MyTFareSubMain.prototype = {
           })
         );
       }
-    });
+    })
     this._drawTosAdminMytFareBanner(result);
   },
 
@@ -351,21 +351,17 @@ Tw.MyTFareSubMain.prototype = {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
 
-      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0) {
-        new Tw.BannerService(
-          this.$container,
-          Tw.REDIS_BANNER_TYPE.TOS_ADMIN,
-          bnr.banner.result.imgList,
-          bnr.target,
-          $.proxy(this._successDrawBanner, this)
-        );
-      } else {
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary)
+          && bnr.banner.result.imgList.length > 0) {
+        new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
+      }else{
         this.$container.find('[data-id=banners-empty]').hide();
         this.$container.find('[data-id=banners]').hide();
       }
     }, this));
 
     new Tw.XtractorService(this.$container);
+
   },
 
   // 배너 check
