@@ -564,7 +564,7 @@ Tw.POPUP_TPL = {
     {
       'list': [
         { 'radio-attr': 'id="00" name="r2"',
-          'label-attr':'id="00" data-center="A100110000" data-img="place-img-01-01" value="인천공항 1터미널 1층 로밍센터"' +
+          'label-attr':'id="00" data-center="A100110000" data-img="place-img-01-1" value="인천공항 1터미널 1층 로밍센터"' +
           // ' data-officehour="<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간"',
           ' data-officehour="<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00"',
           txt: '인천공항 1터미널 1층 로밍센터' },
