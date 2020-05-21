@@ -16,9 +16,16 @@ Tw.MyTFareBillGuideCommon = function (rootEl, resData) {
 
   this.paramDate = this.resData.reqQuery.date || '';
   this.paramLine = this.resData.reqQuery.line || '';
+
+  this._init();
 };
 
 Tw.MyTFareBillGuideCommon.prototype = {
+  _init: function () {
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+  },
+
   /**
    * hbs 헬퍼 등로
    * @private
