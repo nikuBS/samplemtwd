@@ -349,7 +349,7 @@ Tw.ProductRoamingFiReservation.prototype = {
           var defaultReturnImgUrl = $('#fe-return-img').attr('src');
           var defaultReturnStartLen = defaultReturnImgUrl.lastIndexOf('/');
           var defaultReturnCdnUrl = defaultReturnImgUrl.substring(0,defaultReturnStartLen+1);
-          $('#fe-return-img').attr('src', defaultReturnCdnUrl + 'place-img-01-01' + '.png')
+          $('#fe-return-img').attr('src', defaultReturnCdnUrl + 'place-img-01-1' + '.png')
           $('#fe-return-officehour').html('<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간');
         }
         this.$inputReturn.attr('disabled',false);

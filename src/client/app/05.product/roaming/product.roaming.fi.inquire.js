@@ -562,7 +562,7 @@ Tw.ProductRoamingFiInquire.prototype = {
           var defaultReturnImgUrl = $('#fe-return-img').attr('src');
           var defaultReturnStartLen = defaultReturnImgUrl.lastIndexOf('/');
           var defaultReturnCdnUrl = defaultReturnImgUrl.substring(0,defaultReturnStartLen+1);
-          this.$returnImg.attr('src', defaultReturnCdnUrl + 'place-img-01-01' + '.png')
+          this.$returnImg.attr('src', defaultReturnCdnUrl + 'place-img-01-1' + '.png')
           this.$returnOfficeHour.html('<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간');
         }
         $('#flab05').attr('disabled',false);
