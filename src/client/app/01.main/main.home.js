@@ -2514,7 +2514,10 @@ Tw.MainHome.prototype = {
   _initPersonAction: function () {
     var personTimer = null, hideTimer1 = null, hideTimer2 = null;
     var personIcoClickYN = Tw.CommonHelper.getSessionStorage('PERSON_ICO_CLICKED'); // 한번 이상 개인화 진입 아이콘 클릭
-
+    if (personIcoClickYN === 'Y') {
+      $('.h-person').removeClass('show');
+      $('.h-person .btn-comment').hide();
+    }
     function personAction() {
       clearTimeout(personTimer);
       clearTimeout(hideTimer1);
