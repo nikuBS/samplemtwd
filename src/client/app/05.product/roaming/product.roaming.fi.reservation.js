@@ -157,12 +157,15 @@ Tw.ProductRoamingFiReservation.prototype = {
     var date = new Date();
     var hsrsvrcvdtm = date.toISOString().substring(0,10).replace(/\-/gi, '');
 
-    // 수령장소 기본 값(인천공항 1터미널 3층 F카운터) 세팅
+    // 수령장소 기본 값(인천공항 1터미널 3층 F카운터) 세팅, 처음에 액션시트 한번도 선택하지 않고 기본값으로 할때는 해당 속성들이 없기 때문에 임의로 api 넘길 값들을 셋팅
     if(boothcode === null || boothcode === undefined){
-      boothcode = '1000004045';
+      // boothcode = '1000004045';
+      boothcode = '1000004047';
       // impbranch = 'A100110000';
       expbranch = 'A100110000';
-      this.selectIdx = 0;
+      // 액션시트 선택하지 않았을때 예약 완료 페이지에 기본으로 넘길 id 값
+      // this.selectIdx = 0;
+      this.selectIdx = 1;
     }
 
     // 반납장소 기본 값(인천공항 1터미널 1층) 세팅
@@ -346,7 +349,7 @@ Tw.ProductRoamingFiReservation.prototype = {
           var defaultReturnImgUrl = $('#fe-return-img').attr('src');
           var defaultReturnStartLen = defaultReturnImgUrl.lastIndexOf('/');
           var defaultReturnCdnUrl = defaultReturnImgUrl.substring(0,defaultReturnStartLen+1);
-          $('#fe-return-img').attr('src', defaultReturnCdnUrl + 'place-img-01-01' + '.png')
+          $('#fe-return-img').attr('src', defaultReturnCdnUrl + 'place-img-01-1' + '.png')
           $('#fe-return-officehour').html('<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간');
         }
         this.$inputReturn.attr('disabled',false);

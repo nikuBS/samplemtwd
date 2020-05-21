@@ -35981,14 +35981,14 @@ body.apphome .section-box {
 .rm-main-recomm-more-btn{margin:.63rem -1rem 0;padding:0 1rem}
 .rm-main-recomm-more-btn button{display:block;width:100%;height:3.38rem;border-top:1px solid #f2f2f2;color:#000;font-size:.943rem;text-align:center;line-height:3.38rem}
 
-/* 191227 로밍 메인 개선 [OP002-6034] */
+/* 191227 로밍 메인 개선 [OP002-6034] */ /* 200515 로밍 메인 추천요금제 수정 [OP002-8309] */
 .rm-main-recomm-hdtx{padding-top:.3125rem;font-size:.8125rem;color:#959595}
-.rm-main-recomm-item .item{display:block;width:100%;margin-top:.3125rem;padding:1.125rem .9375rem;background-color:#e6f2fb;border-radius:.2rem;text-align:left}
+.rm-main-recomm-item .item{float:left;width:32%;margin:0 0 1.25rem 2%;padding:6rem 0 .875rem;border:1px solid #eee;border-radius:.7rem;background:#fff url(/img/product/rm-main-recomm-ico1.png) no-repeat center 1.375rem;background-size:3.4375rem auto;box-shadow:#eee .625rem .625rem .625rem}
+.rm-main-recomm-item .item+.item{background-image:url(/img/product/rm-main-recomm-ico2.png)}
+.rm-main-recomm-item .item+.item+.item{background-image:url(/img/product/rm-main-recomm-ico3.png)}
 .rm-main-recomm-item .item:first-child{margin:0}
 .rm-main-recomm-item .item h4{font-size:1rem;font-weight:bold;padding-bottom:.17rem}
-.rm-main-recomm-item .item span{margin-right:.9375rem;padding-left:1.5rem;font-size:.8125rem;color:#3198d4;background:url(/img/product/rm-main-ico-global.png) no-repeat 0 0;background-size:.875rem auto}
-.rm-main-recomm-item .item span+span{background-image:url(/img/product/rm-main-ico-cal.png)}
-.rm-main-recomm-item .item span+span+span{background-image:url(/img/product/rm-main-ico-data.png)}
+.rm-main-recomm-item .item span{font-size:.8125rem;color:#f86252}
 .rm-recommendedrate-list .tag-text{color:#959595 !important}
 
 /* 200109 괌사이판 국내처럼 나의 T로밍 이용현황 개발 건 [OP002-6221] */

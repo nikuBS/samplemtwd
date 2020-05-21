@@ -23,7 +23,12 @@ Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId,
   this._prodId = prodId;
   this._displayId = displayId;
   this._svcProdGrpId = svcProdGrpId;
-  this._maxLine = mobileplanId === 'NA00006405' ? 2 : 1;
+
+  if (mobileplanId === 'NA00006405' || mobileplanId === 'NA00006999') {
+    this._maxLine = 2;
+  } else {
+    this._maxLine = 1;
+  }
 
   this._cachedElement();
   this._bindEvent();

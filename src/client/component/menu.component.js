@@ -409,7 +409,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
   /**
    * @function
-   * @desc 각가의 메뉴 클릭시 해당 화면으로 이동
+   * @desc 각각의 메뉴 클릭시 해당 화면으로 이동
    * @param  {Object} e - click event
    */
   _onMenuLink: function (e) {
@@ -874,7 +874,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         item.isShowDataCharge = false;
         item.exUrlNoti = item.exUrlNoti || '';
         if(Tw.BrowserHelper.isApp()) {
-          item.isShowDataCharge = item.exUrlNoti.indexOf('MA') !== -1 ? true : false
+          item.isShowDataCharge = item.exUrlNoti.indexOf('MA') !== -1 ? true : false;
         // } else {
         //   item.isShowDataCharge = item.exUrlNoti.indexOf('MW') !== -1 ? true : false
         }
