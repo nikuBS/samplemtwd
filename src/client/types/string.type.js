@@ -1792,7 +1792,8 @@ Tw.NOTI_POPUP_BTN = {
 Tw.MENU_STRING = {
   FREE_SMS: '무료문자 서비스는 SK텔레콤 휴대폰 번호를 등록하셔야 사용하실 수 있습니다. 단말기에 Usim을 넣어주시거나 SK텔레콤 가입 회선이 있으시다면, T월드에서 이용하실 회선을 등록해 주세요.',
   FREE_SMS_PPS: '선불요금제 이용 고객님은 무료문자 서비스를 사용하실 수 없습니다. 이미 무료문자 인증을 받은 번호가 있다면 전체메뉴 상단에서 회선을 변경하신 후 다시 시도해주세요.',
-  OPTIMIZING_AOS10: '안드로이드10 최적화 준비중입니다.\nT월드 홈페이지(PC)에서 이용하실 수 있습니다.',
+  // OPTIMIZING_AOS10: '안드로이드10 최적화 준비중입니다.\nT월드 홈페이지(PC)에서 이용하실 수 있습니다.',
+  OPTIMIZING_AOS10: '안드로이드 10 최적화 되었습니다.\n최신 버전으로 업데이트 후 이용해 주세요.',
   FREE_SMS_OVERHAUL: {
     start: '20200213220000',
     end: '20200214070059',
@@ -2196,3 +2197,9 @@ Tw.SURVEY_CATEGORY_STR = {
 };
 
 Tw.ALLOW_POPUP_ERROR_MSG = '팝업 설정으로 인하여 일시적인 오류가 발생하였습니다.<br>다시 시도해 주세요.';
+
+// aos10 무료문자 안내 대응
+Tw.COMPARE_TARGET_VERSION = {
+  UPPPER_PACKAGE: '5.0.14',
+  LOWER_PACKAGE: '5.0.15'
+};

@@ -439,7 +439,6 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     Tw.CommonHelper.openUrlExternal(url);
   },
 
-
   /**
    * @function
    * @desc 무료문자 클릭시 native 로 무료문자 호출, 회원정보, 선불폰 사용여부에 따른 alert 처리
@@ -447,7 +446,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   _onFreeSMS: function () {
 
     // OP002-5783 : [VOC]문자보내기 AOS10 대응
-    if(Tw.BrowserHelper.isAndroid()) {
+    /*if(Tw.BrowserHelper.isAndroid()) {
       var osVersion = Tw.BrowserHelper.getAndroidVersion();
       var majorVersion = 0;
 
@@ -468,7 +467,55 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         );
         return;
       }
+    }*/
 
+    /*
+    OP002-8494 : [FE] 무료문자 Android 10 지원을 위한 수정 배포
+    노출 조건 : 안드로이드 OS 버전 10 이상 / App 버전 T world 5.0.14(대문자 패키지) 미만, T world 5.0.15(소문자 패키지) 미만
+    안내문구 : 안드로이드 10 최적화되었습니다. 최신 버전으로 업데이트 후 이용해 주세요.
+    */
+    if(Tw.BrowserHelper.isAndroid()) {
+      var osVersion = Tw.BrowserHelper.getAndroidVersion();
+      var majorVersion = 0;
+
+      if ( !Tw.FormatHelper.isEmpty(osVersion) ) {
+        majorVersion = osVersion.split('.')[0];
+        if(Tw.FormatHelper.isNumber(majorVersion)) {
+          majorVersion = Number(majorVersion);
+        }
+      }
+      
+      var userAgentString = Tw.BrowserHelper.getUserAgent();
+      var currentVersion = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
+
+      if(currentVersion === null || currentVersion === '') {
+         return;
+      }
+
+      this._currentVersion = currentVersion;
+      var versionArr = currentVersion.split('.');
+      var appPackageValue = 0;
+      var appPackageType = '';
+
+      if(versionArr.length === 4) {
+        appPackageValue = versionArr[versionArr.length-2];
+      } else if(versionArr.length === 3){
+        appPackageValue = versionArr[versionArr.length-1];
+      }
+      
+      appPackageType = (appPackageValue % 2) ? "lower":"upper";  // 대/소문자(대문자 짝수, 소문자 홀수) 패키지 구분
+      
+      if(Tw.BrowserHelper.isAndroid() && (majorVersion > 9 || Number(Tw.BrowserHelper.getOsVersion()) > 28 ) 
+        && (this._isAosPackageType(appPackageType))) {
+        this._popupService.openAlert(
+          Tw.MENU_STRING.OPTIMIZING_AOS10,
+          '',
+          Tw.BUTTON_LABEL.CONFIRM,
+          null,
+          'menu_optimizing_aos10'
+        );
+        return;
+      }
     }
 
     if (this._memberType === 1) {
@@ -507,6 +554,24 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     }
     Tw.CommonHelper.openFreeSms();
     return false;
+  },
+
+  /**
+   * @function
+   * @desc 현재 사용중인 단말기의 버전을 대상으로 대/소문자 패키지 유효성 체크
+   * @param  
+   */
+  _isAosPackageType: function (currentAppType) {
+    switch (currentAppType) {
+      case 'upper': // 대문자 패키지(이번 비교 대상 5.0.14)
+        return Tw.ValidationHelper.checkVersionValidation(Tw.COMPARE_TARGET_VERSION.UPPPER_PACKAGE, this._currentVersion, 3);
+      
+      case 'lower': // 소문자 패키지(이번 비교 대상 5.0.15)
+        return Tw.ValidationHelper.checkVersionValidation(Tw.COMPARE_TARGET_VERSION.LOWER_PACKAGE, this._currentVersion, 3);
+    
+      default:
+        return true;
+    }
   },
 
   /**
