@@ -39,7 +39,8 @@ class MyTFareBillHotbill extends TwViewController {
     this._svcInfo = svcInfo;
     this._isPrev = req.url.endsWith('/prev');
 
-    if ( !req.query.child && new Date().getDate() > 7 ) { // 전월요금 7일까지 보이기
+    // 20-05-20 OP002-8488 : 전월요금(지난달 요금) 보기 버튼 매월 1~4일까지 노출
+    if ( !req.query.child && new Date().getDate() > 4 ) { // 전월요금 4일까지 보이기
       this._preBillAvailable = false;
     }
     // 당월 요금은 2일부터 조회 가능(매월 1일은 안내 매세지 출력) -> [DV001-19501]가능하게 수정
