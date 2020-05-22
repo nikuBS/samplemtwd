@@ -192,7 +192,6 @@
 <!--// #skip_navigation -->
 
 <div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
-
     <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '요금안내서' }); %>
 
     <div id="contents" class="container-wrap">
@@ -200,7 +199,10 @@
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <!-- //191115 웹접근성 수정_02 -->
         <div class="container">
+            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22" } }); %>
+
             <hr class="cont-sp type1" aria-hidden="true"/>
+
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
@@ -228,40 +230,37 @@
                             </span>
                             <%}%>
                         </p>
-                        <%# 통합청구(일반) 일때만 노출 %>
-                        <%if (typeChk === 'A6') {%>
+                        <%# 통합청구(일반) 일때만 노출 _%>
+                        <%_ if (typeChk === 'A6') { _%>
                         <p class="msg">
                             <span class="str"><%- data.commDataInfo.repSvcNm %></span>에<br/>통합청구되었습니다.
                         </p>
-                        <p class="term"><%=data.commDataInfo.selStaDt %> ~ <%=data.commDataInfo.selEndDt %></p>
-                        <%} else {%>
-                        <% if( data.billpayInfo.existBill ) { %>
-                        <p class="price"><%=data.commDataInfo.useAmtTot %>원</p>
-                        <p class="term"><%=data.commDataInfo.selStaDt %> ~ <%=data.commDataInfo.selEndDt %></p>
-                        <% } %>
-                        <% } %>
+                        <p class="term"><%= data.commDataInfo.selStaDt %> ~ <%= data.commDataInfo.selEndDt %></p>
+                        <%_ } else if ( data.billpayInfo.existBill ) { _%>
+                        <p class="price"><%= data.commDataInfo.useAmtTot %>원</p>
+                        <p class="term"><%= data.commDataInfo.selStaDt %> ~ <%= data.commDataInfo.selEndDt %></p>
+                        <%_ } _%>
                         <div class="btn-wrap">
                             <button class="btn-round2 btn-style3" data-target="conditionChangeBtn">청구월 변경</button>
                         </div>
                     </div>
-                    <%# 통합청구(일반)이 아닐 때 노출%>
-                    <% if( typeChk !== 'A6' && !data.billpayInfo.existBill ) { %>
+                    <%# 통합청구(일반)이 아닐 때 노출 _%>
+                    <%_ if ( typeChk !== 'A6' && !data.billpayInfo.existBill ) { _%>
                     <div class="result-none type2">
                         이번 달에 사용하신 이용요금이 없습니다.
                     </div>
-                    <% } %>
-
+                    <%_ } _%>
                     <%# 통합청구(대표) 일때만 노출 %>
-                    <%if (typeChk === 'A5') {%>
+                    <%_ if (typeChk === 'A5') { _%>
                     <div class="detail-bill" id="fe-bill-sum-list">
                         <ul data-target="hbPaidAmtSvcCdListArea"></ul>
                     </div>
-                    <%}%>
+                    <%_ } _%>
                 </div>
-                <% if( data.billpayInfo.coClCd === 'B' ){ %>
+                <%_ if ( data.billpayInfo.coClCd === 'B' ) { _%>
                 <p class="txt-desc2 tx-normal mt22">SK브로드밴드를 통해 가입하신 서비스일 경우 청구요금에 포함되지 않습니다. 전화 106 또는 SK브로드밴드 웹사이트를
                     이용해 주세요.</p>
-                <% } %>
+                <%_ } _%>
             </div>
             <!--// .cont-box -->
 
@@ -269,17 +268,16 @@
 
             <div data-target="hbDetailListArea"></div>
 
-            <%# 통합청구(일반)이 아닐 때 노출%>
-            <%if (typeChk !== 'A6') {%>
+            <%# 통합청구(일반)이 아닐 때 노출 %>
+            <%_ if (typeChk !== 'A6') { _%>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="btn-link-list">
-                    <%# 주석처리 요금납부버튼 무조건 노출 if(showConditionInfo.autopayYn == 'N' && showConditionInfo.selectNonPaymentYn
-                    == 'Y' ){ %>
+                    <%# 주석처리 요금납부버튼 무조건 노출 if (showConditionInfo.autopayYn == 'N' && showConditionInfo.selectNonPaymentYn == 'Y') { _%>
                     <li class="last-line">
                         <button data-target="feePayBtn">요금 납부</button>
                     </li>
-                    <%# } %>
+                    <%# } _%>
                     <li class="last-line">
                         <button data-target="payListBtn">납부내역 조회</button>
                     </li>
@@ -288,7 +286,7 @@
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <%}%>
+            <%_ } _%>
 
             <!-- .cont-box -->
             <div id="divChildListHaeder">
@@ -299,13 +297,13 @@
             </div>
             <!--// .cont-box -->
 
-            <%if ([roamDonaCallBtnYn.callgiftYn,roamDonaCallBtnYn.roamingYn,roamDonaCallBtnYn.donationYn].indexOf('Y') >
-            -1) {%>
+            <%_ if ([roamDonaCallBtnYn.callgiftYn,roamDonaCallBtnYn.roamingYn,roamDonaCallBtnYn.donationYn].indexOf('Y') > -1) { _%>
             <hr class="cont-sp type1" aria-hidden="true"/>
+
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
-                    <% if ( roamDonaCallBtnYn.callgiftYn === 'Y' ) { %>
+                    <%_ if ( roamDonaCallBtnYn.callgiftYn === 'Y' ) { _%>
                     <li>
                         <button data-target="callGiftBtn">
                                 <span class="inner">
@@ -313,8 +311,8 @@
                                 </span>
                         </button>
                     </li>
-                    <% } %>
-                    <% if ( roamDonaCallBtnYn.roamingYn === 'Y' ) { %>
+                    <%_ } _%>
+                    <%_ if ( roamDonaCallBtnYn.roamingYn === 'Y' ) { _%>
                     <li>
                         <button data-target="roamingBtn">
                                 <span class="inner">
@@ -322,8 +320,8 @@
                                 </span>
                         </button>
                     </li>
-                    <% } %>
-                    <% if ( roamDonaCallBtnYn.donationYn === 'Y' ) { %>
+                    <%_ } _%>
+                    <%_ if ( roamDonaCallBtnYn.donationYn === 'Y' ) { _%>
                     <li>
                         <button data-target="donationBtn">
                                 <span class="inner">
@@ -331,11 +329,11 @@
                                 </span>
                         </button>
                     </li>
-                    <% } %>
+                    <%_ } _%>
                 </ul>
             </div>
             <!--// .cont-box -->
-            <%}%>
+            <%_ } _%>
 
             <!-- .cont-box -->
             <div class="cont-box noborder bgnone">
@@ -354,8 +352,7 @@
             <!--// .cont-box -->
         </div>
     </div>
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo });
-    %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 
 <script>

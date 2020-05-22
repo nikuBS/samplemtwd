@@ -1,0 +1,20 @@
+<div class="lineinfo-user">
+    <span class="info-title"><%= addition.prodNm %></span>
+    <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
+</div>
+<div class="lineinfo-data">
+    <%_ if (/^[0-9,]+$/.test(addition.basFeeTxt)) { _%>
+    <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+    <%_ } else { _%>
+    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+    <%_ } _%>
+    <%_ if (hasLink) { _%><span class="ico"><span class="blind">자세히 보기</span></span><%_ } _%>
+</div>
+<%# TODO: wire와 wireless가 서로 다르게 처리되는 부분 확인 필요 _%>
+<%_ if (hasButtons) { _%>
+<span class="bt-wrap">
+    <% addition.btnList.map(btn => { _%>
+    <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
+    <%_ }); %>
+</span>
+<%_ } _%>

@@ -11,6 +11,7 @@ import { DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT, CURRENCY_UNIT } from 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../../utils/product.helper';
+import CommonHelper from '../../../../utils/common.helper';
 
 /* 상품 카테고리 별 툴팁 코드 목록 */
 const FEE_PLAN_TIP = {
@@ -275,6 +276,9 @@ class MyTJoinMyplan extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    CommonHelper.addCurLineInfo(svcInfo);
+
     const defaultOptions = {
       title: '나의 요금제',
       pageInfo: pageInfo,

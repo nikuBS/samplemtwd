@@ -1,202 +1,162 @@
 <%#
-* @file myt-join.product.additions.others.html
+* @file myt-join.myplanadd.wire.html
 * @author Jiyoung Jo
 * @since 2018.10.11
-%>
-
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
-            <!-- Grand open 접근성 수정 -->
-            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
-            <!--  //Grand open 접근성 수정 -->
-        </ul>
-    </div>
-    <!--// #skip_navigation -->
-    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-        <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
-        <!--// #header -->
-        <!-- #contents -->
-        <div id="contents" class="container-wrap">
-            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-            <div class="container">
-                <div class="add-prd-top-wrap">
-                    <span class="select" role="tablist">
-                        <button role="tab" aria-selected="true" class="on" id="fe-all-btn">전체</button>
-                        <button role="tab" aria-selected="false" id="fe-pay-btn">유료만 보기</button>
-                    </span>
-                    <span class="counts">총 <em><%= joined.length %></em>개</span>
-                </div>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <div class="add-prd-wrap">
-                        <ul class="list-comp-lineinfo">
-                            <% joined.map(addition => { 
-                                const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
-                                <li class="<%= hasButtons?'add-con':''%>" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
-                                    <% if (hasLink) { %>
-                                    <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
-                                    <% } else { %>
-                                    <div class="not-link">
-                                    <% } %>
-                                        <div class="lineinfo-user">
-                                            <span class="info-title"><%= addition.prodNm %></span>
-                                            <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
-                                        </div>
-                                        <div class="lineinfo-data">
-                                            <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
-                                            <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
-                                            <% } else { %>
-                                            <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
-                                            <% } %>
-                                            <% if (hasLink) { %><span class="ico"><span class="blind">자세히 보기</span></span><% } %>
-                                        </div>
-                                        <% if (hasButtons) { %>
-                                        <span class="bt-wrap">
-                                            <% addition.btnList.map(btn => { %>
-                                                <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
-                                            <% }); %>
-                                        </span>
-                                        <% } %>
-                                    <% if (hasLink) { %>
-                                    </a>
-                                    <% } else { %>
-                                    </div>
-                                    <% } %>
-                                </li>
-                            <% }); %>
-                        </ul>
-                        <div class="contents-empty fe-empty <%= joined.length > 0 ? 'none' : '' %>" aria-hidden="<%= joined.length > 0 %>">
-                            <span class="ico type1"><span class="blind">느낌표(!)</span></span>
-                            <p class="desc">현재 사용 중인 부가서비스가 없습니다.</p>
-                        </div>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-
-                <div class="ti-caption-gray">
-                    <h3 class="tit">신청 접수 중인 부가서비스</h3>
-                </div>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <div class="add-prd-wrap">
-                        <% if (reserved.length > 0) { %>
-                            <ul class="list-comp-lineinfo">
-                                <% reserved.map(addition => { 
-                                    const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
-                                <li class="<%= hasButtons?'add-con':''%>" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
-                                    <% if (hasLink) { %>
-                                    <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
-                                    <% } else { %>
-                                    <div class="not-link">
-                                    <% } %>
-                                        <div class="lineinfo-user">
-                                            <span class="info-title"><%= addition.prodNm %></span>
-                                            <span class="info-sub2">신청일 <%= addition.scrbDt %></span>
-                                        </div>
-                                        <div class="lineinfo-data">
-                                            <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
-                                            <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
-                                            <% } else { %>
-                                            <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
-                                            <% } %>
-                                            <% if (hasLink) { %><span class="ico"><span class="blind">자세히 보기</span></span><% } %>
-                                        </div>
-                                    <% if (hasButtons) { %>
-                                        <span class="bt-wrap">
-                                            <% addition.btnList.map(btn => { %>
-                                                <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></a>
-                                            <% }); %>
-                                        </span>
-                                    <% } %>
-                                    <% if (hasLink) { %>
-                                    </a>
-                                    <% } else { %>
-                                    </div>
-                                    <% } %>
-                                </li>
-                                <% }); %>
-                            </ul>
-                        <% } else { %>
-                            <div class="contents-empty">
-                                <span class="ico type1"><span class="blind">느낌표(!)</span></span>
-                                <p class="desc">현재 신청 접수 중인 부가서비스가 없습니다.</p>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-                
-                <div class="ti-caption-gray">
-                    <h3 class="tit">가입 가능한 부가서비스</h3>
-                </div>
-
-                <% if (joinable.length > 0) { %>
-                    <!-- .cont-box -->
-                    <div class="cont-box nogaps-hoz">
-                        <ul class="add-product-list">
-                            <% joinable.map(addition => { %>
-                            <li>
-                                <% if (addition.prodLinkYn === "Y") { %>
-                                <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
-                                    <span class="tit"><%= addition.prodNm %></span>
-                                    <span class="txt">자세히 보기</span>
-                                </a>
-                                <% } else { %>
-                                <button>
-                                    <span class="tit"><%= addition.prodNm %></span>
-                                </button>
-                                <% } %>
-                                <% if (addition.btnList && addition.btnList.length > 0) { %>
-                                    <span class="bt-wrap">
-                                        <% addition.btnList.map(btn => { %>
-                                            <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
-                                        <% }); %>
-                                    </span>
-                                <% } %>
-                            </li>
-                            <% }); %>
-                        </ul>
-                    </div>
-                    <!--// .cont-box -->
-                <% } else { %>
-                    <!-- .cont-box -->
-                    <div class="cont-box nogaps">
-                        <div class="add-prd-wrap">
-                            <div class="contents-empty">
-                                <span class="ico type1"><span class="blind">느낌표(!)</span></span>
-                                <p class="desc">현재 가입 가능한 부가서비스가 없습니다.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// .cont-box -->
-                <% } %>
-
-                <!-- 꼭 확인해 주세요 2018.11.02 추가 -->
-				<div class="cont-box noborder bgnone">
-                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-                    <ul class="pg-chk-list02">
-                        <li><button id="MS_06_01_tip_02" type="button" class="btn-tip" aria-haspopup="true">부가서비스 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    </ul>
-                </div>
-                <!-- //꼭 확인해 주세요 -->
-
+_%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); _%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <!-- Grand open 접근성 수정 -->
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+        <!--  //Grand open 접근성 수정 -->
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo: svcInfo, pageInfo: locals.pageInfo }); _
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <%# OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
+            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B12-29", multiple: "CMMA_A3_B12-28" } }); _%>
+            <%# // OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
+            <div class="add-prd-top-wrap">
+                <span class="select" role="tablist">
+                    <button role="tab" aria-selected="true" class="on" id="fe-all-btn">전체</button>
+                    <button role="tab" aria-selected="false" id="fe-pay-btn">유료만 보기</button>
+                </span>
+                <span class="counts">총 <em><%- joined.length %></em>개</span>
             </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="add-prd-wrap">
+                    <ul class="list-comp-lineinfo">
+                        <%_ joined.map(addition => { _%>
+                            <%_ const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; _%>
+                            <li class="<%- hasButtons ? 'add-con' : '' %>" data-isFree ="<%- addition.payFreeYn === 'Y' %>">
+                                <%_ if (hasLink) { _%>
+                                <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
+                                    <%- include('./myt-join.myplanadd.wire.joined.html', { addition: addition, hasLink: hasLink, hasButtons: hasButtons }); _%>
+                                </a>
+                                <%_ } else { _%>
+                                <div class="not-link">
+                                    <%- include('./myt-join.myplanadd.wire.joined.html', { addition: addition, hasLink: hasLink, hasButtons: hasButtons }); _%>
+                                </div>
+                                <%_ } _%>
+                            </li>
+                        <%_ }); %>
+                    </ul>
+                    <div class="contents-empty fe-empty <%= joined.length > 0 ? 'none' : '' %>" aria-hidden="<%= joined.length > 0 %>">
+                        <span class="ico type1"><span class="blind">느낌표(!)</span></span>
+                        <p class="desc">현재 사용 중인 부가서비스가 없습니다.</p>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="ti-caption-gray">
+                <h3 class="tit">신청 접수 중인 부가서비스</h3>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="add-prd-wrap">
+                    <%_ if (reserved.length > 0) { _%>
+                    <ul class="list-comp-lineinfo">
+                        <% reserved.map(addition => {
+                            const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
+                        <li class="<%= hasButtons?'add-con':''%>" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
+                            <%_ if (hasLink) { _%>
+                            <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
+                                <%- include('./myt-join.myplanadd.wire.reserved.html', { addition: addition, hasButtons: hasButtons }); _%>
+                            </a>
+                            <%_ } else { _%>
+                            <div class="not-link">
+                                <%- include('./myt-join.myplanadd.wire.reserved.html', { addition: addition, hasButtons: hasButtons }); _%>
+                            </div>
+                            <%_ } _%>
+                        </li>
+                        <%_ }); %>
+                    </ul>
+                    <%_ } else { _%>
+                    <div class="contents-empty">
+                        <span class="ico type1"><span class="blind">느낌표(!)</span></span>
+                        <p class="desc">현재 신청 접수 중인 부가서비스가 없습니다.</p>
+                    </div>
+                    <%_ } _%>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="ti-caption-gray">
+                <h3 class="tit">가입 가능한 부가서비스</h3>
+            </div>
+
+            <%_ if (joinable.length > 0) { _%>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <ul class="add-product-list">
+                    <% joinable.map(addition => { _%>
+                    <li>
+                        <%_ if (addition.prodLinkYn === "Y") { _%>
+                        <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
+                            <span class="tit"><%= addition.prodNm %></span>
+                            <span class="txt">자세히 보기</span>
+                        </a>
+                        <%_ } else { _%>
+                        <button>
+                            <span class="tit"><%= addition.prodNm %></span>
+                        </button>
+                        <%_ } _%>
+                        <%_ if (addition.btnList && addition.btnList.length > 0) { _%>
+                        <span class="bt-wrap">
+                            <% addition.btnList.map(btn => { _%>
+                            <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
+                            <%_ }); %>
+                        </span>
+                        <%_ } _%>
+                    </li>
+                    <%_ }); %>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+            <%_ } else { _%>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="add-prd-wrap">
+                    <div class="contents-empty">
+                        <span class="ico type1"><span class="blind">느낌표(!)</span></span>
+                        <p class="desc">현재 가입 가능한 부가서비스가 없습니다.</p>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <%_ } _%>
+
+            <!-- 꼭 확인해 주세요 2018.11.02 추가 -->
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list02">
+                    <li><button id="MS_06_01_tip_02" type="button" class="btn-tip" aria-haspopup="true">부가서비스 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                </ul>
+            </div>
+            <!-- //꼭 확인해 주세요 -->
         </div>
-        <!--// #contents -->
-    
     </div>
-    <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-</body>
-<% include ../../components/javascript.component.html %>
+    <!--// #contents -->
+</div>
+<%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
+
+<% include ../../components/javascript.component.html _%>
 <script>
     $(document).ready(function () {
-        new Tw.MyTJoinMyPlanAdd($('.wrap'));
+        new Tw.MyTJoinMyPlanAdd({
+            $element: $('#contents')
+        });
     });
 </script>
-<% include ../../components/end.component.html %>
+<% include ../../components/end.component.html _%>

@@ -15,6 +15,7 @@ import {
   MYT_JOIN_FAMILY,
 } from '../../../../types/string.type';
 import MyTHelper from '../../../../utils/myt.helper';
+import CommonHelper from '../../../../utils/common.helper';
 
 /**
  * @class
@@ -36,6 +37,9 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    CommonHelper.addCurLineInfo(svcInfo);
+
     let renderCommonInfo: any = {
       pageInfo,
       svcInfo,

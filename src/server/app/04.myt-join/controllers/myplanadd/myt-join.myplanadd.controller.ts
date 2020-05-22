@@ -12,6 +12,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { PRODUCT_CALLPLAN } from '../../../../types/bff.type';
+import CommonHelper from '../../../../utils/common.helper';
 /**
  * @desc 버튼 타입(가입, 설정, 해지)
  */
@@ -35,14 +36,17 @@ class MyTJoinMyPlanAdd extends TwViewController {
    * @param  {Request} _req
    * @param  {Response} res
    * @param  {NextFunction} _next
-   * @param  {any} svcInfo
-   * @param  {any} _allSvc
-   * @param  {any} _childInfo
-   * @param  {any} pageInfo
+   * @param  {Object} svcInfo
+   * @param  {Object} _allSvc
+   * @param  {Object} _childInfo
+   * @param  {Object} pageInfo
    */
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    CommonHelper.addCurLineInfo(svcInfo);
+
     if (svcInfo.svcAttrCd.includes('M')) {  // 모바일 회선일 경우
-      this._getMobileAdditions.apply(this, [res, svcInfo, pageInfo]);
+      this._getWirelessAdditions.apply(this, [res, svcInfo, pageInfo]);
     } else {  // 유선 회선일 경우
       this._getWireAdditions().subscribe(wire => {
         if (wire.code) {
@@ -53,7 +57,6 @@ class MyTJoinMyPlanAdd extends TwViewController {
             title: '나의 부가서비스'
           });
         }
-
         res.render('myplanadd/myt-join.myplanadd.wire.html', { svcInfo, pageInfo, ...wire });
       });
     }
@@ -63,31 +66,31 @@ class MyTJoinMyPlanAdd extends TwViewController {
    * @desc 무선 부가서비스 가져오기
    * @private
    */
-  private _getMobileAdditions = (res, svcInfo, pageInfo) => {  // 무선 가입 부가서비스 가져오기
+  private _getWirelessAdditions = (res, svcInfo, pageInfo) => {  // 무선 가입 부가서비스 가져오기
     Observable.combineLatest(
         this._wirelessAdditionProduct(),
         this._smartCallPickProduct(svcInfo)
-    ).subscribe(([wirelessAddProd, smartCallPickProd]) => {
-      if (wirelessAddProd.code) {
+    ).subscribe(([wireless, smartCallPickProd]) => {
+      if (wireless.code) {
         return this.error.render(res, {
-          ...wirelessAddProd,
+          ...wireless,
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           title: '나의 부가서비스'
         });
       }
       // 부가상품에 스마트콜Pick이 있는 경우
-      if (wirelessAddProd.additions.filter(item => item.prodId === 'NA00006399').length > 0) {
+      if (wireless.additions.filter(item => item.prodId === 'NA00006399').length > 0) {
         // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
         // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
         smartCallPickProd.forEach((pProd) => {
-          const smtCpItemIdx = wirelessAddProd.additions.findIndex(wProd => wProd.prodId === pProd.prod_id);
+          const smtCpItemIdx = wireless.additions.findIndex(wProd => wProd.prodId === pProd.prod_id);
           if (smtCpItemIdx > -1) {
-            wirelessAddProd.additions.splice(smtCpItemIdx, 1);
+            wireless.additions.splice(smtCpItemIdx, 1);
           }
         });
       }
-      res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, pageInfo, ...wirelessAddProd });
+      res.render('myplanadd/myt-join.myplanadd.wireless.html', { svcInfo, pageInfo, ...wireless });
     });
   }
 
