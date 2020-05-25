@@ -65,9 +65,9 @@ Tw.ProductWireServiceArea.prototype = {
         return !!service;
       })
       .map(function(service) {
-        var matches = service.match(/(.+)[\(|\s]([^\)]+)\)?$/),
+        var matches = service.match(/(.+)[\(]([^\)]+)\)?$/),
           items = (matches && matches.slice(1)) || [service],
-          icon = Tw.SERVICE_AREA_TYPE[items[0]];
+          icon = Tw.SERVICE_AREA_TYPE[items[0].replace(/(\s*)/g,"")];
 
         return {
           name: items,
