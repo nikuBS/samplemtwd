@@ -89,7 +89,9 @@ class MyTFareBillGuide extends TwViewController {
   private _urlTplInfo: any = {
     commonPage: 'billguide/myt-fare.bill.guide.html', // 공통 페이지
     prepaidPage: 'billguide/myt-fare.bill.guide.pps.html', // PPS(선불폰)
+    // NOTE: OP002-8156: 아래 회선은 구할 수 없음 (확인: 문종수)
     companyPage: 'billguide/myt-fare.bill.guide.solution.html', // 기업솔루션(포인트캠)
+    // NOTE: OP002-8156: 아래 회선은 모바일에서 값을 보여줄 수 없음 (확인: 문종수)
     skbroadbandPage: 'billguide/myt-fare.bill.guide.skbd.html' // sk브로드밴드(인터넷/IPTV/집전화)
   };
 
@@ -112,11 +114,11 @@ class MyTFareBillGuide extends TwViewController {
     allSvc = allSvc || { 's': [], 'o': [], 'm': [] };
 
     if ( svcInfo.actCoClCd === 'B' ) {
-      thisMain.logger.info(thisMain, '[ SK브로드밴드 가입 ]', svcInfo.actCoClCd);
-      thisMain._typeChk = 'A3';
+      this.logger.info(thisMain, '[ SK브로드밴드 가입 ]', svcInfo.actCoClCd);
+      this._typeChk = 'A3';
       // TODO: 사업자가 브로드밴드인 경우 이용요금을 조회하여 화면 노출 작업 필요 (SB 선행 작업 후)
       // thisMain.combineCommonCircuit(res, svcInfo, allSvc, childInfo);
-      thisMain.skbroadbandCircuit(res, svcInfo);
+      this.skbroadbandCircuit(res, svcInfo);
       return;
     }
 
@@ -130,23 +132,21 @@ class MyTFareBillGuide extends TwViewController {
     * A6. 통합청구회선 대표아님 |
      */
     if ( svcInfo.svcAttrCd === 'M2' ) {
-
       this.logger.info(this, '[ PPS(선불폰) ] : ', svcInfo.svcAttrCd);
       this._typeChk = 'A1';
-      thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
-      thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
+      this.logger.info(thisMain, '-------------------------------------[Type Check END]');
+      this.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
       this.prepaidCircuit(res, svcInfo, allSvc, childInfo, pageInfo);
-      return ;
+      return;
+    }
 
-    } else if ( svcInfo.svcAttrCd === 'O1' ) {
-
+    if ( svcInfo.svcAttrCd === 'O1' ) {
       this.logger.info(this, '[ 기업솔루션(포인트캠) ]', svcInfo.svcAttrCd);
       this._typeChk = 'A2';
-      thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
-      thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
+      this.logger.info(thisMain, '-------------------------------------[Type Check END]');
+      this.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
       this.companyCircuit(res, svcInfo, allSvc, childInfo);   // 화면없음
       return;
-
     }
 
     const reqArr: Array<any> = [];
@@ -158,7 +158,6 @@ class MyTFareBillGuide extends TwViewController {
         selSvcMgmtNum : this.reqQuery.line
       }, null, [], API_VERSION.V2), 'p1'));
       // reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'));  // 성능개선으로 미호출
-
     } else {
     // 사용요금 조회 : 대표청구 여부(svcInfo.actRepYn) N인 경우
       reqArr.push((this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
@@ -173,7 +172,7 @@ class MyTFareBillGuide extends TwViewController {
     this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
 
     Promise.all(reqArr).then(function(resArr) {
-      thisMain.logger.info(thisMain, `[ Promise.all > success ] : `, resArr);
+      thisMain.logger.info(thisMain, '[ Promise.all > success ] : ', resArr);
       try {
         // OP002-2986. 통합청구에서 해지할경우(개별청구) 청구번호가 바뀐다고함. 그럼 성공이지만 결과를 안준다고 함.
         if (resArr[0].code !== API_CODE.CODE_00 || FormatHelper.isEmpty(resArr[0].result)) {
@@ -205,7 +204,6 @@ class MyTFareBillGuide extends TwViewController {
             thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
           }
           thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
-
         } else {
           // OP002-2986 로 청구 데이터 안들어올 수 있으므로 디폴트 세팅 해준다.
           thisMain._useFeeInfo = {
@@ -419,10 +417,9 @@ class MyTFareBillGuide extends TwViewController {
    * 대표청구회선이 SK브로드밴드인 경우
    */
   private skbroadbandCircuit(res, svcInfo) {
-    const thisMain = this;
-    thisMain.renderView(res, thisMain._urlTplInfo.skbroadbandPage, {
+    this.renderView(res, this._urlTplInfo.skbroadbandPage, {
       svcInfo: svcInfo,
-      pageInfo: thisMain.pageInfo
+      pageInfo: this.pageInfo
     });
   }
 

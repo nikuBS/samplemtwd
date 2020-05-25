@@ -47,7 +47,8 @@ Tw.MyTFareBillGuidePps.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._dateInit();
-
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
   /**
    * hbs 헬퍼 등록
