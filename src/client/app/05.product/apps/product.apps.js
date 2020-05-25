@@ -220,7 +220,6 @@ Tw.ProductApps.prototype = {
       .data('prop');
 
     if (this._order === nOrder) { // 순서가 동일 할 경우 return
-      this._popupService.close();
       return;
     }
 
