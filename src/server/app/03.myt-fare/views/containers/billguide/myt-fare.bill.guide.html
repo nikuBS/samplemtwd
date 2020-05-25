@@ -4,11 +4,9 @@
 * @author 양정규
 * @since 2020.01.28
 * Summay: 요금안내서 화면
-%>
-
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<% include ../../components/javascript.component.html %>
-
+_%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); _%>
+<% include ../../components/javascript.component.html _%>
 <script id="fe-entryTplPaidAmtSvcCdList" type="text/x-handlebars-template">
     {{!-- 주석 : 유형별 서비스 사용요금 --}}
     {{# each resData as |rootItem rootIndex|}}
@@ -18,7 +16,6 @@
         </li>
     {{/each}}
 </script>
-
 <script id="fe-entryTplChild" type="text/x-handlebars-template">
     <div>
         {{!-- 주석 : 자녀사용요금 --}}
@@ -36,7 +33,6 @@
         {{/each}}
     </div>
 </script>
-
 <script id="fe-bill-detail" type="text/x-handlebars-template">
     <div class="statement-detail">
         <!-- .widget -->
@@ -146,7 +142,6 @@
     <!--// .cont-box -->
     <hr class="cont-sp type1" aria-hidden="true"/>
 </script>
-
 <script id="fe-entryTplBill" type="text/x-handlebars-template">
     {{!-- 주석 : svcMgmtNum --}}
     {{# each resData as |rootItem rootIndex|}}
@@ -182,7 +177,6 @@
     {{/each}}
 
 </script>
-
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -191,15 +185,15 @@
 </div>
 <!--// #skip_navigation -->
 
-<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '요금안내서' }); %>
+<div id="fe-wrap" class="wrap" data-menuId="<%- pageInfo.menuId %>">
+    <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '요금안내서' }); _%>
 
     <div id="contents" class="container-wrap">
         <!-- 191115 웹접근성 수정_02 -->
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <!-- //191115 웹접근성 수정_02 -->
         <div class="container">
-            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22" } }); %>
+            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22" } }); _%>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -354,7 +348,6 @@
     </div>
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
-
 <script>
   $(document).ready(function () {
     /**
@@ -378,4 +371,4 @@
     }
   });
 </script>
-<% include ../../components/end.component.html %>
+<% include ../../components/end.component.html _%>
