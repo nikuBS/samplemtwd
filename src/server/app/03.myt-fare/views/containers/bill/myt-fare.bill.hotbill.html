@@ -1,4 +1,5 @@
 <%#
+* 나의 요금 > 실시간 이용요금
 * @file myt-fare.bill.hotbill
 * @author Hyeryoun Lee
 * @since 2018-9-21
@@ -22,7 +23,7 @@
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
-            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22" } }); %>
+            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B12_C49-1", multiple : "CMMA_A3_B12_C49-2" } }); %>
 
             <%_ if (!isPrev) { _%>
             <hr class="cont-sp type1" aria-hidden="true"/>
