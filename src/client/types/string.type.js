@@ -1873,6 +1873,8 @@ Tw.ROAMING_RECEIVE_CODE = {
 
 Tw.SERVICE_AREA_TYPE = {
   기가광랜: 1,
+  bandGiga인터넷: 1, 
+  bandGiga인터넷라이트: 1,
   인터넷: 2,
   디지털전화: 5,
   일반전화: 5,
