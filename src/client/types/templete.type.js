@@ -485,36 +485,36 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_SMALL_LIMIT: [
     {
       'list': [
-        { 'label-attr': 'id="1000000"', 'radio-attr': 'name="r2" id="1000000"', txt: '100만 원' },
-        { 'label-attr': 'id="800000"', 'radio-attr': 'name="r2" id="800000"', txt: '80만 원' },
-        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만 원' },
-        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만 원' },
-        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만 원' },
-        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만 원' },
-        { 'label-attr': 'id="100000"', 'radio-attr': 'name="r2" id="100000"', txt: '10만 원' },
-        { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만 원' },
-        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만 원' },
-        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만 원' }
+        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만원' },
+        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
+        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
+        { 'label-attr': 'id="200000"', 'radio-attr': 'name="r2" id="200000"', txt: '20만원' },
+        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만원' },
+        { 'label-attr': 'id="120000"', 'radio-attr': 'name="r2" id="120000"', txt: '12만원' },
+        { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
+        { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만원' },
+        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
       ]
     }
   ],
-  /*OP002-8414 소액결제/콘텐츠 이용료 한도금액 리스트가 통합되어 현재건 삭제함*/
-  /*FARE_PAYMENT_CONTENTS_LIMIT: [
+  FARE_PAYMENT_CONTENTS_LIMIT: [
     {
       'list': [
-        { 'label-attr': 'id="1000000"', 'radio-attr': 'name="r2" id="1000000"', txt: '100만 원' },
-        { 'label-attr': 'id="800000"', 'radio-attr': 'name="r2" id="800000"', txt: '80만 원' },
-        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만 원' },
-        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만 원' },
-        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만 원' },
-        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만 원' },
-        { 'label-attr': 'id="100000"', 'radio-attr': 'name="r2" id="100000"', txt: '10만 원' },
-        { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만 원' },
-        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만 원' },
-        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만 원' }
+        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만원' },
+        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
+        { 'label-attr': 'id="400000"', 'radio-attr': 'name="r2" id="400000"', txt: '40만원' },
+        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
+        { 'label-attr': 'id="200000"', 'radio-attr': 'name="r2" id="200000"', txt: '20만원' },
+        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만원' },
+        { 'label-attr': 'id="100000"', 'radio-attr': 'name="r2" id="100000"', txt: '10만원' },
+        { 'label-attr': 'id="90000"', 'radio-attr': 'name="r2" id="90000"', txt: '9만원' },
+        { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
+        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
       ]
     }
-  ],*/
+  ],
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
