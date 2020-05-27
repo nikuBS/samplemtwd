@@ -181,8 +181,7 @@ Tw.MyTFareInfoHistory.prototype = {
       ) return ;
 
     var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
-    // OP002-8562 isPersonalBiz 사용안함
-    // detailData.isPersonalBiz = this.data.isPersonalBiz;
+    detailData.isPersonalBiz = this.data.isPersonalBiz;
 
     this._historyService.goLoad(this._historyService.pathname + '/detail?type=' + detailData.dataPayMethodCode +
       (detailData.innerIndex !== undefined ? '&innerIndex=' + detailData.innerIndex: '') +
