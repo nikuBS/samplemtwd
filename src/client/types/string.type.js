@@ -37,7 +37,7 @@ Tw.SMS_UNIT = '건';
 
 Tw.CURRENCY_UNIT = {
   WON: '원',
-  TEN_THOUSAND: '만원',
+  TEN_THOUSAND: '만 원',
   POINT: 'P'
 };
 
@@ -717,7 +717,9 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기' },
   ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제는 다음달에 적용 됩니다.', BUTTON: '해제하기' },
-  ALERT_2_A96: { TITLE: '이용한도를 변경하시겠습니까?', MSG: '이용한도 변경은 월 1회만 가능합니다.', BUTTON: '변경하기' },
+  ALERT_2_A96: { TITLE: '이용한도를 변경하시겠습니까?', MSG: '이용 한도 변경은 월 1회만 하실 수 있습니다.</br> 이용 한도를 변경하면' +
+      '<a href="https://sktadcb.sktelecom.com/tos" class="bt-link-tx underline" target="_blank">휴대폰 결제 이용약관</a>' +
+      '에 재동의하는 것으로 간주됩니다.', BUTTON: '변경하기' },
   ALERT_2_A100: { TITLE: '선결제를 종료하시겠습니까?', MSG: '선결제가 종료됩니다.', BUTTON: '종료하기' },
   ALERT_2_A101: { TITLE: '요금납부를 종료하시겠습니까?', MSG: '요금납부가 종료됩니다.', BUTTON: '종료하기' },
   ALERT_2_DATA: { TITLE: '데이터 충전을 종료하시겠습니까?', MSG: '데이터 충전이 종료됩니다.', BUTTON: '종료하기' }

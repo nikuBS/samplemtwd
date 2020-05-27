@@ -209,22 +209,27 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   _selectAmount: function (event) {
     var $target = $(event.currentTarget);
     var $amount = $target.attr('id');
-    var data = Tw.POPUP_TPL.FARE_PAYMENT_SMALL_LIMIT;
-    if (this.$title === 'contents') {
-      if (this._isAdult === 'Y') {
-        data = Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT;
-      } else {
-        // 20.4.7 OP002-7282. 미성년자인 경우 최대한도 10만원
-        data = [
-          {
-            list : _.filter(Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT[0].list, function(item) {
-              return parseInt(item.txt.replace(/[^0-9]/g, ''), 10) <= 10;
-            })
-          }
-        ];
-      }
+    var data = Tw.POPUP_TPL.FARE_PAYMENT_SMALL_LIMIT; // 20-05-26 OP002-8414 : 소액/콘텐츠 이용료 한도금액 통일 되어 한개로 사용.
+    var max = -1; // -1은 제한 없음을 의미
+    // 1일 한도 인 경우 최대한도를 "매달" 한도금액 선택된 금액만큼 노출
+    if ($target.hasClass('fe-day')){
+      max = this.$monthSelector.text().replace(/[^0-9]/g, '');
+    } else if ($target.hasClass('fe-once')){
+      max = this.$daySelector.text().replace(/[^0-9]/g, '');
     }
-
+    // 20.4.7 OP002-7282. 콘텐츠 이용료 이면서, 미성년자인 경우 최대한도 10만원
+    if (this.$title === 'contents' && this._isAdult !== 'Y') {
+      max = max > 0 && max > 10 ? 10 : max;
+    }
+    if (max > 0) {
+      data = [
+        {
+          list : _.filter(data[0].list, function(item) {
+            return parseInt(item.txt.replace(/[^0-9]/g, ''), 10) <= max;
+          })
+        }
+      ];
+    }
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -259,10 +264,34 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
-
+    this._changeAmountByMonth($target);
     this._checkIsChanged();
     this._popupService.close();
   },
+
+  /**
+   * @function
+   * @desc OP002-8414 매달/1일/1회 한도 금액 변경시 상위 한도 금액에 따라 하위 금액 영향.
+   * @param $target
+   */
+  _changeAmountByMonth: function ($target) {
+    var changeAmount = function (selector) {
+      var currentAmount = parseInt(selector.attr('id'), 10);
+      var targetAmount = parseInt($target.attr('id'), 10);
+      // 하위 한도 금액이 상위 한도 금액 보다 큰 경우만 현재 한도 금액을 상위 한도 금액 으로 변경 한다.
+      if (currentAmount >  targetAmount){
+        selector.attr('id', targetAmount);
+        selector.text($target.text());
+      }
+    };
+
+    // 매달 / 1일 한도 변경 시 하위 한도 금액 영향
+    if (!$target.hasClass('fe-once')){
+      changeAmount(this.$daySelector);
+      changeAmount(this.$onceSelector);
+    }
+  },
+
   /**
    * @function
    * @desc 변경여부 체크 후 버튼 활성화 처리
