@@ -21,10 +21,6 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-
-    
-    
-
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
@@ -64,6 +60,34 @@
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <div class="container">
+				<!-- 200304 [OP002-6726] 추가 -->
+				<div class="tod-line-sel-box">
+					<button type="button" class="line-sel-btn">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-mobile.png" alt=""></i><span class="item">휴대폰</span>
+						<span class="detail-info">010-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-tel.png" alt=""></i><span class="item">집전화</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-wifi.png" alt=""></i><span class="item">T Pocket-Fi</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-tablet.png" alt=""></i><span class="item">태블릿</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-tv.png" alt=""></i><span class="item">IPTV</span>
+						<span class="detail-info">세종특별자치시 전** ****</span>
+					</button>
+					<button type="button" class="line-sel-btn side-arr" style="display:none"> <!-- 191224 [OP002-5303] 수정01 : side-arr처리 -->
+						<i class="sel-ico"><img src="/img/myt/sel-ico-internet.png" alt=""></i><span class="item">인터넷</span>
+						<span class="detail-info">세종특별자치시 전** ****</span>
+					</button>
+				</div>
+				<!-- //200304 [OP002-6726] 추가 -->
 				<hr class="cont-sp type1" aria-hidden="true" />
 				<!-- .cont-box -->
 				<div class="cont-box nogaps">
@@ -113,7 +137,9 @@
 					</ul>
 					<div class="calling-plan type01">
 						<button class="wrap-link fs-type01">
-							<span class="left"><strong class="ff-tb">25GB</strong> 공유 가능</span>
+							<span class="left">
+								<strong class="ff-tb">25GB</strong> 공유 가능
+							</span>
 							<span class="right fc-type01"><strong class="ff-tb fs-type02">15GB</strong> 공유</span>
 						</button>
 						<!-- 190926[OP002-4000] 추가01 -->
