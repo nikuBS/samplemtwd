@@ -27,7 +27,7 @@
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
+
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
@@ -62,7 +62,35 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-               
+				<!-- 200304 [OP002-6726] 추가 -->
+				<div class="tod-line-sel-box">
+					<button type="button" class="line-sel-btn">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-mobile.png" alt=""></i><span class="item">휴대폰</span>
+						<span class="detail-info">010-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-tel.png" alt=""></i><span class="item">집전화</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-wifi.png" alt=""></i><span class="item">T Pocket-Fi</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-tablet.png" alt=""></i><span class="item">태블릿</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-tv.png" alt=""></i><span class="item">IPTV</span>
+						<span class="detail-info">세종특별자치시 전** ****</span>
+					</button>
+					<button type="button" class="line-sel-btn side-arr" style="display:none"> <!-- 191224 [OP002-5303] 수정01 : side-arr처리 -->
+						<i class="sel-ico"><img src="/img/myt/sel-ico-internet.png" alt=""></i><span class="item">인터넷</span>
+						<span class="detail-info">세종특별자치시 전** ****</span>
+					</button>
+				</div>
+				<!-- //200304 [OP002-6726] 추가 -->
+				
 				<div class="add-prd-top-wrap">
 					<span class="select">
 						<button class="on" title="나의 부가서비스">전체</button>
@@ -78,7 +106,7 @@
 								<button>
 									<div class="lineinfo-user">
 										<span class="info-title">컬러링</span>
-										<span class="info-sub2">가입일 2018.8.15</span>										
+										<span class="info-sub2">가입일 2018.8.15</span>
 									</div>
 									<div class="lineinfo-data">
 										<span class="info-title num">43,175<span class="unit ml4">원</span></span>
@@ -93,7 +121,7 @@
 								<button>
 									<div class="lineinfo-user">
 										<span class="info-title">가족나눔데이터</span>
-										<span class="info-sub2">가입일 2018.8.15</span>										
+										<span class="info-sub2">가입일 2018.8.15</span>
 									</div>
 									<div class="lineinfo-data">
 										<span class="info-title">상세참조</span>
@@ -105,7 +133,7 @@
 								<button>
 									<div class="lineinfo-user">
 										<span class="info-title">가족나눔데이터</span>
-										<span class="info-sub2">가입일 2018.8.15</span>										
+										<span class="info-sub2">가입일 2018.8.15</span>
 									</div>
 									<div class="lineinfo-data">
 										<span class="info-title">무료</span>
@@ -167,11 +195,26 @@
 						</ul>
 					</div>
 				</div>
-          
+
           		<!--2019.02.09 삭제 <hr class="cont-sp type1" aria-hidden="true"/>-->
 
 				<!--2018.11.02 삭제 <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;"> -->
-				
+
+				<!-- 190820 [OP002-3324] 수정_01 -->
+				<hr class="cont-sp type1" aria-hidden="true"/>
+				<div class="cont-box nogaps-btm">
+                    <h3 class="suggest-tag-title">다른 부가서비스를 찾고 계신가요?</h3>
+                    <div class="extra-servicebox">
+                        <button type="button" class="btn-round2 btn-style3">데이터</button>
+                        <button type="button" class="btn-round2 btn-style3">혜택 / 편의</button>
+                        <button type="button" class="btn-round2 btn-style3">안심/보험</button>
+                        <button type="button" class="btn-round2 btn-style3">통화 / 메세지</button>
+                        <button type="button" class="btn-round2 btn-style3">콘텐츠 이용</button>
+                        <button type="button" class="btn-round2 btn-style3">인증 / 결제</button>
+                    </div>
+                </div>
+				<!-- //190820 [OP002-3324] 수정_01 -->
+
 				<!-- 2019.02.09 회색bg로 변경 -->
                 <!-- .cont-box -->
                 <div class="cont-box noborder bgnone">
@@ -181,7 +224,7 @@
                     </ul>
                 </div>
                 <!--// .cont-box -->
-           
+
             </div>
         </div>
         <!--// #contents -->

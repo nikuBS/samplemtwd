@@ -36,7 +36,7 @@ interface PaymentData {
   refundPaymentCount?: number; // 환불신청 갯수
   refundTotalAmount?: string; // 환불받을 총 금액
   refundPaymentCnt?: number; // 환불신청내역건수
-  isPersonalBiz?: boolean; // 사업자인지 여부
+  // isPersonalBiz?: boolean; // 사업자인지 여부. OP002-8562 사용안함
   listData?: PaymentList; // 리스트
   getLastPaymentData?: boolean; // BFF_07_0030 전체납부내역 paymentRecord 를 데이터에 포함시킬지 여부 listData 합산시 기준
 }
@@ -89,7 +89,7 @@ class MyTFareInfoHistory extends TwViewController {
       // this.getAllPaymentData(req, res, next, query, svcInfo, pageInfo); // deprecated
       // 전체납부내역 case 
       Observable.combineLatest(
-          this.checkHasPersonalBizNumber(),
+          // this.checkHasPersonalBizNumber(),
           this.getAutoWithdrawalAccountInfo(),
           this.getOverAndRefundPaymentData({getPayList: true}),
       ).subscribe(histories => {
@@ -100,7 +100,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 즉시납부
         case 'direct':
           Observable.combineLatest(
-              this.checkHasPersonalBizNumber(),
+              // this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
               this.getOverAndRefundPaymentData(),
               this.getDirectPaymentData()
@@ -111,7 +111,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 자동납부
         case 'auto':
           Observable.combineLatest(
-              this.checkHasPersonalBizNumber(),
+              // this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
               this.getOverAndRefundPaymentData(),
               this.getAutoPaymentData()
@@ -122,7 +122,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 자동납부 통합인출
         case 'auto-all':
           Observable.combineLatest(
-              this.checkHasPersonalBizNumber(),
+              // this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
               this.getOverAndRefundPaymentData(),
               this.getAutoUnitedPaymentData()
@@ -133,7 +133,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 소액결제 선결제
         case 'micro-prepay':
           Observable.combineLatest(
-              this.checkHasPersonalBizNumber(),
+              // this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
               this.getOverAndRefundPaymentData(),
               this.getMicroPaymentData()
@@ -144,7 +144,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 콘텐츠 이용요금 선결제
         case 'content-prepay':
           Observable.combineLatest(
-              this.checkHasPersonalBizNumber(),
+              // this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
               this.getOverAndRefundPaymentData(),
               this.getContentsPaymentData()
@@ -155,7 +155,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 포인트 납부예약
         case 'point-reserve':
           Observable.combineLatest(
-              this.checkHasPersonalBizNumber(),
+              // this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
               this.getOverAndRefundPaymentData(),
               this.getPointReservePaymentData()
@@ -166,7 +166,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 포인트 자동납부
         case 'point-auto':
           Observable.combineLatest(
-              this.checkHasPersonalBizNumber(),
+              // this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
               this.getOverAndRefundPaymentData(),
               this.getPointAutoPaymentData()
@@ -217,7 +217,7 @@ class MyTFareInfoHistory extends TwViewController {
         overPaymentCount: this.paymentData.overPaymentCount,
         refundTotalAmount: this.paymentData.refundTotalAmount,
         refundPaymentCnt: this.paymentData.refundPaymentCnt,
-        isPersonalBiz: this.paymentData.isPersonalBiz, // 사업자 인지
+        // isPersonalBiz: this.paymentData.isPersonalBiz, // 사업자 인지. OP002-8562 사용안함
         // personalBizNum: this.paymentData.personalBizNum,
         listData: this.mergeData(data.listData), // 리스트 
         refundURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-refund`,
@@ -229,10 +229,11 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   /**
+   * OP002-8562 사용안함 (상세내역에서 사용중으로 현재 페이지에서 호출은 불필요함.)
    * @return {Observable}
    * @desc 사업자 여부
    */
-  private checkHasPersonalBizNumber = (): Observable<any | null> => {
+  /*private checkHasPersonalBizNumber = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).map((resp: { code: string; result: any; }) => {
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
@@ -242,7 +243,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return null;
     });
-  }
+  }*/
 
   /**
    * @return {Observable}
@@ -533,7 +534,7 @@ class MyTFareInfoHistory extends TwViewController {
    * @return {PaymentList} interface 참조
    */
   private mergeData(data: PaymentList): PaymentList {
-    data = data.slice(2);
+    data = data.slice(1);
 
     data = data.reduce((prev, cur) => {
       if (cur) {

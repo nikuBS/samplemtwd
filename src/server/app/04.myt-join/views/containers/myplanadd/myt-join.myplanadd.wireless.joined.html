@@ -1,0 +1,12 @@
+<div class="lineinfo-user">
+    <span class="info-title"><%= addition.prodNm %></span>
+    <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
+</div>
+<div class="lineinfo-data">
+    <%_ if (/^[0-9,]+$/.test(addition.basFeeTxt)) { _%>
+    <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+    <%_ } else { _%>
+    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+    <%_ } _%>
+    <%_ if (hasLink) { _%><span class="ico"><span class="blind">자세히 보기</span></span><%_ } _%>
+</div>

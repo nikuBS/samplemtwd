@@ -1,5 +1,5 @@
 /**
- * [실시간 사용요금] 관련 처리
+ * 나의 요금 > 실시간 사용요금
  * @author Hyeryoun Lee
  * @since 2018-9-20
  */
@@ -15,6 +15,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import FormatHelper from '../../../../utils/format.helper';
+import CommonHelper from '../../../../utils/common.helper';
 
 /**
  * [실시간 사용요금] API호출 및 렌더링
@@ -32,10 +33,14 @@ class MyTFareBillHotbill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    CommonHelper.addCurLineInfo(svcInfo);
+
     this._svcInfo = svcInfo;
     this._isPrev = req.url.endsWith('/prev');
 
-    if ( !req.query.child && new Date().getDate() > 7 ) { // 전월요금 7일까지 보이기
+    // 20-05-20 OP002-8488 : 전월요금(지난달 요금) 보기 버튼 매월 1~4일까지 노출
+    if ( !req.query.child && new Date().getDate() > 4 ) { // 전월요금 4일까지 보이기
       this._preBillAvailable = false;
     }
     // 당월 요금은 2일부터 조회 가능(매월 1일은 안내 매세지 출력) -> [DV001-19501]가능하게 수정
