@@ -819,14 +819,16 @@ Tw.BenefitIndex.prototype = {
       var mergedResult = [];
 
       for ( var idx = 0; idx < arguments.length; idx++ ) {
-        if (arguments[idx].code !== Tw.API_CODE.CODE_00 ) {
-          this._onFail(arguments[idx]);
+        var argumentObj = arguments[idx];
+
+        if (argumentObj.code !== Tw.API_CODE.CODE_00 ) {
+          this._onFail(argumentObj);
           return;
         }
 
-        for ( var i = 0; i < arguments[idx].result.list.length; i++ ) {
+        for ( var i = 0; i < argumentObj.result.list.length; i++ ) {
           var benefitFltNmList = [];
-          var benefitObj = arguments[idx].result.list[i];
+          var benefitObj = argumentObj.result.list[i];
           if (benefitObj.benefitFltNm && benefitObj.benefitFltNm.indexOf(',') > -1) {
             var benefitFltNmArray = benefitObj.benefitFltNm.split(',');
             for ( var j = 0; j < benefitFltNmArray.length; j++ ) {
@@ -853,8 +855,8 @@ Tw.BenefitIndex.prototype = {
           }
           // 요금할인 표기
           if (this._benefitInfo.bill && this._benefitInfo.bill.priceAgrmtList.length > 0) {
-            for ( var idx = 0; idx < this._benefitInfo.bill.priceAgrmtList.length; idx++ ) {
-              var billBenefit = this._benefitInfo.bill.priceAgrmtList[idx];
+            for ( var j = 0; j < this._benefitInfo.bill.priceAgrmtList.length; j++ ) {
+              var billBenefit = this._benefitInfo.bill.priceAgrmtList[j];
               // T 지원금 예외
               var supportBenefit = ['TSupportAgree'].indexOf(billBenefit.prodId) > -1;
               if (supportBenefit && benefitObj.benefitId === 'TW20000015') {
