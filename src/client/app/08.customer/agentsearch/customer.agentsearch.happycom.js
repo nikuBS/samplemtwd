@@ -27,6 +27,12 @@ Tw.CustomerAgentHappycom = function (rootEl, params) {
   this._cacheElements(params);
   this._bindEvents();
   this.$inputSearch.trigger('keyup');
+
+    // back & forward 진입 차단 (해시로 이동하지 않고 바로 뒤로 가도록)
+    // if (this._historyService.isBack()) {
+    //     this._historyService.goBack();
+    // this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
+    // }
 };
 
 Tw.CustomerAgentHappycom.prototype = {
@@ -41,6 +47,11 @@ Tw.CustomerAgentHappycom.prototype = {
 
     // 탭 변경 시 설정부분
     window.onhashchange = $.proxy(function (e) {
+      // if (this._historyService.isBack()) {
+        // 뒤로 버튼을 눌렀을때 hash 변경 되지만 탭 이동만 되고 실제 해당 페이지가 나오지 않는 현상 때문에 강제로 한번 클릭 하는 workaround 처리;;
+        // 하지만 히스토리 이동으로 탭 페이지 이동 보다는 그냥 메인으로 빠져나가는게 표준에 더 부합할듯 한데 기획 요구에 그냥 맞춤
+         this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
+      // }
       this._resetSearch(e);
     }, this);
   },
@@ -119,6 +130,7 @@ Tw.CustomerAgentHappycom.prototype = {
     this.$container.find('.fe-select-filter').click(_.debounce($.proxy(this._openFilterPopup, this), 300));  /* 필터링 부분 이벤트 바인딩 */
     this.$container.on('click', '.fe-btn-more', _.debounce($.proxy(this._onMoreView, this)));  /* 더보기 클릭 */
     this.$container.on('click', '[data-external]', $.proxy(this._onClickCharge, this));  /* 외부 URL 새창(과금팝업 노출 후) */
+    // this.$container.on('click', 'li[role="tab"] a', $.proxy(this._onClickTab, this));  /* 탭 이동 시 히스토리 누적 안되도록 */
   },
 
 
@@ -176,7 +188,8 @@ Tw.CustomerAgentHappycom.prototype = {
 
     this._options = this._newOptions;
 
-    this._historyService.goLoad(this._getSearchUrl(this._searchType.FILTER));
+    // history back 했을때 중복 노출로 인하여 goLoad에서 replaceURL로 변경
+    this._historyService.replaceURL(this._getSearchUrl(this._searchType.FILTER));
   },
 
 
@@ -248,7 +261,8 @@ Tw.CustomerAgentHappycom.prototype = {
         this.$btnLocation.text($(e.currentTarget).data('location')); /* templete.type.js에서 사용자 정의 속성 */
         this.selectedLocationCode = $(e.currentTarget).attr('id');
 
-        this._historyService.goLoad(this._getSearchUrl(this._searchType.LOCATION));
+          // history back 했을때 중복 노출로 인하여 goLoad에서 replaceURL로 변경
+        this._historyService.replaceURL(this._getSearchUrl(this._searchType.LOCATION));
       }, this));
     }, this), 
     null, 
@@ -458,5 +472,45 @@ Tw.CustomerAgentHappycom.prototype = {
    */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  }
+  },
+
+
+    /**
+     * @function
+     * @desc a 태그 이동 시 default 이동 해제하고 페이지 노출 처리를 위하여, 그리고 history back 했을 때 탭간 이동되지 않고 메인으로 이동 되도록 init 전에 this._historyService.isBack() 조건 확인
+     * @param {JSON} err
+     */
+    _onClickTab: function (e) {
+
+        // TODO 2020/05/29, 오병소 : 기존 탭 이동에 대한 히스토리 제거 요청이 오면 active 탭 정보를 ts에 보내서 각 검색 별로 대응할 수 있도록 해야 함(검색 후 탭 정보 들어가도록, aria-selected true 설정)
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        // var url = $(e.currentTarget).attr('href');
+        // this._historyService.replace(url);
+
+        //
+        // this._initTab();
+
+        var url = $(e.currentTarget).attr('href');
+        this._historyService.replace(url);
+
+        // var _container = this.$container.find('li[role="tab"]').attr('aria-controls');
+        // this._cacheElementsTab(_container);
+
+        // 변경 된 탭 선택 해준다, aria-selected되면 css 적용
+        this.$container.find('li[role="tab"] a').attr('aria-selected', 'false');
+        $(e.currentTarget).attr('aria-selected', 'true');
+
+        var _container = this.$container.find('li[aria-selected="true"]');
+        this._cacheElementsTab(_container);
+
+        this._initTab(e);
+
+    }
+
+
+
+
 };
