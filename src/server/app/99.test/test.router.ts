@@ -2,6 +2,7 @@ import TwRouter from '../../common/route/tw.router';
 import TestLoginController from './controllers/test.login.controller';
 import TestLogoutController from './controllers/test.logout.controller';
 import TestPersonController from './controllers/test.person.controller';
+import TestChatbotController from './controllers/test.chatbot.controller';
 
 class TestRouter extends TwRouter {
   constructor() {
@@ -18,6 +19,7 @@ class TestRouter extends TwRouter {
     this.controllers.push({ url: '/logout', controller: TestLogoutController });
     // this.controllers.push({ url: '/cert-sms', controller: TestCertSmsController });
     this.controllers.push({ url: '/person', controller: TestPersonController });
+    this.controllers.push({ url: '/chatbot', controller: TestChatbotController });
   }
 }
 
