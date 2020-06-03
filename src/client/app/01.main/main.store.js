@@ -19,6 +19,7 @@ Tw.MainStore = function (rootEl, menuId) {
   this._menuId = menuId;
   this._adid = null;
   this._twdUrl = '';
+  this._popupService = Tw.Popup;
 
   this._bindEventLanding();
 
@@ -52,7 +53,56 @@ Tw.MainStore.prototype = {
    * @private
    */
   _onClickExternal: function ($event) {
+
     var url = $($event.currentTarget).data('url');
+
+   // 스마트폰
+   if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010" === url) {
+    // 과금 알럿 노출 
+    this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+      $.proxy(function () {
+        this._popupService.close();
+        Tw.CommonHelper.openUrlExternal(url);
+      },this),
+      $.proxy(this._popupService.close,this._popupService),null 
+    );
+  }
+  // 태블릿 
+  else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010" === url) {
+    // 과금 알럿 노출 
+    this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+      $.proxy(function () {
+        this._popupService.close();
+        Tw.CommonHelper.openUrlExternal(url);
+      },this),
+      $.proxy(this._popupService.close,this._popupService),null 
+    );
+  }
+  // 스마트워치 
+  else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010" === url) {
+    // 과금 알럿 노출 
+    this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+      $.proxy(function () {
+        this._popupService.close();
+        Tw.CommonHelper.openUrlExternal(url);
+      },this),
+      $.proxy(this._popupService.close,this._popupService),null 
+    );
+  }
+  // T다이렉트샵 휴대폰 상담 바로가기  
+  else if ('https://m.shop.tworld.co.kr/popup/phone-counsel?utm_source=tworld&utm_medium=app_banner&utm_campaign=counsel&utm_content=store&fSiteCd=1010' === url) {
+    // 과금 알럿 노출 
+    this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+      $.proxy(function () {
+        this._popupService.close();
+        Tw.CommonHelper.openUrlExternal(url);
+      },this),
+      $.proxy(this._popupService.close,this._popupService),null 
+    );
+  } else {
+    Tw.CommonHelper.openUrlExternal(url);
+  }
+
 
     // // 모바일T App 을 통하여 접근한 경우에만 adid 값을 넘김
     // if ( Tw.BrowserHelper.isApp() ) {
@@ -66,7 +116,7 @@ Tw.MainStore.prototype = {
     //     Tw.CommonHelper.openUrlExternal(url);
     //   }
     // } else {
-      Tw.CommonHelper.openUrlExternal(url);
+      // Tw.CommonHelper.openUrlExternal(url);
     // }
   },
 
