@@ -187,6 +187,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     this.$changeBtn.click(_.debounce($.proxy(this._openChangeConfirm, this), 500));
+    // 이용약관 팝업 띄우기
+    this.$container.on('click', '.fe-open-pop', function(){
+      Tw.CommonHelper.openTermLayer(35);
+    });
   },
   /**
    * @function
@@ -209,17 +213,51 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   _selectAmount: function (event) {
     var $target = $(event.currentTarget);
     var $amount = $target.attr('id');
+    this._popupService.open({
+      url: '/hbs/',
+      hbs: 'actionsheet01',
+      layer: true,
+      data: this._getAmountList($target),
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
+    }, $.proxy(this._selectPopupCallback, this, $target, $amount));
+  },
+
+  /**
+   * @function
+   * @desc 한도변경 금액리스트
+   * @param $target
+   */
+  _getAmountList: function ($target){
     var data = Tw.POPUP_TPL.FARE_PAYMENT_SMALL_LIMIT; // 20-05-26 OP002-8414 : 소액/콘텐츠 이용료 한도금액 통일 되어 한개로 사용.
     var max = -1; // -1은 제한 없음을 의미
-    // 1일 한도 인 경우 최대한도를 "매달" 한도금액 선택된 금액만큼 노출
-    if ($target.hasClass('fe-day')){
-      max = this.$monthSelector.text().replace(/[^0-9]/g, '');
-    } else if ($target.hasClass('fe-once')){
-      max = this.$daySelector.text().replace(/[^0-9]/g, '');
+    var _getOnlyNumber = function (value) {
+      if (Tw.FormatHelper.isEmpty(value)) return value;
+      return value.replace(/[^0-9]/g, '');
+    };
+    // max 만큼 1만원 단위로 금액리스트 반환
+    var _getLimitList = function (max) {
+      if (Tw.FormatHelper.isEmpty(max)) return [];
+      var limitList = [];
+      for (var i = max; i > 0; i--) {
+        limitList.push(
+          { 'label-attr': 'id="' + i + '0000"', 'radio-attr': 'name="r2" id="' + i + '0000"', txt: i+Tw.CURRENCY_UNIT.TEN_THOUSAND }
+        );
+      }
+      return [{list: limitList}];
+    };
+
+    /**
+     * 1일/1회 한도 인 경우만 상위에서 선택한 금액만큼으로 최대한도 설정
+     * 1일 한도 : 최대 한도 금액은 월 한도 선택한 금액만큼
+     * 1회 한도 : 최대 한도 금액은 1일 한도 선택한 금액만큼
+     */
+    if ($target.hasClass('fe-day') || $target.hasClass('fe-once')){
+      var $selector = $target.hasClass('fe-day') ? this.$monthSelector : this.$daySelector;
+      data = _getLimitList(_getOnlyNumber($selector.text()));
     }
     // 20.4.7 OP002-7282. 콘텐츠 이용료 이면서, 미성년자인 경우 최대한도 10만원
     if (this.$title === 'contents' && this._isAdult !== 'Y') {
-      max = max > 0 && max > 10 ? 10 : max;
+      max = (max === -1) || max > 10 ? 10 : max;
     }
     if (max > 0) {
       data = [
@@ -230,14 +268,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
         }
       ];
     }
-    this._popupService.open({
-      url: '/hbs/',
-      hbs: 'actionsheet01',
-      layer: true,
-      data: data,
-      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target, $amount));
+
+    return data;
   },
+
   /**
    * @function
    * @desc actionsheet event binding
