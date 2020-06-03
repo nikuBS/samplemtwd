@@ -41,6 +41,8 @@ class CommonTidLogin extends TwViewController {
     }
 
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
+      // 사파리 로그인 이슈 OP002-8678
+      let redirect_url_context = 'https://'; // this.loginService.getProtocol(req); 
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
           client_id: resp.result.clientId,
@@ -48,7 +50,7 @@ class CommonTidLogin extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.LOGIN,
-          redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) +
+          redirect_uri: redirect_url_context + this.loginService.getDns(req) +
             '/common/member/login/route?target=' + target + '_type_' + type + '_state_' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
