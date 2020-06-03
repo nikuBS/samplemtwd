@@ -15,8 +15,11 @@ Tw.CustomerAgentExpzone5gxSearch = function (rootEl, params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  // 필터 적용 최초 기획 기준 : 0 : 매장이 5gx 이거나 vr 둘중에 하나라도 있는 경우, 1 : 매장이 5gx만, 2: 매장이 vr만, 3: 매장이 5gx 및 vr 둘다 되는 매장인 경우
   this.fiveOptionNames = {'0': '전체', '1': '5GX 체험존', '2': 'VR 체험존', '3': '5GX 체험존,VR 체험존'};
   this.fiveOptionType = params.fiveOptionType;
+  // 페이지 이동에 대한 대응으로 필터명 받아 오기 (필터 검색 후 페이지 이동 시 필터명이 html에 적용되어야 하기 때문에)
+  this.fiveOptionName = this.$container.find('.fe-select-filter').text().trim();
 
   /* 기본 전체 옵션인 경우 파란 테두리 없애기 */
   // if(this.$container.find('.fe-select-filter span').text().trim().indexOf(this.fiveOptionNames['0']) > -1){
@@ -95,11 +98,14 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
 
     /* fiveOptionType가 0이라면 전체 비선택, 3이라면 전체를 선택, 그외는 fiveOptionType-1 번째를 선택-eq(0) 부터 시작 */
     if(this.fiveOptionType == Object.keys(this.fiveOptionNames)[0]){  /* 전체 */
+      // this.$container.find('.checkbox').removeClass('checked').attr('aria-checked', false) // 이것도 되는듯
       this.$container.find('.select-list li input').attr('checked', false).closest('.checkbox').removeClass('checked').attr('aria-checked',false);
 
     } else if(this.fiveOptionType == Object.keys(this.fiveOptionNames)[3]){ /* 5gxZone + vrZone으로 모두 선택 */
+      // this.$container.find('.checkbox').addClass('checked').attr('aria-checked', true); // 이것도 되는듯
       this.$container.find('.select-list li input').attr('checked', true).closest('.checkbox').addClass('checked').attr('aria-checked',true); 
-    } else {  /* 둘중에 하나만 선택한 조건 */
+    } else {  /* 둘중에 하나만 선택한 조건으로써 Object.keys(this.fiveOptionNames)[1] 또는 Object.keys(this.fiveOptionNames)[2] 인 조건 */
+      // this.$container.find('.checkbox').eq(parseInt(this.fiveOptionType) - 1).addClass('checked').attr('aria-checked', true); // 이것도 되는듯
       this.$container.find('.select-list li:eq(' + (parseInt(this.fiveOptionType) - 1) + ') input').attr('checked', true).closest('.checkbox').addClass('checked').attr('aria-checked',true);
     }
 
@@ -242,17 +248,15 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
    */
   _getSearchUrl: function (e, bySearchBtn, page) {
     var url = '/customer/agentsearch/expzone5gx?keyword=';
+    var locationOrderName = this.$container.find('#fe-select-location').text().trim();
 
     if (bySearchBtn) {
       url += this.$inputSearch.val();
-      var locationOrderName = this.$container.find('#fe-select-location').text().trim();
-      url += '&locationOrder=' + (this.selectedLocationCode ? this.selectedLocationCode : '1') + '&locationOrderName=' + locationOrderName;
-    } else {
+      url += '&locationOrder=' + (this.selectedLocationCode || '1') + '&locationOrderName=' + locationOrderName;
+    } else { // 페이징을 통한 검색 및 필터명을 통한 검색
         url += this.$inputSearch.val();
-        var locationOrderName = this.$container.find('#fe-select-location').text().trim();
-        
-        url += '&locationOrder=' + (this.selectedLocationCode ? this.selectedLocationCode : '1') + '&locationOrderName=' + locationOrderName;
-        url += '&fiveOptionType=' + (this.fiveOptionType ? this.fiveOptionType : '1') + '&fiveOptionName=' + this.fiveOptionName;  
+        url += '&locationOrder=' + (this.selectedLocationCode || '1') + '&locationOrderName=' + locationOrderName;
+        url += '&fiveOptionType=' + (this.fiveOptionType || '0') + '&fiveOptionName=' + (this.fiveOptionName || '');
         url += '&page=' + (Tw.FormatHelper.isEmpty(page) ? 1 : page);
     } 
     return url;
