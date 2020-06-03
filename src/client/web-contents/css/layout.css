@@ -5544,3 +5544,7 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 @media screen and (max-width:320px){
   .header-wrap .h-belt .h-default .h-person .icon-gnb-person .person-btn-wrap .btn-comment{padding:0 2.5rem 0 0.625rem; font-size:0.75rem}
 }
+
+/* 200602 [OP002-8504] 챗봇 진입 시 랜딩화면 */
+.tod-chat-img{width:100%}
+.tod-chat-img img{width:100%;}
