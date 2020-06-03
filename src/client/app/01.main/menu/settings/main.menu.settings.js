@@ -147,7 +147,26 @@ Tw.MainMenuSettings.prototype = {
    * @desc 공인인증서 선택시 native 화면 호출
    */
   _onCertificates: function () {
-    this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
+    // 최신버전 체크 
+    // 1. 조건 최신버전 == 현재버전 => 네이티브 호출 
+    // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
+    this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
+      .done(function(res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          var currentOsType = this._osType;
+          var versionInfo = _.filter(res.result.ver, function (item) {
+            return item.osType === currentOsType;
+          });
+          var latestVersion = versionInfo[0].newVer;
+          if(Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) {
+            // 업데이트 페이지 이동 
+            $.proxy(this._onUpdate, this) // 업데이트 안내 페이지 이동 
+          } else {
+            // 네이티브 페이지 이동 
+            this._nativeService.send(Tw.NTV_CMD.GO_CERT, {}); // 기존 네이티브 페이지 이동 
+          }
+        }
+      });
     return false;
   },
   _onWidgetSettingClicked: function () {
