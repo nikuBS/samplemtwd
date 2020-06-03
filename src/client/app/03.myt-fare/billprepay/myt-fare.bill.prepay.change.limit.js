@@ -348,9 +348,19 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       this._getLimitFail();
     } else {
       var $target = $(e.currentTarget);
-      this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
-        $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON,
-        $target);
+      this._popupService.open({
+        title: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
+        contents: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG,
+        title_type: 'sub',
+        link_list: [{style_class: 'fe-open-pop', txt: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TERMS}],
+        bt_b:[{style_class: 'pos-left fe-close', txt: Tw.BUTTON_LABEL.CANCEL}, {style_class: 'bt-red1 pos-right fe-change',
+          txt: Tw.BUTTON_LABEL.CHANGE}]
+      }, $.proxy(function($layer){
+        // 닫기 클릭
+        $layer.on('click', '.fe-close', $.proxy(this._onChange, this));
+        // 변경하기 클릭
+        $layer.on('click', '.fe-change', $.proxy(this._change, this));
+      }, this), null, null, $target);
     }
   },
   /**
