@@ -59,7 +59,7 @@ Tw.MainStore.prototype = {
    // 스마트폰
    if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010" === url) {
     // 과금 알럿 노출 
-    Tw.CommonHelper.showDataCharge($(function() {
+    Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
     
@@ -67,21 +67,21 @@ Tw.MainStore.prototype = {
   // 태블릿 
   else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010" === url) {
     // 과금 알럿 노출 
-    Tw.CommonHelper.showDataCharge($(function() {
+    Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
   }
   // 스마트워치 
   else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010" === url) {
     // 과금 알럿 노출 
-    Tw.CommonHelper.showDataCharge($(function() {
+    Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
   }
   // T다이렉트샵 휴대폰 상담 바로가기  
   else if ('https://m.shop.tworld.co.kr/popup/phone-counsel?utm_source=tworld&utm_medium=app_banner&utm_campaign=counsel&utm_content=store&fSiteCd=1010' === url) {
     // 과금 알럿 노출 
-    Tw.CommonHelper.showDataCharge($(function() {
+    Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
   } else {
