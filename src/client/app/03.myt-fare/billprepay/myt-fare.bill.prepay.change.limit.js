@@ -353,11 +353,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
         contents: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG,
         title_type: 'sub',
         link_list: [{style_class: 'fe-open-pop', txt: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TERMS}],
-        bt_b:[{style_class: 'pos-left fe-close', txt: Tw.BUTTON_LABEL.CANCEL}, {style_class: 'bt-red1 pos-right fe-change',
-          txt: Tw.BUTTON_LABEL.CHANGE}]
+        bt_b:[
+          {style_class: 'pos-left fe-close', txt: Tw.BUTTON_LABEL.CANCEL},
+          {style_class: 'bt-red1 pos-right fe-change', txt: Tw.BUTTON_LABEL.CHANGE}]
       }, $.proxy(function($layer){
         // 닫기 클릭
-        $layer.on('click', '.fe-close', $.proxy(this._onChange, this));
+        $layer.on('click', '.fe-close', $.proxy(this._close, this));
         // 변경하기 클릭
         $layer.on('click', '.fe-change', $.proxy(this._change, this));
       }, this), null, null, $target);
@@ -365,10 +366,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   },
   /**
    * @function
-   * @desc 한도변경 확인
+   * @desc 한도변경 팝업 닫기
    */
-  _onChange: function () {
-    this.$isChange = true;
+  _close: function () {
+    // this.$isChange = true;
     this._popupService.close();
   },
   /**
@@ -377,16 +378,17 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    * @param $target
    */
   _change: function ($target) {
-    if (this.$isChange) {
-      var apiName = this._changeLimitApiName();
-      var reqData = this._makeRequestData();
+    // if (this.$isChange) {
+    this._popupService.close();
+    var apiName = this._changeLimitApiName();
+    var reqData = this._makeRequestData();
 
-      this.$isChanged = parseInt(this.$monthSelector.attr('id'), 10) !== parseInt(this.$monthSelector.attr('origin-value'), 10);
+    this.$isChanged = parseInt(this.$monthSelector.attr('id'), 10) !== parseInt(this.$monthSelector.attr('origin-value'), 10);
 
-      this._apiService.request(apiName, reqData)
-        .done($.proxy(this._changeLimitSuccess, this, $target))
-        .fail($.proxy(this._fail, this, $target));
-    }
+    this._apiService.request(apiName, reqData)
+      .done($.proxy(this._changeLimitSuccess, this, $target))
+      .fail($.proxy(this._fail, this, $target));
+    // }
   },
   /**
    * @function
