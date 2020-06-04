@@ -939,6 +939,17 @@ Tw.BenefitIndex.prototype = {
       list: categoryArray
     });
     this.$list.append(output);
+    
+    // 웹접근성 위배사항 수정
+    // 새창으로 열리는 링크의 경우 titla="새창" 추가
+    for (var i = 0; i < this.$list[0].children.length; i++) {
+      var benefitObj = $(this.$list[0].children[i]).find('a');
+      var benefitId = benefitObj.attr('data-benefit-id');
+
+      if (['TW20000014', 'TW20000018', 'TW20000028', 'TW20000029', 'TW20000031'].indexOf(benefitId) > -1) {
+        benefitObj.attr('title', '새창');
+      }
+    }
   },
 
   /**
