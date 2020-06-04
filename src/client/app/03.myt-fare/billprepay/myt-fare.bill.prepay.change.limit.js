@@ -187,6 +187,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     this.$changeBtn.click(_.debounce($.proxy(this._openChangeConfirm, this), 500));
+    // 이용약관 팝업 띄우기
+    this.$container.on('click', '.fe-open-pop', function(){
+      Tw.CommonHelper.openTermLayer(35);
+    });
   },
   /**
    * @function
@@ -209,30 +213,65 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   _selectAmount: function (event) {
     var $target = $(event.currentTarget);
     var $amount = $target.attr('id');
-    var data = Tw.POPUP_TPL.FARE_PAYMENT_SMALL_LIMIT;
-    if (this.$title === 'contents') {
-      if (this._isAdult === 'Y') {
-        data = Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT;
-      } else {
-        // 20.4.7 OP002-7282. 미성년자인 경우 최대한도 10만원
-        data = [
-          {
-            list : _.filter(Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT[0].list, function(item) {
-              return parseInt(item.txt.replace(/[^0-9]/g, ''), 10) <= 10;
-            })
-          }
-        ];
-      }
-    }
-
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
       layer: true,
-      data: data,
+      data: this._getAmountList($target),
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
+
+  /**
+   * @function
+   * @desc 한도변경 금액리스트
+   * @param $target
+   */
+  _getAmountList: function ($target){
+    var data = Tw.POPUP_TPL.FARE_PAYMENT_SMALL_LIMIT; // 20-05-26 OP002-8414 : 소액/콘텐츠 이용료 한도금액 통일 되어 한개로 사용.
+    var max = -1; // -1은 제한 없음을 의미
+    var _getOnlyNumber = function (value) {
+      if (Tw.FormatHelper.isEmpty(value)) return value;
+      return value.replace(/[^0-9]/g, '');
+    };
+    // max 만큼 1만원 단위로 금액리스트 반환
+    var _getLimitList = function (max) {
+      if (Tw.FormatHelper.isEmpty(max)) return [];
+      var limitList = [];
+      for (var i = max; i > 0; i--) {
+        limitList.push(
+          { 'label-attr': 'id="' + i + '0000"', 'radio-attr': 'name="r2" id="' + i + '0000"', txt: i+Tw.CURRENCY_UNIT.TEN_THOUSAND }
+        );
+      }
+      return [{list: limitList}];
+    };
+
+    /**
+     * 1일/1회 한도 인 경우만 상위에서 선택한 금액만큼으로 최대한도 설정
+     * 1일 한도 : 최대 한도 금액은 월 한도 선택한 금액만큼
+     * 1회 한도 : 최대 한도 금액은 1일 한도 선택한 금액만큼
+     */
+    if ($target.hasClass('fe-day') || $target.hasClass('fe-once')){
+      var $selector = $target.hasClass('fe-day') ? this.$monthSelector : this.$daySelector;
+      data = _getLimitList(_getOnlyNumber($selector.text()));
+    }
+    // 20.4.7 OP002-7282. 콘텐츠 이용료 이면서, 미성년자인 경우 최대한도 10만원
+    if (this.$title === 'contents' && this._isAdult !== 'Y') {
+      max = (max === -1) || max > 10 ? 10 : max;
+    }
+    if (max > 0) {
+      data = [
+        {
+          list : _.filter(data[0].list, function(item) {
+            return parseInt(item.txt.replace(/[^0-9]/g, ''), 10) <= max;
+          })
+        }
+      ];
+    }
+
+    return data;
+  },
+
   /**
    * @function
    * @desc actionsheet event binding
@@ -259,10 +298,34 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
-
+    this._changeAmountByMonth($target);
     this._checkIsChanged();
     this._popupService.close();
   },
+
+  /**
+   * @function
+   * @desc OP002-8414 매달/1일/1회 한도 금액 변경시 상위 한도 금액에 따라 하위 금액 영향.
+   * @param $target
+   */
+  _changeAmountByMonth: function ($target) {
+    var changeAmount = function (selector) {
+      var currentAmount = parseInt(selector.attr('id'), 10);
+      var targetAmount = parseInt($target.attr('id'), 10);
+      // 하위 한도 금액이 상위 한도 금액 보다 큰 경우만 현재 한도 금액을 상위 한도 금액 으로 변경 한다.
+      if (currentAmount >  targetAmount){
+        selector.attr('id', targetAmount);
+        selector.text($target.text());
+      }
+    };
+
+    // 매달 / 1일 한도 변경 시 하위 한도 금액 영향
+    if (!$target.hasClass('fe-once')){
+      changeAmount(this.$daySelector);
+      changeAmount(this.$onceSelector);
+    }
+  },
+
   /**
    * @function
    * @desc 변경여부 체크 후 버튼 활성화 처리
@@ -285,9 +348,19 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       this._getLimitFail();
     } else {
       var $target = $(e.currentTarget);
-      this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
-        $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON,
-        $target);
+      this._popupService.open({
+        title: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
+        contents: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG,
+        title_type: 'sub',
+        link_list: [{style_class: 'fe-open-pop', txt: Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TERMS}],
+        bt_b:[{style_class: 'pos-left fe-close', txt: Tw.BUTTON_LABEL.CANCEL}, {style_class: 'bt-red1 pos-right fe-change',
+          txt: Tw.BUTTON_LABEL.CHANGE}]
+      }, $.proxy(function($layer){
+        // 닫기 클릭
+        $layer.on('click', '.fe-close', $.proxy(this._onChange, this));
+        // 변경하기 클릭
+        $layer.on('click', '.fe-change', $.proxy(this._change, this));
+      }, this), null, null, $target);
     }
   },
   /**
