@@ -518,7 +518,7 @@ Tw.POPUP_TPL = {
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
-        { 'label-attr': 'for="0"', txt: '최근 납부 내역',       'radio-attr': 'id="0" name="myTHistory" value="0" checked' },
+        { 'label-attr': 'for="0"', txt: '최근 납부 내역',       'radio-attr': 'id="0" name="myTHistory" value="0"' },
         { 'label-attr': 'for="1"', txt: '즉시납부',            'radio-attr': 'id="1" name="myTHistory" value="1"' },
         { 'label-attr': 'for="2"', txt: '자동납부',            'radio-attr': 'id="2" name="myTHistory" value="2"' },
         { 'label-attr': 'for="3"', txt: '자동 납부 통합인출',    'radio-attr': 'id="3" name="myTHistory" value="3"', onlyType: 'M'},
