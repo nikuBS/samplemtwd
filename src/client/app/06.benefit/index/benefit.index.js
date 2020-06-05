@@ -946,7 +946,7 @@ Tw.BenefitIndex.prototype = {
       var benefitObj = $(this.$list[0].children[i]).find('a');
       var benefitId = benefitObj.attr('data-benefit-id');
 
-      if (['TW20000014', 'TW20000018', 'TW20000028', 'TW20000029', 'TW20000031'].indexOf(benefitId) > -1) {
+      if (['TW20000014', 'TW20000018'].indexOf(benefitId) > -1) {
         benefitObj.attr('title', '새창');
       }
     }
