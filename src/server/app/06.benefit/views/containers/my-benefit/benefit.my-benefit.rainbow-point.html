@@ -8,6 +8,7 @@
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/my-benefit/benefit.my-benefit.rainbow-point.component.html %>
 
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -96,7 +97,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <% if (rainbowPointHistories.length > 0) { %>
-                    <ul class="list-comp-lineinfo type5 no-bt">
+                    <ul class="list-comp-lineinfo type5 no-bt" data-list-cnt="<%= rainbowPointHistoryCount %>">
                     <% for (var i = 0; i < rainbowPointHistories.length; i++) { %>
                         <% if ( i >= 10 ) { %>
                         <li style="display: none" aria-hidden="true">
