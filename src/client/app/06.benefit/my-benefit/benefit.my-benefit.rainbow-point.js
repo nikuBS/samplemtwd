@@ -13,12 +13,75 @@ Tw.BenefitMyBenefitRainbowPoint = function (rootEl, options) {
   this.$container = rootEl;
   this._options = options;
   this._popupService = Tw.Popup;
+  this._apiService = Tw.Api;
   this._page = 1;
   // Element 캐싱
   this._cachedElement();
-  this._bindEvent();  
+  this._bindEvent();
+  this._init();
 };
 Tw.BenefitMyBenefitRainbowPoint.prototype = {
+
+  _init: function() {
+    var totRecCnt = this.$lineList.data('list-cnt');
+    var totRecPage = totRecCnt / 100;
+    var requestArrayParams = [];
+
+    if (totRecCnt % 100 > 0) {
+      totRecPage += 1;
+    }
+    
+    var toDt = Tw.DateHelper.getShortDateWithFormat(Tw.DateHelper.getCurrentShortDate(), 'YYYYMMDD');
+    var fromDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(toDt, -12, 'month', 'YYYYMMDD');
+
+    for (var idx = 2; idx <= totRecPage; idx++) {
+      var param = { command: Tw.API_CMD.BFF_05_0100 };
+      param.params = { fromDt: fromDt, toDt: toDt, size: 100, page: idx };
+      requestArrayParams.push(param);
+    }
+
+    if (!Tw.FormatHelper.isEmpty(requestArrayParams)) {
+      this._apiService.requestArray(requestArrayParams)
+        .done($.proxy(this._addRainbowHistories, this))
+        .fail($.proxy(this._onFail, this));
+    }
+  },
+
+  /**
+   * @function
+   * @desc Api 호출 성공시 콜백
+   * @param {Object} response
+   */
+  _addRainbowHistories: function() {
+    var mergedResult = [];
+
+    for (var i = 0; i < arguments.length; i++) {
+      var argumentsObj = arguments[i];
+
+      for (var idx = 0; idx < argumentsObj.result.history.length; idx++) {
+        var rainbowHistoryObj = argumentsObj.result.history[idx];
+        mergedResult.push(rainbowHistoryObj);
+      }      
+    }
+
+    var source = $('#rainbowHistoryList').html();
+    var template = Handlebars.compile(source);
+
+    var output = template({
+      list: mergedResult
+    });
+
+    this.$lineList.append(output);
+  },
+
+  /**
+   * @function
+   * @desc API Fail
+   * @param {Object} err
+   */
+  _onFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
+  },
 
   /**
    * @function
@@ -74,7 +137,7 @@ Tw.BenefitMyBenefitRainbowPoint.prototype = {
     if (this.$lineList.find('li:not(:visible)').length < 1) {
       this.$btnMore.remove();
     }
-  },
+  }
 
 };
 
