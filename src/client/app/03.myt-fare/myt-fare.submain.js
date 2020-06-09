@@ -357,6 +357,7 @@ Tw.MyTFareSubMain.prototype = {
           Tw.REDIS_BANNER_TYPE.TOS_ADMIN,
           bnr.banner.result.imgList,
           bnr.target,
+          bnr.banner.result.prtyTp,
           $.proxy(this._successDrawBanner, this)
         );
       } else {

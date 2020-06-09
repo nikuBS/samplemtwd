@@ -10,10 +10,11 @@
    * @param {string} type Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
    * @param {Array<object>} banners banner list
    * @param {string} target location code
+   * @param {string} priority M (admin banner 선노출) or T (tos banner 선노출)
    * @param {function} callback excutable code after load banners
    */
 
-  Tw.BannerService = function(rootEl, type, banners, target, callback) {
+  Tw.BannerService = function(rootEl, type, banners, target, priority, callback) {
     this.$container = rootEl;
     if (!banners || banners.length <= 0) {
       if(target){
@@ -23,9 +24,9 @@
     }
   
     if( !Tw.Environment.init ) {
-      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, type, banners, target, callback));
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, type, banners, priority, target, callback));
     } else {
-      this._init(type, banners, target, callback);
+      this._init(type, banners, target, priority, callback);
     }
 
     this._cachedElement(target);
@@ -41,9 +42,10 @@
      * @param {function} callback excutable code after load banners
      * @private
      */
-    _init: function(type, banners, target, callback) {
+    _init: function(type, banners, target, priority, callback) {
+      console.log('[banner.service.js] [_init] target / priority : ', target + ' / ' + priority);
       this._type = type;
-      this._banners = this._getProperBanners(type, banners);
+      this._banners = this._getProperBanners(type, banners, priority);
   
       this._renderBanners(type, target, callback);
     },
@@ -297,7 +299,7 @@
      * @param {Array<object>} banners banner list
      * @private
      */
-    _getProperBanners: function(type, banners) {
+    _getProperBanners: function(type, banners, priority) {
       var browserCode = this._getBrowserCode(),
         today = new Date();
   
@@ -377,7 +379,11 @@
               // TOS인경우 랜덤을 적용하지 않음
               return prev.bannerType - next.bannerType || isTos? prev.expSeq - next.expSeq : Math.floor(Math.random() * 3) -1;
             }else{
-              return prev.bannerType - next.bannerType || prev.expSeq - next.expSeq;
+              if (priority === 'M') {
+                return prev.expSeq - next.expSeq || prev.bannerType - next.bannerType;
+              } else {
+                return prev.bannerType - next.bannerType || prev.expSeq - next.expSeq;
+              }
             }          
             
           })
