@@ -229,29 +229,103 @@ Tw.CommonHelper = (function () {
    * @public
    */
   var showDataCharge = function (confirmCallback, closeCallback) {
-    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
-      $.proxy(function (res) {
-        if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
-          Tw.Popup.openConfirm(
-            Tw.POPUP_CONTENTS.NO_WIFI,
-            null,
-            function () {
-              Tw.Popup.close();
-              confirmCallback();
-            },
-            closeCallback
-          );
-        } else {
-          if ( confirmCallback ) {
-            confirmCallback();
-          }
+     // wifi가 아닌 상태에서 회원이면서 무한요금제면... 팝업 면제권
+     var _apiService = Tw.Api;
+     // 응답이 오는지 체크해야 한다.
+     // OP002-7559 => OP002-7574 
+     // 1. 회원체크 
+     _apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+         .done($.proxy(function(res){
+           if(res.code===Tw.API_CODE.CODE_00){ 
+            // 비회원일때...
+            if (res.result == null) {
+              Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
+                $.proxy(function (res) {
+                  if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
+                    Tw.Popup.openConfirm(
+                      Tw.POPUP_CONTENTS.NO_WIFI,
+                      null,
+                      function () {
+                        Tw.Popup.close();
+                        confirmCallback();
+                      },
+                      closeCallback
+                    );
+                  } else { // wifi 접속한 상태 
+                    if ( confirmCallback ) {
+                      confirmCallback();
+                    }
+                    if ( closeCallback ) {
+                      closeCallback();
+                    }
+                  }
+                }, this)
+              );
+              return;
+            }
 
-          if ( closeCallback ) {
-            closeCallback();
-          }
-        }
-      }, this)
-    );
+             // Redis 상품원장 조회
+             _apiService.request(Tw.NODE_CMD.GET_PRODUCT_INFO, {prodId: res.result.prodId})
+              .done(function(resp) {
+               if(resp.code===Tw.API_CODE.CODE_00){
+                 // 1.1. 요금제 체크 
+                 if ("무제한".indexOf(resp.result.summary.basOfrGbDataQtyCtt) !== -1) {
+                   confirmCallback();
+                 } else {
+                   // 1.2. 와이파이 체크
+                   // 1.3. 와이파이면 바이패스
+                   // 1.4. 와아파이 아니면 팝업 
+                   Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
+                     $.proxy(function (res) {
+                       if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
+                         Tw.Popup.openConfirm(
+                           Tw.POPUP_CONTENTS.NO_WIFI,
+                           null,
+                           function () {
+                             Tw.Popup.close();
+                             confirmCallback();
+                           },
+                           closeCallback
+                         );
+                       } else { // wifi 접속한 상태 
+                         if ( confirmCallback ) {
+                           confirmCallback();
+                         }
+                         if ( closeCallback ) {
+                           closeCallback();
+                         }
+                       }
+                     }, this)
+                   );
+                 }
+               }
+             }).fail(null);
+           } else { // 회원이아니다?
+             // 2. 회원이 아니면 wifi 상태 체크 팝업 
+             Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
+               $.proxy(function (res) {
+                 if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
+                   Tw.Popup.openConfirm(
+                     Tw.POPUP_CONTENTS.NO_WIFI,
+                     null,
+                     function () {
+                       Tw.Popup.close();
+                       confirmCallback();
+                     },
+                     closeCallback
+                   );
+                 } else { // wifi 접속한 상태 
+                   if ( confirmCallback ) {
+                     confirmCallback();
+                   }
+                   if ( closeCallback ) {
+                     closeCallback();
+                   }
+                 }
+               }, this)
+             );
+           }
+         },this)).fail(null);
   };
 
   /**

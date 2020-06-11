@@ -417,15 +417,12 @@ Tw.MyTFareInfoHistory.prototype = {
       title: Tw.POPUP_TITLE.SELECT_PAYMENT_TYPE,
       data: this._setSelectPayType(Tw.POPUP_TPL.PAYMENT_HISTORY_TYPE),
       btnfloating: {
-        txt: '닫기',
+        txt: Tw.BUTTON_LABEL.CLOSE,
         attr: 'type="button"',
         'class': 'tw-popup-closeBtn'
       }
     },
-    $.proxy(this._openTypeSelectHandler, this),
-    $.proxy(this._closeTypeSelect, this),
-    null, $(evt.currentTarget)
-    );
+    $.proxy(this._openTypeSelectHandler, this), null, null, $(evt.currentTarget) );
   },
 
   /**
@@ -452,95 +449,23 @@ Tw.MyTFareInfoHistory.prototype = {
    * - 각 리스트에 클릭 이벤트 바인드 -> 라디오 버튼 체인지 이벤트를 발생 시킴
    * - 각 라디오 버튼에 체인지 이벤트 바인드
    * - 선택된 카테고리 라디오 버튼에 checked 처리
-   * @param {Object} $container 카테고리 선택 액션시트 wraper 엘리먼트
+   * @param $layer 카테고리 선택 액션시트 wraper 엘리먼트
    * @returns {void}
    */
-  _openTypeSelectHandler: function ($container) {
-    Tw.CommonHelper.focusOnActionSheet($container);
-    this.$typeSelectActionsheetButtons = $container.find('.ac-list>li');
-    $(this.$typeSelectActionsheetButtons[0]).find('input').prop('checked', false);
-    $(this.$typeSelectActionsheetButtons[this.currentActionsheetIndex]).find('input').prop('checked', true);
-    this.$typeSelectActionsheetButtons.on('click', $.proxy(this._clickPaymentType, this));
-    $container.on('change', 'input', $.proxy(this._moveByPaymentType, this));
-    this._onWebAccessPopup($container);
-  },
-
-  /**
-   * @function [웹접근성]
-   * @param {element} $layer 팝업액션시트 dom객체
-   */
-  _onWebAccessPopup: function ($layer) {
-    $layer.on('click', 'li', $.proxy(this._onCommonClickService, this));
-    this._onCommonFocus($layer);
-  },
-
-  /**
-   * @function [웹접근성]
-   * @desc 라디오 선택 팝업 IOS 초점이동 되지 않아 초점가도록 처리
-   * @param {element} $layer 팝업액션시트 dom객체
-   */
-  _onCommonFocus: function ($layer) {
+  _openTypeSelectHandler: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
-  },
-
-  /**
-   * @function [웹접근성]
-   * @desc 클릭시 라디오버튼 변경되어 이벤트 변경이벤트 호출되도록 (_moveByPaymentType)
-   * @param {event} e
-   */
-  _onCommonClickService: function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    $(e.currentTarget).siblings().find('input').prop('checked', false);
-    $(e.currentTarget).find('input').prop('checked', true).trigger('change');
-  },
-
-  /**
-   * @function
-   * @member
-   * @desc 라디오 액션 시트 내 리스트 클릭 이벤트, 해당 리스트 내 라디오 버튼 체인지 이벤트를 발생시킴
-   * @param {event} e
-   * @returns {void}
-   */
-  _clickPaymentType: function (e) {
-    if ($(e.currentTarget).is('li')) {
-      e.stopPropagation();
-      $(e.currentTarget).siblings().find('input').prop('checked', false);
-      $(e.currentTarget).find('input').prop('checked', true).trigger('change');
-    }
-  },
-
-  /**
-   * @function
-   * @member
-   * @desc 라디오 액션시트 체인지 이벤트 발생 시 실행 , 해당 카테고리 파라미터를 붙여 이동함 (sortType)
-   * @param {event} e
-   * @returns {void}
-   */
-  _moveByPaymentType: function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var target    = $(e.currentTarget),
-        targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
-
-    if (Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] !== this.queryParams.sortType) {
-      targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] ?
-          targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()];
-
-      this._popupService.closeAllAndGo(targetURL);
-
-    } else {
-      this._popupService.close();
-    }
-  },
-
-  /**
-   * @function
-   * @member
-   * @desc 카테고리 선택 액션시트 닫기
-   */
-  _closeTypeSelect: function () {
-    this._popupService.close();
+    var idx = _.findIndex(Tw.MYT_PAYMENT_HISTORY_TYPE, function (o) {
+      return o === ((this.queryParams && this.queryParams.sortType) || '');
+    }, this);
+    $layer.find('input#' + idx).attr('checked', 'checked');
+    $layer.one('click change', '.ac-list', $.proxy(function (e) {
+      if (e.type === 'click') {
+        this._popupService.close();
+      } else {
+        var param = e.target.value !== '0' ? '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[e.target.value] : '';
+        this._historyService.replaceURL(document.location.pathname + param);
+      }
+    }, this));
   },
   // 분류선택 end
 
