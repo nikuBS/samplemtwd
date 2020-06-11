@@ -89,6 +89,7 @@ Tw.CertificationSkSmsRefund.prototype = {
      * random 만 사용 하는 경우 보완에 취약하여 대체로 window.crypto.getRandomValues 사용
      * 4294967296 : 2**32 (정수로 표현할 수 있는 최대 범위)
      * @see https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+     * @see https://developer.mozilla.org/ko/docs/Web/API/Crypto/getRandomValues
      */
     var randomNumber = window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296;
     this.$captchaImage.attr('src',
