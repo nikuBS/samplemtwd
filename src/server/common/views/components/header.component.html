@@ -1,4 +1,5 @@
 <!-- #header -->
+<% var disablePersonaBtn = (typeof svcType === 'undefined' || typeof svcType === 'null'); %>
 <%_ if (locals.type && locals.type === 'popup') { _%>
 <div class="header-wrap noborder<% if (locals.headerClass) { %> <%= locals.headerClass %><% } %>">
     <div class="page-header noborder">
@@ -32,31 +33,33 @@
                 <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop" role="link" title="" data-xt_eid="CMMA_A2_B6-139" data-xt_csid="NO" data-xt_action="BC">Shop</button>
                 <!-- 활성화시 .on // -->
             </h1>
-            <% if (svcType.login) { %>
-                <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
-                <div class="h-person">  <!-- Web 개인화 추가 -->
-                    <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
-                        <span class="person-btn-wrap">
-                            <span class="inner-btn">
-                                <span class="tod-blind">개인화</span>
+            <% if (!disablePersonaBtn) { %>
+                <% if (svcType.login) { %>
+                    <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
+                    <div class="h-person">  <!-- Web 개인화 추가 -->
+                        <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
+                            <span class="person-btn-wrap">
+                                <span class="inner-btn">
+                                    <span class="tod-blind">개인화</span>
+                                </span>
+                                <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
                             </span>
-                            <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
-                        </span>
-                    </button>
-                </div>
-                <% } %>
-            <% } else { %>
-                <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
-                <div class="h-person">  <!-- Web 개인화 추가 -->
-                    <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
-                        <span class="person-btn-wrap">
-                            <span class="inner-btn">
-                                <span class="tod-blind">개인화</span>
+                        </button>
+                    </div>
+                    <% } %>
+                <% } else { %>
+                    <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
+                    <div class="h-person">  <!-- Web 개인화 추가 -->
+                        <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
+                            <span class="person-btn-wrap">
+                                <span class="inner-btn">
+                                    <span class="tod-blind">개인화</span>
+                                </span>
+                                <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
                             </span>
-                            <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
-                        </span>
-                    </button>
-                </div>
+                        </button>
+                    </div>
+                    <% } %>
                 <% } %>
             <% } %>
             <div class="h-serarch">
@@ -73,31 +76,33 @@
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
             </h1>
-            <% if (svcType.login) { %>
-                <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
-                <div class="h-person">  <!-- Web 개인화 추가 -->
-                    <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
-                            <span class="person-btn-wrap">
-                                <span class="inner-btn">
-                                    <span class="tod-blind">개인화</span>
+            <% if (!disablePersonaBtn) { %>
+                <% if (svcType && svcType.login) { %>
+                    <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
+                    <div class="h-person">  <!-- Web 개인화 추가 -->
+                        <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
+                                <span class="person-btn-wrap">
+                                    <span class="inner-btn">
+                                        <span class="tod-blind">개인화</span>
+                                    </span>
+                                    <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
                                 </span>
-                                <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
-                            </span>
-                    </button>
-                </div>
-                <% } %>
+                        </button>
+                    </div>
+                    <% } %>
                 <% } else { %>
-                <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
-                <div class="h-person">  <!-- Web 개인화 추가 -->
-                    <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
-                            <span class="person-btn-wrap">
-                                <span class="inner-btn">
-                                    <span class="tod-blind">개인화</span>
+                    <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
+                    <div class="h-person">  <!-- Web 개인화 추가 -->
+                        <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
+                                <span class="person-btn-wrap">
+                                    <span class="inner-btn">
+                                        <span class="tod-blind">개인화</span>
+                                    </span>
+                                    <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
                                 </span>
-                                <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
-                            </span>
-                    </button>
-                </div>
+                        </button>
+                    </div>
+                    <% } %>
                 <% } %>
             <% } %>
             <div class="h-serarch">
