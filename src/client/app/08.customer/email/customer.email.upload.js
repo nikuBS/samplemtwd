@@ -432,13 +432,7 @@ Tw.CustomerEmailUpload.prototype = {
    */
   _bindAlertPopupClose: function($layer) {
     // 닫기버튼 바인드
-    $layer.on('click', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
-    // 저사양 단말에서 화면이 바뀌지 않는 현상 대응
-    try {
-      $layer.on('touchstart', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
-    } catch (err) {
-      Tw.Logger.error('파일첨부 미지원 팝업 닫기버튼 touchstart Event 바인드 실패: ' + JSON.stringify(err));
-    }
+    $layer.on('click touchend', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
   },
 
   /**
