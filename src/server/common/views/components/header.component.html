@@ -33,10 +33,10 @@
             <!-- 활성화시 .on // -->
             </h1>
             <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : svcType.login ) { %>
-                <% if(!( (typeof svcInfo === 'undefined' || svcInfo === null || svcInfo.loginType === 'S') ? 'true' : 
-                ( (typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
+                <% if(!( <!--(typeof svcInfo === 'undefined' || svcInfo === null || svcInfo.loginType === 'S') ? 'true' : -->
+                (typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
                 || (typeof svcInfo.personLineTypeChk === 'undefined' || svcInfo.personLineTypeChk === null) ? 'true' : svcInfo.personLineTypeChk   
-                || (typeof svcInfo.personAgentTypeChk === 'undefined' || svcInfo.personAgentTypeChk === null) ? 'true' : svcInfo.personAgentTypeChk  ) 
+                || (typeof svcInfo.personAgentTypeChk === 'undefined' || svcInfo.personAgentTypeChk === null) ? 'true' : svcInfo.personAgentTypeChk 
                 )) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
@@ -81,10 +81,10 @@
                 <%- title %>
             </h1>
             <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : svcType.login ) { %>
-                <% if(!( (typeof svcInfo === 'undefined' || svcInfo === null || svcInfo.loginType === 'S') ? 'true' : 
-                ( (typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
+                <% if(!( <!-- (typeof svcInfo === 'undefined' || svcInfo === null || svcInfo.loginType === 'S') ? 'true' : -->
+                (typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
                 || (typeof svcInfo.personLineTypeChk === 'undefined' || svcInfo.personLineTypeChk === null) ? 'true' : svcInfo.personLineTypeChk   
-                || (typeof svcInfo.personAgentTypeChk === 'undefined' || svcInfo.personAgentTypeChk === null) ? 'true' : svcInfo.personAgentTypeChk  ) 
+                || (typeof svcInfo.personAgentTypeChk === 'undefined' || svcInfo.personAgentTypeChk === null) ? 'true' : svcInfo.personAgentTypeChk
                 )) { %>
                     <div class="h-person">  <!-- App 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
