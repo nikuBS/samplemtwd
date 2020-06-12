@@ -1,4 +1,5 @@
-<!-- #header --> 
+<!-- #header -->
+<% var disablePersonaBtn = (typeof svcType === 'undefined' || typeof svcType === 'null'); %>
 <%_ if (locals.type && locals.type === 'popup') { _%>
 <div class="header-wrap noborder<% if (locals.headerClass) { %> <%= locals.headerClass %><% } %>">
     <div class="page-header noborder">
@@ -30,13 +31,11 @@
             <h1 class="h-home-tit">
                 <button type="button" class="twrold on" role="link" data-xt_eid="CMMA_A2_B6-138" data-xt_csid="NO" data-xt_action="BC" title="선택됨">T world</button> <!-- 활성화시 .on // -->
                 <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop" role="link" title="" data-xt_eid="CMMA_A2_B6-139" data-xt_csid="NO" data-xt_action="BC">Shop</button>
-            <!-- 활성화시 .on // -->
+                <!-- 활성화시 .on // -->
             </h1>
-            <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : svcType.login ) { %>
-                <% if(!((typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
-                || (typeof svcInfo.personLineTypeChk === 'undefined' || svcInfo.personLineTypeChk === null) ? 'true' : svcInfo.personLineTypeChk   
-                || (typeof svcInfo.personAgentTypeChk === 'undefined' || svcInfo.personAgentTypeChk === null) ? 'true' : svcInfo.personAgentTypeChk   
-                )) { %>
+            <% if (!disablePersonaBtn) { %>
+                <% if (svcType.login) { %>
+                    <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
                             <span class="person-btn-wrap">
@@ -47,12 +46,9 @@
                             </span>
                         </button>
                     </div>
-                <% } %>
-            <% } else { %>
-                <% if(! ( 
-                    (typeof personDataNoLoginMap.personTimeChk === 'undefined' || personDataNoLoginMap.personTimeChk === null) ? 'true' : personDataNoLoginMap.personTimeChk  
-                    || (typeof personDataNoLoginMap.personAgentTypeChk === 'undefined' || personDataNoLoginMap.personAgentTypeChk === null) ? 'true' : personDataNoLoginMap.personAgentTypeChk  )) 
-                    { %>
+                    <% } %>
+                <% } else { %>
+                    <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
                             <span class="person-btn-wrap">
@@ -63,6 +59,7 @@
                             </span>
                         </button>
                     </div>
+                    <% } %>
                 <% } %>
             <% } %>
             <div class="h-serarch">
@@ -79,37 +76,33 @@
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
             </h1>
-            <% if ( (typeof svcType === 'undefined' || svcType === null) ? 'false' : svcType.login ) { %>
-                <% if(!((typeof svcInfo.personTimeChk === 'undefined' || svcInfo.personTimeChk === null) ? 'true' : svcInfo.personTimeChk 
-                || (typeof svcInfo.personLineTypeChk === 'undefined' || svcInfo.personLineTypeChk === null) ? 'true' : svcInfo.personLineTypeChk   
-                || (typeof svcInfo.personAgentTypeChk === 'undefined' || svcInfo.personAgentTypeChk === null) ? 'true' : svcInfo.personAgentTypeChk  
-                )) { %>
-                    <div class="h-person">  <!-- App 개인화 추가 -->
+            <% if (!disablePersonaBtn) { %>
+                <% if (svcType && svcType.login) { %>
+                    <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
+                    <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
-                            <span class="person-btn-wrap">
-                                <span class="inner-btn">
-                                    <span class="tod-blind">개인화</span>
+                                <span class="person-btn-wrap">
+                                    <span class="inner-btn">
+                                        <span class="tod-blind">개인화</span>
+                                    </span>
+                                    <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
                                 </span>
-                                <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
-                            </span>
                         </button>
                     </div>
-                <% } %>
-            <% } else { %>
-                <% if(! ( 
-                    (typeof personDataNoLoginMap.personTimeChk === 'undefined' || personDataNoLoginMap.personTimeChk === null) ? 'true' : personDataNoLoginMap.personTimeChk  
-                    || (typeof personDataNoLoginMap.personAgentTypeChk === 'undefined' || personDataNoLoginMap.personAgentTypeChk === null) ? 'true' : personDataNoLoginMap.personAgentTypeChk  )) 
-                    { %>
-                    <div class="h-person">  <!-- App 개인화 추가 -->
+                    <% } %>
+                <% } else { %>
+                    <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
+                    <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
-                            <span class="person-btn-wrap">
-                                <span class="inner-btn">
-                                    <span class="tod-blind">개인화</span>
+                                <span class="person-btn-wrap">
+                                    <span class="inner-btn">
+                                        <span class="tod-blind">개인화</span>
+                                    </span>
+                                    <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
                                 </span>
-                                <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
-                            </span>
                         </button>
                     </div>
+                    <% } %>
                 <% } %>
             <% } %>
             <div class="h-serarch">
@@ -288,11 +281,11 @@
             </ul>
             <dl class="f-info">
                 <dt>휴대폰 고객센터</dt>
-                <dd>국번없이 <button onclick="document.location.href='tel:114'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-98" data-xt_csid="NO" data-xt_action="BC">114</button>(무료) 또는 
-                    <button onclick="document.location.href='tel:080-011-6000'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-99" data-xt_csid="NO" data-xt_action="BC">080-011-6000</button>(무료) 국번없이 
+                <dd>국번없이 <button onclick="document.location.href='tel:114'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-98" data-xt_csid="NO" data-xt_action="BC">114</button>(무료) 또는
+                    <button onclick="document.location.href='tel:080-011-6000'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-99" data-xt_csid="NO" data-xt_action="BC">080-011-6000</button>(무료) 국번없이
                     <button onclick="document.location.href='tel:1599-0011'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-100" data-xt_csid="NO" data-xt_action="BC">1599-0011</button>(유료)</dd>
                 <dt>인터넷·집전화 고객센터</dt>
-                <dd><button onclick="document.location.href='tel:080-816-2000'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-101" data-xt_csid="NO" data-xt_action="BC">080-816-2000</button>(무료) 또는 
+                <dd><button onclick="document.location.href='tel:080-816-2000'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-101" data-xt_csid="NO" data-xt_action="BC">080-816-2000</button>(무료) 또는
                     <button onclick="document.location.href='tel:1600-2000'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-102" data-xt_csid="NO" data-xt_action="BC">1600-2000</button>(유료)</dd>
                 <dt>초콜릿 고객센터</dt>
                 <dd><button onclick="document.location.href='tel:1599-3377'" class="f-btel" role="link" data-xt_eid="CMMA_A11_B3-103" data-xt_csid="NO" data-xt_action="BC">1599-3377</button>(유료)</dd>

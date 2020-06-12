@@ -20,7 +20,6 @@ class MainStore extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
-
     this.getRedisData(noticeCode)
       .subscribe((resp) => {
         res.render(`main.store.html`, { svcInfo, redisData: resp, pageInfo, formatHelper: FormatHelper });
@@ -111,18 +110,15 @@ class MainStore extends TwViewController {
 
   private parseHelpData(cicntsList): any {
     const resultArr = <any>[];
-    var scrnTypCd = cicntsList[0].scrnTypCd||'F';
-    
-    cicntsList.sort(function(prev, next){
-
-      if(scrnTypCd === 'R'){
-        return Math.floor(Math.random() * 3) -1;
-      }else{
+    const scrnTypCd = cicntsList[0].scrnTypCd || 'F';
+    cicntsList.sort((prev, next) => {
+      if (scrnTypCd === 'R') {
+        return Math.floor(Math.random() * 3) - 1;
+      } else {
         return prev.mainExpsSeq - next.mainExpsSeq;
-      }          
+      }
     });
-    cicntsList[0].rollYn = cicntsList[0].rollYn||'Y';
-    
+    cicntsList[0].rollYn = cicntsList[0].rollYn || 'Y';
     for ( let i = 0; i < cicntsList.length; i += 3 ) {
       resultArr.push(cicntsList.slice(i, i + 3));
     }
