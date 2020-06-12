@@ -163,21 +163,20 @@ class MainHome extends TwViewController {
       //    const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '', recommendProdsData };
       //    res.render(`main.home-${flag}.html`, renderData);
       // });
-
       // [feature/OP002-8022] 미 로그인 시 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
       Observable.combineLatest(
-        this.getRedisData(noticeCode, ''), 
+        this.getRedisData(noticeCode, ''),
         this.getPersonDataNoLogin(req)
       ).subscribe(([redisData, personDataNoLogin]) => {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
-        personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크  
+        personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
         res.render(`main.home-${flag}.html`, {
-          svcInfo, 
-          svcType, 
-          homeData, 
-          redisData, 
-          pageInfo, 
-          noticeType: '', 
+          svcInfo,
+          svcType,
+          homeData,
+          redisData,
+          pageInfo,
+          noticeType: '',
           recommendProdsData,
           personDataNoLoginMap
         });
@@ -748,22 +747,11 @@ class MainHome extends TwViewController {
   private getPersonData(svcInfo: any, req: Request): Observable<any> {
     return Observable.combineLatest(
       this.getPersonDisableTimeCheck()
-      
     ).map(([personDisableTimeCheck]) => {
-        if (personDisableTimeCheck == null) {
-          personDisableTimeCheck = true; // 비노출
-        }
-
-        let personDisableLineTypeCheck = this.getPersonLineTypeCheck(svcInfo)
-        if (personDisableLineTypeCheck == 'undefined' || personDisableLineTypeCheck == null) {
-          personDisableLineTypeCheck = true;  // 비노출
-        }
-
-        let personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req)
-        if (personDisableAgentTypeCkeck == 'undefined' || personDisableAgentTypeCkeck == null) {
-          personDisableAgentTypeCkeck = true; // 비노출
-        }
-        return { personDisableTimeCheck, personDisableLineTypeCheck, personDisableAgentTypeCkeck };
+      const personDisableLineTypeCheck = this.getPersonLineTypeCheck(svcInfo);
+      const personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req);
+      this.logger.info(this, '[Person Login Info]', personDisableTimeCheck, personDisableLineTypeCheck, personDisableAgentTypeCkeck);
+      return { personDisableTimeCheck, personDisableLineTypeCheck, personDisableAgentTypeCkeck };
     });
   }
 
@@ -775,17 +763,10 @@ class MainHome extends TwViewController {
   private getPersonDataNoLogin(req: Request): Observable<any> {
     return Observable.combineLatest(
       this.getPersonDisableTimeCheck()
-      
     ).map(([personDisableTimeCheck]) => {
-        if (personDisableTimeCheck == null) {
-          personDisableTimeCheck = true; // 비노출
-        }
-
-        let personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req)
-        if (personDisableAgentTypeCkeck == 'undefined' || personDisableAgentTypeCkeck == null) {
-          personDisableAgentTypeCkeck = true; // 비노출
-        }
-        return { personDisableTimeCheck, personDisableAgentTypeCkeck };
+      const personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req);
+      this.logger.info(this, '[Person Not Login Info]', personDisableTimeCheck, personDisableAgentTypeCkeck);
+      return { personDisableTimeCheck, personDisableAgentTypeCkeck };
     });
   }
 
@@ -797,25 +778,19 @@ class MainHome extends TwViewController {
     const DEFAULT_PARAM = {
       property: REDIS_KEY.PERSON_DISABLE_TIME
     };
-
-    let resTime: any = [];
-    let startTime: any;
-    let endTime: any;
-    const today = new Date().getTime();
-
     return this.apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
-
       if ( resp.code === API_CODE.CODE_00 ) {
-        resTime = resp.result.split('~');
-        startTime = DateHelper.convDateFormat(resTime[0]).getTime();
-        endTime = DateHelper.convDateFormat(resTime[1]).getTime();
+        const today = new Date().getTime();
+        const resTime = resp.result.split('~');
+        const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
+        const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
         this.logger.info(this, '[Person startTime // endTime]', startTime, endTime);
-        // 비노출 : true, 노출 : false
-        return today >= startTime && today <= endTime;
-
+        /**
+         * 버튼 비노출 시점에 포함되지 않으면 버튼 미노출
+         */
+        return (today >= startTime && today <= endTime);
       } else {
         return null;
-
       }
     });
   }
@@ -826,19 +801,12 @@ class MainHome extends TwViewController {
    * @return {object}
    */
   private getPersonLineTypeCheck(svcInfo): any {
-    // 설명서비스등급(svcGr)	정책서	        시스템 
+    // 설명서비스등급(svcGr)	정책서	        시스템
     // 통화내역조회가능이동전화	 A	            A
     // 일반개인이동전화	       B	            Y
-    let svcLineGr = svcInfo.svcGr;
-    let svcType: any;
-    this.logger.info(this, '[Person svcLineGr]', svcLineGr);
-    TARGET_LINE_LIST.forEach(function(targetLine) {
-      let result = svcLineGr.toLowerCase().indexOf(targetLine.toLowerCase());
-      if (result > -1) {
-        svcType = false;  // 해당 서비스이먼 노출은 false
-      } 
-    });
-    return svcType;  // 비노출 : true, 노출 : false
+    const svcLineGr = TARGET_LINE_LIST.find((targetLine) =>
+      svcInfo.svcGr.toLowerCase().includes(targetLine.toLowerCase()));
+    return !!svcLineGr;
   }
 
   /**
@@ -847,16 +815,10 @@ class MainHome extends TwViewController {
    * @return {object}
    */
   private getPersonAgentTypeCheck(req): any {
-    let userAgent: any = this.getUserAgent(req);
-    let agentTypeChk: any;
-    this.logger.info(this, '[Person userAgent]', userAgent);
-    TARGET_AGENT_LIST.forEach(function(targetAgent) {
-      let result = userAgent.toLowerCase().search(targetAgent.toLowerCase());
-      if (result > -1) {
-        agentTypeChk = false;  // 해당 당말기면 노출은 false
-      } 
-    });
-    return agentTypeChk;  // 비노출 : true, 노출 : false
+    const userAgent: string = this.getUserAgent(req);
+    const agentTypeChk = TARGET_AGENT_LIST.find((targetAgent) =>
+      userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
+    return !!agentTypeChk;
   }
 
   /**
@@ -870,7 +832,7 @@ class MainHome extends TwViewController {
     }
     return '';
   }
-  
+
 }
 
 export default MainHome;
