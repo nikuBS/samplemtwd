@@ -612,7 +612,9 @@ Tw.ProductCommonCallplan.prototype = {
 
     //변경 전 상품ID 에 포함된 경우 팝업을 비노출 처리
     var unexposedProdId = new Array();
-    unexposedProdId = resp.result.beforeProdId.split('|');
+    if (resp.code === Tw.API_CODE.CODE_00){
+      unexposedProdId = resp.result.beforeProdId.split('|');
+    }
 
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result) || this._prodTypCd !== 'AB' || unexposedProdId.indexOf(this._prodId) !== -1) {
 
@@ -744,7 +746,9 @@ Tw.ProductCommonCallplan.prototype = {
 
     //변경 전 상품ID 에 포함된 경우 팝업을 비노출 처리
     var unexposedProdId = new Array();
-    unexposedProdId = resp.result.beforeProdId.split('|');
+    if (resp.code === Tw.API_CODE.CODE_00){
+      unexposedProdId = resp.result.beforeProdId.split('|');
+    }
 
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result) || this._prodTypCd !== 'AB' || unexposedProdId.indexOf(this._prodId) !== -1) {
       return this._onLineProcess(joinTermCd, url);
