@@ -214,6 +214,17 @@ Tw.CommonMemberLine.prototype = {
 
   /**
    * @function
+   * @desc 회선관리 이용안내 팝업 오픈 callback
+   * @param $popupContainer
+   * @private
+   */
+  _onOpenBizSignup: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-go-url', $.proxy(this._onClickInternal, this));
+  },
+
+
+  /**
+   * @function
    * @desc 닉네임 설정 클릭 처리
    * @param $event
    * @private
