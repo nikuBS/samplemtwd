@@ -35,7 +35,7 @@
             </h1>
             <% if (!disablePersonaBtn) { %>
                 <% if (svcType.login) { %>
-                    <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
+                    <% if (svcInfo.personTimeChk && svcInfo.personAgentTypeChk && svcInfo.personLineTypeChk) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
                             <span class="person-btn-wrap">
@@ -48,7 +48,7 @@
                     </div>
                     <% } %>
                 <% } else { %>
-                    <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
+                    <% if (personDataNoLoginMap.personTimeChk && personDataNoLoginMap.personAgentTypeChk) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
                             <span class="person-btn-wrap">
@@ -78,7 +78,7 @@
             </h1>
             <% if (!disablePersonaBtn) { %>
                 <% if (svcType && svcType.login) { %>
-                    <% if (svcInfo.personTimeChk || svcInfo.personAgentTypeChk || svcInfo.personLineTypeChk ) { %>
+                    <% if (svcInfo.personTimeChk && svcInfo.personAgentTypeChk && svcInfo.personLineTypeChk ) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="person-btn-wrap">
@@ -91,7 +91,7 @@
                     </div>
                     <% } %>
                 <% } else { %>
-                    <% if( personDataNoLoginMap.personTimeChk || personDataNoLoginMap.personAgentTypeChk ) { %>
+                    <% if( personDataNoLoginMap.personTimeChk && personDataNoLoginMap.personAgentTypeChk ) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
                         <button data-url="/new/my-feed" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A2_B6_C1193-1" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="person-btn-wrap">
