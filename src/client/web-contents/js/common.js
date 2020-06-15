@@ -100,9 +100,11 @@ $(window).on('resize', function (e, datas) {
         if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.removeClass('pb0');      //190318 하단 고정 버튼 위치
     }
 }).on('scroll', function () {
-    for (var fn in scroll_fn) {
-        eval(scroll_fn[fn]);
-    }
+    // 2020-06-15 [OP002-8946] 수정 START
+    //for (var fn in scroll_fn) {
+    //    eval(scroll_fn[fn]);
+    //}
+    // 2020-06-15 [OP002-8946] 수정 END
 
     //190313: 메인탭 분리
     if(skt_landing.util.win_info.get_scrollT() == 0){
@@ -117,9 +119,11 @@ $(window).on('resize', function (e, datas) {
     }
 
 }).on('orientationchange', function () {
-    for (var fn in resize_fn) {
-        eval(resize_fn[fn]);
-    }
+    // 2020-06-15 [OP002-8946] 수정 START
+    //for (var fn in resize_fn) {
+    //    eval(resize_fn[fn]);
+    //}
+    // 2020-06-15 [OP002-8946] 수정 END
 }).on('mousewheel DOMMouseScroll', function (e) {
 
 });
@@ -876,7 +880,7 @@ skt_landing.action = {
     ran_id_create:function(){
         var d = new Date().getTime(),
             ranid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
-                var r = (d+Math.random()*16)%16 | 0;
+                var r = (d+(window.crypto.getRandomValues(new Uint32Array(1))/4294967296)*16)%16 | 0; // 2020-06-15 [OP002-8946] 수정
                 d = Math.floor(d/16);
                 return (c=='x' ? r : (r&0x7|0x8)).toString(16);
             });
@@ -921,7 +925,7 @@ skt_landing.action = {
                     top : $(ta).offset().top,
                     'z-index' : 1000
                 })
-                .attr('id', 'loading' + Math.floor(Math.random()*1000))
+                .attr('id', 'loading' + Math.floor((window.crypto.getRandomValues(new Uint32Array(1))/4294967296)*1000)) // 2020-06-15 [OP002-8946] 수정
                 .appendTo($('body').find('.wrap:eq(0)'))
             $(ta).data('mate', loading_box.attr('id'))
             loading_ico.appendTo(loading_box);
@@ -986,7 +990,7 @@ skt_landing.action = {
                     top : $(ta).offset().top,
                     'z-index' : 1000
                 })
-                .attr('id', 'loading' + Math.floor(Math.random()*1000))
+                .attr('id', 'loading' + Math.floor((window.crypto.getRandomValues(new Uint32Array(1))/4294967296)*1000)) // 2020-06-15 [OP002-8946] 수정
                 .appendTo($('body').find('.wrap:eq(0)'))
             $(ta).data('mate', loading_box.attr('id'))
             loading_ico.appendTo(loading_box);
