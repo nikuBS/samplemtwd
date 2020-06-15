@@ -750,8 +750,8 @@ class MainHome extends TwViewController {
     ).map(([personDisableTimeCheck]) => {
       const personDisableLineTypeCheck = this.getPersonLineTypeCheck(svcInfo);
       const personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req);
-      this.logger.info(this, '[Person Login Info]', personDisableTimeCheck, personDisableLineTypeCheck, personDisableAgentTypeCkeck);
-      return { personDisableTimeCheck, personDisableLineTypeCheck, personDisableAgentTypeCkeck };
+      this.logger.info(this, '[Person Login Info]', personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck);
+      return { personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck };
     });
   }
 
@@ -786,9 +786,10 @@ class MainHome extends TwViewController {
         const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
         this.logger.info(this, '[Person startTime // endTime]', startTime, endTime);
         /**
-         * 버튼 비노출 시점에 포함되지 않으면 버튼 미노출
+         * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
+         * true: 노출, false: 비노출
          */
-        return (today >= startTime && today <= endTime);
+        return !(today >= startTime && today <= endTime);
       } else {
         return null;
       }
@@ -806,6 +807,10 @@ class MainHome extends TwViewController {
     // 일반개인이동전화	       B	            Y
     const svcLineGr = TARGET_LINE_LIST.find((targetLine) =>
       svcInfo.svcGr.toLowerCase().includes(targetLine.toLowerCase()));
+    /**
+     * 개인회선등급(A, Y)에 포함되어있으면 노출
+     * true: 노출 false: 미노출
+     */
     return !!svcLineGr;
   }
 
@@ -818,6 +823,10 @@ class MainHome extends TwViewController {
     const userAgent: string = this.getUserAgent(req);
     const agentTypeChk = TARGET_AGENT_LIST.find((targetAgent) =>
       userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
+    /**
+     * userAgent에 포함된 단말기인 경우 노출
+     * true: 노출, false: 미노출
+     */
     return !!agentTypeChk;
   }
 
