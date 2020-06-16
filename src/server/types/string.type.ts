@@ -1521,7 +1521,8 @@ export const TARGET_AGENT_LIST = [
   'iPhone11_2',   // 아이폰XS  (3차)
   'iPhone11_6',   // 아이폰XS MAX (3차) 
   'iPhone11_8',   // 아이폰XR  (3차)
-  'iPhone8_4'   // 아이폰 SE 2020 (3차)
+  //'iPhone8_4'   // 아이폰 SE 2020 (3차)
+  'iPhone12_8'   // 아이폰 SE 2020 (3차)
 ];
 export const WIDGET_REMAINS_CODE = {
   DATA_SUM: 'DATA_SUM'
