@@ -13,6 +13,7 @@ Tw.CustomerAgentsearchRepairManufacturer = function (rootEl) {
     return;
   }
   this.$container = rootEl;
+  this._historyService = new Tw.HistoryService(rootEl);
 
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
@@ -23,6 +24,7 @@ Tw.CustomerAgentsearchRepairManufacturer = function (rootEl) {
 Tw.CustomerAgentsearchRepairManufacturer.prototype = {
   _bindEvents: function () {
     this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
+    this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
   },
 
   /**
@@ -45,7 +47,20 @@ Tw.CustomerAgentsearchRepairManufacturer.prototype = {
     );
 
     return false;
+  },
+
+
+  /**
+   * @desc 내부이동링크
+   * @param {event} e
+   */
+  _openInternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._historyService.goLoad(location.origin + $(e.currentTarget).attr('href'));
   }
+
 };
 
 

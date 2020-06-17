@@ -85,8 +85,16 @@ Tw.CertificationSkSmsRefund.prototype = {
    * @desc BFF로 captcha 이미지 요청
    */
   _requestCaptchaImg: function () {
+    /**
+     * [OP002-8948] 보안 점검에 Math.random 함수 보안이 취약하여 아래와 같이 변경
+     * random 만 사용 하는 경우 보완에 취약하여 대체로 window.crypto.getRandomValues 사용
+     * 4294967296 : 2**32 (정수로 표현할 수 있는 최대 범위)
+     * @see https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+     * @see https://developer.mozilla.org/ko/docs/Web/API/Crypto/getRandomValues
+     */
+    var randomNumber = window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296;
     this.$captchaImage.attr('src',
-      '/bypass' + Tw.API_CMD.BFF_01_0053.path.replace(':version', 'v1') + '?rnd=' + Math.random());
+      '/bypass' + Tw.API_CMD.BFF_01_0053.path.replace(':version', 'v1') + '?rnd=' + randomNumber);
   },
 
   /**

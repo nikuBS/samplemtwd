@@ -609,7 +609,14 @@ Tw.ProductCommonCallplan.prototype = {
    * @returns {*}
    */
   _resChangeGuideAll: function(joinTermCd, url, currentProdId, mbrNm, resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result) || this._prodTypCd !== 'AB') {
+
+    //변경 전 상품ID 에 포함된 경우 팝업을 비노출 처리
+    var unexposedProdId = new Array();
+    if (resp.code === Tw.API_CODE.CODE_00){
+      unexposedProdId = resp.result.beforeProdId.split('|');
+    }
+
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result) || this._prodTypCd !== 'AB' || unexposedProdId.indexOf(this._prodId) !== -1) {
 
       // DG방어 팝업 호출
       return this._reqDownGrade(joinTermCd, url, currentProdId, mbrNm);
@@ -736,7 +743,14 @@ Tw.ProductCommonCallplan.prototype = {
    * @returns {*}
    */
   _resDownGradeAll: function(joinTermCd, url, currentProdId, mbrNm, resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result) || this._prodTypCd !== 'AB') {
+
+    //변경 전 상품ID 에 포함된 경우 팝업을 비노출 처리
+    var unexposedProdId = new Array();
+    if (resp.code === Tw.API_CODE.CODE_00){
+      unexposedProdId = resp.result.beforeProdId.split('|');
+    }
+
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result) || this._prodTypCd !== 'AB' || unexposedProdId.indexOf(this._prodId) !== -1) {
       return this._onLineProcess(joinTermCd, url);
     }
 

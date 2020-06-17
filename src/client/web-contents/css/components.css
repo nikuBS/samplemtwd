@@ -36169,3 +36169,7 @@ body.apphome .section-box {
 .popup.rm-popup-familyroaming .popup-info{left:0;right:0}
 .rm-popup-familyroaming-btn{position:absolute;bottom:3rem;left:50%;display:inline-block;width:8.9375rem;margin-left:-4.46875rem;line-height:2.5rem;background-color:#f76252;color:#fff;text-align:center;border-radius:4.46875rem}
 .rm-popup-familyroaming-btnclose{position:absolute;top:1.755rem;right:2.125rem;width:1.125rem;height:1.125rem;background:url(/img/product/rm-familyroaming-popup-close.png) no-repeat 0 0;background-size:100% auto}
+
+/* tube-list 오류 수정 [OP002-8763] */
+.tube-list{display:inline-flex;flex-wrap:wrap}
+.tube-list li{display:flex !important;align-items:center;text-ailgn:center;justify-content:center}
