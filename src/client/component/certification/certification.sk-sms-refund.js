@@ -86,6 +86,7 @@ Tw.CertificationSkSmsRefund.prototype = {
    */
   _requestCaptchaImg: function () {
     /**
+     * [OP002-8948] 보안 점검에 Math.random 함수 보안이 취약하여 아래와 같이 변경
      * random 만 사용 하는 경우 보완에 취약하여 대체로 window.crypto.getRandomValues 사용
      * 4294967296 : 2**32 (정수로 표현할 수 있는 최대 범위)
      * @see https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Math/random
