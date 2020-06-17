@@ -368,7 +368,6 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _onNativeSignup: function (resp) {
-    console.log("_onNativeSignup, resp: ", resp);
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
         .done($.proxy(this._successLogin, this))
