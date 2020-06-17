@@ -71,6 +71,7 @@ Tw.MainMenuSettings.prototype = {
     if (versionArray[2] % 2 === 0) { // 대문자 
       version = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1)
     }
+    this._currentVersion = version;
 
     if (userAgentString.indexOf('osType:aos') !== -1) {
       this._osType = 'A';
