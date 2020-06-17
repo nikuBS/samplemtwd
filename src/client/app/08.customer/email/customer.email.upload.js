@@ -32,7 +32,6 @@ Tw.CustomerEmailUpload.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 객체가 생성될 때 동작에 필요한 내부 변수를 정의 한다.
    * @return {void}
    */
@@ -44,7 +43,6 @@ Tw.CustomerEmailUpload.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성자 생성시 템플릿 엘리먼트 설정 customer.email.html
    */
   _cachedElement: function () {
@@ -55,7 +53,6 @@ Tw.CustomerEmailUpload.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성시 이벤트 바인드
    */
   _bindEvent: function () {
@@ -185,7 +182,6 @@ Tw.CustomerEmailUpload.prototype = {
    */
   _openCustomFileChooser: function (e) {
     e.stopPropagation();
-
     var $target = $(e.currentTarget);
     // 저버전 안드로이드일경우 앱 기능 호출 그외에는 파일첨부 기본 기능 이용
     if ( this._isLowerVersionAndroid() ) {
@@ -432,6 +428,9 @@ Tw.CustomerEmailUpload.prototype = {
    */
   _bindAlertPopupClose: function($layer) {
     // 닫기버튼 바인드
+    /**
+     * [OP002-8944] try.. catch.. 블록이 불필요하게 사용되어 아래와 같이 변경
+     */
     $layer.on('click touchend', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
   },
 
