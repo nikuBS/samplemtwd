@@ -122,14 +122,15 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
    * return Observable
    */
   private reqRainbowPointHistories(page: number): Observable<any> {
-    const toDt = DateHelper.getShortDateWithFormat(DateHelper.getCurrentDate(), 'YYYYMMDD');
-    const fromDt = DateHelper.getShortDateWithFormatAddByUnit(toDt, -12, 'month', 'YYYYMMDD');
+    // [OP002-8973] 조회기간에 대한 제한 삭제 
+    // const toDt = DateHelper.getShortDateWithFormat(DateHelper.getCurrentDate(), 'YYYYMMDD');
+    // const fromDt = DateHelper.getShortDateWithFormatAddByUnit(toDt, -12, 'month', 'YYYYMMDD');
 
     return this.apiService.request(API_CMD.BFF_05_0100, {
       // 페이징 -> 더보기 방식 변경에 따라 전체 이력을 한번에 조회해오게 되므로 최대 1000건의 이력까지 노출해주도록 임의로 처리함
       // size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
-      fromDt: fromDt,
-      toDt: toDt,
+      // fromDt: fromDt,
+      // toDt: toDt,
       size: 100,
       page
     });
