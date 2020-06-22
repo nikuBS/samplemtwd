@@ -20,8 +20,11 @@ class CustomerUseGuideApp extends TwViewController {
     this.getContent(res, svcInfo, pageInfo, id).subscribe(
       (content) => {
         if (!FormatHelper.isEmpty(content)) {
-          res.render('useguide/customer.useguide.app.html', {
-            svcInfo, pageInfo, content
+          // 조회 완료 시 컨텐츠관리 누적 조회 수 통계를 위한 API 발송
+          this.setCount(res, svcInfo, pageInfo, id).subscribe( (count) => {
+            res.render('useguide/customer.useguide.app.html', {
+              svcInfo, pageInfo, content
+            });
           });
         }
       },
@@ -48,8 +51,6 @@ class CustomerUseGuideApp extends TwViewController {
   private getContent(res: Response, svcInfo: any, pageInfo: any, id: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0064, {}, null, [id]).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
-        // 조회 완료시 통계를 위한 API 발송
-        this.apiService.request(API_CMD.BFF_08_0065, {}, null, [id]);
         return EnvHelper.replaceCdnUrl(resp.result.icntsCtt);
       }
 
@@ -63,6 +64,36 @@ class CustomerUseGuideApp extends TwViewController {
       return null;
     });
   }
+
+
+  /**
+   * @function
+   * @desc 컨텐츠관리의 앱이용가이드 조회수 count 누적
+   * @para  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @param  {string} id - 조회할 '이럴댄 이렇게 하세요' ID
+   * @returns Observable
+   */
+  private setCount(res: Response, svcInfo: any, pageInfo: any, id: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_08_0065, {}, null, [id]).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        return true;
+      }
+
+      this.error.render(res, {
+        code: resp.code,
+        msg: resp.msg,
+        pageInfo,
+        svcInfo
+      });
+
+      return null;
+    });
+  } // end of getContent
+
+
+
 }
 
 export default CustomerUseGuideApp;

@@ -12,6 +12,7 @@ import { CUSTOMER_SERVICE_OPTION_TYPE } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import EnvHelper from '../../../../utils/env.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import {Observable} from 'rxjs/Observable';
 
 class CustomerUseguideService extends TwViewController {
 
@@ -25,17 +26,22 @@ class CustomerUseguideService extends TwViewController {
       listIndex: this.findIndex(req.query.code, 'listIndex'),
       subIndex: this.findIndex(req.query.code, 'subIndex')
     };
-    
-    if (FormatHelper.isEmpty(code) || FormatHelper.isEmpty(listIndex) || 
+
+    if (FormatHelper.isEmpty(code) || FormatHelper.isEmpty(listIndex) ||
     FormatHelper.isEmpty(subIndex) || !listIndex || !subIndex) {
       // 페이지가 존재하지 않으면
       return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
-    this.apiService.request(API_CMD.BFF_08_0064, {}, {}, [code] ).subscribe(resp => {
-      if ( resp.code !== API_CODE.CODE_00) {
+    Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_08_0064, {}, {}, [code] ),
+        // 컨텐츠관리 누적 조회 수 통계를 위한 API 발송
+        this.apiService.request(API_CMD.BFF_08_0065, {}, null, [code])
+    ).subscribe(([ contents, count]) => {
+      const apiError = this.error.apiError([contents, count]);
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           pageInfo,
           svcInfo
         });
@@ -43,17 +49,17 @@ class CustomerUseguideService extends TwViewController {
 
       // 셀렉트 박스에 쓰일 리스트
       const list = CUSTOMER_SERVICE_OPTION_TYPE[listIndex].sub_list[subIndex].dep_list || [];
-      
+
       // 제목 구하기
-      const result = Object.assign(resp.result, {
+      const result = Object.assign(contents.result, {
         title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex].unitedTitle || CUSTOMER_SERVICE_OPTION_TYPE[listIndex].title,
         sub_title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex].sub_list[subIndex].sub_title,
         dep_title: this.getCurTitleFromDeps(list, code)
       });
 
       res.render('svc-info/customer.svc-info.service.detail.html', {
-        svcInfo: svcInfo, 
-        pageInfo: pageInfo, 
+        svcInfo: svcInfo,
+        pageInfo: pageInfo,
         // 별도로 코드관리
         contentHTML: this.modifyHTML(result['icntsCtt']),
         data: {
@@ -112,7 +118,7 @@ class CustomerUseguideService extends TwViewController {
    */
   private getCurTitleFromDeps = (list: any[], code: string): string => {
     const content = list.reduce((prev, next) => {
-      return (FormatHelper.isEmpty(prev) && 
+      return (FormatHelper.isEmpty(prev) &&
         next.code === code) ? next : prev;
     }, {});
     return FormatHelper.isEmpty(content) ? '' : content.dep_title;
@@ -126,8 +132,8 @@ class CustomerUseguideService extends TwViewController {
   /**
    * @function
    * @desc 문자열로 전달된 html 문자중 주석 제거, {{cdn}} 을 이미지 경로로 교체
-   * @param {string} html 
-   * @return {string} 
+   * @param {string} html
+   * @return {string}
    */
   private modifyHTML = (html: string): string => {
       // 대문자 엘리먼트 소문자로
