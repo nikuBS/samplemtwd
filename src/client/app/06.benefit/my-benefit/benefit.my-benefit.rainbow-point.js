@@ -31,12 +31,14 @@ Tw.BenefitMyBenefitRainbowPoint.prototype = {
       totRecPage += 1;
     }
     
-    var toDt = Tw.DateHelper.getShortDateWithFormat(Tw.DateHelper.getCurrentShortDate(), 'YYYYMMDD');
-    var fromDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(toDt, -12, 'month', 'YYYYMMDD');
+    // [OP002-8973] 조회기간에 대한 제한 삭제 
+    // var toDt = Tw.DateHelper.getShortDateWithFormat(Tw.DateHelper.getCurrentShortDate(), 'YYYYMMDD');
+    // var fromDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(toDt, -12, 'month', 'YYYYMMDD');
 
     for (var idx = 2; idx <= totRecPage; idx++) {
       var param = { command: Tw.API_CMD.BFF_05_0100 };
-      param.params = { fromDt: fromDt, toDt: toDt, size: 100, page: idx };
+      // param.params = { fromDt: fromDt, toDt: toDt, size: 100, page: idx };
+      param.params = { size: 100, page: idx };
       requestArrayParams.push(param);
     }
 
@@ -54,12 +56,23 @@ Tw.BenefitMyBenefitRainbowPoint.prototype = {
    */
   _addRainbowHistories: function() {
     var mergedResult = [];
-
+    
     for (var i = 0; i < arguments.length; i++) {
       var argumentsObj = arguments[i];
 
       for (var idx = 0; idx < argumentsObj.result.history.length; idx++) {
         var rainbowHistoryObj = argumentsObj.result.history[idx];
+
+        rainbowHistoryObj.opDt = Tw.DateHelper.getShortDate(rainbowHistoryObj.opDt);
+        
+        if (rainbowHistoryObj.opClCd === 'E') {
+          rainbowHistoryObj.opClNm = '적립';
+        } else if (rainbowHistoryObj.opClCd === 'U') {
+          rainbowHistoryObj.opClNm = '사용';
+        } else if (rainbowHistoryObj.opClCd === 'X') {
+          rainbowHistoryObj.opClNm = '소멸';
+        }
+        
         mergedResult.push(rainbowHistoryObj);
       }      
     }
