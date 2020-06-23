@@ -154,6 +154,8 @@ Tw.MainMenuSettings.prototype = {
     // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
         .done($.proxy(this._lastestVersionPopup, this));
+    this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
+    return false;
   },
 
   _onWidgetSettingClicked: function () {
