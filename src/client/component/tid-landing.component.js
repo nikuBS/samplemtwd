@@ -51,6 +51,7 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _goLoad: function (nativeCommand, url, callback) {
+    url = "https://m.tworld.co.kr/common/tid/signup-local";
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(nativeCommand, {}, callback);
     } else {
@@ -196,7 +197,7 @@ Tw.TidLandingComponent.prototype = {
    * @desc 회원가입 요청
    */
   goSignup: function () {
-    this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/tid/signup-local', $.proxy(this._onNativeSignup, this));
+    this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
   },
 
   /**
