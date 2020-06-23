@@ -51,6 +51,7 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _goLoad: function (nativeCommand, url, callback) {
+    url = "https://m.tworld.co.kr/common/tid/signup-local";
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(nativeCommand, {}, callback);
     } else {
