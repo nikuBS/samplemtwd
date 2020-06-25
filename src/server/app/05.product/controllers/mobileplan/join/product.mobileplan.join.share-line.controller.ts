@@ -24,7 +24,7 @@ class ProductMobileplanJoinShareLine extends TwViewController {
 
   /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00005057', 'NA00005058', 'NA00005059', 'NA00005060',
-    'NA00003958', 'NA00003557', 'NA00003558', 'NA00003556', 'NA00005057', 'NA00006862'];
+    'NA00003958', 'NA00003557', 'NA00003558', 'NA00003556', 'NA00005057', 'NA00006862', 'NA00006863'];
 
   /* 상품별 툴팁코드 분기처리 */
   private readonly _toolTip = {

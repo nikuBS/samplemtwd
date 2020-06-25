@@ -153,6 +153,9 @@ Tw.MainMenuSettings.prototype = {
    * @desc 공인인증서 선택시 native 화면 호출
    */
   _onCertificates: function () {
+    // 최신버전 체크 
+    // 1. 조건 최신버전 == 현재버전 => 네이티브 호출 
+    // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
     this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
     return false;
   },

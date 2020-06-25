@@ -9,6 +9,8 @@ import {Request, Response, NextFunction} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import { CUSTOMER_SITE_OPTION_TYPE} from '../../../../types/string.type';
 import EnvHelper from '../../../../utils/env.helper';
+import {Observable} from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 /**
  * @class
@@ -20,16 +22,25 @@ class CustomerSvcInfoSite extends TwViewController {
   }
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any)  {
-    this.apiService.request(API_CMD.BFF_08_0064, {}, {}, ['D00003'] ).subscribe(resp => {
-      if ( resp.code !== API_CODE.CODE_00) {
+
+    // tworld admin > 컨텐츠관리 > 사이트 이용방법 > "모바일 T world" 컨텐츠 id : D00003
+
+    Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_08_0064, {}, {}, ['D00003'] ),
+        // 컨텐츠관리 누적 조회 수 통계를 위한 API 발송
+        this.apiService.request(API_CMD.BFF_08_0065, {}, null, ['D00003'])
+    ).subscribe(([ resp, count]) => {
+      const apiError = this.error.apiError([resp, count]);
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           pageInfo,
           svcInfo
         });
       }
-      
+
+
       const TContent = resp.result || {};
 
       res.render('svc-info/customer.svc-info.site.html', {

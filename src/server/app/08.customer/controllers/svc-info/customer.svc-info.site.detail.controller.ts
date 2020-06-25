@@ -11,6 +11,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import { CUSTOMER_SITE_OPTION_TYPE } from '../../../../types/string.type';
+import {Observable} from 'rxjs/Observable';
 
 /**
  * @interface
@@ -44,11 +45,16 @@ class CustomerSvcInfoSite extends TwViewController {
       return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
 
-    this.apiService.request(API_CMD.BFF_08_0064, {}, {}, [code]).subscribe(resp => {
-      if ( resp.code !== API_CODE.CODE_00) {
+    Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_08_0064, {}, {}, [code]),
+        // 컨텐츠관리 누적 조회 수 통계를 위한 API 발송
+        this.apiService.request(API_CMD.BFF_08_0065, {}, null, [code])
+    ).subscribe(([ contents, count]) => {
+      const apiError = this.error.apiError([contents, count]);
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           pageInfo,
           svcInfo
         });
@@ -57,7 +63,7 @@ class CustomerSvcInfoSite extends TwViewController {
       res.render('svc-info/customer.svc-info.site.detail.html', {
         svcInfo: svcInfo, 
         pageInfo: pageInfo, 
-        contentHTML: this.modifyHTML(resp.result.icntsCtt), // 코드로 조회된 콘텐츠
+        contentHTML: this.modifyHTML(contents.result.icntsCtt), // 코드로 조회된 콘텐츠
         data: {
           title: curContent.title // 상세내용 제목
         }
