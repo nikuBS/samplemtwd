@@ -20,7 +20,8 @@ class ProductMobileplanSettingOption extends TwViewController {
   }
 
   /* 접근이 허용되는 상품코드 */
-  private readonly _allowedProdIdList = ['NA00005058', 'NA00005059', 'NA00005060', 'NA00005069', 'NA00005070', 'NA00005071', 'NA00006862'];
+  private readonly _allowedProdIdList = ['NA00005058', 'NA00005059', 'NA00005060',
+   'NA00005069', 'NA00005070', 'NA00005071', 'NA00006862', 'NA00006863'];
 
   /**
    * 설정 정보 데이터 변환
