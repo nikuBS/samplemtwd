@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="product-select-wrap">
-                    <span class="data-tit">공유회선 설정<button class="tip-view" id="<%= prodId=='NA00006862'?'TC000102':'MP_02_02_03_11_tip_01' %>" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></span>
+                    <span class="data-tit">공유회선 설정<button class="tip-view" id="<%= prodId=='NA00006862'?'TC000102' : prodId=='NA00006863'?'TC000102' : 'MP_02_02_03_11_tip_01' %>" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></span>
                     <span class="data-number"><%= svcInfo.svcNumDash %></span>
                 </div>
 
