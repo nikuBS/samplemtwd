@@ -196,9 +196,13 @@ Tw.TidLandingComponent.prototype = {
    * @desc 회원가입 요청
    */
   goSignup: function () {
-    var url = "/common/tid/signup-local"; // 심사 준비로 임시 주소 
-    //var url = "/common/member/signup-guide"; // 돌려야 할 주소 
-    this._goLoad(Tw.NTV_CMD.SIGN_UP, url, $.proxy(this._onNativeSignup, this));
+    // iOS 스토어 심사대비 회원가입 URL을 out link로 연결되도록 수정(심사 후 원복 예정)
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isIos()) {
+      Tw.CommonHelper.openUrlExternal('https://m.tworld.co.kr/common/member/signup-guide');
+    } else {
+      this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
+    }
+    // this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
   },
 
   /**
