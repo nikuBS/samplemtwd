@@ -196,7 +196,9 @@ Tw.TidLandingComponent.prototype = {
    * @desc 회원가입 요청
    */
   goSignup: function () {
-    this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
+    var url = "/common/tid/signup-local"; // 심사 준비로 임시 주소 
+    //var url = "/common/member/signup-guide"; // 돌려야 할 주소 
+    this._goLoad(Tw.NTV_CMD.SIGN_UP, url, $.proxy(this._onNativeSignup, this));
   },
 
   /**
