@@ -211,6 +211,8 @@ Tw.CustomerEmailCategory.prototype = {
    */
   _handleServiceChange1Depth: function ($layer) {
     // $layer.on('change', 'li input', $.proxy(this._onSelectService1Depth, this));
+
+    //  액션시트 데이터(Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY)내에 들어 있는 구분값에 따라 처리
     $layer.on('change', 'li input.gubun1', $.proxy(this._onSelectService1Depth, this));
     $layer.on('change', 'li input.gubun2', $.proxy(this._onSelectQuality1Depth, this));
 
