@@ -613,6 +613,38 @@ $.extend(Tw.CommonSearchMore.prototype,
           this.$container.find('.fe-category.'+collection).attr('href','/common/search/more?category=' + collection + '&keyword='+query+'&step='+(this._step + 1)+'&sort='+sort);
         }
 
+        Tw.Logger.info('[common.search.more] [_sortRate] attr: ', this.$container.find('.fe-category.'+collection).attr('href'));
+        // 정렬 관련 작업 중 
+        this.$container.find("[class*='fe-category']").each(function(a, b) {
+          function replaceQueryParam(param, newval, search) {
+              var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+              var query = search.replace(regex, "$1").replace(/&$/, '');
+              return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+          }
+          var $li = $(this)
+          var url = $li.attr('href')
+          url = replaceQueryParam('sort', sort, url)
+          $li.attr('href', url)
+        })
+
+        // Tw.Logger.info("================")
+        // this.$container('.category-link li').each(function(idx){
+
+        //   function replaceQueryParam(param, newval, search) {
+        //       var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+        //       var query = search.replace(regex, "$1").replace(/&$/, '');
+        //       return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+        //   }
+          
+        //   var $li = $(this);
+        //   Tw.Logger.info('[common.search.more] [_sortRate] href: ', $li.attr('href'));
+        //   let url = $li.attr('href')
+        //   url = replaceQueryParam('sort', sort, url)
+        //   $li.attr('href', url)
+        //  })
+
+
+
       } else {
         Tw.Logger.info('[common.search.more] [_sortRate] search api 리턴 오류!!!', res.code);
         return;
@@ -770,6 +802,20 @@ $.extend(Tw.CommonSearchMore.prototype,
         Tw.Logger.info('[common.search.more] [_categoryInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
         // 선택된 카테고리를 화면 좌측으로 붙여서 노출해주기 위한 처리[E]
 
+        var __sort = this._sort 
+        // alert(__sort)
+        this.$container.find("[class*='fe-category']").each(function(a, b) {
+          function replaceQueryParam(param, newval, search) {
+              var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+              var query = search.replace(regex, "$1").replace(/&$/, '');
+              return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+          }
+          var $li = $(this)
+          var url = $li.attr('href')
+          // alert(url)
+          url = replaceQueryParam('sort', __sort, url)
+          $li.attr('href', url)
+        })
         
 
       } else {
