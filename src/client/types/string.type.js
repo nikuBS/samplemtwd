@@ -1521,7 +1521,7 @@ Tw.BRANCH = {
     4: {name: '1km 반경', id: '5', zoom : 14, distance: 1000},
     5: {name: '3km 반경', id: '6', zoom: 13, distance: 3000}
   },
-  PERMISSION_TITLE: '위치정보 이용 동의 안내',
+  PERMISSION_TITLE: '위치기반 서비스 이용 동의 안내',
   PERMISSION_DETAIL: 'T world에서 내 위치 정보를 사용하기 위해서는 위치 정보 이용에 동의하셔야 합니다.',
   VIEW_LOCATION_TERM: '위치기반 서비스 이용약관 전문보기',
   DO_YOU_AGREE: '동의하시겠습니까?',
@@ -1822,8 +1822,8 @@ Tw.ROAMING_JOIN_STRING = {
 };
 
 Tw.SETTING_LOCATION = {
-  AGREE: '위치정보 이용에 동의하셨습니다.',
-  DISAGREE: '위치정보 이용동의를 취소하셨습니다.'
+  AGREE: '위치기반 서비스 이용에 동의하셨습니다.',
+  DISAGREE: '위치기반 서비스 이용동의를 취소하셨습니다.'
 };
 
 Tw.TMAP_STRING = {
