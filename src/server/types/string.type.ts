@@ -1049,7 +1049,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T다이렉트샵/멤버십/로밍 안내',
+    unitedTitle: 'T다이렉트샵/T멤버십/T로밍 안내',
     united: '_3T',
     title: 'T다이렉트샵 이용안내',
     text: 'T다이렉트샵에서 구매를 원한다면',
@@ -1161,7 +1161,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: '다이렉트샵/멤버십/로밍 안내',
+    unitedTitle: 'T다이렉트샵/T멤버십/T로밍 안내',
     united: '_3T',
     title: 'T멤버십/T로밍 안내',
     text: '',
@@ -1176,11 +1176,11 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00037'
           },
-          {
-            dep_title: '초콜릿 이용',
-            type: 'A1',
-            code: 'C00035'
-          },
+          // {
+          //   dep_title: '초콜릿 이용',
+          //   type: 'A1',
+          //   code: 'C00035'
+          // },
           {
             dep_title: '모바일 T멤버십',
             type: 'A2',
