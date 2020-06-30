@@ -768,7 +768,8 @@ export const TERM_STRING = {
   MEMBERSHIP: '멤버십 회원약관',
   ACTION_TITLE: {
     102: '이용약관'
-  }
+  },
+  MEMBERSHIP_PER: '멤버십 개인정보처리방침'
 };
 
 export const ETC_CENTER = '기타';

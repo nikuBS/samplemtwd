@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import { TERM_STRING } from '../../../../../types/string.type';
 import EnvHelper from '../../../../../utils/env.helper';
+import MyTJoinPhoneNumChgAlarmExt from '../../../../04.myt-join/controllers/submain/myt-join.submain.phone.extalarm.controller';
 
 export default class MainMenuSettingsTerms extends TwViewController {
 
@@ -19,12 +20,14 @@ export default class MainMenuSettingsTerms extends TwViewController {
     46: TERM_STRING.RESELL,
     49: TERM_STRING.RESELL,
     50: TERM_STRING.RESELL,
-    101: TERM_STRING.MEMBERSHIP
+    101: TERM_STRING.MEMBERSHIP,
+    103: TERM_STRING.MEMBERSHIP_PER
   };
 
   // 101번 약관은 외부 url을 iframe으로 표기
   private urlMap = {
-    101: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe1.html' // 멤버십 회원약관
+    101: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe1.html', // 멤버십 회원약관
+    103: 'https://www.sktmembership.co.kr/mobile/html/iframe/2.1_iframe1.html' // 멤버십 개인정보처리방침 
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
