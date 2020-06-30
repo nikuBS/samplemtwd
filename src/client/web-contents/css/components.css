@@ -36176,5 +36176,6 @@ body.apphome .section-box {
 
 /* 200617 [OP002-9029] T+B인터넷(개인형/패밀리형) 가입내역 UI 개선 */
 .my-product-list .tod-add-family {padding-left:1.875rem; background-color:#f7f9fa}
+.my-product-list .tod-add-family .inner {padding-right:1.875rem}
 .my-product-list .tod-add-family .inner .tag {margin-bottom:1rem}
 .my-product-list .tod-add-family .inner .tag .t-icon {display:inline-block; height:1.250rem; line-height:1.250rem; padding:0 0.563rem; border-radius:0.625rem; color:#fff; font-size:0.625rem; background-color:#f76252}
