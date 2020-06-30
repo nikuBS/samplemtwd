@@ -87,6 +87,17 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
           return errorRender(combinations);
         }
 
+        // OP002-9034: T+B인터넷(개인형/패밀리형), T+B전화/인터넷전화(개인형/패밀리형) 가입내역 UI 개선을 위한 순서 재조정 {{
+        /*
+        화면 정렬 순서
+        0: T끼리온가족할인제도
+        1: T+B전화/인터넷전화(개인형)
+        2: T+B전화/인터넷전화(패밀리형)
+        3: T+B인터넷(개인형)
+        4: T+B인터넷(패밀리형)
+        5: 기타......
+        */
+
         res.render('myplancombine/myt-join.myplancombine.html', {
           ...renderCommonInfo,
           combinations

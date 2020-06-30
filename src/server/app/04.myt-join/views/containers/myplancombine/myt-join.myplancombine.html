@@ -35,49 +35,83 @@ _%>
                     <div class="my-product-list">
                         <ul>
                             <%_
-                            const COMBINATION_PRODUCTS = [ 'TW20000012', 'NA00005055', 'TW20000009', 'NA00004211', 'NH00000084', 'TW20000008', 'NH00000059',
-                                'TW20000007', 'NA00002040', 'TW20000010', 'NA00004728', 'TW20000011', 'NH00000114', 'TW20000013', 'NH00000133' ];
-                            const INTERNET_PRODUCTS = ['NH00000037','NH00000039','TW00000062','NH00000040','NH00000041','TW00000063'];
+                            // OP002-8855 변경 사항 참조
+                            const COMBINATION_PRODUCTS = [
+                                'TW20000012', 'NA00005055', 'TW20000009', 'NA00004211',
+                                'NH00000084', 'TW20000008', 'NH00000059','TW20000007',
+                                'NA00002040', // T끼리온가족할인제도
+                                'TW20000010', // T끼리온가족할인제도
+                                'NA00004728', 'TW20000011', 'NH00000114', 'TW20000013', 'NH00000133'
+                            ];
+                            const INTERNET_PRODUCTS = [
+                                'NH00000037', // T+B인터넷(개인형)
+                                'NH00000039', // T+B인터넷(패밀리형)
+                                'TW00000062', // T+B인터넷
+                                'NH00000040', // 개인형 T+B전화/인터넷전화(개인형)
+                                'NH00000041', // T+B전화/인터넷전화(패밀리형)
+                                'TW00000063' // T+B전화/인터넷전화
+                                // 'NH00000050', // T+B전화(정액형)
+                                // 'NH00000051' // T+B전화(실속형)
+                            ];
                             const TIPS = {
                                 NA00005055: '02',
                                 TW20000012: '02',
-                                NA00002040: '03',
-                                TW20000010: '03',
+                                NA00002040: '03', // T끼리온가족할인제도
+                                TW20000010: '03', // T끼리온가족할인제도
                                 NA00004728: '04',
                                 TW20000011: '04',
                                 TW20000009: '05',
                                 NA00004211: '05',
                                 NH00000084: '06',
                                 TW20000008: '06',
-                                NH00000039: '07',
-                                TW00000062: '07',
+                                NH00000039: '07', // T+B인터넷(패밀리형)
+                                TW00000062: '07', // T+B인터넷
                                 NH00000059: '08',
                                 TW20000007: '08',
                                 NH00000103: '09',
                                 TW00000009: '09',
-                                NH00000037: '10',
-                                NH00000041: '10',
+                                NH00000037: '10', // T+B인터넷(개인형)
+                                NH00000041: '10', // T+B전화/인터넷전화(패밀리형)
                                 NH00000105: '11',
                                 TW00000016: '11',
-                                NH00000040: '12',
-                                TW00000063: '12'
+                                NH00000040: '12', // T+B전화/인터넷전화(개인형)
+                                TW00000063: '12' // T+B전화/인터넷전화
                             };
 
-                            combinations.map(comb => { _%>
-                            <li>
+                            combinations.forEach(comb => {
+                                const prodType = comb.prodNm.includes('개인') && 1 || comb.prodNm.includes('패밀리') && 2 || 0;
+                                let tip;
+                                // FIXME: 조건이 이상함
+                                // TW00000062: T+B인터넷(개인형)
+                                // NH00000039: 패밀리지만, 문구는 이렇게? T+B인터넷(개인형) <= 구문이 이상해 보임 확인 필요
+                                tip = prodType === 1 && (comb.prodId === 'TW00000062' || comb.prodId === 'NH00000039') ?
+                                    'MS_07_tip_10' :
+                                // TODO: 아래처럼 되어야 할 것으로 보임
+                                // TW00000062: T+B인터넷(개인형)
+                                // NH00000037: T+B인터넷(개인형)
+                                // tip = (comb.prodId === 'TW00000062' && prodType === 1) || comb.prodId === 'NH00000037' ?
+                                    // 'MS_07_tip_10' :
+                                // TW00000063: T+B전화/인터넷전화(패밀리형)
+                                // NH00000041: T+B전화/인터넷전화(패밀리형)
+                                    (
+                                        (comb.prodId === 'TW00000063' && prodType === 2) || comb.prodId === 'NH00000041' ?
+                                            'TC000109' :
+                                            (TIPS[comb.prodId] && `MS_07_tip_${TIPS[comb.prodId]}`)
+                                    );
+                            _%>
+                            <%_ if (prodType === 2) { _%><li class="tod-add-family"><%_ } else { _%><li><%_ } _%>
                                 <div class="inner">
-                                    <%_ const tip = comb.prodNm.includes('개인') && (comb.prodId === 'TW00000062' || comb.prodId === 'NH00000039') ? '10' : TIPS[comb.prodId] _%>
-                                    <strong class="tit"><%= comb.prodNm %><%_ if (tip) { _%><button id="MS_07_tip_<%- tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> TIP보기" aria-haspopup="true"><%= comb.prodNm %> TIP</button><%_ } _%></strong>
+                                    <%_ if (prodType === 2) { _%><div class="tag"><span class="t-icon">자동 가입 상품</span></div><%_ } _%>
+                                    <strong class="tit"><%= comb.prodNm %><%_ if (tip) { _%><button id="<%- tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> TIP보기" aria-haspopup="true"><%= comb.prodNm %> TIP</button><%_ } _%></strong>
                                     <p class="txt"><%= comb.prodSmryDesc %></p>
-                                    <p class="date">신청일  <%= comb.scrbDt %></p>
+                                    <p class="date">신청일 <%= comb.scrbDt %></p>
                                     <%_ if (COMBINATION_PRODUCTS.includes(comb.prodId)) { _%>
-                                    <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합가족 보기</a>
+                                    <a class="bt-link-tx underline" href="combinations/<%- comb.prodId %>">결합가족 보기</a>
                                     <%_ } else if (INTERNET_PRODUCTS.includes(comb.prodId)) { _%>
-                                        <%_ const type = comb.prodNm.includes('개인') ? 1 : comb.prodNm.includes('패밀리') ? 2 : 0; _%>
-                                    <a class="bt-link-tx underline" href="combinations/<%= `${comb.prodId}?type=${type}` %>">결합상품 보기</a>
+                                    <a class="bt-link-tx underline" href="combinations/<%- comb.prodId %>?type=<%- prodType %>">결합상품 보기</a>
                                     <%_ } _%>
                                     <%_ if (comb.prodLinkYn === "Y") { _%>
-                                    <a class="bt-link-tx underline" href="/product/callplan?prod_id=<%= comb.prodId %>">상품정보 보기</a>
+                                    <a class="bt-link-tx underline" href="/product/callplan?prod_id=<%- comb.prodId %>">상품정보 보기</a>
                                     <%_ } _%>
                                     <span class="visual-area"><img src="<%= comb.prodIconImgUrl %>" alt=""></span>
                                 </div>
