@@ -922,6 +922,11 @@ $.extend(Tw.CommonSearchMore.prototype,
       return;
     }
 
+    // 1. url 추출 
+    // 2. 어떤탭을 클릭했는지 찾는다.
+    // 3. 전체탭이면 sort 파라미터를 D로 설정한다.
+    // 4. 전체탭이 아니면 과거의 sort를 유지한 상태로 불러온다. ? 과거의 sort 내역은 어디에 저장되어 있는것인가?
+    alert(linkUrl);
     this._moveUrl(linkUrl);
   },
   /**
