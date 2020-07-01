@@ -107,17 +107,21 @@ Tw.MyTFareSubMainNonPayment.prototype = {
 
   // 납부가능일 이동
   _onClickedDay: function () {
-    // 20-05-20 OP002-8483 : 현재 시간이 01시 ~ 01시 30분 59초 안에 포함이면 "시스템 점검" 알럿 노출.
-    var formatDate = function (date) {
-      return Tw.DateHelper.convDateCustomFormat(date, 'hh:mm:ss');
-    };
-    var nowTime = formatDate(new Date());
-    var start = formatDate('01:00:00');
-    var end = formatDate('01:30:59');
-    if (Tw.DateHelper.isBetween(nowTime, start, end)) {
-      return this._popupService.openAlert(Tw.NON_PAYMENT.IMPOSSIBLE.MSG, Tw.NON_PAYMENT.IMPOSSIBLE.TITLE);
+    // 20-05-20 OP002-8483
+    // 20-07-01 OP002-9330 : 매월 1일 현재 시간이 00시 ~ 01시 30분 59초 안에 포함이면 "시스템 점검" 알럿 노출.
+    var _curDate = new Date();
+    if (_curDate.getDate() === 1) {
+      var formatDate = function (date) {
+        return Tw.DateHelper.convDateCustomFormat(date, 'hh:mm:ss');
+      };
+      var nowTime = formatDate(_curDate);
+      var start = formatDate('00:00:00');
+      var end = formatDate('01:30:59');
+      if (Tw.DateHelper.isBetween(nowTime, start, end)) {
+        return this._popupService.openAlert(Tw.NON_PAYMENT.IMPOSSIBLE.MSG, Tw.NON_PAYMENT.IMPOSSIBLE.TITLE);
+      }
     }
-    //[END] OP002-8483
+    //[END] OP002-9330
 
     var claimList = this._setClaimList();
     var paymentList = this._setPaymentList();
