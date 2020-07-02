@@ -87,6 +87,37 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
           return errorRender(combinations);
         }
 
+        // OP002-9034: T+B인터넷(개인형/패밀리형), T+B전화/인터넷전화(개인형/패밀리형) 가입내역 UI 개선을 위한 순서 재조정 {{
+        /*
+        화면 정렬 순서
+        0: T끼리온가족할인제도
+        1: T+B전화/인터넷전화(개인형) TW00000063
+        2: T+B전화/인터넷전화(패밀리형) TW00000063
+        3: T+B인터넷(개인형) TW00000062
+        4: T+B인터넷(패밀리형) TW00000062
+        5: 기타......
+        */
+        let prevComb = {
+          prodId: '',
+          prodNm: ''
+        };
+        // 패밀리형 상품 한가지만 온 경우 (개인형 상품이 없는 경우), 표시를 위해 "hasIndiProd"를 추가 한다.
+        // NOTE: 서버에서 전달될 때, 순서에 맞춰 주기로 했으므로, 임으로 찾지 않고, 바로 앞에 것으로 찾는 것으로 한다.
+        combinations.forEach(comb => {
+          if ((comb.prodId === 'TW00000063' && comb.prodNm.includes('패밀리')) || comb.prodId === 'NH00000041') {
+            // comb.familyTypeProdId = true;
+            if ((prevComb.prodId === 'TW00000063' && prevComb.prodNm.includes('개인')) || prevComb.prodId === 'NH00000040') {
+              comb.hasIndiProd = true;
+            }
+          } else if ((comb.prodId === 'TW00000062' && comb.prodNm.includes('패밀리')) || comb.prodId === 'NH00000039') {
+            // comb.familyTypeProdId = true;
+            if ((prevComb.prodId === 'TW00000062' && prevComb.prodNm.includes('개인')) || prevComb.prodId === 'NH00000037') {
+              comb.hasIndiProd = true;
+            }
+          }
+          prevComb = comb;
+        });
+
         res.render('myplancombine/myt-join.myplancombine.html', {
           ...renderCommonInfo,
           combinations

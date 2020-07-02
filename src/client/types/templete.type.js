@@ -912,7 +912,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   {
-    title: '초콜릿',
+    title: 'T멤버십 구매상품',
     category: 'CHOCO',
     gubun: '1',
     list: [

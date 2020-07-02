@@ -44,7 +44,7 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.fe-benefit-title', $.proxy(this._goBenefitBrand, this));  // 제휴 브랜드
     this.$container.on('click', '.fe-membership-grade', $.proxy(this._goMembershipGrade, this));  // 멤버십 카드/등급 안내
     this.$container.on('click', '.box-app-down', $.proxy(this._goTmembership, this));   // T앱
-    this.$container.on('click', '.data-plus', $.proxy(this._selectChocolate, this));    // 초콜릿
+    // this.$container.on('click', '.data-plus', $.proxy(this._selectChocolate, this));    // 초콜릿 서비스 종료로 주석처리
     this.$container.on('click', '.coalition-brand-list .map', $.proxy(this._getBrandDetailInfo, this)); // 지도보기
     this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));  // 가입하기
     // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
@@ -149,19 +149,20 @@ Tw.MembershipSubmain.prototype = {
         this._popupService.close();
       }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
-  /**
-   * @function
-   * @desc 혜택바로가기 > 초콜릿
-   * @param e
-   * @private
-   */
-  _selectChocolate: function (e) {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
-      $.proxy(this._goChocolate, this),
-      $.proxy(function () {
-        this._popupService.close();
-      }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
-  },
+  // 초콜릿 서비스 종료로 주석처리
+  // /**
+  //  * @function
+  //  * @desc 혜택바로가기 > 초콜릿
+  //  * @param e
+  //  * @private
+  //  */
+  // _selectChocolate: function (e) {
+  //   this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
+  //     $.proxy(this._goChocolate, this),
+  //     $.proxy(function () {
+  //       this._popupService.close();
+  //     }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
+  // },
   /**
    * @function
    * @desc T Day 링크 이동
