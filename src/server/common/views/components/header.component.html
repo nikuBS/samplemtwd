@@ -1,6 +1,6 @@
 <!-- #header -->
 <% var disablePersonaBtn = (typeof svcType === 'undefined' || typeof svcType === 'null'); %>
-<% var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); %>
+<% var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 간편로그인여부 %>
 <%_ if (locals.type && locals.type === 'popup') { _%>
 <div class="header-wrap noborder<% if (locals.headerClass) { %> <%= locals.headerClass %><% } %>">
     <div class="page-header noborder">
@@ -34,7 +34,7 @@
                 <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop" role="link" title="" data-xt_eid="CMMA_A2_B6-139" data-xt_csid="NO" data-xt_action="BC">Shop</button>
                 <!-- 활성화시 .on // -->
             </h1>
-            <% if (!disablePersonaBtn && !easyLogin) { %>
+            <% if (!disablePersonaBtn) { %>
                 <% if (svcType && svcType.login) { %>
                     <% if (svcInfo.personTimeChk && svcInfo.personAgentTypeChk && svcInfo.personLineTypeChk) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
@@ -77,7 +77,7 @@
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
             </h1>
-            <% if (!disablePersonaBtn && !easyLogin) { %>
+            <% if (!disablePersonaBtn) { %>
                 <% if (svcType && svcType.login) { %>
                     <% if (svcInfo.personTimeChk && svcInfo.personAgentTypeChk && svcInfo.personLineTypeChk ) { %>
                     <div class="h-person">  <!-- Web 개인화 추가 -->
