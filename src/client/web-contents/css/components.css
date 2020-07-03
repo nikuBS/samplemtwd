@@ -36174,6 +36174,9 @@ body.apphome .section-box {
 .tube-list{display:inline-flex;flex-wrap:wrap}
 .tube-list li{display:flex !important;align-items:center;text-ailgn:center;justify-content:center}
 
+/* 200604 [OP002-8714] 추가 */
+.ico-comm-certify{display:inline-block; width:3.75rem; height:3.75rem; background:url('/img/ico/ico-comm-certify.png') no-repeat 0 0; background-size: 100% 100%;}
+
 /* 200617 [OP002-9029] T+B인터넷(개인형/패밀리형) 가입내역 UI 개선 */
 .my-product-list .tod-add-family {padding-left:1.875rem; background-color:#f7f9fa}
 .my-product-list .tod-add-family .inner {padding-right:1.875rem}
