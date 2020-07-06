@@ -897,6 +897,11 @@ export const CUSTOMER_SITE_OPTION_TYPE = [
   }
 ];
 
+export const CUSTOMER_RESEARCH_ERROR = {
+  MSG: '진행중인 설문/투표/퀴즈가 아닙니다.',
+  MSG2: '존재하는 설문/투표/퀴즈가 아닙니다.'
+};
+
 export const DIRECTSHOP_LINK = {
   common: 'https://m.shop.tworld.co.kr/shopguide',
   benefit: '/submain',
