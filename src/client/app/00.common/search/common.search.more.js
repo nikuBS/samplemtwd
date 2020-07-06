@@ -342,6 +342,7 @@ $.extend(Tw.CommonSearchMore.prototype,
    * @returns {void}
    */
   _onClickChangeSort : function (e) {
+    
     var $target = $(e.currentTarget);    
     var selectedCollection = $target.attr('class').replace(/fe-sort| |tod-fright/gi, '');
     Tw.Logger.info('[common.search.more] [_onClickChangeSort]', '선택된 영역의 collection : ' + selectedCollection);
@@ -516,6 +517,8 @@ $.extend(Tw.CommonSearchMore.prototype,
     var pageNum = options.pageNum;
     // var sort = options.subTabCd;
     var sort = options.sort;
+    // cookie 저장 
+    Tw.CommonHelper.setCookie('search_sort::' + collection, sort);
 
     if (query !== researchQuery) {
       researchQuery = researchQuery.replace(query, '').trim();
@@ -922,6 +925,35 @@ $.extend(Tw.CommonSearchMore.prototype,
       return;
     }
 
+    function getParam(sname) {
+      var params = linkUrl.substr(linkUrl.indexOf("?") + 1);
+      var sval = "";
+      params = params.split("&");
+      for (var i = 0; i < params.length; i++) {
+          temp = params[i].split("=");
+          if ([temp[0]] == sname) { sval = temp[1]; }
+      }
+      return sval;
+    }
+    var category = getParam("category");
+    function replaceQueryParam(param, newval, search) {
+      var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+      var query = search.replace(regex, "$1").replace(/&$/, '');
+      return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+    }
+    if (category === "all") {
+      var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
+      //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
+      var sort = "shortcut-A";
+      sort += ".rate-" + Tw.CommonHelper.getCookie(sortsName[0]);
+      sort += ".service-" + Tw.CommonHelper.getCookie(sortsName[1]);
+      sort += ".tv_internet-" + Tw.CommonHelper.getCookie(sortsName[2]);
+      sort += ".troaming-" + Tw.CommonHelper.getCookie(sortsName[3]);
+      linkUrl = replaceQueryParam('sort', sort, linkUrl);
+    } else {
+      sort = Tw.CommonHelper.getCookie("search_sort::" + category);
+      linkUrl = replaceQueryParam('sort', sort, linkUrl);
+    }
     this._moveUrl(linkUrl);
   },
   /**
