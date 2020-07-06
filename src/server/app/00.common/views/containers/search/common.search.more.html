@@ -15,6 +15,31 @@
         var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
         return endCharIdx>0 ? '으' : '';
     }
+
+    function codeToData(code) {
+
+        // const sort = 'A';  // 추천순 (Admin)
+        // const sort = 'D';  // 최신순 (Date)
+        // const sort = 'H';  // 높은가격순 (HighPrice)
+        // const sort = 'L';  // 낮은가격순 (LowPrice)
+        // const sort = 'C';  // 클릭순 (Click)
+        // const sort = 'R';  // 정확도순 (Rank)
+
+        if (code === 'A') return '추천순';
+        if (code === 'H') return '높은 가격순';
+        if (code === 'L') return '낮은 가격순';
+        if (code === 'D') return '최신순';
+    }
+
+    // sortToCodeName(1, sort)[0]
+    function sortToCodeName(seq, sort) {
+        // shortcut-A.rate-H.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A
+        // let sortName = ["바로가기", "요금제", "부가서비스", "인터넷/집전화/IPTV", "T로밍", "T다이렉트샵", "자주 하는 질문"];
+        let sortCode = sort.split('.')[seq].split('-')[1];
+        console.log(sortCode);
+        return [sortCode, codeToData(sortCode)]
+    }
+
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 
@@ -129,7 +154,7 @@
                 <div class="tod-searchlist-head">
                     <h3 class="tit">요금제</h3>
                     <div class="tod-fright fe-sort rate">
-                        <button class="btn-select fe-btn-sort-rate" title="정렬 기준 선택" aria-haspopup="true" value="A">추천순<span class="ico"></span></button>
+                        <button class="btn-select fe-btn-sort-rate" title="정렬 기준 선택" aria-haspopup="true" value="<%=sort%>"><%= codeToData(sort) %><span class="ico"></span></button>
                     </div>
                 </div>
                 <ul class="extraservice-list tod-srhtype1" id="rate_list">
@@ -150,7 +175,7 @@
                 <div class="tod-searchlist-head">
                     <h3 class="tit">T로밍</h3>
                     <div class="tod-fright fe-sort troaming">
-                        <button class="btn-select fe-btn-sort-troaming" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
+                        <button class="btn-select fe-btn-sort-troaming" title="정렬 기준 선택" aria-haspopup="true" value="<%=sort%>"><%= codeToData(sort) %><span class="ico"></span></button>
                     </div>
                 </div>
                 <ul class="extraservice-list tod-srhtype1" id="troaming_list">
@@ -170,7 +195,7 @@
                 <div class="tod-searchlist-head">
                     <h3 class="tit">부가서비스</h3>
                     <div class="tod-fright fe-sort service">
-                        <button class="btn-select fe-btn-sort-service" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
+                        <button class="btn-select fe-btn-sort-service" title="정렬 기준 선택" aria-haspopup="true" value="<%=sort%>"><%= codeToData(sort) %><span class="ico"></span></button>
                     </div>
                 </div>
                 <ul class="extraservice-list tod-srhtype1" id="service_list">
@@ -209,7 +234,7 @@
                 <div class="tod-searchlist-head">
                     <h3 class="tit">인터넷 · 집전화 · IPTV</h3>
                     <div class="tod-fright fe-sort tv_internet">
-                        <button class="btn-select fe-btn-sort-tv_internet" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
+                        <button class="btn-select fe-btn-sort-tv_internet" title="정렬 기준 선택" aria-haspopup="true" value="<%=sort%>"><%= codeToData(sort) %><span class="ico"></span></button>
                     </div>
                 </div>
                 <ul class="extraservice-list tod-srhtype1" id="tv_internet_list">
