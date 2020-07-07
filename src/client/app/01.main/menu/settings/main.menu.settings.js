@@ -13,8 +13,6 @@ Tw.MainMenuSettings = function (rootEl, xRequestedWith) {
     return;
   }
 
-  this._popupService = Tw.Popup;
-
   this.$container = rootEl;
   this._osType = 'I'; // default iOS,  'A': aos
 
@@ -158,6 +156,7 @@ Tw.MainMenuSettings.prototype = {
     // 최신버전 체크 
     // 1. 조건 최신버전 == 현재버전 => 네이티브 호출 
     // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
+<<<<<<< HEAD
 
     // 업데이트 안내 페이지 팝업 
     // this._popupService.open({
@@ -166,60 +165,12 @@ Tw.MainMenuSettings.prototype = {
 
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
         .done($.proxy(this._lastestVersionPopup, this));
+=======
+    this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
+    return false;
+>>>>>>> parent of cdb6efd30f... Revert "Merge pull request #345 in MTW003/bff-nodejs-mobile from ~P151541/bff-nodejs-mobile:OP002-7917-local-dev to release"
   },
-
   _onWidgetSettingClicked: function () {
     this._nativeService.send(Tw.NTV_CMD.WIDGET_SETTING, { type: 0 });
-  },
-
-  _lastestVersionPopup: function(res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-
-      var userAgentString = Tw.BrowserHelper.getUserAgent();
-      if (userAgentString.indexOf('osType:aos') !== -1) {
-        this._osType = 'A';
-      } else {
-        this._osType = 'I';
-      }
-
-      var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
-      this._currentVersion = version;
-
-      var versionArray = version.split('.')
-      if (versionArray[2] % 2 === 0) { // 대문자 
-        this._currentVersion = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1)
-      }
-
-      var currentOsType = this._osType;
-      var versionInfo = _.filter(res.result.ver, function (item) {
-        return item.osType === currentOsType;
-      });
-      var latestVersion = versionInfo[0].newVer;
-      // console.log(latestVersion, this._currentVersion);// 5.0.10 > 5.0.9
-      if(Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) { // 이전버전 
-        // 업데이트 안내 페이지 팝업 
-        this._popupService.open({
-          hbs: 'MA_03_01_02_03_01_01'
-        }, $.proxy(this._onUpdatePopup, this));
-
-      } else { // 최신버전 
-        // 네이티브 페이지 이동 
-        this._nativeService.send(Tw.NTV_CMD.GO_CERT, {}); // 기존 네이티브 페이지 이동 
-      }
-    }
-  },
-
-  _onUpdatePopup: function($popupContainer) {
-    // 업데이트 화면 이동 
-    $popupContainer.on('click', '.btn-style1', $.proxy(function() {
-      this._onUpdate(); // 업데이트 안내 페이지 이동
-    }, this));
-    // 취소 버튼 이전 화면 이동 
-    $popupContainer.on('click', '.prev-step', $.proxy(function() {
-      this._popupService.close();
-    }, this));
   }
-
-
-
 };
