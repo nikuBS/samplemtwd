@@ -22,13 +22,19 @@ Tw.ApiService = function () {
   // CMMA_A2_B6-462 Main > My > 데이터선물 > T끼리데이터선물하기 제공자조회
   // CMMA_A2_B6-463 Main > My > 데이터선물 > T끼리데이터선물하기 잔여데이터 조회
 
-  var BFF_06_0001_BTN = "<button id='BFF_06_0001_BTN' data-xt_eid='CMMA_A2_B6-461' data-xt_csid='NO' data-xt_action='BV' style='display:none;'>BFF_06_0001</button>";
-  var BFF_06_0014_BTN = "<button id='BFF_06_0014_BTN' data-xt_eid='CMMA_A2_B6-463' data-xt_csid='NO' data-xt_action='BV' style='display:none;'>BFF_06_0014</button>";
-  var BFF_06_0015_BTN = "<button id='BFF_06_0015_BTN' data-xt_eid='CMMA_A2_B6-462' data-xt_csid='NO' data-xt_action='BV' style='display:none;'>BFF_06_0015</button>";
+  var apiStatsFlag = Tw.CommonHelper.getCookie('apiStatsFlag') || false;
 
-  $("body").append(BFF_06_0001_BTN);
-  $("body").append(BFF_06_0014_BTN);
-  $("body").append(BFF_06_0015_BTN);
+  if (!apiStatsFlag) {
+    var BFF_06_0001_BTN = "<button id='BFF_06_0001_BTN' data-xt_eid='CMMA_A2_B6-461' data-xt_csid='NO' data-xt_action='BV' style='display:none;'>BFF_06_0001</button>";
+    var BFF_06_0014_BTN = "<button id='BFF_06_0014_BTN' data-xt_eid='CMMA_A2_B6-463' data-xt_csid='NO' data-xt_action='BV' style='display:none;'>BFF_06_0014</button>";
+    var BFF_06_0015_BTN = "<button id='BFF_06_0015_BTN' data-xt_eid='CMMA_A2_B6-462' data-xt_csid='NO' data-xt_action='BV' style='display:none;'>BFF_06_0015</button>";
+
+    $("body").append(BFF_06_0001_BTN);
+    $("body").append(BFF_06_0014_BTN);
+    $("body").append(BFF_06_0015_BTN);
+
+    Tw.CommonHelper.setCookie('apiStatsFlag', true);
+  }
 };
 
 Tw.ApiService.prototype = {
