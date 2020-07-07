@@ -6,7 +6,7 @@
 Tw.ApiService = function () {
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
-  new Tw.XtractorService(this.$container);
+  new Tw.XtractorService($('body'));
 
   // 통계수집 
   // data-xt_eid : 수집할 통계코드
