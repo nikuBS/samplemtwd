@@ -29,7 +29,12 @@ class CommonSearchMore extends TwViewController {
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const pageNum = req.query.page || 1;
     // const sort = req.query.arrange || 'R';
-    const sort = req.query.sort[0] || 'A';
+    let sort = "";
+    try {
+      sort = req.query.sort[0] || 'A';
+    } catch(e) {
+      sort = 'A';
+    }
 
     console.log("sort: ", sort);
 
