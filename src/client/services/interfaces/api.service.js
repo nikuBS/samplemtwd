@@ -6,7 +6,7 @@
 Tw.ApiService = function () {
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
-  new Tw.XtractorService($('body'));
+  this._xtractorService = new Tw.XtractorService($('body'));
 
   // 통계수집 
   // data-xt_eid : 수집할 통계코드
@@ -126,11 +126,11 @@ Tw.ApiService.prototype = {
   _checkAuth: function (command, params, headers, pathParams, version, resp) {
 
     if (command === Tw.API_CMD.BFF_06_0001) {
-      this._xtractor('CMMA_A2_B6-461', 'NO');
+      this._xtractorService.logView('CMMA_A2_B6-461', 'NO');
     } else if (command === Tw.API_CMD.BFF_06_0014) {
-      this._xtractor('CMMA_A2_B6-463', 'NO');
+      this._xtractorService.logView('CMMA_A2_B6-463', 'NO');
     } else if (command === Tw.API_CMD.BFF_06_0015) {
-      this._xtractor('CMMA_A2_B6-462', 'NO');
+      this._xtractorService.logView('CMMA_A2_B6-462', 'NO');
     }
 
     Tw.Logger.info('[API RESP]', resp);
