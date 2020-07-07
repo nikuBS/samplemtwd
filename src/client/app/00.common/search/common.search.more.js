@@ -945,10 +945,10 @@ $.extend(Tw.CommonSearchMore.prototype,
       var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
       //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
       var sort = "shortcut-A";
-      sort += ".rate-" + Tw.CommonHelper.getCookie(sortsName[0]);
-      sort += ".service-" + Tw.CommonHelper.getCookie(sortsName[1]);
-      sort += ".tv_internet-" + Tw.CommonHelper.getCookie(sortsName[2]);
-      sort += ".troaming-" + Tw.CommonHelper.getCookie(sortsName[3]);
+      sort += ".rate-" + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
+      sort += ".service-" + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
+      sort += ".tv_internet-" + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
+      sort += ".troaming-" + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
       linkUrl = replaceQueryParam('sort', sort, linkUrl);
     } else {
       sort = Tw.CommonHelper.getCookie("search_sort::" + category);
