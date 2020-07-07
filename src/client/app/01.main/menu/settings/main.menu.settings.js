@@ -158,8 +158,14 @@ Tw.MainMenuSettings.prototype = {
     // 최신버전 체크 
     // 1. 조건 최신버전 == 현재버전 => 네이티브 호출 
     // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
-    this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
-        .done($.proxy(this._lastestVersionPopup, this));
+
+    // 업데이트 안내 페이지 팝업 
+    this._popupService.open({
+      hbs: 'MA_03_01_02_03_01_01'
+    }, $.proxy(this._onUpdatePopup, this));
+
+    // this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
+    //     .done($.proxy(this._lastestVersionPopup, this));
   },
 
   _onWidgetSettingClicked: function () {
