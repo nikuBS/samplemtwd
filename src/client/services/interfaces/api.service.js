@@ -6,6 +6,20 @@
 Tw.ApiService = function () {
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
+  new Tw.XtractorService(this.$container);
+
+  // 통계수집 
+  // data-xt_eid : 수집할 통계코드
+  // data-xt_csid : 상품 원장에서 쓰기 위해 필요한 코드로 기타 영역에서는 ‘NO’ 로 셋팅
+  // data-xt_action : BV (view 통계) / BC (클릭통계) / BN (TOS 배너 통계)
+  // data-xt_action2 : data-xt_action 이 BV 인 경우 설정되며, 해당 배너에 대한 클릭통계 수집 요건이 있을 경우 BC 로 설정
+  var BFF_06_0001_BTN = "<button id='BFF_06_0001_BTN' data-xt_eid='' data-xt_csid='NO' data-xt_action='BC' style='display:none;'>BFF_06_0001</button>";
+  var BFF_06_0014_BTN = "<button id='BFF_06_0014_BTN' data-xt_eid='' data-xt_csid='NO' data-xt_action='BC' style='display:none;'>BFF_06_0014</button>";
+  var BFF_06_0015_BTN = "<button id='BFF_06_0015_BTN' data-xt_eid='' data-xt_csid='NO' data-xt_action='BC' style='display:none;'>BFF_06_0015</button>";
+
+  $("body").append(BFF_06_0001_BTN);
+  $("body").append(BFF_06_0014_BTN);
+  $("body").append(BFF_06_0015_BTN);
 };
 
 Tw.ApiService.prototype = {
@@ -21,6 +35,14 @@ Tw.ApiService.prototype = {
    * @returns {*}
    */
   request: function (command, params, headers, pathParams, version, option) {
+
+    if (command === Tw.API_CMD.BFF_06_0001) {
+      $("#BFF_06_0001_BTN").click();
+    } else if (command === Tw.API_CMD.BFF_06_0014) {
+      $("#BFF_06_0014_BTN").click();
+    } else if (command === Tw.API_CMD.BFF_06_0015) {
+      $("#BFF_06_0015_BTN").click();
+    }
 
     // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
     if(!Tw.CommonHelper.checkValidSession(location.pathname, command.path, 'CLIENT_API_REQ')) {
