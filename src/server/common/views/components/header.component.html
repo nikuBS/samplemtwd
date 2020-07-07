@@ -190,11 +190,17 @@
                             <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico01.png" alt=""></i><span class="txt">검색</span>
                         </button>
                     </li>
+                    <% if (!disablePersonaBtn) { %>
+                        <% if (svcType && svcType.login) { %>
+                            <% if (svcInfo.personSmsDisableTimeCheck) { %>
                     <li class="item fe-when-login fe-bt-free-sms-target none">
                         <button class="ico-btn fe-bt-free-sms" data-xt_eid="CMMA_A11_B3-2" data-xt_csid="NO" data-xt_action="BC">
                             <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico02.png" alt=""></i><span class="txt">무료문자</span>
                         </button>
                     </li>
+                           <% } %>
+                        <% }  %>
+                    <% } %>
                     <li class="item fe-when-app-and-login none">
                         <button class="ico-btn fe-t-noti" data-tid="<%= typeof svcInfo === 'undefined' || svcInfo === null ? '' : svcInfo.userId %>"
                                 data-xt_eid="CMMA_A11_B3-3" data-xt_csid="NO" data-xt_action="BC">

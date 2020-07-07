@@ -93,6 +93,7 @@ class MainHome extends TwViewController {
             svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
             svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
+            svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck // 아이콘 문자 비노출시간 체크 
             res.render(`main.home-${flag}.html`, {
               svcInfo,
               svcType,
@@ -746,12 +747,13 @@ class MainHome extends TwViewController {
    */
   private getPersonData(svcInfo: any, req: Request): Observable<any> {
     return Observable.combineLatest(
-      this.getPersonDisableTimeCheck()
-    ).map(([personDisableTimeCheck]) => {
+      this.getPersonDisableTimeCheck(),
+      this.getPersonSmsDisableTimeCheck()
+    ).map(([personDisableTimeCheck, personSmsDisableTimeCheck]) => {
       const personDisableLineTypeCheck = this.getPersonLineTypeCheck(svcInfo);
       const personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req);
       this.logger.info(this, '[Person Login Info]', personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck);
-      return { personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck };
+      return { personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck, personSmsDisableTimeCheck };
     });
   }
 
@@ -785,6 +787,32 @@ class MainHome extends TwViewController {
         const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
         const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
         this.logger.info(this, '[Person startTime // endTime]', startTime, endTime);
+        /**
+         * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
+         * true: 노출, false: 비노출
+         */
+        return !(today >= startTime && today <= endTime);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  /**
+   * redis에서 개인화 문자 진입 아이콘 노출 여부 체크
+   * @return {Observable}
+   */
+  private getPersonSmsDisableTimeCheck(): Observable<any> {
+    const DEFAULT_PARAM = {
+      property: REDIS_KEY.PERSON_SMS_DISABLE_TIME
+    };
+    return this.apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        const today = new Date().getTime();
+        const resTime = resp.result.split('~');
+        const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
+        const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
+        this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
         /**
          * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
          * true: 노출, false: 비노출
