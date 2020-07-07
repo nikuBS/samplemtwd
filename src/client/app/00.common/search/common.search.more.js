@@ -1006,6 +1006,10 @@ $.extend(Tw.CommonSearchMore.prototype,
       '&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
     // changeFilterUrl+='&arrange='+$(btnEvt.currentTarget).data('type');
     changeFilterUrl+='&sort='+$(btnEvt.currentTarget).data('type');
+
+    // cookie 저장 
+    Tw.CommonHelper.setCookie('search_sort::' + this._category, $(btnEvt.currentTarget).data('type'));
+
     if(this._accessQuery.in_keyword){
       changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;
     }
