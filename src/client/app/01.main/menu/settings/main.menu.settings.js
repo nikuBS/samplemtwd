@@ -156,19 +156,8 @@ Tw.MainMenuSettings.prototype = {
     // 최신버전 체크 
     // 1. 조건 최신버전 == 현재버전 => 네이티브 호출 
     // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
-<<<<<<< HEAD
-
-    // 업데이트 안내 페이지 팝업 
-    // this._popupService.open({
-    //   hbs: 'MA_03_01_02_03_01_01'
-    // }, $.proxy(this._onUpdatePopup, this));
-
-    this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
-        .done($.proxy(this._lastestVersionPopup, this));
-=======
     this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
     return false;
->>>>>>> parent of cdb6efd30f... Revert "Merge pull request #345 in MTW003/bff-nodejs-mobile from ~P151541/bff-nodejs-mobile:OP002-7917-local-dev to release"
   },
   _onWidgetSettingClicked: function () {
     this._nativeService.send(Tw.NTV_CMD.WIDGET_SETTING, { type: 0 });
