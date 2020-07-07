@@ -696,19 +696,12 @@ Tw.CustomerAgentsearch.prototype = {
    */
   _onExternalLink: function (e) {
     if(Tw.BrowserHelper.isApp()) {
-      var confirmed = false;
       Tw.CommonHelper.showDataCharge(
-          function () {
-            confirmed = true;
-          },
           $.proxy(function () {
-            if (confirmed) {
-              var url = $(e.currentTarget).attr('href');
-              Tw.CommonHelper.openUrlExternal(url);
-            }
+            var url = $(e.currentTarget).attr('href');
+            Tw.CommonHelper.openUrlExternal(url);
           }, this)
       );
-
       // return false;
     } else {
       var url = $(e.currentTarget).attr('href');

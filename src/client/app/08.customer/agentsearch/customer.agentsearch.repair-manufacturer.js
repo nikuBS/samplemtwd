@@ -33,18 +33,17 @@ Tw.CustomerAgentsearchRepairManufacturer.prototype = {
    * @param  {Object} e - click event
    */
   _onExternalLink: function (e) {
-    var confirmed = false;
-    Tw.CommonHelper.showDataCharge(
-      function () {
-        confirmed = true;
-      },
-      $.proxy(function () {
-        if (confirmed) {
-          var url = $(e.currentTarget).attr('href');
-          Tw.CommonHelper.openUrlExternal(url);
-        }
-      }, this)
-    );
+    if(Tw.BrowserHelper.isApp()) {
+      Tw.CommonHelper.showDataCharge(
+          $.proxy(function () {
+            var url = $(e.currentTarget).attr('href');
+            Tw.CommonHelper.openUrlExternal(url);
+          }, this)
+      );
+    } else {
+      var url = $(e.currentTarget).attr('href');
+      Tw.CommonHelper.openUrlExternal(url);
+    }
 
     return false;
   },
