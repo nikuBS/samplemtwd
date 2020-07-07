@@ -342,7 +342,6 @@ $.extend(Tw.CommonSearchMore.prototype,
    * @returns {void}
    */
   _onClickChangeSort : function (e) {
-    
     var $target = $(e.currentTarget);    
     var selectedCollection = $target.attr('class').replace(/fe-sort| |tod-fright/gi, '');
     Tw.Logger.info('[common.search.more] [_onClickChangeSort]', '선택된 영역의 collection : ' + selectedCollection);
@@ -517,8 +516,6 @@ $.extend(Tw.CommonSearchMore.prototype,
     var pageNum = options.pageNum;
     // var sort = options.subTabCd;
     var sort = options.sort;
-    // cookie 저장 
-    Tw.CommonHelper.setCookie('search_sort::' + collection, sort);
 
     if (query !== researchQuery) {
       researchQuery = researchQuery.replace(query, '').trim();
@@ -615,6 +612,38 @@ $.extend(Tw.CommonSearchMore.prototype,
         } else {
           this.$container.find('.fe-category.'+collection).attr('href','/common/search/more?category=' + collection + '&keyword='+query+'&step='+(this._step + 1)+'&sort='+sort);
         }
+
+        Tw.Logger.info('[common.search.more] [_sortRate] attr: ', this.$container.find('.fe-category.'+collection).attr('href'));
+        // 정렬 관련 작업 중 
+        this.$container.find("[class*='fe-category']").each(function(a, b) {
+          function replaceQueryParam(param, newval, search) {
+              var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+              var query = search.replace(regex, "$1").replace(/&$/, '');
+              return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+          }
+          var $li = $(this)
+          var url = $li.attr('href')
+          url = replaceQueryParam('sort', sort, url)
+          $li.attr('href', url)
+        })
+
+        // Tw.Logger.info("================")
+        // this.$container('.category-link li').each(function(idx){
+
+        //   function replaceQueryParam(param, newval, search) {
+        //       var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+        //       var query = search.replace(regex, "$1").replace(/&$/, '');
+        //       return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+        //   }
+          
+        //   var $li = $(this);
+        //   Tw.Logger.info('[common.search.more] [_sortRate] href: ', $li.attr('href'));
+        //   let url = $li.attr('href')
+        //   url = replaceQueryParam('sort', sort, url)
+        //   $li.attr('href', url)
+        //  })
+
+
 
       } else {
         Tw.Logger.info('[common.search.more] [_sortRate] search api 리턴 오류!!!', res.code);
@@ -773,6 +802,20 @@ $.extend(Tw.CommonSearchMore.prototype,
         Tw.Logger.info('[common.search.more] [_categoryInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
         // 선택된 카테고리를 화면 좌측으로 붙여서 노출해주기 위한 처리[E]
 
+        var __sort = this._sort 
+        // alert(__sort)
+        this.$container.find("[class*='fe-category']").each(function(a, b) {
+          function replaceQueryParam(param, newval, search) {
+              var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+              var query = search.replace(regex, "$1").replace(/&$/, '');
+              return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+          }
+          var $li = $(this)
+          var url = $li.attr('href')
+          // alert(url)
+          url = replaceQueryParam('sort', __sort, url)
+          $li.attr('href', url)
+        })
         
 
       } else {
@@ -925,35 +968,6 @@ $.extend(Tw.CommonSearchMore.prototype,
       return;
     }
 
-    function getParam(sname) {
-      var params = linkUrl.substr(linkUrl.indexOf("?") + 1);
-      var sval = "";
-      params = params.split("&");
-      for (var i = 0; i < params.length; i++) {
-          temp = params[i].split("=");
-          if ([temp[0]] == sname) { sval = temp[1]; }
-      }
-      return sval;
-    }
-    var category = getParam("category");
-    function replaceQueryParam(param, newval, search) {
-      var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
-      var query = search.replace(regex, "$1").replace(/&$/, '');
-      return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
-    }
-    if (category === "all") {
-      var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
-      //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
-      var sort = "shortcut-A";
-      sort += ".rate-" + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
-      sort += ".service-" + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
-      sort += ".tv_internet-" + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
-      sort += ".troaming-" + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
-      linkUrl = replaceQueryParam('sort', sort, linkUrl);
-    } else {
-      sort = Tw.CommonHelper.getCookie("search_sort::" + category);
-      linkUrl = replaceQueryParam('sort', sort, linkUrl);
-    }
     this._moveUrl(linkUrl);
   },
   /**
@@ -1006,10 +1020,6 @@ $.extend(Tw.CommonSearchMore.prototype,
       '&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
     // changeFilterUrl+='&arrange='+$(btnEvt.currentTarget).data('type');
     changeFilterUrl+='&sort='+$(btnEvt.currentTarget).data('type');
-
-    // cookie 저장 
-    Tw.CommonHelper.setCookie('search_sort::' + this._category, $(btnEvt.currentTarget).data('type'));
-
     if(this._accessQuery.in_keyword){
       changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;
     }
