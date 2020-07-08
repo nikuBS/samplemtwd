@@ -376,11 +376,27 @@ Tw.CommonSearchMain.prototype = {
     if(this._historyService.getHash()==='#input_P'){
       this._closeKeywordListBase();
     }
+
+    var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
+    //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
+    var sort = "shortcut-A";
+    sort += ".rate-A";
+    sort += ".service-A";
+    sort += ".tv_internet-A";
+    sort += ".troaming-A";
+    sort += ".direct-D";
+
+    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+    Tw.CommonHelper.setCookie('search_sort::service', 'A');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+
     setTimeout($.proxy(function () {
       // Tw.Logger.info('[common.search-main] [_doSearch]', '"doSearch" Cookie 셋팅');
       // Tw.CommonHelper.setCookie('doSearch', 'Y');
       this._addRecentlyKeywordList(searchKeyword);
-      this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1));
+      this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1) + "&sort="+sort);
     },this),100);
   },
   /**

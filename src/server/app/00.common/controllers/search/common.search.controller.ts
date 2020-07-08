@@ -29,7 +29,7 @@ class CommonSearch extends TwViewController {
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
     const pageNum = req.query.page || 1;
-    const sortCd = req.query.sort || 'A';
+    let sort = req.query.sort || 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D';
     let redirectParam = req.query.redirect || 'Y';
     const _this = this;
     // const sort = 'A';  // 추천순 (Admin)
@@ -38,9 +38,8 @@ class CommonSearch extends TwViewController {
     // const sort = 'L';  // 낮은가격순 (LowPrice)
     // const sort = 'C';  // 클릭순 (Click)
     // const sort = 'R';  // 정확도순 (Rank)
-    let sort = 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A';
+    // let sort = 'shortcut-A.rate-H.service-L.tv_internet-A.troaming-D.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A';
     // const sort = 'shortcut-A.rate-H.service-H.tv_internet-L.troaming-A.tapp-A.direct-A.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A';
-
 
     // this.log.info(this, '[common.search.in-result.controller] req.query : ', req.query);  // keyword=소액결제, in_keyword=내역, step=3
    
