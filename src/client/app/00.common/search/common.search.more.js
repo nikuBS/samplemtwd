@@ -329,6 +329,14 @@ $.extend(Tw.CommonSearchMore.prototype,
       this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
       return;
     }
+    var sort = "shortcut-A";
+    sort += ".rate-" + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
+    sort += ".service-" + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
+    sort += ".tv_internet-" + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
+    sort += ".troaming-" + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
+    sort += ".direct-" + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
+    this._accessQuery.sort = sort;
+
     var requestUrl = '/common/search/more?category=' + this._category + '&sort=' + this._accessQuery.sort + '&keyword='+(encodeURIComponent(this._searchInfo.query))+'&in_keyword=';
     requestUrl+=encodeURIComponent(resultSearchKeyword.trim());
     requestUrl+='&step='+(Number(this._step)+1);
@@ -373,6 +381,7 @@ $.extend(Tw.CommonSearchMore.prototype,
     );
 
     Tw.Logger.info('[common.search.more] [_getSortCd]', 'this._reqOptions.sortCd (TO-BE) : ' + this._reqOptions.sortCd);
+    this._paramObj.sort = sortCdStr = Tw.CommonHelper.getCookie("search_sort::" + categoryId) || 'A';
     
     this._sortCd = [
       {
@@ -381,7 +390,6 @@ $.extend(Tw.CommonSearchMore.prototype,
             txt: Tw.SEARCH_FILTER_STR.ADMIN,  // 추천순
             // 'radio-attr': (this._sort === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
             'radio-attr': (this._paramObj.sort === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
-            
             'label-attr': ' ',
             sort: 'A'
           },
@@ -816,8 +824,22 @@ $.extend(Tw.CommonSearchMore.prototype,
         (encodeURIComponent(this._accessKeyword))+'&in_keyword=':'/common/search?keyword=';
     requestUrl+=encodeURIComponent(keyword);
     requestUrl+='&step='+(Number(this._step)+1);
+    var sort = "&sort=shortcut-A";
+    sort += ".rate-A";
+    sort += ".service-A";
+    sort += ".tv_internet-A";
+    sort += ".troaming-A";
+    sort += ".direct-D";
+    requestUrl += sort;
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);
+
+    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+    Tw.CommonHelper.setCookie('search_sort::service', 'A');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    
   },
   /**
    * @function
@@ -942,13 +964,14 @@ $.extend(Tw.CommonSearchMore.prototype,
       return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
     }
     if (category === "all") {
-      var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
+      var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
       //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
       var sort = "shortcut-A";
       sort += ".rate-" + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
       sort += ".service-" + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
       sort += ".tv_internet-" + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
       sort += ".troaming-" + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
+      sort += ".direct-" + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
       linkUrl = replaceQueryParam('sort', sort, linkUrl);
     } else {
       sort = Tw.CommonHelper.getCookie("search_sort::" + category);
