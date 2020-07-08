@@ -50,7 +50,11 @@ Tw.CustomerAgentHappycom.prototype = {
       // if (this._historyService.isBack()) {
         // 뒤로 버튼을 눌렀을때 hash 변경 되지만 탭 이동만 되고 실제 해당 페이지가 나오지 않는 현상 때문에 강제로 한번 클릭 하는 workaround 처리;;
         // 하지만 히스토리 이동으로 탭 페이지 이동 보다는 그냥 메인으로 빠져나가는게 표준에 더 부합할듯 한데 기획 요구에 그냥 맞춤
-         this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
+
+        // [OP002-9465] 메뉴 중복 노출 오류로 인하여 hash 가 #menu 가 아닌 경우에만 아래 로직을 수행하도록 처리
+        if (window.location.hash !== '#menu') {
+          this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
+        }
       // }
       this._resetSearch(e);
     }, this);
