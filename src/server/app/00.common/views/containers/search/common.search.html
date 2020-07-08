@@ -25,6 +25,31 @@
     }
     keyword = encodeURIComponent(keyword);
     inKeyword = encodeURIComponent(inKeyword);
+
+    function codeToData(code) {
+
+        // const sort = 'A';  // 추천순 (Admin)
+        // const sort = 'D';  // 최신순 (Date)
+        // const sort = 'H';  // 높은가격순 (HighPrice)
+        // const sort = 'L';  // 낮은가격순 (LowPrice)
+        // const sort = 'C';  // 클릭순 (Click)
+        // const sort = 'R';  // 정확도순 (Rank)
+
+        if (code === 'A') return '추천순';
+        if (code === 'H') return '높은 가격순';
+        if (code === 'L') return '낮은 가격순';
+        if (code === 'D') return '최신순';
+    }
+
+    // sortToCodeName(1, sort)[0]
+    function sortToCodeName(seq, sort) {
+        console.log(">>>>>>>>>> ", sort);
+        // shortcut-A.rate-H.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A
+        // let sortName = ["바로가기", "요금제", "부가서비스", "인터넷/집전화/IPTV", "T로밍", "T다이렉트샵", "자주 하는 질문"];
+        let sortCode = sort.split('.')[seq].split('-')[1];
+        console.log(sortCode);
+        return [sortCode, codeToData(sortCode)]
+    }
     
 
 %>
@@ -468,7 +493,7 @@
                 <h3 class="tit">
                     <% if(searchInfo.search[3].rate.count>5){%>
                     <!-- <a class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1%>"> -->
-                        <a class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                        <a class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(1, sort)[0]%>">
                     <% } %>
                         요금제 <span class="num"><%= searchInfo.search[3].rate.count %></span>
                     <% if(searchInfo.search[3].rate.count>5){%>
@@ -476,7 +501,7 @@
                     <% } %>
                 </h3>
                 <div class="tod-fright fe-sort rate">
-                    <button class="btn-select fe-btn-sort-rate" title="정렬 기준 선택" aria-haspopup="true" value="A">추천순<span class="ico"></span></button>
+                    <button class="btn-select fe-btn-sort-rate" title="정렬 기준 선택" aria-haspopup="true" value="<%=sortToCodeName(1, sort)[0]%>"><%= sortToCodeName(1, sort)[1] %><span class="ico"></span></button>
                 </div>
             </div>
             <ul class="extraservice-list tod-srhtype1" id="rate_list">
@@ -484,7 +509,7 @@
             </ul>
             <% if(searchInfo.search[3].rate.count>5){%>
             <div class="btn-more">
-                <button class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">요금제</span>전체보기<i class="ico-arrow-r"></i></button>
+                <button class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(1, sort)[0]%>"><span class="blind">요금제</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
             <% } %>
         </div>
@@ -500,7 +525,7 @@
             <div class="tod-searchlist-head">
                 <h3 class="tit">
                     <% if(searchInfo.search[4].service.count>5){ %>
-                    <a class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <a class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(2, sort)[0]%>">
                     <% } %>
                         부가서비스 <span class="num"><%= searchInfo.search[4].service.count %></span>
                     <% if(searchInfo.search[4].service.count>5){ %>
@@ -508,7 +533,7 @@
                     <% } %>
                 </h3>
                 <div class="tod-fright fe-sort service">
-                    <button class="btn-select fe-btn-sort-service" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
+                    <button class="btn-select fe-btn-sort-service" title="정렬 기준 선택" aria-haspopup="true" value="<%=sortToCodeName(2, sort)[0]%>"><%= sortToCodeName(2, sort)[1] %><span class="ico"></span></button>
                 </div>
             </div>
             <ul class="extraservice-list tod-srhtype1" id="service_list">
@@ -516,7 +541,7 @@
             </ul>
             <% if(searchInfo.search[4].service.count>5){ %>
             <div class="btn-more">
-                <button class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">부가서비스</span>전체보기<i class="ico-arrow-r"></i></button>
+                <button class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(2, sort)[0]%>"><span class="blind">부가서비스</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
             <% } %>
         </div>
@@ -532,7 +557,7 @@
             <div class="tod-searchlist-head">
                 <h3 class="tit">
                     <% if(searchInfo.search[5].tv_internet.count>5){ %>
-                    <a class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <a class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(3, sort)[0]%>">
                     <% } %>
                         인터넷 · 집전화 · IPTV <span class="num"><%= searchInfo.search[5].tv_internet.count %></span>
                     <% if(searchInfo.search[5].tv_internet.count>5){ %>
@@ -540,7 +565,7 @@
                     <% } %>
                 </h3>
                 <div class="tod-fright fe-sort tv_internet">
-                    <button class="btn-select fe-btn-sort-tv_internet" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
+                    <button class="btn-select fe-btn-sort-tv_internet" title="정렬 기준 선택" aria-haspopup="true" value="<%=sortToCodeName(3, sort)[0]%>"><%= sortToCodeName(3, sort)[1] %><span class="ico"></span></button>
                 </div>
             </div>
             <ul class="extraservice-list tod-srhtype1" id="tv_internet_list">
@@ -548,7 +573,7 @@
             </ul>
             <% if(searchInfo.search[5].tv_internet.count>5){ %>
             <div class="btn-more">
-                <button class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">인터넷 · 집전화 · IPTV</span>전체보기<i class="ico-arrow-r"></i></button>
+                <button class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(3, sort)[0]%>"><span class="blind">인터넷 · 집전화 · IPTV</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
             <% } %>
         </div>
@@ -563,7 +588,7 @@
             <div class="tod-searchlist-head">
                 <h3 class="tit">
                     <% if(searchInfo.search[6].troaming.count>5){ %>
-                    <a class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <a class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(4, sort)[0]%>">
                     <% } %>
                         T로밍 <span class="num"><%= searchInfo.search[6].troaming.count %></span>
                     <% if(searchInfo.search[6].troaming.count>5){ %>
@@ -571,7 +596,7 @@
                     <% } %>
                 </h3>
                 <div class="tod-fright fe-sort troaming">
-                    <button class="btn-select fe-btn-sort-troaming" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
+                    <button class="btn-select fe-btn-sort-troaming" title="정렬 기준 선택" aria-haspopup="true" value="<%=sortToCodeName(4, sort)[0]%>"><%= sortToCodeName(4, sort)[1] %><span class="ico"></span></button>
                 </div>
             </div>
             <ul class="extraservice-list tod-srhtype1" id="troaming_list">
@@ -579,7 +604,7 @@
             </ul>
             <% if(searchInfo.search[6].troaming.count>5){ %>
             <div class="btn-more">
-                <button class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T로밍</span>전체보기<i class="ico-arrow-r"></i></button>
+                <button class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(4, sort)[0]%>"><span class="blind">T로밍</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
             <% } %>
         </div>
