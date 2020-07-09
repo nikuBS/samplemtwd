@@ -90,12 +90,12 @@ class MainHome extends TwViewController {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             recommendProdsData = recommendProdsResult;
+            svcInfo.svcType = svcType;
             svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
             svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
             res.render(`main.home-${flag}.html`, {
               svcInfo,
-              svcType,
               homeData,
               redisData,
               pageInfo,
@@ -118,12 +118,12 @@ class MainHome extends TwViewController {
               usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
             }
             homeData.usageData = usageData;
+            svcInfo.svcType = svcType;
             svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
             svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
             res.render(`main.home-${flag}.html`, {
               svcInfo,
-              svcType,
               homeData,
               redisData,
               pageInfo,
@@ -142,12 +142,12 @@ class MainHome extends TwViewController {
           this.getPersonData(svcInfo, req)
         ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
           homeData.billData = billData;
+          svcInfo.svcType = svcType;
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
           res.render(`main.home-${flag}.html`, {
             svcInfo,
-            svcType,
             homeData,
             redisData,
             pageInfo,
@@ -171,8 +171,7 @@ class MainHome extends TwViewController {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
         personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
         res.render(`main.home-${flag}.html`, {
-          svcInfo,
-          svcType,
+          svcInfo: svcInfo || { svcType },
           homeData,
           redisData,
           pageInfo,

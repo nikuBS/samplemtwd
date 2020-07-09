@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
-import { ETC_CENTER } from '../../../../types/string.type';
+import {CUSTOMER_RESEARCH_ERROR, ETC_CENTER} from '../../../../types/string.type';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 import FormatHelper from '../../../../utils/format.helper';
 
@@ -29,12 +29,15 @@ export default class CustomerResearches extends TwViewController {
         // console.log('research 렌더 하위의 가공된 ===== ', research);
         // console.log('research 렌더 하위의 가공된 현재 타이틀 ===== ', research.info.qstnTitleNm);
 
-
+        // 존재하지 않는 설문 id로 인하여 API 리턴값 00 이지만 정상적인 데이터가 넘어오지 않는 경우에 대한 처리 포함 (이시현 매니저님 요청)
+        // CUSTOMER_RESEARCH_ERROR.MSG,
         if (research.code) {
           return this.error.render(res, {
             pageInfo: pageInfo,
             svcInfo,
-            ...research
+            code: research.code !== API_CODE.CODE_00 ? research.code : API_CODE.NODE_1011,
+            msg: research.code !== API_CODE.CODE_00 ? research.msg : CUSTOMER_RESEARCH_ERROR.MSG,
+            // ...research
           });
         }
 
@@ -204,9 +207,13 @@ export default class CustomerResearches extends TwViewController {
   private _getResearch = id => {
     // return of(StepResearch).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0038, { qstnId: id }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
+
+      // 존재하지 않는 설문 id로 인하여 API 리턴값 00 이지만 정상적인 데이터가 넘어오지 않는 경우에 대한 처리 포함 (이시현 매니저님 요청)
+      // FormatHelper.isEmpty(resp.result.surveyQstnMaster[0]
+      if (resp.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(resp.result.surveyQstnMaster[0]) ) {
         return resp;
       }
+
 
       // console.log('resp _getResearch BFF_08_0038  ===== ', resp);
 

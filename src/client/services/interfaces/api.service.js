@@ -6,6 +6,21 @@
 Tw.ApiService = function () {
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
+  this._xtractorService = new Tw.XtractorService($('body'));
+
+  // 통계수집 
+  // data-xt_eid : 수집할 통계코드
+  // data-xt_csid : 상품 원장에서 쓰기 위해 필요한 코드로 기타 영역에서는 ‘NO’ 로 셋팅
+  // data-xt_action : BV (view 통계) / BC (클릭통계) / BN (TOS 배너 통계)
+  // data-xt_action2 : data-xt_action 이 BV 인 경우 설정되며, 해당 배너에 대한 클릭통계 수집 요건이 있을 경우 BC 로 설정
+
+  // BFF_06_0001 사용가능한 리필쿠폰 /core-recharge/v1/refill-coupons CMMA_A2_B6-461
+  // BFF_06_0014 T끼리데이터선물하기 잔여데이터 조회 /core-gift/v1/data-gift-balances CMMA_A2_B6-463
+  // BFF_06_0015 T끼리데이터선물하기 제공자 조회 /core-gift/v1/data-gift-senders CMMA_A2_B6-462
+
+  // CMMA_A2_B6-461 Main > My > 데이터리필 > 사용가능한 리필쿠폰
+  // CMMA_A2_B6-462 Main > My > 데이터선물 > T끼리데이터선물하기 제공자조회
+  // CMMA_A2_B6-463 Main > My > 데이터선물 > T끼리데이터선물하기 잔여데이터 조회
 };
 
 Tw.ApiService.prototype = {
@@ -109,6 +124,15 @@ Tw.ApiService.prototype = {
    * @private
    */
   _checkAuth: function (command, params, headers, pathParams, version, resp) {
+
+    if (command === Tw.API_CMD.BFF_06_0001) {
+      this._xtractorService.logView('CMMA_A2_B6-461', 'NO');
+    } else if (command === Tw.API_CMD.BFF_06_0014) {
+      this._xtractorService.logView('CMMA_A2_B6-463', 'NO');
+    } else if (command === Tw.API_CMD.BFF_06_0015) {
+      this._xtractorService.logView('CMMA_A2_B6-462', 'NO');
+    }
+
     Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
     var path = '';

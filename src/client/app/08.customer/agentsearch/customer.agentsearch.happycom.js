@@ -21,6 +21,8 @@ Tw.CustomerAgentHappycom = function (rootEl, params) {
 
   if (Tw.FormatHelper.isEmpty(this._historyService.getHash())){
     location.hash = '#easy';
+  } else if (this._historyService.getHash() === '#menu') {
+    location.hash = '#easy';
   }
   this._hash = '';
   this._init();
@@ -42,7 +44,7 @@ Tw.CustomerAgentHappycom.prototype = {
    * @param params
    * @desc 최초 실행
    */
-  _init: function(){
+  _init: function(){    
     this._initTab();
 
     // 탭 변경 시 설정부분
@@ -50,9 +52,13 @@ Tw.CustomerAgentHappycom.prototype = {
       // if (this._historyService.isBack()) {
         // 뒤로 버튼을 눌렀을때 hash 변경 되지만 탭 이동만 되고 실제 해당 페이지가 나오지 않는 현상 때문에 강제로 한번 클릭 하는 workaround 처리;;
         // 하지만 히스토리 이동으로 탭 페이지 이동 보다는 그냥 메인으로 빠져나가는게 표준에 더 부합할듯 한데 기획 요구에 그냥 맞춤
-         this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
-      // }
-      this._resetSearch(e);
+        
+        // [OP002-9465] 메뉴 중복 노출 오류로 인하여 hash 가 #menu 가 아닌 경우에만 아래 로직을 수행하도록 처리
+        if (window.location.hash !== '#menu') {
+          this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
+          this._resetSearch(e);
+        }
+      // }      
     }, this);
   },
 
@@ -62,12 +68,15 @@ Tw.CustomerAgentHappycom.prototype = {
    */
   _initTab: function() {
     this._hash = this._historyService.getHash();
-    // 변경 된 탭의 엘리먼트로 세팅한다.
-    var _container = this.$container.find('#'+ this.$container.find('[href="'+this._hash+'"]').parent().attr('aria-controls'));
-    this._cacheElementsTab(_container);
 
-    // 변경 된 탭 선택 해준다.
-    this.$container.find('li[role="tab"]').attr('aria-selected', false).find('[href="' + this._hash + '"]').parent().attr('aria-selected', true);
+    if (this._hash !== '#menu') {
+      // 변경 된 탭의 엘리먼트로 세팅한다.
+      var _container = this.$container.find('#'+ this.$container.find('[href="'+this._hash+'"]').parent().attr('aria-controls'));
+      this._cacheElementsTab(_container);
+
+      // 변경 된 탭 선택 해준다.
+      this.$container.find('li[role="tab"]').attr('aria-selected', false).find('[href="' + this._hash + '"]').parent().attr('aria-selected', true);
+    }    
 
     // 버튼명 변경(스마트폰 교실 예약하기, 코딩교실 예약하기)
     var _url = 'http://www.sktacademy.co.kr/mobileclass/reserve/Reserve_W.asp'; // 스마트폰 교실 예약하기

@@ -15,13 +15,13 @@ if ( locals.prodTitle ) {
     <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.ico" />
     <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.png" />
     <link rel="apple-touch-icon" href="<%= CDN %>/img/common/favicon.png" />
-    <meta name="description" content="페이지설명" />
+    <meta name="description" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
     <meta name="keywords" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagKwdCtt : '' %>" />
-    <meta property="og:title" content="<%= pageTitle %>" />
+    <meta property="og:title" content="초시대를 여는 Tworld" />
     <meta property="og:site_name" content="SKT" />
     <meta property="og:url" content="<%= pageInfo.fullUrl %>" />
     <meta property="og:image" content="<%= CDN %>/img/dummy/kakao_share.jpg" />
-    <meta property="og:description" content="SKT framework" />
+    <meta property="og:description" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
     <title><%= pageTitle %></title>
     <% include ../components/stylesheet.component.html %>
 </head>

@@ -608,17 +608,18 @@ Tw.POPUP_TPL = {
   ROAMING_RECEIVE_PLACE: [
     {
       'list': [
-        // { 'radio-attr': 'name="r2"',
-        //   'label-attr':'id="06" data-center="A100110000" data-booth="1000004045"' +
-        //     ' data-img="place-img-01-f" value="인천공항 1터미널 3층 로밍센터(F 카운터)"' +
-        //     ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>"',
-        //   txt: '인천공항 1터미널 3층 로밍센터(F 카운터)' },
         { 'radio-attr': 'name="r2"',
-          'label-attr':'id="07" data-center="A100110000" data-booth="1000004047"' +
-            ' data-img="place-img-01-h" value="인천공항 1터미널 3층 로밍센터(H 카운터)"' +
+          'label-attr':'id="06" data-center="A100110000" data-booth="1000004045"' +
+            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 로밍센터(F 카운터)"' +
             // ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>"',
             ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
-          txt: '인천공항 1터미널 3층 로밍센터(H 카운터)' },
+          txt: '인천공항 1터미널 3층 로밍센터(F 카운터)' },
+        // { 'radio-attr': 'name="r2"',
+        //   'label-attr':'id="07" data-center="A100110000" data-booth="1000004047"' +
+        //     ' data-img="place-img-01-h" value="인천공항 1터미널 3층 로밍센터(H 카운터)"' +
+        //     // ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>"',
+        //     ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
+        //   txt: '인천공항 1터미널 3층 로밍센터(H 카운터)' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="08" data-center="1430456896" data-booth="1430456957"' +
             ' data-img="place-img-02-de" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"' +

@@ -558,6 +558,19 @@ Tw.CommonSearch.prototype = {
     var requestUrl = '/common/search?keyword=';
     requestUrl += encodeURIComponent(keyword);
     requestUrl += '&step='+ ( Number(this._step) + 1 );
+    var sort = "&sort=shortcut-A";
+    sort += ".rate-A";
+    sort += ".service-A";
+    sort += ".tv_internet-A";
+    sort += ".troaming-A";
+    sort += ".direct-D";
+    requestUrl += sort;
+
+    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+    Tw.CommonHelper.setCookie('search_sort::service', 'A');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
 
     // Tw.Logger.info('[common.search] [_doSearch]', '"doSearch" Cookie 셋팅');
     // Tw.CommonHelper.setCookie('doSearch', 'Y');
@@ -593,6 +606,15 @@ Tw.CommonSearch.prototype = {
     var requestUrl = '/common/search/in-result?keyword=' + ( encodeURIComponent(this._searchInfo.query) ) + '&in_keyword=';
     requestUrl += encodeURIComponent(resultSearchKeyword.trim());
     requestUrl += '&step=' + ( Number(this._step) + 1 );
+
+    var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
+    var sort = "shortcut-A";
+    sort += ".rate-" + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
+    sort += ".service-" + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
+    sort += ".tv_internet-" + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
+    sort += ".troaming-" + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
+    sort += ".direct-" + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
+    requestUrl += "&sort=" + sort;
 
     // Tw.Logger.info('[common.search] [_doResultSearch]', '"doSearch" Cookie 셋팅');
     // Tw.CommonHelper.setCookie('doSearch', 'Y');
@@ -775,6 +797,13 @@ Tw.CommonSearch.prototype = {
     Tw.Logger.info('[common.search] [_selectCategory] 이동할 카테고리 코드 : ', collection);
 
     // 선택한 컬렉션의 정렬기준
+
+    function replaceQueryParam(param, newval, search) {
+      var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+      var query = search.replace(regex, "$1").replace(/&$/, '');
+      return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+    }
+
     var sort;
     if (collection !== 'all') {
       sort = this._reqOptions.sortCd.substring(this._reqOptions.sortCd.indexOf(collection + '-') + collection.length + 1, 
@@ -782,6 +811,7 @@ Tw.CommonSearch.prototype = {
     } else {
       sort = this._reqOptions.sortCd;
     }
+    sort = Tw.CommonHelper.getCookie("search_sort::" + collection) || 'A';
 
     Tw.Logger.info('[common.search] [_selectCategory] 이동할 카테고리의 정렬 기준 : ', sort);
 
@@ -825,14 +855,13 @@ Tw.CommonSearch.prototype = {
   _onClickChangeSort : function (e) {
     var _this = this;
     var $target = $(e.currentTarget);    
-    var selectedCollection = $target.attr('class').replace(/fe-sort| |tod-fright/gi, '');
+    var selectedCollection = $target.attr('class').replace(/fe-sort| |tod-fright/gi, ''); // rate, service ... 
     Tw.Logger.info('[common.search] [_onClickChangeSort] 선택된 영역의 collection : ', selectedCollection);
 
     this._selectedCollectionToChangeSort = selectedCollection;
 
     var tempBtnStr = '.fe-btn-sort-' + selectedCollection;
     
-
     this._popupService.open({
       hbs: this._ACTION_SHEET_HBS,
       layer: true,
@@ -849,6 +878,7 @@ Tw.CommonSearch.prototype = {
     Tw.Logger.info('[common.search] [_getSortCd] 선택된 collection : ', categoryId);
 
     var sortCdStr = this._reqOptions.sortCd.substring(this._reqOptions.sortCd.indexOf(categoryId + '-') + categoryId.length + 1, this._reqOptions.sortCd.indexOf(categoryId + '-') + categoryId.length + 2);
+    sortCdStr = Tw.CommonHelper.getCookie("search_sort::" + categoryId) || 'A';
 
     Tw.Logger.info('[common.search] [_getSortCd] 선택된 collection 의 정렬기준 : ', sortCdStr);
 
@@ -980,6 +1010,20 @@ Tw.CommonSearch.prototype = {
       reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort};
     }
     Tw.Logger.info('[common.search] [_sortRate] 검색API 호출 옵션 : ', reqOptions);
+
+    var count = $("#searchlist_" + collection + " .num").text() * 1;
+    // 5개 이상일때만 더보기가 생기니 그때만 url을 바꿔 준다. 
+    if (count > 5) {
+      function replaceQueryParam(param, newval, search) {
+        var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+        var query = search.replace(regex, "$1").replace(/&$/, '');
+        return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+      }
+      var url = $("a." + collection).attr('data-url');
+      url = replaceQueryParam('sort', sort, url);
+      $("a." + collection).attr('data-url', url);
+    }
+    Tw.CommonHelper.setCookie('search_sort::' + collection, sort);
     
     this._apiService.request(searchApi, reqOptions)
     .done($.proxy(function (res) {
