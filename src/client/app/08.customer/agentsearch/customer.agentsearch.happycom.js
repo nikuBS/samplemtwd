@@ -21,6 +21,8 @@ Tw.CustomerAgentHappycom = function (rootEl, params) {
 
   if (Tw.FormatHelper.isEmpty(this._historyService.getHash())){
     location.hash = '#easy';
+  } else if (this._historyService.getHash() === '#menu') {
+    location.hash = '#easy';
   }
   this._hash = '';
   this._init();
