@@ -14,9 +14,9 @@ _%>
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<div class="wrap" data-menuId="<%- pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo: svcInfo, pageInfo: locals.pageInfo }); _
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo: svcInfo, pageInfo: locals.pageInfo }); _%>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -38,7 +38,7 @@ _%>
                     <ul class="list-comp-lineinfo">
                         <%_ joined.map(addition => { _%>
                             <%_ const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; _%>
-                            <li class="<%- hasButtons ? 'add-con' : '' %>" data-isFree ="<%- addition.payFreeYn === 'Y' %>">
+                            <li<%- hasButtons ? ' class="add-con"' : null %> data-isFree="<%- addition.payFreeYn === 'Y' %>">
                                 <%_ if (hasLink) { _%>
                                 <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
                                     <%- include('./myt-join.myplanadd.wire.joined.html', { addition: addition, hasLink: hasLink, hasButtons: hasButtons }); _%>
@@ -49,9 +49,9 @@ _%>
                                 </div>
                                 <%_ } _%>
                             </li>
-                        <%_ }); %>
+                        <%_ }); _%>
                     </ul>
-                    <div class="contents-empty fe-empty <%= joined.length > 0 ? 'none' : '' %>" aria-hidden="<%= joined.length > 0 %>">
+                    <div class="contents-empty fe-empty<%- joined.length > 0 ? ' none' : null %>" aria-hidden="<%- joined.length > 0 %>">
                         <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                         <p class="desc">현재 사용 중인 부가서비스가 없습니다.</p>
                     </div>
@@ -68,9 +68,9 @@ _%>
                 <div class="add-prd-wrap">
                     <%_ if (reserved.length > 0) { _%>
                     <ul class="list-comp-lineinfo">
-                        <% reserved.map(addition => {
-                            const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
-                        <li class="<%= hasButtons?'add-con':''%>" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
+                        <%_ reserved.map(addition => {
+                            const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; _%>
+                        <li<%- hasButtons ? ' class="add-con"' : null %> data-isFree="<%- addition.payFreeYn === 'Y' %>">
                             <%_ if (hasLink) { _%>
                             <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
                                 <%- include('./myt-join.myplanadd.wire.reserved.html', { addition: addition, hasButtons: hasButtons }); _%>
@@ -81,7 +81,7 @@ _%>
                             </div>
                             <%_ } _%>
                         </li>
-                        <%_ }); %>
+                        <%_ }); _%>
                     </ul>
                     <%_ } else { _%>
                     <div class="contents-empty">
@@ -101,7 +101,7 @@ _%>
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <ul class="add-product-list">
-                    <% joinable.map(addition => { _%>
+                    <%_ joinable.map(addition => { _%>
                     <li>
                         <%_ if (addition.prodLinkYn === "Y") { _%>
                         <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
@@ -115,13 +115,13 @@ _%>
                         <%_ } _%>
                         <%_ if (addition.btnList && addition.btnList.length > 0) { _%>
                         <span class="bt-wrap">
-                            <% addition.btnList.map(btn => { _%>
+                            <%_ addition.btnList.map(btn => { _%>
                             <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
-                            <%_ }); %>
+                            <%_ }); _%>
                         </span>
                         <%_ } _%>
                     </li>
-                    <%_ }); %>
+                    <%_ }); _%>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -151,8 +151,7 @@ _%>
     <!--// #contents -->
 </div>
 <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
-
-<% include ../../components/javascript.component.html _%>
+<%_ include ../../components/javascript.component.html _%>
 <script>
     $(document).ready(function () {
         new Tw.MyTJoinMyPlanAdd({
@@ -160,4 +159,4 @@ _%>
         });
     });
 </script>
-<% include ../../components/end.component.html _%>
+<%_ include ../../components/end.component.html _%>
