@@ -67,14 +67,13 @@ Tw.MainMenuSettings.prototype = {
     this.$versionText.text(version);
     this._currentVersion = version;
 
-    var versionArray = version.split('.')
-    if (versionArray[2] % 2 === 0) { // 대문자 
-      version = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1)
-    }
-    this._currentVersion = version;
-
     if (userAgentString.indexOf('osType:aos') !== -1) {
       this._osType = 'A';
+      var versionArray = version.split('.')
+      if (versionArray[2] % 2 === 0) { // 대문자 
+        version = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1)
+      }
+      this._currentVersion = version;
     }
 
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
