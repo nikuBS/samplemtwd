@@ -7,8 +7,8 @@ _%>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<%# TODO: 굳이 "((data.type === 2) && !data.myInfo) = true" 이 상황이면, DOM을 생성할 필요가 있을까? _%>
-<div class="cont-box"<%- ((data.type === 2) && !data.myInfo) ? ' style="display: none;"' : '' %>>
+<%# TODO: 굳이 "((data.type === 2) && !data.myInfo) = false" 이 상황이면, DOM을 생성할 필요가 있을까? _%>
+<div class="cont-box"<%- ((data.type === 2) && !data.myInfo) ? ' style="display: none;"' : null %>>
     <div class="my-subscription-wrap">
         <div class="basic-list tod-basic-list">
             <ul>

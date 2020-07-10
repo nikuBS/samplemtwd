@@ -15,9 +15,9 @@ _%>
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<div class="wrap" data-menuId="<%- pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 부가서비스', svcInfo: svcInfo, pageInfo: locals.pageInfo }); _%>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -35,16 +35,16 @@ _%>
             </div>
             <div class="cont-box nogaps">
                 <div class="add-prd-wrap">
-                    <div class="contents-empty fe-empty<%- additions.length > 0 ? ' none' : '' %>" aria-hidden="<%- additions.length > 0 %>">
+                    <div class="contents-empty fe-empty<%- additions.length > 0 ? ' none' : null %>" aria-hidden="<%- additions.length > 0 %>">
                         <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                         <p class="desc">현재 사용 중인 부가서비스가 없습니다.</p>
                     </div>
                     <%_ if (additions.length > 0) { _%>
                     <ul class="list-comp-lineinfo">
-                        <% additions.map(addition => { _%>
+                        <%_ additions.map(addition => { _%>
                             <%_ const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; _%>
                         <!-- [OP002-4115] 신규 변경사항 - 유료만 보기 탭 선택시 유료 및 상세참조 부가서비스 카운팅 개수 출력 -->
-                        <li class="<%= hasButtons ? 'add-con' : '' %>" data-isFree="<%- !addition.isNotFree %>">
+                        <li<%- hasButtons ? ' class="add-con"' : null %> data-isFree="<%- !addition.isNotFree %>">
                             <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
                             <%_ if (hasLink) { _%>
                             <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
@@ -58,7 +58,7 @@ _%>
                             <%# TODO: wire와 wireless가 서로 다르게 처리되는 부분 확인 필요 _%>
                             <%_ if (hasButtons) { _%>
                             <span class="bt-wrap">
-                                <% addition.btnList.map(btn => { _%>
+                                <%_ addition.btnList.map(btn => { _%>
                                 <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
                                 <%_ }); _%>
                             </span>
@@ -78,7 +78,7 @@ _%>
                 <div class="add-prd-wrap">
                     <ul class="list-comp-lineinfo">
                         <li>
-                            <a href="/product/roaming/my-use<%= roaming.recentlyJoinsProdNm ? '' : '#add' %>" class="link">
+                            <a href="/product/roaming/my-use<%= roaming.recentlyJoinsProdNm ? null : '#add' %>" class="link">
                                 <div class="lineinfo-user">
                                     <span class="info-title">나의 로밍 요금제 및<br>부가서비스</span>
                                 </div>
@@ -131,7 +131,7 @@ _%>
     <!--// #contents -->
 </div>
 <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
-<% include ../../components/javascript.component.html _%>
+<%_ include ../../components/javascript.component.html _%>
 <script>
     $(document).ready(function () {
         new Tw.MyTJoinMyPlanAdd({
@@ -139,4 +139,4 @@ _%>
         });
     });
 </script>
-<% include ../../components/end.component.html _%>
+<%_ include ../../components/end.component.html _%>
