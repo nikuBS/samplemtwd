@@ -329,12 +329,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
       return;
     }
-    var sort = "shortcut-A";
-    sort += ".rate-" + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
-    sort += ".service-" + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
-    sort += ".tv_internet-" + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
-    sort += ".troaming-" + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
-    sort += ".direct-" + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
+    var sort = Tw.CommonHelper.getCookie("search_sort::" + this._category) || 'A';
     this._accessQuery.sort = sort;
 
     var requestUrl = '/common/search/more?category=' + this._category + '&sort=' + this._accessQuery.sort + '&keyword='+(encodeURIComponent(this._searchInfo.query))+'&in_keyword=';
