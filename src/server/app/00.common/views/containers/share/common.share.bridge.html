@@ -59,7 +59,44 @@
   $(document).ready(function () {
     // Xtractor 에서 바로가기 url 수집하는 API 호출
     window.XtractorScript.xtrMenualApi('<%= referer %>');
+
     new Tw.CommonShareAppInstallInfo($('.wrap'), '<%= target %>', '<%= loginType %>', '<%= referer %>');
+
+    var getParameters = function (paramName) {
+        // 리턴값을 위한 변수 선언
+        var returnValue;
+        // 현재 URL 가져오기
+        var url = location.href;
+        // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
+        var parameters = url.slice(url.indexOf("?") + 1, url.length).split("&");
+        // 나누어진 값의 비교를 통해 paramName 으로 요청된 데이터의 값만 return
+        for (var i = 0; i < parameters.length; i++) {
+          var varName = parameters[i].split("=")[0];
+          if (varName.toUpperCase() == paramName.toUpperCase()) {
+            returnValue = parameters[i].split("=")[1];
+            return decodeURIComponent(returnValue);
+          }
+        }
+      };
+      $.ajax({
+        url: getParameters('target'), // + getParameters("target"), // 클라이언트가 요청을 보낼 서버의 URL 주소
+        type: "GET", // HTTP 요청 방식(GET, POST)
+      }).done(function (json) {
+
+        //   alert(json);
+        var jbMeta1 = $(json).filter('meta[property="og:description"]').attr('content');
+        var jbMeta2 = $(json).filter('meta[property="og:title"]').attr('content');
+        var jbMeta3 = $(json).filter('meta[property="og:image"]').attr('content');
+        var jbMeta4 = $(json).filter('meta[name="description"]').attr('content');
+
+        $('meta[property="og:description"]').attr("content", jbMeta1);
+        $('meta[property="og:title"]').attr("content", jbMeta2);
+        $('meta[property="og:image"]').attr("content", jbMeta3);
+        $('meta[name="description"]').attr("content", jbMeta4);
+
+
+      });
+
   });
 </script>
 <% include ../components/end.component.html %>
