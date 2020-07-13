@@ -41,8 +41,7 @@
     "slick-carousel": "^1.8.1",
     "underscore": "^1.9.1",
     "whatap": "^0.4.2",
-    "winston": "^2.4.4",
-    "cheerio": "0.22.0"
+    "winston": "^2.4.4"
   },
   "devDependencies": {
     "@types/ejs": "^2.6.0",
