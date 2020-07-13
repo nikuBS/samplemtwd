@@ -36,7 +36,7 @@ class CommonShareBridge extends TwViewController {
     const referer = req.query.referer;
 
     request(`http://${req['headers']['host']}${req.query['target']}`, function (error, response, body) {
-      const $ = cheerio.load(body);
+      // const $ = cheerio.load(body);
       // let title = $("meta[property='og:title']").attr('content')
       // let description = $("meta[property='og:description']").attr('content')
       let title = '초시대를 여는 T world';
