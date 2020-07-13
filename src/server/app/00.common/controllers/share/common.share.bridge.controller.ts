@@ -11,7 +11,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 
 
 import request from 'request';
-import cheerio from 'cheerio';
+// import cheerio from 'cheerio';
 /**
  * @desc App 안내화면 초기화를 위한 class
  */
@@ -36,9 +36,11 @@ class CommonShareBridge extends TwViewController {
     const referer = req.query.referer;
 
     request(`http://${req['headers']['host']}${req.query['target']}`, function (error, response, body) {
-      const $ = cheerio.load(body);
-      let title = $("meta[property='og:title']").attr('content')
-      let description = $("meta[property='og:description']").attr('content')
+      // const $ = cheerio.load(body);
+      // let title = $("meta[property='og:title']").attr('content')
+      // let description = $("meta[property='og:description']").attr('content')
+      let title = '초시대를 여는 T world';
+      let description = '';
       res.render('share/common.share.bridge.html', { 
           isAndroid: BrowserHelper.isAndroid(req), 
           target, 
