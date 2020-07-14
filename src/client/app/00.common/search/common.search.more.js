@@ -163,7 +163,7 @@ $.extend(Tw.CommonSearchMore.prototype,
     // this.$container.find('.horizontal-list').css('width', '2431px');
 
     // 최근 검색어 클릭시 초기화 
-    this.$container.on('click', '#auto_complete_list li', function(e) {
+    this.$container.on('click', '#auto_complete_list li, #recently_keyword_list li a', function(e) {
       Tw.CommonHelper.setCookie('search_sort::rate', 'A');
       Tw.CommonHelper.setCookie('search_sort::service', 'A');
       Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
