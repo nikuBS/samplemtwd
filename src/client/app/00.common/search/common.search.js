@@ -259,34 +259,6 @@ Tw.CommonSearch.prototype = {
       $(window).scrollTop(0);
     }, this));
 
-    // 최근 검색어 클릭시 초기화 
-    this.$container.on('click', '#auto_complete_list li', function(e) {
-      Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-      Tw.CommonHelper.setCookie('search_sort::service', 'A');
-      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-      Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
-      Tw.CommonHelper.setCookie('search_sort::direct', 'D');
-    });
-
-    function sortCodeToName(code) {
-      if (code === 'A') return '추천순';
-      if (code === 'H') return '높은 가격순';
-      if (code === 'L') return '낮은 가격순';
-      if (code === 'D') return '최신순';
-    }
-
-    // 뒤로가기 초기화 정렬 초기화 처리 
-    $(window).bind("pageshow", function (event) { 
-      if (event.originalEvent.persisted) { 
-      } else { 
-        $('.fe-btn-sort-rate').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::rate')));
-        $('.fe-btn-sort-service').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::service')));
-        $('.fe-btn-sort-tv_internet').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::tv_internet')));
-        $('.fe-btn-sort-troaming').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::troaming')));
-        $('.fe-btn-sort-direct').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::direct')));
-      }
-    });
-
     this.$container.on('click','.fe-category',$.proxy(this._selectCategory,this));    // 카테고리 클릭시 이벤트 바인딩
     // this.$container.on('click','#fe-more-rate',function(e){
     //   e.preventDefault();
@@ -327,6 +299,37 @@ Tw.CommonSearch.prototype = {
       // 쿠키 초기화
       Tw.CommonHelper.setCookie('scroll_position', '');
     }
+
+
+    // 최근 검색어 클릭시 초기화 
+    this.$container.on('click', '#auto_complete_list li', function(e) {
+      Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+      Tw.CommonHelper.setCookie('search_sort::service', 'A');
+      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+      Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+      Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    });
+
+    function sortCodeToName(code) {
+      if (code === 'A') return '추천순';
+      if (code === 'H') return '높은 가격순';
+      if (code === 'L') return '낮은 가격순';
+      if (code === 'D') return '최신순';
+    }
+
+    // 뒤로가기 초기화 정렬 초기화 처리 
+    $(window).bind("pageshow", function (event) { 
+      if (event.originalEvent.persisted) { 
+      } else { 
+        console.log("화면진입 sort 재정렬");
+        $('.fe-btn-sort-rate').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::rate')));
+        $('.fe-btn-sort-service').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::service')));
+        $('.fe-btn-sort-tv_internet').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::tv_internet')));
+        $('.fe-btn-sort-troaming').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::troaming')));
+        $('.fe-btn-sort-direct').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::direct')));
+      }
+    });
+
   },
   /**
    * @function
