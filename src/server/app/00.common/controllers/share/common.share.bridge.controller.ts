@@ -11,7 +11,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 
 import request from 'request';
 // import cheerio from 'cheerio';
-import client from 'cheerio-httpcli';
+// import client from 'cheerio-httpcli';
 
 
 /**
@@ -37,21 +37,22 @@ class CommonShareBridge extends TwViewController {
     const loginType = req.query.loginType;
     const referer = req.query.referer;
 
-    client.fetch(`http://${req['headers']['host']}${req.query['target']}`, {}, function (err, $, response, body) {
-      let title = $("meta[property='og:title']").attr('content')
-      let description = $("meta[property='og:description']").attr('content')
-      res.render('share/common.share.bridge.html', { 
-        isAndroid: BrowserHelper.isAndroid(req), 
-        target, 
-        loginType, 
-        referer, 
-        pageInfo,
-        ogTitle: title,
-        ogDesc: description
-      });
+    // client.fetch(`http://${req['headers']['host']}${req.query['target']}`, {}, function (err, $, response, body) {
+    //   let title = $("meta[property='og:title']").attr('content')
+    //   let description = $("meta[property='og:description']").attr('content')
+    //   res.render('share/common.share.bridge.html', { 
+    //     isAndroid: BrowserHelper.isAndroid(req), 
+    //     target, 
+    //     loginType, 
+    //     referer, 
+    //     pageInfo,
+    //     ogTitle: title,
+    //     ogDesc: description
+    //   });
 
-    });
-    // res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo });
+    // });
+    const ogDesc = '';
+    res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
   }
 }
 export default CommonShareBridge;
