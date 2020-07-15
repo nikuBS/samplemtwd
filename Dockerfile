@@ -1,8 +1,9 @@
 # Node.js app Docker file
-# ARG DOCKER_REGISTRY
+ARG DOCKER_REGISTRY
 # Linux dependencies
 # FROM ${DOCKER_REGISTRY}/infra/nodejs8-utf8:1.0.1
-FROM node:8.11.0
+FROM ${DOCKER_REGISTRY}/docker-hub/node:11.15
+# FROM node:11.15
 #FROM node:carbon
 
 WORKDIR /home/appadmin
