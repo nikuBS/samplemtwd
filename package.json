@@ -17,7 +17,6 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
-    "cheerio-httpcli": "^0.8.1",
     "connect-redis": "^3.4.0",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.6.1",
