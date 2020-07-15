@@ -299,6 +299,37 @@ Tw.CommonSearch.prototype = {
       // 쿠키 초기화
       Tw.CommonHelper.setCookie('scroll_position', '');
     }
+
+
+    // 최근 검색어 클릭시 초기화 
+    this.$container.on('click', '#auto_complete_list li, #recently_keyword_list li a', function(e) {
+      Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+      Tw.CommonHelper.setCookie('search_sort::service', 'A');
+      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+      Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+      Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    });
+
+    function sortCodeToName(code) {
+      if (code === 'A') return '추천순';
+      if (code === 'H') return '높은 가격순';
+      if (code === 'L') return '낮은 가격순';
+      if (code === 'D') return '최신순';
+    }
+
+    // 뒤로가기 초기화 정렬 초기화 처리 
+    $(window).bind("pageshow", function (event) { 
+      if (event.originalEvent.persisted) { 
+      } else { 
+        console.log("화면진입 sort 재정렬");
+        $('.fe-btn-sort-rate').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::rate')));
+        $('.fe-btn-sort-service').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::service')));
+        $('.fe-btn-sort-tv_internet').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::tv_internet')));
+        $('.fe-btn-sort-troaming').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::troaming')));
+        $('.fe-btn-sort-direct').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::direct')));
+      }
+    });
+
   },
   /**
    * @function
@@ -861,6 +892,19 @@ Tw.CommonSearch.prototype = {
     this._selectedCollectionToChangeSort = selectedCollection;
 
     var tempBtnStr = '.fe-btn-sort-' + selectedCollection;
+
+    // sort=shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D
+    function getParam(sname) {
+      var linkUrl = location.search;
+      var params = linkUrl.substr(linkUrl.indexOf("?") + 1);
+      var sval = "";
+      params = params.split("&");
+      for (var i = 0; i < params.length; i++) {
+          temp = params[i].split("=");
+          if ([temp[0]] == sname) { sval = temp[1]; }
+      }
+      return sval;
+    }
     
     this._popupService.open({
       hbs: this._ACTION_SHEET_HBS,
@@ -1022,6 +1066,7 @@ Tw.CommonSearch.prototype = {
       var url = $("a." + collection).attr('data-url');
       url = replaceQueryParam('sort', sort, url);
       $("a." + collection).attr('data-url', url);
+      $("button." + collection).attr('data-url', url);
     }
     Tw.CommonHelper.setCookie('search_sort::' + collection, sort);
     
