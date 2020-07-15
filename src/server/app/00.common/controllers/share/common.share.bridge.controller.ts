@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 
-import client from 'cheerio-httpcli';
+// import client from 'cheerio-httpcli';
 
 
 /**
@@ -35,22 +35,22 @@ class CommonShareBridge extends TwViewController {
     const loginType = req.query.loginType;
     const referer = req.query.referer;
 
-    client.fetch(`http://${req['headers']['host']}${req.query['target']}`, {}, function (err, $, response, body) {
-      let title = $("meta[property='og:title']").attr('content')
-      let description = $("meta[property='og:description']").attr('content')
-      res.render('share/common.share.bridge.html', { 
-        isAndroid: BrowserHelper.isAndroid(req), 
-        target, 
-        loginType, 
-        referer, 
-        pageInfo,
-        ogTitle: title,
-        ogDesc: description
-      });
+    // client.fetch(`http://${req['headers']['host']}${req.query['target']}`, {}, function (err, $, response, body) {
+    //   let title = $("meta[property='og:title']").attr('content')
+    //   let description = $("meta[property='og:description']").attr('content')
+    //   res.render('share/common.share.bridge.html', { 
+    //     isAndroid: BrowserHelper.isAndroid(req), 
+    //     target, 
+    //     loginType, 
+    //     referer, 
+    //     pageInfo,
+    //     ogTitle: title,
+    //     ogDesc: description
+    //   });
 
-    });
-    // const ogDesc = '';
-    // res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
+    // });
+    const ogDesc = '';
+    res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
   }
 }
 export default CommonShareBridge;
