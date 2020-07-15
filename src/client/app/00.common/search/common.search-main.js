@@ -89,6 +89,7 @@ Tw.CommonSearchMain.prototype = {
     this.$container.on('click','#fe-btn-rcmnd',$.proxy(this._goRcmndLink,this));
     this.$container.on('click','.fe-btn-doLikeThis',$.proxy(this._goDoLikeThisLink,this));
   },
+
   /**
    * @function
    * @desc 추천메뉴 정보 로드
@@ -237,6 +238,13 @@ Tw.CommonSearchMain.prototype = {
       recentlyKeywordData[this._nowUser].splice(removeIdx,1);
     },this));
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(recentlyKeywordData));
+
+    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+    Tw.CommonHelper.setCookie('search_sort::service', 'A');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    
     return recentlyKeywordData;
   },
   /**

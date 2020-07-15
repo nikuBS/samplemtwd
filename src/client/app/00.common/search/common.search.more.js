@@ -127,7 +127,6 @@ $.extend(Tw.CommonSearchMore.prototype,
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.find('#contents').removeClass('none');
     this.$container.on('click','#page_selector',$.proxy(this._openPageSelector,this));
-    
 
     this.$categorySlide = $('#fe-category-slide');
     this.$categorySlide.addClass('horizontal');
@@ -162,6 +161,36 @@ $.extend(Tw.CommonSearchMore.prototype,
 
     //TEST code
     // this.$container.find('.horizontal-list').css('width', '2431px');
+
+    // 최근 검색어 클릭시 초기화 
+    this.$container.on('click', '#auto_complete_list li, #recently_keyword_list li a', function(e) {
+      Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+      Tw.CommonHelper.setCookie('search_sort::service', 'A');
+      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+      Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+      Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    });
+
+    function sortCodeToName(code) {
+      if (code === 'A') return '추천순';
+      if (code === 'H') return '높은 가격순';
+      if (code === 'L') return '낮은 가격순';
+      if (code === 'D') return '최신순';
+    }
+    
+    // 뒤로가기 초기화 정렬 초기화 처리 
+    $(window).bind("pageshow", function (event) { 
+      if (event.originalEvent.persisted) { 
+      } else { 
+        console.log("화면진입 sort 재정렬");
+        $('.fe-btn-sort-rate').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::rate')));
+        $('.fe-btn-sort-service').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::service')));
+        $('.fe-btn-sort-tv_internet').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::tv_internet')));
+        $('.fe-btn-sort-troaming').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::troaming')));
+        $('.fe-btn-sort-direct').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::direct')));
+      }
+    });
+
   },
   /**
    * @function
@@ -329,12 +358,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
       return;
     }
-    var sort = "shortcut-A";
-    sort += ".rate-" + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
-    sort += ".service-" + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
-    sort += ".tv_internet-" + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
-    sort += ".troaming-" + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
-    sort += ".direct-" + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
+    var sort = Tw.CommonHelper.getCookie("search_sort::" + this._category) || 'A';
     this._accessQuery.sort = sort;
 
     var requestUrl = '/common/search/more?category=' + this._category + '&sort=' + this._accessQuery.sort + '&keyword='+(encodeURIComponent(this._searchInfo.query))+'&in_keyword=';
