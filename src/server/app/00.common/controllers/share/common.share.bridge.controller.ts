@@ -34,16 +34,14 @@ class CommonShareBridge extends TwViewController {
     const target = req.query.target;
     const loginType = req.query.loginType;
     const referer = req.query.referer;
+    const thisMain = this;
 
-    request(`http://${req['headers']['host']}${req.query['target']}`, function (error, response, body) {
+    request(`https://app.tworld.co.kr${req.query['target']}`, function (error, response, body) {
       try {
-        console.log(body);
         var title = body.match(/<meta[ property="og:title" />]*content=[\"']?([^>\"']+)[\"']?[^>]*>/g, "\\$&");
-        console.log(title);
         title = title[0].split('\"')[3];
         var description = body.match(/<meta[ property="og:description" />]*content=[\"']?([^>\"']+)[\"']?[^>]*>/g, "\\$&");
         description = description[0].split('\"')[3];
-        console.log(title, description);
     
         res.render('share/common.share.bridge.html', { 
           isAndroid: BrowserHelper.isAndroid(req), 
@@ -55,16 +53,15 @@ class CommonShareBridge extends TwViewController {
           ogDesc: description
         });
       } catch (e) {
-        console.log(e);
-        
+        thisMain.logger.error(thisMain, '[ meta tag ] : ', e);
         res.render('share/common.share.bridge.html', { 
           isAndroid: BrowserHelper.isAndroid(req), 
           target, 
           loginType, 
           referer, 
           pageInfo,
-          ogTitle: '',
-          ogDesc: ''
+          ogTitle: title,
+          ogDesc: description
         });
       }
     });
