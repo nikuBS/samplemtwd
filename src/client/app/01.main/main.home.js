@@ -38,6 +38,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._adid = null;
   this._twdUrl = '';
   this.mbrNm = mbrNm || '';
+  this.isStoreMove = false;
 
   this.isLogin = isLogin;
   // this._lineComponent = new Tw.LineComponent();
@@ -63,11 +64,20 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._initPersonAction();
   
   if ( isLogin === 'true' ) {
+    // 왜 로그인을 하지 않아도 무조건 타는가... 
     this._cachedElement();
     this._initWelcomeMsg();
     this._bindEvent();
     this._initScroll();
     this._setCoachMark();
+
+    this.isStoreMove = Tw.CommonHelper.getCookie('isStoreMove') || false;
+    if (!this.isStoreMove) {
+      // 갤럭시s20 출시로 스토어 탭으로 이동
+      this.$container.find('#contents > div > div.home-tab > div > ul > li:nth-child(2) > div > button').click();
+      this.isStoreMove = true;
+      Tw.CommonHelper.setCookie('isStoreMove', true);
+    }
   }
   // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
@@ -176,6 +186,8 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-close-ad-rcv-agree-banner', $.proxy( function() { this.$adRcvAgreeBanner.addClass('none'); }, this ));
     this.$container.on('click', '#fe-bt-on-ad-rcv-agree-banner', $.proxy(this._onClickAgreeAdRcv, this));
     this.$container.on('click', '#fe-bt-detail-ad-rcv-agree-banner', $.proxy( function() { Tw.CommonHelper.openTermLayer2('03'); }, this ));
+
+    
   },
 
   /**
