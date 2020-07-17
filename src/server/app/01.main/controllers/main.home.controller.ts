@@ -682,22 +682,23 @@ class MainHome extends TwViewController {
     };
 
     if (BrowserHelper.isApp(req)) {
-      const channelIds = [EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
-      return this.apiService.request(API_CMD.BFF_10_0187, {channelIds: channelIds}).map((resp) => {
+      // const channelIds = [EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
+      // return this.apiService.request(API_CMD.BFF_10_0187, {channelIds: channelIds}).map((resp) => {
 
-        if ( resp.code === API_CODE.CODE_00 ) {
-          if ( !FormatHelper.isEmpty(resp.result) ) {
-            retVal.hasRecommendProds = true;
-            const items = resp.result.results[EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS].items || [];
-            // 추천 요금이 없거나, 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
-            if (FormatHelper.isEmpty(items)
-                || (!FormatHelper.isEmpty(items) && items[0].id === prodId)) {
-                  retVal.hasRecommendProds = false;
-            }
-          }
-        }
-        return retVal;
-      });
+      //   if ( resp.code === API_CODE.CODE_00 ) {
+      //     if ( !FormatHelper.isEmpty(resp.result) ) {
+      //       retVal.hasRecommendProds = true;
+      //       const items = resp.result.results[EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS].items || [];
+      //       // 추천 요금이 없거나, 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
+      //       if (FormatHelper.isEmpty(items)
+      //           || (!FormatHelper.isEmpty(items) && items[0].id === prodId)) {
+      //             retVal.hasRecommendProds = false;
+      //       }
+      //     }
+      //   }
+      //   return retVal;
+      // });
+      return Observable.of(retVal);
     } else {
       return Observable.of(retVal);
     }
