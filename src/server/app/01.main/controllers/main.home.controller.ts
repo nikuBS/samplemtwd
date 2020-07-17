@@ -50,7 +50,6 @@ class MainHome extends TwViewController {
    * @return {void}
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const svcType = this.getSvcType(svcInfo);
     const homeData = {
       usageData: null,
       membershipData: null,
@@ -70,72 +69,41 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    if ( svcType.login ) {
-      if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
-        if ( svcType.mobilePhone ) {
-          // 모바일 - 휴대폰 회선
-          Observable.combineLatest(
-            this.getUsageData(svcInfo),
-            this.getMembershipData(svcInfo),
-            this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-            this.getRecommendProds(req, svcInfo.prodId),
-            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-            this.getProductGroup(),
-            this.getPersonData(svcInfo, req)
-          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
-            // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-            if (usageData.data) {
-              usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
-            }
-            homeData.usageData = usageData;
-            homeData.membershipData = membershipData;
-            recommendProdsData = recommendProdsResult;
-            svcInfo.svcType = svcType;
-            svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
-            svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
-            svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
-            svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck // 아이콘 문자 비노출시간 체크 
-            res.render(`main.home-${flag}.html`, {
-              svcInfo,
-              homeData,
-              redisData,
-              pageInfo,
-              noticeType: svcInfo.noticeType,
-              recommendProdsData,
-              isAdRcvAgreeBannerShown
-            });
+    if ( svcInfo ) {
+      if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
+        // 모바일 - 휴대폰 회선
+        Observable.combineLatest(
+          this.getUsageData(svcInfo),
+          this.getMembershipData(svcInfo),
+          this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+          this.getRecommendProds(req, svcInfo.prodId),
+          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+          this.getProductGroup(),
+          this.getPersonData(svcInfo, req)
+        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
+          // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+          if (usageData.data) {
+            usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+          }
+          homeData.usageData = usageData;
+          homeData.membershipData = membershipData;
+          recommendProdsData = recommendProdsResult;
+          svcInfo.personTimeChk = personData.personDisableTimeCheck; // 아이콘 비노출 시간 체크
+          svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
+          svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
+          svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
+          res.render(`main.home-${flag}.html`, {
+            svcInfo,
+            homeData,
+            redisData,
+            pageInfo,
+            noticeType: svcInfo.noticeType,
+            recommendProdsData,
+            isAdRcvAgreeBannerShown
           });
-        } else {
-          // 모바일 - 휴대폰 외 회선
-          Observable.combineLatest(
-            this.getUsageData(svcInfo),
-            this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-            this.getProductGroup(),
-            this.getPersonData(svcInfo, req)
-          ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
-            // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-            if (usageData.data) {
-              usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
-            }
-            homeData.usageData = usageData;
-            svcInfo.svcType = svcType;
-            svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
-            svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
-            svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
-            res.render(`main.home-${flag}.html`, {
-              svcInfo,
-              homeData,
-              redisData,
-              pageInfo,
-              noticeType: svcInfo.noticeType,
-              recommendProdsData,
-              isAdRcvAgreeBannerShown
-            });
-          });
-        }
-      } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
-        // 인터넷 회선
+        });
+      } else if (['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1) {
+        // IPTV, 인터넷 , 전화 회선
         Observable.combineLatest(
           this.getBillData(svcInfo),
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
@@ -143,7 +111,33 @@ class MainHome extends TwViewController {
           this.getPersonData(svcInfo, req)
         ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
           homeData.billData = billData;
-          svcInfo.svcType = svcType;
+          svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
+          svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
+          svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
+          res.render(`main.home-${flag}.html`, {
+            svcInfo,
+            homeData,
+            redisData,
+            pageInfo,
+            noticeType: svcInfo.noticeType,
+            recommendProdsData,
+            isAdRcvAgreeBannerShown
+          });
+        });
+      } else {
+        // 모바일 및 IPTV, 인터넷, 전화 외 회선
+        Observable.combineLatest(
+          this.getUsageData(svcInfo),
+          this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+          this.getProductGroup(),
+          this.getPersonData(svcInfo, req)
+        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
+          // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+          if (usageData.data) {
+            usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
+          }
+          homeData.usageData = usageData;
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
@@ -172,7 +166,7 @@ class MainHome extends TwViewController {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
         personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
         res.render(`main.home-${flag}.html`, {
-          svcInfo: svcInfo || { svcType },
+          svcInfo,
           homeData,
           redisData,
           pageInfo,
@@ -214,32 +208,6 @@ class MainHome extends TwViewController {
           };
         });
       });
-  }
-
-  /**
-   * svcInfo 에서 필요한 정보를 object로 구성
-   * @param {object} svcInfo
-   * @return {object}
-   */
-  private getSvcType(svcInfo: any): any {
-    const svcType = {
-      svcCategory: LINE_NAME.MOBILE,
-      mobilePhone: false,
-      login: false
-    };
-
-    if ( !FormatHelper.isEmpty(svcInfo) ) {
-      svcType.login = true;
-      if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
-        svcType.mobilePhone = true;
-      } else if ( svcInfo.svcAttrCd === SVC_ATTR_E.INTERNET || svcInfo.svcAttrCd === SVC_ATTR_E.IPTV || svcInfo.svcAttrCd === SVC_ATTR_E.TELEPHONE ) {
-        svcType.svcCategory = LINE_NAME.INTERNET_PHONE_IPTV;
-      } else if ( svcInfo.svcAttrCd === SVC_ATTR_E.POINT_CAM ) {
-        svcType.svcCategory = LINE_NAME.SECURITY;
-      }
-    }
-
-    return svcType;
   }
 
   /**
@@ -398,8 +366,8 @@ class MainHome extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       }
-      return null;
     });
+      return null;
   }
 
   /**

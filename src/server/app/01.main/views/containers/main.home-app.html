@@ -14,7 +14,6 @@
         <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
-<% var svcType = svcInfo && svcInfo.svcType ? svcInfo.svcType : {}; %>
 <!--// #skip_navigation -->
 <div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" data-layertype="<%= noticeType %>">
     <!-- #header -->
@@ -42,381 +41,445 @@
                 <div class="home-slider-belt home-slider-belt-active">
                     <!-- .home-slider-my -->
                     <div class="home-slider-my">
-                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
                         <!-- .layer-noti -->
                         <div id="fe-tmpl-noti">
                         </div>
                         <!-- // .layer-noti -->
                         <% } %>
 
-                        <div class="main-top-group <% if(!svcType.login){%>mb0 pb0<% } %>">
+                        <div class="main-top-group <% if(!svcInfo){%>mb0 pb0<% } %>">
                             <!-- 모바일 회선_잔여 데이터 -->
-                            <% if (svcType.login) { %>
-                            <% if (svcInfo.totalSvcCnt === '0') { %>
-                            <!-- 미가입 -->
-                            <div class="main-error-box">
-                                <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                <strong class="ti">가입하신 회선이 없습니다.</strong>
-                                <p class="tx">SK텔레콤의 가족이 되어<br>다양하고 편리한 서비스를 이용해 보세요.</p>
-                                <div class="btn-area">
-                                    <button type="button" class="btn-round1 btn-style4 fe-home-external" title="새창" data-url="https://m.shop.tworld.co.kr/wireless/product/list">휴대폰 보러가기</button>
+                            <% if (svcInfo) { %>
+                                <% if (svcInfo.totalSvcCnt === '0') { %>
+                                <!-- 미가입 -->
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">가입하신 회선이 없습니다.</strong>
+                                    <p class="tx">SK텔레콤의 가족이 되어<br>다양하고 편리한 서비스를 이용해 보세요.</p>
+                                    <div class="btn-area">
+                                        <button type="button" class="btn-round1 btn-style4 fe-home-external" title="새창" data-url="https://m.shop.tworld.co.kr/wireless/product/list">휴대폰 보러가기</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- // 미가입 -->
-                            <% } else if ( svcInfo.expsSvcCnt === '0') { %>
-                            <!-- 미등롣 -->
-                            <div class="main-error-box">
-                                <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                <strong class="ti">회선 등록이 필요합니다.</strong>
-                                <p class="tx">아직 등록되지 않은 회선이 <%= svcInfo.totalSvcCnt %>개 있습니다.<br>원활한 서비스 이용을 위해서<br>적어도 1개의 회선은 등록하셔야 합니다.</p>
-                                <div class="btn-area">
-                                    <a href="/common/member/line" type="button" class="btn-round1 btn-style1">회선 등록하기</a>
+                                <!-- // 미가입 -->
+                                <% } else if ( svcInfo.expsSvcCnt === '0') { %>
+                                <!-- 미등롣 -->
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">회선 등록이 필요합니다.</strong>
+                                    <p class="tx">아직 등록되지 않은 회선이 <%= svcInfo.totalSvcCnt %>개 있습니다.<br>원활한 서비스 이용을 위해서<br>적어도 1개의 회선은 등록하셔야 합니다.</p>
+                                    <div class="btn-area">
+                                        <a href="/common/member/line" type="button" class="btn-round1 btn-style1">회선 등록하기</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- // 미등록 -->
-                            <% } else { %>
-                            <% if (svcType.svcCategory === 'm') { %>
-                            <% if (homeData.usageData) { %>
-                            <% if (homeData.usageData.code === '00') { %>
-                            <!-- 모바일 회선_잔여 데이터 -->
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line ff-tg-light fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <strong class="ti"><a href="/myt-join/myplan" class="bt" data-xt_eid="CMMA_A2_B6-2" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNm %></a></strong>
+                                <!-- // 미등록 -->
+                                <% } else { %>
+                                <% if (svcInfo.svcAttrCd === 'M1') { %>
+                                <% if (homeData.usageData) { %>
+                                <% if (homeData.usageData.code === '00') { %>
+                                <!-- 모바일 회선_잔여 데이터 -->
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line ff-tg-light fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <strong class="ti"><a href="/myt-join/myplan" class="bt" data-xt_eid="CMMA_A2_B6-2" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNm %></a></strong>
 
-                                <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
-                                <!-- .widget -->
-                                <div class="widget">
-                                    <div class="widget-box donutchart">
-                                        <!-- .donut-chart -->
-                                        <a href="<%=homeData.usageData.data.linkUrl %>" class="donut-chart data-type" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
-                                            <div class="donut-chart-area">
-                                                <% if(homeData.usageData.shareTotal !== 0) { %>
-                                                <!-- loop 공유데이터 -->
-                                                <div class="c100 p0" data-percent="<%= homeData.usageData.data.shareRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
-                                                    <div class="blue"><!-- red, yellow, green, blue -->
-                                                        <div class="slice">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
-                                                        </div>
-                                                        <div class="slice transparent">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
+                                    <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box donutchart">
+                                            <!-- .donut-chart -->
+                                            <a href="<%=homeData.usageData.data.linkUrl %>" class="donut-chart data-type" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
+                                                <div class="donut-chart-area">
+                                                    <% if(homeData.usageData.shareTotal !== 0) { %>
+                                                    <!-- loop 공유데이터 -->
+                                                    <div class="c100 p0" data-percent="<%= homeData.usageData.data.shareRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="blue"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- // loop -->
+                                                    <div class="dot"></div>
+                                                    <div class="highlight"></div>
+                                                    <% } %>
+                                                    <!-- loop 남은 데이터-->
+                                                    <div class="c100 p0" data-percent="<%= homeData.usageData.data.myRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="red"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // loop -->
                                                 </div>
-                                                <!-- // loop -->
-                                                <div class="dot"></div>
-                                                <div class="highlight"></div>
+                                                <!-- 5GX 데이터 시간권 사용중-->
+                                                <% if(homeData.usageData.data.usingFivegxTicketTime) { %>
+                                                <span class="ti-data">
+                                                    <strong class="ti">데이터 시간권</strong>
+                                                    <em class="data"><span>사용중</span></em>
+                                                </span>
+                                                <span class="tx-add tod-txcolor6"><%= homeData.usageData.data.showUsingFiveGxTicketTimeRemainedText %> 종료</span>
+                                                <% } else { %>
+                                                <span class="ti-data">
+                                                    <strong class="ti">남은 데이터</strong>
+                                                    <em class="data">
+                                                        <span class="ff-tg-medium"><%= homeData.usageData.data.showAddRemained %></span>
+                                                    </em>
+                                                </span>
                                                 <% } %>
-                                                <!-- loop 남은 데이터-->
-                                                <div class="c100 p0" data-percent="<%= homeData.usageData.data.myRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
-                                                    <div class="red"><!-- red, yellow, green, blue -->
-                                                        <div class="slice">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
-                                                        </div>
-                                                        <div class="slice transparent">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- // loop -->
-                                            </div>
-                                            <!-- 5GX 데이터 시간권 사용중-->
-                                            <% if(homeData.usageData.data.usingFivegxTicketTime) { %>
-                                            <span class="ti-data">
-                                                <strong class="ti">데이터 시간권</strong>
-                                                <em class="data"><span>사용중</span></em>
-                                            </span>
-                                            <span class="tx-add tod-txcolor6"><%= homeData.usageData.data.showUsingFiveGxTicketTimeRemainedText %> 종료</span>
-                                            <% } else { %>
-                                            <span class="ti-data">
-                                                <strong class="ti">남은 데이터</strong>
-                                                <em class="data">
-                                                    <span class="ff-tg-medium"><%= homeData.usageData.data.showAddRemained %></span>
-                                                </em>
-                                            </span>
+                                            </a>
+                                            <!-- // .donut-chart -->
+                                            <% if(!homeData.usageData.data.usingFivegxTicketTime) { %>
+                                            <button id="fe-bt-data-link" class="data-add fe-coach-data-target" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>" data-xt_eid="CMMA_A2_B6-3" data-xt_csid="NO" data-xt_action="BC"><span>충전/선물</span></button>
                                             <% } %>
-                                        </a>
-                                        <!-- // .donut-chart -->
-                                        <% if(!homeData.usageData.data.usingFivegxTicketTime) { %>
-                                        <button id="fe-bt-data-link" class="data-add fe-coach-data-target" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>" data-xt_eid="CMMA_A2_B6-3" data-xt_csid="NO" data-xt_action="BC"><span>충전/선물</span></button>
-                                        <% } %>
-                                        <!--<span id="fe-coach-data" class="coach-mark fe-coach-data none"><strong class="point">충전/선물/공유를</strong> 바로 할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>-->
+                                            <!--<span id="fe-coach-data" class="coach-mark fe-coach-data none"><strong class="point">충전/선물/공유를</strong> 바로 할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>-->
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- // .widget -->
+                                    <!-- // .widget -->
 
-                                <!--<% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>-->
-                                <!--<div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">-->
-                                    <!--<span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>-->
-                                    <!--<% if(homeData.usageData.data.isTplanUse) { %>-->
-                                    <!--<span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>-->
-                                    <!--<% } else { %>-->
-                                    <!--<span class="category1"><span>T가족모아데이터</span><button data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><span class="blind">가입하기</span></button></span>-->
+                                    <!--<% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>-->
+                                    <!--<div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">-->
+                                        <!--<span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>-->
+                                        <!--<% if(homeData.usageData.data.isTplanUse) { %>-->
+                                        <!--<span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>-->
+                                        <!--<% } else { %>-->
+                                        <!--<span class="category1"><span>T가족모아데이터</span><button data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><span class="blind">가입하기</span></button></span>-->
+                                        <!--<% } %>-->
+                                    <!--</div>-->
                                     <!--<% } %>-->
-                                <!--</div>-->
-                                <!--<% } %>-->
 
-                                <div class="call-message">
-                                    <% if(homeData.usageData.data.isTplanUse) { %>
-                                    <div class="tod-flydata-wrap">
-                                            <a href="/myt-data/hotdata" class="tod-link-flydata">
-                                                <span class="sp-tit"><i class="tod-icon-flydata" data-xt_eid="CMMA_A2_B6-229" data-xt_csid="NO" data-xt_action="BC"></i>T가족모아데이터</span>
-                                                <span class="sp-data"><%= homeData.usageData.data.showShareRemained %></span>
-                                            </a>
-                                        </div>
-                                    <% } %>
-                                    <% if(homeData.usageData.fivegxTicketTime.isShow) { %>
+                                    <div class="call-message">
+                                        <% if(homeData.usageData.data.isTplanUse) { %>
                                         <div class="tod-flydata-wrap">
-                                            <a href="/myt-data/hotdata" class="bt-5gx" data-xt_eid="CMMA_A2_B6-286" data-xt_csid="NO" data-xt_action="BC">
-                                                <i class="icon-time-34"></i> 데이터 시간권 <span class="remain"><%= homeData.usageData.fivegxTicketTime.showRemainedText %></span>
+                                                <a href="/myt-data/hotdata" class="tod-link-flydata">
+                                                    <span class="sp-tit"><i class="tod-icon-flydata" data-xt_eid="CMMA_A2_B6-229" data-xt_csid="NO" data-xt_action="BC"></i>T가족모아데이터</span>
+                                                    <span class="sp-data"><%= homeData.usageData.data.showShareRemained %></span>
+                                                </a>
+                                            </div>
+                                        <% } %>
+                                        <% if(homeData.usageData.fivegxTicketTime.isShow) { %>
+                                            <div class="tod-flydata-wrap">
+                                                <a href="/myt-data/hotdata" class="bt-5gx" data-xt_eid="CMMA_A2_B6-286" data-xt_csid="NO" data-xt_action="BC">
+                                                    <i class="icon-time-34"></i> 데이터 시간권 <span class="remain"><%= homeData.usageData.fivegxTicketTime.showRemainedText %></span>
+                                                </a>
+                                            </div>
+                                        <% } %>
+                                        <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
+                                        <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-34" data-xt_eid="CMMA_A2_B6-5" data-xt_csid="NO" data-xt_action="BC"><span class="blind">통화</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></a>
+                                        <% } %>
+                                        <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
+                                        <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-37" data-xt_eid="CMMA_A2_B6-6" data-xt_csid="NO" data-xt_action="BC"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
+                                        <% } %>
+                                    </div>
+                                    <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box donutchart">
+                                            <!-- .donut-chart -->
+                                            <a href="/myt-data/hotdata" class="donut-chart" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
+                                                <div class="donut-chart-area">
+                                                    <!-- loop -->
+                                                    <div class="c100 p0" data-percent="<%= homeData.usageData.voice.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="green"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // loop -->
+                                                </div>
+                                                <span class="ti-data">
+                                                    <strong class="ti">남은 음성통화</strong>
+                                                    <em class="tx2"><%= homeData.usageData.voice.showRemained %></em>
+                                                </span>
                                             </a>
+                                            <!-- // .donut-chart -->
                                         </div>
-                                    <% } %>
-                                    <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-34" data-xt_eid="CMMA_A2_B6-5" data-xt_csid="NO" data-xt_action="BC"><span class="blind">통화</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></a>
-                                    <% } %>
-                                    <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-37" data-xt_eid="CMMA_A2_B6-6" data-xt_csid="NO" data-xt_action="BC"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
-                                    <% } %>
-                                </div>
-                                <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                <!-- .widget -->
-                                <div class="widget">
-                                    <div class="widget-box donutchart">
-                                        <!-- .donut-chart -->
-                                        <a href="/myt-data/hotdata" class="donut-chart" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
-                                            <div class="donut-chart-area">
-                                                <!-- loop -->
-                                                <div class="c100 p0" data-percent="<%= homeData.usageData.voice.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
-                                                    <div class="green"><!-- red, yellow, green, blue -->
-                                                        <div class="slice">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
-                                                        </div>
-                                                        <div class="slice transparent">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- // loop -->
-                                            </div>
-                                            <span class="ti-data">
-                                                <strong class="ti">남은 음성통화</strong>
-                                                <em class="tx2"><%= homeData.usageData.voice.showRemained %></em>
-                                            </span>
-                                        </a>
-                                        <!-- // .donut-chart -->
                                     </div>
-                                </div>
-                                <!-- // .widget -->
+                                    <!-- // .widget -->
 
-                                <div class="call-message">
-                                    <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-37"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
-                                    <% } %>
-                                </div>
-                                <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                <!-- .widget -->
-                                <div class="widget">
-                                    <div class="widget-box donutchart">
-                                        <!-- .donut-chart -->
-                                        <a href="/myt-data/hotdata" class="donut-chart" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
-                                            <div class="donut-chart-area">
-                                                <!-- loop -->
-                                                <div class="c100 p0" data-percent="<%= homeData.usageData.sms.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
-                                                    <div class="yellow"><!-- red, yellow, green, blue -->
-                                                        <div class="slice">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
-                                                        </div>
-                                                        <div class="slice transparent">
-                                                            <div class="bar"></div>
-                                                            <div class="fill"></div>
+                                    <div class="call-message">
+                                        <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
+                                        <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-37"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
+                                        <% } %>
+                                    </div>
+                                    <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box donutchart">
+                                            <!-- .donut-chart -->
+                                            <a href="/myt-data/hotdata" class="donut-chart" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
+                                                <div class="donut-chart-area">
+                                                    <!-- loop -->
+                                                    <div class="c100 p0" data-percent="<%= homeData.usageData.sms.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="yellow"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- // loop -->
                                                 </div>
-                                                <!-- // loop -->
-                                            </div>
-                                            <span class="ti-data">
-                                                <strong class="ti">남은 문자</strong>
-                                                <em class="data"><%= homeData.usageData.sms.showRemained %></em>
-                                            </span>
-                                        </a>
-                                        <!-- // .donut-chart -->
+                                                <span class="ti-data">
+                                                    <strong class="ti">남은 문자</strong>
+                                                    <em class="data"><%= homeData.usageData.sms.showRemained %></em>
+                                                </span>
+                                            </a>
+                                            <!-- // .donut-chart -->
+                                        </div>
+                                    </div>
+                                    <!-- // .widget -->
+                                    <% } %>
+                                </div>
+                                <!-- //모바일 회선_잔여 데이터 -->
+                                <% } else if (homeData.usageData.code === 'BLN0001') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잠시 후 다시 이용해 주세요</strong>
+                                        <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
                                     </div>
                                 </div>
-                                <!-- // .widget -->
+                                <% } else if (homeData.usageData.code === 'BLN0002') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                        <p class="tx">당월 혹은 전월에 기존 요금제로 재 변경한 이력이 있습니다.</p>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BLN0003') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                                        <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BLN0004') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                        <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BLN0005') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                        <p class="tx">본인이 법정대리인으로 등록된 자녀 회선이 아닙니다.</p>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BLN0006') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                        <p class="tx">잔여량 조회에 실패하였습니다.</p>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BLN0007') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                        <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0004') { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="cont-box nogaps b-line-none">
+                                        <div class="notice-point">
+                                            <p class="t-np1">서비스 점검 중 입니다.</p>
+                                            <p class="t-np2"><%= homeData.usageData.fallbackMsg %></p>
+                                            <p class="t-np3"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BFF0011' && homeData.usageData.fallbackClCd === 'F0004' ) { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="cont-box nogaps b-line-none">
+                                        <div class="notice-point">
+                                            <p class="t-np1">서비스 점검 중 입니다.</p>
+                                            <p class="t-np2"><%= homeData.usageData.fallbackMsg %></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0001') { %>
+                                <% } else if (homeData.usageData.code === 'BFF0011' && homeData.usageData.fallbackClCd === 'F0001') { %>
+                                <% } else { %>
+                                <div class="main-chart-box">
+                                    <em class="line">
+                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <div class="main-error-box">
+                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                        <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                                        <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
+                                    </div>
+
+                                </div>
                                 <% } %>
-                            </div>
-                            <!-- //모바일 회선_잔여 데이터 -->
-                            <% } else if (homeData.usageData.code === 'BLN0001') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
-                                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BLN0002') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
-                                    <p class="tx">당월 혹은 전월에 기존 요금제로 재 변경한 이력이 있습니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BLN0003') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BLN0004') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
-                                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BLN0005') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
-                                    <p class="tx">본인이 법정대리인으로 등록된 자녀 회선이 아닙니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BLN0006') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
-                                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BLN0007') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
-                                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0004') { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="cont-box nogaps b-line-none">
-                                    <div class="notice-point">
-                                        <p class="t-np1">서비스 점검 중 입니다.</p>
-                                        <p class="t-np2"><%= homeData.usageData.fallbackMsg %></p>
-                                        <p class="t-np3"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BFF0011' && homeData.usageData.fallbackClCd === 'F0004' ) { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="cont-box nogaps b-line-none">
-                                    <div class="notice-point">
-                                        <p class="t-np1">서비스 점검 중 입니다.</p>
-                                        <p class="t-np2"><%= homeData.usageData.fallbackMsg %></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0001') { %>
-                            <% } else if (homeData.usageData.code === 'BFF0011' && homeData.usageData.fallbackClCd === 'F0001') { %>
-                            <% } else { %>
-                            <div class="main-chart-box">
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                                    <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
-                                </div>
+                                <% } %>
+                                <% } %>
+                                <% if (svcInfo && ['S1', 'S2', 'S3'].includes(svcInfo.svcAttrCd) ) { %>
+                                <!-- 인터넷/전화/IPTV 요금안내서 -->
+                                <% if(homeData.billData && homeData.billData.showBill) { %>
+                                    <% if(homeData.billData.isBroadband) { %>
+                                    <div class="main-chart-box">
+                                        <% if(svcInfo.svcAttrCd === 'S3') { %>
+                                        <em class="line">
+                                            <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                            <% if (svcInfo.expsSvcCnt > 1) { %>
+                                            <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                            <% } %>
+                                        </em>
+                                        <% } else { %>
+                                        <em class="line">
+                                            <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                            <% if (svcInfo.expsSvcCnt > 1) { %>
+                                            <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                            <% } %>
+                                        </em>
+                                        <% } %>
+                                        <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
-                            </div>
-                            <% } %>
-                            <% } %>
-                            <% } %>
-                            <% if (svcType.login && svcType.svcCategory === 's' ) { %>
-                            <!-- 인터넷/전화/IPTV 요금안내서 -->
-                            <% if(homeData.billData && homeData.billData.showBill) { %>
-                                <% if(homeData.billData.isBroadband) { %>
+                                        <div class="main-breakdown-box">
+                                            <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
+                                            <p class="tx">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
+                                        </div>
+                                    </div>
+                                    <% } else { %>
+                                    <div class="main-chart-box">
+                                        <% if(svcInfo.svcAttrCd === 'S3') { %>
+                                        <em class="line">
+                                            <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                            <% if (svcInfo.expsSvcCnt > 1) { %>
+                                            <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                            <% } %>
+                                        </em>
+                                        <% } else { %>
+                                        <em class="line">
+                                            <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                            <% if (svcInfo.expsSvcCnt > 1) { %>
+                                            <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                            <% } %>
+                                        </em>
+                                        <% } %>
+                                        <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
+
+                                        <button id="fe-bt-link-billguide" class="main-breakdown-box mb0">
+                                            <% if (homeData.billData.type2) { %>
+                                            <div class="stit"><%= homeData.billData.billMonth %>월 청구요금</div>
+                                            <% } else if (homeData.billData.type1) { %>
+                                            <div class="stit"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                                            <% } else { %>
+                                            <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
+                                            <% } %>
+                                            <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
+                                            <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
+                                            <% if (homeData.billData.type1 || homeData.billData.type2) { %>
+                                            <ul class="list">
+                                                <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.useAmtTot %>원</em></li>
+                                                <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
+                                            </ul>
+                                            <% } else { %>
+                                            <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
+                                            <% } %>
+                                        </button>
+                                    </div>
+                                <% } %>
+                                <% } else { %>
                                 <div class="main-chart-box">
                                     <% if(svcInfo.svcAttrCd === 'S3') { %>
                                     <em class="line">
                                         <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
                                         <% if (svcInfo.expsSvcCnt > 1) { %>
-                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <span class="tod-coach-markfe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                         <% } %>
                                     </em>
                                     <% } else { %>
@@ -428,78 +491,14 @@
                                     </em>
                                     <% } %>
                                     <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
-
                                     <div class="main-breakdown-box">
-                                        <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
-                                        <p class="tx">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
+                                        <strong class="ti">발행된 요금안내서가 없습니다.</strong>
                                     </div>
                                 </div>
-                                <% } else { %>
-                                <div class="main-chart-box">
-                                    <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                    <em class="line">
-                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
-                                        <% if (svcInfo.expsSvcCnt > 1) { %>
-                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                        <% } %>
-                                    </em>
-                                    <% } else { %>
-                                    <em class="line">
-                                        <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
-                                        <% if (svcInfo.expsSvcCnt > 1) { %>
-                                        <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                        <% } %>
-                                    </em>
-                                    <% } %>
-                                    <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
-
-                                    <button id="fe-bt-link-billguide" class="main-breakdown-box mb0">
-                                        <% if (homeData.billData.type2) { %>
-                                        <div class="stit"><%= homeData.billData.billMonth %>월 청구요금</div>
-                                        <% } else if (homeData.billData.type1) { %>
-                                        <div class="stit"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
-                                        <% } else { %>
-                                        <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
-                                        <% } %>
-                                        <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
-                                        <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
-                                        <% if (homeData.billData.type1 || homeData.billData.type2) { %>
-                                        <ul class="list">
-                                            <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.useAmtTot %>원</em></li>
-                                            <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
-                                        </ul>
-                                        <% } else { %>
-                                        <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
-                                        <% } %>
-                                    </button>
-                                </div>
-                            <% } %>
-                            <% } else { %>
-                            <div class="main-chart-box">
-                                <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-markfe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <% } else { %>
-                                <em class="line">
-                                    <button class="bt fe-bt-line fe-coach-line-target" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="tod-coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
                                 <% } %>
-                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
-                                <div class="main-breakdown-box">
-                                    <strong class="ti">발행된 요금안내서가 없습니다.</strong>
-                                </div>
-                            </div>
-                            <% } %>
-                            <!-- // 인터넷/전화/IPTV 요금안내서 -->
-                            <% } %>
-                            <% } %>
+                                <!-- // 인터넷/전화/IPTV 요금안내서 -->
+                                <% } %>
+                                <% } %>
                             <% } else { %>
                             <!-- 비로그인 -->
                             <div class="main-error-box welcome tod-login-box">
@@ -530,7 +529,7 @@
                         </div>
                         <!--// 2019.03.20 카드 추가 -->
 
-                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
                         <% if (homeData.membershipData.code === 'EASY_LOGIN') { %>
                         <div class="section-box nogaps">
                             <div class="main-membershop-box">
@@ -605,7 +604,7 @@
                         <% } %>
 
                         <!-- 광고성 정보 수신동의(선택) -->
-                        <% if (svcType.login && isAdRcvAgreeBannerShown) { %>
+                        <% if (svcInfo && isAdRcvAgreeBannerShown) { %>
                             <div class="section-box nogaps tod-alram-box bdtype1" id="fe-ad-rcv-agree-banner">
                                 <div class="shadow-box">
                                     <div class="alarm_list">
@@ -641,7 +640,7 @@
                             <!-- 광고성 정보 수신동의(선택) -->
 
                         <!-- 내게맞는요금제 추천 -->
-                        <% if (svcType.login && recommendProdsData.hasRecommendProds) { %>
+                        <% if (svcInfo && recommendProdsData.hasRecommendProds) { %>
                             <div class="section-box nogaps">
                                 <div class="tod-mls-comp tod-second-box fe-mls-1" data-mls-id="MTW_M000184_01">
                                     <!-- mls-hd -->
@@ -715,7 +714,7 @@
                             </div>
                             <% } %>
 
-                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[0]) { %>
                         <div class="section-box empty fe-smart-0 fe-smart-<%= redisData.smartCard[0].no %>" data-smartCard="<%= redisData.smartCard[0].no %>">
                             <div class="main-fee-box">
@@ -742,7 +741,7 @@
                         </div>
                         <!-- // 프로모션 배너 2 -->
 
-                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[1]) { %>
                         <div class="section-box empty fe-smart-1 fe-smart-<%= redisData.smartCard[1].no %>" data-smartCard="<%= redisData.smartCard[1].no %>">
                             <div class="main-fee-box">
@@ -751,7 +750,7 @@
                         </div>
                         <% } %>
                         <% } %>
-                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[2]) { %>
                         <div class="section-box empty fe-smart-2 fe-smart-<%= redisData.smartCard[2].no %>" data-smartCard="<%= redisData.smartCard[2].no %>">
                             <div class="main-fee-box">
@@ -777,7 +776,7 @@
                             </div>
                         </div>
                         <!-- // 프로모션 배너 2 -->
-                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[3]) { %>
                         <div class="section-box empty fe-smart-3 fe-smart-<%= redisData.smartCard[3].no %>" data-smartCard="<%= redisData.smartCard[3].no %>">
                             <div class="main-fee-box">
@@ -786,7 +785,7 @@
                         </div>
                         <% }%>
                         <% } %>
-                        <!--<% if (svcType.login && svcType.mobilePhone) { %>-->
+                        <!--<% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>-->
                         <!--<% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>-->
                         <!--<div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">-->
                             <!--<div class="main-fee-box">-->
@@ -885,7 +884,7 @@
     <button id="fe-bt-hidden-notice" class="none"></button>
 </div>
 <% include ../components/javascript.component.html %>
-<% if (svcType.login && svcType.mobilePhone) { %>
+<% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>
 <%- include('../components/smart-card/bill.component.html', { svcInfo: svcInfo }); %>
 <%- include('../components/smart-card/gift.component.html'); %>
 <%- include('../components/smart-card/micro-contents.component.html'); %>
