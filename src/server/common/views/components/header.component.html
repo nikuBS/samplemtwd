@@ -193,7 +193,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                             <i class="ico"><img src="<%= CDN %>/img/common/menu-m-ico01.png" alt=""></i><span class="txt">검색</span>
                         </button>
                     </li>
-                    <% if (!enablePersonaBtn) { %>
+                    <% if (enablePersonaBtn) { %>
                         <% if (svcType && svcType.login) { %>
                             <% if (svcInfo.personSmsDisableTimeCheck) { %>
                     <li class="item fe-when-login fe-bt-free-sms-target none">
