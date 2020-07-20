@@ -537,7 +537,7 @@ Tw.ProductCommonCallplan.prototype = {
         svcProdId: this._svcProdId
       }, this._event
         , $.proxy(this._procPreCheck, this, joinTermCd, url)
-        , $.proxy(this._reqTerminateDefense, this, joinTermCd, url));
+        , $.proxy(this._reqIsAdditionUse, this, joinTermCd, url));
       // return this._reqTerminateDefense(joinTermCd, url);
         
     }else if (joinTermCd !== '01') {// 해지에 해당될 경우 즉시 사전체크 호출
@@ -664,15 +664,48 @@ Tw.ProductCommonCallplan.prototype = {
 
   /**
    * @function
-   * @desc 다운그레이드 Redis 조회
+   * @desc 다운그레이드 Redis 조회 전 특정상품 가입여부 체크(V컬러링[NA00007017] 가입자 체크를 위해 개발됨 [OP002-8237])
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param mbrNm - 고객명
+   */
+  _reqIsAdditionUse: function(joinTermCd, url) {
+    if (this._prodId === 'NA00000282'){
+      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00007017'])
+      .done($.proxy(this._resIsAdditionUse, this, joinTermCd, url));
+    }else{
+      this._reqTerminateDefense(joinTermCd, url);
+    }
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 Redis 조회 (특정상품 가입여부 체크가 필요한 상품)
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param mbrNm - 고객명
+   */
+  _resIsAdditionUse: function(joinTermCd, url, resp) {
+    var isAdditionUse = resp.result.isAdditionUse;
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
+      .done($.proxy(this._resTerminateDefense, this, joinTermCd, url, isAdditionUse));
+
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 Redis 조회 (특정상품 가입여부 체크 없음)
    * @param joinTermCd - 01 가입 03 해지
    * @param url - 타겟 url
    * @param currentProdId - 현재 상품코드
    * @param mbrNm - 고객명
    */
   _reqTerminateDefense: function(joinTermCd, url) {
+    var isAdditionUse = 'N';
     this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
-      .done($.proxy(this._resTerminateDefense, this, joinTermCd, url));
+      .done($.proxy(this._resTerminateDefense, this, joinTermCd, url, isAdditionUse));
 
   },
 
@@ -686,8 +719,12 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    * @returns {*}
    */
-  _resTerminateDefense: function(joinTermCd, url, resp) {
+  _resTerminateDefense: function(joinTermCd, url, isAdditionUse, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return this._procPreCheck(joinTermCd, url);
+    }
+
+    if (this._prodId === 'NA00000282' && isAdditionUse !== 'Y') {
       return this._procPreCheck(joinTermCd, url);
     }
 
