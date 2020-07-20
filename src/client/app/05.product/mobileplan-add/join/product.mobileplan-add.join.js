@@ -72,6 +72,133 @@ Tw.ProductMobileplanAddJoin.prototype = {
     this.$container.html(html);
     this._callConfirmCommonJs();
     Tw.Tooltip.separateMultiInit(this.$container);
+
+    if (this._prodId === 'NA00007017') {
+      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00000929'])
+      .done($.proxy(this._resIsAdditionUseJoin, this));
+    } else {
+      var isAdditionUse = 'N';
+      this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
+      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
+    }
+  },
+
+  /**
+   * @function
+   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우1
+   * @param isAdditionUse - 특정 상품 가입여부(Y,N)
+   * @param resp - 무선 부가상품 가입여부 API 응답 값
+   */
+  _resIsAdditionUseJoin: function(resp) {
+    var isAdditionUse = resp.result.isAdditionUse;
+    if (isAdditionUse === 'Y') {
+      this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
+      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00001583'])
+      .done($.proxy(this._resIsAdditionUseJoin2nd, this));
+    }
+
+  },
+
+  /**
+   * @function
+   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우2
+   * @param isAdditionUse - 특정 상품 가입여부(Y,N)
+   * @param resp - 무선 부가상품 가입여부 API 응답 값
+   */
+  _resIsAdditionUseJoin2nd: function(resp) {
+    var isAdditionUse = resp.result.isAdditionUse;
+    if (isAdditionUse === 'Y') {
+      this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
+      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00003723'])
+      .done($.proxy(this._resIsAdditionUseJoin3rd, this));
+    }
+
+  },
+
+  /**
+   * @function
+   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우3
+   * @param isAdditionUse - 특정 상품 가입여부(Y,N)
+   * @param resp - 무선 부가상품 가입여부 API 응답 값
+   */
+  _resIsAdditionUseJoin3rd: function(resp) {
+    var isAdditionUse = resp.result.isAdditionUse;
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
+      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
+
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 조회 API 응답 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
+  _isJoinTerm: function(isAdditionUse, resp) {
+
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return ;
+    }
+
+    if (this._prodId === 'NA00007017' && isAdditionUse !== 'Y') {
+      return ;
+    } else {
+      this._openJoinTermPopup(resp.result);
+    }
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 실행
+   * @param respResult - 가입안내 팝업 조회 API 응답 값
+   */
+  _openJoinTermPopup: function(respResult) {
+    var popupOptions = {
+      hbs: 'MV_01_02_02_01',
+      bt: [
+        {
+          style_class: 'unique fe-btn_back',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }
+      ]
+    };
+
+    if (respResult.prodTmsgTypCd === 'H') {
+      popupOptions = $.extend(popupOptions, {
+        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
+      });
+    }
+
+    if (respResult.prodTmsgTypCd === 'I') {
+      popupOptions = $.extend(popupOptions, {
+        img_url: respResult.rgstImgUrl,
+        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
+      });
+    }
+
+    this._isResultPop = true;
+    this._popupService.open(popupOptions, $.proxy(this._bindJoinTermPopupEvent, this), $.proxy(this._closeResultPopup, this), 'jointerm_pop');
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 이벤트 바인딩
+   * @param $popupContainer - 가입안내팝업 컨테이너 레이어
+   */
+  _bindJoinTermPopupEvent: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeResultPopup, this));
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 내 닫기버튼 클릭 시
+   */
+  _closeResultPopup: function() {
+    this._popupService.close();
   },
 
   /**
