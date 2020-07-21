@@ -1750,8 +1750,6 @@ class ApiRouter {
           });
         }
         // 잔여 SMS 조회 및 객체(remainedSms) 설정 완료
-  
-  
 
         // 단위 변경 및 표기 양식 설정
         // 최종 Response 객체 선언 (Widget 표기용)
@@ -1766,18 +1764,37 @@ class ApiRouter {
           },
           voice: {
             skipId: voiceCode, // 조회한 음성 공제코드
-            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           },
           sms: {
+            skipId: smsCode, // 조회한 SMS 공제코드
+            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
+          }
+         
+        };
+
+        if (voiceCode === null) {
+          responseRemains.voice = 
+          {
+            skipId: voiceCode, // 조회한 음성 공제코드
+            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
+          }
+        }
+
+        if (smsCode === null) {
+          responseRemains.sms = {
             skipId: smsCode, // 조회한 SMS 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           }
-        };
-
+        }
         
         // 잔여 데이터 Response 양식 설정
         if ( remainedData.isEmpty === false ) {
