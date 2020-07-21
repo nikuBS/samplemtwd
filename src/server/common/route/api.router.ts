@@ -1568,37 +1568,42 @@ class ApiRouter {
         } else { // 요청받은 공제코드가 합산 데이터가 아닐 경우
           // 범용 데이터에서 공제코드 검색
           if ( resp.result && resp.result.gnrlData ) {
+            let dcs = dataCode.split(",") || dataCode;
             resp.result.gnrlData.map((data) => {
-              dataCodes.push(data.skipId);
-              // 요청한 공제코드가 있을 경우 잔여량 입력
-              if ( data.skipId === dataCode ) {
-                remainedData.isEmpty = false;
-                
-                // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
-                switch (data.unlimit) {
-                  // 무제한
-                  case '1':
-                  case 'M':
-                    remainedData.unlimit = true;
-                    return;
-                  // 기본제공
-                  case 'B':
-                    remainedData.unlimit_default = true;
-                    return;
-                }
-  
-                // 제공량 입력
-                remainedData.total = +data.total;
-                
-                // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
-                if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
-                  remainedData.remained = +data.remained;
-                } else {
-                  remainedData.sharedRemained = +data.remained;
-                }
-  
-                // 단위 설정
-                remainedData.unit = data.unit;
+              for (let d in dcs) {
+                  if (d === data.skipId) {
+                    dataCodes.push(data.skipId);
+                    // 요청한 공제코드가 있을 경우 잔여량 입력
+                    if ( data.skipId === dataCode ) {
+                      remainedData.isEmpty = false;
+                      
+                      // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
+                      switch (data.unlimit) {
+                        // 무제한
+                        case '1':
+                        case 'M':
+                          remainedData.unlimit = true;
+                          return;
+                        // 기본제공
+                        case 'B':
+                          remainedData.unlimit_default = true;
+                          return;
+                      }
+        
+                      // 제공량 입력
+                      remainedData.total = +data.total;
+                      
+                      // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                      if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                        remainedData.remained = +data.remained;
+                      } else {
+                        remainedData.sharedRemained = +data.remained;
+                      }
+        
+                      // 단위 설정
+                      remainedData.unit = data.unit;
+                    }
+                  }
               }
             });
           }
@@ -1761,14 +1766,14 @@ class ApiRouter {
           },
           voice: {
             skipId: voiceCode, // 조회한 음성 공제코드
-            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           },
           sms: {
             skipId: smsCode, // 조회한 SMS 공제코드
-            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           }
         };
