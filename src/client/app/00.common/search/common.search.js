@@ -1049,7 +1049,17 @@ Tw.CommonSearch.prototype = {
     var reqOptions;
     if (query !== researchQuery) {
       researchQuery = researchQuery.replace(query, '').trim();
-      reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort, researchQuery: encodeURIComponent(researchQuery)};
+      if (Tw.BrowserHelper.isApp()) {
+        if (Tw.BrowserHelper.isAndroid()) {
+          reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort, researchQuery: encodeURIComponent(researchQuery), device: 'A'};
+        } else if (Tw.BrowserHelper.isIos()) {
+          reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort, researchQuery: encodeURIComponent(researchQuery), device: 'I'};
+        } else {
+          reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort, researchQuery: encodeURIComponent(researchQuery)};
+        }
+      } else {
+        reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort, researchQuery: encodeURIComponent(researchQuery)};
+      }
     } else {
       reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort};
     }

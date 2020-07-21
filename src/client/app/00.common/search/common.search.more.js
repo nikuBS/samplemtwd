@@ -559,6 +559,13 @@ $.extend(Tw.CommonSearchMore.prototype,
       reqOptions = {query: encodeURIComponent(query), collection: collection, pageNum: pageNum, sort: sort};
     }
 
+    if (Tw.BrowserHelper.isApp()) {
+      if (Tw.BrowserHelper.isAndroid()) {
+        reqOptions.device = 'A';
+      } else if (Tw.BrowserHelper.isIos()) {
+        reqOptions.device = 'I';
+      }
+    }
     
     Tw.Logger.info('[common.search.more] [_sortRate]', 'query : ' + query);
     Tw.Logger.info('[common.search.more] [_sortRate]', 'encoded query : ' + encodeURIComponent(query));
@@ -897,13 +904,20 @@ $.extend(Tw.CommonSearchMore.prototype,
     var sort = this._category + '-' + 
                this._reqOptions.sortCd.substring(this._reqOptions.sortCd.indexOf(this._category + '-') + this._category.length + 1, this._reqOptions.sortCd.indexOf(this._category + '-') + this._category.length + 2)
 
-    this._apiService.request(searchApi, {
-      query: encodeURIComponent(this._searchInfo.query),
-      collection: this._category,
-      pageNum: this._pageNum,
-      // pageNum: 1,
-      sort: sort
-    })
+    var reqOptions;
+    if (Tw.BrowserHelper.isApp()) {
+      if (Tw.BrowserHelper.isAndroid()) {
+        reqOptions = {query: encodeURIComponent(this._searchInfo.query), collection: this._category, pageNum: this._pageNum, sort: sort, device: 'A'};
+      } else if (Tw.BrowserHelper.isIos()) {
+        reqOptions = {query: encodeURIComponent(this._searchInfo.query), collection: this._category, pageNum: this._pageNum, sort: sort, device: 'I'};
+      } else {
+        reqOptions = {query: encodeURIComponent(this._searchInfo.query), collection: this._category, pageNum: this._pageNum, sort: sort};
+      }
+    } else {
+      reqOptions = {query: encodeURIComponent(this._searchInfo.query), collection: this._category, pageNum: this._pageNum, sort: sort};
+    }    
+
+    this._apiService.request(searchApi, reqOptions)
     .done($.proxy(function (res) {
       if (res.code === 0) {
         var searchResultData = res.result.search[0][this._category].data;
