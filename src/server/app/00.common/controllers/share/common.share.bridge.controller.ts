@@ -9,8 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 
-// import request from 'request';
-// import client from 'cheerio-httpcli';
+var request = require('request');
 
 
 /**
@@ -35,23 +34,39 @@ class CommonShareBridge extends TwViewController {
     const target = req.query.target;
     const loginType = req.query.loginType;
     const referer = req.query.referer;
+    const thisMain = this;
 
-    // client.fetch(`http://${req['headers']['host']}${req.query['target']}`, {}, function (err, $, response, body) {
-    //   let title = $("meta[property='og:title']").attr('content')
-    //   let description = $("meta[property='og:description']").attr('content')
-    //   res.render('share/common.share.bridge.html', { 
-    //     isAndroid: BrowserHelper.isAndroid(req), 
-    //     target, 
-    //     loginType, 
-    //     referer, 
-    //     pageInfo,
-    //     ogTitle: title,
-    //     ogDesc: description
-    //   });
-
-    // });
-    const ogDesc = '';
-    res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
+    request(`https://app.tworld.co.kr${req.query['target']}`, function (error, response, body) {
+      try {
+        var title = body.match(/<meta[ property="og:title" />]*content=[\"']?([^>\"']+)[\"']?[^>]*>/g, "\\$&");
+        title = title[0].split('\"')[3];
+        var description = body.match(/<meta[ property="og:description" />]*content=[\"']?([^>\"']+)[\"']?[^>]*>/g, "\\$&");
+        description = description[0].split('\"')[3];
+    
+        res.render('share/common.share.bridge.html', { 
+          isAndroid: BrowserHelper.isAndroid(req), 
+          target, 
+          loginType, 
+          referer, 
+          pageInfo,
+          ogTitle: title,
+          ogDesc: description
+        });
+      } catch (e) {
+        thisMain.logger.error(thisMain, '[ meta tag ] : ', e);
+        res.render('share/common.share.bridge.html', { 
+          isAndroid: BrowserHelper.isAndroid(req), 
+          target, 
+          loginType, 
+          referer, 
+          pageInfo,
+          ogTitle: title,
+          ogDesc: description
+        });
+      }
+    });
+    // const ogDesc = '';
+    // res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
   }
 }
 export default CommonShareBridge;

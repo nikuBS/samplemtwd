@@ -23,6 +23,7 @@ import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
 import CryptoHelper from '../../utils/crypto.helper';
 import { SSO_SERVICE_LIST } from '../../types/config.type';
+import { SSL_OP_CISCO_ANYCONNECT } from 'constants';
 
 const os = require('os');
 
@@ -1527,9 +1528,11 @@ class ApiRouter {
   
         // 데이터에서 공제코드 검색
         // 요청받은 공제코드가 합산 데이터일 경우
+        let dataCodes: string[] = [];
         if ( dataCode === WIDGET_REMAINS_CODE.DATA_SUM ) {
           if ( resp.result && resp.result.gnrlData ) {
             resp.result.gnrlData.map((data) => {
+              dataCodes.push(data.skipId);
               // KB 단위 잔여량만 합산
               if ( data.unit === UNIT_E.DATA ) {
                 remainedData.isEmpty = false;
@@ -1565,36 +1568,42 @@ class ApiRouter {
         } else { // 요청받은 공제코드가 합산 데이터가 아닐 경우
           // 범용 데이터에서 공제코드 검색
           if ( resp.result && resp.result.gnrlData ) {
+            let dcs = dataCode.split(",") || dataCode;
             resp.result.gnrlData.map((data) => {
-              // 요청한 공제코드가 있을 경우 잔여량 입력
-              if ( data.skipId === dataCode ) {
-                remainedData.isEmpty = false;
-                
-                // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
-                switch (data.unlimit) {
-                  // 무제한
-                  case '1':
-                  case 'M':
-                    remainedData.unlimit = true;
-                    return;
-                  // 기본제공
-                  case 'B':
-                    remainedData.unlimit_default = true;
-                    return;
-                }
-  
-                // 제공량 입력
-                remainedData.total = +data.total;
-                
-                // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
-                if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
-                  remainedData.remained = +data.remained;
-                } else {
-                  remainedData.sharedRemained = +data.remained;
-                }
-  
-                // 단위 설정
-                remainedData.unit = data.unit;
+              for (let d in dcs) {
+                  if (d === data.skipId) {
+                    dataCodes.push(data.skipId);
+                    // 요청한 공제코드가 있을 경우 잔여량 입력
+                    if ( data.skipId === dataCode ) {
+                      remainedData.isEmpty = false;
+                      
+                      // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
+                      switch (data.unlimit) {
+                        // 무제한
+                        case '1':
+                        case 'M':
+                          remainedData.unlimit = true;
+                          return;
+                        // 기본제공
+                        case 'B':
+                          remainedData.unlimit_default = true;
+                          return;
+                      }
+        
+                      // 제공량 입력
+                      remainedData.total = +data.total;
+                      
+                      // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                      if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                        remainedData.remained = +data.remained;
+                      } else {
+                        remainedData.sharedRemained = +data.remained;
+                      }
+        
+                      // 단위 설정
+                      remainedData.unit = data.unit;
+                    }
+                  }
               }
             });
           }
@@ -1603,6 +1612,7 @@ class ApiRouter {
           if ( remainedData.isEmpty === true ) {
             if ( resp.result && resp.result.spclData ) {
               resp.result.spclData.map((data) => {
+                dataCodes.push(data.skipId);
                 // 요청한 공제코드가 있을 경우 잔여량 입력
                 if ( data.skipId === dataCode ) {
                   remainedData.isEmpty = false;
@@ -1651,12 +1661,13 @@ class ApiRouter {
           unit: '' // 단위
         };
   
+        // 미설정코드 처리 
         // 요청받은 음성 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
-        if ( voiceCode === null ) {
-          if ( resp.result && resp.result.voice && resp.result.voice.length > 0 ) {
-            voiceCode = resp.result.voice[0].skipId;
-          }
-        }
+        // if ( voiceCode === null ) {
+        //   if ( resp.result && resp.result.voice && resp.result.voice.length > 0 ) {
+        //     voiceCode = resp.result.voice[0].skipId;
+        //   }
+        // }
   
         // 음성에서 공제코드 검색
         if ( resp.result && resp.result.voice ) {
@@ -1701,12 +1712,13 @@ class ApiRouter {
           unit: '' // 단위
         };      
   
+        // 미설정코드 처리 
         // 요청받은 SMS 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
-        if ( smsCode === null ) {
-          if ( resp.result && resp.result.sms && resp.result.sms.length > 0 ) {
-            smsCode = resp.result.sms[0].skipId;
-          }
-        }
+        // if ( smsCode === null ) {
+        //   if ( resp.result && resp.result.sms && resp.result.sms.length > 0 ) {
+        //     smsCode = resp.result.sms[0].skipId;
+        //   }
+        // }
         
         // SMS에서 공제코드 검색
         if ( resp.result && resp.result.sms ) {
@@ -1738,15 +1750,13 @@ class ApiRouter {
           });
         }
         // 잔여 SMS 조회 및 객체(remainedSms) 설정 완료
-  
-  
 
         // 단위 변경 및 표기 양식 설정
         // 최종 Response 객체 선언 (Widget 표기용)
         const responseRemains = {
           svcMgmtNum: svcMgmtNum,
           data: {
-            skipId: dataCode, // 조회한 데이터 공제코드
+            skipId: dataCodes.join(', '), // 조회한 데이터 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
@@ -1764,7 +1774,27 @@ class ApiRouter {
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           }
+         
         };
+
+        if (voiceCode === null) {
+          responseRemains.voice = 
+          {
+            skipId: voiceCode, // 조회한 음성 공제코드
+            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
+          }
+        }
+
+        if (smsCode === null) {
+          responseRemains.sms = {
+            skipId: smsCode, // 조회한 SMS 공제코드
+            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
+          }
+        }
         
         // 잔여 데이터 Response 양식 설정
         if ( remainedData.isEmpty === false ) {
