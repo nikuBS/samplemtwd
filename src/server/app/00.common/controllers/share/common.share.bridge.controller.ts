@@ -39,7 +39,7 @@ class CommonShareBridge extends TwViewController {
     request({
         uri: `http://app.tworld.co.kr${req.query['target']}`,
         method: 'GET',
-        timeout: 3000,
+        timeout: 50,
         followRedirect: true, 
         maxRedirects: 2
       }, function (error, response, body) {
