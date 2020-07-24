@@ -149,7 +149,10 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     M001882: 'CMMA_A11_B3-94',
     M001921: 'CMMA_A11_B3-95',  // 행복커뮤니티센터
     M002217: 'CMMA_A11_B3-104', // 결합상품
-    M002222: 'CMMA_A11_B3-105'  // 전체혜택
+    M002222: 'CMMA_A11_B3-105',  // 전체혜택
+
+    M001962: 'CMMA_A11_B3-111', // APP 이용가이드 
+
   },
 
   TRACKER_CODES: [
