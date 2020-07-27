@@ -7,7 +7,7 @@ _%>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="ti-caption-gray tod-caption-white">
-    <h3 class="tit">일시정지 신청정보</h3>
+    <h3 class="tit">정지 신청정보</h3>
 </div>
 <!-- .cont-box -->
 <div class="cont-box nogaps-hoz">
@@ -20,14 +20,14 @@ _%>
                     <%_ if (locals.militaryAC) { _%>
                     장기일시정지의 일시해제
                     <%_ } else if (locals.reservedYn) { _%>
-                    일시정지 예약
+                    정지 예약
                     <%_ } else { _%>
-                    <%- (type === 'long-term') ? '장기' : '' %>일시정지 중
+                    <%- (type === 'long-term') ? '장기일시' : '' %>정지 중
                     <%_ } _%>
                     </span>
                 </li>
                 <li>
-                    <span class="title"><%- (type === 'long-term') ? '장기' : '' %>일시정지 기간</span>
+                    <span class="title"><%- (type === 'long-term') ? '장기일시' : '' %>일시 기간</span>
                     <span class="tx-cont"><%- period.from %>~<%- period.to || '' %></span>
                 </li>
                 <%_ if (locals.resuspendDt) { _%>
@@ -43,6 +43,7 @@ _%>
             </ul>
         </div>
     </div>
+    <%_ if (locals.showButtons) { _%>
     <%_ if (locals.resuspend) { _%>
     <ul class="bt-slice mt20 mb20">
         <li>
@@ -74,6 +75,7 @@ _%>
         </li>
         <%_ } _%>
     </ul>
+    <%_ } _%>
     <%_ } _%>
 </div>
 <!--// .cont-box -->
