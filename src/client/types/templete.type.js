@@ -108,10 +108,10 @@ Tw.POPUP_TPL = {
     {
       'title': '',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': '나의 계좌에서 바로 납부하기', 'option': 'fe-account' },
-        { 'button-attr': 'type="button"', 'txt': '입금 전용계좌 문자 안내 받기', 'option': 'fe-sms' },
-        { 'button-attr': 'type="button"', 'txt': '입금 전용계좌 신청하기', 'option': 'fe-sms-guide' },
-        { 'button-attr': 'type="button"', 'txt': '기타 납부하기(카드, 포인트 등)', 'option': 'fe-etc-bill' }
+        { 'button-attr': 'type="button"', 'txt': '나의 계좌에서 바로 납부하기', 'option': 'fe-account', 'ico': 'ico14' },
+        { 'button-attr': 'type="button"', 'txt': '입금 전용계좌 문자 안내 받기', 'option': 'fe-sms', 'ico': 'ico15' },
+        { 'button-attr': 'type="button"', 'txt': '입금 전용계좌 신청하기', 'option': 'fe-sms-guide', 'ico': 'ico15' },
+        { 'button-attr': 'type="button"', 'txt': '기타 납부하기(카드, 포인트 등)', 'option': 'fe-etc-bill', 'ico': 'ico16' }
       ]
     }
   ],
