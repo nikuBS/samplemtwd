@@ -23,7 +23,6 @@ import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
 import CryptoHelper from '../../utils/crypto.helper';
 import { SSO_SERVICE_LIST } from '../../types/config.type';
-import { SSL_OP_CISCO_ANYCONNECT } from 'constants';
 
 const os = require('os');
 
@@ -1524,6 +1523,8 @@ class ApiRouter {
           if ( resp.result && resp.result.gnrlData && resp.result.gnrlData.length > 0 ) {
             dataCode = WIDGET_REMAINS_CODE.DATA_SUM;
           }
+        } else { // 배열로 dataCode를 전달 받아도 공제 합산을 위해서 초기화 
+          dataCode = WIDGET_REMAINS_CODE.DATA_SUM;
         }
   
         // 데이터에서 공제코드 검색
@@ -1663,11 +1664,11 @@ class ApiRouter {
   
         // 미설정코드 처리 
         // 요청받은 음성 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
-        // if ( voiceCode === null ) {
-        //   if ( resp.result && resp.result.voice && resp.result.voice.length > 0 ) {
-        //     voiceCode = resp.result.voice[0].skipId;
-        //   }
-        // }
+        if ( voiceCode === null ) {
+          if ( resp.result && resp.result.voice && resp.result.voice.length > 0 ) {
+            voiceCode = resp.result.voice[0].skipId;
+          }
+        }
   
         // 음성에서 공제코드 검색
         if ( resp.result && resp.result.voice ) {
@@ -1714,11 +1715,11 @@ class ApiRouter {
   
         // 미설정코드 처리 
         // 요청받은 SMS 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
-        // if ( smsCode === null ) {
-        //   if ( resp.result && resp.result.sms && resp.result.sms.length > 0 ) {
-        //     smsCode = resp.result.sms[0].skipId;
-        //   }
-        // }
+        if ( smsCode === null ) {
+          if ( resp.result && resp.result.sms && resp.result.sms.length > 0 ) {
+            smsCode = resp.result.sms[0].skipId;
+          }
+        }
         
         // SMS에서 공제코드 검색
         if ( resp.result && resp.result.sms ) {
@@ -1777,7 +1778,7 @@ class ApiRouter {
          
         };
 
-        if (voiceCode === null) {
+        if (voiceCode === 'NULL') {
           responseRemains.voice = 
           {
             skipId: voiceCode, // 조회한 음성 공제코드
@@ -1787,7 +1788,7 @@ class ApiRouter {
           }
         }
 
-        if (smsCode === null) {
+        if (smsCode === 'NULL') {
           responseRemains.sms = {
             skipId: smsCode, // 조회한 SMS 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
