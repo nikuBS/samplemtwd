@@ -36193,3 +36193,9 @@ body.apphome .section-box {
 .tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap .icon-cellphone-50 {background: url(/img/ico/icon_40px_auto.png) no-repeat 0 0;}
 .tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap .icon-cellphone-51 {background: url(/img/ico/icon_50px_phone.png) no-repeat 0 0;}
 .tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap .icon-cellphone-52 {background: url(/img/ico/icon_40px_home.png) no-repeat 0 0;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell:first-child {width:80%;}
+.cont-actionsheet.tod-my-charge .ac-list {padding: 0.87rem 0 !important;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico14 {background: url(/img/ico/icon_48px_myaccount.png) no-repeat 0 0; background-size: 100% 100%;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico15 {background: url(/img/ico/icon_48px_mysms.png) no-repeat 0 0; background-size: 100% 100%;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico16 {background: url(/img/ico/icon_48px_otherpay.png) no-repeat 0 0; background-size: 100% 100%;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol {width:1.5rem; height:1.5rem;}
