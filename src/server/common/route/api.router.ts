@@ -1460,10 +1460,14 @@ class ApiRouter {
 
     // 조회대상 회선 및 공제코드 변수 생성
     // TODO: 상용 반영 시 Query들 Header로 입력받도록 수정 필요
-    let svcMgmtNum: any = req.headers.svcMgmtNum || req.query.svcMgmtNum || null;
-    let dataCode: any = req.headers.dataCode || req.query.dataCode || null;
-    let voiceCode: any = req.headers.voiceCode || req.query.voiceCode || null;
-    let smsCode: any = req.headers.smsCode || req.query.smsCode || null;
+    let svcMgmtNum: any = req.headers.svcMgmtNum || null;
+    let dataCode: any = req.headers.dataCode || null;
+    let voiceCode: any = req.headers.voiceCode || null;
+    let smsCode: any = req.headers.smsCode || null;
+    // let svcMgmtNum: any = req.headers.svcMgmtNum || req.query.svcMgmtNum || null;
+    // let dataCode: any = req.headers.dataCode || req.query.dataCode || null;
+    // let voiceCode: any = req.headers.voiceCode || req.query.voiceCode || null;
+    // let smsCode: any = req.headers.smsCode || req.query.smsCode || null;
 
     // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
     apiService.request(API_CMD.BFF_01_0002, {}).subscribe((resp) => {
