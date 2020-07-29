@@ -87,9 +87,9 @@ Tw.POPUP_TPL = {
         { 'button-attr': 'type="button"', 'txt': '카드납부', 'option': 'fe-card' },
         { 'button-attr': 'type="button"', 'txt': 'SK pay 납부', 'option': 'fe-skpay' },
         { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' },
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백포인트', 'option': 'fe-ok-cashbag' },
-        { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
-        { 'button-attr': 'type="button"', 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 납부 예약', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'T포인트 납부 예약', 'option': 'fe-t-point' },
+        { 'button-attr': 'type="button"', 'txt': '레인보우포인트 납부 예약', 'option': 'fe-rainbow-point' }
 
       ]
     }
