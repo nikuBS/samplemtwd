@@ -303,18 +303,62 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
     if (this._isPrepayAble()) {
       if (Tw.BrowserHelper.isApp()) { // 앱일 경우에만 이동
+        // [OP002-9462] 선결제 기능 조건부
+        this._apiService.request(Tw.API_CMD.BFF_07_0104, {})
+          .done($.proxy(this._checkTimeSuccess, this, e))
+          .fail($.proxy(function (err) {
+            this._showErrorPopup(Tw.POPUP_TITLE.NOTIFY, err.msg, e.currentTarget);
+          }, this));
+      } else {
+        this._goAppInfo(e); // 웹일 경우 앱 설치 유도 페이지로 이동
+      }
+    } else {
+      // 0원이면 안내 alert 노출
+      this._showErrorPopup(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, e.currentTarget);
+      /*
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE,
+        null, null, null, $(e.currentTarget)); // 0원이면 안내 alert 노출
+      */
+    }
+  },
+  /**
+   * 선결제 가능 시간 확인 후 처리
+   * @param e
+   * @param res
+   * @private
+   */
+  _checkTimeSuccess: function (e, res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      /*
+      const res = {
+        result: {
+          "msg": "Swing 에러메시지",
+          "msg_disp_yn": "메시지노출여부(매월말 23시 50분~00분인 경우 Y, 그외에는 N)"
+        }
+      };
+      */
+      if (res.result.msg_disp_yn === 'N') {
         new Tw.MyTFareBillPrepayMainSKpay({
           $element: this.$container,
           callbackSKpay: $.proxy(this._goSKpay, this),
           callbackPrepay: $.proxy(this._goPrepayCallback, this)
         }).openPaymentOption(e);
       } else {
-        this._goAppInfo(e); // 웹일 경우 앱 설치 유도 페이지로 이동
+        this._showErrorPopup(Tw.POPUP_TITLE.NOTIFY, res.result.msg, e.currentTarget);
       }
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE,
-        null, null, null, $(e.currentTarget)); // 0원이면 안내 alert 노출
+      Tw.Error(res.code, res.msg).pop(); // 에러 시 공통팝업 호출
     }
+  },
+  /**
+   * 에러표시창
+   * @param {String|null} [title]
+   * @param {String} contents
+   * @param {HTMLElement} target
+   * @private
+   */
+  _showErrorPopup: function (title, contents, target) {
+    this._popupService.openAlert(contents, title,'',null, '', $(target));
   },
     /**
    * @function
