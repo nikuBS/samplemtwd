@@ -36,7 +36,13 @@ class CommonShareBridge extends TwViewController {
     const referer = req.query.referer;
     // const thisMain = this;
 
-    // request(`https://app.tworld.co.kr${req.query['target']}`, function (error, response, body) {
+    // request({
+    //     uri: `http://app.tworld.co.kr${req.query['target']}`,
+    //     method: 'GET',
+    //     timeout: 50,
+    //     followRedirect: true, 
+    //     maxRedirects: 2
+    //   }, function (error, response, body) {
     //   try {
     //     var title = body.match(/<meta[ property="og:title" />]*content=[\"']?([^>\"']+)[\"']?[^>]*>/g, "\\$&");
     //     title = title[0].split('\"')[3];
@@ -65,7 +71,7 @@ class CommonShareBridge extends TwViewController {
     //     });
     //   }
     // });
-    const ogDesc = '';
+    const ogDesc = pageInfo.seoMetaTagKwdCtt;
     res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
   }
 }

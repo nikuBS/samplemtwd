@@ -29,6 +29,7 @@ import MyTFareBillAccount from './controllers/bill/myt-fare.bill.account.control
 import MyTFareBillCard from './controllers/bill/myt-fare.bill.card.controller';
 import MyTFareBillPoint from './controllers/bill/myt-fare.bill.point.controller';
 import MyTFareBillSms from './controllers/bill/myt-fare.bill.sms.controller';
+import MyTFareBillSmsGuide from './controllers/bill/myt-fare.bill.sms-guide.controller';
 import MyTFareBillCashbag from './controllers/bill/myt-fare.bill.cashbag.controller';
 import MyTFareBillTPoint from './controllers/bill/myt-fare.bill.tpoint.controller';
 import MyTFareBillRainbow from './controllers/bill/myt-fare.bill.rainbow.controller';
@@ -71,6 +72,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/card', controller: MyTFareBillCard });
     this.controllers.push({ url: '/bill/point', controller: MyTFareBillPoint });
     this.controllers.push({ url: '/bill/sms', controller: MyTFareBillSms });
+    this.controllers.push({ url: '/bill/sms-guide', controller: MyTFareBillSmsGuide });
     this.controllers.push({ url: '/bill/cashbag', controller: MyTFareBillCashbag });
     this.controllers.push({ url: '/bill/tpoint', controller: MyTFareBillTPoint });
     this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });

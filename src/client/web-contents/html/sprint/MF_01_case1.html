@@ -71,30 +71,18 @@
                         <!-- .cont-box -->
                         <div class="cont-box nogaps noborder">
                             <!-- .cont-actionsheet -->
-                            <div class="cont-actionsheet mf-actionsheet">
-                                <!-- 190624 수정_01 -->
+                            <!-- 200727 [OP002-9606] 추가_01 -->
+                            <div class="cont-actionsheet mf-actionsheet tod-my-charge">
+                                <!-- //200727 [OP002-9606] 추가_01 -->
+                                <!-- 200727 [OP002-9606] 수정_01 -->
                                 <ul class="ac-list">
                                     <li class="type1">
-                                        <button type="button">
-                                            <span class="table">
-                                                <span class="table-row">
-                                                    <span class="table-cell">
-                                                        <span class="txt">자동납부</span>
-                                                    </span>
-                                                    <span class="table-cell right">
-                                                        <span class="spot">사용중</span>
-                                                        <span class="link"></span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li class="type1">
                                         <button>
                                             <span class="table">
                                                 <span class="table-row">
                                                     <span class="table-cell">
-                                                        <span class="txt">계좌이체 납부</span>
+                                                        <span class="simbol ico14"></span>
+                                                        <span class="txt">나의 계좌에서 바로 납부하기</span>
                                                     </span>
                                                     <span class="table-cell right">
                                                         <span class="spot"></span>
@@ -109,7 +97,8 @@
                                             <span class="table">
                                                 <span class="table-row">
                                                     <span class="table-cell">
-                                                        <span class="txt">SK pay 납부</span>
+                                                        <span class="simbol ico15"></span>
+                                                        <span class="txt">입금 전용계좌 문자 안내 받기</span>
                                                     </span>
                                                     <span class="table-cell right">
                                                         <span class="spot"></span>
@@ -124,22 +113,8 @@
                                             <span class="table">
                                                 <span class="table-row">
                                                     <span class="table-cell">
-                                                        <span class="txt">일반결제 납부</span>
-                                                    </span>
-                                                    <span class="table-cell right">
-                                                        <span class="spot"></span>
-                                                        <span class="link"></span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li class="type1">
-                                        <button>
-                                            <span class="table">
-                                                <span class="table-row">
-                                                    <span class="table-cell">
-                                                        <span class="txt">포인트납부예약</span>
+                                                        <span class="simbol ico16"></span>
+                                                        <span class="txt">기타 납부하기(카드, 포인트 등)</span>
                                                     </span>
                                                     <span class="table-cell right">
                                                         <span class="spot"></span>
@@ -150,7 +125,7 @@
                                         </button>
                                     </li>
                                 </ul>
-                                <!-- //190624 수정_01 -->
+                                <!-- //200727 [OP002-9606] 수정_01 -->
                                 <button type="button" class="btn-floating btn-style3">닫기</button>
                             </div>
                             <!-- // .cont-actionsheet -->
@@ -165,39 +140,5 @@
         <!-- // .popup hbs -->
 
     </div>
-
-
-    <!-- 190607 삭제_01 -->
-    <!-- <script>
-    $(document).on('ready',function(){
-        skt_landing.action.popup.open({
-            url:'/hbs/',
-            hbs:'MF_01_case1',
-            layer:true,
-            data:[
-                {
-                'title':'요금 납부',
-                'list':[
-                        {'button-attr':'type="button"','txt':'계좌이체 납부','add':'','spot':''},
-                        {'button-attr':'type="button"','txt':'체크 / 신용카드 납부','add':'','spot':''},
-                        {'button-attr':'type="button"','txt':'OK캐쉬백 / T포인트 납부','add':'','spot':''},
-                        {'button-attr':'type="button"','txt':'입금전용계좌 문자 신청','add':'입금전용계좌 정보를 문자로 전송합니다.자동납부 인출 중이 아닌 경우에만 이용 가능합니다.','spot':'신청'}
-                    ]
-                },
-                {
-                'title':'포인트 요금 납부',
-                'list':[
-                        {'button-attr':'type="button"','txt':'OK캐쉬백포인트 조회하기','add':'','spot':'7,520점'},
-                        {'button-attr':'type="button"','txt':'T포인트 조회하기','add':'','spot':'6,257점'},
-                        {'button-attr':'type="button"','txt':'레인보우포인트 조회하기','add':'','spot':'4,250점'}
-                    ]
-                }
-            ],
-            lineManagement : {'attr':'type="button"','txt':'자동납부', 'spot':'사용중'},
-            btnfloating : {'attr':'type="button"','txt':'닫기'}
-        });
-    });
-    </script> -->
-    <!-- //190607 삭제_01 -->
 </body>
 </html>

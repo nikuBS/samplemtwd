@@ -36179,3 +36179,23 @@ body.apphome .section-box {
 .my-product-list .tod-add-family .inner {padding-right:1.875rem}
 .my-product-list .tod-add-family .inner .tag {margin-bottom:1rem}
 .my-product-list .tod-add-family .inner .tag .t-icon {display:inline-block; height:1.250rem; line-height:1.250rem; padding:0 0.563rem; border-radius:0.625rem; color:#fff; font-size:0.625rem; background-color:#f76252}
+
+/* 200727 [OP002-9606] 티월드 요금납부 화면 수정 요청 */
+.tod-dep-account .cont-box h3.tit {font-size:1.0625rem; font-weight:700;}
+.tod-dep-account .cont-box h3.sub_tit {font-size:1rem;}
+.tod-dep-account .cont-box p.sub {margin-top:0.75rem; color:rgba(0,0,0, 0.6); font-size:0.75rem}
+.tod-dep-account .cont-box .statement-cont .single-list:first-child {padding-top:1.875rem; border:none;}
+.tod-dep-account .cont-box .statement-cont .single-list {padding:1rem 0; border-top:solid 1px #f2f2f2;}
+.tod-dep-account .cont-box .statement-cont.type2 .single-list .title .in-tx.type2 {font-size:1rem; line-height:1.5rem;}
+.tod-dep-account .cont-box .statement-cont.type2 .single-list .title .info-sub {font-size:0.875rem; color:#959595;}
+.tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap i {display: inline-block; width: 1.25rem; height: 1.25rem; background-size: 100% 100% !important;}
+.tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap .icon-cellphone-49 {background: url(/img/ico/icon_40px_jiro.png) no-repeat 0 0;}
+.tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap .icon-cellphone-50 {background: url(/img/ico/icon_40px_auto.png) no-repeat 0 0;}
+.tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap .icon-cellphone-51 {background: url(/img/ico/icon_50px_phone.png) no-repeat 0 0;}
+.tod-dep-account .cont-box .statement-cont.type2 .single-list .title .ico-wrap .icon-cellphone-52 {background: url(/img/ico/icon_40px_home.png) no-repeat 0 0;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell:first-child {width:80%;}
+.cont-actionsheet.tod-my-charge .ac-list {padding: 0.87rem 0 !important;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico14 {background: url(/img/ico/icon_48px_myaccount.png) no-repeat 0 0; background-size: 100% 100%;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico15 {background: url(/img/ico/icon_48px_mysms.png) no-repeat 0 0; background-size: 100% 100%;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico16 {background: url(/img/ico/icon_48px_otherpay.png) no-repeat 0 0; background-size: 100% 100%;}
+.cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol {width:1.5rem; height:1.5rem;}

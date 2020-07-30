@@ -418,7 +418,7 @@ Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
 Tw.MYT_FARE_PAYMENT_NAME = {
   SKPAY: 'SK pay 납부',
   ACCOUNT: '계좌이체',
-  CARD: '체크/신용카드',
+  CARD: '카드',
   POINT: '포인트',
   OK_CASHBAG: 'OK캐쉬백',
   T_POINT: 'T포인트',
@@ -485,11 +485,11 @@ Tw.ALERT_MSG_COMMON = {
   BIOMETRICS_REGISTER_FAIL: '생체인증 등록에 실패하였습니다.',
   BIOMETRICS_CERT_FAIL: '본인인증이 실패하였습니다.',
   CERT_FAIL: '인증에 실패하였습니다.',
-  SUCEESS_SAFETY_NUMBER_PROVIDE_DENY : '안심번호 제공 거부 등록이 완료되었습니다.<br />감사합니다.',
-  SUCEESS_SAFETY_NUMBER_PROVIDE_FAIL : '안심번호 제공 거부가 실패하였습니다.<br />잠시 후 다시 시도해 주시기 바랍니다.',
-  SUCEESS_SAFETY_NUMBER_PROVIDE : '안심번호 제공 거부가 해제되었습니다.',
-  BROADBAND_AGREEMENT_UNDER_FOURTEEN : '미성년자는 이동전화 가입시 등록된 법정대리인의 동의가 필요합니다. 고객센터(114)로 문의하세요.',
-  BROADBAND_AGREEMENT_CANCEL_ALERT : 'SK브로드밴드 서비스 이용 동의에 미동의시 SK브로드밴드 가입 상품에 대해 T world에서 서비스 이용을 하실 수 없습니다.<br /><br />동의하지 않으시겠습니까?'
+  SUCEESS_SAFETY_NUMBER_PROVIDE_DENY: '안심번호 제공 거부 등록이 완료되었습니다.<br />감사합니다.',
+  SUCEESS_SAFETY_NUMBER_PROVIDE_FAIL: '안심번호 제공 거부가 실패하였습니다.<br />잠시 후 다시 시도해 주시기 바랍니다.',
+  SUCEESS_SAFETY_NUMBER_PROVIDE: '안심번호 제공 거부가 해제되었습니다.',
+  BROADBAND_AGREEMENT_UNDER_FOURTEEN: '미성년자는 이동전화 가입시 등록된 법정대리인의 동의가 필요합니다. 고객센터(114)로 문의하세요.',
+  BROADBAND_AGREEMENT_CANCEL_ALERT: 'SK브로드밴드 서비스 이용 동의에 미동의시 SK브로드밴드 가입 상품에 대해 T world에서 서비스 이용을 하실 수 없습니다.<br /><br />동의하지 않으시겠습니까?'
 };
 
 Tw.ALERT_MSG_HOME = {
@@ -717,7 +717,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기' },
   ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제는 다음달에 적용 됩니다.', BUTTON: '해제하기' },
-  ALERT_2_A96: { TITLE: '이용 한도를 변경하시겠습니까?',
+  ALERT_2_A96: {
+    TITLE: '이용 한도를 변경하시겠습니까?',
     MSG: '이용 한도 변경은 월 1회만 하실 수 있습니다.</br></br> 이용 한도를 변경하면 휴대폰 결제 이용약관에 재동의하는 것으로 간주됩니다.',
     TERMS: '이용약관 보기'
   },
@@ -810,10 +811,20 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A43: { TITLE: '해당 회선으로 절친을 등록하시겠습니까?', MSG: '절친 변경 후 1개월 동안 다른 회선으로 절친 변경이 불가합니다.', BUTTON: '등록하기' },
   ALERT_3_A44: { TITLE: '다른 회선으로 절친 등록 시 현재 회선의 절친은 자동 해지 됩니다.' },
   ALERT_3_A45: { TITLE: '절친으로 등록된 회선은 해지 불가합니다.', MSG: '다른 회선으로 절친 등록 후 해당 회선 해지 하실 수 있습니다.' },
-  ALERT_3_A61: { TITLE: '해지 시 유의사항을 모두 확인하였으며, 선택하신 상품을 해지하시겠습니까?', MSG: '고객님께서는 T끼리온가족할인 대표회선입니다.\n해지시 T끼리온가족그룹이 자동 해지됩니다.', BUTTON: '해지하기' },
-  ALERT_3_A62: { TITLE: '해지 시 유의사항을 모두 확인하였으며, 선택하신 상품을 해지하시겠습니까?',
-    MSG: '고객님께서는 T끼리온가족할인 가입되어있습니다.\n해지 시 그룹 탈퇴 및 2회선 미만으로 T끼리온가족그룹이 자동 해지됩니다.', BUTTON: '해지하기' },
-  ALERT_3_A63: { TITLE: '해지 시 유의사항을 모두 확인하였으며, 선택하신 상품을 해지하시겠습니까?', MSG: '고객님께서는 T끼리온가족할인 가입되어있습니다.\n해지 시 T끼리온가족그룹에서 탈퇴됩니다', BUTTON: '해지하기' },
+  ALERT_3_A61: {
+    TITLE: '해지 시 유의사항을 모두 확인하였으며, 선택하신 상품을 해지하시겠습니까?',
+    MSG: '고객님께서는 T끼리온가족할인 대표회선입니다.\n해지시 T끼리온가족그룹이 자동 해지됩니다.',
+    BUTTON: '해지하기'
+  },
+  ALERT_3_A62: {
+    TITLE: '해지 시 유의사항을 모두 확인하였으며, 선택하신 상품을 해지하시겠습니까?',
+    MSG: '고객님께서는 T끼리온가족할인 가입되어있습니다.\n해지 시 그룹 탈퇴 및 2회선 미만으로 T끼리온가족그룹이 자동 해지됩니다.', BUTTON: '해지하기'
+  },
+  ALERT_3_A63: {
+    TITLE: '해지 시 유의사항을 모두 확인하였으며, 선택하신 상품을 해지하시겠습니까?',
+    MSG: '고객님께서는 T끼리온가족할인 가입되어있습니다.\n해지 시 T끼리온가족그룹에서 탈퇴됩니다',
+    BUTTON: '해지하기'
+  },
   ALERT_3_A68: { TITLE: '해당 상품의 가입예약신청 이력이 있습니다. 가입예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A69: { TITLE: '해당 상품의 해지예약신청 이력이 있습니다. 해지예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A70: { TITLE: '해당 상품의 변경예약신청 이력이 있습니다. 변경예약을 취소하시겠습니까?', BUTTON: '취소하기' },
@@ -840,7 +851,10 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A97: { TITLE: '이미 신청하신 희망 번호가 존재합니다. 삭제후 추가해주시기 바랍니다.', MSG: '' },
   ALERT_3_A98: { TITLE: '숫자 4자리를 입력해주세요.', MSG: '' },
   ALERT_3_A99: { TITLE: '선택한 회선을 해지하시겠습니까?', MSG: '해지 후 사용하시던 번호는 당일 재사용이 불가합니다. 서비스를 해지 하시겠습니까?', BUTTON: '해지하기' },
-  ALERT_3_A100: { TITLE: '미성년자 옵션 선택 안내', MSG: 'FLO 앤 데이터 월정액 무료 / wavve 앤 데이터 월정액 무료 이용을 원하실 경우 고객센터 또는 대리점을 통해 법정대리인 동의 후 이용해주시기 바랍니다.\n(이미 해당 상품을 유료로 이용중인 고객님께서는 옵션 선택이 가능합니다.)' },
+  ALERT_3_A100: {
+    TITLE: '미성년자 옵션 선택 안내',
+    MSG: 'FLO 앤 데이터 월정액 무료 / wavve 앤 데이터 월정액 무료 이용을 원하실 경우 고객센터 또는 대리점을 통해 법정대리인 동의 후 이용해주시기 바랍니다.\n(이미 해당 상품을 유료로 이용중인 고객님께서는 옵션 선택이 가능합니다.)'
+  },
   ALERT_3_A101: { TITLE: '', MSG: '미성년자 고객님께서는 고객센터 또는 대리점을 통해 법정대리인 동의 후 해당 옵션 선택이 가능합니다.' },
   ALERT_3_A102: { TITLE: '알림', MSG: '5개의 상품을 선택해주세요.' },
   ALERT_3_A103: { TITLE: '알림', MSG: '변경된 상품이 없습니다.' },
@@ -851,9 +865,11 @@ Tw.ALERT_MSG_PRODUCT = {
   PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.',
   NEED_LINE: '등록된 회선이 있어야 이용 가능합니다.\n회선 등록 후 계속하시겠습니까?',
   BPCP: 'BPCP URL이 설정되어 있지 않습니다.',
-  FLO_PROMOTION_INFO: { TITLE: '프로모션 유의사항 안내',
-                  MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>',
-                  BTN_TEXT: 'T멤버십 할인내역 확인하기' }
+  FLO_PROMOTION_INFO: {
+    TITLE: '프로모션 유의사항 안내',
+    MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>',
+    BTN_TEXT: 'T멤버십 할인내역 확인하기'
+  }
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
@@ -1448,12 +1464,12 @@ Tw.CUSTOMER_EMAIL = {
     TITLE: '문의 내역을 삭제하시겠습니까?',
     CONTENT: '선택한 문의 내역을 삭제할 경우 추가 문의한 내역도 함께 삭제됩니다.'
   },
-  RETRY_SERVICE:'사용하시는 서비스에 맞게 항목을 다시 선택해주세요.',
-  RETRY_CATEGORY:'서비스 항목을 선택해주세요.'
+  RETRY_SERVICE: '사용하시는 서비스에 맞게 항목을 다시 선택해주세요.',
+  RETRY_CATEGORY: '서비스 항목을 선택해주세요.'
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
-  MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
+  MSG: '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
 };
 
 Tw.CUSTOMER_NEAR_POPUP = {
@@ -1481,8 +1497,8 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
     {
       id: 'S1',
       type: ['인터넷'],
-      child: [['T_광랜 인터넷','T_스마트스피드(다이렉트)','T_광랜+WiFi','T_Giga인터넷라이트','T_Giga인터넷','T_Giga 프리미엄','T_Giga라이트+WiFi',
-      'T_Giga+WiFi','T_Giga프리미엄+WiFi 1.7G','T_Giga프리미엄X2.5','T_Giga프리미엄X5','T_Giga프리미엄X10']]
+      child: [['T_광랜 인터넷', 'T_스마트스피드(다이렉트)', 'T_광랜+WiFi', 'T_Giga인터넷라이트', 'T_Giga인터넷', 'T_Giga 프리미엄', 'T_Giga라이트+WiFi',
+        'T_Giga+WiFi', 'T_Giga프리미엄+WiFi 1.7G', 'T_Giga프리미엄X2.5', 'T_Giga프리미엄X5', 'T_Giga프리미엄X10']]
     },
     {
       id: 'S2',
@@ -1514,12 +1530,12 @@ Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
 Tw.BRANCH = {
   SELECT_REGION: '지역설정',
   SELECT_BRANCH_RADIUS: {
-    0: {name: '전체', id: '1'},
-    1: {name: '지점', id: '2'},
-    2: {name: '대리점', id: '3'},
-    3: {name: '500m 반경', id: '4', zoom: 15, distance: 500},
-    4: {name: '1km 반경', id: '5', zoom : 14, distance: 1000},
-    5: {name: '3km 반경', id: '6', zoom: 13, distance: 3000}
+    0: { name: '전체', id: '1' },
+    1: { name: '지점', id: '2' },
+    2: { name: '대리점', id: '3' },
+    3: { name: '500m 반경', id: '4', zoom: 15, distance: 500 },
+    4: { name: '1km 반경', id: '5', zoom: 14, distance: 1000 },
+    5: { name: '3km 반경', id: '6', zoom: 13, distance: 3000 }
   },
   PERMISSION_TITLE: '위치기반 서비스 이용 동의 안내',
   PERMISSION_DETAIL: 'T world에서 내 위치 정보를 사용하기 위해서는 위치 정보 이용에 동의하셔야 합니다.',
@@ -1831,53 +1847,87 @@ Tw.TMAP_STRING = {
 };
 
 Tw.ROAMING_RETURN_CODE = {
-  '1430452300': { name: '대구 SKT 황금점 매장', img: 'place-img-10',
-                  officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
-  '1430456896': { name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-02-1',
-                  // officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
-                  officeHour: '<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00' },
-  'A100110000': { name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-01-1',
-                  // officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간' },
-                  officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00' },
-  'A100140000': { name: '김포공항 1층 로밍센터', img: 'place-img-03',
-                  officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00' },
-  'A900100000': { name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
-                  officeHour: '<strong>업무시간</strong> | 09:00 ~ 19:00' },
-  'A200130000': { name: '김해공항 1층 로밍센터', img: 'place-img-05-1',
-                  officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
-  'C399900000': { name: '대구공항 2층 로밍센터', img: 'place-img-06',
-                  officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
-  'C299910000': { name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
-                  officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30' }
+  '1430452300': {
+    name: '대구 SKT 황금점 매장', img: 'place-img-10',
+    officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)'
+  },
+  '1430456896': {
+    name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-02-1',
+    // officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
+    officeHour: '<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00'
+  },
+  'A100110000': {
+    name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-01-1',
+    // officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간' },
+    officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00'
+  },
+  'A100140000': {
+    name: '김포공항 1층 로밍센터', img: 'place-img-03',
+    officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00'
+  },
+  'A900100000': {
+    name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
+    officeHour: '<strong>업무시간</strong> | 09:00 ~ 19:00'
+  },
+  'A200130000': {
+    name: '김해공항 1층 로밍센터', img: 'place-img-05-1',
+    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00'
+  },
+  'C399900000': {
+    name: '대구공항 2층 로밍센터', img: 'place-img-06',
+    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00'
+  },
+  'C299910000': {
+    name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
+    officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30'
+  }
 };
 
 Tw.ROAMING_RECEIVE_CODE = {
-  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f',
-                // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
-                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>' },
-  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h',
-                // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
-                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>' },
-  1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03',
-                officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00' },
-  1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
-                officeHour: '<strong>업무시간</strong> | 09:00 ~ 19:00' },
-  1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터', img: 'place-img-05',
-                officeHour: '<strong>업무시간</strong> | 06:00 ~ 21:30' },
-  1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10',
-                officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
-  1430471483: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
-                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
-  C299910000: { code: 'C299910000', name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
-                officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30' },
-  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de',
-                // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>' }
-                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>' }
+  1000004045: {
+    code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f',
+    // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
+    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+  },
+  1000004047: {
+    code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h',
+    // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
+    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+  },
+  1000004055: {
+    code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03',
+    officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00'
+  },
+  1000004057: {
+    code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
+    officeHour: '<strong>업무시간</strong> | 09:00 ~ 19:00'
+  },
+  1000012532: {
+    code: 'A200130000', name: '김해공항 3층 로밍센터', img: 'place-img-05',
+    officeHour: '<strong>업무시간</strong> | 06:00 ~ 21:30'
+  },
+  1430452300: {
+    code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10',
+    officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)'
+  },
+  1430471483: {
+    code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
+    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00'
+  },
+  C299910000: {
+    code: 'C299910000', name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
+    officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30'
+  },
+  1430456957: {
+    code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de',
+    // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>' }
+    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+  }
 };
 
 Tw.SERVICE_AREA_TYPE = {
   기가광랜: 1,
-  bandGiga인터넷: 1, 
+  bandGiga인터넷: 1,
   bandGiga인터넷라이트: 1,
   인터넷: 2,
   디지털전화: 5,
@@ -1957,7 +2007,7 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
   ERR_END_EVT_START: '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
   ERR_END_EVT_END: '서비스 종료일 설정은 개시일 이후만 가능합니다.',
   OVER_30_DAYS: '개시일과 종료일의 차이는 30일까지입니다.',
-  ERR_STARTED_PRD : '서비스 개시 이후에는 이용 기간을 변경하실 수 없습니다.'
+  ERR_STARTED_PRD: '서비스 개시 이후에는 이용 기간을 변경하실 수 없습니다.'
 };
 
 Tw.ROAMING_BPCP = {
@@ -2115,7 +2165,7 @@ Tw.ALERT_MSG_5G = {
     MSG: '데이터를 마음껏 이용하세요!<br>설정한 시간 이전에 종료 시, 남은 시간은 반환됩니다.<br><br>*정기점검 시간에는 시간설정 서비스 이용이 제한됩니다.'
   },
   CONFIRM_TIME_OVER: {
-    TITLE : '',
+    TITLE: '',
     MSG: '조회 요청 시간을 초과하였습니다.<br>재조회 이후 계속 진행됩니다.'
   },
   CONFIRM_TERMINATE: {
@@ -2183,7 +2233,7 @@ Tw.WIRE_NUMBER_CHANGE = {
 };
 
 Tw.PRODUCT_JOIN_OCB = {
-  POPUP : '혜택 안내'
+  POPUP: '혜택 안내'
 };
 
 Tw.MYT_FARE_BILL = {
