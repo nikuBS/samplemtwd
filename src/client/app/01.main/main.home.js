@@ -73,24 +73,10 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
 
     this.isStoreMove = Tw.CommonHelper.getCookie('isStoreMove') || false;
     if (!this.isStoreMove) {
-
-      // userAgent check 
-      var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
-      var userAgentString = Tw.BrowserHelper.getUserAgent();
-      var isStoreCheck = false;
-      for(var i=0; i<userAgents.length; i++) {
-        if (userAgentString.indexOf(userAgents[i])>0) {
-          isStoreCheck = true;
-          break;
-        }
-      }
-      if (isStoreCheck) {
-        // 갤럭시s20 출시로 스토어 탭으로 이동
-        this.$container.find('#contents > div > div.home-tab > div > ul > li:nth-child(2) > div > button').click();
-        this.isStoreMove = true;
-        Tw.CommonHelper.setCookie('isStoreMove', true);
-      }
-      
+      // 갤럭시s20 출시로 스토어 탭으로 이동
+      this.$container.find('#contents > div > div.home-tab > div > ul > li:nth-child(2) > div > button').click();
+      this.isStoreMove = true;
+      Tw.CommonHelper.setCookie('isStoreMove', true);
     }
   }
   // new Tw.XtractorService(this.$container);
