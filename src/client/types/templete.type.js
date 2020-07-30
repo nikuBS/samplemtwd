@@ -84,7 +84,7 @@ Tw.POPUP_TPL = {
     {
       'title': '기타 납부하기',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': '카드납부', 'option': 'fe-card' },
+        { 'button-attr': 'type="button"', 'txt': '카드 납부', 'option': 'fe-card' },
         { 'button-attr': 'type="button"', 'txt': 'SK pay 납부', 'option': 'fe-skpay' },
         { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' },
         { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 납부 예약', 'option': 'fe-ok-cashbag' },
