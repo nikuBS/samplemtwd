@@ -173,7 +173,9 @@ Tw.MyTFareBill.prototype = {
   },
   /**
    * API 성공 처리
-   * @param smsResponse, okCashBagResponse, rainbowResponse
+   * @param smsResponse
+   * @param okCashBagResponse
+   * @param rainbowResponse
    */
   onApiSucess: function (smsResponse, okCashBagResponse, rainbowResponse) {
     if (smsResponse) {
