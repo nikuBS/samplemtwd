@@ -357,7 +357,7 @@ class ApiRouter {
    */
   private getChangeGuide(req: Request, res: Response, next: NextFunction) {
     const value: any = req.query.value || null;
-      // typeYn: any = req.query.type_yn || 'N';
+    // typeYn: any = req.query.type_yn || 'N';
 
     if (FormatHelper.isEmpty(value)) {
       return res.json({ code: '01' });
@@ -694,13 +694,13 @@ class ApiRouter {
                 }, []);
 
               //if(imgList.length > 0){ // 캠페인 대상군이지만 대상 캠페인이 없으면 디폴트 출력되지 않게 해달라고 하여 수정함
-                return Observable.of({
-                  code: API_CODE.CODE_00,
-                  result: {
-                    summary: {},
-                    imgList: imgList
-                  }
-                });
+              return Observable.of({
+                code: API_CODE.CODE_00,
+                result: {
+                  summary: {},
+                  imgList: imgList
+                }
+              });
               // }else{
               //   return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
               // }
@@ -1498,7 +1498,7 @@ class ApiRouter {
 
       // 잔여량 조회 BFF 호출
       apiService.request(API_CMD.BFF_05_0001, {}, { 'T-svcMgmtNum': svcMgmtNum }).subscribe((resp) => {
-      //apiService.request(API_CMD.BFF_01_0002, {}).subscribe((resp) => { // 잔여량 조회 횟수 제한으로 테스트 시 다른 BFF 호출
+        //apiService.request(API_CMD.BFF_01_0002, {}).subscribe((resp) => { // 잔여량 조회 횟수 제한으로 테스트 시 다른 BFF 호출
 
         // 목업 데이터 (전형득 수석님 1번 회선)
         // resp = {"code":"00","msg":"success","result":{"dataTopUp":"N","ting":"N","dataDiscount":"N","gnrlData":[{"prodId":"POT10","prodNm":"T가족모아데이터","skipId":"POT10","skipNm":"T가족모아데이터","unlimit":"0","total":"9999999","used":"0","remained":"5555555","unit":"140","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"FD004","skipNm":"데이터리필","unlimit":"0","total":"4194304","used":"1327544","remained":"2866760","unit":"140","rgstDtm":"20191201070304","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3II","skipNm":"데이터통화 4GB 무료","unlimit":"0","total":"4194304","used":"936","remained":"2254654","unit":"110","rgstDtm":"","exprDtm":""}],"spclData":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IC","skipNm":"데이터서비스 이용 음성통화","unlimit":"0","total":"4194304","used":"15772","remained":"4178532","unit":"140","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IK","skipNm":"한도초과후 데이터 무료","unlimit":"1","total":"무제한","used":"무제한","remained":"무제한","unit":"140","rgstDtm":"","exprDtm":""}],"voice":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IJ","skipNm":"영상, 부가전화 300분","unlimit":"0","total":"18000","used":"53","remained":"17947","unit":"240","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IG","skipNm":"SKT 고객간 음성 무제한","unlimit":"M","total":"무제한","used":"12460","remained":"무제한","unit":"240","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IH","skipNm":"집전화·이동전화 음성 무제한","unlimit":"M","total":"무제한","used":"878","remained":"무제한","unit":"240","rgstDtm":"","exprDtm":""}],"sms":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IB","skipNm":"SMS/MMS/ⓜ메신저 기본제공","unlimit":"B","total":"기본제공","used":"기본제공","remained":"기본제공","unit":"310","rgstDtm":"","exprDtm":""}],"etc":[]}};
@@ -1571,39 +1571,39 @@ class ApiRouter {
             let dcs = dataCode.split(",") || dataCode;
             resp.result.gnrlData.map((data) => {
               for (let d in dcs) {
-                  if (d === data.skipId) {
-                    dataCodes.push(data.skipId);
-                    // 요청한 공제코드가 있을 경우 잔여량 입력
-                    if ( data.skipId === dataCode ) {
-                      remainedData.isEmpty = false;
+                if (d === data.skipId) {
+                  dataCodes.push(data.skipId);
+                  // 요청한 공제코드가 있을 경우 잔여량 입력
+                  if ( data.skipId === dataCode ) {
+                    remainedData.isEmpty = false;
 
-                      // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
-                      switch (data.unlimit) {
-                        // 무제한
-                        case '1':
-                        case 'M':
-                          remainedData.unlimit = true;
-                          return;
-                        // 기본제공
-                        case 'B':
-                          remainedData.unlimit_default = true;
-                          return;
-                      }
-
-                      // 제공량 입력
-                      remainedData.total = +data.total;
-
-                      // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
-                      if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
-                        remainedData.remained = +data.remained;
-                      } else {
-                        remainedData.sharedRemained = +data.remained;
-                      }
-
-                      // 단위 설정
-                      remainedData.unit = data.unit;
+                    // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
+                    switch (data.unlimit) {
+                      // 무제한
+                      case '1':
+                      case 'M':
+                        remainedData.unlimit = true;
+                        return;
+                      // 기본제공
+                      case 'B':
+                        remainedData.unlimit_default = true;
+                        return;
                     }
+
+                    // 제공량 입력
+                    remainedData.total = +data.total;
+
+                    // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                    if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                      remainedData.remained = +data.remained;
+                    } else {
+                      remainedData.sharedRemained = +data.remained;
+                    }
+
+                    // 단위 설정
+                    remainedData.unit = data.unit;
                   }
+                }
               }
             });
           }
