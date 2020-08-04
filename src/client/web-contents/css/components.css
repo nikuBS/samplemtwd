@@ -36199,6 +36199,6 @@ body.apphome .section-box {
 .cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico15 {background: url(/img/ico/icon_48px_mysms.png) no-repeat 0 0; background-size: 100% 100%;}
 .cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol.ico16 {background: url(/img/ico/icon_48px_otherpay.png) no-repeat 0 0; background-size: 100% 100%;}
 .cont-actionsheet.tod-my-charge .ac-list .type1 .table-cell > span.simbol {width:1.5rem; height:1.5rem;}
-.tod-extra-service .cont-box .service-list li .list-inner.ico-t22:before {background-image: url(/img/customer/ico-guide22.png);}
-.tod-extra-service .cont-box .service-list li .list-inner.ico-t23:before {background-image: url(/img/customer/ico-guide23.png);}
-.tod-extra-service .cont-box .service-list li .list-inner.ico-t24:before {background-image: url(/img/customer/ico-guide24.png);}
+.tod-service-list li .list-inner.ico-t22:before {background-image: url(/img/customer/ico-guide22.png);}
+.tod-service-list li .list-inner.ico-t23:before {background-image: url(/img/customer/ico-guide23.png);}
+.tod-service-list li .list-inner.ico-t24:before {background-image: url(/img/customer/ico-guide24.png);}
