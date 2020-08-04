@@ -1449,7 +1449,11 @@ class ApiRouter {
       }
       const mobileLine = sessionsResponse.result && sessionsResponse.result.m && sessionsResponse.result.m.length ?
         sessionsResponse.result.m : [];
-      if ( !svcMgmtNum ) {
+      if ( svcMgmtNum ) {
+        // 입력된 서비스관리번호가 조회 된 서비스 관리번호 포함여부 확인 (유효성체크)
+        const filterSvcMgmtNum = mobileLine.filter(line => line.svcMgmtNum === svcMgmtNum);
+        svcMgmtNum = filterSvcMgmtNum.length ? svcMgmtNum : '';
+      } else {
         // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
         svcMgmtNum = mobileLine.length ? mobileLine[0].svcMgmtNum : svcMgmtNum;
       }
