@@ -212,7 +212,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     if (Tw.BrowserHelper.isApp()) {
       var confirmed = false;
       // if(this.isLogin) { // 비로그인 케이스 없음
-         if(!Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {  // 과금팝업 동의 쿠키 값 받아올수 없을때
+         if(!Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH')) {  // 과금팝업 동의 쿠키 값 받아올수 없을때
           Tw.CommonHelper.showDataCharge(
             $.proxy(function () {
               confirmed = true;

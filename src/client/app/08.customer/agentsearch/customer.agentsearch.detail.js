@@ -2,22 +2,29 @@
  * @file 지점 상세화면 처리
  * @author Hakjoon Sim
  * @since 2018-10-29
+ * @editor 양정규 2020-07-22
  */
 
 /**
  * @constructor
  * @param  {Object} mapEl - map이 위치할 elem
- * @param  {Object} coord - 해당 지점의 좌표 값
+ * @param  {Object} options - 옵션 파라미터
  */
-Tw.CustomerAgentsearchDetail = function (mapEl, coord, isLogin) {
+Tw.CustomerAgentsearchDetail = function (rootEl, options) {
+  this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._apiService = Tw.Api;
+  this.tmapComponent = new Tw.TmapMakerComponent();
 
   this._dataChargeConfirmed = false;
-  this.isLogin = (isLogin === 'true');
+  this.isLogin = options.isLogin;
+  this._locCode = options.locCode;
+  this._coord = options.coord;
+  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent();
 
-  $(window).on(Tw.INIT_COMPLETE, $.proxy(function() {
-    this._showDataChargePopupIfNeeded(mapEl, coord);
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
+    this.customerAgentsearchComponent.showDataCharge(this._init.bind(this));
   }, this));
 };
 
@@ -25,81 +32,126 @@ Tw.CustomerAgentsearchDetail.prototype = {
 
   /**
    * @function
-   * @desc app인 경우 tmap으로 인해 과금 팝업 보여줘야 함
-   * @param  {Object} mapEl - map이 위치할 elem
-   * @param  {Object} coord - 해당 지점의 좌표 값
+   * @desc 초기 설정
+   * @private
    */
-  _showDataChargePopupIfNeeded: function (mapEl, coord) {
-    // Tw.Logger.info('thomas_check get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
-    if (Tw.BrowserHelper.isApp()) {
-      var confirmed = false;
-      if(this.isLogin) {
-         if(!Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {  // 과금팝업 동의 쿠키 값 받아올수 없을때
-          Tw.CommonHelper.showDataCharge(
-            $.proxy(function () {
-              confirmed = true;
-              Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y');
-              // Tw.Logger.info('thomas_check set이후 get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
-              this._initMap(mapEl, coord);
-            }, this),
-            $.proxy(function () {
-              if (!confirmed) {
-                this._historyService.goBack();
-                return;
-              }
-            }, this)
-          );
-        } else {  // 로그인 이면서 과금 팝업 쿠키값 받아 올수 있을때
-          this._initMap(mapEl, coord);
-        }
-      } else {  // 비로그인
-        Tw.CommonHelper.showDataCharge(
-          $.proxy(function () {
-            confirmed = true;
-            this._initMap(mapEl, coord);
-          }, this),
-          $.proxy(function () {
-            if (!confirmed) {
-              this._historyService.goBack();
-              return;
-            }
-          }, this)
-        );
-      }
-    } else {  // 앱이 아닐때
-      this._initMap(mapEl, coord);
-    }
+  _init: function () {
+    this._cacheElements();
+    this._bindEvents();
+    this._getTshopImg();
+    this._initMap();
+  },
+
+  /**
+   * @function
+   * @desc DOM caching
+   */
+  _cacheElements: function () {
+    this._sliderArea = this.$container.find('.fe-slider-area');  // 매장 이미지 슬라이더 영역
+    this._slider = this.$container.find('.fe-slider');  // 매장 이미지 영역
+    this._imgTelplate = Handlebars.compile($('#tpl_img').html());
+  },
+
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
+  _bindEvents: function () {
+    // 티샵 예약하기 외부 URL 이동
+    this.$container.on('click', '.fe-booking', $.proxy(this.customerAgentsearchComponent.goBooking, this.customerAgentsearchComponent));
+    this.$container.on('click', '#fe-myLocation', $.proxy(this._initMap, this)); // 내 위치 버튼 클릭 이벤트
   },
 
   /**
    * @function
    * @desc tmap api 사용하여 지도 화면에 표시
-   * @param  {Object} mapEl - map이 위치할 elem
-   * @param  {Object} coord - 해당 지점의 좌표 값
    */
-  _initMap: function (mapEl, coord) {
-    var map = new Tmap.Map({
-      div: mapEl[0].id,
+  _initMap: function () {
+    var position = {
+      latitude: this._coord.lat,
+      longitude: this._coord.lon
+    };
+    // Tmap 생성
+    this.tmapComponent.makeTmap($.extend({
+      id: 'fe-tmap-box',
       width: '100%',
-      height: mapEl.width() + 'px',
-      httpsMode: true
+      height: $('#fe-tmap-box').width() + 'px'
+    }, position)).makeMarker($.extend({
+      width: 24
+    }, position));
+  },
+
+  _getTshopImg: function () {
+    // 매장 이미지 호출
+    var server = Tw.Environment.environment !== 'prd' ? 'dev.' : '';
+    Tw.TShop.IMG_URL = Tw.StringHelper.stringf(Tw.TShop.IMG_URL, server);
+    Tw.AJAX_CMD.GET_TSHOP_IMG_LIST.url = Tw.TShop.IMG_URL;
+    // STORE_CODE
+    this._apiService.requestAjax(Tw.AJAX_CMD.GET_TSHOP_IMG_LIST, {
+      // 'STORE_CODE': 'D000000000' // 테스트용 매장코드
+      'STORE_CODE': this._locCode
+    }).done(function (res) {
+      if (res.RET_CODE !== 0 || Tw.FormatHelper.isEmpty(res.IMAGES)) {
+        Tw.Logger.error('[_getTshopImg] error or not found images..');
+        return;
+      }
+      _.map(res.IMAGES, function (o, i) {
+        res.IMAGES[i] = decodeURIComponent(o);
+      });
+
+      this.$container.find('#fe-gallery').removeClass('none');
+      this._renderImg(res.IMAGES);
+    }.bind(this)).fail(function (err) {
+      console.info('[_getTshopImg] err:', err);
+    });
+  },
+
+  _renderImg: function (imgList) {
+    this._slider.append(this._imgTelplate({
+      list: imgList
+    }));
+    this._sliderArea.addClass('slider1-auto').data('slider-auto', 'auto');
+    this._slick();
+  },
+
+  _slick: function () {
+    var _this = this._slider;
+    _this.slick({
+      autoplay: true,
+      autoplaySpeed: 4000,
+      dots: true,
+      arrows: true,
+      infinite: true,
+      speed : 300,
+      lazyLoad: 'progressive',
+      centerMode: false,
+      focusOnSelect: false,
+      touchMove : true,
+      customPaging: function(slider, i) {
+        if (i === 0) {
+          return $('<button />').attr(
+            {
+              text: Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1),
+              'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1)
+            }
+          );
+        } else {
+          return $('<button />').attr({
+            text: i + 1,
+            'aria-label': i + 1
+          });
+        }
+      }
     });
 
-    var shopLon = coord.lon + '';
-    var shopLat = coord.lat + '';
-
-    map.setCenter(new Tmap.LonLat(shopLon, shopLat).transform('EPSG:4326', 'EPSG:3857'), 15);
-
-    var markerLayer = new Tmap.Layer.Markers();
-    map.addLayer(markerLayer);
-
-    var lonlat = new Tmap.LonLat(shopLon, shopLat).transform('EPSG:4326', 'EPSG:3857');
-    var size = new Tmap.Size(24, 38);
-    var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var icon = new Tmap.Icon(Tw.Environment.cdn + '/img/ico/ico-tmap-pin.png',
-      size, offset);
-
-    var marker = new Tmap.Marker(lonlat, icon);
-    markerLayer.addMarker(marker);
+    // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 START
+    _this.after($('<button type="button" class="tod-bann-btn stop"><span class="blind">일시정지</span></button>')); // 190610_추가
+    _this.next('button.tod-bann-btn').on('click', function () {
+      _this.slick($(this).hasClass('stop') ? 'slickPause' : 'slickPlay');
+      $(this).find('.blind').html($(this).hasClass('stop') ? '재생' : '일시정지');
+      $(this).toggleClass('stop', !$(this).hasClass('stop'));
+    });
+    // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 END
   }
+
 };

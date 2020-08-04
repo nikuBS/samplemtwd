@@ -676,9 +676,14 @@ Tw.SESSION_CMD = {
 
 Tw.TMAP = {
   URL: 'https://api2.sktelecom.com/tmap',
-  PIN: '/img/ico/ico-tmap-pin.png',
+  PIN_RED: '/img/ico/ico-pin-red.png',
+  PIN_GRAY: '/img/ico/ico-pin-gray.png',
   COMPASS: '/img/ico/ico-tmap-compass.png',
   APP_KEY: 'ecfeceac-3660-4618-bc3b-37a11f952441'
+};
+
+Tw.TShop = {
+  IMG_URL: 'https://{0}tsharp.io'
 };
 
 Tw.AJAX_CMD = {
@@ -697,7 +702,8 @@ Tw.AJAX_CMD = {
     method: Tw.API_METHOD.POST,
     url: Tw.IPIN_URL,
     contentType: 'application/x-www-form-urlencoded'
-  }
+  },
+  GET_TSHOP_IMG_LIST: { path: '/api/store/store/images', method: Tw.API_METHOD.GET, url: '' }
 };
 
 Tw.API_CODE = {

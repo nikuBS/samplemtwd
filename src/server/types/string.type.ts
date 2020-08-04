@@ -803,6 +803,57 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page018: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)'
 };
 
+// 지점/대리점 찾기
+export const CUSTOMER_AGENT_SEARCH = {
+  POSSIBLE_TASK: {
+    TITLE: '처리 가능 업무',
+    BODY: {
+      dvcChange: '휴대폰 일반',  // 기기변경 -> 휴대폰 일반
+      rbpAsYn: '행복A/S',
+      hanaroCode: '유선/인터넷TV', // SK브로드밴드 -> 유선/인터넷TV
+      secuConsulting: 'ADT캡스보안', // 보안상담 -> ADT캡스보안
+      appleYn: '애플취급',
+      pickupYn: '바로픽업',
+      nameTheft: '명의도용접수',
+      callHistSearch: '통화내역조회',
+      rentYn: '임대폰'
+    }
+  },
+
+  PRO_COUNSEL: {
+    TITLE: '예약상담업무', // 명칭변경. 전문 상담 -> 예약상담업무
+    BODY: {
+      tSharpYn: '휴대폰일반, 유선/인터넷/TV, ADT캡스보안'
+    }
+  },
+
+  PROGRAM: {
+    TITLE: '프로그램',
+    BODY: {
+      speedYn: '스마트폰 기초 과정',
+      applEduYn: '스마트폰 응용 과정',
+      codingEduYn: '코딩 교실'
+    }
+  },
+
+  EXP_ZONE: {
+    TITLE: '체험존',
+    BODY: {
+      fiveGxYn: '5GX 체험존',
+      vrYn: 'VR 체험존',
+      dvcExprZone: '단말체험존'
+    }
+  },
+
+  ETC: {
+    TITLE: '기타',
+    BODY: {
+      prkPsblCnt: '주차가능',
+      disSlopeYn: '장애인경사로설치'
+    }
+  }
+};
+
 export const ROAMING_RECEIVE_CENTER = {
   '0': '인천공항 1터미널 3층 로밍 센터(F 카운터)',
   '1': '인천공항 1터미널 3층 로밍 센터(H 카운터)',
@@ -1527,9 +1578,10 @@ export const TARGET_AGENT_LIST = [
   'iPhone11_2',   // 아이폰XS  (3차)
   'iPhone11_6',   // 아이폰XS MAX (3차) 
   'iPhone11_8',   // 아이폰XR  (3차)
-  //'iPhone8_4'   // 아이폰 SE 2020 (3차)
+  // 'iPhone8_4'   // 아이폰 SE 2020 (3차)
   'iPhone12_8'   // 아이폰 SE 2020 (3차)
 ];
 export const WIDGET_REMAINS_CODE = {
   DATA_SUM: 'DATA_SUM'
-}
+};
+
