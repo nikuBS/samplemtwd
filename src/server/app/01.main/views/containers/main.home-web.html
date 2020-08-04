@@ -15,6 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
+
 <div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" data-layertype="<%= noticeType %>">
     <!-- #header -->
     <%- include('../components/header.component.html', { title: '<div class="h-logo"><button data-url="/main/home" class="icon-gnb-home-T"><span class="blind">홈으로</span></button></div>', svcInfo: svcInfo, home: 'web' }) %>
@@ -64,7 +65,7 @@
                     </div>
                 </div>
                 <% } else { %>
-                <% if (svcInfo.svcAttrCd === 'M1') { %>
+                <% if (svcInfo.svcAttrCd.includes('M')) { %>
                 <% if (homeData.usageData) { %>
                 <% if (homeData.usageData.code === '00') { %>
                 <div class="section-box">
@@ -269,9 +270,9 @@
                 <% } %>
                 <% } %>
                 <% } %>
-                <% if (svcInfo && svcInfo.svcAttrCd === 'O1' ) { %>
+                <% if (svcInfo && ['S1', 'S2', 'S3'].includes(svcInfo.svcAttrCd) ) { %>
                 <% if (homeData.billData && homeData.billData.showBill) { %>
-                <% if(homeData.billData.isBroadband) { %>
+                <% if (homeData.billData.isBroadband) { %>
                 <!-- 브로드밴드 가입회선 -->
                 <div class="section-box">
                     <div class="member-info-box">

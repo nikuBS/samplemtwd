@@ -14,6 +14,7 @@
         <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
+
 <!--// #skip_navigation -->
 <div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" data-layertype="<%= noticeType %>">
     <!-- #header -->
@@ -74,7 +75,7 @@
                                 </div>
                                 <!-- // 미등록 -->
                                 <% } else { %>
-                                <% if (svcInfo.svcAttrCd === 'M1') { %>
+                                <% if (svcInfo.svcAttrCd.includes('M')) { %>
                                 <% if (homeData.usageData) { %>
                                 <% if (homeData.usageData.code === '00') { %>
                                 <!-- 모바일 회선_잔여 데이터 -->
@@ -785,7 +786,7 @@
                         </div>
                         <% }%>
                         <% } %>
-                        <!--<% if (svcInfo && svcInfo.svcAttrCd === 'M1') { %>-->
+                        <!--<% if (svcInfo && svcInfo.svcAttrCd.includes('M')) { %>-->
                         <!--<% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>-->
                         <!--<div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">-->
                             <!--<div class="main-fee-box">-->
