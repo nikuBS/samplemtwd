@@ -5610,3 +5610,6 @@ body.apphome .main-membershop-box {
 
 /* 200518 [OP002-8424] 추가 */
 .dialog-box{ display:flex; -webkit-align-items: center;  align-items: center;}
+
+/* 200802 추가[OP002-9807] 추가 */
+.tod-icon-msg-red {display:inline-block; width:1.375rem; height:1.375rem; background:url(/img/ico/icon_44_msg.png) no-repeat 0 0; background-size:100% 100%;}
