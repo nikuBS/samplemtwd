@@ -8,14 +8,15 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
-
-// var request = require('request');
+import { REDIS_KEY } from '../../../../types/redis.type';
+import { UrlMetaModel } from '../../../../models/url-meta.model';
 
 
 /**
  * @desc App 안내화면 초기화를 위한 class
  */
 class CommonShareBridge extends TwViewController {
+  
   constructor() {
     super();
   }
@@ -34,45 +35,15 @@ class CommonShareBridge extends TwViewController {
     const target = req.query.target;
     const loginType = req.query.loginType;
     const referer = req.query.referer;
-    // const thisMain = this;
-
-    // request({
-    //     uri: `http://app.tworld.co.kr${req.query['target']}`,
-    //     method: 'GET',
-    //     timeout: 50,
-    //     followRedirect: true, 
-    //     maxRedirects: 2
-    //   }, function (error, response, body) {
-    //   try {
-    //     var title = body.match(/<meta[ property="og:title" />]*content=[\"']?([^>\"']+)[\"']?[^>]*>/g, "\\$&");
-    //     title = title[0].split('\"')[3];
-    //     var description = body.match(/<meta[ property="og:description" />]*content=[\"']?([^>\"']+)[\"']?[^>]*>/g, "\\$&");
-    //     description = description[0].split('\"')[3];
+    let ogDesc = pageInfo.seoMetaTagKwdCtt;
+    this.redisService.getData(REDIS_KEY.URL_META + target).subscribe((resp) => {
+      const urlMeta = new UrlMetaModel(resp.result || {});
+      // console.log(">>>[TEST] ", urlMeta);
+      // console.log(">>>[TEST] ", urlMeta.seoMetaTagTitNm);
+      ogDesc = urlMeta.seoMetaTagTitNm;
+      res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
+    });
     
-    //     res.render('share/common.share.bridge.html', { 
-    //       isAndroid: BrowserHelper.isAndroid(req), 
-    //       target, 
-    //       loginType, 
-    //       referer, 
-    //       pageInfo,
-    //       ogTitle: title,
-    //       ogDesc: description
-    //     });
-    //   } catch (e) {
-    //     thisMain.logger.error(thisMain, '[ meta tag ] : ', e);
-    //     res.render('share/common.share.bridge.html', { 
-    //       isAndroid: BrowserHelper.isAndroid(req), 
-    //       target, 
-    //       loginType, 
-    //       referer, 
-    //       pageInfo,
-    //       ogTitle: title,
-    //       ogDesc: description
-    //     });
-    //   }
-    // });
-    const ogDesc = pageInfo.seoMetaTagKwdCtt;
-    res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
   }
 }
 export default CommonShareBridge;
