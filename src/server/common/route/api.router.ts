@@ -16,7 +16,7 @@ import DateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR, UNLIMIT_NAME } from '../../types/string.type';
-import { TPLAN_SHARE_LIST, UNIT, UNIT_E } from '../../types/bff.type';
+import { TPLAN_SHARE_LIST, UNIT, UNIT_E, WIDGET_ERROR } from '../../types/bff.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import EnvHelper from '../../utils/env.helper';
@@ -146,18 +146,7 @@ class ApiRouter {
    */
   private setGetApi(cmd) {
     this.router.get(cmd.path, (req, res, next) => {
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.set('expires', '0');
-      res.set('pragma', 'no-cache');
-
-      if ( this.sessionCheck(req, res, next) ) {
-        cmd.target.call(this, req, res, next);
-      } else {
-        res.json({
-          code: API_CODE.NODE_1004,
-          msg: NODE_API_ERROR[API_CODE.NODE_1004]
-        });
-      }
+      this.sessionCheck(req, res, next, cmd);
     });
   }
 
@@ -167,13 +156,7 @@ class ApiRouter {
    */
   private setPostApi(cmd) {
     this.router.post(cmd.path, (req, res, next) => {
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.set('expires', '0');
-      res.set('pragma', 'no-cache');
-
-      if ( this.sessionCheck(req, res, next) ) {
-        cmd.target.call(this, req, res, next);
-      }
+      this.sessionCheck(req, res, next, cmd);
     });
   }
 
@@ -183,18 +166,7 @@ class ApiRouter {
    */
   private setPutApi(cmd) {
     this.router.put(cmd.path, (req, res, next) => {
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.set('expires', '0');
-      res.set('pragma', 'no-cache');
-
-      if ( this.sessionCheck(req, res, next) ) {
-        cmd.target.call(this, req, res, next);
-      } else {
-        res.json({
-          code: API_CODE.NODE_1004,
-          msg: NODE_API_ERROR[API_CODE.NODE_1004]
-        });
-      }
+      this.sessionCheck(req, res, next, cmd);
     });
   }
 
@@ -204,18 +176,7 @@ class ApiRouter {
    */
   private setDeleteApi(cmd) {
     this.router.delete(cmd.path, (req, res, next) => {
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.set('expires', '0');
-      res.set('pragma', 'no-cache');
-
-      if ( this.sessionCheck(req, res, next) ) {
-        cmd.target.call(this, req, res, next);
-      } else {
-        res.json({
-          code: API_CODE.NODE_1004,
-          msg: NODE_API_ERROR[API_CODE.NODE_1004]
-        });
-      }
+      this.sessionCheck(req, res, next, cmd);
     });
   }
 
@@ -224,16 +185,24 @@ class ApiRouter {
    * @param req
    * @param res
    * @param next
+   * @param cmd
    */
-  private sessionCheck(req, res, next) {
+  private sessionCheck(req, res, next, cmd) {
     const loginService = new LoginService();
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('expires', '0');
+    res.set('pragma', 'no-cache');
     if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
-      return false;
+      res.json({
+        code: API_CODE.NODE_1004,
+        msg: NODE_API_ERROR[API_CODE.NODE_1004]
+      });
+    } else {
+      cmd.target.call(this, req, res, next);
     }
-    return true;
   }
 
   /**
@@ -323,6 +292,7 @@ class ApiRouter {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = resp.result.splash;
         }
+
         res.json(resp);
       });
   }
@@ -339,6 +309,7 @@ class ApiRouter {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = resp.result.notice;
         }
+
         res.json(resp);
       });
   }
@@ -352,6 +323,7 @@ class ApiRouter {
   private getXtInfo(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService(),
       svcInfo = loginService.getSvcInfo(req);
+
     res.json({
       code: API_CODE.CODE_00,
       result: !svcInfo || FormatHelper.isEmpty(svcInfo.xtInfo) ? {} : Object.assign(svcInfo.xtInfo, {
@@ -368,14 +340,18 @@ class ApiRouter {
    */
   private getChangeGuide(req: Request, res: Response, next: NextFunction) {
     const value: any = req.query.value || null;
+    // typeYn: any = req.query.type_yn || 'N';
+
     if ( FormatHelper.isEmpty(value) ) {
-      res.json({ code: '01' });
+      return res.json({ code: '01' });
     }
+
     this.redisService.getData(REDIS_KEY.PRODUCT_CHANGEGUIDE + value)
       .subscribe((resp) => {
         if ( resp.code !== API_CODE.CODE_00 ) {
-          res.json(resp);
+          return res.json(resp);
         }
+
         res.json(Object.assign(resp, {
           result: Object.assign(resp.result, {
             guidMsgCtt: EnvHelper.replaceCdnUrl(resp.result.guidMsgCtt)
@@ -393,14 +369,17 @@ class ApiRouter {
   private getDowngrade(req: Request, res: Response, next: NextFunction) {
     const value: any = req.query.value || null,
       typeYn: any = req.query.type_yn || 'N';
+
     if ( FormatHelper.isEmpty(value) ) {
-      res.json({ code: '01' });
+      return res.json({ code: '01' });
     }
+
     this.redisService.getData((typeYn === 'Y' ? REDIS_KEY.PRODUCT_DOWNGRADE_TYPE : REDIS_KEY.PRODUCT_DOWNGRADE) + value)
       .subscribe((resp) => {
         if ( resp.code !== API_CODE.CODE_00 ) {
-          res.json(resp);
+          return res.json(resp);
         }
+
         res.json(Object.assign(resp, {
           result: Object.assign(resp.result, {
             guidMsgCtt: EnvHelper.replaceCdnUrl(resp.result.guidMsgCtt)
@@ -422,6 +401,7 @@ class ApiRouter {
       .subscribe((resp) => {
         res.json(resp);
       });
+
   }
 
   /**
@@ -516,7 +496,7 @@ class ApiRouter {
     const code = req.query.code;
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
       });
@@ -595,7 +575,7 @@ class ApiRouter {
       })
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          if ( targetSerial === '' ) {
+          if ( !targetSerial ) {
             return Observable.of(resp);
           } else {
             const start = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnStaDt + resp.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
@@ -614,16 +594,15 @@ class ApiRouter {
       })
       .subscribe((resp) => {
         Object.assign(resp.result, bannerLink);
-        res.json(resp);
+        return res.json(resp);
       }, (err) => {
         // 오류가 발생하면 데이터가 없는 것이기 때문에, admin banner을 출력하도록 유도한다.
         if ( !FormatHelper.isEmpty(bannerLink) ) {
           bannerLink['tosLnkgYn'] = 'N';
         }
-        err.code = API_CODE.CODE_00;
-        err.msg = 'success';
-        err.result = bannerLink;
-        res.json(err);
+        Object.assign(err, { code: API_CODE.CODE_00, msg: 'success' });
+        Object.assign(err.result, bannerLink);
+        return res.json(err);
       });
   }
 
@@ -638,7 +617,7 @@ class ApiRouter {
     const code = req.query.code;
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
       });
@@ -717,9 +696,9 @@ class ApiRouter {
           resp.result = {};
         }
         Object.assign(resp.result, bannerLink);
-        res.json(resp);
+        return res.json(resp);
       }, (err) => {
-        res.json(err);
+        return res.json(err);
       });
   }
 
@@ -839,7 +818,7 @@ class ApiRouter {
           if ( resp.code === API_CODE.CODE_00 ) {
             resp.result.enableEdit = 'N';
           }
-          res.json(resp);
+          return res.json(resp);
         });
     } else {
       const svcMgmtNum = svcInfo.svcMgmtNum;
@@ -859,7 +838,7 @@ class ApiRouter {
             this.logger.error(this, 'Invalid svcGr :', svcGr + ', ' + resp.msg, '\n', svcInfo);
           }
           resp.result.enableEdit = 'Y';
-          res.json(resp);
+          return res.json(resp);
         });
     }
   }
@@ -876,7 +855,7 @@ class ApiRouter {
     apiService.setCurrentReq(req, res);
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
       });
@@ -884,7 +863,7 @@ class ApiRouter {
     const svcGr = svcInfo.svcGr;
     this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + svcGr)
       .subscribe((resp) => {
-        res.json(resp);
+        return res.json(resp);
       });
   }
 
@@ -956,7 +935,7 @@ class ApiRouter {
 
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
       });
@@ -986,7 +965,7 @@ class ApiRouter {
 
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
       });
@@ -1195,7 +1174,7 @@ class ApiRouter {
 
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1003,
         msg: NODE_API_ERROR[API_CODE.NODE_1003]
       });
@@ -1457,18 +1436,38 @@ class ApiRouter {
     apiService.setCurrentReq(req, res);
 
     // 조회대상 회선 및 공제코드 변수 생성
-    const svcMgmtNum: any = req.headers.svcmgmtnum;
+    let svcMgmtNum: any = req.headers.svcmgmtnum;
     const dataCode: any = req.headers.datacode;
-    let voiceCode: any = req.headers.voicecode;
-    let smsCode: any = req.headers.smscode;
-    // 잔여량 조회 BFF 호출
-    apiService.request(API_CMD.BFF_05_0001, {}, {
-      'T-svcMgmtNum': svcMgmtNum
-    })
-      .subscribe((balancesResponse) => {
+    const voiceCode: any = req.headers.voicecode;
+    const smsCode: any = req.headers.smscode;
+    // 특별공제항목은 데이터 코드 값이 입력된 경우에만 처리한다.
+    const isSpclData = !!dataCode;
+    // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
+    apiService.request(API_CMD.BFF_01_0002, {}).subscribe((sessionsResponse) => {
+      if ( sessionsResponse.code !== API_CODE.CODE_00 ) {
+        return res.json(sessionsResponse);
+      }
+      const mobileLine = sessionsResponse.result && sessionsResponse.result.m && sessionsResponse.result.m.length ?
+        sessionsResponse.result.m : [];
+      if ( svcMgmtNum ) {
+        // 입력된 서비스관리번호가 조회 된 서비스 관리번호 포함여부 확인 (유효성체크)
+        const filterSvcMgmtNum = mobileLine.filter(line => line.svcMgmtNum === svcMgmtNum);
+        svcMgmtNum = filterSvcMgmtNum.length ? svcMgmtNum : '';
+      } else {
+        // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
+        svcMgmtNum = mobileLine.length ? mobileLine[0].svcMgmtNum : svcMgmtNum;
+      }
+      if ( !svcMgmtNum ) {
+        // 서비스관리번호 조회되지 않을 경우 Error Return
+        return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
+      }
+      // 잔여량 조회 BFF 호출
+      apiService.request(API_CMD.BFF_05_0001, {}, {
+        'T-svcMgmtNum': svcMgmtNum
+      }).subscribe((balancesResponse) => {
         // 잔여량 조회 실패 시 Error return
         if ( balancesResponse.code !== API_CODE.CODE_00 ) {
-          res.json(balancesResponse);
+          return res.json(balancesResponse);
         }
         // 잔여 데이터 객체 생성
         const remainedData: any = {
@@ -1481,16 +1480,13 @@ class ApiRouter {
           unit: '' // 단위
         };
         // 요청받은 데이터 공제코드가 없을 경우 합산 데이터(기본값)로 설정
-        // 배열로 dataCode를 전달 받아도 공제 합산을 위해서 초기화
-        // 데이터에서 공제코드 검색
-        // 요청받은 공제코드가 합산 데이터일 경우
         const dataCodes: string[] = dataCode ? (dataCode.includes(',') ? dataCode.split(',') : [dataCode]) : [];
         if ( balancesResponse.result && balancesResponse.result.gnrlData ) {
           balancesResponse.result.gnrlData.map((data) => {
             const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
             // KB 단위 잔여량만 합산
             if ( skipId.length ) {
-              // dataCode 값이 undefined 인 경우에는 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
+              // dataCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
               if ( !dataCode ) {
                 dataCodes.push(data.skipId);
               }
@@ -1522,6 +1518,42 @@ class ApiRouter {
             }
           });
         }
+        // 특별공제 데이터는 실제 입력된 값이 넘어오는 경우에만 처리
+        if ( isSpclData ) {
+          if ( balancesResponse.result && balancesResponse.result.spclData ) {
+            balancesResponse.result.spclData.map((data) => {
+              const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
+              // KB 단위 잔여량만 합산
+              if ( skipId.length ) {
+                if ( data.unit === UNIT_E.DATA ) {
+                  remainedData.isEmpty = false;
+                  // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
+                  switch ( data.unlimit ) {
+                    // 무제한
+                    case '1':
+                    case 'M':
+                      remainedData.unlimit = true;
+                      return;
+                    // 기본제공
+                    case 'B':
+                      remainedData.unlimit_default = true;
+                      return;
+                  }
+                  // 각 항목 별 제공량 합산
+                  remainedData.total += +data.total;
+                  // 각 항목 별 잔여량 합산 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                  if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                    remainedData.remained += +data.remained;
+                  } else {
+                    remainedData.sharedRemained += +data.remained;
+                  }
+                  // 단위 설정 (합산은 무조건 KB)
+                  remainedData.unit = UNIT_E.DATA;
+                }
+              }
+            });
+          }
+        }
         // 잔여 데이터 조회 및 객체(remainedData) 설정 완료
         // 잔여 음성 객체 생성
         const remainedVoice: any = {
@@ -1534,19 +1566,14 @@ class ApiRouter {
         };
         // 미설정코드 처리
         // 요청받은 음성 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
-        if ( !voiceCode ) {
-          if ( balancesResponse.result && balancesResponse.result.voice && balancesResponse.result.voice.length > 0 ) {
-            voiceCode = balancesResponse.result.voice[0].skipId;
-          }
-        }
-
+        const voiceCodes: string[] = voiceCode ? (voiceCode.includes(',') ? voiceCode.split(',') : [voiceCode]) : [];
         // 음성에서 공제코드 검색
         if ( balancesResponse.result && balancesResponse.result.voice ) {
           balancesResponse.result.voice.map((voice) => {
+            const skipId: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( voice.skipId === voiceCode ) {
+            if ( skipId.length ) {
               remainedVoice.isEmpty = false;
-
               // 음성 항목이 무제한 또는 기본제공일 경우 Flag 설정
               switch ( voice.unlimit ) {
                 // 무제한
@@ -1559,11 +1586,9 @@ class ApiRouter {
                   remainedVoice.unlimit_default = true;
                   return;
               }
-
               // 제공량 및 잔여량 입력
               remainedVoice.total = +voice.total;
               remainedVoice.remained = +voice.remained;
-
               // 단위 설정
               remainedVoice.unit = voice.unit;
             }
@@ -1579,20 +1604,14 @@ class ApiRouter {
           remained: 0, // 잔여량
           unit: '' // 단위
         };
-        // 미설정코드 처리
-        // 요청받은 SMS 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
-        if ( !smsCode ) {
-          if ( balancesResponse.result && balancesResponse.result.sms && balancesResponse.result.sms.length > 0 ) {
-            smsCode = balancesResponse.result.sms[0].skipId;
-          }
-        }
+        const smsCodes: string[] = smsCode ? (smsCode.includes(',') ? smsCode.split(',') : [smsCode]) : [];
         // SMS에서 공제코드 검색
         if ( balancesResponse.result && balancesResponse.result.sms ) {
           balancesResponse.result.sms.map((sms) => {
+            const skipId: string[] = smsCodes ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( sms.skipId === smsCode ) {
+            if ( skipId.length ) {
               remainedSms.isEmpty = false;
-
               // SMS 항목이 무제한 또는 기본제공일 경우 Flag 설정
               switch ( sms.unlimit ) {
                 // 무제한
@@ -1605,7 +1624,6 @@ class ApiRouter {
                   remainedSms.unlimit_default = true;
                   return;
               }
-
               // 제공량 및 잔여량 입력
               remainedSms.total = +sms.total;
               remainedSms.remained = +sms.remained;
@@ -1642,15 +1660,17 @@ class ApiRouter {
           }
 
         };
+
+        // 위젯에서 미설정으로 설정한 경우
         if ( dataCode === 'NULL' ) {
-          responseRemains.voice = {
+          responseRemains.data = {
             skipId: dataCode, // 조회한 음성 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
-            remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
+            remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
+            sharedRemainedPercentage: 0 // 총 제공량 대비 잔여 T가족모아데이터의 비율
           };
         }
-
         if ( voiceCode === 'NULL' ) {
           responseRemains.voice = {
             skipId: voiceCode, // 조회한 음성 공제코드
@@ -1748,15 +1768,15 @@ class ApiRouter {
             const value = keyObj['remainedPercentage'];
             keyObj['remainedPercentage'] = Number((value * 100).toFixed(2));
           }
-
           if ( !FormatHelper.isEmpty(keyObj['sharedRemainedPercentage']) ) {
             const value = keyObj['sharedRemainedPercentage'];
             keyObj['sharedRemainedPercentage'] = Number((value * 100).toFixed(2));
           }
         });
         balancesResponse.result = responseRemains;
-        res.json(balancesResponse);
+        return res.json(balancesResponse);
       });
+    });
   }
 }
 

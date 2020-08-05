@@ -10,7 +10,7 @@ _%>
 <div class="cont-box nogaps">
     <ul class="full-link-list">
         <%_ if (data.myPausedState && data.myPausedState.svcStCd) { _%>
-        <!--일시정지 상태 영역-->
+        <!--정지 상태 영역-->
         <li>
             <button data-id="pause_c">
                 <span class="inner">
@@ -20,7 +20,7 @@ _%>
                         var longStateCd = data.myLongPausedState.opStateCd;
                         if (data.myPausedState.armyDt || data.myPausedState.armyExtDt) {
                 _%>
-                    <span class="tit">일시정지 현황</span>
+                    <span class="tit">정지 현황</span>
                     <span class="text">장기일시정지 해제 중</span>
                         <%_
                         } else {
@@ -32,7 +32,7 @@ _%>
                     <%_
                             } else {
                     _%>
-                    <span class="tit">일시정지 현황<%_ if (!longStateCd) { _%><span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span><%_ } _%></span>
+                    <span class="tit">정지 현황<%_ if (!longStateCd) { _%><span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span><%_ } _%></span>
                     <span class="text">장기일시정지 <%- longStateCd ? data.myLongPausedState.opState : '중' %></span>
                     <%_
                             }
@@ -40,11 +40,11 @@ _%>
                     } else {
                         if (data.myPausedState.armyDt || data.myPausedState.armyExtDt) {
                     _%>
-                        <span class="tit">일시정지 현황</span>
+                        <span class="tit">정지 현황</span>
                         <span class="text">장기일시정지 해제 중</span>
                         <%_ } else if (data.myPausedState.reservedYn === 'Y') { _%>
-                        <span class="tit">일시정지 현황<span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span></span>
-                        <span class="text">일시정지 예약중</span>
+                        <span class="tit">정지 현황<span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span></span>
+                        <span class="text">정지 예약중</span>
                         <%_ } else { _%>
                         <span class="tit">일시정지</span>
                         <span class="text">신청하기</span>
@@ -55,17 +55,17 @@ _%>
                     if (data.myLongPausedState && data.myLongPausedState.state) {
                         var longStateCd = data.myLongPausedState.opStateCd;
                     _%>
-                    <span class="tit">일시정지 현황<span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span></span>
+                    <span class="tit">정지 현황<span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span></span>
                     <span class="text">
-                        <%# DV001-19840 일시정지중 & 장기일시정지 2가지 포함 case인경우. "일시정지 중" 텍스트 항시 노출 _%>
+                        <%# DV001-19840 정지중 & 장기일시정지 2가지 포함 case인경우. "정지 중" 텍스트 항시 노출 _%>
                         <%_ if (['21', '22', '27'].indexOf(data.myPausedState.svcChgRsnCd) === -1) { _%>
-                        일시정지 중<br/>
+                        정지 중<br/>
                         <%_ } _%>
                         장기일시정지 <%- longStateCd ? data.myLongPausedState.opState : '중' %>
                     </span>
                     <%_ } else { _%>
-                    <span class="tit">일시정지 현황<span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate || '' %></span></span>
-                    <span class="text">일시정지 중</span>
+                    <span class="tit">정지 현황<span class="sub"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate || '' %></span></span>
+                    <span class="text">정지 중</span>
                     <%_
                     }
                 }
@@ -73,7 +73,7 @@ _%>
                 </span>
             </button>
         </li>
-        <!--// 일시정지 상태 영역-->
+        <!--// 정지 상태 영역-->
         <%_
         }
         if (data.type === 0) {

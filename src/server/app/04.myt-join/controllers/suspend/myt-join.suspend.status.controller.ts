@@ -55,7 +55,9 @@ class MyTJoinSuspendStatus extends TwViewController {
       const to = pausedStatus.toDt ? DateHelper.getShortDateWithFormat(pausedStatus.toDt, 'YYYY.M.D.') : null;
       const status = {
         period: {from, to},
-        resetable: true
+        resetable: true,
+        // 2G 서비스 종료(svcChgRsnCd="55")인 경우, 정지 요청, 장시일시정지 요청 불가
+        showButtons: pausedStatus.svcChgRsnCd !== '55'
       };
       if (pausedStatus.svcStCd === 'SP') { // 일시정지 상태
         //  const from = DateHelper.getShortDateWithFormat(pausedStatus.fromDt, 'YYYY.M.D.');

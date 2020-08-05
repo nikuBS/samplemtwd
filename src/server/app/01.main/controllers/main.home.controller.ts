@@ -6,28 +6,33 @@
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
-import {NextFunction, Request, Response} from 'express';
-import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE, SESSION_CMD} from '../../../types/api-command.type';
+import { NextFunction, Request, Response } from 'express';
+import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../types/api-command.type';
 import {
-    EXPERIMENT_EXPS_SCRN_ID,
-    HOME_SMART_CARD,
-    LINE_NAME,
-    LOGIN_TYPE,
-    MEMBERSHIP_GROUP,
-    MYT_FARE_BILL_CO_TYPE,
-    PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
-    PRODUCT_5GX_TICKET_TIME_SKIP_ID,
-    SVC_ATTR_E,
-    TPLAN_SHARE_LIST,
-    UNIT,
-    UNIT_E,
-    UNLIMIT_CODE
+  HOME_SMART_CARD,
+  LOGIN_TYPE,
+  MEMBERSHIP_GROUP,
+  MYT_FARE_BILL_CO_TYPE,
+  PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
+  PRODUCT_5GX_TICKET_TIME_SKIP_ID,
+  SVC_ATTR_E,
+  TPLAN_SHARE_LIST,
+  UNIT,
+  UNIT_E,
+  UNLIMIT_CODE
 } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
-import {SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME, TARGET_AGENT_LIST, TARGET_LINE_LIST} from '../../../types/string.type';
+import {
+  SKIP_NAME,
+  TARGET_AGENT_LIST,
+  TARGET_LINE_LIST,
+  TIME_UNIT,
+  UNIT as UNIT_STR,
+  UNLIMIT_NAME
+} from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import {CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY} from '../../../types/redis.type';
+import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
 
 /**
@@ -54,7 +59,7 @@ class MainHome extends TwViewController {
     const homeData = {
       usageData: null,
       membershipData: null,
-      billData: null,
+      billData: null
     };
     const personDataNoLoginMap = {
       personTimeChk: null,
@@ -83,6 +88,7 @@ class MainHome extends TwViewController {
     }
 
     if ( svcInfo ) {
+<<<<<<< HEAD
       if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
         console.log(">>>[TEST] 모바일 - 휴대폰 회선");
         // 모바일 - 휴대폰 회선
@@ -118,6 +124,70 @@ class MainHome extends TwViewController {
         });
       } else if (['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1) {
         console.log(">>>[TEST] IPTV, 인터넷 , 전화 회선");
+=======
+      if ( svcInfo.svcAttrCd.includes('M') ) {
+        if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
+          // 모바일 - 휴대폰 회선
+          Observable.combineLatest(
+            this.getUsageData(svcInfo),
+            this.getMembershipData(svcInfo),
+            this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+            this.getRecommendProds(req, svcInfo.prodId),
+            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+            this.getProductGroup(),
+            this.getPersonData(svcInfo, req)
+          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
+            // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+            if ( usageData.data ) {
+              usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
+            }
+            homeData.usageData = usageData;
+            homeData.membershipData = membershipData;
+            recommendProdsData = recommendProdsResult;
+            svcInfo.personTimeChk = personData.personDisableTimeCheck; // 아이콘 비노출 시간 체크
+            svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
+            svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
+            svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
+            res.render(`main.home-${ flag }.html`, {
+              svcInfo,
+              homeData,
+              redisData,
+              pageInfo,
+              noticeType: svcInfo.noticeType,
+              recommendProdsData,
+              isAdRcvAgreeBannerShown
+            });
+          });
+        } else {
+          // 모바일 및 IPTV, 인터넷, 전화 외 회선
+          Observable.combineLatest(
+            this.getUsageData(svcInfo),
+            this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+            this.getProductGroup(),
+            this.getPersonData(svcInfo, req)
+          ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
+            // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
+            if ( usageData.data ) {
+              usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
+            }
+            homeData.usageData = usageData;
+            svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
+            svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
+            svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
+            res.render(`main.home-${ flag }.html`, {
+              svcInfo,
+              homeData,
+              redisData,
+              pageInfo,
+              noticeType: svcInfo.noticeType,
+              recommendProdsData,
+              isAdRcvAgreeBannerShown
+            });
+          });
+        }
+      } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
+>>>>>>> 81cdc3c3e19e237a3dfa2fffda3e222412947a2c
         // IPTV, 인터넷 , 전화 회선
         Observable.combineLatest(
           this.getBillData(svcInfo),
@@ -129,6 +199,7 @@ class MainHome extends TwViewController {
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
+<<<<<<< HEAD
           res.render(`main.home-${flag}.html`, {
             svcInfo,
             homeData,
@@ -158,6 +229,9 @@ class MainHome extends TwViewController {
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
           res.render(`main.home-${flag}.html`, {
+=======
+          res.render(`main.home-${ flag }.html`, {
+>>>>>>> 81cdc3c3e19e237a3dfa2fffda3e222412947a2c
             svcInfo,
             homeData,
             redisData,
@@ -181,8 +255,12 @@ class MainHome extends TwViewController {
       ).subscribe(([redisData, personDataNoLogin]) => {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
         personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
+<<<<<<< HEAD
 
         res.render(`main.home-${flag}.html`, {
+=======
+        res.render(`main.home-${ flag }.html`, {
+>>>>>>> 81cdc3c3e19e237a3dfa2fffda3e222412947a2c
           svcInfo,
           homeData,
           redisData,
@@ -305,7 +383,7 @@ class MainHome extends TwViewController {
     const scrnTypCd = cicntsList[0].scrnTypCd || 'F';
 
     cicntsList.sort((prev, next) => {
-      if (scrnTypCd === 'R') {
+      if ( scrnTypCd === 'R' ) {
         return Math.floor(Math.random() * 3) - 1;
       } else {
         return prev.mainExpsSeq - next.mainExpsSeq;
@@ -385,7 +463,7 @@ class MainHome extends TwViewController {
         return resp.result;
       }
     });
-      return null;
+    return null;
   }
 
   /**
@@ -421,7 +499,7 @@ class MainHome extends TwViewController {
 
       const invMonth = +DateHelper.getCurrentMonth(billData[billName].invDt);
       let billMonth = +invMonth + 1;
-      if (invMonth === 12) {
+      if ( invMonth === 12 ) {
         billMonth = 1;
       }
 
@@ -463,7 +541,7 @@ class MainHome extends TwViewController {
         usageData['fallbackClCd'] = resp.result.fallbackClCd;
         usageData['fallbackUrl'] = resp.result.fallbackUrl;
         usageData['fallbackMsg'] = resp.result.fallbackMsg;
-      } else if (resp.code === API_CODE.BFF_0011 ) {
+      } else if ( resp.code === API_CODE.BFF_0011 ) {
         usageData['fallbackClCd'] = resp.result.fallbackClCd;
         usageData['fallbackUrl'] = resp.result.fallbackUrl;
         usageData['fallbackMsg'] = resp.result.fallbackMsg;
@@ -488,7 +566,7 @@ class MainHome extends TwViewController {
       data: { isShow: false },
       voice: { isShow: false },
       sms: { isShow: false },
-      fivegxTicketTime: { isShow: false },
+      fivegxTicketTime: { isShow: false }
     };
 
     if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
@@ -565,19 +643,19 @@ class MainHome extends TwViewController {
       data.myTotal = 0;
       data.myRemained = 0;
       list.map((target) => {
-        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 && target.unit !== UNIT_E.FEE) {
+        if ( TPLAN_SHARE_LIST.indexOf(target.skipId) === -1 && target.unit !== UNIT_E.FEE ) {
           data.myTotal += +target.total;
           data.myRemained += +target.remained;
         }
 
-        if (target.unit === UNIT_E.FEE) {
+        if ( target.unit === UNIT_E.FEE ) {
           includeFee = true;
           includeFeeCnt++;
         }
       });
 
       // gnrlData에 원단위만 존재하는 경우, 실시간 데이터 잔여량을 보여주지 않는다.
-      if ( includeFeeCnt === list.length && includeFee) {
+      if ( includeFeeCnt === list.length && includeFee ) {
         data.isShow = false;
       }
 
@@ -590,7 +668,7 @@ class MainHome extends TwViewController {
       data.shareRemainedRatio = Math.round(data.addRemained / data.addTotal * 100);
     }
 
-    if (data.usingFivegxTicketTime) {
+    if ( data.usingFivegxTicketTime ) {
       data.linkUrl = '/myt-data/5g-setting';
     } else {
       // data.linkUrl = '/myt-data/hotdata';
@@ -660,14 +738,14 @@ class MainHome extends TwViewController {
    * @param {any} prodId
    * @return {Observable}
    */
-  private getRecommendProds(req: Request, prodId: any): Observable<any>  {
+  private getRecommendProds(req: Request, prodId: any): Observable<any> {
 
     const retVal = {
       hasRecommendProds: false,
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    if (BrowserHelper.isApp(req)) {
+    if ( BrowserHelper.isApp(req) ) {
       // const channelIds = [EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
       // return this.apiService.request(API_CMD.BFF_10_0187, {channelIds: channelIds}).map((resp) => {
 
@@ -696,12 +774,12 @@ class MainHome extends TwViewController {
    */
   private getIsAdRcvAgreeBannerShown(loginType): Observable<any> {
 
-    if (FormatHelper.isEmpty(loginType) || loginType !== 'T') {
+    if ( FormatHelper.isEmpty(loginType) || loginType !== 'T' ) {
       return Observable.of(false);
     }
 
     return this.apiService.request(API_CMD.BFF_03_0034, null).map((resp) => {
-      if (resp.code !== API_CODE.CODE_00) {
+      if ( resp.code !== API_CODE.CODE_00 ) {
         return false;
       }
       return resp.result.twdAdRcvAgreeYn !== 'Y';
@@ -716,8 +794,8 @@ class MainHome extends TwViewController {
   private getProductGroup(): Observable<any> {
     // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
     return this.apiService.request(API_CMD.BFF_10_0188, {}, {}, ['NA6031_PRC_PLN', 1])
-      .map( resp => {
-        if (resp.code === API_CODE.CODE_00) {
+      .map(resp => {
+        if ( resp.code === API_CODE.CODE_00 ) {
           return resp.result.prodList;
         } else {
           return null;
@@ -739,7 +817,12 @@ class MainHome extends TwViewController {
       const personDisableLineTypeCheck = this.getPersonLineTypeCheck(svcInfo);
       const personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req);
       this.logger.info(this, '[Person Login Info]', personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck);
-      return { personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck, personSmsDisableTimeCheck };
+      return {
+        personDisableTimeCheck,
+        personDisableAgentTypeCkeck,
+        personDisableLineTypeCheck,
+        personSmsDisableTimeCheck
+      };
     });
   }
 
