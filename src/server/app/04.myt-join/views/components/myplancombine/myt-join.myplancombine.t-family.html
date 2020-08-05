@@ -4,7 +4,7 @@
 * @editor 양정규
 * @since 2018.10.26
 * id: MS_07_01_01
-%>
+_%>
 
 <!-- .cont-box -->
 <% const groupInfo = combination.combinationGroup; %>
@@ -20,7 +20,7 @@
         <ul>
             <li>
                 <span class="title">신청일</span>
-                <span class="tx-cont"><%- combination.combinationWirelessMemberList[0].auditDtm || groupInfo.combStaDt %></span>
+                <span class="tx-cont"><%- groupInfo.combStaDt %></span>
             </li>
             <li>
                 <span class="title">가족 합산 총 적용가입기간</span>
@@ -44,10 +44,10 @@
         <div class="widget-box accordion2">
             <div class="acco-style data-famliy-group-list type2">
                 <ul class="acco-box">
-                    <%  combination.combinationWirelessMemberList.map(member => { 
-                        const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum; 
+                    <%  combination.combinationWirelessMemberList.map(member => {
+                        const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum;
                         const isRep = member.relClCd === '00'; %>
-                        
+
                         <li class="acco-list">
                             <!-- on , off -->
                             <div class="acco-title">
@@ -108,7 +108,6 @@
         </div>
     </div>
     <!-- //.widget -->
-
 </div>
 <!--// .cont-box -->
 
