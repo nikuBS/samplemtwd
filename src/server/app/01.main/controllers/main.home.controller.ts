@@ -75,8 +75,10 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    let prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
+    let prodEventCtl = true; // true: 적용일때만... false: 범위 대상일 아니면 제외
+    let eventBannerCtl = false;
     // 갤럭시20 
+    // app event banner control gallexy20
     if (prodEventCtl) {
       let isEvent = req.query['event'] || '';
       if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab 
@@ -88,7 +90,29 @@ class MainHome extends TwViewController {
           }
         }
       }
+
+      // web event banner control gallexy20 
+      if (flag === 'web') {
+        
+        eventBannerCtl = true;
+
+        // phone check ? 
+        // console.log(`>>>[TEST] for out source `, req['useragent']['source']);
+        // var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+        // for(let i=0; i<userAgents.length; i++) {
+        //   console.log(`>>>[TEST] if out userAgents[${i}] `, userAgents[i]);
+        //   if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+        //     console.log(`>>>[TEST] if in userAgents[${i}] `, userAgents[i]);
+        //     eventBannerCtl = true;
+        //     break;
+        //   }
+        // }
+      }
     }
+
+    console.log(`>>>[TEST] flag `, flag);
+    console.log(`>>>[TEST] eventBannerCtl `, eventBannerCtl);
+
 
     if ( svcInfo ) {
       if ( svcInfo.svcAttrCd.includes('M') ) {
@@ -136,7 +160,8 @@ class MainHome extends TwViewController {
               noticeType: svcInfo.noticeType,
               recommendProdsData,
               event: eventFlag,
-              isAdRcvAgreeBannerShown
+              isAdRcvAgreeBannerShown,
+              eventBannerCtl: eventBannerCtl
             });
           });
         } else {
@@ -163,7 +188,8 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              isAdRcvAgreeBannerShown
+              isAdRcvAgreeBannerShown,
+              eventBannerCtl: eventBannerCtl
             });
           });
         }
@@ -186,7 +212,8 @@ class MainHome extends TwViewController {
             pageInfo,
             noticeType: svcInfo.noticeType,
             recommendProdsData,
-            isAdRcvAgreeBannerShown
+            isAdRcvAgreeBannerShown,
+            eventBannerCtl: eventBannerCtl
           });
         });
       }
@@ -210,7 +237,8 @@ class MainHome extends TwViewController {
           pageInfo,
           noticeType: '',
           recommendProdsData,
-          personDataNoLoginMap
+          personDataNoLoginMap,
+          eventBannerCtl: eventBannerCtl
         });
       
       });
