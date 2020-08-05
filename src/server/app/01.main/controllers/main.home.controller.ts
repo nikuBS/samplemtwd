@@ -88,43 +88,6 @@ class MainHome extends TwViewController {
     }
 
     if ( svcInfo ) {
-<<<<<<< HEAD
-      if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
-        console.log(">>>[TEST] 모바일 - 휴대폰 회선");
-        // 모바일 - 휴대폰 회선
-        Observable.combineLatest(
-          this.getUsageData(svcInfo),
-          this.getMembershipData(svcInfo),
-          this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-          this.getRecommendProds(req, svcInfo.prodId),
-          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-          this.getProductGroup(),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
-          // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-          if (usageData.data) {
-            usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
-          }
-          homeData.usageData = usageData;
-          homeData.membershipData = membershipData;
-          recommendProdsData = recommendProdsResult;
-          svcInfo.personTimeChk = personData.personDisableTimeCheck; // 아이콘 비노출 시간 체크
-          svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
-          svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
-          svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
-          res.render(`main.home-${flag}.html`, {
-            svcInfo,
-            homeData,
-            redisData,
-            pageInfo,
-            noticeType: svcInfo.noticeType,
-            recommendProdsData,
-            isAdRcvAgreeBannerShown
-          });
-        });
-      } else if (['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1) {
-        console.log(">>>[TEST] IPTV, 인터넷 , 전화 회선");
-=======
       if ( svcInfo.svcAttrCd.includes('M') ) {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
           // 모바일 - 휴대폰 회선
@@ -187,7 +150,6 @@ class MainHome extends TwViewController {
           });
         }
       } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
->>>>>>> 81cdc3c3e19e237a3dfa2fffda3e222412947a2c
         // IPTV, 인터넷 , 전화 회선
         Observable.combineLatest(
           this.getBillData(svcInfo),
@@ -199,39 +161,7 @@ class MainHome extends TwViewController {
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
           svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
-<<<<<<< HEAD
-          res.render(`main.home-${flag}.html`, {
-            svcInfo,
-            homeData,
-            redisData,
-            pageInfo,
-            noticeType: svcInfo.noticeType,
-            recommendProdsData,
-            isAdRcvAgreeBannerShown
-          });
-        });
-      } else {
-        // 모바일 및 IPTV, 인터넷, 전화 외 회선
-        console.log(">>>[TEST] 모바일 및 IPTV, 인터넷, 전화 외 회선");
-        Observable.combineLatest(
-          this.getUsageData(svcInfo),
-          this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-          this.getProductGroup(),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
-          // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
-          if (usageData.data) {
-            usageData.data['isTplanProd'] = prodList && prodList.findIndex( item => item.prodId === svcInfo.prodId) > -1;
-          }
-          homeData.usageData = usageData;
-          svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
-          svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
-          svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
-          res.render(`main.home-${flag}.html`, {
-=======
           res.render(`main.home-${ flag }.html`, {
->>>>>>> 81cdc3c3e19e237a3dfa2fffda3e222412947a2c
             svcInfo,
             homeData,
             redisData,
@@ -255,12 +185,7 @@ class MainHome extends TwViewController {
       ).subscribe(([redisData, personDataNoLogin]) => {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
         personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
-<<<<<<< HEAD
-
-        res.render(`main.home-${flag}.html`, {
-=======
         res.render(`main.home-${ flag }.html`, {
->>>>>>> 81cdc3c3e19e237a3dfa2fffda3e222412947a2c
           svcInfo,
           homeData,
           redisData,
