@@ -41,6 +41,7 @@ import BrowserHelper from '../../../utils/browser.helper';
 class MainHome extends TwViewController {
   constructor() {
     super();
+    
   }
 
   /**
@@ -73,6 +74,18 @@ class MainHome extends TwViewController {
       hasRecommendProds: false,
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
+
+    // 갤럭시20 
+    let isEvent = req.query['event'] || '';
+    var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+    if (!isEvent) { // tab 클릭시 : 1=> main , null=> tab 
+      for(let i=0; i<userAgents.length; i++) {
+        if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+          res.redirect("/main/store");
+          return;
+        }
+      }
+    }
 
     if ( svcInfo ) {
       if ( svcInfo.svcAttrCd.includes('M') ) {
@@ -181,6 +194,7 @@ class MainHome extends TwViewController {
           recommendProdsData,
           personDataNoLoginMap
         });
+      
       });
     }
   }
