@@ -77,8 +77,8 @@ class MainHome extends TwViewController {
 
     // 갤럭시20 
     let isEvent = req.query['event'] || '';
-    var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
-    if (!isEvent) { // tab 클릭시 : 1=> main , null=> tab 
+    if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab 
+      var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
       for(let i=0; i<userAgents.length; i++) {
         if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
           res.redirect("/main/store");
@@ -111,6 +111,18 @@ class MainHome extends TwViewController {
             svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
             svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
+
+            var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+            var eventFlag = 0;
+            if (flag === 'app') {
+              for(let i=0; i<userAgents.length; i++) {
+                if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+                  eventFlag = 1;
+                  break;
+                }
+              }
+            }
+            
             res.render(`main.home-${ flag }.html`, {
               svcInfo,
               homeData,
@@ -118,6 +130,7 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
+              event: eventFlag,
               isAdRcvAgreeBannerShown
             });
           });
