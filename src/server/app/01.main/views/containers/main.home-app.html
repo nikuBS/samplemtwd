@@ -49,6 +49,13 @@
                         <!-- // .layer-noti -->
                         <% } %>
 
+                        <% if (svcInfo && svcInfo.svcAttrCd === 'M' && event === 1) { %>
+                        <!-- .layer-noti -->
+                        <div id="fe-tmpl-noti">
+                        </div>
+                        <!-- // .layer-noti -->
+                        <% } %>
+
                         <div class="main-top-group <% if(!svcInfo){%>mb0 pb0<% } %>">
                             <!-- 모바일 회선_잔여 데이터 -->
                             <% if (svcInfo) { %>
