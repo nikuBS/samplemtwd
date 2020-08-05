@@ -75,17 +75,44 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
+    let prodEventCtl = true; // true: 적용일때만... false: 범위 대상일 아니면 제외
+    let eventBannerCtl = false;
     // 갤럭시20 
-    let isEvent = req.query['event'] || '';
-    if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab 
-      var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
-      for(let i=0; i<userAgents.length; i++) {
-        if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
-          res.redirect("/main/store");
-          return;
+    // app event banner control gallexy20
+    if (prodEventCtl) {
+      let isEvent = req.query['event'] || '';
+      if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab 
+        var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+        for(let i=0; i<userAgents.length; i++) {
+          if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+            res.redirect("/main/store");
+            return;
+          }
         }
       }
+
+      // web event banner control gallexy20 
+      if (flag === 'web') {
+        
+        eventBannerCtl = true;
+
+        // phone check ? 
+        // console.log(`>>>[TEST] for out source `, req['useragent']['source']);
+        // var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+        // for(let i=0; i<userAgents.length; i++) {
+        //   console.log(`>>>[TEST] if out userAgents[${i}] `, userAgents[i]);
+        //   if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+        //     console.log(`>>>[TEST] if in userAgents[${i}] `, userAgents[i]);
+        //     eventBannerCtl = true;
+        //     break;
+        //   }
+        // }
+      }
     }
+
+    console.log(`>>>[TEST] flag `, flag);
+    console.log(`>>>[TEST] eventBannerCtl `, eventBannerCtl);
+
 
     if ( svcInfo ) {
       if ( svcInfo.svcAttrCd.includes('M') ) {
@@ -112,13 +139,15 @@ class MainHome extends TwViewController {
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
             svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
 
-            var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
             var eventFlag = 0;
-            if (flag === 'app') {
-              for(let i=0; i<userAgents.length; i++) {
-                if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
-                  eventFlag = 1;
-                  break;
+            if (prodEventCtl) {
+              var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+              if (flag === 'app') {
+                for(let i=0; i<userAgents.length; i++) {
+                  if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+                    eventFlag = 1;
+                    break;
+                  }
                 }
               }
             }
@@ -131,7 +160,8 @@ class MainHome extends TwViewController {
               noticeType: svcInfo.noticeType,
               recommendProdsData,
               event: eventFlag,
-              isAdRcvAgreeBannerShown
+              isAdRcvAgreeBannerShown,
+              eventBannerCtl: eventBannerCtl
             });
           });
         } else {
@@ -158,7 +188,8 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              isAdRcvAgreeBannerShown
+              isAdRcvAgreeBannerShown,
+              eventBannerCtl: eventBannerCtl
             });
           });
         }
@@ -181,7 +212,8 @@ class MainHome extends TwViewController {
             pageInfo,
             noticeType: svcInfo.noticeType,
             recommendProdsData,
-            isAdRcvAgreeBannerShown
+            isAdRcvAgreeBannerShown,
+            eventBannerCtl: eventBannerCtl
           });
         });
       }
@@ -205,7 +237,8 @@ class MainHome extends TwViewController {
           pageInfo,
           noticeType: '',
           recommendProdsData,
-          personDataNoLoginMap
+          personDataNoLoginMap,
+          eventBannerCtl: eventBannerCtl
         });
       
       });
