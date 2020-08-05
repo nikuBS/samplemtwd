@@ -36,6 +36,7 @@ import BrowserHelper from '../../../utils/browser.helper';
 class MainHome extends TwViewController {
   constructor() {
     super();
+    
   }
 
   /**
@@ -69,8 +70,21 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
+    // 갤럭시20 
+    let isEvent = req.query['event'] || '';
+    var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+    if (!isEvent) { // tab 클릭시 : 1=> main , null=> tab 
+      for(let i=0; i<userAgents.length; i++) {
+        if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+          res.redirect("/main/store");
+          return;
+        }
+      }
+    }
+
     if ( svcInfo ) {
       if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
+        console.log(">>>[TEST] 모바일 - 휴대폰 회선");
         // 모바일 - 휴대폰 회선
         Observable.combineLatest(
           this.getUsageData(svcInfo),
@@ -103,6 +117,7 @@ class MainHome extends TwViewController {
           });
         });
       } else if (['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1) {
+        console.log(">>>[TEST] IPTV, 인터넷 , 전화 회선");
         // IPTV, 인터넷 , 전화 회선
         Observable.combineLatest(
           this.getBillData(svcInfo),
@@ -126,6 +141,7 @@ class MainHome extends TwViewController {
         });
       } else {
         // 모바일 및 IPTV, 인터넷, 전화 외 회선
+        console.log(">>>[TEST] 모바일 및 IPTV, 인터넷, 전화 외 회선");
         Observable.combineLatest(
           this.getUsageData(svcInfo),
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
@@ -165,6 +181,7 @@ class MainHome extends TwViewController {
       ).subscribe(([redisData, personDataNoLogin]) => {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
         personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
+
         res.render(`main.home-${flag}.html`, {
           svcInfo,
           homeData,
@@ -174,6 +191,7 @@ class MainHome extends TwViewController {
           recommendProdsData,
           personDataNoLoginMap
         });
+      
       });
     }
   }
