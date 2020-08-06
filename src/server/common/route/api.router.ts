@@ -12,17 +12,18 @@ import FormatHelper from '../../utils/format.helper';
 import VERSION from '../../config/version.config';
 import * as fs from 'fs';
 import dateHelper from '../../utils/date.helper';
-import DateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
-import { NODE_API_ERROR, UNLIMIT_NAME } from '../../types/string.type';
-import { TPLAN_SHARE_LIST, UNIT, UNIT_E, WIDGET_ERROR } from '../../types/bff.type';
+import { NODE_API_ERROR, WIDGET_REMAINS_CODE, UNLIMIT_NAME } from '../../types/string.type';
+import { UNIT, UNIT_E, TPLAN_SHARE_LIST, WIDGET_ERROR } from '../../types/bff.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
+import DateHelper from '../../utils/date.helper';
 import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
 import CryptoHelper from '../../utils/crypto.helper';
 import { SSO_SERVICE_LIST } from '../../types/config.type';
+import { SSL_OP_CISCO_ANYCONNECT } from 'constants';
 
 const os = require('os');
 
@@ -85,17 +86,13 @@ class ApiRouter {
     GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: API_METHOD.GET, target: this.getNewBannerTos },
 
     /*임시 API TOS배너확인후 삭제*/
-    GET_BANNER_TOS_LNKG_INFO: {
-      path: '/banner/bannerTosLnkgInfo',
-      method: API_METHOD.GET,
-      target: this.getBannerTosLnkgInfo
-    },
+    GET_BANNER_TOS_LNKG_INFO: { path: '/banner/bannerTosLnkgInfo', method: API_METHOD.GET, target: this.getBannerTosLnkgInfo  },
     GET_BANNER_TOS_KEY: { path: '/banner/bannerTosKey', method: API_METHOD.GET, target: this.getBannerTosKey },
-    GET_BANNER_TOS_INFO: { path: '/banner/bannerTosInfo', method: API_METHOD.GET, target: this.getBannerTosInfo },
+    GET_BANNER_TOS_INFO: { path: '/banner/bannerTosInfo', method: API_METHOD.GET, target: this.getBannerTosInfo  },
 
     GET_MASKING_METHOD: { path: '/masking-method', method: API_METHOD.GET, target: this.getMaskingMethod },
     SET_MASKING_COMPLETE: { path: '/masking-complete', method: API_METHOD.POST, target: this.setMaskingComplete },
-    DELETE_SESSION_STORE: { path: '/session-store', method: API_METHOD.DELETE, target: this.deleteSessionStore },
+    DELETE_SESSION_STORE: { path: '/session-store', method: API_METHOD.DELETE, target: this.deleteSessionStore, },
     GET_HOME_WELCOME: { path: '/home/welcome', method: API_METHOD.GET, target: this.getHomeWelcome },
     GET_HOME_NOTICE: { path: '/home/notice', method: API_METHOD.GET, target: this.getHomeNotice },
     GET_HOME_HELP: { path: '/home/help', method: API_METHOD.GET, target: this.getHomeHelp },
@@ -146,7 +143,13 @@ class ApiRouter {
    */
   private setGetApi(cmd) {
     this.router.get(cmd.path, (req, res, next) => {
-      this.sessionCheck(req, res, next, cmd);
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
   }
 
@@ -156,7 +159,13 @@ class ApiRouter {
    */
   private setPostApi(cmd) {
     this.router.post(cmd.path, (req, res, next) => {
-      this.sessionCheck(req, res, next, cmd);
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
   }
 
@@ -166,7 +175,13 @@ class ApiRouter {
    */
   private setPutApi(cmd) {
     this.router.put(cmd.path, (req, res, next) => {
-      this.sessionCheck(req, res, next, cmd);
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
   }
 
@@ -176,7 +191,13 @@ class ApiRouter {
    */
   private setDeleteApi(cmd) {
     this.router.delete(cmd.path, (req, res, next) => {
-      this.sessionCheck(req, res, next, cmd);
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
   }
 
@@ -185,14 +206,10 @@ class ApiRouter {
    * @param req
    * @param res
    * @param next
-   * @param cmd
    */
-  private sessionCheck(req, res, next, cmd) {
+  private sessionCheck(req, res, next) {
     const loginService = new LoginService();
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
-    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.set('expires', '0');
-    res.set('pragma', 'no-cache');
     if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
@@ -200,9 +217,9 @@ class ApiRouter {
         code: API_CODE.NODE_1004,
         msg: NODE_API_ERROR[API_CODE.NODE_1004]
       });
-    } else {
-      cmd.target.call(this, req, res, next);
+      return false;
     }
+    return true;
   }
 
   /**
@@ -340,15 +357,15 @@ class ApiRouter {
    */
   private getChangeGuide(req: Request, res: Response, next: NextFunction) {
     const value: any = req.query.value || null;
-    // typeYn: any = req.query.type_yn || 'N';
+      // typeYn: any = req.query.type_yn || 'N';
 
-    if ( FormatHelper.isEmpty(value) ) {
+    if (FormatHelper.isEmpty(value)) {
       return res.json({ code: '01' });
     }
 
     this.redisService.getData(REDIS_KEY.PRODUCT_CHANGEGUIDE + value)
       .subscribe((resp) => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
+        if (resp.code !== API_CODE.CODE_00) {
           return res.json(resp);
         }
 
@@ -370,13 +387,13 @@ class ApiRouter {
     const value: any = req.query.value || null,
       typeYn: any = req.query.type_yn || 'N';
 
-    if ( FormatHelper.isEmpty(value) ) {
+    if (FormatHelper.isEmpty(value)) {
       return res.json({ code: '01' });
     }
 
     this.redisService.getData((typeYn === 'Y' ? REDIS_KEY.PRODUCT_DOWNGRADE_TYPE : REDIS_KEY.PRODUCT_DOWNGRADE) + value)
       .subscribe((resp) => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
+        if (resp.code !== API_CODE.CODE_00) {
           return res.json(resp);
         }
 
@@ -485,6 +502,7 @@ class ApiRouter {
   }
 
 
+
   /**
    * TOS 배너 조회
    * @param req
@@ -533,7 +551,7 @@ class ApiRouter {
           targetSerial = serialNums;
           if ( serialNums.indexOf('R') !== -1 ) {
             targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[0] : serialNums;
-          } else if ( serialNums.indexOf('|') !== -1 ) {
+          } else if (serialNums.indexOf('|') !== -1) {
             targetSerial = serialNums.split('|')[0];
           }
           return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
@@ -575,7 +593,7 @@ class ApiRouter {
       })
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          if ( !targetSerial ) {
+          if ( targetSerial === '' ) {
             return Observable.of(resp);
           } else {
             const start = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnStaDt + resp.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
@@ -588,6 +606,7 @@ class ApiRouter {
               return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
             }
           }
+          return Observable.of(resp);
         } else {
           return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
         }
@@ -596,11 +615,13 @@ class ApiRouter {
         Object.assign(resp.result, bannerLink);
         return res.json(resp);
       }, (err) => {
+
         // 오류가 발생하면 데이터가 없는 것이기 때문에, admin banner을 출력하도록 유도한다.
-        if ( !FormatHelper.isEmpty(bannerLink) ) {
+        if (!FormatHelper.isEmpty(bannerLink)) {
           bannerLink['tosLnkgYn'] = 'N';
         }
-        Object.assign(err, { code: API_CODE.CODE_00, msg: 'success' });
+
+        Object.assign(err, {code: API_CODE.CODE_00, msg: 'success'});
         Object.assign(err.result, bannerLink);
         return res.json(err);
       });
@@ -631,7 +652,7 @@ class ApiRouter {
     let realTimeBanner, campaignBanner;
 
     this.redisService.getData(REDIS_KEY.BANNER_TOS_LINK + code)
-      .switchMap((resp) => {  // TOS 정보를 호출함
+      .switchMap((resp) => {  //TOS 정보를 호출함
         if ( resp.code === API_CODE.CODE_00 ) {
           if ( resp.result.bltnYn === 'N' ) {
             throw resp;
@@ -648,38 +669,38 @@ class ApiRouter {
           throw resp;
         }
       })
-      .switchMap((resp) => {// 조회된 TOS정보 중 실시간배너(R)인것만 추출하여 배너를 조회함
+      .switchMap((resp) => {//조회된 TOS정보 중 실시간배너(R)인것만 추출하여 배너를 조회함
         if ( resp.code === API_CODE.CODE_00 ) {
-          serialNums = (resp.result || '').trim();
+          serialNums = (resp.result||'').trim();
           realTimeBanner = serialNums.split('|').filter(e => e.indexOf('R') > -1);
           campaignBanner = serialNums.split('|').filter(e => e.indexOf('C') > -1);
 
-          if ( serialNums === '' ) {
+          if(serialNums === ''){
             return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
-          } else {
+          }else{
             return Observable.combineLatest(
               ...(realTimeBanner.map(e => this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + e))),
               ...(campaignBanner.map(e => this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + e)))
-            ).switchMap(([...args]: any[]) => {
-              const imgList = args.filter(e => e.code === API_CODE.CODE_00)
+            ).switchMap(([...args ]:any[]) => {
+              let imgList = args.filter(e => e.code === API_CODE.CODE_00)
                 .filter(e => {
-                  const start = DateHelper.convDateCustomFormat(e.result.summary.cmpgnStaDt + e.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
-                  const end = DateHelper.convDateCustomFormat(e.result.summary.cmpgnEndDt + e.result.summary.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
-                  const today = new Date().getTime();
+                  let start = DateHelper.convDateCustomFormat(e.result.summary.cmpgnStaDt + e.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
+                  let end = DateHelper.convDateCustomFormat(e.result.summary.cmpgnEndDt + e.result.summary.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
+                  let today = new Date().getTime();
                   return start < today && end > today;
-                }).reduce((p, n) => {
+                }).reduce((p,n) => {
                   n.result.imgList.forEach(e => p.push(Object.assign({}, n.result.summary, e)));
                   return p;
                 }, []);
 
-              // if(imgList.length > 0){ // 캠페인 대상군이지만 대상 캠페인이 없으면 디폴트 출력되지 않게 해달라고 하여 수정함
-              return Observable.of({
-                code: API_CODE.CODE_00,
-                result: {
-                  summary: {},
-                  imgList: imgList
-                }
-              });
+              //if(imgList.length > 0){ // 캠페인 대상군이지만 대상 캠페인이 없으면 디폴트 출력되지 않게 해달라고 하여 수정함
+                return Observable.of({
+                  code: API_CODE.CODE_00,
+                  result: {
+                    summary: {},
+                    imgList: imgList
+                  }
+                });
               // }else{
               //   return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
               // }
@@ -691,7 +712,7 @@ class ApiRouter {
         }
       })
       .subscribe((resp) => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
+        if ( resp.code !== API_CODE.CODE_00 ){
           resp.code = API_CODE.CODE_00;
           resp.result = {};
         }
@@ -725,7 +746,7 @@ class ApiRouter {
   private getBannerTosKey(req: Request, res: Response, next: NextFunction) {
     const code = req.query.code;
     const uId = req.query.uId;
-    this.redisService.getTosRedisKey(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ':' + uId + ':*')
+    this.redisService.getTosRedisKey(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ":" + uId + ":*")
       .switchMap((resp) => {
         return this.redisService.getStringTos(resp.result);
       })
@@ -943,9 +964,9 @@ class ApiRouter {
     const svcMgmtNum = req.body.svcMgmtNum;
 
     loginService.setMaskingCert(req, svcMgmtNum)
-      .switchMap(() => loginService.clearSessionStore(req, svcMgmtNum))
-      .switchMap(() => apiService.updateSvcInfo({}))
-      .subscribe(() => {
+      .switchMap((resp) => loginService.clearSessionStore(req, svcMgmtNum))
+      .switchMap((resp) => apiService.updateSvcInfo({}))
+      .subscribe((resp) => {
         res.json({
           code: API_CODE.CODE_00
         });
@@ -973,7 +994,7 @@ class ApiRouter {
     const svcMgmtNum = svcInfo.svcMgmtNum;
     const apiId = req.body.apiId ? req.body.apiId.command : null;
     loginService.clearSessionStore(req, svcMgmtNum, apiId)
-      .subscribe(() => {
+      .subscribe((resp) => {
         res.json({
           code: API_CODE.CODE_00
         });
@@ -1181,10 +1202,10 @@ class ApiRouter {
     }
 
     apiService.request(API_CMD.BFF_03_0001, {})
-      .switchMap(() => {
+      .switchMap((resp) => {
         return loginService.logoutSession(req, res);
       })
-      .subscribe(() => {
+      .subscribe((resp) => {
         this.logger.info(this, '[TID logout]', loginService.getSvcInfo(req));
         res.json({ code: API_CODE.CODE_00 });
       });
@@ -1347,11 +1368,11 @@ class ApiRouter {
     let url: any = decodeURIComponent((req.query.url || ''));
     this.logger.info(this, '[getSsoUrl] original url', url);
 
-    const serviceList: any = SSO_SERVICE_LIST.filter(function (item) {
+    const serviceList: any = SSO_SERVICE_LIST.filter(function(item) {
       return (url.indexOf(item.host) !== -1);
     });
 
-    if ( FormatHelper.isEmpty(serviceList) || serviceList.length < 1 ) {
+    if (FormatHelper.isEmpty(serviceList) || serviceList.length < 1) {
       res.json({
         code: API_CODE.CODE_404
       });
@@ -1362,7 +1383,7 @@ class ApiRouter {
     const loginService = new LoginService();
     const svcInfo = loginService.getSvcInfo(req);
 
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       res.json({
         code: API_CODE.CODE_404
       });
@@ -1371,7 +1392,7 @@ class ApiRouter {
 
     let value = svcInfo[service.session_key];
 
-    if ( FormatHelper.isEmpty(value) ) {
+    if (FormatHelper.isEmpty(value)) {
       res.json({
         code: API_CODE.CODE_404
       });
@@ -1400,7 +1421,6 @@ class ApiRouter {
   /**
    * session 정보 확인
    * @param req
-   * @param res
    */
   private getSessionInfo(req, res) {
     const twm = req.query.twm;
@@ -1408,7 +1428,7 @@ class ApiRouter {
     const ret = {};
 
     // 임시로 kjh1234@gmail.com로 로그인 된 경우만 조회 가능하도록 추가
-    if ( !FormatHelper.isEmpty(req.session.svcInfo) && req.session.svcInfo.userId === 'kjh1234@gmail.com' ) {
+    if ( !FormatHelper.isEmpty(req.session.svcInfo) && req.session.svcInfo.userId === 'kjh1234@gmail.com') {
       this.redisService.getData(key)
         .switchMap((resp) => {
           ret['userId'] = resp.result.svcInfo.userId;
@@ -1432,68 +1452,93 @@ class ApiRouter {
    * @param next
    */
   private getWidgetRemains(req: Request, res: Response, next: NextFunction) {
+    // Console 테스트 용1 : $.ajax('http://localhost:3000/api/widget/remains?svcMgmtNum=7253819428&dataCode=DD3J5&voiceCode=DD3J8&smsCode=DD3IZ') 김강타 본회선
+    // Console 테스트 용2 : $.ajax('http://localhost:3000/api/widget/remains?svcMgmtNum=7045659333&dataCode=DD3J5&voiceCode=DD3J8&smsCode=DD3IZ') 김강타 부회선
+    // Console 테스트 용3 : $.ajax('http://localhost:3000/api/widget/remains?svcMgmtNum=7039762321&dataCode=DD3II&voiceCode=DD3IJ&smsCode=DD3IB') 전형득 수석님 1번 회선
+
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
 
     // 조회대상 회선 및 공제코드 변수 생성
-    let svcMgmtNum: any = req.headers.svcmgmtnum;
-    const dataCode: any = req.headers.datacode;
-    const voiceCode: any = req.headers.voicecode;
-    const smsCode: any = req.headers.smscode;
-    // 특별공제항목은 데이터 코드 값이 입력된 경우에만 처리한다.
-    const isSpclData = !!dataCode;
+    // TODO: 상용 반영 시 Query들 Header로 입력받도록 수정 필요
+    let svcMgmtNum: any = req.headers.svcMgmtNum || req.query.svcMgmtNum || null;
+    let dataCode: any = req.headers.dataCode || req.query.dataCode || null;
+    let voiceCode: any = req.headers.voiceCode || req.query.voiceCode || null;
+    let smsCode: any = req.headers.smsCode || req.query.smsCode || null;
+
     // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
-    apiService.request(API_CMD.BFF_01_0002, {}).subscribe((sessionsResponse) => {
-      if ( sessionsResponse.code !== API_CODE.CODE_00 ) {
-        return res.json(sessionsResponse);
+    apiService.request(API_CMD.BFF_01_0002, {}).subscribe((resp) => {
+      if ( resp.code !== '00' ) {
+        return res.json(resp);
       }
-      const mobileLine = sessionsResponse.result && sessionsResponse.result.m && sessionsResponse.result.m.length ?
-        sessionsResponse.result.m : [];
-      if ( svcMgmtNum ) {
-        // 입력된 서비스관리번호가 조회 된 서비스 관리번호 포함여부 확인 (유효성체크)
-        const filterSvcMgmtNum = mobileLine.filter(line => line.svcMgmtNum === svcMgmtNum);
-        svcMgmtNum = filterSvcMgmtNum.length ? svcMgmtNum : '';
-      } else {
-        // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
-        svcMgmtNum = mobileLine.length ? mobileLine[0].svcMgmtNum : svcMgmtNum;
+
+      // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
+      if ( svcMgmtNum === null ) {
+        if ( resp.result && resp.result.m && resp.result.m.length > 0 ) {
+          svcMgmtNum = resp.result.m[0].svcMgmtNum;
+        }
       }
-      if ( !svcMgmtNum ) {
-        // 서비스관리번호 조회되지 않을 경우 Error Return
+
+      // 서비스관리번호 유효성 체크 Flag
+      let isValidSvcMgmtNum = false;
+
+      // 모바일 회선 리스트에서 조회
+      if ( resp.result && resp.result.m ) {
+        resp.result.m.map((line) => {
+          if ( line.svcMgmtNum === svcMgmtNum ) {
+            isValidSvcMgmtNum = true;
+          }
+        });
+      }
+
+      // 서비스관리번호 조회되지 않을 경우 Error Return
+      if ( !isValidSvcMgmtNum ) {
         return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
       }
+
       // 잔여량 조회 BFF 호출
-      apiService.request(API_CMD.BFF_05_0001, {}, {
-        'T-svcMgmtNum': svcMgmtNum
-      }).subscribe((balancesResponse) => {
+      apiService.request(API_CMD.BFF_05_0001, {}, { 'T-svcMgmtNum': svcMgmtNum }).subscribe((resp) => {
+      //apiService.request(API_CMD.BFF_01_0002, {}).subscribe((resp) => { // 잔여량 조회 횟수 제한으로 테스트 시 다른 BFF 호출
+
+        // 목업 데이터 (전형득 수석님 1번 회선)
+        // resp = {"code":"00","msg":"success","result":{"dataTopUp":"N","ting":"N","dataDiscount":"N","gnrlData":[{"prodId":"POT10","prodNm":"T가족모아데이터","skipId":"POT10","skipNm":"T가족모아데이터","unlimit":"0","total":"9999999","used":"0","remained":"5555555","unit":"140","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"FD004","skipNm":"데이터리필","unlimit":"0","total":"4194304","used":"1327544","remained":"2866760","unit":"140","rgstDtm":"20191201070304","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3II","skipNm":"데이터통화 4GB 무료","unlimit":"0","total":"4194304","used":"936","remained":"2254654","unit":"110","rgstDtm":"","exprDtm":""}],"spclData":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IC","skipNm":"데이터서비스 이용 음성통화","unlimit":"0","total":"4194304","used":"15772","remained":"4178532","unit":"140","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IK","skipNm":"한도초과후 데이터 무료","unlimit":"1","total":"무제한","used":"무제한","remained":"무제한","unit":"140","rgstDtm":"","exprDtm":""}],"voice":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IJ","skipNm":"영상, 부가전화 300분","unlimit":"0","total":"18000","used":"53","remained":"17947","unit":"240","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IG","skipNm":"SKT 고객간 음성 무제한","unlimit":"M","total":"무제한","used":"12460","remained":"무제한","unit":"240","rgstDtm":"","exprDtm":""},{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IH","skipNm":"집전화·이동전화 음성 무제한","unlimit":"M","total":"무제한","used":"878","remained":"무제한","unit":"240","rgstDtm":"","exprDtm":""}],"sms":[{"prodId":"NA00006536","prodNm":"T플랜 안심4G","skipId":"DD3IB","skipNm":"SMS/MMS/ⓜ메신저 기본제공","unlimit":"B","total":"기본제공","used":"기본제공","remained":"기본제공","unit":"310","rgstDtm":"","exprDtm":""}],"etc":[]}};
+
         // 잔여량 조회 실패 시 Error return
-        if ( balancesResponse.code !== API_CODE.CODE_00 ) {
-          return res.json(balancesResponse);
+        if ( resp.code !== '00' ) {
+          return res.json(resp);
         }
+
         // 잔여 데이터 객체 생성
         const remainedData: any = {
           isEmpty: true,
           unlimit: false, // 무제한 여부
           unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
-          total: 0, // 제공량
+          total : 0, // 제공량
           remained: 0, // 잔여량
           sharedRemained: 0, // T가족모아데이터 잔여량
           unit: '' // 단위
         };
+
         // 요청받은 데이터 공제코드가 없을 경우 합산 데이터(기본값)로 설정
-        const dataCodes: string[] = dataCode ? (dataCode.includes(',') ? dataCode.split(',') : [dataCode]) : [];
-        if ( balancesResponse.result && balancesResponse.result.gnrlData ) {
-          balancesResponse.result.gnrlData.map((data) => {
-            const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
-            // KB 단위 잔여량만 합산
-            if ( skipId.length ) {
-              // dataCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
-              if ( !dataCode ) {
-                dataCodes.push(data.skipId);
-              }
+        if ( dataCode === null ) {
+          if ( resp.result && resp.result.gnrlData && resp.result.gnrlData.length > 0 ) {
+            dataCode = WIDGET_REMAINS_CODE.DATA_SUM;
+          }
+        }
+
+        // 데이터에서 공제코드 검색
+        // 요청받은 공제코드가 합산 데이터일 경우
+        let dataCodes: string[] = [];
+        if ( dataCode === WIDGET_REMAINS_CODE.DATA_SUM ) {
+          if ( resp.result && resp.result.gnrlData ) {
+            resp.result.gnrlData.map((data) => {
+              dataCodes.push(data.skipId);
+              // KB 단위 잔여량만 합산
               if ( data.unit === UNIT_E.DATA ) {
                 remainedData.isEmpty = false;
+
                 // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
-                switch ( data.unlimit ) {
+                switch (data.unlimit) {
                   // 무제한
                   case '1':
                   case 'M':
@@ -1504,31 +1549,76 @@ class ApiRouter {
                     remainedData.unlimit_default = true;
                     return;
                 }
+
                 // 각 항목 별 제공량 합산
                 remainedData.total += +data.total;
+
                 // 각 항목 별 잔여량 합산 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
                 if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
                   remainedData.remained += +data.remained;
                 } else {
                   remainedData.sharedRemained += +data.remained;
                 }
+
                 // 단위 설정 (합산은 무조건 KB)
                 remainedData.unit = UNIT_E.DATA;
               }
-            }
-          });
-        }
-        // 특별공제 데이터는 실제 입력된 값이 넘어오는 경우에만 처리
-        if ( isSpclData ) {
-          if ( balancesResponse.result && balancesResponse.result.spclData ) {
-            balancesResponse.result.spclData.map((data) => {
-              const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
-              // KB 단위 잔여량만 합산
-              if ( skipId.length ) {
-                if ( data.unit === UNIT_E.DATA ) {
+            });
+          }
+        } else { // 요청받은 공제코드가 합산 데이터가 아닐 경우
+          // 범용 데이터에서 공제코드 검색
+          if ( resp.result && resp.result.gnrlData ) {
+            let dcs = dataCode.split(",") || dataCode;
+            resp.result.gnrlData.map((data) => {
+              for (let d in dcs) {
+                  if (d === data.skipId) {
+                    dataCodes.push(data.skipId);
+                    // 요청한 공제코드가 있을 경우 잔여량 입력
+                    if ( data.skipId === dataCode ) {
+                      remainedData.isEmpty = false;
+
+                      // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
+                      switch (data.unlimit) {
+                        // 무제한
+                        case '1':
+                        case 'M':
+                          remainedData.unlimit = true;
+                          return;
+                        // 기본제공
+                        case 'B':
+                          remainedData.unlimit_default = true;
+                          return;
+                      }
+
+                      // 제공량 입력
+                      remainedData.total = +data.total;
+
+                      // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                      if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                        remainedData.remained = +data.remained;
+                      } else {
+                        remainedData.sharedRemained = +data.remained;
+                      }
+
+                      // 단위 설정
+                      remainedData.unit = data.unit;
+                    }
+                  }
+              }
+            });
+          }
+
+          // 범용 데이터에서 찾지 못했을 경우 특수 데이터에서 공제코드 검색
+          if ( remainedData.isEmpty === true ) {
+            if ( resp.result && resp.result.spclData ) {
+              resp.result.spclData.map((data) => {
+                dataCodes.push(data.skipId);
+                // 요청한 공제코드가 있을 경우 잔여량 입력
+                if ( data.skipId === dataCode ) {
                   remainedData.isEmpty = false;
-                  // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
-                  switch ( data.unlimit ) {
+
+                  // 데이터 항목이 무제한 또는 기본제공일 경우 Flag 설정
+                  switch (data.unlimit) {
                     // 무제한
                     case '1':
                     case 'M':
@@ -1539,43 +1629,55 @@ class ApiRouter {
                       remainedData.unlimit_default = true;
                       return;
                   }
-                  // 각 항목 별 제공량 합산
-                  remainedData.total += +data.total;
-                  // 각 항목 별 잔여량 합산 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+
+                  // 제공량 입력
+                  remainedData.total = +data.total;
+
+                  // 잔여량 입력 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
                   if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
-                    remainedData.remained += +data.remained;
+                    remainedData.remained = +data.remained;
                   } else {
-                    remainedData.sharedRemained += +data.remained;
+                    remainedData.sharedRemained = +data.remained;
                   }
-                  // 단위 설정 (합산은 무조건 KB)
-                  remainedData.unit = UNIT_E.DATA;
+
+                  // 단위 설정
+                  remainedData.unit = data.unit;
                 }
-              }
-            });
+              });
+            }
           }
         }
         // 잔여 데이터 조회 및 객체(remainedData) 설정 완료
+
+
+
         // 잔여 음성 객체 생성
         const remainedVoice: any = {
           isEmpty: true,
           unlimit: false, // 무제한 여부
           unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
-          total: 0, // 제공량
+          total : 0, // 제공량
           remained: 0, // 잔여량
           unit: '' // 단위
         };
+
         // 미설정코드 처리
         // 요청받은 음성 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
-        const voiceCodes: string[] = voiceCode ? (voiceCode.includes(',') ? voiceCode.split(',') : [voiceCode]) : [];
+        // if ( voiceCode === null ) {
+        //   if ( resp.result && resp.result.voice && resp.result.voice.length > 0 ) {
+        //     voiceCode = resp.result.voice[0].skipId;
+        //   }
+        // }
+
         // 음성에서 공제코드 검색
-        if ( balancesResponse.result && balancesResponse.result.voice ) {
-          balancesResponse.result.voice.map((voice) => {
-            const skipId: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
+        if ( resp.result && resp.result.voice ) {
+          resp.result.voice.map((voice) => {
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( skipId.length ) {
+            if ( voice.skipId === voiceCode ) {
               remainedVoice.isEmpty = false;
+
               // 음성 항목이 무제한 또는 기본제공일 경우 Flag 설정
-              switch ( voice.unlimit ) {
+              switch (voice.unlimit) {
                 // 무제한
                 case '1':
                 case 'M':
@@ -1586,34 +1688,47 @@ class ApiRouter {
                   remainedVoice.unlimit_default = true;
                   return;
               }
+
               // 제공량 및 잔여량 입력
               remainedVoice.total = +voice.total;
               remainedVoice.remained = +voice.remained;
+
               // 단위 설정
               remainedVoice.unit = voice.unit;
             }
           });
         }
         // 잔여 음성 조회 및 객체(remainedVoice) 설정 완료
+
+
+
         // 잔여 SMS 객체 생성
         const remainedSms: any = {
           isEmpty: true,
           unlimit: false, // 무제한 여부
           unlimit_default: false, // 기본제공 여부 (무제한 표기의 일종, '무제한'을 우선으로 표기)
-          total: 0, // 제공량
+          total : 0, // 제공량
           remained: 0, // 잔여량
           unit: '' // 단위
         };
-        const smsCodes: string[] = smsCode ? (smsCode.includes(',') ? smsCode.split(',') : [smsCode]) : [];
+
+        // 미설정코드 처리
+        // 요청받은 SMS 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
+        // if ( smsCode === null ) {
+        //   if ( resp.result && resp.result.sms && resp.result.sms.length > 0 ) {
+        //     smsCode = resp.result.sms[0].skipId;
+        //   }
+        // }
+
         // SMS에서 공제코드 검색
-        if ( balancesResponse.result && balancesResponse.result.sms ) {
-          balancesResponse.result.sms.map((sms) => {
-            const skipId: string[] = smsCodes ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
+        if ( resp.result && resp.result.sms ) {
+          resp.result.sms.map((sms) => {
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( skipId.length ) {
+            if ( sms.skipId === smsCode ) {
               remainedSms.isEmpty = false;
+
               // SMS 항목이 무제한 또는 기본제공일 경우 Flag 설정
-              switch ( sms.unlimit ) {
+              switch (sms.unlimit) {
                 // 무제한
                 case '1':
                 case 'M':
@@ -1624,6 +1739,7 @@ class ApiRouter {
                   remainedSms.unlimit_default = true;
                   return;
               }
+
               // 제공량 및 잔여량 입력
               remainedSms.total = +sms.total;
               remainedSms.remained = +sms.remained;
@@ -1635,6 +1751,8 @@ class ApiRouter {
         }
         // 잔여 SMS 조회 및 객체(remainedSms) 설정 완료
 
+
+
         // 단위 변경 및 표기 양식 설정
         // 최종 Response 객체 선언 (Widget 표기용)
         const responseRemains = {
@@ -1644,93 +1762,59 @@ class ApiRouter {
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
-            sharedRemainedPercentage: 0 // 총 제공량 대비 잔여 T가족모아데이터의 비율
+            sharedRemainedPercentage: 0, // 총 제공량 대비 잔여 T가족모아데이터의 비율
           },
           voice: {
             skipId: voiceCode, // 조회한 음성 공제코드
-            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           },
           sms: {
             skipId: smsCode, // 조회한 SMS 공제코드
-            isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
+            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           }
-
         };
 
-        // 위젯에서 미설정으로 설정한 경우
-        if ( dataCode === 'NULL' ) {
-          responseRemains.data = {
-            skipId: dataCode, // 조회한 음성 공제코드
-            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
-            remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
-            sharedRemainedPercentage: 0 // 총 제공량 대비 잔여 T가족모아데이터의 비율
-          };
-        }
-        if ( voiceCode === 'NULL' ) {
-          responseRemains.voice = {
-            skipId: voiceCode, // 조회한 음성 공제코드
-            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
-            remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
-          };
-        }
-        if ( smsCode === 'NULL' ) {
-          responseRemains.sms = {
-            skipId: smsCode, // 조회한 SMS 공제코드
-            isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
-            remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
-            remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
-          };
-        }
 
         // 잔여 데이터 Response 양식 설정
-        if ( !remainedData.isEmpty ) {
+        if ( remainedData.isEmpty === false ) {
           responseRemains.data.isValid = true;
-          if ( remainedData.unlimit ) { // 잔여 데이터가 무제한인 경우
+          if ( remainedData.unlimit === true ) { // 잔여 데이터가 무제한인 경우
             responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.data.remainedPercentage = 1;
-          } else if ( remainedData.unlimit_default ) { // 잔여 데이터가 기본제공인 경우
+          } else if ( remainedData.unlimit_default === true ) { // 잔여 데이터가 기본제공인 경우
             responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.data.remainedPercentage = 1;
           } else { // 잔여 데이터가 무제한이 아닌 경우
             if ( remainedData.unit === UNIT_E.DATA ) { // 잔여 데이터의 단위가 'KB'인 경우
-              responseRemains.data.remainedValue =
-                FormatHelper.convDataFormatWithUnit(
-                  remainedData.remained + remainedData.sharedRemained, UNIT[remainedData.unit]); // 용량 단위 변경 및 단위 텍스트 추가
-              responseRemains.data.remainedPercentage =
-                remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
-              responseRemains.data.sharedRemainedPercentage =
-                remainedData.total !== 0 ? remainedData.sharedRemained / remainedData.total : 0;
+              responseRemains.data.remainedValue = FormatHelper.convDataFormatWithUnit(remainedData.remained + remainedData.sharedRemained, UNIT[remainedData.unit]); // 용량 단위 변경 및 단위 텍스트 추가
+              responseRemains.data.remainedPercentage = remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
+              responseRemains.data.sharedRemainedPercentage = remainedData.total !== 0 ? remainedData.sharedRemained / remainedData.total : 0;
             } else if ( remainedData.unit === UNIT_E.FEE ) { // 잔여 데이터의 단위가 '원'인 경우
-              responseRemains.data.remainedValue =
-                FormatHelper.getFeeContents(remainedData.remained + remainedData.sharedRemained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
-              responseRemains.data.remainedPercentage =
-                remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
-              responseRemains.data.sharedRemainedPercentage =
-                remainedData.total !== 0 ? remainedData.sharedRemained / remainedData.total : 0;
+              responseRemains.data.remainedValue = FormatHelper.getFeeContents(remainedData.remained + remainedData.sharedRemained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.data.remainedPercentage = remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
+              responseRemains.data.sharedRemainedPercentage = remainedData.total !== 0 ? remainedData.sharedRemained / remainedData.total : 0;
             } else { // 잔여 데이터의 단위가 'KB' 또는 '원'이 아닌 경우
               responseRemains.data.isValid = false;
             }
           }
         }
+
         // 잔여 음성 Response 양식 설정
-        if ( !remainedVoice.isEmpty ) {
+        if ( remainedVoice.isEmpty === false ) {
           responseRemains.voice.isValid = true;
-          if ( remainedVoice.unlimi ) { // 잔여 음성이 무제한인 경우
+          if ( remainedVoice.unlimit === true ) { // 잔여 음성이 무제한인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.voice.remainedPercentage = 1;
-          } else if ( remainedVoice.unlimit_default ) { // 잔여 음성이 기본제공인 경우
+          } else if ( remainedVoice.unlimit_default === true ) { // 잔여 음성이 기본제공인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.voice.remainedPercentage = 1;
           } else { // 잔여 음성이 무제한이 아닌 경우
             if ( remainedVoice.unit === UNIT_E.VOICE ) { // 잔여 음성의 단위가 '초'인 경우
-              responseRemains.voice.remainedValue =
-                FormatHelper.convVoiceMinFormatWithUnit(Math.floor(remainedVoice.remained / 60)); // 시간 단위 변경 및 단위 텍스트 추가
+              responseRemains.voice.remainedValue = FormatHelper.convVoiceMinFormatWithUnit( Math.floor(remainedVoice.remained / 60) ); // 시간 단위 변경 및 단위 텍스트 추가
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
             } else if ( remainedVoice.unit === UNIT_E.FEE ) { // 잔여 음성의 단위가 '원'인 경우
               responseRemains.voice.remainedValue = FormatHelper.getFeeContents(remainedVoice.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
@@ -1740,13 +1824,14 @@ class ApiRouter {
             }
           }
         }
+
         // 잔여 SMS Response 양식 설정
-        if ( !remainedSms.isEmpty ) {
+        if ( remainedSms.isEmpty === false ) {
           responseRemains.sms.isValid = true;
-          if ( remainedSms.unlimit ) { // 잔여 SMS가 무제한인 경우
+          if ( remainedSms.unlimit === true ) { // 잔여 SMS가 무제한인 경우
             responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.sms.remainedPercentage = 1;
-          } else if ( remainedSms.unlimit_default ) { // 잔여 SMS가 기본제공인 경우
+          } else if ( remainedSms.unlimit_default === true ) { // 잔여 SMS가 기본제공인 경우
             responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.sms.remainedPercentage = 1;
           } else { // 잔여 SMS가 무제한이 아닌 경우
@@ -1761,20 +1846,23 @@ class ApiRouter {
             }
           }
         }
+
         // 잔여량 백분율 변환(소수점 두자리)
         Object.keys(responseRemains).map((key) => {
           const keyObj = responseRemains[key];
-          if ( !FormatHelper.isEmpty(keyObj['remainedPercentage']) ) {
+          if (!FormatHelper.isEmpty(keyObj['remainedPercentage'])) {
             const value = keyObj['remainedPercentage'];
             keyObj['remainedPercentage'] = Number((value * 100).toFixed(2));
           }
-          if ( !FormatHelper.isEmpty(keyObj['sharedRemainedPercentage']) ) {
+
+          if (!FormatHelper.isEmpty(keyObj['sharedRemainedPercentage'])) {
             const value = keyObj['sharedRemainedPercentage'];
             keyObj['sharedRemainedPercentage'] = Number((value * 100).toFixed(2));
           }
         });
-        balancesResponse.result = responseRemains;
-        return res.json(balancesResponse);
+        resp.result = responseRemains;
+
+        return res.json(resp);
       });
     });
   }
