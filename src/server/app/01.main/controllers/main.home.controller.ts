@@ -41,7 +41,6 @@ import BrowserHelper from '../../../utils/browser.helper';
 class MainHome extends TwViewController {
   constructor() {
     super();
-    
   }
 
   /**
@@ -77,11 +76,11 @@ class MainHome extends TwViewController {
 
     let prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
     let eventBannerCtl = false;
-    // 갤럭시20 
+    // 갤럭시20
     // app event banner control gallexy20
     if (prodEventCtl) {
       let isEvent = req.query['event'] || '';
-      if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab 
+      if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab
         var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
         for(let i=0; i<userAgents.length; i++) {
           if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
@@ -91,12 +90,12 @@ class MainHome extends TwViewController {
         }
       }
 
-      // web event banner control gallexy20 
+      // web event banner control gallexy20
       if (flag === 'web') {
-        
+
         eventBannerCtl = true;
 
-        // phone check ? 
+        // phone check ?
         // console.log(`>>>[TEST] for out source `, req['useragent']['source']);
         // var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
         // for(let i=0; i<userAgents.length; i++) {
@@ -113,9 +112,7 @@ class MainHome extends TwViewController {
     console.log(`>>>[TEST] flag `, flag);
     console.log(`>>>[TEST] eventBannerCtl `, eventBannerCtl);
 
-
     if ( svcInfo ) {
-      if ( svcInfo.svcAttrCd.includes('M') ) {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
           // 모바일 - 휴대폰 회선
           Observable.combineLatest(
@@ -138,20 +135,6 @@ class MainHome extends TwViewController {
             svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
             svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
-
-            var eventFlag = 0;
-            if (prodEventCtl) {
-              var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
-              if (flag === 'app') {
-                for(let i=0; i<userAgents.length; i++) {
-                  if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
-                    eventFlag = 1;
-                    break;
-                  }
-                }
-              }
-            }
-            
             res.render(`main.home-${ flag }.html`, {
               svcInfo,
               homeData,
@@ -159,12 +142,32 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              event: eventFlag,
-              isAdRcvAgreeBannerShown,
-              eventBannerCtl: eventBannerCtl
+              isAdRcvAgreeBannerShown
             });
           });
-        } else {
+        } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
+        // IPTV, 인터넷 , 전화 회선
+        Observable.combineLatest(
+          this.getBillData(svcInfo),
+          this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
+          this.getPersonData(svcInfo, req)
+        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
+          homeData.billData = billData;
+          svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
+          svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
+          svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
+          res.render(`main.home-${ flag }.html`, {
+            svcInfo,
+            homeData,
+            redisData,
+            pageInfo,
+            noticeType: svcInfo.noticeType,
+            recommendProdsData,
+            isAdRcvAgreeBannerShown
+          });
+        });
+      } else {
           // 모바일 및 IPTV, 인터넷, 전화 외 회선
           Observable.combineLatest(
             this.getUsageData(svcInfo),
@@ -188,37 +191,10 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              isAdRcvAgreeBannerShown,
-              event: 0,
-              eventBannerCtl: eventBannerCtl
+              isAdRcvAgreeBannerShown
             });
           });
         }
-      } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
-        // IPTV, 인터넷 , 전화 회선
-        Observable.combineLatest(
-          this.getBillData(svcInfo),
-          this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
-          homeData.billData = billData;
-          svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
-          svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
-          svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck;  // 아이콘 비노출 에이전트 타입 체크
-          res.render(`main.home-${ flag }.html`, {
-            svcInfo,
-            homeData,
-            redisData,
-            pageInfo,
-            noticeType: svcInfo.noticeType,
-            recommendProdsData,
-            isAdRcvAgreeBannerShown,
-            event: 0,
-            eventBannerCtl: eventBannerCtl
-          });
-        });
-      }
     } else {
       // 비로그인
       // this.getRedisData(noticeCode, '').subscribe((redisData) => {
@@ -239,11 +215,8 @@ class MainHome extends TwViewController {
           pageInfo,
           noticeType: '',
           recommendProdsData,
-          personDataNoLoginMap,
-          event: 0,
-          eventBannerCtl: eventBannerCtl
+          personDataNoLoginMap
         });
-      
       });
     }
   }
