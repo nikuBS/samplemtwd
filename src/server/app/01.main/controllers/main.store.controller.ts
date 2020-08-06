@@ -20,9 +20,12 @@ class MainStore extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
+
+    let prodEventCtl = false;
+
     this.getRedisData(noticeCode)
       .subscribe((resp) => {
-        res.render(`main.store.html`, { svcInfo, redisData: resp, pageInfo, formatHelper: FormatHelper });
+        res.render(`main.store.html`, { svcInfo, redisData: resp, pageInfo, formatHelper: FormatHelper, prodEventCtl: prodEventCtl });
       });
   }
 
