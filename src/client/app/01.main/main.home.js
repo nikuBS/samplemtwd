@@ -58,11 +58,11 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._bindEventLanding();
   this._bindEventLogin();
 
-  this._initEmrNotice(emrNotice, isLogin === 'true');
-  this._getQuickMenu(isLogin === 'true');
+  this._initEmrNotice(emrNotice, isLogin);
+  this._getQuickMenu(isLogin );
   this._initPersonAction();
   
-  if ( isLogin === 'true' ) {
+  if ( isLogin ) {
     this._cachedElement();
     this._initWelcomeMsg();
     this._bindEvent();

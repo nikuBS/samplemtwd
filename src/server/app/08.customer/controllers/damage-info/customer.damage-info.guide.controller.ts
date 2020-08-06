@@ -24,8 +24,8 @@ class CustomerDamagenfoGuide extends TwViewController {
   /* 카테고리 별 목록 선언 */
   private _categoryLists = {
     video: CUSTOMER_PROTECT_GUIDE_VIDEO,  // 동영상으로 보는 피해예방법
-    latest: CUSTOMER_PROTECT_GUIDE_LATEST,  // 웹툰으로 보는 피해예방법
-    webtoon: CUSTOMER_PROTECT_GUIDE_WEBTOON // 최신 이용자 피해예방 정보
+    latest: CUSTOMER_PROTECT_GUIDE_LATEST,  // 최신 이용자 피해예방 정보
+    webtoon: CUSTOMER_PROTECT_GUIDE_WEBTOON // 웹툰으로 보는 피해예방법
   };
 
   /**
