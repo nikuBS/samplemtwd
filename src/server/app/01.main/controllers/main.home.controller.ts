@@ -189,6 +189,7 @@ class MainHome extends TwViewController {
               noticeType: svcInfo.noticeType,
               recommendProdsData,
               isAdRcvAgreeBannerShown,
+              event: 0,
               eventBannerCtl: eventBannerCtl
             });
           });
@@ -213,6 +214,7 @@ class MainHome extends TwViewController {
             noticeType: svcInfo.noticeType,
             recommendProdsData,
             isAdRcvAgreeBannerShown,
+            event: 0,
             eventBannerCtl: eventBannerCtl
           });
         });
@@ -238,6 +240,7 @@ class MainHome extends TwViewController {
           noticeType: '',
           recommendProdsData,
           personDataNoLoginMap,
+          event: 0,
           eventBannerCtl: eventBannerCtl
         });
       
