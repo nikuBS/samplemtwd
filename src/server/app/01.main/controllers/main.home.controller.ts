@@ -75,7 +75,7 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    let prodEventCtl = true; // true: 적용일때만... false: 범위 대상일 아니면 제외
+    let prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
     let eventBannerCtl = false;
     // 갤럭시20 
     // app event banner control gallexy20
