@@ -74,10 +74,11 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    let prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
-    let eventBannerCtl = false;
+    let prodEventCtl = true; // true: 적용일때만... false: 범위 대상일 아니면 제외
+    var eventFlag = 0;
     // 갤럭시20
-    // app event banner control gallexy20
+    // 이벤트 기간이면서, 앱이면서, 최초 접속시, 아래 폰 목록에 해당되는 폰들은 /main/store 진입 한다.
+    // isEvent를 만든이유는 화면에서 /main/home?event=1 를 추가하여 최초를 제외한 상황일때는 main화면으로 넘기기 위해서이다. 
     if (prodEventCtl) {
       let isEvent = req.query['event'] || '';
       if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab
@@ -90,27 +91,22 @@ class MainHome extends TwViewController {
         }
       }
 
-      // web event banner control gallexy20
-      if (flag === 'web') {
-
-        eventBannerCtl = true;
-
-        // phone check ?
-        // console.log(`>>>[TEST] for out source `, req['useragent']['source']);
-        // var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
-        // for(let i=0; i<userAgents.length; i++) {
-        //   console.log(`>>>[TEST] if out userAgents[${i}] `, userAgents[i]);
-        //   if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
-        //     console.log(`>>>[TEST] if in userAgents[${i}] `, userAgents[i]);
-        //     eventBannerCtl = true;
-        //     break;
-        //   }
-        // }
+      // 앱 접속이면서, 이벤트 기간이고, 아래 폰 목록에 해당하는 항목만 노티를 표시용 플래그 설정
+      if (prodEventCtl) {
+        var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+        if (flag === 'app') {
+          for(let i=0; i<userAgents.length; i++) {
+            if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+              eventFlag = 1;
+              break;
+            }
+          }
+        }
       }
     }
 
     console.log(`>>>[TEST] flag `, flag);
-    console.log(`>>>[TEST] eventBannerCtl `, eventBannerCtl);
+    console.log(`>>>[TEST] eventFlag `, eventFlag);
 
     if ( svcInfo ) {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
@@ -135,6 +131,7 @@ class MainHome extends TwViewController {
             svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
             svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
+
             res.render(`main.home-${ flag }.html`, {
               svcInfo,
               homeData,
@@ -142,7 +139,8 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              isAdRcvAgreeBannerShown
+              isAdRcvAgreeBannerShown,
+              event: eventFlag
             });
           });
         } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
@@ -164,7 +162,8 @@ class MainHome extends TwViewController {
             pageInfo,
             noticeType: svcInfo.noticeType,
             recommendProdsData,
-            isAdRcvAgreeBannerShown
+            isAdRcvAgreeBannerShown,
+            event: eventFlag
           });
         });
       } else {
@@ -191,7 +190,8 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              isAdRcvAgreeBannerShown
+              isAdRcvAgreeBannerShown,
+              event: eventFlag
             });
           });
         }
@@ -215,7 +215,8 @@ class MainHome extends TwViewController {
           pageInfo,
           noticeType: '',
           recommendProdsData,
-          personDataNoLoginMap
+          personDataNoLoginMap,
+          event: eventFlag
         });
       });
     }
