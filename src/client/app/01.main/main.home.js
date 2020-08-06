@@ -39,7 +39,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._twdUrl = '';
   this.mbrNm = mbrNm || '';
 
-  this.isLogin = isLogin;
+  this.isLogin = isLogin === 'true';
   // this._lineComponent = new Tw.LineComponent();
 
   // if ( location.hash === '#store' ) {
@@ -58,11 +58,11 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._bindEventLanding();
   this._bindEventLogin();
 
-  this._initEmrNotice(emrNotice, isLogin);
-  this._getQuickMenu(isLogin );
+  this._initEmrNotice(emrNotice, this.isLogin);
+  this._getQuickMenu(this.isLogin);
   this._initPersonAction();
-  
-  if ( isLogin ) {
+
+  if ( this.isLogin ) {
     this._cachedElement();
     this._initWelcomeMsg();
     this._bindEvent();
@@ -72,7 +72,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 
-  if( !Tw.Environment.init ) {
+  if ( !Tw.Environment.init ) {
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._setBanner, this));
   } else {
     this._setBanner();
@@ -173,9 +173,13 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-recommend-prods-guide', $.proxy(this._onClickRecommendProdsGuide, this));
 
     // 광고성 정보 수신동의 배너 이벤트
-    this.$container.on('click', '#fe-bt-close-ad-rcv-agree-banner', $.proxy( function() { this.$adRcvAgreeBanner.addClass('none'); }, this ));
+    this.$container.on('click', '#fe-bt-close-ad-rcv-agree-banner', $.proxy(function () {
+      this.$adRcvAgreeBanner.addClass('none');
+    }, this));
     this.$container.on('click', '#fe-bt-on-ad-rcv-agree-banner', $.proxy(this._onClickAgreeAdRcv, this));
-    this.$container.on('click', '#fe-bt-detail-ad-rcv-agree-banner', $.proxy( function() { Tw.CommonHelper.openTermLayer2('03'); }, this ));
+    this.$container.on('click', '#fe-bt-detail-ad-rcv-agree-banner', $.proxy(function () {
+      Tw.CommonHelper.openTermLayer2('03');
+    }, this));
   },
 
   /**
@@ -257,7 +261,7 @@ Tw.MainHome.prototype = {
     //     Tw.CommonHelper.openUrlExternal(url);
     //   }
     // } else {
-      Tw.CommonHelper.openUrlExternal(url);
+    Tw.CommonHelper.openUrlExternal(url);
     // }
   },
 
@@ -295,7 +299,7 @@ Tw.MainHome.prototype = {
     this._adid = res.params.adid;
 
     if ( url.indexOf('?') > -1 ) {
-      str = '&';        
+      str = '&';
     }
 
     url += str + 'url=1&dstUrl=' + encodeURIComponent(dstUrl) + '&adid=' + this._adid;
@@ -353,7 +357,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _onClickPersonIcoClicked: function ($event) {
-    if (this.isLogin === 'true' ) {
+    if ( this.isLogin ) {
       Tw.CommonHelper.setSessionStorage('PERSON_ICO_CLICKED', 'Y');
     }
   },
@@ -562,7 +566,7 @@ Tw.MainHome.prototype = {
    */
   _onClickRecommendProdsGuide: function () {
     this._popupService.open({
-      hbs:'HO_01_02'
+      hbs: 'HO_01_02'
     }, $.proxy(this._onOpenRecommendProdsGuidePopup, this));
   },
 
@@ -573,7 +577,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _onOpenRecommendProdsGuidePopup: function ($popupContainer) {
-    $popupContainer.on('click', '.bt-red1', $.proxy(function() {
+    $popupContainer.on('click', '.bt-red1', $.proxy(function () {
       this._historyService.goLoad('/main/recommend/product');
     }, this));
   },
@@ -584,12 +588,12 @@ Tw.MainHome.prototype = {
    * @return {void}
    * @private
    */
-  _onClickAgreeAdRcv: function() {
-    this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn:'Y' })
+  _onClickAgreeAdRcv: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn: 'Y' })
       .done($.proxy(this._successAgreeAdRcv, this));
   },
 
-  _successAgreeAdRcv: function() {
+  _successAgreeAdRcv: function () {
     Tw.Popup.toast(Tw.TOAST_TEXT.RCV_AGREE);
     this.$adRcvAgreeBanner.addClass('none');
   },
@@ -1085,10 +1089,10 @@ Tw.MainHome.prototype = {
     } else if ( billData.code === Tw.API_CODE.CODE_00 ) {
       var invMonth = Tw.DateHelper.getCurrentMonth(billData.result.invDt);
       var billMonth = '1';
-      if(invMonth === '12') {
+      if ( invMonth === '12' ) {
         billMonth = '1';
       } else {
-        billMonth = +invMonth+ 1;
+        billMonth = +invMonth + 1;
       }
       return {
         showData: true,
@@ -1586,7 +1590,7 @@ Tw.MainHome.prototype = {
 
       var $parent = mls.closest('.section-box');
       var actionTop = $parent.offset().top - ($parent.height() / 1.2);
-      if ($(window).scrollTop() > actionTop) {
+      if ( $(window).scrollTop() > actionTop ) {
         this._initMlsCard(index);
       }
     }, this));
@@ -1839,8 +1843,10 @@ Tw.MainHome.prototype = {
       this._historyService.goLoad(noti.linkUrl);
     } else if ( noti.linkTrgtClCd === '2' ) {
       this._onClickCloseNoti(nonShow);
-      if( noti.billYn === 'Y') {
-        Tw.CommonHelper.showDataCharge($.proxy(function (url) {Tw.CommonHelper.openUrlExternal(url);}, this, noti.linkUrl));
+      if ( noti.billYn === 'Y' ) {
+        Tw.CommonHelper.showDataCharge($.proxy(function (url) {
+          Tw.CommonHelper.openUrlExternal(url);
+        }, this, noti.linkUrl));
       } else {
         Tw.CommonHelper.openUrlExternal(noti.linkUrl);
       }
@@ -1906,22 +1912,22 @@ Tw.MainHome.prototype = {
       { target: '7', banner: banner7 },
       { target: 'e' }, { target: 'f' }, { target: 'g' }, { target: 'S' }];
 
-    result.forEach(function(row){
-      if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
-        if(!row.banner.result.summary){
-          row.banner.result.summary = {target: row.target};  
+    result.forEach(function (row) {
+      if ( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
+        if ( !row.banner.result.summary ) {
+          row.banner.result.summary = { target: row.target };
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
-      }else{
-        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
+      } else {
+        row.banner = { result: { summary: { target: row.target }, imgList: [] } };
       }
 
-      if(admBanner.code === Tw.API_CODE.CODE_00){
-        row.banner.result.imgList = row.banner.result.imgList.concat( 
-          admBanner.result.banners.filter(function(admbnr){
+      if ( admBanner.code === Tw.API_CODE.CODE_00 ) {
+        row.banner.result.imgList = row.banner.result.imgList.concat(
+          admBanner.result.banners.filter(function (admbnr) {
             return admbnr.bnnrLocCd === row.target;
-          }).map(function(admbnr){
+          }).map(function (admbnr) {
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
             admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
             return admbnr;
@@ -1955,23 +1961,23 @@ Tw.MainHome.prototype = {
    */
   _successTosAdminWebBanner: function (resp, admBanner) {
     var result = [{ target: '5', banner: resp },
-    { target: 'e' }, { target: 'f' }, { target: 'g' }, { target: 'S' }];
+      { target: 'e' }, { target: 'f' }, { target: 'g' }, { target: 'S' }];
 
-    result.forEach(function(row){
-      if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
-        if(!row.banner.result.summary){
-          row.banner.result.summary = {target: row.target};  
+    result.forEach(function (row) {
+      if ( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
+        if ( !row.banner.result.summary ) {
+          row.banner.result.summary = { target: row.target };
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
-      }else{
-        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
+      } else {
+        row.banner = { result: { summary: { target: row.target }, imgList: [] } };
       }
 
-      row.banner.result.imgList = row.banner.result.imgList.concat( 
-        admBanner.result.banners.filter(function(admbnr){
+      row.banner.result.imgList = row.banner.result.imgList.concat(
+        admBanner.result.banners.filter(function (admbnr) {
           return admbnr.bnnrLocCd === row.target;
-        }).map(function(admbnr){
+        }).map(function (admbnr) {
           admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
           admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
           return admbnr;
@@ -2020,9 +2026,9 @@ Tw.MainHome.prototype = {
       }
     }, this));
 
-    var directBanner = banners.filter(function(e){
+    var directBanner = banners.filter(function (e) {
       return e.target === 'S';
-    }).map(function(e){
+    }).map(function (e) {
       return e.banner.result.imgList;
     })[0].map(function (target) {
       target.chargeOrExternal = 'fe-home-external';
@@ -2106,7 +2112,7 @@ Tw.MainHome.prototype = {
         }
       }, this));
 
-      var directBanner = _.filter(resp.result.banners, function(banner) {
+      var directBanner = _.filter(resp.result.banners, function (banner) {
         return banner.bnnrLocCd === 'S';
       }).map(function (target) {
         target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
@@ -2314,14 +2320,14 @@ Tw.MainHome.prototype = {
   _initMlsCard: function (index) {
 
     // Tw.INIT.COMPLETE event 발생 후에도 Tw.Environment.cdn가 설정되지 않는 경우가 발생
-    if( !Tw.Environment.init ) {
+    if ( !Tw.Environment.init ) {
       //$(window).on(Tw.INIT_COMPLETE, $.proxy(this._getMlsCard(index), this));
-      var checkInit = setInterval(function() {
-        if(Tw.Environment.init && !Tw.FormatHelper.isEmpty(Tw.Environment.cdn)) {
-            clearInterval(checkInit);
+      var checkInit = setInterval(function () {
+        if ( Tw.Environment.init && !Tw.FormatHelper.isEmpty(Tw.Environment.cdn) ) {
+          clearInterval(checkInit);
         }
       }, 200);
-  
+
     } else {
       this._getMlsCard(index);
     }
@@ -2363,23 +2369,23 @@ Tw.MainHome.prototype = {
    * @desc 내게 맞는 요금제 추천 MLS 요청
    * @private
    */
-  _getRecommendProdsData: function(element) {
+  _getRecommendProdsData: function (element) {
 
     var storeRecommendProds = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODS));
-    
+
     if ( Tw.FormatHelper.isEmpty(storeRecommendProds) ||
-        Tw.DateHelper.convDateFormat(storeRecommendProds.expired).getTime() < new Date().getTime() ||
-        this._svcMgmtNum !== storeRecommendProds.svcMgmtNum ) {
+      Tw.DateHelper.convDateFormat(storeRecommendProds.expired).getTime() < new Date().getTime() ||
+      this._svcMgmtNum !== storeRecommendProds.svcMgmtNum ) {
 
-          setTimeout($.proxy(this._handleRecommendProds, this, element), 500);
+      setTimeout($.proxy(this._handleRecommendProds, this, element), 500);
 
-        // var channelIds = [Tw.EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
-        
-        // // 실시간 데이터를 위해서 항상 API를 호출한다.
-        // this._apiService.request(
-        //   Tw.API_CMD.BFF_10_0187, {channelIds: channelIds})
-        // .done($.proxy(this._handleRecommendProds, this, element))
-        // .fail($.proxy(this._failRecommendProdsData, this));
+      // var channelIds = [Tw.EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS];
+
+      // // 실시간 데이터를 위해서 항상 API를 호출한다.
+      // this._apiService.request(
+      //   Tw.API_CMD.BFF_10_0187, {channelIds: channelIds})
+      // .done($.proxy(this._handleRecommendProds, this, element))
+      // .fail($.proxy(this._failRecommendProdsData, this));
 
     } else {
       this._handleRecommendProds(element, storeRecommendProds.data);
@@ -2415,7 +2421,7 @@ Tw.MainHome.prototype = {
    * @param error
    * @private
    */
-  _failRecommendProdsData: function(error) {
+  _failRecommendProdsData: function (error) {
     Tw.Logger.error(error);
   },
 
@@ -2452,7 +2458,7 @@ Tw.MainHome.prototype = {
 
   //       if(card.reasonCode !== '#') {
   //         var addInfo = {
-  //           prodId: item.prodId, 
+  //           prodId: item.prodId,
   //           prodNm: item.prodNm,
   //           prodType: item.prodType,
   //           hasData: card.reasonTyp === 'data'? true : false,
@@ -2460,7 +2466,7 @@ Tw.MainHome.prototype = {
   //           hasMembership: card.reasonTyp === 'membership'? true : false,
   //           hasMusic: card.reasonTyp === 'music'? true : false,
   //           hasVideo: card.reasonTyp === 'video'? true : false,
-  //           mbrNm: this.mbrNm, 
+  //           mbrNm: this.mbrNm,
   //           priority: parseInt(Tw.RECOMMEND_PRODS_PRIORITY[card.reasonTyp], 10),
   //           CDN: cdn,
   //         }
@@ -2488,20 +2494,20 @@ Tw.MainHome.prototype = {
    * @param {string} element
    * @param {string} result
    * @param {function} callback excutable code after load banners
-   * @param {string} hbs 
+   * @param {string} hbs
    * @private
    */
-  _handleRecommendProds: function(element, result) { 
+  _handleRecommendProds: function (element, result) {
     // if ( !Tw.FormatHelper.isEmpty(result) ) {
-      var time = 2000;
+    var time = 2000;
 
-      // 찾는 중 카드 Fade out
-      $('.tod-mls-cont > div').eq(0).fadeOut(time);
-      $('.tod-mls-ft > div').eq(0).fadeOut(time);
+    // 찾는 중 카드 Fade out
+    $('.tod-mls-cont > div').eq(0).fadeOut(time);
+    $('.tod-mls-ft > div').eq(0).fadeOut(time);
 
-      // 완료 카드 Fade in
-      $('.tod-mls-cont > div').eq(1).fadeIn(time);
-      $('.tod-mls-ft > div').eq(1).fadeIn(time);
+    // 완료 카드 Fade in
+    $('.tod-mls-cont > div').eq(1).fadeIn(time);
+    $('.tod-mls-ft > div').eq(1).fadeIn(time);
     // } else {
     //   element.hide();
     // }
@@ -2514,10 +2520,11 @@ Tw.MainHome.prototype = {
   _initPersonAction: function () {
     var personTimer = null, hideTimer1 = null, hideTimer2 = null;
     var personIcoClickYN = Tw.CommonHelper.getSessionStorage('PERSON_ICO_CLICKED'); // 한번 이상 개인화 진입 아이콘 클릭
-    if (personIcoClickYN === 'Y') {
+    if ( personIcoClickYN === 'Y' ) {
       $('.h-person').removeClass('show');
       $('.h-person .btn-comment').hide();
     }
+
     function personAction() {
       clearTimeout(personTimer);
       clearTimeout(hideTimer1);
@@ -2535,18 +2542,18 @@ Tw.MainHome.prototype = {
     }
 
     $(window).on('scroll', function () {
-      if ($(this).scrollTop() === 0) {
-        if (personIcoClickYN !== 'Y') {
+      if ( $(this).scrollTop() === 0 ) {
+        if ( personIcoClickYN !== 'Y' ) {
           personAction();
         }
       } else {
-        if (personIcoClickYN !== 'Y') {
+        if ( personIcoClickYN !== 'Y' ) {
           $('.h-person .btn-comment').show();  //2020.05.13 추가
         }
         $('.h-person').removeClass('show');
       }
     });
-    if (personIcoClickYN !== 'Y') {
+    if ( personIcoClickYN !== 'Y' ) {
       personAction();
     }
   }
