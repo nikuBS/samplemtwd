@@ -82,6 +82,27 @@ Tw.PRODUDT.PROMOTIONS = {
             def.fail();
           }
         });
+
+      },
+      function(data, def){  // 상품 최초가입일 조회함.
+        var promotion = Tw.PRODUDT.PROMOTIONS.POOQ;
+        var prodIds = Tw.PRODUDT.PROMOTIONS.POOQ.FLO.concat([data.prodId], promotion.PRODS[data.prodId].SUB_PROD);
+
+        Tw.Api.request(Tw.API_CMD.BFF_10_0191, {}, {}, [prodIds[0]] )
+        .done(function(resp){
+
+          if ( resp.code === Tw.API_CODE.CODE_00 ) {
+
+            var fstScrbDt = resp.result.fstScrbDt;  // 상품 최초가입일 조회
+ 
+            def.resolve({
+              fstScrbDt: fstScrbDt
+            });
+          } else {
+            def.fail();
+          }
+        });
+
       }
     ],
     WHEN: [function(data){
@@ -94,7 +115,7 @@ Tw.PRODUDT.PROMOTIONS = {
         return null;
       }
 
-      if  (data.certDate.substr(0, 4) === '2019') {
+      if  (data.fstScrbDt.substr(0, 4) === '2019') {
         if (Tw.PRODUDT.PROMOTIONS.POOQ.FIRST_PROD.indexOf(data.svcProdId) > -1 && data.joinDate2 !== 'N') { //POOQ 할인 2코드 & NA6405, NA6539
           return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지(Case_01)
         } else if (Tw.PRODUDT.PROMOTIONS.POOQ.SECOND_PROD.indexOf(data.svcProdId) > -1 && data.joinDate2 !== 'N') { //POOQ 할인 2코드 & NA6404, NA6538
@@ -102,7 +123,7 @@ Tw.PRODUDT.PROMOTIONS = {
             return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지(Case_01)
           } else if (data.prodId === 'NA00006516' && data.joinDate !== 'N' && data.floContentsDate !== 'N') { //Only NA00006517 + NA00006600
             if (data.coinDate !== 'N') { //코인지급내역
-              if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
+              if (month === data.coinDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
                 return 'NONE_FREE_2_3'; ////코인 미지급 팝업
               }else{
                 return 'NONE_FREE_2_2';
@@ -116,7 +137,7 @@ Tw.PRODUDT.PROMOTIONS = {
 
         } else {
           if (data.coinDate !== 'N') { //코인지급내역
-            if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
+            if (month === data.coinDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
               return 'NONE_FREE_2_3'; ////코인 미지급 팝업
             }else{
               return 'NONE_FREE_2_2';
@@ -130,9 +151,9 @@ Tw.PRODUDT.PROMOTIONS = {
         if ( (Tw.PRODUDT.PROMOTIONS.POOQ.FIRST_PROD.indexOf(data.svcProdId) > -1 || Tw.PRODUDT.PROMOTIONS.POOQ.SECOND_PROD.indexOf(data.svcProdId) > -1) && data.joinDate2 !== 'N') { //POOQ 할인 2코드 & NA6405, NA6539, NA6404, NA6538
           return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지(Case_01)
         } else if (data.joinDate1 !== 'N') {
-          if (1 <= moment(month).diff(data.certDate.substr(0, 6) + '01', 'month') ) {
+          if (1 <= moment(month).diff(data.fstScrbDt.substr(0, 6) + '01', 'month') ) {
             if (data.coinDate !== 'N') { //코인지급내역
-              if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
+              if (month === data.coinDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
                 return 'NONE_FREE_2_3'; ////코인 미지급 팝업
               }else{
                 return 'NONE_FREE_2_2';
@@ -145,7 +166,7 @@ Tw.PRODUDT.PROMOTIONS = {
           }
         } else {
           if (data.coinDate !== 'N') { //코인지급내역
-            if (month === data.certDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
+            if (month === data.coinDate.substr(0, 6) + '01' ) { //NA00006657 가입 기간 M월
               return 'NONE_FREE_2_3'; ////코인 미지급 팝업
             }else{
               return 'NONE_FREE_2_2';
@@ -295,12 +316,12 @@ Tw.PRODUDT.PROMOTIONS = {
     USED: 'Y',
     PRODS:{
       'NA00006520': { // FLO 앤 데이터
-                  //    인증코드       적립        할인(100원)    요금제 혜택...
-        SUB_PROD: [ 'NA00006521', 'NA00006655', 'NA00006541', 'NA00006542', 'NA00006576']
+                  //    인증코드       적립        할인(100원)    요금제 혜택  FLO_유지_적립완료  적용 할인3코드(T플랜 에센스 혜택)
+        SUB_PROD: [ 'NA00006521', 'NA00006655', 'NA00006541', 'NA00006542', 'NA00007013', 'NA00006576']
       },
       'NA00006599': { // FLO 앤 데이터 플러스
-                 //    인증코드       적립        할인(100원)    요금제 혜택...
-        SUB_PROD: [ 'NA00006600', 'NA00006655', 'NA00006601', 'NA00006602']
+                 //    인증코드       적립        할인(100원)    요금제 혜택   FLO_유지_적립완료
+        SUB_PROD: [ 'NA00006600', 'NA00006655', 'NA00006601', 'NA00006602', 'NA00007013']
       }
     },
     POOQ: [ 'NA00006517', 'NA00006523', 'NA00006578', 'NA00006585'], //POOQ 관련 서비스
@@ -334,7 +355,8 @@ Tw.PRODUDT.PROMOTIONS = {
               var coinDate = resp.result[prodIds[idx++]];  // 코인 적립일
               var joinDate1 = resp.result[prodIds[idx++]];  // 100원프로모션 가입일
               var joinDate2 = resp.result[prodIds[idx++]];  // 무료요금제 가입일
-              var joinDate3 = prodIds.length > idx ? resp.result[prodIds[idx]] : null;
+              var floUseDate = resp.result[prodIds[idx++]];  // FLO_유지_적립완료일
+              var joinDate3 = prodIds.length > idx ? resp.result[prodIds[idx]] : null; //적용 할인3코드(T플랜 에센스 혜택)
 
               def.resolve({
                 pooq : pooq,
@@ -345,12 +367,34 @@ Tw.PRODUDT.PROMOTIONS = {
                 coinDate: coinDate,
                 joinDate1: joinDate1,
                 joinDate2: joinDate2,
+                floUseDate: floUseDate,
                 joinDate3: joinDate3
               });
             } else {
               def.fail();
             }
           });
+      },
+
+      function(data, def){  // 상품 최초가입일 조회함.
+        var promotion = Tw.PRODUDT.PROMOTIONS.FLO;
+        var prodIds = Tw.PRODUDT.PROMOTIONS.FLO.POOQ.concat([data.prodId], promotion.PRODS[data.prodId].SUB_PROD);
+
+        Tw.Api.request(Tw.API_CMD.BFF_10_0191, {}, {}, [prodIds[0]] )
+        .done(function(resp){
+
+          if ( resp.code === Tw.API_CODE.CODE_00 ) {
+
+            var fstScrbDt = resp.result.fstScrbDt;  // 상품 최초가입일 조회
+ 
+            def.resolve({
+              fstScrbDt: fstScrbDt
+            });
+          } else {
+            def.fail();
+          }
+        });
+
       }
     ],
     WHEN: [function(data){
@@ -360,7 +404,7 @@ Tw.PRODUDT.PROMOTIONS = {
 
       var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
 
-      if  (data.certDate.substr(0, 4) === '2019') {
+      if  (data.fstScrbDt.substr(0, 4) === '2019') {
         if  ( Tw.PRODUDT.PROMOTIONS.FLO.FIRST_PROD.indexOf(data.svcProdId) > -1 && data.joinDate2 !== 'N') { //FLO 할인 2코드 & NA6405, NA6539
           return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
         } else if ( data.joinDate3 && data.joinDate3 !== 'N' ) { // FLO 할인 3코드
@@ -371,7 +415,7 @@ Tw.PRODUDT.PROMOTIONS = {
             return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
           } else if ( data.prodId === 'NA00006599' && data.joinDate !== 'N' && data.pooqContentsDate !== 'N' ) { // Only NA00006517 + NA00006600
             return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
-          } else if ( data.coinDate !== 'N' ) { // OCB지급 Y
+          } else if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
             if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
               return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
             }else{
@@ -380,7 +424,7 @@ Tw.PRODUDT.PROMOTIONS = {
           } else {
             return 'NONE_FREE_3_1'; // OCB지급 N
           }
-        } else if ( data.coinDate !== 'N' ) { // OCB지급 Y
+        } else if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
           if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
             return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
           }else{
@@ -399,8 +443,8 @@ Tw.PRODUDT.PROMOTIONS = {
           } else if ( data.joinDate != 'N' && (data.pooqContentsDate !== 'N' || data.pooqContentsPlusDate !== 'N') ) { // Only NA00006517 or NA00006523
             return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
           } else if (data.joinDate1 !== 'N') {
-            if ( 1 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ) {
-              if ( data.coinDate !== 'N' ) { // OCB지급 Y
+            if ( 1 <= moment(month).diff(data.fstScrbDt.substr(0, 6) + '01', 'month') ) {
+              if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
                 if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
                   return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
                 }else{
@@ -413,7 +457,7 @@ Tw.PRODUDT.PROMOTIONS = {
               return 'NONE_FREE_2'; //case02, case04, 해지
             }
           } else {
-            if ( data.coinDate !== 'N' ) { // OCB지급 Y
+            if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
               if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
                 return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
               }else{
@@ -424,8 +468,8 @@ Tw.PRODUDT.PROMOTIONS = {
             }
           }
         } else if ( data.joinDate1 !== 'N') {
-          if  ( 1 <= moment(month).diff(data.joinDate1.substr(0,6) + '01', 'month') ) {
-            if ( data.coinDate !== 'N' ) { // OCB지급 Y
+          if  ( 1 <= moment(month).diff(data.fstScrbDt.substr(0,6) + '01', 'month') ) {
+            if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
               if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
                 return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
               }else{
@@ -438,7 +482,7 @@ Tw.PRODUDT.PROMOTIONS = {
             return 'NONE_FREE_2'; //case02, case04, 해지
           }
         } else {
-          if ( data.coinDate !== 'N' ) { // OCB지급 Y
+          if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
             if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
               return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
             }else{
