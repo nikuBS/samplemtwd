@@ -607,3 +607,6 @@ background:url('../img/customer/common/btn-right-arrow.png') center 40% no-repea
 
 /* 190701 추가 [OP002-1939] 이럴 땐 이렇게 하세요 */
 .idpt-container .tod-except01 {padding-top:0.625rem;}
+
+/* 200724 [OP002-9585] 이럴 땐 이렇게 하세요 온라인모바일 노출상품서비스 통일화  */
+.idpt-container .idpt-imgline-list li.tod-min-h-auto{min-height:auto !important; overflow:hidden;} 
