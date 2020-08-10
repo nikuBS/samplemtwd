@@ -1522,9 +1522,9 @@ class ApiRouter {
         if ( isSpclData ) {
           if ( balancesResponse.result && balancesResponse.result.spclData ) {
             balancesResponse.result.spclData.map((data) => {
-              const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
+              const dataSkipIds: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
               // KB 단위 잔여량만 합산
-              if ( skipId.length ) {
+              if ( dataSkipIds.length ) {
                 if ( data.unit === UNIT_E.DATA ) {
                   remainedData.isEmpty = false;
                   // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
@@ -1569,10 +1569,18 @@ class ApiRouter {
         const voiceCodes: string[] = voiceCode ? (voiceCode.includes(',') ? voiceCode.split(',') : [voiceCode]) : [];
         // 음성에서 공제코드 검색
         if ( balancesResponse.result && balancesResponse.result.voice ) {
-          balancesResponse.result.voice.map((voice) => {
-            const skipId: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
+          balancesResponse.result.voice.map((voice, index) => {
+            const voiceSkipIds: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
+            // 전달받은 voiceCode 값이 없는 경우에는 첫번째 항목만 노출
+            if( !voiceCode && index !== 0 ) {
+              return;
+            }
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( skipId.length ) {
+            if ( voiceSkipIds.length ) {
+              // voiceCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
+              if ( !voiceCode ) {
+                voiceCodes.push(voice.skipId);
+              }
               remainedVoice.isEmpty = false;
               // 음성 항목이 무제한 또는 기본제공일 경우 Flag 설정
               switch ( voice.unlimit ) {
@@ -1607,10 +1615,18 @@ class ApiRouter {
         const smsCodes: string[] = smsCode ? (smsCode.includes(',') ? smsCode.split(',') : [smsCode]) : [];
         // SMS에서 공제코드 검색
         if ( balancesResponse.result && balancesResponse.result.sms ) {
-          balancesResponse.result.sms.map((sms) => {
-            const skipId: string[] = smsCodes ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
+          balancesResponse.result.sms.map((sms, index) => {
+            const smsSkipIds: string[] = smsCode ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
+            // 전달받은 smsCode 값이 없는 경우에는 첫번째 항목만 노출
+            if( !smsCode && index !== 0 ) {
+              return;
+            }
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( skipId.length ) {
+            if ( smsSkipIds.length ) {
+              // smsCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
+              if ( !smsCode ) {
+                smsCodes.push(sms.skipId);
+              }
               remainedSms.isEmpty = false;
               // SMS 항목이 무제한 또는 기본제공일 경우 Flag 설정
               switch ( sms.unlimit ) {
@@ -1647,13 +1663,13 @@ class ApiRouter {
             sharedRemainedPercentage: 0 // 총 제공량 대비 잔여 T가족모아데이터의 비율
           },
           voice: {
-            skipId: voiceCode, // 조회한 음성 공제코드
+            skipId: voiceCodes.join(', '), // 조회한 음성 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           },
           sms: {
-            skipId: smsCode, // 조회한 SMS 공제코드
+            skipId: smsCodes.join(', '), // 조회한 SMS 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
@@ -1721,7 +1737,7 @@ class ApiRouter {
         // 잔여 음성 Response 양식 설정
         if ( !remainedVoice.isEmpty ) {
           responseRemains.voice.isValid = true;
-          if ( remainedVoice.unlimi ) { // 잔여 음성이 무제한인 경우
+          if ( remainedVoice.unlimit ) { // 잔여 음성이 무제한인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.voice.remainedPercentage = 1;
           } else if ( remainedVoice.unlimit_default ) { // 잔여 음성이 기본제공인 경우
