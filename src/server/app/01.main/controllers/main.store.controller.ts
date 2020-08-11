@@ -26,7 +26,9 @@ class MainStore extends TwViewController {
     
     this.getRedisData(noticeCode)
       .subscribe((resp) => {
-        svcInfo.personSmsDisableTimeCheck = resp['personSmsDisableTimeCheck'];
+        if (svcInfo) {
+          svcInfo.personSmsDisableTimeCheck = resp['personSmsDisableTimeCheck'];
+        }
         res.render(`main.store.html`, { svcInfo, redisData: resp, pageInfo, formatHelper: FormatHelper, prodEventCtl: prodEventCtl });
       });
   }
