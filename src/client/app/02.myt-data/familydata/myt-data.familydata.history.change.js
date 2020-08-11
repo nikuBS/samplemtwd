@@ -60,7 +60,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
    * @desc 데이터 추가 버튼 클릭 시
    * @param {Event} click event 객체
    * @returns {void}
-  */  
+  */
   _addChangeData: function(e) {
     var value = e.currentTarget.getAttribute('data-value');
 
@@ -149,7 +149,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
    * @returns {void}
   */
   _setDisableSubmit: function(disable) {
-    disable !== !!this.$submitBtn.attr('disabled') && this.$submitBtn.attr('disabled', disable);
+    this.$submitBtn.attr('disabled', disable);
   },
 
   /**
@@ -173,7 +173,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 변경하기 확인 시
-   * @param {$object} 클릭 타겟 jquery 객체 
+   * @param {$object} 클릭 타겟 jquery 객체
    * @returns {void}
   */
   _submitChange: function($target) {
@@ -201,14 +201,15 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 변경하기 요청에 대한 응답이 서버에서 돌아온 경우
-   * @param {$object} 클릭 타겟 jquery 객체 
-   * @param {object} 서버 응답
+   * @param {$object} $target 클릭 타겟 jquery 객체
+   * @param {object} resp 서버 응답
    * @returns {void}
   */
   _handleDoneSubmit: function($target, resp) {
     var CODE = Tw.MYT_DATA_FAMILYDATA_CHANGE_DATA_CODE[resp.code];
     if (CODE) {
-      this._popupService.openAlert(Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS[CODE], null, null, $.proxy(this._setRetrieveStatus, this), undefined, $target);  // 웹접근성 포커스 처리를 위한 jquery 객체
+      this._popupService.openAlert(Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS[CODE], null, null,
+        $.proxy(this._setRetrieveStatus, this), undefined, $target);  // 웹접근성 포커스 처리를 위한 jquery 객체
     } else if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
@@ -222,7 +223,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
         $.proxy(function() {
           this._popupService.close();
           this.isSuccess = true;
-        }, this), 
+        }, this),
         0
       );
     }
@@ -268,11 +269,11 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     if (resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
       this._setRetrieveStatus();
       this._popupService.openAlert(
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, 
-        Tw.POPUP_TITLE.NOTIFY, 
-        undefined, 
-        undefined, 
-        undefined, 
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218,
+        Tw.POPUP_TITLE.NOTIFY,
+        undefined,
+        undefined,
+        undefined,
         this.$retrieveBtn // 웹접근성 포커스 처리를 위한 jquery 객체
       );
       return;
@@ -283,11 +284,11 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
       this._setRetrieveStatus();
       this._popupService.openAlert(
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, 
-        Tw.POPUP_TITLE.NOTIFY, 
-        undefined, 
-        undefined, 
-        undefined, 
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218,
+        Tw.POPUP_TITLE.NOTIFY,
+        undefined,
+        undefined,
+        undefined,
         this.$retrieveBtn // 웹접근성 포커스 처리를 위한 jquery 객체
       );
     } else {

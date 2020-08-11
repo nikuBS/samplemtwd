@@ -97,7 +97,11 @@ Tw.MyTFareBillSetChange.prototype = {
    * @param {Object} e - 이벤트
    */
   _searchZip: function (e) {
-    this.$container.find('.fe-zip').trigger('keyup'); // 2019-10-10 bug fix : AS IS 주소창 터치시 수정으로 간주하였는데. TO BE 에서 read only로 변경되어서 우편번호 검색 버튼 클릭 시 해당 이벤트 먹도록 변경함.
+    /**
+     * 2019-10-10 bug fix : AS IS 주소창 터치시 수정으로 간주하였는데.
+     * TO BE 에서 read only로 변경되어서 우편번호 검색 버튼 클릭 시 해당 이벤트 먹도록 변경함.
+    */
+    this.$container.find('.fe-zip').trigger('keyup');
     new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._callBackSearchZip, this));
   },
 

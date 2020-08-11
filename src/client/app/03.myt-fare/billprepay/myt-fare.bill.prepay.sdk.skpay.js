@@ -22,39 +22,40 @@ Tw.MyTFareBillPrepaySdkSKPay.prototype = {
     try {
       var _linChnlClCd = '';
       var _itemsName = '';
-      
-      if (this._data.title === 'small') {
+
+      if ( this._data.title === 'small' ) {
         _linChnlClCd = 'MSS'; //소액선결제
         _itemsName = '소액결제'; //소액결제
-      } else if (this._data.title === 'contents') {
+      } else if ( this._data.title === 'contents' ) {
         _linChnlClCd = 'MSC'; //컨텐츠이용료
         _itemsName = '콘텐츠이용료'; //콘텐츠이용료
       }
-
+      /* jshint ignore:start */
       this._encryptedUserAgent = SKpaySDK.generateUserAgent();
+      /* jshint ignore:end */
       var _itemsOffered = [{
-        "identifier": this._data.skpayInfo.svcMgmtNum,
-        "name": _itemsName,
-        "price": this._data.requestSum, //선결제금액,
-        "category": "선결제" //fix
+        identifier: this._data.skpayInfo.svcMgmtNum,
+        name: _itemsName,
+        price: this._data.requestSum, //선결제금액,
+        category: '선결제' //fix
       }];
       var _acceptedPaymentMethods = [];
-      _acceptedPaymentMethods.push({ category: "CreditCard"});
-      _acceptedPaymentMethods.push({ category: "DebitCard"});
-      _acceptedPaymentMethods.push({ category: "DirectDebit"});
-  
+      _acceptedPaymentMethods.push({ category: 'CreditCard' });
+      _acceptedPaymentMethods.push({ category: 'DebitCard' });
+      _acceptedPaymentMethods.push({ category: 'DirectDebit' });
+
       var dateReq = {
-        "linChnlClCd": _linChnlClCd, //진입구분
-        "totPayAmt": this._data.requestSum, //총선결제금액
-        "encryptedUserAgent": this._encryptedUserAgent, //User Agent
-        "offer": {
-          "identifier": '',
-          "name": 'SKT 요금', //fix
-          "price": this._data.requestSum, //선결제금액
-          "itemsOffered": _itemsOffered,
-          "acceptedPaymentMethods": _acceptedPaymentMethods,
-          "offeredBy": {
-            "identifier": "skt-tworld" //fix
+        linChnlClCd: _linChnlClCd, //진입구분
+        totPayAmt: this._data.requestSum, //총선결제금액
+        encryptedUserAgent: this._encryptedUserAgent, //User Agent
+        offer: {
+          identifier: '',
+          name: 'SKT 요금', //fix
+          price: this._data.requestSum, //선결제금액
+          itemsOffered: _itemsOffered,
+          acceptedPaymentMethods: _acceptedPaymentMethods,
+          offeredBy: {
+            identifier: 'skt-tworld' //fix
           }
         }
       };
@@ -62,28 +63,29 @@ Tw.MyTFareBillPrepaySdkSKPay.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_07_0099, dateReq)
         .done($.proxy(this._onSuccessSkpayAuth, this))
         .fail($.proxy(this._onFailSkpayAuth, this));
-    } catch (e) {
-      if (e instanceof ReferenceError) {
+    } catch ( e ) {
+      if ( e instanceof ReferenceError ) {
         Tw.Error(Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CODE, Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CONTENTS).pop();
       }
     }
   },
-    /**
+  /**
    * @function
    * @desc SK pay 납부 API 성공 시 SK Pay 페이지 호출
    * @param resp
    */
   _onSuccessSkpayAuth: function (resp) {
     Tw.CommonHelper.endLoading('.popup-page');
-    if (resp.code === Tw.API_CODE.CODE_00) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      /* jshint ignore:start */
       SKpaySDK.performPaymentWithUI({
         authorizationGrant: resp.result.authorizationGrant,
         offerToken: resp.result.offerToken,
         orderNumber: resp.result.orderNumber,
-        redirectUri: this._data.skpayInfo.redirectUri + '?dataKey=' + resp.result.orderNumber + "&source=" + this._data.title
+        redirectUri: this._data.skpayInfo.redirectUri + '?dataKey=' + resp.result.orderNumber + '&source=' + this._data.title
       });
-    }
-    else {
+      /* jshint ignore:end */
+    } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },

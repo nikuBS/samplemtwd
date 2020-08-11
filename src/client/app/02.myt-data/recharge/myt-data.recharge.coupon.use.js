@@ -53,14 +53,14 @@ Tw.MyTDataRechargeCouponUse.prototype = {
    * @desc myt-data submain에서 진입 후 뒤로가기 시 submain으로 이동시키기 위한 처리
    */
   _init: function () {
-    if (!Tw.BrowserHelper.isApp()) {
+    if ( !Tw.BrowserHelper.isApp() ) {
       this.$container.find('.fe-cancel-btn-box').addClass('none');
     }
 
     this._hashService.initHashNav($.proxy(this._onTabChanged, this));
     this._currentTab =
       this.$container.find('#tab1').attr('aria-selected') === 'true' ? 'refill' : 'gift';
-    if (!Tw.BrowserHelper.isApp()) {
+    if ( !Tw.BrowserHelper.isApp() ) {
       this.$container.find('#fe-btn-contacts').hide();
     }
   },
@@ -71,12 +71,12 @@ Tw.MyTDataRechargeCouponUse.prototype = {
    * @param  {String} hash - 현재 선택된 tab의 hash 값
    */
   _onTabChanged: function (hash) {
-    if (hash.raw === 'refill') {
+    if ( hash.raw === 'refill' ) {
       this._onOptionSelected();
       this.$tipGift.hide();
       this.$tipRefill.show();
       this._currentTab = 'refill';
-    } else if (hash.raw === 'gift') {
+    } else if ( hash.raw === 'gift' ) {
       this._onNumberChanged();
       this.$tipRefill.hide();
       this.$tipGift.show();
@@ -94,7 +94,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
    */
   _onOptionSelected: function () {
     var checked = this.$container.find('input[type=radio]:checked');
-    if (checked.length === 0) {
+    if ( checked.length === 0 ) {
       this.$btnUse.attr('disabled', true);
     } else {
       this.$btnUse.attr('disabled', false);
@@ -130,7 +130,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
 
     // this.$errorSpan.addClass('none');
 
-    if (pureNumber.length === 0) {
+    if ( pureNumber.length === 0 ) {
       this.$btnUse.attr('disabled', true);
     } else {
       this.$btnUse.attr('disabled', false);
@@ -152,7 +152,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
    */
   _onClickContacts: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(function (res) {
-      if (res.resultCode === Tw.NTV_CODE.CODE_00) {
+      if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
         var number = res.params.phoneNumber.replace(/[^0-9]/gi, '').trim();
         number = Tw.FormatHelper.getDashedCellPhoneNumber(number);
         this.$numberInput.val(number);
@@ -169,7 +169,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
    */
   _onSubmitClicked: function () {
     var confirmed = false;
-    switch (this._currentTab) {
+    switch ( this._currentTab ) {
       case 'refill':
         this._popupService.openModalTypeA(
           Tw.REFILL_COUPON_CONFIRM.TITLE_REFILL,
@@ -181,7 +181,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
             this._popupService.close();
           }, this),
           $.proxy(function () {
-            if (confirmed) {
+            if ( confirmed ) {
               this._refill();
             }
           }, this)
@@ -198,7 +198,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
             this._popupService.close();
           }, this),
           $.proxy(function () {
-            if (confirmed) {
+            if ( confirmed ) {
               this._gift();
             }
           }, this)
@@ -253,9 +253,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
    * @param  {Object} res - BFF로 부터 받은 response json 객체
    */
   _success: function (type, res) {
-    if (res.code !== Tw.API_CODE.CODE_00) {
-      if (type === 'gift') {
-        if (res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004') {
+    if ( res.code !== Tw.API_CODE.CODE_00 ) {
+      if ( type === 'gift' ) {
+        if ( res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004' ) {
           this._popupService.open({
             title: Tw.POPUP_TITLE.NOT_FAMILY,
             title_type: 'sub',
@@ -273,17 +273,17 @@ Tw.MyTDataRechargeCouponUse.prototype = {
           return;
         }
 
-        if (res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005') {
+        if ( res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005' ) {
           this._showAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
           return;
         }
 
-        if (res.code === 'RCG3003') {
+        if ( res.code === 'RCG3003' ) {
           this._showAlert(Tw.REFILL_COUPON_ALERT.A211);
           return;
         }
 
-        if (res.code === 'RCG3006') {
+        if ( res.code === 'RCG3006' ) {
           this._showAlert(Tw.REFILL_COUPON_ALERT.A212);
           return;
         }
@@ -299,8 +299,8 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     // submain에서 진입한 경우 뒤로가기 동작에서 submain으로 보내주기 위함
     Tw.CommonHelper.setLocalStorage('recharge', 'done');
     // [OP002-2795] 잔여량 세션 데이터 업데이트 필요
-    this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, { apiId : Tw.SESSION_CMD.BFF_05_0001 });
-    switch (type) {
+    this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, { apiId: Tw.SESSION_CMD.BFF_05_0001 });
+    switch ( type ) {
       case 'data':
         this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=data');
         break;
@@ -324,7 +324,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this._popupService.openAlert(content, null, null, $.proxy(function () {
       setTimeout($.proxy(function () {
         this.$numberInput.focus();
-      }, this), 300)
+      }, this), 300);
     }, this));
   }
   /* 취소팝업 삭제
