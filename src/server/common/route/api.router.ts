@@ -15,7 +15,7 @@ import dateHelper from '../../utils/date.helper';
 import DateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
-import { NODE_API_ERROR, UNLIMIT_NAME } from '../../types/string.type';
+import { NODE_API_ERROR, TIME_UNIT, UNLIMIT_NAME } from '../../types/string.type';
 import { TPLAN_SHARE_LIST, UNIT, UNIT_E, WIDGET_ERROR } from '../../types/bff.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
@@ -1666,6 +1666,7 @@ class ApiRouter {
             skipId: voiceCodes.join(', '), // 조회한 음성 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '-', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           },
           sms: {
@@ -1692,6 +1693,7 @@ class ApiRouter {
             skipId: voiceCode, // 조회한 음성 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '미설정', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           };
         }
@@ -1739,17 +1741,22 @@ class ApiRouter {
           responseRemains.voice.isValid = true;
           if ( remainedVoice.unlimit ) { // 잔여 음성이 무제한인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
+            responseRemains.voice.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.voice.remainedPercentage = 1;
           } else if ( remainedVoice.unlimit_default ) { // 잔여 음성이 기본제공인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
+            responseRemains.voice.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.voice.remainedPercentage = 1;
           } else { // 잔여 음성이 무제한이 아닌 경우
             if ( remainedVoice.unit === UNIT_E.VOICE ) { // 잔여 음성의 단위가 '초'인 경우
               responseRemains.voice.remainedValue =
-                FormatHelper.convVoiceMinFormatWithUnit(Math.floor(remainedVoice.remained / 60)); // 시간 단위 변경 및 단위 텍스트 추가
+                FormatHelper.convVoiceMinFormatWithUnit(Math.floor(remainedVoice.remained / 60), true); // 시간 단위 변경 및 단위 텍스트 추가
+              // 음성 시간 정보가 있는 경우에만 해당 정보 전달 - native 쪽과 협의
+              responseRemains.voice.remainedValueSmall = Math.floor(remainedVoice.remained / 60) + TIME_UNIT.MINUTE;
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
             } else if ( remainedVoice.unit === UNIT_E.FEE ) { // 잔여 음성의 단위가 '원'인 경우
-              responseRemains.voice.remainedValue = FormatHelper.getFeeContents(remainedVoice.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.voice.remainedValue = responseRemains.voice.remainedValueSmall
+                = FormatHelper.getFeeContents(remainedVoice.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
             } else { // 잔여 음성의 단위가 '초' 또는 '원'이 아닌 경우
               responseRemains.voice.isValid = false;
