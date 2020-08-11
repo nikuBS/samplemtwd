@@ -88,7 +88,7 @@ Tw.PRODUDT.PROMOTIONS = {
         var promotion = Tw.PRODUDT.PROMOTIONS.POOQ;
         var prodIds = Tw.PRODUDT.PROMOTIONS.POOQ.FLO.concat([data.prodId], promotion.PRODS[data.prodId].SUB_PROD);
 
-        Tw.Api.request(Tw.API_CMD.BFF_10_0191, {}, {}, [prodIds[0]] )
+        Tw.Api.request(Tw.API_CMD.BFF_10_0191, {}, {}, [prodIds[6]] )
         .done(function(resp){
 
           if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -380,7 +380,7 @@ Tw.PRODUDT.PROMOTIONS = {
         var promotion = Tw.PRODUDT.PROMOTIONS.FLO;
         var prodIds = Tw.PRODUDT.PROMOTIONS.FLO.POOQ.concat([data.prodId], promotion.PRODS[data.prodId].SUB_PROD);
 
-        Tw.Api.request(Tw.API_CMD.BFF_10_0191, {}, {}, [prodIds[0]] )
+        Tw.Api.request(Tw.API_CMD.BFF_10_0191, {}, {}, [prodIds[5]] )
         .done(function(resp){
 
           if ( resp.code === Tw.API_CODE.CODE_00 ) {
