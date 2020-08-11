@@ -1,0 +1,15 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<div id="productRoaming">
+    <h1>-</h1>
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
+  });
+</script>
+<% include ../../components/end.component.html %>
+

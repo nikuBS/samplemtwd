@@ -111,6 +111,8 @@ import ProductRoamingFeeInfo from './controllers/roaming/product.roaming.fee-inf
 import ProductRoamingEventRightRoam from './controllers/roaming/product.roaming.event.right-roam.controller';
 import ProductRoamingWithBaro from './controllers/roaming/product.roaming.with-baro.controller';
 
+import RoamingMainController from './controllers/roaming-next/roaming.main';
+
 class ProductRouter extends TwRouter {
   constructor() {
     super();
@@ -185,6 +187,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
 
+    this.controllers.push({ url: '/OO/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
     this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult });
     this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
@@ -213,12 +216,13 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/setting/roaming-auto', controller: ProductRoamingSettingRoamingAuto });
     this.controllers.push({ url: '/roaming/setting/roaming-alarm', controller: ProductRoamingSettingRoamingAlarm });
     this.controllers.push({ url: '/roaming/setting/roaming-combine', controller: ProductRoamingSettingRoamingCombine });
-    this.controllers.push({ url: '/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
     this.controllers.push({ url: '/roaming/lookup', controller: ProductRoamingLookup });
     this.controllers.push({ url: '/roaming/fee-info', controller: ProductRoamingFeeInfo });
     this.controllers.push({ url: '/roaming/event/right-roam', controller: ProductRoamingEventRightRoam });
     this.controllers.push({ url: '/roaming/with-baro', controller: ProductRoamingWithBaro });
+
+    this.controllers.push({ url: '/roaming', controller: RoamingMainController });
 
     this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplanBackup });
