@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 var skt_landing = {},
   frontend_fn = {
   },
@@ -8,3 +9,4 @@ var skt_landing = {},
   wheel_fn = [] //wheel시 사용
 $(document).on('ready', function () {
 });
+/* jshint ignore:end */

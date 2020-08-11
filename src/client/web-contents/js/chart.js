@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 $.fn.chart2 = function(o){
   /*
     target : 대상
@@ -1093,3 +1094,4 @@ $.fn.chart = function(option){
     return num.toString().replace(regexp, ',');
   }
 }
+/* jshint ignore:end */

@@ -2,6 +2,7 @@
  * @summary 바닥 스크롤의 위치값
  * @global
  */
+/* jshint ignore:start */
 var current_scrollTop="";
 var fixScroll_onoff="";
 $(document).on('ready', function () {
@@ -1926,3 +1927,4 @@ skt_landing.dev = {
     }
 })(jQuery, window, document);
 // 190910 [OP002-3626][myT] [UX/PUB] (W-1908-138-02) 5G YT 상품 페이지 생성 END
+/* jshint ignore:end */

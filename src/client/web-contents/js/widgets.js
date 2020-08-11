@@ -1,4 +1,5 @@
-﻿$(document).on('ready', function () {
+﻿/* jshint ignore:start */
+$(document).on('ready', function () {
   skt_landing.widgets.widget_init();
 });
 /**
@@ -1554,4 +1555,4 @@ skt_landing.widgets = {
     });
   }
 }
-
+/* jshint ignore:end */
