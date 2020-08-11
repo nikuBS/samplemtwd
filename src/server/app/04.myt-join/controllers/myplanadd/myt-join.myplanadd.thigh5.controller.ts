@@ -9,7 +9,6 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_JOIN_THIGH5_PREFERENTIAL } from '../../../../types/string.type';
-import { Observable } from 'rxjs/Observable';
 
 const DGRADE_PROD_ID: any = [
   '02',   // 12개월 고금리
@@ -39,9 +38,7 @@ class MyTJoinMyPlanAddTHigh5 extends TwViewController {
       if (dGradeDayPercent > 100) {
         dGradeDayPercent = 100;
       }
-
-      console.log("result : " + JSON.stringify(result));
-
+      // console.log('result : ' + JSON.stringify(result));
       res.render('myplanadd/myt-join.myplanadd.thigh5.html', {
         scrbDt: DateHelper.getShortDate(result.scrbDt),
         joinTermCd: result.joinTermCd === '01' ? 12 : 24,
@@ -70,14 +67,14 @@ class MyTJoinMyPlanAddTHigh5 extends TwViewController {
     //     const resp = {
     //       "code": "00",
     //       "msg": "success",
-    //       "result": {        
-    //         "thigh5Yn": "Y",          
-    //         "scrbDt": "20190321",          
-    //         "heroProdYn": "N",          
-    //         "joinTermCd": "01",          
-    //         "thigh5ProdId": "01",          
-    //         "thigh5HeroYn": "N",          
-    //         "dGradeYn": "N",          
+    //       "result": {
+    //         "thigh5Yn": "Y",
+    //         "scrbDt": "20190321",
+    //         "heroProdYn": "N",
+    //         "joinTermCd": "01",
+    //         "thigh5ProdId": "01",
+    //         "thigh5HeroYn": "N",
+    //         "dGradeYn": "N",
     //         "dGradeDay": "0000"
     //       }
     //     };

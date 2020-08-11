@@ -5,12 +5,12 @@
  * @desc SK pay 요금납부 페이지
  */
 
-import {NextFunction, Request, Response} from 'express';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {Observable} from 'rxjs/Observable';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
+import { NextFunction, Request, Response } from 'express';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
+import { MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
-import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
+import { MYT_FARE_PAYMENT_NAME } from '../../../../types/string.type';
 import BrowserHelper from '../../../../utils/browser.helper';
 import MyTFareBillPaymentCommon from './myt-fare.bill.payment.common.controller';
 
@@ -32,15 +32,12 @@ class MyTFareBillSkpay extends MyTFareBillPaymentCommon {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    var https = 'https';
-    if(req.headers.host === 'localhost:3000'){
-      https = 'http';
-    }
+    const https = req.headers.host === 'localhost:3000' ? 'http' : 'https';
     const data = {
       title: MYT_FARE_PAYMENT_TITLE.SKPAY,
       svcInfo: svcInfo, // 회선정보 (필수 데이터)
       pageInfo: pageInfo, // 페이지정보 (필수 데이터)
-      redirectUri : https + '://' + req.headers.host + '/myt-fare/bill/skpay/result'
+      redirectUri: https + '://' + req.headers.host + '/myt-fare/bill/skpay/result'
     };
 
     if (BrowserHelper.isApp(req)) { // 앱 환경 여부 체크

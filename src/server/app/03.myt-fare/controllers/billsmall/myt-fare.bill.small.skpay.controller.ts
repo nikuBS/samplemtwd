@@ -29,18 +29,15 @@ class MyTFareBillSmallSKpay extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    var https = 'https';
-    if(req.headers.host === 'localhost:3000'){
-      https = 'http';
-    }
-    var _skpayInfo = {
-      redirectUri : https + '://' + req.headers.host + '/myt-fare/bill/skpay/result/prepay',
-      svcMgmtNum : svcInfo.svcMgmtNum
-    }
+    const https = req.headers.host === 'localhost:3000' ? 'http' : 'https';
+    const skpayInfo = {
+      redirectUri: https + '://' + req.headers.host + '/myt-fare/bill/skpay/result/prepay',
+      svcMgmtNum: svcInfo.svcMgmtNum
+    };
     res.render('billsmall/myt-fare.bill.small.skpay.html', {
       pageInfo,
       svcInfo,
-      skpayInfo : _skpayInfo
+      skpayInfo
     });
   }
 }

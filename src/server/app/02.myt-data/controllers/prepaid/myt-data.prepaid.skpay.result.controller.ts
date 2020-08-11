@@ -5,7 +5,7 @@
  * @since 2019.08.20
  */
 
-import { Request, Response, NextFunction } from 'express-serve-static-core';
+import { NextFunction, Request, Response } from 'express-serve-static-core';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { MYT_FARE_ERROR_MSG } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
@@ -26,10 +26,12 @@ interface ResultJsonError {
   code: string;
   message: string;
 }
+
 interface ResultJson {
   paymentTokenIdentifier: string;
   paymentToken: string;
 }
+
 class MyTDataPrepaidSKpayResult extends TwViewController {
   constructor() {
     super();
@@ -58,24 +60,25 @@ class MyTDataPrepaidSKpayResult extends TwViewController {
       amtCd: req.query.amtCd,
       mb: req.query.mb
     };
-    var status = req.body.status;
-    var result = req.body.result;
-    var paymentToken = '';
-    var resultUtf = '';
-    var codeError = '';
-    var renderUrl = 'prepaid/myt-data.prepaid.skpay.result.html';
+    const status = req.body.status;
+    const result = req.body.result;
+    let paymentToken = '';
+    let resultUtf = '';
+    let codeError = '';
+    const renderUrl = 'prepaid/myt-data.prepaid.skpay.result.html';
     const urlVoice = 'voice';
     const urlData = 'data';
 
     resultUtf = this.getResultUtf(result, resultUtf);
 
-    if (status == 200) {
+    if (status === 200) {
       paymentToken = this.getPaymentToken(resultUtf, paymentToken);
-      let data = this.getDataApi(query, paymentToken, urlData);
+      const data = this.getDataApi(query, paymentToken, urlData);
       if (query.source && query.source === urlVoice) {
         this.apiService.request(API_CMD.BFF_06_0086, data).subscribe((createInfo) => {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
-            return res.redirect('/myt-data/recharge/prepaid/voice-complete?type=voice&previousAmount=' + query.previousAmount + '&afterAmount=' + query.afterAmount + '&rechargeAmount='+ query.rechargeAmount);
+            return res.redirect('/myt-data/recharge/prepaid/voice-complete?type=voice&previousAmount=' +
+              query.previousAmount + '&afterAmount=' + query.afterAmount + '&rechargeAmount=' + query.rechargeAmount);
           } else {
             return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, createInfo.msg), { pageInfo }));
           }
@@ -83,25 +86,31 @@ class MyTDataPrepaidSKpayResult extends TwViewController {
       } else if (query.source && query.source === urlData) {
         this.apiService.request(API_CMD.BFF_06_0087, data).subscribe((createInfo) => {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
-              return res.redirect('/myt-data/recharge/prepaid/data-complete?data=' + query.mb);
+            return res.redirect('/myt-data/recharge/prepaid/data-complete?data=' + query.mb);
           } else {
-            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, createInfo.msg), { pageInfo }));
+            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, createInfo.msg), { pageInfo }));
           }
         });
       }
     } else {
       if (resultUtf) {
-        let resultJsonError: ResultJsonError = JSON.parse(resultUtf);
+        const resultJsonError: ResultJsonError = JSON.parse(resultUtf);
         codeError = resultJsonError.code;
       }
-      if (codeError === 'USER_EXIT') { //USER_EXIT 사용자 취소
+      if (codeError === 'USER_EXIT') { // USER_EXIT 사용자 취소
         return res.redirect('/myt-data/submain');
-      } else if (codeError === 'BAD_REQUEST') { //BAD_REQUEST 잘못된 요청
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo }));
-      } else if (codeError === 'EXCEPTION') { //EXCEPTION 11 Pay 내부 오류
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo }));
-      } else { //정의되지 않은 오류
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo }));
+      } else if (codeError === 'BAD_REQUEST') { // BAD_REQUEST 잘못된 요청
+        return res.render(renderUrl, Object.assign(
+          this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo })
+        );
+      } else if (codeError === 'EXCEPTION') { // EXCEPTION 11 Pay 내부 오류
+        return res.render(renderUrl, Object.assign(
+          this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo })
+        );
+      } else { // 정의되지 않은 오류
+        return res.render(renderUrl, Object.assign(
+          this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo })
+        );
       }
     }
   }
@@ -134,31 +143,32 @@ class MyTDataPrepaidSKpayResult extends TwViewController {
 
   private getPaymentToken(resultUtf: string, paymentToken: string) {
     if (resultUtf) {
-      var resultText2 = JSON.parse(resultUtf);
+      const resultText2 = JSON.parse(resultUtf);
       if (resultText2) {
-        let resultJson: ResultJson = JSON.parse(resultText2);
+        const resultJson: ResultJson = JSON.parse(resultText2);
         paymentToken = resultJson.paymentToken;
       }
     }
     return paymentToken;
   }
+
   /**
    * @function
    * @desc get data
-   * @param queryObject
+   * @param mainTitle
+   * @param errorCode
+   * @param errorMsg
    * @returns {any}
    * @private
    */
   private _getDataError(mainTitle: any, errorCode: any, errorMsg: any): any {
-    var _error = '[' + MYT_FARE_ERROR_MSG.MSG_CODE + " : " + errorCode + ']';
-    let data = {
+    return {
       mainTitle: mainTitle,
       subTitle: errorMsg,
-      description: _error,
+      description: '[' + MYT_FARE_ERROR_MSG.MSG_CODE + ' : ' + errorCode + ']',
       centerName: '',
       centerUrl: ''
     };
-    return data;
   }
 }
 

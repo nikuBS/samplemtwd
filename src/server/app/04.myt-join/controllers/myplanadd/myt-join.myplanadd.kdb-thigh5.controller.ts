@@ -9,7 +9,6 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_JOIN_THIGH5_PREFERENTIAL } from '../../../../types/string.type';
-import { Observable } from 'rxjs/Observable';
 
 const DGRADE_PROD_ID: any = [
   '02',   // 12개월 고금리
@@ -44,19 +43,17 @@ class MyTJoinMyPlanAddKdbTHigh5 extends TwViewController {
 
       let autoPayDrwCntPercent = 0;
       if (result.joinTermCd === '01') {
-      autoPayDrwCntPercent = parseInt(result.autoPayDrwCnt, 10) / AUTOPAY_12MONTH_MAX * 100;
+        autoPayDrwCntPercent = parseInt(result.autoPayDrwCnt, 10) / AUTOPAY_12MONTH_MAX * 100;
       } else {
-      autoPayDrwCntPercent = parseInt(result.autoPayDrwCnt, 10) / AUTOPAY_24MONTH_MAX * 100;
+        autoPayDrwCntPercent = parseInt(result.autoPayDrwCnt, 10) / AUTOPAY_24MONTH_MAX * 100;
       }
 
       const data: any = { autoPayBillAdd: false };
-      if (result.autoPayBill === 'Y' && 
-      ((result.joinTermCd === '01' && result.autoPayDrwCnt >= 10) || (result.joinTermCd === '02' && result.autoPayDrwCnt >= 20))) {
-      data.autoPayBillAdd = true;
+      if (result.autoPayBill === 'Y' &&
+        ((result.joinTermCd === '01' && result.autoPayDrwCnt >= 10) || (result.joinTermCd === '02' && result.autoPayDrwCnt >= 20))) {
+        data.autoPayBillAdd = true;
       }
-
-      console.log("result : " + JSON.stringify(result));
-
+      // console.log('result : ' + JSON.stringify(result));
       res.render('myplanadd/myt-join.myplanadd.kdb-thigh5.html', {
         scrbDt: DateHelper.getShortDate(result.scrbDt),
         joinTermCd: result.joinTermCd === '01' ? 12 : 24,
@@ -89,14 +86,14 @@ class MyTJoinMyPlanAddKdbTHigh5 extends TwViewController {
     //     const resp = {
     //       "code": "00",
     //       "msg": "success",
-    //       "result": {        
-    //         "thigh5Yn": "Y",          
-    //         "scrbDt": "20190321",          
-    //         "heroProdYn": "N",          
-    //         "joinTermCd": "01",          
-    //         "thigh5ProdId": "01",          
-    //         "thigh5HeroYn": "N",          
-    //         "dGradeYn": "N",          
+    //       "result": {
+    //         "thigh5Yn": "Y",
+    //         "scrbDt": "20190321",
+    //         "heroProdYn": "N",
+    //         "joinTermCd": "01",
+    //         "thigh5ProdId": "01",
+    //         "thigh5HeroYn": "N",
+    //         "dGradeYn": "N",
     //         "dGradeDay": "0000"
     //       }
     //     };

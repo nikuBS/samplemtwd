@@ -29,18 +29,15 @@ export default class MyTFareBillContentsSKpay extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    var https = 'https';
-    if(req.headers.host === 'localhost:3000'){
-      https = 'http';
-    }
-    var _skpayInfo = {
+    const https = req.headers.host === 'localhost:3000' ? 'http' : 'https';
+    const skpayInfo = {
       redirectUri : https + '://' + req.headers.host + '/myt-fare/bill/skpay/result/prepay',
       svcMgmtNum : svcInfo.svcMgmtNum
-    }
+    };
     res.render('billcontents/myt-fare.bill.contents.skpay.html', {
-      svcInfo: svcInfo, // 회선 정보 (필수)
-      pageInfo: pageInfo, // 페이지 정보 (필수)
-      skpayInfo : _skpayInfo
+      svcInfo, // 회선 정보 (필수)
+      pageInfo, // 페이지 정보 (필수)
+      skpayInfo
     });
   }
 }

@@ -5,23 +5,25 @@
  * @since 2019.06.25
  */
 
-import { Request, Response, NextFunction } from 'express-serve-static-core';
+import { NextFunction, Request, Response } from 'express-serve-static-core';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { MYT_FARE_ERROR_MSG } from '../../../../types/string.type';
+import { MYT_FARE_COMPLETE_MSG, MYT_FARE_ERROR_MSG } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { MYT_FARE_COMPLETE_MSG } from '../../../../types/string.type';
 
 interface Query {
   orderNumber: string;
 }
+
 interface ResultJsonError {
   code: string;
   message: string;
 }
+
 interface ResultJson {
   paymentTokenIdentifier: string;
   paymentToken: string;
 }
+
 class MyTFareBillSkpayResult extends TwViewController {
   constructor() {
     super();
@@ -42,41 +44,51 @@ class MyTFareBillSkpayResult extends TwViewController {
     const query: Query = {
       orderNumber: req.query.dataKey
     };
-    var status = req.body.status;
-    var result = req.body.result;
-    var paymentToken = '';
-    var resultUtf = '';
-    var codeError = '';
-    var msgError = '';
-    var historyDepth = -3;
-    var renderUrl = 'bill/myt-fare.bill.skpay.result.html';
+    const status = req.body.status;
+    const result = req.body.result;
+    let paymentToken = '';
+    let resultUtf = '';
+    let codeError = '';
+    const historyDepth = -3;
+    const renderUrl = 'bill/myt-fare.bill.skpay.result.html';
 
     resultUtf = this.getResultUtf(result, resultUtf);
-    
-    if (status == 200) {
+
+    if (status === 200) {
       paymentToken = this.getPaymentToken(resultUtf, paymentToken);
-      let data = this.getDataApi(query, paymentToken);
+      const data = this.getDataApi(query, paymentToken);
       this.apiService.request(API_CMD.BFF_07_0097, data).subscribe((createInfo) => {
         if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
           return res.redirect('/myt-fare/bill/pay-complete');
         } else {
-          return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, createInfo.msg), { pageInfo, historyDepth }));
+          return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, createInfo.msg), {
+            pageInfo,
+            historyDepth
+          }));
         }
       });
     } else {
       if (resultUtf) {
-        let resultJsonError: ResultJsonError = JSON.parse(resultUtf);
+        const resultJsonError: ResultJsonError = JSON.parse(resultUtf);
         codeError = resultJsonError.code;
-        // msgError = resultJsonError.message;
       }
-      if (codeError === 'USER_EXIT') { //USER_EXIT 사용자 취소
+      if (codeError === 'USER_EXIT') { // USER_EXIT 사용자 취소
         return res.redirect('/myt-fare/submain');
-      } else if (codeError === 'BAD_REQUEST') { //BAD_REQUEST 잘못된 요청
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo, historyDepth }));
-      } else if (codeError === 'EXCEPTION') { //EXCEPTION 11 Pay 내부 오류
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo, historyDepth }));
-      } else { //정의되지 않은 오류
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo, historyDepth }));
+      } else if (codeError === 'BAD_REQUEST') { // BAD_REQUEST 잘못된 요청
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), {
+          pageInfo,
+          historyDepth
+        }));
+      } else if (codeError === 'EXCEPTION') { // EXCEPTION 11 Pay 내부 오류
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), {
+          pageInfo,
+          historyDepth
+        }));
+      } else { // 정의되지 않은 오류
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), {
+          pageInfo,
+          historyDepth
+        }));
       }
     }
   }
@@ -97,63 +109,30 @@ class MyTFareBillSkpayResult extends TwViewController {
 
   private getPaymentToken(resultUtf: string, paymentToken: string) {
     if (resultUtf) {
-      var resultText2 = JSON.parse(resultUtf);
+      const resultText2 = JSON.parse(resultUtf);
       if (resultText2) {
-        let resultJson: ResultJson = JSON.parse(resultText2);
+        const resultJson: ResultJson = JSON.parse(resultText2);
         paymentToken = resultJson.paymentToken;
       }
     }
     return paymentToken;
   }
-    /**
-   * @function
-   * @desc get data
-   * @param queryObject
-   * @returns {any}
-   * @private
-   */
-  private _getDataComplete(): any {
-    var _mainTitle = MYT_FARE_COMPLETE_MSG.PAYMENT
-    var  _centerName = MYT_FARE_COMPLETE_MSG.HISTORY; // 중간 링크 버튼이 있을 경우 버튼명
-    var _centerUrl = '/myt-fare/info/history'; // 중간 링크 클릭 시 이동할 대상
-
-    let data = {
-      mainTitle: _mainTitle, // 메인 타이틀
-      subTitle: '',
-      description: '',
-      centerName: _centerName,
-      centerUrl: _centerUrl
-    };
-    return data;
-  }
   /**
    * @function
    * @desc get data
-   * @param queryObject
-   * @returns {any}
+   * @param mainTitle
+   * @param errorCode
+   * @param errorMsg
    * @private
    */
   private _getDataError(mainTitle: any, errorCode: any, errorMsg: any): any {
-    var _error = '[' + MYT_FARE_ERROR_MSG.MSG_CODE + " : " + errorCode + ']';
-    let data = {
+    return {
       mainTitle: mainTitle,
       subTitle: errorMsg,
-      description: _error,
+      description: '[' + MYT_FARE_ERROR_MSG.MSG_CODE + ' : ' + errorCode + ']',
       centerName: '',
       centerUrl: ''
     };
-    return data;
-  }
-  private _getDataDebug(mainTitle: any, errorCode: any, errorMsg: any): any {
-    var _error = errorCode;
-    let data = {
-      mainTitle: mainTitle,
-      subTitle: errorMsg,
-      description: _error,
-      centerName: '',
-      centerUrl: ''
-    };
-    return data;
   }
 }
 
