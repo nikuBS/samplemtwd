@@ -1751,7 +1751,6 @@ class ApiRouter {
             if ( remainedVoice.unit === UNIT_E.VOICE ) { // 잔여 음성의 단위가 '초'인 경우
               responseRemains.voice.remainedValue =
                 FormatHelper.convVoiceMinFormatWithUnit(Math.floor(remainedVoice.remained / 60), true); // 시간 단위 변경 및 단위 텍스트 추가
-              // 음성 시간 정보가 있는 경우에만 해당 정보 전달 - native 쪽과 협의
               responseRemains.voice.remainedValueSmall = Math.floor(remainedVoice.remained / 60) + TIME_UNIT.MINUTE;
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
             } else if ( remainedVoice.unit === UNIT_E.FEE ) { // 잔여 음성의 단위가 '원'인 경우
