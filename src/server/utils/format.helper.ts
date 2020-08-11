@@ -225,7 +225,7 @@ class FormatHelper {
    * @param data
    * @param notIncludingMin
    */
-  static convVoiceMinFormatWithUnit(data: any, notIncludingMin: boolean | false): any {
+  static convVoiceMinFormatWithUnit(data: any, notIncludingMin: boolean = false): any {
     const hours = Math.floor(data / 60);
     const min = data - (hours * 60);
     // '분'이 0 인 경우에 옵션에 따라 노출 여부 결정
