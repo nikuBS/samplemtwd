@@ -4,7 +4,7 @@
  * @since 2018.11.01
  */
 
-Tw.MyTJoinCombinationsTBFree = function(rootEl, svcInfo) {
+Tw.MyTJoinCombinationsTBFree = function (rootEl, svcInfo) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._member = svcInfo;
@@ -18,7 +18,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @desc 이벤트 바인딩
    * @private
    */
-  _bindEvent: function() {
+  _bindEvent: function () {
     this.$container.on('click', '.fe-benefit', $.proxy(this._openChangeBenefitPopup, this));
   },
 
@@ -27,9 +27,9 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {Event} e 클릭 이벤트
    * @private
    */
-  _openChangeBenefitPopup: function(e) {  
+  _openChangeBenefitPopup: function (e) {
     this.$changeBtn = $(e.target);
-    this._bIdx = e.target.getAttribute('data-index'); // 혜택 1 변경인 지 혜택 2 변경인 지 
+    this._bIdx = e.target.getAttribute('data-index'); // 혜택 1 변경인 지 혜택 2 변경인 지
     this._benefit = e.target.getAttribute('data-benefit');  // 현재 설정된 혜택 값
 
     this._popupService.open(  // 혜택 변경하기 팝업 오픈
@@ -51,10 +51,10 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {$object} $layer 팝업 jquery object
    * @private
    */
-  _handleOpenChangeBenefitPopup: function($layer) { 
+  _handleOpenChangeBenefitPopup: function ($layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._submitChangeBenefit, this, $layer));
 
-    if (this._bIdx === '2') {
+    if ( this._bIdx === '2' ) {
       var $input = $layer.find('input');
       var $error = $layer.find('.val-txt');
       var $submitBtn = $layer.find('.bt-red1 button');
@@ -69,15 +69,15 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {$object} $layer 팝업 레이어 jquery object
    * @private
    */
-  _submitChangeBenefit: function($layer) {
+  _submitChangeBenefit: function ($layer) {
     var value = '',
-      code = 0;
+        code  = 0;
 
-    if (this._bIdx === '1') { // 혜택 1 변경 시
+    if ( this._bIdx === '1' ) { // 혜택 1 변경 시
       code = 6;
       value = $layer.find('li[aria-checked="true"]').data('code');
 
-      if (this._benefit === value) {  // 기존 혜택과 동일할 때
+      if ( this._benefit === value ) {  // 기존 혜택과 동일할 때
         var ALERT = Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A11;
         return this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
       }
@@ -88,7 +88,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
         .val()
         .replace(/-/g, '');
 
-      if (this._benefit === value) {  // 기존 혜택과 동일할 때
+      if ( this._benefit === value ) {  // 기존 혜택과 동일할 때
         return this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A13.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A13.TITLE);
       }
     }
@@ -108,26 +108,26 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {object} resp BFF 응답
    * @private
    */
-  _successChangeBenefit: function(resp) { 
-    if (resp.code === Tw.API_CODE.CODE_00) {
+  _successChangeBenefit: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var ALERT = Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A12;
       var parent = this.$changeBtn
         .parent()
         .contents()
-        .filter(function() {
+        .filter(function () {
           return this.nodeType === 3;
         })[0];  // 바닥 페이지 혜택 관련 정보 변경을 위해서 기존 혜택이 설정되어 있는 element 찾음
 
       this.$changeBtn.attr('data-benefit', this._benefit);
-      // 바닥페이지에 입력된 혜택 값 변경 
-      if (this._bIdx === '1') {
+      // 바닥페이지에 입력된 혜택 값 변경
+      if ( this._bIdx === '1' ) {
         parent.textContent = parent.textContent.replace(/.+\s/, Tw.MYT_JOIN_TB_FREE_BENEFIT[this._benefit] + ' ');
       } else {
-        parent.textContent = parent.textContent.replace(/[0-9\-\*]+/, FormatHelper.getDashedCellPhoneNumber(this._benefit));
+        parent.textContent = parent.textContent.replace(/[0-9\-\*]+/, Tw.FormatHelper.getDashedCellPhoneNumber(this._benefit));
       }
 
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._closePopup, this));
-    } else if (resp.code === 'PRD0024') { // 혜택 2에 등록한 번호가 가족 번호일 때
+    } else if ( resp.code === 'PRD0024' ) { // 혜택 2에 등록한 번호가 가족 번호일 때
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A14.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A14.TITLE);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -138,7 +138,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @desc 혜택 변경 팝업 닫기
    * @private
    */
-  _closePopup: function() {
+  _closePopup: function () {
     this._popupService.close();
   },
 
@@ -148,24 +148,24 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {$object} $error 에러 표시 jquery 객체
    * @private
    */
-  _validPhoneNumber: function(value, $error) {  
+  _validPhoneNumber: function (value, $error) {
     var number = value.replace(/-/g, '');
 
-    if (number.indexOf('010') === 0) {  
-      if (number.length !== 11) { // 입력번호가 010 번호이면 11자리
+    if ( number.indexOf('010') === 0 ) {
+      if ( number.length !== 11 ) { // 입력번호가 010 번호이면 11자리
         this._setInvalidInput($error, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V18);
         return false;
       }
-    } else if (number.length !== 11 && number.length !== 10) {  // 입력번호가 010 번호가 아니면 11자리 또는 10자리
+    } else if ( number.length !== 11 && number.length !== 10 ) {  // 입력번호가 010 번호가 아니면 11자리 또는 10자리
       this._setInvalidInput($error, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V18);
       return false;
     }
 
-    if (!Tw.ValidationHelper.isCellPhone(number)) { // 핸드폰 번호인지 유효성 검사
+    if ( !Tw.ValidationHelper.isCellPhone(number) ) { // 핸드폰 번호인지 유효성 검사
       this._setInvalidInput($error, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V9);
       return false;
     } else {  // 입력된 번호 유효할 때
-      if (!$error.hasClass('none')) {
+      if ( !$error.hasClass('none') ) {
         $error.addClass('none').attr('aria-hidden', true);
       }
       return true;
@@ -177,11 +177,11 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {$object} $input 인풋 jquery 객체
    * @param {$object} $error 에러 표시 jquery 객체
    */
-  _handleFocusoutInput: function($input, $error) {  
-    var value = $input.val(),
-      isValid = this._validPhoneNumber(value, $error);
+  _handleFocusoutInput: function ($input, $error) {
+    var value   = $input.val(),
+        isValid = this._validPhoneNumber(value, $error);
 
-    if (isValid) {  // 입력한 번호가 유효하면 Dash 추가
+    if ( isValid ) {  // 입력한 번호가 유효하면 Dash 추가
       $input.val(Tw.FormatHelper.getDashedCellPhoneNumber(value));
     }
   },
@@ -192,8 +192,8 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {string} msg 에러메세지
    * @private
    */
-  _setInvalidInput: function($error, msg) { 
-    if ($error.hasClass('none')) {
+  _setInvalidInput: function ($error, msg) {
+    if ( $error.hasClass('none') ) {
       $error.removeClass('none').attr('aria-hidden', false);
     }
     $error.text(msg);
@@ -204,7 +204,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param {$object} $input 인풋 jquery 객체
    * @private
    */
-  _removeDash: function($input) { 
+  _removeDash: function ($input) {
     $input.val(($input.val() || '').replace(/-/g, ''));
   },
 
@@ -215,7 +215,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
    * @param  {$object} $submitBtn
    * @private
    */
-  _handleTypeInput: function($input, $error, $submitBtn) { 
+  _handleTypeInput: function ($input, $error, $submitBtn) {
     var value = $input
       .val()
       .replace(/[^0-9]/g, '');
@@ -224,13 +224,13 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
     var validLenth = value.indexOf('010') === 0 ? 11 : 10;
 
-    if (this._isCheckedLen && (!value || !value.length)) {  // 인풋에 핸드폰 번호 자릿수가 입력되기 전까지 유효성 검사하지 않도록 함
+    if ( this._isCheckedLen && (!value || !value.length) ) {  // 인풋에 핸드폰 번호 자릿수가 입력되기 전까지 유효성 검사하지 않도록 함
       this._isCheckedLen = false;
-    } else if (!this._isCheckedLen && value.length === validLenth) {
+    } else if ( !this._isCheckedLen && value.length === validLenth ) {
       this._isCheckedLen = true;
     }
 
-    if (this._isCheckedLen && this._validPhoneNumber(value, $error)) {  // 인풋에 들어온 값이 유효하면 submit 버튼 활성화
+    if ( this._isCheckedLen && this._validPhoneNumber(value, $error) ) {  // 인풋에 들어온 값이 유효하면 submit 버튼 활성화
       $submitBtn.removeAttr('disabled');
     } else {
       $submitBtn.attr('disabled', true);

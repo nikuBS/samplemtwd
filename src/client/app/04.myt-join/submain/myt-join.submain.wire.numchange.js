@@ -12,8 +12,8 @@ Tw.MyTJoinPhoneNumWireChange = function ($rootEl, data) {
   this._historyService = new Tw.HistoryService();
   this._listItemTmpl = Handlebars.compile($('#list-cont-item-tmplt').html());
   this._data = JSON.parse(data);
-  this._onProcess = this._data['wireSvcOperStCd'] && this._data['wireSvcOperStCd'] !== '3'; // 이전 요청 진행중
-  this._onSuspend = this._data['wireSvcStCd'] && this._data['wireSvcStCd'] !== 'AC'; // 정지중
+  this._onProcess = this._data.wireSvcOperStCd && this._data.wireSvcOperStCd !== '3'; // 이전 요청 진행중
+  this._onSuspend = this._data.wireSvcStCd && this._data.wireSvcStCd !== 'AC'; // 정지중
   this._bindEvent();
 };
 
@@ -53,15 +53,15 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
    * @desc 변경가능 번호 검색 요청
    * @private
    */
-  _onclickSchNums: function (e) {
+  _onclickSchNums: function () {
 
     var param = {
       staLineNum: $('#input-from').val(),
       endLineNum: $('#input-to').val()
     };
 
-    if ( Tw.FormatHelper.isEmpty(param.staLineNum) || param.staLineNum.length !== 4
-      || Tw.FormatHelper.isEmpty(param.endLineNum) || param.endLineNum.length !== 4 ) {
+    if ( Tw.FormatHelper.isEmpty(param.staLineNum) || param.staLineNum.length !== 4 ||
+      Tw.FormatHelper.isEmpty(param.endLineNum) || param.endLineNum.length !== 4 ) {
       this.$container.find('#err-no-input').show();
       return;
     }

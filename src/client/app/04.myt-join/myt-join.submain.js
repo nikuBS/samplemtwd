@@ -33,16 +33,16 @@ Tw.MyTJoinSubMain.prototype = {
     this.$myPlan = this.$container.find('[data-id=my-plan]');
     this.$ptPwd = this.$container.find('[data-id=change-pwd]');
 
-    if (this._data.isAddProduct) {
+    if ( this._data.isAddProduct ) {
       // 부가상품 버튼
       this.$addProd = this.$container.find('[data-id=add-prod]');
       // 결합상품 버튼
       this.$comProd = this.$container.find('[data-id=com-prod]');
     }
     // 유선
-    if (this._data.type === 2) {
+    if ( this._data.type === 2 ) {
       this.$wireInq = this.$container.find('[data-id=wire-inq]');
-      if (this._data.isWireFree) {
+      if ( this._data.isWireFree ) {
         this.$bTargetInq = this.$container.find('[data-id=B-target-inq]');
       }
       this.$addrChg = this.$container.find('[data-id=addr-chg]');
@@ -54,34 +54,34 @@ Tw.MyTJoinSubMain.prototype = {
       this.$untillInfo = this.$container.find('[data-id=until-info]');
       this.$workNotify = this.$container.find('[data-id=work-notify]');
     } else {
-      if (this._data.isInstallement) {
+      if ( this._data.isInstallement ) {
         this.$installement = this.$container.find('[data-id=installement]');
       }
-      if (this._data.isContractPlan) {
+      if ( this._data.isContractPlan ) {
         this.$contractPlan = this.$container.find('[data-id=contract-plan]');
       }
       // 무선
       // 포켓파이 회선 추가 OP002-1517
-      if (this._data.type === 0 || this._data.svcInfo.svcAttrCd === 'M3') {
-        if (this._data.myPausedState && this._data.myPausedState.svcStCd) {
+      if ( this._data.type === 0 || this._data.svcInfo.svcAttrCd === 'M3' ) {
+        if ( this._data.myPausedState && this._data.myPausedState.svcStCd ) {
           this.$pauseC = this.$container.find('[data-id=pause_c]');
         }
         // 무선
-        if (this._data.type === 0) {
-          if (this._data.isOldNumber) {
+        if ( this._data.type === 0 ) {
+          if ( this._data.isOldNumber ) {
             this.$oldNum = this.$container.find('[data-id=old_number]');
           }
-          if (this._data.isNotChangeNumber) {
+          if ( this._data.isNotChangeNumber ) {
             this.$chgNumSvc = this.$container.find('[data-id=change_number]');
           }
         }
       }
     }
 
-    if (this._data.type !== 1) {
-      if (this._data.otherLines.length > 0) {
+    if ( this._data.type !== 1 ) {
+      if ( this._data.otherLines.length > 0 ) {
         this.$otherLines = this.$container.find('[data-id=other-lines]');
-        if (this._data.otherLines.length > 20) {
+        if ( this._data.otherLines.length > 20 ) {
           this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
           this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.JOIN_SUBMAIN.MORE_LINE_TEMP);
         }
@@ -96,16 +96,16 @@ Tw.MyTJoinSubMain.prototype = {
     this.$myPlan.on('click', $.proxy(this._onMovedMyPlan, this));
     this.$ptPwd.on('click', $.proxy(this._onMovedChangePwd, this));
 
-    if (this._data.isAddProduct) {
+    if ( this._data.isAddProduct ) {
       // 부가상품 버튼
       this.$addProd.on('click', $.proxy(this._onMovedAddProduct, this));
       // 결합상품 버튼
       this.$comProd.on('click', $.proxy(this._onMovedComProduct, this));
     }
     // 유선
-    if (this._data.type === 2) {
+    if ( this._data.type === 2 ) {
       this.$wireInq.on('click', $.proxy(this._onMovedWireInquire, this));
-      if (this._data.isWireFree) {
+      if ( this._data.isWireFree ) {
         this.$bTargetInq.on('click', $.proxy(this._onMovedBInquire, this));
       }
       this.$addrChg.on('click', $.proxy(this._onMovedWireOtherSvc, this));
@@ -118,33 +118,33 @@ Tw.MyTJoinSubMain.prototype = {
       this.$workNotify.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$container.on('click', '#fe-wire-num-change', $.proxy(this._onChangeWireNumber, this));
     } else {
-      if (this._data.isInstallement) {
+      if ( this._data.isInstallement ) {
         this.$installement.on('click', $.proxy(this._onMovedInstallement, this));
       }
-      if (this._data.isContractPlan) {
+      if ( this._data.isContractPlan ) {
         this.$contractPlan.on('click', $.proxy(this._onMovedContractPlan, this));
       }
       // 무선
       // 포켓파이 회선추가 OP002-1517
-      if (this._data.type === 0 || this._data.svcInfo.svcAttrCd === 'M3') {
-        if (this._data.myPausedState && this._data.myPausedState.svcStCd) {
+      if ( this._data.type === 0 || this._data.svcInfo.svcAttrCd === 'M3' ) {
+        if ( this._data.myPausedState && this._data.myPausedState.svcStCd ) {
           this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
         }
-        if (this._data.type === 0) {
-          if (this._data.isOldNumber) {
+        if ( this._data.type === 0 ) {
+          if ( this._data.isOldNumber ) {
             this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
           }
-          if (this._data.isNotChangeNumber) {
+          if ( this._data.isNotChangeNumber ) {
             this.$chgNumSvc.on('click', $.proxy(this._onMoveChgNumSvc, this));
           }
         }
       }
     }
 
-    if (this._data.type !== 1) {
-      if (this._data.otherLines.length > 0) {
+    if ( this._data.type !== 1 ) {
+      if ( this._data.otherLines.length > 0 ) {
         this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
-        if (this._data.otherLines.length > 20) {
+        if ( this._data.otherLines.length > 20 ) {
           this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
         }
       }
@@ -171,8 +171,8 @@ Tw.MyTJoinSubMain.prototype = {
   _getTosAdminMytJoinBanner: function () {
     this._apiService
       .requestArray([
-        {command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: {code: '0010'}},
-        {command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: {menuId: this._data.pageInfo.menuId}}
+        { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0010' } },
+        { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._data.pageInfo.menuId } }
       ])
       .done($.proxy(this._successTosAdminMytJoinBanner, this))
       .fail($.proxy(this._errorRequest, this));
@@ -185,20 +185,20 @@ Tw.MyTJoinSubMain.prototype = {
    * @private
    */
   _successTosAdminMytJoinBanner: function (banner1, admBanner) {
-    var result = [{target: 'M', banner: banner1}];
+    var result = [{ target: 'M', banner: banner1 }];
 
     result.forEach(function (row) {
-      if (row.banner && row.banner.code === Tw.API_CODE.CODE_00) {
-        if (!row.banner.result.summary) {
-          row.banner.result.summary = {target: row.target};
+      if ( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
+        if ( !row.banner.result.summary ) {
+          row.banner.result.summary = { target: row.target };
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
       } else {
-        row.banner = {result: {summary: {target: row.target}, imgList: []}};
+        row.banner = { result: { summary: { target: row.target }, imgList: [] } };
       }
 
-      if (admBanner.code === Tw.API_CODE.CODE_00) {
+      if ( admBanner.code === Tw.API_CODE.CODE_00 ) {
         row.banner.result.imgList = row.banner.result.imgList.concat(
           admBanner.result.banners.map(function (admbnr) {
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
@@ -207,7 +207,7 @@ Tw.MyTJoinSubMain.prototype = {
           })
         );
       }
-    })
+    });
     this._drawTosAdminMytJoinBanner(result);
   },
 
@@ -219,13 +219,13 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _drawTosAdminMytJoinBanner: function (banners) {
     _.map(banners, $.proxy(function (bnr) {
-      if (bnr.banner.result.bltnYn === 'N') {
+      if ( bnr.banner.result.bltnYn === 'N' ) {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
 
-      if (!Tw.FormatHelper.isEmpty(bnr.banner.result.summary)
-        && bnr.banner.result.imgList.length > 0) {
-        new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0 ) {
+        new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList,
+          bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
       } else {
         this.$container.find('[data-id=banners-empty]').hide();
         this.$container.find('[data-id=banners]').hide();
@@ -252,7 +252,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
-    if (Tw.BrowserHelper.isApp()) {
+    if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.resetHeight(this.$bannerList[0]);
     }
   },
@@ -279,7 +279,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedJoinService: function () {
     var type = 'cellphone';
-    switch (this._data.svcInfo.svcAttrCd) {
+    switch ( this._data.svcInfo.svcAttrCd ) {
       case 'S1':
         type = 'internet';
         break;
@@ -306,7 +306,7 @@ Tw.MyTJoinSubMain.prototype = {
    * @desc 번호안내서비스
    */
   _onMoveChgNumSvc: function () {
-    if (this._data.numberChanged) {
+    if ( this._data.numberChanged ) {
       // 연장 & 해지
       this._historyService.goLoad('/myt-join/submain/phone/extalarm');
     } else {
@@ -356,7 +356,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedContractPlan: function () {
     var url = '/myt-join/myplancombine/noagreement';
-    if (this._data.myContractPlan.muPointYn === 'N') {
+    if ( this._data.myContractPlan.muPointYn === 'N' ) {
       url = '/product/callplan?prod_id=NA00005923';
     }
     this._historyService.goLoad(url);
@@ -376,10 +376,10 @@ Tw.MyTJoinSubMain.prototype = {
     }
     else
     */
-    if (stateMyPaused) {
-      if (stateMyPaused.reservedYn === 'Y') {
+    if ( stateMyPaused ) {
+      if ( stateMyPaused.reservedYn === 'Y' ) {
         // [OP002-1526]
-        if (stateMyPaused.fromDt === '99991231') {
+        if ( stateMyPaused.fromDt === '99991231' ) {
           // 2G 장기 미사용 이용정지 화면 진입 불가
           this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR.UNUSED_2G_USER);
         } else {
@@ -388,15 +388,15 @@ Tw.MyTJoinSubMain.prototype = {
         }
         return;
       }
-      if (stateMyPaused.state) {
+      if ( stateMyPaused.state ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
         return;
       }
     }
-    if (stateMyLongPaused && stateMyLongPaused.state) {
+    if ( stateMyLongPaused && stateMyLongPaused.state ) {
       // 장기일시정지 처리완료 상태에서 멈추는 문제 해결 (장기일시정지, 처리완료, 신청일이 오늘 포함 이전이면, 새로 신청가능한 것으로
-      if (stateMyLongPaused.opStateCd !== 'C' || !stateMyLongPaused.stateReleased) {
+      if ( stateMyLongPaused.opStateCd !== 'C' || !stateMyLongPaused.stateReleased ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
         return;
@@ -471,7 +471,7 @@ Tw.MyTJoinSubMain.prototype = {
     var value = event.target.value;
     // 작업하는 중에도 시간은 변경될 수 있어서, 값을 돌릴때는 지금의 시간으로 넣음 (2019-10-30 23:59:59 -> 2019-10-31 00:00:00)
     var today = Tw.DateHelper.getDateCustomFormat('YYYY-MM-DD');
-    if (!value) {
+    if ( !value ) {
       event.target.value = this._popupResumeSuspend.dateValid || today;
       this._popupResumeSuspend.dateValid = event.target.value;
       return false;
@@ -487,12 +487,12 @@ Tw.MyTJoinSubMain.prototype = {
     */
     var diff = Tw.DateHelper.getDiffByUnit(value, today.replace(/-/g, ''), 'days');
     // 오늘보다 이전이거나
-    if (diff < 0) {
+    if ( diff < 0 ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
       return false;
     }
     // 오늘보다 30일 이후거나
-    if (diff > 30) {
+    if ( diff > 30 ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
       return false;
     }
@@ -505,7 +505,7 @@ Tw.MyTJoinSubMain.prototype = {
    * @param data
    * @param $popup Resuspend(장기일시정지 재신청) popup element
    */
-  _requestResumeSuspend: function (data, $popup) {
+  _requestResumeSuspend: function (data /*$popup*/) {
     var fromDate = this._popupResumeSuspend.$date.val();
     // var fromDate = $popup.find('input[type="date"]').val();
     // TODO: 아래 구문은 필요없어 보이는데, 확인 후 삭제하자
@@ -522,7 +522,7 @@ Tw.MyTJoinSubMain.prototype = {
     */
     fromDate = fromDate.replace(/-/g, '');
     // var params = { fromDt: fromDate.replace(/-/g, '') };
-    this._apiService.request(Tw.API_CMD.BFF_05_0151, {fromDt: fromDate})
+    this._apiService.request(Tw.API_CMD.BFF_05_0151, { fromDt: fromDate })
       .done($.proxy(this._onResumeSuspendRequestSuccess, this, {
         fromDt: fromDate,
         toDt: data.period.to.replace(/\./g, '')
@@ -537,12 +537,12 @@ Tw.MyTJoinSubMain.prototype = {
    * @private
    */
   _onResumeSuspendRequestSuccess: function (params, res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       params.command = 'resuspend';
       params.svcNum = this._data.svcInfo.svcNum;
       // params.toDt = this._params.status.period.to;
       this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param(params));
-    } else if (res.code in Tw.MYT_JOIN_SUSPEND.ERROR) {
+    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       this._onResumeSuspendRequestError(res);
@@ -577,7 +577,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedWireOtherSvc: function (event) {
     var $target = $(event.target);
-    switch ($target.attr('data-id')) {
+    switch ( $target.attr('data-id') ) {
       case 'addr-chg':
         this._historyService.goLoad('/myt-join/submain/wire/modifyaddress');
         break;
@@ -612,17 +612,17 @@ Tw.MyTJoinSubMain.prototype = {
   _onClickedOtherLine: function (event) {
     // 통합, 개별이면서 대표인 경우만 동작
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
-      type = $target.find('span.blind').text(),
-      mgmtNum = $target.attr('data-svc-mgmt-num'),
-      number = $target.attr('data-num');
-    if (mgmtNum) {
+        type    = $target.find('span.blind').text(),
+        mgmtNum = $target.attr('data-svc-mgmt-num'),
+        number  = $target.attr('data-num');
+    if ( mgmtNum ) {
       // 기준회선변경
       // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
       this.changeLineType = type;
       this.changeLineMgmtNum = mgmtNum;
       this.changeLineMdn = number;
 
-      var target = _.find(this._data.otherLines, {svcMgmtNum: mgmtNum});
+      var target = _.find(this._data.otherLines, { svcMgmtNum: mgmtNum });
       this._popupService.openSwitchLine(this._data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
         $.proxy(this._onChangeLineConfirmed, this), null, 'change_line');
     }
@@ -642,10 +642,10 @@ Tw.MyTJoinSubMain.prototype = {
    * @param {JSON} resp
    */
   _onChangeSessionSuccess: function (resp) {
-    if (resp.code !== Tw.CALLBACK_CODE.SUCCESS) {
+    if ( resp.code !== Tw.CALLBACK_CODE.SUCCESS ) {
       return;
     }
-    if (Tw.BrowserHelper.isApp()) {
+    if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
@@ -659,12 +659,12 @@ Tw.MyTJoinSubMain.prototype = {
   _onOtherLinesMore: function () {
     var index = this.$otherLines.find('li').length;
     var totalCount = this._data.otherLines.length - index;
-    if (totalCount === 0) {
+    if ( totalCount === 0 ) {
       this.$otherLinesMoreBtn.hide();
       return;
     }
     var length = totalCount > 20 ? 20 : totalCount;
-    for (var i = 0; i < length; i++) {
+    for ( var i = 0; i < length; i++ ) {
       var item = this._data.otherLines[index + i];
       var data = _.extend({
         number: (['S1', 'S2'].indexOf(item.svcAttrCd) > -1) ? item.addr : item.svcNum
@@ -688,7 +688,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onChangeWireNumber: function (e) {
     // coClCd: 회사구분코드, actCoClCd: 청구회사코드
-    if (this._data.svcInfo.coClCd === Tw.MYT_JOIN_CO_TYPE.BROADBAND) { // 브로드밴드 가입자
+    if ( this._data.svcInfo.coClCd === Tw.MYT_JOIN_CO_TYPE.BROADBAND ) { // 브로드밴드 가입자
       this._popupService.openConfirmButton(Tw.WIRE_NUMBER_CHANGE.ALERT_BROADBAND.CONTENTS,
         Tw.WIRE_NUMBER_CHANGE.ALERT_BROADBAND.TITLE,
         $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.OUTLINK.BROADBAND), null,

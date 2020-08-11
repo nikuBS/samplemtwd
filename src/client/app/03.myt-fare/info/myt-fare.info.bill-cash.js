@@ -1,11 +1,11 @@
 /**
  * @file [나의요금-현금영수증발급내역_리스트] 관련 처리
- * @author Lee Kirim 
+ * @author Lee Kirim
  * @since 2018-09-17
  */
 
 /**
- * @class 
+ * @class
  * @desc 현금영수증발급내역 리스트를 위한 class
  * @param {Object} rootEl - 최상위 element Object
  * @param {JSON} data - myt-fare.info.bill-cash.controlloer.ts 로 부터 전달되어 온 현금영수증내역 정보
@@ -25,10 +25,10 @@ Tw.MyTFareInfoBillCash = function (rootEl, data) {
 };
 
 Tw.MyTFareInfoBillCash.prototype = {
-  
+
   /**
    * @function
-   * @member 
+   * @member
    * @desc 객체가 생성될 때 동작에 필요한 내부 변수를 정의 한다.
    * @return {void}
    */
@@ -50,7 +50,7 @@ Tw.MyTFareInfoBillCash.prototype = {
       // this.renderListData = this.data.noticeInfo;
       this.renderListData.initialMoreData = this.listViewMoreHide;
       this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
-      
+
       this.renderListData.records = this.renderableListData.reduce($.proxy(function (prev, cur) {
         if (prev.length) {
           if (prev.slice(-1)[0].date === cur.listDt) {
@@ -64,7 +64,7 @@ Tw.MyTFareInfoBillCash.prototype = {
 
         return prev;
       }, this), []);
-      
+
       initedListTemplate = this.$template.$listCashWrapper(this.renderListData);
     }
 
@@ -93,7 +93,7 @@ Tw.MyTFareInfoBillCash.prototype = {
 
       $emptyList: Handlebars.compile($('#list-empty').html())
     };
-    
+
     Handlebars.registerPartial('chargeItems', $('#fe-template-cash-items').html());
     Handlebars.registerPartial('list', $('#fe-template-cash-day').html());
     Handlebars.registerPartial('year', $('#fe-template-cash-year').html());
@@ -116,7 +116,7 @@ Tw.MyTFareInfoBillCash.prototype = {
    * @param {event} e 더보기 버튼 클릭 이벤트 발생 시킨 엘리먼트
    * @returns {void}
    */
-  _updateCashList: function (e) {
+  _updateCashList: function () {
     this._updateCashListData();
 
     this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.list.length ? 'none' : ''});

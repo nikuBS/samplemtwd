@@ -5,7 +5,7 @@
  */
 
 
-Tw.MyTDataPrepaidHistory = function(rootEl, histories) {
+Tw.MyTDataPrepaidHistory = function (rootEl, histories) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -21,7 +21,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   /**
    * @desc 선불폰 충전/선물 내역 초기 작업
    */
-  _init: function() {
+  _init: function () {
     this._currentType = this.$selectBtn.data('type');
     this._leftCount = {
       data: Number(this.$totalCount.data('data')) - Tw.DEFAULT_LIST_COUNT,
@@ -33,7 +33,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
       voice: 1
     };  // BFF api 요청 파라미터
 
-    // 더보기 버튼 클릭 시, 새로운 데이터 추가를 위한 template 저장 
+    // 더보기 버튼 클릭 시, 새로운 데이터 추가를 위한 template 저장
     var $items = $('#fe-tmpl-charge-items').html();
     this._itemsTmpl = Handlebars.compile($items);
     this._dayTmpl = Handlebars.compile($('#fe-tmpl-charge-day').html());
@@ -43,7 +43,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   /**
    * @desc 이벤트 바인딩
    */
-  _bindEvent: function() {
+  _bindEvent: function () {
     this.$selectBtn.on('click', $.proxy(this._openChangeTypes, this));
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.data-tx', $.proxy(this._handleShowDetail, this));
@@ -53,7 +53,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   /**
    * @desc jquery object 캐싱
    */
-  _cachedElement: function() {
+  _cachedElement: function () {
     this.$moreBtn = this.$container.find('.bt-more');
     this.$selectBtn = this.$container.find('.bt-select');
     this.$totalCount = this.$container.find('.num > em');
@@ -65,18 +65,20 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @desc 음성 or 데이터 타입 변경을 위한 팝업 오픈
    * @param {Event} e 클릭 이벤트
    */
-  _openChangeTypes: function(e) {
+  _openChangeTypes: function (e) {
     var type = this._currentType;
 
     this._popupService.open(
       {
         hbs: 'actionsheet01',
+        /* jshint ignore:start */
         btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        /* jshint ignore:end */
         layer: true,
         data: [
           {
-            list: _.map(Tw.PREPAID_HISTORIES, function(item) {
-              if (item['radio-attr'].lastIndexOf(type) > 0) {
+            list: _.map(Tw.PREPAID_HISTORIES, function (item) {
+              if ( item['radio-attr'].lastIndexOf(type) > 0 ) {
                 return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
               }
               return item;
@@ -93,9 +95,9 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   /**
    * @desc 음성 or 데이터 타입 변경을 위한 팝업 이벤트 바인딩
-   * @param {$object} $layer 
+   * @param {$object} $layer
    */
-  _handleOpenChangeTypes: function($layer) {
+  _handleOpenChangeTypes: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
@@ -104,27 +106,27 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @desc 음성 or 데이터 충전 타입 선택 시
    * @param {Event} e 클릭 이벤트
    */
-  _handleSelectType: function(e) {
-    var type = $(e.currentTarget).data('type'),
-      count = this.$totalCount.data(type);
+  _handleSelectType: function (e) {
+    var type  = $(e.currentTarget).data('type'),
+        count = this.$totalCount.data(type);
 
-    if (type === this._currentType) { // 현재 타입이랑 선택된 타입이랑 동일 할 때 return
+    if ( type === this._currentType ) { // 현재 타입이랑 선택된 타입이랑 동일 할 때 return
       return;
     }
 
     var isEmpty = !this.$empty.hasClass('none');
-    if (!isEmpty) {
+    if ( !isEmpty ) {
       this.$list.find('li.fe-prepaid-' + this._currentType)
         .addClass('none')
         .attr('aria-hidden', true); // 현재 노출되고 있는 타입에 대해서 none 처리
     }
 
-    if (count === 0) {  // 내역이 없을 경우 처리
-      if (!isEmpty) {
+    if ( count === 0 ) {  // 내역이 없을 경우 처리
+      if ( !isEmpty ) {
         this.$empty.removeClass('none').attr('aria-hidden', false);
       }
     } else {
-      if (isEmpty) {
+      if ( isEmpty ) {
         this.$empty.addClass('none').attr('aria-hidden', true);
       }
 
@@ -145,9 +147,9 @@ Tw.MyTDataPrepaidHistory.prototype = {
   /**
    * @desc 더보기 버튼 클릭 시
    */
-  _handleLoadMore: function() {
+  _handleLoadMore: function () {
     var type = this._currentType;
-    if (this._leftCount[type] <= 0) { // 남은 내역 갯수가 0일 때 리턴
+    if ( this._leftCount[type] <= 0 ) { // 남은 내역 갯수가 0일 때 리턴
       return;
     }
 
@@ -165,9 +167,9 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @desc 내역 요청에 대한 응답이 돌아온 경우
    * @param {object} resp 서버 응답
    */
-  _handleSuccessLoadMore: function(resp) {
+  _handleSuccessLoadMore: function (resp) {
     var type = this._currentType;
-    if (resp.code !== Tw.API_CODE.CODE_00) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       this._pageCount[this._currentType]--; // 요청 전 값으로 input param 변경
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -185,21 +187,25 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @desc 추가 충전 내역 render
    * @param {object} histories 내역
    */
-  _renderHistories: function(histories) {
-    var type = this._currentType,
-      keys = Object.keys(histories),
-      idx = keys.length - 1,
-      key = keys[idx],
-      contents = '',
-      typeName = Tw.PREPAID_TYPES[type.toUpperCase()],
-      $exist = this.$list.find('.list-box.fe-prepaid-' + type).filter('[data-key="' + key + '"]');
+  _renderHistories: function (histories) {
+    var type     = this._currentType,
+        keys     = Object.keys(histories),
+        idx      = keys.length - 1,
+        key      = keys[idx],
+        contents = '',
+        typeName = Tw.PREPAID_TYPES[type.toUpperCase()],
+        $exist   = this.$list.find('.list-box.fe-prepaid-' + type).filter('[data-key="' + key + '"]');
 
-    if ($exist.length > 0) {
-      $exist.find('ul.list-con').append(this._itemsTmpl({ items: histories[key], typeName: typeName, pageNum: this._pageCount[type] }));
+    if ( $exist.length > 0 ) {
+      $exist.find('ul.list-con').append(this._itemsTmpl({
+        items: histories[key],
+        typeName: typeName,
+        pageNum: this._pageCount[type]
+      }));
       idx--;
     }
 
-    for (; idx >= 0; idx--) {
+    for ( ; idx >= 0; idx-- ) {
       key = keys[idx];
 
       contents += this._dayTmpl({
@@ -212,7 +218,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
       });
     }
 
-    if (contents.length > 0) {
+    if ( contents.length > 0 ) {
       this.$list.append(contents);
     }
 
@@ -222,14 +228,14 @@ Tw.MyTDataPrepaidHistory.prototype = {
   /**
    * @desc 더보기 버튼 보이기 설정
    */
-  _setMoreButton: function() {
+  _setMoreButton: function () {
     var hasNone = this.$moreBtn.hasClass('none'),
-      type = this._currentType;
-    if (this._leftCount[type] > 0) {
-      if (hasNone) {
+        type    = this._currentType;
+    if ( this._leftCount[type] > 0 ) {
+      if ( hasNone ) {
         this.$moreBtn.removeClass('none').attr('aria-hidden', false);
       }
-    } else if (!hasNone) {
+    } else if ( !hasNone ) {
       this.$moreBtn.addClass('none').attr('aria-hidden', true);
     }
   },
@@ -240,16 +246,16 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @param {object} history 내역
    * @param {number} idx 어레이 인덱스
    */
-  _sortHistory: function(histories, history, idx) {
+  _sortHistory: function (histories, history, idx) {
     var key = (history.chargeDtm || history.chargeDt).substring(0, 8);
 
-    if (!histories[key]) {
+    if ( !histories[key] ) {
       histories[key] = [];
     }
 
     history.idx = histories.idx + idx;
     history.date = Tw.DateHelper.getShortDate(key);
-    if (Tw.PREPAID_BADGES[history.chargeTp]) {
+    if ( Tw.PREPAID_BADGES[history.chargeTp] ) {
       history.badge = Tw.PREPAID_BADGES[history.chargeTp];
     }
     history.isCanceled = history.payCd === '5' || history.payCd === '9';
@@ -266,15 +272,15 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @desc 선불폰 충전 내역 자세히 보기 팝업 오픈
    * @param {Event} e 클릭 이벤트 객체
    */
-  _handleShowDetail: function(e) {
-    var index = e.currentTarget.getAttribute('data-origin-idx'),
-      history = this._histories[this._currentType][index];
+  _handleShowDetail: function (e) {
+    var index   = e.currentTarget.getAttribute('data-origin-idx'),
+        history = this._histories[this._currentType][index];
 
     var _payment = history.cardNm && history.wayCd === '02' ?
-    Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' :
-    Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
+      Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' :
+      Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
 
-    if(history.wayCd === '22' || history.wayCd === '23' ||history.wayCd === '30' ||history.wayCd === '31' ||history.wayCd === '32'){
+    if ( history.wayCd === '22' || history.wayCd === '23' || history.wayCd === '30' || history.wayCd === '31' || history.wayCd === '32' ) {
       _payment = Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
     }
 
@@ -286,29 +292,33 @@ Tw.MyTDataPrepaidHistory.prototype = {
       payment: _payment
     });
 
-    this._popupService.open({ hbs: 'DC_09_06_01', detail: detail }, undefined, undefined, undefined, $(e.currentTarget));
+    this._popupService.open({
+      hbs: 'DC_09_06_01',
+      detail: detail
+    }, undefined, undefined, undefined, $(e.currentTarget));
   },
 
   /**
    * @desc '취소' 버튼 클릭 시 confirm 오픈
    * @param {Event} e 클릭 이벤트 객체
    */
-  _openCancel: function(e) {
+  _openCancel: function (e) {
     var $target = $(e.currentTarget);
-    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, $target), undefined, $target);
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY,
+      $.proxy(this._handleCancel, this, $target), undefined, $target);
   },
-  
+
   /**
    * @desc 취소 확인 팝업에서 '확인' 버튼 클릭시, 취소 로직
    * @param {$object} $target 취소 버튼
    */
-  _handleCancel: function($target) {
-    var code = $target.data('charge-code'),
-      id = $target.data('cancel-id'),
-      pageNum = $target.data('page-number');
+  _handleCancel: function ($target) {
+    var code    = $target.data('charge-code'),
+        id      = $target.data('cancel-id'),
+        pageNum = $target.data('page-number');
 
     skt_landing.action.loading.on({ ta: this.$container });
-    if (Tw.FormatHelper.isEmpty(code)) {
+    if ( Tw.FormatHelper.isEmpty(code) ) {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: Tw.DEFAULT_LIST_COUNT })
         .done($.proxy(this._handleSuccessCancel, this))
@@ -326,9 +336,9 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @desc 취소 api 요청에 대한 서버 응답 시
    * @param {object} resp 서버 응답
    */
-  _handleSuccessCancel: function(resp) {
+  _handleSuccessCancel: function (resp) {
     skt_landing.action.loading.off({ ta: this.$container });
-    if (resp.code !== Tw.API_CODE.CODE_00) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
       window.location.replace('/myt-data/recharge/prepaid/history');
@@ -339,7 +349,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   /**
    * @desc api 요청에 대한 timeout 발생 시
    */
-  _fail: function() {
+  _fail: function () {
     skt_landing.action.loading.off({ ta: this.$container });
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }

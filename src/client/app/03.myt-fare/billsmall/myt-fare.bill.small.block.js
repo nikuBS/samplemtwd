@@ -4,8 +4,8 @@
  * @since 2018-11-29
  */
 
- /**
- * @class 
+/**
+ * @class
  * @desc 차단내역 리스트를 위한 class
  * @param {Object} rootEl - 최상위 element Object
  * @param {JSON} data - myt-fare.bill.small.block.controlloer.ts 로 부터 전달되어 온 내역 정보
@@ -13,7 +13,7 @@
 Tw.MyTFareBillSmallBlock = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
-  
+
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
@@ -26,15 +26,15 @@ Tw.MyTFareBillSmallBlock.prototype = {
 
   /**
    * @function
-   * @member 
+   * @member
    * @desc 데이터 렌더링
    * @return {void}
    */
-  _init: function() {
+  _init: function () {
     var renderedHTML;
-    if(!this.data.cpHistories.length){
+    if ( !this.data.cpHistories.length ) {
       renderedHTML = this.$template.$emptyList();
-    }else{
+    } else {
       renderedHTML = this.$template.$blockContents(this.data);
     }
     this.$domWrapper.append(renderedHTML);
@@ -46,10 +46,10 @@ Tw.MyTFareBillSmallBlock.prototype = {
    * @desc 생성자 생성시 템플릿 엘리먼트 설정
    * - myt-fare.bill.small.block.html 참고
    */
-  _cachedElement: function() {
-    this.$domWrapper = this.$container.find('#fe-block-list'); 
+  _cachedElement: function () {
+    this.$domWrapper = this.$container.find('#fe-block-list');
     this.$template = {
-      $blockContents: Handlebars.compile($('#fe-block-contents').html()), // 차단내역 리스트 
+      $blockContents: Handlebars.compile($('#fe-block-contents').html()), // 차단내역 리스트
       $emptyList: Handlebars.compile($('#list-empty').html()) // 화면 없을 경우
     };
   },
@@ -59,19 +59,21 @@ Tw.MyTFareBillSmallBlock.prototype = {
    * @member
    * @desc 생성시 이벤트 바인드
    */
-  _bindEvent: function() {
-    this.$domWrapper.find('.on-tx').on('click',$.proxy(this._UnBlockThis,this)); // 해제하기
+  _bindEvent: function () {
+    this.$domWrapper.find('.on-tx').on('click', $.proxy(this._UnBlockThis, this)); // 해제하기
     // 차단하기는 리스트에서 해제된 내역 불러와 지지 않으므로 토글 할 수 없음 ( 기존 기획 토글이었으나 해당 기능 삭제)
   },
 
   /**
    * @function
    * @desc 해제하기 버튼 눌렀을 시 확인 팝업 띄움
-   * @param {event} e 
+   * @param {event} e
    */
-  _UnBlockThis: function(e) {
+  _UnBlockThis: function (e) {
     e.stopPropagation();
-    this.$li = this.$domWrapper.find('li').filter(function(){ return $(this).data('listId') === $(e.currentTarget).data('listId'); }); // 클릭이벤트 발생한 엘리먼트를 저장 성공후 DOM에서 제거 목적
+    this.$li = this.$domWrapper.find('li').filter(function () {
+      return $(this).data('listId') === $(e.currentTarget).data('listId');
+    }); // 클릭이벤트 발생한 엘리먼트를 저장 성공후 DOM에서 제거 목적
     this.blockData = this.data.cpHistories[$(e.currentTarget).data('listId')]; // 블록될 데이터를 찾아 저장
     /**
      * @desc 차단하기 확인 팝업
@@ -97,13 +99,13 @@ Tw.MyTFareBillSmallBlock.prototype = {
       $(e.currentTarget)
     );
   },
-  
+
   /**
    * @method
    * @desc 해제하기 API 호출
    * @param {element} $target
    */
-  _execUnBlock: function($target) {
+  _execUnBlock: function ($target) {
     this.$li.find('.btn-switch.type1').removeClass('on');
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
@@ -120,10 +122,10 @@ Tw.MyTFareBillSmallBlock.prototype = {
    * @method
    * @desc 해제 API 응답시 실행
    * @param {element} $target
-   * @param {JSON} res 
+   * @param {JSON} res
    */
-  _successUnBlock: function($target, res) {
-    if(res.code !== Tw.API_CODE.CODE_00) {
+  _successUnBlock: function ($target, res) {
+    if ( res.code !== Tw.API_CODE.CODE_00 ) {
       this._failBlock($target, res);
       this.$li.find('.btn-switch.type1').addClass('on');
     } else {
@@ -135,7 +137,7 @@ Tw.MyTFareBillSmallBlock.prototype = {
       this.$li.remove();
       this.$container.find('.ti-caption-gray .num em').text(this.data.payHistoryCnt);
       // 0건이 되면
-      if(!this.data.payHistoryCnt) {
+      if ( !this.data.payHistoryCnt ) {
         this.$domWrapper.append(this.$template.$emptyList());
       }
     }
@@ -144,10 +146,10 @@ Tw.MyTFareBillSmallBlock.prototype = {
   /**
    * @method
    * @desc API 응답 에러 반환 시 에러메세지 팝업 실행
-   * @param {element} $target 
-   * @param {JSON} res 
+   * @param {element} $target
+   * @param {JSON} res
    */
-  _failBlock: function($target, res) {
+  _failBlock: function ($target, res) {
     /**
      * @param {function} 팝업 닫힌 후 실행될 callback function
      * @param {element} 팝업 닫힌 후 포커스 이동할 DOM 객체 (웹접근성 반영)
@@ -155,5 +157,5 @@ Tw.MyTFareBillSmallBlock.prototype = {
     return Tw.Error(res.code, res.msg).pop(null, $target);
   }
 
- 
+
 };

@@ -18,7 +18,9 @@ Tw.MytJoinSuspendUpload = function () {
  * @const
  * @readonly
  */
-Tw.MytJoinSuspendUpload.DEFAULT_FILE = {'attr': 'name="file" accept="image/bmp, image/x-windows-bmp, image/gif, image/jpeg, image/pjpeg, image/png, .bmp, .gif, .jpg, .jpeg, .png"'};
+Tw.MytJoinSuspendUpload.DEFAULT_FILE = {
+  'attr': 'name="file" accept="image/bmp, image/x-windows-bmp, image/gif, image/jpeg, image/pjpeg, image/png, .bmp, .gif, .jpg, .jpeg, .png"'
+};
 Tw.MytJoinSuspendUpload.prototype = {
   /**
    *
@@ -35,9 +37,9 @@ Tw.MytJoinSuspendUpload.prototype = {
     this._fileCount = fileCount || 1;
     this._acceptExt = ['bmp', 'gif', 'jpg', 'jpeg', 'png'];
     this._fileInfos = _.map(fileInfos || new Array(this._fileCount), function (fileInfo, index) {
-      return _.defaults(fileInfo, Tw.MytJoinSuspendUpload.DEFAULT_FILE, {oldFile: oldFiles[index]});
+      return _.defaults(fileInfo, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[index] });
     });
-    if (tooltip) {
+    if ( tooltip ) {
       this._showUploadTip(tooltip, $focusEl);
     } else {
       this._showUploadPopup();
@@ -67,7 +69,7 @@ Tw.MytJoinSuspendUpload.prototype = {
    */
   _showUploadPopup: function () {
     // 모바일웹 4.4 버젼은 파일 업로드 미지원
-    if (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
+    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_SUPPORT_FILE_UPLOAD);
       return;
@@ -77,8 +79,8 @@ Tw.MytJoinSuspendUpload.prototype = {
       hbs: 'CS_04_01_L02',
       inputfile_num: this._fileInfos,
       warning_msg: [
-        {'txt': Tw.UPLOAD_FILE.WARNING_A01, 'point': ''},
-        {'txt': Tw.UPLOAD_FILE.WARNING_A03, 'point': ''}
+        { 'txt': Tw.UPLOAD_FILE.WARNING_A01, 'point': '' },
+        { 'txt': Tw.UPLOAD_FILE.WARNING_A03, 'point': '' }
       ]
     }, $.proxy(this._openUploadFile, this), $.proxy(this._reset, this), 'upload');
   },
@@ -97,14 +99,14 @@ Tw.MytJoinSuspendUpload.prototype = {
 
     this.$btUpload.attr('disabled', true);
 
-    if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
+    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
       this.$inputFile.css('display', 'none');
       this._nativeUploaded = [this._fileCount];
     }
   },
 
   _openCustomFileChooser: function ($target) {
-    if (this._isLowerVersionAndroid()) {
+    if ( this._isLowerVersionAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
         dest: 'suspend',
         acceptExt: this._acceptExt,
@@ -120,19 +122,19 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @param response
    */
   _nativeFileChooser: function ($target, response) {
-    if (response.resultCode === Tw.NTV_CODE.CODE_00) {
+    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
       var fileInfo = params.fileData.result[0];
 
-      if (fileInfo) {
+      if ( fileInfo ) {
         var $elFileName = $target.find('input.fileview');
         $elFileName.val(fileInfo.originalName);
       }
       this._nativeUploaded[$target.data('index')] = fileInfo;
       this._setFileButton($target, false);
-    } else if (response.resultCode === Tw.NTV_CODE.CODE_01) {
+    } else if ( response.resultCode === Tw.NTV_CODE.CODE_01 ) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A01);
-    } else if (response.resultCode === Tw.NTV_CODE.CODE_02) {
+    } else if ( response.resultCode === Tw.NTV_CODE.CODE_02 ) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
     }
   },
@@ -156,11 +158,11 @@ Tw.MytJoinSuspendUpload.prototype = {
   _onChangeFile: function (event) {
     var input = event.target;
     var files = input.files;
-    if (files.length !== 0) {
+    if ( files.length !== 0 ) {
       var $input = $(input);
       var $inputBox = $input.closest('.inputbox');
       var file = files[0];
-      if (!this._validateFile(file)) {
+      if ( !this._validateFile(file) ) {
         $input.val('');
         this._setFileButton($inputBox, true);
       } else {
@@ -175,12 +177,12 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @returns {boolean}
    */
   _validateFile: function (file) {
-    if (file.size > Tw.MAX_UPLOAD_FILE_SIZE) {
+    if ( file.size > Tw.MAX_UPLOAD_FILE_SIZE ) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A01);
       return false;
     }
     // file suffix validation.
-    if (!/\.(bmp|gif|jpg|jpeg|png)$/ig.test(file.name)) {
+    if ( !/\.(bmp|gif|jpg|jpeg|png)$/ig.test(file.name) ) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
       return false;
     }
@@ -191,8 +193,8 @@ Tw.MytJoinSuspendUpload.prototype = {
    * @desc Event listener for the button click on #fe-upload-ok(파일업로드)
    */
   _onClickOk: function () {
-    if (this._callback) {
-      if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
+    if ( this._callback ) {
+      if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
         this._callback(this._nativeUploaded, true);
       } else {
         /*
@@ -226,11 +228,11 @@ Tw.MytJoinSuspendUpload.prototype = {
   _onClickFileButton: function (e) {
     var $btFile = $(e.target);
     var $inputBox = $btFile.parents('.inputbox');
-    if ($inputBox.find('input.file').attr('disabled')) {// 파일삭제
+    if ( $inputBox.find('input.file').attr('disabled') ) {// 파일삭제
       // 파일삭제시 input 처리
       this._setFileButton($inputBox, true);
     } else {
-      if (Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
+      if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
         this._openCustomFileChooser($inputBox);
       }
     }
@@ -255,7 +257,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     var index = $inputBox.attr('data-index');
     var $inputFile = $inputBox.find('input.file');
     var $buttonFile = $inputBox.find('.fe-file-button');
-    if (addable) {
+    if ( addable ) {
       delete this._fileInfos[index].oldFile;
       $inputBox.find('input.fileview').val('');
       $inputFile.prop('files', null);
