@@ -112,6 +112,8 @@ class MainHome extends TwViewController {
     console.log(`>>>[TEST] flag `, flag);
     console.log(`>>>[TEST] eventBannerCtl `, eventBannerCtl);
 
+    
+
     if ( svcInfo ) {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
           // 모바일 - 휴대폰 회선
