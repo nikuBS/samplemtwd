@@ -50,12 +50,22 @@
             <div id="tariffs">
             </div>
         </div>
-        <!--
-        <div class="card">
-            <h3>로밍 카드/쿠폰</h3>
-            <h3>baro Box 대여</h3>
+        <div class="card no-padding">
+            <a href="/product/roaming/coupon">
+                <div class="menu-link border-bottom">
+                    <img class="icon" src="<%= CDN %>/img/product/roam/ico_coupon.png" width="32" />
+                    <span>로밍 카드/쿠폰</span>
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                </div>
+            </a>
+            <a href="/product/roaming/fi/guide">
+                <div class="menu-link">
+                    <img class="icon" src="<%= CDN %>/img/product/roam/ico_barobox.png" width="32" />
+                    <span>baro Box 대여</span>
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                </div>
+            </a>
         </div>
-        -->
     </div>
 </div>
 </body>
@@ -123,7 +133,6 @@
     }
   }
   function fillTariffs() {
-    // height 30px로 밀어버렷
     const list = [
       {url: '', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
       {url: '', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
