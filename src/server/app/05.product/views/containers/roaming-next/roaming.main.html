@@ -25,14 +25,7 @@
                 여행하실 나라를 선택해주세요
             </p>
             <div id="nations">
-                <ul>
-<!--                    <li>-->
-<!--                        <img src="<%= CDN %>/img/product/roam/img_nation_s_01.png" width="92" />-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <img src="<%= CDN %>/img/product/roam/img_nation_s_01.png" width="92" />-->
-<!--                    </li>-->
-                </ul> 
+                <ul></ul> 
             </div>
             <p class="description">
                 찾으시는 나라가 없으신가요?
@@ -46,17 +39,23 @@
             </div>
         </div>
         <div class="banner">
-            <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너" />
+            <a href="/product/roaming/info/barocall">
+                <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너 Baro 통화" />
+            </a>
         </div>
         <div class="card">
             <h3>
                 로밍 요금제 한눈에 보기
             </h3>
+            <div id="tariffs">
+            </div>
         </div>
+        <!--
         <div class="card">
             <h3>로밍 카드/쿠폰</h3>
             <h3>baro Box 대여</h3>
         </div>
+        -->
     </div>
 </div>
 </body>
@@ -65,8 +64,8 @@
   $(document).ready(function () {
     new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
   });
-  function boot() {
-    const nationList = [
+  function fillRecommendedNations() {
+    const list = [
       {
         'url': '<%= CDN %>/img/product/roam/img_nation_s_01.png',
         'name': '중국',
@@ -101,11 +100,11 @@
 
     const GAP = 6;
     const COLUMN = 3;
-    const nations = document.getElementById('nations');
-    const nationWidth = Math.floor((nations.clientWidth - GAP * COLUMN) / COLUMN);
+    const container = document.getElementById('nations');
+    const nationWidth = Math.floor((container.clientWidth - GAP * COLUMN) / COLUMN);
     const ul = document.querySelector('#nations ul');
-    for (let i = 0; i < nationList.length; i++) {
-      const item = nationList[i];
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
 
       const img = document.createElement('img');
       img.src = item.url;
@@ -123,7 +122,40 @@
       ul.appendChild(li);
     }
   }
-  boot();
+  function fillTariffs() {
+    // height 30px로 밀어버렷
+    const list = [
+      {url: '', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
+      {url: '', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
+      {url: '', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
+    ];
+    const container = document.getElementById('tariffs');
+    for (var i=0; i<list.length; i++) {
+      const item = list[i];
+
+      // TODO: Handlebar 같은 템플릿엔진 적용 필요
+      const div = document.createElement('div');
+      div.className = 'tariff';
+
+      const icon = document.createElement('img');
+      icon.src = '<%= CDN %>/img/product/roam/' + item.icon;
+      icon.alt = 'product-icon';
+      div.appendChild(icon);
+
+      const title = document.createElement('h4');
+      title.innerText = item.name;
+      div.appendChild(title);
+
+      const subtitle = document.createElement('h5');
+      subtitle.innerText = item.description;
+      div.appendChild(subtitle);
+
+      container.appendChild(div);
+    }
+  }
+
+  fillRecommendedNations();
+  fillTariffs();
 </script>
 <% include ../../components/end.component.html %>
 
