@@ -193,7 +193,6 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
   /**
    * @function
    * @desc 전화번호 변경 요청
-   * @param
    * @private
    */
   _requestChangeNumber: function () {
@@ -222,7 +221,6 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
   /**
    * @function
    * @desc 완료페이지로 가기
-   * @param
    * @private
    */
   _goCompletePage: function () {

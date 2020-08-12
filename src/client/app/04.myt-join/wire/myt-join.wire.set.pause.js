@@ -77,10 +77,6 @@ Tw.MytJoinWireSetPause.prototype = {
 
   /**
    * 이용정지 가능 기간 반환
-   * @return {
-   *   min: 시작날짜
-   *   max: 끝날짜
-   * }
    * @private
    */
   _getEndDateRange: function () {
@@ -263,7 +259,7 @@ Tw.MytJoinWireSetPause.prototype = {
 
   /**
    * 일시 정지 신청/해제 API호출 실패
-   * @param resp
+   * @param err
    * @private
    */
   _reqFail: function (err) {

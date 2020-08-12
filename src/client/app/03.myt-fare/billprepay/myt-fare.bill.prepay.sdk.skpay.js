@@ -18,7 +18,7 @@ Tw.MyTFareBillPrepaySdkSKPay = function (params) {
 };
 
 Tw.MyTFareBillPrepaySdkSKPay.prototype = {
-  goSkpay: function (e) {
+  goSkpay: function () {
     try {
       var _linChnlClCd = '';
       var _itemsName = '';

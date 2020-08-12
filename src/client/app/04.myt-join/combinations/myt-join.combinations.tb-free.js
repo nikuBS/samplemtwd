@@ -48,7 +48,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   /**
    * @desc 혜택 변경 팝업 이벤트 바인딩
-   * @param {$object} $layer 팝업 jquery object
+   * @param $layer 팝업 jquery object
    * @private
    */
   _handleOpenChangeBenefitPopup: function ($layer) {
@@ -66,12 +66,12 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   /**
    * @desc 혜택 변경 버튼 클릭 시 서버에 요청
-   * @param {$object} $layer 팝업 레이어 jquery object
+   * @param $layer 팝업 레이어 jquery object
    * @private
    */
   _submitChangeBenefit: function ($layer) {
-    var value = '',
-        code  = 0;
+    var value = '';
+    var code = 0;
 
     if ( this._bIdx === '1' ) { // 혜택 1 변경 시
       code = 6;
@@ -144,8 +144,8 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   /**
    * @desc 혜택2변경 핸드폰 번호 유효성 검사
-   * @param {string} value 인풋 입력 값
-   * @param {$object} $error 에러 표시 jquery 객체
+   * @param value 인풋 입력 값
+   * @param $error 에러 표시 jquery 객체
    * @private
    */
   _validPhoneNumber: function (value, $error) {
@@ -174,8 +174,8 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   /**
    * @desc 인풋이 포커스를 잃었을 때
-   * @param {$object} $input 인풋 jquery 객체
-   * @param {$object} $error 에러 표시 jquery 객체
+   * @param $input 인풋 jquery 객체
+   * @param $error 에러 표시 jquery 객체
    */
   _handleFocusoutInput: function ($input, $error) {
     var value   = $input.val(),
@@ -188,7 +188,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   /**
    * @desc 에러 스테이트 설정
-   * @param {$object} $error 에러 표시 jquery 객체
+   * @param $error 에러 표시 jquery 객체
    * @param {string} msg 에러메세지
    * @private
    */
@@ -201,7 +201,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   /**
    * @desc 입력에 포커스가 되면 대쉬 지움
-   * @param {$object} $input 인풋 jquery 객체
+   * @param $input 인풋 jquery 객체
    * @private
    */
   _removeDash: function ($input) {
@@ -210,9 +210,9 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   /**
    * @desc 인풋에 입력 시
-   * @param  {$object} $input
-   * @param  {$object} $error
-   * @param  {$object} $submitBtn
+   * @param  $input
+   * @param  $error
+   * @param  $submitBtn
    * @private
    */
   _handleTypeInput: function ($input, $error, $submitBtn) {

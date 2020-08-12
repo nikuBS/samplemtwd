@@ -25,7 +25,7 @@ Tw.MyTDataHistory.prototype = {
 
   /**
    * @desc 초기화 함수
-   * @param {object} histories BFF 에서 전체 내역 소팅 및 페이징이 안된다고 하여, node에서 소팅 후 더보기 로직을 위해 js로 토스
+   * @param histories BFF 에서 전체 내역 소팅 및 페이징이 안된다고 하여, node에서 소팅 후 더보기 로직을 위해 js로 토스
    */
   _init: function (histories) {
     this._type = Number(this.$list.data('filter-index'));
@@ -116,7 +116,7 @@ Tw.MyTDataHistory.prototype = {
 
   /**
    * @desc 충전/선물 유형 변경 팝업 오픈 시
-   * @param {$object} $layer
+   * @param $layer
    */
   _handleOpenType: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
@@ -125,10 +125,10 @@ Tw.MyTDataHistory.prototype = {
 
   /**
    * @desc 충전/선물 유형 변경 선택 시
-   * @param {Event} e 클릭 이벤트 객체
+   * @param event 클릭 이벤트 객체
    */
-  _handleSelectType: function (e) {
-    var $target = $(e.currentTarget),
+  _handleSelectType: function (event) {
+    var $target = $(event.currentTarget),
         $li     = $target.parents('label');
     var selectedIdx = Number($target.data('type'));
 
@@ -177,16 +177,16 @@ Tw.MyTDataHistory.prototype = {
 
   /**
    * @desc 충전 취소 버튼 클릭 시 안내 팝업
-   * @param {Event} e 클릭 이벤트 객체
+   * @param event 클릭 이벤트 객체
    */
-  _openCancelableChargeAlert: function (e) {
+  _openCancelableChargeAlert: function (event) {
     this._popupService.openAlert(
       Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCEL,
       undefined,
       undefined,
       undefined,
       undefined,
-      $(e.currentTarget)  // 웹 접근성 포커스 처리를 위한 jquery 객체
+      $(event.currentTarget)  // 웹 접근성 포커스 처리를 위한 jquery 객체
     );
   }
 };

@@ -26,7 +26,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 리스트 생성 실행
    * @return {void}
    */
@@ -36,7 +35,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성시 이벤트 바인드
    */
   _bindEvent: function () {
@@ -45,7 +43,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성자 생성시 템플릿 엘리먼트 설정
    * - myt-fare.info.overpay-refund.html 참고
    */
@@ -74,7 +71,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 환불내역 리스트 , 리스트 렌더링 후 이벤트 바인드
    */
   _initRefundList: function () {
@@ -116,14 +112,12 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 상세보기로 이동, 클릭 이벤트 발생한 객체 엘리먼트의 listId 값을 파라미터로 이동 시킴
    * /myt-fare/info/overpay-refund/detail?
-   * @param {number>string} lsitId
-   * @param {event} e
+   * @param {event} event
    */
-  _listViewDetailHandler: function (e) {
-    var detailData = this.data[$(e.currentTarget).data('listId')];
+  _listViewDetailHandler: function (event) {
+    var detailData = this.data[$(event.currentTarget).data('listId')];
 
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
@@ -132,15 +126,13 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 더보기 버튼 이벤트 리스트 추가
-   * @param {event} e
    */
   _updateRefundList: function () {
     this._updateRefundListData();
 
     this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.length ? 'none' : ''});
-    // this._updateViewMoreBtnRestCounter($(e.currentTarget));
+    // this._updateViewMoreBtnRestCounter($(event.currentTarget));
 
     var $domAppendTarget  = this.$appendListTarget;
 
@@ -154,7 +146,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 추가할 리스트 목록 구하기
    */
   _updateRefundListData: function () {
@@ -168,13 +159,11 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
-   * @param {event} e
-   * @returns {void}
+   * @param $target
    * @desc 더보기 클릭시 남은 리스트 갯수 표현하는 것이었으나 현재 사용되지는 않음
    */
-  _updateViewMoreBtnRestCounter: function (e) {
-    e.text(e.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
+  _updateViewMoreBtnRestCounter: function ($target) {
+    $target.text($target.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
   }
 
 

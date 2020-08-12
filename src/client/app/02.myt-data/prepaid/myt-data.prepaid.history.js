@@ -95,7 +95,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   /**
    * @desc 음성 or 데이터 타입 변경을 위한 팝업 이벤트 바인딩
-   * @param {$object} $layer
+   * @param $layer
    */
   _handleOpenChangeTypes: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
@@ -104,10 +104,10 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   /**
    * @desc 음성 or 데이터 충전 타입 선택 시
-   * @param {Event} e 클릭 이벤트
+   * @param event 클릭 이벤트
    */
-  _handleSelectType: function (e) {
-    var type  = $(e.currentTarget).data('type'),
+  _handleSelectType: function (event) {
+    var type  = $(event.currentTarget).data('type'),
         count = this.$totalCount.data(type);
 
     if ( type === this._currentType ) { // 현재 타입이랑 선택된 타입이랑 동일 할 때 return
@@ -165,7 +165,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   /**
    * @desc 내역 요청에 대한 응답이 돌아온 경우
-   * @param {object} resp 서버 응답
+   * @param resp 서버 응답
    */
   _handleSuccessLoadMore: function (resp) {
     var type = this._currentType;
@@ -185,7 +185,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   /**
    * @desc 추가 충전 내역 render
-   * @param {object} histories 내역
+   * @param histories 내역
    */
   _renderHistories: function (histories) {
     var type     = this._currentType,
@@ -310,7 +310,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
   /**
    * @desc 취소 확인 팝업에서 '확인' 버튼 클릭시, 취소 로직
-   * @param {$object} $target 취소 버튼
+   * @param $target 취소 버튼
    */
   _handleCancel: function ($target) {
     var code    = $target.data('charge-code'),
