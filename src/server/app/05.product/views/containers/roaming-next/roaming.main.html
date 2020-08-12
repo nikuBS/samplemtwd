@@ -1,14 +1,74 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="productRoaming">
-    <h1 class="hello">T roaming</h1>
+    <div id="gnb">
+        <span class="menu">
+            <img src="<%= CDN %>/img/product/roam/menu_black.png" alt="컨텍스트 메뉴" width="24" height="24" />
+        </span>
+        <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="로고" width="94" height="24" />
+    </div>
+    <div id="background"></div>
+    <div id="contents">
+        <h2>
+            해외여행 갈 땐
+        </h2>
+        <h2 class="colorPoint">
+            T로밍과 함께 !
+        </h2>
+        <p class="description">
+            T로밍 요금제를 통해 해외에서도 국내처럼 <br />
+            자유롭게 baro 통화하세요.
+        </p>
+        <div class="card">
+            <h3>국가별 맞춤 로밍 요금제 추천</h3>
+            <p class="description">
+                여행하실 나라를 선택해주세요
+            </p>
+            <div id="nations">
+                <!-- TODO: 가변 width 고려하여 가용 width / 3 - spacing * 2 세팅 -->
+                <ul>
+                    <li>
+                        <img src="<%= CDN %>/img/product/roam/img_nation_s_01.png" width="92" />
+                        <img src="<%= CDN %>/img/product/roam/img_nation_s_02.png" width="92" />
+                        <img src="<%= CDN %>/img/product/roam/img_nation_s_03.png" width="92" />
+                    </li>
+                    <li>
+                        <img src="<%= CDN %>/img/product/roam/img_nation_s_04.png" width="92" />
+                        <img src="<%= CDN %>/img/product/roam/img_nation_s_05.png" width="92" />
+                        <img src="<%= CDN %>/img/product/roam/img_nation_s_06.png" width="92" />
+                    </li>
+                </ul> 
+            </div>
+            <p class="description">
+                찾으시는 나라가 없으신가요?
+            </p>
+            <div class="field-container">
+                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" />
+                <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
+            </div>
+            <div class="link">
+                <a href="#" onclick="return false;">전체 국가보기</a>
+            </div>
+        </div>
+        <div class="banner">
+            <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너" />
+        </div>
+        <div class="card">
+            <h3>
+                로밍 요금제 한눈에 보기
+            </h3>
+        </div>
+        <div class="card">
+            <h3>로밍 카드/쿠폰</h3>
+            <h3>baro Box 대여</h3>
+        </div>
+    </div>
 </div>
 </body>
-
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
+    new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -453,10 +453,10 @@ gulp.task('post-clean', function () {
 });
 
 gulp.task('watch', function () {
-  livereload.listen();
-  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
-  gulp.watch('src/client/**/*.js', { interval: 500 }, ['client-build']);
-  gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
+//  livereload.listen();
+//  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
+//  gulp.watch('src/client/**/*.js', { interval: 500 }, ['client-build']);
+//  gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
 });
 
 gulp.task('get-manifest', function () {
