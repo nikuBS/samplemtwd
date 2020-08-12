@@ -416,7 +416,7 @@ Tw.PRODUDT.PROMOTIONS = {
           } else if ( data.prodId === 'NA00006599' && data.joinDate !== 'N' && data.pooqContentsDate !== 'N' ) { // Only NA00006517 + NA00006600
             return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
           } else if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
-            if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
+            if( data.coinDate === 'N' || 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
               return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
             }else{
               return 'NONE_FREE_3_3'; // OCB지급 Y , 가입월 M+1 이하
@@ -425,7 +425,7 @@ Tw.PRODUDT.PROMOTIONS = {
             return 'NONE_FREE_3_1'; // OCB지급 N
           }
         } else if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
-          if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
+          if( data.coinDate === 'N' || 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
             return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
           }else{
             return 'NONE_FREE_3_3'; // OCB지급 Y , 가입월 M+1 이하
@@ -445,7 +445,7 @@ Tw.PRODUDT.PROMOTIONS = {
           } else if (data.joinDate1 !== 'N') {
             if ( 1 <= moment(month).diff(data.fstScrbDt.substr(0, 6) + '01', 'month') ) {
               if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
-                if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
+                if( data.coinDate === 'N' || 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
                   return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
                 }else{
                   return 'NONE_FREE_3_3'; // OCB지급 Y , 가입월 M+1 이하
@@ -458,7 +458,7 @@ Tw.PRODUDT.PROMOTIONS = {
             }
           } else {
             if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
-              if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
+              if( data.coinDate === 'N' || 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
                 return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
               }else{
                 return 'NONE_FREE_3_3'; // OCB지급 Y , 가입월 M+1 이하
@@ -470,7 +470,7 @@ Tw.PRODUDT.PROMOTIONS = {
         } else if ( data.joinDate1 !== 'N') {
           if  ( 1 <= moment(month).diff(data.fstScrbDt.substr(0,6) + '01', 'month') ) {
             if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
-              if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
+              if( data.coinDate === 'N' || 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
                 return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
               }else{
                 return 'NONE_FREE_3_3'; // OCB지급 Y , 가입월 M+1 이하
@@ -483,7 +483,7 @@ Tw.PRODUDT.PROMOTIONS = {
           }
         } else {
           if ( data.coinDate !== 'N' || data.floUseDate !== 'N') { // OCB지급 Y or FLO_유지_적립완료
-            if( 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
+            if( data.coinDate === 'N' || 2 <= moment(month).diff(data.coinDate.substr(0,6) + '01', 'month') ){
               return 'NONE_FREE_3_2'; // OCB지급 Y , 가입월 M+2 이상
             }else{
               return 'NONE_FREE_3_3'; // OCB지급 Y , 가입월 M+1 이하
