@@ -196,7 +196,7 @@ class ApiRouter {
     if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1004,
         msg: NODE_API_ERROR[API_CODE.NODE_1004]
       });
