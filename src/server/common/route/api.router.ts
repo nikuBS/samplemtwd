@@ -194,6 +194,7 @@ class ApiRouter {
     res.set('expires', '0');
     res.set('pragma', 'no-cache');
     if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+      this.logger.error('sessionCheck::loginCookie: ' + loginCookie);
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
       return res.json({
