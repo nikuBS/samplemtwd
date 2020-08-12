@@ -222,11 +222,11 @@ Tw.MytJoinSuspendUpload.prototype = {
   /**
    * @function
    * @desc Event listener for the button click on .fe-file-button(파일찾기/삭제)
-   * @param e
+   * @param event
    * @private
    */
-  _onClickFileButton: function (e) {
-    var $btFile = $(e.target);
+  _onClickFileButton: function (event) {
+    var $btFile = $(event.target);
     var $inputBox = $btFile.parents('.inputbox');
     if ( $inputBox.find('input.file').attr('disabled') ) {// 파일삭제
       // 파일삭제시 input 처리

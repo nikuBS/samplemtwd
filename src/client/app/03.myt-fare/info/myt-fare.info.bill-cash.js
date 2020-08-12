@@ -28,7 +28,6 @@ Tw.MyTFareInfoBillCash.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 객체가 생성될 때 동작에 필요한 내부 변수를 정의 한다.
    * @return {void}
    */
@@ -78,7 +77,6 @@ Tw.MyTFareInfoBillCash.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성자 생성시 템플릿 엘리먼트 설정
    * - myt-fare.info.history.html 참고
    */
@@ -102,7 +100,6 @@ Tw.MyTFareInfoBillCash.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성시 이벤트 바인드
    */
   _bindEvent: function () {
@@ -111,10 +108,7 @@ Tw.MyTFareInfoBillCash.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 더보기 실행
-   * @param {event} e 더보기 버튼 클릭 이벤트 발생 시킨 엘리먼트
-   * @returns {void}
    */
   _updateCashList: function () {
     this._updateCashListData();
@@ -149,7 +143,6 @@ Tw.MyTFareInfoBillCash.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 리스트
    * @returns {void}
    */
@@ -164,12 +157,10 @@ Tw.MyTFareInfoBillCash.prototype = {
 
   /**
    * @function
-   * @member
-   * @param {event} e
-   * @returns {void}
+   * @param $target
    * @desc 더보기 클릭시 남은 리스트 갯수 표현하는 것이었으나 현재 사용되지는 않음
    */
-  _updateViewMoreBtnRestCounter: function (e) {
-    e.text(e.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
+  _updateViewMoreBtnRestCounter: function ($target) {
+    $target.text($target.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
   }
 };

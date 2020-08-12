@@ -162,18 +162,16 @@ Tw.MyTFareInfoHistory.prototype = {
    * @function
    * @desc 상세보기 이동
    * - myt-fare/info/history/detail?
-   * @param {string} type - 카테고리타입 상세페이지에서 어떤 API 를 호출할 지 기준이 됨
-   * @param {number>string} innerIndex - 리스트내 인덱스 존재 할 경우 / 상세보기 페이지에서도 같은 API 를 호출하고 id 값이 존재하지 않아 innerIndex 값을 저장해서 파라미터로 넘겨 해당 데이터를 찾을 수 있도록 함
-   * @param {date>string} opDt, payOpTm- 즉시납부 코드일 경우 (=== DI ) 파라미터 전송 해당 파라미터로 상세페이지에서 검색
+   * @param event
    */
-  _listViewDetailHandler: function (e) {
+  _listViewDetailHandler: function (event) {
     // 링크가 없다면 return ;
-    if ( !$(e.currentTarget).data('listId') &&
-      $(e.currentTarget).data('listId') !== 0 &&
-      $(e.currentTarget).data('listId') !== '0'
+    if ( !$(event.currentTarget).data('listId') &&
+      $(event.currentTarget).data('listId') !== 0 &&
+      $(event.currentTarget).data('listId') !== '0'
     ) return;
 
-    var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
+    var detailData = this.data.listData.mergedListData[$(event.currentTarget).data('listId')];
     // OP002-8562 isPersonalBiz 사용안함
     // detailData.isPersonalBiz = this.data.isPersonalBiz;
 
@@ -185,13 +183,13 @@ Tw.MyTFareInfoHistory.prototype = {
 
   /**
    * @function
-   * @param {event} e
+   * @param event
    * @desc 예약취소 클릭 이벤트 발생 처리
    * @returns {void}
    */
-  _reserveCancelHandler: function (e) {
-    e.stopPropagation();
-    this.reserveCancelData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
+  _reserveCancelHandler: function (event) {
+    event.stopPropagation();
+    this.reserveCancelData = this.data.listData.mergedListData[$(event.currentTarget).data('listId')];
     var alertCode, alertType;
 
     // alertCode 설정 포인트 종류별로 확인 메세지 결정
@@ -215,9 +213,9 @@ Tw.MyTFareInfoHistory.prototype = {
       this._popupService.openConfirm(
         alertType.MSG,
         alertType.TITLE,
-        $.proxy(this._execReserveCancel, this, $(e.currentTarget)),
+        $.proxy(this._execReserveCancel, this, $(event.currentTarget)),
         $.proxy(this._popupService.close, this),
-        $(e.currentTarget)
+        $(event.currentTarget)
       );
     }
 
@@ -261,8 +259,8 @@ Tw.MyTFareInfoHistory.prototype = {
   /**
    * @function
    * @desc 포인트 1회 납부예약 취소 결과값 반환 후 처리
-   * @param {Object} $target 처음 이벤트 발생시켰던 버튼 엘리먼트
-   * @param {JSON} res 반환 값 JSON
+   * @param $target 처음 이벤트 발생시켰던 버튼 엘리먼트
+   * @param res 반환 값 JSON
    */
   _successReserveCancel: function ($target, res) {
     var alertCode, alertType;
@@ -274,7 +272,7 @@ Tw.MyTFareInfoHistory.prototype = {
 
     alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
 
-    if ( res.code === '00' ) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       // 성공시
       /**
        * @desc 포인트 예약취소 알림 팝업
@@ -320,10 +318,7 @@ Tw.MyTFareInfoHistory.prototype = {
   // 포인트 예약 취소 end
 
   /**
-   * @function
    * @desc 더보기 실행
-   * @param {event} e 더보기 버튼 클릭 이벤트 발생 시킨 엘리먼트
-   * @returns {void}
    */
   _updatePaymentList: function () {
     // 표현할 리스트 데이터 호출
@@ -476,9 +471,8 @@ Tw.MyTFareInfoHistory.prototype = {
   /**
    * @function
    * @desc API 호출 후 에러 반환시 에러 서비스 호출
-   * @param {Oject} $target API 호출시 이벤트 발생 시킨 엘리먼트
-   * @param {JSON} err API 반환 코드
-   * @returns {boolean} false
+   * @param $target API 호출시 이벤트 발생 시킨 엘리먼트
+   * @param err API 반환 코드
    */
   _apiError: function ($target, err) {
     Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop(null, $target);

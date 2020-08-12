@@ -181,7 +181,8 @@ Tw.MyTJoinSubMain.prototype = {
   /**
    * @function
    * @desc 토스 배너 처리
-   * @param resp
+   * @param banner1
+   * @param admBanner
    * @private
    */
   _successTosAdminMytJoinBanner: function (banner1, admBanner) {

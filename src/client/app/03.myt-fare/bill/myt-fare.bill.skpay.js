@@ -8,7 +8,7 @@
 /**
  * @namespace
  * @desc SK pay 납부 namespace
- * @param rootEl - dom 객체
+ * @param params
  */
 Tw.MyTFareBillSkpay = function (params) {
   this.$container = params.$element;
@@ -183,9 +183,9 @@ Tw.MyTFareBillSkpay.prototype = {
   /**
    * @function
    * @desc 모든 유효성 검증 후 납부내역 확인 풀팝업 load
-   * @param e
+   * @param event
    */
-  _checkPay: function (e) {
+  _checkPay: function (event) {
     if ( this._checkIsPayLimit() && this._validationService.isAllValid() ) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
@@ -195,7 +195,7 @@ Tw.MyTFareBillSkpay.prototype = {
         $.proxy(this._openCheckPay, this), // open callback
         $.proxy(this._afterPaySuccess, this), // close callback
         'check-pay',
-        $(e.currentTarget)
+        $(event.currentTarget)
       );
     }
   },
@@ -273,11 +273,11 @@ Tw.MyTFareBillSkpay.prototype = {
   /**
    * @function
    * @desc 요금납부 종료 confirm
-   * @param e
+   * @param event
    */
-  _checkClose: function (e) {
+  _checkClose: function (event) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(e.currentTarget));
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(event.currentTarget));
   },
   /**
    * @function
@@ -299,9 +299,9 @@ Tw.MyTFareBillSkpay.prototype = {
   /**
    * @function
    * @desc SK pay 납부 API 호출
-   * @param e
+   * @param event
    */
-  _goSkpay: function (e) {
+  _goSkpay: function (event) {
     try {
       /* jshint ignore:start */
       this._encryptedUserAgent = SKpaySDK.generateUserAgent();
@@ -349,8 +349,8 @@ Tw.MyTFareBillSkpay.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_07_0095, dateReq)
         .done($.proxy(this._onSuccessSkpayAuth, this))
         .fail($.proxy(this._onFailSkpayAuth, this));
-    } catch ( e ) {
-      if ( e instanceof ReferenceError ) {
+    } catch ( event ) {
+      if ( event instanceof ReferenceError ) {
         Tw.Error(Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CODE, Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CONTENTS).pop();
       }
     }
@@ -392,8 +392,7 @@ Tw.MyTFareBillSkpay.prototype = {
    * bankOrCardAccn, ccPwd: string, cdexpy: string, cdexpm: string, instmm, unpaidBillList: *|Array}}
    */
   _makeRequestData: function () {
-
-    var reqData = {
+    return {
       payOvrAutoYn: this._refundAutoYn,
       payOvrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
       payOvrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
@@ -407,7 +406,6 @@ Tw.MyTFareBillSkpay.prototype = {
       instmm: this.$cardTypeSelector.attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
     };
-    return reqData;
   },
   /**
    * @function

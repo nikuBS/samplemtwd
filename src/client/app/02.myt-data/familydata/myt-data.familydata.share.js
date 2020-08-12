@@ -36,11 +36,11 @@ Tw.MyTDataFamilyShare.prototype = {
 
   /**
    * 데이터 플러스 버튼 클릭 시
-   * @param {Event} e 클릭 이벤트 객체
+   * @param event 클릭 이벤트 객체
    */
-  _addShareData: function (e) {
-    var value   = e.currentTarget.getAttribute('data-value'),
-        $target = $(e.currentTarget);
+  _addShareData: function (event) {
+    var value   = event.currentTarget.getAttribute('data-value'),
+        $target = $(event.currentTarget);
 
     if ( value === 'all' ) {  // 전체 클릭 시 인풋, +1, +5 버튼 비활성화
       if ( this._all ) {
@@ -104,7 +104,7 @@ Tw.MyTDataFamilyShare.prototype = {
 
   /**
    * @desc 변경하기 버튼 상태 변경
-   * @param {boolean} disable
+   * @param disable
    */
   _setDisableSubmit: function (disable) {
     this.$submitBtn.attr('disabled', disable);

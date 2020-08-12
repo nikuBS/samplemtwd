@@ -37,7 +37,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 객체가 생성될 때 동작에 필요한 내부 변수를 정의 한다.
    * - limitLength 한번에 노출되는 갯수 20
    * - monthActionSheetListData 셀렉트박스 선택시 (월 선택) 노출시킬 리스트
@@ -47,7 +46,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * - selectedYear 선택된 년도 초기값 확인(파라미터 값 또는 현재 년도)
    * - selectedMonth 선택된 월 초기값 확인(파라미터 값 또는 현재 월)
    * - _getQueryFromTo 를 호출하고 extend로 this.fromDt, this.toDt를 설정한다.
-   * @return {void}
    */
   _init: function () {
     this.limitLength = Tw.DEFAULT_LIST_COUNT;
@@ -67,7 +65,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성자 생성시 템플릿 엘리먼트 설정
    * - myt-fare.bill.small.history.html 참고
    */
@@ -81,7 +78,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성시 이벤트 바인드
    */
   _bindEvent: function () {
@@ -158,7 +154,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * 기존 응답값에 필요한 결과 데이터를 추가해 반환한다
    * 결과배열을 역정렬해서 반환함(최근내역이 뒤로 가서 조회되어 FE에서 수정해 표기)
    * @param {JSON} res
-   * @returns {Array<object>}
    */
   _convData: function (res) {
     if ( res && res.result &&
@@ -194,7 +189,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @desc 주어진 파라미터로 문자열형태로 반환
    * @param {number} year 년도
    * @param {number} month 월
-   * @return {string} YYYYMM
    */
   _getStrYearMonth: function (year, month) {
     return year + (month.toString().length < 2 ? '0' : '') + month;
@@ -204,7 +198,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @function
    * @desc convData 결과값으로 온 데이터를 YYYYMM: [] 형태로 반환 -> this.totalList 에 확장
    * @param {Array<object>} arr
-   * @returns {Object<{YYYYMM:Array<object>}>}
    */
   _devData: function (arr) {
     return _.reduce(arr, function (prev, o) {
@@ -221,7 +214,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @desc this.totalList 에서 YYYYMM 키값으로 선택된 배열을 리스트로 렌더링
    * this.list 에 전달된 리스트를 concat 하고 list를 splice로 삭제하며 렌더링함
    * @param {object[]} list
-   * @return {function}
    */
   _showLists: function (list) {
     this.list = [].concat(list);
@@ -272,9 +264,9 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @desc 월 선택 셀렉트 박스를 노출함
-   * @param {event} e
+   * @param {event} event
    */
-  _showSelectMonth: function (e) {
+  _showSelectMonth: function (event) {
     /**
      * @function
      * @param {Object} {hbs: hbs 의 파일명, layer: 레이어 여부, title: 액션시트 제목, data: 데이터 리스트,
@@ -295,18 +287,16 @@ Tw.MyTFareBillSmallHistory.prototype = {
       $.proxy(this._openMonthSelectHandler, this), // 액션시트 열린 후 콜백
       null,
       null, // 해쉬네임
-      $(e.currentTarget) // 팝업 닫힌 후 포커스 이동될 버튼 객체
+      $(event.currentTarget) // 팝업 닫힌 후 포커스 이동될 버튼 객체
     );
   },
 
   /**
    * @function
-   * @member
    * @desc 월 선택 액션시트 열린 후 callback function
    * - 선택된 월 라디오 버튼에 checked 처리
    * - 각 리스트에 클릭 이벤트 바인드 -> 라디오 버튼 체인지 이벤트를 발생 시킴
    * @param {Object} $sheet 월 선택 액션시트 wraper 엘리먼트
-   * @returns {void}
    */
   _openMonthSelectHandler: function ($sheet) {
     // 해당 년 월 선택
@@ -326,17 +316,15 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 선택된 년/월로 수정 후 리스트 렌더링 함수 호출
-   * @param {event} e
-   * @returns {void}
+   * @param {event} event
    */
-  _updateMicroPayContentsList: function (e) {
-    var year = $(e.currentTarget).find('input').data('year') || this.data.curYear;
-    var month = $(e.currentTarget).find('input').data('month') || this.data.curMonth;
+  _updateMicroPayContentsList: function (event) {
+    var year = $(event.currentTarget).find('input').data('year') || this.data.curYear;
+    var month = $(event.currentTarget).find('input').data('month') || this.data.curMonth;
     //선택표기
-    $(e.currentTarget).attr('aria-selected', true).siblings().attr('aria-selected', false);
-    $(e.currentTarget).find('input[type=radio]').prop('checked', true);
+    $(event.currentTarget).attr('aria-selected', true).siblings().attr('aria-selected', false);
+    $(event.currentTarget).find('input[type=radio]').prop('checked', true);
     // 선택 text
     this.$selectMonth.text(month + Tw.PERIOD_UNIT.MONTH);
 
@@ -354,10 +342,10 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @desc 상세보기 이벤트
-   * @param {event} e
+   * @param {event} event
    */
-  _moveDetailPage: function (e) {
-    var $target = $(e.currentTarget);
+  _moveDetailPage: function (event) {
+    var $target = $(event.currentTarget);
     var thisData = this._getDetailData($target.data('listDate'), $target.data('listId'));
     this._popupService.open(
       $.extend({
@@ -375,9 +363,8 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @desc listDate 키값을 기준으로 listId 를 찾아 반환
-   * @param {date>number} listDate
-   * @param {number} listId
-   * @returns {object}
+   * @param listDate
+   * @param listId
    */
   _getDetailData: function (listDate, listId) {
     var curList = this.totalList[listDate.toString().substr(0, 6)];
@@ -410,12 +397,12 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @function
    * @param {date} date
    * @param {number} idx
-   * @param {objcect} obj
+   * @param obj
    */
   _updateData: function (date, idx, obj) {
     var curData = this._getDetailData(date, idx);
     if ( !Tw.FormatHelper.isEmpty(curData) ) {
-      curData = $.extend(curData, obj);
+      $.extend(curData, obj);
     }
   },
 
@@ -429,7 +416,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   /**
    * @desc 월 선택 액션시트에 사용될 데이터 반환
-   * @return {array}
    */
   _setMonthActionSheetData: function () {
     return this.monthActionSheetListData || this._setMonthList(this.data.beforeYear, this.data.beforeMonth, 6); // 캐싱된것 or 함수 실행
@@ -469,9 +455,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
       list: tempArr.reverse()
     }];
 
-    /**
-     * @returns {Array<{YYYYMM: []}>}
-     */
     if ( type === 'key' ) {
       return _.reduce(keyArr, function (prev, key_name) {
         prev[key_name] = [];
@@ -489,7 +472,6 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @param {number} prev_month
    * @param {number} year
    * @param {number} month
-   * @return {Object<{fromDt: YYYYMM01, toDt: YYYYMM31}>}
    */
   _getQueryFromTo: function (prev_year, prev_month, year, month) {
     var firstDate = prev_year + (prev_month.toString().length < 2 ? '0' : '') + prev_month + '01';

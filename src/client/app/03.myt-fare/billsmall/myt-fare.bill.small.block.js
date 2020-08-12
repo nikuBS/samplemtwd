@@ -26,9 +26,7 @@ Tw.MyTFareBillSmallBlock.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 데이터 렌더링
-   * @return {void}
    */
   _init: function () {
     var renderedHTML;
@@ -42,7 +40,6 @@ Tw.MyTFareBillSmallBlock.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성자 생성시 템플릿 엘리먼트 설정
    * - myt-fare.bill.small.block.html 참고
    */
@@ -56,7 +53,6 @@ Tw.MyTFareBillSmallBlock.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성시 이벤트 바인드
    */
   _bindEvent: function () {
@@ -67,14 +63,14 @@ Tw.MyTFareBillSmallBlock.prototype = {
   /**
    * @function
    * @desc 해제하기 버튼 눌렀을 시 확인 팝업 띄움
-   * @param {event} e
+   * @param {event} event
    */
-  _UnBlockThis: function (e) {
-    e.stopPropagation();
+  _UnBlockThis: function (event) {
+    event.stopPropagation();
     this.$li = this.$domWrapper.find('li').filter(function () {
-      return $(this).data('listId') === $(e.currentTarget).data('listId');
+      return $(this).data('listId') === $(event.currentTarget).data('listId');
     }); // 클릭이벤트 발생한 엘리먼트를 저장 성공후 DOM에서 제거 목적
-    this.blockData = this.data.cpHistories[$(e.currentTarget).data('listId')]; // 블록될 데이터를 찾아 저장
+    this.blockData = this.data.cpHistories[$(event.currentTarget).data('listId')]; // 블록될 데이터를 찾아 저장
     /**
      * @desc 차단하기 확인 팝업
      * @param {string} title 확인 제목
@@ -92,11 +88,11 @@ Tw.MyTFareBillSmallBlock.prototype = {
       Tw.ALERT_MSG_MYT_FARE.ALERT_2_A95.MSG,
       Tw.ALERT_MSG_MYT_FARE.ALERT_2_A95.BUTTON,
       null,
-      $.proxy(this._execUnBlock, this, $(e.currentTarget)),
+      $.proxy(this._execUnBlock, this, $(event.currentTarget)),
       null,
       'confirmBlock',
       null,
-      $(e.currentTarget)
+      $(event.currentTarget)
     );
   },
 
@@ -156,6 +152,4 @@ Tw.MyTFareBillSmallBlock.prototype = {
      */
     return Tw.Error(res.code, res.msg).pop(null, $target);
   }
-
-
 };
