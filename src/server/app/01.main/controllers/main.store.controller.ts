@@ -26,9 +26,6 @@ class MainStore extends TwViewController {
     
     this.getRedisData(noticeCode)
       .subscribe((resp) => {
-        if (svcInfo) {
-          svcInfo.personSmsDisableTimeCheck = resp['personSmsDisableTimeCheck'];
-        }
         res.render(`main.store.html`, { svcInfo, redisData: resp, pageInfo, formatHelper: FormatHelper, prodEventCtl: prodEventCtl });
       });
   }
@@ -40,8 +37,7 @@ class MainStore extends TwViewController {
       this.getStoreAddProduct(),
       this.getStoreTappsProduct(),
       this.getHomeHelp(),
-      this.getPersonSmsDisableTimeCheck()
-    ).map(([notice, product, productAdd, productTapps, help, personSmsDisableTimeCheck]) => {
+    ).map(([notice, product, productAdd, productTapps, help]) => {
       let mainNotice = null;
       if ( !FormatHelper.isEmpty(notice) ) {
         mainNotice = notice.mainNotice;
@@ -58,33 +54,7 @@ class MainStore extends TwViewController {
       if ( !FormatHelper.isEmpty(productTapps) ) {
         tappsProduct = productTapps.storeProduct;
       }
-      return { mainNotice, mainProduct, addProduct, tappsProduct, help, personSmsDisableTimeCheck };
-    });
-  }
-
-  /**
-   * redis에서 개인화 문자 진입 아이콘 노출 여부 체크
-   * @return {Observable}
-   */
-  private getPersonSmsDisableTimeCheck(): Observable<any> {
-    const DEFAULT_PARAM = {
-      property: REDIS_KEY.PERSON_SMS_DISABLE_TIME
-    };
-    return this.apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        const today = new Date().getTime();
-        const resTime = resp.result.split('~');
-        const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
-        const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
-        this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
-        /**
-         * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
-         * true: 노출, false: 비노출
-         */
-        return !(today >= startTime && today <= endTime);
-      } else {
-        return null;
-      }
+      return { mainNotice, mainProduct, addProduct, tappsProduct, help };
     });
   }
 
