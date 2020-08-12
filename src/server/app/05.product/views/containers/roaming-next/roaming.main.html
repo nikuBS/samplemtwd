@@ -25,18 +25,13 @@
                 여행하실 나라를 선택해주세요
             </p>
             <div id="nations">
-                <!-- TODO: 가변 width 고려하여 가용 width / 3 - spacing * 2 세팅 -->
                 <ul>
-                    <li>
-                        <img src="<%= CDN %>/img/product/roam/img_nation_s_01.png" width="92" />
-                        <img src="<%= CDN %>/img/product/roam/img_nation_s_02.png" width="92" />
-                        <img src="<%= CDN %>/img/product/roam/img_nation_s_03.png" width="92" />
-                    </li>
-                    <li>
-                        <img src="<%= CDN %>/img/product/roam/img_nation_s_04.png" width="92" />
-                        <img src="<%= CDN %>/img/product/roam/img_nation_s_05.png" width="92" />
-                        <img src="<%= CDN %>/img/product/roam/img_nation_s_06.png" width="92" />
-                    </li>
+<!--                    <li>-->
+<!--                        <img src="<%= CDN %>/img/product/roam/img_nation_s_01.png" width="92" />-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <img src="<%= CDN %>/img/product/roam/img_nation_s_01.png" width="92" />-->
+<!--                    </li>-->
                 </ul> 
             </div>
             <p class="description">
@@ -70,6 +65,65 @@
   $(document).ready(function () {
     new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
   });
+  function boot() {
+    const nationList = [
+      {
+        'url': '<%= CDN %>/img/product/roam/img_nation_s_01.png',
+        'name': '중국',
+        'code': 'china',
+      },
+      {
+        'url': '<%= CDN %>/img/product/roam/img_nation_s_02.png',
+        'name': '일본',
+        'code': 'japan',
+      },
+      {
+        'url': '<%= CDN %>/img/product/roam/img_nation_s_03.png',
+        'name': '베트남',
+        'code': 'vietnam',
+      },
+      {
+        'url': '<%= CDN %>/img/product/roam/img_nation_s_04.png',
+        'name': '필리핀',
+        'code': 'philippines',
+      },
+      {
+        'url': '<%= CDN %>/img/product/roam/img_nation_s_05.png',
+        'name': '미국',
+        'code': 'america',
+      },
+      {
+        'url': '<%= CDN %>/img/product/roam/img_nation_s_06.png',
+        'name': '이탈리아',
+        'code': 'italy',
+      },
+    ];
+
+    const GAP = 6;
+    const COLUMN = 3;
+    const nations = document.getElementById('nations');
+    const nationWidth = Math.floor((nations.clientWidth - GAP * COLUMN) / COLUMN);
+    const ul = document.querySelector('#nations ul');
+    for (let i = 0; i < nationList.length; i++) {
+      const item = nationList[i];
+
+      const img = document.createElement('img');
+      img.src = item.url;
+      img.width = nationWidth;
+
+      const span = document.createElement('span');
+      span.innerText = item.name;
+
+      const li = document.createElement('li');
+      li.onclick = function() {
+        console.log('clicked: ' + item.code);
+      };
+      li.appendChild(img);
+      li.appendChild(span);
+      ul.appendChild(li);
+    }
+  }
+  boot();
 </script>
 <% include ../../components/end.component.html %>
 
