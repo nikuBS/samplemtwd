@@ -199,6 +199,32 @@ abstract class TwViewController {
   }
 
   /**
+   * redis에서 개인화 문자 진입 아이콘 노출 여부 체크
+   * @return {Observable}
+   */
+  protected getPersonSmsDisableTimeCheck(): Observable<any> {
+    const DEFAULT_PARAM = {
+      property: REDIS_KEY.PERSON_SMS_DISABLE_TIME
+    };
+    return this._apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        const today = new Date().getTime();
+        const resTime = resp.result.split('~');
+        const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
+        const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
+        this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
+        /**
+         * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
+         * true: 노출, false: 비노출
+         */
+        return !(today >= startTime && today <= endTime);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  /**
    * 화면 권한 처리
    * @param req
    * @param res
@@ -243,40 +269,47 @@ abstract class TwViewController {
             return;
           }
           if ( isLogin ) {
-            urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
-            if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
-              const urlAuth = urlMeta.auth.grades;
-              const svcGr = svcInfo.svcGr;
-              // admin 정보 입력 오류 (접근권한이 입력되지 않음)
-              if ( urlAuth === '' ) {
-                res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-                return;
-              }
-              if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
-                if ( urlAuth.indexOf('N') !== -1 ) {
-                  // 준회원 접근 가능한 화면
+
+            this.getPersonSmsDisableTimeCheck().subscribe((resp) => {
+
+                svcInfo.personSmsDisableTimeCheck = resp;
+                console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo);
+                urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
+                if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
+                  const urlAuth = urlMeta.auth.grades;
+                  const svcGr = svcInfo.svcGr;
+                  // admin 정보 입력 오류 (접근권한이 입력되지 않음)
+                  if ( urlAuth === '' ) {
+                    res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+                    return;
+                  }
+                  if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
+                    if ( urlAuth.indexOf('N') !== -1 ) {
+                      // 준회원 접근 가능한 화면
+                      this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                    } else {
+                      // 등록된 회선 없음 + 준회원 접근 안되는 화면
+                      this.errorNoRegister(req, res, next);
+                    }
+                  } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+                    this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                  } else {
+                    // 접근권한 없음
+                    this.errorAuth(req, res, next);
+                  }
+                } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
                   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
                 } else {
-                  // 등록된 회선 없음 + 준회원 접근 안되는 화면
-                  this.errorNoRegister(req, res, next);
+                  // 현재 로그인 방법으론 이용할 수 없음
+                  if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+                    res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
+                  } else {
+                    // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+                    this.errorAuth(req, res, next);
+                  }
                 }
-              } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
-                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-              } else {
-                // 접근권한 없음
-                this.errorAuth(req, res, next);
-              }
-            } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-            } else {
-              // 현재 로그인 방법으론 이용할 수 없음
-              if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-                res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
-              } else {
-                // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-                this.errorAuth(req, res, next);
-              }
-            }
+            });
+           
           } else {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
