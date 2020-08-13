@@ -132,6 +132,7 @@ Tw.API_CMD = {
   BFF_05_0022: { path: '/core-bill/:version/hotbills', method: Tw.API_METHOD.GET },
   BFF_05_0024: { path: '/core-bill/:version/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0027: { path: '/core-bill/:version/bill-types', method: Tw.API_METHOD.PUT },
+  BFF_05_0030: { path: '/core-bill/:version/bill-pay/unpaid-bills', method: Tw.API_METHOD.GET },
   BFF_05_0031: { path: '/core-bill/:version/bill-pay/payment-possible-day', method: Tw.API_METHOD.GET },
   BFF_05_0032: { path: '/core-bill/:version/bill-pay/payment-possible-day-input', method: Tw.API_METHOD.POST },
   BFF_05_0033: { path: '/core-bill/:version/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
@@ -239,6 +240,7 @@ Tw.API_CMD = {
   BFF_05_0217: { path: '/core-modification/:version/data-refill', method: Tw.API_METHOD.GET },
   BFF_05_0218: { path: '/core-modification/:version/specialized-benefits', method: Tw.API_METHOD.GET },
   BFF_05_0219: { path: '/core-modification/:version/custum-benefits', method: Tw.API_METHOD.GET },
+  BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
