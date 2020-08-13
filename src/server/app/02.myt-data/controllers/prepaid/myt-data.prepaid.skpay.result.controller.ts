@@ -71,7 +71,7 @@ class MyTDataPrepaidSKpayResult extends TwViewController {
 
     resultUtf = this.getResultUtf(result, resultUtf);
 
-    if (status === 200) {
+    if (status === '200') {
       paymentToken = this.getPaymentToken(resultUtf, paymentToken);
       const data = this.getDataApi(query, paymentToken, urlData);
       if (query.source && query.source === urlVoice) {
