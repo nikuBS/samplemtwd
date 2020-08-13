@@ -166,7 +166,9 @@ export const API_CMD = {
   BFF_05_0020: { path: '/core-bill/:version/bill-pay/recent-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0021: { path: '/core-bill/:version/bill-pay/recent-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0028: { path: '/core-bill/:version/bill-reissue', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0030: { path: '/core-bill/:version/bill-pay/unpaid-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  // BFF_05_0030: { path: '/core-bill/:version/bill-pay/unpaid-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0030: { path: '/core-bill/:version/bill-pay/unpaid-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  
   BFF_05_0031: { path: '/core-bill/:version/bill-pay/payment-possible-day', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0032: { path: '/core-bill/:version/bill-pay/payment-possible-day-input', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0033: { path: '/core-bill/:version/bill-pay/autopay-schedule', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

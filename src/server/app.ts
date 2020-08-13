@@ -30,6 +30,9 @@ import BypassRouter from './common/route/bypass.router';
 import ApiRouter from './common/route/api.router';
 import NativeRouter from './common/route/native.router';
 import StoreRouter from './common/route/store.router';
+
+import ChatbotRouter from './app/98.chatbot/chatbot.router';
+
 import TestRouter from './app/99.test/test.router';
 import ShortcutRouter from './common/route/shortcut.router';
 
@@ -170,6 +173,8 @@ class App {
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
     this.app.use('/tevent', new AppRouter(TeventRouter.instance.controllers).router);
 
+    this.app.use('/chatbot', new AppRouter(ChatbotRouter.instance.controllers).router);
+
     this.app.use('/test', new AppRouter(TestRouter.instance.controllers).router);
   }
 
@@ -192,6 +197,8 @@ class App {
       path.join(__dirname, 'app/08.auth/views/containers'),
       path.join(__dirname, 'common/views/containers'),
 
+      path.join(__dirname, 'app/98.chatbot/views/containers'),
+      
       path.join(__dirname, 'app/99.test/views/containers')
 
     ]);

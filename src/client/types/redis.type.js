@@ -44,3 +44,7 @@ Tw.REDIS_BANNER_TYPE = {
   ADMIN: 'admin',
   TOS_ADMIN: 'tos_admin'
 };
+
+Tw.REDIS_KEY = {
+  CHATBOT_DISABLE_TIME: 'chatbot.service.isol.time'
+};
