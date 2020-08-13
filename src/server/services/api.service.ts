@@ -308,7 +308,6 @@ class ApiService {
       // this.logger.error(this, '[API ERROR] Exception', err);
       observer.next({ code: API_CODE.CODE_500 });
       observer.complete();
-      res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
   }
 
