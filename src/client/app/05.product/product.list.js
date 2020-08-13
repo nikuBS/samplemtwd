@@ -37,6 +37,12 @@ Tw.ProductList.prototype = {
     this._leftCount = this.$moreBtn.data('left-count');
     this._listTmpl = Handlebars.compile($('#fe-templ-' + this.TYPE).html());
     this._filterTmpl = Handlebars.compile($('#fe-templ-filters').html());
+    
+    if (this._historyService.getHash() === '#chatbot') {
+      history.replaceState({}, '리스트 < 요금제 < 상품', '/product/mobileplan/list');
+      
+      this._onloadChangeFiltersByChatbot();
+    }
   },
 
   /**

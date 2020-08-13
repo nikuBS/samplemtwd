@@ -146,6 +146,47 @@ Tw.BpcpService.prototype = {
       reqParams.eParam = eParam;
     }
 
+    Tw.Logger.info('[bpcp.service] [open] eParam : ', eParam);
+    Tw.Logger.info('[bpcp.service] [open] Tw.FormatHelper.isEmpty(eParam) : ', Tw.FormatHelper.isEmpty(eParam));
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
+      .done($.proxy(this._responseBPCP, this));
+  },
+
+  /**
+   * @function
+   * @desc BPCP 실행 요청 처리
+   * @param url - BPCP 로 식별된 주소 값
+   * @param svcMgmtNum - 서비스관리번호
+   * @param eParam - BPCP 부가 파라미터 값
+   * @param extraParam - 별도 추가적인 파라미터 값
+   */
+  open_withExtraParam: function(url, svcMgmtNum, eParam, extraParam) {
+    Tw.Logger.info('[bpcp.service] [open_withExtraParam] url : ', url);
+    Tw.Logger.info('[bpcp.service] [open_withExtraParam] svcMgmtNum : ', svcMgmtNum);
+    Tw.Logger.info('[bpcp.service] [open_withExtraParam] eParam : ', eParam);
+    Tw.Logger.info('[bpcp.service] [open_withExtraParam] extraParam : ', extraParam);
+    Tw.Logger.info('[bpcp.service] [open_withExtraParam] Tw.FormatHelper.isEmpty(extraParam) : ', Tw.FormatHelper.isEmpty(extraParam));
+
+    var bpcpServiceId = url.replace('BPCP:', ''),
+      reqParams = {
+      bpcpServiceId: bpcpServiceId
+    };
+
+    this._bpcpServiceId = bpcpServiceId;
+
+    if (!Tw.FormatHelper.isEmpty(svcMgmtNum)) {
+      reqParams.svcMgmtNum = svcMgmtNum;
+    }
+
+    if (!Tw.FormatHelper.isEmpty(eParam)) {
+      reqParams.eParam = eParam;
+    }
+
+    if (!Tw.FormatHelper.isEmpty(extraParam)) {
+      this._extraParam = extraParam;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
       .done($.proxy(this._responseBPCP, this));
   }
