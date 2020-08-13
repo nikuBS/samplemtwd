@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 (function ($, window, document) {
     var pluginName = 'circle_datepicker';
     var defaults = {
@@ -173,3 +174,4 @@
         });
     }
 })(jQuery, window, document);
+/* jshint ignore:end */

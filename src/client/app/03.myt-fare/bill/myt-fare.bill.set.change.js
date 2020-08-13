@@ -7,8 +7,8 @@
 /**
  * @class
  * @desc MyT > 나의요금 > 요금 안내서 설정 > 안내서 변경
- * @param {Object} rootEl - dom 객체
- * @param {JSON} data
+ * @param rootEl - dom 객체
+ * @param data
  */
 Tw.MyTFareBillSetChange = function (rootEl, data) {
   this.$container = rootEl;
@@ -38,7 +38,7 @@ Tw.MyTFareBillSetChange.prototype = {
   _initVariables: function () {
     this._billType = Tw.UrlHelper.getQueryParams().billType; // 메인 안내서 유형
     this._subBillType = Tw.UrlHelper.getQueryParams().subBillType || 'X';  // 함께 받는 안내서 유형
-    this._isChangeInfo = Tw.UrlHelper.getQueryParams().isChangeInfo === 'Y' ? true : false; // 정보변경 유무
+    this._isChangeInfo = Tw.UrlHelper.getQueryParams().isChangeInfo === 'Y'; // 정보변경 유무
     this._optionsArea = this.$container.find('#fe-option-list'); // 옵션 설정 영역
     this._options = this._optionsArea.find(' > ul > li'); // 옵션 설정 엘리먼트들
     this._inputHpNum = this.$container.find('.fe-hp-num'); // 핸드폰번호 input
@@ -94,17 +94,21 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc 우편번호 조회 서비스 호출
-   * @param {Object} e - 이벤트
+   * @param event - 이벤트
    */
-  _searchZip: function (e) {
-    this.$container.find('.fe-zip').trigger('keyup'); // 2019-10-10 bug fix : AS IS 주소창 터치시 수정으로 간주하였는데. TO BE 에서 read only로 변경되어서 우편번호 검색 버튼 클릭 시 해당 이벤트 먹도록 변경함.
-    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._callBackSearchZip, this));
+  _searchZip: function (event) {
+    /**
+     * 2019-10-10 bug fix : AS IS 주소창 터치시 수정으로 간주하였는데.
+     * TO BE 에서 read only로 변경되어서 우편번호 검색 버튼 클릭 시 해당 이벤트 먹도록 변경함.
+    */
+    this.$container.find('.fe-zip').trigger('keyup');
+    new Tw.CommonPostcodeMain(this.$container, $(event.currentTarget), $.proxy(this._callBackSearchZip, this));
   },
 
   /**
    * @function
    * @desc 우편번호 조회 서비스 콜백
-   * @param {Object} resp
+   * @param resp
    */
   _callBackSearchZip: function (resp) {
     this._addrArea.find('input[name="dtlAddr"]').trigger('focusin');
@@ -122,7 +126,7 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc 기타(우편) 데이터 설정
-   * @param {Object} data : 주소 데이터 {zip: 우편번호, basAddr: 기본주소, dtlAddr: 상세주소}
+   * @param data 주소 데이터 {zip: 우편번호, basAddr: 기본주소, dtlAddr: 상세주소}
    */
   _setAddrData: function (data) {
     this.$container.find('#fe-no-addr-area').addClass('none');
@@ -141,8 +145,8 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc "옵션설정" 항목 enabled/disabled 처리 (check 상태는 그대로 유지)
-   * @param {Object} context
-   * @param {boolean} disabled
+   * @param context
+   * @param disabled
    */
   _disabledOptions: function (context, disabled) {
     if (disabled) {
@@ -177,7 +181,6 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc 함께 받을 요금 안내서 값 반환
-   * @returns {this | string | number | string[] | * | jQuery}
    */
   _getTogetherVal: function () {
     return this.$container.find('input[name="together"]:checked').val() || '';
@@ -186,8 +189,8 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc input(checkbox, radio) 체크하기
-   * @param {Object} _$el    : 셀렉터
-   * @param {boolean} checked : 체크 상태 (true|false)
+   * @param _$el 셀렉터
+   * @param checked 체크 상태 (true|false)
    */
   _prop: function (_$el, checked) {
     var _parent = _$el.prop('checked', checked)
@@ -205,14 +208,14 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc 체크박스/ 라디오 버튼 체크표시
-   * @param {String} name  : 엘리먼트 이름
-   * @param {String} value : 값
+   * @param name 엘리먼트 이름
+   * @param value 값
    */
   _checkedElement: function (name, value) {
     var _$this = this;
     this.$container.find('[name=' + name + ']')
       .each(function () {
-        _$this._prop($(this), $(this).val() === value ? true : false);
+        _$this._prop($(this), $(this).val() === value);
       });
   },
 
@@ -224,7 +227,7 @@ Tw.MyTFareBillSetChange.prototype = {
    */
   _checkedSlideCheckbox: function (name, value) {
     var _$curCheckbox = this.$container.find('[name="{0}"]'.replace('{0}', name));
-    var isCheck = _$curCheckbox.val() === value ? true : false;
+    var isCheck = _$curCheckbox.val() === value;
 
     var _parent = _$curCheckbox.prop('checked', isCheck).trigger('change')
       .parent()
@@ -306,7 +309,7 @@ Tw.MyTFareBillSetChange.prototype = {
    */
   _setOptions: function (gubun) {
     var billType = this._billType;
-    var isDisplay = gubun === 1 ? true : false;
+    var isDisplay = gubun === 1;
     var subBillType = isDisplay ? this._getTogetherVal() : this._subBillType;
     var mergeType = billType + subBillType;
     var lineType = this._data.lineType;
@@ -388,11 +391,11 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc 함께 받을 요금 안내서 변경 시
-   * @param {Object} e
+   * @param {Object} event
    */
-  _onChangeTogetherBill: function (e) {
+  _onChangeTogetherBill: function (event) {
     // 이메일 인경우 이메일 입력 부분 보이기
-    this._toggleElement('fe-email-area', $(e.currentTarget).val() === '2');
+    this._toggleElement('fe-email-area', $(event.currentTarget).val() === '2');
     this._setOptions(1);
   },
 
@@ -412,10 +415,10 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc 휴대폰 번호 입력 시 자동 하이픈 넣기
-   * @param {Object} e
+   * @param {Object} event
    */
-  _onFormatHpNum: function (e) {
-    var _$this = $(e.currentTarget);
+  _onFormatHpNum: function (event) {
+    var _$this = $(event.currentTarget);
     var data = _$this.val();
     data = data.replace(/[^0-9]/g, '');
 
@@ -444,22 +447,22 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc Native 주소록 호출
-   * @param {Object} e
+   * @param {Object} event
    */
-  _onClickBtnAddr: function (e) {
-    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this, e));
+  _onClickBtnAddr: function (event) {
+    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this, event));
   },
 
   /**
    * @function
    * @desc Native 주소록 호출 후 콜백. 전화번호 input에 값을 입력해준다.
-   * @param {Object} e
+   * @param {Object} event
    * @param {Object} resp
    */
-  _onContact: function (e, resp) {
+  _onContact: function (event, resp) {
     if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
       var params = resp.params;
-      var _inputName = $(e.currentTarget).data('el');
+      var _inputName = $(event.currentTarget).data('el');
       $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).val(Tw.StringHelper.phoneStringToDash(params.phoneNumber));
       $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).trigger('change');
     }
@@ -479,10 +482,10 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc 법정대리인 함께 수령 스위칭
-   * @param {Object} e
+   * @param {Object} event
    */
-  _onChangeCcurNotiYn: function (e) {
-    this._changeCcurNotiYn($(e.currentTarget));
+  _onChangeCcurNotiYn: function (event) {
+    this._changeCcurNotiYn($(event.currentTarget));
   },
 
   /**
@@ -627,25 +630,25 @@ Tw.MyTFareBillSetChange.prototype = {
   /**
    * @function
    * @desc input focus 및 변경 이벤트.
-   * @param {Object} e
+   * @param {Object} event
    */
-  _onCheckedInput : function (e) {
-    this._clearInput(e);
+  _onCheckedInput : function (event) {
+    this._clearInput(event);
     this._onDisableSubmitButton();
   },
 
   /**
    * @function
    * @desc input focus 시에 입력된 값을 지운다.
-   * @param {Object} e
+   * @param {Object} event
    */
-  _clearInput : function (e) {
-    var $target = $(e.currentTarget);
+  _clearInput : function (event) {
+    var $target = $(event.currentTarget);
     var _validType = $target.data('validType');
     if (['addr', 'email', 'hp'].indexOf(_validType) !== -1 ) {
       $target.data('isChange', true);
       // focus 인 경우 값 초기화
-      if (e.type === 'focusin') {
+      if (event.type === 'focusin') {
         // 우편주소 일경우 우편번호, 기본주소, 상세주소 3개 초기화
         if (_validType === 'addr') {
           this.$container.find('[data-valid-type="addr"]').data('isChange', true);

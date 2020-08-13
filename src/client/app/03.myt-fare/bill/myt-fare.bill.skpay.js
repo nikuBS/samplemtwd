@@ -8,7 +8,7 @@
 /**
  * @namespace
  * @desc SK pay 납부 namespace
- * @param rootEl - dom 객체
+ * @param params
  */
 Tw.MyTFareBillSkpay = function (params) {
   this.$container = params.$element;
@@ -79,7 +79,7 @@ Tw.MyTFareBillSkpay.prototype = {
   _onChangeOption: function (event) {
     var $target = $(event.currentTarget);
 
-    if ($target.hasClass('fe-manual-input')) {
+    if ( $target.hasClass('fe-manual-input') ) {
       $target.addClass('checked');
       this.$refundBank.removeAttr('disabled');
       this.$refundNumber.removeAttr('disabled');
@@ -100,10 +100,10 @@ Tw.MyTFareBillSkpay.prototype = {
     var $target = $(event.currentTarget);
     var $parentTarget = $target.parents('.fe-refund-check-btn');
 
-    if ($target.is(':checked')) {
+    if ( $target.is(':checked') ) {
       $parentTarget.addClass('on');
 
-      if (this._isFirstCheck) {
+      if ( this._isFirstCheck ) {
         this.$refundNumber.on('keyup', $.proxy(this._checkNumber, this));
         this._isFirstCheck = false;
       }
@@ -135,7 +135,7 @@ Tw.MyTFareBillSkpay.prototype = {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
 
     var $id = $target.attr('id');
-    if (!Tw.FormatHelper.isEmpty($id)) {
+    if ( !Tw.FormatHelper.isEmpty($id) ) {
       $layer.find('input#' + $id).attr('checked', 'checked');
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
@@ -168,13 +168,13 @@ Tw.MyTFareBillSkpay.prototype = {
   _checkIsAbled: function () {
     this._validationService.checkIsAbled(); // 공통 validation service 호출
   },
-    /**
+  /**
    * @function
    * @desc SK pay 납부는 1,000 미만은 불가. 1,000 이상만 가능
    */
   _checkIsPayLimit: function () {
     var amount = this._paymentCommon.getAmount();
-    if (amount < 1000) {
+    if ( amount < 1000 ) {
       Tw.Error(Tw.ALERT_MSG_SKPAY.PAY_LIMIT.CODE, Tw.ALERT_MSG_SKPAY.PAY_LIMIT.CONTENTS).pop();
       return false;
     }
@@ -183,19 +183,19 @@ Tw.MyTFareBillSkpay.prototype = {
   /**
    * @function
    * @desc 모든 유효성 검증 후 납부내역 확인 풀팝업 load
-   * @param e
+   * @param event
    */
-  _checkPay: function (e) {
-    if (this._checkIsPayLimit() && this._validationService.isAllValid()) {
+  _checkPay: function (event) {
+    if ( this._checkIsPayLimit() && this._validationService.isAllValid() ) {
       this._popupService.open({
-        'hbs': 'MF_01_01_01',
-        'title': Tw.MYT_FARE_PAYMENT_NAME.SKPAY,
-        'unit': Tw.CURRENCY_UNIT.WON
-      },
+          'hbs': 'MF_01_01_01',
+          'title': Tw.MYT_FARE_PAYMENT_NAME.SKPAY,
+          'unit': Tw.CURRENCY_UNIT.WON
+        },
         $.proxy(this._openCheckPay, this), // open callback
         $.proxy(this._afterPaySuccess, this), // close callback
         'check-pay',
-        $(e.currentTarget)
+        $(event.currentTarget)
       );
     }
   },
@@ -231,7 +231,7 @@ Tw.MyTFareBillSkpay.prototype = {
     $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(data.cardNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
 
-    if (this.$refundCheckBox.hasClass('on')) {
+    if ( this.$refundCheckBox.hasClass('on') ) {
       $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
         .text(data.refundNm + ' ' + data.refundNum);
     }
@@ -247,8 +247,8 @@ Tw.MyTFareBillSkpay.prototype = {
     var data = {};
     data.cardNum = $.trim(this.$cardNumber.val());
 
-    if (this.$refundCheckBox.hasClass('on')) {
-      if (isRefundInput) {
+    if ( this.$refundCheckBox.hasClass('on') ) {
+      if ( isRefundInput ) {
         data.refundCd = this.$refundBank.attr('id');
         data.refundNm = this.$refundBank.text();
         data.refundNum = this.$refundNumber.val();
@@ -273,11 +273,11 @@ Tw.MyTFareBillSkpay.prototype = {
   /**
    * @function
    * @desc 요금납부 종료 confirm
-   * @param e
+   * @param event
    */
-  _checkClose: function (e) {
+  _checkClose: function (event) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(e.currentTarget));
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(event.currentTarget));
   },
   /**
    * @function
@@ -292,54 +292,56 @@ Tw.MyTFareBillSkpay.prototype = {
    * @desc close 이후 원래 페이지로 돌아가기
    */
   _afterClose: function () {
-    if (this._isClose) {
+    if ( this._isClose ) {
       this._historyService.resetHistory(-2);
     }
   },
   /**
    * @function
    * @desc SK pay 납부 API 호출
-   * @param e
+   * @param event
    */
-  _goSkpay: function (e) {
+  _goSkpay: function (event) {
     try {
+      /* jshint ignore:start */
       this._encryptedUserAgent = SKpaySDK.generateUserAgent();
-      var _name = this.svcNumber + this.$container.find('.fe-multi-line').text();
+      /* jshint ignore:end */
+      // var _name = this.svcNumber + this.$container.find('.fe-multi-line').text();
       var _itemsOffered = [];
       var billDetailList = this._paymentCommon.getBillDetailList();
-      if(billDetailList){
-        for (var i in billDetailList) {
+      if ( billDetailList ) {
+        for ( var i in billDetailList ) {
           var item = {
             identifier: billDetailList[i].billSvcMgmtNum, //billSvcMgmtNum
-            name : billDetailList[i].invDt,
-            price : billDetailList[i].payAmt,
-            category: "미납요금", //fix
+            name: billDetailList[i].invDt,
+            price: billDetailList[i].payAmt,
+            category: '미납요금', //fix
             provider: {
-              "identifier": billDetailList[i].billAcntNum //청구계정번호(bill_acnt_num)
+              identifier: billDetailList[i].billAcntNum //청구계정번호(bill_acnt_num)
             }
           };
           _itemsOffered.push(item);
         }
       }
       var _acceptedPaymentMethods = [];
-      _acceptedPaymentMethods.push({ category: "CreditCard"});
-      _acceptedPaymentMethods.push({ category: "DebitCard"});
-      _acceptedPaymentMethods.push({ category: "DirectDebit"});
-  
+      _acceptedPaymentMethods.push({ category: 'CreditCard' });
+      _acceptedPaymentMethods.push({ category: 'DebitCard' });
+      _acceptedPaymentMethods.push({ category: 'DirectDebit' });
+
       var dateReq = {
-        "acntNum": this.acntNum, //계정번호
-        "totPayAmt": this._paymentCommon.getAmount().toString(), //총 금액
-        "payOvrBankCd": this.$container.find('.fe-payment-refund').attr('id'),
-        "payOvrBankNum": this.$container.find('.fe-payment-refund').attr('data-num'),
-        "encryptedUserAgent": this._encryptedUserAgent, //User Agent
-        "offer": {
-          "identifier": this.svcMgmtNum, //SvcMgmtNum : 대표서비스 넘버
-          "name": 'SKT 요금', //fix
-          "price": this._paymentCommon.getAmount().toString(), //청구금액
-          "itemsOffered": _itemsOffered,
-          "acceptedPaymentMethods": _acceptedPaymentMethods,
-          "offeredBy": {
-            "identifier": "skt-tworld" //fix
+        acntNum: this.acntNum, //계정번호
+        totPayAmt: this._paymentCommon.getAmount().toString(), //총 금액
+        payOvrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
+        payOvrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
+        encryptedUserAgent: this._encryptedUserAgent, //User Agent
+        offer: {
+          identifier: this.svcMgmtNum, //SvcMgmtNum : 대표서비스 넘버
+          name: 'SKT 요금', //fix
+          price: this._paymentCommon.getAmount().toString(), //청구금액
+          itemsOffered: _itemsOffered,
+          acceptedPaymentMethods: _acceptedPaymentMethods,
+          offeredBy: {
+            identifier: 'skt-tworld' //fix
           }
         }
       };
@@ -347,8 +349,8 @@ Tw.MyTFareBillSkpay.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_07_0095, dateReq)
         .done($.proxy(this._onSuccessSkpayAuth, this))
         .fail($.proxy(this._onFailSkpayAuth, this));
-    } catch (e) {
-      if (e instanceof ReferenceError) {
+    } catch ( event ) {
+      if ( event instanceof ReferenceError ) {
         Tw.Error(Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CODE, Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CONTENTS).pop();
       }
     }
@@ -360,16 +362,17 @@ Tw.MyTFareBillSkpay.prototype = {
    */
   _onSuccessSkpayAuth: function (resp) {
     Tw.CommonHelper.endLoading('.popup-page');
-    if (resp.code === Tw.API_CODE.CODE_00) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.close();
+      /* jshint ignore:start */
       SKpaySDK.performPaymentWithUI({
         authorizationGrant: resp.result.authorizationGrant,
         offerToken: resp.result.offerToken,
         orderNumber: resp.result.orderNumber,
         redirectUri: this.redirectUri + '?dataKey=' + resp.result.orderNumber
       });
-    }
-    else {
+      /* jshint ignore:end */
+    } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
@@ -389,8 +392,7 @@ Tw.MyTFareBillSkpay.prototype = {
    * bankOrCardAccn, ccPwd: string, cdexpy: string, cdexpm: string, instmm, unpaidBillList: *|Array}}
    */
   _makeRequestData: function () {
-
-    var reqData = {
+    return {
       payOvrAutoYn: this._refundAutoYn,
       payOvrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
       payOvrBankNum: this.$container.find('.fe-payment-refund').attr('data-num'),
@@ -404,7 +406,6 @@ Tw.MyTFareBillSkpay.prototype = {
       instmm: this.$cardTypeSelector.attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
     };
-    return reqData;
   },
   /**
    * @function
@@ -413,7 +414,7 @@ Tw.MyTFareBillSkpay.prototype = {
    * @param res
    */
   _paySuccess: function ($target, res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.endLoading('.popup-page');
       this._isPaySuccess = true;
       this._popupService.close();

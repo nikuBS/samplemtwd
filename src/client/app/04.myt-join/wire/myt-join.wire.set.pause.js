@@ -54,7 +54,7 @@ Tw.MytJoinWireSetPause.prototype = {
 
     // this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
     // this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
-    this.$container.on('click', '.fe-btn-submit', _.debounce($.proxy(this._onClickBtnSubmit, this),500));
+    this.$container.on('click', '.fe-btn-submit', _.debounce($.proxy(this._onClickBtnSubmit, this), 500));
     // this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
 
@@ -77,10 +77,6 @@ Tw.MytJoinWireSetPause.prototype = {
 
   /**
    * 이용정지 가능 기간 반환
-   * @return {
-   *   min: 시작날짜
-   *   max: 끝날짜
-   * }
    * @private
    */
   _getEndDateRange: function () {
@@ -230,7 +226,8 @@ Tw.MytJoinWireSetPause.prototype = {
         params = {};
         break;
     }
-    this._popupService.openModalTypeATwoButton(title, contents, btName, closeBtName, undefined, _.debounce($.proxy(this._reqWireSetPause, this, apiCmd, params),500));
+    this._popupService.openModalTypeATwoButton(title, contents, btName, closeBtName, undefined,
+      _.debounce($.proxy(this._reqWireSetPause, this, apiCmd, params), 500));
   },
 
   /**
@@ -262,7 +259,7 @@ Tw.MytJoinWireSetPause.prototype = {
 
   /**
    * 일시 정지 신청/해제 API호출 실패
-   * @param resp
+   * @param err
    * @private
    */
   _reqFail: function (err) {

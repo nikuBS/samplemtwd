@@ -4,20 +4,19 @@
  * @date 2019-03-18
  */
 
-Tw.MyTDataFamilyHistoryChange = function() {
+Tw.MyTDataFamilyHistoryChange = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 };
 
-
 Tw.MyTDataFamilyHistoryChange.prototype = {
   /**
-   * @param {$object} rootEl 최상위 container object
-   * @param {$object} item 해당 조회 버튼을 가진 부모 object
+   * @param rootEl 최상위 container object
+   * @param item 해당 조회 버튼을 가진 부모 object
    * @param {object} changable 변경 가능한 데이터 양
    * @returns {void}
-  */
-  init: function(rootEl, item, changable) {
+   */
+  init: function (rootEl, item, changable) {
     this.$container = rootEl;
     this.$item = item;
     this._serial = item.data('serial-number');
@@ -32,8 +31,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   /**
    * @desc 이벤트 바인딩
    * @returns {void}
-  */
-  _bindEvent: function() {
+   */
+  _bindEvent: function () {
     this.$container.on('click', '.btn-type01', $.proxy(this._addChangeData, this));
     this.$cancel.on('click', $.proxy(this._handleClickCancel, this));
     this.$retrieveBtn.on('click', $.proxy(this._handleRerieveChangable, this, true));
@@ -45,8 +44,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   /**
    * @desc jquery element 캐싱
    * @returns {void}
-  */
-  _cachedElement: function() {
+   */
+  _cachedElement: function () {
     this.$input = this.$container.find('#fe-changable');
     this.$submitBtn = this.$container.find('#fe-submit');
     this.$error = this.$container.find('#fe-error');
@@ -58,13 +57,13 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 데이터 추가 버튼 클릭 시
-   * @param {Event} click event 객체
+   * @param event click event 객체
    * @returns {void}
-  */  
-  _addChangeData: function(e) {
-    var value = e.currentTarget.getAttribute('data-value');
+   */
+  _addChangeData: function (event) {
+    var value = event.currentTarget.getAttribute('data-value');
 
-    if (value === 'all') {
+    if ( value === 'all' ) {
       this._toggleAllButton(this._all);
     } else {
       this.$input.val(Number(this.$input.val()) + Number(value));
@@ -76,11 +75,11 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 전체 버튼 클릭 시
-   * @param {boolean} 현재 전체 버튼 상태
+   * @param all 현재 전체 버튼 상태
    * @returns {void}
-  */
- _toggleAllButton: function(all) {
-    if (all) {
+   */
+  _toggleAllButton: function (all) {
+    if ( all ) {
       this.$input.val('');
       this.$input.removeAttr('disabled');
       this.$all.siblings('.fe-enable').removeAttr('disabled');
@@ -100,8 +99,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   /**
    * @desc 인풋 창 내 X 버튼 클릭
    * @returns {void}
-  */
-  _handleClickCancel: function() {
+   */
+  _handleClickCancel: function () {
     this._toggleAllButton(true);
     this._validateChangeAmount();
   },
@@ -109,8 +108,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   /**
    * @desc 인풋 창 입력 시
    * @returns {void}
-  */
-  _handleTypeAmount: function() {
+   */
+  _handleTypeAmount: function () {
     var sValue = this.$input
       .val()
       .replace(/^0*/, '')
@@ -123,20 +122,20 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   /**
    * @desc 인풋 창 입력 값 validation
    * @returns {void}
-  */
-  _validateChangeAmount: function() {
+   */
+  _validateChangeAmount: function () {
     var value = Number(this.$input.val());
 
-    if (!value) {
+    if ( !value ) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.NON_CHANGE_DATA);
       this.$error.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(true);
-    } else if (value > this._changable.data) {
+    } else if ( value > this._changable.data ) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.GREATER_THAN_CHANGABLE_DATA);
       this.$error.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(true);
     } else {
-      if (!this.$error.hasClass('none')) {
+      if ( !this.$error.hasClass('none') ) {
         this.$error.addClass('none').attr('aria-hidden', true);
       }
       this._setDisableSubmit(false);
@@ -145,20 +144,20 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 하단(변경하기) 버튼 활성화
-   * @param {boolean} disable
+   * @param disable
    * @returns {void}
-  */
-  _setDisableSubmit: function(disable) {
-    disable !== !!this.$submitBtn.attr('disabled') && this.$submitBtn.attr('disabled', disable);
+   */
+  _setDisableSubmit: function (disable) {
+    this.$submitBtn.attr('disabled', disable);
   },
 
   /**
    * @desc 하단(변경하기) 버튼 클릭 시
-   * @param {Event} 클릭 이벤트 객체
+   * @param event 클릭 이벤트 객체
    * @returns {void}
-  */
-  _clickSubmit: function(e) {
-    var $target = $(e.currentTarget);
+   */
+  _clickSubmit: function (event) {
+    var $target = $(event.currentTarget);
     var ALERT = Tw.ALERT_MSG_MYT_DATA.CONFIRM_SHARE_DATA_CHANGE;
     this._popupService.openConfirmButton(
       ALERT.CONTENTS,
@@ -173,15 +172,15 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 변경하기 확인 시
-   * @param {$object} 클릭 타겟 jquery 객체 
+   * @param $target 클릭 타겟 jquery 객체
    * @returns {void}
-  */
-  _submitChange: function($target) {
+   */
+  _submitChange: function ($target) {
     var type = 'R',
-      gb = this.$input.val(),
-      mb = 0;
+        gb   = this.$input.val(),
+        mb   = 0;
 
-    if (this._all) {
+    if ( this._all ) {
       type = 'A';
       gb = this._changable.gb;
       mb = this._changable.mb;
@@ -199,17 +198,21 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       .done($.proxy(this._handleDoneSubmit, this, $target));
   },
 
+  _handleClosePopup: function () {
+    this._popupService.close();
+  },
+
   /**
    * @desc 변경하기 요청에 대한 응답이 서버에서 돌아온 경우
-   * @param {$object} 클릭 타겟 jquery 객체 
-   * @param {object} 서버 응답
-   * @returns {void}
-  */
-  _handleDoneSubmit: function($target, resp) {
+   * @param $target 클릭 타겟 jquery 객체
+   * @param resp 서버 응답
+   */
+  _handleDoneSubmit: function ($target, resp) {
     var CODE = Tw.MYT_DATA_FAMILYDATA_CHANGE_DATA_CODE[resp.code];
-    if (CODE) {
-      this._popupService.openAlert(Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS[CODE], null, null, $.proxy(this._setRetrieveStatus, this), undefined, $target);  // 웹접근성 포커스 처리를 위한 jquery 객체
-    } else if (resp.code !== Tw.API_CODE.CODE_00) {
+    if ( CODE ) {
+      this._popupService.openAlert(Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS[CODE], null, null,
+        $.proxy(this._setRetrieveStatus, this), undefined, $target);  // 웹접근성 포커스 처리를 위한 jquery 객체
+    } else if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
       this.$item.find('.fe-after').remove();
@@ -219,10 +222,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
         .attr('aria-hidden', false);
 
       setTimeout(
-        $.proxy(function() {
+        $.proxy(function () {
           this._popupService.close();
           this.isSuccess = true;
-        }, this), 
+        }, this),
         0
       );
     }
@@ -230,13 +233,13 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 조회하기 버튼 클릭 시
-   * @param {boolean} 버튼 노출 여부
+   * @param visible 버튼 노출 여부
    * @returns {void}
-  */
-  _handleRerieveChangable: function(visible) {
+   */
+  _handleRerieveChangable: function (visible) {
     this._setDisableChange(true);
 
-    if (visible) {
+    if ( visible ) {
       this.$retrieveBtn.addClass('none').attr('aria-hidden', true);
     }
 
@@ -250,10 +253,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 변경 가능 데이터 조회
-   * @param {string} 버튼 노출 여부
+   * @param requestCount
    * @returns {void}
-  */
-  _requestRetrieve: function(requestCount) {
+   */
+  _requestRetrieve: function (requestCount) {
     this._apiService
       .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: this._serial })
       .done($.proxy(this._handleDoneRetrieve, this));
@@ -261,33 +264,33 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 변경 가능 데이터 서버 응답이 내려온 경우
-   * @param {object} 서버 응답
+   * @param resp
    * @returns {void}
-  */
-  _handleDoneRetrieve: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
+   */
+  _handleDoneRetrieve: function (resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
       this._setRetrieveStatus();
       this._popupService.openAlert(
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, 
-        Tw.POPUP_TITLE.NOTIFY, 
-        undefined, 
-        undefined, 
-        undefined, 
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218,
+        Tw.POPUP_TITLE.NOTIFY,
+        undefined,
+        undefined,
+        undefined,
         this.$retrieveBtn // 웹접근성 포커스 처리를 위한 jquery 객체
       );
       return;
     }
 
-    if (resp.result.nextReqYn === 'Y') {
+    if ( resp.result.nextReqYn === 'Y' ) {
       setTimeout($.proxy(this._requestRetrieve, this, resp.result.reqCnt), 3000); // 3초 후에 재요청(BFF 요청 사항)
-    } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
+    } else if ( !resp.result.remGbGty && !resp.result.remMbGty ) {
       this._setRetrieveStatus();
       this._popupService.openAlert(
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, 
-        Tw.POPUP_TITLE.NOTIFY, 
-        undefined, 
-        undefined, 
-        undefined, 
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218,
+        Tw.POPUP_TITLE.NOTIFY,
+        undefined,
+        undefined,
+        undefined,
         this.$retrieveBtn // 웹접근성 포커스 처리를 위한 jquery 객체
       );
     } else {
@@ -298,22 +301,22 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   /**
    * @desc 서버에서 변경가능 데이터 조회 실패 시, '조회하기' 버튼 재 노출
    * @returns {void}
-  */
-  _setRetrieveStatus: function() {
+   */
+  _setRetrieveStatus: function () {
     this.$retrieveBtn.removeClass('none').attr('aria-hidden', false);
     this.$strong.addClass('none').attr('aria-hidden', true);
   },
 
   /**
    * @desc 서버에서 변경가능 데이터 조회 성공 시
-   * @param {object} 변경 가능 데이터 서버 응답 결과
+   * @param share 변경 가능 데이터 서버 응답 결과
    * @returns {void}
-  */
-  _handleSuccessRetrieve: function(share) {
+   */
+  _handleSuccessRetrieve: function (share) {
     var nData = Number((Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0).toFixed(2));
     this.$strong.text(nData > 0 ? nData + 'GB' : '0MB').switchClass('txt-c4', 'txt-c2');
     this.$retrieveBtn.remove();
-    if (nData > 0) {
+    if ( nData > 0 ) {
       this._changable.gb = Number(share.remGbGty);
       this._changable.mb = Number(share.remMbGty);
       this._changable.data = nData;
@@ -323,10 +326,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   /**
    * @desc 변경하기 버튼 비활성화
-   * @param {boolean} 비활성화 여부
+   * @param disable 비활성화 여부
    * @returns {void}
-  */
-  _setDisableChange: function(disable) {
+   */
+  _setDisableChange: function (disable) {
     this.$input.attr('disabled', disable);
     this.$container.find('.btn-type01').attr('disabled', disable);
   }

@@ -55,6 +55,7 @@ class MainHome extends TwViewController {
    * @return {void}
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    console.log(">>[TEST] main.controller.svcInfo", svcInfo);
     const homeData = {
       usageData: null,
       membershipData: null,
@@ -74,17 +75,14 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    let prodEventCtl = true; // true: 적용일때만... false: 범위 대상일 아니면 제외
-    let eventFlag = 0;
-    let userAgents = ["SM-G955N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
-    // console.log(">>[TEST] req.headers.referer ", req.headers.referer);
+    let prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
+    let eventBannerCtl = false;
     // 갤럭시20
-    // 이벤트 기간이면서, 앱이면서, 최초 접속시, 아래 폰 목록에 해당되는 폰들은 /main/store 진입 한다.
-    // isEvent를 만든이유는 화면에서 /main/home?event=1 를 추가하여 최초를 제외한 상황일때는 main화면으로 넘기기 위해서이다. 
+    // app event banner control gallexy20
     if (prodEventCtl) {
       let isEvent = req.query['event'] || '';
-      // console.log(">>['TEST'] ", isEvent, flag, svcInfo);
-      if ((isEvent === '' && flag === 'app') && svcInfo) { // tab 클릭시 : 1=> main , null=> tab G955N
+      if (!isEvent && flag === 'app') { // tab 클릭시 : 1=> main , null=> tab
+        var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
         for(let i=0; i<userAgents.length; i++) {
           if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
             res.redirect("/main/store");
@@ -93,21 +91,27 @@ class MainHome extends TwViewController {
         }
       }
 
-      // 앱 접속이면서, 이벤트 기간이고, 아래 폰 목록에 해당하는 항목만 노티를 표시용 플래그 설정
-      if (prodEventCtl) {
-        if (flag === 'app') {
-          for(let i=0; i<userAgents.length; i++) {
-            if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
-              eventFlag = 1;
-              break;
-            }
-          }
-        }
+      // web event banner control gallexy20
+      if (flag === 'web') {
+
+        eventBannerCtl = true;
+
+        // phone check ?
+        // console.log(`>>>[TEST] for out source `, req['useragent']['source']);
+        // var userAgents = ["SM-G995N","SM-G965N","SM-G977N","SM-N950N","SM-N960N","SM-N971N","SM-N976N"];
+        // for(let i=0; i<userAgents.length; i++) {
+        //   console.log(`>>>[TEST] if out userAgents[${i}] `, userAgents[i]);
+        //   if (req['useragent']['source'].indexOf(userAgents[i]) > -1) {
+        //     console.log(`>>>[TEST] if in userAgents[${i}] `, userAgents[i]);
+        //     eventBannerCtl = true;
+        //     break;
+        //   }
+        // }
       }
     }
 
-    // console.log(`>>>[TEST] flag `, flag);
-    // console.log(`>>>[TEST] eventFlag `, eventFlag);
+    console.log(`>>>[TEST] flag `, flag);
+    console.log(`>>>[TEST] eventBannerCtl `, eventBannerCtl);
 
     if ( svcInfo ) {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE ) {
@@ -131,8 +135,6 @@ class MainHome extends TwViewController {
             svcInfo.personTimeChk = personData.personDisableTimeCheck; // 아이콘 비노출 시간 체크
             svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck; // 아이콘 비노출 서비스 타입 체크
             svcInfo.personAgentTypeChk = personData.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
-            svcInfo.personSmsDisableTimeCheck = personData.personSmsDisableTimeCheck; // 아이콘 문자 비노출시간 체크
-
             res.render(`main.home-${ flag }.html`, {
               svcInfo,
               homeData,
@@ -140,8 +142,7 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              isAdRcvAgreeBannerShown,
-              event: eventFlag
+              isAdRcvAgreeBannerShown
             });
           });
         } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
@@ -163,8 +164,7 @@ class MainHome extends TwViewController {
             pageInfo,
             noticeType: svcInfo.noticeType,
             recommendProdsData,
-            isAdRcvAgreeBannerShown,
-            event: eventFlag
+            isAdRcvAgreeBannerShown
           });
         });
       } else {
@@ -191,8 +191,7 @@ class MainHome extends TwViewController {
               pageInfo,
               noticeType: svcInfo.noticeType,
               recommendProdsData,
-              isAdRcvAgreeBannerShown,
-              event: eventFlag
+              isAdRcvAgreeBannerShown
             });
           });
         }
@@ -216,8 +215,7 @@ class MainHome extends TwViewController {
           pageInfo,
           noticeType: '',
           recommendProdsData,
-          personDataNoLoginMap,
-          event: eventFlag
+          personDataNoLoginMap
         });
       });
     }
@@ -760,17 +758,15 @@ class MainHome extends TwViewController {
    */
   private getPersonData(svcInfo: any, req: Request): Observable<any> {
     return Observable.combineLatest(
-      this.getPersonDisableTimeCheck(),
-      this.getPersonSmsDisableTimeCheck()
-    ).map(([personDisableTimeCheck, personSmsDisableTimeCheck]) => {
+      this.getPersonDisableTimeCheck()
+    ).map(([personDisableTimeCheck]) => {
       const personDisableLineTypeCheck = this.getPersonLineTypeCheck(svcInfo);
       const personDisableAgentTypeCkeck = this.getPersonAgentTypeCheck(req);
       this.logger.info(this, '[Person Login Info]', personDisableTimeCheck, personDisableAgentTypeCkeck, personDisableLineTypeCheck);
       return {
         personDisableTimeCheck,
         personDisableAgentTypeCkeck,
-        personDisableLineTypeCheck,
-        personSmsDisableTimeCheck
+        personDisableLineTypeCheck
       };
     });
   }
@@ -805,32 +801,6 @@ class MainHome extends TwViewController {
         const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
         const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
         this.logger.info(this, '[Person startTime // endTime]', startTime, endTime);
-        /**
-         * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
-         * true: 노출, false: 비노출
-         */
-        return !(today >= startTime && today <= endTime);
-      } else {
-        return null;
-      }
-    });
-  }
-
-  /**
-   * redis에서 개인화 문자 진입 아이콘 노출 여부 체크
-   * @return {Observable}
-   */
-  private getPersonSmsDisableTimeCheck(): Observable<any> {
-    const DEFAULT_PARAM = {
-      property: REDIS_KEY.PERSON_SMS_DISABLE_TIME
-    };
-    return this.apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        const today = new Date().getTime();
-        const resTime = resp.result.split('~');
-        const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
-        const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
-        this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
         /**
          * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
          * true: 노출, false: 비노출

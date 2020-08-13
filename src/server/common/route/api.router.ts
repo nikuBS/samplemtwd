@@ -15,7 +15,7 @@ import dateHelper from '../../utils/date.helper';
 import DateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
-import { NODE_API_ERROR, UNLIMIT_NAME } from '../../types/string.type';
+import { NODE_API_ERROR, TIME_UNIT, UNLIMIT_NAME } from '../../types/string.type';
 import { TPLAN_SHARE_LIST, UNIT, UNIT_E, WIDGET_ERROR } from '../../types/bff.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
@@ -194,9 +194,10 @@ class ApiRouter {
     res.set('expires', '0');
     res.set('pragma', 'no-cache');
     if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+      this.logger.error('sessionCheck::loginCookie: ' + loginCookie);
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
-      res.json({
+      return res.json({
         code: API_CODE.NODE_1004,
         msg: NODE_API_ERROR[API_CODE.NODE_1004]
       });
@@ -1522,9 +1523,9 @@ class ApiRouter {
         if ( isSpclData ) {
           if ( balancesResponse.result && balancesResponse.result.spclData ) {
             balancesResponse.result.spclData.map((data) => {
-              const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
+              const dataSkipIds: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
               // KB 단위 잔여량만 합산
-              if ( skipId.length ) {
+              if ( dataSkipIds.length ) {
                 if ( data.unit === UNIT_E.DATA ) {
                   remainedData.isEmpty = false;
                   // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
@@ -1569,10 +1570,18 @@ class ApiRouter {
         const voiceCodes: string[] = voiceCode ? (voiceCode.includes(',') ? voiceCode.split(',') : [voiceCode]) : [];
         // 음성에서 공제코드 검색
         if ( balancesResponse.result && balancesResponse.result.voice ) {
-          balancesResponse.result.voice.map((voice) => {
-            const skipId: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
+          balancesResponse.result.voice.map((voice, index) => {
+            const voiceSkipIds: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
+            // 전달받은 voiceCode 값이 없는 경우에는 첫번째 항목만 노출
+            if( !voiceCode && index !== 0 ) {
+              return;
+            }
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( skipId.length ) {
+            if ( voiceSkipIds.length ) {
+              // voiceCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
+              if ( !voiceCode ) {
+                voiceCodes.push(voice.skipId);
+              }
               remainedVoice.isEmpty = false;
               // 음성 항목이 무제한 또는 기본제공일 경우 Flag 설정
               switch ( voice.unlimit ) {
@@ -1607,10 +1616,18 @@ class ApiRouter {
         const smsCodes: string[] = smsCode ? (smsCode.includes(',') ? smsCode.split(',') : [smsCode]) : [];
         // SMS에서 공제코드 검색
         if ( balancesResponse.result && balancesResponse.result.sms ) {
-          balancesResponse.result.sms.map((sms) => {
-            const skipId: string[] = smsCodes ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
+          balancesResponse.result.sms.map((sms, index) => {
+            const smsSkipIds: string[] = smsCode ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
+            // 전달받은 smsCode 값이 없는 경우에는 첫번째 항목만 노출
+            if( !smsCode && index !== 0 ) {
+              return;
+            }
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( skipId.length ) {
+            if ( smsSkipIds.length ) {
+              // smsCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
+              if ( !smsCode ) {
+                smsCodes.push(sms.skipId);
+              }
               remainedSms.isEmpty = false;
               // SMS 항목이 무제한 또는 기본제공일 경우 Flag 설정
               switch ( sms.unlimit ) {
@@ -1643,19 +1660,22 @@ class ApiRouter {
             skipId: dataCodes.join(', '), // 조회한 데이터 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '-', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
             sharedRemainedPercentage: 0 // 총 제공량 대비 잔여 T가족모아데이터의 비율
           },
           voice: {
-            skipId: voiceCode, // 조회한 음성 공제코드
+            skipId: voiceCodes.join(', '), // 조회한 음성 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '-', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           },
           sms: {
-            skipId: smsCode, // 조회한 SMS 공제코드
+            skipId: smsCodes.join(', '), // 조회한 SMS 공제코드
             isValid: false, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '-', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           }
 
@@ -1667,6 +1687,7 @@ class ApiRouter {
             skipId: dataCode, // 조회한 음성 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '미설정', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0, // 총 제공량 대비 잔여 데이터(T가족모아데이터 외)의 비율
             sharedRemainedPercentage: 0 // 총 제공량 대비 잔여 T가족모아데이터의 비율
           };
@@ -1676,6 +1697,7 @@ class ApiRouter {
             skipId: voiceCode, // 조회한 음성 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '미설정', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           };
         }
@@ -1684,6 +1706,7 @@ class ApiRouter {
             skipId: smsCode, // 조회한 SMS 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
             remainedValue: '미설정', // 표기될 잔여량 숫자(또는 텍스트)
+            remainedValueSmall: '미설정', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           };
         }
@@ -1693,15 +1716,20 @@ class ApiRouter {
           responseRemains.data.isValid = true;
           if ( remainedData.unlimit ) { // 잔여 데이터가 무제한인 경우
             responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
+            responseRemains.data.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT; // native 요청사항
             responseRemains.data.remainedPercentage = 1;
           } else if ( remainedData.unlimit_default ) { // 잔여 데이터가 기본제공인 경우
             responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
+            responseRemains.data.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT; // native 요청사항
             responseRemains.data.remainedPercentage = 1;
           } else { // 잔여 데이터가 무제한이 아닌 경우
             if ( remainedData.unit === UNIT_E.DATA ) { // 잔여 데이터의 단위가 'KB'인 경우
               responseRemains.data.remainedValue =
                 FormatHelper.convDataFormatWithUnit(
                   remainedData.remained + remainedData.sharedRemained, UNIT[remainedData.unit]); // 용량 단위 변경 및 단위 텍스트 추가
+              responseRemains.data.remainedValueSmall =
+                FormatHelper.convDataFormatWithUnit(
+                  remainedData.remained + remainedData.sharedRemained, UNIT[remainedData.unit]); // native 요청사항
               responseRemains.data.remainedPercentage =
                 remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
               responseRemains.data.sharedRemainedPercentage =
@@ -1709,6 +1737,8 @@ class ApiRouter {
             } else if ( remainedData.unit === UNIT_E.FEE ) { // 잔여 데이터의 단위가 '원'인 경우
               responseRemains.data.remainedValue =
                 FormatHelper.getFeeContents(remainedData.remained + remainedData.sharedRemained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.data.remainedValueSmall =
+                FormatHelper.getFeeContents(remainedData.remained + remainedData.sharedRemained) + UNIT[UNIT_E.FEE]; // native 요청사항
               responseRemains.data.remainedPercentage =
                 remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
               responseRemains.data.sharedRemainedPercentage =
@@ -1721,19 +1751,23 @@ class ApiRouter {
         // 잔여 음성 Response 양식 설정
         if ( !remainedVoice.isEmpty ) {
           responseRemains.voice.isValid = true;
-          if ( remainedVoice.unlimi ) { // 잔여 음성이 무제한인 경우
+          if ( remainedVoice.unlimit ) { // 잔여 음성이 무제한인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
+            responseRemains.voice.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.voice.remainedPercentage = 1;
           } else if ( remainedVoice.unlimit_default ) { // 잔여 음성이 기본제공인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
+            responseRemains.voice.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.voice.remainedPercentage = 1;
           } else { // 잔여 음성이 무제한이 아닌 경우
             if ( remainedVoice.unit === UNIT_E.VOICE ) { // 잔여 음성의 단위가 '초'인 경우
               responseRemains.voice.remainedValue =
-                FormatHelper.convVoiceMinFormatWithUnit(Math.floor(remainedVoice.remained / 60)); // 시간 단위 변경 및 단위 텍스트 추가
+                FormatHelper.convVoiceMinFormatWithUnit(Math.floor(remainedVoice.remained / 60), true); // 시간 단위 변경 및 단위 텍스트 추가
+              responseRemains.voice.remainedValueSmall = Math.floor(remainedVoice.remained / 60) + TIME_UNIT.MINUTE;
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
             } else if ( remainedVoice.unit === UNIT_E.FEE ) { // 잔여 음성의 단위가 '원'인 경우
-              responseRemains.voice.remainedValue = FormatHelper.getFeeContents(remainedVoice.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.voice.remainedValue = responseRemains.voice.remainedValueSmall
+                = FormatHelper.getFeeContents(remainedVoice.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
             } else { // 잔여 음성의 단위가 '초' 또는 '원'이 아닌 경우
               responseRemains.voice.isValid = false;
@@ -1745,16 +1779,20 @@ class ApiRouter {
           responseRemains.sms.isValid = true;
           if ( remainedSms.unlimit ) { // 잔여 SMS가 무제한인 경우
             responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
+            responseRemains.sms.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT; // native 요청사항
             responseRemains.sms.remainedPercentage = 1;
           } else if ( remainedSms.unlimit_default ) { // 잔여 SMS가 기본제공인 경우
             responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
+            responseRemains.sms.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT; // native 요청사항
             responseRemains.sms.remainedPercentage = 1;
           } else { // 잔여 SMS가 무제한이 아닌 경우
             if ( remainedSms.unit === UNIT_E.SMS || remainedSms.unit === UNIT_E.SMS_2 ) { // 잔여 SMS의 단위가 '건'인 경우
               responseRemains.sms.remainedValue = FormatHelper.convNumFormat(remainedSms.remained); // 3자리 콤마 및 단위 텍스트 추가
+              responseRemains.sms.remainedValueSmall = FormatHelper.convNumFormat(remainedSms.remained); // native 요청사항
               responseRemains.sms.remainedPercentage = remainedSms.total !== 0 ? remainedSms.remained / remainedSms.total : 0;
             } else if ( remainedSms.unit === UNIT_E.FEE ) { // 잔여 SMS의 단위가 '원'인 경우
               responseRemains.sms.remainedValue = FormatHelper.getFeeContents(remainedSms.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
+              responseRemains.sms.remainedValueSmall = FormatHelper.getFeeContents(remainedSms.remained) + UNIT[UNIT_E.FEE]; // native 요청사항
               responseRemains.sms.remainedPercentage = remainedSms.total !== 0 ? remainedSms.remained / remainedSms.total : 0;
             } else { // 잔여 SMS의 단위가 '건' 또는 '원'이 아닌 경우
               responseRemains.sms.isValid = false;

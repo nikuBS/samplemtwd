@@ -9,8 +9,9 @@ import { NextFunction, Request, Response } from 'express';
 import BrowserHelper from '../../../utils/browser.helper';
 import { CHANNEL_CODE, REDIS_KEY } from '../../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
-import { API_CODE } from '../../../types/api-command.type';
+import { API_CODE, API_CMD } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
+import DateHelper from '../../../utils/date.helper';
 
 class MainStore extends TwViewController {
   constructor() {
@@ -22,7 +23,7 @@ class MainStore extends TwViewController {
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
     let prodEventCtl = false;
-
+    
     this.getRedisData(noticeCode)
       .subscribe((resp) => {
         res.render(`main.store.html`, { svcInfo, redisData: resp, pageInfo, formatHelper: FormatHelper, prodEventCtl: prodEventCtl });
@@ -35,7 +36,7 @@ class MainStore extends TwViewController {
       this.getStoreProduct(),
       this.getStoreAddProduct(),
       this.getStoreTappsProduct(),
-      this.getHomeHelp()
+      this.getHomeHelp(),
     ).map(([notice, product, productAdd, productTapps, help]) => {
       let mainNotice = null;
       if ( !FormatHelper.isEmpty(notice) ) {

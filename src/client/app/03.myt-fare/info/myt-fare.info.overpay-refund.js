@@ -1,11 +1,11 @@
 /**
  * @file [나의요금-환불처리-리스트] 관련 처리
- * @author Lee Kirim 
+ * @author Lee Kirim
  * @since 2018-09-17
  */
 
 /**
- * @class 
+ * @class
  * @desc 환불처리 리스트를 위한 class
  * @param {Object} rootEl - 최상위 element Object
  * @param {JSON} data - myt-fare.info.overpay-refund.controller.ts 로 부터 전달되어 온 납부내역 정보
@@ -26,7 +26,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member 
    * @desc 리스트 생성 실행
    * @return {void}
    */
@@ -36,7 +35,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성시 이벤트 바인드
    */
   _bindEvent: function () {
@@ -45,7 +43,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 생성자 생성시 템플릿 엘리먼트 설정
    * - myt-fare.info.overpay-refund.html 참고
    */
@@ -74,7 +71,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 환불내역 리스트 , 리스트 렌더링 후 이벤트 바인드
    */
   _initRefundList: function () {
@@ -88,7 +84,7 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
     } else {
       this.listRenderPerPage = Tw.DEFAULT_LIST_COUNT; // 한번에 노출 갯수 20
 
-      this.listLastIndex = this.listRenderPerPage; // 노출된 마지막 인덱스 
+      this.listLastIndex = this.listRenderPerPage; // 노출된 마지막 인덱스
       this.listViewMoreHide = (this.listLastIndex < totalDataCounter); // 더보기버튼 숨길 지 여부
 
       this.renderableListData = this.data.slice(0, this.listRenderPerPage); // 렌더링할 리스트
@@ -109,21 +105,19 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
     this.$btnListViewMorewrapper = this.$container.find('#fe-refund-history-wrapper .bt-more');
     this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updateRefundList, this)); // 더보기버튼 클릭 이벤트
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
-    // 상세보기 버튼 클릭 이벤트 
-    this.$appendListTarget.on('click', 'button', $.proxy(this._listViewDetailHandler, this)); 
+    // 상세보기 버튼 클릭 이벤트
+    this.$appendListTarget.on('click', 'button', $.proxy(this._listViewDetailHandler, this));
     this.$appendListTarget.on('click', '.inner', $.proxy(this._listViewDetailHandler, this));
   },
 
   /**
    * @function
-   * @member
    * @desc 상세보기로 이동, 클릭 이벤트 발생한 객체 엘리먼트의 listId 값을 파라미터로 이동 시킴
    * /myt-fare/info/overpay-refund/detail?
-   * @param {number>string} lsitId
-   * @param {event} e 
+   * @param {event} event
    */
-  _listViewDetailHandler: function (e) {
-    var detailData = this.data[$(e.currentTarget).data('listId')];
+  _listViewDetailHandler: function (event) {
+    var detailData = this.data[$(event.currentTarget).data('listId')];
 
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
@@ -132,15 +126,13 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 더보기 버튼 이벤트 리스트 추가
-   * @param {event} e 
    */
-  _updateRefundList: function (e) {
+  _updateRefundList: function () {
     this._updateRefundListData();
 
     this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.length ? 'none' : ''});
-    // this._updateViewMoreBtnRestCounter($(e.currentTarget));
+    // this._updateViewMoreBtnRestCounter($(event.currentTarget));
 
     var $domAppendTarget  = this.$appendListTarget;
 
@@ -154,7 +146,6 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
    * @desc 추가할 리스트 목록 구하기
    */
   _updateRefundListData: function () {
@@ -168,14 +159,12 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   /**
    * @function
-   * @member
-   * @param {event} e
-   * @returns {void}
+   * @param $target
    * @desc 더보기 클릭시 남은 리스트 갯수 표현하는 것이었으나 현재 사용되지는 않음
    */
-  _updateViewMoreBtnRestCounter: function (e) {
-    e.text(e.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
+  _updateViewMoreBtnRestCounter: function ($target) {
+    $target.text($target.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
   }
 
-  
+
 };

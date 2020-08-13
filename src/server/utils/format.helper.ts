@@ -221,10 +221,18 @@ class FormatHelper {
     return { hours, min, sec };
   }
 
-  static convVoiceMinFormatWithUnit(data: any): any {
-    const hours = Math.floor(data / 60),
-      min = data - (hours * 60);
-
+  /**
+   * @param data
+   * @param notIncludingMin
+   */
+  static convVoiceMinFormatWithUnit(data: any, notIncludingMin: boolean = false): any {
+    const hours = Math.floor(data / 60);
+    const min = data - (hours * 60);
+    // '분'이 0 인 경우에 옵션에 따라 노출 여부 결정
+    if (notIncludingMin && (hours > 0 && min === 0)) {
+      // 시간이 있는 경우에만
+      return hours + VOICE_UNIT.HOURS;
+    }
     return (hours > 0 ? hours + VOICE_UNIT.HOURS : '') + min + VOICE_UNIT.MIN;
   }
 
