@@ -81,7 +81,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
 
   onBranchDetail: function (e) {
     e.preventDefault();
-    this._historyService.goLoad('/customer/agentsearch/detail?code=' + $(e.currentTarget).attr('href'));
+    this._historyService.goLoad('/customer/agentsearch/detail?code=' + $(e.currentTarget).data('locCode'));
   },
 
   // 지점/대리점 찾기 리스트 > 처리업무들
