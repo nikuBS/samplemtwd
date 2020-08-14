@@ -247,11 +247,11 @@
 <!--지점/대리점 리스트 템플릿-->
 <script type="text/template" id="tpl_search_result_item">
   {{#list}}
-  <li data-locCode="{{locCode}}">
+  <li data-loc-code="{{locCode}}" class="fe-branch-detail">
       <div class="tod-o2o-item">
           <dl>
               <dt class="item-tit">
-                  <span class="tit"><a href="{{locCode}}" class="fe-branch-detail">{{storeName}}</a></span>
+                  <span class="tit">{{storeName}}</span>
                   {{#if shopTypeNm}}
                   <span class="type">{{shopTypeNm}}</span>
                   {{/if}}

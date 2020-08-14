@@ -1131,11 +1131,11 @@
 </script>
 <script type="text/x-handlebars-template" id="shop_list_templ">
     {{#shopList}}
-    <li class="{{ternaryOp isTShopList true '' 'slide-item'}}">
+    <li class="fe-branch-detail {{ternaryOp isTShopList true '' 'slide-item'}}" data-loc-code="{{locCode}}">
         <div class="tod-o2o-item">
             <dl>
                 <dt class="item-tit">
-                    <span class="tit"><a href="{{locCode}}" class="fe-branch-detail">{{storeName}}</a></span>
+                    <span class="tit">{{storeName}}</span>
                     {{#if shopTypeNm}}
                         <span class="type">{{shopTypeNm}}</span>
                     {{/if}}

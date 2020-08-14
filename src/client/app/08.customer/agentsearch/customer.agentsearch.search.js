@@ -242,7 +242,7 @@ Tw.CustomerAgentsearch.prototype = {
         (카운트영역, 에러배너영역, 리스트 영역)
         */
       case 4:
-        this.resultContents(0, options.error);
+        this.resultContents(options.res.totalCount, options.error);
         showArea([$filterArea, $noData, $normalListArea]);
         listRender(options, list);
         break;
