@@ -62,10 +62,8 @@ Tw.CustomerAgentsearchComponent.prototype = {
       this._showDataChargeExt(url);
       return;
     }
-    // console.info('### url', url);
-    // Tw.CommonHelper.openUrlExternal(url);
-    Tw.CommonHelper.openUrlInApp(url);
-    // this._historyService.goLoad(url);
+    Tw.CommonHelper.openUrlExternal(url);
+    // Tw.CommonHelper.openUrlInApp(url);
   },
 
   _showDataChargeExt: function (url) {
@@ -140,7 +138,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
     }.bind(this);
 
 
-    list.forEach(function (o, idx) {
+    list.forEach(function (o) {
       // 처리 가능업무
       saveTask(o, 'dvcChange');
       saveTask(o, 'rbpAsYn');
