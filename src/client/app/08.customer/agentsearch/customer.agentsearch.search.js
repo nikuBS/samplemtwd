@@ -339,14 +339,19 @@ Tw.CustomerAgentsearch.prototype = {
 
   /**
    * @function
-   * @desc 탭 변경 일때 내용 초기화 해준다.
+   * @desc 탭 변경 일때 새로고침
    */
   _onReset: function () {
-    this.$keyword.val(''); // 검색어 클리어
+    // 즉시 리로딩 하면 hash 값 변경되기 전에 로딩되어 약간의 시간을 줌.
+    setTimeout(function (){
+      this._historyService.reload();
+    }.bind(this), 50);
+
+    /*this.$keyword.val(''); // 검색어 클리어
     // 탭(지하철) 셀렉트 박스 초기화
     this._resetTubeSelect();
     this.$resultListByList.empty(); // 리스트 클리어
-    this.$resultCount.text('0'); // 검색 갯수 초기화
+    this.$resultCount.text('0'); // 검색 갯수 초기화*/
   },
 
   /**
