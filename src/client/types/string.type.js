@@ -1469,7 +1469,9 @@ Tw.CUSTOMER_EMAIL = {
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
-  MSG: '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
+  TITLE : '위치정보 이용 안내',
+  AOS_MSG : '위치 서비스를 이용하시려면 위치(GPS)가 켜져 있어야 합니다.</br> “단말 설정>위치” 또는 단말기 상단의 알림창에서 “위치”를 켜주세요.',
+  IOS_MSG : '위치 서비스를 이용하시려면 접근 권한을 허용해주셔야 합니다.</br></br>“단말 설정> 개인정보보호> 위치 서비스”를 켜고, “T world”에 대해 위치 접근 허용 후 다시 시도해주세요.'
 };
 
 Tw.CUSTOMER_NEAR_POPUP = {
@@ -1485,6 +1487,38 @@ Tw.CUSTOMER_HELPLINE_COMPLETE = {
   AREA: '상담지역',
   PHONE_NUMBER: '연락가능번호'
 };
+
+// 지점/대리점 찾기
+Tw.CUSTOMER_AGENT_SEARCH = {
+  // 필터영역 (매장 속성 선택)
+  FILTER: {
+    // 처리가능업무
+    dvcChange: '휴대폰 일반', // 기기변경 -> 휴대폰 일반
+    rbpAsYn: '행복A/S',
+    hanaroCode: '유선/인터넷TV', // SK브로드밴드 -> 유선/인터넷TV
+    secuConsulting: 'ADT캡스보안', // 보안상담 -> ADT캡스보안
+    appleYn: '애플취급',
+    pickupYn: '바로픽업',
+    nameTheft: '명의도용접수',
+    callHistSearch: '통화내역조회',
+    rentYn: '임대폰',
+
+    // 체험존
+    fiveGxYn: '5GX 체험존',
+    vrYn: 'VR 체험존',
+    dvcExprZone: '단말체험존',
+
+    // 교육 프로그램
+    speedYn: '스마트폰 기초 과정',
+    applEduYn: '스마트폰 응용 과정',
+    codingEduYn: '코딩 교실',
+
+    // 기타
+    prkPsblCnt: '주차가능',
+    disSlopeYn: '장애인경사로설치'
+  }
+};
+
 
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SEL_PROD_TYPE_DEF: '요금제 선택',
@@ -1529,14 +1563,6 @@ Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {
 
 Tw.BRANCH = {
   SELECT_REGION: '지역설정',
-  SELECT_BRANCH_RADIUS: {
-    0: { name: '전체', id: '1' },
-    1: { name: '지점', id: '2' },
-    2: { name: '대리점', id: '3' },
-    3: { name: '500m 반경', id: '4', zoom: 15, distance: 500 },
-    4: { name: '1km 반경', id: '5', zoom: 14, distance: 1000 },
-    5: { name: '3km 반경', id: '6', zoom: 13, distance: 3000 }
-  },
   PERMISSION_TITLE: '위치기반 서비스 이용 동의 안내',
   PERMISSION_DETAIL: 'T world에서 내 위치 정보를 사용하기 위해서는 위치 정보 이용에 동의하셔야 합니다.',
   VIEW_LOCATION_TERM: '위치기반 서비스 이용약관 전문보기',

@@ -151,7 +151,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     M002217: 'CMMA_A11_B3-104', // 결합상품
     M002222: 'CMMA_A11_B3-105',  // 전체혜택
 
-    M002208: 'CMMA_A11_B3-111', // APP 이용가이드 
+    M002208: 'CMMA_A11_B3-111' // APP 이용가이드
 
   },
 
@@ -420,10 +420,10 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var url = $target.val();
 
     if(Tw.BrowserHelper.isApp() && $target.hasClass('fe-show-data-charge')) {
-      Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, e));
+      Tw.CommonHelper.showDataCharge($.proxy(this._customizeExternal, this, url));
     } else {
       if ( url.indexOf('http') !== -1 ) {
-        Tw.CommonHelper.openUrlExternal(url);
+        this._customizeExternal(url);
       } else {
         this._goOrReplace(url);
       }
@@ -432,13 +432,16 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
   /**
    * @function
-   * @desc 외부 브라우저 랜딩 처리
-   * @param $event 이벤트 객체
-   * @return {void}
-   * @private
+   * @desc 외부 URL 랜딩처리. (※ 티# 나의 방문예약 페이지인 경우만 인앱이동)
+   * @param url
    */
-  _onClickExternal: function ($event) {
-    var url = $($event.currentTarget).val();
+  _customizeExternal: function (url) {
+    // 나의 방문 예약 경로 인 경우. 외부 창이 아닌 "인앱" 으로 호출한다.
+    if (url.indexOf('mobile.tsharp.io/my/booking/list') > -1) {
+      url += '?sso_login_id='+this._svcInfo.userId+'&svc_num=' + this._svcInfo.svcMgmtNum;
+      Tw.CommonHelper.openUrlInApp(url);
+      return;
+    }
     Tw.CommonHelper.openUrlExternal(url);
   },
 
@@ -487,7 +490,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           majorVersion = Number(majorVersion);
         }
       }
-      
+
       var userAgentString = Tw.BrowserHelper.getUserAgent();
       var currentVersion = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
 
@@ -505,11 +508,11 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       } else if(versionArr.length === 3){
         appPackageValue = versionArr[versionArr.length-1];
       }
-      
-      appPackageType = (appPackageValue % 2) ? "lower":"upper";  // 대/소문자(대문자 짝수, 소문자 홀수) 패키지 구분
-      
-      if(Tw.BrowserHelper.isAndroid() && (majorVersion > 9 || Number(Tw.BrowserHelper.getOsVersion()) > 28 ) 
-        && (this._isAosPackageType(appPackageType))) {
+
+      appPackageType = (appPackageValue % 2) ? 'lower' : 'upper';  // 대/소문자(대문자 짝수, 소문자 홀수) 패키지 구분
+
+      if(Tw.BrowserHelper.isAndroid() && (majorVersion > 9 || Number(Tw.BrowserHelper.getOsVersion()) > 28 ) &&
+        (this._isAosPackageType(appPackageType))) {
         this._popupService.openAlert(
           Tw.MENU_STRING.OPTIMIZING_AOS10,
           '',
@@ -562,16 +565,16 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   /**
    * @function
    * @desc 현재 사용중인 단말기의 버전을 대상으로 대/소문자 패키지 유효성 체크
-   * @param  
+   * @param
    */
   _isAosPackageType: function (currentAppType) {
     switch (currentAppType) {
       case 'upper': // 대문자 패키지(이번 비교 대상 5.0.14)
         return Tw.ValidationHelper.checkVersionValidation(Tw.COMPARE_TARGET_VERSION.UPPPER_PACKAGE, this._currentVersion, 3);
-      
+
       case 'lower': // 소문자 패키지(이번 비교 대상 5.0.15)
         return Tw.ValidationHelper.checkVersionValidation(Tw.COMPARE_TARGET_VERSION.LOWER_PACKAGE, this._currentVersion, 3);
-    
+
       default:
         return true;
     }

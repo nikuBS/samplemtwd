@@ -5,7 +5,7 @@
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
+<body class="o2o-body">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -26,15 +26,15 @@
                         <div class="component-box tabs" data-header-noborder="true">
                             <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
-                                    <ul role="tablist">
-                                        <li role="presentation" class="fe-tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                            <a  role="tab" aria-selected="true" class="fe-custom-replace-history" href="#name">매장명</a>
+                                    <ul role="tablist" class="fe-tabs">
+                                        <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1">
+                                            <a  role="tab" aria-selected="true" href="#name">매장명</a>
                                         </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="presentation" class="fe-tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                            <a role="tab" aria-selected="false" class="fe-custom-replace-history" href="#addr">주소</a>
+                                        <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2">
+                                            <a role="tab" aria-selected="false" href="#addr">주소</a>
                                         </li>
-                                        <li role="presentation" class="fe-tab" aria-selected="false" aria-controls="tab3-tab" id="tab3">
-                                            <a role="tab" aria-selected="false" class="fe-custom-replace-history" href="#tube">지하철</a>
+                                        <li role="presentation" aria-selected="false" aria-controls="tab3-tab" id="tab3">
+                                            <a role="tab" aria-selected="false" href="#tube">지하철</a>
                                         </li>
                                     </ul>
                                 </div> <!-- end of tab-linker -->
@@ -43,33 +43,17 @@
                                     <ul>
                                         <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
                                             <!-- .search-point -->
-                                            <div class="search-point">
+                                            <div class="search-point tod-search-point">
                                                 <!-- .cont-box -->
-                                                <div class="cont-box pb0">
+                                                <div class="cont-box nogaps-btm">
                                                     <!-- .inputbox -->
                                                     <span class="inputbox mb20">
                                                         <span class="input">
-                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch && type === 'name' ? keyword : '' %>" autocomplete="off" />
-                                                            <button id="fe-cancel-name" class="cancel"><span class="blind">삭제</span></button>
+                                                            <input class="fe-keyword" type="text" title="지점/대리점명" placeholder="지점/대리점명" autocomplete="off" />
+                                                            <button class="cancel fe-cancel"><span class="blind">삭제</span></button>
                                                         </span>
+                                                        <button class="ico-search-red fe-search"><span class="blind">검색</span></button>
                                                     </span>
-                                                    <!-- // .inputbox -->
-                                                    <!-- .filter 201907004 삭제-->
-                                                    <!-- <div class="filter">
-                                                        <div class="inline">
-                                                            <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- // .filter -->
-                                                    <!-- .btn-search -->
-                                                    <div class="btn-search">
-                                                        <ul class="bt-slice">
-                                                            <li class="bt-red1">
-                                                                <button id="fe-btn-search-name" <%= isSearch ? undefined : 'disabled' %>>검색</button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- // .btn-search -->
                                                 </div>
                                                 <!-- // .cont-box -->
                                             </div>
@@ -77,33 +61,17 @@
                                         </li>
                                         <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                             <!-- .search-point -->
-                                            <div class="search-point">
+                                            <div class="search-point tod-search-point">
                                                 <!-- .cont-box -->
-                                                <div class="cont-box pb0">
+                                                <div class="cont-box nogaps-btm">
                                                     <!-- .inputbox -->
                                                     <span class="inputbox mb20">
                                                         <span class="input">
-                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="<%= isSearch && type === 'addr' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
-                                                            <button id="fe-cancel-addr" class="cancel"><span class="blind">삭제</span></button>
+                                                            <input class="fe-keyword" type="text" title="주소/지역명" placeholder="주소/지역명" autocomplete="off" />
+                                                            <button class="cancel fe-cancel"><span class="blind">삭제</span></button>
                                                         </span>
+                                                        <button class="ico-search-red fe-search"><span class="blind">검색</span></button>
                                                     </span>
-                                                    <!-- // .inputbox -->
-                                                    <!-- .filter 20190704 삭제-->
-                                                    <!-- <div class="filter">
-                                                        <div class="inline">
-                                                            <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- // .filter -->
-                                                    <!-- .btn-search -->
-                                                    <div class="btn-search">
-                                                        <ul class="bt-slice">
-                                                            <li class="bt-red1"> <!-- //190520_리디자인 02 : 클래스 수정 -->
-                                                                <button id="fe-btn-search-addr" <%= isSearch ? undefined : 'disabled' %>>검색</button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- // .btn-search -->
                                                 </div>
                                                 <!-- // .cont-box -->
                                             </div>
@@ -116,38 +84,22 @@
                                                 <div class="cont-box nogaps-btm">
                                                     <!-- 2019.02.22 역이름 검색 프로세스 수정-->
                                                     <!-- .filter -->
-                                                    <div class="filter subway mb20">    <!-- mb20 넣는게 맞는지 확인 필요 20190704 -->
+                                                    <div class="filter subway mb20 fe-subway">    <!-- mb20 넣는게 맞는지 확인 필요 20190704 -->
                                                         <div class="inline">
-                                                            <button class="bt-dropdown text-type02" id="fe-select-area" title="지역선택" aria-haspopup="true">지역선택</button>
+                                                            <button class="bt-dropdown text-type02 fe-select-area" title="지역선택" aria-haspopup="true" data-type="area">지역선택</button>
                                                         </div>
                                                         <div class="inline">
-                                                            <button class="bt-dropdown text-type02" id="fe-select-line" title="노선선택" aria-haspopup="true">노선선택</button>
+                                                            <button class="bt-dropdown text-type02 fe-select-line" title="노선선택" aria-haspopup="true" data-type="line" data-error-msg="지역을 선택해 주세요.">노선선택</button>
                                                         </div>
                                                         <div class="tod-station-sel">
-															<button class="bt-dropdown text-type02" id="fe-select-name" title="지하철 역명 선택" aria-haspopup="true">지하철 역명 선택</button>
+															<button class="bt-dropdown text-type02 fe-select-name" title="지하철 역명 선택" aria-haspopup="true" data-type="name" data-error-msg="지역 및 노선을 선택해 주세요.">지하철 역명 선택</button>
 														</div>
                                                     </div>
-                                                    <!-- // .filter -->
-                                                    <!-- .inputbox 삭제 예정 20190704-->
-                                                    <!-- <span class="inputbox">
-                                                        <span class="input">
-                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="정확한 역명 예) 홍대역(X), 홍대입구역(O)" value="<%= isSearch && type === 'tube' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
-                                                            <button id="fe-cancel-tube" class="cancel"><span class="blind">삭제</span></button>
-                                                        </span>
-                                                    </span> -->
-                                                    <!-- // .inputbox -->
-                                                    <!-- .filter 20190704 삭제-->
-                                                    <!-- <div class="filter">
-                                                        <div class="inline">
-                                                            <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- // .filter -->
                                                     <!-- .btn-search -->
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
                                                             <li class="bt-red1">
-                                                                <button id="fe-btn-search-tube" <%= isSearch ? undefined : 'disabled' %>>검색</button>
+                                                                <button id="fe-btn-search-tube" class="fe-search">검색</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -166,256 +118,121 @@
                 </div>
                 <!--// .cont-box -->
 
-                <div class="fe-none fe-result <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
-                        <!-- .ti-caption-gray -->
-                        <!-- <div class="ti-caption-gray"> -->
-                    <div class="cont-box bgnone noborder gaps-style03">
-                        <div class="contheader-box">
-                            <div class="totalfilter-wrap">
-                                <span class="total">총 <span class="number-text"><%= isSearch ? result.totalCount : '0' %></span>개</span>
-                                <!-- <button type="button" class="filter-btn">전체</button> -->
-                                <!-- <button type="button" class="filter-btn date-in">
-                                    <span class="datebox"><%= isSearch ? optionsText : '전체' %></span><span class="text">외</span>
-                                    <span class="number pl4">2</span><span class="text">건</span>
-                                </button> -->
-                                <% if( (isSearch && optionsText.text.indexOf('전체') == -1) ||  ( isSearch &&optionsText.text.indexOf('전체') !== -1 && optionsText.count > 0)) { %>
-                                    <button type="button" class="filter-btn date-in fe-options" aria-haspopup="true">
-                                    <% } else { %>
-                                    <button type="button" class="filter-btn fe-options" aria-haspopup="true">
-                                <% } %>
-                                    <span class="datebox"><%= isSearch ? optionsText.text : '전체' %></span>
-                                    <!-- if(<%= isSearch && 'count' in optionsText %>) { -->
-                                    <% if( isSearch && optionsText.count > 1) { %>
-                                        <span class="text">외</span>
-                                        <span class="number pl4"><%= optionsText.count - 1 %></span><span class="text">건</span>
-                                    <% } %>
-                                </button>
+                <!-- 위치동의를 하지 않은 고객이 검색하였을 경우, 노출되는 배너 -->
+                <div class="fe-location-alert none">
+                    <hr class="cont-sp type1" aria-hidden="true" />
+                    <div class="tod-dialog-box">
+                        <div class="dialog-ico"><i class="ico-location"><span class="blind">emoji</span></i></div>
+                        <button class="dialog-txt" data-go-url="/main/menu/settings/location">
+                            <span class="key">
+                                위치정보 이용동의를 하시면<br>
+                                <strong>근처 지점/대리점을 확인하실 수 있습니다. </strong>
+                            </span>
+                        </button>
+                        <div class="dialog-right-btn fe-close-alert"><button class="icon-32px-exit"><span class="blind">닫기</span></button></div>
+                    </div>
+                    <!--<hr class="cont-sp type1" aria-hidden="true" />-->
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!--필터옵션 영역-->
+                <div class="tod-filter-option fe-filter-area">
+                    <div class="contheader-box">
+                        <div class="totalfilter-wrap">
+                            <span class="total">총<span id="fe-result-count" class="number-text">0</span>개</span>
+                            <button type="button" class="filter-btn fe-options" aria-haspopup="true">
+                                <span class="datebox">필터</span>
+                            </button>
+                        </div>
 
-                            </div>
+                        <!-- 지도보기/리스트보기 토글 버튼-->
+                        <div class="btn-wrap fe-toggle-button">
+                            <button class="btn-round2 btn-style3 btn-display-list" data-toggle-name="지도보기">리스트보기</button>
                         </div>
                     </div>
                 </div>
+                <!--필터옵션 영역-->
 
-                <div class="fe-result <%= isSearch && result.totalCount > '0' ? undefined : 'none' %>">
-                    <div class="cont-box bgnone noborder gaps-style03">
-                        <div class="contheader-box">
-                            <div class="totalfilter-wrap">
-                                <!-- <% isSearch ? optionsText.count : '' %> -->
-                                <span class="total">총<span class="number-text"><%= isSearch ? result.totalCount : '0' %></span>개</span>
-                                <!-- <button type="button" class="filter-btn">전체</button> -->
-                                <% if( (isSearch && optionsText.text.indexOf('전체') == -1) ||  ( isSearch &&optionsText.text.indexOf('전체') !== -1 && optionsText.count > 0)) { %>
-                                <button type="button" class="filter-btn date-in fe-options" aria-haspopup="true">
-                                <% } else { %>
-                                <button type="button" class="filter-btn fe-options" aria-haspopup="true">
-                                <% } %>
-                                    <span class="datebox"><%= isSearch ? optionsText.text : '전체' %></span>
-                                    <!-- if(<%= isSearch && 'count' in optionsText %>) { -->
-                                    <% if( isSearch && optionsText.count > 1) { %>
-                                        <span class="text">외</span>
-                                        <span class="number pl4"><%= optionsText.count - 1 %></span><span class="text">건</span>
-                                    <% } %>
-                                </button>
-                            </div>
+                <!-- 결과 없을경우 -->
+                <div class="fe-nodata none">
+                    <div class="cont-box nogaps-hoz">
+                        <div class="contents-empty tod-contents-empty">
+                            <span class="ico type-map fe-icon"></span>
+                            <p class="desc fe-err-msg"
+                               data-error1="<strong>반경 3km 이내에 지점/대리점이 없습니다.</strong><br />원하시는 지점/대리점을 검색해주세요."
+                               data-error2="<strong>검색 결과가 없습니다.</strong><br />다시 검색해주세요."
+                               data-error3="<strong>반경 3km 이내에 지점/대리점이 없습니다.</strong><br />원하시는 업무 처리가 가능한 매장을 안내 드립니다."
+                               data-error4="<strong>원하시는 업무 처리가 가능한 매장이 없습니다.</strong><br />원하시는 지점/대리점을 검색해주세요."
+                               data-error5="<strong>반경 3km 이내에 지점/대리점이 없습니다.</strong><br />지도 검색 반경을 변경하시거나, <br>원하시는 지점/대리점을 검색해주세요."
+                            >
+                            </p>
                         </div>
+                    </div>
+                    <hr class="cont-sp type1" aria-hidden="true" />
+                </div>
+                <!--// 결과 없을경우 -->
+
+                <div class="cont-box nogaps-hoz fe-loading">
+                    <div class="tod-o2o-loading">
+                        <span class="ico-loading"><img src="<%-CDN%>/img/ico/loading.gif" alt=""></span>
+                        <p class="txt">데이터를 불러오는 중 입니다.</p>
                     </div>
                 </div>
 
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-hoz">
-                    <!-- .search-point -->
-                    <div class="search-point">
-
-
-                            <!-- <div class="totalfilter-wrap"> -->
-                                <!-- <h3 class="tit">총 <em>0</em>개의 매장이 검색되었습니다.</h3> -->
-                                <!-- <span class="total">총 <span class="number-text">0</span>개</span> -->
-                            <!-- </div> -->
-                            <!-- // .ti-caption-gray -->
-                        <div class="fe-none fe-result <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
-                        <!-- .contents-empty -->
-                            <div class="contents-empty">
-                                <span class="ico type1"></span>
-                                <p class="desc">검색 결과가 없습니다.<br /><strong>다시 검색해주세요.</strong></p>
-                            </div>
-                            <!-- // .contents-empty -->
+                <!--지도 형식일때-->
+                <div class="tod-o2o-comp map-type fe-map-list-area none">
+                    <!-- 지도 노출 영역 :  디바이스 스크린  바닥까지 노출 -->
+                    <div id="fe-map-area" style="position: relative;">
+                        <!-- 반경 -->
+                        <div class="map-pos-select" style="position: absolute; right: 53px; top: 20px;z-index: 1;">
+                            <button type="button" class="tod-map-select fe-radius" aria-haspopup="true" title="거리반경 선택"><span>500m 반경</span></button>
+                            <!-- 1Km 반경, 2Km 반경 -->
                         </div>
 
-
-                        <div class="fe-result <%= isSearch && result.totalCount > '0' ? undefined : 'none' %>">
-
-
-                            <!-- .ti-caption-gray -->
-                            <!-- <div class="ti-caption-gray"> -->
-                            <!-- <div class="totalfilter-wrap"> -->
-                                <!-- <h3 class="tit">총 <em id="fe-result-count"><%= isSearch ? result.totalCount : '0' %></em>개의 매장이 검색되었습니다.</h3> -->
-                                <!-- <span class="total">총 <span class="number-text"><%= isSearch ? result.totalCount : '0' %></span>개</span> -->
-                                <!-- <h3 class="tit">총 <em id="fe-result-count"><%= isSearch ? result.totalCount : '0' %></em>개의 매장이 검색되었습니다.</h3> -->
-                                <!-- <button type="button" class="filter-btn date-in">
-                                        <span class="datebox">대리점, 공식인증 대리점, 애플취급점</span><span class="text">외</span> 
-                                        <span class="number pl4">2</span><span class="text">건</span>
-                                </button> -->
-
-<!-- 
-                            <div class="filter">
-                                <div class="inline">
-                                    <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
-                                </div>
-                            </div> -->
-
-
-                            <!-- </div> -->
-
-                            <!-- // .ti-caption-gray -->
-                            <!-- .shop-info -->
-                            <div class="shop-info">
-                                <div class="shop-txt">
-                                    <ul id="fe-result-list">
-                                        <% if (isSearch && result.regionInfoList.length > 0) { %>
-                                        <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
-                                        <li>
-                                            <!-- 191021 웹접근성 수정_01 -->
-                                            <button class="bt-dtxt type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
-                                                <span class="dtxt-t"><%= result.regionInfoList[i].storeName %></span>
-                                                <span class="dtxt-d"><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %></span>
-                                            </button>
-                                            <!-- //191021 웹접근성 수정_01 -->
-                                            <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span class="blind">매장으로 전화하기</span></a>
-                                        </li>
-                                        <% } %>
-                                        <% } %>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- // .shop-info -->
-                            <!-- .btn-more -->
-                            <!-- <div class="btn-more <ejs isSearch && result.lastPageType === 'N' ? undefined : 'none' ejs>"> -->
-                                <!-- <div class="bt-more"> -->
-                                    <!-- <button role="button" title="">더보기</button> -->
-                                <!-- </div> -->
-                            <!-- </div> -->
-                            <!-- // .btn-more -->
-                            <% if (isSearch && result.totalCount > 20) { %>
-                            <div class="paging-wrap top-line type1">
-                                <div class="paging">
-                                    <% if (lastPage > 3) { %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-first" data-page="1" class="first <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">처음 페이지로 이동</span></a>
-                                    <% } %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-prev" data-page="<%= page - 1 %>" class="prev <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">이전 페이지로 이동</span></a>
-                                    <% const start = page - (page % 3 === 0 ? 2 : page % 3 - 1) %>
-                                    <% const end = start + 2 >= lastPage ? lastPage : start + 2; %>
-                                    <% for (let i = start; i <= end; i += 1) { %>
-                                    <% if (i === page) { %>
-                                    <a href="javascript:void(0)" role="button" class="active fe-go-page" title="현재페이지"><%= i %></a>
-                                    <% } else { %>
-                                    <a href="javascript:void(0)" role="button" class="fe-go-page"><%= i %></a>
-                                    <% } %>
-                                    <% } %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-next" data-page="<%= page + 1 %>" class="next <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
-                                    <% if (lastPage > 3) { %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-last" data-page="<%= lastPage %>" class="last <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">마지막 페이지로 이동</span></a>
-                                    <% } %>
-                                </div>
-                            </div>
-                            <% } %>
+                        <!-- 나의 위치 -->
+                        <div class="map-pos-my" style="position: absolute; right: 16px; top: 20px;z-index: 1;">
+                            <button id="fe-myLocation" type="button" class="tod-map-pos"><span class="blind">내위치</span></button>
                         </div>
-
-                        <% if (isAcceptAge) { %>
-                        <!-- .bn-search -->
-                        <div class="bn-search">
-                            <div class="inner">
-                                <span class="ico"></span>
-                                <div class="txt">
-                                    나의 위치와
-                                    <strong>가까운 매장을 찾아보세요</strong>
-                                    <a class="bt-link-tx underline" href="/customer/agentsearch/near">찾아보기</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // .bn-search -->
-                        <% } else { %>
-                            <hr class="cont-sp type1 tod-hr-line01" aria-hidden="true">
-                        <% } %>
-
-                        <!-- 190920 [OP002-3790] 수정_02 -->
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box accordion">
-                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                    <div class="acco-style office_hours">
-                                        <ul class="acco-list pd0"><!-- .on: 열기 -->
-                                            <li class="acco-box on">
-                                                <div class="acco-tit">
-                                                    <button role="button" aria-pressed="false">
-                                                        <span class="ico-wrap"><img src="<%=CDN%>/img/customer/ico_office_hours.png" alt=""></span>
-                                                        <div class="txt">
-                                                            <p>업무시간 안내</p>
-                                                            <span>대리점 업무시간은 매장마다 다릅니다. <br>토, 일요일 및 공휴일 휴무</span>
-                                                        </div>
-                                                    </button>
-                                                </div>
-                                                <div class="acco-cont hours-of-business">
-                                                    <div class="inner">
-                                                        <!-- 200529 [OP002-8676] 수정01 -->
-                                                        <div class="time-list">
-                                                            <dl>
-                                                                <dt>일반지점</dt>
-                                                                <dd>(평일) 09:00 ~ 18:00</dd>
-                                                            </dl>
-                                                            <dl>
-                                                                <dt>일산, 강북지점</dt>
-                                                                <dd>(평일) 09:00 ~ 19:00</dd>
-                                                            </dl>
-                                                            <p class="stitle">특수상권</p>
-                                                            <dl class="subtext-dl">
-                                                                <dt class="title">테크노마트</dt>
-                                                                <dd class="text">(평일) 09:00 ~ 19:00</dd>
-                                                            </dl>
-                                                            <p class="stitle">소형지점</p>
-                                                            <dl class="subtext-dl">
-                                                                <dt class="title">순천, 충주</dt>
-                                                                <dd class="text">(평일) 09:00 ~ 18:00</dd>
-                                                            </dl>
-                                                            <p class="stitle">복합매장지점</p>
-                                                            <dl class="subtext-dl">
-                                                                <dt class="title">안양</dt>
-                                                                <dd class="text">(평일) 09:00 ~ 19:00</dd>
-                                                            </dl>
-                                                            <dl class="subtext-dl">
-                                                                <dt class="title">덕천, 마산, 창원, 울산,<br>부천, 안산, 은평</dt>
-                                                                <dd class="text">(평일) 10:00 ~ 19:00</dd>
-                                                            </dl>
-                                                        </div>
-                                                        <!-- //200529 [OP002-8676] 수정01 -->
-                                                        <div class="link-long">
-                                                            <a href="https://tbooking.svctop.co.kr" class="disabled" aria-haspopup="true" target="_blank" title="지점 방문 예약 바로가기 새창">
-                                                                <span class="ico-wrap">
-                                                                    <img src="<%=CDN%>/img/ico/ico_reserve.png" alt="" style=" width: 2.75rem;height: 2.75rem;">
-                                                                </span>
-                                                                <div class="txt">
-                                                                    <p>지점 방문 예약</p>
-                                                                    <span>지점 방문 예약 후 방문하시면<br>대기시간 없이 바로 상담 받으실 수 있습니다.</span>
-                                                                </div>
-
-                                                                <span class="tx-sub">
-                                                                    <span class="ico"><span class="blind">더보기</span></span>
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--// .widget -->
-                        <!-- //190920 [OP002-3790] 수정_02 -->
-
+                        <div id="fe-tmap-box" style="width: 100%; height:100%"></div>
                     </div>
-                    <!-- // .search-point -->
+
+                    <!-- 매장정보 -->
+                    <div class="tod-o2o-display fe-shop-info-area"  data-expanded="false" style="z-index:2;">
+                        <div class="tod-o2o-list fe-list-area">
+                            <ul class="fe-result-list">
+                                <!--#tpl_search_result_item 리스트 바인딩 영역-->
+                            </ul>
+                            <div class="btn-more fe-btn-more none">
+                                <button>더 보기</button>
+                            </div>
+                        </div>
+                        <!-- 반경 500m 이내 지점/대리점 없는 경우 -->
+                        <div class="contents-empty tod-contents-empty fe-no-shop none">
+                            <span class="ico type-map fe-icon"></span>
+                            <p class="desc" data-desc="<strong>{distance} 이내에 지점/대리점이 없습니다.</strong><br />지도 검색 반경을 변경하시거나, <br>원하시는 지점/대리점을 검색해주세요."></p>
+                        </div>
+                        <!--// 반경 500m 이내 지점/대리점 없는 경우 -->
+                    </div> <!--// 매장정보 -->
                 </div>
-                <!--// .cont-box -->
+                <!--// 지도 형식일때-->
+
+                <!--리스트 형식일때-->
+                <div class="tod-o2o-comp normal-type fe-normal-list-area none">
+                    <!-- 타이틀 노출 -->
+                    <div class="tod-o2o-title fe-list-title none">
+                        <p>T world가 추천하는 지점/대리점</p>
+                    </div>
+                    <!-- 리스트 -->
+                    <div class="tod-o2o-list">
+                        <ul class="fe-result-list">
+                            <!--#tpl_search_result_item 리스트 바인딩 영역-->
+                        </ul>
+                    </div>
+                    <div class="btn-more fe-btn-more none">
+                        <button>더 보기</button>
+                    </div>
+                </div>
+                <!--// 리스트 형식일때-->
+
             </div>
         </div>
         <!--// #contents -->
@@ -426,23 +243,44 @@
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/tmap.component.html %>
+<!--지점/대리점 리스트 템플릿-->
 <script type="text/template" id="tpl_search_result_item">
   {{#list}}
-  <li>
-      <dl class="type02 fe-branch-detail" value={{locCode}}>
-          <dt>{{storeName}}</dt>
-          <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a></dd>
-      </dl>
+  <li data-locCode="{{locCode}}">
+      <div class="tod-o2o-item">
+          <dl>
+              <dt class="item-tit">
+                  <span class="tit"><a href="{{locCode}}" class="fe-branch-detail">{{storeName}}</a></span>
+                  {{#if shopTypeNm}}
+                  <span class="type">{{shopTypeNm}}</span>
+                  {{/if}}
+              </dt>
+              <dd class="item-txt">
+                  <span class="txt"><em class="blind">도로명주소</em>{{searchAddr}}</span>
+                  <span class="txt"><em class="blind">지번주소</em>{{jibunAddr}}</span>
+              </dd>
+          </dl>
+          <!--매장 처리 가능업부 영역-->
+          <p class="item-etc">{{ableTask}}</p>
+      </div>
+      <!--예약상담 가능인경우-->
+      {{#if isReserve}}
+      <div class="tod-o2o-btns col2">
+          <a href="tel:{{tel}}" class="btn btn-phone">전화걸기</a>
+          <a href="#" class="btn btn-booking fe-booking" data-booking-url="{{url}}" data-charge="{{charge}}">상담 예약</a>
+      </div>
+      {{else}}
+      <div class="tod-o2o-btns col1">
+          <a href="tel:{{tel}}" class="btn btn-phone">전화걸기</a>
+      </div>
+      {{/if}}
   </li>
   {{/list}}
 </script>
 <script>
   $(document).ready(function () {
-    var data = '<%- isSearch ? JSON.stringify(params) : undefined %>';
-    if (!!data) {
-        data = JSON.parse(data);
-    }
-    new Tw.CustomerAgentsearch($('.wrap'), data);
+    new Tw.CustomerAgentsearch($('.wrap'), '<%-isAcceptAge%>', '<%-JSON.stringify(svcInfo)%>');
   });
 </script>
 <% include ../../components/end.component.html %>

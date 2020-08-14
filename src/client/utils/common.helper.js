@@ -127,6 +127,47 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+  /**
+   * @desc 만료시간 포함한 로컬스토리지 저장
+   * @param{string} key
+   * @param{Object} value
+   * @param{number} expiredays
+   */
+  var setLocalStorageExpire = function (key, value, expiredays) {
+    var today = new Date();
+    today.setDate(today.getDate() + expiredays);
+
+    this.setLocalStorage(key, JSON.stringify({
+      value: value,
+      expireTime: today
+    }));
+  };
+
+  /**
+   * @desc 로컬스토리지 얻기. 만료시간이 지난데이터면 삭제함.
+   * @param{string} key
+   * @returns {string|undefined}
+   */
+  var getLocalStorageExpire = function (key) {
+    var storedData = this.getLocalStorage(key);
+    if (Tw.FormatHelper.isEmpty(storedData)) {
+      return storedData;
+    }
+    try {
+      storedData = JSON.parse(storedData);
+      var now = new Date();
+      now = Tw.DateHelper.convDateFormat(now);
+      if (Tw.DateHelper.convDateFormat(storedData.expireTime) < now) { // 만료시간이 지난 데이터 일 경우
+        this.removeLocalStorage(key);
+        return undefined;
+      }
+
+      return storedData;
+    } catch (e) {
+      return storedData;
+    }
+  };
+
     /**
    * @desc setter
    * @param {string} key
@@ -241,7 +282,7 @@ Tw.CommonHelper = (function () {
           },
           closeCallback
         );
-      } else { // wifi 접속한 상태 
+      } else { // wifi 접속한 상태
         if ( confirmCallback ) {
           confirmCallback();
         }
@@ -252,11 +293,11 @@ Tw.CommonHelper = (function () {
      }
      var _apiService = Tw.Api;
      // 응답이 오는지 체크해야 한다.
-     // OP002-7559 => OP002-7574 
-     // 1. 회원체크 
+     // OP002-7559 => OP002-7574
+     // 1. 회원체크
      _apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
          .done($.proxy(function(res){
-           if(res.code===Tw.API_CODE.CODE_00){ 
+           if(res.code===Tw.API_CODE.CODE_00){
             // 비회원일때...
             if (res.result == null) {
               Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
@@ -271,21 +312,21 @@ Tw.CommonHelper = (function () {
              _apiService.request(Tw.NODE_CMD.GET_PRODUCT_INFO, {prodId: res.result.prodId})
               .done(function(resp) {
 
-               if(resp.code===Tw.API_CODE.CODE_00){ // resp.code === 정상 
-                 // 1.1. 요금제 체크 
-                 if ("무제한".indexOf(resp.result.summary.basOfrGbDataQtyCtt) !== -1) {
+               if(resp.code===Tw.API_CODE.CODE_00){ // resp.code === 정상
+                 // 1.1. 요금제 체크
+                 if ('무제한'.indexOf(resp.result.summary.basOfrGbDataQtyCtt) !== -1) {
                    confirmCallback();
                  } else {
                    // 1.2. 와이파이 체크
                    // 1.3. 와이파이면 바이패스
-                   // 1.4. 와아파이 아니면 팝업 
+                   // 1.4. 와아파이 아니면 팝업
                    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
                      $.proxy(function (res) {
                       wifiCheckPopup(res);
                      }, this)
                    );
                  }
-               } else { // resp.code === 비정상 
+               } else { // resp.code === 비정상
                 Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
                   $.proxy(function (res) {
                    wifiCheckPopup(res);
@@ -294,7 +335,7 @@ Tw.CommonHelper = (function () {
                }
              }).fail(null);
            } else { // 회원이아니다?
-             // 2. 회원이 아니면 wifi 상태 체크 팝업 
+             // 2. 회원이 아니면 wifi 상태 체크 팝업
              Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
                $.proxy(function (res) {
                 wifiCheckPopup(res);
@@ -534,16 +575,16 @@ Tw.CommonHelper = (function () {
         Tw.Logger.info('[checkValidSession]', 'Set PRE TWM : ', preTWM);
         this.setSessionStorage(Tw.SSTORE_KEY.PRE_TWM, this.getCookie(Tw.COOKIE_KEY.TWM));
       } else {
-        if(preTWM !== curTWM && location.search.indexOf("sess_invalid=Y") === -1) {
+        if(preTWM !== curTWM && location.search.indexOf('sess_invalid=Y') === -1) {
           Tw.Logger.error('[checkValidSession]', preTWM, curTWM);
           var historyService = new Tw.HistoryService();
-          var params = 'sess_invalid=Y'
-            + '&pre_twm=' + preTWM
-            + '&cur_twm=' + curTWM
-            + '&url=' + url
-            + '&command_path=' + commandPath
-            + '&point=' + point
-            + '&target=' + location.pathname + location.search;
+          var params = 'sess_invalid=Y' +
+            '&pre_twm=' + preTWM +
+            '&cur_twm=' + curTWM +
+            '&url=' + url +
+            '&command_path=' + commandPath +
+            '&point=' + point +
+            '&target=' + location.pathname + location.search;
 
           historyService.replaceURL('/common/member/logout/expire?' + params);
           return false;
@@ -561,6 +602,8 @@ Tw.CommonHelper = (function () {
     toast: toast,
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
+    setLocalStorageExpire: setLocalStorageExpire,
+    getLocalStorageExpire: getLocalStorageExpire,
     getCookie: getCookie,
     setCookie: setCookie,
     removeLocalStorage: removeLocalStorage,

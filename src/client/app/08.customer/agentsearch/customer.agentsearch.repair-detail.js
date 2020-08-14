@@ -16,6 +16,7 @@ Tw.CustomerAgentsearchRepairDetail = function (rootEl, location, isLogin) {
 
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this.tmapComponent = new Tw.TmapMakerComponent();
 
   this._dataChargeConfirmed = false;
   this.isLogin = (isLogin === 'true');
@@ -35,7 +36,7 @@ Tw.CustomerAgentsearchRepairDetail.prototype = {
     if (Tw.BrowserHelper.isApp()) {
       var confirmed = false;
       if(this.isLogin) {
-        if(!Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {  // 과금팝업 동의 쿠키 값 받아올수 없을때
+        if(!Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH')) {  // 과금팝업 동의 쿠키 값 받아올수 없을때
           Tw.CommonHelper.showDataCharge(
             $.proxy(function () {
               confirmed = true;
@@ -83,23 +84,17 @@ Tw.CustomerAgentsearchRepairDetail.prototype = {
    * @desc Tmap 통해 지도 표시하고 해당 지점 위치를 marker 로 표시
    */
   _showMap: function () {
-    var map = new Tmap.Map({
-      div: this.$tmapBox.attr('id'),
+    var position = {
+      latitude: this._location.latitude,
+      longitude: this._location.longitude
+    };
+    // Tmap 생성
+    this.tmapComponent.makeTmap($.extend({
+      id: this.$tmapBox.attr('id'),
       width: '100%',
-      height: this.$tmapBox.width() + 'px',
-      httpsMode: true
-    });
-    map.setCenter(new Tmap.LonLat(this._location.longitude, this._location.latitude)
-      .transform('EPSG:4326', 'EPSG:3857'), 15);
-
-    var markerLayer = new Tmap.Layer.Markers();
-    map.addLayer(markerLayer);
-    var size = new Tmap.Size(24, 38);
-    var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var lonlat = new Tmap.LonLat(this._location.longitude, this._location.latitude)
-      .transform('EPSG:4326', 'EPSG:3857');
-    var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.PIN, size, offset);
-    var marker = new Tmap.Marker(lonlat, icon);
-    markerLayer.addMarker(marker);
+      height: this.$tmapBox.width() + 'px'
+    }, position)).makeMarker($.extend({
+      width: 24
+    }, position));
   }
 };
