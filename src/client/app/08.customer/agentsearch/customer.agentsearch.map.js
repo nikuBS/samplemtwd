@@ -129,6 +129,7 @@ Tw.CustomerAgentsearchMap.prototype = {
   },
 
   _setListClose: function() {
+    this.$shopInfoArea.scrollTop(0);
     var elDisplay = document.querySelector('.tod-o2o-display');
     elDisplay.style.height =  '0px';
     elDisplay.style.transition = 'height .5s';
@@ -224,6 +225,14 @@ Tw.CustomerAgentsearchMap.prototype = {
    * @param  {Object} location - 좌표값
    */
   _showPermission: function () { // 위치정보 이용동의를 위한 팝업 보여줌
+    // 이전에 미동의 클릭한 기록이 있으면 비노출.
+    var key = 'hideLocationNot_' + this._svcInfo.userId;
+    var value = Tw.BrowserHelper.isApp() ? Tw.CommonHelper.getLocalStorageExpire(key) : Tw.CommonHelper.getCookie(key);
+    if (!!value) {
+      this._notAgreeLocation();
+      return;
+    }
+
     this._popupService.open({
       title: Tw.BRANCH.PERMISSION_TITLE,
       title_type: 'sub',
@@ -249,6 +258,17 @@ Tw.CustomerAgentsearchMap.prototype = {
       // 위치정보 미동의
       root.on('click', '.fe-close', $.proxy(function () { // fe-close를 fe-disAgree로 변경해야 될듯
         this._popupService.close();
+
+        // 닫기 버튼 클릭 시 일주일(7일) 동안 비노출 함
+        // var key = 'hideLocationNot_' + this._svcInfo.userId;
+        var expireDay = 7;  // 만료 기간(일)
+        // App 인 경우 cookie 에 저장하면 지워져서, app = localStorage, web = cookie에 저장한다.
+        if (Tw.BrowserHelper.isApp()) {
+          Tw.CommonHelper.setLocalStorageExpire(key, 'Y', expireDay);
+        } else {
+          Tw.CommonHelper.setCookie(key, 'Y', expireDay);
+        }
+
         this._notAgreeLocation();
       }, this));
 
