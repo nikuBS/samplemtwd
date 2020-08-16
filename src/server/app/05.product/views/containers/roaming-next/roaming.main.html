@@ -9,27 +9,19 @@
     </div>
     <div id="background"></div>
     <div id="contents">
-        <h2>
-            해외여행 갈 땐
-        </h2>
-        <h2 class="colorPoint">
-            T로밍과 함께 !
-        </h2>
+        <h2>해외여행 갈 땐</h2>
+        <h2 class="colorPoint">T로밍과 함께 !</h2>
         <p class="description">
             T로밍 요금제를 통해 해외에서도 국내처럼 <br />
             자유롭게 baro 통화하세요.
         </p>
         <div class="card">
             <h3>국가별 맞춤 로밍 요금제 추천</h3>
-            <p class="description">
-                여행하실 나라를 선택해주세요
-            </p>
+            <p class="description">여행하실 나라를 선택해주세요</p>
             <div id="nations">
                 <ul></ul> 
             </div>
-            <p class="description">
-                찾으시는 나라가 없으신가요?
-            </p>
+            <p class="description">찾으시는 나라가 없으신가요?</p>
             <div class="field-container">
                 <input type="text" placeholder="원하시는 국가 명을 입력해주세요" />
                 <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
@@ -44,9 +36,7 @@
             </a>
         </div>
         <div class="card">
-            <h3>
-                로밍 요금제 한눈에 보기
-            </h3>
+            <h3>로밍 요금제 한눈에 보기</h3>
             <div id="tariffs">
             </div>
         </div>
@@ -72,103 +62,97 @@
         로밍 중 휴대폰 분실 안내
     -->
 </div>
+<script type="text/x-handlebars-template" id="tpl-nation-card">
+    <li>
+        <img src="{{ imageUrl }}" width="{{ width }}">
+        <span>{{ name }}</span>
+    </li>
+</script>
+<script type="text/x-handlebars-template" id="tpl-tariff-card">
+    <div class="tariff">
+        <img src="<%= CDN %>/img/product/roam/{{ icon }}" alt="product-icon" /> 
+        <h4>{{ title }}</h4>
+        <h5>{{ subtitle }}</h5>
+    </div>
+</script>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
+    fillRecommendedNations();
+    fillTariffs();
   });
   function fillRecommendedNations() {
-    const list = [
-      {
-        'url': '<%= CDN %>/img/product/roam/img_nation_s_01.png',
-        'name': '중국',
-        'code': 'china',
-      },
-      {
-        'url': '<%= CDN %>/img/product/roam/img_nation_s_02.png',
-        'name': '일본',
-        'code': 'japan',
-      },
-      {
-        'url': '<%= CDN %>/img/product/roam/img_nation_s_03.png',
-        'name': '베트남',
-        'code': 'vietnam',
-      },
-      {
-        'url': '<%= CDN %>/img/product/roam/img_nation_s_04.png',
-        'name': '필리핀',
-        'code': 'philippines',
-      },
-      {
-        'url': '<%= CDN %>/img/product/roam/img_nation_s_05.png',
-        'name': '미국',
-        'code': 'america',
-      },
-      {
-        'url': '<%= CDN %>/img/product/roam/img_nation_s_06.png',
-        'name': '이탈리아',
-        'code': 'italy',
-      },
-    ];
-
     const GAP = 6;
     const COLUMN = 3;
     const container = document.getElementById('nations');
     const nationWidth = Math.floor((container.clientWidth - GAP * COLUMN) / COLUMN);
     const ul = document.querySelector('#nations ul');
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i];
-
-      const img = document.createElement('img');
-      img.src = item.url;
-      img.width = nationWidth;
-
-      const span = document.createElement('span');
-      span.innerText = item.name;
-
-      const li = document.createElement('li');
-      li.onclick = function() {
-        console.log('clicked: ' + item.code);
-      };
-      li.appendChild(img);
-      li.appendChild(span);
-      ul.appendChild(li);
+    const template = Handlebars.compile($('#tpl-nation-card').html());
+    for (let i = 0; i < nationList.length; i++) {
+      const item = nationList[i];
+      const li = template({
+        width: nationWidth - GAP,
+        name: item.name,
+        code: item.code,
+        imageUrl: item.url,
+      });
+      ul.innerHTML += li;
     }
   }
   function fillTariffs() {
-    const list = [
-      {url: '', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
-      {url: '', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
-      {url: '', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
-    ];
+    const template = Handlebars.compile($('#tpl-tariff-card').html());
     const container = document.getElementById('tariffs');
-    for (var i=0; i<list.length; i++) {
-      const item = list[i];
-
-      // TODO: Handlebar 같은 템플릿엔진 적용 필요
-      const div = document.createElement('div');
-      div.className = 'tariff';
-
-      const icon = document.createElement('img');
-      icon.src = '<%= CDN %>/img/product/roam/' + item.icon;
-      icon.alt = 'product-icon';
-      div.appendChild(icon);
-
-      const title = document.createElement('h4');
-      title.innerText = item.name;
-      div.appendChild(title);
-
-      const subtitle = document.createElement('h5');
-      subtitle.innerText = item.description;
-      div.appendChild(subtitle);
-
-      container.appendChild(div);
+    container.innerHTML = '';
+    for (var i=0; i<tariffList.length; i++) {
+      const item = tariffList[i];
+      container.innerHTML += template({
+        icon: item.icon,
+        title: item.name,
+        subtitle: item.description,
+      });
     }
   }
 
-  fillRecommendedNations();
-  fillTariffs();
+  const tariffList = [
+    {url: '', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
+    {url: '', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
+    {url: '', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
+  ];
+
+  const nationList = [
+    {
+      'url': '<%= CDN %>/img/product/roam/img_nation_s_01.png',
+      'name': '중국',
+      'code': 'china',
+    },
+    {
+      'url': '<%= CDN %>/img/product/roam/img_nation_s_02.png',
+      'name': '일본',
+      'code': 'japan',
+    },
+    {
+      'url': '<%= CDN %>/img/product/roam/img_nation_s_03.png',
+      'name': '베트남',
+      'code': 'vietnam',
+    },
+    {
+      'url': '<%= CDN %>/img/product/roam/img_nation_s_04.png',
+      'name': '필리핀',
+      'code': 'philippines',
+    },
+    {
+      'url': '<%= CDN %>/img/product/roam/img_nation_s_05.png',
+      'name': '미국',
+      'code': 'america',
+    },
+    {
+      'url': '<%= CDN %>/img/product/roam/img_nation_s_06.png',
+      'name': '이탈리아',
+      'code': 'italy',
+    },
+  ];
 </script>
 <% include ../../components/end.component.html %>
 
