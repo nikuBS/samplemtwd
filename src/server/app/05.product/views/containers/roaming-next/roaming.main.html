@@ -23,7 +23,7 @@
             </div>
             <p class="description">찾으시는 나라가 없으신가요?</p>
             <div class="field-container">
-                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" />
+                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
                 <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
             </div>
             <div class="link">
@@ -82,6 +82,11 @@
     new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
     fillRecommendedNations();
     fillTariffs();
+    $('#nation-search').autocomplete({
+      source: ['중국', '일본', '베트남', '필리핀', '미국', '이탈리아'],
+      delay: 50,
+      minLength: 0,
+    });
   });
   function fillRecommendedNations() {
     const GAP = 6;
@@ -155,4 +160,3 @@
   ];
 </script>
 <% include ../../components/end.component.html %>
-
