@@ -22,12 +22,14 @@
                 <ul></ul> 
             </div>
             <p class="description">찾으시는 나라가 없으신가요?</p>
+            <form action="#" onsubmit="console.log('nation-search'); return false;">
             <div class="field-container">
                 <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
                 <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
             </div>
+            </form>
             <div class="link">
-                <a href="#" onclick="return false;">전체 국가보기</a>
+                <a href="#" onclick="openNationsPopup(); return false;">전체 국가보기</a>
             </div>
         </div>
         <div class="banner">
@@ -62,8 +64,14 @@
         로밍 중 휴대폰 분실 안내
     -->
 </div>
+<div id="nationsPopup">
+    <div class="closePopup" onclick="closePopup();">X</div>
+</div>
+<div id="schedulePopup">
+    <div class="closePopup" onclick="closePopup();">X</div>
+</div>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
-    <li>
+    <li onclick="openSchedulePopup('{{ code }}');">
         <img src="{{ imageUrl }}" width="{{ width }}">
         <span>{{ name }}</span>
     </li>
@@ -118,6 +126,19 @@
         subtitle: item.description,
       });
     }
+  }
+  function openNationsPopup() {
+    $('#productRoaming').css('display', 'none');
+    $('#nationsPopup').css('display', 'block');
+  }
+  function openSchedulePopup(code) {
+    $('#productRoaming').css('display', 'none');
+    $('#schedulePopup').css('display', 'block');
+  }
+  function closePopup() {
+    $('#nationsPopup').css('display', 'none');
+    $('#schedulePopup').css('display', 'none');
+    $('#productRoaming').css('display', 'block');
   }
 
   const tariffList = [

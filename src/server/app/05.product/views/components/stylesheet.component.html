@@ -195,7 +195,39 @@
     border-bottom: 1px solid #f2f2f2;
   }
   .rn ul.ui-autocomplete li.ui-menu-item {
-    font-size: 14px;
+    font-size: 13px;
     padding: 4px;
+  }
+  .rn ul.ui-autocomplete .ui-state-active {
+    background: #4559fc;
+  }
+  .rn #nationsPopup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: white;
+  }
+  .rn #schedulePopup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #e0e0e0;
+  }
+  .rn .closePopup {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px;
+    cursor: pointer;
   }
 </style>
