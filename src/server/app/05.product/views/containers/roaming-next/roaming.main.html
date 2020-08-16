@@ -33,6 +33,7 @@
             </div>
         </div>
         <div class="banner">
+            <!-- TODO: 배너 API 연동 -->
             <a href="/product/roaming/info/barocall">
                 <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너 Baro 통화" />
             </a>
@@ -59,15 +60,42 @@
             </a>
         </div>
     </div>
-    <!-- 
+    <!--
+        TODO:
         출국 전 알아두면 좋은 정보
         로밍 중 휴대폰 분실 안내
     -->
 </div>
-<div id="nationsPopup">
-    <div class="closePopup" onclick="closePopup();">X</div>
+<div id="nationsPopup" class="popup">
+    <div class="header">
+        <h1>로밍 가능한 전체 국가</h1>
+        <div class="close" onclick="closePopup()">
+            <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#000">
+                    <rect height="3" rx="1.5" transform="matrix(.70710678 .70710678 -.70710678 .70710678 20.353553 -8.137825)" width="42" x="-1" y="19"/>
+                    <rect height="3" rx="1.5" transform="matrix(-.70710678 .70710678 .70710678 .70710678 19.646447 -8.137825)" width="42" x="-1" y="19"/>
+                </g>
+            </svg>
+        </div>
+    </div>
+    <div class="menu">
+        <ul>
+            <li id="major">주요국가</li>
+            <li id="europe">유럽</li>
+            <li id="asia">아시아</li>
+            <li id="america">미주</li>
+            <li id="oceania">오세아니아</li>
+            <li id="middleeast">중동</li>
+            <li id="africa">아프리카</li>
+        </ul>
+    </div>
+    <div class="content">
+        <ul>
+
+        </ul>
+    </div>
 </div>
-<div id="schedulePopup">
+<div id="schedulePopup" class="popup">
     <div class="closePopup" onclick="closePopup();">X</div>
 </div>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
@@ -90,12 +118,47 @@
     new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
     fillRecommendedNations();
     fillTariffs();
+    prepareNations();
     $('#nation-search').autocomplete({
-      source: ['중국', '일본', '베트남', '필리핀', '미국', '이탈리아'],
-      delay: 50,
-      minLength: 0,
+      source: allNations,
+      delay: 100,
+      minLength: 1,
     });
+    setupNationsPopup();
   });
+  function prepareNations() {
+    let all = [];
+    const categories = Object.keys(nations);
+    for (let i=0; i<categories.length; i+=1) {
+      let category = categories[i];
+      if (category === 'major')
+        continue;
+      const items = nations[category].split(', ');
+      all = all.concat(items);
+    }
+    all.sort();
+    allNations = all;
+  }
+  function setupNationsPopup() {
+    const menuItems = $('#nationsPopup .menu li');
+    for (var i=0; i<menuItems.length; i++) {
+      menuItems[i].onclick = function (event) {
+        onClickNationGroup(event.target)
+      };
+    }
+  }
+  function onClickNationGroup(menu) {
+    $('#nationsPopup .menu li').removeClass('active');
+    menu.className = 'active';
+    const selectedNations = nations[menu.id].split(', ')
+    const targetList = $('#nationsPopup .content ul')
+    targetList.html('');
+    for (var nation of selectedNations) {
+      var li = document.createElement('li');
+      li.innerText = nation;
+      targetList.append(li);
+    }
+  }
   function fillRecommendedNations() {
     const GAP = 6;
     const COLUMN = 3;
@@ -103,8 +166,8 @@
     const nationWidth = Math.floor((container.clientWidth - GAP * COLUMN) / COLUMN);
     const ul = document.querySelector('#nations ul');
     const template = Handlebars.compile($('#tpl-nation-card').html());
-    for (let i = 0; i < nationList.length; i++) {
-      const item = nationList[i];
+    for (let i = 0; i < recommendedNationList.length; i++) {
+      const item = recommendedNationList[i];
       const li = template({
         width: nationWidth - GAP,
         name: item.name,
@@ -128,12 +191,13 @@
     }
   }
   function openNationsPopup() {
-    $('#productRoaming').css('display', 'none');
+    onClickNationGroup(document.getElementById('major'));
     $('#nationsPopup').css('display', 'block');
+    $('#productRoaming').css('display', 'none');
   }
   function openSchedulePopup(code) {
-    $('#productRoaming').css('display', 'none');
     $('#schedulePopup').css('display', 'block');
+    $('#productRoaming').css('display', 'none');
   }
   function closePopup() {
     $('#nationsPopup').css('display', 'none');
@@ -147,7 +211,7 @@
     {url: '', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
   ];
 
-  const nationList = [
+  const recommendedNationList = [
     {
       'url': '<%= CDN %>/img/product/roam/img_nation_s_01.png',
       'name': '중국',
@@ -179,5 +243,23 @@
       'code': 'italy',
     },
   ];
+
+  const nations = {
+    'major': '중국, 일본, 베트남, 필리핀, 미국, 이탈리아',
+    'europe': '건지섬, 그리스, 네덜란드, 노르웨이, 니제르, 덴마크, 독일, 라트비아, 러시아, 루마니아, 룩셈부르크, 리투아니아, ' +
+        '리히텐슈타인, 마케도니아, 맨섬, 모나코, 몬테네그로, 몰타, 바티칸, 벨기에, 벨라루스, 보스니아헤르체고비나, 부르키나파소, ' +
+        '불가리아, 산마리노, 세르비아, 스발바르 제도, 스웨덴, 스위스, 스페인, 슬로바키아, 슬로베니아, 아르메니아, 아이슬란드, ' +
+        '아일랜드, 알바니아, 에스토니아, 에티오피아, 영국, 오스트리아, 올란드제도, 우크라이나, 이탈리아, 저지섬, 조지아(그루지야), ' +
+        '지브롤터, 체코, 크로아티아, 키프로스, 터키, 페로제도, 포르투갈, 폴란드, 프랑스, 핀란드, 헝가리',
+    'asia': '네팔, 대만, 라오스, 마카오, 말레이시아, 몽골, 미얀마, 방글라데시, 베트남, 부탄, 브루나이, 스리랑카, ' +
+        '싱가포르, 아제르바이젠, 우즈베키스탄, 인도, 인도네시아, 일본, 중국, 카자흐스탄, 캄보디아, 키르기즈스탄, 태국, 파키스탄, 필리핀, 홍콩',
+    'america': '과테말라, 니카라과, 도미니카 공화국, 멕시코, 미국, 버진아일랜드, 브라질, 아르헨티나, 에콰도르, 엘살바도르, ' +
+        '우루과이, 칠레, 캐나다, 코스타리카, 콜롬비아, 파나마, 페루, 푸에르토리코',
+    'oceania': '뉴질랜드, 호주',
+    'middleeast': '아랍에미리트(UAE), 이스라엘, 카타르',
+    'africa': '가봉, 니제르, 르완다, 마다가스카르, 모리셔스, 알제리, 우간다, 이집트, 잠비아, 케냐, 콩고 민주공화국, 차드, 탄자니아',
+  };
+  var allNations = [];
+
 </script>
 <% include ../../components/end.component.html %>

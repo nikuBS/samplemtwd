@@ -201,7 +201,7 @@
   .rn ul.ui-autocomplete .ui-state-active {
     background: #4559fc;
   }
-  .rn #nationsPopup {
+  .rn .popup {
     display: none;
     position: fixed;
     z-index: 1;
@@ -210,17 +210,67 @@
     width: 100%;
     height: 100%;
     overflow: auto;
+  }
+  .rn #nationsPopup {
     background-color: white;
   }
-  .rn #schedulePopup {
-    display: none;
-    position: fixed;
+  .rn #nationsPopup .header {
+    height: 52px;
+    background-color: white;
     z-index: 1;
-    left: 0;
+    border-bottom: 1px solid #edeef0;
+    position: fixed;
     top: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
+  }
+  .rn #nationsPopup .header h1 {
+    color: black;
+    font-size: 16px;
+    letter-spacing: -0.7px;
+    line-height: 52px;
+    text-align: center;
+  }
+  .rn #nationsPopup .header .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 15px;
+    cursor: pointer;
+  }
+  .rn #nationsPopup .menu {
+    background-color: #f0f4ff;
+    width: 120px;
+    position: fixed;
+    top: 53px;
     height: 100%;
-    overflow: auto;
+  }
+  .rn #nationsPopup .menu li {
+    height: 56px;
+    line-height: 56px;
+    padding-left: 18px;
+    font-size: 16px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .rn #nationsPopup .menu li.active {
+    background-color: white;
+    color: #4559fc;
+  }
+  .rn #nationsPopup .content {
+    background-color: #fff;
+    margin-left: 120px;
+    margin-top: 53px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .rn #nationsPopup .content li {
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+    color: #666;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .rn #schedulePopup {
     background-color: #e0e0e0;
   }
   .rn .closePopup {
