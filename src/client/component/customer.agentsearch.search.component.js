@@ -39,9 +39,16 @@ Tw.CustomerAgentsearchComponent.prototype = {
    */
   _bindEvents: function () {
     this.$container.on('click', '.fe-branch-detail', $.proxy(this.onBranchDetail, this));
+    this.$container.on('click', '.fe-tel', $.proxy(this.goTel, this));
     this.$container.on('click', '.fe-booking', $.proxy(this.goBooking, this));
     this.$container.on('click', '[data-go-url]', $.proxy(this.goLoad, this)); // 페이지 이동
     this.$container.on('click', '.fe-close-alert', $.proxy(this.hideAlertMsg, this)); // 위치 권한 미동의 '닫기' 버튼 클릭 이벤트
+  },
+
+  goTel: function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this._historyService.goLoad('tel:'+$(event.currentTarget).data('tel'));
   },
 
   showDataCharge: function (callback) {
@@ -151,7 +158,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
       }
     };
 
-    list.forEach(function (o, idx) {
+    list.forEach(function (o) {
       // 처리 가능업무
       saveTask(o, 'dvcChange');
       saveTask(o, 'rbpAsYn');
