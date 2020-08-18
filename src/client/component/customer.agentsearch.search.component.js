@@ -1,21 +1,48 @@
 /**
  * @file 지점/대리점 화면 component
- * @author Hakjoon Sim
- * @since 2018-10-16
- * @edit 2020-06-12 양정규 OP002-8862
+ * @author 양정규
+ * @since 2020-08-14
  */
 
 /**
  * @constructor
- * @param  {Object} svcInfo
+ * @param rootEl
+ * @param svcInfo
  */
-Tw.CustomerAgentsearchComponent = function (svcInfo) {
+Tw.CustomerAgentsearchComponent = function (rootEl, svcInfo) {
+  this.$container = rootEl;
   this._svcInfo = svcInfo;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
+
+  this._init();
 };
 
 Tw.CustomerAgentsearchComponent.prototype = {
+
+  _init: function () {
+    this._cacheElements();
+    this._bindEvents();
+  },
+
+  /**
+   * @function
+   * @desc DOM caching
+   */
+  _cacheElements: function () {
+
+  },
+
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
+  _bindEvents: function () {
+    this.$container.on('click', '.fe-branch-detail', $.proxy(this.onBranchDetail, this));
+    this.$container.on('click', '.fe-booking', $.proxy(this.goBooking, this));
+    this.$container.on('click', '[data-go-url]', $.proxy(this.goLoad, this)); // 페이지 이동
+    this.$container.on('click', '.fe-close-alert', $.proxy(this.hideAlertMsg, this)); // 위치 권한 미동의 '닫기' 버튼 클릭 이벤트
+  },
 
   showDataCharge: function (callback) {
     var cookieName = Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH';
@@ -63,7 +90,6 @@ Tw.CustomerAgentsearchComponent.prototype = {
       return;
     }
     Tw.CommonHelper.openUrlExternal(url);
-    // Tw.CommonHelper.openUrlInApp(url);
   },
 
   _showDataChargeExt: function (url) {
@@ -81,6 +107,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
 
   onBranchDetail: function (e) {
     e.preventDefault();
+    e.stopPropagation();
     this._historyService.goLoad('/customer/agentsearch/detail?code=' + $(e.currentTarget).data('locCode'));
   },
 
@@ -89,6 +116,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
     if (Tw.FormatHelper.isEmpty(list)) {
       return;
     }
+    var self = this;
     var saveTask = function (o, key) {
       var value = o[key];
       // 유선/인터넷TV(SK브로드밴드) 의 경우, Y/N으로 주지않고 1/0 으로 줌.
@@ -123,22 +151,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
       }
     };
 
-    // 예약상담 URL 정보
-    var reserveCounsel = function (item) {
-      // 현재 실행되고 있는 서버 종류
-      var server = Tw.Environment.environment !== 'prd' ? 'dev-' : '';
-      if (item.tSharpYn === 'Y') { // Tshop 예약 가능이면
-        item.url = Tw.StringHelper.stringf(Tw.OUTLINK.T_SHOP_RESERVE, server, this._svcInfo.userId, this._svcInfo.svcMgmtNum, item.locCode);
-      } else if (''+item.storeType === '1') { // 지점이면
-        item.url = Tw.OUTLINK.BRANCH_RERSERVE;
-        item.charge = true; // 과금팝업 띄우기
-      }
-      // 티샵 예약 or 일반 지점 예약 가능 여부
-      item.isReserve = !!item.url;
-    }.bind(this);
-
-
-    list.forEach(function (o) {
+    list.forEach(function (o, idx) {
       // 처리 가능업무
       saveTask(o, 'dvcChange');
       saveTask(o, 'rbpAsYn');
@@ -165,11 +178,25 @@ Tw.CustomerAgentsearchComponent.prototype = {
       saveTask(o, 'disSlopeYn');
 
       setShopType(o);
-      reserveCounsel(o);
+      self.reserveCounsel(o);
       if (!!o.arrAbleTask) {
         o.ableTask = o.arrAbleTask.toString();
       }
     });
+  },
+
+  // 예약상담 URL 정보
+  reserveCounsel: function (item) {
+    if (item.tSharpYn === 'Y') { // Tshop 예약 가능이면
+      var url = Tw.Environment.environment === 'prd' ? Tw.OUTLINK.T_SHOP.PRD : Tw.OUTLINK.T_SHOP.DEV;
+      url += Tw.OUTLINK.T_SHOP.RESERVE;
+      item.url = Tw.StringHelper.stringf(url, this._svcInfo.userId, this._svcInfo.svcMgmtNum, item.locCode);
+    } else if (''+item.storeType === '1') { // 지점이면
+      item.url = Tw.OUTLINK.BRANCH_RERSERVE;
+      item.charge = true; // 과금팝업 띄우기
+    }
+    // 티샵 예약 or 일반 지점 예약 가능 여부
+    item.isReserve = !!item.url;
   },
 
   hasStorage: function () {

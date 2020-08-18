@@ -18,10 +18,11 @@ Tw.CustomerAgentsearchDetail = function (rootEl, options) {
   this.tmapComponent = new Tw.TmapMakerComponent();
 
   this._dataChargeConfirmed = false;
-  this.isLogin = options.isLogin;
+  this._svcInfo = options.svcInfo;
   this._locCode = options.locCode;
   this._coord = options.coord;
-  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent();
+  this._detail = options.detail;
+  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(rootEl, options.svcInfo);
 
   $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
     this.customerAgentsearchComponent.showDataCharge(this._init.bind(this));
@@ -38,6 +39,7 @@ Tw.CustomerAgentsearchDetail.prototype = {
   _init: function () {
     this._cacheElements();
     this._bindEvents();
+    this._renderContact();
     this._getTshopImg();
     this._initMap();
   },
@@ -49,7 +51,8 @@ Tw.CustomerAgentsearchDetail.prototype = {
   _cacheElements: function () {
     this._sliderArea = this.$container.find('.fe-slider-area');  // 매장 이미지 슬라이더 영역
     this._slider = this.$container.find('.fe-slider');  // 매장 이미지 영역
-    this._imgTelplate = Handlebars.compile($('#tpl_img').html());
+    this._imgTemplate = Handlebars.compile($('#tpl_img').html());
+    this._contactTemplate = Handlebars.compile($('#tpl_contact_item').html());
   },
 
   /**
@@ -57,9 +60,12 @@ Tw.CustomerAgentsearchDetail.prototype = {
    * @desc 이벤트 바인딩
    */
   _bindEvents: function () {
-    // 티샵 예약하기 외부 URL 이동
-    this.$container.on('click', '.fe-booking', $.proxy(this.customerAgentsearchComponent.goBooking, this.customerAgentsearchComponent));
     this.$container.on('click', '#fe-myLocation', $.proxy(this._initMap, this)); // 내 위치 버튼 클릭 이벤트
+  },
+
+  _renderContact: function () {
+    this.customerAgentsearchComponent.reserveCounsel(this._detail);
+    this.$container.find('.fe-shop-info').append(this._contactTemplate(this._detail));
   },
 
   /**
@@ -75,7 +81,7 @@ Tw.CustomerAgentsearchDetail.prototype = {
     this.tmapComponent.makeTmap($.extend({
       id: 'fe-tmap-box',
       width: '100%',
-      height: $('#fe-tmap-box').width() + 'px'
+      height: '280px'
     }, position)).makeMarker($.extend({
       width: 24
     }, position));
@@ -107,7 +113,7 @@ Tw.CustomerAgentsearchDetail.prototype = {
   },
 
   _renderImg: function (imgList) {
-    this._slider.append(this._imgTelplate({
+    this._slider.append(this._imgTemplate({
       list: imgList
     }));
     this._sliderArea.addClass('slider1-auto').data('slider-auto', 'auto');
