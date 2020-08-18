@@ -15,7 +15,7 @@ Tw.CommonSearchShop = function (commonSearch) {
   this._svcInfo = commonSearch._svcInfo;
   this._locationInfoComponent = new Tw.LocationInfoComponent();
   this._tmapMakerComponent = new Tw.TmapMakerComponent();
-  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(this._svcInfo);
+  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(this.$container, this._svcInfo);
   this._apiService = Tw.Api;
 
   this._location = null;
@@ -80,14 +80,7 @@ Tw.CommonSearchShop.prototype = {
 
   // handlebars 완료 후 이벤트 바인딩 하기
   _bindEvents: function () {
-    // 위치 권한 미동의 '닫기' 버튼 클릭 이벤트
-    this.$container.on('click', '.fe-close-alert', $.proxy(this.customerAgentsearchComponent.hideAlertMsg, this.customerAgentsearchComponent));
-    this.$container.on('click', '[data-go-url]', $.proxy(this.customerAgentsearchComponent.goLoad, this.customerAgentsearchComponent)); // 페이지 이동
     this.$container.on('click', '#fe-myLocation', $.proxy(this._requestCurrentPosition, this)); // 내 위치 버튼 클릭 이벤트
-    // 상세 페이지 이동
-    this.$container.on('click', '.fe-branch-detail', $.proxy(this.customerAgentsearchComponent.onBranchDetail, this.customerAgentsearchComponent));
-    // 티샵 예약하기 외부 URL 이동
-    this.$container.on('click', '.fe-booking', $.proxy(this.customerAgentsearchComponent.goBooking, this.customerAgentsearchComponent));
   },
 
   /**

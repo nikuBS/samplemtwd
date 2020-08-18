@@ -28,7 +28,6 @@ import CustomerFaqSearch from './controllers/faq/customer.faq.search.controller'
 import CustomerFaqCategory from './controllers/faq/customer.faq.category.controller';
 import CustomerAgentsearch from './controllers/agentsearch/customer.agentsearch.controller';
 import CustomerAgentsearchDetail from './controllers/agentsearch/customer.agentsearch.detail.controller';
-import CustomerAgentsearchNear from './controllers/agentsearch/customer.agentsearch.near.controller';
 import CustomerAgentsearchRepair from './controllers/agentsearch/customer.agentsearch.repair.controller';
 import CustomerAgentsearchRepairDetail from './controllers/agentsearch/customer.agentsearch.repair-detail.controller';
 import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/customer.agentsearch.repair-manufacturer.controllter';
@@ -73,7 +72,6 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/agentsearch/rentphone', controller: CustomerAgentsearchRentPhone });
     this.controllers.push({ url: '/agentsearch/search', controller: CustomerAgentsearch });
     this.controllers.push({ url: '/agentsearch/detail', controller: CustomerAgentsearchDetail });
-    this.controllers.push({ url: '/agentsearch/near', controller: CustomerAgentsearchNear });
     this.controllers.push({ url: '/agentsearch/repair', controller: CustomerAgentsearchRepair });
     this.controllers.push({ url: '/agentsearch/repair-detail', controller: CustomerAgentsearchRepairDetail });
     this.controllers.push({ url: '/agentsearch/repair-manufacturer', controller: CustomerAgentsearchRepairManufacturer });

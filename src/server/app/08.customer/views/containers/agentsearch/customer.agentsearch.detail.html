@@ -22,7 +22,7 @@
                 <!-- cont-box -->
                 <div class="cont-box">
                     <!-- .shop-info -->
-                    <div class="shop-info tod-shop-info">
+                    <div class="shop-info tod-shop-info fe-shop-info">
                         <%if(detail.shopTypeNm){%>
                         <!-- .shop-tag -->
                         <div class="shop-tag">
@@ -88,19 +88,7 @@
                         </div>
                         <!-- // .shop-txt -->
 
-                        <!-- .tod-o2o-btn -->
-                        <%if (detail.isReserve) { %>
-                        <div class="tod-o2o-btns col2"><!-- 버튼 2개 : col2 // 버튼 1개 : col1 -->
-                            <a href="tel:<%= detail.tel %>" class="btn btn-phone">전화걸기</a>
-                            <a href="#" class="btn btn-booking fe-booking" data-booking-url="<%-detail.url%>" data-charge="<%-detail.charge%>">상담 예약</a>
-                        </div>
-                        <%} else {%>
-                        <div class="tod-o2o-btns col1"><!-- 버튼 2개 : col2 // 버튼 1개 : col1 -->
-                            <a href="tel:<%= detail.tel %>" class="btn btn-phone">전화걸기</a>
-                        </div>
-                        <%}%>
-                        <!--// .tod-o2o-btn -->
-
+                        <!-- .tod-o2o-btn hbs 영역-->
                     </div>
                     <!-- // .shop-info -->
                 </div>
@@ -207,6 +195,18 @@
         <li><span class="slide-item" ><img src="{{this}}" alt=""></span></li>
     {{/list}}
 </script>
+<script type="text/template" id="tpl_contact_item">
+    {{#if isReserve}}
+    <div class="tod-o2o-btns col2">
+        <a href="tel:{{tel}}" class="btn btn-phone">전화걸기</a>
+        <a href="#" class="btn btn-booking fe-booking" data-booking-url="{{url}}" data-charge="{{charge}}">상담 예약</a>
+    </div>
+    {{else}}
+    <div class="tod-o2o-btns col1">
+        <a href="tel:{{tel}}" class="btn btn-phone">전화걸기</a>
+    </div>
+    {{/if}}
+</script>
 <script>
   $(document).ready(function () {
     var options = {
@@ -214,7 +214,8 @@
         lon: '<%- detail.geoX %>',
         lat: '<%- detail.geoY %>'
       },
-      isLogin: '<%- svcInfo !== null %>' === 'true',
+      svcInfo: JSON.parse('<%- JSON.stringify(svcInfo)%>'),
+      detail: JSON.parse('<%- JSON.stringify(detail)%>'),
       locCode: '<%-detail.locCode%>'
     };
     new Tw.CustomerAgentsearchDetail($('.wrap'), options);

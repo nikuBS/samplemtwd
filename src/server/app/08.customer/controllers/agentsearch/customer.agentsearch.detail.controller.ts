@@ -227,22 +227,6 @@ class CustomerAgentsearchDetail extends TwViewController {
       }
     }
     respData.services = arrService;
-
-    // 상담예약 URL
-    const server = String(process.env.NODE_ENV) !== 'prd' ? 'dev-' : '',
-      {userId, svcMgmtNum} = this._svcInfo;
-    // Tshop 예약 가능이면
-    if (respData.tSharpYn === 'Y') {
-      respData.url = `https://${server}mobile.tsharp.io/sev/booking/counseling/date/shop' +
-      '?sso_login_id=${userId}&svc_num=${svcMgmtNum}&service_name=tworld&store_code=${respData.locCode}`;
-    } else if ('' + respData.storeType === '1') { // 지점이면
-      respData.url = 'https://tbooking.svctop.co.kr';
-      respData.charge = true;
-    }
-    // 티샵 예약 or 일반 지점 예약 가능 여부
-    respData.isReserve = !!respData.url;
-
-
     return respData;
   }
 

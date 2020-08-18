@@ -17,7 +17,7 @@ Tw.CustomerAgentsearchMap = function (options) {
   this._historyService = new Tw.HistoryService();
   this._tmapMakerComponent = new Tw.TmapMakerComponent();
   this._locationInfoComponent = new Tw.LocationInfoComponent();
-  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(this._svcInfo);
+  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(this.$container, this._svcInfo);
   this._moreViewSvc = new Tw.MoreViewComponent();
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -59,8 +59,11 @@ Tw.CustomerAgentsearchMap.prototype = {
   _init: function () {
     this._cacheElements();
     this._bindEvents();
-    this._setSize();
     this._checkLocationAgreement();
+  },
+
+  _initMapAreaList : function () {
+    this._setSize();
     this._initMapList();
   },
 
@@ -79,7 +82,6 @@ Tw.CustomerAgentsearchMap.prototype = {
 
   _bindEvents: function () {
     this.$container.on('click', '#fe-myLocation', $.proxy(this._requestCurrentPosition, this)); // 내 위치 버튼 클릭 이벤트
-    this.$container.on('click', '.fe-close-alert', $.proxy(this.customerAgentsearchComponent.hideAlertMsg, this)); // 위치 권한 미동의 '닫기' 버튼 클릭 이벤트
     this.$radiusOption.on('click', $.proxy(this._onRadiusOption, this));  // 검색반경 액션시트
     this.$toggleButton.on('click', $.proxy(this._toggleButtonListOrMap, this)); // 리스트/지도 보기 이벤트
   },
@@ -92,28 +94,38 @@ Tw.CustomerAgentsearchMap.prototype = {
   _toggleButtonListOrMap: function (e) {
     var $button = e ? $(e.currentTarget) : this.$toggleButton;
     $button = $button.find('button');
-    var currentName = $button.text();
-    var toggleName = $button.data('toggleName');
 
     if ($button.hasClass('btn-display-list')) {
+      this._toggleList(true);
+    } else {
+      this._toggleList(false);
+    }
+  },
+
+  _toggleList: function (showList) {
+    var $button = this.$toggleButton.find('button');
+
+    if (showList) {
       $button.removeClass('btn-display-list').addClass('btn-display-map');
       this._setListOpen();
+      $button.text($button.data('map'));
     } else {
       $button.removeClass('btn-display-map').addClass('btn-display-list');
       this._setListClose();
+      $button.text($button.data('list'));
     }
-    $button.data('toggleName', currentName).text(toggleName);
   },
 
   _getContentH: function () {
-    // var windowH = document.body.clientHeight ||  window.innerHeight;
-    // var elLocation = document.querySelector('.tod-o2o-comp.map-type');
-    // var reactTop = 	elLocation.getBoundingClientRect().top;
     var windowH = document.body.clientHeight ||  window.innerHeight;
+    var elLocation = document.querySelector('.tod-o2o-comp.map-type');
+    var reactTop = 	elLocation.getBoundingClientRect().top;
+    /*var windowH = document.body.clientHeight ||  window.innerHeight;
     var headerH = document.querySelector('.header-wrap').clientHeight;
     var tabsH = document.querySelector('.tab-area').clientHeight;
     var filterH = document.querySelector('.tod-filter-option').clientHeight;
-    var contentH =  windowH - ( headerH + tabsH + filterH );
+    var contentH =  windowH - ( headerH + tabsH + filterH );*/
+    var contentH = windowH - reactTop;
     return contentH;
   },
 
@@ -138,6 +150,7 @@ Tw.CustomerAgentsearchMap.prototype = {
 
   _setSize: function() {
     var contentH =  this._getContentH();
+    this.contentH = contentH;
     var elLocation = document.querySelector('.tod-o2o-comp.map-type');
     elLocation.setAttribute('style', 'height:' + contentH + 'px;');
   },
@@ -146,25 +159,32 @@ Tw.CustomerAgentsearchMap.prototype = {
     var elDisplay = document.querySelector('.tod-o2o-display');
 
     //touch event
-    var isStartTop = 0, isClientY = 0, isLastY = 0;
+    var isStartTop = 0, isClientY = 0, isLastY = 0, move = false;
     elDisplay.addEventListener('touchstart', function(event) {
       isStartTop = elDisplay.scrollTop;
       isClientY = event.touches[0].clientY;
+      move = false;
     });
 
     elDisplay.addEventListener('touchmove', function(event) {
       isLastY = event.touches[0].clientY;
+      move = true;
     });
 
     elDisplay.addEventListener('touchend', function() {
+      if (!move) {
+        return;
+      }
       if (isStartTop === 0 && isClientY < isLastY) {
         // this._setListClose();
-        this._toggleButtonListOrMap();
+        // this._toggleButtonListOrMap();
+        this._toggleList(false);
       }
 
       if (elDisplay.getAttribute('data-expanded') === 'false' && isClientY > isLastY ) {
         // this._setListOpen();
-        this._toggleButtonListOrMap();
+        // this._toggleButtonListOrMap();
+        this._toggleList(true);
       }
     }.bind(this));
   },
@@ -500,12 +520,14 @@ Tw.CustomerAgentsearchMap.prototype = {
     if (this._isNotAgreeLocation) {
       return;
     }
+    this._initMapAreaList();
     // Tmap 생성
     this._tmapMakerComponent.makeTmap($.extend({
       id: 'fe-tmap-box',
       width: '100%',
       // height: '683px',
-      height: this.$container.find('#fe-tmap-box').width() + 'px',
+      height: this.contentH +'px',
+      // height: this.$container.find('#fe-tmap-box').width() + 'px',
       zoom: this.$radiusOption.data('option').zoom
     }, this._location))
       .makeMarker($.extend({ // 마커 생성

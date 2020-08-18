@@ -21,7 +21,7 @@ Tw.CustomerAgentsearch = function (rootEl, isAcceptAge, svcInfo) {
   this._query = Tw.UrlHelper.getQueryParams();
   this.customerAgentsearchMap = undefined;
   this.customerAgentsearchFilter = undefined;
-  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(this._svcInfo);
+  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(rootEl, this._svcInfo);
 
   this._init();
 };
@@ -143,12 +143,6 @@ Tw.CustomerAgentsearch.prototype = {
 
     this.$tabs.on('click', 'li', $.proxy(this._onReset, this)); // 탭 클릭
     this.$btnsSelect.on('click', $.proxy(this._onTube, this));  // 지하철 탭의 셀렉트 박스들 클릭시 액션시트 띄움
-    // 상세 페이지 이동
-    this.$container.on('click', '.fe-branch-detail', $.proxy(this.customerAgentsearchComponent.onBranchDetail, this.customerAgentsearchComponent));
-    // 티샵 예약하기 외부 URL 이동
-    this.$container.on('click', '.fe-booking', $.proxy(this.customerAgentsearchComponent.goBooking, this.customerAgentsearchComponent));
-    // this.$container.on('click', '.fe-booking', $.proxy(this._goBooking, this));  // 티샵 예약하기 외부 URL 이동
-    this.$container.on('click', '[data-go-url]', $.proxy(this.customerAgentsearchComponent.goLoad, this.customerAgentsearchComponent)); // 페이지 이동
     this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
     this._createObserver();
   },
@@ -659,7 +653,9 @@ Tw.CustomerAgentsearch.prototype = {
         res.isDeleteAppend = true;
         callback(res);
       }
-      this.$listTitle.removeClass('none');
+      if (res.result.totalCount > 0) {
+        this.$listTitle.removeClass('none');
+      }
     }.bind(this));
   },
 

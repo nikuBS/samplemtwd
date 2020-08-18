@@ -436,8 +436,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @param url
    */
   _customizeExternal: function (url) {
-    // 나의 방문 예약 경로 인 경우. 외부 창이 아닌 "인앱" 으로 호출한다.
-    if (url.indexOf('mobile.tsharp.io/my/booking/list') > -1) {
+    var _url = Tw.Environment.environment === 'prd' ? Tw.OUTLINK.T_SHOP.PRD : Tw.OUTLINK.T_SHOP.DEV;
+    _url += '/my/booking/list';
+    if (url.indexOf(_url) > -1) {
       url += '?sso_login_id='+this._svcInfo.userId+'&svc_num=' + this._svcInfo.svcMgmtNum;
     }
     Tw.CommonHelper.openUrlExternal(url);
