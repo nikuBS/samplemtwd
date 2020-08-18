@@ -41,16 +41,16 @@ Tw.ChatbotService = function() {
 
     // 2차 사외 오픈 (8/27) 시점 접근 대상 단말 리스트
     this._accessAllowedDevice0827 = [
-        'LGM-G600S'     // TEST
-        ,'SM-G977N'     // 갤럭시S10 5G
+        // 'LGM-G600S',     // TEST
+        'SM-G977N'      // 갤럭시S10 5G
         ,'SM-N971N'     // 갤럭시노트10 5G
         ,'SM-N976N'     // 갤럭시노트10 플러스 5G
         // ,'SM-N960N'     // 갤럭시노트9
         // ,'SM-G960N'     // 갤럭시S9
         // ,'SM-G973N'     // 갤럭시S10
         // ,'SM-A516N'     // 갤A51 5G
-        ,'iPhone12_1'   // 아이폰11
-        ,'iPhone12_3'   // 아이폰11Pro
+        // ,'iPhone12_1'   // 아이폰11
+        // ,'iPhone12_3'   // 아이폰11Pro
     ];
     // 2차 사외 오픈 (8/27) 시점 챗봇 팝업 노출대상 화면 리스트
     this._chatbotPopDispPageUrls0827 = {
