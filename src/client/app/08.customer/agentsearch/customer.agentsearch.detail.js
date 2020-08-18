@@ -89,9 +89,8 @@ Tw.CustomerAgentsearchDetail.prototype = {
 
   _getTshopImg: function () {
     // 매장 이미지 호출
-    var server = Tw.Environment.environment !== 'prd' ? 'dev.' : '';
-    Tw.TShop.IMG_URL = Tw.StringHelper.stringf(Tw.TShop.IMG_URL, server);
-    Tw.AJAX_CMD.GET_TSHOP_IMG_LIST.url = Tw.TShop.IMG_URL;
+    var url = Tw.Environment.environment === 'prd' ? Tw.OUTLINK.T_SHOP.PRD : Tw.OUTLINK.T_SHOP.DEV;
+    Tw.AJAX_CMD.GET_TSHOP_IMG_LIST.url = url+':8080';
     // STORE_CODE
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TSHOP_IMG_LIST, {
       // 'STORE_CODE': 'D000000000' // 테스트용 매장코드
