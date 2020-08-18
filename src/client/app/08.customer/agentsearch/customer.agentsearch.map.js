@@ -177,13 +177,11 @@ Tw.CustomerAgentsearchMap.prototype = {
       }
       if (isStartTop === 0 && isClientY < isLastY) {
         // this._setListClose();
-        // this._toggleButtonListOrMap();
         this._toggleList(false);
       }
 
       if (elDisplay.getAttribute('data-expanded') === 'false' && isClientY > isLastY ) {
         // this._setListOpen();
-        // this._toggleButtonListOrMap();
         this._toggleList(true);
       }
     }.bind(this));
