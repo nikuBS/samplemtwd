@@ -36468,7 +36468,7 @@ body.apphome .section-box {
 .tod-paging-wrap .tod-paging  .num-box .line{color: #eee;}
 
 /* device  - IOS_AOS body 영역 고정. */
-.device_ios .o2o-body{ overflow: hidden; height: 100%;}
+.o2o-body{ overflow: hidden; height: 100%;}
 .o2o-body .wrap{padding-bottom: 0 !important;}
 .o2o-body .container-wrap{margin-bottom: 0 !important;}
 /* //200807 [OP002-8565] o2o 지점/대리점 고도화 */
