@@ -36202,3 +36202,273 @@ body.apphome .section-box {
 .service-list li .list-inner.ico-t22:before {background-image: url(/img/customer/ico-guide22.png)}
 .service-list li .list-inner.ico-t23:before {background-image: url(/img/customer/ico-guide23.png)}
 .service-list li .list-inner.ico-t24:before {background-image: url(/img/customer/ico-guide24.png)}
+
+/* 200807 [OP002-8565] o2o 지점/대리점 고도화 */
+.tod-location-tit{position: relative;}
+.tod-location-tit .tit{font-size: 1rem; font-weight:bold;}
+.tod-location-tit .txt{font-size: 0.75rem; color: #666; margin-top: 0.625rem;}
+.tod-location-tit .link{display: block; font-size: 0.8125rem; margin-top: 1.25rem;}
+.tod-location-tit .link a.bt-link-tx.underline, 
+.tod-location-tit .link button.bt-link-tx.underline{padding: 0 !important;}
+.tod-location-tit .checkbox-option{ position: absolute; right: 0; top: 0;}
+.tod-location-list{border-top: 1px solid #f2f2f2; margin-top: 1.25rem;}
+.tod-location-list dt{ font-size: 0.8125rem; font-weight:bold; margin-top: 1.25rem;}
+.tod-location-list dd{font-size: 0.75rem; color: #666; margin-top: 0.625rem;}
+
+/*o2o comp*/
+.tod-o2o-comp{background: #fff; }
+.tod-o2o-comp.normal-type{}
+.tod-o2o-comp.map-type{position: relative; width: 100%;}
+.tod-o2o-comp .btn-more{margin: 0 1rem;}
+
+.tod-o2o-map{position: absolute; left: 0; top: 0; height: 100%; }
+.tod-o2o-comp.map-type .tod-o2o-display{position: absolute; left: 0; bottom: 0;} /* fixed : aos 검색박스 이슈로 absolute 수정. */
+.tod-o2o-display{height: 0; min-height: 190px; width: 100%; box-sizing: border-box; -webkit-transition: height .5s ease-in-out; transition: height .5s ease-in-out; padding-top: 5px; 
+  background: #fff; overflow: hidden;}
+.tod-o2o-display:before{
+    content: '';
+    display: block;
+    background-color: #ddd;
+    width: 3.1875rem;
+    height: 0.375rem;
+    border-radius: 3px;
+    margin: 0 auto;
+}
+
+.tod-o2o-display[data-expanded='true']{overflow: auto; overflow-x: hidden;}
+.tod-o2o-display[data-expanded="false"] .tod-contents-empty{padding: 1rem  0 0 0 !important;}
+.tod-o2o-display[data-expanded="false"] .tod-contents-empty .desc{margin: 1rem  0 0 0 !important;}
+
+/*o2o title*/
+.tod-o2o-title{border-bottom: 1px solid #f2f2f2; font-size: 1rem; padding: 1.875rem 0 0.9375rem 0; margin: 0 1rem;}
+.tod-filter-option{padding: 0.5rem 1rem;}
+.tod-filter-option .btn-display-list:before{
+    content: '';
+    display: inline-block; 
+    position: relative; top: -1px;
+    width: 0.5625rem; height: 0.5rem; background: url('/img/ico/ico-s-list.png') no-repeat 0 0;
+    background-size: 100% 100%;
+    margin-right: 0.25rem;
+}
+
+.tod-filter-option .btn-display-map:before{
+    content: '';
+    display: inline-block; 
+    width: 0.5625rem; height: 0.75rem; background: url('/img/ico/ico-s-map.png') no-repeat 0 0;
+    background-size: 100% 100%;
+    margin-right: 0.25rem;
+}
+
+/*o2o list*/
+.tod-o2o-list ul > li{border-top: 1px solid #f2f2f2; padding: 1.25rem 0; margin: 0 1rem;}
+.tod-o2o-list ul > li:first-child{ border-top:0;}
+
+/*o2o item*/
+.tod-o2o-item .item-tit .tit{display: inline-block; overflow: hidden; text-overflow:ellipsis;white-space:nowrap;}
+.tod-o2o-item .item-tit .tit:before{
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    width: 0.75rem;
+    height: 1rem;
+    margin: 0 0.3125rem 0 0.0625rem;
+    background: url('/img/ico/ico-tmap-pin.png') no-repeat 0 0;
+    background-size: 100%;
+}
+.tod-o2o-item .item-tit .tit{font-size: 1rem; font-weight: bold; color: #000; letter-spacing: -1.4px; word-break: break-all; max-width: 70%;}
+.tod-o2o-item .item-tit .tit a{font-weight: bold;}
+.tod-o2o-item .type{
+    display: inline-block;
+    margin-left: 0.25rem;
+    margin-top: 0.125rem;
+    padding: 0.125rem 0.3125rem 0 0.3125rem;
+    border-radius: 2px;
+    background-color: #f5f5f5;
+    color: #666;
+    font-size: 0.6875rem;
+    line-height: 0.875rem;
+    height: 1.125rem;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+.tod-o2o-item .item-txt, .tod-o2o-item .item-etc,
+.tod-o2o-list .tod-o2o-btns{margin-top: 0.625rem;}
+.tod-o2o-item .item-txt{font-size: 0.8125rem; line-height: 1.4;word-break: keep-all;}
+.tod-o2o-item .item-txt .txt{display: block;}
+.tod-o2o-item .item-etc{font-size: 0.8125rem; color: #858585; height: 1.25rem; word-break: keep-all;}
+.tod-o2o-item .item-txt .txt,
+.tod-o2o-item .item-etc{ display: block; overflow: hidden; text-overflow:ellipsis;white-space:nowrap;} 
+
+/* 지도 타입일 경우 : o2o item */
+.tod-o2o-comp.map-type .tod-o2o-list{margin-bottom: 3.125rem;}
+
+/*o2o-btn*/
+.tod-o2o-btns{display: flex; display: -webkit-flex; background-color: #fff; border: 1px solid #ddd; border-radius: 0.1875rem;}
+.tod-o2o-btns.col1 .btn{width: 100%;}
+.tod-o2o-btns.col2 .btn{width: 50%;}
+.tod-o2o-btns .btn{display: block; font-size: 0.875rem; padding:0.625rem 0; 
+    border-left: 1px solid #ddd; box-sizing: border-box; text-align: center;}
+.tod-o2o-btns .btn:first-child{border-left: 0;}
+.tod-o2o-btns .btn-phone:before{
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-right: 0.3125rem;
+    background: url(/img/ico/ico-call.png) no-repeat 0 0;
+    background-size: 100%;
+}
+.tod-o2o-btns .btn-booking:before{
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-right: 0.3125rem;
+    background: url(/img/ico/ico-calendar.png) no-repeat 0 0;
+    background-size: 100%;
+}
+
+/* tod-dialog box (=main dialogbox) */
+.tod-dialog-box{position: relative; display:flex; -webkit-align-items: center;align-items: center; background: #eff6fb; min-height: 1.75rem; padding: 0.75rem 2.5rem 0.88rem 3.44rem; border-top: 1px solid #e1e1e1; border-bottom: 1px solid #e1e1e1;}
+.tod-dialog-box .dialog-txt {display: block; color: inherit; text-align: left;}
+.tod-dialog-box .dialog-txt .key {display: block; font-size: 0.8125rem; line-height: 1.19rem;}
+.tod-dialog-box .dialog-txt .key > strong{font-size: 0.9375rem;}
+.tod-dialog-box .dialog-ico {position: absolute; left: 1.13rem; top: 50%; -webkit-transform: translate(0, -50%); transform: translate(0, -50%);}
+.tod-dialog-box .dialog-ico i {width: 1.69rem; height: 1.69rem; vertical-align: top;}
+.tod-dialog-box .dialog-right-btn {position: absolute; right: 0.94rem; top: 50%; -webkit-transform: translate(0, -50%); transform: translate(0, -50%);}
+.tod-dialog-box .ico-location{display: inline-block; width: 1.75rem; height: 1.75rem; background: url(/img/ico/ico-location.png) no-repeat 0 0; background-size: 100% 100%;}
+.tod-dialog-box .icon-32px-exit {display: inline-block; width: 1rem; height: 1rem; background: url(/img/svg/icon_32px_exit.svg) no-repeat 0 0; background-size: 100% 100%;}
+            
+/* tod-search-point */
+.ico-search-red {display: inline-block; background: url(/img/ico/ico-search-red.png) no-repeat 8px 9px; background-size: 50% 50%;}
+.tod-search-point .inputbox .ico-search-red{position: absolute; right: 0; top: 0; width: 2.4rem; height: 2.4rem;}
+.tod-search-point .inputbox .input .cancel{right: 2rem;}
+
+/* 검색 없을 경우 */
+.tod-contents-empty{padding: 3.75rem 0; color: #858585; text-align: center;}
+.tod-contents-empty .desc{margin-top: 1.5625rem;}
+.tod-contents-empty .ico.type-map {margin: auto;display: block;width: 2.8125rem;height: 3.75rem;background: url(/img/ico/ico-nomap.png) no-repeat;background-size: 100% 100%;}
+.tod-contents-empty-txt{padding: 1rem 0; color: #858585; text-align: center;}
+
+/* 매장 속성 선택 */
+.tod-filter-title{font-size: 0.8125rem !important;}
+.tod-filter-desc{font-size: 0.8125rem; color: #858585;}
+.tod-filter-radio ul{display:flex; display: -webkit-flex; width: 100%; margin-top: 1.25rem;}
+.tod-filter-radio li{ width: 33%;}
+.tod-filter-radio li label{margin-left: 0.625rem; font-size: 0.9375rem;}
+.tod-productfilter-type .productfilter{padding-top: 0 !important;}
+.tod-productfilter-type .productfilter .radiobox.checked .text{ font-weight: normal !important;}
+
+/* 매장 상세 */
+.tod-shop-info .shop-tag{margin-bottom: 0 !important;}
+.tod-shop-info .shop-tag .tag{background-color: #3b98e6;}
+.tod-shop-info .shop-name{margin-bottom: 1.25rem !important; letter-spacing: -0.125rem;}
+.tod-shop-info .shop-rating{margin-top: 1.56rem; margin-bottom: 0;}
+.tod-shop-info .shop-txt > ul > li{ padding: 0; border-bottom: 0; margin-top: 1.25rem; font-size: 0.8125rem;}
+.tod-shop-info .shop-txt .txt{display: block;}
+.tod-shop-info .shop-txt .desc{color: #666;}
+.tod-shop-info .tod-o2o-btns{margin-top: 0.9375rem;}
+.tod-shop-info .shop-map .btn-mapfind{ position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); width: 5.625rem; height: 2.375rem;}
+.tod-shop-info .shop-map .btn-mapfind > img{width: 100%;}
+
+.tod-shop-texts .tit{font-size: 0.8125rem;}
+.tod-shop-texts .list{margin-top: 0.3125rem;}
+.tod-shop-texts .item-txt{display: inline-block; padding: 0.375rem; border-radius: 3px; font-size: 0.8125rem; line-height: 1; margin-right: 0.3125rem; margin-top: 0.3125rem;}
+.tod-shop-texts .item-txt.gray{background-color: #f5f5f5; color: #858585;}
+.tod-shop-texts .item-txt.blue{background-color: #e6f2fb; color: #178bce;}
+.tod-shop-texts .ol-list{margin-top: 0.3125rem; font-size: 0.8125rem; color: #666;}
+
+.tod-shop-gallery{ height: 15rem;}
+.tod-shop-gallery .slick-arrow {display:none !important;}
+.tod-shop-gallery .slick-dots {position:absolute; z-index:1; bottom:auto; top:1.3125rem; right:2.375rem; width: auto;}
+.tod-shop-gallery .slick-dots li {width:auto; height:auto; vertical-align:top; margin:0 0.375rem;}
+.tod-shop-gallery .slick-dots li button {width:0.44rem; height:0.44rem; border:1px solid #fff; border-radius: 50%;}
+.tod-shop-gallery .slick-dots li.slick-active button {background:#fff;}
+.tod-shop-gallery .slider1-auto .slider-box {position:relative;}
+.tod-shop-gallery .slider1-auto .tod-bann-btn {position:absolute; top:1.125rem; right:1rem; vertical-align:top;}
+.tod-shop-gallery .slider1-auto .tod-bann-btn:before {content:''; display:block; width:0.8125rem; height:0.8125rem; background:rgba(0,0,0,.6) url('/img/main/tod_ban_play.png') no-repeat 50% 50%; background-size:100%;  border-radius: 50%;}
+.tod-shop-gallery .slider1-auto .tod-bann-btn.stop:before {background-image:url('/img/main/tod_ban_stop.png');}
+.tod-shop-gallery .slide-item {display:block; width:100%; height: 15rem; text-align:center; box-sizing:border-box;}
+.tod-shop-gallery .slide-item  > img{ width: 100%;}
+
+.tod-shop-place ul{display: flex;}
+.tod-shop-place .item{display: inline-block; width: 50%; text-align: center; font-size: 0.8125rem; border-left: 1px solid #ddd;}
+.tod-shop-place .item:first-child{border-left: 0;}
+.tod-shop-place .link-as, .tod-shop-place .link-5gx{ display: block;} 
+.tod-shop-place .link-as:before{
+    content: '';
+    display: block;
+    width: 4.1875rem;
+    height: 4.1875rem;
+    margin: 0 auto 0.625rem;
+    background: url('/img/ico/ico-asfind.png') no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.tod-shop-place .link-5gx:before{
+    content: '';
+    display: block;
+    width: 4.1875rem;
+    height: 4.1875rem;
+    margin: 0 auto 0.625rem;
+    background: url('/img/ico/ico-5gxfind.png') no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.tod-filter-btn .data-wrap{font-size: 0.75rem; color: #858585; margin-top: 0.4375rem;}
+.tod-filter-btn .data-wrap .data-loading{ display: inline-block; width: 1.125rem; height: 1.125rem;}  
+.tod-filter-btn .data-wrap .data-loading > img {width: 100%; vertical-align: top; margin-top: -1px; margin-right: 0.125rem;}
+.tod-filter-btn{border-top: 1px solid #e5e5e5; background: #fff; height: 3.75rem; overflow: hidden; padding: 0 1rem; }
+.tod-filter-btn .tod-fright{margin-top: 0.9375rem;}
+.tod-filter-btn .btn-round2{min-width: 10rem;}
+.tod-filter-btn .resetbtn{ height: 3.75rem; width: 3.375rem; text-align: center; font-size: 0.875rem;}
+.tod-filter-btn .resetbtn:after{display: inline-block; top: 1.375rem;}
+
+/* map 요소 */
+.tod-map-select{width: 5.9375rem; height: 2rem; line-height: 1rem; padding: 0 1.2rem 0 0.625rem; box-sizing: border-box; font-size: 0.8125rem; font-weight: bold; color: #359ad4; background:#fff url('/img/ico/ico-arw.png') no-repeat 90% 50%; background-size: 0.625rem 0.375rem; border: 1px solid #cbcbcb; border-radius: 3px; text-align: left; }
+.tod-map-select > span{ display:block; margin-top: -2px;} 
+.tod-map-pos{width: 2rem; height: 2rem; background-color: #fff; border: 1px solid #cbcbcb; border-radius: 3px;}
+.tod-map-pos:before{content: ''; display: inline-block; margin: 2px auto 0; width: 1.1875rem; height: 1.1875rem; background: url('/img/ico/ico-pos.png') no-repeat 0 0; background-size: 100% 100%;}
+
+ /* Ho_05_02 - 서치화면  노출 */
+.tod-search-o2o-list{padding: 1.25rem 1.25rem 0; margin-top: 0.625rem;}
+.tod-search-o2o-list .slick-arrow {display:none !important;}
+.tod-search-o2o-list .slick-dots {position:absolute; z-index:1; bottom:auto; top: -1rem; right:1rem; width:auto;}
+.tod-search-o2o-list .slick-dots li {width:auto; height:auto; vertical-align:top; margin:0 0.375rem;}
+.tod-search-o2o-list .slick-dots li button {width:0.44rem; height:0.44rem; background:#fff; border: 1px solid #000; border-radius: 50%;}
+.tod-search-o2o-list .slick-dots li.slick-active button {background:#000;}
+.tod-search-o2o-list .slider1-auto .slider-box {position:relative;}
+.tod-search-o2o-list .slider1-auto .tod-bann-btn {position:absolute; top:-12px; right: 0; vertical-align:top;}
+.tod-search-o2o-list .slider1-auto .tod-bann-btn:before {content:''; display:block; width:0.8125rem; height:0.8125rem; background:rgba(0,0,0,.6) url('/img/main/tod_ban_play.png') no-repeat 50% 50%; background-size:100%;}
+.tod-search-o2o-list .slider1-auto .tod-bann-btn.stop:before {background-image:url('/img/main/tod_ban_stop.png');}
+.tod-search-o2o-list .slide-item .tod-o2o-btns{margin-top: 0.9375rem;}
+
+/* HO_05 - 노출 */
+.tod-o2o-bnr .inner{ position: relative;}
+.tod-o2o-bnr .inner .txt{ font-size: 1rem; line-height: 1.2; padding-bottom: 1.25rem;}
+.tod-o2o-bnr .inner .ico {position: absolute; right: 0; top: 50%; -webkit-transform: translate(0, -50%); transform: translate(0, -50%); display: block; width: 5.25rem; height: 4.44rem; background: url('/img/customer/bg_cs_02_01.png') no-repeat 0 0; background-size: 100% 100%; }
+
+/* loading */
+.tod-o2o-loading{ padding: 9.375rem 0; text-align: center;}
+.tod-o2o-loading .txt{margin-top: 1.25rem; color: #858585;}
+.tod-o2o-loading .ico-loading{display: block; width: 2rem; height: 2rem; margin: 0 auto;}
+.tod-o2o-loading .ico-loading img{width: 100%;}
+
+/* tod-paging-wrap */
+.tod-paging-wrap{position: relative; border-top: 1px solid #ddd; margin: 0 1rem;  height: 1.5rem; padding: 1.25rem 0 2.5rem;}
+.tod-paging-wrap .tod-paging{ width: 100%; margin: 0 !important; }
+.tod-paging-wrap .tod-paging .prev,
+.tod-paging-wrap .tod-paging .next{top: 0 !important;}
+.tod-paging-wrap .tod-paging  .num-box{display: inline-block; font-size: 0.9375rem; line-height: 1.5rem; vertical-align: top; margin: 0 0.75rem;}
+.tod-paging-wrap .tod-paging  .num-box .line{color: #eee;}
+
+/* device  - IOS_AOS body 영역 고정. */
+.o2o-body{ overflow: hidden; height: 100%;}
+.o2o-body .wrap{padding-bottom: 0 !important;}
+.o2o-body .container-wrap{margin-bottom: 0 !important;}
+/* //200807 [OP002-8565] o2o 지점/대리점 고도화 */

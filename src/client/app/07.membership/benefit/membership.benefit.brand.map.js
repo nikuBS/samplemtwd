@@ -14,6 +14,7 @@ Tw.MembershipBenefitBrandMap = function (container, location, data) {
   this.data = data;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this.tmapComponent = new Tw.TmapMakerComponent();
 
   this._dataChargeConfirmed = false;
 
@@ -41,7 +42,7 @@ Tw.MembershipBenefitBrandMap.prototype = {
     this.$btnBenefit.on('click', $.proxy(this._onClickBenefit, this));
     this.$btnFranchiseeList.on('click', $.proxy(this._onClickFranchiseeList, this));
 
-    $(window).on("orientationchange", $.proxy(function(){
+    $(window).on('orientationchange', $.proxy(function(){
       setTimeout($.proxy(function() {
         this.$map.empty();
         this._initMap(this.$map, this.location);
@@ -89,26 +90,18 @@ Tw.MembershipBenefitBrandMap.prototype = {
    * @private
    */
   _initMap: function (mapEl, coord) {
-    var map = new Tmap.Map({
-      div: mapEl[0].id,
+    var position = {
+      latitude: coord.lat,
+      longitude: coord.lon
+    };
+    // Tmap 생성
+    this.tmapComponent.makeTmap($.extend({
+      id: mapEl[0].id,
       width: '100%',
       height: $(window).height() * 0.6 + 'px'
-    });
-    var shopLon = coord.lon + '';
-    var shopLat = coord.lat + '';
-
-    map.setCenter(new Tmap.LonLat(shopLat, shopLon).transform('EPSG:4326', 'EPSG:3857'), 15);
-
-    var markerLayer = new Tmap.Layer.Markers();
-    map.addLayer(markerLayer);
-
-    var lonlat = new Tmap.LonLat(shopLat, shopLon).transform('EPSG:4326', 'EPSG:3857');
-    var size = new Tmap.Size(24, 38);
-    var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.PIN, size, offset);
-
-    var marker = new Tmap.Marker(lonlat, icon);
-    markerLayer.addMarker(marker);
+    },position)).makeMarker($.extend({
+      width: 24
+    }, position));
   },
 
   // 혜택보기화면으로 이동 (주의 area에 한글이 들어가는데 encode하지 않을 경우 로그인화면에서 오류남)

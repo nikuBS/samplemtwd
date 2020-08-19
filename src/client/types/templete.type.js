@@ -221,19 +221,14 @@ Tw.POPUP_TPL = {
   ],
   CUSTOMER_AGENTSEARCH_NEAR_LOCATION: [
     {
-      title: '매장형태',
-      list: [
-        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-location="전체"', txt: '전체' },
-        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-location="지점"', txt: '지점' },
-        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2" data-location="대리점"', txt: '대리점' }
-      ]
-    },
-    {
       title: '검색반경',
       list: [
-        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r3" data-radius="500"', txt: '500m 반경' },
-        { 'label-attr': 'id="5"', 'radio-attr': 'id="5" name="r3" data-radius="1000"', txt: '1km 반경' },
-        { 'label-attr': 'id="6"', 'radio-attr': 'id="6" name="r3" data-radius="3000"', txt: '3km 반경' }
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r3" ' +
+            'data-option= \'{"id": 1, "zoom": 15, "txt":"500m 반경", "distance": 500}\' ', txt: '500m 반경' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r3" ' +
+            'data-option= \'{"id": 2, "zoom": 14, "txt":"1km 반경", "distance": 1000}\'', txt: '1km 반경' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r3" ' +
+            'data-option= \'{"id": 3, "zoom": 13, "txt":"3km 반경", "distance": 3000}\'', txt: '3km 반경' }
       ]
     }
   ],
