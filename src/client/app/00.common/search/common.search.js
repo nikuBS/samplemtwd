@@ -53,6 +53,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,cdn,step,from,sort,nowUrl) {
     }
   };
   this._tidLanding = new Tw.TidLandingComponent();
+  this._commonSearchShop = null;
 };
 
 Tw.CommonSearch.prototype = {
@@ -88,7 +89,10 @@ Tw.CommonSearch.prototype = {
       return;
     }
     Tw.Logger.info('[common.search] [_nextInit] 검색 결과 정보 : ', this._searchInfo.search);
-    
+    if (!this._commonSearchShop){
+      this._commonSearchShop = new Tw.CommonSearchShop(this);
+    }
+
     // var keyName,contentsCnt;
     var keyName,contentsCnt,rank; // 이전일
     var totalCnt=0;

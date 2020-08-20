@@ -3,7 +3,6 @@
 * @author Hyunkuk Lee (max5500@pineone.com)
 * @since 2018.12.11
 %>
-
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <!-- body -->
 <%
@@ -108,7 +107,7 @@
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
                                 <ul class="horizontal-list">
-                                <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
+                                <% for(var i=0; i < relatedKeyword.result.Word.length && i<=4; i++){ %>
                                     <li>
                                         <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
                                             <%= relatedKeyword.result.Word[i] %>
@@ -123,7 +122,19 @@
             </div>
             <% } %>
             <!-- //연관 검색어 -->
-            
+
+            <!-- 200710 [OP002-8565] o2o 고도화 관련 작업 : 추가 -->
+            <div id="fe-shop-info-area">
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- 매장 조회 중 -->
+                <div class="cont-box nogaps-hoz fe-loading none">
+                    <div class="tod-o2o-loading">
+                        <span class="ico-loading"><img src="<%-CDN%>/img/ico/loading.gif" alt=""></span>
+                        <p class="txt">가까운 매장을 조회 중입니다. </p>
+                    </div>
+                </div>
+            </div>
+
 
 <!--즉답검색결과[S]-->
             <% if(searchInfo.search[0].immediate.data.length>0){ %>
@@ -1030,12 +1041,132 @@
 </script>
 <!--결합상품 검색결과[E]-->
 
+<script type="text/x-handlebars-template" id="shop_area_templ">
+    <!-- 위치 미동의 한 경우 -->
+    {{#unless locAgree}}
+        {{#if showBanner}}
+            <div class="fe-location-alert">
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="tod-dialog-box">
+                    <div class="dialog-ico"><i class="ico-location"><span class="blind">emoji</span></i></div>
+                    <button class="dialog-txt" data-go-url="/main/menu/settings/location">
+                        <span class="key">
+                            위치정보 이용동의를 하시면<br>
+                            <strong>근처 지점/대리점을 확인하실 수 있습니다. </strong>
+                        </span>
+                    </button>
+                    <div class="dialog-right-btn fe-close-alert"><button class="icon-32px-exit"><span class="blind">닫기</span></button></div>
+                </div>
+            </div>
+        {{/if}}
+    {{else}}
+    <!-- 위치 동의 한 경우 -->
+    <hr class="cont-sp type1" aria-hidden="true">
+    <div class="cont-box nogaps">
+        {{#unless isTShopList}}
+        <!--지도 영역-->
+        <div id="fe-map-area" class="tod-search-o2o-map" style="height: 285px;">
+            <div style="position: relative;">
+                <!-- 나의 위치 -->
+                <div class="map-pos-my" style="position: absolute; right: 16px; top: 20px;z-index: 1;">
+                    <button id="fe-myLocation" type="button" class="tod-map-pos"><span class="blind">내위치</span></button>
+                </div>
+                <div id="fe-tmap-box" style="width: 100%;"></div>
+            </div>
+        </div>
+        <!--// 지도 영역-->
+        <!-- rollinglist -->
+        <div class="tod-search-o2o-list">
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box slider1"><!-- 자동롤링 기능 필요할 경우 data-slider-auto="true" 추가 -->
+                    <div class="slider-box">
+                        <ul class="slider fe-slider">
+                            {{>shopList}}
+                        </ul>
+                    </div>
+                </div>
+            </div> <!--/ .widget -->
+        </div>  <!-- //rollinglist -->
+        <div class="tod-more-view" data-go-url="/customer/agentsearch">
+            <div class="btn-more bt0"><button>더 보기<i class="ico-arrow-r"></i></button></div>
+        </div>
+        {{else}}
+            <div class="tod-o2o-comp normal-type">
+                <!-- 타이틀 노출 -->
+                <div class="tod-o2o-title">
+                    <p>T world가 추천하는 지점/대리점</p>
+                </div>
+                <!-- 리스트 -->
+                <div class="tod-o2o-list">
+                    <ul class="fe-result-list">
+                        <!--#tpl_search_result_item 리스트 바인딩 영역-->
+                        {{>shopList}}
+                    </ul>
+                    <div class="tod-paging-wrap">
+                        <div class="paging tod-paging">
+                            <button class="prev fe-prev"><span class="tod-blind">이전</span></button><!-- disabled : class="prev disabled"-->
+<!--                            <button class="prev fe-prev disabled" disabled><span class="tod-blind">이전</span></button>&lt;!&ndash; disabled : class="prev disabled"&ndash;&gt;-->
+                            <div class="num-box">
+                                <span class="num">
+                                   <em class="tod-blind">현재 페이지</em><strong class="fe-page-no">1</strong>
+                               </span>
+                                <span class="line">/</span>
+                                <span class="num">
+                                   <em class="tod-blind">총 페이지</em>{{totalPage}}
+                               </span>
+                            </div>
+                            <button class="next fe-next"><span class="tod-blind">다음</span></button><!-- disabled : class="btn-netx disabled"-->
+                        </div>
+                    </div>
 
+                    <div class="btn-more">
+                        <button data-go-url="/customer/agentsearch">지점/대리점 찾기 바로가기<i class="ico-arrow-r"></i></button>
+                    </div>
+                </div>
+            </div>
+        {{/unless}}
+    </div>
+    {{/unless}}
+</script>
+<script type="text/x-handlebars-template" id="shop_list_templ">
+    {{#shopList}}
+    <li class="fe-branch-detail {{ternaryOp isTShopList true '' 'slide-item'}}" data-loc-code="{{locCode}}">
+        <div class="tod-o2o-item">
+            <dl>
+                <dt class="item-tit">
+                    <span class="tit">{{storeName}}</span>
+                    {{#if shopTypeNm}}
+                        <span class="type">{{shopTypeNm}}</span>
+                    {{/if}}
+                </dt>
+                <dd class="item-txt">
+                    <span class="txt"><em class="blind">도로명주소</em>{{searchAddr}}</span>
+                    <span class="txt"><em class="blind">지번주소</em>{{jibunAddr}}</span>
+                </dd>
+            </dl>
+            <p class="item-etc">{{ableTask}}</p>
+        </div>
+        <!--예약상담 가능인경우-->
+        {{#if isReserve}}
+        <div class="tod-o2o-btns col2">
+            <a class="btn btn-phone fe-tel" data-tel="{{tel}}">전화걸기</a>
+            <a href="#" class="btn btn-booking fe-booking" data-booking-url="{{url}}" data-charge="{{charge}}">상담 예약</a>
+        </div>
+        {{else}}
+            <div class="tod-o2o-btns col1">
+                <a class="btn btn-phone fe-tel" data-tel="{{tel}}">전화걸기</a>
+            </div>
+        {{/if}}
+    </li>
+    {{/shopList}}
+</script>
 </div>
 
 <% include ../../components/javascript.component.html %>
 <% include ../../components/search/search.template.component.html %>
 <% include ../../components/search/search.keyword-list.component.html %>
+<% include ../../components/tmap.component.html %>
 <script>
     $(document).ready(function () {
         new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>')._init();

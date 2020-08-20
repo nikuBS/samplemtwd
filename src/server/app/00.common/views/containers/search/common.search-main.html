@@ -86,7 +86,7 @@
                     <div class="tod-popularword-wrap"> <!-- show toggle -->
                         <ul class="popularsearchword-list linklist-type tod-popularsearchword-list">
                         <% if(popularKeyword.result&&popularKeyword.result.Query){ %>
-                            <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
+                            <% for(var i=0; i < popularKeyword.result.Query.length; i++){ %>
                             <li id="fe-popularword-list-content" class="fe-popularword-list-content" data-index="<%=i+1%>">
                                 <a href="/common/search?step=<%= step+1 %>&keyword=<%= encodeURIComponent(popularKeyword.result.Query[i].content) %>" data-xt_eid="CMMA_A11_B4-<%= i+1 %>" data-xt_csid="NO"  data-xt_action="BC" data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element xtractor">
                                     <strong class="number"><%= i+1 %></strong>
@@ -118,6 +118,25 @@
             <!-- //191001 [OP002-4009] 수정02 -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- 200710 [OP002-8565] o2o 고도화 관련 작업 : 추가 -->
+            <!-- 방문 상담 예약하기 -->
+            <div class="cont-box">
+                <div class="tod-o2o-bnr">
+                    <div class="inner">
+                        <span class="ico"></span>
+                        <div class="txt">
+                            고객 맞춤 서비스!!<br>
+                            <strong>가까운 매장을 찾아보세요</strong>
+                        </div>
+                        <a class="btn-round2 btn-style3" href="/customer/agentsearch">방문 상담 예약하기</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- //방문 상담 예약하기 -->
+            <!-- //200710 [OP002-8565] o2o 고도화 관련 작업 : 추가 -->
+
             <% if(doLikeThis) { %>
             <!-- 191001 [OP002-4009] 수정03 -->
             <div class="cont-box nogaps">

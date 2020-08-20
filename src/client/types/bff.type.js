@@ -181,7 +181,7 @@ Tw.SVC_ATTR_ICO_CLASS = {
   M5: 'icon-wifi',
   S1: 'icon-internet',
   S2: 'icon-pc',
-  S3: 'icon-call',
+  S3: 'icon-call'
 };
 
 Tw.POINT_NM = {
@@ -337,11 +337,11 @@ Tw.BROADBAND_SVC_CODE = {
   INTERNET: 'I',
   IPTV: 'T',
   PHONE: 'P'
-}
+};
 
 // 브로드밴드 서비스 유형 별 이름
 Tw.BROADBAND_SVC_CODE_NAME = {
   I: '인터넷',
   T: 'IPTV',
   P: '집전화'
-}
+};

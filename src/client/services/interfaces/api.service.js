@@ -56,8 +56,6 @@ Tw.ApiService.prototype = {
           return err;
         });
     }
-
-
   },
 
   /**
@@ -376,5 +374,48 @@ Tw.ApiService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
       callback();
     }
+  },
+
+  /**
+   * @function
+   * @param command
+   * @param params
+   * @param headers
+   * @param pathParams
+   * @param version
+   * @param option
+   * @returns {{done: *}}
+   * @desc BFF 요청 공통. 요청 실패를 공통으로 처리하려고 만듬.
+   */
+  requestDone: function (command, params, headers, pathParams, version, option) {
+    return {
+      done: function(func) {
+        this.request(command, params, headers, pathParams, version, option)
+          .done($.proxy(this.response, this, func))
+          .fail(this.responseFail);
+      }.bind(this)
+    };
+  },
+
+  /**
+   * @function
+   * @param{function} callBack
+   * @param{Object} resp 수신 결과
+   * @desc BFF 결과 수신 처리. 결과 실패를 공통으로 처리하려고 만듬.
+   */
+  response: function (callBack, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return this.responseFail(resp);
+    }
+    callBack(resp);
+  },
+
+  /**
+   * @function
+   * @param{Object} err
+   * @desc 요청 결과 실패 공통 팝업
+   */
+  responseFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   }
 };

@@ -22,10 +22,11 @@ Tw.MainMenuSettingsLocation = function (rootEl) {
 
 Tw.MainMenuSettingsLocation.prototype = {
   _cacheElements: function () {
-    this.$term = this.$container.find('input');
+    this.$term = this.$container.find('#ck_agree');
+    this.$agree = this.$container.find('.fe-agree');
   },
   _bindEvents: function () {
-    this.$term.on('change', $.proxy(this._onTermChanged, this));
+    this.$agree.on('change', $.proxy(this._onTermChanged, this));
     this.$container.on('click', '#fe-view', $.proxy(this._onLink, this));
     this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
     this.$container.on('click', '#fe-dsds', $.proxy(this._onDsdsClick, this));
@@ -66,7 +67,7 @@ Tw.MainMenuSettingsLocation.prototype = {
    */
   _onTermChanged: function (e) {
     var data = {
-      twdLocUseAgreeYn: e.target.checked ? 'Y' : 'N'
+      twdLocUseAgreeYn: $(e.currentTarget).hasClass('on') ? 'Y' : 'N'
     };
 
     this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
@@ -91,6 +92,7 @@ Tw.MainMenuSettingsLocation.prototype = {
     Tw.Error(err.code, err.msg).pop();
     var checked = !!this.$term.attr('checked');
     this.$term.attr('checked', !checked);
+    this.$agree.toggleClass('on', !checked);
   },
 
   /**

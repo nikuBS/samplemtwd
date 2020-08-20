@@ -8,6 +8,7 @@ Tw.BpcpService = function() {
   this._tidLanding = new Tw.TidLandingComponent();
   this._bpcpServiceId = null;
   this._currentHistoryLength = 0;
+  this._extraParam = null;
 };
 
 Tw.BpcpService.prototype = {
@@ -74,8 +75,14 @@ Tw.BpcpService.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
+    if (!Tw.FormatHelper.isEmpty(this._extraParam)) {
+      url += (url.indexOf('?') !== -1 ? '&' : '?') + this._extraParam;
+    }
+
     url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
+
+    Tw.Logger.info('[_onSuccessBpcpPop] url : ', url);
 
     if (this._isReplace) {
       return this._historyService.replaceURL(url);
@@ -162,6 +169,7 @@ Tw.BpcpService.prototype = {
    * @param extraParam - 별도 추가적인 파라미터 값
    */
   open_withExtraParam: function(url, svcMgmtNum, eParam, extraParam) {
+
     Tw.Logger.info('[bpcp.service] [open_withExtraParam] url : ', url);
     Tw.Logger.info('[bpcp.service] [open_withExtraParam] svcMgmtNum : ', svcMgmtNum);
     Tw.Logger.info('[bpcp.service] [open_withExtraParam] eParam : ', eParam);

@@ -41,5 +41,11 @@ Tw.OUTLINK = {
     discount: '/bnft?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide5&fSiteCd=1010',
     buy: '/dc-agrmt-typ?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide6&fSiteCd=1010',
     delivery: '/dvc-dlv?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide7&fSiteCd=1010'
-  }
+  },
+  T_SHOP: {
+    DEV: 'https://dev-reservation.sktplays.com',
+    PRD: 'https://reservation.tworld.co.kr',
+    RESERVE: '/sev/booking/counseling/date/shop?sso_login_id={0}&svc_num={1}&service_name=tworld&store_code={2}' // 예약하기
+  },
+  BRANCH_RERSERVE: 'https://tbooking.svctop.co.kr'
 };

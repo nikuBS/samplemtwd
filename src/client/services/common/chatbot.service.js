@@ -10,10 +10,9 @@ Tw.ChatbotService = function() {
 
     // 1, 2차 오픈일 경과 여부 체크를 위한 일자 관련 변수 [S]
     this._currentDate = Tw.DateHelper.getCurrentShortDate();
-    // this._firstOoenDate = Tw.DateHelper.getCurrentShortDate('20200723');
+    this._firstOoenDate = Tw.DateHelper.getCurrentShortDate('20200723');
     // this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200827');
-    this._firstOoenDate = Tw.DateHelper.getCurrentShortDate('20200617');
-    this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200617');
+    this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200818');
     // 1, 2차 오픈일 경과 여부 체크를 위한 일자 관련 변수 [E]
 
     // 챗봇 발화어 노출 대상군 판단을 위해 호출 필요한 API List
@@ -42,16 +41,16 @@ Tw.ChatbotService = function() {
 
     // 2차 사외 오픈 (8/27) 시점 접근 대상 단말 리스트
     this._accessAllowedDevice0827 = [
-        'LGM-G600S'     // TEST
-        ,'SM-G977N'     // 갤럭시S10 5G
+        // 'LGM-G600S',     // TEST
+        'SM-G977N'      // 갤럭시S10 5G
         ,'SM-N971N'     // 갤럭시노트10 5G
         ,'SM-N976N'     // 갤럭시노트10 플러스 5G
         // ,'SM-N960N'     // 갤럭시노트9
         // ,'SM-G960N'     // 갤럭시S9
         // ,'SM-G973N'     // 갤럭시S10
         // ,'SM-A516N'     // 갤A51 5G
-        ,'iPhone12_1'   // 아이폰11
-        ,'iPhone12_3'   // 아이폰11Pro
+        // ,'iPhone12_1'   // 아이폰11
+        // ,'iPhone12_3'   // 아이폰11Pro
     ];
     // 2차 사외 오픈 (8/27) 시점 챗봇 팝업 노출대상 화면 리스트
     this._chatbotPopDispPageUrls0827 = {
@@ -61,7 +60,7 @@ Tw.ChatbotService = function() {
         // '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop',           // 2. 나의요금 서브메인
         // '/myt-data/submain'   : 'mytdata_submain_chatbot_pop'            // 3. 나의 데이터/통화
         '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop_new'           // 2. 나의요금 서브메인        
-        ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
+        // ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
     };
     
     // 챗봇 상담하기 화면 경로
@@ -105,30 +104,30 @@ Tw.ChatbotService.prototype = {
     _init: function () {
         var _this = this;
 
-        Tw.Logger.log('[chatbot.service] [_init] App/WEB 체크', '');
+        // Tw.Logger.log('[chatbot.service] [_init] App/WEB 체크', '');
         console.log('[chatbot.service] [_init] App/WEB 체크', '');
 
         if ( !Tw.BrowserHelper.isApp() ) {
             // App 에서만 접근 가능 (Web 에서는 비노출)
-            Tw.Logger.info('[chatbot.service] [_init] WEB 을 통한 접근', '');
+            // Tw.Logger.info('[chatbot.service] [_init] WEB 을 통한 접근', '');
             console.log('[chatbot.service] [_init] WEB 을 통한 접근', '');
             return;
         } else {
-            Tw.Logger.info('[chatbot.service] [_init] APP 을 통한 접근', '');
+            // Tw.Logger.info('[chatbot.service] [_init] APP 을 통한 접근', '');
             console.log('[chatbot.service] [_init] APP 을 통한 접근', '');
             var userAgentString = Tw.BrowserHelper.getUserAgent();
 
             // App Version 정보
             if ( /appVersion:/.test(userAgentString) ) {
                 _this._appVersion = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
-                Tw.Logger.info('[chatbot.service] [_init] App 버전 정보 : ', _this._appVersion);
+                // Tw.Logger.info('[chatbot.service] [_init] App 버전 정보 : ', _this._appVersion);
                 console.log('[chatbot.service] [_init] App 버전 정보 : ', _this._appVersion);
             }
 
             // 단말 모델 정보
             if ( /model:/.test(userAgentString) ) {
                 _this._deviceModelCode = userAgentString.split('model:')[1].split('|')[0];
-                Tw.Logger.info('[chatbot.service] [_init] 단말 모델 정보 : ', _this._deviceModelCode);
+                // Tw.Logger.info('[chatbot.service] [_init] 단말 모델 정보 : ', _this._deviceModelCode);
                 console.log('[chatbot.service] [_init] 단말 모델 정보 : ', _this._deviceModelCode);
             }
         }
@@ -136,10 +135,10 @@ Tw.ChatbotService.prototype = {
         // 챗봇 노출 대상 화면 여부 체크
         var urlPath = location.pathname;
 
-        Tw.Logger.info('[chatbot.service] [_init] 접속한 페이지 URL : ', urlPath);
-        Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 : ', this._firstOoenDate);
-        Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 일자 : ', this._secondOpenDate);
-        Tw.Logger.info('[chatbot.service] [_init] 현재 일자 : ', this._currentDate);
+        // Tw.Logger.info('[chatbot.service] [_init] 접속한 페이지 URL : ', urlPath);
+        // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 : ', this._firstOoenDate);
+        // Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 일자 : ', this._secondOpenDate);
+        // Tw.Logger.info('[chatbot.service] [_init] 현재 일자 : ', this._currentDate);
         console.log('[chatbot.service] [_init] 접속한 페이지 URL : ', urlPath);
         console.log('[chatbot.service] [_init] 1차 사외 오픈 일자 : ', this._firstOoenDate);
         console.log('[chatbot.service] [_init] 2차 사외 오픈 일자 : ', this._secondOpenDate);
@@ -152,56 +151,56 @@ Tw.ChatbotService.prototype = {
 
             if (Tw.DateHelper.getDiffByUnit(this._currentDate, this._secondOpenDate, 'day') > -1) {
                 // 2차 사외 오픈 일자 이후
-                Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 일자 이후인 경우', '');
+                // Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 일자 이후인 경우', '');
                 console.log('[chatbot.service] [_init] 2차 사외 오픈 일자 이후인 경우', '');
 
                 if (this._chatbotPopDispPageUrls0827[urlPath] !== undefined) {
                     // 2차 사외 오픈 시점 노출 대상 화면인 경우
-                    Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 시점 노출 대상 화면인 경우', '');
+                    // Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 시점 노출 대상 화면인 경우', '');
                     console.log('[chatbot.service] [_init] 2차 사외 오픈 시점 노출 대상 화면인 경우', '');
 
                     isAllowed = true;
                 } else if (urlPath === this._chatbotDefaultPage) {
                     // 전체 메뉴 > 챗봇 체험하기 접근 시
                     // 진입화면, 유무선, 발화어, T월드 앱 버전, 개인정보 수집/이용동의
-                    Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
+                    // Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
                     console.log('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
                     
                     isAllowed = true;
                     isDefaultPage = true;
                 } else {
                     // 대상화면이 아닌 경우
-                    Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
+                    // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
                     console.log('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
                 }
 
             } else {
                 // 1차 사외 오픈 일자 이후 && 2차 사외 오픈 일자 이전
-                Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 이후지만 2차 사외 오픈 일자 이전인 경우', '');
+                // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 이후지만 2차 사외 오픈 일자 이전인 경우', '');
                 console.log('[chatbot.service] [_init] 1차 사외 오픈 일자 이후지만 2차 사외 오픈 일자 이전인 경우', '');
 
                 if (this._chatbotPopDispPageUrls0723[urlPath] !== undefined) {
                     // 1차 사외 오픈 시점 노출 대상 화면인 경우
-                    Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 시점 노출 대상 화면인 경우', '');
+                    // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 시점 노출 대상 화면인 경우', '');
                     console.log('[chatbot.service] [_init] 1차 사외 오픈 시점 노출 대상 화면인 경우', '');
 
                     isAllowed = true;
                 } else if (urlPath === this._chatbotDefaultPage) {
                     // 전체 메뉴 > 챗봇 체험하기 접근 시
                     // 진입화면, 유무선, 발화어, T월드 앱 버전, 개인정보 수집/이용동의
-                    Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
+                    // Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
                     console.log('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
 
                     isAllowed = true;
                     isDefaultPage = true;
                 } else {
                     // 대상화면이 아닌 경우
-                    Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
+                    // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
                     console.log('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
                 }
             }
         } else {
-            Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 이전인 경우', '');
+            // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 이전인 경우', '');
             console.log('[chatbot.service] [_init] 1차 사외 오픈 일자 이전인 경우', '');
         }
 
@@ -209,7 +208,7 @@ Tw.ChatbotService.prototype = {
 
         if (isAllowed) {
             if (isDefaultPage) {
-                Tw.Logger.info('[chatbot.service] [_init] 전체메뉴 > 챗봇 상담하기 를 통해 진입한 경우', '');
+                // Tw.Logger.info('[chatbot.service] [_init] 전체메뉴 > 챗봇 상담하기 를 통해 진입한 경우', '');
                 console.log('[chatbot.service] [_init] 전체메뉴 > 챗봇 상담하기 를 통해 진입한 경우', '');
 
                 this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
@@ -229,20 +228,20 @@ Tw.ChatbotService.prototype = {
                                 
                             } else {
                                 // 간편 로그인
-                                Tw.Logger.info('[chatbot.service] [_init] 간편 로그인', '');
+                                // Tw.Logger.info('[chatbot.service] [_init] 간편 로그인', '');
                                 console.log('[chatbot.service] [_init] 간편 로그인', '');
                                 return;
                             }
                         } else {
                             // 미로그인
-                            Tw.Logger.info('[chatbot.service] [_init] 미로그인', '');
+                            // Tw.Logger.info('[chatbot.service] [_init] 미로그인', '');
                             console.log('[chatbot.service] [_init] 미로그인', '');
                             return;
                         }                        
                     }
                 }, this));
             } else {
-                Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');
+                // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');
                 console.log('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');
 
                 this._apiService.requestArray([
