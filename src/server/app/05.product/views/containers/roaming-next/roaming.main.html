@@ -263,8 +263,6 @@
 
     var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
     var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
-    console.log('From ' + startDate.format('MM.DD') + ' to ' + endDate.format('MM.DD'));
-
     document.location.href = '/product/roaming/offer?nation=JPN&from=' + startDate.format('YYYYMMDD') +
       '&to=' + endDate.format('YYYYMMDD');
   }
