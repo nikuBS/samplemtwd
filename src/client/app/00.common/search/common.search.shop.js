@@ -68,6 +68,7 @@ Tw.CommonSearchShop.prototype = {
 
   _cacheElements: function () {
     this.shopInfoArea = this.$container.find('#fe-shop-info-area');
+    this._loading = this.$container.find('.fe-loading');
     this.$shopAreaTempl = Handlebars.compile($('#shop_area_templ').html());
     this.$shopListTempl = Handlebars.compile($('#shop_list_templ').html());
     Handlebars.registerPartial('shopList', $('#shop_list_templ').html());
@@ -98,7 +99,7 @@ Tw.CommonSearchShop.prototype = {
         longitude: 126.3015055,
         latitude: 37.4038252
       };*/
-      this.shopInfoArea.removeClass('none');
+      this._loading.removeClass('none');
       this._findNearShop();
     }, this), $.proxy(function () { // 위치정보 실패시
       if (Tw.BrowserHelper.isApp()) {
@@ -193,6 +194,7 @@ Tw.CommonSearchShop.prototype = {
   },
 
   _resultRender: function (options) {
+    this._loading.addClass('none');
     var param = $.extend({
       locAgree: true, // 위치 접근권한 동의 여부
       isTShopList: false, // 근처 매장 없을 때, 티샵 예약가능한 매장인지 여부
@@ -214,6 +216,7 @@ Tw.CommonSearchShop.prototype = {
    * @desc 티샵매장일때 렌더링
    */
   _resultRenderNoShop: function (res) {
+    this._loading.addClass('none');
     this._respTshop = res.result;
     var param = {
       locAgree: true, // 위치 접근권한 동의 여부
