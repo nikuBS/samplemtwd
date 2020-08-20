@@ -102,7 +102,6 @@
             <h1>언제 떠나세요?</h1>
             <div class="date">
                 <h2>가는날</h2>
-                <!-- TODO: 2020.07.15 -->
                 <h3 id="date-depart">-</h3>
             </div>
             <div class="date">
@@ -119,11 +118,7 @@
             </svg>
         </div>
     </div>
-    <div id="scheduleContent">
-        <div id="calendar">
-
-        </div>
-    </div>
+    <div id="scheduleContent"><div id="calendar"></div></div>
     <div id="scheduleConfirm" class="bottom-button not-prepared" onclick="tryConfirm();">
         추천 요금제 확인
     </div>
@@ -235,6 +230,9 @@
     $('#schedulePopup').css('display', 'block');
     $('#productRoaming').css('display', 'none');
 
+    $('#date-depart').html('');
+    $('#date-arrive').html('');
+
     $('div#calendar').daterangepicker({
       element: $('div#calendar'),
       parentEl: 'div#calendar',
@@ -266,7 +264,9 @@
     var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
     var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
     console.log('From ' + startDate.format('MM.DD') + ' to ' + endDate.format('MM.DD'));
-    // TODO: 추천 요금제 화면으로 이동
+
+    document.location.href = '/product/roaming/offer?nation=JPN&from=' + startDate.format('YYYYMMDD') +
+      '&to=' + endDate.format('YYYYMMDD');
   }
 
   function closePopup() {
