@@ -103,11 +103,11 @@
             <div class="date">
                 <h2>가는날</h2>
                 <!-- TODO: 2020.07.15 -->
-                <h3 id="date-depart">2020.08.19</h3>
+                <h3 id="date-depart">-</h3>
             </div>
             <div class="date">
                 <h2>오는날</h2>
-                <h3 id="date-arrive">2020.08.23</h3>
+                <h3 id="date-arrive">-</h3>
             </div>
         </div>
         <div class="close" onclick="closePopup()">
@@ -119,12 +119,12 @@
             </svg>
         </div>
     </div>
-    <div class="content">
+    <div id="scheduleContent">
         <div id="calendar">
 
         </div>
     </div>
-    <div class="footer" onclick="closePopup();">
+    <div id="scheduleConfirm" class="bottom-button not-prepared" onclick="tryConfirm();">
         추천 요금제 확인
     </div>
 </div>
@@ -145,6 +145,8 @@
 <% include ../../components/javascript.component.html %>
 
 <script>
+  var debug_a = '';
+
   $(document).ready(function () {
     new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
     fillRecommendedNations();
@@ -209,6 +211,7 @@
       ul.innerHTML += li;
     }
   }
+
   function fillTariffs() {
     const template = Handlebars.compile($('#tpl-tariff-card').html());
     const container = document.getElementById('tariffs');
@@ -227,6 +230,7 @@
     $('#productRoaming').css('display', 'none');
     $('#nationsPopup').css('display', 'block');
   }
+
   function openSchedulePopup(code) {
     $('#schedulePopup').css('display', 'block');
     $('#productRoaming').css('display', 'none');
@@ -234,9 +238,37 @@
     $('div#calendar').daterangepicker({
       element: $('div#calendar'),
       parentEl: 'div#calendar',
-      minDate: '2020-08-19',
+      minDate: moment().add(1, 'days').format('YYYY-MM-DD'),
+    }, function(start, end) {
+      if (start && end) {
+        $('#scheduleConfirm').removeClass('not-prepared');
+      } else {
+        $('#scheduleConfirm').addClass('not-prepared');
+      }
+
+      if (start) {
+        $('#date-depart').html(start.format('YYYY.MM.DD'));
+      }
+      if (end) {
+        $('#date-arrive').html(end.format('YYYY.MM.DD'));
+      } else {
+        $('#date-arrive').html('-');
+      }
     });
   }
+
+  function tryConfirm() {
+    const classes = $('#scheduleConfirm').attr('class');
+    if (classes.indexOf('not-prepared') >= 0) {
+      return false;
+    }
+
+    var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
+    var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
+    console.log('From ' + startDate.format('MM.DD') + ' to ' + endDate.format('MM.DD'));
+    // TODO: 추천 요금제 화면으로 이동
+  }
+
   function closePopup() {
     $('#nationsPopup').css('display', 'none');
     $('#schedulePopup').css('display', 'none');
@@ -1242,25 +1274,16 @@
         if (this.endDate || date.isBefore(this.startDate, 'day')) { //picking start
           this.endDate = null;
           this.setStartDate(date.clone());
+          this.callback(date.clone(), null);
         } else if (!this.endDate && date.isBefore(this.startDate)) {
           this.setEndDate(this.startDate.clone());
         } else { // picking end
           this.setEndDate(date.clone());
-          if (this.autoApply) {
-            this.calculateChosenLabel();
-            this.clickApply();
-          }
-        }
-
-        if (this.singleDatePicker) {
-          this.setEndDate(this.startDate);
-          if (this.autoApply)
-            this.clickApply();
+          this.callback(this.startDate.clone(), date.clone());
         }
 
         this.updateView();
         e.stopPropagation();
-
       },
 
       calculateChosenLabel: function () {
