@@ -619,6 +619,9 @@ Tw.ChatbotService.prototype = {
                 case 'pay_bill':
                     extraParam += '&keyword=pay_bill';
                     break;
+                case 'micro_pay':
+                    extraParam += '&keyword=micro_pay';
+                    break;
                 default:
                     extraParam += '&keyword=initail';
                     break;
