@@ -22,11 +22,11 @@
                 <ul></ul> 
             </div>
             <p class="description">찾으시는 나라가 없으신가요?</p>
-            <form action="#" onsubmit="console.log('nation-search'); return false;">
-            <div class="field-container">
-                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
-                <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
-            </div>
+            <form action="#" onsubmit="searchNation(); return false;">
+                <div class="field-container">
+                    <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
+                    <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
+                </div>
             </form>
             <div class="link">
                 <a href="#" onclick="openNationsPopup(); return false;">전체 국가보기</a>
@@ -99,14 +99,16 @@
     <div class="header">
         <img src="<%= CDN %>/img/product/roam/img_nation_m_01.png" width="100%" />
         <div class="summary">
-            <h1>언제 떠나세요?</h1>
-            <div class="date">
-                <h2>가는날</h2>
-                <h3 id="date-depart">-</h3>
-            </div>
-            <div class="date">
-                <h2>오는날</h2>
-                <h3 id="date-arrive">-</h3>
+            <h1><span id="target-nation"></span>, 언제 떠나세요?</h1>
+            <div>
+                <div class="date">
+                    <h2>가는날</h2>
+                    <h3 id="date-depart">-</h3>
+                </div>
+                <div class="date">
+                    <h2>오는날</h2>
+                    <h3 id="date-arrive">-</h3>
+                </div>
             </div>
         </div>
         <div class="close" onclick="closePopup()">
@@ -124,7 +126,7 @@
     </div>
 </div>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
-    <li onclick="openSchedulePopup('{{ code }}');">
+    <li onclick="openSchedulePopup('{{ code }}', '{{ name }}');">
         <img src="{{ imageUrl }}" width="{{ width }}">
         <span>{{ name }}</span>
     </li>
@@ -140,8 +142,6 @@
 <% include ../../components/javascript.component.html %>
 
 <script>
-  var debug_a = '';
-
   $(document).ready(function () {
     new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
     fillRecommendedNations();
@@ -184,6 +184,10 @@
     targetList.html('');
     for (var nation of selectedNations) {
       var li = document.createElement('li');
+      li.onclick = function(e) {
+        var nationName = e.target.innerText
+        openSchedulePopup('ETC', nationName);
+      };
       li.innerText = nation;
       targetList.append(li);
     }
@@ -226,12 +230,14 @@
     $('#nationsPopup').css('display', 'block');
   }
 
-  function openSchedulePopup(code) {
+  function openSchedulePopup(code, name) {
     $('#schedulePopup').css('display', 'block');
     $('#productRoaming').css('display', 'none');
 
-    $('#date-depart').html('');
-    $('#date-arrive').html('');
+    $('#date-depart').html('-');
+    $('#date-arrive').html('-');
+    $('#target-nation').html(name);
+    $('#target-nation').attr('data-code', code);
 
     $('div#calendar').daterangepicker({
       element: $('div#calendar'),
@@ -255,6 +261,16 @@
     });
   }
 
+  function searchNation() {
+    try {
+      var nationName = $('#nation-search').val();
+      var nationCode = 'ETC';
+      openSchedulePopup(nationCode, nationName);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   function tryConfirm() {
     const classes = $('#scheduleConfirm').attr('class');
     if (classes.indexOf('not-prepared') >= 0) {
@@ -263,7 +279,10 @@
 
     var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
     var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
-    document.location.href = '/product/roaming/offer?nation=JPN&from=' + startDate.format('YYYYMMDD') +
+    var countryCode = $('#target-nation').attr('data-code');
+    var countryName = $('#target-nation').html();
+    document.location.href = '/product/roaming/offer?code=' + countryCode + '&name=' + countryName +
+      '&from=' + startDate.format('YYYYMMDD') +
       '&to=' + endDate.format('YYYYMMDD');
   }
 
@@ -280,36 +299,12 @@
   ];
 
   const recommendedNationList = [
-    {
-      'url': '<%= CDN %>/img/product/roam/img_nation_s_01.png',
-      'name': '중국',
-      'code': 'china',
-    },
-    {
-      'url': '<%= CDN %>/img/product/roam/img_nation_s_02.png',
-      'name': '일본',
-      'code': 'japan',
-    },
-    {
-      'url': '<%= CDN %>/img/product/roam/img_nation_s_03.png',
-      'name': '베트남',
-      'code': 'vietnam',
-    },
-    {
-      'url': '<%= CDN %>/img/product/roam/img_nation_s_04.png',
-      'name': '필리핀',
-      'code': 'philippines',
-    },
-    {
-      'url': '<%= CDN %>/img/product/roam/img_nation_s_05.png',
-      'name': '미국',
-      'code': 'america',
-    },
-    {
-      'url': '<%= CDN %>/img/product/roam/img_nation_s_06.png',
-      'name': '이탈리아',
-      'code': 'italy',
-    },
+    {'url': '<%= CDN %>/img/product/roam/img_nation_s_01.png', 'name': '중국', 'code': 'CHN'},
+    {'url': '<%= CDN %>/img/product/roam/img_nation_s_02.png', 'name': '일본', 'code': 'JPN'},
+    {'url': '<%= CDN %>/img/product/roam/img_nation_s_03.png', 'name': '베트남', 'code': 'VNM'},
+    {'url': '<%= CDN %>/img/product/roam/img_nation_s_04.png', 'name': '필리핀', 'code': 'PHL'},
+    {'url': '<%= CDN %>/img/product/roam/img_nation_s_05.png', 'name': '미국', 'code': 'USA'},
+    {'url': '<%= CDN %>/img/product/roam/img_nation_s_06.png', 'name': '이탈리아', 'code': 'ITA'},
   ];
 
   const nations = {
