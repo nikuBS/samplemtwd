@@ -16,7 +16,6 @@ Tw.NextRoaming.prototype = {
   _bindEvent: function () {
     console.log('Tw.NextRoaming._bindEvent()');
     this.$container.on('click', '.fe-link-internal', $.proxy(this._onClickInternal, this));
-    // TODO: #nations 너비 계산
   },
   /**
    * @function
