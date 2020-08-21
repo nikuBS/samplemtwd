@@ -45,6 +45,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._onCancel, this));
     this.$container.on('click', 'button.fe-replace-url', $.proxy(this._onReplaceUrl, this));
+    this.$container.on('click', 'button.bt-link-tx', $.proxy(this._onPlans, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
 
@@ -244,6 +245,92 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_06_0008, reqData)
       .done($.proxy(this._success, this, 'gift'))
       .fail($.proxy(this._fail, this));
+  },
+
+  /**
+   * @function
+   * @desc 선물하기/리필하기 각각 이용가능한 요금제를 BFF에서 조회하고 이를 layer pop-up으로 출력
+   */
+  _onPlans: function () {
+    this._apiService.requestArray([
+      {
+        command: Tw.API_CMD.BFF_06_0066,
+        params: {
+          type: 'R', dataRfilPsblYn: 'Y', voiceRfilPsblYn: 'Y'
+        }
+      },
+      {
+        command: Tw.API_CMD.BFF_06_0066, params: {
+          type: 'R', dataRfilPsblYn: 'Y', voiceRfilPsblYn: 'N'
+        }
+      },
+      {
+        command: Tw.API_CMD.BFF_06_0066, params: {
+          type: 'R', dataRfilPsblYn: 'N', voiceRfilPsblYn: 'Y'
+        }
+      }
+    ]).done($.proxy(function (all, data, voice) {
+      if ( all.code === Tw.API_CODE.CODE_00 ) {
+        if ( data.code === Tw.API_CODE.CODE_00 ) {
+          if ( voice.code === Tw.API_CODE.CODE_00 ) {
+            this._popupService.open({
+              hbs: 'DC_05_02',
+              listAll: this._purifyPlansData(all.result),
+              listData: this._purifyPlansData(data.result),
+              listVoice: this._purifyPlansData(voice.result)
+            });
+          } else {
+            Tw.Error(voice.code, voice.msg).pop();
+          }
+        } else {
+          Tw.Error(data.code, data.msg).pop();
+        }
+      } else {
+        Tw.Error(all.code, all.msg).pop();
+      }
+
+    }, this));
+  },
+  /**
+   * @function
+   * @desc SB 정의된 순서대로 요금제 정렬
+   * @param  {Array} rawData - BFF로 부터 받은 요금제 리스트
+   */
+  _purifyPlansData: function (rawData) {
+    return rawData.sort(function (a, b) {
+      var ia = a.initial;
+      var ib = b.initial;
+
+      var patternHangul = /[ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ]/;
+
+      var order = function (a, b) {
+        if ( a < b ) {
+          return -1;
+        } else if ( a > b ) {
+          return 1;
+        }
+        return 0;
+      };
+
+      if ( ia.match(patternHangul) && ib.match(patternHangul) ) {
+        return order(ia, ib);
+      }
+
+      if ( ia.match(/[a-zA-Z]/) && ib.match(/[a-zA-Z]/) ) {
+        return order(ia, ib);
+      }
+
+      if ( ia.match(/[0-9]/) && ib.match(/[0-9]i/) ) {
+        return order(ia, ib);
+      }
+
+      if ( ia < ib ) {
+        return 1;
+      } else if ( ia > ib ) {
+        return -1;
+      }
+      return 0;
+    });
   },
 
   /**
