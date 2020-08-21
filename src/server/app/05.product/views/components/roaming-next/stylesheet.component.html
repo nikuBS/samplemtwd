@@ -1,16 +1,20 @@
 <style type="text/less">
+  @gnb-height: 50px;
+  @pointColor: #4559fc;
+
   body.rn {
     background-color: #f8f8f8;
     .colorPoint {
-      color: #4559fc;
+      color: @pointColor;
     }
     #gnb {
-      height: 50px;
+      height: @gnb-height;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       text-align: center;
+      background-color: white;
       .menu {
         position: absolute;
         left: 20px;
@@ -20,8 +24,16 @@
       .logo {
         margin-top: 12px;
       }
+      h1 {
+        font-size: 17px;
+        line-height: @gnb-height;
+        font-weight: 500;
+        color: #0f0f0f;
+        letter-spacing: -0.4px;
+      }
+      border-bottom: 1px solid #e9e9e9;
     }
-    #background {
+    .background {
       position: absolute;
       right: 0;
       top: 0;
@@ -35,7 +47,7 @@
       min-height: 500px;
       #contents {
         margin: 20px;
-        padding-top: 50px;
+        padding-top: @gnb-height;
         padding-bottom: 50px;
         h2 {
           font-size: 26px;
@@ -330,6 +342,157 @@
       }
       .not-prepared {
         background-color: #dddddd;
+      }
+    }
+
+    #roamingTariffOffer {
+      background-color: #fff;
+      .decoration {
+        height: 168px;
+        margin-top: @gnb-height;
+        position: relative;
+        overflow: hidden;
+        img {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+        }
+        p {
+          position: absolute;
+          left: 20px;
+          top: 62px;
+          font-size: 18px;
+          font-weight: 500;
+          color: white;
+        }
+      }
+      #contents {
+        min-height: 500px;
+        background-color: #f6f6f6;
+      }
+      .card {
+        background-color: #fff;
+        margin-bottom: 10px;
+        padding: 32px 20px;
+        h2 {
+          font-size: 21px;
+          font-weight: 600;
+          color: black;
+          letter-spacing: -0.52px;
+          margin-bottom: 20px;
+        }
+        .description {
+          font-size: 13px;
+          color: #959595;
+          margin-top: 8px;
+          margin-bottom: 20px;
+        }
+      }
+      .offered {
+        background-color: #f3f4f9;
+        border-radius: 12px;
+        .others {
+          padding: 16px 16px 20px 16px;
+          background-color: #eaebef;
+          font-size: 13px;
+          color: #2a2a2a;
+          border-bottom-left-radius: 12px;
+          border-bottom-right-radius: 12px;
+          a {
+            text-decoration: underline;
+            color: @pointColor;
+            float: right;
+            padding-top: 20px;
+          }
+        }
+      }
+      .tariff {
+        padding: 16px;
+        position: relative;
+        .arrow {
+          position: absolute;
+          right: 13px;
+          top: 21px;
+        }
+        h3 {
+          font-size: 18px;
+          font-weight: 700;
+          color: @pointColor;
+          margin-bottom: 20px;
+        }
+        .data {
+          font-size: 16px;
+          color: #111;
+          span {
+            margin-left: 4px;
+          }
+        }
+        .phone {
+          font-size: 13px;
+          color: #666;
+        }
+        .price {
+          font-size: 16px;
+          font-weight: 700;
+          color: #111;
+          float: right;
+        }
+      }
+      .diff {
+        width: 100%;
+        display: block;
+        margin-bottom: 12px;
+      }
+      .margin0 {
+        margin-bottom: 0;
+      }
+      .past {
+        .button {
+          border-radius: 40px;
+          border: 1px solid #4559fc;
+          height: 36px;
+          line-height: 36px;
+          background: #fff;
+          text-align: center;
+          font-size: 13px;
+          cursor: pointer;
+          color: @pointColor;
+        }
+      }
+      .tariff-list {
+        height: 188px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        margin-bottom: 20px;
+        .tariff-box {
+          display: inline-block;
+          width: 180px;
+          height: 168px;
+          margin-right: 8px;
+          background-color: #f3f4f9;
+          border-radius: 12px;
+          .tariff {
+            // override above
+            .data {
+              padding-top: 20px;
+            }
+            .price {
+              float: inherit;
+              display: block;
+              margin-top: 4px;
+            }
+          }
+        }
+      }
+      .link {
+        font-size: 13px;
+        color: @pointColor;
+        text-decoration: underline;
+        float: right;
+        padding-bottom: 20px;
       }
     }
   }

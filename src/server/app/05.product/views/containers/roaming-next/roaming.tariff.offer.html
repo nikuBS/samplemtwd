@@ -1,11 +1,105 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
 <body class="rn">
-<div id="productTariffOffer">
+<div id="roamingTariffOffer">
     <div id="gnb">
         <span class="menu">
             <img src="<%= CDN %>/img/product/roam/menu_black.png" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
-        요금제 추천
+        <h1>요금제 추천</h1>
+    </div>
+    <div class="decoration">
+        <img src="<%= CDN %>/img/product/roam/img_nation_m_01.png" />
+        <p>
+            사용하기 좋은 요금제를 <br />
+            추천해 드려요!
+        </p>
+    </div>
+    <div id="contents">
+        <div class="card">
+            <h2>
+                <span class="colorPoint">일본</span>으로 <span class="colorPoint">9박10일</span> 여행과<br />
+                가장 잘 맞는 로밍 요금제
+            </h2>
+            <div class="offered">
+                <div class="tariff">
+                    <h3>baro OnePass VIP</h3>
+                    <div class="data">
+                        <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                        <span>4GB</span>
+                    </div>
+                    <span class="phone">baro통화 무제한</span>
+                    <span class="price">39,000원/30일</span>
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                </div>
+                <div class="others">
+                    <a href="#">더보기 +</a>
+                    <p>
+                        <span class="colorPoint">중국, 홍콩</span> 등의 국가에서도<br />사용 가능해요.
+                    </p>
+                </div>
+            </div>
+            <div class="past">
+                <p class="description">
+                    지난 T로밍요금제 사용 내역을 기반으로 보여드립니다.
+                </p>
+                <div class="button">
+                    지난 여행 이력보기
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>다른 해외 데이터 서비스 간 비교</h2>
+            <img class="diff" src="<%= CDN %>/img/product/roam/img_vs_01.png" alt="타서비스 비교" />
+            <img class="diff margin0" src="<%= CDN %>/img/product/roam/img_vs_02.png" alt="타서비스 비교" />
+        </div>
+        <div class="card" style="margin-bottom: 150px; ">
+            <h2>
+                <span class="colorPoint">일본</span>에서 이용 가능한<br />
+                모든 요금제
+            </h2>
+            <p class="description" style="margin-top: -12px;">
+                편리하고 합리적인 가격의 로밍 요금제를 이용하세요
+            </p>
+            <div class="tariff-list">
+                <div class="tariff-box">
+                    <div class="tariff">
+                        <h3>baro OnePass VIP</h3>
+                        <div class="data">
+                            <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                            <span>4GB</span>
+                        </div>
+                        <span class="price">39,000원/30일</span>
+                        <span class="phone">baro통화 무제한</span>
+                        <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                    </div>
+                </div>
+                <div class="tariff-box">
+                    <div class="tariff">
+                        <h3>baro OnePass VIP</h3>
+                        <div class="data">
+                            <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                            <span>4GB</span>
+                        </div>
+                        <span class="price">39,000원/30일</span>
+                        <span class="phone">baro통화 무제한</span>
+                        <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                    </div>
+                </div>
+                <div class="tariff-box">
+                    <div class="tariff">
+                        <h3>baro OnePass</h3>
+                        <div class="data">
+                            <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                            <span>4GB</span>
+                        </div>
+                        <span class="price">39,000원/30일</span>
+                        <span class="phone">baro통화 무제한</span>
+                        <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                    </div>
+                </div>
+            </div>
+            <span class="link">로밍 전체 요금제 보러 가기</span>
+        </div>
     </div>
 </div>
 </body>
