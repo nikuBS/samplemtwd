@@ -8,7 +8,7 @@
 <body class="rn">
 <div id="roamingMain">
     <div id="gnb">
-        <span class="menu">
+        <span class="menu" onclick="openMenu();">
             <img src="<%= CDN %>/img/product/roam/menu_black.png" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="로고" width="94" height="24" />
@@ -72,6 +72,7 @@
         로밍 중 휴대폰 분실 안내
     -->
 </div>
+<%- include('../../components/roaming-next/roaming.menu.html'); %>
 <div id="nationsDialog" class="dialog">
     <div class="header">
         <h1>로밍 가능한 전체 국가</h1>
@@ -158,7 +159,6 @@
       minLength: 1,
     });
     setupNationsDialog();
-    // openSchedulePopup('japan');
   });
   function prepareNations() {
     let all = [];
@@ -294,6 +294,15 @@
   function closeDialog() {
     $('#nationsDialog').css('display', 'none');
     $('#scheduleDialog').css('display', 'none');
+    $('#roamingMain').css('display', 'block');
+  }
+
+  function openMenu() {
+    $('#roamingMenu').css('display', 'block');
+    $('#roamingMain').css('display', 'none');
+  }
+  function closeMenu() {
+    $('#roamingMenu').css('display', 'none');
     $('#roamingMain').css('display', 'block');
   }
 

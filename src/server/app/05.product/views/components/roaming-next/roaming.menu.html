@@ -1,0 +1,84 @@
+<div id="roamingMenu" class="dialog">
+    <div class="header">
+        <div class="close" onclick="closeMenu()">
+            <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#fff">
+                    <rect height="3" rx="1.5" transform="matrix(.70710678 .70710678 -.70710678 .70710678 20.353553 -8.137825)" width="42" x="-1" y="19"/>
+                    <rect height="3" rx="1.5" transform="matrix(-.70710678 .70710678 .70710678 .70710678 19.646447 -8.137825)" width="42" x="-1" y="19"/>
+                </g>
+            </svg>
+        </div>
+        <h2>로그인 해주세요 &gt;</h2>
+        <div class="mode">
+            <span>T로밍 모드 이용 중</span>
+            <div class="switch" onclick="toggleSwitch();">
+                <div class="track"></div>
+                <div id="thumb" class="thumb-on"></div>
+            </div>
+            <div class="reset"></div>
+        </div>
+        <div class="sticky-menu">
+            <div class="menu">
+                <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-width="1.8"><path d="m17.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round"/><path d="m16.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round"/><path d="m34.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round" transform="matrix(-1 0 0 1 58 0)"/><path d="m27.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round" transform="matrix(-1 0 0 1 51 0)"/><path d="m20.5 3.9c-.0392524 0-.0785019.0006701-.1177314.00201001-1.903678.06502126-3.3942038 1.66096732-3.3291825 3.5646453l.787746 23.06345159c.0489547 1.4332862 1.2250459 2.5698931 2.6591679 2.5698931s2.6102132-1.1366069 2.6591679-2.5698931l.787746-23.06345159c.0013399-.0392295.00201-.07847902.00201-.1177314 0-1.90478808-1.5441358-3.44892391-3.4489239-3.44892391z" fill="#4559fc"/></g></g></svg>
+                <span>T로밍 모드</span>
+            </div>
+            <div class="divider"></div>
+            <div class="menu">
+                <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-linejoin="round" stroke-width="1.8"><path d="m4 34v-2.5c0-6.9035594 5.59644063-12.5 12.5-12.5 6.9035594 0 12.5 5.5964406 12.5 12.5v2.5c-6.8857191 0-15.2190525 0-25 0z" stroke-linecap="square"/><g transform="translate(20 19)"><circle cx="8.5" cy="8.5" fill="#4559fc" r="8.5" stroke-linecap="square"/><path d="m1 8.5h16" fill="#4559fc" stroke-linecap="square"/><g stroke-linecap="round"><path d="m8 0c-4 5.35671158-4 11.0233782 0 17"/><path d="m12 0c-4 5.35671158-4 11.0233782 0 17" transform="matrix(-1 0 0 1 21 0)"/></g></g><circle cx="17" cy="12" r="7" stroke-linecap="square"/></g></g></svg>
+                <span>나의 T로밍 이용현황</span>
+            </div>
+        </div>
+    </div>
+    <div class="menus">
+        <h3>상품 둘러보기</h3>
+        <ul>
+            <li>
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8" transform="translate(4.5 5.2)"><path d="m.9 26.1h25.2v-21.6h-12.9727922l-3.60000001-3.6h-8.62720779z"/><path d="m8.1 14.04 4.4571429 4.86 7.2428571-8.1"/></g></g></svg>
+                <span>T로밍</span>
+            </li>
+            <li>
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><circle cx="18" cy="18.7" r="14.4"/><g stroke-linecap="square" transform="translate(9.9 15.1)"><path d="m2.7 0 2.49230769 8.1 2.91764178-8.06006892 2.89774283 8.06006892 2.4923077-8.1" stroke-linejoin="bevel"/><path d="m2.7 3.6h-2.7"/><path d="m16.2 3.6h-2.7"/></g></g></g></svg>
+                <span>T로밍 요금제</span>
+            </li>
+            <li>
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(0 .7)"><path d="m0 0h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><path d="m5.4 30.6h25.2v-25.2h-25.2z"/><path d="m23.4 16.2c0-2.9823376-2.4176624-5.4-5.4-5.4s-5.4 2.4176624-5.4 5.4" stroke-linecap="square" transform="matrix(1 0 0 -1 0 27)"/></g></g></svg>
+                <span>T로밍 부가서비스</span>
+            </li>
+            <li>
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(0 .7)"><path d="m0 0h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><path d="m5.4 30.6h25.2v-25.2h-25.2z"/><path d="m9.9 15.3h5.4v-5.4h-5.4z" fill="#fff"/><path d="m20.7 26.1h5.4" stroke-linecap="square"/></g></g></svg>
+                <span>T로밍 카드/쿠폰</span>
+            </li>
+            <li>
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><circle cx="18" cy="18.7" r="14.4"/><g stroke-linecap="square" transform="translate(14.4 11.5)"><path d="m7.0875 4.34700808c0-.17959457-.02777351-.35544758-.0825699-.52306918-.3280277-1.02668227-1.59885353-1.7989389-3.10612953-1.7989389h-.70859987c-1.75423507 0-3.1902007 1.04464173-3.1902007 2.32200808 0 .75205224.49767131 1.42253862 1.26557138 1.8475791l4.55710787 2.20003343c.76714944.42504047 1.26482075 1.09627516 1.26482075 1.84757909 0 1.2773664-1.435215 2.4140503-3.18869943 2.4140503h-.70859987c-1.75423507 0-3.1902007-1.1366839-3.1902007-2.4140503"/><path d="m3.54375 0v2.025"/><path d="m3.54375 12.65625v2.025"/></g></g></g></svg>
+                <span>국가별 로밍 이용요금 조회</span>
+            </li>
+        </ul>
+
+        <h3>이용 안내</h3>
+        <ul>
+            <li>
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8" transform="translate(4.5 5.2)"><path d="m.9 26.1h25.2v-21.6h-12.9727922l-3.60000001-3.6h-8.62720779z" fill="#fff"/><path d="m8.1 14.04 4.4571429 4.86 7.2428571-8.1"/></g></g></svg>
+                <span>T로밍 안내</span>
+            </li>
+            <li>
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><circle cx="18" cy="18.7" r="14.4"/><g stroke-linecap="square" transform="translate(9.9 15.1)"><path d="m2.7 0 2.49230769 8.1 2.91764178-8.06006892 2.89774283 8.06006892 2.4923077-8.1" stroke-linejoin="bevel"/><path d="m2.7 3.6h-2.7"/><path d="m16.2 3.6h-2.7"/></g></g></g></svg>
+                <span>T로밍 센터</span>
+            </li>
+        </ul>
+    </div>
+    <div class="banner">
+        <img src="<%= CDN %>/img/product/roam/img_menu_01.png" width="100%" />
+    </div>
+</div>
+<script type="text/javascript">
+    function toggleSwitch() {
+      var thumb = $('#thumb');
+      if (thumb.attr('class') === 'thumb-off') {
+        thumb.removeClass('thumb-off');
+        thumb.addClass('thumb-on');
+      } else {
+        thumb.removeClass('thumb-on');
+        thumb.addClass('thumb-off');
+      }
+    }
+</script>
