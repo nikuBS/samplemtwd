@@ -6,7 +6,7 @@
   });
 %>
 <body class="rn">
-<div id="productRoaming">
+<div id="roamingMain">
     <div id="gnb">
         <span class="menu">
             <img src="<%= CDN %>/img/product/roam/menu_black.png" alt="컨텍스트 메뉴" width="24" height="24" />
@@ -35,7 +35,7 @@
                 </div>
             </form>
             <div class="link">
-                <a href="#" onclick="openNationsPopup(); return false;">전체 국가보기</a>
+                <a href="#" onclick="openNationsDialog(); return false;">전체 국가보기</a>
             </div>
         </div>
         <div class="banner">
@@ -72,10 +72,10 @@
         로밍 중 휴대폰 분실 안내
     -->
 </div>
-<div id="nationsPopup" class="popup">
+<div id="nationsDialog" class="dialog">
     <div class="header">
         <h1>로밍 가능한 전체 국가</h1>
-        <div class="close" onclick="closePopup()">
+        <div class="close" onclick="closeDialog()">
             <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                 <g fill="#000">
                     <rect height="3" rx="1.5" transform="matrix(.70710678 .70710678 -.70710678 .70710678 20.353553 -8.137825)" width="42" x="-1" y="19"/>
@@ -101,7 +101,7 @@
         </ul>
     </div>
 </div>
-<div id="schedulePopup" class="popup">
+<div id="scheduleDialog" class="dialog">
     <div class="header">
         <img src="<%= CDN %>/img/product/roam/img_nation_m_01.png" width="100%" />
         <div class="summary">
@@ -117,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="close" onclick="closePopup()">
+        <div class="close" onclick="closeDialog()">
             <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                 <g fill="#fff">
                     <rect height="3" rx="1.5" transform="matrix(.70710678 .70710678 -.70710678 .70710678 20.353553 -8.137825)" width="42" x="-1" y="19"/>
@@ -132,7 +132,7 @@
     </div>
 </div>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
-    <li onclick="openSchedulePopup('{{ code }}', '{{ name }}');">
+    <li onclick="openScheduleDialog('{{ code }}', '{{ name }}');">
         <img src="{{ imageUrl }}" width="{{ width }}">
         <span>{{ name }}</span>
     </li>
@@ -148,7 +148,7 @@
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
   $(document).ready(function () {
-    new Tw.NextRoaming($('#productRoaming'), '<%= pageInfo.menuId %>')
+    new Tw.NextRoaming($('#roamingMain'), '<%= pageInfo.menuId %>')
     fillRecommendedNations();
     fillTariffs();
     prepareNations();
@@ -157,7 +157,7 @@
       delay: 100,
       minLength: 1,
     });
-    setupNationsPopup();
+    setupNationsDialog();
     // openSchedulePopup('japan');
   });
   function prepareNations() {
@@ -173,8 +173,8 @@
     all.sort();
     allNations = all;
   }
-  function setupNationsPopup() {
-    const menuItems = $('#nationsPopup .menu li');
+  function setupNationsDialog() {
+    const menuItems = $('#nationsDialog .menu li');
     for (var i=0; i<menuItems.length; i++) {
       menuItems[i].onclick = function (event) {
         onClickNationGroup(event.target)
@@ -182,16 +182,16 @@
     }
   }
   function onClickNationGroup(menu) {
-    $('#nationsPopup .menu li').removeClass('active');
+    $('#nationsDialog .menu li').removeClass('active');
     menu.className = 'active';
     const selectedNations = nations[menu.id].split(', ')
-    const targetList = $('#nationsPopup .content ul')
+    const targetList = $('#nationsDialog .content ul')
     targetList.html('');
     for (var nation of selectedNations) {
       var li = document.createElement('li');
       li.onclick = function(e) {
         var nationName = e.target.innerText
-        openSchedulePopup('ETC', nationName);
+        openScheduleDialog('ETC', nationName);
       };
       li.innerText = nation;
       targetList.append(li);
@@ -229,15 +229,15 @@
       });
     }
   }
-  function openNationsPopup() {
+  function openNationsDialog() {
     onClickNationGroup(document.getElementById('major'));
-    $('#productRoaming').css('display', 'none');
-    $('#nationsPopup').css('display', 'block');
+    $('#roamingMain').css('display', 'none');
+    $('#nationsDialog').css('display', 'block');
   }
 
-  function openSchedulePopup(code, name) {
-    $('#schedulePopup').css('display', 'block');
-    $('#productRoaming').css('display', 'none');
+  function openScheduleDialog(code, name) {
+    $('#scheduleDialog').css('display', 'block');
+    $('#roamingMain').css('display', 'none');
 
     $('#date-depart').html('-');
     $('#date-arrive').html('-');
@@ -270,7 +270,7 @@
     try {
       var nationName = $('#nation-search').val();
       var nationCode = 'ETC';
-      openSchedulePopup(nationCode, nationName);
+      openScheduleDialog(nationCode, nationName);
     } catch (e) {
       console.error(e);
     }
@@ -291,10 +291,10 @@
       '&to=' + endDate.format('YYYYMMDD');
   }
 
-  function closePopup() {
-    $('#nationsPopup').css('display', 'none');
-    $('#schedulePopup').css('display', 'none');
-    $('#productRoaming').css('display', 'block');
+  function closeDialog() {
+    $('#nationsDialog').css('display', 'none');
+    $('#scheduleDialog').css('display', 'none');
+    $('#roamingMain').css('display', 'block');
   }
 
   const tariffList = [
@@ -314,17 +314,23 @@
 
   const nations = {
     'major': '중국, 일본, 베트남, 필리핀, 미국, 이탈리아',
+    // EUR
     'europe': '건지섬, 그리스, 네덜란드, 노르웨이, 니제르, 덴마크, 독일, 라트비아, 러시아, 루마니아, 룩셈부르크, 리투아니아, ' +
       '리히텐슈타인, 마케도니아, 맨섬, 모나코, 몬테네그로, 몰타, 바티칸, 벨기에, 벨라루스, 보스니아헤르체고비나, 부르키나파소, ' +
       '불가리아, 산마리노, 세르비아, 스발바르 제도, 스웨덴, 스위스, 스페인, 슬로바키아, 슬로베니아, 아르메니아, 아이슬란드, ' +
       '아일랜드, 알바니아, 에스토니아, 에티오피아, 영국, 오스트리아, 올란드제도, 우크라이나, 이탈리아, 저지섬, 조지아(그루지야), ' +
       '지브롤터, 체코, 크로아티아, 키프로스, 터키, 페로제도, 포르투갈, 폴란드, 프랑스, 핀란드, 헝가리',
+    // ASP
     'asia': '네팔, 대만, 라오스, 마카오, 말레이시아, 몽골, 미얀마, 방글라데시, 베트남, 부탄, 브루나이, 스리랑카, ' +
       '싱가포르, 아제르바이젠, 우즈베키스탄, 인도, 인도네시아, 일본, 중국, 카자흐스탄, 캄보디아, 키르기즈스탄, 태국, 파키스탄, 필리핀, 홍콩',
+    // AMC
     'america': '과테말라, 니카라과, 도미니카 공화국, 멕시코, 미국, 버진아일랜드, 브라질, 아르헨티나, 에콰도르, 엘살바도르, ' +
       '우루과이, 칠레, 캐나다, 코스타리카, 콜롬비아, 파나마, 페루, 푸에르토리코',
+    // OCN
     'oceania': '뉴질랜드, 호주',
+    // MET
     'middleeast': '아랍에미리트(UAE), 이스라엘, 카타르',
+    // AFT
     'africa': '가봉, 니제르, 르완다, 마다가스카르, 모리셔스, 알제리, 우간다, 이집트, 잠비아, 케냐, 콩고 민주공화국, 차드, 탄자니아',
   };
   var allNations = [];
