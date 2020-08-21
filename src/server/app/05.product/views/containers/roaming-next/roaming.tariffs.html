@@ -1,0 +1,132 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<body class="rn">
+<div id="roamingTariffs">
+    <div id="gnb">
+        <span class="menu">
+            <img src="<%= CDN %>/img/product/roam/menu_black.png" alt="컨텍스트 메뉴" width="24" height="24" />
+        </span>
+        <h1>T로밍 요금제</h1>
+    </div>
+    <div class="header">
+        <h2>나의 여행 <span class="colorPoint">패턴</span>을 <span class="colorPoint">선택</span>해보세요!</h2>
+        <div class="anchors">
+            <div class="anchor">
+                <img src="<%= CDN %>/img/product/roam/tab_01_on.png" width="128" />
+            </div>
+            <div class="anchor">
+                <img src="<%= CDN %>/img/product/roam/tab_02_off.png" width="128" onclick="goto('group2');"/>
+            </div>
+            <div class="anchor">
+                <img src="<%= CDN %>/img/product/roam/tab_03_off.png" width="128" />
+            </div>
+            <div class="anchor">
+                <img src="<%= CDN %>/img/product/roam/tab_04_off.png" width="128" />
+            </div>
+            <div class="anchor">
+                <img src="<%= CDN %>/img/product/roam/tab_05_off.png" width="128" />
+            </div>
+        </div>
+    </div>
+    <div id="groups">
+    </div>
+</div>
+<script type="text/x-handlebars-template" id="tpl-tariff-group">
+    <div class="group" id="{{id}}">
+        <div class="summary">
+            <img src="<%= CDN %>/img/product/roam/{{ background }}" />
+            <h2>{{ name }}</h2>
+            <p>
+                {{{ description }}}
+            </p>
+        </div>
+        <div class="tariffs">
+            {{#each items}}
+                <div class="tariff">
+                    <span class="price">{{ price }}</span>
+                    <h3>{{ name }}</h3>
+                    <div class="data">
+                        <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                        <span>{{ data }}</span>
+                    </div>
+                    <span class="phone">{{ phone }}</span>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  const groups = [
+    {
+      name: 'baro 요금제',
+      description: '아시아, 미주, 유럽, 호주 어디에서나 저렴한 가격과<br />넉넉한 데이터로 고품질의 baro통화를 이용하세요',
+      id: 'group1',
+      background: 'img_baro01.png',
+      items: [
+        {name: 'baro 3GB', data: '3GB', phone: 'baro통화 무제한', price: '29,000원/7일'},
+        {name: 'baro 4GB', data: '4GB', phone: 'baro통화 무제한', price: '39,000원/30일'},
+        {name: 'baro 7GB', data: '7GB', phone: 'baro통화 무제한', price: '59,000원/30일'},
+      ]
+    },
+    {
+      name: 'baro OnePass',
+      description: '짧은 여행이나 출장을 자주 갈 때, <br />전 세계에서 1일 단위로 데이터를 이용하세요!',
+      id: 'group2',
+      background: 'img_baro02.png',
+      items: [
+        {name: 'baro OnePass 300 기본형', data: '300MB', phone: 'baro통화 무제한', price: '9,900원/1일'},
+        {name: 'baro OnePass 300 기간형', data: '300MB', phone: 'baro통화 무제한', price: '9,900원/1일'},
+        {name: 'baro OnePass 500 기본형', data: '500MB', phone: 'baro통화 무제한', price: '16,500원/1일'},
+        {name: 'baro OnePass 500 기간형', data: '500MB', phone: 'baro통화 무제한', price: '16,500원/1일'},
+      ]
+    },
+    {
+      name: 'baro OnePass Data / VIP',
+      description: '전 세계에서 1일 단위로 데이터 걱정 없이<br />무제한으로 이용하세요!',
+      id: 'group3',
+      background: 'img_baro03.png',
+      items: [
+        {name: 'baro OnePass VIP 기본형', data: '데이터 무제한', phone: '음성30분 / 문자30건 / baro통화 무제한', price: '19,000원/1일'},
+        {name: 'baro OnePass VIP 기간형', data: '데이터 무제한', phone: '음성30분 / 문자30건 / baro통화 무제한', price: '19,000원/1일'},
+        {name: 'baro OnePass Data VIP 기본형', data: '데이터 무제한', phone: 'baro통화 무제한', price: '17,600원/1일'},
+        {name: 'baro OnePass VIP', data: '데이터 무제한', phone: 'baro통화 무제한', price: '17,600원/1일'},
+      ]
+    },
+    {
+      name: '괌·사이판',
+      description: '괌 사이판 여행, 국내 가입 요금제의 기본제공<br />데이터를 그대로 이용하세요!',
+      id: 'group4',
+      background: 'img_baro04.png',
+      items: [
+        {name: 'T괌 사이판 국내처럼', data: '요금제 유형별 이용안내 상세참고', phone: 'baro통화 무제한', price: '무료'},
+        {name: 'T괌 사이판 5천원', data: '500MB', phone: '문자 기본제공 / baro통화 무제한', price: '5,000원/10일'},
+      ]
+    },
+    {
+      name: 'T로밍 LongPass',
+      description: '괌 사이판 여행, 국내 가입 요금제의 기본제공<br />데이터를 그대로 이용하세요!',
+      id: 'group5',
+      background: 'img_baro05.png',
+      items: [
+        {name: 'T로밍 LongPass 2GB', data: '2GB', phone: 'baro통화 무제한', price: '40,000원/30일'},
+        {name: 'T로밍 LongPass 3GB', data: '3GB', phone: 'baro통화 무제한', price: '50,000원/30일'},
+        {name: 'T로밍 LongPass 5GB', data: '5GB', phone: 'baro통화 무제한', price: '65,000원/30일'},
+      ]
+    },
+  ];
+
+  function goto(id) {
+    console.log('goto ' + id);
+  }
+
+  $(document).ready(function () {
+    const template = Handlebars.compile($('#tpl-tariff-group').html());
+    const target = document.getElementById('groups');
+    target.innerHTML = '';
+    for (var group of groups) {
+      target.innerHTML += template(group);
+    }
+  });
+</script>
+<% include ../../components/end.component.html %>

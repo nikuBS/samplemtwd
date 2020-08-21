@@ -495,6 +495,104 @@
         padding-bottom: 20px;
       }
     }
+
+    #roamingTariffs {
+      @header-height: 170px;
+      .header {
+        position: fixed;
+        top: @gnb-height;
+        left: 0;
+        right: 0;
+        height: @header-height;
+        background-color: white;
+        z-index: 1;
+        h2 {
+          font-size: 21px;
+          font-weight: 500;
+          color: black;
+          padding-top: 32px;
+          margin-left: 20px;
+          margin-bottom: 10px;
+        }
+        .anchors {
+          overflow-x: auto;
+          overflow-y: hidden;
+          white-space: nowrap;
+          padding-left: 20px;
+          padding-right: 15px;
+          .anchor {
+            display: inline-block;
+            width: 128px;
+            height: 82px;
+            margin-right: 5px;
+            vertical-align: top;
+          }
+        }
+      }
+      #groups {
+        margin-top: @gnb-height + @header-height;
+      }
+      .summary {
+        position: relative;
+        height: 160px;
+        overflow-y: hidden;
+        img {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+        }
+        h2 {
+          position: absolute;
+          left: 20px;
+          top: 32px;
+          font-size: 21px;
+          font-weight: 600;
+          color: black;
+        }
+        p {
+          position: absolute;
+          left: 20px;
+          top: 70px;
+          font-size: 13px;
+          font-weight: 400;
+          color: black;
+        }
+      }
+      .tariffs {
+        position: relative;
+        margin: -33px 16px 32px 16px;
+        background: #FFFFFF;
+        box-shadow: 0 8px 24px 2px rgba(0,45,237,0.15);
+        border-radius: 10px;
+        padding: 10px 20px 0 20px;
+        cursor: pointer;
+      }
+      .tariff {
+        margin-top: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #f2f2f2;
+
+        h3 {
+          font-size: 16px;
+        }
+        .data {
+          span {
+            font-size: 13px;
+          }
+        }
+        .phone {
+          font-size: 13px;
+          color: #959595;
+        }
+        .price {
+          float: right;
+          font-size: 15px;
+          font-weight: 700;
+          color: @pointColor;
+        }
+      }
+    }
   }
   body.scroll #gnb {
     background-color: white;
