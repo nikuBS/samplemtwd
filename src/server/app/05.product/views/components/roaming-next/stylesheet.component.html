@@ -156,8 +156,9 @@
         #tariffs {
           margin-top: 24px;
           margin-bottom: 8px;
-          height: 150px;
+          height: 154px;
           overflow-x: scroll;
+          overflow-y: hidden;
           white-space: nowrap;
           .tariff {
             display: inline-block;
@@ -545,13 +546,14 @@
     #roamingTariffs {
       @header-height: 170px;
       .header {
-        position: fixed;
+        //position: fixed;
         top: @gnb-height;
-        left: 0;
-        right: 0;
+        //left: 0;
+        //right: 0;
         height: @header-height;
         background-color: white;
-        z-index: 1;
+        //z-index: 1;
+        margin-top: @gnb-height;
         h2 {
           font-size: 21px;
           font-weight: 500;
@@ -576,7 +578,7 @@
         }
       }
       #groups {
-        margin-top: @gnb-height + @header-height;
+        //margin-top: @gnb-height + @header-height;
       }
       .summary {
         position: relative;

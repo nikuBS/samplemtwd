@@ -39,7 +39,6 @@
             </div>
         </div>
         <div class="banner">
-            <!-- TODO: 배너 API 연동 -->
             <a href="/product/roaming/info/barocall">
                 <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너 Baro 통화" />
             </a>
@@ -156,7 +155,7 @@
     </li>
 </script>
 <script type="text/x-handlebars-template" id="tpl-tariff-card">
-    <div class="tariff">
+    <div class="tariff" onclick="document.location.href='/product/roaming/tariffs#{{ id }}'">
         <img src="<%= CDN %>/img/product/roam/{{ icon }}" alt="product-icon" /> 
         <h4>{{ title }}</h4>
         <h5>{{ subtitle }}</h5>
@@ -240,6 +239,7 @@
     for (var i=0; i<tariffList.length; i++) {
       const item = tariffList[i];
       container.innerHTML += template({
+        id: item.id,
         icon: item.icon,
         title: item.name,
         subtitle: item.description,
@@ -324,9 +324,9 @@
   }
 
   const tariffList = [
-    {url: '', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
-    {url: '', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
-    {url: '', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
+    {id: 'group-baro', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
+    {id: 'group-onepass', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
+    {id: 'group-vip', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
   ];
 
   const recommendedNationList = [
