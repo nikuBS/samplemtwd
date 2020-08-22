@@ -66,11 +66,28 @@
             </a>
         </div>
     </div>
-    <!--
-        TODO:
-        출국 전 알아두면 좋은 정보
-        로밍 중 휴대폰 분실 안내
-    -->
+    <a href="/product/roaming/info/guide">
+        <div class="info-link">
+            출국 전 알아두면 좋은 정보
+            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+        </div>
+    </a>
+    <a href="/product/roaming/info/guide?reqItem=lost">
+        <div class="info-link" style="border-bottom: 1px solid #ededed;">
+            <div class="separator-top"></div>
+            로밍 중 휴대폰 분실 안내
+            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+        </div>
+    </a>
+    <div class="links">
+        <div class="other-link">
+            <a href="/product/roaming/info/center">로밍 센터 안내</a>
+        </div>
+        <div class="divider"></div>
+        <div class="other-link">
+            <a href="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">자주하는 질문</a>
+        </div>
+    </div>
 </div>
 <%- include('../../components/roaming-next/roaming.menu.html'); %>
 <div id="nationsDialog" class="dialog">
