@@ -11,7 +11,7 @@
         <h2>로그인 해주세요 &gt;</h2>
         <div class="mode">
             <span>T로밍 모드 이용 중</span>
-            <div class="switch" onclick="toggleSwitch();">
+            <div class="switch" onclick="confirmOff();">
                 <div class="track"></div>
                 <div id="thumb" class="thumb-on"></div>
             </div>
@@ -84,15 +84,49 @@
         <img src="<%= CDN %>/img/product/roam/img_menu_01.png" width="100%" />
     </div>
 </div>
+<script type="text/x-handlebars-template" id="tpl-dialog-off">
+    <div id="{{ id }}" class="modal">
+        <div class="content">
+            <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+            <p class="message">
+                T로밍 모드를 끌 경우 <br />
+                T월드 국내모드로 이동하며 <br />
+                <span class="colorPoint">데이터 요금이 발생</span>됩니다.
+            </p>
+            <p class="note">로밍 서비스는 계속 이용 가능</p>
+            <p class="note">앱 종료 후 재실행시 다시 T로밍 모드로 전환</p>
+            <div class="divider"></div>
+            <div class="buttons">
+                <a href="#">T로밍모드 종료</a>
+            </div>
+        </div>
+    </div>
+</script>
 <script type="text/javascript">
-    function toggleSwitch() {
+    function dismissOff(id) {
       var thumb = $('#thumb');
-      if (thumb.attr('class') === 'thumb-off') {
-        thumb.removeClass('thumb-off');
-        thumb.addClass('thumb-on');
-      } else {
-        thumb.removeClass('thumb-on');
-        thumb.addClass('thumb-off');
-      }
+      thumb.removeClass('thumb-off');
+      thumb.addClass('thumb-on');
+      $('#' + id).hide();
+      document.getElementById('roamingMenu').removeChild(document.getElementById(id));
+    }
+    function confirmOff() {
+      var thumb = $('#thumb');
+      thumb.removeClass('thumb-on');
+      thumb.addClass('thumb-off');
+
+      const id = 'dialogOff';
+      const template = Handlebars.compile($('#tpl-dialog-off').html());
+      document.getElementById('roamingMenu').innerHTML += template({id: id});
+
+      $('#' + id).on('click', function(e) {
+        if (e.target === document.getElementById(id)) {
+          dismissOff(id);
+        }
+      });
+      $('#' + id + ' .close').on('click', function() {
+        dismissOff(id);
+      });
+      $('#' + id).show();
     }
 </script>
