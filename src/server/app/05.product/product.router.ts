@@ -114,6 +114,7 @@ import ProductRoamingWithBaro from './controllers/roaming/product.roaming.with-b
 import RoamingMainController from './controllers/roaming-next/roaming.main';
 import RoamingTariffOfferController from './controllers/roaming-next/roaming.tariff.offer';
 import RoamingTariffsController from './controllers/roaming-next/roaming.tariffs';
+import RoamingOnController from './controllers/roaming-next/roaming.on';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -225,6 +226,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/with-baro', controller: ProductRoamingWithBaro });
 
     this.controllers.push({ url: '/roaming', controller: RoamingMainController });
+    this.controllers.push({ url: '/roaming/on', controller: RoamingOnController });
     this.controllers.push({ url: '/roaming/offer', controller: RoamingTariffOfferController });
     this.controllers.push({ url: '/roaming/tariffs', controller: RoamingTariffsController });
 
