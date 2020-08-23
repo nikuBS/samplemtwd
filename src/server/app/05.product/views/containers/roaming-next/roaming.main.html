@@ -8,7 +8,7 @@
 <body class="rn">
 <div id="roamingMain">
     <div id="gnb">
-        <span class="menu" onclick="openMenu();">
+        <span class="menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="로고" width="94" height="24" />
@@ -88,7 +88,6 @@
         </div>
     </div>
 </div>
-<%- include('../../components/roaming-next/roaming.menu.html'); %>
 <div id="nationsDialog" class="dialog">
     <div class="header">
         <h1>로밍 가능한 전체 국가</h1>
@@ -139,6 +138,7 @@
         추천 요금제 확인
     </div>
 </div>
+<%- include('../../components/roaming-next/roaming.menu.html'); %>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
     <li onclick="openScheduleDialog('{{ code }}', '{{ name }}', '{{ imageTopUrl }}');">
         <img src="{{ imageUrl }}" width="{{ width }}">
@@ -156,6 +156,7 @@
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
   $(document).ready(function () {
+    new Tw.NextRoamingMenu($('#roamingMain')).install();
     new Tw.NextRoaming($('#roamingMain'), '<%= pageInfo.menuId %>')
     fillRecommendedNations();
     fillTariffs();
@@ -306,15 +307,6 @@
   function closeDialog() {
     $('#nationsDialog').css('display', 'none');
     $('#scheduleDialog').css('display', 'none');
-    $('#roamingMain').css('display', 'block');
-  }
-
-  function openMenu() {
-    $('#roamingMenu').css('display', 'block');
-    $('#roamingMain').css('display', 'none');
-  }
-  function closeMenu() {
-    $('#roamingMenu').css('display', 'none');
     $('#roamingMain').css('display', 'block');
   }
 

@@ -2,7 +2,7 @@
 <body class="rn">
 <div id="roamingOn">
     <div id="gnb">
-        <span class="menu" onclick="openMenu();">
+        <span class="menu">
             <img class="white" src="<%= CDN %>/img/product/roam/ico_menu_w.svg" alt="컨텍스트 메뉴" width="24" height="24" />
             <img class="black" src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
@@ -104,6 +104,7 @@
         </div>
     </div>
 </div>
+<%- include('../../components/roaming-next/roaming.menu.html'); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
@@ -111,6 +112,8 @@
     fillBackgroundImage();
     $('#timeKorea').html(moment().format('YY.MM.DD HH:mm'));
     $('#timeLocal').html(moment().add('<%= country.timezoneOffset %>', 'hours').format('YY.MM.DD HH:mm'));
+    
+    new Tw.NextRoamingMenu($('#roamingOn')).install();
   });
   function fillBackgroundImage() {
     const url = '<%= country.backgroundUrl %>'

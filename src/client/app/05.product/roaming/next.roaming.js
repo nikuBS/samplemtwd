@@ -14,7 +14,6 @@ Tw.NextRoaming.prototype = {
    * @desc 이벤트 바인딩
    */
   _bindEvent: function () {
-    console.log('Tw.NextRoaming._bindEvent()');
     this.$container.on('click', '.fe-link-internal', $.proxy(this._onClickInternal, this));
   },
   /**
@@ -29,4 +28,28 @@ Tw.NextRoaming.prototype = {
     event.preventDefault();
     event.stopPropagation();
   }  
+};
+
+Tw.NextRoamingMenu = function(rootEl) {
+  this.$container = rootEl;
+};
+
+Tw.NextRoamingMenu.prototype = {
+  install: function () {
+    var container = this.$container;
+    $('#gnb .menu').on('click', function() {
+      $('#roamingMenu').css('display', 'block');
+      container.css('display', 'none');
+    });
+    $('#roamingMenu .header .close').on('click', function() {
+      container.css('display', 'block');
+      $('#roamingMenu').css('display', 'none');
+    });
+  },
+  open: function() {
+
+  },
+  close: function() {
+
+  }
 };

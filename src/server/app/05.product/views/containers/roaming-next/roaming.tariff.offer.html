@@ -106,7 +106,13 @@
         </div>
     </div>
 </div>
+<%- include('../../components/roaming-next/roaming.menu.html'); %>
 </body>
 <% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).on('ready', function() {
+    new Tw.NextRoamingMenu($('#roamingTariffOffer')).install();
+  });
+</script>
 
 <% include ../../components/end.component.html %>
