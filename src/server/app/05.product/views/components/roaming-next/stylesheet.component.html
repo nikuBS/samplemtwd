@@ -41,10 +41,8 @@
       top: 0;
       width: 360px;
       height: 180px;
-      background-image: url(<%= CDN %>/img/product/roam/bg-map.png);
-      background-size: 360px 180px;
-      display: block;
     }
+
     #roamingMain {
       margin-bottom: 40px;
       #contents {
@@ -261,6 +259,7 @@
       height: 100%;
       overflow: auto;
     }
+
     #nationsDialog {
       background-color: white;
       .header {
@@ -321,6 +320,7 @@
         }
       }
     }
+
     #scheduleDialog {
       background-color: white;
       .header {
@@ -331,11 +331,21 @@
         top: 0;
         left: 0;
         right: 0;
-        img {
+        overflow: hidden;
+        .banner {
           position: absolute;
           bottom: 0;
           left: 0;
           right: 0;
+        }
+        .banner-cover {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #1c1462;
+          opacity: 0.49;
         }
         .summary {
           position: absolute;
@@ -819,6 +829,7 @@
         }
       }
     }
+
     #roamingOff {
       display: none;
       position: fixed;
