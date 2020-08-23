@@ -405,18 +405,27 @@
     }
 
     #roamingTariffOffer {
+      @deco-height: 168px;
       background-color: #fff;
       .decoration {
-        height: 168px;
+        height: @deco-height;
         margin-top: @gnb-height;
         position: relative;
         overflow: hidden;
-        img {
+        .banner {
           position: absolute;
           bottom: 0;
           left: 0;
-          right: 0;
+          height: @deco-height;
+        }
+        .banner-cover {
+          position: absolute;
+          left: 0;
+          top: 0;
           width: 100%;
+          height: @deco-height;
+          background-color: #1c1462;
+          opacity: 0.4;
         }
         p {
           position: absolute;

@@ -250,6 +250,8 @@
 
     $('#date-depart').html('-');
     $('#date-arrive').html('-');
+    if (!topBannerUrl)
+      topBannerUrl = 'http://yellowchamber.com/images/roaming/top_etc.png';
     $('#scheduleDialog .banner').attr('src', topBannerUrl);
     $('#target-nation').html(name);
     $('#target-nation').attr('data-code', code);
@@ -325,27 +327,27 @@
   const recommendedNationList = [
     {
       url: '<%= CDN %>/img/product/roam/img_nation_s_01.png', name: '중국', code: 'CHN',
-      topUrl: 'http://yellowchamber.com/images/roaming/top_china.png'
+      topUrl: 'http://yellowchamber.com/images/roaming/top_chn.png'
     },
     {
       url: '<%= CDN %>/img/product/roam/img_nation_s_02.png', name: '일본', code: 'JPN',
-      topUrl: 'http://yellowchamber.com/images/roaming/top_japan.png'
+      topUrl: 'http://yellowchamber.com/images/roaming/top_jpn.png'
     },
     {
       url: '<%= CDN %>/img/product/roam/img_nation_s_03.png', name: '베트남', code: 'VNM',
-      topUrl: 'http://yellowchamber.com/images/roaming/top_vietnam.png'
+      topUrl: 'http://yellowchamber.com/images/roaming/top_vnm.png'
     },
     {
       url: '<%= CDN %>/img/product/roam/img_nation_s_04.png', name: '필리핀', code: 'PHL',
-      topUrl: 'http://yellowchamber.com/images/roaming/top_philippines.png'
+      topUrl: 'http://yellowchamber.com/images/roaming/top_phl.png'
     },
     {
       url: '<%= CDN %>/img/product/roam/img_nation_s_05.png', name: '미국', code: 'USA',
-      topUrl: 'http://yellowchamber.com/images/roaming/top_america.png'
+      topUrl: 'http://yellowchamber.com/images/roaming/top_usa.png'
     },
     {
       url: '<%= CDN %>/img/product/roam/img_nation_s_06.png', name: '이탈리아', code: 'ITA',
-      topUrl: 'http://yellowchamber.com/images/roaming/top_italy.png'
+      topUrl: 'http://yellowchamber.com/images/roaming/top_ita.png'
     },
   ];
 

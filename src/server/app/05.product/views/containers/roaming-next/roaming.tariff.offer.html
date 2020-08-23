@@ -8,7 +8,9 @@
         <h1>요금제 추천</h1>
     </div>
     <div class="decoration">
-        <img src="<%= CDN %>/img/product/roam/img_nation_m_01.png" />
+<!--        <img src="<%= CDN %>/img/product/roam/img_nation_m_01.png" />-->
+        <img class="banner" src="http://yellowchamber.com/images/roaming/top_<%= country.code.toLowerCase() %>.png" />
+        <div class="banner-cover"></div>
         <p>
             사용하기 좋은 요금제를 <br />
             추천해 드려요!
@@ -17,7 +19,9 @@
     <div id="contents">
         <div class="card">
             <h2>
-                <span class="colorPoint">일본</span>으로 <span class="colorPoint">9박10일</span> 여행과<br />
+                <span class="colorPoint"><%= country.name %></span><!-- 으로 -->
+                <span class="colorPoint"><%= night %>박<%= days %>일</span>
+                여행과<br />
                 가장 잘 맞는 로밍 요금제
             </h2>
             <div class="offered">
@@ -54,7 +58,7 @@
         </div>
         <div class="card" style="margin-bottom: 150px; ">
             <h2>
-                <span class="colorPoint">일본</span>에서 이용 가능한<br />
+                <span class="colorPoint"><%= country.name %></span>에서 이용 가능한<br />
                 모든 요금제
             </h2>
             <p class="description" style="margin-top: -12px;">
