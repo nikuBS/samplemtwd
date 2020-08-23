@@ -23,7 +23,7 @@
                 <span>T로밍 모드</span>
             </div>
             <div class="divider"></div>
-            <div class="menu">
+            <div class="menu" onclick="showUsage();">
                 <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-linejoin="round" stroke-width="1.8"><path d="m4 34v-2.5c0-6.9035594 5.59644063-12.5 12.5-12.5 6.9035594 0 12.5 5.5964406 12.5 12.5v2.5c-6.8857191 0-15.2190525 0-25 0z" stroke-linecap="square"/><g transform="translate(20 19)"><circle cx="8.5" cy="8.5" fill="#4559fc" r="8.5" stroke-linecap="square"/><path d="m1 8.5h16" fill="#4559fc" stroke-linecap="square"/><g stroke-linecap="round"><path d="m8 0c-4 5.35671158-4 11.0233782 0 17"/><path d="m12 0c-4 5.35671158-4 11.0233782 0 17" transform="matrix(-1 0 0 1 21 0)"/></g></g><circle cx="17" cy="12" r="7" stroke-linecap="square"/></g></g></svg>
                 <span>나의 T로밍 이용현황</span>
             </div>
@@ -138,22 +138,44 @@
         </div>
     </div>
 </script>
+<script type="text/x-handlebars-template" id="tpl-dialog-usage">
+    <div id="{{ id }}" class="modal">
+        <div class="content">
+            <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+            <p class="message">
+                사용시간을 <br />
+                변경하시겠습니까?
+            </p>
+            <p class="note">고객님께서 가입하신 <span class="colorPoint">baro 4GB</span>은</p>
+            <p class="note">현지 시각 <span class="colorPoint">{{ timeLocal }}</span></p>
+            <p class="note">한국 시각 <span class="colorPoint">{{ timeKorea }}</span> 부터</p>
+            <p class="note">사용 가능합니다.</p>
+            <div class="divider"></div>
+            <div class="buttons">
+                <a href="#" onclick="return false;">변경하기</a>
+            </div>
+        </div>
+    </div>
+</script>
 <script type="text/javascript">
     function dismiss(id) {
-      var thumb = $('#thumb');
-      thumb.removeClass('thumb-off');
-      thumb.addClass('thumb-on');
       $('#' + id).hide();
       document.getElementById('roamingMenu').removeChild(document.getElementById(id));
     }
-    function showModal(id) {
+    function showModal(id, onDismiss) {
       $('#' + id).on('click', function(e) {
         if (e.target === document.getElementById(id)) {
           dismiss(id);
+          if (onDismiss) {
+            onDismiss();
+          }
         }
       });
       $('#' + id + ' .close').on('click', function() {
         dismiss(id);
+        if (onDismiss) {
+          onDismiss();
+        }
       });
       $('#' + id).show();
     }
@@ -161,6 +183,16 @@
       const id = 'dialogWelcome';
       const template = Handlebars.compile($('#tpl-dialog-welcome').html());
       document.getElementById('roamingMenu').innerHTML += template({id: id});
+      showModal(id);
+    }
+    function showUsage() {
+      const id = 'dialogUsage';
+      const template = Handlebars.compile($('#tpl-dialog-usage').html());
+      document.getElementById('roamingMenu').innerHTML += template({
+        id: id,
+        timeLocal: '20.08.20 17시',
+        timeKorea: '20.08.20 18시',
+      });
       showModal(id);
     }
     function confirmOff() {
@@ -171,7 +203,11 @@
       const id = 'dialogOff';
       const template = Handlebars.compile($('#tpl-dialog-off').html());
       document.getElementById('roamingMenu').innerHTML += template({id: id});
-      showModal(id);
+      showModal(id, function() {
+        var thumb = $('#thumb');
+        thumb.removeClass('thumb-off');
+        thumb.addClass('thumb-on');
+      });
     }
 
     var switchOffIndex = 0;
