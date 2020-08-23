@@ -3,24 +3,29 @@
 <div id="roamingOn">
     <div id="gnb">
         <span class="menu" onclick="openMenu();">
-            <img src="<%= CDN %>/img/product/roam/ico_menu_w.svg" alt="컨텍스트 메뉴" width="24" height="24" />
+            <img class="white" src="<%= CDN %>/img/product/roam/ico_menu_w.svg" alt="컨텍스트 메뉴" width="24" height="24" />
+            <img class="black" src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <img class="logo" src="<%= CDN %>/img/product/roam/logo_w.png" alt="로고" width="104" />
+        <h1 class="appbar">
+            <img src="<%= country.flagUrl %>" alt="국기" width="24" />
+            <span><%= country.name %></span>
+        </h1>
     </div>
     <div id="contents">
         <div class="hud">
             <h1>
-                <img src="<%= CDN %>/img/product/roam/flag_aus.png" alt="국기" />
-                <span>호주</span>
+                <img src="<%= country.flagUrl %>" alt="국기" />
+                <span><%= country.name %></span>
             </h1>
             <div class="clocks">
                 <div class="clock">
                     <p class="note">
-                        <span class="nation">호주</span>
+                        <span class="nation"><%= country.name %></span>
                         <img src="<%= CDN %>/img/product/roam/ico_time.png" />
-                        한국기준 -8시간
+                        한국기준 <%= country.timezoneOffset %>시간
                     </p>
-                    <h2 class="value" id="timeLocal">20.07.20 02:01</h2>
+                    <h2 class="value" id="timeLocal">-</h2>
                     <p class="note">*수도시각 기준 (섬머타임 미반영)</p>
                 </div>
                 <div class="divider"></div>
@@ -29,7 +34,7 @@
                         <span class="nation">한국</span>
                         <img src="<%= CDN %>/img/product/roam/ico_time.png" />
                     </p>
-                    <h2 class="value" id="timeKorea">20.07.20 10:01</h2>
+                    <h2 class="value" id="timeKorea">-</h2>
                 </div>
             </div>
         </div>
@@ -104,12 +109,11 @@
 <script type="text/javascript">
   $(document).ready(function () {
     fillBackgroundImage();
-    // TODO: 타임존 sensitive 재구현 필요
     $('#timeKorea').html(moment().format('YY.MM.DD HH:mm'));
-    $('#timeLocal').html(moment().subtract(8, 'hours').format('YY.MM.DD HH:mm'));
+    $('#timeLocal').html(moment().add('<%= country.timezoneOffset %>', 'hours').format('YY.MM.DD HH:mm'));
   });
   function fillBackgroundImage() {
-    const url = '<%= CDN %>/img/product/roam/background_aus.png';
+    const url = '<%= country.backgroundUrl %>'
     const backgroundImage = new Image();
     backgroundImage.onload = function() {
       var container = document.getElementById('roamingOn');
