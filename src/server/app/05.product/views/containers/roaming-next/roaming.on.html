@@ -1,12 +1,108 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
 <body class="rn">
 <div id="roamingOn">
-    <h1>
-        로밍모드
-    </h1>
+    <div id="gnb">
+        <span class="menu" onclick="openMenu();">
+            <img src="<%= CDN %>/img/product/roam/ico_menu_w.svg" alt="컨텍스트 메뉴" width="24" height="24" />
+        </span>
+        <img class="logo" src="<%= CDN %>/img/product/roam/logo_w.png" alt="로고" width="104" />
+    </div>
+    <div id="contents">
+        <div class="hud">
+            <h1>
+                <img src="<%= CDN %>/img/product/roam/flag_aus.png" alt="국기" />
+                <span>호주</span>
+            </h1>
+
+            <div class="clocks">
+                <div class="clock">
+                    <p class="note">
+                        <span class="nation">호주</span>
+                        <img src="<%= CDN %>/img/product/roam/ico_time.png" />
+                        한국기준 -8시간
+                    </p>
+                    <h2 class="value" id="timeLocal">20.07.20 02:01</h2>
+                    <p class="note">*수도시각 기준 (섬머타임 미반영)</p>
+                </div>
+                <div class="divider"></div>
+                <div class="clock">
+                    <p class="note">
+                        <span class="nation">한국</span>
+                        <img src="<%= CDN %>/img/product/roam/ico_time.png" />
+                    </p>
+                    <h2 class="value" id="timeKorea">20.07.20 10:01</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="text-align: center; padding: 40px 24px 8px 24px;">
+            <h3>반갑습니다. 고객님</h3>
+            <p class="description">로그인 후 고객님의 정보를 확인하세요</p>
+            <div class="buttons">
+                <a href="#">
+                    <div class="button button-1">
+                        로그인하기
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="button button-2">
+                        번호로 간편하게 로그인하기
+                    </div>
+                </a>
+            </div>
+            <p class="description">아직 T world 회원이 아니라면 <a href="/" class="colorPoint">회원가입</a> 후 이용해주세요</p>
+        </div>
+        <div class="card">
+            <h3 style="margin-bottom: 10px;">
+                T전화를 통해<br />
+                <img src="<%= CDN %>/img/product/roam/img_barocall.png" width="95" />
+                <span class="colorPoint">이용시 통화 무료!</span>
+            </h3>
+            <p class="description">
+                baro 통화 이용시 해외에서 제3국 (방문 국가 외 국가)으로 연락할 때는
+                <span class="colorPoint">유료 요금이 발생</span>합니다. (국내는 무료)
+            </p>
+        </div>
+        <div class="card">
+            <p class="description mb2">
+                언제 어디서나 재외국민 안전은
+            </p>
+            <h3>
+                외교부 영사콜센터 (24시간)
+                <img src="<%= CDN %>/img/product/roam/ico_phone.svg" width="20" height="20" alt="phone" class="phone"/>
+            </h3>
+        </div>
+        <div class="card">
+            <p class="description mb2">
+                국내/해외 어디에서나 무료로 이용 가능한
+            </p>
+            <h3>
+                T로밍 고객 센터 (24시간)
+                <img src="<%= CDN %>/img/product/roam/ico_phone.svg" width="20" height="20" alt="phone" class="phone" />
+            </h3>
+        </div>
+    </div>
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
+  $(document).ready(function () {
+    fillBackgroundImage();
+    // TODO: 타임존 sensitive 재구현 필요
+    $('#timeKorea').html(moment().format('YY.MM.DD HH:mm'));
+    $('#timeLocal').html(moment().subtract(8, 'hours').format('YY.MM.DD HH:mm'));
+  });
+  function fillBackgroundImage() {
+    const url = '<%= CDN %>/img/product/roam/background_aus.png';
+    const backgroundImage = new Image();
+    backgroundImage.onload = function() {
+      var container = document.getElementById('roamingOn');
+      var scaleFactor = container.clientWidth / this.width;
+
+      container.style.backgroundImage = "url('" + url + "')";
+      container.style.backgroundRepeat = 'no-repeat';
+      container.style.backgroundSize = container.clientWidth + 'px ' + (this.height * scaleFactor) + 'px';
+    }
+    backgroundImage.src = url;
+  }
 </script>
 <% include ../../components/end.component.html %>

@@ -35,16 +35,16 @@
       background-color: white;
       border-bottom: 1px solid #e9e9e9;
     }
-    .background {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 360px;
-      height: 180px;
-    }
 
     #roamingMain {
       margin-bottom: 40px;
+      .background {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 360px;
+        height: 180px;
+      }
       #contents {
         margin: 20px;
         padding-top: @gnb-height;
@@ -64,7 +64,7 @@
         .card {
           background: #FFFFFF;
           box-shadow: 0 8px 24px 2px rgba(0,45,237,0.15);
-          border-radius: 20px;
+          border-radius: 10px;
           padding: 24px;
           margin-top: 4px;
           margin-bottom: 16px;
@@ -889,6 +889,128 @@
         letter-spacing: -0.5px;
         color: white;
         opacity: 0.7;
+      }
+    }
+
+    #roamingOn {
+      #gnb {
+      }
+      #contents {
+        .hud {
+          margin: 0px 20px 140px 20px;
+          padding-top: 90px;
+          h1 {
+            img {
+              vertical-align: middle;
+              margin-right: 2px;
+              width: 36px;
+              height: 24px;
+            }
+            span {
+              line-height: 36px;
+              font-size: 26px;
+              font-weight: 500;
+              color: white;
+            }
+          }
+
+          .clocks {
+            text-align: left;
+            width: 100%;
+            margin-top: 20px;
+            .clock {
+              display: inline-block;
+              text-align: left;
+              color: white;
+              vertical-align: top;
+              .note {
+                font-size: 11px;
+                font-weight: 500;
+                letter-spacing: -0.55px;
+                opacity: 0.5;
+                img {
+                  vertical-align: middle;
+                  margin-left: 2px;
+                  margin-right: 4px;
+                  width: 14px;
+                  height: 14px;
+                }
+                .nation {
+                  font-size: 13px;
+                  vertical-align: middle;
+                }
+              }
+              .value {
+                font-size: 18px;
+                font-weight: 400;
+                opacity: 0.9;
+                margin-top: 6px;
+                margin-bottom: 2px;
+              }
+            }
+            .divider {
+              vertical-align: top;
+              display: inline-block;
+              width: 1px;
+              margin-top: 3px;
+              margin-left: 20px;
+              margin-right: 20px;
+              height: 45px;
+              background-color: #fff;
+              opacity: 0.2;
+            }
+          }
+        }
+
+        .card {
+          background-color: #fff;
+          box-shadow: 0 8px 24px 2px rgba(0, 45, 237, 0.15);
+          border-radius: 10px;
+          padding: 24px;
+          margin: 16px;
+
+          h3 {
+            font-size: 21px;
+            font-weight: 500;
+            letter-spacing: -1px;
+            margin-top: 5px;
+            img {
+              vertical-align: bottom;
+            }
+            .phone {
+              vertical-align: middle;
+            }
+          }
+
+          .description {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #959595;
+          }
+        }
+
+        .buttons {
+          padding-bottom: 12px;
+        }
+        .button {
+          width: 196px;
+          height: 36px;
+          line-height: 36px;
+          font-size: 13px;
+          font-weight: 500;
+          border-radius: 18px;
+          margin: 0 auto 10px auto;
+        }
+        .button-1 {
+          background-color: @pointColor;
+          color: white;
+        }
+        .button-2 {
+          background-color: white;
+          border: 1.5px solid @pointColor;
+          color: @pointColor;
+        }
       }
     }
   }
