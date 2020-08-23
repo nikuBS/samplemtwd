@@ -18,7 +18,7 @@
             <div class="reset"></div>
         </div>
         <div class="sticky-menu">
-            <div class="menu">
+            <div class="menu" onclick="showWelcome();">
                 <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-width="1.8"><path d="m17.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round"/><path d="m16.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round"/><path d="m34.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round" transform="matrix(-1 0 0 1 58 0)"/><path d="m27.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round" transform="matrix(-1 0 0 1 51 0)"/><path d="m20.5 3.9c-.0392524 0-.0785019.0006701-.1177314.00201001-1.903678.06502126-3.3942038 1.66096732-3.3291825 3.5646453l.787746 23.06345159c.0489547 1.4332862 1.2250459 2.5698931 2.6591679 2.5698931s2.6102132-1.1366069 2.6591679-2.5698931l.787746-23.06345159c.0013399-.0392295.00201-.07847902.00201-.1177314 0-1.90478808-1.5441358-3.44892391-3.4489239-3.44892391z" fill="#4559fc"/></g></g></svg>
                 <span>T로밍 모드</span>
             </div>
@@ -121,6 +121,23 @@
         </div>
     </div>
 </script>
+<script type="text/x-handlebars-template" id="tpl-dialog-welcome">
+    <div id="{{ id }}" class="modal">
+        <div class="content">
+            <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+            <p class="message">
+                고객님, <br />
+                편안한 비행 되셨나요?
+            </p>
+            <p class="note">해외에서도 <span class="colorPoint">편하고 쉬운 데이터 사용</span>을 위해</p>
+            <p class="note"><span class="colorPoint">T로밍 요금제</span>와 함께 해보세요.</p>
+            <div class="divider"></div>
+            <div class="buttons">
+                <a href="/product/roaming/tariffs">나에게 맞는 요금제 보기</a>
+            </div>
+        </div>
+    </div>
+</script>
 <script type="text/javascript">
     function dismiss(id) {
       var thumb = $('#thumb');
@@ -129,16 +146,7 @@
       $('#' + id).hide();
       document.getElementById('roamingMenu').removeChild(document.getElementById(id));
     }
-
-    function confirmOff() {
-      var thumb = $('#thumb');
-      thumb.removeClass('thumb-on');
-      thumb.addClass('thumb-off');
-
-      const id = 'dialogOff';
-      const template = Handlebars.compile($('#tpl-dialog-off').html());
-      document.getElementById('roamingMenu').innerHTML += template({id: id});
-
+    function showModal(id) {
       $('#' + id).on('click', function(e) {
         if (e.target === document.getElementById(id)) {
           dismiss(id);
@@ -148,6 +156,22 @@
         dismiss(id);
       });
       $('#' + id).show();
+    }
+    function showWelcome() {
+      const id = 'dialogWelcome';
+      const template = Handlebars.compile($('#tpl-dialog-welcome').html());
+      document.getElementById('roamingMenu').innerHTML += template({id: id});
+      showModal(id);
+    }
+    function confirmOff() {
+      var thumb = $('#thumb');
+      thumb.removeClass('thumb-on');
+      thumb.addClass('thumb-off');
+
+      const id = 'dialogOff';
+      const template = Handlebars.compile($('#tpl-dialog-off').html());
+      document.getElementById('roamingMenu').innerHTML += template({id: id});
+      showModal(id);
     }
 
     var switchOffIndex = 0;
