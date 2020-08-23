@@ -84,6 +84,25 @@
         <img src="<%= CDN %>/img/product/roam/img_menu_01.png" width="100%" />
     </div>
 </div>
+<script type="text/x-handlebars-template" id="tpl-switch-off">
+    <div id="{{ id }}">
+        <img class="decoration" src="<%= CDN %>/img/product/roam/ico_loading.svg" width="145" />
+        <div class="progress">
+            <span class="circle off"></span>
+            <span class="circle off"></span>
+            <span class="circle off"></span>
+            <span class="circle off"></span>
+        </div>
+        <p class="message">
+            T로밍 모드를 끄고 <br />
+            T월드 국내 모드로 이동합니다
+        </p>
+        <p class="note">
+            로밍 중 T월드 국내 모드 접속 시 데이터 요금 발생 <br />
+            앱 종료 후 재실행시 다시 T로밍 모드로 전환
+        </p>
+    </div>
+</script>
 <script type="text/x-handlebars-template" id="tpl-dialog-off">
     <div id="{{ id }}" class="modal">
         <div class="content">
@@ -97,19 +116,20 @@
             <p class="note">앱 종료 후 재실행시 다시 T로밍 모드로 전환</p>
             <div class="divider"></div>
             <div class="buttons">
-                <a href="#">T로밍모드 종료</a>
+                <a href="#" onclick="return switchOff()">T로밍모드 종료</a>
             </div>
         </div>
     </div>
 </script>
 <script type="text/javascript">
-    function dismissOff(id) {
+    function dismiss(id) {
       var thumb = $('#thumb');
       thumb.removeClass('thumb-off');
       thumb.addClass('thumb-on');
       $('#' + id).hide();
       document.getElementById('roamingMenu').removeChild(document.getElementById(id));
     }
+
     function confirmOff() {
       var thumb = $('#thumb');
       thumb.removeClass('thumb-on');
@@ -121,12 +141,37 @@
 
       $('#' + id).on('click', function(e) {
         if (e.target === document.getElementById(id)) {
-          dismissOff(id);
+          dismiss(id);
         }
       });
       $('#' + id + ' .close').on('click', function() {
-        dismissOff(id);
+        dismiss(id);
       });
       $('#' + id).show();
+    }
+
+    var switchOffIndex = 0;
+    var switchOffTimer;
+    function switchOff() {
+      dismiss('dialogOff');
+      const id = 'roamingOff';
+      const template = Handlebars.compile($('#tpl-switch-off').html());
+      document.getElementById('roamingMenu').innerHTML += template({id: id});
+      $('#roamingOff').show();
+      const circles = $('#roamingOff .progress span')
+      switchOffTimer = setInterval(function() {
+        if (switchOffIndex > 0) {
+          circles[switchOffIndex-1].className = 'circle off';
+        }
+        circles[switchOffIndex].className = 'circle on';
+        switchOffIndex += 1;
+        if (switchOffIndex >= 4) {
+          clearInterval(switchOffTimer);
+          setTimeout(function() {
+            document.location.href = '/product/roaming';
+          }, 250);
+        }
+      }, 530);
+      return false;
     }
 </script>
