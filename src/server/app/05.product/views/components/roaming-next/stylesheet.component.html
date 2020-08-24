@@ -581,14 +581,17 @@
           color: black;
           padding-top: 32px;
           margin-left: 20px;
-          margin-bottom: 10px;
+          margin-bottom: 0px;
         }
         .anchors {
           overflow-x: auto;
           overflow-y: hidden;
           white-space: nowrap;
+          padding-top: 12px;
           padding-left: 20px;
           padding-right: 15px;
+          background-color: white;
+          z-index: 10;
           .anchor {
             display: inline-block;
             width: 128px;
@@ -600,6 +603,7 @@
       }
       #groups {
         //margin-top: @gnb-height + @header-height;
+        padding-bottom: 300px;
       }
       .summary {
         position: relative;

@@ -10,19 +10,19 @@
     <div class="header">
         <h2>나의 여행 <span class="colorPoint">패턴</span>을 <span class="colorPoint">선택</span>해보세요!</h2>
         <div class="anchors">
-            <div class="anchor">
+            <div class="anchor" id="a-group-baro" onclick="showGroup(this)">
                 <img src="<%= CDN %>/img/product/roam/tab_01_on.png" width="128" />
             </div>
-            <div class="anchor">
-                <img src="<%= CDN %>/img/product/roam/tab_02_off.png" width="128" onclick="goto('group2');"/>
+            <div class="anchor" id="a-group-onepass" onclick="showGroup(this)">
+                <img src="<%= CDN %>/img/product/roam/tab_02_off.png" width="128" />
             </div>
-            <div class="anchor">
+            <div class="anchor" id="a-group-vip" onclick="showGroup(this)">
                 <img src="<%= CDN %>/img/product/roam/tab_03_off.png" width="128" />
             </div>
-            <div class="anchor">
+            <div class="anchor" id="a-group-guam" onclick="showGroup(this)">
                 <img src="<%= CDN %>/img/product/roam/tab_04_off.png" width="128" />
             </div>
-            <div class="anchor">
+            <div class="anchor" id="a-group-longpass" onclick="showGroup(this)">
                 <img src="<%= CDN %>/img/product/roam/tab_05_off.png" width="128" />
             </div>
         </div>
@@ -116,10 +116,16 @@
       ]
     },
   ];
-
-  function goto(id) {
-    console.log('goto ' + id);
+  const groupMetas = {
+    'group-baro': {top: 0, height: 0},
+    'group-onepass': {},
+    'group-vip': {},
+    'group-guam': {},
+    'group-longpass': {},
   }
+  const imagePrefix = "<%= CDN %>/img/product/roam/tab_0";
+  var scrollMonitor = true;
+  var selectedAnchor = 'a-group-baro';
 
   function showPlan(id) {
     var path = '/product/callplan?prod_id=' + id;
@@ -127,14 +133,78 @@
   }
 
   $(document).ready(function () {
+    fillTariffs();
+    initScrollAnchors();
+
+    new Tw.NextRoamingMenu($('#roamingTariffOffer')).install();
+  });
+
+  function initScrollAnchors() {
+    for (var k of Object.keys(groupMetas)) {
+      var div = document.getElementById(k);
+      groupMetas[k].top = div.offsetTop;
+      groupMetas[k].height = div.offsetHeight;
+    }
+    console.log(groupMetas);
+
+    var anchors = $('.header .anchors');
+    $(window).scroll(function(e) {
+      if (!scrollMonitor)
+        return;
+
+      var scrollTop = $(window).scrollTop();
+      if (scrollTop > 63) {
+        anchors.css('position', 'fixed');
+        anchors.css('left', '0');
+        anchors.css('right', '0');
+        anchors.css('top', '50px');
+        anchors.css('height', '94px');
+
+        for (var k of Object.keys(groupMetas)) {
+          var meta = groupMetas[k];
+          if (scrollTop > meta.top - 145 && scrollTop < meta.top - 145 + meta.height) {
+            const thatId = 'a-' + k;
+            $('.header .anchor').each(function(i, val) {
+              var state = val.id === thatId ? 'on' : 'off';
+              $('#' + val.id + ' img').attr('src', imagePrefix + (i+1) + '_' + state + '.png');
+              if (state === 'on' && selectedAnchor !== thatId) {
+                $('.anchors').animate({
+                  scrollLeft: $(val).offset().left - 20,
+                }, 50);
+                selectedAnchor = thatId;
+              }
+            });
+            break;
+          }
+        }
+      } else {
+        anchors.css('position', 'static');
+      }
+    });
+  }
+
+  function showGroup(e) {
+    var groupId = e.id.substring(2);
+    scrollMonitor = false;
+    $([document.documentElement, document.body]).animate({
+      scrollTop: groupMetas[groupId].top - 145,
+    }, 500, function() {
+      scrollMonitor = true;
+    });
+
+    $('.header .anchor').each(function(i, val) {
+      var state = val.id === e.id ? 'on' : 'off';
+      $('#' + val.id + ' img').attr('src', imagePrefix + (i+1) + '_' + state + '.png');
+    });
+  }
+
+  function fillTariffs() {
     const template = Handlebars.compile($('#tpl-tariff-group').html());
     const target = document.getElementById('groups');
     target.innerHTML = '';
     for (var group of groups) {
       target.innerHTML += template(group);
     }
-
-    new Tw.NextRoamingMenu($('#roamingTariffOffer')).install();
-  });
+  }
 </script>
 <% include ../../components/end.component.html %>
