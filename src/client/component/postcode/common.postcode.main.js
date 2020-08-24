@@ -121,7 +121,9 @@ Tw.CommonPostcodeMain.prototype = {
     var $target = $(e.currentTarget);
     if (this._isValid()) { // 검색조건 2글자 이상 입력되면
       var $apiName = this._getApiName();
-      var $reqData = this._makeRequestData($.trim(this.$searchField.val()));
+      var searchAddrStr = this.$searchField.val().replace(/ /gi, '');
+      this.$searchField.val(searchAddrStr);
+      var $reqData = this._makeRequestData($.trim(searchAddrStr));
 
       // 주소 찾기
       this._apiService.request($apiName, $reqData)
