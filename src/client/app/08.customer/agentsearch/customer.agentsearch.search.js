@@ -57,7 +57,7 @@ Tw.CustomerAgentsearch.prototype = {
    * @desc 현재 해쉬의 탭을 선택해준다. (새로고침하는 경우 탭 선택이 풀려서 해줘야 함)
    */
   _selectTab: function () {
-    this.$tabs.find('a[href="' + this._historyService.getHash() + '"]') // 현재 해쉬(#) 이름 의 a tag
+    this.$tabs.find('a[href="#' + this._getType() + '"]') // 현재 해쉬(#) 이름 의 a tag
       .attr('aria-selected', true)  // 선택 되도록 selected
       .parent().attr('aria-selected', true) // 부모(li) 도 선택되도록 selected
       .siblings().attr('aria-selected', false)  // 나머지 친구 노드들은 false
@@ -89,12 +89,13 @@ Tw.CustomerAgentsearch.prototype = {
     this.customerAgentsearchComponent.registerHelper();
     this._selectTab();
     this._onSearchButtonDisabled();
-    this.customerAgentsearchMap = new Tw.CustomerAgentsearchMap({ // 나와 가까운 지점 지도 생성
+    var args = {
       customerAgentsearch: this
-    });
-    this.customerAgentsearchFilter = new Tw.CustomerAgentsearchFilter({
-      customerAgentsearch: this
-    });
+    };
+
+    // 나와 가까운 지점 지도 생성
+    this.customerAgentsearchMap = new Tw.CustomerAgentsearchMap(args);
+    this.customerAgentsearchFilter = new Tw.CustomerAgentsearchFilter(args);
   },
 
   /**
@@ -335,17 +336,25 @@ Tw.CustomerAgentsearch.prototype = {
    * @function
    * @desc 탭 변경 일때 새로고침
    */
-  _onReset: function () {
+  _onReset: function (event) {
     // 즉시 리로딩 하면 hash 값 변경되기 전에 로딩되어 약간의 시간을 줌.
-    setTimeout(function (){
+    /*setTimeout(function (){
       this._historyService.reload();
-    }.bind(this), 50);
-
-    /*this.$keyword.val(''); // 검색어 클리어
+    }.bind(this), 50);*/
+    var hash = $(event.currentTarget).find('a').attr('href');
+    this._historyService.replaceURL(window.location.pathname + hash);
+    // 로딩중 표시
+    this.layout({
+      type: 3
+    });
+    this.$keyword.val(''); // 검색어 클리어
     // 탭(지하철) 셀렉트 박스 초기화
     this._resetTubeSelect();
     this.$resultListByList.empty(); // 리스트 클리어
-    this.$resultCount.text('0'); // 검색 갯수 초기화*/
+    this.$resultCount.text('0'); // 검색 갯수 초기화
+    this.customerAgentsearchFilter.clearItems();
+    this.customerAgentsearchMap.reset();
+    this.customerAgentsearchMap._firstTimeFindNearShop();
   },
 
   /**

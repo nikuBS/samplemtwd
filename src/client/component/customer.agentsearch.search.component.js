@@ -161,6 +161,8 @@ Tw.CustomerAgentsearchComponent.prototype = {
     list.forEach(function (o) {
       // 처리 가능업무
       saveTask(o, 'dvcChange');
+      saveTask(o, 'nmChange');
+      saveTask(o, 'feeAcceptance');
       saveTask(o, 'rbpAsYn');
       saveTask(o, 'hanaroCode');
       saveTask(o, 'secuConsulting');

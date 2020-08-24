@@ -1493,7 +1493,9 @@ Tw.CUSTOMER_AGENT_SEARCH = {
   // 필터영역 (매장 속성 선택)
   FILTER: {
     // 처리가능업무
-    dvcChange: '휴대폰 일반', // 기기변경 -> 휴대폰 일반
+    dvcChange: '기기변경',
+    nmChange: '명의변경',
+    feeAcceptance: '요금수납',
     rbpAsYn: '행복A/S',
     hanaroCode: '유선/인터넷TV', // SK브로드밴드 -> 유선/인터넷TV
     secuConsulting: 'ADT캡스보안', // 보안상담 -> ADT캡스보안
