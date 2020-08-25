@@ -349,42 +349,16 @@ class CommonSearch extends TwViewController {
             break;
           case 7:
             // console.log('❖❖❖❖❖❖❖❖❖❖❖ 부가서비스 검색 ❖❖❖❖❖❖❖❖❖❖❖');
-            // AS-IS
-            // this.apiService.request(API_CMD.BFF_05_0137, {}, {})
-            // .subscribe((resultData) => {
-            //   if (resultData.code !== API_CODE.CODE_00) {
-            //     searchResult = removeImmediateData(searchResult);
-            //   } else {
-            //     searchResult.result.search[0].immediate.data[0].subData = resultData.result;
-            //   }
-            //   showSearchResult(searchResult, relatedKeyword , requestObj , this);
-            // });
-            // break;
-
-            // TO-BE
-            if (svcInfo && svcInfo.svcAttrCd.startsWith('S')) {
-              this.apiService.request(API_CMD.BFF_05_0129, {}, {})
-              .subscribe((resultData) => {
-                if (resultData.code !== API_CODE.CODE_00) {
-                  searchResult = removeImmediateData(searchResult);
-                } else {
-                  searchResult.result.search[0].immediate.data[0].subData = resultData.result;
-                }
-                showSearchResult(searchResult, relatedKeyword , requestObj , this);
-              });
-              break;
-            } else {
-              this.apiService.request(API_CMD.BFF_05_0161, {}, {})
-              .subscribe((resultData) => {
-                if (resultData.code !== API_CODE.CODE_00) {
-                  searchResult = removeImmediateData(searchResult);
-                } else {
-                  searchResult.result.search[0].immediate.data[0].subData = resultData.result;
-                }
-                showSearchResult(searchResult, relatedKeyword , requestObj , this);
-              });
-              break;
-            }
+            this.apiService.request(API_CMD.BFF_05_0137, {}, {})
+            .subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult = removeImmediateData(searchResult);
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result;
+              }
+              showSearchResult(searchResult, relatedKeyword , requestObj , this);
+            });
+            break;
           case 8:
             // console.log('❖❖❖❖❖❖❖❖❖❖❖ 음성잔여량 검색 ❖❖❖❖❖❖❖❖❖❖❖');
             this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
