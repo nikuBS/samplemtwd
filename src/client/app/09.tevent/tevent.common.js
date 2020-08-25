@@ -497,9 +497,13 @@ Tw.TeventCommon.prototype = {
    * @param id
    */
   _getDetailEvent: function (id) {
+    var $target = null;
+    var _this = this;
+
     if (typeof(id) !== 'string') {
       var event = id;
-      id = $(event.currentTarget).attr('id');
+      $target = $(event.currentTarget);
+      id = $target.attr('id');
     }
 
     var url = '/tevent';
@@ -508,7 +512,51 @@ Tw.TeventCommon.prototype = {
     } else {
       url = url + '/detail?id=';
     }
-    this._historyService.goLoad(url + id);
+
+    var billYn = $target.attr('data-billYn');
+
+    if (Tw.BrowserHelper.isApp()) {
+      Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
+        $.proxy(function (res) {
+            if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
+              // WIFI 망이 아닌 경우
+
+              if (billYn === 'Y') {
+                // 과금여부가 Y 인 경우
+                _this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+                  $.proxy(function () {
+                    _this._popupService.close();
+                    _this._historyService.goLoad(url + id);
+                  },_this),
+                  $.proxy(_this._popupService.close,_this._popupService),$target
+                );
+              } else {
+                // 과금여부가 N 인 경우
+                _this._historyService.goLoad(url + id);
+              }
+            } else {
+              // WIFI 망인 경우
+              _this._historyService.goLoad(url + id);
+            }
+          }, _this)
+      );
+    } else {
+      // 모바일WEB
+      _this._historyService.goLoad(url + id);
+    }
+    
+    
+    // if (billYn === 'Y') {
+    //   this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+    //     $.proxy(function () {
+    //       this._popupService.close();
+    //       this._historyService.goLoad(url + id);
+    //     },this),
+    //     $.proxy(this._popupService.close,this._popupService),$target
+    //   );
+    // } else {
+    //   this._historyService.goLoad(url + id);
+    // }
   },
   
   /**
