@@ -265,7 +265,8 @@ gulp.task('js-rb', function () {
     'src/client/web-contents/js/$vars.js',
     'src/client/web-contents/js/chart.js',
     'src/client/web-contents/js/common.js',
-    'src/client/web-contents/js/widgets.js'
+    'src/client/web-contents/js/widgets.js',
+    'src/client/web-contents/js/lottie_svg.min.js'
   ])
     // .pipe(plumber())
     .pipe(sort())
