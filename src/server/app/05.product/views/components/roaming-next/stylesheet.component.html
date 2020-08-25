@@ -920,6 +920,92 @@
       }
     }
 
+    #roamingAddons {
+      .filters {
+        margin-top: @gnb-height;
+        background-color: #f5f5f5;
+        padding: 20px;
+        h2 {
+          font-size: 14px;
+          font-weight: 600;
+          color: #000;
+          letter-spacing: -0.42px;
+          margin-bottom: 10px;
+        }
+        .tag {
+          font-size: 12px;
+          font-weight: 600;
+          color: #111;
+          letter-spacing: -0.29px;
+          //height: 20px;
+          //line-height: 20px;
+
+          padding: 5px 12px;
+          margin-right: 8px;
+          background-color: white;
+          border-radius: 20px;
+          border: 1px solid #ddd;
+        }
+        .active {
+          background-color: @pointColor;
+          color: #fff;
+          border: 0;
+        }
+      }
+      .items {
+        .item {
+          padding: 28px 20px;
+          margin-bottom: 8px;
+          background-color: #fff;
+          .name {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.43px;
+            color: #000;
+            margin-bottom: 8px;
+            .comment {
+              display: inline-block;
+              font-size: 11px;
+              font-weight: 700;
+              color: @pointColor;
+              vertical-align: top;
+              margin-top: 1px;
+              margin-left: 5px;
+            }
+          }
+          .tag {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: @pointColor;
+          }
+          .description {
+            font-size: 13px;
+            font-weight: 400;
+            color: #959595;
+            letter-spacing: -0.5px;
+          }
+          .status {
+            padding: 3px 10px;
+            font-size: 10px;
+            font-weight: 500;
+            color: #111;
+            letter-spacing: -0.29px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            float: right;
+
+          }
+          .inuse {
+            background-color: @pointColor;
+            color: white;
+            border: 0;
+          }
+        }
+      }
+    }
+
     #roamingOn {
       #gnb {
         .menu {

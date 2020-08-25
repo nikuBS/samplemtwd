@@ -1,19 +1,69 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
 <body class="rn">
-<div id="roamingTariffs">
+<div id="roamingAddons">
     <div id="gnb" class="gnb-opaque">
         <span class="menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <h1>T로밍 부가서비스</h1>
     </div>
-    <div class="header">
+    <div class="filters">
+        <h2>부가서비스 종류</h2>
+        <% Object.keys(filters).map(filterId => {%>
+        <span class="tag" id="tag<%= filterId %>" onclick="fillItems('<%= filterId %>')">
+            #<%= filters[filterId] %>
+        </span>
+        <% }) %>
     </div>
-    <div id="groups">
+    <div class="items">
     </div>
 </div>
 <%- include('../../components/roaming-next/roaming.menu.html'); %>
 </body>
 <% include ../../components/javascript.component.html %>
+<script type="text/x-handlebars-template" id="tpl-item">
+    <div class="item">
+<!--        <span class="status inuse">이용중</span>-->
+        <span class="status">가입가능</span>
+        <a href="/product/callplan?prod_id={{ prodId }}">
+        <h3 class="name">{{ prodNm }}<span class="comment">{{ basFeeAmt.value }}</span></h3>
+        </a>
+        {{#each filters}}
+        <span class="tag">#{{ prodFltNm }}</span>
+        {{/each}}
+        <p class="description">{{ prodSmryDesc }}</p>
+    </div>
+</script>
+<script type="text/javascript">
+  $(document).on('ready', function () {
+    new Tw.NextRoamingMenu($('roamingAddons')).install();
+    fillItems();
+  });
+
+  function fillItems(tagId) {
+    const itemsDiv = document.querySelector('#roamingAddons .items');
+    itemsDiv.innerHTML = '';
+    const template = Handlebars.compile($('#tpl-item').html());
+    for (var item of items) {
+      if (tagId) {
+        for (var filter of item.filters) {
+          if (filter.prodFltId === tagId) {
+            itemsDiv.innerHTML += template(item);
+            break;
+          }
+        }
+        continue;
+      }
+      itemsDiv.innerHTML += template(item);
+    }
+
+    if (tagId) {
+      $('.filters span.tag').removeClass('active');
+      $('#tag' + tagId).addClass('active');
+    }
+  }
+
+  var items = <%- JSON.stringify(addonData.products) %>;
+</script>
 
 <% include ../../components/end.component.html %>

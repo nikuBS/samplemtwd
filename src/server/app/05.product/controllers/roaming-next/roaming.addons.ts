@@ -31,9 +31,16 @@ export default class RoamingAddonsController extends TwViewController {
           return this.error.render(res, {...error, svcInfo, pageInfo});
         }
 
+        const filters = {};
+        addonData.products.map(item => {
+          for (const filter of item.filters) {
+            filters[filter.prodFltId] = filter.prodFltNm;
+          }
+        });
+
         res.render('roaming-next/roaming.addons.html', {svcInfo, params, isLogin: this.isLogin(svcInfo), pageInfo,
           addonCntData,
-          addonData,
+          addonData, filters,
         });
 
       });
@@ -52,8 +59,15 @@ export default class RoamingAddonsController extends TwViewController {
           return this.error.render(res, {...error, svcInfo, pageInfo});
         }
 
+        const filters = {};
+        addonData.products.map(item => {
+          for (const filter of item.filters) {
+            filters[filter.prodFltId] = filter.prodFltNm;
+          }
+        });
+
         res.render('roaming-next/roaming.addons.html', {svcInfo, params, isLogin: this.isLogin(svcInfo), pageInfo,
-          addonData,
+          addonData, filters,
         });
       });
     }

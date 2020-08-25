@@ -170,7 +170,7 @@
               if (state === 'on' && selectedAnchor !== thatId) {
                 $('.anchors').animate({
                   scrollLeft: $(val).offset().left - 20,
-                }, 50);
+                }, 250);
                 selectedAnchor = thatId;
               }
             });
@@ -188,7 +188,7 @@
     scrollMonitor = false;
     $([document.documentElement, document.body]).animate({
       scrollTop: groupMetas[groupId].top - 145,
-    }, 500, function() {
+    }, 280, function() {
       scrollMonitor = true;
     });
 
