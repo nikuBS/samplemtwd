@@ -41,7 +41,7 @@ Tw.ChatbotService = function() {
 
     // 2차 사외 오픈 (8/27) 시점 접근 대상 단말 리스트
     this._accessAllowedDevice0827 = [
-        // 'LGM-G600S',     // TEST
+        'LGM-G600S',     // TEST
         'SM-G977N'      // 갤럭시S10 5G
         ,'SM-N971N'     // 갤럭시노트10 5G
         ,'SM-N976N'     // 갤럭시노트10 플러스 5G
@@ -53,7 +53,7 @@ Tw.ChatbotService = function() {
         // ,'iPhone12_3'   // 아이폰11Pro
 
         // 8/26 SKT임원테스트를 위한 단말기 등록 [S]
-        , 'LM-V510M'
+        , 'LM-V510N'
         , 'SM-A220S'
         , 'SM-N960N'
         , 'SM-A805N'
@@ -500,6 +500,10 @@ Tw.ChatbotService.prototype = {
                 _this.$elChabot.removeClass('slideUp');
             }
         });
+
+        setTimeout( function () {
+            _this._animateSvg('.profile2', Tw.Environment.cdn + '/js/chatbot_1.json', false);
+        }, 3200 );
         
         // 20/08/11 디자인 변경으로 인한 삭제 [S]
         // /*
@@ -1164,6 +1168,19 @@ Tw.ChatbotService.prototype = {
             this.$elChabot.attr('data-scroll', 'false').addClass('expanded');
             this.$elChabot.off('webkitTransitionEnd', this.toggleNowrap);
         }
+    },
+
+    _animateSvg: function (element, path, loop) {
+        var target = document.querySelectorAll(element);
+
+        bodymovin.loadAnimation({
+            container: target[target.length - 1],
+            path: path,
+            renderer: 'svg',
+            loop: loop,
+            autoplay: true,
+            rendererSettions: { progressiveLoad: false, }
+        }).play();
     },
 
     _toggleEmoticon: function () {
