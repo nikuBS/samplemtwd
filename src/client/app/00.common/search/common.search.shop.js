@@ -146,8 +146,7 @@ Tw.CommonSearchShop.prototype = {
         currLocY: this._location.latitude,
         distance: option.distance
       };
-      // todo JK : BFF 매핑 추가하기
-      this.customerAgentsearchComponent.request(Tw.API_CMD.BFF_08_0008, param).done(function (res) {
+      this._request(Tw.API_CMD.BFF_08_0008, param).done(function (res) {
         // 주변 매장 리스트가 없을 때, 최대 3km 까지 재검색 한다.
         if (Tw.FormatHelper.isEmpty(res.result.regionInfoList)) {
           var next = options[i++];
@@ -189,8 +188,7 @@ Tw.CommonSearchShop.prototype = {
       // searchText : encodeURIComponent('강남'), // 티샵 예약가능 매장이 없어서. 임시로 을지로 조회로 대체
       currentPage: this._reqPageNo++
     };
-    // todo JK : 통합검색 화면에 BFF매핑 추가하기
-    this.customerAgentsearchComponent.request(Tw.API_CMD.BFF_08_0004, param).done($.proxy(callback, this));
+    this._request(Tw.API_CMD.BFF_08_0004, param).done($.proxy(callback, this));
   },
 
   _resultRender: function (options) {
@@ -425,5 +423,31 @@ Tw.CommonSearchShop.prototype = {
       focusOnSelect: false,
       touchMove : true
     });
+  },
+
+  /**
+   * @function
+   * @param bff
+   * @param param
+   * @return {{done: (function(*): *)}}
+   * @desc BFF 리퀘스트. 결과가 실패이면 로딩중 화면 비노출 및 다음스텝 진행안함.
+   */
+  _request: function (bff, param) {
+    var self = this;
+    var fail = function (res) {
+      Tw.Error(res.code, res.msg).pop();
+      self._loading.addClass('none');
+    };
+    return {
+      done: function (func) {
+        return self._apiService.request(bff, param).done(function (res){
+          if (res.code !== Tw.API_CODE.CODE_00) {
+            fail(res);
+            return;
+          }
+          func(res);
+        }).fail(fail);
+      }
+    };
   }
 };

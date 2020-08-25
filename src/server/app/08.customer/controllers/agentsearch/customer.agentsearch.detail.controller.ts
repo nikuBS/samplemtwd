@@ -83,6 +83,11 @@ interface BranchDetail {
   url?: string; // 상담예약 url
   isReserve?: boolean; // 상담예약 가능여부
   charge?: boolean; // 과금팝업 유무
+  // 운영시간
+  weekTime?: string; // 평일
+  satTime?: string; // 토요일/공휴일
+  sunTime?: string; // 일요일
+  prPhrs: string; // 매장소개
 }
 
 class CustomerAgentsearchDetail extends TwViewController {
@@ -145,12 +150,32 @@ class CustomerAgentsearchDetail extends TwViewController {
    */
   private purifyDetailInfo(detail: BranchDetail): BranchDetail {
     const purified: BranchDetail = {...detail};
-    purified.weekdayOpenTime = FormatHelper.insertColonForTime(purified.weekdayOpenTime);
-    purified.weekdayCloseTime = FormatHelper.insertColonForTime(purified.weekdayCloseTime);
-    purified.satOpenTime = FormatHelper.insertColonForTime(purified.satOpenTime);
-    purified.satCloseTime = FormatHelper.insertColonForTime(purified.satCloseTime);
-    purified.holidayOpenTime = FormatHelper.insertColonForTime(purified.holidayOpenTime);
-    purified.holidayCloseTime = FormatHelper.insertColonForTime(purified.holidayCloseTime);
+
+    const getTextTime = (time, sTime, eTime) => {
+      const etcText = '매장에 문의해주세요', closedText = '영업안함';
+      let closed = false;
+      if (FormatHelper.isEmpty(sTime) || FormatHelper.isEmpty(eTime) ) {
+        closed = true;
+      } else if (!FormatHelper.isNumber(sTime) || !FormatHelper.isNumber(eTime)) {
+        closed = true;
+      } else if (sTime.length !== 4 || eTime.length !== 4) {
+        closed = true;
+      } else if (sTime === '0000' || eTime === '0000') {
+        closed = true;
+      }
+
+      if (closed) {
+        // 일요일은 "영업안함" 다른날은 "매장에 문의해주세요"
+        purified[time] = time === 'sunTime' ? closedText : etcText;
+        return;
+      }
+      sTime = FormatHelper.insertColonForTime(sTime);
+      eTime = FormatHelper.insertColonForTime(eTime);
+      purified[time] = `${sTime}~${eTime}`;
+    };
+    getTextTime('weekTime', purified.weekdayOpenTime, purified.weekdayCloseTime);
+    getTextTime('satTime', purified.satOpenTime, purified.satCloseTime);
+    getTextTime('sunTime', purified.holidayOpenTime, purified.holidayCloseTime);
 
     const star = Math.round(parseFloat(purified.custRateAvg));
     purified.star = 'star' + star;
@@ -208,12 +233,22 @@ class CustomerAgentsearchDetail extends TwViewController {
       respData.shopTypeNm = '무인매장';
     }
 
+    // 매장소개. "#^" 문자를 줄내림 문자로 치환.
+    if (!!respData.prPhrs) {
+      respData.prPhrs = respData.prPhrs.replace(/\#\^/g, '<br>');
+    }
+
     for (const category in CUSTOMER_AGENT_SEARCH) {
       if (!FormatHelper.isEmpty(category)) {
         const {TITLE, BODY} = CUSTOMER_AGENT_SEARCH[category];
         const datas = Object.keys(BODY).reduce((acc: any[], item: string) => {
           if (okData(item)) {
-            acc.push(BODY[item]);
+            // tSharpYn(T# 예약가능) 인경우는. [휴대폰일반, 유선/인터넷/TV, ADT캡스보안] 항목을 각각 넣어준다.
+            if (item === 'tSharpYn') {
+              acc = acc.concat(BODY[item].split(','));
+            } else {
+              acc.push(BODY[item]);
+            }
           }
           return acc;
         }, []);
