@@ -53,7 +53,6 @@
 	</div>
 </body>
 <% include ../components/javascript.component.html %>
-<script type="text/javascript" src="<%= CDN %>/js/lottie_svg.min.js"></script>
 <script>
   window.onload = function() {
     function animateSvg(elements, path, loop){
@@ -70,7 +69,7 @@
     }
 
     animateSvg('.profile1', '<%= CDN %>/js/intro_start.json', true);
-    animateSvg('.profile2', '<%= CDN %>/js/chatbot_1.json', false);
+		animateSvg('.profile2', '<%= CDN %>/js/chatbot_1.json', false);
   }
 </script>
 <% include ../components/end.component.html %>
