@@ -53,11 +53,11 @@ Tw.ChatbotService = function() {
         // ,'iPhone12_3'   // 아이폰11Pro
 
         // 8/26 SKT임원테스트를 위한 단말기 등록 [S]
-        , 'LM-V510N'
-        , 'SM-A220S'
-        , 'SM-N960N'
-        , 'SM-A805N'
-        , 'SM-A205S'
+        //, 'LM-V510N'
+        //, 'SM-A220S'
+        //, 'SM-N960N'
+        //, 'SM-A805N'
+        //, 'SM-A205S'
         // 8/26 SKT임원테스트를 위한 단말기 등록 [E]
     ];
     // 2차 사외 오픈 (8/27) 시점 챗봇 팝업 노출대상 화면 리스트
@@ -603,8 +603,9 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_bindEvent] 유무선 여부 (M:무선, W:유선) : ', serviceType);
 
             var eParam = '';
+            var chkAccessDtm = Tw.DateHelper.getFullDateAnd24Time(new Date());
             // var extraParam = 'menuId=' + _this._menuId + '&svcGr=' + _this._svcInfo.svcGr + '&svcType=' + serviceType + '&appVersion=' + _this._appVersion + '&twdAgreeInfo=' + _this._twdAgreeYn.split('~')[0];
-            var extraParam = 'menuId=' + _this._menuId + '&svcGr=' + _this._svcInfo.svcGr + '&svcType=' + serviceType + '&appVersion=' + _this._appVersion;
+            var extraParam = 'menuId=' + _this._menuId + '&svcGr=' + _this._svcInfo.svcGr + '&svcType=' + serviceType + '&appVersion=' + _this._appVersion + '&chkAccessDtm=' + chkAccessDtm;
             Tw.Logger.info('[chatbot.service] [_bindEvent] BPCP 연동시 추가 I/F 위한 파라미터 : ', extraParam);
 
             switch (chatbotGubun) {
@@ -1054,8 +1055,9 @@ Tw.ChatbotService.prototype = {
         Tw.Logger.info('[chatbot.service] [_redirectChatbotPage] 유무선 여부 (M:무선, W:유선) : ', serviceType);
 
         var eParam = '';
+        var chkAccessDtm = Tw.DateHelper.getFullDateAnd24Time(new Date());
         // var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&twdAgreeInfo=' + _this._twdAgreeYn.split('~')[0] + '&keyword=initial';
-        var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&keyword=initial';
+        var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&keyword=initial' + '&chkAccessDtm=' + chkAccessDtm;
 
         Tw.Logger.info('[chatbot.service] [_redirectChatbotPage] BPCP 연동시 추가 I/F 위한 파라미터 : ', extraParam);
 
