@@ -18,8 +18,9 @@ export default class RoamingAddonsController extends TwViewController {
     if (this.isLogin(svcInfo)) {
       Observable.combineLatest(
         this.getRoamingPlanAddCntData(),
-        this.getRoamingPlanAddData(params)
-      ).subscribe(([addonCntData, addonData]) => {
+        this.getRoamingPlanAddData(params),
+        this.testNewApis(svcInfo),
+    ).subscribe(([addonCntData, addonData]) => {
         this.logger.info(this, 'roamingAddon: ', addonData);
 
         const error = {
@@ -46,7 +47,8 @@ export default class RoamingAddonsController extends TwViewController {
       });
     } else {
       Observable.combineLatest(
-        this.getRoamingPlanAddData(params)
+        this.getRoamingPlanAddData(params),
+        this.testNewApis(svcInfo),
       ).subscribe(([addonData]) => {
         this.logger.info(this, 'roamingAddon: ', addonData);
 
@@ -123,6 +125,23 @@ export default class RoamingAddonsController extends TwViewController {
           msg: resp.msg
         };
       }
+    });
+  }
+
+  private testNewApis(svcInfo) {
+    return this.apiService.request(API_CMD.BFF_10_0200, {
+      // prodId: 'NA00006489',
+      // svcMgmtNum: svcInfo.svcMgmtNum,
+      // countryCode: 'JPN',
+      // svcStartDt: '2020-08-29',
+      // svcEndDt: '2020-09-09',
+      // usgStartDate: '2020-08-01',
+      // usgEndDate: '2020-08-15',
+      // svcNum: svcInfo.svcNum,
+      mcc: '202',
+    }).map((resp) => {
+      this.logger.warn(this, JSON.stringify(resp));
+      return {hello: 'world'};
     });
   }
 }
