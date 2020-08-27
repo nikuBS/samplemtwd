@@ -69,6 +69,28 @@ gulp.task('js-vendor', function () {
     // .pipe(gulp.dest('.'));
 });
 
+gulp.task('json-chatbot-1', function () {
+  return gulp.src([
+    'src/client/web-contents/js/chatbot_1.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('chatbot_1.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
+gulp.task('json-chatbot-2', function () {
+  return gulp.src([
+    'src/client/web-contents/js/intro_start.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('intro_start.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
 gulp.task('js-vendor-ex', function () {
   return gulp.src([
     'node_modules/jquery-ui-dist/jquery-ui.min.js',
@@ -265,7 +287,8 @@ gulp.task('js-rb', function () {
     'src/client/web-contents/js/$vars.js',
     'src/client/web-contents/js/chart.js',
     'src/client/web-contents/js/common.js',
-    'src/client/web-contents/js/widgets.js'
+    'src/client/web-contents/js/widgets.js',
+    'src/client/web-contents/js/lottie_svg.min.js'
   ])
     // .pipe(plumber())
     .pipe(sort())
@@ -459,7 +482,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4', 'json-chatbot-1', 'json-chatbot-2']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
 gulp.task('run', ['server', 'watch']);

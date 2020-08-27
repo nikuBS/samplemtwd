@@ -72,16 +72,23 @@
                                         <dt class="blind">운영시간</dt>
                                         <dd>
                                             <span class="tit">평일</span>
-                                            <span class="desc"><%-`${detail.weekdayOpenTime}~${detail.weekdayCloseTime}`%></span>
+                                            <span class="desc"><%-detail.weekTime%></span>
                                         </dd>
                                         <dd>
-                                            <span class="tit">주말</span>
-                                            <span class="desc"><%-`${detail.satOpenTime}~${detail.satCloseTime}`%></span>
+                                            <span class="tit">토요일/공휴일</span>
+                                            <span class="desc"><%-detail.satTime%></span>
                                         </dd>
                                         <dd>
-                                            <span class="tit">공휴</span>
-                                            <span class="desc"><%-`${detail.holidayOpenTime}~${detail.holidayCloseTime}`%></span>
+                                            <span class="tit">일요일</span>
+                                            <span class="desc"><%-detail.sunTime%></span>
                                         </dd>
+                                        <%# 특이사항 있을때만 노출함%>
+                                        <%_ if (!!detail.businessHourEtc) { _%>
+                                        <dd>
+                                            <span class="tit">특이사항</span>
+                                            <span class="desc"><%- detail.businessHourEtc%></span>
+                                        </dd>
+                                        <%_ } _%>
                                     </dl>
                                 </li>
                             </ul>
@@ -119,7 +126,7 @@
                 <!-- // cont-box -->
 
                 <hr class="cont-sp type1" aria-hidden="true">
-                <!--매장 상세-->
+                <!--매장 소개-->
                 <%if ((detail.prPhrs && detail.prPhrs.trim().length > 0) && (isPossible || idx === 0)) {%>
                 <!-- cont-box -->
                 <div class="cont-box">
@@ -137,7 +144,7 @@
 
                 <hr class="cont-sp type1" aria-hidden="true">
                 <%}%>
-                <!--// 매장 상세-->
+                <!--// 매장 소개-->
 
                 <%});%>
                 <!--//처리업무 ~ 기타 영역-->

@@ -11,14 +11,13 @@ Tw.ChatbotService = function() {
     // 1, 2차 오픈일 경과 여부 체크를 위한 일자 관련 변수 [S]
     this._currentDate = Tw.DateHelper.getCurrentShortDate();
     this._firstOoenDate = Tw.DateHelper.getCurrentShortDate('20200723');
-    // this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200827');
-    this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200818');
+    this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200827');
     // 1, 2차 오픈일 경과 여부 체크를 위한 일자 관련 변수 [E]
 
     // 챗봇 발화어 노출 대상군 판단을 위해 호출 필요한 API List
     this._defaultRequestUrls = [
-        { command: Tw.API_CMD.BFF_03_0014, params: {} }                             // 1. 개인정보이용동의 여부 및 동의일자
-        ,{ command: Tw.API_CMD.BFF_05_0030, params: {} }                            // 2. 미납 내역 조회 (/core-bill/v1/bill-pay/unpaid-bills)
+        // { command: Tw.API_CMD.BFF_03_0014, params: {} },                             // 1. 개인정보이용동의 여부 및 동의일자
+        { command: Tw.API_CMD.BFF_05_0030, params: {} }                            // 2. 미납 내역 조회 (/core-bill/v1/bill-pay/unpaid-bills)
         ,{ command: Tw.API_CMD.BFF_05_0040, params: {mappProdIds: 'NA00004184'} }   // 4. 소액결제 이용여부
         // 20/08/11 요건 삭제로 주석 처리 [S]
         // ,{ command: Tw.NODE_CMD.GET_CHILD_INFO, params: {} }                        // 3. 자녀회선 보유 여부 및 자녀회선수
@@ -51,6 +50,14 @@ Tw.ChatbotService = function() {
         // ,'SM-A516N'     // 갤A51 5G
         // ,'iPhone12_1'   // 아이폰11
         // ,'iPhone12_3'   // 아이폰11Pro
+
+        // 8/26 SKT임원테스트를 위한 단말기 등록 [S]
+        //, 'LM-V510N'
+        //, 'SM-A220S'
+        //, 'SM-N960N'
+        //, 'SM-A805N'
+        //, 'SM-A205S'
+        // 8/26 SKT임원테스트를 위한 단말기 등록 [E]
     ];
     // 2차 사외 오픈 (8/27) 시점 챗봇 팝업 노출대상 화면 리스트
     this._chatbotPopDispPageUrls0827 = {
@@ -492,6 +499,10 @@ Tw.ChatbotService.prototype = {
                 _this.$elChabot.removeClass('slideUp');
             }
         });
+
+        setTimeout( function () {
+            _this._animateSvg('.profile2', Tw.Environment.cdn + '/js/chatbot_1.json', false);
+        }, 3200 );
         
         // 20/08/11 디자인 변경으로 인한 삭제 [S]
         // /*
@@ -591,7 +602,9 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_bindEvent] 유무선 여부 (M:무선, W:유선) : ', serviceType);
 
             var eParam = '';
-            var extraParam = 'menuId=' + _this._menuId + '&svcGr=' + _this._svcInfo.svcGr + '&svcType=' + serviceType + '&appVersion=' + _this._appVersion + '&twdAgreeInfo=' + _this._twdAgreeYn.split('~')[0];
+            var chkAccessDtm = Tw.DateHelper.getFullDateAnd24Time(new Date());
+            // var extraParam = 'menuId=' + _this._menuId + '&svcGr=' + _this._svcInfo.svcGr + '&svcType=' + serviceType + '&appVersion=' + _this._appVersion + '&twdAgreeInfo=' + _this._twdAgreeYn.split('~')[0];
+            var extraParam = 'menuId=' + _this._menuId + '&svcGr=' + _this._svcInfo.svcGr + '&svcType=' + serviceType + '&appVersion=' + _this._appVersion + '&chkAccessDtm=' + chkAccessDtm;
             Tw.Logger.info('[chatbot.service] [_bindEvent] BPCP 연동시 추가 I/F 위한 파라미터 : ', extraParam);
 
             switch (chatbotGubun) {
@@ -619,8 +632,11 @@ Tw.ChatbotService.prototype = {
                 case 'pay_bill':
                     extraParam += '&keyword=pay_bill';
                     break;
+                case 'micro_pay':
+                    extraParam += '&keyword=micro_pay';
+                    break;
                 default:
-                    extraParam += '&keyword=initail';
+                    extraParam += '&keyword=initial';
                     break;
             }
 
@@ -809,44 +825,45 @@ Tw.ChatbotService.prototype = {
      * @function
      * @desc 말풍선 노출 대상군 확인
      */
-    _checkTargetGroup: function (twdAgreeInfo, unpaidBillInfo, micropayInfo /*, childInfo, autopayInfo*/ ) {
+    _checkTargetGroup: function (/*twdAgreeInfo,*/ unpaidBillInfo, micropayInfo /*, childInfo, autopayInfo*/ ) {
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------', '');
-        /* ******************************************* 
-            1. 이용요금분석 관련 말풍선 노출 대상군 여부 체크 
-        ******************************************* */
-        if ( twdAgreeInfo.code === Tw.API_CODE.CODE_00 ) {
-            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] SKT 개인정보수집이용동의 여부 : ', twdAgreeInfo.result.agr203Yn);
-            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] SKT 개인정보수집이용동의 일자 : ', twdAgreeInfo.result.agr203Dtm);
+        // 8/25 챗봇 내 개인화 추천서비스에 대한 요건이 삭제되었으므로 개인화 이용정보 수집동의 여부는 조회하지 않도록 처리 [S]
+        // /* ******************************************* 
+        //     1. 이용요금분석 관련 말풍선 노출 대상군 여부 체크 
+        // ******************************************* */
+        // if ( twdAgreeInfo.code === Tw.API_CODE.CODE_00 ) {
+        //     Tw.Logger.info('[chatbot.service] [_checkTargetGroup] SKT 개인정보수집이용동의 여부 : ', twdAgreeInfo.result.agr203Yn);
+        //     Tw.Logger.info('[chatbot.service] [_checkTargetGroup] SKT 개인정보수집이용동의 일자 : ', twdAgreeInfo.result.agr203Dtm);
 
-            if (twdAgreeInfo.result.agr203Yn === 'N') {
-                this._twdAgreeYn = 'N~0';
-            } else {
-                /* **************************************************************************************************
-                   **************************************************************************************************
-                   < TO-DO >
-                     : BFF_03_0021 의 경우 개인정보 이용동의 여부만 리턴해주기 때문에, 
-                       이용동의일자를 받아오는 API 를 확인하여 BFF_03_0021를 대체할 필요가 있음
-                **************************************************************************************************
-                ************************************************************************************************** */
+        //     if (twdAgreeInfo.result.agr203Yn === 'N') {
+        //         this._twdAgreeYn = 'N~0';
+        //     } else {
+        //         /* **************************************************************************************************
+        //            **************************************************************************************************
+        //            < TO-DO >
+        //              : BFF_03_0021 의 경우 개인정보 이용동의 여부만 리턴해주기 때문에, 
+        //                이용동의일자를 받아오는 API 를 확인하여 BFF_03_0021를 대체할 필요가 있음
+        //         **************************************************************************************************
+        //         ************************************************************************************************** */
 
-                var currentDate = Tw.DateHelper.getCurrentShortDate();
-                var agreeDate = Tw.DateHelper.getCurrentShortDate(Tw.DateHelper.convDateFormat(twdAgreeInfo.result.agr203Dtm));
-                Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 현재 일자 : ', currentDate);
-                Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 동의 일자 : ', agreeDate);
-                var gap = Tw.DateHelper.getDiffByUnit(currentDate, agreeDate, 'day');
-                Tw.Logger.info('[chatbot.service] [_checkTargetGroup] gap : ', gap);
+        //         var currentDate = Tw.DateHelper.getCurrentShortDate();
+        //         var agreeDate = Tw.DateHelper.getCurrentShortDate(Tw.DateHelper.convDateFormat(twdAgreeInfo.result.agr203Dtm));
+        //         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 현재 일자 : ', currentDate);
+        //         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 동의 일자 : ', agreeDate);
+        //         var gap = Tw.DateHelper.getDiffByUnit(currentDate, agreeDate, 'day');
+        //         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] gap : ', gap);
                 
-                this._twdAgreeYn = 'Y~' + gap;
-            }
+        //         this._twdAgreeYn = 'Y~' + gap;
+        //     }
 
-            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 1. 이용요금분석 관련 말풍선 노출 대상군 여부 : ', this._twdAgreeYn);
-        } else {
-            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 1. 티월드 개인정보 이용동의 여부 조회 API 리턴 에러', twdAgreeInfo.code, twdAgreeInfo.msg);
+        //     Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 1. 이용요금분석 관련 말풍선 노출 대상군 여부 : ', this._twdAgreeYn);
+        // } else {
+        //     Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 1. 티월드 개인정보 이용동의 여부 조회 API 리턴 에러', twdAgreeInfo.code, twdAgreeInfo.msg);
 
-            this._twdAgreeYn = 'N~0';
-            // Tw.Error(twdAgreeInfo.code, twdAgreeInfo.msg, '1. 이용요금분석').pop();
-        }
-
+        //     this._twdAgreeYn = 'N~0';
+        //     // Tw.Error(twdAgreeInfo.code, twdAgreeInfo.msg, '1. 이용요금분석').pop();
+        // }
+        // 8/25 챗봇 내 개인화 추천서비스에 대한 요건이 삭제되었으므로 개인화 이용정보 수집동의 여부는 조회하지 않도록 처리 [E]
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------', '');
         /* *******************************************
             2. 미납내역 관련 말풍선 노출 대상군 여부 체크 
@@ -982,8 +999,8 @@ Tw.ChatbotService.prototype = {
         // 20/08/11 요건 삭제로 주석 처리 [E]
         
         var targetValue = [
-            this._twdAgreeYn
-            ,this._unpaidYn
+            // this._twdAgreeYn,
+            this._unpaidYn
             ,this._micropayYn
             // 20/08/11 요건 삭제로 주석 처리 [S]
             // ,this._haveChildYn
@@ -1037,7 +1054,9 @@ Tw.ChatbotService.prototype = {
         Tw.Logger.info('[chatbot.service] [_redirectChatbotPage] 유무선 여부 (M:무선, W:유선) : ', serviceType);
 
         var eParam = '';
-        var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&twdAgreeInfo=' + _this._twdAgreeYn.split('~')[0] + '&keyword=initail';
+        var chkAccessDtm = Tw.DateHelper.getFullDateAnd24Time(new Date());
+        // var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&twdAgreeInfo=' + _this._twdAgreeYn.split('~')[0] + '&keyword=initial';
+        var extraParam = 'menuId=&svcType=' + serviceType + '&svcGr=' + _this._svcInfo.svcGr + '&appVersion=' + _this._appVersion + '&keyword=initial' + '&chkAccessDtm=' + chkAccessDtm;
 
         Tw.Logger.info('[chatbot.service] [_redirectChatbotPage] BPCP 연동시 추가 I/F 위한 파라미터 : ', extraParam);
 
@@ -1150,6 +1169,19 @@ Tw.ChatbotService.prototype = {
             this.$elChabot.attr('data-scroll', 'false').addClass('expanded');
             this.$elChabot.off('webkitTransitionEnd', this.toggleNowrap);
         }
+    },
+
+    _animateSvg: function (element, path, loop) {
+        var target = document.querySelectorAll(element);
+
+        bodymovin.loadAnimation({
+            container: target[target.length - 1],
+            path: path,
+            renderer: 'svg',
+            loop: loop,
+            autoplay: true,
+            rendererSettions: { progressiveLoad: false, }
+        }).play();
     },
 
     _toggleEmoticon: function () {

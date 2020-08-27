@@ -558,6 +558,174 @@
             </div> 
         </div>
         <!--// #contents -->
+
+        <!-- 200727 [OP002-7810] 추가_01 -->
+		<!-- .tod-ui-chabot2 -->
+		<div class="tod-ui-chabot2" data-scroll="true"><!-- class="tod-ui-chabot2  slideup expanded"-->
+			<div class="tod-ui-chabot2-inner">
+                <!-- button -->
+				<!-- title -->
+				<div class="title-wrap">
+                        <button type="button" class="btn-tab">
+                            <!-- 200818 [OP002-7810] 수정_01 -->
+                            <span class="tod-chatbot-img profile2"></span>
+							<!-- //200818 [OP002-7810] 수정_01 -->
+                            <span class="chatbot-tit"><strong>T월드 챗봇</strong>이 도와드릴까요?</span>
+                        </button>
+				</div>
+
+				<!-- list -->
+				<!-- 
+					ico-chatbot ai :  ai, 
+					ico-chatbot pay : 납부, 소액결제 금액 알려줘
+					ico-chatbot data: 데이터 선물, 
+					ico-chatbot coupon: 리필쿠폰,
+					ico-chatbot unpaid-charge : 미납 요금,
+					ico-chatbot live-charge :  실시간 요금,
+					ico-chatbot thismonth-charge :  이번달 요금
+				 -->
+                 <div class="list-wrap nowrap">
+					<div class="list">
+						<button class="item">
+							<span class="ico-chatbot ai"><em class="tod-blind">Ai</em></span><span class="txt">요금제 추천해줘</span>
+						</button>
+						<button class="item">
+							<span class="ico-chatbot thismonth-charge"><em class="tod-blind">이번달 요금</em></span>
+							<span class="txt">이번 달 요금 얼마 나왔어</span>
+						</button>
+						<button class="item">
+							<span class="ico-chatbot data"><em class="tod-blind">데이터선물</em></span>
+							<span class="txt">나 데이터 선물할래</span>
+						</button>
+						<button class="item">
+							<span class="ico-chatbot coupon"><em class="tod-blind">리필쿠폰</em></span>
+							<span class="txt">리필 쿠폰 사용할래</span>
+						</button>
+					</div>
+				</div>
+
+				<!-- 상담하기 -->
+				<div class="link-wrap">
+					<a href="#" title="새창 열림" class="link-chatbot-go">챗봇으로 빠른 상담하기</a>
+				</div>
+
+				<!-- close -->
+				<!--
+				<div class="close-wrap">
+					<button class="btn-close"><span class="tod-blind">닫기</span></button>
+				</div>
+				-->
+
+			</div>
+		</div>
+		<!--//.tod-ui-chabot2 -->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var $elChabot = $(".tod-ui-chabot2"),
+					$btnTab = $('.btn-tab'),
+					isStartY = 0,
+					isLastY = 0,
+					timer;
+
+				function toggleNowrap() {
+					$elChabot.attr("data-scroll", "true");
+					$(".tod-ui-chabot .list-wrap").addClass('nowrap');
+				}
+
+				function expanded() {
+					if ( $elChabot.hasClass('expanded')){
+						$('body').removeClass("noscroll");
+						$elChabot.removeClass("expanded");
+						$elChabot.attr("data-scroll", "true")
+						$elChabot.on("webkitTransitionEnd", toggleNowrap);
+
+					} else {
+						$("body").addClass("noscroll");
+						$elChabot.attr("data-scroll", "false").addClass("expanded");
+						$elChabot.off("webkitTransitionEnd", toggleNowrap);
+					}
+				}
+
+                /* 200818 스크립트 삭제 
+				function toggleEmoticon() {
+					// Math.random 함수는 보안 이슈가 있으므로 사용 금지. 2 ~ 5초 사이에 랜덤으로 움직인다.
+					setTimeout(function () {
+						$('.tod-chatbot-img').toggleClass('on');
+						toggleEmoticon();
+					}, (((window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296) * (5 - 2)) + 2) * 1000);
+				}
+
+				// 아이콘 랜덤 토글
+				toggleEmoticon();
+                */
+
+				// 3초후 안내 팝업 슬라이드 업
+				timer = setTimeout(function() {
+					$elChabot.addClass("slideUp");
+				}, 3000);
+			
+				//윈도우 스크롤 시 챗봇
+				$(window).on('scroll', function() {
+					clearTimeout(timer);
+					timer = setTimeout(function() {
+						$elChabot.addClass("slideUp");
+					}, 1000);
+				});
+
+				//touch event
+				$btnTab.on('touchstart', function(e) {
+					e.preventDefault();
+					isStartY = e.originalEvent.touches[0].clientY;
+				});
+
+				$btnTab.on('touchmove', function(e) {
+					e.preventDefault();
+					isLastY = e.originalEvent.touches[0].clientY;
+				});
+
+				$btnTab.on('touchend', function(e) {
+					e.preventDefault();
+					// click인 경우
+					if (Math.abs(isStartY - isLastY) < 20) {
+						expanded();
+					// 닫혀 있는데 아래로 내린 경우 - 창 최대화
+					} else if (!$elChabot.hasClass('expanded') && isStartY > isLastY ) {
+						expanded();
+					// 열려 있는데 아래로 내린 경우 - 창 최소화
+					} else if ($elChabot.hasClass('expanded') && isStartY < isLastY ) {
+						expanded();
+					// 닫혀 있는데 아래로 내린 경우 - 창 숨김
+					} else if (!$elChabot.hasClass('expanded') && isStartY < isLastY ) {
+						$elChabot.removeClass("slideUp");
+					}
+				});
+			});
+		</script>
+        <!-- // 200727 [OP002-7810] 추가_01  -->
+        
+        <!-- 200818 [OP002-7810] 스크립트 추가_01  -->
+        <script type="text/javascript" src="/js/lottie_svg.min.js"></script>
+        <script type="text/javascript">
+            window.onload = function(){
+                setTimeout( function() {
+                function animateSvg(elements, path, loop){
+                    var target = document.querySelectorAll(elements);
+
+                    bodymovin.loadAnimation({
+                        container: target[target.length - 1],
+                        path: path,
+                        renderer: 'svg',
+                        loop: loop,
+                        autoplay: true,
+                        rendererSettings: { progressiveLoad: false, }
+                    }).play();
+                }
+
+                animateSvg('.profile2', '/js/chatbot_1.json', false);
+            }, 3200);
+            };
+        </script>
+        <!-- // 200818 [OP002-7810] 스크립트 추가_01  -->
     </div>
 </body>
 </html>
