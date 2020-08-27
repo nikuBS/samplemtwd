@@ -140,25 +140,25 @@ body.apphome .error-code { padding-bottom: 1.88rem; }
 
 .main-fee-box .fee-cont.plan-slide .slider li > .plan-card.right { margin-left: 20px; background-color: #f0682e; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card.right p.price { border-top: 1px solid #ed5c26; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card.right span.price { border-top: 1px solid #ed5c26; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > div { position: absolute; top: 1.31rem; left: 0.94rem; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > .inner { position: absolute; display: block; top: 1.31rem; left: 0.94rem; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p { font-size: 0.81rem; font-weight: 500; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > .inner > span { display: block; font-size: 0.81rem; font-weight: 500; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p.plan-name { line-height: 1.2em; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > .inner > span.plan-name { line-height: 1.2em; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p.plan-name > strong { display: block; font-size: 1.06rem; font-weight: 900; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > .inner > span.plan-name > strong { display: block; font-size: 1.06rem; font-weight: 900; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p.data { padding-left: 1.63rem; margin-top: 0.63rem; background: url("/img/en/main/icon_plan_data.png") left center no-repeat; background-size: 0.81rem 0.81rem; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > .inner > span.data { padding-left: 1.63rem; margin-top: 0.63rem; background: url("/img/en/main/icon_plan_data.png") left center no-repeat; background-size: 0.81rem 0.81rem; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p.sms { padding-left: 1.63rem; margin-top: 0.5rem; background: url("/img/en/main/icon_plan_sms.png") left center no-repeat; background-size: 0.88rem 0.63rem; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > .inner > span.sms { padding-left: 1.63rem; margin-top: 0.5rem; background: url("/img/en/main/icon_plan_sms.png") left center no-repeat; background-size: 0.88rem 0.63rem; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p.call { padding-left: 1.63rem; margin-top: 0.5rem; background: url("/img/en/main/icon_plan_call.png") left center no-repeat; background-size: 0.88rem 0.88rem; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card > .inner > span.call { padding-left: 1.63rem; margin-top: 0.5rem; background: url("/img/en/main/icon_plan_call.png") left center no-repeat; background-size: 0.88rem 0.88rem; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p.price { position: absolute; bottom: 0; left: 0; width: 100%; height: 2.63rem; line-height: 2.56rem; font-size: 1rem; font-weight: 700; text-align: center; border-top: 1px solid #c32a45; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card span.price { position: absolute; bottom: 0; left: 0; width: 100%; height: 2.63rem; line-height: 2.56rem; font-size: 1rem; font-weight: 700; text-align: center; border-top: 1px solid #c32a45; }
 
-.main-fee-box .fee-cont.plan-slide .slider li > .plan-card p.price > span { font-size: 0.88rem; }
+.main-fee-box .fee-cont.plan-slide .slider li > .plan-card span.price > span { font-size: 0.88rem; }
 
 .main-fee-box .fee-cont.plan-slide .slider .slick-prev, .main-fee-box .fee-cont.plan-slide .slider .slick-next { display: none !important; }
 
@@ -180,7 +180,7 @@ body.apphome .error-code { padding-bottom: 1.88rem; }
 
 .main-fee-box .fee-cont .fee-info:last-child.no-billing { padding-bottom: 1.69rem; }
 
-.main-fee-box .fee-cont .fee-info.no-billing { font-size: 0.94rem; font-weight: 300; padding-bottom: 2.19rem; cursor: normal; pointer-events: none; }
+.main-fee-box .fee-cont .fee-info.no-billing { font-size: 0.94rem; font-weight: 300; padding-bottom: 2.19rem; cursor: normal; pointer-events: none; text-align: center; }
 
 .main-fee-box .fee-cont .fee-info.no-events { cursor: normal; pointer-events: none; }
 
@@ -196,15 +196,15 @@ body.apphome .error-code { padding-bottom: 1.88rem; }
 
 .main-fee-box .fee-cont .fee-info.support { background: url("/img/en/main/arrow_support.png") right 1.5rem no-repeat; background-size: 0.44rem 0.69rem; }
 
-.main-fee-box .fee-cont .fee-info.support > p { font-size: 0.94rem; font-weight: 500; color: #000; text-align: left; line-height: 1.4em; padding-left: 2.5rem; padding-right: 1.56rem; background-position: left center; background-repeat: no-repeat; }
+.main-fee-box .fee-cont .fee-info.support > span { display: block; font-size: 0.94rem; font-weight: 500; color: #000; text-align: left; line-height: 1.4em; padding-left: 2.5rem; padding-right: 1.56rem; background-position: left center; background-repeat: no-repeat; }
 
-.main-fee-box .fee-cont .fee-info.support > p > span { display: block; font-size: 0.81rem; font-weight: 300; color: #858585; line-height: 1.2em; }
+.main-fee-box .fee-cont .fee-info.support > span > span { display: block; font-size: 0.81rem; font-weight: 300; color: #858585; line-height: 1.2em; }
 
-.main-fee-box .fee-cont .fee-info.support > p#support01 { background-image: url("/img/en/main/icon_support01.png"); background-size: 1.63rem 1.63rem; }
+.main-fee-box .fee-cont .fee-info.support > span#support01 { background-image: url("/img/en/main/icon_support01.png"); background-size: 1.63rem 1.63rem; }
 
-.main-fee-box .fee-cont .fee-info.support > p#support02 { background-image: url("/img/en/main/icon_support02.png"); background-size: 1.5rem 1.63rem; }
+.main-fee-box .fee-cont .fee-info.support > span#support02 { background-image: url("/img/en/main/icon_support02.png"); background-size: 1.5rem 1.63rem; }
 
-.main-fee-box .fee-cont .fee-info.support > p#support03 { background-position: 0.19rem center; background-image: url("/img/en/main/icon_support03.png"); background-size: 1.19rem 1.75rem; }
+.main-fee-box .fee-cont .fee-info.support > span#support03 { background-position: 0.19rem center; background-image: url("/img/en/main/icon_support03.png"); background-size: 1.19rem 1.75rem; }
 
 .main-fee-box .fee-cont .fee-info + .fee-info { border-top: 1px solid #f2f2f2; }
 

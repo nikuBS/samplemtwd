@@ -3,7 +3,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 100;
-  src: local("Noto Sans KR Thin"), local("NotoSansKR-Thin"), url("../font/noto-sans-kr-v8-korean_latin-100.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-100.woff") format("woff");
+  src: local("Noto Sans KR Thin"), local("NotoSansKR-Thin"), url("/font/noto-sans-kr-v8-korean_latin-100.woff2") format("woff2"), url("/font/noto-sans-kr-v8-korean_latin-100.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-300 - korean_latin */
@@ -11,7 +11,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 300;
-  src: local("Noto Sans KR Light"), local("NotoSansKR-Light"), url("../font/noto-sans-kr-v8-korean_latin-300.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-300.woff") format("woff");
+  src: local("Noto Sans KR Light"), local("NotoSansKR-Light"), url("/font/noto-sans-kr-v8-korean_latin-300.woff2") format("woff2"), url("/font/noto-sans-kr-v8-korean_latin-300.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-regular - korean_latin */
@@ -19,7 +19,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
-  src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular"), url("../font/noto-sans-kr-v8-korean_latin-regular.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-regular.woff") format("woff");
+  src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular"), url("/font/noto-sans-kr-v8-korean_latin-regular.woff2") format("woff2"), url("/font/noto-sans-kr-v8-korean_latin-regular.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-500 - korean_latin */
@@ -27,7 +27,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
-  src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"), url("../font/noto-sans-kr-v8-korean_latin-500.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-500.woff") format("woff");
+  src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"), url("/font/noto-sans-kr-v8-korean_latin-500.woff2") format("woff2"), url("/font/noto-sans-kr-v8-korean_latin-500.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-700 - korean_latin */
@@ -35,7 +35,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
-  src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"), url("../font/noto-sans-kr-v8-korean_latin-700.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-700.woff") format("woff");
+  src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"), url("/font/noto-sans-kr-v8-korean_latin-700.woff2") format("woff2"), url("/font/noto-sans-kr-v8-korean_latin-700.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-100 - latin */
@@ -43,7 +43,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 100;
-  src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto-v18-latin-100.woff2") format("woff2"), url("../font/roboto-v18-latin-100.woff") format("woff");
+  src: local("Roboto Thin"), local("Roboto-Thin"), url("/font/roboto-v18-latin-100.woff2") format("woff2"), url("/font/roboto-v18-latin-100.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-300 - latin */
@@ -51,7 +51,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
-  src: local("Roboto Light"), local("Roboto-Light"), url("../font/roboto-v18-latin-300.woff2") format("woff2"), url("../font/roboto-v18-latin-300.woff") format("woff");
+  src: local("Roboto Light"), local("Roboto-Light"), url("/font/roboto-v18-latin-300.woff2") format("woff2"), url("/font/roboto-v18-latin-300.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-regular - latin */
@@ -59,7 +59,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local("Roboto"), local("Roboto-Regular"), url("../font/roboto-v18-latin-regular.woff2") format("woff2"), url("../font/roboto-v18-latin-regular.woff") format("woff");
+  src: local("Roboto"), local("Roboto-Regular"), url("/font/roboto-v18-latin-regular.woff2") format("woff2"), url("/font/roboto-v18-latin-regular.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-500 - latin */
@@ -67,7 +67,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src: local("Roboto Medium"), local("Roboto-Medium"), url("../font/roboto-v18-latin-500.woff2") format("woff2"), url("../font/roboto-v18-latin-500.woff") format("woff");
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("/font/roboto-v18-latin-500.woff2") format("woff2"), url("/font/roboto-v18-latin-500.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-700 - latin */
@@ -75,7 +75,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local("Roboto Bold"), local("Roboto-Bold"), url("../font/roboto-v18-latin-700.woff2") format("woff2"), url("../font/roboto-v18-latin-700.woff") format("woff");
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("/font/roboto-v18-latin-700.woff2") format("woff2"), url("/font/roboto-v18-latin-700.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /*Default set*/
@@ -7514,7 +7514,7 @@ a.ui-button:active,
 .btn-more {
   border-top: 1px solid #e5e5e5;
   font-size: 0;
-  text-align: center; }/* 190831 [리디자인] : 컬러 변경  */
+  text-align: center; } /* 190831 [리디자인] : 컬러 변경  */
 
 .btn-more button,
 .btn-more a {
@@ -9555,7 +9555,6 @@ button:focus span {
 .popup .popup-info.full .editor-type .tod-popeditor-inwrap {position:relative; background:#fff; margin:-1.5rem -1.25rem -1.25rem -1.25rem; padding:1.5rem 1.25rem 1.25rem 1.25rem;}
 .popup .popup-info.full .editor-type .tod-popeditor-inwrap .font-only-black-ti {font-size:1.13rem; font-weight:700; color:#222 !important;}
 
-
 /* 190516 추가 [OP002-381] 공통 Class추가 */
 .tod-fleft {float:left !important;}
 .tod-fright {float:right !important;}
@@ -9588,6 +9587,7 @@ button:focus span {
 .address-wrap.inputbox.tod-type1 .input{width:auto}
 .address-wrap.inputbox.tod-type1 .dongho.first{width:9.54%}
 .address-wrap.inputbox.tod-type1 .dongho{width:6.06%;padding-left:0.43rem;vertical-align:middle}
+
 /* 190831 [리디자인] 추가 */
 .tod-caption-white{background: #fff; font-size: 1rem;}
 .tod-caption-white .tit{font-size: 1rem;}
@@ -9610,6 +9610,14 @@ button:focus span {
 .popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue.disagree {font-size:0.8125rem; color:rgba(255,255,255,.7);}
 .popup .popup-info.tod-eventpop-type1 .bt-box.bt-slice>li {height:auto; padding:0;}
 
+/* 190830 [OP002-3568] 텍스트형 배너 */
+.banner-area .tod-text-type{display:table;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;padding:1.25rem 1rem;background-color:#fff}
+.banner-area .tod-text-type .img{display:table-cell;vertical-align:top}
+.banner-area .tod-text-type .img.w44{width:2.75rem;padding-right:0.75rem;}
+.banner-area .tod-text-type .text-area{display:table-cell}
+.banner-area .tod-text-type .title{display:inline-block;width:100%;font-size:1rem;line-height:1.3;letter-spacing:-0.08125rem}
+.banner-area .tod-text-type .desc{display:inline-block;width:100%;padding:0.25rem 0 0.1875rem;font-size:0.8125rem;line-height:1.3}
+
 /* 190909 [OP002-3773] 즉답검색 아이템 추가 */
 .paymentcharge-box.type06 {background-image: url("/img/search/bg_number_06.png");}
 .paymentcharge-box .money {font-size: 1.56rem; word-break: break-all; line-height: 1.75rem;text-decoration: underline;}
@@ -9625,7 +9633,7 @@ button:focus span {
 .sch-form.tod-sch-form .close-area{width:3rem; right:auto; left:0; background:url('/img/common/search-arr-white.png') no-repeat 50% 50%; background-size:0.6875rem 1.25rem}
 .tod-rec-search-box{padding:1rem 0}
 .tod-rec-search-box .rec-search{display:flex; width:100%; flex-wrap:nowrap; align-items:center}
-.tod-rec-search-box .rec-search .rec-item{width:3.375rem; height:1.25rem; box-sizing:border-box; background:url('/img/common/recommand_sear_badge.png') no-repeat left top; background-size:3.375rem 1.25rem; } 
+.tod-rec-search-box .rec-search .rec-item{width:3.375rem; height:1.25rem; box-sizing:border-box; background:url('/img/common/recommand_sear_badge.png') no-repeat left top; background-size:3.375rem 1.25rem; }
 .tod-rec-search-box .rec-search .rec-word{width:-webkit-calc(100% - 3.375rem - 0.5rem); width:calc(100% - 3.375rem - 0.5rem); height:1.25rem; box-sizing:border-box; margin-left:0.5rem}
 .tod-rec-search-box .rec-search .rec-word button{display:inline-block; width:100%; line-height:21px; white-space:nowrap; font-size:1rem; text-overflow:ellipsis; overflow:hidden; text-align:left}
 .tod-search-tit{font-size:16px; color:#000; font-weight:500 }
@@ -9681,7 +9689,7 @@ button:focus span {
 .popup .popup-info .tod-bt-group{margin-top: 0; background-color:#fff;}
 .popup .popup-info .tod-btns{overflow: hidden; height: 3.125rem;}
 .popup .popup-info .tod-btns > li{float:left; width: 50%;}
-.popup .popup-info .tod-btns .btn{width:100%; line-height: 3.125rem; font-size: 0.938rem; font-weight: #700;} 
+.popup .popup-info .tod-btns .btn{width:100%; line-height: 3.125rem; font-size: 0.938rem; font-weight: #700;}
 .popup .popup-info .tod-btns > li:first-child .btn{text-align: left; padding-left: 1.5rem;}
 .popup .popup-info .tod-btns > li:last-child .btn{text-align: right; padding-right: 1.5rem;}
 
@@ -9814,3 +9822,216 @@ button:focus span {
 .popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box .btn-floating{color:#000; font-size:1rem}
 .popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .need-agree{display:inline-block; color:#fff; font-size:0.8125rem; margin-top:1.25rem}
 .complete-title.tod-higher-pt{padding-top:100px !important}
+
+
+/* 200318 [OP002-7211] 통합검색 결과 UI개선_잔여업무_개선  */
+.tod-typing-error {padding:0.6875rem 0 0.625rem 1rem; background:#e6f2fb; font-size:0.75rem; line-height:1.1875rem; color:#000;}
+.tod-typing-error .te_txt {margin-right:0.25rem;}
+.tod-typing-error .bt-link-tx.underline.small {margin-top:0; padding:0 !important; font-size:0.75rem; line-height:1.1875rem; white-space:nowrap;}
+/* //200318 [OP002-7211] 통합검색 결과 UI개선_잔여업무_개선  */
+
+
+/* 200416 [OP002-7756] 추가 */
+.tod-persona-wrap{position: relative; margin-bottom: 1rem; height: 3.75rem;}
+.tod-persona-wrap .hide{ display: none;}
+.tod-persona-wrap .show{ display: block;}
+.tod-persona-wrap.type2{  margin-top: 1rem}
+.tod-persona-wrap .screen{width: 100%; height: 3.75rem; margin: 0 auto;position: relative; transform-origin: 50% 0%; }
+.tod-persona-wrap .loading{ position: absolute; width: 100%; height: 3.75rem; top: 0; left: 50%; transform: translateX(-50%);}
+
+.tod-chat-loading{display:flex; justify-content:center; align-items:center; height:100%;}
+.tod-chat-loading .cir{display:inline-block; width:12px; height:12px; border-radius:12px; background:#4099ec; margin:0 0.125rem; animation: ani-cir-loading 1.5s; animation-fill-mode:both; animation-iteration-count: 1; animation-timing-function:cubic-bezier(.73,.34,.47,.96); transform:translateY(0); transform-origin:50%; background:#f76252}
+.tod-chat-loading .cir:nth-child(2){animation-delay:-0.15s; background:#1abcfe }
+.tod-chat-loading .cir:nth-child(3){animation-delay:-0.3s; background:#0acf83 }
+.tod-chat-loading .cir:nth-child(4){animation-delay:-0.45s; background:#a259ff }
+
+@keyframes ani-cir-loading{
+    0%{transform:translateY(0); height:0.75rem}
+    10%{transform:translateY(-10px); height:16px}
+    35%{transform:translateY(26px); height:26px}
+    70%{transform:translateY(0); height:0.75rem}
+}
+
+.tod-persona-wrap .tod-msg-wrap{position: absolute; top:0; left: 0; width: 100%; }
+.tod-gradient-wrap {
+  position: relative;
+  display: -webkit-box; display: flex; -webkit-box-align: center; align-items: center; width: calc(100% - 32px);
+  margin: auto 16px; line-height: 1; box-sizing: border-box; background: #fff; background-clip: padding-box; border: solid 2px transparent;
+}
+.tod-gradient-wrap:before {
+  content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: -1;
+  margin: -2px; border-radius: inherit; border-color: #6a60e2; /* 하위 번전 */
+  background: -webkit-gradient(linear, left top, right top, from(#6a60e2), to(#0daaaa)); background: linear-gradient(to right, #6a60e2, #0daaaa);
+}
+.tod-gradient-wrap .gradient-txt{display: block; width: 100%; text-align: center; transform:translateY(0);}
+.tod-gradient-wrap .gradient-txt > em{background: linear-gradient(to right, #6a60e2, #0daaaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.tod-gradient-wrap.square{border-radius: 0.375rem; font-size: 1rem;}
+.tod-gradient-wrap.square .link-touch{ display: block; padding: 1.25rem 0; width: 100%; text-align: center;}
+@media all and (max-width: 320px) {
+  .tod-gradient-wrap.square{font-size: 0.8125rem;}
+}
+.tod-gradient-wrap.round{border-radius: 3.125rem; font-size: 0.9375rem;}
+.tod-gradient-wrap.round .link-touch{ display: block; padding: 0.9375rem 0; width: 100%; text-align: center;}
+
+.tod-float-persona-wrap{ position: fixed; left: 0; bottom: -100px; width:100%; transition: all .5s ease-out; }
+.tod-float-persona-wrap.slideUp{ bottom: 10px; z-index: 9999;}
+
+/* bounce ani */
+.bounce {
+  position: relative;
+  -webkit-animation: ani-bounce 1s 1;
+  animation: ani-bounce 1s 1;
+}
+
+@-webkit-keyframes ani-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -5px, 0);
+    transform: translate3d(0, -5px, 0);
+  }
+
+  70% {
+    -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -13px, 0);
+    transform: translate3d(0, -13px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0,-4px,0);
+    transform: translate3d(0,-4px,0);
+  }
+}
+@keyframes ani-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -5px, 0);
+    transform: translate3d(0, -5px, 0);
+  }
+
+  70% {
+    -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    -webkit-transform: translate3d(0, -13px, 0);
+    transform: translate3d(0, -13px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0,-4px,0);
+    transform: translate3d(0,-4px,0);
+  }
+}
+/* //200416 [OP002-7756] 추가 */
+
+/* 200421 [OP002-7810] 추가 : chatbot ui */
+.popup-chabot{}
+.tod-ui-chabot{
+  z-index: 200; position: fixed; left: 0; bottom: -100px;
+  width: 100%; background: #fff; border: 1px solid #cecece; border-top-left-radius: 0.625rem; border-top-right-radius: 0.625rem; border-bottom: 0; box-sizing: border-box;
+  max-height: 0; transition: all .3s linear;}
+.tod-ui-chabot .tod-ui-chabot-inner{position: relative; padding-bottom: 0.9375rem;}
+.tod-ui-chabot .title-wrap{text-align: left; width: 100%;}
+.tod-ui-chabot .title-wrap .btn-tab{width: 100%; padding-top: 0.375rem; text-align: left;}
+.tod-ui-chabot .title-wrap .btn-tab:before{content: ''; display: block; background-color: #ddd; width: 3.1875rem; height: 0.375rem; border-radius: 3px; margin:0 auto;}
+.tod-ui-chabot .title-wrap .label-txt,.tod-ui-chabot .title-wrap .tit-txt,.tod-ui-chabot .title-wrap .tit-stxt{display: block; margin-left: 18px;}
+.tod-ui-chabot .title-wrap .label-txt{width: 2.8125rem; height: 0.75rem; padding-top: 1.375rem;}
+.tod-ui-chabot .title-wrap .label-txt > img{ width: 100%;}
+.tod-ui-chabot .title-wrap .tit-txt{font-size: 1rem; font-weight: 400; margin-top: 0.375rem;}
+.tod-ui-chabot .title-wrap .tit-stxt{font-size: 0.75rem;}
+.tod-ui-chabot .list-wrap{font-size: 0; margin-top: 0.3125rem;}
+.tod-ui-chabot .list-wrap .list{margin-left: 0.5625rem;}
+.tod-ui-chabot .list-wrap .item{background-color: #f76252; color: #fff; border-radius: 1.25rem; padding: 0 0.9375rem; height: 2rem; line-height: 2rem; margin-left: 0.3125rem; margin-top: 0.3125rem; font-size: 0.75rem; box-sizing: border-box; overflow: hidden;}
+.tod-ui-chabot .list-wrap .item-other{display: none;}
+.tod-ui-chabot .list-wrap .item-prev{background-color: #fff; border: 1px solid #f76252; color: #f76252; border-radius: 1.25rem; padding: 0 0.9375rem; height: 2rem; line-height: 2rem; margin-bottom: 0.3125rem; font-size: 0.75rem; box-sizing: border-box;}
+.ico-chabot-ai{
+  display: inline-block; width: 1.6875rem; height: 1.3125rem;
+  background: url("/img/common/chatbot/ico-chatbot-ai.png") no-repeat 0 0; background-size: 100%; vertical-align: top;
+}
+.ico-chabot-arrw{
+  display: inline-block; width: 0.625rem; height: 0.625rem;
+  background: url("/img/common/chatbot/ico-chatbot-arrow.png") no-repeat 0 0; background-size: 100%; vertical-align: top;
+}
+.tod-ui-chabot .ico-chabot-ai{margin: 0.3125rem -0.625rem 0 0; }
+.tod-ui-chabot .ico-chabot-arrw{float: right; margin: 0.75rem -0.125rem 0 0.625rem; }
+.tod-ui-chabot .close-wrap{position: absolute; right: 0.3125rem; top: 0.75rem;}
+.tod-ui-chabot .btn-close{width: 1.875rem; height: 1.875rem; }
+.tod-ui-chabot .btn-close:after{content:''; display: block; width: 16px; height: 16px; margin: 0 auto; background: url("/img/common/chatbot/btn-chabot-close.png") no-repeat 0 0; background-size: 100%;}
+.tod-ui-chabot .banner-wrap{margin: 0 0.875rem;}
+.tod-chabot-banner {position: relative; display: block; border: 1px solid #e5e5e5; background: #fff; border-radius: 0.375rem; margin-top: 1.875rem; padding: 0.625rem 0.875rem 0.6875rem; width: 100%; box-sizing: border-box; text-align: left;}
+.tod-chabot-banner:after{content:''; display: block; position: absolute; right: 1rem; top: 50%; margin-top: -0.4375rem; width: 0.4375rem; height: 0.8125rem; background: url("/img/common/chatbot/ico-right-arrow.png") no-repeat 0 0; background-size: 100%;}
+.tod-chabot-banner.icon-chat-msg:after{content:''; display: block; position: absolute; right: 1.25rem; top: 50%; margin-top: -0.5625rem; width: 1.25rem; height: 1.125rem; background: url("/img/common/chatbot/ico-chabot-msg.png") no-repeat 0 0; background-size: 100%; }
+.tod-chabot-banner  .img-wrap{display: inline-block; width: 2rem; height: 2rem; vertical-align: top;}
+.tod-chabot-banner  .txt-wrap{display: inline-block; text-align: left; font-size: 0.75rem; margin-left: 0.9375rem;}
+.tod-chabot-banner  .img-wrap > img{width: 100%;}
+/* control */
+.tod-ui-chabot[data-scroll="true"] .tod-ui-chabot-inner{padding-bottom: 1.25rem;}
+.tod-ui-chabot[data-scroll="true"] .list-wrap{overflow: hidden; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tod-ui-chabot[data-scroll="true"] .list-wrap::-webkit-scrollbar{display: none;}
+.tod-ui-chabot[data-scroll="true"] .list-wrap.nowrap{white-space: nowrap;}
+.tod-ui-chabot[data-scroll="true"] .list-wrap .list{margin-left: 0;}
+.tod-ui-chabot[data-scroll="true"] .list-wrap .item:nth-child(1){margin-left: 0.875rem;}
+.tod-ui-chabot[data-scroll="true"] .list-wrap .item:last-child{margin-right: 0.875rem;}
+.tod-ui-chabot[data-scroll="true"] .list-wrap .item-other {display: inline-block;}
+.tod-ui-chabot[data-scroll="true"] .banner-wrap{display: none;}
+.tod-ui-chabot.slideUp{bottom: 2.5rem; max-height: 9.6875rem; transition: all .3s linear;} /*155px*/
+.tod-ui-chabot.expanded{max-height: 40rem; transition: all .5s linear;}/*640px*/
+
+.tod-chat-btn{ max-width:3.5rem; min-width:3.5rem; height:3.5rem; box-shadow:0px 0px 0.625rem rgba(00,00,00,0.15); z-index: 200; position:fixed; bottom:3.5625rem; right:1.0625rem; border-radius:3.5rem; background-color:#fff; transition:all 0.8s cubic-bezier(0.72,0,0.28,1);}
+.tod-chat-btn[class*='color-']{max-width:22.5rem;}
+.tod-chat-btn.color-red{background-color:#fe4a4a;  }
+.tod-chat-btn.color-blue{background-color:#008aff; }
+.tod-chat-btn.color-green{background-color:#20c997; }
+.tod-chat-btn.color-purple{background-color:#a259ff; }
+
+.tod-chat-btn .chat-loading{display:flex; width:3.5rem; height:3.5rem; justify-content:center; align-items:center; position:absolute; right:0; top:0;  }
+.tod-chat-btn .chat-loading i{display:inline-block; width:0.375rem; height:0.375rem; border-radius:0.375rem; margin:0 0.0938rem; background:rgba(255,255,255,0.5); animation:move-type 1.5s cubic-bezier(0.49,0.025,0.49,1); animation-iteration-count:3; transform:translateY(0);}
+/* 로딩할때 default */
+.tod-chat-btn.default .chat-loading i{animation:move-default 1.25s cubic-bezier(0.49,0.025,0.685,1);  animation-iteration-count: infinite;}
+.tod-chat-btn.default .chat-loading i:nth-child(1){background-color:#fe4a4a}
+.tod-chat-btn.default .chat-loading i:nth-child(2){background-color:#008aff; animation-delay:0.15s}
+.tod-chat-btn.default .chat-loading i:nth-child(3){background-color:#20c997; animation-delay:0.3s}
+.tod-chat-btn.default .chat-loading i:nth-child(4){background-color:#a259ff; animation-delay:0.45s}
+.tod-chat-btn .chat-loading i:nth-child(2){animation-delay:-0.15s}
+.tod-chat-btn .chat-loading i:nth-child(3){animation-delay:-0.3s}
+.tod-chat-btn .chat-loading i:nth-child(4){animation-delay:-0.45s}
+@keyframes move-default{
+    0%{height:0.375rem;}
+    30%{height:1.75rem;}
+    60%{height:0.375rem;}
+    100%{height:0.375rem;}
+}
+@keyframes move-type{
+    0%{transform:translateY(0)}
+    25%{transform:translateY(7px)}
+    50%{transform:translateY(-7px)}
+    75%{transform:translateY(0)}
+    100%{transform:translateY(0)}
+}
+/* .tod-chat-btn .default .txt{display:none;} */
+.tod-chat-btn .txt{max-width:0; height:100%; padding:0 3.9375rem 0 1.4375rem; overflow:hidden; transition:transform 2s ease-in-out, max-width .8s;
+  transform:translateY(3.5rem); opacity:0;   }
+.tod-chat-btn .txt{display:none;}
+.tod-chat-btn .txt .inner{display:inline-block; color:#fff; font-size:0.875rem; line-height:3.5rem; position:relative;}
+.tod-chat-btn .txt .chat{text-decoration:underline;}
+.tod-chat-btn .txt .opacity{color:#83d5ff;}
+.tod-chat-btn.color-red .txt.red{transform:translateY(0); max-width:22.5rem; opacity:1;}
+.tod-chat-btn.color-blue .txt.blue{transform:translateY(0); max-width:22.5rem; opacity:1;}
+.tod-chat-btn.color-green .txt.green{transform:translateY(0); max-width:22.5rem; opacity:1;}
+.tod-chat-btn.color-purple .txt.purple{transform:translateY(0); max-width:22.5rem; opacity:1;}
+/* //200421 [OP002-7810] 추가 : chatbot gateway */

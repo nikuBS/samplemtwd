@@ -44,7 +44,7 @@
 
 #common-menu.tod-common-menu .footer .f-bt button { font-size: 0.81rem; }
 
-#common-menu .footer .f-ltd { color: #7d7d7d; font-size: 0.63rem; margin-top: 1.25rem; background: none; }
+#common-menu .footer .f-ltd { color: #7d7d7d; font-size: 0.63rem; margin-top: 1.25rem; background: none; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 #common-menu.tod-common-menu .footer .f-bt .f-register:before { background: url("/img/en/ico_register.png") left 0 no-repeat; background-size: 100% 100%; }
 
@@ -174,5 +174,7 @@
 .charge-line .tit { display: table-cell; font-size: 1rem; vertical-align: middle; font-weight: 500; }
 
 .charge-line::after { position: absolute; right: 0; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url("/img/en/icon_32px_arrowmore.svg") no-repeat 23% 50%; background-size: 100%; }
+
+.mb100 { margin-bottom: 3.13rem; }
 
 /*# sourceMappingURL=maps/style_en.css.map */
