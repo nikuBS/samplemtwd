@@ -69,24 +69,32 @@ body.apphome .container-wrap { background: -webkit-gradient(linear, left top, le
 .icon-gnb-home-T { background-image: url("/img/en/graphic_80px_bi_skt.svg"); }
 
 /* 로그인 전 */
-.main-error-box.welcome { padding: 4.06rem 0 4.69rem 0; }
+.section-box.mw { margin-top: -2.81rem; }
 
-.section-box.mw .main-error-box.welcome { padding: 1.56rem 0 4.5rem 0; }
+.section-box.mw .main-error-box.welcome.tod-login-box { padding: 1.75rem 0; }
 
-.main-error-box .ti { font-size: 1.44rem; }
+.main-error-box.welcome.tod-login-box { padding: 4.06rem 0 1.56rem 0; }
 
-.main-error-box.welcome.tod-login-box .tx { font-size: 0.81rem; margin-top: 1.13rem; }
+.main-error-box.welcome.tod-login-box .ti { font-size: 1.44rem; margin-top: 0; }
 
-.main-error-box .btn-area { margin-top: 1.44rem; }
+.main-error-box.welcome.tod-login-box .tx { font-size: 0.81rem; margin-top: 1.13rem; line-height: 1.4em; }
 
-.main-error-box.welcome.tod-login-box .desc2 { bottom: 1.69rem; }
+.main-error-box.welcome.tod-login-box .tx > span { color: #f76252; }
+
+.main-error-box.welcome.tod-login-box .btn-area { margin-top: 1.44rem; }
+
+.main-error-box.welcome.tod-login-box .desc2 { position: static; margin-top: 1.63rem; }
+
+.main-error-box.welcome.tod-login-box.line-none .btn-area .btn-style1 { width: 10rem; font-size: 0.94rem; }
+
+.main-error-box.welcome.tod-login-box.line-none .desc2 { font-size: 0.88rem; line-height: 1.6em; }
+
+.main-error-box.welcome.tod-login-box.line-none .desc2 .bt { font-size: 0.94rem; margin: 0 auto; }
 
 /* 로그인 후 */
 .mw-banner01 button { width: 100%; }
 
 .mw-banner01 button img { width: 100%; }
-
-.section-box.mw { margin-top: -2.81rem; }
 
 .section-box.mw .main-chart-box { padding: 1.56rem 0; }
 
@@ -95,6 +103,8 @@ body.apphome .container-wrap { background: -webkit-gradient(linear, left top, le
 .main-top-group.internet { padding: 0 1.5rem; }
 
 body.apphome .main-top-group::before { display: none; }
+
+body.apphome .error-code { padding-bottom: 1.88rem; }
 
 .main-chart-box { padding-top: 2.63rem; padding-bottom: 0.75rem; }
 
@@ -243,5 +253,11 @@ body.apphome .main-top-group::before { display: none; }
 .internet-box .no-bill { padding: 3.13rem 0; }
 
 .internet-box .no-bill > p { font-size: 0.94rem; font-weight: 500; color: #000; }
+
+.error-code { padding-top: 5.94rem; background: url("/img/en/ico_notice_point_gray.png") center top 1.25rem no-repeat; background-size: 3.75rem 3.75rem; }
+
+.error-code > p { font-size: 0.88rem; font-weight: 300; color: #000; }
+
+.error-code > p.error-title { font-size: 1.31rem; font-weight: 500; margin-bottom: 1.25rem; }
 
 /*# sourceMappingURL=maps/main_en.css.map */

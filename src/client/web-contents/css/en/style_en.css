@@ -108,6 +108,34 @@
 
 .notice-point .t-np1 { background: url("/img/en/ico_notice_point_gray.png") center 0 no-repeat; background-size: 60px auto; font-weight: 400; }
 
+.user-month-bill .this-month-bill .stit { font-size: 1rem; color: #000; }
+
+.user-month-bill .this-month-bill .price { color: #f76252; font-size: 30px; }
+
+.user-month-bill .this-month-bill .price .won { font-size: 1.38rem; }
+
+.user-month-bill .this-month-bill .stit .term { font-size: 0.81rem; color: #959595; }
+
+.msg-type2 { font-weight: 300; }
+
+.msg-type2 .txt-point { font-weight: 500; color: #000 !important; }
+
+.btn-style1 { font-size: 0.94rem; font-weight: 700; }
+
+.cont-box .tit-type6.iblock { font-size: 1rem; font-weight: 600; }
+
+.review-list { margin-top: 0; }
+
+.review-list li .txt .tit { font-size: 0.88rem; font-weight: 400; padding-left: 2.19rem; position: relative; }
+
+.review-list li .txt .tit .phone-num-ico { width: 0.88rem; height: 1.25rem; position: absolute; top: -0.19rem; left: 0.31rem; }
+
+.review-list li .val { font-size: 14px; font-weight: 500; }
+
+.full-link-list li button .inner .tit { font-weight: 500; }
+
+.full-link-list li button:after, .full-link-list li a:after, .full-link-list li .no-link:after { position: absolute; right: 0.63rem; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url("/img/en/icon_32px_arrowmore.svg") no-repeat 23% 50%; background-size: 100%; }
+
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
 
@@ -140,5 +168,11 @@
 .fs-info { font-size: 0.81rem; color: #666; position: relative; padding: 0 0 0.94rem 0.78rem; line-height: 1.06rem; }
 
 .fs-info::before { content: ''; display: inline-block; position: absolute; left: 0; top: 0.38rem; width: 0.25rem; height: 0.25rem; background: #959595; border-radius: 100%; }
+
+.charge-line { position: relative; display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 1.25rem 0; text-align: left; font-size: 0; line-height: 1; color: #000000; }
+
+.charge-line .tit { display: table-cell; font-size: 1rem; vertical-align: middle; font-weight: 500; }
+
+.charge-line::after { position: absolute; right: 0; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url("/img/en/icon_32px_arrowmore.svg") no-repeat 23% 50%; background-size: 100%; }
 
 /*# sourceMappingURL=maps/style_en.css.map */
