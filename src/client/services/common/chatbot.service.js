@@ -11,8 +11,7 @@ Tw.ChatbotService = function() {
     // 1, 2차 오픈일 경과 여부 체크를 위한 일자 관련 변수 [S]
     this._currentDate = Tw.DateHelper.getCurrentShortDate();
     this._firstOoenDate = Tw.DateHelper.getCurrentShortDate('20200723');
-    // this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200827');
-    this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200818');
+    this._secondOpenDate = Tw.DateHelper.getCurrentShortDate('20200827');
     // 1, 2차 오픈일 경과 여부 체크를 위한 일자 관련 변수 [E]
 
     // 챗봇 발화어 노출 대상군 판단을 위해 호출 필요한 API List
@@ -41,7 +40,7 @@ Tw.ChatbotService = function() {
 
     // 2차 사외 오픈 (8/27) 시점 접근 대상 단말 리스트
     this._accessAllowedDevice0827 = [
-        'LGM-G600S',     // TEST
+        // 'LGM-G600S',     // TEST
         'SM-G977N'      // 갤럭시S10 5G
         ,'SM-N971N'     // 갤럭시노트10 5G
         ,'SM-N976N'     // 갤럭시노트10 플러스 5G
