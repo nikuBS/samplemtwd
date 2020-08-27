@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -17,25 +17,25 @@
 	<meta property="og:image" content="/img/en/logo-tworld01.png" />
 	<meta property="og:description" content="SKT framework" />
 	<title>SKT</title>
-	<link rel="stylesheet" type="text/css" href="/css/en/common.css" media="all" /><!-- [C] 공통 스타일 -->
-	<link rel="stylesheet" type="text/css" href="/css/en/layout.css" media="all" /><!-- [C] 박스 모델 -->
-	<link rel="stylesheet" type="text/css" href="/css/en/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-	<link rel="stylesheet" type="text/css" href="/css/en/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-	<link rel="stylesheet" type="text/css" href="/css/en/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+	<link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+	<link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+	<link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+	<link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+	<link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
 	<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
 	<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
 	<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
-	<script type="text/javascript" src="/js/en/$vars.js"></script><!--[C] 전역 변수 -->
-	<script type="text/javascript" src="/js/en/common_en.js"></script>
-	<script type="text/javascript" src="/js/en/widgets.js"></script><!--[C] 기능별 위젯 -->
-	<script type="text/javascript" src="/js/en/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+	<script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+	<script type="text/javascript" src="/js/common_en.js"></script>
+	<script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+	<script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#contents">Go to Main</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -48,10 +48,7 @@
 						<button type="button" class="icon-gnb-menu"><span class="blind">menu opn</span></button>
 					</div>
 
-                    <div class="h-tit">My Data / Talk time</div>
-                    <div class="h-serarch">
-                        <button class="icon-gnb-search"><span class="blind">search</span></button>
-                    </div>
+                    <div class="h-tit">MY DATA / TALKTIME</div>
 				</div>
 			</div>
 		</div>
@@ -61,31 +58,31 @@
             <div class="container">
 				<!-- 200304 [OP002-6726] 추가 -->
 				<div class="tod-line-sel-box">
-					<button type="button" class="line-sel-btn">
-						<i class="sel-ico"><img src="/img/en/sel-ico-mobile.png" alt=""></i><span class="item"></span>
-						<span class="detail-info">010-94**-04**</span>
-					</button>
-					<button type="button" class="line-sel-btn" style="display:none">
-						<i class="sel-ico"><img src="/img/en/sel-ico-tel.png" alt=""></i><span class="item"></span>
-						<span class="detail-info">070-94**-04**</span>
-					</button>
-					<button type="button" class="line-sel-btn" style="display:none">
-						<i class="sel-ico"><img src="/img/en/sel-ico-wifi.png" alt=""></i><span class="item"></span>
-						<span class="detail-info">070-94**-04**</span>
-					</button>
-					<button type="button" class="line-sel-btn" style="display:none">
-						<i class="sel-ico"><img src="/img/en/sel-ico-tablet.png" alt=""></i><span class="item"></span>
-						<span class="detail-info">070-94**-04**</span>
-					</button>
-					<button type="button" class="line-sel-btn" style="display:none">
-						<i class="sel-ico"><img src="/img/en/sel-ico-tv.png" alt=""></i><span class="item"></span>
-						<span class="detail-info">세종특별자치시 전** ****</span>
-					</button>
-					<button type="button" class="line-sel-btn side-arr" style="display:none"> <!-- 191224 [OP002-5303] 수정01 : side-arr처리 -->
-						<i class="sel-ico"><img src="/img/en/sel-ico-internet.png" alt=""></i><span class="item"></span>
-						<span class="detail-info">세종특별자치시 전** ****</span>
-					</button>
-				</div>
+                    <button type="button" class="line-sel-btn">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-mobile.png" alt=""></i><span class="item blind">Mobile Phone</span>
+                        <span class="detail-info">010-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-tel.png" alt=""></i><span class="item blind">Landline</span>
+                        <span class="detail-info">070-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-wifi.png" alt=""></i><span class="item blind">T Pocket-Fi</span>
+                        <span class="detail-info">070-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-tablet.png" alt=""></i><span class="item blind">tablet</span>
+                        <span class="detail-info">070-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-tv.png" alt=""></i><span class="item blind">IPTV</span>
+                        <span class="detail-info">세종특별자치시 전** ****</span>
+                    </button>
+                    <button type="button" class="line-sel-btn side-arr" style="display:none"> <!-- 191224 [OP002-5303] 수정01 : side-arr처리 -->
+                        <i class="sel-ico"><img src="/img/en/sel-ico-internet.png" alt=""></i><span class="item">Internet</span>
+                        <span class="detail-info">세종특별자치시 전** ****</span>
+                    </button>
+                </div>
 				<!-- //200304 [OP002-6726] 추가 -->
 
 				<hr class="cont-sp type1" aria-hidden="true" />
@@ -97,15 +94,32 @@
 					</div>
 				</div>
 
-				<div class="cont-box noborder bgnone">
-					<p class="fs-info mt8">In order to ensure service stability on T world, remaining call credit inquiries are limited to 12 times every 120 minutes.</p>
-					<p class="fs-info mt4">Please use the information only for reference purposes since the usage amount shown may differ from that of the actual invoice.</p>
-					<p class="fs-info mt4">When a call plan has been changed or temporarily suspended during a particular month, free benefits are calculated on a pro rata basis. When you use the services in excess of the free benefit amount, separate fees are charged relevant to the excess in usage. (Please note that the basic call benefits calculated on a pro rata basis under the fee system may not be reflected.)</p>
-					<p class="fs-info mt4">The remaining basic calls are not carried over to the following month. Some of the remaining basic calls that may be carried over to the following month may be used or checked from the 5th of the following month.</p>
-					<p class="fs-info mt4">After changing call plan and then changing it back to the previous plan, or if you have previously suspended a plan during a particular month, the service for checking the remaining call credit is not provided until the 4th of the following month. When usage breakdown is not available remaining call usage cannot be checked.</p>
-					<p class="fs-info mt4">Remaining call credit inquiries are possible with voice call plans/voice talk options/data options that offer basic benefits (voice, video, data, SMS etc.). However, a newly released call plan may cause application time to be delayed.</p>
-                </div>
-
+				<hr class="cont-sp type1" aria-hidden="true"/>
+				<div class="cont-box nogaps">
+					<div class="widget">
+						<div class="widget-box accordion">
+							<div class="acco-cover toggle">
+								<div class="acco-style  type-qa qa-lease">
+									<ul class="acco-list pt0">
+										<li class="acco-box">
+											<div class="acco-tit">
+												<button role="button" aria-pressed="true"><img src="/img/en/ico_fs-info.png" alt="" />Check Important Things to Know</button>
+											</div>
+											<div class="acco-cont information-usebox">
+												<p class="fs-info">In order to ensure service stability on T world, remaining call credit inquiries are limited to 12 times every 120 minutes</p>
+												<p class="fs-info">Please use the information only for reference purposes since the usage amount shown may differ from that of the actual invoice</p>
+												<p class="fs-info">When a call plan has been changed or temporarily suspended during a particular month, free benefits are calculated on a pro rata basis. When you use the services in excess of the free benefit amount, separate fees are charged relevant to the excess in usage. (Please note that the basic call benefits calculated on a pro rata basis under the fee system may not be reflected.)</p>
+												<p class="fs-info">The remaining basic calls are not carried over to the following month. Some of the remaining basic calls that may be carried over to the following month may be used or checked from the 5th of the following month</p>
+												<p class="fs-info">After changing call plan and then changing it back to the previous plan, or if you have previously suspended a plan during a particular month, the service for checking the remaining call credit is not provided until the 4th of the following month. When usage breakdown is not available remaining call usage cannot be checked</p>
+												<p class="fs-info">Remaining call credit inquiries are possible with voice call plans/voice talk options/data options that offer basic benefits (voice, video, data, SMS etc.). However, a newly released call plan may cause application time to be delayed</p>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
         </div>
         <!--// #contents -->
