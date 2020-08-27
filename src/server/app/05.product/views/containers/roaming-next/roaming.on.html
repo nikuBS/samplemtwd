@@ -38,23 +38,22 @@
                 </div>
             </div>
         </div>
-        <div class="card" style="text-align: center; padding: 40px 24px 8px 24px;">
+        <% if (isLogin == false) { %>
+        <div class="card anonymous">
             <h3>반갑습니다. 고객님</h3>
             <p class="description">로그인 후 고객님의 정보를 확인하세요</p>
             <div class="buttons">
-                <a href="#">
-                    <div class="button button-1">
-                        로그인하기
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="button button-2">
-                        번호로 간편하게 로그인하기
-                    </div>
-                </a>
+                <div class="button button-1" id="login">
+                    로그인하기
+                </div>
+                <div class="button button-2" id="slogin">
+                    번호로 간편하게 로그인하기
+                </div>
             </div>
-            <p class="description">아직 T world 회원이 아니라면 <a href="/common/member/signup-guide" class="colorPoint">회원가입</a> 후 이용해주세요</p>
+            <p class="description">아직 T world 회원이 아니라면
+                <span class="colorPoint" id="signup">회원가입</span> 후 이용해주세요</p>
         </div>
+        <% } %>
         <div class="card">
             <h3 style="margin-bottom: 10px;">
                 T전화를 통해<br />
@@ -114,6 +113,21 @@
     $('#timeLocal').html(moment().add('<%= country.timezoneOffset %>', 'hours').format('YY.MM.DD HH:mm'));
     
     new Tw.NextRoamingMenu($('#roamingOn')).install();
+    var target = '/product/roaming';
+    var landing = new Tw.TidLandingComponent();
+
+    $('#login').on('click', function(e) {
+      landing.goLogin(target)
+      e.stopPropagation();
+    });
+    $('#slogin').on('click', function(e) {
+      landing.goSLogin(target)
+      e.stopPropagation();
+    });
+    $('#signup').on('click', function(e) {
+      landing.goSignup();
+      e.stopPropagation();
+    })
   });
   function fillBackgroundImage() {
     const url = '<%= country.backgroundUrl %>'

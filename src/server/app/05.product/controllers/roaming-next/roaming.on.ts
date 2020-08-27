@@ -7,11 +7,7 @@ import EnvHelper from '../../../../utils/env.helper';
 
 export default class RoamingOnController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const isLogin: boolean = FormatHelper.isEmpty(svcInfo);
-    // if (isLogin) {
-    //   this.renderAnonymous(res, svcInfo, pageInfo);
-    // }
-
+    const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     const CDN = EnvHelper.getEnvironment('CDN');
     res.render('roaming-next/roaming.on.html', {
       svcInfo,
