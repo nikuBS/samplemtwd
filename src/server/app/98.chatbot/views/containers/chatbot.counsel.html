@@ -14,40 +14,34 @@
 			<div class="container-wrap">
 				<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
 				<div class="container">
-					<!-- chabot intro -->
+          <!-- chabot intro -->
+          <!-- 200818 [OP002-7810] 수정_01 -->
 					<div class="tod-chatbotIntro-img-wrap">
-            <div class="img-wrap">
-              <p class="tod-blind">T World 서비스</p>
-              <p class="txt-rolling">
-                <span class="item" style="display: none;">잔여량</span>
-                <span class="item" style="display: none;">납부</span>
-                <span class="item" style="display: none;">미납</span>
-                <span class="item" style="display: block;">로밍</span>
-                <span class="item" style="display: none;">일시정지</span>
-                <span class="item" style="display: none;">요금조회</span>
-                <span class="item" style="display: none;">멤버십</span>
-                <span class="item" style="display: none;">리필 쿠폰</span>
-                <span class="item" style="display: none;">데이터선물</span>
-              </p>
-            </div>
-					</div>
-					<div class="tod-chatbotIntro-tit-wrap">
+            <div class="img-wrap profile1"></div>
+          </div>
+          <!-- //200818 [OP002-7810] 수정_01 -->
+          <div class="tod-chatbotIntro-tit-wrap">
 						<div class="inner">
 							<p class="tit"><strong>24시간 365일</strong> 이용하세요. </p>
 							<p class="desc">
-								<span class="tod-chatbot-img"></span><!-- 
-									class="tod-chabot-img" : O /  class="tod-chabot-img on" : 스마일-->
+								<!-- 200818 [OP002-7810] 수정_02 -->
+								<span class="profile2 tod-chatbot-img"></span>
+								<!-- //200818 [OP002-7810] 수정_02 -->	
 								<span class="txt">언제든지 모바일 T월드를 편하게<br>이용하실 수 있도록 도와드릴게요!</span>
 							</p>
 						</div>
-					</div>
-					<div class="tod-chatbotIntro-btn-wrap">
-						<button type="button" class="btn-chabot-default" data-param=""><span class="txt">챗봇 상담 시작하기</span></button>
+          </div>
+          <div class="tod-chatbotIntro-btn-wrap">
+						<button type="button" class="btn-chabot-default"><span class="txt">챗봇 상담 시작하기</span></button>
+						<!--
+                        <a href="#" class="btn-chabot-default"><span class="txt">챗봇 상담 시작하기</span></a>
+                        -->
+						
 					</div>
 					<div class="tod-chatbotIntro-copy">
 						<span class="txt">T 월드 챗봇 Ver. 0.1</span>
-					</div>
-					<!-- //chabot intro -->
+          </div>
+          <!-- //chabot intro -->
 				</div>
 			</div>
 			<!--// .container-wrap -->
@@ -60,34 +54,22 @@
 </body>
 <% include ../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    var el = document.querySelectorAll(".tod-chatbotIntro-img-wrap .item");
-    var ellength = el.length;
-    var current = 0;
+  window.onload = function() {
+    function animateSvg(elements, path, loop){
+      var target = document.querySelectorAll(elements);
 
-    function next(){
-        current++;
-        if (current >= ellength){
-            current = 0;
-        }
-        for (var i = 0; i < ellength; i++) {
-            el[i].style.display = "none";
-        }
-        el[current].style.display = "block";
+      bodymovin.loadAnimation({
+        container: target[target.length - 1],
+        path: path,
+        renderer: 'svg',
+        loop: loop,
+        autoplay: true,
+        rendererSettings: { progressiveLoad: false, }
+      }).play();
     }
 
-    setInterval( function(){ next(); },  1000 );
-
-    function toggleEmoticon() {
-      // Math.random 함수는 보안 이슈가 있으므로 사용 금지. 2 ~ 5초 사이에 랜덤으로 움직인다.
-      setTimeout(function () {
-        $('.tod-chatbot-img').toggleClass('on');
-        toggleEmoticon();
-      }, (((window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296) * (5 - 2)) + 2) * 1000);
-    }
-    
-    // 아이콘 랜덤 토글
-    toggleEmoticon();
-  });
+    animateSvg('.profile1', '<%= CDN %>/js/intro_start.json', true);
+		animateSvg('.profile2', '<%= CDN %>/js/chatbot_1.json', false);
+  }
 </script>
 <% include ../components/end.component.html %>

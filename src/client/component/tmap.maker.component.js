@@ -60,8 +60,22 @@ Tw.TmapMakerComponent.prototype = {
     }, option);
 
     var $map = $('#'+_option.id); // 지도가 그려질 엘리먼트의 ID
+    $map.empty();
+    $map.css({width: _option.width, height: _option.height});
+    /*
+       지도 재 생성할때도 처음 한번만 객체 생성하고 이후에 재사용으로 하려고 했으나,
+       지도 resize() 할때 숫자값 외에 '%' 나 'px' 를 넣으면 지도 노출이 안되어 매번 객체 생성을 따로 해줘야 함.
+    */
+    this.map = new Tmapv2.Map(_option.id,{
+      center: new Tmapv2.LatLng(_option.latitude, _option.longitude),
+      width: _option.width,
+      height: _option.height,
+      // zoom: 14,
+      zoom: _option.zoom,
+      httpsMode: true
+    });
     // 해당 엘리먼트에 지도 객체가 생성이 안되어 있다면 객체 생성해줌. 이후에는 생성된 지도 객체를 이용함.
-    if (!$map.data('create')) {
+    /*if (!$map.data('create')) {
       this.map = new Tmapv2.Map(_option.id,{
         // center: new Tmapv2.LatLng(_option.latitude, _option.longitude),
         width: _option.width,
@@ -71,9 +85,11 @@ Tw.TmapMakerComponent.prototype = {
         httpsMode: true
       });
       $map.data('create',true);
+    } else {
+      this.map.resize('100%', '600px');
     }
     this.map.setCenter(new Tmapv2.LatLng(_option.latitude, _option.longitude)); // 지도 중심 설정. 지도 초기 좌표
-    this.map.setZoom(_option.zoom); // 줌 레벨 설정.
+    this.map.setZoom(_option.zoom);*/ // 줌 레벨 설정.
     this.removeMarkers(); // 모든 마커들 삭제함.
     return this;  // 메소드 체인 방식 이용하기 위해 현재 인스턴스를 리턴함.
   },
@@ -144,6 +160,7 @@ Tw.TmapMakerComponent.prototype = {
     this.markers.forEach(function (marker) {
       marker.setMap(null);
     });
+    this.markers = [];
     this.marker = undefined;
     return this;
   },

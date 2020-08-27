@@ -86,6 +86,11 @@ Tw.CustomerAgentsearchMap.prototype = {
     this.$toggleButton.on('click', $.proxy(this._toggleButtonListOrMap, this)); // 리스트/지도 보기 이벤트
   },
 
+  reset: function () {
+    this._nearShops = undefined;  // 지점 대리점 리스트
+    this._lastParam = {};
+  },
+
   /**
    * @function
    * @param e
@@ -321,6 +326,10 @@ Tw.CustomerAgentsearchMap.prototype = {
    * @param location
    */
   _firstTimeFindNearShop: function () {
+    // 위치 미동의 인 경우 진행 안함.
+    if (this._isNotAgreeLocation) {
+      return;
+    }
     // OP002-8862 최초 500m 내의 검색반경 내의 지점/대리점이 없을 경우 1km/3km의 검색 진행
     var options = this._getOptions();
     var i = 0;
@@ -523,7 +532,6 @@ Tw.CustomerAgentsearchMap.prototype = {
     this._tmapMakerComponent.makeTmap($.extend({
       id: 'fe-tmap-box',
       width: '100%',
-      // height: '683px',
       height: this.contentH +'px',
       // height: this.$container.find('#fe-tmap-box').width() + 'px',
       zoom: this.$radiusOption.data('option').zoom
@@ -586,11 +594,9 @@ Tw.CustomerAgentsearchMap.prototype = {
         }
       };
       // 첫번째 마커를 제외한, 나머지 마커는 비선택 아이콘으로 설정한다.
-      if (idx > 0) {
-        $.extend(markerParam, {
-          iconType: Tw.TmapMakerComponent.ICON_TYPE.UN_CHECK
-        });
-      }
+      $.extend(markerParam, {
+        iconType: idx === 0 ? Tw.TmapMakerComponent.ICON_TYPE.CHECK : Tw.TmapMakerComponent.ICON_TYPE.UN_CHECK
+      });
       this._tmapMakerComponent.makeMarker(markerParam);
     }.bind(this));
   },
@@ -625,6 +631,13 @@ Tw.CustomerAgentsearchMap.prototype = {
       $(e.currentTarget));
   },
 
+  /**
+   * @function
+   * @param bff
+   * @param param
+   * @return {JQuery.Promise<any, any, any>}
+   * @desc 리퀘스트
+   */
   _requestPromise: function (bff, param) {
     var $def = $.Deferred();
     this._apiService.request(bff, param).done(function (res){
@@ -633,6 +646,8 @@ Tw.CustomerAgentsearchMap.prototype = {
       }else {
         $def.resolve(res);
       }
+    }).fail(function (res){
+      $def.reject(res);
     });
 
     return $def.promise();

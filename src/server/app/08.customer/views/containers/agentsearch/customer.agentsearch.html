@@ -27,8 +27,8 @@
                             <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
                                     <ul role="tablist" class="fe-tabs">
-                                        <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                            <a  role="tab" aria-selected="true" href="#name">매장명</a>
+                                        <li role="presentation" aria-selected="false" aria-controls="tab1-tab" id="tab1">
+                                            <a  role="tab" aria-selected="false" href="#name">매장명</a>
                                         </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                         <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2">
                                             <a role="tab" aria-selected="false" href="#addr">주소</a>
@@ -171,12 +171,14 @@
                 </div>
                 <!--// 결과 없을경우 -->
 
+                <!--로딩 영역-->
                 <div class="cont-box nogaps-hoz fe-loading">
                     <div class="tod-o2o-loading">
                         <span class="ico-loading"><img src="<%-CDN%>/img/ico/loading.gif" alt=""></span>
                         <p class="txt">데이터를 불러오는 중 입니다.</p>
                     </div>
                 </div>
+                <!--// 로딩 영역-->
 
                 <!--지도 형식일때-->
                 <div class="tod-o2o-comp map-type fe-map-list-area none">

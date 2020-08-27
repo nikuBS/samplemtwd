@@ -808,7 +808,9 @@ export const CUSTOMER_AGENT_SEARCH = {
   POSSIBLE_TASK: {
     TITLE: '처리 가능 업무',
     BODY: {
-      dvcChange: '휴대폰 일반',  // 기기변경 -> 휴대폰 일반
+      dvcChange: '기기변경',
+      nmChange: '명의변경',
+      feeAcceptance: '요금수납',
       rbpAsYn: '행복A/S',
       hanaroCode: '유선/인터넷TV', // SK브로드밴드 -> 유선/인터넷TV
       secuConsulting: 'ADT캡스보안', // 보안상담 -> ADT캡스보안
@@ -823,7 +825,7 @@ export const CUSTOMER_AGENT_SEARCH = {
   PRO_COUNSEL: {
     TITLE: '예약상담업무', // 명칭변경. 전문 상담 -> 예약상담업무
     BODY: {
-      tSharpYn: '휴대폰일반, 유선/인터넷/TV, ADT캡스보안'
+      tSharpYn: '휴대폰일반,유선/인터넷/TV,ADT캡스보안'
     }
   },
 

@@ -1,10 +1,10 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: bff-nodejs-mobile-1.244
+  name: bff-nodejs-mobile-1.243
   labels:
     app: bff-nodejs-mobile
-    version: '1.244'
+    version: "1.243"
 spec:
   replicas: 40
   strategy:
@@ -15,66 +15,66 @@ spec:
   selector:
     matchLabels:
       app: bff-nodejs-mobile
-      version: '1.244'
+      version: "1.243"
   template:
     metadata:
       labels:
         app: bff-nodejs-mobile
-        version: '1.244'
+        version: "1.243"
     spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - bff-nodejs-mobile
-              topologyKey: kubernetes.io/hostname
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - bff-nodejs-mobile
+                topologyKey: kubernetes.io/hostname
       containers:
-      - name: bff-nodejs-mobile
-        image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:1.244.0
-        env:
-        - name: REDIS_PWD_KEY
-          valueFrom:
-            secretKeyRef:
-              name: encsecret
-              key: jasyptEnc
-        ports:
-        - containerPort: 3000
-        imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          failureThreshold: 10
-          initialDelaySeconds: 180
-          periodSeconds: 15
-          successThreshold: 1
-          timeoutSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          failureThreshold: 10
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 15
-        resources:
-          requests:
-            cpu: 2000m
-            memory: 3072Mi
-          limits:
-            cpu: 4000m
-            memory: 3072Mi
-        volumeMounts:
-        - mountPath: /home/appadmin/uploads
-          name: upload-volume
+        - name: bff-nodejs-mobile
+          image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:1.243.0
+          env:
+            - name: REDIS_PWD_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: encsecret
+                  key: jasyptEnc
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            failureThreshold: 10
+            initialDelaySeconds: 180
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            failureThreshold: 10
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 3072Mi
+            limits:
+              cpu: 4000m
+              memory: 3072Mi
+          volumeMounts:
+            - mountPath: /home/appadmin/uploads
+              name: upload-volume
       volumes:
-      - name: upload-volume
-        persistentVolumeClaim:
-          claimName: upload-pvc
+        - name: upload-volume
+          persistentVolumeClaim:
+            claimName: upload-pvc
