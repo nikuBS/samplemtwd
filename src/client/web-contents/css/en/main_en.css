@@ -200,11 +200,11 @@ body.apphome .error-code { padding-bottom: 1.88rem; }
 
 .main-fee-box .fee-cont .fee-info.support > span > span { display: block; font-size: 0.81rem; font-weight: 300; color: #858585; line-height: 1.2em; }
 
-.main-fee-box .fee-cont .fee-info.support > span#support01 { background-image: url("/img/en/main/icon_support01.png"); background-size: 1.63rem 1.63rem; }
+.main-fee-box .fee-cont .fee-info.support > span.support01 { background-image: url("/img/en/main/icon_support01.png"); background-size: 1.63rem 1.63rem; }
 
-.main-fee-box .fee-cont .fee-info.support > span#support02 { background-image: url("/img/en/main/icon_support02.png"); background-size: 1.5rem 1.63rem; }
+.main-fee-box .fee-cont .fee-info.support > span.support02 { background-image: url("/img/en/main/icon_support02.png"); background-size: 1.5rem 1.63rem; }
 
-.main-fee-box .fee-cont .fee-info.support > span#support03 { background-position: 0.19rem center; background-image: url("/img/en/main/icon_support03.png"); background-size: 1.19rem 1.75rem; }
+.main-fee-box .fee-cont .fee-info.support > span.support03 { background-position: 0.19rem center; background-image: url("/img/en/main/icon_support03.png"); background-size: 1.19rem 1.75rem; }
 
 .main-fee-box .fee-cont .fee-info + .fee-info { border-top: 1px solid #f2f2f2; }
 

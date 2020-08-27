@@ -136,6 +136,8 @@
 
 .full-link-list li button:after, .full-link-list li a:after, .full-link-list li .no-link:after { position: absolute; right: 0.63rem; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url("/img/en/icon_32px_arrowmore.svg") no-repeat 23% 50%; background-size: 100%; }
 
+.icon-badge-tip { background: url("/img/en/graphic_badge_tip.svg") no-repeat 0 0; background-size: 100% 100%; }
+
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
 
@@ -174,6 +176,22 @@
 .charge-line .tit { display: table-cell; font-size: 1rem; vertical-align: middle; font-weight: 500; }
 
 .charge-line::after { position: absolute; right: 0; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url("/img/en/icon_32px_arrowmore.svg") no-repeat 23% 50%; background-size: 100%; }
+
+.gray-box { width: 100%; padding: 0 0.94rem; border-radius: 0.94rem; background-color: #fafafa; -webkit-box-sizing: border-box; box-sizing: border-box; margin-bottom: 1.25rem; }
+
+.gray-box .charge { width: 100%; display: table; position: relative; font-size: 0.81rem; color: #000; padding: 1.25rem 0.63rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom: 1px solid #e5e5e5; }
+
+.gray-box .charge:last-of-type { border-bottom: none; }
+
+.gray-box .charge dt { width: 65%; display: table-cell; font-weight: 400; }
+
+.gray-box .charge dd { width: 35%; display: table-cell; font-weight: 400; text-align: right; vertical-align: middle; }
+
+.gray-box .charge dd.red { color: #f76252; }
+
+.gray-box .charge dd.fw-500 { font-weight: 500; }
+
+.gray-box .charge .ico-miri { width: 32px; height: 14px; }
 
 .mb100 { margin-bottom: 3.13rem; }
 
