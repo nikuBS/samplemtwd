@@ -754,10 +754,10 @@ $.fn.chart2 = function(o){
 			style_pattern.unshift((average/max*100).toFixed(0));
 		}else if(type == "₩"){ // ₩
 			for(var i=0; i<arry.length; i++){
-				text_pattern.push("₩ " + add_comma(arry[i]));
+				text_pattern.push("₩" + add_comma(arry[i]));
 				style_pattern.push((arry[i]/max*100).toFixed(0));
 			}
-			text_pattern.unshift("₩ " + add_comma(average));
+			text_pattern.unshift("₩" + add_comma(average));
 			style_pattern.unshift((average/max*100).toFixed(0));
 		}else{ // 기타
 			for(var i=0; i<arry.length; i++){
@@ -859,13 +859,13 @@ $.fn.chart2 = function(o){
 			style2_pattern.unshift((average2/max*100).toFixed(0));
 		}else if(type == "₩"){ // ₩
 			for(var i=0; i<arry.length; i++){
-				text_pattern.push("₩ " + add_comma(arry[i]));
-				text2_pattern.push("₩ " + add_comma(arry2[i]));
+				text_pattern.push("₩" + add_comma(arry[i]));
+				text2_pattern.push("₩" + add_comma(arry2[i]));
 				style_pattern.push((arry[i]/max*100).toFixed(0));
 				style2_pattern.push((arry2[i]/max*100).toFixed(0));
 			}
-			text_pattern.unshift("₩ " + add_comma(average));
-			text2_pattern.unshift("₩ " + add_comma(average2));
+			text_pattern.unshift("₩" + add_comma(average));
+			text2_pattern.unshift("₩" + add_comma(average2));
 			style_pattern.unshift((average/max*100).toFixed(0));
 			style2_pattern.unshift((average2/max*100).toFixed(0));
 		}else{ // 기타
