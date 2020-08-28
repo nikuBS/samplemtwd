@@ -66,7 +66,7 @@ export default class RoamingAddonsController extends TwViewController {
     });
   }
 
-  private getAddonsAll() {
+  private getAddonsAll(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0031, {idxCtgCd: 'F01600'}).map((resp) => {
       this.logger.info(this, 'result ', resp.result);
       if (resp.code === API_CODE.CODE_00) {
@@ -89,7 +89,7 @@ export default class RoamingAddonsController extends TwViewController {
     });
   }
 
-  private testNewApis(svcInfo) {
+  private testNewApis(svcInfo): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0200, {
       // prodId: 'NA00006489',
       // svcMgmtNum: svcInfo.svcMgmtNum,

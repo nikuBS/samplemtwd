@@ -8,22 +8,26 @@
         </span>
         <img class="logo" src="<%= CDN %>/img/product/roam/logo_w.png" alt="로고" width="104" />
         <h1 class="appbar">
-            <img src="<%= country.flagUrl %>" alt="국기" width="24" />
-            <span><%= country.name %></span>
+            <span class="flag-icon flag-icon-<%= country.flagCode %>"></span>
+<!--            <img src="<%= country.flagUrl %>" alt="국기" width="24" />-->
+            <span class="cname"><%= country.name %></span>
         </h1>
     </div>
     <div id="contents">
         <div class="hud">
             <h1>
-                <img src="<%= country.flagUrl %>" alt="국기" />
-                <span><%= country.name %></span>
+                <span class="flag-icon flag-icon-<%= country.flagCode %>"></span>
+<!--                <img src="<%= country.flagUrl %>" alt="국기" />-->
+                <span class="cname"><%= country.name %></span>
             </h1>
             <div class="clocks">
                 <div class="clock">
                     <p class="note">
                         <span class="nation"><%= country.name %></span>
                         <img src="<%= CDN %>/img/product/roam/ico_time.png" />
+                        <% if (country.timezoneOffset !== '0') { %>
                         한국기준 <%= country.timezoneOffset %>시간
+                        <% } %>
                     </p>
                     <h2 class="value" id="timeLocal">-</h2>
                     <p class="note">*수도시각 기준 (섬머타임 미반영)</p>
@@ -38,6 +42,11 @@
                 </div>
             </div>
         </div>
+        <% if (isLogin == true) { %>
+        <div class="card">
+            로그인시 항목. noSubscription 여부에 따라 다른 카드 표시
+        </div>
+        <% } %>
         <% if (isLogin == false) { %>
         <div class="card anonymous">
             <h3>반갑습니다. 고객님</h3>
@@ -139,7 +148,7 @@
       container.style.backgroundImage = "url('" + url + "')";
       container.style.backgroundRepeat = 'no-repeat';
       container.style.backgroundSize = container.clientWidth + 'px ' + (this.height * scaleFactor) + 'px';
-    }
+    };
     backgroundImage.src = url;
   }
 </script>
