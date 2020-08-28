@@ -59,7 +59,7 @@ Tw.CommonSearchMain.prototype = {
   _keyInputEvt : function (inputEvtObj) {
     inputEvtObj.preventDefault();
     if(Tw.InputHelper.isEnter(inputEvtObj)){
-      this._searchByInputValue();
+      this._searchByInputValue(inputEvtObj);
     }else{
       if(this._historyService.getHash()==='#input_P'){
         if(this.$inputElement.val().trim().length>0){
@@ -111,7 +111,7 @@ Tw.CommonSearchMain.prototype = {
 
       // 노출순서 기준 오름차순으로 정렬 (1,2,3,4...)
       result.sort(function(a,b) {
-        return a["expsSeq"] - b["expsSeq"];
+        return a.expsSeq - b.expsSeq;
       });
 
       for (var i = 0; i < result.length; i += 1) {
@@ -126,7 +126,7 @@ Tw.CommonSearchMain.prototype = {
    * @param  {String} title - 표기할 추천업무 명
    */
   _compileTplForRecommendationItem: function (href, title, impDispYn, oferStcCd) {
-    var returnStr = ''
+    var returnStr = '';
 
     if (impDispYn === 'Y') {
       returnStr += '<li class="item strong">';
@@ -230,7 +230,9 @@ Tw.CommonSearchMain.prototype = {
     }
     _.each(recentlyKeywordData[this._nowUser],$.proxy(function (data, index) {
       //recognize 10 days ago data from now
-      if(Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateCustomFormat(this._todayStr,this._recentKeywordDateFormat),Tw.DateHelper.convDateCustomFormat(data.searchTime,this._recentKeywordDateFormat),'day')>=10){
+      if(Tw.DateHelper.getDiffByUnit(
+        Tw.DateHelper.convDateCustomFormat(this._todayStr,this._recentKeywordDateFormat),
+        Tw.DateHelper.convDateCustomFormat(data.searchTime,this._recentKeywordDateFormat),'day')>=10) {
         removeIdx.push(index);
       }
     },this));
@@ -329,8 +331,7 @@ Tw.CommonSearchMain.prototype = {
    * @member
    * @desc 인기 검색어 6위-10위 접기
    */
-  _hideMorePopularSearchWord : function ($event) {
-    var $target = $($event.currentTarget);
+  _hideMorePopularSearchWord : function () {
     _.each(this.$container.find('.fe-popularword-list-content'), $.proxy(this._hideMoreContent, this));
 
     document.querySelector('#fe-btn-more').setAttribute('style', 'display: block');
@@ -387,12 +388,12 @@ Tw.CommonSearchMain.prototype = {
 
     var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
     //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
-    var sort = "shortcut-A";
-    sort += ".rate-A";
-    sort += ".service-A";
-    sort += ".tv_internet-A";
-    sort += ".troaming-A";
-    sort += ".direct-D";
+    var sort = 'shortcut-A';
+    sort += '.rate-A';
+    sort += '.service-A';
+    sort += '.tv_internet-A';
+    sort += '.troaming-A';
+    sort += '.direct-D';
 
     Tw.CommonHelper.setCookie('search_sort::rate', 'A');
     Tw.CommonHelper.setCookie('search_sort::service', 'A');
@@ -404,7 +405,7 @@ Tw.CommonSearchMain.prototype = {
       // Tw.Logger.info('[common.search-main] [_doSearch]', '"doSearch" Cookie 셋팅');
       // Tw.CommonHelper.setCookie('doSearch', 'Y');
       this._addRecentlyKeywordList(searchKeyword);
-      this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1) + "&sort="+sort);
+      this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1) + '&sort='+sort);
     },this),100);
   },
   /**
@@ -515,7 +516,10 @@ Tw.CommonSearchMain.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentlyKeywordListData[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)}));
+        this.$keywordListBase.find('#recently_keyword_list')
+          .append(this._recentKeywordTemplate({
+            listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)
+          }));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -572,7 +576,10 @@ Tw.CommonSearchMain.prototype = {
       if(idx>=10){
         return;
       }
-      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)}));
+      this.$keywordListBase.find('#auto_complete_list')
+        .append(this._autoCompleteKeywrodTemplate({
+          listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)
+        }));
     },this));
   },
   /**

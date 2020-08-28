@@ -2,114 +2,42 @@
  * @file 지점/대리점 검색 화면 관련 처리
  * @author Hakjoon Sim
  * @since 2018-10-16
+ * @edit 2020-06-12 양정규 OP002-8862
  */
-
 /**
  * @constructor
- * @param  {Object} rootEl - 최상위 elem
- * @param  {String} params - query params
+ * @param {Object} rootEl - 최상위 elem
+ * @param {String} params - isAcceptAge(Y: 14세 이상, N)
+ * @param {Object} svcInfo
  */
-Tw.CustomerAgentsearch = function (rootEl, params) {
+Tw.CustomerAgentsearch = function (rootEl, isAcceptAge, svcInfo) {
   this.$container = rootEl;
-
+  this._isAcceptAge = isAcceptAge === 'Y';
+  this._svcInfo = JSON.parse(svcInfo);
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this.tubeNameList = []; // 지하철 역명 저장되는 배열
-  
+  this._moreViewSvc = new Tw.MoreViewComponent();
+  this._query = Tw.UrlHelper.getQueryParams();
+  this.customerAgentsearchMap = undefined;
+  this.customerAgentsearchFilter = undefined;
+  this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(rootEl, this._svcInfo);
 
-  this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
+  this._init();
+};
 
-  this._options = {
-    storeType: 0 // 0: 전체, 1: 지점, 2: 대리점
-  };
-
-  // URLSearchParams polyfill
-  (function (w) {
-    w.URLSearchParams = w.URLSearchParams || function (searchString) {
-        var self = this;
-        self.searchString = searchString;
-        self.get = function (name) {
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(self.searchString);
-            if (results == null) {
-                return null;
-            }
-            else {
-                return decodeURI(results[1]) || 0;
-            }
-        };
-    }
-  })(window);
-
-  this._init(params);
-  this._cacheElements();
-  this._bindEvents();
+Tw.LIST_TYPE = {
+  MAP: 'MAP',
+  LIST: 'LIST'
 };
 
 Tw.CustomerAgentsearch.prototype = {
 
   /**
    * @function
-   * @desc 현재 탭이 지하철역 일 경우 선택된 노선 및 역 화면표시 기능
-   * @param  {String} params
+   * @desc endsWith polyfill
    */
-  _init: function (params) {
-    var hash = window.location.hash;
-    this._prevTab = hash;
-    if (!Tw.FormatHelper.isEmpty(hash) && window.location.hash !== '#name') {
-      setTimeout($.proxy(function () {
-        this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
-
-        // query에 지역명, 노선명  있을 경우 해당 값들 설정
-        if (hash === '#tube' && window.location.href.indexOf('area') !== -1) {
-          var urlParams = new window.URLSearchParams(window.location.search);
-          var area = urlParams.get('area').split(':');
-          var line = urlParams.get('line').split(':');
-          var tubeName = urlParams.get('keyword').split(':');
-          // Tw.Logger.info('[검색후 url 지하철 : ]', tubeName);
-          this.$container.find('#fe-select-area').text(area[0]);
-          this.$container.find('#fe-select-line').text(line[0]);
-          this.$container.find('#fe-select-name').text(tubeName[0]);
-          this._selectedTubeAreaCode = area[1];
-          this._selectedTubeLineCode = line[1];
-          this._selectedTubeNameCode = tubeName[1];
-          // Tw.Logger.info('[검색후 url 지하철 역명 번호 : ]', this._selectedTubeNameCode);
-          // alert(this._selectedTubeNameCode);
-          $.proxy(this._getTubeNameList(),this);
-        }
-      }, this), 0);
-    }
-
-    if (!Tw.FormatHelper.isEmpty(params)) {
-      /* // More btn 삭제
-      this._page = 2;
-      $.extend(true, this._options, params);
-      delete this._options.searchText;
-
-      this._lastCmd = Tw.API_CMD.BFF_08_0004;
-      switch (hash) {
-        case '#addr':
-          this._lastCmd = Tw.API_CMD.BFF_08_0005;
-          break;
-        case '#tube':
-          this._lastCmd = Tw.API_CMD.BFF_08_0006;
-          break;
-      }
-
-      this._lastQueryParams = params;
-      this._lastQueryParams.searchText = encodeURIComponent(params.searchText);
-      */
-
-      delete params.searchText;
-      delete params.searchAreaNm;
-      delete params.searchLineNm;
-      delete params.currentPage;
-      $.extend(true, this._options, params);
-
-      this._isSearched = true;
-    }
-
-    // endsWith polyfill
+  _makeEndsWith: function () {
     if (!String.prototype.endsWith) {
       String.prototype.endsWith = function (searchString, position) {
         var subjectString = this.toString();
@@ -123,571 +51,622 @@ Tw.CustomerAgentsearch.prototype = {
       };
     }
   },
-  _cacheElements: function () {
-    this.$inputName = this.$container.find('#fe-input-name');
-    this.$inputAddr = this.$container.find('#fe-input-addr');
-    this.$inputTube = this.$container.find('#fe-select-name');
-    // this.$inputTube = this.$container.find('#fe-input-tube');
-    this.$btnSearchName = this.$container.find('#fe-btn-search-name');
-    this.$btnSearchAddr = this.$container.find('#fe-btn-search-addr');
-    this.$btnSearchTube = this.$container.find('#fe-btn-search-tube');
-    this.$btnOptions = this.$container.find('.fe-options');
-    this.$divNone = this.$container.find('.fe-none');
-    this.$divResult = this.$container.find('.fe-result');
-    this.$ulResult = this.$container.find('#fe-result-list');
-    this.$resultCount = this.$container.find('#fe-result-count');
-    this.$divMore = this.$container.find('.btn-more');
-  },
-  _bindEvents: function () {
-    this.$container.on('keyup', 'input', $.proxy(this._onInput, this));
-    this.$container.on('click', '.cancel', $.proxy(this._onInput, this));
-    this.$container.on('click', '#fe-btn-search-name, #fe-btn-search-addr, #fe-btn-search-tube',
-      $.proxy(this._onSearchRequested, this));
-    this.$btnOptions.on('click', $.proxy(this._onOptionsClicked, this));
-    // this.$container.on('click', '.bt-more button', $.proxy(this._onMoreRequested, this));  // page navigation으로 변경
-    this.$container.on('click', '.fe-branch-detail', $.proxy(this._onBranchDetail, this));
-    this.$container.on('click', '.fe-custom-replace-history', $.proxy(this._onTabChanged, this));
-    this.$container.on('click', '#fe-cancel-name,#fe-cancel-addr,#fe-cancel-tube',
-      $.proxy(this._onCancelInput, this));
-    this.$container.on('click', '.fe-go-page,#fe-go-first,#fe-go-prev,#fe-go-next,#fe-go-last',
-      $.proxy(this._onPaging, this));
-    this.$container.on('click', '#fe-select-area', $.proxy(this._onTubeArea, this));
-    this.$container.on('click', '#fe-select-line', $.proxy(this._onTubeLine, this));
-    this.$container.on('click', '#fe-select-name', $.proxy(this._onTubeName, this));
-    this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
+
+  /**
+   * @function
+   * @desc 현재 해쉬의 탭을 선택해준다. (새로고침하는 경우 탭 선택이 풀려서 해줘야 함)
+   */
+  _selectTab: function () {
+    this.$tabs.find('a[href="#' + this._getType() + '"]') // 현재 해쉬(#) 이름 의 a tag
+      .attr('aria-selected', true)  // 선택 되도록 selected
+      .parent().attr('aria-selected', true) // 부모(li) 도 선택되도록 selected
+      .siblings().attr('aria-selected', false)  // 나머지 친구 노드들은 false
+      .find('a').attr('aria-selected', false); // 해당 친구 노드들의 a tag 들도 false
   },
 
   /**
    * @function
-   * @desc tab 변경에 땨른 화면 처리
-   * @param  {Object} e - click event
+   * @desc 지하철 탭의 셀렉트 박스들. 3개중 1개라도 선택이 안되어 있다면 "검색" 버튼 비 활성화.
    */
-  _onTabChanged: function (e) {
-    if (this._isSearched && this._prevTab !== $(e.currentTarget).attr('href')) {
-      this.$inputName.val('');
-      this.$inputAddr.val('');
-      this.$inputTube.val('');
-      this.$container.find('#fe-select-area').text('지역선택');
-      this.$container.find('#fe-select-line').text('노선선택');
-      this.$container.find('#fe-select-name').text('지하철 역명 선택');
-      this._selectedTubeAreaCode = null;
-      this._selectedTubeLineCode = null;
-      this._selectedTubeNameCode = null;
-      this.$divResult.addClass('none');
-      this._prevTab = window.location.hash;
-      this._isSearched = false;
-
-      this.$btnSearchAddr.attr('disabled', 'disabled');
-      this.$btnSearchName.attr('disabled', 'disabled');
-      this.$btnSearchTube.attr('disabled', 'disabled');
-    }
-    location.replace(e.currentTarget.href);
-
-    // 웹접근성, 선택된 tab 에 aria-selected 값 true
-    this.$container.find('.fe-tab a').attr('aria-selected', 'false');
-    $(e.currentTarget).attr('aria-selected', 'true');
+  _onSearchButtonDisabled: function () {
+    var r = _.some(this.$btnsSelect, function (o) {
+      return Tw.FormatHelper.isEmpty($(o).attr('id'));
+    });
+    $('#fe-btn-search-tube').attr('disabled', !!r);
   },
 
   /**
    * @function
-   * @desc 검색어 입력에 따른 이벤트 처리(각각의 버튼 활성/비활성 처리)
-   * @param  {Object} e - keyup event
+   * @desc 초기 설정
+   * @private
    */
-  _onInput: function (e) {
-    var text = e.currentTarget.value.trim();
-    var enable = Tw.FormatHelper.isEmpty(text) ? false : true;
+  _init: function () {
+    this._makeEndsWith();
+    this._cacheElements();
+    this._bindEvents();
 
-    var targetId = e.currentTarget.id;
-    switch (targetId) {
-      case 'fe-input-name':
-        if (enable) {
-          this.$btnSearchName.removeAttr('disabled');
-        } else {
-          this.$btnSearchName.attr('disabled', 'disabled');
-        }
-        break;
-      case 'fe-input-addr':
-        if (enable) {
-          this.$btnSearchAddr.removeAttr('disabled');
-        } else {
-          this.$btnSearchAddr.attr('disabled', 'disabled');
-        }
-        break;
-      case 'fe-select-name':
-        if (enable) {
-          this.$btnSearchTube.removeAttr('disabled');
-        } else {
-          this.$btnSearchTube.attr('disabled', 'disabled');
-        }
-        break;
-      default:
-        break;
-    }
-  },
-
-  /**
-   * @function
-   * @desc 옵션 선택한 경우 레이어 팝업으로 옵션화면 노출
-   * @param  {Object} e - click event
-   */
-  _onOptionsClicked: function (e) {
-    this._popupService.open({
-        hbs: 'CS_02_01_01'
-      },
-      $.proxy(function ($root) {
-        Tw.CommonHelper.focusOnActionSheet($root);
-        new Tw.CustomerAgentsearchSearchOptions(
-          $root, this._options, $.proxy(this._onOptionsChanged, this));
-      }, this),
-      null,
-      'options', e
-    );
-  },
-
-  /**
-   * @function
-   * @desc 변경된 옵션에 따라 BFF로 요청할 data를 만들어줌
-   * @param  {Object} options - 변경된 옵션 값
-   */
-  _onOptionsChanged: function (options) {
-    if (!!options) {
-      this._options = options;
-
-      if (!!this._isSearched) {
-        var $activeTab = this.$container.find('li[role="presentation"][aria-selected="true"]');
-        var tabId = $activeTab.attr('id');
-        var id = 'fe-btn-search-name';
-        switch (tabId) {
-          case 'tab2':
-            id = 'fe-btn-search-addr';
-            break;
-          case 'tab3':
-            id = 'fe-btn-search-tube';
-            break;
-          default:
-            break;
-        }
-
-        this._onSearchRequested({
-          currentTarget: {
-            id: id
-          }
-        }, true);
-        return;
-      }
-
-      // make text to show about options set
-      var text = Tw.BRANCH_SEARCH_OPTIONS[this._options.storeType];
-      var optionToShow = '';
-      var count = 0;
-      for (var key in this._options) {
-        if (key === 'storeType') {
-          continue;
-        }
-        count++;
-        if (Tw.FormatHelper.isEmpty(optionToShow)) {
-          optionToShow = Tw.BRANCH_SEARCH_OPTIONS[key];
-        }
-      }
-      if (count > 0) {
-        text += ', ' + optionToShow;
-        if (count > 1) {
-          text += Tw.BRANCH_SEARCH_OPTIONS.etc + (count - 1) + Tw.BRANCH_SEARCH_OPTIONS.count;
-        }
-      }
-      this.$btnOptions.text(text);
-    }
-  },
-
-  /**
-   * @function
-   * @desc 지하철 탭에서 지역선택 시 actionsheet로 옵션 표기해줌
-   */
-  _onTubeArea: function (e) {
-    var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
-    if (!Tw.FormatHelper.isEmpty(this._selectedTubeAreaCode)) { // 선택된 항목에 checked 추가
-      list[0].list = _.map(list[0].list, $.proxy(function (item) {
-        if (item['radio-attr'].indexOf('checked') !== -1 && !(item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1)) {
-          item['radio-attr'] = item['radio-attr'].replace('checked', '');
-        } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1) {
-          item['radio-attr'] += ' checked';
-        }
-        return item;
-      }, this));
-    }
-
-    this._popupService.open({
-      hbs: 'actionsheet01',
-      layer: true,
-      data: list,
-      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(function ($root) {
-      Tw.CommonHelper.focusOnActionSheet($root);
-      $root.on('click', '.btn-floating', $.proxy(function () {
-        this._popupService.close();
-      }, this));
-      $root.on('click', 'input[type=radio]', $.proxy(function (e) {
-        var selectedAreaName = $(e.currentTarget).data('area');
-        this._selectedTubeAreaCode = $(e.currentTarget).attr('id');
-        this.$container.find('#fe-select-area').text(selectedAreaName);
-        this.$container.find('#fe-select-line').text('노선선택');
-        this._selectedTubeLineCode = null;
-        this.$container.find('#fe-select-name').text('지하철 역명 선택');
-        this._selectedTubeNameCode = null;
-        this._popupService.close();
-      }, this));
-    }, this), 
-    null, 
-    null,
-    $(e.currentTarget));
-  },
-
-  /**
-   * @function
-   * @desc 지하철 탭에서 노선 선택 시 actionsheet 로 선택 가능한 노선 표시
-   */
-  _onTubeLine: function (e) {
-    if (!this._selectedTubeAreaCode) {
-      this._popupService.openAlert('지역을 선택해 주세요.');
-      return;
-    }
-
-    var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_LINE[this._selectedTubeAreaCode];
-    if (!Tw.FormatHelper.isEmpty(this._selectedTubeLineCode)) { // 선택된 항목에 checked 추가
-      list[0].list = _.map(list[0].list, $.proxy(function (item) {
-          if (item['radio-attr'].indexOf('checked') !== -1 && !(item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1)) {
-            item['radio-attr'] = item['radio-attr'].replace('checked', '');
-          } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1) {
-          item['radio-attr'] += ' checked';
-        }
-        return item;
-      }, this));
-    }
-
-    this._popupService.open({
-      hbs: 'actionsheet01',
-      layer: true,
-      data: list,
-      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(function ($root) {
-      Tw.CommonHelper.focusOnActionSheet($root);
-      $root.on('click', '.btn-floating', $.proxy(function () {
-        this._popupService.close();
-      }, this));
-      $root.on('click', 'input[type=radio]', $.proxy(function (e) {
-        this.tubeNameList = []; // 지하철 역명 저장되는 배열
-        var selectedLine = $(e.currentTarget).data('line');
-        this.$container.find('#fe-select-line').text(selectedLine);
-        this._selectedTubeLineCode = $(e.currentTarget).attr('id');
-        this.$container.find('#fe-select-name').text('지하철 역명 선택');
-        this._selectedTubeNameCode = null;
-        $.proxy(this._getTubeNameList(), this ); // 노선 선택하면 API 호출하여 지하철 역명 리스트 생성
-        this._popupService.close();
-        // Tw.Logger.info('[라인 선택 후 지역 값 텍스트, 인코딩 전 : ]', this.$container.find('#fe-select-area').text().trim());
-        // Tw.Logger.info('[라인 선택 후 호선값 텍스트, 인코딩 전 : ]', this.$container.find('#fe-select-line').text().trim());
-
-
-      }, this));
-    }, this), 
-    null, 
-    null,
-    $(e.currentTarget));
-  },
-
-    /**
-   * @function
-   * @desc 지하철 탭에서 노선 선택 시 actionsheet 로 선택 가능한 노선 표시
-   */
-  _getTubeNameList: function () {
-
-    // Tw.Logger.info('_getTubeNameList 함수에 들어왔는지 확인');
-    // Tw.Logger.info('[리스트 만들기전 지역 값은? : ]', this._selectedTubeAreaCode);
-    // Tw.Logger.info('[리스트 만들기전 호선값은 ? : ]', this._selectedTubeLineCode);
-    // 지역 및 노선 값
-    var tubeName = {
-      // 'fe-select-area' : this.$container.find('#fe-select-area').text().trim(),
-      'fe-select-area' : encodeURIComponent(this.$container.find('#fe-select-area').text().trim()),
-      // 'fe-select-line' : this.$container.find('#fe-select-line').text().trim()
-      'fe-select-line' : encodeURIComponent(this.$container.find('#fe-select-line').text().trim())
-      // feSelectArea : this._selectedTubeAreaCode,
-      // feSelectLine : this._selectedTubeLineCode
+    // 순서 중요!! _cacheElements() 함수 다음에 호출되어야 함!!
+    this.customerAgentsearchComponent.registerHelper();
+    this._selectTab();
+    this._onSearchButtonDisabled();
+    var args = {
+      customerAgentsearch: this
     };
 
-    // Tw.Logger.info('[리스트 만들기전 파라미터 객체 값은 ? : ]', tubeName);
+    // 나와 가까운 지점 지도 생성
+    this.customerAgentsearchMap = new Tw.CustomerAgentsearchMap(args);
+    this.customerAgentsearchFilter = new Tw.CustomerAgentsearchFilter(args);
+  },
 
-    // 지하철 목록 검색(역명))
-    this._apiService.request(Tw.API_CMD.BFF_08_0078, tubeName)
-    .done($.proxy(function (res) {
-      // Tw.Logger.info('[res 값은 ? : ]', res);
-      if (res.code === Tw.API_CODE.CODE_00) {
-        // if(res.result === '0'){  0일때를 고려할지 생각중
-          // this._popupService.close();
-          // this._callback(); 혹시 다른거 처리하려면..
-        // }
-        var result = res.result;
-        // Tw.Logger.info('[Subway Name API result]', result);
+  /**
+   * @function
+   * @desc DOM caching
+   */
+  _cacheElements: function () {
+    this.tubeNameList = []; // 지하철 역명 저장되는 배열
+    this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
+    this.isKeywordSearch = false; // 맵 형식 조회인지 유무
+    this._reqParam = undefined;
 
-        var tubeNameformatList = [];
-        for (var i = 0; i < result.length; i++) {
-          var nameListObj = {
-            'label-attr': 'id="' + ((i < 10) ? '0' + i : i) + '"',
-            'radio-attr': 'id="'+ ((i < 10) ? '0' + i : i) + '" name="r2" data-name="' + result[i].subwStnNm + '"',
-            'txt': result[i].subwStnNm
-          };
+    this.$tabs = this.$container.find('.fe-tabs');  // 탭 부모 노드
+    this.$btnsSelect = this.$container.find('.fe-subway button'); // 탭(지하철) > 셀렉트 박스들
+    // 탭(지하철) > 셀렉트 박스
+    this.$btnSelectArea = this.$container.find('.fe-select-area'); // 지역 선택
+    this.$btnSelectLine = this.$container.find('.fe-select-line'); // 노선 선택
+    this.$btnSelectName = this.$container.find('.fe-select-name'); // 역명 선택
 
-          tubeNameformatList.push(nameListObj);
-        }
-        
-        this.tubeNameList.push({ 'list': tubeNameformatList });
+    this.$keyword = this.$container.find('.fe-keyword'); // 검색 필드
+    this.$search = this.$container.find('.fe-search'); // 검색 버튼
+    this.$noData = this.$container.find('.fe-nodata'); // 검색 결과 없을때 영역
+    this.$mapListArea = this.$container.find('.fe-map-list-area'); // 지도형식(지도+리스트) 영역
+    this.$mapArea = this.$container.find('#fe-map-area'); // 지도 영역
+    this.$resultListByMap = this.$mapListArea.find('.fe-result-list'); // 지점/대리점 리스트(지도+리스트)
+    this.$normalListArea = this.$container.find('.fe-normal-list-area');  // 기본 리스트 형식 영역
+    this.$resultListByList = this.$normalListArea.find('.fe-result-list'); // 지점/ 대리점 리스트(리스트)
+    this.$btnMore = this.$normalListArea.find('.fe-btn-more'); // 더보기 버튼
+    this.$resultCount = this.$container.find('#fe-result-count'); // 검색한 매장 리스트 갯수
+    this.$loading = this.$container.find('.fe-loading');  // 로딩
+    this.$toggleButton = this.$container.find('.fe-toggle-button');  // 리스트 보기/지도 보기 토글버튼
+    this.$listTitle = this.$container.find('.fe-list-title');  // 'T shop' 매장 리스트 출력시 노출되는 타이틀
+    this.$locationAlert = this.$container.find('.fe-location-alert');  // 위치정보 미동의 시 보이는 알럿 영역
+    this.$filterArea = this.$container.find('.fe-filter-area');  // 필터 영역
+    this.$listArea = this.$container.find('.fe-list-area');  // 리스트 바인딩 될 영역
+    this.$noShop = this.$container.find('.fe-no-shop');  // 반경 거리 이내에 매장 없을 때 보이는 영역
+  },
 
-        // Tw.Logger.info('[tubeNameList list 생성 되었는지]', this.tubeNameList);
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
+  _bindEvents: function () {
+    this.$keyword.on('keydown', $.proxy(this._getSearch, this)); // 검색어 input 엔터 시 검색
+    this.$search.on('click', $.proxy(this._getSearch, this)); // 검색 버튼 클릭
 
-      }
-      // Tw.Error(res.code, res.msg).pop();  // 에러 팝업을 띄울지 지울지 고민중
-    }, this))
-    .fail(function (err) {  // Fail에 대란 처리를 지울지 
-      // Tw.Logger.info('[API 조회 실패?] ]');
-      Tw.Error(err.code, err.msg).pop();
+    this.$tabs.on('click', 'li', $.proxy(this._onReset, this)); // 탭 클릭
+    this.$btnsSelect.on('click', $.proxy(this._onTube, this));  // 지하철 탭의 셀렉트 박스들 클릭시 액션시트 띄움
+    this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
+    this._createObserver();
+  },
+
+  layout: function (options) {
+    options = $.extend({
+      res: {
+        totalCount: 0,
+        regionInfoList: []
+      },
+      isDeleteAppend: true
+    },options);
+
+    var none = 'none';
+    var map = 'MAP', list = 'LIST';
+    var $locationAlert = this.$locationAlert,
+      $filterArea = this.$filterArea,
+      $noData = this.$noData,
+      $loading = this.$loading,
+      $mapListArea = this.$mapListArea,
+      $listArea = this.$listArea,
+      $noShop = this.$noShop,
+      $toggleButton = this.$toggleButton,
+      $listTitle = this.$listTitle,
+      $normalListArea = this.$normalListArea;
+    // 모두 숨김
+    var selectors = [$locationAlert, $filterArea, $noData, $loading, $mapListArea, $listArea, $noShop, $normalListArea, $listTitle, $toggleButton];
+    selectors.forEach(function (selector){
+      selector.addClass(none);
     });
 
+    var showArea = function (selectors1) {
+      selectors1.forEach(function (selector){
+        selector.removeClass(none);
+      });
+    };
+    var setMoreView = function (list, renderType) {
+      var renderList = renderType === map ? this.renderMapTypeList : this.renderNormalTypeList;
+      this._moreViewSvc.init({
+        list: list,
+        btnMore: this.$container.find('.fe-btn-more'),
+        callBack: $.proxy(renderList, this),
+        isOnMoreView: true
+      });
+    }.bind(this);
+
+    var listRender = function (options, renderType) {
+      var _list = options.res.regionInfoList;
+      if (Tw.FormatHelper.isEmpty(_list)){
+        return;
+      }
+      if (options.isDeleteAppend) {
+        this.$resultListByMap.empty();
+        this.$resultListByList.empty();
+      }
+      // 지도 타입인 경우만 body 태그에 o2o-body 클래스를 추가한다. 하단 매장 영역 고정을 위해.
+      $('body').toggleClass('o2o-body', renderType === map);
+      if (renderType === map || options.isAllList) {
+        setMoreView(_list, renderType);
+        return;
+      }
+      var renderList = renderType === map ? this.renderMapTypeList : this.renderNormalTypeList;
+      renderList.call(this, {
+        list: _list,
+        isDeleteAppend: options.isDeleteAppend
+      });
+    }.bind(this);
+
+    switch (options.type) {
+      // P.9: 위치동의 > 지도형식 (카운트영역, 지도, 리스트)
+      case 1:
+        this.resultContents(options.res.totalCount);
+        showArea([$filterArea, $mapListArea, $toggleButton, $listArea]);
+        listRender(options, map);
+        break;
+      // P.10: 위치 미동의 (위치정보 이용동의 배너(만 14세 이상인경우만 노출), 티샵예약가능 매장들)
+      case 2:
+        if (this._isAcceptAge && !this.customerAgentsearchComponent.hasStorage()) {
+          showArea([$locationAlert]);
+        }
+        showArea([$normalListArea]);
+        listRender(options, list);
+        break;
+      // P.11: 위치 동의 > 필터 > 로딩중 (로딩중)
+      case 3:
+        showArea([$loading]);
+        break;
+      /*
+        P.12: 위치 동의 > 필터 > 매장 0건일때 > 3km안에는 없지만 전체매장 중에는 있을때
+        P.16: 키워드 검색 > 검색결과 없을때
+        (카운트영역, 에러배너영역, 리스트 영역)
+        */
+      case 4:
+        this.resultContents(options.res.totalCount, options.error);
+        showArea([$filterArea, $noData, $normalListArea]);
+        listRender(options, list);
+        break;
+      // P.12: 위치 동의 > 필터 > 매장 0건일때 > 전체매장(800km 이내)에도 없을때 (카운트영역, 에러배너영역)
+      case 5:
+        this.resultContents(0, options.error);
+        showArea([$filterArea, $noData]);
+        break;
+      // P.13: 위치 동의 > 500m, 1km내에 매장 없을때 (카운트영역, 지도영역, 리스트 형식 에러 영역)
+      case 6:
+        this.resultContents(0, options.error);
+        showArea([$filterArea, $mapListArea, $toggleButton, $noShop]);
+        break;
+      // P.15: 키워드 검색 (카운트 영역(리스트/지도 버튼 미노출), 리스트 영역)
+      case 7:
+        showArea([$filterArea, $normalListArea]);
+        this.resultContents(options.res.totalCount);
+        listRender(options, list);
+        break;
+      //  P.13: 위치 동의 > 3km안에 매장 없을때 (SB 에는 카운터 영역 있지만 조회 데이터가 없기 때문에 비노출이 맞는거 같음)
+      // (에러배너영역, 리스트 영역)
+      case 8:
+        showArea([$noData, $normalListArea]);
+        this.resultContents(0, options.error);
+        listRender(options, list);
+        break;
+    }
 
   },
 
-
-    /**
+  /**
    * @function
-   * @desc 지하철 탭에서 역명 선택 시 actionsheet 로 선택 가능한 역명 표시
+   * @desc 지점/대리점 검색
+   * @param{event} e
    */
-  _onTubeName: function (e) {
-    if (!this._selectedTubeAreaCode || !this._selectedTubeLineCode) {
-      this._popupService.openAlert('지역 및 노선을 선택해 주세요.');
-      return;
-    }
-
-    // Tw.Logger.info('[현재 지하철 노선도]', this._selectedTubeNameCode);
-    var list = this.tubeNameList;
-
-    // Tw.Logger.info('[현재 지하철 노선도 list[0].list]', list[0].list);
-    if (!Tw.FormatHelper.isEmpty(this._selectedTubeNameCode)) { // 선택된 항목에 checked 추가
-      list[0].list = _.map(list[0].list, $.proxy(function (item) {
-        if (item['radio-attr'].indexOf('checked') !== -1 && !(item['radio-attr'].indexOf('id="' + this._selectedTubeNameCode) !== -1)) {
-          item['radio-attr'] = item['radio-attr'].replace('checked', '');
-        } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeNameCode) !== -1) {
-          item['radio-attr'] += ' checked';
+  _getSearch: function (e) {
+    var $target = $(e.currentTarget);
+    var param = {
+      storeType: this.getStoreTypeByQuery(),
+      currentPage: 1
+    };
+    var saveParam = {};
+    var isSendOk = false;
+    // 지하철 탭이 아닌경우(매장명/주소 탭)
+    if (this._getType() !== 'tube') {
+      var isInput = $target[0].tagName === 'INPUT';
+      var keyword = '';
+      if (isInput) {
+        if (!Tw.InputHelper.isEnter(e)) {
+          return;
         }
-        return item;
-      }, this));
+        keyword = $target.val();
+      } else {
+        keyword = $target.prev().find('.fe-keyword').val();
+      }
+      keyword = String(keyword).trim();
+      if (keyword === '') {
+        return;
+      }
+      saveParam.searchText = encodeURIComponent(keyword);
+      isSendOk = true;
+    } else {
+      $.extend(saveParam, {
+        searchAreaNm: encodeURIComponent(this.$btnSelectArea.text().trim()),
+        searchLineNm: encodeURIComponent(this.$btnSelectLine.text().trim()),
+        searchText: encodeURIComponent(this.$btnSelectName.text().trim())
+      });
+      isSendOk = true;
+    }
+    // 전송 요청 일때
+    if (isSendOk) {
+      // 보내기전 리스트 클리어
+      // this.$resultListByList.empty();
+      this._reqParam = saveParam;
+      this.customerAgentsearchFilter.clearItems();
+      this._getSearchRequest($.extend(param, saveParam));  // 지점/대리점 조회 요청
+    }
+  },
+
+  /**
+   * @function
+   * @param{number?} i 탭(지하철) 셀렉트 박스 의 인덱스 순서
+   * @desc 파라미터 i 보다 나중 select 들을 초기화 해준다.
+   */
+  _resetTubeSelect: function (i) {
+    // 탭(지하철) 셀렉트 박스 초기화
+    _.each(this.$btnsSelect, function (o, idx) {
+      if (i === undefined || i < idx) {
+        var $obj = $(o);
+        $obj.attr('id', '').data('list', '').text($obj.attr('title'));
+      }
+    });
+  },
+
+  /**
+   * @function
+   * @desc 탭 변경 일때 새로고침
+   */
+  _onReset: function (event) {
+    // 즉시 리로딩 하면 hash 값 변경되기 전에 로딩되어 약간의 시간을 줌.
+    /*setTimeout(function (){
+      this._historyService.reload();
+    }.bind(this), 50);*/
+    var hash = $(event.currentTarget).find('a').attr('href');
+    this._historyService.replaceURL(window.location.pathname + hash);
+    // 로딩중 표시
+    this.layout({
+      type: 3
+    });
+    this.$keyword.val(''); // 검색어 클리어
+    // 탭(지하철) 셀렉트 박스 초기화
+    this._resetTubeSelect();
+    this.$resultListByList.empty(); // 리스트 클리어
+    this.$resultCount.text('0'); // 검색 갯수 초기화
+    this.customerAgentsearchFilter.clearItems();
+    this.customerAgentsearchMap.reset();
+    this.customerAgentsearchMap._firstTimeFindNearShop();
+  },
+
+  /**
+   * @function
+   * @param{Event} e
+   * @desc 지하철 탭에서 selectbox 선택 시 actionsheet로 옵션 표기해줌
+   */
+  _onTube: function (e) {
+    var $target = $(e.currentTarget);
+    // 셀렉트박스 유형별 list
+    var list = {
+      area: Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA,  // 지역
+      line: Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_LINE[this.$btnSelectArea.attr('id')] // 노선
+    };
+    list = list[$target.data('type')] || $target.data('list');  // 지역 및 노선이 아니라면, "지하철 역명"
+
+    // type 이 area(지역선택) 이 아닌경우, 상위 셀렉트 박스를 선택하지 않았을 경우 알럿 노출
+    if (Tw.FormatHelper.isEmpty(list)) {
+      return this._popupService.openAlert($target.data('error-msg'));
     }
 
     this._popupService.open({
-      hbs: 'actionsheet01',
-      layer: true,
-      data: list,
-      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(function ($root) {
-      Tw.CommonHelper.focusOnActionSheet($root);
-      $root.on('click', '.btn-floating', $.proxy(function () {
-        this._popupService.close();
-      }, this));
-      $root.on('click', 'input[type=radio]', $.proxy(function (e) {
-        var selectedName = $(e.currentTarget).data('name');
-        this.$container.find('#fe-select-name').text(selectedName);
-        this._selectedTubeNameCode = $(e.currentTarget).attr('id');
-        // Tw.Logger.info('[선택된 지하철 이름]', this._selectedTubeNameCode);
-        this.$btnSearchTube.removeAttr('disabled');
-        this._popupService.close();
-      }, this));
-    }, this), 
-    null, 
-    null,
-    $(e.currentTarget));
+        hbs: 'actionsheet01',
+        layer: true,
+        data: list,
+        btnfloating: {'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
+      }, $.proxy(this._selectPopupCallback, this, $target),
+      null,
+      null,
+      $target);
   },
-
 
   /**
    * @function
-   * @desc 검색 버튼 클릭 시 검색결과 요청
-   * @param  {Object} e - click event
+   * @desc Observer 생성. 옵저버로 엘리먼트의 "속성"을 등록 해 놓으면, 속성이 변경될 때마다 해당 옵저버가 실행된다.
    */
-  _onSearchRequested: function (e, isOptions) {
-    if (e && e.currentTarget.id.indexOf('tube') !== -1) {
-      if (!this._selectedTubeAreaCode || !this._selectedTubeLineCode) {
-        this._popupService.openAlert('지역/노선을 선택해 주세요.');
+  _createObserver: function () {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    var observer = new MutationObserver($.proxy(this._startObserver, this));
+    this.$btnsSelect.each(function (n, e) {
+      observer.observe(e, {
+        attributes: true, // 속성 감지 true 설정
+        attributeFilter: ['id'] // 속성중 "id" 가 변경이 되면 옵저버 수행
+      });
+    });
+  },
+
+  /**
+   * @function
+   * @param mutations
+   * @desc 등록된 옵저버의 속성값이 변경될 시 로직 수행.(버튼 활성화 여부:_onSearchButtonDisabled())
+   */
+  _startObserver: function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.type === 'attributes') {
+        this._onSearchButtonDisabled();
+      }
+    }.bind(this));
+  },
+
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param{jQuery} $target - 클릭한 버튼 객체
+   * @param{jQuery} $layer - actionsheet 객체
+   */
+  _selectPopupCallback: function ($target, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+    var id = $target.attr('id');
+    // 선택한 셀렉트 박스 체크
+    if (!Tw.FormatHelper.isEmpty(id)) {
+      $layer.find('input#' + id).attr('checked', 'checked');
+    }
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
+  },
+
+  /**
+   * @function
+   * @desc 선택한 값 셋팅
+   * @param $target
+   * @param{Event} event
+   */
+  _setSelectedValue: function ($target, event) {
+    this._resetTubeSelect(this.$btnsSelect.index($target));
+
+    var $selectedValue = $(event.target);
+    $target.attr('id', $selectedValue.attr('id'));
+    $target.text($selectedValue.parents('label').text());
+
+    // 탭(지하철) > "노선 선택" 인 경우
+    if ($target.hasClass('fe-select-line')) {
+      this._getTubeNameList();
+    }
+    this._popupService.close();
+  },
+
+  /**
+   * @function
+   * @desc 지하철 탭에서 노선 선택 시 BFF 호출하여 수신한 노선정보를 "역명" 버튼 data 속성에 저장
+   */
+  _getTubeNameList: function () {
+    var tubeName = {
+      'fe-select-area': encodeURIComponent(this.$btnSelectArea.text().trim()),
+      'fe-select-line': encodeURIComponent(this.$btnSelectLine.text().trim())
+    };
+
+    // 지하철 목록 검색(역명))
+    this.customerAgentsearchComponent.request(Tw.API_CMD.BFF_08_0078, tubeName)
+      .done($.proxy(function (res) {
+          this.$btnSelectName.data('list', [{
+            'list': _.map(res.result, function (o, idx) {
+              var id = Tw.FormatHelper.leadingZeros(idx, 2);
+              return {
+                'label-attr': 'id="' + id + '"',
+                'radio-attr': 'id="' + id + '" name="r2"',
+                'txt': o.subwStnNm
+              };
+            })
+          }]);
+        }, this)
+      );
+  },
+
+  /**
+   * @function
+   * @desc 현재 해쉬 이름 리턴 ('name', 'addr', 'tube')
+   */
+  _getType: function () {
+    return this._historyService.getHash().replace('#', '') || 'name';
+  },
+
+  /**
+   * @function
+   * @returns {number}
+   * @desc 매장유형 리턴. 0:전체, 1:지점, 2: 대리점
+   */
+  getStoreTypeByQuery : function () {
+    var type = {
+      branch: 1,  // 지점
+      agent : 2 // 대리점
+    };
+    return type[this._query.storeType] || 0; // 없으면 전체:0
+  },
+
+  /**
+   * @function
+   * @desc 지점/대리점 조회 요청
+   * @param{JSON} param
+   */
+  _getSearchRequest: function (param) {
+    param = $.extend( {
+      currentPage: 1
+    }, param);
+    // "더보기" 버튼 data 속성 "param" 비어 있으면 더보기 이벤트 바인딩
+    if (Tw.FormatHelper.isEmpty(this.$btnMore.data('param'))) {
+      this.$btnMore.off('click').on('click', $.proxy(this._onMoreView, this));
+    }
+    // "더보기" 에서 사용 하기 위해 요청 전에 파라미터를 저장 해 놓는다.
+    this.$btnMore.data('param', param);
+    var getApiName = {
+      'name': Tw.API_CMD.BFF_08_0004,
+      'addr': Tw.API_CMD.BFF_08_0005,
+      'tube': Tw.API_CMD.BFF_08_0006
+    };
+    var apiName = getApiName[this._getType() || 'name'];
+    this.customerAgentsearchComponent.request(apiName, param).done(function (resp) {
+      this.$keyword.blur(); // 인풋 포커스 아웃을 해줘야 단말기의 "키보드" 가 아래로 내려감.
+      this.isKeywordSearch = true;
+      if (Tw.FormatHelper.isEmpty(resp.result.regionInfoList)) {
+        this.searchTShop(function (res){
+          this.layout({
+            type: 4,
+            error: 'error2',
+            res: res.result,
+            isDeleteAppend: res.isDeleteAppend
+          });
+        }.bind(this));
         return;
       }
-    }
-    // query param으로 필요한 정보를 보내면 검색관련 작업은 server rendering으로 이루어짐
-    if(isOptions){  // 옵션 필터링으로 검색 시 
-      this._historyService.replaceURL(this._getSearchUrl(e, false, null, true )); // 옵션 필터링으로 검색 시 
-    } else {
-      this._historyService.replaceURL(this._getSearchUrl(e, true));
-    }
-  },
-
-  /**
-   * @function
-   * @desc 하단 page navigation 선택에 따른 처리
-   * @param  {Object} e - click event
-   */
-  _onPaging: function (e) {
-    var $target = $(e.currentTarget);
-    if ($target.hasClass('active') || $target.hasClass('disabled')) {
-      return;
-    }
-
-    var page = $target.data('page');
-    if ($target.hasClass('fe-go-page')) {
-      page = $target.text();
-    }
-
-    this._historyService.goLoad(this._getSearchUrl(null, false, page));
-  },
-
-  /**
-   * @function
-   * @desc 검색결과 server rendering 을 위한 query param 생성
-   * @param  {Object} e - click event
-   * @param  {Boolean} bySearchBtn - 검색 버튼을 통한 검색인지, pagination을 통한 검색인지
-   * @param  {Number} page - bySearchBtn true 인 경우 targeting 할 page 번호
-   */
-  _getSearchUrl: function (e, bySearchBtn, page, isOptions) {  // bySearchBtn: true - 처음검색, false - page 검색
-    var url = '/customer/agentsearch/search?type=';
-    var hash = '#name';
-
-    if (bySearchBtn) {  // 버튼 검색인 경우 - 기존 필터 적용 되지 않도록
-      switch (e.currentTarget.id) {
-        case 'fe-btn-search-name':
-          url += 'name&keyword=' + this.$inputName.val();
-          break;
-        case 'fe-btn-search-addr':
-          url += 'addr&keyword=' + this.$inputAddr.val();
-          hash = '#addr';
-          break;
-        case 'fe-btn-search-tube':
-          var area = this.$container.find('#fe-select-area').text().trim();
-          var line = this.$container.find('#fe-select-line').text().trim();
-          var tubeName = this.$container.find('#fe-select-name').text().trim();
-          // url += 'tube&keyword=' + this.$inputTube.val() +
-          url += 'tube&keyword=' + tubeName + ':' +  this._selectedTubeNameCode +
-            '&area=' + area + ':' + this._selectedTubeAreaCode +
-            '&line=' + line + ':' + this._selectedTubeLineCode;
-          hash = '#tube';
-          break;
-        default:
-          return;
-      }
-      url += '&storeType=' + 0;
-      url += hash;
-      return url;
-    } else if (isOptions){  // 필터 검색인 경우
-      switch (e.currentTarget.id) {
-        case 'fe-btn-search-name':
-          url += 'name&keyword=' + this.$inputName.val();
-          break;
-        case 'fe-btn-search-addr':
-          url += 'addr&keyword=' + this.$inputAddr.val();
-          hash = '#addr';
-          break;
-        case 'fe-btn-search-tube':
-          var area = this.$container.find('#fe-select-area').text().trim();
-          var line = this.$container.find('#fe-select-line').text().trim();
-          var tubeName = this.$container.find('#fe-select-name').text().trim();
-          url += 'tube&keyword=' + tubeName + ':' +  this._selectedTubeNameCode +
-            '&area=' + area + ':' + this._selectedTubeAreaCode +
-            '&line=' + line + ':' + this._selectedTubeLineCode;
-          hash = '#tube';
-          break;
-        default:
-          return;
-      }
-    } else {
-      var currentHash = location.href.match(/#.*/)[0];
-      switch (currentHash) {
-        case '#name':
-          url += 'name&keyword=' + this.$inputName.val();
-          break;
-        case '#addr':
-          url += 'addr&keyword=' + this.$inputAddr.val();
-          hash = '#addr';
-          break;
-        case '#tube':
-          var areaTube = this.$container.find('#fe-select-area').text().trim();
-          var lineTube = this.$container.find('#fe-select-line').text().trim();
-          var tubeName = this.$container.find('#fe-select-name').text().trim();
-          url += 'tube&keyword=' + tubeName + ':' +  this._selectedTubeNameCode +
-            '&area=' + areaTube + ':' + this._selectedTubeAreaCode +
-            '&line=' + lineTube + ':' + this._selectedTubeLineCode;
-          hash = '#tube';
-          break;
-        default:
-          return;
-      }
-      url += '&page=' + page;
-    }
-
-    url += '&storeType=' + this._options.storeType;
-
-    url += '&options=';
-    for (var key in this._options) {
-      if (key === 'storeType') {
-        continue;
-      }
-      if (url.endsWith('&options=')) {
-        url += key;
-      } else {
-        url += '::' + key;
-      }
-    }
-    if (url.endsWith('&options=')) {
-      url = url.substring(0, url.indexOf('&options='));
-    }
-    url += hash;
-
-    return url;
-  },
-  /*  // page navigation으로 변경
-  _onMoreRequested: function () {
-    this._lastQueryParams.currentPage = this._page;
-    this._apiService.request(this._lastCmd, this._lastQueryParams)
-      .done($.proxy(this._onMoreResult, this))
-      .fail(function (err) {
-        Tw.Error(err.code, err.msg).pop();
+      this.layout({
+        type: 7,
+        res: resp.result,
+        isDeleteAppend: param.currentPage <= 1
       });
+      this._showHideMoreBtn(resp);
+    }.bind(this));
   },
-  _onMoreResult: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      this.$ulResult.append(this._searchedItemTemplate({
-        list: res.result.regionInfoList
-      }));
 
-      if (res.result.lastPageType === 'Y') {
-        this.$divMore.addClass('none');
-      } else {
-        this.$divMore.removeClass('none');
-      }
+  _moreView: function (param) {
+    // "더보기" 버튼 data 속성 "param" 비어 있으면 더보기 이벤트 바인딩
+    if (Tw.FormatHelper.isEmpty(this.$btnMore.data('param'))) {
+      this.$btnMore.off('click').on('click', $.proxy(this._onMoreView, this));
+    }
+    // "더보기" 에서 사용 하기 위해 요청 전에 파라미터를 저장 해 놓는다.
+    this.$btnMore.data('param', param);
+  },
 
-      this._page++;
+  filterSearchRequest: function (param) {
+    this._getSearchRequest($.extend(param, this._reqParam));
+  },
+
+  _showHideMoreBtn: function (resp) {
+    if (resp.result.lastPageType === 'N') {
+      this.$btnMore.removeClass('none');
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this.$btnMore.addClass('none').data('param', '');
     }
   },
-  */
 
   /**
    * @function
-   * @desc 지점 선택시 해당 지점 상세화면으로 이동
-   * @param  {Object} e - click event
+   * @param res
+   * @desc 지도형식(지도+리스트)
    */
-  _onBranchDetail: function (e) {
-    if (e.target.nodeName.toLowerCase() === 'a') {
+  renderMapTypeList: function (res) {
+    if (Tw.FormatHelper.isEmpty(res)) {
+      return;
+    }
+    this.renderList({
+      listType: Tw.LIST_TYPE.MAP,
+      list: res.list
+    });
+  },
+
+  renderList: function (options) {
+    if (!options || Tw.FormatHelper.isEmpty(options.list) || !options.listType) {
       return;
     }
 
-    var code = $(e.currentTarget).attr('value');
-
-    this._historyService.goLoad('/customer/agentsearch/detail?code=' + code);
+    this.customerAgentsearchComponent.ableTasks(options.list);
+    var $resultList = options.listType === Tw.LIST_TYPE.MAP ? this.$resultListByMap : this.$resultListByList;
+    $resultList.append(this._searchedItemTemplate({
+      list: options.list
+    }));
   },
 
+  /**
+   * @function
+   * @param res
+   * @desc 리스트 형식
+   */
+  renderNormalTypeList: function (res) {
+    if (Tw.FormatHelper.isEmpty(res)) {
+      return;
+    }
+    this.renderList({
+      listType: Tw.LIST_TYPE.LIST,
+      list: res.list
+    });
+  },
+
+  /**
+   * @function
+   * @param{Event} e
+   * @desc 더보기
+   */
+  _onMoreView: function (e) {
+    var param = $(e.currentTarget).data('param');
+    param.currentPage++;
+    this._getSearchRequest(param);
+  },
+
+  resultContents: function (cnt, err) {
+    if (!Tw.FormatHelper.isEmpty(cnt)) {
+      this.$resultCount.text(cnt);
+    }
+    if (err) {
+      var $contents = this.$noData.find('.fe-err-msg');
+      $contents.html($contents.data(err));
+    }
+  },
+
+  searchTShop: function (callback) {
+    var self = this;
+    var onMoreView = function (e) {
+      var param = $(e.currentTarget).data('param');
+      param.currentPage++;
+      self.customerAgentsearchComponent.request(Tw.API_CMD.BFF_08_0004, param).done(function (res){
+        self._showHideMoreBtn(res);
+        if (callback){
+          res.isDeleteAppend = false;
+          callback(res);
+        }
+      });
+    };
+
+    // "더보기" 버튼 data 속성 "param" 비어 있으면 더보기 이벤트 바인딩
+    if (Tw.FormatHelper.isEmpty(this.$btnMore.data('param'))) {
+      this.$btnMore.off('click').on('click', onMoreView);
+    }
+
+    var param = {
+      storeType: '0',
+      // todo JK : param.tSharpYn 값이 없어서 임시로 param.test 사용.
+      tSharpYn: 'Y',
+      // test: 'Y',
+      // searchText : encodeURIComponent('강남'), // 티샵 예약가능 매장이 없어서. 임시로 을지로 조회로 대체
+      currentPage: 1
+    };
+    // "더보기" 에서 사용 하기 위해 요청 전에 파라미터를 저장 해 놓는다.
+    this.$btnMore.data('param', param);
+    this.customerAgentsearchComponent.request(Tw.API_CMD.BFF_08_0004, param).done(function (res){
+      this._showHideMoreBtn(res);
+      if (callback){
+        res.isDeleteAppend = true;
+        callback(res);
+      }
+      if (res.result.totalCount > 0) {
+        this.$listTitle.removeClass('none');
+      }
+    }.bind(this));
+  },
 
   /**
    * @function
@@ -697,50 +676,17 @@ Tw.CustomerAgentsearch.prototype = {
   _onExternalLink: function (e) {
     if(Tw.BrowserHelper.isApp()) {
       Tw.CommonHelper.showDataCharge(
-          $.proxy(function () {
-            var url = $(e.currentTarget).attr('href');
-            Tw.CommonHelper.openUrlExternal(url);
-          }, this)
+        $.proxy(function () {
+          var url = $(e.currentTarget).attr('href');
+          Tw.CommonHelper.openUrlExternal(url);
+        }, this)
       );
-      // return false;
+
     } else {
       var url = $(e.currentTarget).attr('href');
       Tw.CommonHelper.openUrlExternal(url);
     }
-
     return false;
-  },
-
-
-/**
-   * @function
-   * @desc 필요한 경우 호출하여 과금 팝업 발생, 동의 시 콜백 실행
-   * @param  {Function} onConfirm - 동의 시 실행할 callback
-   */
-  _showDataChargePopup: function (onConfirm) {
-    this._popupService.openConfirm(
-      Tw.POPUP_CONTENTS.NO_WIFI,
-      null,
-      $.proxy(function () {
-        this._popupService.close();
-        onConfirm();
-      }, this)
-    );
-  },
-
-  /**
-   * @function
-   * @desc 검색필드에 x버튼으로 입력 내용 삭제 시 필요한 처리
-   * @param  {Object} e - click event
-   */
-  _onCancelInput: function (e) {
-    var $target = $(e.currentTarget);
-    if ($target.attr('id').indexOf('name') !== -1) {
-      this.$btnSearchName.attr('disabled', 'disabled');
-    } else if ($target.attr('id').indexOf('addr') !== -1) {
-      this.$btnSearchAddr.attr('disabled', 'disabled');
-    } else if ($target.attr('id').indexOf('tube') !== -1) {
-      this.$btnSearchTube.attr('disabled', 'disabled');
-    }
   }
 };
+

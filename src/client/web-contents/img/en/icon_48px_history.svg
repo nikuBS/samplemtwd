@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>mdpi/##Icon/48/History</title>
+    <desc>Created with Sketch.</desc>
+    <g id="##Icon/48/History" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="48" height="48"></rect>
+        <g id="Group-15" transform="translate(5.000000, 2.000000)" stroke="#333333">
+            <path d="M32,5.7959 C32,8.7199 24.836,11.0909 16,11.0909 C7.164,11.0909 0,8.7199 0,5.7959 C0,2.8719 7.164,0.4999 16,0.4999 C24.836,0.4999 32,2.8719 32,5.7959 Z" id="Stroke-3" stroke-width="1.998" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M32,15.2695 C32,18.1935 24.836,20.5645 16,20.5645 C7.164,20.5645 0,18.1935 0,15.2695" id="Stroke-5" stroke-width="1.998" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M26.6489,28.6958 C23.8199,29.5308 20.0889,30.0388 15.9999,30.0388 C7.1639,30.0388 0.0009,27.6688 0.0009,24.7428" id="Stroke-7" stroke-width="1.998" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M31.9995,20.4443 L31.9995,5.9033" id="Stroke-9" stroke-width="1.998" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M0,5.9038 L0,33.5208 C0,36.2918 5.893,39.2028 14.542,39.4998" id="Stroke-11" stroke-width="1.998" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M23.791,43.4971 C25.365,43.4971 30.098,41.4351 34.256,37.0021 C38.415,32.5681 40,29.0061 40,27.4071 C40,26.6581 39.844,25.5511 39.022,24.7341 L37.141,22.8641 C36.744,22.4731 36.037,22.3461 35.605,22.7381 L31.858,26.5131 C31.407,26.9611 31.407,27.5571 31.858,27.9931 L34.059,30.1721 C34.467,30.7901 33.593,32.5301 31.522,34.5921 C29.472,36.6251 27.484,38.0031 26.602,37.7171 L26.107,37.3171 L24.613,35.7581 C24.137,35.2841 23.408,35.2821 22.929,35.7581 L19.37,39.3041 C18.877,39.7921 18.877,40.3371 19.369,40.8281 L21.105,42.5511 C21.125,42.5721 21.146,42.5901 21.17,42.6061 L21.31,42.7071 C21.985,43.2431 22.723,43.5001 23.609,43.5001 C23.669,43.5001 23.73,43.4991 23.791,43.4971 Z" id="Stroke-13" stroke-width="2"></path>
+        </g>
+    </g>
+</svg>

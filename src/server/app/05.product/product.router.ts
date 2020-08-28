@@ -50,6 +50,7 @@ import ProductMobileplanAddSetting5gxWatchtab from './controllers/mobileplan-add
 import ProductMobileplanAddSettingNumberPlus2nd from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.number-plus2nd.controller';
 import ProductMobileplanAddSettingSmartCallPick from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.smartcall-pick.controller';
 import ProductMobileplanAddLookupPayment from './controllers/mobileplan-add/lookup/product.mobileplan-add.lookup.payment.controller';
+import ProductMobileplanAddLookupSilverNoti from './controllers/mobileplan-add/lookup/product.mobileplan-add.lookup.silver-noti.controller';
 
 import ProductWire from './controllers/wireplan/product.wireplan.controller';
 import ProductWires from './controllers/wireplan/product.wireplan.list.controller';
@@ -157,6 +158,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add/setting/number-plus2nd', controller: ProductMobileplanAddSettingNumberPlus2nd });
     this.controllers.push({ url: '/mobileplan-add/setting/smartcall-pick', controller: ProductMobileplanAddSettingSmartCallPick });
     this.controllers.push({ url: '/mobileplan-add/lookup/payment', controller: ProductMobileplanAddLookupPayment });
+    this.controllers.push({ url: '/mobileplan-add/lookup/silver-noti', controller: ProductMobileplanAddLookupSilverNoti });
     this.controllers.push({ url: '/mobileplan-add/terminate', controller: ProductMobileplanAddTerminate });
 
     this.controllers.push({ url: '/wireplan', controller: ProductWire });

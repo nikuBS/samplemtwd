@@ -30,7 +30,7 @@
                         <% if (content) { %>
                         <ul class="fe-content-list" data-page="<%= totalPages %>" data-cnt="<%= totalElements %>">
                             <% for (var i = 0; i < content.length; i++) { %>
-                            <li id="<%= content[i].prNum %>" class="fe-first fe-done">
+                            <li id="<%= content[i].prNum %>" class="fe-first fe-done" data-billYn="<%= content[i].billYn %>">
                                 <button class="btn" title="이벤트 자세히보기">
                                     <span class="tit fe-event-title"><%= content[i].prNm %></span>
                                     <span class="subtxt">

@@ -1268,3 +1268,11 @@
 .idpt-benefit .tod-bg-list-title > span {display:inline-block; margin-right:4px; font-size:0.8125rem; font-weight:normal;}
 .idpt-benefit .tod-fontS14 {font-size:0.875rem;}
 .idpt-benefit .idpt-data-info .tod-data-info-sup-txt {display:block; margin:-12px 0 9px; font-size:0.875rem; color:#666;}
+
+/* 200812 [OP002-9988] Care8 DNA 부가서비스 Tworld 가입 화면 개발 요청 */
+.idpt-benefit.all-no-padding{padding:0}
+.idpt-benefit .benefit-img.all-no-margin{margin:0; width:100%; max-width:none}
+.idpt-benefit .benefit-img.all-no-margin img{vertical-align:top; width:100%}
+.idpt-benefit .tod-care-list-wrap{padding:2.3125rem 1rem 0; }
+.idpt-benefit .tod-care-list-wrap .idpt-bg-list{margin-top:0}
+.idpt-benefit .tod-care-solution .tod-care-solution-list img{width:100%; vertical-align:top}

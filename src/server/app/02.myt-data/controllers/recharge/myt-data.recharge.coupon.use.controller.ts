@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT, TIME_UNIT, MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
+import { DATA_UNIT, MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 import { TPLAN_LARGE_PROD_ID } from '../../../../types/bff.type';
 
@@ -29,6 +29,7 @@ interface Product {
   basOfrCharCntCtt: string;
   basFeeInfo: string;
 }
+
 interface Coupon {
   copnIsueNum: string;
   copnNm: string;
@@ -90,6 +91,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
 
     let no: string, name: string, period: string, tab: string, isGift: boolean;
+    // isGift  - 선물받은 쿠폰 여부
     const auto = req.query.auto === 'Y';
     if (auto) {
       this.getMostSuitableCoupon(res, svcInfo, pageInfo)

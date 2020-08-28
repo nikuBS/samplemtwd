@@ -69,6 +69,8 @@ Tw.API_CMD = {
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
   BFF_01_0064: { path: '/:version/mask-methods', method: Tw.API_METHOD.GET },
   BFF_01_0065: { path: '/core-modification/:version/share-scuturl', method: Tw.API_METHOD.GET },
+  BFF_01_0069: { path: '/core-modification/:version/preference-property', method: Tw.API_METHOD.GET },
+  
   // AUTH
   BFF_03_0002: { path: '/:version/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/:version/user/accounts', method: Tw.API_METHOD.DELETE },
@@ -130,6 +132,7 @@ Tw.API_CMD = {
   BFF_05_0022: { path: '/core-bill/:version/hotbills', method: Tw.API_METHOD.GET },
   BFF_05_0024: { path: '/core-bill/:version/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0027: { path: '/core-bill/:version/bill-types', method: Tw.API_METHOD.PUT },
+  BFF_05_0030: { path: '/core-bill/:version/bill-pay/unpaid-bills', method: Tw.API_METHOD.GET },
   BFF_05_0031: { path: '/core-bill/:version/bill-pay/payment-possible-day', method: Tw.API_METHOD.GET },
   BFF_05_0032: { path: '/core-bill/:version/bill-pay/payment-possible-day-input', method: Tw.API_METHOD.POST },
   BFF_05_0033: { path: '/core-bill/:version/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
@@ -237,6 +240,7 @@ Tw.API_CMD = {
   BFF_05_0217: { path: '/core-modification/:version/data-refill', method: Tw.API_METHOD.GET },
   BFF_05_0218: { path: '/core-modification/:version/specialized-benefits', method: Tw.API_METHOD.GET },
   BFF_05_0219: { path: '/core-modification/:version/custum-benefits', method: Tw.API_METHOD.GET },
+  BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
@@ -672,9 +676,14 @@ Tw.SESSION_CMD = {
 
 Tw.TMAP = {
   URL: 'https://api2.sktelecom.com/tmap',
-  PIN: '/img/ico/ico-tmap-pin.png',
+  PIN_RED: '/img/ico/ico-pin-red.png',
+  PIN_GRAY: '/img/ico/ico-pin-gray.png',
   COMPASS: '/img/ico/ico-tmap-compass.png',
   APP_KEY: 'ecfeceac-3660-4618-bc3b-37a11f952441'
+};
+
+Tw.TShop = {
+  IMG_URL: 'https://{0}tsharp.io'
 };
 
 Tw.AJAX_CMD = {
@@ -693,7 +702,8 @@ Tw.AJAX_CMD = {
     method: Tw.API_METHOD.POST,
     url: Tw.IPIN_URL,
     contentType: 'application/x-www-form-urlencoded'
-  }
+  },
+  GET_TSHOP_IMG_LIST: { path: '/api/store/store/images', method: Tw.API_METHOD.GET, url: '' }
 };
 
 Tw.API_CODE = {

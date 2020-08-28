@@ -22,10 +22,30 @@
                 <!-- cont-box -->
                 <div class="cont-box">
                     <!-- .shop-info -->
-                    <div class="shop-info">
+                    <div class="shop-info tod-shop-info fe-shop-info">
+                        <%if(detail.shopTypeNm){%>
+                        <!-- .shop-tag -->
+                        <div class="shop-tag">
+                            <span class="tag"><%-detail.shopTypeNm%></span>
+                        </div>
+                        <!-- // .shop-tag -->
+                        <%}%>
+
                         <!-- .shop-nam -->
                         <div class="shop-name"><%= detail.storeName %></div>
                         <!-- // .shop-nam -->
+
+                        <!-- .shop-map -->
+                        <div class="shop-map">
+                            <!-- 나의 위치 -->
+                            <div class="map-pos-my" style="position: absolute; right: 16px; top: 20px;z-index: 1;">
+                                <button type="button" id="fe-myLocation" class="tod-map-pos"><span class="blind">내위치</span></button>
+                            </div>
+                            <div id="fe-tmap-box"></div> <!--지도 부분-->
+                            <!--<button class="btn-mapfind"><img src="<%-CDN%>/img/ico/btn-roadfind.png" alt="길찾기"></button>--><!-- 길찾기 : 7월 30일 이후에  진행 -->
+                        </div>
+                        <!--// .shop-map -->
+
                         <% if (detail.custRateCnt !== '0' && detail.custRateAvg !== '0') { %>
                         <!-- .shop-rating -->
                         <div class="shop-rating">
@@ -35,67 +55,134 @@
                         </div>
                         <!-- // .shop-rating -->
                         <% } %>
-                        <!-- .shop-tag -->
-                        <div class="shop-tag">
-                            <!-- 5GX체험존 및 VR체험존 태그 조건 비교 -->
-                            <% if (isExpZone) { %>
-                                <% if (detail.fiveGxYn === 'Y') { %><span class="tag">5GX 체험존</span><% } %>
-                                <% if (detail.fiveVrYn === 'Y') { %><span class="tag">VR 체험존</span><% } %>
-                            <!--행복 커뮤니티 센터-->
-                            <% } else if (isHappy) { %>
-                                <% if (detail.speedYn === 'Y') { %><span class="tag">스마트폰 기초 과정</span><% } %>
-                                <% if (detail.applEduYn === 'Y') { %><span class="tag">스마트폰 응용 과정</span><% } %>
-                                <% if (detail.codingEduYn === 'Y') { %><span class="tag">코딩 교실</span><% } %>
-                             <% }  else { %>
-                                <% if (detail.direct === 'Y') { %><span class="tag">바로 픽업</span><% } %>
-                                <% if (detail.premium === 'Y') { %><span class="tag">T프리미엄스토어</span><% } %>
-                                <% if (detail.rent === 'Y') { %><span class="tag">임대폰</span><% } %>
-                                <% if (detail.skb === 'Y') { %><span class="tag">SK브로드밴드</span><% } %>
-                                <% if (detail.apple === 'Y') { %><span class="tag">애플취급점</span><% } %>
-                                <% if (detail.authAgnYn === 'Y') { %><span class="tag">공식인증 대리점</span><% } %>
-                            <% } %>
-                        </div>
-                        <!-- // .shop-tag -->
-                        <!-- .shop-map -->
-                        <div class="shop-map">
-                            <div id="fe-tmap-box"></div>
-                        </div>
                         <!-- .shop-txt -->
                         <div class="shop-txt">
                             <ul>
                                 <li>
-                                    <dl class="type01">
-                                        <dt>주소</dt>
-                                        <dd><%= detail.searchAddr %><br /><%= detail.jibunAddr %></dd>
+                                    <dl>
+                                        <dt class="blind">주소</dt>
+                                        <dd>
+                                            <span class="txt"><em class="blind">도로명주소</em><%= detail.searchAddr %></span>
+                                            <span class="txt"><em class="blind">지번주소</em><%= detail.jibunAddr %></span>
+                                        </dd>
                                     </dl>
                                 </li>
                                 <li>
-                                    <dl class="type02">
-                                        <dt>연락처</dt>
-                                        <dd><%= detail.tel %><a class="bt-tel" href="tel:<%= detail.tel %>"><span role="img" class="blind">매장으로 전화하기</span></a></dd>
-                                    </dl>
-                                </li>
-                                <!--<li>
-                                    <dl class="type01">
-                                        <dt>운영시간</dt>
-                                        <dd>평일 <%= detail.weekdayOpenTime %>~<%= detail.weekdayCloseTime %></dd>
-                                        <dd>주말 <%= detail.satOpenTime %>~<%= detail.satCloseTime %></dd>
-                                        <dd>공휴 <%= detail.holidayOpenTime %>~<%= detail.holidayCloseTime %></dd>
-                                    </dl>
-                                </li>-->
-                                <li>
-                                    <dl class="type03">
-                                        <dt>찾아오시는길</dt>
-                                        <% for (let i = 0; i < detail.talkMapArr.length; i += 1) { %>
-                                        <dd><%= detail.talkMapArr[i] %></dd>
-                                        <% } %>
+                                    <dl>
+                                        <dt class="blind">운영시간</dt>
+                                        <dd>
+                                            <span class="tit">평일</span>
+                                            <span class="desc"><%-detail.weekTime%></span>
+                                        </dd>
+                                        <dd>
+                                            <span class="tit">토요일/공휴일</span>
+                                            <span class="desc"><%-detail.satTime%></span>
+                                        </dd>
+                                        <dd>
+                                            <span class="tit">일요일</span>
+                                            <span class="desc"><%-detail.sunTime%></span>
+                                        </dd>
+                                        <%# 특이사항 있을때만 노출함%>
+                                        <%_ if (!!detail.businessHourEtc) { _%>
+                                        <dd>
+                                            <span class="tit">특이사항</span>
+                                            <span class="desc"><%- detail.businessHourEtc%></span>
+                                        </dd>
+                                        <%_ } _%>
                                     </dl>
                                 </li>
                             </ul>
                         </div>
                         <!-- // .shop-txt -->
+
+                        <!-- .tod-o2o-btn hbs 영역-->
                     </div>
                     <!-- // .shop-info -->
+                </div>
+                <!-- // cont-box -->
+
+                <!--처리업무 ~ 기타 영역-->
+                <%
+                    detail.services.forEach( (item, idx) => {
+                    const isPossible = item.category === 'POSSIBLE_TASK';
+                    const clsNm = !isPossible ? 'blue' : 'gray';
+                    const addHashTag = isPossible ? '#' : '';
+                %>
+                <% if (idx === 0) { %>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <% }%>
+
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <div class="tod-shop-texts">
+                        <p class="tit"><%-item.title%></p>
+                        <div class="list">
+                            <%item.datas.forEach( data => {%>
+                            <span class="item-txt <%-clsNm%>"><%-`${addHashTag}${data}`%></span>
+                            <%});%>
+                        </div>
+                    </div>
+                </div>
+                <!-- // cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!--매장 소개-->
+                <%if ((detail.prPhrs && detail.prPhrs.trim().length > 0) && (isPossible || idx === 0)) {%>
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <div class="tod-shop-texts">
+                        <p class="tit">매장소개</p>
+                        <div class="list">
+                            <!-- 200723 수정 :백엔드에서 데이터 수신시 리스트 형식이 아닌 한개의 값으로 셋팅되어 수정됨.   -->
+                            <div class="ol-list">
+                                <%-detail.prPhrs%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+                <%}%>
+                <!--// 매장 소개-->
+
+                <%});%>
+                <!--//처리업무 ~ 기타 영역-->
+
+                <!--매장 이미지 ajax로 가져오는 부분-->
+                <div id="fe-gallery" class="none">
+                    <!-- cont-box -->
+                    <div class="cont-box nogaps ">
+                        <div class="tod-shop-gallery">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider1 fe-slider-area"><!-- 자동롤링 기능 필요할 경우 data-slider-auto="true" 추가 -->
+                                    <div class="slider-box">
+                                        <ul class="slider fe-slider">
+                                            <!--이미지 렌더링 영역-->
+                                            <!--<li><span class="slide-item" ><img src="<%-CDN%>/img/dummy/dmy-o2o-1.png" alt=""></span></li>
+                                            <li><span class="slide-item" ><img src="<%-CDN%>/img/dummy/dmy-o2o-2.png" alt=""></span></li>
+                                            <li><span class="slide-item" ><img src="<%-CDN%>/img/dummy/dmy-o2o-3.png" alt=""></span></li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
+                        </div>
+                    </div>
+                    <!-- // cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true">
+                </div>
+                <!--//매장 이미지 ajax로 가져오는 부분-->
+
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <div class="tod-shop-place">
+                        <ul>
+                            <li class="item"><a href="/customer/agentsearch/repair" class="link-as">A/S센터 찾기</a></li>
+                            <li class="item"><a href="/customer/agentsearch/expzone5gx" class="link-5gx">5GX 체험존 찾기</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- // cont-box -->
             </div>
@@ -109,12 +196,36 @@
 </body>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/tmap.component.html %>
+
+<script type="text/template" id="tpl_img">
+    {{#list}}
+        <li><span class="slide-item" ><img src="{{this}}" alt=""></span></li>
+    {{/list}}
+</script>
+<script type="text/template" id="tpl_contact_item">
+    {{#if isReserve}}
+    <div class="tod-o2o-btns col2">
+        <a class="btn btn-phone fe-tel" data-tel="{{tel}}">전화걸기</a>
+        <a href="#" class="btn btn-booking fe-booking" data-booking-url="{{url}}" data-charge="{{charge}}">상담 예약</a>
+    </div>
+    {{else}}
+    <div class="tod-o2o-btns col1">
+        <a class="btn btn-phone fe-tel" data-tel="{{tel}}">전화걸기</a>
+    </div>
+    {{/if}}
+</script>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerAgentsearchDetail($('#fe-tmap-box'), {
-      lon: '<%= detail.geoX %>',
-      lat: '<%= detail.geoY %>'
-    }, '<%= svcInfo !== null %>');
+    var options = {
+      coord: {
+        lon: '<%- detail.geoX %>',
+        lat: '<%- detail.geoY %>'
+      },
+      svcInfo: JSON.parse('<%- JSON.stringify(svcInfo)%>'),
+      detail: JSON.parse('<%- JSON.stringify(detail)%>'),
+      locCode: '<%-detail.locCode%>'
+    };
+    new Tw.CustomerAgentsearchDetail($('.wrap'), options);
   });
 </script>
 <% include ../../components/end.component.html %>
