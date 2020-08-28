@@ -61,6 +61,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._initEmrNotice(emrNotice, this.isLogin);
   this._getQuickMenu(this.isLogin);
   this._initPersonAction();
+  this._openSijugnNoticePopup();
 
   if ( this.isLogin ) {
     this._cachedElement();
@@ -2556,5 +2557,29 @@ Tw.MainHome.prototype = {
     if ( personIcoClickYN !== 'Y' ) {
       personAction();
     }
+  },
+
+  _openSijugnNoticePopup: function() {
+    alert(1);
+
+    this._popupService.open({
+      hbs: 'MA_03_01_02_01_06'
+    }, $.proxy(this._onOpenRecommendProdsGuidePopup, this));
+
+    alert(2);
+
+    // var popupOptions = {
+    //   hbs: 'MA_03_01_02_01_06'
+    // };
+    // popupOptions = $.extend(popupOptions, {
+    //   img_src: Tw.Environment.cdn + "/img/main/correct.png"
+    // });
+
+    // this._popupService.open({
+    //   hbs: 'MA_03_01_02_01_06',
+    //   img_src: Tw.Environment.cdn + "/img/main/correct.png" || "/img/main/correct.png"
+    // }, $.proxy(this._onOpenRecommendProdsGuidePopup, this));
+
+    // this._popupService.open(popupOptions, null, null, 'notice_popup');
   }
 };
