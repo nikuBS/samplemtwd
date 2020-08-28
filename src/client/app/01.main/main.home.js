@@ -61,7 +61,11 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._initEmrNotice(emrNotice, this.isLogin);
   this._getQuickMenu(this.isLogin);
   this._initPersonAction();
-  this._openSijugnNoticePopup();
+  if ( Tw.FormatHelper.isEmpty(Tw.CommonHelper.getLocalStorage(Tw.NTV_STORAGE.TEMPORARY_NOTICE)) ) {
+    // 임시 공지사항 쿠키정보가 없으면 팝업 노출 - 시정임시팝업
+    // cdn url 정보 셋팅이 필요하여 timeout 추가
+    setTimeout($.proxy(this._openSijungNoticePopup, this), 2000);
+  }
 
   if ( this.isLogin ) {
     this._cachedElement();
@@ -2559,27 +2563,23 @@ Tw.MainHome.prototype = {
     }
   },
 
-  _openSijugnNoticePopup: function() {
-    alert(1);
-
+  _openSijungNoticePopup: function () {
     this._popupService.open({
-      hbs: 'MA_03_01_02_01_06'
-    }, $.proxy(this._onOpenRecommendProdsGuidePopup, this));
-
-    alert(2);
-
-    // var popupOptions = {
-    //   hbs: 'MA_03_01_02_01_06'
-    // };
-    // popupOptions = $.extend(popupOptions, {
-    //   img_src: Tw.Environment.cdn + "/img/main/correct.png"
-    // });
-
-    // this._popupService.open({
-    //   hbs: 'MA_03_01_02_01_06',
-    //   img_src: Tw.Environment.cdn + "/img/main/correct.png" || "/img/main/correct.png"
-    // }, $.proxy(this._onOpenRecommendProdsGuidePopup, this));
-
-    // this._popupService.open(popupOptions, null, null, 'notice_popup');
+      hbs: 'MA_03_01_02_01_06',
+      layer: true,
+      img_src: Tw.Environment.cdn + '/img/main/correct.png'
+    }, $.proxy(function ($popup) {
+      // open callback
+      $popup.on('click', '.correct-all-close', $.proxy(function () {
+        // cookie
+        Tw.CommonHelper.setLocalStorage(Tw.NTV_STORAGE.TEMPORARY_NOTICE, 'Y');
+        this._popupService.close();
+      }, this));
+      $popup.on('click', '.correct-close', $.proxy(function () {
+        this._popupService.close();
+      }, this));
+    }, this), function () {
+      // close callback
+    }, 'notice', this.$container);
   }
 };
