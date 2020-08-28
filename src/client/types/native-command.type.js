@@ -101,7 +101,8 @@ Tw.NTV_STORAGE = {
   COACH_MYTDATA_HOTDATA_SHARE: 'coachMyTDataHotDataShare',
   COACH_PRODUCT_MOBILEPLAN_TOTAL: 'coachProductMobilePlanTotal',
   COMMON_MEMBER_LINE_GUIDE: 'commonMemberLineGuide',
-  XTVID: 'xtvId'
+  XTVID: 'xtvId',
+  TEMPORARY_NOTICE: 'temporaryNotice'
 };
 
 Tw.NTV_PAGE_KEY = {
