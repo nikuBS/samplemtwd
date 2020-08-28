@@ -61,10 +61,10 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._initEmrNotice(emrNotice, this.isLogin);
   this._getQuickMenu(this.isLogin);
   this._initPersonAction();
-  if ( Tw.FormatHelper.isEmpty(Tw.CommonHelper.getCookie(Tw.NTV_STORAGE.TEMPORARY_NOTICE)) ) {
+  if ( Tw.FormatHelper.isEmpty(Tw.CommonHelper.getLocalStorage(Tw.NTV_STORAGE.TEMPORARY_NOTICE)) ) {
     // 임시 공지사항 쿠키정보가 없으면 팝업 노출 - 시정임시팝업
     // cdn url 정보 셋팅이 필요하여 timeout 추가
-    setTimeout($.proxy(this._openSijungNoticePopup, this), 3000);
+    setTimeout($.proxy(this._openSijungNoticePopup, this), 2000);
   }
 
   if ( this.isLogin ) {
@@ -2572,7 +2572,7 @@ Tw.MainHome.prototype = {
       // open callback
       $popup.on('click', '.correct-all-close', $.proxy(function () {
         // cookie
-        Tw.CommonHelper.setCookie(Tw.NTV_STORAGE.TEMPORARY_NOTICE, 'Y', 365);
+        Tw.CommonHelper.setLocalStorage(Tw.NTV_STORAGE.TEMPORARY_NOTICE, 'Y');
         this._popupService.close();
       }, this));
       $popup.on('click', '.correct-close', $.proxy(function () {

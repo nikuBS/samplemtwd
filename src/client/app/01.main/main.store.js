@@ -28,6 +28,12 @@ Tw.MainStore = function (rootEl, menuId) {
   } else {
     this._setBanner();
   }
+
+  if ( Tw.FormatHelper.isEmpty(Tw.CommonHelper.getLocalStorage(Tw.NTV_STORAGE.TEMPORARY_NOTICE)) ) {
+    // 임시 공지사항 쿠키정보가 없으면 팝업 노출 - 시정임시팝업
+    // cdn url 정보 셋팅이 필요하여 timeout 추가
+    setTimeout($.proxy(this._openSijungNoticePopup, this), 2000);
+  }
 };
 
 Tw.MainStore.prototype = {
@@ -58,29 +64,29 @@ Tw.MainStore.prototype = {
 
    // 스마트폰
    if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010" === url) {
-    // 과금 알럿 노출 
+    // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
-    
+
   }
-  // 태블릿 
+  // 태블릿
   else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010" === url) {
-    // 과금 알럿 노출 
+    // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
   }
-  // 스마트워치 
+  // 스마트워치
   else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010" === url) {
-    // 과금 알럿 노출 
+    // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
   }
-  // T다이렉트샵 휴대폰 상담 바로가기  
+  // T다이렉트샵 휴대폰 상담 바로가기
   else if ('https://m.shop.tworld.co.kr/popup/phone-counsel?utm_source=tworld&utm_medium=app_banner&utm_campaign=counsel&utm_content=store&fSiteCd=1010' === url) {
-    // 과금 알럿 노출 
+    // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
@@ -140,7 +146,7 @@ Tw.MainStore.prototype = {
     this._adid = res.params.adid;
 
     if ( url.indexOf('?') > -1 ) {
-      str = '&';        
+      str = '&';
     }
 
     url += str + 'url=1&dstUrl=' + encodeURIComponent(dstUrl) + '&adid=' + this._adid;
@@ -226,7 +232,7 @@ Tw.MainStore.prototype = {
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
         if(!row.banner.result.summary){
-          row.banner.result.summary = {target: row.target};  
+          row.banner.result.summary = {target: row.target};
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
@@ -235,7 +241,7 @@ Tw.MainStore.prototype = {
       }
 
       if(admBanner.code === Tw.API_CODE.CODE_00){
-        row.banner.result.imgList = row.banner.result.imgList.concat( 
+        row.banner.result.imgList = row.banner.result.imgList.concat(
           admBanner.result.banners.filter(function(admbnr){
             return admbnr.bnnrLocCd === row.target;
           }).map(function(admbnr){
@@ -274,7 +280,7 @@ Tw.MainStore.prototype = {
       if ( bnr.banner.result.bltnYn === 'N' ) {
         this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
       }
-      
+
       if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
         if ( bnr.target === '7' ) {
           this._membershipBanner = {
@@ -408,5 +414,25 @@ Tw.MainStore.prototype = {
    */
   _successDrawBanner: function () {
     // this._resetHeight();
+  },
+
+  _openSijungNoticePopup: function () {
+    this._popupService.open({
+      hbs: 'MA_03_01_02_01_06',
+      layer: true,
+      img_src: Tw.Environment.cdn + '/img/main/correct.png'
+    }, $.proxy(function ($popup) {
+      // open callback
+      $popup.on('click', '.correct-all-close', $.proxy(function () {
+        // cookie
+        Tw.CommonHelper.setLocalStorage(Tw.NTV_STORAGE.TEMPORARY_NOTICE, 'Y');
+        this._popupService.close();
+      }, this));
+      $popup.on('click', '.correct-close', $.proxy(function () {
+        this._popupService.close();
+      }, this));
+    }, this), function () {
+      // close callback
+    }, 'notice', this.$container);
   }
 };
