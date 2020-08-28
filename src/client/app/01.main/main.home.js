@@ -63,7 +63,8 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._initPersonAction();
   if ( Tw.FormatHelper.isEmpty(Tw.CommonHelper.getCookie(Tw.NTV_STORAGE.TEMPORARY_NOTICE)) ) {
     // 임시 공지사항 쿠키정보가 없으면 팝업 노출 - 시정임시팝업
-    this._openSijungNoticePopup();
+    // cdn url 정보 셋팅이 필요하여 timeout 추가
+    setTimeout($.proxy(this._openSijungNoticePopup, this), 3000);
   }
 
   if ( this.isLogin ) {
