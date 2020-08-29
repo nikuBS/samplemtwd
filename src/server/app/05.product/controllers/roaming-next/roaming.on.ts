@@ -4,6 +4,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import EnvHelper from '../../../../utils/env.helper';
+import moment from 'moment';
 
 const ISO3166 = {
   '412': ['AFG', 'AF'], '276': ['ALB', 'AL'], '722': ['ARG', 'AR'], '505': ['AUS', 'AU'], '232': ['AUT', 'AT'],
@@ -26,60 +27,141 @@ const TMP_BACKGROUND = {
   '310': 'https://cdn.pratico-pratiques.com/app/uploads/sites/7/2018/09/19151650/new-york-en-famille-c-est-possible.jpeg',
   '452': 'http://2.bp.blogspot.com/-uC82665_9iM/Tnd1FMx6aMI/AAAAAAAAAKo/4ZBg3kO6c_M/s1600/hanoi_vietnam_01.jpg',
 };
+const DATA_PROVIDED = {
+  'NA00006489': '3GB',
+  'NA00006493': '4GB',
+  'NA00006497': '7GB',
+  'NA00006491': '4GB',
+  'NA00006499': '8GB',
+  'NA00004088': '매일 300MB',
+  'NA00005047': '매일 500MB',
+  'NA00006745': '데이터 무제한',
+  'NA00006487': '데이터 무제한',
+  'NA00005300': '2GB',
+  'NA00005505': '3GB',
+  'NA00005252': '5GB',
+};
 
 export default class RoamingOnController extends TwViewController {
+  CDN = EnvHelper.getEnvironment('CDN');
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const CDN = EnvHelper.getEnvironment('CDN');
-    const CDN_DEV = EnvHelper.getEnvironment('CDN_DEV');
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     let mcc = req.query.mcc;
     if (!mcc) {
       // throw new Error('MCC is required');
+      // FIXME: Testing
       mcc = '262';
     }
 
-    // 비로그인
-    // 로그인 했고 로밍요금제 미가입
-    // 로그인 했고 로밍요금제 사용중
+    const context: any = {
+      svcInfo,
+      pageInfo,
+      isLogin,
+      noSubscription: true,
+      availableTariffs: [],
+      usage: null,
+    };
+    const template = 'roaming-next/roaming.on.html';
 
-    Observable.combineLatest(
-      this.getCountryInfo(mcc),
-      this.getAvailableTariffs(mcc),
-      this.getUsingTariffs(isLogin),
-    ).subscribe(([info, allTariffs, usingTariffs]) => {
-      console.log(`* CountryInfo: ${JSON.stringify(info)}`);
-      console.log(`* Tariffs: ${JSON.stringify(allTariffs)}`);
-      console.log(`* Using Tariffs: ${JSON.stringify(usingTariffs)}`);
-
-      const noSubscription = !usingTariffs || usingTariffs.length === 0;
-
-      let backgroundUrl = info.mblRepImg;
-      if (backgroundUrl) {
-        backgroundUrl = `${CDN_DEV}${backgroundUrl}`;
-        if (process.env.LOGNAME === 'rath') {
-          backgroundUrl = `${CDN}/img/product/roam/background_aus.png`;
-        }
+    this.getCountryInfo(mcc).subscribe(info => {
+      context.country = {
+        code: info.countryCode,
+        name: info.countryNm,
+        nameEnglish: info.countryNmEng,
+        timezoneOffset: info.tmdiffTms,
+        flagUrl: `${this.CDN}${info.mblNflagImg}`,
+        flagCode: ISO3166[mcc][1].toLowerCase(),
+        backgroundUrl: this._useCountryBackground(info, mcc),
+      };
+      if (!isLogin) {
+        res.render(template, context);
       } else {
-        backgroundUrl = TMP_BACKGROUND[mcc] || `${CDN}/img/product/roam/background_aus.png`;
-      }
+        this.getUsingTariffs().subscribe(usingTariffs => {
+          const noSubscription = !usingTariffs || usingTariffs.length === 0;
+          context.noSubscription = noSubscription;
+          if (noSubscription) {
+            this.getAvailableTariffs(mcc).subscribe(allTariffs => {
+              context.availableTariffs = allTariffs.map(t => this._fixTariffInstance(t));
+              res.render(template, context);
+            });
+          } else {
+            let startDate = moment().subtract(3, 'days').format('YYYY-MM-DD');
+            if (usingTariffs != null) {
+              startDate = usingTariffs[0].scrbDt;
+            }
+            const endDate = moment().format('YYYY-MM-DD');
+            Observable.combineLatest(
+              this.getDataUsage(),
+              this.getPhoneUsage(),
+              this.getBaroPhoneUsage(startDate, endDate)
+            ).subscribe(([dataUsage, phoneUsage, baroUsage]) => {
+              context.noSubscription = false;
+              context.usage = {
+                data: dataUsage,
+                phone: phoneUsage,
+                baro: baroUsage,
+              };
 
-      res.render('roaming-next/roaming.on.html', {
-        svcInfo,
-        pageInfo,
-        availableTariffs: allTariffs,
-        noSubscription: noSubscription,
-        isLogin: isLogin,
-        country: {
-          code: info.countryCode,
-          name: info.countryNm,
-          nameEnglish: info.countryNmEng,
-          timezoneOffset: info.tmdiffTms,
-          flagUrl: `${CDN}${info.mblNflagImg}`,
-          flagCode: ISO3166[mcc][1].toLowerCase(),
-          backgroundUrl: backgroundUrl,
-        }
-      });
+              // FIXME: Testing
+              context.usage.data = {
+                prodId: '-',
+                prodNm: 'baro 3GB',
+                total: '3000',
+                used: '1730',
+                remained: '1270',
+                rgstDtm: moment().subtract(2, 'days').format('YYYYMMDD') + '10',
+                exprDtm: moment().subtract(-3, 'days').format('YYYYMMDD') + '22',
+              };
+              context.usage.baro = {
+                used: '7'
+              };
+              res.render(template, context);
+            });
+          }
+        });
+      }
     });
+  }
+
+  private _fixTariffInstance(t) {
+    if (t.basFeeInfo) {
+      let iFee: any = parseInt(t.basFeeInfo, 10);
+      if (iFee) {
+        if (iFee >= 1000) {
+          iFee = iFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        t.price = iFee + '원';
+      } else {
+        t.price = t.basFeeInfo;
+      }
+    }
+    if (t.romUsePrdInfo) {
+      const value = parseInt(t.romUsePrdInfo, 10);
+      t.duration = value <= 1 ? 1 : value;
+    } else {
+      t.duration = 1;
+    }
+    if (!t.basOfrDataQtyCtt || t.basOfrDataQtyCtt === '-') {
+      t.data = DATA_PROVIDED[t.prodId];
+    } else {
+      t.data = t.basOfrDataQtyCtt;
+    }
+    return t;
+  }
+
+
+  private _useCountryBackground(info, mcc: string): string {
+    let backgroundUrl = info.mblRepImg;
+    if (backgroundUrl) {
+      backgroundUrl = `${this.CDN}${backgroundUrl}`;
+      if (process.env.LOGNAME === 'rath') {
+        backgroundUrl = `${this.CDN}/img/product/roam/background_aus.png`;
+      }
+    } else {
+      backgroundUrl = TMP_BACKGROUND[mcc] || `${this.CDN}/img/product/roam/background_aus.png`;
+    }
+    return backgroundUrl;
   }
 
   protected get noUrlMeta(): boolean {
@@ -123,10 +205,7 @@ export default class RoamingOnController extends TwViewController {
    * 현재 사용중인 로밍요금제 목록
    * @private
    */
-  private getUsingTariffs(isLogin: boolean): Observable<any> {
-    if (!isLogin) {
-      return Observable.of([]);
-    }
+  private getUsingTariffs(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0056, {}).map(resp => {
       // prodId: 'NA0000000',
       // prodNm: 'T로밍 아시아패스',
@@ -143,10 +222,7 @@ export default class RoamingOnController extends TwViewController {
    * @param isLogin
    * @private
    */
-  private getDataUsage(isLogin: boolean): Observable<any> {
-    if (!isLogin) {
-      return Observable.of([]);
-    }
+  private getDataUsage(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0201, {}).map(resp => {
       // prodId,
       // prodNm,
@@ -164,10 +240,7 @@ export default class RoamingOnController extends TwViewController {
    * @param isLogin
    * @private
    */
-  private getPhoneUsage(isLogin: boolean): Observable<any> {
-    if (!isLogin) {
-      return Observable.of([]);
-    }
+  private getPhoneUsage(): Observable<any> {
     // 타회선 조회시 T-SvcMgmtNum 넘겨야함
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map(resp => {
       // dataTopUp

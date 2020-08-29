@@ -43,9 +43,44 @@
             </div>
         </div>
         <% if (isLogin == true) { %>
+        <%   if (noSubscription == true && availableTariffs) { %>
         <div class="card">
-            로그인시 항목. noSubscription 여부에 따라 다른 카드 표시
+            <h3>
+                <span class="colorPoint"><%= country.name %>에서 이용 가능한</span> <br />
+                추천 로밍 요금제
+            </h3>
+            <p class="description">
+                편리하고 합리적인 가격의 로밍 요금제를 이용하세요
+            </p>
+            <div class="tariff-list">
+                <% for (var t of availableTariffs) { %>
+                <a href="/product/callplan?prod_id=<%= t.prodId %>">
+                <div class="tariff-box">
+                    <div class="tariff">
+                        <h3><%= t.prodNm %></h3>
+                        <div class="data">
+                            <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                            <span><%= t.data %></span>
+                        </div>
+                        <span class="price"><%= t.price %> / <%= t.duration %>일</span>
+                        <span class="phone"><%= t.prodBasBenfCtt %></span>
+                    </div>
+                </div>
+                </a>
+                <% } %>
+            </div>
+            <div class="button button-1" id="offer" style="text-align: center;">
+                추천 요금제 보러가기
+            </div>
         </div>
+        <%   } %>
+        <%   if (usage) { %>
+        <div class="card">
+            Chart
+            <p><%= JSON.stringify(usage.data, null, 2) %></p>
+            <p><%= JSON.stringify(usage.baro, null, 2) %></p>
+        </div>
+        <%   } %>
         <% } %>
         <% if (isLogin == false) { %>
         <div class="card anonymous">
@@ -137,6 +172,10 @@
       landing.goSignup();
       e.stopPropagation();
     })
+    $('#offer').on('click', function(e) {
+      // TODO: scheduleDialog 표시
+      e.stopPropagation();
+    });
   });
   function fillBackgroundImage() {
     const url = '<%= country.backgroundUrl %>'

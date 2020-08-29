@@ -1037,7 +1037,7 @@
       }
       #contents {
         .hud {
-          margin: 0px 20px 140px 20px;
+          margin: 0px 20px 100px 20px;
           padding-top: 90px;
           //background-color: rgba(0, 0, 0, 0.5);
           h1 {
@@ -1172,6 +1172,59 @@
           background-color: white;
           border: 1.5px solid @pointColor;
           color: @pointColor;
+        }
+
+        .tariff-list {
+          height: 174px;
+          overflow-x: scroll;
+          overflow-y: hidden;
+          white-space: nowrap;
+          margin-bottom: 20px;
+          .tariff-box {
+            display: inline-block;
+            width: 170px;
+            height: 160px;
+            margin-right: 8px;
+            background-color: #f3f4f9;
+            border-radius: 12px;
+            .tariff {
+              padding: 16px;
+              position: relative;
+              h3 {
+                position: absolute;
+                font-size: 18px;
+                font-family: Roboto;
+                font-weight: 500;
+                color: @pointColor;
+                white-space: normal;
+                left: 16px;
+                right: 16px;
+                top: 12px;
+              }
+              .data {
+                margin-top: 58px;
+                font-size: 14px;
+                font-weight: 500;
+                color: #757575;
+                span {
+                  margin-left: 2px;
+                }
+                padding-top: 5px;
+              }
+              .phone {
+                font-size: 13px;
+                font-weight: 700;
+                color: #757575;
+              }
+              .price {
+                font-size: 16px;
+                font-weight: 700;
+                color: #111;
+                display: block;
+                margin-top: 2px;
+              }
+            }
+          }
         }
       }
     }
