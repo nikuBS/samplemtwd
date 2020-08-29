@@ -116,6 +116,8 @@ import RoamingTariffOfferController from './controllers/roaming-next/roaming.tar
 import RoamingTariffsController from './controllers/roaming-next/roaming.tariffs';
 import RoamingOnController from './controllers/roaming-next/roaming.on';
 import RoamingAddonsController from './controllers/roaming-next/roaming.addons';
+import RoamingHistoryController from './controllers/roaming-next/roaming.history';
+
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -231,6 +233,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/offer', controller: RoamingTariffOfferController });
     this.controllers.push({ url: '/roaming/tariffs', controller: RoamingTariffsController });
     this.controllers.push({ url: '/roaming/addons', controller: RoamingAddonsController });
+    this.controllers.push({ url: '/roaming/history', controller: RoamingHistoryController });
 
     this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplanBackup });

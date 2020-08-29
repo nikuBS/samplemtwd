@@ -1019,6 +1019,52 @@
       }
     }
 
+    #roamingHistory {
+      .card {
+        margin-top: 10px;
+        background-color: white;
+        padding: 32px 20px;
+        h2 {
+          font-size: 21px;
+          font-weight: 600;
+          margin-bottom: 32px;
+        }
+        p {
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 1.3em;
+          color: #000;
+        }
+      }
+      .chart {
+        position: relative;
+        .bubble {
+          position: absolute;
+          right: 1px;
+          top: 6px;
+          width: 70px;
+          height: 28px;
+          border-radius: 6px;
+          background-color: @pointColor;
+
+          font-size: 14px;
+          font-weight: 600;
+          color: white;
+          line-height: 28px;
+          text-align: center;
+          display: block;
+        }
+        .date {
+          font-size: 13px;
+          font-weight: 500;
+          color: #666;
+        }
+        .right {
+          float: right;
+        }
+      }
+    }
+
     #roamingOn {
       #gnb {
         .menu {
