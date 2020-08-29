@@ -10,24 +10,14 @@ _%>
 <div class="cont-box nogaps">
     <ul class="full-link-list">
         <li>
-            <button type="button" data-id="my-plan" title="나의 요금제" aria-haspopup="true">
+            <button type="button" data-id="my-plan" title="나의 요금제/부가상품" aria-haspopup="true">
                 <span class="inner">
-                    <span class="tit">나의 요금제</span>
-                    <span class="text"><%= data.svcInfo.prodNm %></span>
+                    <span class="tit">나의 요금제/부가상품</span>
+                    <span class="text"><%= data.svcInfo.prodNm %><%_ if (data.isAddProduct) { _%>&nbsp;/ <%- data.myAddProduct.addTotCnt %>개<%_ } _%></span>
                 </span>
             </button>
         </li>
-        <%_ if (data.isAddProduct) { _%>
-        <li>
-            <button type="button" data-id="add-prod" title="나의 부가서비스" aria-haspopup="true">
-                <span class="inner">
-                    <span class="tit">나의 부가서비스</span>
-                    <span class="text"><%- data.myAddProduct.addTotCnt %>개</span>
-                </span>
-            </button>
-        </li>
-            <%_ if (data.type === 0) { _%>
-                <%_ if (data.myAddProduct.comProdCnt > 0) { _%>
+        <%_ if (data.type === 0 && data.isAddProduct && data.myAddProduct.comProdCnt > 0) { _%>
         <li>
             <button type="button" data-id="com-prod" title="나의 결합상품" aria-haspopup="true">
                 <span class="inner">
@@ -36,8 +26,6 @@ _%>
                 </span>
             </button>
         </li>
-                <%_ } _%>
-            <%_ } _%>
         <%_ } _%>
         <li>
             <button type="button" data-id="join-svc" title="가입상담예약 신청 및 조회" aria-haspopup="true">
