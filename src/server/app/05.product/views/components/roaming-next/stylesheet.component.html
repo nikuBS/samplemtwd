@@ -1063,6 +1063,63 @@
           float: right;
         }
       }
+      .items {
+        .item {
+          margin-top: 16px;
+          padding-bottom: 16px;
+          border-bottom: 1px solid #f0f0f0;
+          position: relative;
+          h3 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+          }
+          span {
+            display: block;
+          }
+          .flag-icon {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            width: 33px;
+            height: 25px;
+            border: 1px solid #f0f0f0;
+          }
+          .night {
+            font-size: 12px;
+            font-weight: 500;
+            color: @pointColor;
+          }
+          .range {
+            font-size: 12px;
+            font-weight: 500;
+            color: #a0a0a0;
+          }
+          .total {
+            font-size: 15px;
+            font-weight: 700;
+            color: @pointColor;
+            margin-bottom: 4px;
+          }
+          .average {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666;
+          }
+          .right {
+            float: right;
+            text-align: right;
+          }
+          .content {
+            margin-left: 50px;
+          }
+        }
+        .item:last-child {
+          border-bottom: 0;
+        }
+      }
     }
 
     #roamingOn {
