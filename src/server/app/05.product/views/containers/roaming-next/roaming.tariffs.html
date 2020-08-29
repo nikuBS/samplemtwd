@@ -129,14 +129,19 @@
 
   function showPlan(id) {
     var path = '/product/callplan?prod_id=' + id;
-    document.location.href = 'https://m.tworld.co.kr' + path;
+    document.location.href = path;
   }
 
   $(document).ready(function () {
     fillTariffs();
     initScrollAnchors();
-
     new Tw.NextRoamingMenu($('#roamingTariffs')).install();
+
+    var i0 = document.location.href.lastIndexOf('#');
+    if (i0 !== -1) {
+      var hash = document.location.href.substring(i0 + 1);
+      showGroupImpl('group-' + hash, 'a-group-' + hash);
+    }
   });
 
   function initScrollAnchors() {
@@ -168,8 +173,9 @@
               var state = val.id === thatId ? 'on' : 'off';
               $('#' + val.id + ' img').attr('src', imagePrefix + (i+1) + '_' + state + '.png');
               if (state === 'on' && selectedAnchor !== thatId) {
+                var offsetLeft = val.offsetLeft - 20;
                 $('.anchors').animate({
-                  scrollLeft: $(val).offset().left - 20,
+                  scrollLeft: offsetLeft,
                 }, 250);
                 selectedAnchor = thatId;
               }
@@ -185,6 +191,10 @@
 
   function showGroup(e) {
     var groupId = e.id.substring(2);
+    showGroupImpl(groupId, e.id);
+  }
+
+  function showGroupImpl(groupId, anchorId) {
     scrollMonitor = false;
     $([document.documentElement, document.body]).animate({
       scrollTop: groupMetas[groupId].top - 145,
@@ -193,9 +203,17 @@
     });
 
     $('.header .anchor').each(function(i, val) {
-      var state = val.id === e.id ? 'on' : 'off';
+      var state = val.id === anchorId ? 'on' : 'off';
       $('#' + val.id + ' img').attr('src', imagePrefix + (i+1) + '_' + state + '.png');
+
+      if (state === 'on') {
+        var offsetLeft = val.offsetLeft - 20;
+        $('.anchors').animate({
+          scrollLeft: offsetLeft,
+        }, 200);
+      }
     });
+
   }
 
   function fillTariffs() {

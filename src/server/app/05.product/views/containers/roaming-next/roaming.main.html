@@ -45,7 +45,7 @@
         </div>
         <div class="card">
             <h3>로밍 요금제 한눈에 보기</h3>
-            <div id="tariffs">
+            <div id="groups">
             </div>
         </div>
         <div class="card no-padding">
@@ -120,12 +120,14 @@
         <span>{{ name }}</span>
     </li>
 </script>
-<script type="text/x-handlebars-template" id="tpl-tariff-card">
-    <div class="tariff" onclick="document.location.href='/product/roaming/tariffs#{{ id }}'">
-        <img src="<%= CDN %>/img/product/roam/{{ icon }}" alt="product-icon" /> 
-        <h4>{{ title }}</h4>
-        <h5>{{ subtitle }}</h5>
-    </div>
+<script type="text/x-handlebars-template" id="tpl-tariff-group-card">
+    <a href="/product/roaming/tariffs#{{ id }}">
+        <div class="group">
+            <img src="<%= CDN %>/img/product/roam/{{ icon }}" alt="product-icon" />
+            <h4>{{ title }}</h4>
+            <h5>{{ subtitle }}</h5>
+        </div>
+    </a>
 </script>
 </body>
 <% include ../../components/javascript.component.html %>
@@ -134,7 +136,8 @@
     new Tw.NextRoamingMenu($('#roamingMain')).install();
     new Tw.NextRoaming($('#roamingMain'), '<%= pageInfo.menuId %>')
     fillRecommendedNations();
-    fillTariffs();
+    fillTariffGroups();
+
     prepareNations();
     $('#nation-search').autocomplete({
       source: allNations,
@@ -200,9 +203,9 @@
     }
   }
 
-  function fillTariffs() {
-    const template = Handlebars.compile($('#tpl-tariff-card').html());
-    const container = document.getElementById('tariffs');
+  function fillTariffGroups() {
+    const template = Handlebars.compile($('#tpl-tariff-group-card').html());
+    const container = document.getElementById('groups');
     container.innerHTML = '';
     for (var i=0; i<tariffList.length; i++) {
       const item = tariffList[i];
@@ -237,9 +240,11 @@
   }
 
   const tariffList = [
-    {id: 'group-baro', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
-    {id: 'group-onepass', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
-    {id: 'group-vip', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
+    {id: 'baro', name: 'baro 요금제', description: '전세계 주요국가에서', icon: 'icon_planet.png'},
+    {id: 'onepass', name: 'One Pass', description: '출장을 자주 간다면', icon: 'icon_onepass.png'},
+    {id: 'vip', name: 'One Pass VIP', description: '해외에서도 데이터를 무제한으로', icon: 'icon_vip.png'},
+    {id: 'guam', name: '괌사이판', description: '괌,사이판 여행필수품', icon: 'icon_guam.png'},
+    {id: 'longpass', name: 'LongPass', description: '중동, 아프리카에서도', icon: 'icon_longpass.png'},
   ];
 
   const recommendedNationList = [
