@@ -45,6 +45,32 @@ const DATA_PROVIDED = {
 export default class RoamingOnController extends TwViewController {
   CDN = EnvHelper.getEnvironment('CDN');
 
+  static formatTariff(t) {
+    if (t.basFeeInfo) {
+      let iFee: any = parseInt(t.basFeeInfo, 10);
+      if (iFee) {
+        if (iFee >= 1000) {
+          iFee = iFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        t.price = iFee + '원';
+      } else {
+        t.price = t.basFeeInfo;
+      }
+    }
+    if (t.romUsePrdInfo) {
+      const value = parseInt(t.romUsePrdInfo, 10);
+      t.duration = value <= 1 ? 1 : value;
+    } else {
+      t.duration = 1;
+    }
+    if (!t.basOfrDataQtyCtt || t.basOfrDataQtyCtt === '-') {
+      t.data = DATA_PROVIDED[t.prodId];
+    } else {
+      t.data = t.basOfrDataQtyCtt;
+    }
+    return t;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     let mcc = req.query.mcc;
@@ -85,7 +111,7 @@ export default class RoamingOnController extends TwViewController {
               this.getAvailableTariffs(mcc),
               this.getPhoneUsage(),
             ).subscribe(([allTariffs, phoneUsage]) => {
-              context.availableTariffs = allTariffs.map(t => this._fixTariffInstance(t));
+              context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
               context.usage.phone = {
                 voice: 92,
                 sms: 37
@@ -146,31 +172,6 @@ export default class RoamingOnController extends TwViewController {
     });
   }
 
-  private _fixTariffInstance(t) {
-    if (t.basFeeInfo) {
-      let iFee: any = parseInt(t.basFeeInfo, 10);
-      if (iFee) {
-        if (iFee >= 1000) {
-          iFee = iFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
-        t.price = iFee + '원';
-      } else {
-        t.price = t.basFeeInfo;
-      }
-    }
-    if (t.romUsePrdInfo) {
-      const value = parseInt(t.romUsePrdInfo, 10);
-      t.duration = value <= 1 ? 1 : value;
-    } else {
-      t.duration = 1;
-    }
-    if (!t.basOfrDataQtyCtt || t.basOfrDataQtyCtt === '-') {
-      t.data = DATA_PROVIDED[t.prodId];
-    } else {
-      t.data = t.basOfrDataQtyCtt;
-    }
-    return t;
-  }
 
 
   private _useCountryBackground(info, mcc: string): string {

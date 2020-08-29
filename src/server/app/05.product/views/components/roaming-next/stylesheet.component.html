@@ -411,7 +411,7 @@
     }
 
     #roamingTariffOffer {
-      @deco-height: 168px;
+      @deco-height: 170px;
       background-color: #fff;
       .decoration {
         height: @deco-height;
@@ -422,7 +422,8 @@
           position: absolute;
           bottom: 0;
           left: 0;
-          height: @deco-height;
+          width: 100%;
+          //height: @deco-height;
         }
         .banner-cover {
           position: absolute;
@@ -550,8 +551,14 @@
           border-radius: 12px;
           .tariff {
             // override above
+            h3 {
+              position: absolute;
+              left: 16px;
+              right: 36px;
+              white-space: normal;
+            }
             .data {
-              padding-top: 20px;
+              padding-top: 65px;
             }
             .price {
               float: inherit;
