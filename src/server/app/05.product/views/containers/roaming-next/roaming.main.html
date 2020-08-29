@@ -115,8 +115,9 @@
 <%- include('../../components/roaming-next/schedule.picker.html'); %>
 <%- include('../../components/roaming-next/roaming.menu.html'); %>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
-    <li onclick="openScheduleDialog('{{ code }}', '{{ name }}', '{{ imageTopUrl }}', '#roamingMain');">
-        <img src="{{ imageUrl }}" width="{{ width }}">
+    <li style="width: {{width}}px; height: {{height}}px;"
+        onclick="openScheduleDialog('{{ code }}', '{{ name }}', '{{ imageTopUrl }}', '#roamingMain');">
+        <img src="{{ imageUrl }}" width="{{ width }}" height="{{ height }}" alt="{{ imageAlt }}">
         <span>{{ name }}</span>
     </li>
 </script>
@@ -135,7 +136,7 @@
   $(document).ready(function () {
     new Tw.NextRoamingMenu($('#roamingMain')).install();
     new Tw.NextRoaming($('#roamingMain'), '<%= pageInfo.menuId %>')
-    fillRecommendedNations();
+    fillPopularNations();
     fillTariffGroups();
 
     prepareNations();
@@ -183,15 +184,31 @@
       targetList.append(li);
     }
   }
-  function fillRecommendedNations() {
+  function fillPopularNations() {
     const GAP = 6;
     const COLUMN = 3;
     const container = document.getElementById('nations');
     const nationWidth = Math.floor((container.clientWidth - GAP * COLUMN) / COLUMN);
     const ul = document.querySelector('#nations ul');
     const template = Handlebars.compile($('#tpl-nation-card').html());
-    for (let i = 0; i < recommendedNationList.length; i++) {
-      const item = recommendedNationList[i];
+
+    // TODO: Redis 데이터
+    // for (let i = 0; i < popularNations.length; i++) {
+    //   const item = popularNations[i];
+    //   const li = template({
+    //     width: nationWidth - GAP,
+    //     height: (nationWidth - GAP) * 0.727,
+    //     name: item.countryNameKor,
+    //     code: item.countryCode,
+    //     imageUrl: '<%= CDN %>/adminupload/' + item.mblBtnImgId + '.png',
+    //     imageAlt: item.mblBtnImgAltCtt,
+    //     imageTopUrl: '',
+    //   });
+    //   ul.innerHTML += li;
+    // }
+
+    for (let i = 0; i < popularNationList.length; i++) {
+      const item = popularNationList[i];
       const li = template({
         width: nationWidth - GAP,
         name: item.name,
@@ -247,7 +264,7 @@
     {id: 'longpass', name: 'LongPass', description: '중동, 아프리카에서도', icon: 'icon_longpass.png'},
   ];
 
-  const recommendedNationList = [
+  const popularNationList = [
     {
       url: '<%= CDN %>/img/product/roam/img_nation_s_01.png', name: '중국', code: 'CHN',
       topUrl: 'http://yellowchamber.com/images/roaming/top_chn.png'
@@ -296,6 +313,8 @@
     'africa': '가봉, 니제르, 르완다, 마다가스카르, 모리셔스, 알제리, 우간다, 이집트, 잠비아, 케냐, 콩고 민주공화국, 차드, 탄자니아',
   };
   var allNations = [];
+
+  var popularNations = <%- JSON.stringify(popularNations) %>;
 </script>
 <% include ../../components/roaming-next/calendar.javascript.html %>
 <% include ../../components/end.component.html %>
