@@ -1134,6 +1134,10 @@
             }
           }
 
+          .charts {
+
+          }
+
           .description {
             margin-top: 5px;
             margin-bottom: 15px;
@@ -1190,7 +1194,86 @@
           color: @pointColor;
         }
 
-        .usages {
+        .data-usages {
+          text-align: center;
+          h2 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.92px;
+            color: black;
+            margin-bottom: 4px;
+          }
+          .range {
+            font-size: 13px;
+            font-weight: 400;
+            color: #8d8d8d;
+            letter-spacing: -0.5px;
+          }
+          .status {
+            display: block;
+            width: 65px;
+            border: 1.5px solid #dcdcdc;
+            border-radius: 13px;
+            color: @pointColor;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 0;
+            margin: 8px auto;
+          }
+          .charts {
+            text-align: center;
+            margin-bottom: 8px;
+            .chart {
+              display: inline-block;
+              position: relative;
+              width: 100px;
+              .track {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 0;
+              }
+              .progress {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 1;
+                width: 100px;
+                height: 100px;
+              }
+              .value-max {
+                position: absolute;
+                top: 28px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-family: "Noto Sans";
+                font-size: 13px;
+                font-weight: 500;
+                color: #999;
+              }
+              .value {
+                position: absolute;
+                top: 46px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-family: Roboto;
+                font-size: 17px;
+                font-weight: 500;
+                color: @pointColor;
+              }
+              h4 {
+                margin-top: 115px;
+                font-size: 14px;
+                font-weight: 700;
+                color: #111;
+              }
+            }
+          }
+        }
+
+        .phone-usages {
           margin-top: 25px;
           margin-bottom: 25px;
           .usage {

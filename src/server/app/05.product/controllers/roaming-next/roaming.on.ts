@@ -80,7 +80,7 @@ export default class RoamingOnController extends TwViewController {
         this.getUsingTariffs().subscribe(usingTariffs => {
           const noSubscription = !usingTariffs || usingTariffs.length === 0;
           context.noSubscription = noSubscription;
-          if (noSubscription) {
+          if (noSubscription && false) {
             Observable.combineLatest(
               this.getAvailableTariffs(mcc),
               this.getPhoneUsage(),
@@ -108,6 +108,16 @@ export default class RoamingOnController extends TwViewController {
                 data: dataUsage,
                 phone: phoneUsage,
                 baro: baroUsage,
+                formatBytes: function(value) {
+                  const n = parseInt(value, 10);
+                  if (!n) { return value; }
+                  if (n < 1000) { return n + 'MB'; }
+                  if (n % 1000 === 0) { return (n / 1000) + 'GB'; }
+                  return (n / 1000).toFixed(2) + 'GB';
+                },
+                formatTime: function(yyyyMMddHH) {
+                  return moment(yyyyMMddHH, 'YYYYMMDDHH').format('YY.MM.DD HH:00');
+                }
               };
 
               // FIXME: Testing
@@ -125,6 +135,7 @@ export default class RoamingOnController extends TwViewController {
                 sms: 200,
               };
               context.usage.baro = {
+                total: '무제한',
                 used: '7'
               };
               res.render(template, context);

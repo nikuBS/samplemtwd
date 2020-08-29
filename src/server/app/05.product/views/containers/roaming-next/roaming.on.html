@@ -75,10 +75,36 @@
         </div>
         <%   } %>
         <%   if (usage.data && usage.baro) { %>
-        <div class="card">
-            Chart
-            <p><%= JSON.stringify(usage.data, null, 2) %></p>
-            <p><%= JSON.stringify(usage.baro, null, 2) %></p>
+        <div class="card data-usages">
+            <h2><%= usage.data.prodNm %></h2>
+            <!-- TODO: 가입기간 IMPL -->
+            <span class="range">
+                가입 기간
+                <%= usage.formatTime(usage.data.rgstDtm) %>
+                -
+                <%= usage.formatTime(usage.data.exprDtm) %>
+            </span>
+            <span class="status">이용중</span>
+            <div class="charts">
+                <div class="chart" style="margin-right: 36px;">
+                    <div class="track">
+                        <img src="<%= CDN %>/img/product/roam/track.svg" width="100" height="100" />
+                    </div>
+                    <div id="chart-data" class="progress"></div>
+                    <div class="value-max"><%= usage.formatBytes(usage.data.total) %></div>
+                    <div class="value" style="color: #607dff;"><%= usage.formatBytes(usage.data.used) %></div>
+                    <h4>데이터량</h4>
+                </div>
+                <div class="chart">
+                    <div class="track">
+                        <img src="<%= CDN %>/img/product/roam/track.svg" width="100" height="100" />
+                    </div>
+                    <div id="chart-phone" class="progress"></div>
+                    <div class="value-max"><%= usage.baro.total %></div>
+                    <div class="value" style="color: #728eff;"><%= usage.baro.used %>분</div>
+                    <h4 style="font-family: Roboto;">baro 통화</h4>
+                </div>
+            </div>
         </div>
         <%   } %>
         <% } %>
@@ -104,7 +130,7 @@
                 로밍 음성/SMS
                 <span class="beta">Beta</span>
             </h3>
-            <div class="usages">
+            <div class="phone-usages">
                 <div class="usage">
                     <svg width="21" viewBox="0 0 43 42" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h43v42h-43z" fill="#4559fc" opacity="0"/><g stroke="#111" stroke-width="2"><g transform="translate(7 1)"><path d="m3.6 1c-1.43594035 0-2.6 1.16405965-2.6 2.6v31.8c0 1.4359403 1.16405965 2.6 2.6 2.6h17.2565217c1.4359404 0 2.6-1.1640597 2.6-2.6v-31.8c0-1.43594035-1.1640596-2.6-2.6-2.6z" fill="#fff"/><path d="m0 31.071952h24.456522"/><path d="m9.782609 5.5h5.147358" stroke-linecap="round"/></g><ellipse cx="30.5" cy="36.5" fill="#b9c0ff" rx="7.5" ry="3.5"/><ellipse cx="30.5" cy="32.5" fill="#b9c0ff" rx="7.5" ry="3.5"/><ellipse cx="30.5" cy="28.5" fill="#b9c0ff" rx="7.5" ry="3.5"/></g></g></svg>
                     <span class="usage-type">음성</span>
@@ -179,6 +205,7 @@
 <%- include('../../components/roaming-next/roaming.menu.html'); %>
 </body>
 <% include ../../components/javascript.component.html %>
+<%- include('../../components/roaming-next/circlebar.javascript.html'); %>
 <script type="text/javascript">
   $(document).ready(function () {
     fillBackgroundImage();
@@ -205,6 +232,22 @@
       // TODO: scheduleDialog 표시
       e.stopPropagation();
     });
+
+    if (document.getElementById('chart-data')) {
+      var chartData = new ProgressBar.Circle('#chart-data', {
+        easing: 'easeInOut',
+        strokeWidth: 7,
+        color: '#607dff',
+      });
+      var chartPhone = new ProgressBar.Circle('#chart-phone', {
+        easing: 'easeInOut',
+        strokeWidth: 7,
+        color: '#728eff',
+      });
+
+      chartData.animate(0.41);
+      chartPhone.animate(0.72);
+    }
   });
   function fillBackgroundImage() {
     const url = '<%= country.backgroundUrl %>'
