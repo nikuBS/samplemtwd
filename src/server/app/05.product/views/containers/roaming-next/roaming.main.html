@@ -112,35 +112,10 @@
         </ul>
     </div>
 </div>
-<div id="scheduleDialog" class="dialog">
-    <div class="header">
-        <img class="banner" width="100%" />
-        <div class="banner-cover"></div>
-        <div class="summary">
-            <h1><span id="target-nation"></span>, 언제 떠나세요?</h1>
-            <div>
-                <div class="date">
-                    <h2>가는날</h2>
-                    <h3 id="date-depart">-</h3>
-                </div>
-                <div class="date">
-                    <h2>오는날</h2>
-                    <h3 id="date-arrive">-</h3>
-                </div>
-            </div>
-        </div>
-        <div class="close" onclick="closeDialog()">
-            <img src="<%= CDN %>/img/product/roam/ico_close_w.svg" width="20" height="20" alt="Close"/>
-        </div>
-    </div>
-    <div id="scheduleContent"><div id="calendar"></div></div>
-    <div id="scheduleConfirm" class="bottom-button not-prepared" onclick="tryConfirm();">
-        추천 요금제 확인
-    </div>
-</div>
+<%- include('../../components/roaming-next/schedule.picker.html'); %>
 <%- include('../../components/roaming-next/roaming.menu.html'); %>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
-    <li onclick="openScheduleDialog('{{ code }}', '{{ name }}', '{{ imageTopUrl }}');">
+    <li onclick="openScheduleDialog('{{ code }}', '{{ name }}', '{{ imageTopUrl }}', '#roamingMain');">
         <img src="{{ imageUrl }}" width="{{ width }}">
         <span>{{ name }}</span>
     </li>
@@ -245,40 +220,6 @@
     $('#nationsDialog').css('display', 'block');
   }
 
-  function openScheduleDialog(code, name, topBannerUrl) {
-    $('#scheduleDialog').css('display', 'block');
-    $('#roamingMain').css('display', 'none');
-
-    $('#date-depart').html('-');
-    $('#date-arrive').html('-');
-    if (!topBannerUrl)
-      topBannerUrl = 'http://yellowchamber.com/images/roaming/top_etc.png';
-    $('#scheduleDialog .banner').attr('src', topBannerUrl);
-    $('#target-nation').html(name);
-    $('#target-nation').attr('data-code', code);
-
-    $('div#calendar').daterangepicker({
-      element: $('div#calendar'),
-      parentEl: 'div#calendar',
-      minDate: moment().add(1, 'days').format('YYYY-MM-DD'),
-    }, function(start, end) {
-      if (start && end) {
-        $('#scheduleConfirm').removeClass('not-prepared');
-      } else {
-        $('#scheduleConfirm').addClass('not-prepared');
-      }
-
-      if (start) {
-        $('#date-depart').html(start.format('YYYY.MM.DD'));
-      }
-      if (end) {
-        $('#date-arrive').html(end.format('YYYY.MM.DD'));
-      } else {
-        $('#date-arrive').html('-');
-      }
-    });
-  }
-
   function searchNation() {
     try {
       var nationName = $('#nation-search').val();
@@ -287,22 +228,6 @@
     } catch (e) {
       console.error(e);
     }
-  }
-
-  function tryConfirm() {
-    const classes = $('#scheduleConfirm').attr('class');
-    if (classes.indexOf('not-prepared') >= 0) {
-      return false;
-    }
-
-    var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
-    var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
-    var countryCode = $('#target-nation').attr('data-code');
-    var countryName = $('#target-nation').html();
-    document.location.href = '/product/roaming/offer?code=' + countryCode + '&name=' + countryName +
-      '&from=' + startDate.format('YYYYMMDD') +
-      '&to=' + endDate.format('YYYYMMDD');
-    closeDialog();
   }
 
   function closeDialog() {

@@ -1,4 +1,8 @@
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<%- include('../../components/start.component.html', {
+  pageInfo: locals.pageInfo,
+  includeRoam: true,
+  includeCalendar: true,
+}); %>
 <body class="rn">
 <div id="roamingOn">
     <div id="gnb">
@@ -46,8 +50,8 @@
         <%   if (noSubscription == true && availableTariffs) { %>
         <div class="card">
             <h3>
-                <span class="colorPoint"><%= country.name %>에서 이용 가능한</span> <br />
-                추천 로밍 요금제
+                <span class="colorPoint"><%= country.name %>에서 이용 가능한</span><br />
+                로밍 요금제
             </h3>
             <p class="description">
                 편리하고 합리적인 가격의 로밍 요금제를 이용하세요
@@ -77,7 +81,6 @@
         <%   if (usage.data && usage.baro) { %>
         <div class="card data-usages">
             <h2><%= usage.data.prodNm %></h2>
-            <!-- TODO: 가입기간 IMPL -->
             <span class="range">
                 가입 기간
                 <%= usage.formatTime(usage.data.rgstDtm) %>
@@ -202,6 +205,7 @@
         </div>
     </div>
 </div>
+<%- include('../../components/roaming-next/schedule.picker.html'); %>
 <%- include('../../components/roaming-next/roaming.menu.html'); %>
 </body>
 <% include ../../components/javascript.component.html %>
@@ -229,7 +233,8 @@
       e.stopPropagation();
     })
     $('#offer').on('click', function(e) {
-      // TODO: scheduleDialog 표시
+      openScheduleDialog('<%= country.code %>', '<%= country.name %>',
+        'http://yellowchamber.com/images/roaming/top_phl.png', '#roamingOn');
       e.stopPropagation();
     });
 
@@ -262,5 +267,10 @@
     };
     backgroundImage.src = url;
   }
+  function closeDialog() {
+    $('#scheduleDialog').css('display', 'none');
+    $('#roamingOn').css('display', 'block');
+  }
 </script>
+<% include ../../components/roaming-next/calendar.javascript.html %>
 <% include ../../components/end.component.html %>

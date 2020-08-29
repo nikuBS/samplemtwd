@@ -80,7 +80,7 @@ export default class RoamingOnController extends TwViewController {
         this.getUsingTariffs().subscribe(usingTariffs => {
           const noSubscription = !usingTariffs || usingTariffs.length === 0;
           context.noSubscription = noSubscription;
-          if (noSubscription && false) {
+          if (noSubscription) {
             Observable.combineLatest(
               this.getAvailableTariffs(mcc),
               this.getPhoneUsage(),
