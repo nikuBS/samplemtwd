@@ -51,7 +51,7 @@ export default class RoamingOnController extends TwViewController {
     if (!mcc) {
       // throw new Error('MCC is required');
       // FIXME: Testing
-      mcc = '262';
+      mcc = '234';
     }
 
     const context: any = {

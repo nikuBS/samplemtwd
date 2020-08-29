@@ -37,9 +37,13 @@ export default class RoamingMainController extends TwViewController {
       // expsSeq
       // mblBtnImgId
       // mblBtnImgAltCtt
-      return resp.result.roamingPopularNationList.sort((o1, o2) => {
-        return parseInt(o1.expsSeq, 10) - parseInt(o2.expsSeq, 10);
-      });
+      const items = resp.result.roamingPopularNationList;
+      if (items) {
+        return items.sort((o1, o2) => {
+          return parseInt(o1.expsSeq, 10) - parseInt(o2.expsSeq, 10);
+        });
+      }
+      return [];
     });
   }
 }
