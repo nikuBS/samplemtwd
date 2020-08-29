@@ -60,7 +60,7 @@ export default class RoamingOnController extends TwViewController {
       isLogin,
       noSubscription: true,
       availableTariffs: [],
-      usage: null,
+      usage: {},
     };
     const template = 'roaming-next/roaming.on.html';
 
@@ -81,8 +81,15 @@ export default class RoamingOnController extends TwViewController {
           const noSubscription = !usingTariffs || usingTariffs.length === 0;
           context.noSubscription = noSubscription;
           if (noSubscription) {
-            this.getAvailableTariffs(mcc).subscribe(allTariffs => {
+            Observable.combineLatest(
+              this.getAvailableTariffs(mcc),
+              this.getPhoneUsage(),
+            ).subscribe(([allTariffs, phoneUsage]) => {
               context.availableTariffs = allTariffs.map(t => this._fixTariffInstance(t));
+              context.usage.phone = {
+                voice: 92,
+                sms: 37
+              };
               res.render(template, context);
             });
           } else {
@@ -112,6 +119,10 @@ export default class RoamingOnController extends TwViewController {
                 remained: '1270',
                 rgstDtm: moment().subtract(2, 'days').format('YYYYMMDD') + '10',
                 exprDtm: moment().subtract(-3, 'days').format('YYYYMMDD') + '22',
+              };
+              context.usage.phone = {
+                voice: 146,
+                sms: 200,
               };
               context.usage.baro = {
                 used: '7'

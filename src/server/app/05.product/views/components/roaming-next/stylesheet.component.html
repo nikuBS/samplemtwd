@@ -1145,6 +1145,11 @@
               letter-spacing: -0.5px;
             }
           }
+
+          .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+          }
         }
 
         .anonymous {
@@ -1172,6 +1177,34 @@
           background-color: white;
           border: 1.5px solid @pointColor;
           color: @pointColor;
+        }
+
+        .usages {
+          margin-top: 25px;
+          margin-bottom: 25px;
+          .usage {
+            margin: 10px 0;
+            svg {
+              vertical-align: middle;
+              margin-right: 4px;
+            }
+
+            .usage-type {
+              vertical-align: middle;
+              font-size: 15px;
+              font-weight: 500;
+              color: #0f0f0f;
+            }
+
+            .usage-value {
+              vertical-align: middle;
+              font-size: 15px;
+              font-weight: 700;
+              color: #030303;
+              letter-spacing: 0;
+              float: right;
+            }
+          }
         }
 
         .tariff-list {

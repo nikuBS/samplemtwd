@@ -74,7 +74,7 @@
             </div>
         </div>
         <%   } %>
-        <%   if (usage) { %>
+        <%   if (usage.data && usage.baro) { %>
         <div class="card">
             Chart
             <p><%= JSON.stringify(usage.data, null, 2) %></p>
@@ -96,6 +96,32 @@
             </div>
             <p class="description">아직 T world 회원이 아니라면
                 <span class="colorPoint" id="signup">회원가입</span> 후 이용해주세요</p>
+        </div>
+        <% } %>
+        <% if (isLogin == true && usage.phone) { %>
+        <div class="card">
+            <h3>로밍 음성/SMS</h3>
+            <div class="usages">
+                <div class="usage">
+                    <svg width="21" viewBox="0 0 43 42" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h43v42h-43z" fill="#4559fc" opacity="0"/><g stroke="#111" stroke-width="2"><g transform="translate(7 1)"><path d="m3.6 1c-1.43594035 0-2.6 1.16405965-2.6 2.6v31.8c0 1.4359403 1.16405965 2.6 2.6 2.6h17.2565217c1.4359404 0 2.6-1.1640597 2.6-2.6v-31.8c0-1.43594035-1.1640596-2.6-2.6-2.6z" fill="#fff"/><path d="m0 31.071952h24.456522"/><path d="m9.782609 5.5h5.147358" stroke-linecap="round"/></g><ellipse cx="30.5" cy="36.5" fill="#b9c0ff" rx="7.5" ry="3.5"/><ellipse cx="30.5" cy="32.5" fill="#b9c0ff" rx="7.5" ry="3.5"/><ellipse cx="30.5" cy="28.5" fill="#b9c0ff" rx="7.5" ry="3.5"/></g></g></svg>
+                    <span class="usage-type">음성</span>
+                    <span class="usage-value"><%= usage.phone.voice > 60 ? Math.floor(usage.phone.voice / 60) + '시간 ' + usage.phone.voice % 60 + '분' : usage.phone.voice + '분' %></span>
+                </div>
+                <div class="divider"></div>
+                <div class="usage">
+                    <svg width="21" viewBox="0 0 43 42" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h43v42h-43z" fill="#4559fc" opacity="0"/><g stroke="#111" stroke-width="2"><g transform="translate(5 8)"><path d="m3.6 1c-1.43594035 0-2.6 1.16405965-2.6 2.6v17.2565217c0 1.4359404 1.16405965 2.6 2.6 2.6h26.26875c1.4359403 0 2.6-1.1640596 2.6-2.6v-17.2565217c0-1.43594035-1.1640597-2.6-2.6-2.6z" fill="#fff"/><path d="m1.55914398 2.73951445 15.16836642 11.68511245 15.1683664-11.68511245" stroke-linecap="round" stroke-linejoin="round"/></g><ellipse cx="31" cy="34.5" fill="#b9c0ff" rx="7" ry="3.5"/><ellipse cx="31" cy="30.5" fill="#b9c0ff" rx="7" ry="3.5"/><ellipse cx="31" cy="26.5" fill="#b9c0ff" rx="7" ry="3.5"/></g></g></svg>
+                    <span class="usage-type">SMS/MMS</span>
+                    <span class="usage-value"><%= usage.phone.sms %>건</span>
+                </div>
+            </div>
+            <!--
+            <p class="description">
+                기본전화로 중국에서 한국으로 걸 때는 720원/초 SMS발신은 300원/건 입니다.
+            </p>
+            <p class="description">
+                나라 간 시차 반영으로 인해 예정 금액은 다소 차이가 날 수 있습니다.
+            </p>
+            -->
         </div>
         <% } %>
         <div class="card">
