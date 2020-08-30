@@ -37,19 +37,24 @@ Tw.NextRoamingMenu = function(rootEl) {
 Tw.NextRoamingMenu.prototype = {
   install: function () {
     var container = this.$container;
-    $('#gnb .menu').on('click', function() {
-      $('#roamingMenu').css('display', 'block');
-      container.css('display', 'none');
-    });
-    $('#roamingMenu .header .close').on('click', function() {
-      container.css('display', 'block');
-      $('#roamingMenu').css('display', 'none');
-    });
-  },
-  open: function() {
+    $('#header').remove();
 
+    var mcc = Tw.CommonHelper.getLocalStorage('roamingMCC');
+    if (mcc && mcc !== '450') {
+      $('#gnb .menu').on('click', function() {
+        $('#roamingMenu').css('display', 'block');
+        container.css('display', 'none');
+      });
+      $('#roamingMenu .header .close').on('click', function() {
+        container.css('display', 'block');
+        $('#roamingMenu').css('display', 'none');
+      });
+      $('#common-menu').remove();
+    } else {
+      var menu = new Tw.MenuComponent();
+      $('#gnb .menu').on('click', function() {
+        menu._onGnbBtnClicked();
+      });
+    }
   },
-  close: function() {
-
-  }
 };

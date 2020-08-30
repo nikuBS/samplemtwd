@@ -2,11 +2,12 @@
 <body class="rn">
 <div id="roamingAddons">
     <div id="gnb" class="gnb-opaque">
-        <span class="menu">
+        <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <h1>T로밍 부가서비스</h1>
     </div>
+    <%- include('../components/header.component.html', { title: 'T로밍 부가서비스', svcInfo: svcInfo }) %>
     <div class="filters">
         <h2>부가서비스 종류</h2>
         <% Object.keys(filters).map(filterId => {%>

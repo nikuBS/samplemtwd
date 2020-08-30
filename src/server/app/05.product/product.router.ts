@@ -193,7 +193,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
 
-    this.controllers.push({ url: '/OO/roaming', controller: ProductRoaming });
+    this.controllers.push({ url: '/__/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
     this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult });
     this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
@@ -203,8 +203,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/info/barocall', controller: ProductRoamingBaroCall });
     this.controllers.push({ url: '/roaming/info/baropromotion', controller: ProductRoamingBaroPromotion });
     this.controllers.push({ url: '/roaming/info/guamsaipan', controller: ProductRoamingGuamSaipan });
-    this.controllers.push({ url: '/roaming/fee', controller: ProductRoamingFee });
-    this.controllers.push({ url: '/roaming/planadd', controller: ProductRoamingPlanAdd });
+    this.controllers.push({ url: '/__/roaming/fee', controller: ProductRoamingFee });
+    this.controllers.push({ url: '/__/roaming/planadd', controller: ProductRoamingPlanAdd });
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
     this.controllers.push({ url: '/roaming/fi/inquire', controller: ProductRoamingFiInquire });
     this.controllers.push({ url: '/roaming/coupon', controller: ProductRoamingCoupon });
@@ -230,9 +230,12 @@ class ProductRouter extends TwRouter {
 
     this.controllers.push({ url: '/roaming', controller: RoamingMainController });
     this.controllers.push({ url: '/roaming/on', controller: RoamingOnController });
+    // TODO: 아래 4개, 메뉴 MCC 보고 예전거 해줄지말지 체크하기.
     this.controllers.push({ url: '/roaming/offer', controller: RoamingTariffOfferController });
+    this.controllers.push({ url: '/roaming/fee', controller: RoamingTariffsController });
     this.controllers.push({ url: '/roaming/tariffs', controller: RoamingTariffsController });
     this.controllers.push({ url: '/roaming/addons', controller: RoamingAddonsController });
+    this.controllers.push({ url: '/roaming/planadd', controller: RoamingAddonsController });
     this.controllers.push({ url: '/roaming/history', controller: RoamingHistoryController });
 
     this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });

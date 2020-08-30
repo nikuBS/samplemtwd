@@ -8,12 +8,13 @@
 <body class="rn">
 <div id="roamingMain">
     <div id="gnb">
-        <span class="menu">
+        <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="로고" width="94" height="24" />
     </div>
     <img class="background" src="<%= CDN %>/img/product/roam/bg-map.png" alt="배경이미지"/>
+    <%- include('../components/header.component.html', { title: 'T로밍', svcInfo: svcInfo }) %>
     <div id="contents">
         <h2>해외여행 갈 땐</h2>
         <h2 class="colorPoint">T로밍과 함께 !</h2>
@@ -134,7 +135,7 @@
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
   $(document).ready(function () {
-    new Tw.NextRoamingMenu($('#roamingMain')).install();
+    // new Tw.NextRoamingMenu($('#roamingMain')).install();
     new Tw.NextRoaming($('#roamingMain'), '<%= pageInfo.menuId %>')
     fillPopularNations();
     fillTariffGroups();
@@ -146,6 +147,12 @@
       minLength: 1,
     });
     setupNationsDialog();
+
+    var menu = new Tw.MenuComponent();
+    $('#gnb .menu').on('click', function() {
+      menu._onGnbBtnClicked();
+    });
+    $('#header').hide();
   });
   function prepareNations() {
     let all = [];

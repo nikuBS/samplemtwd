@@ -2,11 +2,12 @@
 <body class="rn">
 <div id="roamingTariffs">
     <div id="gnb" class="gnb-opaque">
-        <span class="menu">
+        <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <h1>T로밍 요금제</h1>
     </div>
+    <%- include('../components/header.component.html', { title: 'T로밍 요금제', svcInfo: svcInfo }) %>
     <div class="header">
         <h2>나의 여행 <span class="colorPoint">패턴</span>을 <span class="colorPoint">선택</span>해보세요!</h2>
         <div class="anchors">

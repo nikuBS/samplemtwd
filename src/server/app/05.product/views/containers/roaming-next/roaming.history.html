@@ -2,11 +2,12 @@
 <body class="rn">
 <div id="roamingHistory">
     <div id="gnb" class="gnb-opaque">
-        <span class="menu">
+        <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <h1>지난 여행 정보</h1>
     </div>
+    <%- include('../components/header.component.html', { title: '지난 여행 정보', svcInfo: svcInfo }) %>
     <div class="card" style="margin-top: 60px;">
         <h2>지난 여행 평균 데이터</h2>
         <p>

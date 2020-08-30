@@ -2,7 +2,7 @@
 <body class="rn">
 <div id="roamingTariffOffer">
     <div id="gnb" class="gnb-opaque">
-        <span class="menu">
+        <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="컨텍스트 메뉴" width="24" height="24" />
         </span>
         <h1>요금제 추천</h1>
@@ -16,7 +16,8 @@
             추천해 드려요!
         </p>
     </div>
-    <div id="contents">
+    <%- include('../components/header.component.html', { title: '요금제 추천', svcInfo: svcInfo }) %>
+    <div class="contents">
         <div class="card">
             <h2>
                 <span class="colorPoint"><%= country.name %></span><!-- 으로 -->
