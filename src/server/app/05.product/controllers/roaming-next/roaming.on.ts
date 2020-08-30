@@ -73,11 +73,9 @@ export default class RoamingOnController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
-    let mcc = req.query.mcc;
+    const mcc = req.query.mcc || req.cookies['ROAMING_MCC'];
     if (!mcc) {
-      // throw new Error('MCC is required');
-      // FIXME: Testing
-      mcc = '234';
+      throw new Error('MCC is required');
     }
 
     const context: any = {
@@ -94,6 +92,7 @@ export default class RoamingOnController extends TwViewController {
       context.country = {
         code: info.countryCode,
         name: info.countryNm,
+        mcc: mcc,
         nameEnglish: info.countryNmEng,
         timezoneOffset: info.tmdiffTms,
         flagUrl: `${this.CDN}${info.mblNflagImg}`,

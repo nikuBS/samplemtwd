@@ -230,7 +230,6 @@ class ProductRouter extends TwRouter {
 
     this.controllers.push({ url: '/roaming', controller: RoamingMainController });
     this.controllers.push({ url: '/roaming/on', controller: RoamingOnController });
-    // TODO: 아래 4개, 메뉴 MCC 보고 예전거 해줄지말지 체크하기.
     this.controllers.push({ url: '/roaming/offer', controller: RoamingTariffOfferController });
     this.controllers.push({ url: '/roaming/fee', controller: RoamingTariffsController });
     this.controllers.push({ url: '/roaming/tariffs', controller: RoamingTariffsController });

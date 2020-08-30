@@ -55,7 +55,7 @@
         </div>
     </div>
 </script>
-<%- include('../../components/roaming-next/roaming.menu.html'); %>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
@@ -168,7 +168,7 @@
 
         for (var k of Object.keys(groupMetas)) {
           var meta = groupMetas[k];
-          if (scrollTop > meta.top - 145 && scrollTop < meta.top - 145 + meta.height) {
+          if (scrollTop > meta.top - 200 && scrollTop < meta.top - 200 + meta.height) {
             const thatId = 'a-' + k;
             $('.header .anchor').each(function(i, val) {
               var state = val.id === thatId ? 'on' : 'off';
@@ -198,7 +198,7 @@
   function showGroupImpl(groupId, anchorId) {
     scrollMonitor = false;
     $([document.documentElement, document.body]).animate({
-      scrollTop: groupMetas[groupId].top - 145,
+      scrollTop: groupMetas[groupId].top - 200,
     }, 280, function() {
       scrollMonitor = true;
     });

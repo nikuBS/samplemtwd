@@ -10,7 +10,6 @@ export default class RoamingAddonsController extends TwViewController {
     Observable.combineLatest(
       this.getAddonsUsing(svcInfo),
       this.getAddonsAll(),
-      this.testNewApis(svcInfo),
     ).subscribe(([addonUsing, addonData]) => {
       this.logger.info(this, 'roamingAddon: ', addonData);
 
@@ -52,7 +51,7 @@ export default class RoamingAddonsController extends TwViewController {
 
   private getAddonsUsing(svcInfo): Observable<any> {
     if (!this.isLogin(svcInfo)) {
-      return Observable.defer(() => {});
+      return Observable.of([]);
     }
     return this.apiService.request(API_CMD.BFF_10_0057, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
@@ -86,23 +85,6 @@ export default class RoamingAddonsController extends TwViewController {
           msg: resp.msg
         };
       }
-    });
-  }
-
-  private testNewApis(svcInfo): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0200, {
-      // prodId: 'NA00006489',
-      // svcMgmtNum: svcInfo.svcMgmtNum,
-      // countryCode: 'JPN',
-      // svcStartDt: '2020-08-29',
-      // svcEndDt: '2020-09-09',
-      // usgStartDate: '2020-08-01',
-      // usgEndDate: '2020-08-15',
-      // svcNum: svcInfo.svcNum,
-      // mcc: '202',
-    }).map((resp) => {
-      // this.logger.warn(this, JSON.stringify(resp));
-      return {hello: 'world'};
     });
   }
 }

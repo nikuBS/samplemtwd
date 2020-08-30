@@ -19,7 +19,7 @@
     <div class="items">
     </div>
 </div>
-<%- include('../../components/roaming-next/roaming.menu.html'); %>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script type="text/x-handlebars-template" id="tpl-item">
@@ -40,7 +40,7 @@
 </script>
 <script type="text/javascript">
   $(document).on('ready', function () {
-    new Tw.NextRoamingMenu($('roamingAddons')).install();
+    new Tw.NextRoamingMenu($('#roamingAddons')).install();
     fillItems();
   });
 

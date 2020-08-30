@@ -7,9 +7,7 @@ import FormatHelper from '../../../../utils/format.helper';
 export default class RoamingTariffOfferController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
-    if (!isLogin) {
-      throw new Error('halt');
-    }
+    // TODO: 최근 방문국가 w/ 사용요금제 목록 API 연동 필요
 
     res.render('roaming-next/roaming.history.html', {
       svcInfo,

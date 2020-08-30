@@ -206,16 +206,22 @@
     </div>
 </div>
 <%- include('../../components/roaming-next/schedule.picker.html'); %>
-<%- include('../../components/roaming-next/roaming.menu.html'); %>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <%- include('../../components/roaming-next/circlebar.javascript.html'); %>
 <script type="text/javascript">
+  if (!navigator.mcc) {
+    navigator.__defineGetter__('mcc', function() {
+      return '<%= country.mcc %>';
+    });
+  }
+
   $(document).ready(function () {
     fillBackgroundImage();
     $('#timeKorea').html(moment().format('YY.MM.DD HH:mm'));
     $('#timeLocal').html(moment().add('<%= country.timezoneOffset %>', 'hours').format('YY.MM.DD HH:mm'));
-    
+
     new Tw.NextRoamingMenu($('#roamingOn')).install();
     var target = '/product/roaming';
     var landing = new Tw.TidLandingComponent();

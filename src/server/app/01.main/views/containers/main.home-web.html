@@ -576,6 +576,10 @@
 <% include ../components/javascript.component.html %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
 <script>
+  if (navigator.mcc && navigator.mcc !== '450') {
+    Tw.CommonHelper.setCookie('ROAMING_MCC', navigator.mcc, 1)
+    document.location.href = '/product/roaming/on?mcc=' + navigator.mcc;
+  }
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');
   });

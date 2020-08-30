@@ -39,17 +39,26 @@ Tw.NextRoamingMenu.prototype = {
     var container = this.$container;
     $('#header').remove();
 
-    var mcc = Tw.CommonHelper.getLocalStorage('roamingMCC');
+    var mcc = Tw.CommonHelper.getCookie('ROAMING_MCC');
+    if (!mcc) {
+      mcc = navigator.mcc;
+    }
+
     if (mcc && mcc !== '450') {
       $('#gnb .menu').on('click', function() {
         $('#roamingMenu').css('display', 'block');
         container.css('display', 'none');
+
+        $('#roamingMenu .header .login').on('click', function(e) {
+          new Tw.TidLandingComponent().goLogin('/product/roaming');
+          e.stopPropagation();
+        });
       });
       $('#roamingMenu .header .close').on('click', function() {
         container.css('display', 'block');
         $('#roamingMenu').css('display', 'none');
       });
-      $('#common-menu').remove();
+      $('#common-menu').hide();
     } else {
       var menu = new Tw.MenuComponent();
       $('#gnb .menu').on('click', function() {
