@@ -37,7 +37,7 @@ Tw.NextRoamingMenu = function(rootEl) {
 Tw.NextRoamingMenu.prototype = {
   install: function () {
     var container = this.$container;
-    $('#header').remove();
+    $('#header').hide();
 
     var mcc = Tw.CommonHelper.getCookie('ROAMING_MCC');
     if (!mcc) {

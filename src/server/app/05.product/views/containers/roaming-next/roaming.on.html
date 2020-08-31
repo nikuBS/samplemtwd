@@ -218,6 +218,8 @@
   }
 
   $(document).ready(function () {
+    Tw.CommonHelper.setCookie('ROAMING_MCC', '<%= country.mcc %>', 1);
+
     fillBackgroundImage();
     $('#timeKorea').html(moment().format('YY.MM.DD HH:mm'));
     $('#timeLocal').html(moment().add('<%= country.timezoneOffset %>', 'hours').format('YY.MM.DD HH:mm'));
@@ -240,6 +242,7 @@
     })
     $('#offer').on('click', function(e) {
       openScheduleDialog('<%= country.code %>', '<%= country.name %>',
+        // FIXME: 상단 이미지 교체 필요
         'http://yellowchamber.com/images/roaming/top_phl.png', '#roamingOn');
       e.stopPropagation();
     });
@@ -256,6 +259,7 @@
         color: '#728eff',
       });
 
+      // TODO: 사용량에 따라 하단 비율 조정
       chartData.animate(0.41);
       chartPhone.animate(0.72);
     }
