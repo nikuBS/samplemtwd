@@ -259,9 +259,10 @@
         color: '#728eff',
       });
 
-      // TODO: 사용량에 따라 하단 비율 조정
-      chartData.animate(0.41);
-      chartPhone.animate(0.72);
+      <% if (usage.data && usage.baro) { %>
+      chartData.animate(parseFloat('<%= parseFloat(usage.data.used) / parseFloat(usage.data.total) %>'))
+      chartPhone.animate(parseFloat('<%= parseFloat(usage.baro.used) / 60 %>'));
+      <% } %>
     }
   });
   function fillBackgroundImage() {

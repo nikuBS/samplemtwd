@@ -77,6 +77,7 @@ export default class RoamingOnController extends TwViewController {
     if (!mcc) {
       throw new Error('MCC is required');
     }
+    const testUsage = req.query.use === '1' || false;
 
     const context: any = {
       svcInfo,
@@ -105,7 +106,7 @@ export default class RoamingOnController extends TwViewController {
         this.getUsingTariffs().subscribe(usingTariffs => {
           const noSubscription = !usingTariffs || usingTariffs.length === 0;
           context.noSubscription = noSubscription;
-          if (noSubscription) {
+          if (noSubscription && !testUsage) {
             Observable.combineLatest(
               this.getAvailableTariffs(mcc),
               this.getPhoneUsage(),
@@ -145,24 +146,26 @@ export default class RoamingOnController extends TwViewController {
                 }
               };
 
-              // FIXME: Testing
-              context.usage.data = {
-                prodId: '-',
-                prodNm: 'baro 3GB',
-                total: '3000',
-                used: '1730',
-                remained: '1270',
-                rgstDtm: moment().subtract(2, 'days').format('YYYYMMDD') + '10',
-                exprDtm: moment().subtract(-3, 'days').format('YYYYMMDD') + '22',
-              };
-              context.usage.phone = {
-                voice: 146,
-                sms: 200,
-              };
-              context.usage.baro = {
-                total: '무제한',
-                used: '7'
-              };
+              if (testUsage) {
+                // FIXME: Testing
+                context.usage.data = {
+                  prodId: '-',
+                  prodNm: 'baro 3GB',
+                  total: '3000',
+                  used: '1730',
+                  remained: '1270',
+                  rgstDtm: moment().subtract(2, 'days').format('YYYYMMDD') + '10',
+                  exprDtm: moment().subtract(-3, 'days').format('YYYYMMDD') + '22',
+                };
+                context.usage.phone = {
+                  voice: 146,
+                  sms: 200,
+                };
+                context.usage.baro = {
+                  total: '무제한',
+                  used: '7'
+                };
+              }
               res.render(template, context);
             });
           }
