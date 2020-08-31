@@ -1473,6 +1473,121 @@
         }
       }
     }
+
+    #roamingCoupon {
+      .card {
+        margin-top: 10px;
+        background-color: #fff;
+        padding: 35px 20px;
+        min-height: 80px;
+        p {
+          font-size: 13px;
+          font-weight: 400;
+          color: #959595;
+          letter-spacing: -0.5px;
+        }
+        .help {
+          position: relative;
+          height: 60px;
+          .note {
+            position: absolute;
+            left: 25px;
+            top: 12px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #959595;
+          }
+          .title {
+            position: absolute;
+            left: 25px;
+            top: 35px;
+            font-size: 19px;
+            font-weight: 600;
+            color: @pointColor;
+          }
+          .phone {
+            position: absolute;
+            right: 25px;
+            top: 1px;
+            width: 45px;
+            height: 60px;
+
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+          }
+        }
+      }
+      .header {
+        margin-top: 60px;
+        h2 {
+          font-size: 26px;
+          font-weight: 600;
+          color: #111;
+          margin-bottom: 10px;
+        }
+        .inquire {
+          float: right;
+          font-size: 13px;
+          font-weight: 500;
+          color: @pointColor;
+          letter-spacing: -0.5px;
+        }
+      }
+      .button {
+        border-radius: 18px;
+        border: 1px solid @pointColor;
+        height: 36px;
+        text-align: center;
+        cursor: pointer;
+        margin: 15px 0;
+        color: @pointColor;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 36px;
+      }
+      .anchors {
+        background-color: @pointColor;
+        color: white;
+        .anchor {
+          display: inline-block;
+          height: 60px;
+          line-height: 60px;
+          font-size: 15px;
+          font-weight: 600;
+          letter-spacing: -0.75px;
+          color: #fff;
+          padding: 0 20px;
+          opacity: 0.4;
+        }
+        .selected {
+          font-size: 17px;
+          font-weight: 700;
+          color: #fff;
+          opacity: 1.0;
+        }
+      }
+      .intro {
+        ul {
+          height: 330px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          white-space: nowrap;
+          li {
+            display: inline-block;
+          }
+          .inner-box {
+            display: inline-block;
+            background-color: #f3f4f9;
+            border-radius: 6px;
+            .card {
+              background-color: #f3f4f9;
+            }
+          }
+        }
+      }
+    }
   }
   body.scroll #gnb {
     background-color: white;

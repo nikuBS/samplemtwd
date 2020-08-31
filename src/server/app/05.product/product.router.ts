@@ -117,6 +117,7 @@ import RoamingTariffsController from './controllers/roaming-next/roaming.tariffs
 import RoamingOnController from './controllers/roaming-next/roaming.on';
 import RoamingAddonsController from './controllers/roaming-next/roaming.addons';
 import RoamingHistoryController from './controllers/roaming-next/roaming.history';
+import RoamingCouponController from './controllers/roaming-next/roaming.coupon';
 
 
 class ProductRouter extends TwRouter {
@@ -207,7 +208,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/__/roaming/planadd', controller: ProductRoamingPlanAdd });
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
     this.controllers.push({ url: '/roaming/fi/inquire', controller: ProductRoamingFiInquire });
-    this.controllers.push({ url: '/roaming/coupon', controller: ProductRoamingCoupon });
+    this.controllers.push({ url: '/__/roaming/coupon', controller: ProductRoamingCoupon });
     this.controllers.push({ url: '/roaming/fi/reservation', controller: ProductRoamingFiReservation });
     this.controllers.push({ url: '/roaming/fi/reservation-complete', controller: ProductRoamingFiReservationComplete });
     this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
@@ -236,6 +237,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/addons', controller: RoamingAddonsController });
     this.controllers.push({ url: '/roaming/planadd', controller: RoamingAddonsController });
     this.controllers.push({ url: '/roaming/history', controller: RoamingHistoryController });
+    this.controllers.push({ url: '/roaming/coupon', controller: RoamingCouponController });
 
     this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplanBackup });
