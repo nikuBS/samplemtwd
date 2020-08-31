@@ -148,7 +148,7 @@
 
 .accordion .acco-list .acco-box .acco-tit button { font-weight: 500; font-size: 1rem; }
 
-.accordion .acco-list .acco-box .acco-tit button img { width: 15px; height: 15.5px; vertical-align: text-top; margin-right: 0.44rem; }
+.accordion .acco-list .acco-box .acco-tit button img { width: 0.94rem; height: 0.97rem; vertical-align: text-top; margin-right: 0.44rem; }
 
 .accordion .acco-style.btn-hold.active-txt-type .acco-list .acco-box.on .acco-tit { font-weight: 500; }
 
@@ -162,7 +162,31 @@
 
 .full-link-list li button:after, .full-link-list li a:after, .full-link-list li .no-link:after { position: absolute; right: 0.63rem; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url("/img/en/icon_32px_arrowmore.svg") no-repeat 23% 50%; background-size: 100%; }
 
-.cont-box .tit-type6 { position: relative; display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 1.19rem 1.81rem 1.06rem 1rem; text-align: left; font-size: 1rem; vertical-align: middle; line-height: 1; color: #000000; }
+.cont-box .tit-type6 { position: relative; display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 1.19rem 1.81rem 1.06rem 1rem; text-align: left; font-size: 1rem; vertical-align: middle; line-height: 1; color: #000000; font-weight: 500; }
+
+.icon-fnote { display: inline-block; width: 0.5rem; height: 0.5rem; margin: -3px 6px 0 6px; background: url("/img/en/ico-require.png") no-repeat; background-size: 0.5rem; }
+
+.radiobox.type01.checked:before { background: url("/img/en/ico-radio-style01-checked.png") no-repeat 0 0; background-size: 1.5rem auto; }
+
+.radiobox.type01:before { background: url("/img/en/ico-radio-style01-default.png") no-repeat 0 0; background-size: 1.5rem auto; }
+
+.popup-page .popup-closeBtn { background: url("/img/en/icon_48px_titlebar_exit.svg") no-repeat 0 0; background-size: 100% 100%; }
+
+.extraservice-list > .category-type .products-titleinfo .title { font-size: 1.06rem; font-weight: 500; }
+
+.extraservice-list > .category-type .products-titleinfo .title .taglist-wrap { display: block; font-weight: 300; margin-top: 0.31rem; }
+
+.extraservice-list > .category-type .products-titleinfo .info .money { font-size: 1.19rem; font-weight: 600; }
+
+.extraservice-list > .category-type .products-titleinfo .info .taglist-wrap { display: block; font-weight: 300; margin-top: 0; text-align: right; }
+
+.products-detailinfo02 .category-type.type01, .products-detailinfo02 .category-type.type02, .products-detailinfo02 .category-type.type03 { width: 33.33%; text-align: center; }
+
+.products-detailinfo02 .category-type .gb { background: url("/img/en/bg_gb.png") no-repeat 0 0.13rem; background-size: 14px 14px; color: #666; }
+
+.products-detailinfo02 .category-type .type { background: url("/img/en/bg_type.png") no-repeat 0 0.13rem; background-size: 14px 14px; }
+
+.products-detailinfo02 .category-type .basic { background: url("/img/en/bg_sms.png") no-repeat 0 0.32rem; background-size: 14px 10px; }
 
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
@@ -199,6 +223,14 @@
 
 .fs-info:last-of-type { padding: 0 0 0 0.78rem; }
 
+.fs-info.footnote01 { padding-left: 0.88rem; }
+
+.fs-info.footnote01::before { content: ''; display: inline-block; position: absolute; left: 0; top: 0.25rem; width: 0.5rem; height: 0.5rem; background: url("/img/en/ico-require.png") 0 0 no-repeat; background-size: 100% 100%; }
+
+.fs-info.footnote02 { padding-left: 0.88rem; }
+
+.fs-info.footnote02::before { content: ''; display: inline-block; position: absolute; left: 0; top: 0.25rem; width: 0.5rem; height: 0.44rem; background: url("/img/en/ico-require02.png") 0 0 no-repeat; background-size: 100% 100%; }
+
 .charge-line { position: relative; display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 1.25rem 0; text-align: left; font-size: 0; line-height: 1; color: #000000; }
 
 .charge-line .tit { display: table-cell; font-size: 1rem; vertical-align: middle; font-weight: 500; }
@@ -206,6 +238,8 @@
 .charge-line::after { position: absolute; right: 0; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url("/img/en/icon_32px_arrowmore.svg") no-repeat 23% 50%; background-size: 100%; }
 
 .gray-box { width: 100%; padding: 0 0.94rem; border-radius: 0.63rem; background-color: #fafafa; -webkit-box-sizing: border-box; box-sizing: border-box; margin-bottom: 1.25rem; }
+
+.gray-box.pl-30 { width: 95%; margin: 0.94rem auto; background: #f7f9fa; }
 
 .gray-box .charge { width: 100%; display: table; position: relative; font-size: 0.81rem; color: #000; padding: 1.25rem 0.63rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom: 1px solid #e5e5e5; }
 
@@ -257,7 +291,79 @@
 
 .chart-wrap.bar5 .data-arry .data-belt .data-ul > li + li { margin-top: 0.81rem; }
 
-.bill-detail { width: 100%; position: relative; background: #f7f9fa; padding: 1.06rem 1rem; }
+.bg-gray { width: 100%; position: relative; background: #f7f9fa; padding: 0 1rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.bg-gray .totall { width: 100%; position: relative; padding: 1.06rem 0.63rem; display: table; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.bg-gray .totall dt { width: 75%; display: table-cell; font-size: 0.94rem; color: #000; text-align: left; }
+
+.bg-gray .totall dd { width: 25%; display: table-cell; text-align: right; font-size: 0.94rem; }
+
+.bg-gray .totall dd.red { color: #f76252; }
+
+.bg-gray .comm-charges .totall::after { content: ''; display: inline-block; width: 100%; height: 1px; background: #e5e5e5; position: absolute; bottom: 0; left: 0; }
+
+.bg-gray .comm-charges .bill-cont { width: 100%; position: relative; display: table; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 0.94rem 0.63rem; }
+
+.bg-gray .comm-charges .bill-cont::after { content: ''; width: 100%; height: 1px; background: #f2f2f2; position: absolute; bottom: 0; left: 0; }
+
+.bg-gray .comm-charges .bill-cont:last-of-type::after { display: none; }
+
+.bg-gray .comm-charges .bill-cont dt { width: 75%; display: table-cell; color: #000; font-size: 0.88rem; }
+
+.bg-gray .comm-charges .bill-cont dt .refer { font-size: 0.75rem; color: #666; font-weight: 300; }
+
+.bg-gray .comm-charges .bill-cont dd { width: 25%; display: table-cell; text-align: right; font-size: 0.88rem !important; }
+
+.bg-gray .service-charge .totall::after { content: ''; display: inline-block; width: 100%; height: 1px; background: #e5e5e5; position: absolute; top: 0; left: 0; }
+
+.bg-gray .service-charge .bill-cont { width: 100%; position: relative; display: table; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 0.94rem 0.63rem; }
+
+.bg-gray .service-charge .bill-cont::after { content: ''; width: 100%; height: 1px; background: #f2f2f2; position: absolute; top: 0; left: 0; }
+
+.bg-gray .service-charge .bill-cont dt { width: 100%; color: #000; padding-bottom: 0.5rem; font-size: 0.88rem; }
+
+.bg-gray .service-charge .bill-cont dd { width: 100%; display: table; font-size: 0.75rem; color: #666; }
+
+.bg-gray .service-charge .bill-cont dd .article { width: 75%; display: table-cell; text-align: left; position: relative; padding-left: 0.38rem; }
+
+.bg-gray .service-charge .bill-cont dd .article::before { content: ''; display: inline-block; width: 2px; height: 2px; background: #666; position: absolute; top: 49%; left: 0; }
+
+.bg-gray .service-charge .bill-cont dd .fee { width: 25%; display: table-cell; text-align: right; }
+
+.bg-gray .service-charge .bill-cont > dd + dd { padding-top: 0.5rem; }
+
+.charge-list { width: 100%; }
+
+.charge-list .acco-list .acco-box { min-height: 3.06rem; }
+
+.charge-list .acco-list .acco-box .acco-tit > button { width: 100%; height: 100%; position: relative; font-size: 0.88rem; color: #000; }
+
+.charge-list .acco-list .acco-box .acco-tit > button .phone-num-ico { width: 0.88rem; height: 1.25rem; vertical-align: text-bottom; }
+
+.charge-list .acco-list .acco-box .acco-tit > button .phone-num { width: 65%; display: block; float: left; }
+
+.charge-list .acco-list .acco-box .acco-tit > button .fee { width: calc(35% - 0.93rem); display: block; text-align: right; float: left; padding-right: 0.31rem; }
+
+.charge-list .acco-list .acco-box .acco-tit > button .fee.red { color: #f76252; }
+
+.call-plan { width: 100%; height: 3.25rem; line-height: 3.25rem; padding: 0 0.94rem; }
+
+.call-plan dl { width: 100%; display: table; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.call-plan dl dt { width: 65%; display: table-cell; font-size: 0.81rem; color: #666; text-align: left; }
+
+.call-plan dl dd { width: 35%; display: table-cell; font-size: 0.94rem; color: #000; font-weight: 500; text-align: right; }
+
+.my-info-tit { height: 3.25rem; line-height: 3.25rem; font-size: 1rem; font-weight: 500; }
+
+.my-info-data { width: 100%; display: table; border: 1px solid #cfcfcf; border-top: 0; }
+
+.my-info-data:first-of-type { border-top: 1px solid #cfcfcf; }
+
+.my-info-data dt { display: table-cell; width: 40%; background: #f5f5f5; border-right: 1px solid #cfcfcf; padding: 0.94rem 0.75rem; font-size: 13px; color: #858585; vertical-align: middle; }
+
+.my-info-data dd { display: table-cell; width: 60%; padding: 0.94rem 0.75rem; font-size: 0.81rem; line-height: 1.13rem; color: #000; vertical-align: middle; }
 
 .mb100 { margin-bottom: 3.13rem; }
 
@@ -331,18 +437,18 @@
 .tod-coach-mark .close { background-image: url("/img/en/btn_coach_mark_white.png"); }
 
 /* Logout */
-.popup-page.sign-page .container-wrap .container.logout { top: 44%; }
+.popup-page.sign-page .container-wrap .container.logout, .popup-page.sign-page .container-wrap .container.warning { top: 44%; }
 
-.container.logout .complete-title > img { width: 3.75rem; height: 3.75rem; margin-bottom: 2.5rem; }
+.container.logout .complete-title > img, .container.warning .complete-title > img { width: 3.75rem; height: 3.75rem; margin-bottom: 2.5rem; }
 
-.container.logout .complete-title > span { padding-top: 0; }
+.container.logout .complete-title > span, .container.warning .complete-title > span { padding-top: 0; }
 
-.container.logout .complete-title > span > strong { font-size: 2rem; font-weight: 700; }
+.container.logout .complete-title > span > strong, .container.warning .complete-title > span > strong { font-size: 2rem; font-weight: 700; }
 
-.container.logout .complete-title > span:not(.mid-txt) { margin-bottom: 1.13rem; }
+.container.logout .complete-title > span:not(.mid-txt), .container.warning .complete-title > span:not(.mid-txt) { margin-bottom: 1.13rem; }
 
-.container.logout .complete-title > span.mid-txt { font-size: 1.38rem; font-weight: 500; line-height: 1.4em; }
+.container.logout .complete-title > span.mid-txt, .container.warning .complete-title > span.mid-txt { font-size: 1.38rem; font-weight: 500; line-height: 1.4em; }
 
-.container.logout .complete-error-tx { padding-top: 1.13rem; }
+.container.logout .complete-error-tx, .container.warning .complete-error-tx { padding-top: 1.13rem; }
 
 /*# sourceMappingURL=maps/style_en.css.map */
