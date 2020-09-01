@@ -241,9 +241,7 @@
       e.stopPropagation();
     })
     $('#offer').on('click', function(e) {
-      openScheduleDialog('<%= country.code %>', '<%= country.name %>',
-        // FIXME: 상단 이미지 교체 필요
-        'http://yellowchamber.com/images/roaming/top_phl.png', '#roamingOn');
+      openScheduleDialog('<%= country.code %>', '<%= country.name %>', '<%= country.backgroundUrl %>', '#roamingOn');
       e.stopPropagation();
     });
 

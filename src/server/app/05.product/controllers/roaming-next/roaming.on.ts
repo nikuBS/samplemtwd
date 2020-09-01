@@ -5,16 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import moment from 'moment';
+import RoamingHelper from './roaming.helper';
 
-const ISO3166 = {
-  '412': ['AFG', 'AF'], '276': ['ALB', 'AL'], '722': ['ARG', 'AR'], '505': ['AUS', 'AU'], '232': ['AUT', 'AT'],
-  '206': ['BEL', 'BE'], '470': ['BGD', 'BD'], '302': ['CAN', 'CA'], '228': ['CHE', 'CH'], '730': ['CHL', 'CL'],
-  '460': ['CHN', 'CN'], '244': ['FIN', 'FI'], '208': ['FRA', 'FR'], '234': ['GBR', 'GB'], '310': ['USA', 'US'],
-  '202': ['GRC', 'GR'], '454': ['HKG', 'HK'], '372': ['HTI', 'HT'], '216': ['HUN', 'HU'], '510': ['IDN', 'ID'],
-  '404': ['IND', 'IN'], '425': ['ISR', 'IL'], '222': ['ITA', 'IT'], '440': ['JPN', 'JP'], '270': ['LUX', 'LU'],
-  '455': ['MAC', 'MO'], '515': ['PHL', 'PH'], '530': ['NZL', 'NZ'], '250': ['RUS', 'RU'], '240': ['SWE', 'SW'],
-  '520': ['THA', 'TH'], '452': ['VNM', 'VN'], '549': ['WSM', 'WS'], '214': ['ESP', 'ES'], '262': ['DEU', 'DE'],
-};
 const TMP_BACKGROUND = {
   '412': 'https://s-media-cache-ak0.pinimg.com/736x/9a/89/0c/9a890cf6cbb42fdb2762b616c38c888d.jpg',
   '440': 'https://i.pinimg.com/originals/01/14/fd/0114fd9f04d7e313f9a3266c2885adca.jpg',
@@ -97,7 +89,7 @@ export default class RoamingOnController extends TwViewController {
         nameEnglish: info.countryNmEng,
         timezoneOffset: info.tmdiffTms,
         flagUrl: `${this.CDN}${info.mblNflagImg}`,
-        flagCode: ISO3166[mcc][1].toLowerCase(),
+        flagCode: RoamingHelper.getAlpha2ByMCC(mcc).toLowerCase(),
         backgroundUrl: this._useCountryBackground(info, mcc),
       };
       if (!isLogin) {

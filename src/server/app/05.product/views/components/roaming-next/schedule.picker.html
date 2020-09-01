@@ -1,7 +1,6 @@
 <div id="scheduleDialog" class="dialog">
     <div class="header">
         <img class="banner" width="100%" />
-        <div class="banner-cover"></div>
         <div class="summary">
             <h1><span id="target-nation"></span>, 언제 떠나세요?</h1>
             <div>
@@ -32,7 +31,8 @@
     $('#date-depart').html('-');
     $('#date-arrive').html('-');
     if (!topBannerUrl)
-      topBannerUrl = 'http://yellowchamber.com/images/roaming/top_etc.png';
+      // FIXME:
+      topBannerUrl = '<%= CDN %>/img/product/roam/background_aus.png';
     $('#scheduleDialog .banner').attr('src', topBannerUrl);
     $('#target-nation').html(name);
     $('#target-nation').attr('data-code', code);
@@ -67,8 +67,7 @@
     var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
     var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
     var countryCode = $('#target-nation').attr('data-code');
-    var countryName = $('#target-nation').html();
-    document.location.href = '/product/roaming/offer?code=' + countryCode + '&name=' + countryName +
+    document.location.href = '/product/roaming/offer?code=' + countryCode +
       '&from=' + startDate.format('YYYYMMDD') +
       '&to=' + endDate.format('YYYYMMDD');
     closeDialog();

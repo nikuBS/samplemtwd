@@ -5,26 +5,34 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import moment from 'moment';
 import RoamingOnController from './roaming.on';
+import RoamingHelper from './roaming.helper';
+import EnvHelper from '../../../../utils/env.helper';
 
 export default class RoamingTariffOfferController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     const countryCode = req.query.code;
-    const countryName = req.query.name;
 
     const from = moment(req.query.from, 'YYYYMMDD');
     const to = moment(req.query.to, 'YYYYMMDD');
     const night = to.diff(from) / 86400 / 1000;
 
     Observable.combineLatest(
+      this.getCountryInfo(RoamingHelper.getMCC(countryCode)),
       this.getRecommendedTariff(countryCode, from.format('YYYYMMDD'), to.format('YYYYMMDD')),
       this.getAvailableTariffs(countryCode),
-    ).subscribe(([recommended, allTariffs]) => {
+    ).subscribe(([country, recommended, allTariffs]) => {
       res.render('roaming-next/roaming.tariff.offer.html', {
         svcInfo,
         pageInfo,
         isLogin: isLogin,
-        country: {code: countryCode, name: countryName},
+        country: {
+          code: country.countryCode,
+          name: country.countryNm,
+          imageUrl: country.mblRepImg
+            // FIXME:
+            || EnvHelper.getEnvironment('CDN') + '/img/product/roam/background_aus.png',
+        },
         night: night,
         days: night + 1,
         recommended,
@@ -35,6 +43,19 @@ export default class RoamingTariffOfferController extends TwViewController {
 
   protected get noUrlMeta(): boolean {
     return true;
+  }
+
+  /**
+   * 해당 국가의 메타정보인 국가명, 한국과의 tzOffset, 국기 이미지 리소스 등
+   *
+   * @param mcc mobileCountryCode 3자리
+   * @private
+   */
+  private getCountryInfo(mcc: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0199, {mcc}).map(resp => {
+      // countryCode, countryNm, countryNmEng, tmdiffTms
+      return resp.result;
+    });
   }
 
   /**
