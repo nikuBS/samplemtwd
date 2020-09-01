@@ -167,7 +167,7 @@
                 <span class="colorPoint">유료 요금이 발생</span>합니다. (국내는 무료)
             </p>
         </div>
-        <div class="card">
+        <div class="card card-toggle" id="info-consulate">
             <p class="description mb2">
                 언제 어디서나 재외국민 안전은
             </p>
@@ -184,8 +184,11 @@
                 </p>
                 <a href="tel:+82263439000"><h4>+82-2-6343-9000</h4></a>
             </div>
+            <div class="toggle" onclick="toggleInfo(this);">
+                <img src="<%= CDN %>/img/product/roam/ico_collapse.svg" alt="카드 접기" />
+            </div>
         </div>
-        <div class="card">
+        <div class="card card-toggle" id="info-customer">
             <p class="description mb2">
                 국내/해외 어디에서나 무료로 이용 가능한
             </p>
@@ -202,6 +205,9 @@
                 </p>
                 <a href="tel:+82232100404"><h4>+82-2-3210-0404</h4></a>
             </div>
+            <div class="toggle" onclick="toggleInfo(this)">
+                <img src="<%= CDN %>/img/product/roam/ico_collapse.svg" alt="카드 접기" />
+            </div>
         </div>
     </div>
 </div>
@@ -211,6 +217,19 @@
 <% include ../../components/javascript.component.html %>
 <%- include('../../components/roaming-next/circlebar.javascript.html'); %>
 <script type="text/javascript">
+  function toggleInfo(e) {
+    var id = e.parentElement.id;
+    var imagePrefix = '<%= CDN %>/img/product/roam/ico_';
+    var imageSuffix = '.svg';
+    $('#' + id + ' .info').toggle('blind', {}, 250, function() {
+      var info = $('#' + id + ' .info')[0];
+      $('#' + id + ' .toggle img').attr(
+        'src',
+        imagePrefix + (info.style.display === 'none' ? 'expand' : 'collapse') + imageSuffix
+      )
+    });
+  }
+
   if (!navigator.mcc) {
     navigator.__defineGetter__('mcc', function() {
       return '<%= country.mcc %>';
