@@ -57,23 +57,30 @@ class CommonUtilServiceBlock extends TwViewController {
         // 게시 여부 
         if (blockYn === 'Y') {
           // 기간 체크 
-          if (!(today >= startTime && today <= endTime)) {  
+          if ((today >= startTime && today <= endTime)) {  
+            // console.log('[TEST] 1', blockYn,today,startTime,endTime);
             fromDtm = startTime.toString();
             toDtm = endTime.toString();
             hideTime = FormatHelper.isEmpty(fromDtm) || fromDtm === 'undefined';
             // 노출 
             res.render('util/common.util.service-block.html', { fromDtm, toDtm, pageInfo, hideTime, title, content, blockYn });
           } else {
+            // console.log('[TEST] 2', blockYn,today,startTime,endTime);
             // 비노출 
+            blockYn = 'N';
             res.render('util/common.util.service-block.html', { fromDtm, toDtm, pageInfo, hideTime, title, content, blockYn });
           }
         } else {
+          // console.log('[TEST] 3', blockYn,today,startTime,endTime);
           // 비노출 
+          blockYn = 'N';
           res.render('util/common.util.service-block.html', { fromDtm, toDtm, pageInfo, hideTime, title, content, blockYn });
         }
         
       } else {
-         // 비노출 
+        // console.log('[TEST] 4', blockYn,today,startTime,endTime);
+        // 비노출 
+        blockYn = 'N';
         res.render('util/common.util.service-block.html', { fromDtm, toDtm, pageInfo, hideTime, title, content, blockYn });
       }
     });
