@@ -35,7 +35,7 @@ export default class RoamingMainController extends TwViewController {
   private getNationsByContinents(continent: string): Observable<any> {
     return this.redisService.getData(`${REDIS_KEY.ROAMING_NATIONS_BY_CONTINENT}:${continent}`).map(resp => {
       // contnCd, countryCode, countryNameKor, commCdValNm
-      return resp.contnPsbNation;
+      return resp.result.contnPsbNation;
     });
   }
 
