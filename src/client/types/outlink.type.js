@@ -47,5 +47,5 @@ Tw.OUTLINK = {
     PRD: 'https://reservation.tworld.co.kr',
     RESERVE: '/sev/booking/counseling/date/shop?sso_login_id={0}&svc_num={1}&service_name=tworld&store_code={2}' // 예약하기
   },
-  BRANCH_RERSERVE: 'https://tbooking.svctop.co.kr'
+  BRANCH_RERSERVE: 'https://tbooking.svctop.co.kr/index?jj_nm='
 };
