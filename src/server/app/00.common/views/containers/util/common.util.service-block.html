@@ -7,6 +7,7 @@
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <!-- body -->
 <body style="background:#fff; position:relative;">
+<% if (blockYn === 'N') { %>
 <div class="wrap checking_wrap">
     <i class="icon-warning-120"><span class="blind">warning</span></i>
     <p class="tit">시스템 점검 중입니다</p>
@@ -15,6 +16,16 @@
     <p class="subTxt"><%= fromDtm %> ~ <%= toDtm %></p>
     <% } %>
 </div>
+<% } else { %>
+  <div class="wrap checking_wrap">
+    <i class="icon-warning-120"><span class="blind">warning</span></i>
+    <p class="tit"><%= title %></p>
+    <p class="txt"><%- content %></p>
+    <% if (hideTime) { %>
+    <p class="subTxt"><%= fromDtm %> ~ <%= toDtm %></p>
+    <% } %>
+</div>
+<% } %>  
 <div class="checking_btn">
     <button type="button" class="fe-common-back">닫기</button>
 </div>
