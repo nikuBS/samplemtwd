@@ -999,6 +999,7 @@ export const API_CMD = {
   BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0190: { path: '/core-product/:version/roaming-use-firstTime', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0196: { path: '/core-product/:version/roaming/fee-plans/recommend-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0197: { path: '/core-product/:version/roaming/fee-plans/latest-used-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0198: { path: '/core-product/:version/roaming/submain/group-products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0199: { path: '/core-product/:version/roaming/mode/country-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0200: { path: '/core-product/:version/roaming/mode/country-fee-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

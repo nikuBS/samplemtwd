@@ -7,7 +7,7 @@ import {REDIS_KEY} from '../../../../types/redis.type';
 
 export default class RoamingMainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const isLogin: boolean = FormatHelper.isEmpty(svcInfo);
+    const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     Observable.combineLatest(
       this.getPopularNations(),
       this.getNationsByContinents('AFR'),
@@ -16,7 +16,8 @@ export default class RoamingMainController extends TwViewController {
       this.getNationsByContinents('EUR'),
       this.getNationsByContinents('MET'),
       this.getNationsByContinents('OCN'),
-    ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn]) => {
+      this.getRecentUsedTariff(isLogin),
+    ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn, recentUsed]) => {
 
       if (popularNations.length > 15) {
         popularNations = popularNations.slice(0, 15);
@@ -28,6 +29,7 @@ export default class RoamingMainController extends TwViewController {
         isLogin: isLogin,
         popularNations,
         nations: {afr, asp, amc, eur, met, ocn},
+        recentUsed,
       });
     });
   }
@@ -54,6 +56,18 @@ export default class RoamingMainController extends TwViewController {
         });
       }
       return [];
+    });
+  }
+
+  private getRecentUsedTariff(isLogin: boolean): Observable<any> {
+    if (!isLogin) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_10_0197, {}).map(resp => {
+      // prodId, prodNm: 'baro 4GB',
+      // svcStartDt, svcEndDt: '20190828',
+      // startEndTerm: '30',
+      return resp.result;
     });
   }
 }

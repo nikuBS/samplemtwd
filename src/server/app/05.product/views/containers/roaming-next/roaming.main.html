@@ -33,14 +33,40 @@
                 </div>
             </form>
             <div class="link">
-                <a href="#" onclick="openNationsDialog(); return false;">전체 국가보기</a>
+                <a href="#" onclick="openNationsDialog(); return false;">전체 국가 보기</a>
             </div>
         </div>
+        <% if (recentUsed) { %>
+        <div class="card">
+            <h3>최근 이용하신 로밍요금제</h3>
+            <div class="history">
+                <a href="/product/callplan?prod_id=<%= recentUsed.prodId %>">
+                    <h4>
+                        <%= recentUsed.prodNm %>
+                    </h4>
+                </a>
+                <div class="range">
+                    <svg height="13" viewBox="0 0 26 26" width="13" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h26v26h-26z" fill="#4559fc" opacity="0"/><g stroke="#4559fc"><rect height="19" rx="2" stroke-width="2" width="22" x="2.000097" y="4"/><path d="m1 9.355773h23.778487" stroke-width="2"/><path d="m7.500097 13.5h1v1h-1z" fill="#333"/><path d="m7.500097 17.5h1v1h-1z" fill="#333"/><path d="m12.500097 13.5h1v1h-1z" fill="#333"/><path d="m12.500097 17.5h1v1h-1z" fill="#333"/><path d="m17.500097 13.5h1v1h-1z" fill="#333"/><path d="m17.500097 17.5h1v1h-1z" fill="#333"/><path d="m7.000097 1.850952v4.292114" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="m19.000097 1.850952v4.292114" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></g></svg>
+                    <%= recentUsed.svcStartDt %>
+                    ~
+                    <%= recentUsed.svcEndDt %>
+                </div>
+                <span class="days">
+                    <%= parseInt(recentUsed.startEndTerm)-1 %>박
+                    <%= recentUsed.startEndTerm %>일
+                </span>
+            </div>
+            <div class="link">
+                <a href="/product/roaming/history">지난 여행 이용 패턴</a>
+            </div>
+        </div>
+        <% } else { %>
         <div class="banner">
             <a href="/product/roaming/info/barocall">
                 <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너 Baro 통화" />
             </a>
         </div>
+        <% } %>
         <div class="card">
             <h3>로밍 요금제 한눈에 보기</h3>
             <div id="groups">
