@@ -82,9 +82,9 @@ class ProductMobileplanAddSettingSmartCallPick extends TwViewController {
         }));
       }
 
-      let listSmartPick = smartCallPickInfo.result.listSmartPick;
-      let smartCallPick = SMART_CALL_PICK.map(function(e) {
-        let row = Object.assign({}, e);
+      const listSmartPick = smartCallPickInfo.result.listSmartPick;
+      const smartCallPick = SMART_CALL_PICK.map(function(e) {
+        const row = Object.assign({}, e);
         row.checked = listSmartPick.filter(p => row.value === p.prod_id).length > 0;
         return row;
       });
