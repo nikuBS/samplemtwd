@@ -100,7 +100,7 @@ Tw.InputHelper = (function () {
 
   /**
    * @desc add dash to input for phone number
-   * @param {Element} input 
+   * @param {Element} input
    * @public
    */
   function insertDashCellPhone(input) {
@@ -138,8 +138,8 @@ Tw.InputHelper = (function () {
   function inputLengthCheck(input){
     var $input = $(input);
     var inputText = $input.val();
-    var inputMaxLength = $input.prop("maxlength");
-    
+    var inputMaxLength = $input.prop('maxlength');
+
     if(inputText.length > inputMaxLength){
       $input.val(inputText.substr(0, inputMaxLength));
     }

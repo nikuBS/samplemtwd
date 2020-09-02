@@ -32,13 +32,13 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Get Date
-   * @returns {Date}
-   * @public
+   * @return {Date}
+   * 사용하지 않아 주석처리
    */
-  var getDate = function () {
-    var date = new Date();
-    return date;
-  };
+  // var getDate = function () {
+  //   var date = new Date();
+  //   return date;
+  // };
 
   /**
    * @desc Get remain days to the given date

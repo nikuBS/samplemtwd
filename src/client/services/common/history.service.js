@@ -51,7 +51,7 @@ Tw.HistoryService.prototype = {
   },
   /**
    * @desc go to url
-   * @param {string} url 
+   * @param {string} url
    * @public
    */
   goLoad: function (url) {
@@ -66,7 +66,7 @@ Tw.HistoryService.prototype = {
   },
   /**
    * @desc go to hash
-   * @param {string} hash 
+   * @param {string} hash
    * @public
    */
   goHash: function (hash) {
@@ -95,7 +95,7 @@ Tw.HistoryService.prototype = {
     this.history.replaceState(this.historyObj, this.historyName, pathname);
   },
   /**
-   * @desc replace url 
+   * @desc replace url
    * @param {string} sUrl
    * @public
    */
@@ -112,7 +112,7 @@ Tw.HistoryService.prototype = {
   },
   /**
    * @desc check that current page was accessed by back button.
-   * @param {object} event 
+   * @param {object} event
    * @private
    */
   _checkIsBack: function (event) {
@@ -142,12 +142,12 @@ Tw.HistoryService.prototype = {
   },
   /**
    * @desc push hash to list
-   * @param {string} hash 
+   * @param {string} hash
    * @private
    */
   _addHashList: function (hash) {
     var hashList = this._hashList;
-    if ( !hashList.indexOf(hash) !== -1 ) {
+    if ( hashList.indexOf(hash) !== -1 ) { // if ( !hashList.indexOf(hash) !== -1 ) ! <-- 잘못사용
       hashList.push(hash);
     }
   },
