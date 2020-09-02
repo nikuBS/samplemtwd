@@ -32,12 +32,15 @@ Tw.ValidationHelper = (function () {
   }
 
   /**
-   * @param {String} : hong-gil.dong@gmail.com
+   * @param {String} str - hong-gil.dong@gmail.com
    * @returns {Boolean}
    */
+  /* jshint ignore:start */
   function isEmail(str) {
+    // 정규표현식 길이가 긴 관계로 jshint ignore 처리
     return Tw.ValidationHelper.regExpTest(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, str);
   }
+  /* jshint ignore:end */
 
   /**
    * @param {String} : 000000
@@ -365,7 +368,7 @@ Tw.ValidationHelper = (function () {
     isTelephone: isTelephone,
     isRepresentNumber: isRepresentNumber,
     isSeriesNum: isSeriesNum,
-    isEmail: isEmail,
+    isEmail: isEmail, // jshint ignore:line
     isStraightPassword: isStraightPassword,
     containSpecial: containSpecial,
     containNumber: containNumber,

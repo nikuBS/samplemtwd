@@ -419,7 +419,7 @@ Tw.CommonHelper = (function () {
     }
     this._doingAnimateHeight = setTimeout(function () {
       if (!Tw.FormatHelper.isEmpty($element.slick)) {
-        $element.slick && $element.slick.animateHeight();
+        $element.slick.animateHeight();
       }
     }, 200);
   };

@@ -101,7 +101,7 @@
               'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1)
             });
         },
-        afterChange: function(e, slick) {
+        afterChange: function (/* e, slick */) {
           //slick.$slider.find('.slick-current > button').focus();  // 스라이드 될때마다 스크롤이 이동되어 주석처리함
           //$(slick.$slides[index]).find('button').focus();
         }
