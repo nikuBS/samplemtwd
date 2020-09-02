@@ -4,6 +4,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
+import moment from 'moment';
 
 export default class RoamingMainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -67,6 +68,13 @@ export default class RoamingMainController extends TwViewController {
       // prodId, prodNm: 'baro 4GB',
       // svcStartDt, svcEndDt: '20190828',
       // startEndTerm: '30',
+      if (resp.result) {
+        const startDate = moment(resp.result.svcStartDt, 'YYYYMMDD');
+        const endDate = moment(resp.result.svcEndDt, 'YYYYMMDD');
+        resp.result.nights = endDate.diff(startDate, 'days');
+        resp.result.formattedStartDate = startDate.format('YY.MM.DD');
+        resp.result.formattedEndDate = endDate.format('YY.MM.DD');
+      }
       return resp.result;
     });
   }
