@@ -26,7 +26,7 @@ import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/prod
 import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 import ProductMobileplanSetting0planSh from './controllers/mobileplan/setting/product.mobileplan.setting.0plan-sh.controller';
 import ProductMobileplanSetting0planSm from './controllers/mobileplan/setting/product.mobileplan.setting.0plan-sm.controller';
-import ProductMobileplanSetting5gxStandardPromotion from './controllers/mobileplan/setting/product.mobileplan.setting.5gx-standard-promotion.controller';
+import ProductMobileplanSetting5gxStandardPromotion from './controllers/mobileplan/setting/product.mobileplan.setting.5gx-standard-promotion.controller'; // tslint:disable-line
 import ProductMobileplanSetting5gxYt from './controllers/mobileplan/setting/product.mobileplan.setting.5gx-yt.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
