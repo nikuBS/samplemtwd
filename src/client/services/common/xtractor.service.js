@@ -180,7 +180,7 @@ Tw.XtractorService.prototype = {
    * @param elem - 노출 선언된 객체
    * @returns {boolean}
    */
-  _sendBV2: function(elem) {
+  _sendBV2: function (elem) {
     var $elem = $(elem);
 
     var E_ID = $elem.data('xt_eid');

@@ -60,7 +60,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date|string} date YYYYMMDD
+   * @param {Date|string} format YYYYMMDD
    * @returns {string} : 2018.06.01 12:00:00
    * @public
    */
@@ -69,7 +69,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param none
+   * @param date
    * @returns {string} : 12
    * @public
    */
@@ -87,7 +87,6 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date|string} date YYYYMMDD
    * @returns {string} : currentDateTime - 1 year
    * @public
    */
@@ -159,6 +158,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @param {Date|string} date YYYYMMDDhhmmss
+   * @param format
    * @returns {string} : 2018-06-02 11:59
    * @public
    */
@@ -171,7 +171,9 @@ Tw.DateHelper = (function () {
 
   /**
    * @des Return Date with Format parameter
-   * @param {date} date || {string} date, {string} format
+   * @param {date} date
+   * @param {string} format
+   * @param {string} currentFormat
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    * @public
    */
@@ -181,7 +183,13 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Convert Date Format (BFF string to Date)
-   * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
+   * @param {date} date
+   * @param {number} amount
+   * @param {string} unit
+   * @param {string} format
+   * @param {string} currentFormat
+   * @param {string} format
+   * @param {string} currentFormat
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    * @public
    */
@@ -206,6 +214,7 @@ Tw.DateHelper = (function () {
   /**
    * @desc Get next month in korean
    * @param {Date|string} date YYYYMMDDhhmmss
+   * @param {boolean} isYear
    * @returns {string} : 11월 | 18년12월
    * @public
    */
@@ -284,6 +293,7 @@ Tw.DateHelper = (function () {
   /**
    * @desc Get difference between end date and start date
    * @param {Date|string} endDate YYYYMMDDhhmmss
+   * @param {Date|string} startDate
    * @returns {number} milliseconds
    * @public
    */
@@ -337,7 +347,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : YYYYMMDD
    * @public
    */
-  var add5min = function(date) {
+  var add5min = function (date) {
     return moment(this.convDateFormat(date)).add(5, 'minutes').format('YYYYMMDDHHmmss');
   };
 
@@ -348,7 +358,7 @@ Tw.DateHelper = (function () {
    * @returns {number} milliseconds
    * @public
    */
-  var getRemainedSec = function(startTime, diff) {
+  var getRemainedSec = function (startTime, diff) {
     diff = diff || Tw.SMS_CERT_TIME;
     var currentTime = new Date().getTime();
     var passed = currentTime - startTime.getTime();
@@ -427,7 +437,7 @@ Tw.DateHelper = (function () {
     getTomorrowDate: getTomorrowDate,
     AddMonth: AddMonth,
     isBefore: isBefore,
-    getDateCustomFormat : getDateCustomFormat,
+    getDateCustomFormat: getDateCustomFormat,
     add5min: add5min,
     getRemainedSec: getRemainedSec,
     convertMinSecFormat: convertMinSecFormat,

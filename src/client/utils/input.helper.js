@@ -39,6 +39,7 @@ Tw.InputHelper = (function () {
 
     $input.val(sValue);
   }
+
   /**
    * @desc keydown event handler to type only number
    * @param  {Event} event
@@ -49,8 +50,7 @@ Tw.InputHelper = (function () {
     if ( key === 0 || key === 8 || key === 46 || key === 9 ) {
       if ( typeof event.stopPropagation !== 'undefined' ) {
         event.stopPropagation();
-      }
-      else {
+      } else {
         event.cancelBubble = true;
       }
       return;
@@ -58,8 +58,7 @@ Tw.InputHelper = (function () {
     if ( key < 48 || (key > 57 && key < 96) || key > 105 || event.shiftKey ) {
       if ( event.preventDefault ) {
         event.preventDefault();
-      }
-      else {
+      } else {
         event.returnValue = false;
       }
     }
@@ -124,23 +123,23 @@ Tw.InputHelper = (function () {
   }
 
   function iosBlurCheck(e) {
-    var isTextInput = function(node) {
+    var isTextInput = function (node) {
       return ['INPUT'].indexOf(node.nodeName) !== -1;
     };
 
-    if (!isTextInput(e.target) && isTextInput(document.activeElement)) {
-      setTimeout(function() {
+    if ( !isTextInput(e.target) && isTextInput(document.activeElement) ) {
+      setTimeout(function () {
         document.activeElement.blur();
       }, 100);
     }
   }
 
-  function inputLengthCheck(input){
+  function inputLengthCheck(input) {
     var $input = $(input);
     var inputText = $input.val();
     var inputMaxLength = $input.prop('maxlength');
 
-    if(inputText.length > inputMaxLength){
+    if ( inputText.length > inputMaxLength ) {
       $input.val(inputText.substr(0, inputMaxLength));
     }
   }
