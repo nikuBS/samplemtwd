@@ -116,13 +116,15 @@ export default class RoamingOnController extends TwViewController {
               this.getAvailableTariffs(mcc),
               this.getPhoneUsage(),
               this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
-            ).subscribe(([allTariffs, phoneUsage, rate]) => {
+              this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
+            ).subscribe(([allTariffs, phoneUsage, rate, meta]) => {
               context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
               context.usage.phone = {
                 voice: 92,
                 sms: 37
               };
               context.rate = rate;
+              context.meta = meta;
               res.render(template, context);
             });
           } else {
@@ -136,12 +138,14 @@ export default class RoamingOnController extends TwViewController {
               this.getPhoneUsage(),
               this.getBaroPhoneUsage(startDate, endDate),
               this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
-          ).subscribe(([dataUsage, phoneUsage, baroUsage, rate]) => {
+              this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
+          ).subscribe(([dataUsage, phoneUsage, baroUsage, rate, meta]) => {
               context.noSubscription = false;
               context.usage.data = dataUsage;
               context.usage.phone = phoneUsage;
               context.usage.baro = baroUsage;
               context.rate = rate;
+              context.meta = meta;
 
               if (testUsage) {
                 // FIXME: Testing
@@ -316,7 +320,22 @@ export default class RoamingOnController extends TwViewController {
       // sMoChargeMin/Max: 문자 - SMS 발신, "165",
       // vIntChargeMin/Max: 음성 - 방문국에서 한국으로, "144.8"
       // dMoChargeMin/Max: 데이터 이용료, "0.28"
-      console.log(resp.result);
+      return resp.result;
+    });
+  }
+
+  private getRoamingMeta(countryCode: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0061, {
+      countryCode: countryCode,
+      command: 'onlyCountry',
+    }).map(resp => {
+      // voiceRoamingYn: 'Y'
+      // dataRoamingYn: 'Y'
+      // gsm: '3'
+      // wcdma: '0'
+      // cdma: '0'
+      // rent: '0'
+      // lte: '0'
       return resp.result;
     });
   }
