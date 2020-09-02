@@ -16,7 +16,7 @@ import { PRODUCT_CODE } from '../../../../types/bff.type';
 
 /**
  * @class
- * @desc 상품 > 모바일 요금제 
+ * @desc 상품 > 모바일 요금제
  */
 export default class Product extends TwViewController {
   constructor() {
@@ -34,7 +34,7 @@ export default class Product extends TwViewController {
    * @param  {any} pageInfo
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    var isLogin = svcInfo && svcInfo.svcAttrCd.startsWith('M');
+    const isLogin = svcInfo && svcInfo.svcAttrCd.startsWith('M');
 
     Observable.combineLatest(
       this._getProductGroups(),
@@ -216,7 +216,7 @@ export default class Product extends TwViewController {
       return Observable.of(false);
     }
 
-    if (FormatHelper.isEmpty(svcInfo) || FormatHelper.isEmpty(svcInfo.loginType) || svcInfo.loginType != 'T') {
+    if (FormatHelper.isEmpty(svcInfo) || FormatHelper.isEmpty(svcInfo.loginType) || svcInfo.loginType !== 'T') {
       return Observable.of(false);
     }
 

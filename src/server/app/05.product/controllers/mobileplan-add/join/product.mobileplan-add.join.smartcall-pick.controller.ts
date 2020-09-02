@@ -1,6 +1,6 @@
 /**
  * 모바일 부가서비스 > 스마트콜Pick
- * @author 
+ * @author
  * @since 2019-09-30
  */
 
@@ -25,7 +25,7 @@ class ProductMobileplanAddJoinSmartCallPick extends TwViewController {
   private readonly _prodIdList = ['NA00006399'];
 
   /* 스마트콜Pick 구성 상품코드1 */
-  private _subProdIdList1 = ['NA00004343', 'NA00000282', 'NA00000288', 'NA00001509', 'NA00004689', 
+  private _subProdIdList1 = ['NA00004343', 'NA00000282', 'NA00000288', 'NA00001509', 'NA00004689',
                                   'NA00000273', 'NA00005172', 'NA00000278', 'NA00003708', 'NA00001350'];
 
   /* 스마트콜Pick 구성 상품코드2 */
@@ -68,7 +68,7 @@ class ProductMobileplanAddJoinSmartCallPick extends TwViewController {
           if (apiError.code === 'ICAS4003') { /* BFF_10_0183 호출 시 모든 상품이 사용여부 N인 경우 */
             multiAdditionInfo1 = { result: {} };
             this._subProdIdList1.forEach(e => {
-              multiAdditionInfo1.result[e] = 'N';  
+              multiAdditionInfo1.result[e] = 'N';
             });
           } else {
             return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -88,8 +88,8 @@ class ProductMobileplanAddJoinSmartCallPick extends TwViewController {
       if (multiAdditionInfo2.result.isAdditionUse === 'Y') {
         usedProd.push('NA00004195');
       }
-      let smartCallPick = SMART_CALL_PICK.map(function(e) {
-        let row = Object.assign({}, e);
+      const smartCallPick = SMART_CALL_PICK.map(function(e) {
+        const row = Object.assign({}, e);
         row.checked = usedProd.filter(p => row.value === p).length > 0;
         return row;
       });

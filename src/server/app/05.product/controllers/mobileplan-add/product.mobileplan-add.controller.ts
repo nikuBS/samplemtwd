@@ -21,7 +21,7 @@ export default class ProductAddition extends TwViewController {
   constructor() {
     super();
   }
-  
+
   /**
    * @desc 화면 랜더링
    * @param  {Request} _req
@@ -33,7 +33,7 @@ export default class ProductAddition extends TwViewController {
    * @param  {any} pageInfo
    */
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    var isLogin = svcInfo && svcInfo.svcAttrCd.startsWith('M');
+    const isLogin = svcInfo && svcInfo.svcAttrCd.startsWith('M');
 
     Observable.combineLatest(
       this._getMyAdditions(isLogin),
@@ -168,7 +168,7 @@ export default class ProductAddition extends TwViewController {
       return Observable.of(false);
     }
 
-    if (FormatHelper.isEmpty(svcInfo) || FormatHelper.isEmpty(svcInfo.loginType) || svcInfo.loginType != 'T') {
+    if (FormatHelper.isEmpty(svcInfo) || FormatHelper.isEmpty(svcInfo.loginType) || svcInfo.loginType !== 'T') {
       return Observable.of(false);
     }
 
