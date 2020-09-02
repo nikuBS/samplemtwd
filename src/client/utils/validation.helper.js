@@ -4,7 +4,7 @@ Tw.ValidationHelper = (function () {
   }
 
   /**
-   * @param {String} : 010-0000-0000 or 0100000000 or 013000000000
+   * @param {String} str 010-0000-0000 or 0100000000 or 013000000000
    * @returns {Boolean}
    */
   function isCellPhone(str) {
@@ -13,7 +13,7 @@ Tw.ValidationHelper = (function () {
   }
 
   /**
-   * @param {String} : 02-0000-0000 or 0200000000
+   * @param {String} str 02-0000-0000 or 0200000000
    * @returns {Boolean}
    */
   function isTelephone(str) {
@@ -21,11 +21,11 @@ Tw.ValidationHelper = (function () {
   }
 
   /**
-   * @param {String} : 0000-0000 or 00000000
+   * @param {String} str 0000-0000 or 00000000
    * @returns {Boolean}
    */
   function isRepresentNumber(str) {
-    if (str.length > 7 && str.length < 10)
+    if ( str.length > 7 && str.length < 10 )
       return regExpTest(/(\d{4})-?(\d{4})/, str);
     else
       return false;
@@ -35,27 +35,30 @@ Tw.ValidationHelper = (function () {
    * @param {String} str - hong-gil.dong@gmail.com
    * @returns {Boolean}
    */
+
   /* jshint ignore:start */
   function isEmail(str) {
     // 정규표현식 길이가 긴 관계로 jshint ignore 처리
     return Tw.ValidationHelper.regExpTest(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, str);
   }
+
   /* jshint ignore:end */
 
   /**
-   * @param {String} : 000000
+   * @param {String} str 000000
+   * @param {number} max
    * @returns {Boolean}
    */
   function isStraightPassword(str, max) {
-    if(!max) max = 6;
+    if ( !max ) max = 6;
     var i, j, x, y;
     var buff = ['0123456789', '9876543210'];
     var src, src2, ptn = '';
 
-    for(i = 0; i < buff.length; i++){
+    for ( i = 0; i < buff.length; i++ ) {
       src = buff[i]; // 0123456789
       src2 = buff[i] + buff[i]; // 01234567890123456789
-      for(j = 0; j < src.length; j++){
+      for ( j = 0; j < src.length; j++ ) {
         x = src.substr(j, 1); // 0
         y = src2.substr(j, max); // 0123
         ptn += '[' + x + ']{' + max + ',}|'; // [0]{4,}|0123|[1]{4,}|1234|...
@@ -65,7 +68,7 @@ Tw.ValidationHelper = (function () {
 
     ptn = new RegExp(ptn.replace(/.$/, '')); // 맨마지막의 글자를 하나 없애고 정규식으로 만든다.
 
-    if (ptn.test(str)) {
+    if ( ptn.test(str) ) {
       return true;
     }
     return false;
@@ -73,8 +76,8 @@ Tw.ValidationHelper = (function () {
 
   function isSeriesNum(string, maxSeries) {
     var checkSeriesNum = '0123456789';
-    for (var i = 0; i <= checkSeriesNum.length - maxSeries; i++) {
-      if (string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1) {
+    for ( var i = 0; i <= checkSeriesNum.length - maxSeries; i++ ) {
+      if ( string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1 ) {
         return true;
       }
     }
@@ -94,8 +97,8 @@ Tw.ValidationHelper = (function () {
   }
 
   function isBirthday(value) {
-    var month = value.substr(2,2);
-    var day = value.substr(4,2);
+    var month = value.substr(2, 2);
+    var day = value.substr(4, 2);
 
     var isMonth = parseInt(month, 10) > 0 && parseInt(month, 10) <= 12;
     var isDay = parseInt(day, 10) > 0 && parseInt(day, 10) <= 31;
@@ -106,9 +109,10 @@ Tw.ValidationHelper = (function () {
   /** 아래 validation check function은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
    *  by Jayoon Kong
    */
+
   /* input 값을 입력하지 않았을 경우 */
   function checkEmpty(value) {
-    if (Tw.FormatHelper.isEmpty(value)) {
+    if ( Tw.FormatHelper.isEmpty(value) ) {
       return false;
     }
     return true;
@@ -116,7 +120,7 @@ Tw.ValidationHelper = (function () {
 
   /* input 값의 길이가 맞지 않는 경우 */
   function checkLength(value, length) {
-    if ($.trim(value).length !== length) {
+    if ( $.trim(value).length !== length ) {
       return false;
     }
     return true;
@@ -129,7 +133,7 @@ Tw.ValidationHelper = (function () {
 
   /* input 값의 길이가 기준값보다 적은 경우 */
   function checkMoreLength($target, length) {
-    if ($.trim($target.val()).length < length) {
+    if ( $.trim($target.val()).length < length ) {
       return false;
     }
     return true;
@@ -137,7 +141,7 @@ Tw.ValidationHelper = (function () {
 
   /* input 값이 param보다 적은 경우 */
   function checkIsMore(value, minVal) {
-    if (parseInt($.trim(value), 10) < minVal) {
+    if ( parseInt($.trim(value), 10) < minVal ) {
       return false;
     }
     return true;
@@ -145,7 +149,7 @@ Tw.ValidationHelper = (function () {
 
   /* input 값이 param보다 적은 경우 alert 띄우고 값 변경해주는 function */
   function checkIsMoreAndSet($standardSelector, $selector) {
-    if (parseInt($.trim($standardSelector.attr('id')), 10) < $selector.attr('id')) {
+    if ( parseInt($.trim($standardSelector.attr('id')), 10) < $selector.attr('id') ) {
       $selector.attr('id', $standardSelector.attr('id'));
       $selector.text($standardSelector.text());
       return false;
@@ -155,7 +159,7 @@ Tw.ValidationHelper = (function () {
 
   /* 개인정보 제공 동의 체크를 하지 않았을 경우 alert 띄우는 function */
   function checkIsAgree($target, message) {
-    if (!$target.is(':checked')) {
+    if ( !$target.is(':checked') ) {
       Tw.Popup.openAlert(message);
       return false;
     }
@@ -164,7 +168,7 @@ Tw.ValidationHelper = (function () {
 
   /* 포인트 정합성 체크 funtion */
   function checkIsAvailablePoint(value, point) {
-    if (parseInt($.trim(value), 10) > parseInt(point, 10)) {
+    if ( parseInt($.trim(value), 10) > parseInt(point, 10) ) {
       return false;
     }
     return true;
@@ -173,7 +177,7 @@ Tw.ValidationHelper = (function () {
   /* 포인트 10점 단위 체크 function */
   function checkIsTenUnit(value) {
     value = $.trim(value);
-    if (value[value.length - 1] !== '0') {
+    if ( value[value.length - 1] !== '0' ) {
       return false;
     }
     return true;
@@ -181,7 +185,7 @@ Tw.ValidationHelper = (function () {
 
   /* 필수값 선택 여부 체크하는 function */
   function checkIsSelected($target) {
-    if ($target.attr('id') === undefined) {
+    if ( $target.attr('id') === undefined ) {
       return false;
     }
     return true;
@@ -190,7 +194,7 @@ Tw.ValidationHelper = (function () {
   /* 카드 유효기간 체크하는 function */
   function checkYear($targetY) {
     var value = $targetY.val();
-    if (value.length < 4 || value < new Date().getFullYear()) {
+    if ( value.length < 4 || value < new Date().getFullYear() ) {
       return false;
     }
     return true;
@@ -200,8 +204,8 @@ Tw.ValidationHelper = (function () {
     var value = $targetM.val();
     var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
-    if (months.indexOf(value) === -1 || value.length < 2 ||
-      (parseInt($targetY.val(), 10) === new Date().getFullYear() && value < new Date().getMonth() + 1)) {
+    if ( months.indexOf(value) === -1 || value.length < 2 ||
+      (parseInt($targetY.val(), 10) === new Date().getFullYear() && value < new Date().getMonth() + 1) ) {
       return false;
     }
     return true;
@@ -209,7 +213,7 @@ Tw.ValidationHelper = (function () {
 
   function isYearInvalid($target) {
     var value = $target.val();
-    if (value.length < 4 || value < new Date().getFullYear()) {
+    if ( value.length < 4 || value < new Date().getFullYear() ) {
       return true;
     }
     return false;
@@ -219,15 +223,15 @@ Tw.ValidationHelper = (function () {
     var value = $target.val();
     var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
-    if (months.indexOf(value) === -1 || value.length < 2) {
+    if ( months.indexOf(value) === -1 || value.length < 2 ) {
       return true;
     }
     return false;
   }
 
   function checkExpiration($targetY, $targetM) {
-    if (parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
-      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1) {
+    if ( parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
+      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1 ) {
       return false;
     }
     return true;
@@ -235,7 +239,7 @@ Tw.ValidationHelper = (function () {
 
   /* 배수 체크하는 function */
   function checkMultiple(value, standard) {
-    if (parseInt($.trim(value), 10) % standard !== 0) {
+    if ( parseInt($.trim(value), 10) % standard !== 0 ) {
       return false;
     }
     return true;
@@ -243,7 +247,7 @@ Tw.ValidationHelper = (function () {
 
   /* 연속숫자 체크하는 function */
   function checkIsStraight(value, max) {
-    if (isStraightPassword($.trim(value.toString()), max)) {
+    if ( isStraightPassword($.trim(value.toString()), max) ) {
       return false;
     }
     return true;
@@ -252,17 +256,17 @@ Tw.ValidationHelper = (function () {
   /* 동일 숫자 반복 체크하는 function */
   function checkIsSameLetters(value, message) {
     var isSame = true;
-    for (var i = 1; i < value.length; i++) {
-      if (value.substring(i - 1, i) !== value.substring(i, i + 1)) {
+    for ( var i = 1; i < value.length; i++ ) {
+      if ( value.substring(i - 1, i) !== value.substring(i, i + 1) ) {
         isSame = false;
       }
     }
 
-    if (!Tw.FormatHelper.isEmpty(message)) {
+    if ( !Tw.FormatHelper.isEmpty(message) ) {
       Tw.Popup.openAlert(message);
     }
 
-    if (isSame) {
+    if ( isSame ) {
       return false;
     }
     return true;
@@ -270,7 +274,7 @@ Tw.ValidationHelper = (function () {
 
   /* 동일 값 체크하는 function */
   function checkIsSame(value, standard) {
-    if ($.trim(value.toString()) !== standard) {
+    if ( $.trim(value.toString()) !== standard ) {
       return false;
     }
     return true;
@@ -278,7 +282,7 @@ Tw.ValidationHelper = (function () {
 
   /* 다른 값 체크하는 function */
   function checkIsDifferent(value, standard) {
-    if ($.trim(value.toString()) === standard) {
+    if ( $.trim(value.toString()) === standard ) {
       return false;
     }
     return true;
@@ -286,10 +290,10 @@ Tw.ValidationHelper = (function () {
 
   function showAndHideErrorMsg($target, isValid, message) {
     var $message = $target.siblings('.fe-error-msg');
-    if (!$message.hasClass('fe-error-msg')) {
+    if ( !$message.hasClass('fe-error-msg') ) {
       $message = $target.parent().siblings('.fe-error-msg');
     }
-    if (isValid) {
+    if ( isValid ) {
       $message.hide();
       $message.attr('aria-hidden', 'true');
       return true;
@@ -297,7 +301,7 @@ Tw.ValidationHelper = (function () {
       $message.show();
       $message.attr('aria-hidden', 'false');
 
-      if (message) {
+      if ( message ) {
         $message.text(message);
       }
     }
@@ -312,50 +316,50 @@ Tw.ValidationHelper = (function () {
    */
   function checkVersionValidation(criteria, version, operator) {
 
-    var i=0;
+    var i = 0;
     var criteriaArr = criteria.split('.');
     var versionArr = version.split('.');
 
-    if(criteriaArr.length !== 3) {
+    if ( criteriaArr.length !== 3 ) {
       return false;
     }
 
     // 같음
-    if(operator === 1) {
+    if ( operator === 1 ) {
       return criteria === version;
       // 다름
-    } else if(operator === 2) {
+    } else if ( operator === 2 ) {
       return criteria !== version;
       // 이상 또는 이하 인 경우 같은
-    } else if((operator === 4 || operator === 5) && criteria === version) {
+    } else if ( (operator === 4 || operator === 5) && criteria === version ) {
       return true;
     }
 
-    for(i=0; i<3; i++) {
+    for ( i = 0; i < 3; i++ ) {
 
       var target1 = Number(criteriaArr[i]);
       var target2 = Number(versionArr[i]);
 
       // 미만
-      if(operator === 3) {
-        if(target1 > target2) return true;
+      if ( operator === 3 ) {
+        if ( target1 > target2 ) return true;
         // 이하
-      } else if(operator === 4) {
-        if(target1 > target2) {
+      } else if ( operator === 4 ) {
+        if ( target1 > target2 ) {
           return true;
-        } else if(target1 < target2){
+        } else if ( target1 < target2 ) {
           return false;
         }
         // 이상
-      } else if(operator === 5) {
-        if(target1 < target2) {
+      } else if ( operator === 5 ) {
+        if ( target1 < target2 ) {
           return true;
-        } else if(target1 > target2){
+        } else if ( target1 > target2 ) {
           return false;
         }
         // 초과
-      } else if(operator === 6) {
-        if(target1 < target2) return true;
+      } else if ( operator === 6 ) {
+        if ( target1 < target2 ) return true;
       }
     }
 
