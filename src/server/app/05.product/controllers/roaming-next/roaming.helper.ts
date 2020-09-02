@@ -17,6 +17,16 @@ export default class RoamingHelper {
     }
     return 'KR';
   }
+
+  static getAlpha3ByMCC(mcc: string): string {
+    for (const a3 of Object.keys(ISO3166)) {
+      const item = ISO3166[a3];
+      if (item[1] === mcc) {
+        return a3;
+      }
+    }
+    return 'KOR';
+  }
 }
 
 const ISO3166 = {

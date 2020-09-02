@@ -95,6 +95,19 @@ export default class RoamingOnController extends TwViewController {
       if (!isLogin) {
         res.render(template, context);
       } else {
+        context.usage = {
+          formatBytes: function(value) {
+            const n = parseInt(value, 10);
+            if (!n) { return value; }
+            if (n < 1000) { return n + 'MB'; }
+            if (n % 1000 === 0) { return (n / 1000) + 'GB'; }
+            return (n / 1000).toFixed(2) + 'GB';
+          },
+          formatTime: function(yyyyMMddHH) {
+            return moment(yyyyMMddHH, 'YYYYMMDDHH').format('YY.MM.DD HH:00');
+          }
+        };
+
         this.getUsingTariffs().subscribe(usingTariffs => {
           const noSubscription = !usingTariffs || usingTariffs.length === 0;
           context.noSubscription = noSubscription;
@@ -102,12 +115,14 @@ export default class RoamingOnController extends TwViewController {
             Observable.combineLatest(
               this.getAvailableTariffs(mcc),
               this.getPhoneUsage(),
-            ).subscribe(([allTariffs, phoneUsage]) => {
+              this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
+            ).subscribe(([allTariffs, phoneUsage, rate]) => {
               context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
               context.usage.phone = {
                 voice: 92,
                 sms: 37
               };
+              context.rate = rate;
               res.render(template, context);
             });
           } else {
@@ -119,24 +134,14 @@ export default class RoamingOnController extends TwViewController {
             Observable.combineLatest(
               this.getDataUsage(),
               this.getPhoneUsage(),
-              this.getBaroPhoneUsage(startDate, endDate)
-            ).subscribe(([dataUsage, phoneUsage, baroUsage]) => {
+              this.getBaroPhoneUsage(startDate, endDate),
+              this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
+          ).subscribe(([dataUsage, phoneUsage, baroUsage, rate]) => {
               context.noSubscription = false;
-              context.usage = {
-                data: dataUsage,
-                phone: phoneUsage,
-                baro: baroUsage,
-                formatBytes: function(value) {
-                  const n = parseInt(value, 10);
-                  if (!n) { return value; }
-                  if (n < 1000) { return n + 'MB'; }
-                  if (n % 1000 === 0) { return (n / 1000) + 'GB'; }
-                  return (n / 1000).toFixed(2) + 'GB';
-                },
-                formatTime: function(yyyyMMddHH) {
-                  return moment(yyyyMMddHH, 'YYYYMMDDHH').format('YY.MM.DD HH:00');
-                }
-              };
+              context.usage.data = dataUsage;
+              context.usage.phone = phoneUsage;
+              context.usage.baro = baroUsage;
+              context.rate = rate;
 
               if (testUsage) {
                 // FIXME: Testing
@@ -165,8 +170,6 @@ export default class RoamingOnController extends TwViewController {
       }
     });
   }
-
-
 
   private _useCountryBackground(info, mcc: string): string {
     let backgroundUrl = info.mblRepImg;
@@ -295,6 +298,25 @@ export default class RoamingOnController extends TwViewController {
       // transCount: '0', // 명의변경 이력
       // usgStartDate: '20200701', // '개시일'
       // sumTotDur: '10', // 일 사용량 (분)
+      return resp.result;
+    });
+  }
+
+  /**
+   *
+   * @param countryCode ISO3166 국가코드 3자리
+   * @private
+   */
+  private getRateByCountry(countryCode: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0058, {
+      countryCode: countryCode,
+      manageType: 'W',
+      showDailyPrice: 'N',
+    }).map(resp => {
+      // sMoChargeMin/Max: 문자 - SMS 발신, "165",
+      // vIntChargeMin/Max: 음성 - 방문국에서 한국으로, "144.8"
+      // dMoChargeMin/Max: 데이터 이용료, "0.28"
+      console.log(resp.result);
       return resp.result;
     });
   }

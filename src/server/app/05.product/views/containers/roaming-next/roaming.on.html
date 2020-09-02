@@ -155,14 +155,16 @@
                     <span class="usage-value"><%= usage.phone.sms %>건</span>
                 </div>
             </div>
-            <!--
-            <p class="description">
-                기본전화로 중국에서 한국으로 걸 때는 720원/초 SMS발신은 300원/건 입니다.
-            </p>
-            <p class="description">
-                나라 간 시차 반영으로 인해 예정 금액은 다소 차이가 날 수 있습니다.
-            </p>
-            -->
+            <% if (rate) { %>
+            <ul class="description">
+                <li>
+                    기본전화로 중국에서 한국으로 걸 때는 <%= rate.vIntChargeMin %>원/초 SMS발신은 <%= rate.sMoChargeMin %>원/건 입니다.
+                </li>
+                <li>
+                    나라 간 시차 반영으로 인해 예정 금액은 다소 차이가 날 수 있습니다.
+                </li>
+            </ul>
+            <% } %>
         </div>
         <% } %>
         <div class="card">
