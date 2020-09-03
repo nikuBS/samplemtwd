@@ -5,6 +5,7 @@
 %>
 
 <%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -21,7 +22,7 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" />
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz co-info">
                     <h3 class="tit">사업자 정보</h3>
@@ -31,7 +32,9 @@
                                 <dt>상호</dt>
                                 <dd>
                                     <p class="value">에스케이텔레콤(주)</p>
-                                    <button href="http://www.ftc.go.kr/www/bizCommView.do?key=232&apv_perm_no=2004301010030201122" class="bt-link-tx underline fe-outlink">사업자정보</button>
+                                    <button
+                                        href="http://www.ftc.go.kr/www/bizCommView.do?key=232&apv_perm_no=2004301010030201122"
+                                        class="bt-link-tx underline fe-outlink">사업자정보</button>
                                 </dd>
                             </dl>
                         </li>
@@ -70,7 +73,7 @@
                     </ul>
                 </div>
                 <!-- //.cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" />
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder co-info2">
                     <h3 class="tit">인증 정보</h3>
@@ -79,28 +82,30 @@
                         <li>
                             <div class="link-long cert01">
                                 <button class="fe-outlink" href="https://www.sktinsight.com/121295">
-                                  국가고객만족도 23년 연속 1위
+                                    국가고객만족도 23년 연속 1위
                                 </button>
                             </div>
                         </li>
                         <% if (!isApp) { %>
                         <li>
                             <div class="link-long cert02">
-                            <button class="fe-outlink" href="http://www.wa.or.kr/board/list.asp?BoardID=0006">한국웹접근성인증평가원 웹접근성 준수</button>
+                                <button class="fe-outlink"
+                                    href="http://www.wa.or.kr/board/list.asp?BoardID=0006">한국웹접근성인증평가원 웹접근성 준수</button>
                             </div>
                         </li>
                         <% } %>
                         <li>
                             <div class="link-long cert03">
                                 <button class="fe-outlink" href="http://www.tworld.co.kr/tglink.jsp?urlname=mfoot_012">
-                                  한국서비스품질지수 21년 연속 1위
+                                    한국서비스품질지수 21년 연속 1위
                                 </button>
                             </div>
                         </li>
                         <% if (isApp) { %>
                         <li>
                             <div class="link-long cert04">
-                                <button class="fe-outlink" href="http://www.wa.or.kr/board/list.asp?BoardID=0008">한국웹접근성인증평가원 앱접근성 준수</button>
+                                <button class="fe-outlink"
+                                    href="http://www.wa.or.kr/board/list.asp?BoardID=0008">한국웹접근성인증평가원 앱접근성 준수</button>
                             </div>
                         </li>
                         <% } %>
@@ -111,13 +116,20 @@
                                 </button>
                             </div>
                         </li>
+                        <li>
+                            <div class="link-long cert06">
+                                <button class="fe-outlink" href="#">
+                                    동반성장지수 8년 연속 최우수 기업
+                                </button>
+                            </div>
+                        </li>
                     </ul>
                     <!--// .link-long-list -->
                 </div>
                 <!--// .cont-box -->
 
                 <% if (!isApp) { %>
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" />
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder co-info3">
                     <h3 class="tit">웹접근성 안내</h3>
@@ -149,8 +161,8 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    new Tw.MainMenuSettingsBusinessInfo($('.wrap'));
-  });
+    $(document).ready(function () {
+        new Tw.MainMenuSettingsBusinessInfo($('.wrap'));
+    });
 </script>
 <% include ../../../components/end.component.html %>
