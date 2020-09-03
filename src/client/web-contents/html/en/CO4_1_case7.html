@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -17,24 +17,24 @@
     <meta property="og:image" content="/img/en/logo-tworld01.png" />
     <meta property="og:description" content="SKT framework" />
     <title>SKT</title>
-    <link rel="stylesheet" type="text/css" href="/css/en/common.css" media="all" /><!-- [C] 공통 스타일 -->
-	<link rel="stylesheet" type="text/css" href="/css/en/layout.css" media="all" /><!-- [C] 박스 모델 -->
-    <link rel="stylesheet" type="text/css" href="/css/en/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-    <link rel="stylesheet" type="text/css" href="/css/en/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-	<link rel="stylesheet" type="text/css" href="/css/en/main_en.css" media="all" /><!-- [C] 글로벌T(영문) 메인 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+	<link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/main_en.css" media="all" /><!-- [C] 글로벌T(영문) 메인 스타일 -->
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
-    <script type="text/javascript" src="/js/en/$vars.js"></script><!--[C] 전역 변수 -->
-    <script type="text/javascript" src="/js/en/common.js"></script>
-    <script type="text/javascript" src="/js/en/widgets.js"></script><!--[C] 기능별 위젯 -->
-    <script type="text/javascript" src="/js/en/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
 </head>
 <body class="apphome"><!-- app홈 전용 // -->
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#contents">Go to Main</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -46,7 +46,7 @@
                     <div class="h-menu">
                         <button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
                     </div>
-                    <div class="h-logo"><button class="icon-gnb-home-T"><span class="blind">홈으로</span></button></div>
+                    <div class="h-logo"><button class="icon-gnb-home-T"><span class="blind">Go to Home</span></button></div>
                 </div>
             </div>
         </div>
@@ -103,8 +103,8 @@
                                 <!-- // .widget -->
 
                                 <div class="call-message">
-                                    <button class="bt-call"><i class="icon-call-34"><span class="blind">통화</span></i> <span class="ff-tg-light">1</span>h <span class="ff-tg-light">45</span>m</button>
-                                    <button class="bt-message" tabindex="0"><i class="icon-sms-37"><span class="blind">문자</span></i> <span class="ff-tg-light">Unlimited</span></button>
+                                    <button class="bt-call"><i class="icon-call-34"><span class="blind">Talktime</span></i> <span class="ff-tg-light">1</span>h <span class="ff-tg-light">45</span>m</button>
+                                    <button class="bt-message" tabindex="0"><i class="icon-sms-37"><span class="blind">Texts</span></i> <span class="ff-tg-light">Unlimited</span></button>
                                 </div>
                             </div>
                             <!-- //모바일 회선_잔여 데이터 -->
@@ -138,26 +138,26 @@
                                 <div class="fee-cont">
                                     <strong class="tit">MY BILLS</strong>
                                     <!--청구 데이터 미존재시-->
-                                    <button class="fee-info no-billing">
+                                    <div class="fee-info no-billing">
                                         No Billing History
-                                    </button>
+                                    </div>
                                     <!--//청구 데이터 미존재시-->
                                     <!--청구 데이터 존재시-->
-                                    <!-- <button class="fee-info">
-                                        <p class="target">
+                                    <!-- <div class="fee-info">
+                                        <span class="target">
                                             <span class="tit">Aug. Fees</span>
                                             <span class="date"><span>2018.7.1</span> ~ <span>2018.7.31</span></span>
-                                        </p>
-                                        <p class="sum monthly-fee">₩ <span>77,890</span></p>
-                                    </button> -->
+                                        </span>
+                                        <span class="sum monthly-fee">₩ <span>77,890</span></span>
+                                    </div> -->
                                     <!--//청구 데이터 존재시-->
                                     <!--MIRI 납부제 이용고객-->
-                                    <!-- <button class="fee-info">
-                                        <p class="target">
+                                    <!-- <div class="fee-info">
+                                        <span class="target">
                                             <span class="tit"><i class="logo-miri"><span class="blind">miri</span></i> Balance</span>
-                                        </p>
-                                        <p class="sum">₩ <span>123,456</span></p>
-                                    </button> -->
+                                        </span>
+                                        <span class="sum">₩ <span>123,456</span></span>
+                                    </div> -->
                                     <!--//MIRI 납부제 이용고객-->
                                 </div>
                                 <div class="btn-area">
@@ -173,20 +173,20 @@
                             <div class="main-fee-box">
                                 <div class="fee-cont">
                                     <strong class="tit">ADDITIONAL<br>SERVICE CHARGES</strong>
-                                    <button class="fee-info no-events">
+                                    <div class="fee-info">
                                         <p class="target">
                                             <span class="tit">Mobile Payment Fees</span>
                                             <span class="date"><span>2020.8.1</span> ~ <span>2020.8.7</span></span>
                                         </p>
                                         <p class="sum">₩ <span>3,075</span></p>
-                                    </button>
-                                    <button class="fee-info no-events">
+                                    </div>
+                                    <div class="fee-info">
                                         <p class="target">
                                             <span class="tit">Micropayment</span>
                                             <span class="date"><span>2020.8.1</span> ~ <span>2020.8.7</span></span>
                                         </p>
                                         <p class="sum">₩ <span>9,000</span></p>
-                                    </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -216,62 +216,62 @@
                                                                     <ul class="slider">
                                                                         <li>
                                                                             <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
                                                                             </button>
                                                                             <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
-                                                                            <button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
-                                                                            </button>
-                                                                            <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
                                                                             </button>
                                                                         </li>
                                                                         <li>
                                                                             <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
                                                                             </button>
                                                                             <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <button class="plan-card">
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
+                                                                            </button>
+                                                                            <button class="plan-card right">
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
                                                                             </button>
                                                                         </li>
                                                                     </ul>
@@ -288,62 +288,62 @@
                                                                     <ul class="slider">
                                                                         <li>
                                                                             <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
                                                                             </button>
                                                                             <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
-                                                                            <button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
-                                                                            </button>
-                                                                            <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
                                                                             </button>
                                                                         </li>
                                                                         <li>
                                                                             <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
                                                                             </button>
                                                                             <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <button class="plan-card">
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
+                                                                            </button>
+                                                                            <button class="plan-card right">
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
                                                                             </button>
                                                                         </li>
                                                                     </ul>
@@ -360,62 +360,62 @@
                                                                     <ul class="slider">
                                                                         <li>
                                                                             <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
                                                                             </button>
                                                                             <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
-                                                                            <button>
-                                                                        </li>
-                                                                        <li>
-                                                                            <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
-                                                                            </button>
-                                                                            <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
                                                                             </button>
                                                                         </li>
                                                                         <li>
                                                                             <button class="plan-card">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PLATINUM</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>125,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
                                                                             </button>
                                                                             <button class="plan-card right">
-                                                                                <div>
-                                                                                    <p class="plan-name">5GX<strong>PRIME</strong></p>
-                                                                                    <p class="data">100GB</p>
-                                                                                    <p class="sms">Unlimited</p>
-                                                                                    <p class="call">Unlimited</p>
-                                                                                </div>
-                                                                                <p class="price">₩ <span>95,000</span></p>
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <button class="plan-card">
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PLATINUM</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>125,000</span></span>
+                                                                            </button>
+                                                                            <button class="plan-card right">
+                                                                                <span class="inner">
+                                                                                    <span class="plan-name">5GX<strong>PRIME</strong></span>
+                                                                                    <span class="data">100GB</span>
+                                                                                    <span class="sms">Unlimited</span>
+                                                                                    <span class="call">Unlimited</span>
+                                                                                </span>
+                                                                                <span class="price">₩ <span>95,000</span></span>
                                                                             </button>
                                                                         </li>
                                                                     </ul>
@@ -465,19 +465,19 @@
                                 <div class="fee-cont">
                                     <strong class="tit">SUPPORT</strong>
                                     <button class="fee-info support">
-                                        <p id="support01">Watch and Learn
+                                        <span class="support01">Watch and Learn
                                             <span>Use telco services Like a Local by learning from simple tutorial videos</span>
-                                        </p>
+                                        </span>
                                     </button>
                                     <button class="fee-info support">
-                                        <p id="support02">FAQ
+                                        <span class="support02">FAQ
                                             <span>Solve your curiosity</span>
-                                        </p>
+                                        </span>
                                     </button>
                                     <button class="fee-info support">
-                                        <p id="support03">Required Documents
+                                        <span class="support03">Required Documents
                                             <span>You can view the documents required for foreigner’s subscription</span>
-                                        </p>
+                                        </span>
                                     </button>
                                 </div>
                             </div>

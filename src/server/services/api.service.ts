@@ -605,7 +605,8 @@ class ApiService {
    * @param state
    */
   public requestLoginTid(token: string, state: string): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0008, { token, state }, LOGIN_TYPE.TID);
+    const params = {token,state,roamingYn:"1",mCntrCd:"2",globalYn:"3"};
+    return this.requestLogin(API_CMD.BFF_03_0008, params, LOGIN_TYPE.TID);
   }
 
   /**

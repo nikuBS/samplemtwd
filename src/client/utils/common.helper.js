@@ -34,10 +34,10 @@ Tw.CommonHelper = (function () {
    * @param  {string} option
    * @public
    */
-  // 앱 / 일반에서 링크 열기
+      // 앱 / 일반에서 링크 열기
   var openUrlExternal = function (url, option) {
-    openUrl(url, Tw.NTV_BROWSER.EXTERNAL, option);
-  };
+        openUrl(url, Tw.NTV_BROWSER.EXTERNAL, option);
+      };
 
   /**
    * @desc 외부 링크 열기(SSO)
@@ -53,20 +53,20 @@ Tw.CommonHelper = (function () {
       Tw.Api.request(Tw.NODE_CMD.GET_SSO_URL, {
         url: encodeURIComponent(url)
       })
-        .done($.proxy(function(res) {
+        .done($.proxy(function (res) {
           if ( res.code === Tw.API_CODE.CODE_00 ) {
             url = decodeURIComponent(res.result);
             Tw.Logger.info('[openSsoUrlExternal url]', url);
           }
           openUrlExternal(url, option);
         }, this))
-        .fail($.proxy(function(error) {
+        .fail($.proxy(function (error) {
           Tw.Logger.error(error);
           openUrlExternal(url, option);
         }, this));
-      } else {
-        openUrlExternal(url, option);
-      }
+    } else {
+      openUrlExternal(url, option);
+    }
   };
 
   /**
@@ -150,25 +150,25 @@ Tw.CommonHelper = (function () {
    */
   var getLocalStorageExpire = function (key) {
     var storedData = this.getLocalStorage(key);
-    if (Tw.FormatHelper.isEmpty(storedData)) {
+    if ( Tw.FormatHelper.isEmpty(storedData) ) {
       return storedData;
     }
     try {
       storedData = JSON.parse(storedData);
       var now = new Date();
       now = Tw.DateHelper.convDateFormat(now);
-      if (Tw.DateHelper.convDateFormat(storedData.expireTime) < now) { // 만료시간이 지난 데이터 일 경우
+      if ( Tw.DateHelper.convDateFormat(storedData.expireTime) < now ) { // 만료시간이 지난 데이터 일 경우
         this.removeLocalStorage(key);
         return undefined;
       }
 
       return storedData;
-    } catch (e) {
+    } catch ( e ) {
       return storedData;
     }
   };
 
-    /**
+  /**
    * @desc setter
    * @param {string} key
    * @param {string} value
@@ -270,8 +270,8 @@ Tw.CommonHelper = (function () {
    * @public
    */
   var showDataCharge = function (confirmCallback, closeCallback) {
-     // wifi가 아닌 상태에서 회원이면서 무한요금제면... 팝업 면제권
-     function wifiCheckPopup(res) {
+    // wifi가 아닌 상태에서 회원이면서 무한요금제면... 팝업 면제권
+    function wifiCheckPopup(res) {
       if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
         Tw.Popup.openConfirm(
           Tw.POPUP_CONTENTS.NO_WIFI,
@@ -290,59 +290,60 @@ Tw.CommonHelper = (function () {
           closeCallback();
         }
       }
-     }
-     var _apiService = Tw.Api;
-     // 응답이 오는지 체크해야 한다.
-     // OP002-7559 => OP002-7574
-     // 1. 회원체크
-     _apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-         .done($.proxy(function(res){
-           if(res.code===Tw.API_CODE.CODE_00){
-            // 비회원일때...
-            if (res.result == null) {
-              Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
-                $.proxy(function (res) {
-                  wifiCheckPopup(res);
-                }, this)
-              );
-              return;
-            }
+    }
 
-             // Redis 상품원장 조회
-             _apiService.request(Tw.NODE_CMD.GET_PRODUCT_INFO, {prodId: res.result.prodId})
-              .done(function(resp) {
+    var _apiService = Tw.Api;
+    // 응답이 오는지 체크해야 한다.
+    // OP002-7559 => OP002-7574
+    // 1. 회원체크
+    _apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function (res) {
+        if ( res.code === Tw.API_CODE.CODE_00 ) {
+          // 비회원일때...
+          if ( res.result == null ) {
+            Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
+              $.proxy(function (res) {
+                wifiCheckPopup(res);
+              }, this)
+            );
+            return;
+          }
 
-               if(resp.code===Tw.API_CODE.CODE_00){ // resp.code === 정상
-                 // 1.1. 요금제 체크
-                 if ('무제한'.indexOf(resp.result.summary.basOfrGbDataQtyCtt) !== -1) {
-                   confirmCallback();
-                 } else {
-                   // 1.2. 와이파이 체크
-                   // 1.3. 와이파이면 바이패스
-                   // 1.4. 와아파이 아니면 팝업
-                   Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
-                     $.proxy(function (res) {
+          // Redis 상품원장 조회
+          _apiService.request(Tw.NODE_CMD.GET_PRODUCT_INFO, { prodId: res.result.prodId })
+            .done(function (resp) {
+
+              if ( resp.code === Tw.API_CODE.CODE_00 ) { // resp.code === 정상
+                // 1.1. 요금제 체크
+                if ( '무제한'.indexOf(resp.result.summary.basOfrGbDataQtyCtt) !== -1 ) {
+                  confirmCallback();
+                } else {
+                  // 1.2. 와이파이 체크
+                  // 1.3. 와이파이면 바이패스
+                  // 1.4. 와아파이 아니면 팝업
+                  Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
+                    $.proxy(function (res) {
                       wifiCheckPopup(res);
-                     }, this)
-                   );
-                 }
-               } else { // resp.code === 비정상
+                    }, this)
+                  );
+                }
+              } else { // resp.code === 비정상
                 Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
                   $.proxy(function (res) {
-                   wifiCheckPopup(res);
+                    wifiCheckPopup(res);
                   }, this)
                 );
-               }
-             }).fail(null);
-           } else { // 회원이아니다?
-             // 2. 회원이 아니면 wifi 상태 체크 팝업
-             Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
-               $.proxy(function (res) {
-                wifiCheckPopup(res);
-               }, this)
-             );
-           }
-         },this)).fail(null);
+              }
+            }).fail(null);
+        } else { // 회원이아니다?
+          // 2. 회원이 아니면 wifi 상태 체크 팝업
+          Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
+            $.proxy(function (res) {
+              wifiCheckPopup(res);
+            }, this)
+          );
+        }
+      }, this)).fail(null);
   };
 
   /**
@@ -414,12 +415,12 @@ Tw.CommonHelper = (function () {
    * @public
    */
   var resetHeight = function ($element) {
-    if (this._doingAnimateHeight) {
+    if ( this._doingAnimateHeight ) {
       clearTimeout(this._doingAnimateHeight);
     }
     this._doingAnimateHeight = setTimeout(function () {
-      if (!Tw.FormatHelper.isEmpty($element.slick)) {
-        $element.slick && $element.slick.animateHeight();
+      if ( !Tw.FormatHelper.isEmpty($element.slick) ) {
+        $element.slick.animateHeight();
       }
     }, 200);
   };
@@ -502,18 +503,18 @@ Tw.CommonHelper = (function () {
    * @desc 새창 열림 설정
    * @public
    */
-  var replaceExternalLinkTarget = function($container) {
-    _.each($container.find('.fe-link-external,[target=_blank]'), function(elem) {
+  var replaceExternalLinkTarget = function ($container) {
+    _.each($container.find('.fe-link-external,[target=_blank]'), function (elem) {
       $(elem).attr('target', '_blank')
         .addClass('fe-link-external');
 
-      if (Tw.FormatHelper.isEmpty($(elem).attr('title'))) {
+      if ( Tw.FormatHelper.isEmpty($(elem).attr('title')) ) {
         $(elem).attr('title', Tw.WEB_ACCESSBILITY.NEW_WINDOW);
       }
     });
   };
 
-  var sendRequestImg = function(url) {
+  var sendRequestImg = function (url) {
     document.createElement('img').setAttribute('src', url);
   };
 
@@ -521,7 +522,7 @@ Tw.CommonHelper = (function () {
    *
    * @param {jQuery} $popupLayer
    */
-  var focusOnActionSheet = function($popupLayer) {
+  var focusOnActionSheet = function ($popupLayer) {
     // WARNING: jQuery DOM object를 인자로 하기 때문에, isEmpty()로 확인하면 안됨
     // NOTE: 궁극적으로 둘 중 하나라도 나와야 하기 때문
     /*
@@ -538,7 +539,7 @@ Tw.CommonHelper = (function () {
     // 첫번째 제목을 선택
     var $target = $popupLayer.find('span.txt').eq(0);
     // Selector를 한번에 호출하는 것보다, 끊어서 호출하는 것이 좋음
-    if ($target.length === 0) {
+    if ( $target.length === 0 ) {
       // 첫번째 입력 대상을 선택
       $target = $popupLayer.find('input').eq(0);
     }
@@ -549,15 +550,15 @@ Tw.CommonHelper = (function () {
       $target = $popupLayer.find('ul').eq(0).children('li').eq(0);
     }
     */
-    if ($target.length) {
+    if ( $target.length ) {
       setTimeout(function () {
         $target.focus();
       }, 300);
     }
   };
 
-  var setBannerForStatistics = function(banners, summary) {
-    return _.map(banners, function(banner) {
+  var setBannerForStatistics = function (banners, summary) {
+    return _.map(banners, function (banner) {
       return $.extend({}, summary, banner);
     });
   };
@@ -565,17 +566,17 @@ Tw.CommonHelper = (function () {
   /**
    * @desc compare origin TWM and current TWM
    */
-  var checkValidSession = function(url, commandPath, point) {
+  var checkValidSession = function (url, commandPath, point) {
     var preTWM = this.getSessionStorage(Tw.SSTORE_KEY.PRE_TWM) || '';
     var curTWM = this.getCookie(Tw.COOKIE_KEY.TWM) || '';
 
-    if(this.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) === 'Y' && !Tw.FormatHelper.isEmpty(curTWM)) {
+    if ( this.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) === 'Y' && !Tw.FormatHelper.isEmpty(curTWM) ) {
       // 값이 비어 있으면, TWM 값을 저장
-      if(Tw.FormatHelper.isEmpty(preTWM)) {
+      if ( Tw.FormatHelper.isEmpty(preTWM) ) {
         Tw.Logger.info('[checkValidSession]', 'Set PRE TWM : ', preTWM);
         this.setSessionStorage(Tw.SSTORE_KEY.PRE_TWM, this.getCookie(Tw.COOKIE_KEY.TWM));
       } else {
-        if(preTWM !== curTWM && location.search.indexOf('sess_invalid=Y') === -1) {
+        if ( preTWM !== curTWM && location.search.indexOf('sess_invalid=Y') === -1 ) {
           Tw.Logger.error('[checkValidSession]', preTWM, curTWM);
           var historyService = new Tw.HistoryService();
           var params = 'sess_invalid=Y' +

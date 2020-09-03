@@ -76,7 +76,7 @@ abstract class TwViewController {
 
     this.setChannel(req, res).subscribe((resp) => {
       this._apiService.setCurrentReq(req, res);
-      
+
       if ( this.checkLogin(req) ) {
         this.sessionLogin(req, res, next, path);
       } else {
@@ -244,7 +244,7 @@ abstract class TwViewController {
       res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
     }
 
-    // 19.05.28 
+    // 19.05.28
     // APP 을 통한 로그인 시 XTLID, XTLOGINID, XTSVCGR, XTLOGINTYPE 쿠키가 생성되지 않는 (사라지는?) 문제를 해결하기 위해
     // request 에 해당 쿠키가 존재하지 않는 경우 새로 발급하도록 처리
     this.checkXtCookie(req, res);
@@ -273,7 +273,7 @@ abstract class TwViewController {
             this.getPersonSmsDisableTimeCheck().subscribe((resp) => {
 
                 svcInfo.personSmsDisableTimeCheck = resp;
-                console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo);
+                // console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo); - 주석처리
                 urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
                 if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
                   const urlAuth = urlMeta.auth.grades;
@@ -309,7 +309,7 @@ abstract class TwViewController {
                   }
                 }
             });
-           
+
           } else {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
@@ -475,24 +475,24 @@ abstract class TwViewController {
         // XTLID 쿠키 존재 여부 체크 및 미존재시 새로 발급
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLID])) {
           // this.logger.debug(this, '[checkXtCookie] XTLID Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTLID, req.session.svcInfo.xtInfo.XTLID);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTLID, req.session.svcInfo.xtInfo.XTLID);
         // }
 
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTUID])) {
           // this.logger.debug(this, '[checkXtCookie] XTUID Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTUID, req.session.svcInfo.xtInfo.XTUID);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTUID, req.session.svcInfo.xtInfo.XTUID);
         // }
 
         // XTLOGINID 쿠키 존재 여부 체크 및 미존재시 새로 발급
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLOGINID])) {
           // this.logger.debug(this, '[checkXtCookie] XTLOGINID Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTLOGINID, req.session.svcInfo.xtInfo.XTLOGINID);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTLOGINID, req.session.svcInfo.xtInfo.XTLOGINID);
         // }
 
         // XTSVCGR 쿠키 존재 여부 체크 및 미존재시 새로 발급
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTSVCGR])) {
           // this.logger.debug(this, '[checkXtCookie] XTSVCGR Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTSVCGR, req.session.svcInfo.xtInfo.XTSVCGR);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTSVCGR, req.session.svcInfo.xtInfo.XTSVCGR);
         // }
       }
     }

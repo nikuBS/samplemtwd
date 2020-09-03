@@ -31,7 +31,8 @@ export enum REDIS_KEY {
   SESSION = 'session:',
   STORE_PRODUCT = 'StoreProduct:',
   PERSON_DISABLE_TIME = 'person_icon.disable.time',
-  PERSON_SMS_DISABLE_TIME = 'freesms.block.time'
+  PERSON_SMS_DISABLE_TIME = 'freesms.block.time',
+  COMMON_BLOCK = 'str.scrn_isol_phrs'
 }
 
 export enum REDIS_TOS_KEY {

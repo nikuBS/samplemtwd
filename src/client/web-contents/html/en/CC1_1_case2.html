@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/en/favicon.ico" />
+    <link rel="shortcut icon" href="/img/en/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/en/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/en/logo-tworld01.png" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents">Go to Main</a></li><!-- 191115 웹접근성 수정_01 -->
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+					</div>
+                    <div class="h-tit">BILLS</div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <!-- 191115 웹접근성 수정_02 -->
+            <h2 id="contents-area" tabindex="-1"><span class="blind">Main Section</span></h2>
+            <!-- //191115 웹접근성 수정_02 -->
+            <div class="container">
+                <!-- 200304 [OP002-6726] 추가 -->
+				<div class="tod-line-sel-box">
+					<button type="button" class="line-sel-btn">
+						<i class="sel-ico"><img src="/img/en/sel-ico-mobile.png" alt=""></i><span class="item blind">Mobile Phone</span>
+						<span class="detail-info">010-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/myt/sel-ico-tel.png" alt=""></i><span class="item blind">Landline</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/en/sel-ico-wifi.png" alt=""></i><span class="item blind">T Pocket-Fi</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/en/sel-ico-tablet.png" alt=""></i><span class="item blind">tablet</span>
+						<span class="detail-info">070-94**-04**</span>
+					</button>
+					<button type="button" class="line-sel-btn" style="display:none">
+						<i class="sel-ico"><img src="/img/en/sel-ico-tv.png" alt=""></i><span class="item blind">IPTV</span>
+						<span class="detail-info">세종특별자치시 전** ****</span>
+					</button>
+					<button type="button" class="line-sel-btn side-arr" style="display:none"> <!-- 191224 [OP002-5303] 수정01 : side-arr처리 -->
+						<i class="sel-ico"><img src="/img/en/sel-ico-internet.png" alt=""></i><span class="item blind">Internet</span>
+						<span class="detail-info">세종특별자치시 전** ****</span>
+					</button>
+				</div>
+				<!-- //200304 [OP002-6726] 추가 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="user-month-bill">
+                        <div class="this-month-bill">
+                            <p class="stit">Aug. Fees <span class="term">(2020.7.1 ~ 2020.7.31)</span></p>
+                            <p class="price"><span class="won">₩</span>85,050</p>
+                            <div class="btn-wrap"><button class="btn-round2 btn-style3">Select Bill</button></div> <!--2019.03.20 버튼명 변경-->
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <span class="inner">
+                        <span class="tit-type6">Current Usage Information</span>
+                    </span>
+                    <div class="bg-gray">
+                        <div class="comm-charges">
+                            <dl class="totall">
+                                <dt>Communication Charges</dt>
+                                <dd class="red">₩75,325</dd>
+                            </dl>
+                            <dl class="bill-cont">
+                                <dt>Monthly Flat Rates<br /> <span class="refer">(Monthly Charge)</span></dt>
+                                <dd>₩63,866</dd>
+                            </dl>
+                            <dl class="bill-cont">
+                                <dt>Rate Discounts<br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Decimal Amounts)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                <dd>-₩2</dd>
+                            </dl>
+                            <dl class="bill-cont">
+                                <dt>Value-added Tax (VAT) <i class="icon-fnote"  role="note" aria-labelledby="aria-footnote-01"><span class="blind">Refer to Footnotes</span></i><br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Total Amount of Value-added Tax)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                <dd>₩6,915</dd>
+                            </dl>
+                        </div>
+                        <div class="service-charge">
+                            <dl class="totall">
+                                <dt>Additional Service Charge(s)</dt>
+                                <dd class="red">₩9,725</dd>
+                            </dl>
+                            <dl class="bill-cont">
+                                <dt>Additional Service Charge</dt>
+                                <dd><span class="article">Music Ringtone</span><span class="fee">₩725</span></dd>
+                            </dl>
+                            <dl class="bill-cont">
+                                <dt>Micropayment</dt>
+                                <dd><span class="article"  role="note" aria-labelledby="aria-footnote-01">Micropayment_Mobilians <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">₩10,000</span></dd>
+                                <dd><span class="article"  role="note" aria-labelledby="aria-footnote-01"> Micropayment Advance Payment <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">-₩1,000</span></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="gray-box mt14 pl-30">
+                        <dl class="charge">
+                            <dt><img src="/img/en/ico_miri.png" alt="miri" class="ico-miri" /> Amount Paid</dt>
+                            <dd class="red">-₩85,050</dd>
+                        </dl>
+                        <dl class="charge">
+                            <dt><img src="/img/en/ico_miri.png" alt="miri" class="ico-miri" /> Balance</dt>
+                            <dd class="fw-500">₩120,050</dd>
+                        </dl>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <div class="acco-cover">
+                                <div class="acco-style charge-list">
+                                    <ul class="acco-list pt0">
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="true">
+                                                    <span class="phone-num"><img src="/img/en/sel-ico-mobile-black.png" alt="cell phone" class="phone-num-ico">010-50**-25**</span>
+                                                    <span class="fee">₩79,450</span>
+                                                </button>
+                                            </div>
+                                            <div class="acco-cont information-usebox">
+                                                <div class="bg-gray">
+                                                    <div class="comm-charges">
+                                                        <dl class="totall">
+                                                            <dt>Communication Charges</dt>
+                                                            <dd class="red">₩75,325</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Monthly Flat Rates<br /> <span class="refer">(Monthly Charge)</span></dt>
+                                                            <dd>₩63,866</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Rate Discounts<br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Decimal Amounts)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd>-₩2</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Value-added Tax (VAT) <i class="icon-fnote" role="note" aria-labelledby="aria-footnote-01"><span class="blind">Refer to Footnotes</span></i><br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Total Amount of Value-added Tax)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd>₩6,915</dd>
+                                                        </dl>
+                                                    </div>
+                                                    <div class="service-charge">
+                                                        <dl class="totall">
+                                                            <dt>Additional Service Charge(s)</dt>
+                                                            <dd class="red">₩9,725</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Additional Service Charge</dt>
+                                                            <dd><span class="article">Music Ringtone</span><span class="fee">₩725</span></dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Micropayment</dt>
+                                                            <dd><span class="article" role="note" aria-labelledby="aria-footnote-01">Micropayment_Mobilians <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">₩10,000</span></dd>
+                                                            <dd><span class="article" role="note" aria-labelledby="aria-footnote-01"> Micropayment Advance Payment <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">-₩1,000</span></dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="true">
+                                                    <span class="phone-num"><img src="/img/en/sel-ico-mobile-black.png" alt="cell phone" class="phone-num-ico">010-50**-25**</span>
+                                                    <span class="fee">₩79,450</span>
+                                                </button>
+                                            </div>
+                                            <div class="acco-cont information-usebox">
+                                                <div class="bg-gray">
+                                                    <div class="comm-charges">
+                                                        <dl class="totall">
+                                                            <dt>Communication Charges</dt>
+                                                            <dd class="red">₩75,325</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Monthly Flat Rates<br /> <span class="refer">(Monthly Charge)</span></dt>
+                                                            <dd>₩63,866</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Rate Discounts<br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Decimal Amounts)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd>-₩2</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Value-added Tax (VAT) <i class="icon-fnote" role="note" aria-labelledby="aria-footnote-01"><span class="blind">Refer to Footnotes</span></i><br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Total Amount of Value-added Tax)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd>₩6,915</dd>
+                                                        </dl>
+                                                    </div>
+                                                    <div class="service-charge">
+                                                        <dl class="totall">
+                                                            <dt>Additional Service Charge(s)</dt>
+                                                            <dd class="red">₩9,725</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Additional Service Charge</dt>
+                                                            <dd><span class="article">Music Ringtone</span><span class="fee">₩725</span></dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Micropayment</dt>
+                                                            <dd><span class="article" role="note" aria-labelledby="aria-footnote-01">Micropayment_Mobilians <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">₩10,000</span></dd>
+                                                            <dd><span class="article" role="note" aria-labelledby="aria-footnote-01"> Micropayment Advance Payment <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">-₩1,000</span></dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <p class="fs-info footnote01" id="aria-footnote-01">The target display items are exclude VAT</p>
+                    <p class="fs-info footnote02" id="aria-footnote-02">Display item is a third-party fees charged on our behalf</p>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

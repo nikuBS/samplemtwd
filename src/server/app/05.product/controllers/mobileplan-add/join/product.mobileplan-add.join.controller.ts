@@ -5,7 +5,7 @@
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
@@ -62,22 +62,7 @@ class ProductMobileplanAddJoin extends TwViewController {
                 isBackCheck: true
               }));
             }
-
-            this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-            .subscribe((joinTermInfo) => {
-              if (joinTermInfo.code !== API_CODE.CODE_00) {
-                return this.error.render(res, Object.assign(renderCommonInfo, {
-                  code: joinTermInfo.code,
-                  msg: joinTermInfo.msg,
-                  isBackCheck: true
-                }));
-              }
-    
-              res.render('mobileplan-add/join/product.mobileplan-add.join.html', Object.assign(renderCommonInfo, {
-                prodId: prodId,
-                joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
-              }));
-            });         
+            this._getProductJoinTermInfo(res, prodId, renderCommonInfo);
           });
       } else if (prodId === 'NA00006978') { // TODO: 분실보험990++ 본상품 사전체크를 위한 로직, 추후 삭제 필요
         this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, ['NA00006977'])
@@ -89,22 +74,7 @@ class ProductMobileplanAddJoin extends TwViewController {
                 isBackCheck: true
               }));
             }
-
-            this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-            .subscribe((joinTermInfo) => {
-              if (joinTermInfo.code !== API_CODE.CODE_00) {
-                return this.error.render(res, Object.assign(renderCommonInfo, {
-                  code: joinTermInfo.code,
-                  msg: joinTermInfo.msg,
-                  isBackCheck: true
-                }));
-              }
-    
-              res.render('mobileplan-add/join/product.mobileplan-add.join.html', Object.assign(renderCommonInfo, {
-                prodId: prodId,
-                joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
-              }));
-            });         
+            this._getProductJoinTermInfo(res, prodId, renderCommonInfo);
           });
       } else if (prodId === 'NA00006395') { // TODO: 분실보험990 본상품 사전체크를 위한 로직, 추후 삭제 필요
         this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, ['NA00006397'])
@@ -116,41 +86,37 @@ class ProductMobileplanAddJoin extends TwViewController {
                 isBackCheck: true
               }));
             }
-
-            this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-            .subscribe((joinTermInfo) => {
-              if (joinTermInfo.code !== API_CODE.CODE_00) {
-                return this.error.render(res, Object.assign(renderCommonInfo, {
-                  code: joinTermInfo.code,
-                  msg: joinTermInfo.msg,
-                  isBackCheck: true
-                }));
-              }
-    
-              res.render('mobileplan-add/join/product.mobileplan-add.join.html', Object.assign(renderCommonInfo, {
-                prodId: prodId,
-                joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
-              }));
-            });         
+            this._getProductJoinTermInfo(res, prodId, renderCommonInfo);
           });
       } else {
-        this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-        .subscribe((joinTermInfo) => {
-          if (joinTermInfo.code !== API_CODE.CODE_00) {
-            return this.error.render(res, Object.assign(renderCommonInfo, {
-              code: joinTermInfo.code,
-              msg: joinTermInfo.msg,
-              isBackCheck: true
-            }));
-          }
-
-          res.render('mobileplan-add/join/product.mobileplan-add.join.html', Object.assign(renderCommonInfo, {
-            prodId: prodId,
-            joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
-          }));
-        });
+        this._getProductJoinTermInfo(res, prodId, renderCommonInfo);
       }
     });
+  }
+
+  /**
+   * 중복된 변수 선언 및 동일하게 사용중인 기능으로 함수로 분리 하여 처리 (tslint 오류 수정건)
+   * @param res
+   * @param prodId
+   * @param renderCommonInfo
+   * @private
+   */
+  _getProductJoinTermInfo(res, prodId, renderCommonInfo) {
+    this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
+      .subscribe((joinTermInfo) => {
+        if (joinTermInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, Object.assign(renderCommonInfo, {
+            code: joinTermInfo.code,
+            msg: joinTermInfo.msg,
+            isBackCheck: true
+          }));
+        }
+
+        res.render('mobileplan-add/join/product.mobileplan-add.join.html', Object.assign(renderCommonInfo, {
+          prodId: prodId,
+          joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+        }));
+      });
   }
 }
 

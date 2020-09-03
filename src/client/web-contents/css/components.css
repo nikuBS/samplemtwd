@@ -36657,3 +36657,10 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 .o2o-body .wrap{padding-bottom: 0 !important;}
 .o2o-body .container-wrap{margin-bottom: 0 !important;}
 /* //200807 [OP002-8565] o2o 지점/대리점 고도화 */
+
+/* 200825 [OP002-10176] wavve 플러스상품 혜택 확대 관련 Tworld공지 */
+.tod-offer-prd-options.tod-v2 .item > label {font-size:0.75rem}
+.tod-offer-prd-options.tod-v2 .label-tit {font-size:0.938rem}
+@media all and (max-width: 320px) {
+  .tod-offer-prd-options.tod-v2 .label-tit {font-size:0.81rem}
+ }
