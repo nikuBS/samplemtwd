@@ -2463,7 +2463,7 @@ body.apphome .container-wrap { background: -webkit-gradient(linear, left top, le
 /* 로그인 후 */
 .mw-banner01 button { width: 100%; }
 
-.mw-banner01 button img { width: 100%; }
+.mw-banner01 button img { width: 100%; vertical-align: top; }
 
 .section-box.mw .main-chart-box { padding: 1.56rem 0; }
 

@@ -182,14 +182,6 @@
 
 .extraservice-list > .category-type .products-titleinfo .info .taglist-wrap { display: block; font-weight: 300; margin-top: 0; text-align: right; }
 
-.products-detailinfo02 .category-type.type01, .products-detailinfo02 .category-type.type02, .products-detailinfo02 .category-type.type03 { width: 33.33%; text-align: center; }
-
-.products-detailinfo02 .category-type .gb { background: url("/img/en/bg_gb.png") no-repeat 0 0.13rem; background-size: 14px 14px; color: #666; }
-
-.products-detailinfo02 .category-type .type { background: url("/img/en/bg_type.png") no-repeat 0 0.13rem; background-size: 14px 14px; }
-
-.products-detailinfo02 .category-type .basic { background: url("/img/en/bg_sms.png") no-repeat 0 0.32rem; background-size: 14px 10px; }
-
 .full-link-list li button .inner .tit.tx-medium { font-weight: 400 !important; font-size: 0.94rem; line-height: 1.25rem; }
 
 /*영문만 추가*/
@@ -542,7 +534,7 @@
 
 .video-list > li { padding: 1.88rem 0; }
 
-.video-list > li > p { font-size: 0.75rem; font-weight: 300; color: #666666; line-height: 1.06rem; }
+.video-list > li > p { font-size: 0.75rem; font-weight: 300; color: #666666; line-height: 1.6em; }
 
 .video-list > li > p.num { font-weight: 500; color: #000; margin-bottom: 0.38rem; }
 
@@ -618,5 +610,84 @@
 .passcode-list > li + li { margin-top: 0.63rem; }
 
 .popup .popup-info .bt-bottom li.bt-red1.full button, .popup .popup-info .bt-bottom li.bt-red1.full a { width: 100%; padding: 0; text-align: center; }
+
+/* 요금제 리스트 */
+.subscribed-plan { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; padding: 1rem 0; }
+
+.subscribed-plan > p { font-size: 0.81rem; font-weight: 400; color: #666666; }
+
+.subscribed-plan > p.plan-name { font-size: 0.94rem; font-weight: 500; color: #000; }
+
+.plan-banner { width: 100%; }
+
+.plan-banner > img { width: 100%; vertical-align: top; }
+
+.plan-list .headingbox-wrap .title { font-size: 1rem; font-weight: 500; color: #000; }
+
+.plan-list .representcharge-list > li .representcharge-info { padding-left: 0; }
+
+.plan-list .representcharge-list > li .representcharge-info:after { background-image: url("/img/en/ico-group.png"); top: 50%; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); }
+
+.plan-list .plan-title { display: inline-block; width: 100%; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 0 2.5rem 0 3.44rem; background-repeat: no-repeat; background-position: left center; background-size: 2.75rem 2.75rem; }
+
+.plan-list .plan-title.p-5gx { background-image: url("/img/en/icon_plan_5gx.png"); }
+
+.plan-list .plan-title.p-0teen { background-image: url("/img/en/icon_plan_0teen.png"); }
+
+.plan-list .plan-title.tplan { background-image: url("/img/en/icon_plan_tplan.png"); }
+
+.plan-list .plan-title.p-0plan { background-image: url("/img/en/icon_plan_0plan.png"); }
+
+.plan-list .plan-title.ting { background-image: url("/img/en/icon_plan_ting.png"); }
+
+.plan-list .plan-title.senior { background-image: url("/img/en/icon_plan_senior.png"); }
+
+.plan-list .plan-title.p-5gtab { background-image: url("/img/en/icon_plan_5gtab.png"); }
+
+.plan-list .plan-title .plan-name { display: inline-block; width: 100%; font-size: 1rem; font-weight: 500; margin-bottom: 0.25rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.plan-list .plan-title .plan-name .plan-badge { display: inline-block; height: 0.94rem; line-height: 0.94rem; padding: 0 0.31rem; font-size: 0.56rem; font-weight: 400; color: #178bce; background-color: #e6f2fb; border-radius: 0.13rem; vertical-align: middle; -webkit-box-sizing: border-box; box-sizing: border-box; margin-left: 0.38rem; }
+
+.plan-list .plan-title .plan-desc { display: inline-block; font-size: 0.81rem; font-weight: 300; color: #959595; line-height: 1.4em !important; }
+
+.plan-list .plan-card { padding: 1rem; border-radius: 0.25rem; background-color: #fff; -webkit-box-shadow: 0 0.06rem 0.63rem #e5e6e8; box-shadow: 0 0.06rem 0.63rem #e5e6e8; }
+
+.plan-list .plan-card > button { display: inline-block; width: 100%; text-align: left; background: url("/img/en/arrow_support.png") right top 0.19rem no-repeat; background-size: 0.44rem 0.69rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.plan-list .plan-card > button .plan-name { display: inline-block; width: 100%; font-size: 0.88rem; font-weight: 500; color: #000; }
+
+.plan-list .plan-card > button .fee { display: inline-block; font-size: 1rem; font-weight: 700; color: #f76252; margin-top: 0.31rem; }
+
+.plan-list .plan-card > ul { margin-top: 0.88rem; padding-top: 0.88rem; border-top: 1px solid #f2f2f2; font-size: 0; }
+
+.plan-list .plan-card > ul > li { display: inline-block; width: 33.33%; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 5.125%; }
+
+.plan-list .plan-card > ul > li > p { display: inline-block; font-size: 0.81rem; font-weight: 500; color: #666666; }
+
+.plan-list .plan-card > ul > li > p > i { display: inline-block; margin-right: 0.31rem; }
+
+.plan-list .plan-card > ul > li > p.data { font-weight: 700; color: #178bce; }
+
+.plan-list .plan-card > ul > li > p.data > i { width: 0.81rem; height: 0.81rem; background: url("/img/en/bg_gb.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
+
+.plan-list .plan-card > ul > li > p.talktime > i { width: 0.88rem; height: 0.88rem; background: url("/img/en/bg_type.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
+
+.plan-list .plan-card > ul > li > p.units > i { width: 0.88rem; height: 0.63rem; background: url("/img/en/bg_sms.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.06rem; }
+
+.plan-list .plan-card + .plan-card { margin-top: 0.63rem; }
+
+.products-detailinfo02 .category-type { -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.products-detailinfo02 .category-type.type01 { padding-left: 0.94rem; width: 37%; }
+
+.products-detailinfo02 .category-type.type02 { width: 34%; }
+
+.products-detailinfo02 .category-type.type03 { width: 29%; }
+
+.products-detailinfo02 .category-type .gb { background-image: url(/img/en/bg_gb.png); }
+
+.products-detailinfo02 .category-type .type { background-image: url(/img/en/bg_type.png); }
+
+.products-detailinfo02 .category-type .basic { background-image: url(/img/en/bg_sms.png); }
 
 /*# sourceMappingURL=maps/style_en.css.map */
