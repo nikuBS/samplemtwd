@@ -59,34 +59,40 @@
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <div class="container">
-                <!-- 191204 [OP002-5303] 추가01 -->
-				<div class="tod-line-sel-box">
-                    <button type="button" class="line-sel-btn" style="display:none">
-                        <i class="sel-ico"><img src="/img/myt/sel-ico-mobile.png" alt=""></i><span class="item">휴대폰</span>
-                        <span class="detail-info">010-94**-04**</span>
-                    </button>
-                    <button type="button" class="line-sel-btn" style="display:none">
-                        <i class="sel-ico"><img src="/img/myt/sel-ico-tel.png" alt=""></i><span class="item">집전화</span>
-                        <span class="detail-info">070-94**-04**</span>
-                    </button>
-                    <button type="button" class="line-sel-btn" style="display:none">
-                        <i class="sel-ico"><img src="/img/myt/sel-ico-wifi.png" alt=""></i><span class="item">T Pocket-Fi</span>
-                        <span class="detail-info">070-94**-04**</span>
-                    </button>
-                    <button type="button" class="line-sel-btn" style="display:none">
-                        <i class="sel-ico"><img src="/img/myt/sel-ico-tablet.png" alt=""></i><span class="item">태블릿</span>
-                        <span class="detail-info">070-94**-04**</span>
-                    </button>
-                    <button type="button" class="line-sel-btn" style="display:none">
-                        <i class="sel-ico"><img src="/img/myt/sel-ico-tv.png" alt=""></i><span class="item">IPTV</span>
-                        <span class="detail-info">세종특별자치시 전** ****</span>
-                    </button>
-                    <button type="button" class="line-sel-btn side-arr"> <!-- 191224 [OP002-5303] 수정01 : side-arr처리 -->
-                        <i class="sel-ico"><img src="/img/myt/sel-ico-internet.png" alt=""></i><span class="item">인터넷</span>
-                        <span class="detail-info">세종특별자치시 전** ****</span>
-                    </button>
-                </div>
-                <!-- //191204 [OP002-5303] 추가01 -->
+                <!-- 200810 [OP002-9649] 수정_01 -->
+				<!-- 다른 회선 관리 -->
+				<div class="tod-line-sel-box tod-line-sel-new">
+					<div class="tod-line-sel-fixed">
+						<div class="line-sel-btn">
+							<i class="sel-ico"><img src="/img/myt/sel-ico-mobile.png" alt=""></i><span class="item">휴대폰</span>
+							<span class="detail-info">010-94**-04**</span>
+						</div>
+						<div class="line-sel-btn" style="display:none">
+							<i class="sel-ico"><img src="/img/myt/sel-ico-tel.png" alt=""></i><span class="item">집전화</span>
+							<span class="detail-info">070-94**-04**</span>
+						</div>
+						<div class="line-sel-btn" style="display:none">
+							<i class="sel-ico"><img src="/img/myt/sel-ico-wifi.png" alt=""></i><span class="item">T Pocket-Fi</span>
+							<span class="detail-info">070-94**-04**</span>
+						</div>
+						<div class="line-sel-btn" style="display:none">
+							<i class="sel-ico"><img src="/img/myt/sel-ico-tablet.png" alt=""></i><span class="item">태블릿</span>
+							<span class="detail-info">070-94**-04**</span>
+						</div>
+						<div class="line-sel-btn" style="display:none">
+							<i class="sel-ico"><img src="/img/myt/sel-ico-tv.png" alt=""></i><span class="item">IPTV</span>
+							<span class="detail-info">세종특별자치시 전** ****</span>
+						</div>
+						<div class="line-sel-btn side-arr" style="display:none">
+							<i class="sel-ico"><img src="/img/myt/sel-ico-internet.png" alt=""></i><span class="item">인터넷</span>
+							<span class="detail-info">세종특별자치시 전** ****</span>
+						</div>
+						<button type="button" class="btn-round3 btn-other-line">다른 회선 관리</button>
+					</div>
+				</div>
+				<!-- //다른 회선 관리 -->
+                <!-- //200810 [OP002-9649] 수정_01 -->
+                
                 <!-- <hr class="cont-sp type1" aria-hidden="true"/> --><!-- //191204 [OP002-5303] 삭제01 -->
                 <!-- .cont-box -->
                 <div class="cont-box">
@@ -132,22 +138,32 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                    <ul class="full-link-list">
-                        <li>
-                            <button>
-                                <span class="inner">
-                                    <span class="tit">나의 요금제</span>
-                                    <span class="text">뉴 T끼리 맞춤형(100분+6GB)</span>
-                                </span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="inner">
-                                    <span class="tit">나의 부가서비스</span>
-                                    <span class="text">유료 2개 / 무료15개</span>
-                                </span>
-                            </button>
-                        </li>
+                        <!-- 200810 [OP002-9649] 수정_02 -->
+						<li>
+							<button>
+								<span class="inner">
+									<span class="tit">나의 요금제/부가상품</span>
+									<span class="text">뉴 T끼리 맞춤형(100분+6GB) / 15개</span>
+								</span>
+							</button>
+						</li>
+						<!-- <li>
+							<button>
+								<span class="inner">
+									<span class="tit">나의 요금제</span>
+									<span class="text">뉴 T끼리 맞춤형(100분+6GB)</span>
+								</span>
+							</button>
+						</li>
+						<li>
+							<button>
+								<span class="inner">
+									<span class="tit">나의 부가서비스</span>
+									<span class="text">유료 2개 / 무료15개</span>
+								</span>
+							</button>
+						</li> -->
+						<!-- // 200810 [OP002-9649] 수정_02 -->
                         <li>
                             <button>
                                 <span class="inner">
