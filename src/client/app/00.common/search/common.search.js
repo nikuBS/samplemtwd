@@ -1683,12 +1683,21 @@ Tw.CommonSearch.prototype = {
     var returnStr2 = '';
     var returnStr3 = '';
 
+    console.log('[common.search] [_calculateAdditionsFee] usingAdditions : ', usingAdditions);
+    console.log('[common.search] [_calculateAdditionsFee] this._svcInfo.svcAttrCd : ', this._svcInfo.svcAttrCd);
+
+    // 선택된 회선이 유선인 경우
     if (!Tw.FormatHelper.isEmpty(this._svcInfo) && this._svcInfo.svcAttrCd.startsWith('S')) {
+      console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 유선인 경우', '');
+
       var paidProdList = usingAdditions.pays || [];
       var unpaidProdList = usingAdditions.frees || [];
 
       var addProdPayCnt = paidProdList.length;        // 가입한 유료 유선 부가상품 카운트
       var addProdPayFreeCnt = unpaidProdList.length;  // 가입한 무료 유선 부가상품 카운트
+
+      console.log('[common.search] [_calculateAdditionsFee] 가입한 유료 유선 부가상품 카운트 : ', addProdPayCnt);
+      console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
 
       returnStr1 = addProdPayCnt + '건';
       returnStr2 = addProdPayFreeCnt + '건';
@@ -1707,12 +1716,20 @@ Tw.CommonSearch.prototype = {
       $('.fe-prod-cnt-wireless').hide();
       $('.fe-prod-cnt-wire').show();
       
-    } else {
-      var disProdCnt = usingAdditions.disProdCnt;               // 가입한 무선 옵션/할인 프로그램 카운트
+    } 
+    // 선택된 회선이 무선인 경우
+    else {
+      console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 무선인 경우', '');
+
+      var comProdCnt = usingAdditions.comProdCnt;               // 가입한 무선 옵션/할인 프로그램 카운트
       var addProdPayCnt = usingAdditions.addProdPayCnt;         // 가입한 무선 유료 부가상품 카운트
       var addProdPayFreeCnt = usingAdditions.addProdPayFreeCnt; // 가입한 무선 무료 부가상품 카운트
 
-      returnStr1 = disProdCnt + '건';
+      console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', comProdCnt);
+      console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
+      console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
+
+      returnStr1 = comProdCnt + '건';
       returnStr2 = addProdPayCnt + '건';
       returnStr3 = addProdPayFreeCnt + '건';
 
@@ -1720,7 +1737,7 @@ Tw.CommonSearch.prototype = {
       this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
       this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
-      if (disProdCnt === '0') {
+      if (comProdCnt === '0') {
         this.$container.find('.fe-wireless-discount-additions-cnt').attr('href', '');
       }
 
