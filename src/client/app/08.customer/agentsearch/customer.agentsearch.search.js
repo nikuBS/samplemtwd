@@ -57,11 +57,16 @@ Tw.CustomerAgentsearch.prototype = {
    * @desc 현재 해쉬의 탭을 선택해준다. (새로고침하는 경우 탭 선택이 풀려서 해줘야 함)
    */
   _selectTab: function () {
-    this.$tabs.find('a[href="#' + this._getType() + '"]') // 현재 해쉬(#) 이름 의 a tag
+    var tabLi = this.$tabs.find('a[href="#' + this._getType() + '"]') // 현재 해쉬(#) 이름 의 a tag
       .attr('aria-selected', true)  // 선택 되도록 selected
-      .parent().attr('aria-selected', true) // 부모(li) 도 선택되도록 selected
+      .parent().attr('aria-selected', true); // 부모(li) 도 선택되도록 selected
+
+    tabLi
       .siblings().attr('aria-selected', false)  // 나머지 친구 노드들은 false
       .find('a').attr('aria-selected', false); // 해당 친구 노드들의 a tag 들도 false
+
+    this.$container.find('#'+ tabLi.attr('aria-controls')).attr('aria-selected', true)
+      .siblings().attr('aria-selected', false); // 나머지 친구 노드들은 false;
   },
 
   /**
@@ -96,6 +101,33 @@ Tw.CustomerAgentsearch.prototype = {
     // 나와 가까운 지점 지도 생성
     this.customerAgentsearchMap = new Tw.CustomerAgentsearchMap(args);
     this.customerAgentsearchFilter = new Tw.CustomerAgentsearchFilter(args);
+    // 쿼리 확인
+    if (this._query.searchText) {
+      var param = $.extend({
+        storeType: 0,
+        currentPage: 1
+      }, this._query);
+      if (this._getType() !== 'tube') {
+        this.$keyword.val(param.searchText);
+        param.searchText = encodeURIComponent(param.searchText);
+      } else {
+        var area = param.searchAreaNm.split(',');
+        var line = param.searchLineNm.split(',');
+        var text = param.searchText.split(',');
+        this.$btnSelectArea.attr('id', area[1]).text(area[0]);
+        this.$btnSelectLine.attr('id', line[1]).text(line[0]);
+        this.$btnSelectName.attr('id', text[1]).text(text[0]);
+
+        param.searchAreaNm = encodeURIComponent(area[0]);
+        param.searchLineNm = encodeURIComponent(line[0]);
+        param.searchText = encodeURIComponent(text[0]);
+
+        this._getTubeNameList();
+      }
+      this.filterSearchRequest(param);
+    }else {
+      this.customerAgentsearchMap._checkLocationAgreement();
+    }
   },
 
   /**
@@ -141,7 +173,6 @@ Tw.CustomerAgentsearch.prototype = {
   _bindEvents: function () {
     this.$keyword.on('keydown', $.proxy(this._getSearch, this)); // 검색어 input 엔터 시 검색
     this.$search.on('click', $.proxy(this._getSearch, this)); // 검색 버튼 클릭
-
     this.$tabs.on('click', 'li', $.proxy(this._onReset, this)); // 탭 클릭
     this.$btnsSelect.on('click', $.proxy(this._onTube, this));  // 지하철 탭의 셀렉트 박스들 클릭시 액션시트 띄움
     this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
@@ -253,6 +284,9 @@ Tw.CustomerAgentsearch.prototype = {
         break;
       // P.15: 키워드 검색 (카운트 영역(리스트/지도 버튼 미노출), 리스트 영역)
       case 7:
+        if (this.customerAgentsearchMap._isNotAgreeLocation && this._isAcceptAge && !this.customerAgentsearchComponent.hasStorage()) {
+          showArea([$locationAlert]);
+        }
         showArea([$filterArea, $normalListArea]);
         this.resultContents(options.res.totalCount);
         listRender(options, list);
@@ -309,8 +343,6 @@ Tw.CustomerAgentsearch.prototype = {
     }
     // 전송 요청 일때
     if (isSendOk) {
-      // 보내기전 리스트 클리어
-      // this.$resultListByList.empty();
       this._reqParam = saveParam;
       this.customerAgentsearchFilter.clearItems();
       this._getSearchRequest($.extend(param, saveParam));  // 지점/대리점 조회 요청
@@ -334,15 +366,13 @@ Tw.CustomerAgentsearch.prototype = {
 
   /**
    * @function
-   * @desc 탭 변경 일때 새로고침
+   * @desc 탭 변경 일때 초기화
    */
   _onReset: function (event) {
-    // 즉시 리로딩 하면 hash 값 변경되기 전에 로딩되어 약간의 시간을 줌.
-    /*setTimeout(function (){
-      this._historyService.reload();
-    }.bind(this), 50);*/
     var hash = $(event.currentTarget).find('a').attr('href');
-    this._historyService.replaceURL(window.location.pathname + hash);
+    history.replaceState(null, null, hash);
+    // history.replaceState(null, null, window.location.pathname + hash);
+    this._selectTab();
     // 로딩중 표시
     this.layout({
       type: 3
@@ -354,7 +384,7 @@ Tw.CustomerAgentsearch.prototype = {
     this.$resultCount.text('0'); // 검색 갯수 초기화
     this.customerAgentsearchFilter.clearItems();
     this.customerAgentsearchMap.reset();
-    this.customerAgentsearchMap._firstTimeFindNearShop();
+    this.customerAgentsearchMap._checkLocationAgreement();
   },
 
   /**
@@ -492,11 +522,13 @@ Tw.CustomerAgentsearch.prototype = {
    * @desc 매장유형 리턴. 0:전체, 1:지점, 2: 대리점
    */
   getStoreTypeByQuery : function () {
-    var type = {
+    /*var type = {
       branch: 1,  // 지점
       agent : 2 // 대리점
     };
-    return type[this._query.storeType] || 0; // 없으면 전체:0
+    return type[this._query.storeType] || 0;*/ // 없으면 전체:0
+    return parseInt(this._query.storeType, 10) || 0;
+
   },
 
   /**
@@ -521,6 +553,15 @@ Tw.CustomerAgentsearch.prototype = {
     };
     var apiName = getApiName[this._getType() || 'name'];
     this.customerAgentsearchComponent.request(apiName, param).done(function (resp) {
+      if (this._getType() !== 'tube') {
+        param.searchText = decodeURIComponent(param.searchText);
+      } else {
+        // 상세보기 후 다시 현재 페이지 돌아왔을때 지하철 셀렉트 박스 선택해주기 위
+        param.searchAreaNm = decodeURIComponent(param.searchAreaNm + ',' + this.$btnSelectArea.attr('id'));
+        param.searchLineNm = decodeURIComponent(param.searchLineNm + ',' + this.$btnSelectLine.attr('id'));
+        param.searchText = decodeURIComponent(param.searchText + ',' + this.$btnSelectName.attr('id'));
+      }
+      history.replaceState(null, null, '?' + $.param(param) + '#' + this._getType());
       this.$keyword.blur(); // 인풋 포커스 아웃을 해줘야 단말기의 "키보드" 가 아래로 내려감.
       this.isKeywordSearch = true;
       if (Tw.FormatHelper.isEmpty(resp.result.regionInfoList)) {
@@ -552,10 +593,20 @@ Tw.CustomerAgentsearch.prototype = {
     this.$btnMore.data('param', param);
   },
 
+  /**
+   * @function
+   * @param param
+   * @desc 필터 팝업에서 검색시 사용
+   */
   filterSearchRequest: function (param) {
     this._getSearchRequest($.extend(param, this._reqParam));
   },
 
+  /**
+   * @function
+   * @param resp
+   * @desc 더보기 버튼 노출 토글
+   */
   _showHideMoreBtn: function (resp) {
     if (resp.result.lastPageType === 'N') {
       this.$btnMore.removeClass('none');
@@ -579,6 +630,11 @@ Tw.CustomerAgentsearch.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @param options
+   * @desc 리스트 렌더링
+   */
   renderList: function (options) {
     if (!options || Tw.FormatHelper.isEmpty(options.list) || !options.listType) {
       return;
@@ -627,18 +683,31 @@ Tw.CustomerAgentsearch.prototype = {
     }
   },
 
-  searchTShop: function (callback) {
+  /**
+   * @function
+   * @param callback
+   * @param filter 필터속성 파라미터
+   * @param onlyTshop 검색조건 없을때 사용되는 "티샵예약가능" 매장인지 여부
+   * @desc 필터 조건으로 검색
+   */
+  _searchFilter: function (callback, filter, onlyTshop) {
     var self = this;
-    var onMoreView = function (e) {
-      var param = $(e.currentTarget).data('param');
-      param.currentPage++;
+    var req0004 = function (param, isDeleteAppend) {
       self.customerAgentsearchComponent.request(Tw.API_CMD.BFF_08_0004, param).done(function (res){
         self._showHideMoreBtn(res);
         if (callback){
-          res.isDeleteAppend = false;
+          res.isDeleteAppend = isDeleteAppend;
           callback(res);
         }
+        if (onlyTshop && res.result.totalCount > 0) {
+          self.$listTitle.removeClass('none');
+        }
       });
+    };
+    var onMoreView = function (e) {
+      var param = $(e.currentTarget).data('param');
+      param.currentPage++;
+      req0004(param, false);
     };
 
     // "더보기" 버튼 data 속성 "param" 비어 있으면 더보기 이벤트 바인딩
@@ -646,26 +715,33 @@ Tw.CustomerAgentsearch.prototype = {
       this.$btnMore.off('click').on('click', onMoreView);
     }
 
-    var param = {
-      storeType: '0',
-      // todo JK : param.tSharpYn 값이 없어서 임시로 param.test 사용.
-      tSharpYn: 'Y',
-      // test: 'Y',
-      // searchText : encodeURIComponent('강남'), // 티샵 예약가능 매장이 없어서. 임시로 을지로 조회로 대체
-      currentPage: 1
-    };
+    var param = $.extend({
+      currentPage: 1,
+      storeType: '0'
+    }, filter);
     // "더보기" 에서 사용 하기 위해 요청 전에 파라미터를 저장 해 놓는다.
     this.$btnMore.data('param', param);
-    this.customerAgentsearchComponent.request(Tw.API_CMD.BFF_08_0004, param).done(function (res){
-      this._showHideMoreBtn(res);
-      if (callback){
-        res.isDeleteAppend = true;
-        callback(res);
-      }
-      if (res.result.totalCount > 0) {
-        this.$listTitle.removeClass('none');
-      }
-    }.bind(this));
+    req0004(param, true);
+  },
+
+  /**
+   * @function
+   * @param callback
+   * @desc 위치 미동의, 검색조건 없을때 사용됨. 티샵예약 가능매장만 검색
+   */
+  searchTShop: function (callback) {
+    this._searchFilter(callback, {
+      tSharpYn: 'Y'
+    }, true);
+  },
+
+  /**
+   * @function
+   * @param ca|llback
+   * @desc url 파라미터의 필터 속성으로 검색
+   */
+  searchFilter: function (callback) {
+    this._searchFilter(callback, this._query);
   },
 
   /**

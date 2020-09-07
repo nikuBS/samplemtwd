@@ -15,6 +15,7 @@ Tw.CustomerAgentsearchFilter = function (options) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._query = Tw.UrlHelper.getQueryParams();
   this._selectedItem = undefined;
   this._init();
 };
@@ -29,6 +30,7 @@ Tw.CustomerAgentsearchFilter.prototype = {
     this._cacheElements();
     this._bindEvents();
     this.customerAgentsearchComponent.registerHelper();
+    this._selectedItem = $.extend({}, this._query);
   },
 
   _cacheElements: function () {
@@ -39,12 +41,14 @@ Tw.CustomerAgentsearchFilter.prototype = {
     this.$container.on('click', '.fe-options', $.proxy(this._openFilter, this)); // 필터 팝업 열기
   },
 
+  /**
+   * @function
+   * @param e
+   * @desc 매장속성 팝업 오픈
+   */
   _openFilter: function (e) {
     this._popupService.open({
         hbs: 'CS2.2',
-        data: {
-          storeType: this._customerAgentsearch.getStoreTypeByQuery()
-        },
         layer: true
       }, $.proxy(this._openFilterCallback, this),
       $.proxy(this._closeCallback, this),
@@ -52,14 +56,23 @@ Tw.CustomerAgentsearchFilter.prototype = {
       $(e.currentTarget));
   },
 
+  /**
+   * @function
+   * @param $layer
+   * @desc 팝업 오픈 후 콜백함수
+   */
   _openFilterCallback: function ($layer) {
     this.$form = $layer.find('#fe-form');
-    this._checkedItems();
+    this._checkedLastItems();
     $layer.on('click', '.fe-reset', $.proxy(this._reset, this));
     $layer.on('click', '.fe-select', $.proxy(this._onSelectShop, this));
     $layer.on('click', '.fe-close', $.proxy(this._closePop, this));
   },
 
+  /**
+   * @function
+   * @desc 초기화
+   */
   _reset: function(){
     this.$form[0].reset();
     this.$container.find('input[type="checkbox"]').prop('checked',false) // 모든 체크박스 체크해제
@@ -68,15 +81,27 @@ Tw.CustomerAgentsearchFilter.prototype = {
       .attr('aria-checked', false);
   },
 
+  /**
+   * @function
+   * @desc 선택된 속성들 초기화
+   */
   clearItems: function () {
     this._selectedItem = undefined;
   },
 
+  /**
+   * @function
+   * @desc [매장 속성 선택] 매장 속성 조회.
+   */
   _onSelectShop: function () {
     this._reqOk = true;
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 팝업 닫고나서 매장 속성을 조회한다.
+   */
   _closeCallback: function () {
     if (this._reqOk) {
       // #fe-form 데이터 JSON 으로 변환
@@ -89,7 +114,13 @@ Tw.CustomerAgentsearchFilter.prototype = {
         return m;
       }, {});
       this._selectedItem = data;
-      var instance = !this._customerAgentsearch.isKeywordSearch ? this._customerAgentsearchMap : this._customerAgentsearch;
+      var instance = null;
+      // 위치정보 미동의 했을땐 키워드 검색용 인스턴스를 사용.
+      if (this._customerAgentsearchMap._isNotAgreeLocation){
+        instance = this._customerAgentsearch;
+      } else {
+        instance = !this._customerAgentsearch.isKeywordSearch ? this._customerAgentsearchMap : this._customerAgentsearch;
+      }
       // 전송 파라미터에 ['mobile', 'wire', 'caps'] 제거.(BFF 전송 시 쓸데없는 파라미터 제외하려고.)
       var param = _.clone(data);
       delete param.mobile;
@@ -99,22 +130,27 @@ Tw.CustomerAgentsearchFilter.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 팝업 닫기
+   */
   _closePop: function (){
     this._reqOk = false;
     this._popupService.close();
   },
 
-  _checkedItems: function () {
+  /**
+   * @function
+   * @param{array} items
+   * @desc input 체크
+   */
+  _checkedLastItems: function () {
     if (!this._selectedItem) {
       return;
     }
-
     for (var key in this._selectedItem){
       var value = this._selectedItem[key];
       this.$form.find('input[name="'+ key +'"][value="'+ value +'"]').prop('checked', true);
     }
   }
-
-
-
 };

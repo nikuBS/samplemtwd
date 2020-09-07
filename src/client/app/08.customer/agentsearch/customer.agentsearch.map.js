@@ -23,23 +23,20 @@ Tw.CustomerAgentsearchMap = function (options) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._location = undefined; // 현재위치 좌표정보
-
-  // 위치 변경 관련 두개 파일 git에서 삭제 해야 함, CS_02_03_L01.hbs , customer.agentsearch.region.js
   this._nearShops = undefined;  // 지점 대리점 리스트
   this.$radiusList = undefined; // 검색 반경 리스트
 
-  // todo 양정규 : shortcut url 지점/대리점 url로 작업하기
   // shortcut url 생성을 위한 주소, 검색 반경은 디폴트로 적용
   // 내위치 지도 전체 : http://localhost:3000/customer/agentsearch
-  // 내위치 지도 지점 : http://localhost:3000/customer/agentsearch?storeType=branch
-  // 내위치 지도 대리점 : http://localhost:3000/customer/agentsearch?storeType=agent
+  // 내위치 지도 지점 : http://localhost:3000/customer/agentsearch?storeType=1
+  // 내위치 지도 대리점 : http://localhost:3000/customer/agentsearch?storeType=2
   // 내위치 리스트 전체 : http://localhost:3000/customer/agentsearch?showList=Y
-  // 내위치 리스트 지점 : http://localhost:3000/customer/agentsearch?storeType=branch&showList=Y
-  // 내위치 리스트 대리점 : http://localhost:3000/customer/agentsearch?storeType=agent&showList=Y
+  // 내위치 리스트 지점 : http://localhost:3000/customer/agentsearch?storeType=1&showList=Y
+  // 내위치 리스트 대리점 : http://localhost:3000/customer/agentsearch?storeType=2&showList=Y
 
   this._query = Tw.UrlHelper.getQueryParams();
   this._isNotAgreeLocation = false; // 위치 미동의 여부. 디폴트는 동의
-  this._lastParam = {};
+  this._lastParam = $.extend({}, this._query);
 
   var customerComponent = this.customerAgentsearchComponent;
   var init = this._init.bind(this);
@@ -59,7 +56,7 @@ Tw.CustomerAgentsearchMap.prototype = {
   _init: function () {
     this._cacheElements();
     this._bindEvents();
-    this._checkLocationAgreement();
+    // this._checkLocationAgreement();
   },
 
   _initMapAreaList : function () {
@@ -86,9 +83,14 @@ Tw.CustomerAgentsearchMap.prototype = {
     this.$toggleButton.on('click', $.proxy(this._toggleButtonListOrMap, this)); // 리스트/지도 보기 이벤트
   },
 
+  /**
+   * @function
+   * @desc 초기화
+   */
   reset: function () {
     this._nearShops = undefined;  // 지점 대리점 리스트
     this._lastParam = {};
+    this._query = Tw.UrlHelper.getQueryParams();
   },
 
   /**
@@ -107,6 +109,11 @@ Tw.CustomerAgentsearchMap.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @param showList
+   * @desc 지도보기/리스트 보기 버튼 토글 및 지도/ 리스트 토글
+   */
   _toggleList: function (showList) {
     var $button = this.$toggleButton.find('button');
 
@@ -121,6 +128,11 @@ Tw.CustomerAgentsearchMap.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @return {number}
+   * @desc 컨텐츠 높이 구하기
+   */
   _getContentH: function () {
     var windowH = document.body.clientHeight ||  window.innerHeight;
     var elLocation = document.querySelector('.tod-o2o-comp.map-type');
@@ -134,7 +146,10 @@ Tw.CustomerAgentsearchMap.prototype = {
     return contentH;
   },
 
-  //open
+  /**
+   * @function
+   * @desc 리스트 위로 슬라이드
+   */
   _setListOpen: function() {
     var contentH =  this._getContentH();
     var elDisplay = document.querySelector('.tod-o2o-display');
@@ -145,6 +160,10 @@ Tw.CustomerAgentsearchMap.prototype = {
     elDisplay.setAttribute('data-expanded', 'true');
   },
 
+  /**
+   * @function
+   * @desc 리스트 아래로 슬라이드(매장 1개만 보임)
+   */
   _setListClose: function() {
     this.$shopInfoArea.scrollTop(0);
     var elDisplay = document.querySelector('.tod-o2o-display');
@@ -153,13 +172,21 @@ Tw.CustomerAgentsearchMap.prototype = {
     elDisplay.setAttribute('data-expanded', 'false');
   },
 
+  /**
+   * @function
+   * @desc 컨텐츠 영역 높이 조정
+   */
   _setSize: function() {
     var contentH =  this._getContentH();
     this.contentH = contentH;
     var elLocation = document.querySelector('.tod-o2o-comp.map-type');
     elLocation.setAttribute('style', 'height:' + contentH + 'px;');
   },
-  
+
+  /**
+   * @function
+   * @desc 지도/리스트 영역 초기 설정.
+   */
   _initMapList: function () {
     var elDisplay = document.querySelector('.tod-o2o-display');
 
@@ -216,7 +243,11 @@ Tw.CustomerAgentsearchMap.prototype = {
       if (Tw.BrowserHelper.isApp()) {
         this.$shopInfoArea.css('min-height', '234px');
       }
-      this._firstTimeFindNearShop();
+      if (Tw.FormatHelper.isEmpty(this._lastParam)) {
+        this._firstTimeFindNearShop();
+      } else {
+        this.filterSearchRequest(this._lastParam);
+      }
     }, this), $.proxy(function () { // 위치정보 실패시
       if (Tw.BrowserHelper.isApp()) {
         this._notAgreeLocation();
@@ -235,9 +266,17 @@ Tw.CustomerAgentsearchMap.prototype = {
    * @param  {Object} location - 현재 위치 좌표
    */
   _checkLocationAgreement: function () {
+    // 로딩 표시
+    this._customerAgentsearch.layout({
+      type: 3
+    });
     // 만 14세 미만 일때
     if (!this._isAcceptAge) {
       return this._notAgreeLocation();
+    }
+    // 이미 위치정보 조회를 했으면 바로 지점 조회한다.
+    if (this._location) {
+      return this._firstTimeFindNearShop();
     }
     this._locationInfoComponent.checkLocationAgreement($.proxy(this._requestCurrentPosition, this), $.proxy(this._showPermission, this));
   },
@@ -283,7 +322,6 @@ Tw.CustomerAgentsearchMap.prototype = {
         this._popupService.close();
 
         // 닫기 버튼 클릭 시 일주일(7일) 동안 비노출 함
-        // var key = 'hideLocationNot_' + this._svcInfo.userId;
         var expireDay = 7;  // 만료 기간(일)
         // App 인 경우 cookie 에 저장하면 지워져서, app = localStorage, web = cookie에 저장한다.
         if (Tw.BrowserHelper.isApp()) {
@@ -310,9 +348,21 @@ Tw.CustomerAgentsearchMap.prototype = {
    */
   _notAgreeLocation: function () {
     this._isNotAgreeLocation = true;  // 위치 미동의 설정
-    this._customerAgentsearch.searchTShop(function (res){
+    if (Tw.FormatHelper.isEmpty(this._query)) {
+      this._customerAgentsearch.searchTShop(function (res){
+        this._customerAgentsearch.layout({
+          type: 2,
+          res: res.result,
+          isDeleteAppend: res.isDeleteAppend
+        });
+      }.bind(this));
+      return;
+    }
+
+    // 위치 미동의 이지만, 단축 URL로 바로 진입시에 해당 필터 조건의 매장 조회.
+    this._customerAgentsearch.searchFilter(function (res){
       this._customerAgentsearch.layout({
-        type: 2,
+        type: 7,
         res: res.result,
         isDeleteAppend: res.isDeleteAppend
       });
@@ -330,6 +380,9 @@ Tw.CustomerAgentsearchMap.prototype = {
     if (this._isNotAgreeLocation) {
       return;
     }
+    this._customerAgentsearch.layout({
+      type: 3
+    });
     // OP002-8862 최초 500m 내의 검색반경 내의 지점/대리점이 없을 경우 1km/3km의 검색 진행
     var options = this._getOptions();
     var i = 0;
@@ -350,6 +403,7 @@ Tw.CustomerAgentsearchMap.prototype = {
             return;
           }
         }
+        history.replaceState(null, null, '?' + $.param(param) + '#'+this._customerAgentsearch._getType());
         this._nearShops = res.result.regionInfoList;
         this.$radiusOption.text(option.txt).data('option',option);
         // 매장 결과 없을 때
@@ -398,25 +452,18 @@ Tw.CustomerAgentsearchMap.prototype = {
     funcRequest(options[i++]);
   },
 
+  /**
+   * @function
+   * @param params
+   * @desc 필터 팝업에서 조회 시
+   */
   filterSearchRequest: function (params) {
-    // todo JK : 바뀔 가능성 많음. 리셋 시 처음 데이터 보여주기.
-    if (_.keys(params).length === 1 && params.storeType === this._customerAgentsearch.getStoreTypeByQuery()) {
-      this._customerAgentsearch.layout({
-        type: 1,
-        res: {
-          regionInfoList: this._nearShops,
-          totalCount: this._nearShops.length
-        }
-      });
-      this._initMap();
-      return;
-    }
     // 로딩 표시
     this._customerAgentsearch.layout({
       type: 3
     });
 
-    var distance = this._getOptions()[0].distance;
+    var distance = params.distance || this._getOptions()[0].distance;
     var i = 0;
     var options = _.filter(this.customerAgentsearchComponent.getRadiusList(), function (item) {
       return item.distance >= distance;
@@ -442,7 +489,9 @@ Tw.CustomerAgentsearchMap.prototype = {
             return;
           }
         }
-
+        history.replaceState(null, null, '?' + $.param(this._lastParam) + '#'+this._customerAgentsearch._getType());
+        this._nearShops = res.result.regionInfoList;
+        this.$radiusOption.text(option.txt).data('option',option);
         var nearShops = res.result.regionInfoList;
         // 전체 반경 800km 안에 전체 매장 결과 없을 때.
         if (nearShops.length < 1) {
@@ -533,7 +582,6 @@ Tw.CustomerAgentsearchMap.prototype = {
       id: 'fe-tmap-box',
       width: '100%',
       height: this.contentH +'px',
-      // height: this.$container.find('#fe-tmap-box').width() + 'px',
       zoom: this.$radiusOption.data('option').zoom
     }, this._location))
       .makeMarker($.extend({ // 마커 생성

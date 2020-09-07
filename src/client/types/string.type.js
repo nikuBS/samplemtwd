@@ -1506,6 +1506,7 @@ Tw.CUSTOMER_AGENT_SEARCH = {
     nameTheft: '명의도용접수',
     callHistSearch: '통화내역조회',
     rentYn: '임대폰',
+    safeDealKiosk: '안심거래 키오스크',
 
     // 체험존
     fiveGxYn: '5GX 체험존',
