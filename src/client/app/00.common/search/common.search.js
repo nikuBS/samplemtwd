@@ -1688,7 +1688,7 @@ Tw.CommonSearch.prototype = {
 
     // 선택된 회선이 유선인 경우
     if (!Tw.FormatHelper.isEmpty(this._svcInfo) && this._svcInfo.svcAttrCd.startsWith('S')) {
-      console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 유선인 경우', '');
+      // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 유선인 경우', '');
 
       var paidProdList = usingAdditions.pays || [];
       var unpaidProdList = usingAdditions.frees || [];
@@ -1696,8 +1696,8 @@ Tw.CommonSearch.prototype = {
       var addProdPayCnt = paidProdList.length;        // 가입한 유료 유선 부가상품 카운트
       var addProdPayFreeCnt = unpaidProdList.length;  // 가입한 무료 유선 부가상품 카운트
 
-      console.log('[common.search] [_calculateAdditionsFee] 가입한 유료 유선 부가상품 카운트 : ', addProdPayCnt);
-      console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
+      // console.log('[common.search] [_calculateAdditionsFee] 가입한 유료 유선 부가상품 카운트 : ', addProdPayCnt);
+      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
 
       returnStr1 = addProdPayCnt + '건';
       returnStr2 = addProdPayFreeCnt + '건';
@@ -1706,11 +1706,11 @@ Tw.CommonSearch.prototype = {
       this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
 
       if (addProdPayCnt === '0') {
-        this.$container.find('.fe-wire-paid-additions-cnt').attr('href', '');
+        this.$container.find('.fe-wire-paid-additions-cnt').removeAttr('href');
       }
 
       if (addProdPayFreeCnt === '0') {
-        this.$container.find('.fe-wire-unpaid-additions-cnt').attr('href', '');
+        this.$container.find('.fe-wire-unpaid-additions-cnt').removeAttr('href');
       }
 
       $('.fe-prod-cnt-wireless').hide();
@@ -1719,15 +1719,15 @@ Tw.CommonSearch.prototype = {
     } 
     // 선택된 회선이 무선인 경우
     else {
-      console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 무선인 경우', '');
+      // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 무선인 경우', '');
 
-      var comProdCnt = usingAdditions.comProdCnt;               // 가입한 무선 옵션/할인 프로그램 카운트
+      var comProdCnt = usingAdditions.comProdCnt;               // 가입한 무선 션/할인 프로그램 카운트
       var addProdPayCnt = usingAdditions.addProdPayCnt;         // 가입한 무선 유료 부가상품 카운트
       var addProdPayFreeCnt = usingAdditions.addProdPayFreeCnt; // 가입한 무선 무료 부가상품 카운트
 
-      console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', comProdCnt);
-      console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
-      console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
+      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', comProdCnt);
+      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
+      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
 
       returnStr1 = comProdCnt + '건';
       returnStr2 = addProdPayCnt + '건';
@@ -1738,15 +1738,15 @@ Tw.CommonSearch.prototype = {
       this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
       if (comProdCnt === '0') {
-        this.$container.find('.fe-wireless-discount-additions-cnt').attr('href', '');
+        this.$container.find('.fe-wireless-discount-additions-cnt').removeAttr('href');
       }
 
       if (addProdPayCnt === '0') {
-        this.$container.find('.fe-wireless-paid-additions-cnt').attr('href', '');
+        this.$container.find('.fe-wireless-paid-additions-cnt').removeAttr('href');
       }
 
       if (addProdPayFreeCnt === '0') {
-        this.$container.find('.fe-wireless-unpaid-additions-cnt').attr('href', '');
+        this.$container.find('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
       }
 
       $('.fe-prod-cnt-wireless').show();
