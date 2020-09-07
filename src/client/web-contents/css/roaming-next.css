@@ -380,7 +380,7 @@ body.rn #scheduleDialog .header {
 }
 body.rn #scheduleDialog .header .banner {
   position: absolute;
-  bottom: 0;
+  bottom: -16px;
   left: 0;
   right: 0;
 }

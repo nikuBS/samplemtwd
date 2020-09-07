@@ -271,7 +271,9 @@
       e.stopPropagation();
     })
     $('#offer').on('click', function(e) {
-      openScheduleDialog('<%= country.code %>', '<%= country.name %>', '<%= country.backgroundUrl %>', '#roamingOn');
+      openScheduleDialog('<%= country.code %>', '<%= country.name %>',
+        '<%= country.backgroundMiniUrl %>',
+        '#roamingOn');
       e.stopPropagation();
     });
 

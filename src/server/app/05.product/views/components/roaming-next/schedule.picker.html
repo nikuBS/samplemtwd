@@ -30,10 +30,15 @@
 
     $('#date-depart').html('-');
     $('#date-arrive').html('-');
-    if (!topBannerUrl)
-      // FIXME:
-      topBannerUrl = '<%= CDN %>/img/product/roam/background_aus.png';
-    $('#scheduleDialog .banner').attr('src', topBannerUrl);
+    if (!topBannerUrl) {
+      $('#scheduleDialog .banner').attr('src', '');
+      // topBannerUrl = '<%= CDN %>/img/product/roam/background_aus.png';
+      $.get('/product/roaming?queryBg=' + code, function(data) {
+        $('#scheduleDialog .banner').attr('src', '<%= CDN %>' + data.backgroundUrl);
+      });
+    } else {
+      $('#scheduleDialog .banner').attr('src', topBannerUrl);
+    }
     $('#target-nation').html(name);
     $('#target-nation').attr('data-code', code);
 

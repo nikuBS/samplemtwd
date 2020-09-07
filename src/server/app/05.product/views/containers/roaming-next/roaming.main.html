@@ -139,7 +139,7 @@
 <%- include('../../components/roaming-next/roaming.menu.html'); %>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
     <li style="width: {{width}}px; height: {{height}}px;"
-        onclick="openScheduleDialog('{{ code }}', '{{ name }}', '{{ imageTopUrl }}', '#roamingMain');">
+        onclick="openScheduleDialog('{{ code }}', '{{ name }}', null, '#roamingMain');">
         {{#if imageUrl}}
             <img src="{{ imageUrl }}" width="{{ width }}" height="{{ height }}" alt="{{ imageAlt }}">
             <span class="name">{{ name }}</span>
@@ -258,22 +258,9 @@
         code2: ISO3166[item.countryCode][0].toLowerCase(),
         imageUrl: imageUrl,
         imageAlt: item.mblBtnImgAltCtt,
-        imageTopUrl: '',
       });
       ul.innerHTML += li;
     }
-
-    // for (let i = 0; i < popularNationList.length; i++) {
-    //   const item = popularNationList[i];
-    //   const li = template({
-    //     width: nationWidth - GAP,
-    //     name: item.name,
-    //     code: item.code,
-    //     imageUrl: item.url,
-    //     imageTopUrl: item.topUrl,
-    //   });
-    //   ul.innerHTML += li;
-    // }
   }
 
   function fillTariffGroups() {

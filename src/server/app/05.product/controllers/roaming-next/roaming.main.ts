@@ -5,9 +5,21 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
 import moment from 'moment';
+import RoamingHelper from './roaming.helper';
 
 export default class RoamingMainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if (req.query.queryBg) {
+      const countryCode = req.query.queryBg;
+      this.getCountryInfo(RoamingHelper.getMCC(countryCode)).subscribe(resp => {
+        res.json({
+          code: countryCode,
+          backgroundUrl: resp.mblBgImg,
+        });
+      });
+      return;
+    }
+
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     Observable.combineLatest(
       this.getPopularNations(),
@@ -75,6 +87,14 @@ export default class RoamingMainController extends TwViewController {
         resp.result.formattedStartDate = startDate.format('YY.MM.DD');
         resp.result.formattedEndDate = endDate.format('YY.MM.DD');
       }
+      return resp.result;
+    });
+  }
+
+  private getCountryInfo(mcc): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
+      // countryCode, countryNm, countryNmEng, tmdiffTms
+      console.log(resp.result);
       return resp.result;
     });
   }

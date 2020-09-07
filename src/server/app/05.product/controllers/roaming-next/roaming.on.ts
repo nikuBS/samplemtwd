@@ -7,18 +7,6 @@ import EnvHelper from '../../../../utils/env.helper';
 import moment from 'moment';
 import RoamingHelper from './roaming.helper';
 
-const TMP_BACKGROUND = {
-  '412': 'https://s-media-cache-ak0.pinimg.com/736x/9a/89/0c/9a890cf6cbb42fdb2762b616c38c888d.jpg',
-  '440': 'https://i.pinimg.com/originals/01/14/fd/0114fd9f04d7e313f9a3266c2885adca.jpg',
-  '505': EnvHelper.getEnvironment('CDN') + '/img/product/roam/background_aus.png',
-  '262': 'https://i.pinimg.com/originals/2d/af/b1/2dafb17f4df7f128bce1c29e2e469ff4.jpg',
-  '222': 'https://leger2.imgix.net/Includes/images/overview/italy/rome.jpg?auto=compress,enhance,format&q=30',
-  '250': 'https://lirp-cdn.multiscreensite.com/1edbeafc/dms3rep/multi/opt/Moscow+-+IFDAS+Home+Page+Round-640w.jpg',
-  '515': 'https://i.pinimg.com/originals/15/d2/0e/15d20ef6051733f19bcd99b8f2931db0.jpg',
-  '234': 'https://media.cntraveller.in/wp-content/uploads/2014/02/London-background-image---123rf-resized-credited5-768x768.jpg',
-  '310': 'https://cdn.pratico-pratiques.com/app/uploads/sites/7/2018/09/19151650/new-york-en-famille-c-est-possible.jpeg',
-  '452': 'http://2.bp.blogspot.com/-uC82665_9iM/Tnd1FMx6aMI/AAAAAAAAAKo/4ZBg3kO6c_M/s1600/hanoi_vietnam_01.jpg',
-};
 const DATA_PROVIDED = {
   'NA00006489': '3GB',
   'NA00006493': '4GB',
@@ -90,7 +78,8 @@ export default class RoamingOnController extends TwViewController {
         timezoneOffset: info.tmdiffTms,
         flagUrl: `${this.CDN}${info.mblNflagImg}`,
         flagCode: RoamingHelper.getAlpha2ByMCC(mcc).toLowerCase(),
-        backgroundUrl: this._useCountryBackground(info, mcc),
+        backgroundUrl: this._useCountryBackground(info.mblRepImg, mcc),
+        backgroundMiniUrl: this._useCountryBackground(info.mblBgImg, mcc),
       };
       if (!isLogin) {
         res.render(template, context);
@@ -175,15 +164,12 @@ export default class RoamingOnController extends TwViewController {
     });
   }
 
-  private _useCountryBackground(info, mcc: string): string {
-    let backgroundUrl = info.mblRepImg;
+  private _useCountryBackground(uri, mcc: string): string {
+    let backgroundUrl = uri;
     if (backgroundUrl) {
       backgroundUrl = `${this.CDN}${backgroundUrl}`;
-      if (process.env.LOGNAME === 'rath') {
-        backgroundUrl = `${this.CDN}/img/product/roam/background_aus.png`;
-      }
     } else {
-      backgroundUrl = TMP_BACKGROUND[mcc] || `${this.CDN}/img/product/roam/background_aus.png`;
+      backgroundUrl = `${this.CDN}/img/product/roam/background_aus.png`;
     }
     return backgroundUrl;
   }
