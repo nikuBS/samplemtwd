@@ -1679,27 +1679,62 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _calculateAdditionsFee : function (usingAdditions) {
-    var addProdList = usingAdditions.addProdList || []; // 이용중인 부가서비스 리스트
-    var totalPaidAdditionsCnt = 0;
-    var totalUnpaidAdditionsCnt = 0;
     var returnStr1 = '';
     var returnStr2 = '';
+    var returnStr3 = '';
 
-    if(addProdList.length > 0) {
-      addProdList.map(function(_data){
-        if(_data.payFreeYn !== 'Y'){
-          totalPaidAdditionsCnt++;
-        } else {
-          totalUnpaidAdditionsCnt++;
-        }
-      });
+    if (!Tw.FormatHelper.isEmpty(this._svcInfo) && this._svcInfo.svcAttrCd.startsWith('S')) {
+      var paidProdList = usingAdditions.pays || [];
+      var unpaidProdList = usingAdditions.frees || [];
+
+      var addProdPayCnt = paidProdList.length;        // 가입한 유료 유선 부가상품 카운트
+      var addProdPayFreeCnt = unpaidProdList.length;  // 가입한 무료 유선 부가상품 카운트
+
+      returnStr1 = addProdPayCnt + '건';
+      returnStr2 = addProdPayFreeCnt + '건';
+
+      this.$container.find('.fe-wire-paid-additions-cnt').text(returnStr1);
+      this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
+
+      if (addProdPayCnt === '0') {
+        this.$container.find('.fe-wire-paid-additions-cnt').attr('href', '');
+      }
+
+      if (addProdPayFreeCnt === '0') {
+        this.$container.find('.fe-wire-unpaid-additions-cnt').attr('href', '');
+      }
+
+      $('.fe-prod-cnt-wireless').hide();
+      $('.fe-prod-cnt-wire').show();
+      
+    } else {
+      var disProdCnt = usingAdditions.disProdCnt;               // 가입한 무선 옵션/할인 프로그램 카운트
+      var addProdPayCnt = usingAdditions.addProdPayCnt;         // 가입한 무선 유료 부가상품 카운트
+      var addProdPayFreeCnt = usingAdditions.addProdPayFreeCnt; // 가입한 무선 무료 부가상품 카운트
+
+      returnStr1 = disProdCnt + '건';
+      returnStr2 = addProdPayCnt + '건';
+      returnStr3 = addProdPayFreeCnt + '건';
+
+      this.$container.find('.fe-wireless-discount-additions-cnt').text(returnStr1);
+      this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
+      this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
+
+      if (disProdCnt === '0') {
+        this.$container.find('.fe-wireless-discount-additions-cnt').attr('href', '');
+      }
+
+      if (addProdPayCnt === '0') {
+        this.$container.find('.fe-wireless-paid-additions-cnt').attr('href', '');
+      }
+
+      if (addProdPayFreeCnt === '0') {
+        this.$container.find('.fe-wireless-unpaid-additions-cnt').attr('href', '');
+      }
+
+      $('.fe-prod-cnt-wireless').show();
+      $('.fe-prod-cnt-wire').hide();
     }
-
-    returnStr1 = totalUnpaidAdditionsCnt + '건';
-    returnStr2 = totalPaidAdditionsCnt + '건';
-
-    this.$container.find('.fe-unpaid-additions-cnt').text(returnStr1);
-    this.$container.find('.fe-paid-additions-cnt').text(returnStr2);
   },
   /**
    * @function
