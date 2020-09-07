@@ -1699,23 +1699,35 @@ Tw.CommonSearch.prototype = {
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 유료 유선 부가상품 카운트 : ', addProdPayCnt);
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
 
-      returnStr1 = addProdPayCnt + '건';
-      returnStr2 = addProdPayFreeCnt + '건';
+      if (addProdPayCnt === '0' && addProdPayFreeCnt === '0') {
+        $('.tod-search-mytbox').parent().hide();
+        
+        // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출 
+        for(var i=0;i<this._searchInfo.search.length;i++){
+          keyName =  Object.keys(this._searchInfo.search[i])[0];
+          
+          if(keyName==='smart'){
+            this._showSmart(this._searchInfo.search[i][keyName].data[0]);
+          }
+        }
+      } else {
+        returnStr1 = addProdPayCnt + '건';
+        returnStr2 = addProdPayFreeCnt + '건';
 
-      this.$container.find('.fe-wire-paid-additions-cnt').text(returnStr1);
-      this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
+        this.$container.find('.fe-wire-paid-additions-cnt').text(returnStr1);
+        this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
 
-      if (addProdPayCnt === '0') {
-        this.$container.find('.fe-wire-paid-additions-cnt').removeAttr('href');
+        if (addProdPayCnt === '0') {
+          this.$container.find('.fe-wire-paid-additions-cnt').removeAttr('href');
+        }
+
+        if (addProdPayFreeCnt === '0') {
+          this.$container.find('.fe-wire-unpaid-additions-cnt').removeAttr('href');
+        }
+
+        $('.fe-prod-cnt-wireless').hide();
+        $('.fe-prod-cnt-wire').show();
       }
-
-      if (addProdPayFreeCnt === '0') {
-        this.$container.find('.fe-wire-unpaid-additions-cnt').removeAttr('href');
-      }
-
-      $('.fe-prod-cnt-wireless').hide();
-      $('.fe-prod-cnt-wire').show();
-      
     } 
     // 선택된 회선이 무선인 경우
     else {
@@ -1729,28 +1741,41 @@ Tw.CommonSearch.prototype = {
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
 
-      returnStr1 = comProdCnt + '건';
-      returnStr2 = addProdPayCnt + '건';
-      returnStr3 = addProdPayFreeCnt + '건';
+      if (comProdCnt === '0' && addProdPayCnt === '0' && addProdPayFreeCnt === '0') {
+        $('.tod-search-mytbox').parent().hide();
+        
+        // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출 
+        for(var i=0;i<this._searchInfo.search.length;i++){
+          keyName =  Object.keys(this._searchInfo.search[i])[0];
+          
+          if(keyName==='smart'){
+            this._showSmart(this._searchInfo.search[i][keyName].data[0]);
+          }
+        }
+      } else {
+        returnStr1 = comProdCnt + '건';
+        returnStr2 = addProdPayCnt + '건';
+        returnStr3 = addProdPayFreeCnt + '건';
 
-      this.$container.find('.fe-wireless-discount-additions-cnt').text(returnStr1);
-      this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
-      this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
+        this.$container.find('.fe-wireless-discount-additions-cnt').text(returnStr1);
+        this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
+        this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
-      if (comProdCnt === '0') {
-        this.$container.find('.fe-wireless-discount-additions-cnt').removeAttr('href');
+        if (comProdCnt === '0') {
+          this.$container.find('.fe-wireless-discount-additions-cnt').removeAttr('href');
+        }
+
+        if (addProdPayCnt === '0') {
+          this.$container.find('.fe-wireless-paid-additions-cnt').removeAttr('href');
+        }
+
+        if (addProdPayFreeCnt === '0') {
+          this.$container.find('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
+        }
+
+        $('.fe-prod-cnt-wireless').show();
+        $('.fe-prod-cnt-wire').hide();
       }
-
-      if (addProdPayCnt === '0') {
-        this.$container.find('.fe-wireless-paid-additions-cnt').removeAttr('href');
-      }
-
-      if (addProdPayFreeCnt === '0') {
-        this.$container.find('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
-      }
-
-      $('.fe-prod-cnt-wireless').show();
-      $('.fe-prod-cnt-wire').hide();
     }
   },
   /**
