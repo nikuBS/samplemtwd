@@ -36750,3 +36750,8 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 @media all and (max-width: 320px) {
   .tod-offer-prd-options.tod-v2 .label-tit {font-size:0.81rem}
  }
+
+ /* 200903 [OP002-10356][UX/PUB] T World PC Web 하단부 이미지 적용 */
+.co-info2 .link-long-list .cert06 button, .co-info2 .link-long-list .cert06 a {
+  background: url(/img/ico/ico-cert06.png) 0 50% no-repeat;
+  background-size: 36px auto; }
