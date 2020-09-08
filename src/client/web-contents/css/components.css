@@ -36737,11 +36737,11 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 .add-prd-wrap.tod-type02 .list-comp-lineinfo li .bt-wrap {margin-top:0.313rem}
 .add-prd-wrap.tod-type02 .list-comp-lineinfo li .lineinfo-data .info-title {font-size:1rem !important}
 
-.tod-sel-top-wrap {padding:0.625rem 1rem}
-.tod-sel-top-wrap .link-cont {}
+.tod-sel-top-wrap {position:relative; z-index:25; min-height:3.375rem}
+.tod-sel-top-wrap .link-cont {position:fixed; width:100%; padding:0.625rem 1rem; box-sizing:border-box; background-color:#f5f5f5}
 .tod-sel-top-wrap .link-cont > a{display:inline-block; padding:0.625rem 0.8125rem 0.5625rem; color:#000; font-size:0.8125rem; border:0.0625rem solid #e6e7e8; border-radius:2.25rem; line-height:1; background:#fff; white-space:nowrap; }
 .tod-sel-top-wrap .link-cont > a.on {background:#f76151; border-color:#f76151; color:#fff}
-.tod-link-cont-anchor {position:absolute; margin-top:-6.563rem}
+.tod-link-cont-anchor {position:absolute; margin-top:-9.938rem}
 /* [end] 200810 [OP002-9649] [고도화] 나의 요금제/나의 부가상품 개선안 */
 
 /* 200825 [OP002-10176] wavve 플러스상품 혜택 확대 관련 Tworld공지 */
