@@ -1255,7 +1255,6 @@ class MyTJoinMyplan extends TwViewController {
     }
     data.type = 'UF';
     return this.__getUsageFee().switchMap((resp) => {
-      debugger;
       if (!resp) {
         return Observable.of(data);
       }
@@ -1265,7 +1264,6 @@ class MyTJoinMyplan extends TwViewController {
       return Observable.of({...data, ...resp});
     }).pipe(
         map((resp: any) => {
-          debugger;
           return resp;
         })
     );
