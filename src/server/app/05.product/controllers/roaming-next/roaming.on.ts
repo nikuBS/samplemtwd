@@ -288,7 +288,16 @@ export default class RoamingOnController extends TwViewController {
       // transCount: '0', // 명의변경 이력
       // usgStartDate: '20200701', // '개시일'
       // sumTotDur: '10', // 일 사용량 (분)
-      return resp.result;
+      const result = resp.result;
+      if (!result) {
+        return {};
+      }
+
+      return {
+        usgStartDate: result.usgStartDate,
+        total: '무제한',
+        used: result.sumTotDur,
+      };
     });
   }
 
