@@ -40,7 +40,7 @@ Tw.ChatbotService = function() {
 
     // 2차 사외 오픈 (8/27) 시점 접근 대상 단말 리스트
     this._accessAllowedDevice0827 = [
-        'LGM-G600S',     // TEST
+        // 'LGM-G600S',     // TEST
         'SM-G977N'      // 갤럭시S10 5G
         ,'SM-N971N'     // 갤럭시노트10 5G
         ,'SM-N976N'     // 갤럭시노트10 플러스 5G
@@ -67,7 +67,7 @@ Tw.ChatbotService = function() {
         // '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop',           // 2. 나의요금 서브메인
         // '/myt-data/submain'   : 'mytdata_submain_chatbot_pop'            // 3. 나의 데이터/통화
         '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop_new'           // 2. 나의요금 서브메인        
-        ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
+        // ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
     };
     
     // 챗봇 상담하기 화면 경로
