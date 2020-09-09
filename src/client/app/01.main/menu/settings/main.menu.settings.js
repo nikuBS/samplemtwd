@@ -69,9 +69,9 @@ Tw.MainMenuSettings.prototype = {
 
     if (userAgentString.indexOf('osType:aos') !== -1) {
       this._osType = 'A';
-      var versionArray = version.split('.')
-      if (versionArray[2] % 2 === 0) { // 대문자 
-        version = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1)
+      var versionArray = version.split('.');
+      if (versionArray[2] % 2 === 0) { // 대문자
+        version = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1);
       }
       this._currentVersion = version;
     }
@@ -152,9 +152,9 @@ Tw.MainMenuSettings.prototype = {
    * @desc 공인인증서 선택시 native 화면 호출
    */
   _onCertificates: function () {
-    // 최신버전 체크 
-    // 1. 조건 최신버전 == 현재버전 => 네이티브 호출 
-    // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
+    // 최신버전 체크
+    // 1. 조건 최신버전 == 현재버전 => 네이티브 호출
+    // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출
     this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
     return false;
   },

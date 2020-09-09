@@ -20,11 +20,11 @@ Tw.MainMenuSettingsTempChatbot = function (params) {
 
 Tw.MainMenuSettingsTempChatbot.prototype = {
   goChatbot: function (e) {
-    // var eParam = "custNum=" + this._data._custNum + "~" + "mbrChlId=" + this._data._mbrChlId;
-    // this._bpcpService.open("BPCP:0000065084", this._data._svcMgmtNum, eParam);
+    // var eParam = 'custNum=' + this._data._custNum + '~' + 'mbrChlId=' + this._data._mbrChlId;
+    // this._bpcpService.open('BPCP:0000065084', this._data._svcMgmtNum, eParam);
 
 
-    this._bpcpService.open("BPCP:0000065084");
-    // return this._historyService.replaceURL("http://stg-tworld.sktchatbot.co.kr/?token=036e9045f8ae52254065df96a73a3870&provider_usn=jinajang&type=USER&mbr_chl_id=jinajang&svc_mgmt_num=jinajang");
+    this._bpcpService.open('BPCP:0000065084');
+    // return this._historyService.replaceURL('http://stg-tworld.sktchatbot.co.kr/?token=036e9045f8ae52254065df96a73a3870&provider_usn=jinajang&type=USER&mbr_chl_id=jinajang&svc_mgmt_num=jinajang'); // jshint ignore:line
   }
 };

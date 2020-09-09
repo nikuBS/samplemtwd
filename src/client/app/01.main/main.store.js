@@ -64,7 +64,7 @@ Tw.MainStore.prototype = {
     var url = $($event.currentTarget).data('url');
 
    // 스마트폰
-   if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010" === url) {
+   if ('https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010' === url) { // jshint ignore:line
     // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
@@ -72,21 +72,21 @@ Tw.MainStore.prototype = {
 
   }
   // 태블릿
-  else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010" === url) {
+  else if ('https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010' === url) { // jshint ignore:line
     // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
   }
   // 스마트워치
-  else if ("https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010" === url) {
+  else if ('https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010' === url) { // jshint ignore:line
     // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
     }, this), null);
   }
   // T다이렉트샵 휴대폰 상담 바로가기
-  else if ('https://m.shop.tworld.co.kr/popup/phone-counsel?utm_source=tworld&utm_medium=app_banner&utm_campaign=counsel&utm_content=store&fSiteCd=1010' === url) {
+  else if ('https://m.shop.tworld.co.kr/popup/phone-counsel?utm_source=tworld&utm_medium=app_banner&utm_campaign=counsel&utm_content=store&fSiteCd=1010' === url) { // jshint ignore:line
     // 과금 알럿 노출
     Tw.CommonHelper.showDataCharge($.proxy(function() {
       Tw.CommonHelper.openUrlExternal(url);
@@ -252,7 +252,7 @@ Tw.MainStore.prototype = {
           })
         );
       }
-    })
+    });
     this._drawTosAdminBanner(result);
   },
 
@@ -289,15 +289,16 @@ Tw.MainStore.prototype = {
             list: bnr.banner.result.imgList
           };
         } else {
-          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList,
+            bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
         }
       }
     }, this));
 
     var directBanner = banners.filter(function(e){
-      return e.target == 'S'
+      return e.target === 'S';
     }).map(function(e){
-      return e.banner.result.imgList
+      return e.banner.result.imgList;
     })[0].map(function (target) {
       target.chargeOrExternal = target.billYn === 'Y' ? 'fe-home-charge' : 'fe-home-external';
       return target;

@@ -349,7 +349,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @param resp
    * @private
    */
-  _onReadSms: function (reCert, $target, resp) {
+  _onReadSms: function (reCert, $target/*, resp */) {
     this._sendCertApi(reCert, $target);
   },
 
@@ -407,7 +407,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @param error
    * @private
    */
-  _failRequestCert: function (error) {
+  _failRequestCert: function (/* error */) {
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -617,7 +617,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @param resp
    * @private
    */
-  _successUpdateSvc: function (resp) {
+  _successUpdateSvc: function (/* resp */) {
     this._historyService.goBack();
   },
 

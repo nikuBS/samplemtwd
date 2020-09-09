@@ -68,12 +68,12 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     if(this._from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
       this._addRecentlyKeyword(decodeURIComponent(this._keyword));
     }
-    
+
     new Tw.XtractorService(this.$container);
 
     var keyword = decodeURIComponent(this._keyword);
     var inKeyword = decodeURIComponent(this._inKeyword);
-    
+
     if (keyword !== inKeyword) {
       inKeyword = inKeyword.replace(keyword, '');
       inKeyword = inKeyword.trim();
@@ -86,7 +86,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     // Tw.Logger.info('[common.search.not-found] [_nextInit] decoded inKeyword : ', '[' + inKeyword + ']');
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded keyword : ', '[' + encodedKeyword + ']');
     // Tw.Logger.info('[common.search.not-found] [_nextInit] encoded inKeyword : ', '[' + encodedInKeyword + ']');
-    
+
     window.XtractorScript.xtrSearchResult(encodedKeyword, encodedInKeyword, '0');
   },
   /**
@@ -98,7 +98,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
    */
   _showClaimPopup : function(evt){
     this._popupService.open({
-      hbs: 'HO_05_02_02_01_01', 
+      hbs: 'HO_05_02_02_01_01',
       layer: true,
       data: null
     }, $.proxy(this._bindEventForRequestKeyword, this),
@@ -267,7 +267,9 @@ $.extend(Tw.CommonSearchNotFound.prototype,
    */
   _requestKeyword : function (evt) {
     this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_08_0071, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, null, null, null, { jsonp : false }).
+    this._apiService.request(Tw.API_CMD.BFF_08_0071, {
+      ctt : this.$requestKeywordPopup.find('.input-focus').val()
+    }, null, null, null, { jsonp : false }).
     done($.proxy(function (res) {
       this._claimCallback(res,52, evt);
     }, this))
@@ -306,7 +308,8 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     if(res.code===Tw.API_CODE.CODE_00){
 
       this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.REQUEST_IMPROVE);
-      // this._popupService.openModalTypeAOneButton(Tw.ALERT_MSG_SEARCH.REQUEST_IMPROVE, null, null, null, null, null, null, null, $(evt.currentTarget));
+      // this._popupService.openModalTypeAOneButton(
+      // Tw.ALERT_MSG_SEARCH.REQUEST_IMPROVE, null, null, null, null, null, null, null, $(evt.currentTarget));
 
 
       //openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName, evt) {
