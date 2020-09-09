@@ -54,7 +54,8 @@ Tw.NextRoamingMenu.prototype = {
           e.stopPropagation();
         });
       });
-      $('#roamingMenu .header .close').on('click', function() {
+      $(document).on('click', '#roamingMenu .header .close', function() {
+        console.log('#roamingMenu .header .close onClick');
         container.css('display', 'block');
         $('#roamingMenu').css('display', 'none');
       });
