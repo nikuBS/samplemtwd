@@ -62,11 +62,17 @@
             </div>
             -->
         </div>
-        <% } else { %>
+        <% } else if (banners.topBanners && banners.topBanners.length > 0) { %>
         <div class="banner">
+            <a href="<%= banners.topBanners[0].imgLinkUrl %>">
+                <img src="<%= CDN %><%= banners.topBanners[0].bnnrFilePathNm %>"
+                     alt="<%= banners.topBanners[0].bnnrImgAltCtt %>" />
+            </a>
+            <!--
             <a href="/product/roaming/info/barocall">
                 <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너 Baro 통화" />
             </a>
+            -->
         </div>
         <% } %>
         <div class="card">

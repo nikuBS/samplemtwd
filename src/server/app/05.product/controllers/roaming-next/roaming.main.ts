@@ -30,7 +30,8 @@ export default class RoamingMainController extends TwViewController {
       this.getNationsByContinents('MET'),
       this.getNationsByContinents('OCN'),
       this.getRecentUsedTariff(isLogin),
-    ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn, recentUsed]) => {
+      this.getBanners(pageInfo),
+    ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn, recentUsed, banners]) => {
 
       if (popularNations.length > 15) {
         popularNations = popularNations.slice(0, 15);
@@ -43,6 +44,7 @@ export default class RoamingMainController extends TwViewController {
         popularNations,
         nations: {afr, asp, amc, eur, met, ocn},
         recentUsed,
+        banners,
       });
     });
   }
@@ -95,6 +97,32 @@ export default class RoamingMainController extends TwViewController {
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
       // countryCode, countryNm, countryNmEng, tmdiffTms
       console.log(resp.result);
+      return resp.result;
+    });
+  }
+
+  /**
+   * 배너조회
+   * @param pageInfo 페이지정보
+   * @returns 성공 시 result에 상단, 중단 배너를 분류한 프로퍼티를 추가하여 반한하고, 실패 시 null 반환
+   */
+  private getBanners(pageInfo): Observable<any> {
+    return this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId).map(resp => {
+      if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
+        // 부분 차단
+        return null;
+      }
+
+      if ( FormatHelper.isEmpty(resp.result) ) {
+        return resp.result;
+      }
+
+      resp.result.topBanners = resp.result.banners.filter(function (banner) {
+        return banner.bnnrLocCd === 'T';
+      });
+      resp.result.topBanners.sort(function (a, b) {
+        return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+      });
       return resp.result;
     });
   }
