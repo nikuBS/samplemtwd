@@ -362,7 +362,7 @@ Tw.MainHome.prototype = {
    * @return {void}
    * @private
    */
-  _onClickPersonIcoClicked: function ($event) {
+  _onClickPersonIcoClicked: function (/* $event */) {
     if ( this.isLogin ) {
       Tw.CommonHelper.setSessionStorage('PERSON_ICO_CLICKED', 'Y');
     }
@@ -2503,7 +2503,7 @@ Tw.MainHome.prototype = {
    * @param {string} hbs
    * @private
    */
-  _handleRecommendProds: function (element, result) {
+  _handleRecommendProds: function (/* element, result*/) {
     // if ( !Tw.FormatHelper.isEmpty(result) ) {
     var time = 2000;
 
@@ -2542,7 +2542,7 @@ Tw.MainHome.prototype = {
           $('.h-person').removeClass('show');
           hideTimer2 = setTimeout(function () {
             $('.h-person .btn-comment').hide();
-          }, 1000)
+          }, 1000);
         }, 3000);
       }, 500);
     }

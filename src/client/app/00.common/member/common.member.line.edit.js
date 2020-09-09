@@ -34,7 +34,7 @@ Tw.CommonMemberLineEdit.prototype = {
 
     var $itemLists = this.$container.find('.fe-item-list');
     _.map($itemLists, $.proxy(function (item) {
-    
+
       var selector = '#' + $(item).attr('id');
       skt_landing.dev.sortableInit(selector, {
         axis: 'y',
@@ -218,7 +218,7 @@ Tw.CommonMemberLineEdit.prototype = {
    * @desc 마케팅 동의 여부 요청 실패 처리
    * @private
    */
-  _failGetMarketingOffer: function () {
+  _failGetMarketingOffer: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
@@ -246,8 +246,8 @@ Tw.CommonMemberLineEdit.prototype = {
    * @desc 더보기 클릭 처리
    * @private
    */
-  _onClickMore: function ($target) {
-    var $target = $($event.currentTarget);
+  _onClickMore: function (event) {
+    var $target = $(event.currentTarget);
     var $list = $target.parents('.fe-line-cover').find('.fe-item-list');
 
     var $hideList = $list.filter('.none');

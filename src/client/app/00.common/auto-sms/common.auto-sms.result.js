@@ -4,7 +4,7 @@
  * @since 2018.03.14
  */
 
-Tw.CommonAutoSmsResult = function (rootEl) {
+Tw.CommonAutoSmsResult = function (/* rootEl */) {
 
 };
 
