@@ -36737,6 +36737,7 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 .add-prd-wrap.tod-type02 .list-comp-lineinfo li .lineinfo-user .info-title {font-size: 1rem}
 .add-prd-wrap.tod-type02 .list-comp-lineinfo li .bt-wrap {margin-top:0.313rem}
 .add-prd-wrap.tod-type02 .list-comp-lineinfo li .lineinfo-data .info-title {font-size:1rem !important}
+.add-prd-wrap.tod-type02 .list-comp-lineinfo li button.btn-round5 {display:inline-block; width:auto; padding: 0 0.63rem}
 
 .tod-sel-top-wrap {position:relative; z-index:25; min-height:3.375rem}
 .tod-sel-top-wrap .link-cont {position:fixed; width:100%; padding:0.625rem 1rem; box-sizing:border-box; background-color:#f5f5f5}
