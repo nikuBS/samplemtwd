@@ -55,9 +55,8 @@ Tw.NextRoamingMenu.prototype = {
         });
       });
       $(document).on('click', '#roamingMenu .header .close', function() {
-        console.log('#roamingMenu .header .close onClick');
-        container.css('display', 'block');
         $('#roamingMenu').css('display', 'none');
+        container.css('display', 'inherit');
       });
       $('#common-menu').hide();
     } else {

@@ -12,7 +12,7 @@
     </div>
     <img class="background" src="<%= CDN %>/img/product/roam/bg-map.png" alt="배경"/>
     <%- include('../components/header.component.html', { title: 'T로밍', svcInfo: svcInfo }) %>
-    <div id="contents">
+    <div id="content">
         <h2>해외여행 갈 땐</h2>
         <h2 class="colorPoint">T로밍과 함께 !</h2>
         <p class="description">
@@ -181,8 +181,6 @@
       }
     });
     setupNationsDialog();
-
-    $('#header').hide();
   });
   function prepareNations() {
     let all = [];
