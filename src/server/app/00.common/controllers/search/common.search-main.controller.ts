@@ -6,13 +6,12 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { NextFunction, Request, Response } from 'express';
-import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import express, { Application, NextFunction, Request, Response } from 'express';
+import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import BrowserHelper from '../../../../utils/browser.helper';
-import express, { Application } from 'express';
 import ApiRouter from '../../../../common/route/api.router';
-import {CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY} from '../../../../types/redis.type';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 
 class CommonSearchMain extends TwViewController {
@@ -44,7 +43,7 @@ class CommonSearchMain extends TwViewController {
       }
     });
     cicntsList[0].rollYn = cicntsList[0].rollYn || 'Y';
-    for ( let i = 0; i < cicntsList.length; i += 3 ) {
+    for (let i = 0; i < cicntsList.length; i += 3) {
       resultArr.push(cicntsList.slice(i, i + 3));
     }
     return resultArr;
@@ -53,14 +52,14 @@ class CommonSearchMain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';
     const step = req.query.step || 1;
-    let sort = req.query.sort || 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D';
+    const sort = req.query.sort || 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D';
     Observable.combineLatest(
-      this.apiService.request(API_CMD.POPULAR_KEYWORD, { range : 'D'}, {}),
-      this.apiService.request(API_CMD.BFF_08_0068, { mblOsTypCd : nowOsType }, {}),
-      this.apiService.request(API_CMD.BFF_08_0069, { mblOsTypCd : nowOsType }, {}),
+      this.apiService.request(API_CMD.POPULAR_KEYWORD, { range: 'D' }, {}),
+      this.apiService.request(API_CMD.BFF_08_0068, { mblOsTypCd: nowOsType }, {}),
+      this.apiService.request(API_CMD.BFF_08_0069, { mblOsTypCd: nowOsType }, {}),
       this.redisService.getData(REDIS_KEY.HOME_HELP)
-    ).subscribe(([ popularKeyword, recommendKeyword , smartKeyword , doLikeThis ]) => {
-      if ( popularKeyword.code !== 0 ) {
+    ).subscribe(([popularKeyword, recommendKeyword, smartKeyword, doLikeThis]) => {
+      if (popularKeyword.code !== 0) {
         return this.error.render(res, {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
@@ -71,11 +70,11 @@ class CommonSearchMain extends TwViewController {
 
       res.render('search/common.search-main.html', {
         pageInfo: pageInfo,
-        popularKeyword : popularKeyword,
-        recommendKeyword : recommendKeyword,
-        smartKeyword : smartKeyword,
-        doLikeThis : doLikeThis.code !== API_CODE.REDIS_SUCCESS ? null : this.parseHelpData(doLikeThis.result.cicntsList),
-        step : step,
+        popularKeyword: popularKeyword,
+        recommendKeyword: recommendKeyword,
+        smartKeyword: smartKeyword,
+        doLikeThis: doLikeThis.code !== API_CODE.REDIS_SUCCESS ? null : this.parseHelpData(doLikeThis.result.cicntsList),
+        step: step,
         sort: sort
       });
     });

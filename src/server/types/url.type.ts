@@ -136,7 +136,7 @@ export const URL = {
   '/product/roaming/planadd': { login: false, id: 'RM_12', title: '로밍 부가서비스' },
 
 
-    // Customer
+  // Customer
   '/customer/agentsearch': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/search': { login: false, id: 'CS_02_01', title: '지점/대리점 찾기' },
   '/customer/agentsearch/detail': { login: false, id: 'CS_02_02', title: '매장정보' },
