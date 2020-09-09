@@ -36681,7 +36681,8 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 
   /* 나의 요금제 */
 .tod-plan-compact-info-v2 {position:relative; overflow:hidden; margin: 0.56rem 1rem; background: #fff; border-radius: 0.25rem; -webkit-box-shadow: 0rem 0.19rem 1.25rem -0.13rem rgba(0, 0, 0, 0.03);     box-shadow: 0rem 0.19rem 1.25rem -0.13rem rgba(0, 0, 0, 0.03); border: 1px solid #e1e2e4; text-align: left; display: block; }
-.tod-plan-compact-info-v2 > a {position:relative; display:block; padding: 0.94rem 1rem 1.250rem}
+.tod-plan-compact-info-v2 > a,
+.tod-plan-compact-info-v2 > .none-link {position:relative; display:block; padding: 0.94rem 1rem 1.250rem}
 .tod-plan-compact-info-v2 .plan { display: block; overflow: hidden; }
 .tod-plan-compact-info-v2 .plan .tit {display:block; color: #000000; font-size: 1rem; color: #000}
 .tod-plan-compact-info-v2 .plan .tit .point-txt { color: #178bce; }
