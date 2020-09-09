@@ -44,7 +44,7 @@ Tw.NextRoamingMenu.prototype = {
       mcc = navigator.mcc;
     }
 
-    if (mcc && mcc !== '450') {
+    if (mcc && mcc !== '450' && mcc !== '999') {
       $('#gnb .menu').on('click', function() {
         $('#roamingMenu').css('display', 'block');
         container.css('display', 'none');

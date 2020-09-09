@@ -136,7 +136,8 @@
                 <span class="colorPoint" id="signup">회원가입</span> 후 이용해주세요</p>
         </div>
         <% } %>
-        <% if (isLogin == true && usage.phone) { %>
+        <% if (isLogin == true && usage.phone && false) { %>
+        <!-- 1차 오픈 스펙에서 빠짐 -->
         <div class="card">
             <h3>
                 로밍 음성/SMS
@@ -248,7 +249,7 @@
   }
 
   $(document).ready(function () {
-    Tw.CommonHelper.setCookie('ROAMING_MCC', '<%= country.mcc %>', 1);
+    document.cookie = 'ROAMING_MCC=<%= country.mcc %>; path=/';
 
     fillBackgroundImage();
     $('#timeKorea').html(moment().format('YY.MM.DD HH:mm'));

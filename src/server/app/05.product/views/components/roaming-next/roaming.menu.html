@@ -22,14 +22,14 @@
             <div class="reset"></div>
         </div>
         <div class="sticky-menu">
-            <div class="menu" onclick="showUsage();">
+            <div class="menu" onclick="showHome();">
                 <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-width="1.8"><path d="m17.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round"/><path d="m16.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round"/><path d="m34.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round" transform="matrix(-1 0 0 1 58 0)"/><path d="m27.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round" transform="matrix(-1 0 0 1 51 0)"/><path d="m20.5 3.9c-.0392524 0-.0785019.0006701-.1177314.00201001-1.903678.06502126-3.3942038 1.66096732-3.3291825 3.5646453l.787746 23.06345159c.0489547 1.4332862 1.2250459 2.5698931 2.6591679 2.5698931s2.6102132-1.1366069 2.6591679-2.5698931l.787746-23.06345159c.0013399-.0392295.00201-.07847902.00201-.1177314 0-1.90478808-1.5441358-3.44892391-3.4489239-3.44892391z" fill="#4559fc"/></g></g></svg>
                 <span>T로밍 모드</span>
             </div>
             <div class="divider"></div>
             <div class="menu" onclick="showMyServices();">
                 <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-linejoin="round" stroke-width="1.8"><path d="m4 34v-2.5c0-6.9035594 5.59644063-12.5 12.5-12.5 6.9035594 0 12.5 5.5964406 12.5 12.5v2.5c-6.8857191 0-15.2190525 0-25 0z" stroke-linecap="square"/><g transform="translate(20 19)"><circle cx="8.5" cy="8.5" fill="#4559fc" r="8.5" stroke-linecap="square"/><path d="m1 8.5h16" fill="#4559fc" stroke-linecap="square"/><g stroke-linecap="round"><path d="m8 0c-4 5.35671158-4 11.0233782 0 17"/><path d="m12 0c-4 5.35671158-4 11.0233782 0 17" transform="matrix(-1 0 0 1 21 0)"/></g></g><circle cx="17" cy="12" r="7" stroke-linecap="square"/></g></g></svg>
-                <span>나의 T로밍 이용현황</span>
+                <span>T로밍 이용현황</span>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         <h3>상품 둘러보기</h3>
         <ul>
             <li>
-                <a href="/product/roaming/on">
+                <a href="/product/roaming">
                 <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8" transform="translate(4.5 5.2)"><path d="m.9 26.1h25.2v-21.6h-12.9727922l-3.60000001-3.6h-8.62720779z"/><path d="m8.1 14.04 4.4571429 4.86 7.2428571-8.1"/></g></g></svg>
                 <span>T로밍</span>
                 </a>
@@ -217,6 +217,10 @@
       document.getElementById('roamingMenu').innerHTML += template({id: id});
       showModal(id);
     }
+    function showHome() {
+      document.location.href = '/product/roaming/on';
+    }
+    // TODO: 이용요금이 빠르면 다시 체크
     function showUsage() {
       const id = 'dialogUsage';
       const template = Handlebars.compile($('#tpl-dialog-usage').html());
@@ -248,7 +252,7 @@
     var switchOffIndex = 0;
     var switchOffTimer;
     function switchOff() {
-      Tw.CommonHelper.setCookie('ROAMING_MCC', '0', -1);
+      document.cookie = 'ROAMING_MCC=999; path=/';
 
       dismiss('dialogOff');
       const id = 'roamingOff';
