@@ -9,9 +9,8 @@ import ProductHelper from '../../../../utils/product.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_JOIN_WIRE_SVCATTRCD, NODE_ERROR_MSG } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { Request, Response, NextFunction } from 'express';
-import { Observable } from 'rxjs';
-import { request } from 'https';
+import { NextFunction, Request, Response } from 'express';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * @desc 공통 - 휴대전화 가상번호 제공 거부 등록
@@ -39,7 +38,7 @@ class CommonMemberLineVirtualNumberDenial extends TwViewController {
     const allowdSvcGr = ['A', 'Y'];
 
     // 모바일회선 중 svcAttrCd 적합하는 회선만 추출
-    const selectedLines = allSvc[allowedSvcAttrInfo.group].filter((lineInfo) => 
+    const selectedLines = allSvc[allowedSvcAttrInfo.group].filter((lineInfo) =>
       (
         allowedSvcAttrInfo.svcAttrCds.indexOf(lineInfo.svcAttrCd) !== -1
         && allowdSvcGr.indexOf(lineInfo.svcGr) !== -1
@@ -55,42 +54,42 @@ class CommonMemberLineVirtualNumberDenial extends TwViewController {
       });
     } else {
 
-    // 가상번호 거부 신청여부 확인할 회선 별 Parameter들 세팅
-    const requestIsDeniedParams: Observable<any>[] = selectedLines.map((line) => this.apiService.request(
-      API_CMD.BFF_08_0081, { selectedSvcMgmtNum: line.svcMgmtNum }
-    ));
+      // 가상번호 거부 신청여부 확인할 회선 별 Parameter들 세팅
+      const requestIsDeniedParams: Observable<any>[] = selectedLines.map((line) => this.apiService.request(
+        API_CMD.BFF_08_0081, { selectedSvcMgmtNum: line.svcMgmtNum }
+      ));
 
-    Observable.combineLatest.apply(Observable, requestIsDeniedParams).subscribe((resps: any) => {
+      Observable.combineLatest.apply(Observable, requestIsDeniedParams).subscribe((resps: any) => {
 
-      // Render용 데이터 정리
-      const deniableLineList: any[] = resps.map((resp, index) => {
-        const lineInfo = selectedLines[index];
-  
-        if (resp.code !== API_CODE.CODE_00) {
+        // Render용 데이터 정리
+        const deniableLineList: any[] = resps.map((resp, index) => {
+          const lineInfo = selectedLines[index];
 
-          this.error.render(res, {
-            code: resp.code,
-            msg: resp.msg,
-            pageInfo: pageInfo,
-            svcInfo: svcInfo
-          });
+          if (resp.code !== API_CODE.CODE_00) {
 
-        }
-        
-        return (
-          {
-            // 회선명은 별명을 우선적으로 노출, 없으면 기본값 노출
-            lineNm: lineInfo.nickNm || MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
-            svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
-            eqpMdlNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ? lineInfo.eqpMdlNm : '',
-            isDenied: resp.result.isAdditionUse,
-            svcMgmtNum: lineInfo.svcMgmtNum
+            this.error.render(res, {
+              code: resp.code,
+              msg: resp.msg,
+              pageInfo: pageInfo,
+              svcInfo: svcInfo
+            });
+
           }
-        );
-      });
 
-      res.render('member/common.member.line.virtual-number-denial.html', { svcInfo, pageInfo, deniableLineList });  
-    });
+          return (
+            {
+              // 회선명은 별명을 우선적으로 노출, 없으면 기본값 노출
+              lineNm: lineInfo.nickNm || MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
+              svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
+              eqpMdlNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ? lineInfo.eqpMdlNm : '',
+              isDenied: resp.result.isAdditionUse,
+              svcMgmtNum: lineInfo.svcMgmtNum
+            }
+          );
+        });
+
+        res.render('member/common.member.line.virtual-number-denial.html', { svcInfo, pageInfo, deniableLineList });
+      });
     }
   }
 }

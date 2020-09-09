@@ -38,20 +38,23 @@ class CommonSearch extends TwViewController {
     // const sort = 'L';  // 낮은가격순 (LowPrice)
     // const sort = 'C';  // 클릭순 (Click)
     // const sort = 'R';  // 정확도순 (Rank)
-    // let sort = 'shortcut-A.rate-H.service-L.tv_internet-A.troaming-D.tapp-D.direct-D.tmembership-R.event-D.sale-C.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A';
-    // const sort = 'shortcut-A.rate-H.service-H.tv_internet-L.troaming-A.tapp-A.direct-A.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A';
+    // let sort = 'shortcut-A.rate-H.service-L.tv_internet-A.troaming-D.tapp-D.direct-D.tmembership-R.event-D.sale-C
+    // .as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A';
+    // const sort = 'shortcut-A.rate-H.service-H.tv_internet-L.troaming-A.tapp-A.direct-A.tmembership-A.event-A
+    // .sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A.bundle-A';
 
     // this.log.info(this, '[common.search.in-result.controller] req.query : ', req.query);  // keyword=소액결제, in_keyword=내역, step=3
-   
+
     let requestObj, researchCd, researchQuery, searchApi ;
     /**
      * 검색 결과 출력
      * @param searchResult 검색 결과
      * @param relatedKeyword 연관 검색어
+     * @param requestObject
      * @param thisObj 해당 객체
      * @returns void
      */
-    function showSearchResult(searchResult, relatedKeyword , requestObj , thisObj) {
+    function showSearchResult(searchResult, relatedKeyword , requestObject , thisObj) {
       _this.logger.info(_this, '[common.search.controller] [showSearchResult]', '###########################################################');
       _this.logger.info(_this, '[common.search.controller] [showSearchResult]', '');
       _this.logger.info(_this, '[common.search.controller] [showSearchResult] redirectParam : ', redirectParam);
@@ -85,7 +88,7 @@ class CommonSearch extends TwViewController {
 
       } else {
         // 2020.01.16 이전일 [S]
-        // OP002-5939 의 경우 요건 담당 매니저 최종 컨펌이 나지 않아 
+        // OP002-5939 의 경우 요건 담당 매니저 최종 컨펌이 나지 않아
         // shortcut 검색결과가 없는 경우 rank 값이 가장 높은 컬렉션으로 리다이렉트 시키는 부분은 제외처리함.
         redirectParam = 'N';
         // 2020.01.16 이전일 [E]
@@ -95,14 +98,14 @@ class CommonSearch extends TwViewController {
           let tempCollection = '';
           _this.logger.info(_this, '[common.search.controller] #################################################', '');
           _this.logger.info(_this, '[common.search.controller] req.query : ', req.query);
-  
+
           const tempAccessQuery = req.query;
-  
+
           for (let idx = 0; idx < searchResult.result.search.length; idx++) {
             const keyName =  Object.keys(searchResult.result.search[idx])[0];
             const contentsCnt = Number(searchResult.result.search[idx][keyName].count);
             const rank = Number(searchResult.result.search[idx][keyName].rank);
-  
+
             if (contentsCnt > 0) {
               if (keyName === 'shortcut') {
                 redirectYn = 'N';
@@ -112,58 +115,58 @@ class CommonSearch extends TwViewController {
               }
             }
           }
-  
+
           _this.logger.info(_this, '[common.search.controller] redirectYn : ', redirectYn);
           _this.logger.info(_this, '[common.search.controller] 리다이렉트할 컬렉션 : ', tempCollection);
 
           if (redirectYn === 'Y') {
             collection = tempCollection;
             _this.logger.info(_this, '[common.search.controller] 리다이렉트할 컬렉션 : ', collection);
-  
+
             // tempAccessQuery = tempAccessQuery + '&category=' + collection;
             tempAccessQuery.category = collection;
-  
+
             const startIdx = sort.indexOf(collection + '-') + collection.length + 1;
             sort = sort.substring(startIdx, startIdx + 1);
-  
+
             _this.logger.info(_this, '[common.search.controller] 리다이렉트할 컬렉션 정렬기준 : ', sort);
-            
-  
+
+
             // tempAccessQuery = tempAccessQuery + '&sort=' + sort;
             tempAccessQuery.sort = sort;
-  
+
             _this.logger.info(_this, '[common.search.controller] tempAccessQuery : ', tempAccessQuery);
             _this.logger.info(_this, '[common.search.controller] #################################################', '');
-  
+
             if (FormatHelper.isEmpty(req.query.in_keyword)) {
-              requestObj = { query , collection , pageNum , sort };
+              requestObject = { query , collection , pageNum , sort };
             } else {
               researchCd = 1;
               researchQuery = StringHelper.encodeURIAllCase(req.query.in_keyword) || '';
-              requestObj = { query , collection , researchQuery , researchCd , pageNum , sort };
+              requestObject = { query , collection , researchQuery , researchCd , pageNum , sort };
             }
-  
+
             if (BrowserHelper.isApp(req)) {
               searchApi = API_CMD.SEARCH_APP;
               if ( BrowserHelper.isIos(req) ) {
-                requestObj.device = 'I';
+                requestObject.device = 'I';
               } else {
-                requestObj.device = 'A';
+                requestObject.device = 'A';
               }
             } else {
               searchApi = API_CMD.SEARCH_WEB;
             }
-        
+
             if (!FormatHelper.isEmpty(svcInfo)) {
-              requestObj.userId = svcInfo.userId;
+              requestObject.userId = svcInfo.userId;
             }
-  
-  
-  
-  
+
+
+
+
             Observable.combineLatest(
-              _this.apiService.request( searchApi, requestObj, {}),
-              _this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
+              _this.apiService.request( searchApi, requestObject, {}),
+              _this.apiService.request(API_CMD.RELATED_KEYWORD, requestObject, {})
             ).subscribe(([ _searchResult, _relatedKeyword ]) => {
               if (_searchResult.code !== 0 || _relatedKeyword.code !== 0) {
                 return _this.error.render(res, {
@@ -173,7 +176,8 @@ class CommonSearch extends TwViewController {
                   msg: _searchResult.code !== 0 ? _searchResult.msg : _relatedKeyword.msg
                 });
               }
-              if (FormatHelper.isEmpty(svcInfo) && _searchResult.result.totalcount === 1 && collection === 'shortcut' && _searchResult.result.search[0].shortcut.data[0].DOCID === 'M000083') {
+              if (FormatHelper.isEmpty(svcInfo) && _searchResult.result.totalcount === 1 &&
+                collection === 'shortcut' && _searchResult.result.search[0].shortcut.data[0].DOCID === 'M000083') {
                 _searchResult.result.totalcount = 0;
               }
               if ( _searchResult.result.totalcount === 0 ) {
@@ -226,7 +230,7 @@ class CommonSearch extends TwViewController {
               inKeyword : searchResult.result.researchQuery,
               step : step,
               from : from,
-              sort : requestObj.sort,
+              sort : requestObject.sort,
               nowUrl : req.originalUrl
             });
           }
@@ -240,7 +244,7 @@ class CommonSearch extends TwViewController {
             inKeyword : searchResult.result.researchQuery,
             step : step,
             from : from,
-            sort : requestObj.sort,
+            sort : requestObject.sort,
             nowUrl : req.originalUrl
           });
         }
@@ -296,7 +300,8 @@ class CommonSearch extends TwViewController {
           msg : searchResult.code !== 0 ? searchResult.msg : relatedKeyword.msg
         });
       }
-      if (FormatHelper.isEmpty(svcInfo) && searchResult.result.totalcount === 1 && searchResult.result.search[2].shortcut.data.length && searchResult.result.search[2].shortcut.data[0].DOCID === 'M000083') {
+      if (FormatHelper.isEmpty(svcInfo) && searchResult.result.totalcount === 1 &&
+        searchResult.result.search[2].shortcut.data.length && searchResult.result.search[2].shortcut.data[0].DOCID === 'M000083') {
         searchResult.result.totalcount = 0;
       }
       if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {

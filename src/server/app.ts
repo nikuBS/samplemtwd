@@ -1,6 +1,6 @@
 // for APM
 const os = require('os');
-process.env.WHATAP_NAME = 'NodeAgent-{ip2}-{ip3}-{cluster}'
+process.env.WHATAP_NAME = 'NodeAgent-{ip2}-{ip3}-{cluster}';
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
@@ -198,7 +198,7 @@ class App {
       path.join(__dirname, 'common/views/containers'),
 
       path.join(__dirname, 'app/98.chatbot/views/containers'),
-      
+
       path.join(__dirname, 'app/99.test/views/containers')
 
     ]);
