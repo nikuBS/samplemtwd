@@ -33,8 +33,8 @@ export default class RoamingMainController extends TwViewController {
       this.getBanners(pageInfo),
     ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn, recentUsed, banners]) => {
 
-      if (popularNations.length > 15) {
-        popularNations = popularNations.slice(0, 15);
+      if (popularNations.length > 6) {
+        popularNations = popularNations.slice(0, 6);
       }
 
       res.render('roaming-next/roaming.main.html', {

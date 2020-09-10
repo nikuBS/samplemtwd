@@ -150,7 +150,7 @@
         onclick="openScheduleDialog('{{ code }}', '{{ name }}', null, '#roamingMain');">
         {{#if imageUrl}}
             <img src="{{ imageUrl }}" width="{{ width }}" height="{{ height }}" alt="{{ imageAlt }}">
-            <span class="name">{{ name }}</span>
+            <!-- <span class="name">{{ name }}</span> -->
         {{else}}
             <span class="flag-icon flag-icon-{{ code2 }}"></span>
             <span class="name-dark">{{ name }}</span>
@@ -245,12 +245,10 @@
 
     for (let i = 0; i < popularNations.length; i++) {
       const item = popularNations[i];
-      var imageUrl = '<%= CDN %>/adminupload/' + item.mblBtnImg + '.png';
+      var imageUrl = '<%= CDN %>' + item.mblBtnImg;
+      // var imageUrl = 'http://cdnm-dev.tworld.co.kr' + item.mblBtnImg;
       if (!item.mblBtnImg) {
         imageUrl = null;
-        if (sampleImages[item.countryCode] != null) {
-          imageUrl = sampleImages[item.countryCode];
-        }
       }
       const li = template({
         width: nationWidth - GAP,
@@ -280,7 +278,6 @@
     }
   }
   function openNationsDialog() {
-    // 유럽, 아시아, 미주, 오세아니아, 중동, 아프리카
     onClickNationGroup(document.getElementById('EUR'));
     $('#roamingMain').css('display', 'none');
     $('#nationsDialog').css('display', 'block');
@@ -299,15 +296,6 @@
     {id: 'guam', name: '괌사이판', description: '괌,사이판 여행필수품', icon: 'icon_guam.png'},
     {id: 'longpass', name: 'LongPass', description: '중동, 아프리카에서도', icon: 'icon_longpass.png'},
   ];
-
-  const sampleImages = {
-    'CHN': '<%= CDN %>/img/product/roam/img_nation_s_01.png',
-    'JPN': '<%= CDN %>/img/product/roam/img_nation_s_02.png',
-    'VNM': '<%= CDN %>/img/product/roam/img_nation_s_03.png',
-    'PHL': '<%= CDN %>/img/product/roam/img_nation_s_04.png',
-    'USA': '<%= CDN %>/img/product/roam/img_nation_s_05.png',
-    'ITA': '<%= CDN %>/img/product/roam/img_nation_s_06.png',
-  };
 
   // JS 모듈로 분리 고려
   const ISO3166 = {
