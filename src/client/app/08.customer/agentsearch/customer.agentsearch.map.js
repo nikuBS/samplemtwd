@@ -56,7 +56,10 @@ Tw.CustomerAgentsearchMap.prototype = {
   _init: function () {
     this._cacheElements();
     this._bindEvents();
-    // this._checkLocationAgreement();
+    // 쿼리 확인. 키워드 검색이 아닌 경우 내 위치 매장을 조회한다.
+    if (!this._query.searchText) {
+      this._checkLocationAgreement();
+    }
   },
 
   _initMapAreaList : function () {

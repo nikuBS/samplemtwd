@@ -101,7 +101,7 @@ Tw.CustomerAgentsearch.prototype = {
     // 나와 가까운 지점 지도 생성
     this.customerAgentsearchMap = new Tw.CustomerAgentsearchMap(args);
     this.customerAgentsearchFilter = new Tw.CustomerAgentsearchFilter(args);
-    // 쿼리 확인
+    // 쿼리 확인. 키워드 검색인 경우
     if (this._query.searchText) {
       var param = $.extend({
         storeType: 0,
@@ -125,8 +125,6 @@ Tw.CustomerAgentsearch.prototype = {
         this._getTubeNameList();
       }
       this.filterSearchRequest(param);
-    }else {
-      this.customerAgentsearchMap._checkLocationAgreement();
     }
   },
 
