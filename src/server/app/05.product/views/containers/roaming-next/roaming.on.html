@@ -90,6 +90,7 @@
         <%   if (usage.data && usage.baro) { %>
         <div class="card data-usages">
             <h2><%= usage.data.prodNm %></h2>
+            <% if (usage.data.used) { %>
             <span class="range">
                 가입 기간
                 <%= usage.formatTime(usage.data.rgstDtm) %>
@@ -97,6 +98,7 @@
                 <%= usage.formatTime(usage.data.exprDtm) %>
             </span>
             <span class="status">이용중</span>
+            <% } %>
             <div class="charts">
                 <div class="chart" style="margin-right: 36px;">
                     <div class="track">
@@ -113,7 +115,7 @@
                     </div>
                     <div id="chart-phone" class="progress"></div>
                     <div class="value-max"><%= usage.baro.total %></div>
-                    <div class="value" style="color: #728eff;"><%= usage.baro.used %>분</div>
+                    <div class="value" style="color: #728eff;"><%= usage.formatDuration(usage.baro.used) %></div>
                     <h4 style="font-family: Roboto;">baro 통화</h4>
                 </div>
             </div>
@@ -291,8 +293,8 @@
       });
 
       <% if (usage.data && usage.baro) { %>
-      chartData.animate(parseFloat('<%= parseFloat(usage.data.used) / parseFloat(usage.data.total) %>'))
-      chartPhone.animate(parseFloat('<%= parseFloat(usage.baro.used) / 60 %>'));
+      chartData.animate(parseFloat('<%= parseFloat(usage.data.used) / parseFloat(usage.data.total) %>'));
+      chartPhone.animate(0.15);
       <% } %>
     }
   });

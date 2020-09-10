@@ -243,10 +243,14 @@
     const ul = document.querySelector('#nations ul');
     const template = Handlebars.compile($('#tpl-nation-card').html());
 
+    var cdn = '<%= CDN %>';
+    if (cdn.indexOf(':3001') > 0) {
+      cdn = 'http://cdnm-dev.tworld.co.kr';
+    }
+
     for (let i = 0; i < popularNations.length; i++) {
       const item = popularNations[i];
-      var imageUrl = '<%= CDN %>' + item.mblBtnImg;
-      // var imageUrl = 'http://cdnm-dev.tworld.co.kr' + item.mblBtnImg;
+      var imageUrl = cdn + item.mblBtnImg;
       if (!item.mblBtnImg) {
         imageUrl = null;
       }

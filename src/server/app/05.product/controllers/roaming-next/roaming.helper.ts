@@ -1,3 +1,4 @@
+import EnvHelper from '../../../../utils/env.helper';
 
 export default class RoamingHelper {
   static getMCC(alpha3: string): string {
@@ -33,7 +34,7 @@ export default class RoamingHelper {
     if (env === 'local' && uri.startsWith('/adminupload')) {
       return 'http://cdnm-dev.tworld.co.kr' + uri;
     }
-    return uri;
+    return EnvHelper.getEnvironment('CDN') + uri;
   }
 }
 
