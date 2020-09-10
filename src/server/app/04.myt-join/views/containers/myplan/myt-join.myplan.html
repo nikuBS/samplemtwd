@@ -1,5 +1,5 @@
 <%#
-* 나의 가입정보 > 나의 요금제
+* 나의 가입정보 > 나의 요금제/부가상품 (MS_05)
 * @file myt-join.myplan.html
 * @author Ji Hun Yang (jihun202@sk.com)
 * @since 2018.09.19
@@ -13,14 +13,12 @@ _%>
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%- pageInfo.menuId %>">
-    <%- include('../components/header.component.html', { title: '나의 요금제', svcInfo: svcInfo }); _%>
+    <%- include('../components/header.component.html', { title: '나의 요금제/부가상품', svcInfo: svcInfo }); _%>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <%# OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
         <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C61-1", multiple: "CMMA_A3_B13_C61-2" } }); _%>
-        <%# // OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
         <div class="container" data-id="sub-container">
-            <%- include('../../components/myplan/myt-join.myplan.' + feeMainTemplate + '.html') _%>
+            <%- include('../../components/myplan/myt-join.myplan.' + templateType + '.html', feePlan, additions, agreements, usageFee, benefits, usagePattern, pps, tipList) _%>
         </div>
     </div>
     <!--// #contents -->
@@ -30,11 +28,10 @@ _%>
     </footer>
     <!--// #footer -->
 </div>
-<% include ../../components/javascript.component.html _%>
+<%- include('../../components/javascript.component.html') _%>
 <script>
     $(document).ready(function () {
         new Tw.MyTJoinMyPlan({ $element: $('#contents') });
-        // new Tw.MyTJoinMyPlan({ $element: $('[data-id=sub-container]') });
     });
 </script>
-<% include ../../components/end.component.html _%>
+<%- include('../../components/end.component.html') _%>
