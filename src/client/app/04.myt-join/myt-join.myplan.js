@@ -11,15 +11,16 @@
 Tw.MyTJoinMyPlan = function (params) {
   this.$container = params.$element;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._rendered();
+  this._cachedElement();
   this._bindEvent();
   this._initialize();
 };
 
 Tw.MyTJoinMyPlan.prototype = {
-  _rendered: function () {
+  _cachedElement: function () {
     this.$routers = this.$container.find('[data-id=routers]');
     this.$actions = this.$container.find('[data-id=actions]');
+    this.$btnMore = this.$container.find('.btn-more'); // .children().eq(0);
   },
 
   /**
@@ -32,6 +33,16 @@ Tw.MyTJoinMyPlan.prototype = {
     this.$actions
       .on('click', '[data-id=bt-alarm-available]', $.proxy(this._onBtAlarmAvailableClicked, this))
       .on('click', '[data-id=bt-change-plan]', $.proxy(this._onBtChangePlanClicked, this));
+    if (this.$btnMore.length) {
+      // this.$container.find('.btn-more').children().eq(0)
+      this.$btnMore
+        .one('click', '> button', $.proxy(function (event) {
+          event.preventDefault();
+          $(event.target).parent().hide();
+          this.$container/*.find('.tod-full-link-list')*/.find('[data-id=addition-prods]').removeClass('tod-hidden-list')
+            .find('button, a').eq(0).focus();
+        }, this));
+    }
   },
 
   _initialize: function () {
@@ -46,9 +57,9 @@ Tw.MyTJoinMyPlan.prototype = {
    */
   _onBtGotoClicked: function (event) {
     var $target = $(event.target);
-    var url = $.trim($target.attr('data-href'));
-    if (url) {
-      this._historyService.goLoad(url);
+    var href = $.trim($target.data('href'));
+    if (href) {
+      this._historyService.goLoad(href);
     }
   },
 

@@ -70,7 +70,7 @@ Tw.API_CMD = {
   BFF_01_0064: { path: '/:version/mask-methods', method: Tw.API_METHOD.GET },
   BFF_01_0065: { path: '/core-modification/:version/share-scuturl', method: Tw.API_METHOD.GET },
   BFF_01_0069: { path: '/core-modification/:version/preference-property', method: Tw.API_METHOD.GET },
-  
+
   // AUTH
   BFF_03_0002: { path: '/:version/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/:version/user/accounts', method: Tw.API_METHOD.DELETE },
@@ -241,6 +241,7 @@ Tw.API_CMD = {
   BFF_05_0218: { path: '/core-modification/:version/specialized-benefits', method: Tw.API_METHOD.GET },
   BFF_05_0219: { path: '/core-modification/:version/custum-benefits', method: Tw.API_METHOD.GET },
   BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: Tw.API_METHOD.GET },
+  BFF_05_0222: { path: '/core-product/:version/services/wireless/additions/info', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
