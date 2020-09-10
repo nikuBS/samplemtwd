@@ -1,51 +1,45 @@
 <div class="plan">
-    <strong class="tit" data-tracker="V" data-tracker_tw_prod_id="<%- feePlanProd.prodId %>" data-tracker_tw_prod_nm="<%= feePlanProd.prodNm %>"><%= feePlanProd.prodNm %></strong>
-    <span class="date">신청일: <%- '2020.6.5' %></span>
-    <%_ if (feePlanProd.basFeeInfo) { _%>
-    <span class="val">
-        <%# PPS인 경우 _%>
-        <%_ if (svcInfo.svcAttrCd === 'M2') { _%>
-        <strong>상세참조</strong>
-        <%_ } else { _%>
-            <%_ if (feePlanProd.prodFltNm) { _%>
-            <span class="hash">#<%= feePlanProd.prodFltNm %></span>
-            <%_ } _%>
-            <%_ if (feePlanProd.basFeeInfo.isNaN) { _%>
-            <strong><%- feePlanProd.basFeeInfo.value %></strong>
-            <%_ } else { _%>
-            월정액(부가세 포함) <br /> <strong><%- feePlanProd.basFeeInfo.value %>원</strong>
-            <%_ } _%>
-        <%_ } _%>
-    </span>
+    <strong class="tit" data-tracker="V" data-tracker_tw_prod_id="<%= feePlan.feePlanProd.prodId %>" data-tracker_tw_prod_nm="<%= feePlan.feePlanProd.prodNm %>"><%= feePlan.feePlanProd.prodNm %></strong>
+    <%_ if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { _%>
+    <span class="val"><%- feePlan.feePlanProd.basFeeInfo.value %>원</span>
+    <%_
+    }
+    if ( feePlan.feePlanProd.basFeeInfo && feePlan.feePlanProd.basFeeInfo.isNaN ) {
+    _%>
+    <span class="val"><%- feePlan.feePlanProd.basFeeInfo.value %></span>
     <%_ } _%>
 </div>
-<%_ if (feePlanProd.basOfrDataQtyCtt || feePlanProd.basOfrVcallTmsCtt || feePlanProd.basOfrCharCntCtt) { _%>
+<div class="sub">
+    <%_ if ( feePlan.feePlanProd.prodFltNm ) { _%>
+    <span class="hash">#<%= feePlan.feePlanProd.prodFltNm %></span>
+    <%_
+    }
+    if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) {
+    _%>
+    <span class="rest">월정액(부가세 포함)</span>
+    <%_ } _%>
+</div>
+<%_ if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { _%>
 <div class="service-wrap">
     <div class="service">
-        <%# PPS인 경우 _%>
-        <%_ if (svcInfo.svcAttrCd === 'M2') { _%>
+        <%_ if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { _%>
         <span class="sv-spec data">
-            <i class="ico-phone-plan"></i><%= '기본제공금액조절사용' %>
+            <i class="ico-data-plan" title="데이터"></i><%- feePlan.feePlanProd.basOfrDataQtyCtt.value.data ? ( feePlan.feePlanProd.basOfrDataQtyCtt.value.data + (feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ? '' : feePlan.feePlanProd.basOfrDataQtyCtt.value.unit)) : feePlan.feePlanProd.basOfrDataQtyCtt.value %>
         </span>
-        <%_ } else { _%>
-            <%_ if (feePlanProd.basOfrDataQtyCtt) { _%>
-        <span class="sv-spec data">
-            <i class="ico-data-plan" title="데이터"></i><%- feePlanProd.basOfrDataQtyCtt.value.data ? (feePlanProd.basOfrDataQtyCtt.value.data + (feePlanProd.basOfrDataQtyCtt.isNaN ? '' : feePlanProd.basOfrDataQtyCtt.value.unit)) : feePlanProd.basOfrDataQtyCtt.value %>
-        </span>
-            <%_ } _%>
-            <%# T-Pocket-Fi, T-Login 제외 _%>
-            <%_ if (['M3', 'M4'].includes(svcInfo.svcAttrCd) === false) { _%>
-                <%_ if (feePlanProd.basOfrVcallTmsCtt) { _%>
+        <%_
+        }
+        if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) {
+        _%>
         <span class="sv-spec">
-            <i class="ico-phone-plan" title="통화"></i><%- feePlanProd.basOfrVcallTmsCtt.value %>
+            <i class="ico-phone-plan" title="통화"></i><%- feePlan.feePlanProd.basOfrVcallTmsCtt.value %>
         </span>
-                <%_ } _%>
-                <%_ if (feePlanProd.basOfrCharCntCtt) { _%>
+        <%_
+        }
+        if ( feePlan.feePlanProd.basOfrCharCntCtt ) {
+        _%>
         <span class="sv-spec">
-            <i class="ico-msg-plan" title="문자"></i><%- feePlanProd.basOfrCharCntCtt.value + (feePlanProd.basOfrCharCntCtt.isNaN ? '' : feePlanProd.basOfrCharCntCtt.unit) %>
+            <i class="ico-msg-plan" title="문자"></i><%- feePlan.feePlanProd.basOfrCharCntCtt.value + (feePlan.feePlanProd.basOfrCharCntCtt.isNaN ? '' : feePlan.feePlanProd.basOfrCharCntCtt.unit) %>
         </span>
-                <%_ } _%>
-            <%_ } _%>
         <%_ } _%>
     </div>
 </div>
