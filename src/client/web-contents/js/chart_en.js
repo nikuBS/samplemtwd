@@ -2,7 +2,7 @@
 $.fn.chart2 = function(o){
 	/*
     target : 대상
-    type : 차트 유형 (circle, bar1, bar2, bar3, bar4, bar5)
+    type : 차트 유형 (circle, bar1, bar2, bar3, bar4, bar5, bar6)
     legend : 범례
     data_arry : 데이터
     unlimited : 데이터에 무제한이 있는지 여부
@@ -464,36 +464,39 @@ $.fn.chart2 = function(o){
 			throw_arry.push(d.data_arry[i].v);
 		}
 		average(throw_arry, d.unit);
-		// if(d.legend){// 범례
-		//   $(d.target).append($('<div>').addClass('legend'));
-		//   for(var i=0; i < d.legend.length; i++){
-		//     $(d.target).find('.legend')
-		//       .append(
-		//         $('<span>').addClass('category' + i)
-		//         .append(
-		//           $('<span>').text(d.legend[i])
-		//         )
-		//       )
-		//   }
-		// }
+		if(d.legend){// 범례
+			$(d.target).append($("<div>").addClass("legend"));
+			for(var i=0; i < d.legend.length; i++){
+				$(d.target).find(".legend")
+					.append(
+						$("<span>").addClass("category" + i)
+							.append(
+								$("<span>").text(d.legend[i])
+							)
+					);
+			}
+		}
 
 		if(d.average && d.average_place == "left"){ // 평균
-			$(d.target).find(".data-arry").append($("<span>").addClass("dash").append($("<span>").css("bottom", style_pattern[0]+"%")));
+			$(d.target).find(".data-arry").append($("<span>").addClass("dash").append($("<span>").css("width", style_pattern[0]+"%")));
 			$(d.target).find(".data-ul")
 				.append(
 					$("<li>").addClass("average").data("value", average)
 						.append(
 							$("<dl>")
 								.append(
-									$("<dt>").text("평균")
+									$("<dt>").text("Average")
 								)
 								.append(
 									$("<dd>")
 										.append(
-											$("<span>").addClass("bar").css("height", style_pattern[0]+"%")
+											$("<span>").addClass("bar-rail")
+												.append(
+													$("<span>").addClass("bar").css("width", style_pattern[0]+"%")
+												)
 										)
 										.append(
-											$("<span>").addClass("v").css("bottom", style_pattern[0]+"%").text(text_pattern[0])
+											$("<span>").addClass("v").text(text_pattern[0])
 										)
 								)
 						)
@@ -503,7 +506,7 @@ $.fn.chart2 = function(o){
 		for(var i=0; i < d.data_arry.length; i++){
 			$(d.target).find(".data-ul")
 				.append(
-					$("<li>")
+					$("<li>").addClass("month")
 						.append(
 							$("<dl>")
 								.append($("<dt>")
@@ -526,29 +529,210 @@ $.fn.chart2 = function(o){
 		}
 
 		if(d.average && d.average_place == "right"){ // 평균
-			$(d.target).find(".data-arry").append($("<span>").addClass("dash").append($("<span>").css("bottom", style_pattern[0]+"%")));
+			$(d.target).find(".data-arry").append($("<span>").addClass("dash").append($("<span>").css("width", style_pattern[0]+"%")));
 			$(d.target).find(".data-ul")
 				.append(
 					$("<li>").addClass("average").data("value", average)
 						.append(
 							$("<dl>")
 								.append(
-									$("<dt>").text("평균")
+									$("<dt>").text("Average")
 								)
 								.append(
 									$("<dd>")
 										.append(
-											$("<span>").addClass("bar").css("height", style_pattern[0]+"%")
+											$("<span>").addClass("bar-rail")
+												.append(
+													$("<span>").addClass("bar").css("width", style_pattern[0]+"%")
+												)
 										)
 										.append(
-											$("<span>").addClass("v").css("bottom", style_pattern[0]+"%").text(text_pattern[0])
+											$("<span>").addClass("v").text(text_pattern[0])
 										)
 								)
 						)
 				);
-			setTimeout(function () {
-				$(d.target).find(".data-belt").scrollLeft($(d.target).find(".data-belt").width());
-			}, 500);
+		}
+
+		// $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+		// if($(d.target).find('.data-ul > li').length > 4){
+		//   $(d.target).addClass('over');
+		//   $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+		//   $(d.target).find('.data-ul').css('width', (25 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+		// }
+		if(d.link){
+			$(d.target).find(".data-ul > li:not(\".average\")").each(function(i){
+				var temp = $(this).find("span.v").text();
+				if(d.data_arry[i].class !== undefined){
+					$(this).find("span.v").empty().append($("<button>").text(temp).attr("type","button").addClass(d.data_arry[i].class));
+				}else{
+					$(this).find("span.v").empty().append($("<button>").text(temp).attr("type","button").addClass("link" + i));
+				}
+			});
+		}
+	}
+	if(d.type == "bar6"){ // bar6
+		$(d.target).append($("<div>").addClass("data-arry").append($("<div>").addClass("data-belt").append($("<ul>").addClass("data-ul"))));
+		for(var i=0; i < d.data_arry.length; i++){
+			throw_arry.push(d.data_arry[i].v);
+			throw2_arry.push(d.data_arry[i].v2);
+		}
+		average2(throw_arry, throw2_arry, d.unit);
+
+		if(d.legend){// 범례
+			$(d.target).append($("<div>").addClass("legend"));
+			for(var i=0; i < d.legend.length; i++){
+				$(d.target).find(".legend")
+					.append(
+						$("<span>").addClass("category" + i)
+							.append(
+								$("<span>").text(d.legend[i])
+							)
+					);
+			}
+		}
+
+		if(d.average && d.average_place == "left"){ // 평균
+			var style2_pattern_average_height = (style2_pattern[0] > 110)? 110 : style2_pattern[0];
+			$(d.target).find(".data-arry").append($("<span>").addClass("dash").append($("<span>").css("width", style_pattern[0]+"%")));
+			$(d.target).find(".data-ul")
+				.append(
+					$("<li>").addClass("average").data("value", average)
+						.append(
+							$("<dl>")
+								.append(
+									$("<dt>").text("Average")
+								)
+								.append(
+									$("<dd>")
+										.append(
+											$("<span>").addClass("graph")
+												.append(
+													$("<span>").addClass("bar-rail")
+														.append(
+															$("<span>").addClass("bar").css("width", style_pattern[0]+"%")
+														)
+												)
+												.append(
+													$("<span>").addClass("bar-rail02")
+														.append(
+															$("<span>").addClass("bar2").css("width", style2_pattern_average_height+"%")
+														)
+												)
+										)
+										.append(
+											$("<span>").addClass("price")
+												.append(
+													$("<span>").addClass("blind").text(d.legend[0])
+												)
+												.append(
+													$("<span>").addClass("v").text(text_pattern[0])
+												)
+												.append(
+													$("<span>").addClass("blind").text(d.legend[1])
+												)
+												.append(
+													$("<span>").addClass("blind").text(text2_pattern[0])
+												)
+										)
+								)
+						)
+				);
+		}
+
+		for(var i=0; i < d.data_arry.length; i++){
+			var style2_pattern_height = (style2_pattern[i+1] > 110)? 110 : style2_pattern[i+1];
+			$(d.target).find(".data-ul")
+				.append(
+					$("<li>").addClass("month")
+						.append(
+							$("<dl>")
+								.append($("<dt>")
+									.text(d.data_arry[i].t)
+								)
+								.append(
+									$("<dd>")
+										.append(
+											$("<span>").addClass("graph")
+												.append(
+													$("<span>").addClass("bar-rail")
+														.append(
+															$("<span>").addClass("bar").css("width", style_pattern[i+1]+"%")
+														)
+												)
+												.append(
+													$("<span>").addClass("bar-rail02")
+														.append(
+															$("<span>").addClass("bar2").css("width", style2_pattern_height+"%")
+														)
+												)
+										)
+										.append(
+											$("<span>").addClass("price")
+												.append(
+													$("<span>").addClass("blind").text(d.legend[0])
+												)
+												.append(
+													$("<span>").addClass("v").text(text_pattern[i+1])
+												)
+												.append(
+													$("<span>").addClass("blind").text(d.legend[1])
+												)
+												.append(
+													$("<span>").addClass("blind").text(text2_pattern[i+1])
+												)
+										)
+								)
+						)
+				);
+		}
+
+		if(d.average && d.average_place == "right"){ // 평균
+			var style2_pattern_average_height = (style2_pattern[0] > 110)? 110 : style2_pattern[0];
+			$(d.target).find(".data-arry").append($("<span>").addClass("dash").append($("<span>").css("width", style_pattern[0]+"%")));
+			$(d.target).find(".data-ul")
+				.append(
+					$("<li>").addClass("average").data("value", average)
+						.append(
+							$("<dl>")
+								.append(
+									$("<dt>").text("Average")
+								)
+								.append(
+									$("<dd>")
+										.append(
+											$("<span>").addClass("graph")
+												.append(
+													$("<span>").addClass("bar-rail")
+														.append(
+															$("<span>").addClass("bar").css("width", style_pattern[0]+"%")
+														)
+												)
+												.append(
+													$("<span>").addClass("bar-rail02")
+														.append(
+															$("<span>").addClass("bar2").css("width", style2_pattern_average_height+"%")
+														)
+												)
+										)
+										.append(
+											$("<span>").addClass("price")
+												.append(
+													$("<span>").addClass("blind").text(d.legend[0])
+												)
+												.append(
+													$("<span>").addClass("v").text(text_pattern[0])
+												)
+												.append(
+													$("<span>").addClass("blind").text(d.legend[1])
+												)
+												.append(
+													$("<span>").addClass("blind").text(text2_pattern[0])
+												)
+										)
+								)
+						)
+				);
 		}
 
 		// $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
@@ -1058,6 +1242,121 @@ $.fn.chart = function(option){
 				});
 			}
 		}
+	}else if(option.type == "bar3"){
+		var chart_ul = make_tag("ul","chart_ul",container);
+		for(var i = 0; i <= chart_length -1; ++i){/* da_arr.length */
+			/* html append */
+			var el = make_tag("li","graph-list",chart_ul);
+			el.style.width = 100/(chart_length)+"%";
+			/* make dl,dt,dd,span,span,span */
+			var el_dl = make_tag("dl","chart-dl",el),
+				el_dt = make_tag("dt","graph-tit",el_dl).innerHTML = chart_data.da_arr[i].na,
+				el_dd = make_tag("dd","chart-dd",el_dl),
+				box = make_tag("span","box",el_dd);
+			for(var j=0; j < option.legend.length; j++){
+				bar = make_tag("span","bar",box);
+				txt = make_tag("span","txt",box).innerHTML = chart_data.da_arr[i].data[j];
+			}
+			/* data set */
+			el_dt.innerHTML = chart_data.da_arr[i].na;
+			for(var j=0; j < option.legend.length; j++){
+				if(chart_data.da_arr[i].data[j] == "무제한"){
+					$(el_dd).find(".txt").eq(j).html(chart_data.da_arr[i].data[j]);
+				}else if(option.unit[i] == "원"){
+					$(el_dd).find(".txt").eq(j).html(add_comma(chart_data.da_arr[i].data[j]) + option.unit[i]);
+				}else{
+					$(el_dd).find(".txt").eq(j).html(chart_data.da_arr[i].data[j] + option.unit[i]);
+				}
+			}
+			/* style set */
+			if(chart_data.da_arr[i].data[0] == "무제한" && chart_data.da_arr[i].data[1] == "무제한"){
+				$(el_dd).find(".bar").eq(0).css("height", "100%").next().css("bottom", "105%");
+				$(el_dd).find(".bar").eq(1).css("height", "100%").next().css("bottom", "105%");
+			}else if(chart_data.da_arr[i].data[0] == "무제한"){
+				$(el_dd).find(".bar").eq(0).css("height", "100%").next().css("bottom", "105%");
+				$(el_dd).find(".bar").eq(1).css("height", "50%").next().css("bottom", "55%");
+			}else if(chart_data.da_arr[i].data[1] == "무제한"){
+				$(el_dd).find(".bar").eq(0).css("height", "50%").next().css("bottom", "55%");
+				$(el_dd).find(".bar").eq(1).css("height", "100%").next().css("bottom", "105%");
+			}else{
+				if(chart_data.da_arr[i].data[0] > chart_data.da_arr[i].data[1]){
+					$(el_dd).find(".bar").eq(0).css("height", "100%").next().css("bottom", "105%");
+					$(el_dd).find(".bar").eq(1).css("height", (chart_data.da_arr[i].data[1] / chart_data.da_arr[i].data[0] * 100) + "%").next().css("bottom", ((chart_data.da_arr[i].data[1] / chart_data.da_arr[i].data[0] * 100) + 5) + "%");
+				}else{
+					$(el_dd).find(".bar").eq(0).css("height", (chart_data.da_arr[i].data[0] / chart_data.da_arr[i].data[1] * 100) + "%").next().css("bottom", ((chart_data.da_arr[i].data[0] / chart_data.da_arr[i].data[1] * 100) + 5) + "%");
+					$(el_dd).find(".bar").eq(1).css("height", "100%").next().css("bottom", "105%");
+				}
+			}
+		}
+		/* 중앙선 */
+		var line_box = make_tag("span","line-box",container),
+			line = make_tag("span","line",line_box);
+		line.style.bottom = 100+"%";
+		/* 범례 */
+		var chart_left = make_tag("div","chart-left",container);
+		var rec_box = make_tag("div","rec-box",chart_left),
+			rec_ul = make_tag("ul","rec-ul",rec_box);
+		for(var i=0; i < option.legend.length; i++){ /* legend.length */
+			var rec_li = make_tag("li","rec-li",rec_ul);
+			make_rec("",option.legend[i],rec_li);
+		}
+	}else if(option.type == "bar4"){
+		var chart_ul = make_tag("ul","chart_ul",container);
+		var flag = false;
+		for(var i = 0; i < chart_length; ++i){
+			if(chart_data.da_arr[i].data[0] == "무제한"){
+				flag = true;
+			}
+		}
+
+		for(var i = 0; i < chart_length; ++i){
+			var el = make_tag("li","graph-list",chart_ul);
+			el.style.width = 100/(chart_length)+"%";
+			var el_dl = make_tag("dl","chart-dl",el),
+				el_dt = make_tag("dt","graph-tit",el_dl),
+				el_dd = make_tag("dd","chart-dd",el_dl),
+				box = make_tag("span","box",el_dd),
+				bar = make_tag("span","bar",box),
+				txt = make_tag("span","txt",box);
+			var count,count_txt,average_count,average_txt;
+			if(option.unit == "time"){
+				count_txt = operation_time(operation_minutes(chart_data.da_arr[i].data[0]));
+				count = operation_minutes(chart_data.da_arr[i].data[0]);
+			}else{
+				if(chart_data.da_arr[i].data == "무제한"){
+					count_txt = chart_data.da_arr[i].data;
+				}else{
+					count_txt = chart_data.da_arr[i].data+option.unit;
+				}
+				count = chart_data.da_arr[i].data;
+			}
+			el_dt.innerHTML = chart_data.da_arr[i].na;
+			txt.innerHTML = count_txt;
+			if(count_txt == "0GB" || count_txt == "0초"){
+				txt.setAttribute("class", "txt blind");
+			}
+			if(chart_data.da_arr[i].data[0] == "무제한"){
+				txt.style.bottom = 105+"%";
+				bar.style.height = 100+"%";
+			}else{
+				if(flag){
+					txt.style.bottom = ((count/max)*100/2)+5+"%";
+					bar.style.height = ((count/max)*100/2)+"%";
+				}else{
+					txt.style.bottom = (count/max)*100+5+"%";
+					bar.style.height = (count/max)*100+"%";
+				}
+			}
+			if(i == 0){
+				var line_box = make_tag("span","line-box",container),
+					line = make_tag("span","line",line_box);
+				if(flag){
+					line.style.bottom = ((count/max)*100/2)+"%";
+				}else{
+					line.style.bottom = (count/max)*100+"%";
+				}
+			}
+		}
 	}else if(option.type == "bar5"){
 		var scroll_gap = 0;
 		var chart_left = make_tag("div","chart-left",container),
@@ -1147,65 +1446,7 @@ $.fn.chart = function(option){
 				});
 			}
 		}
-	}else if(option.type == "bar3"){
-		var chart_ul = make_tag("ul","chart_ul",container);
-		for(var i = 0; i <= chart_length -1; ++i){/* da_arr.length */
-			/* html append */
-			var el = make_tag("li","graph-list",chart_ul);
-			el.style.width = 100/(chart_length)+"%";
-			/* make dl,dt,dd,span,span,span */
-			var el_dl = make_tag("dl","chart-dl",el),
-				el_dt = make_tag("dt","graph-tit",el_dl).innerHTML = chart_data.da_arr[i].na,
-				el_dd = make_tag("dd","chart-dd",el_dl),
-				box = make_tag("span","box",el_dd);
-			for(var j=0; j < option.legend.length; j++){
-				bar = make_tag("span","bar",box);
-				txt = make_tag("span","txt",box).innerHTML = chart_data.da_arr[i].data[j];
-			}
-			/* data set */
-			el_dt.innerHTML = chart_data.da_arr[i].na;
-			for(var j=0; j < option.legend.length; j++){
-				if(chart_data.da_arr[i].data[j] == "무제한"){
-					$(el_dd).find(".txt").eq(j).html(chart_data.da_arr[i].data[j]);
-				}else if(option.unit[i] == "원"){
-					$(el_dd).find(".txt").eq(j).html(add_comma(chart_data.da_arr[i].data[j]) + option.unit[i]);
-				}else{
-					$(el_dd).find(".txt").eq(j).html(chart_data.da_arr[i].data[j] + option.unit[i]);
-				}
-			}
-			/* style set */
-			if(chart_data.da_arr[i].data[0] == "무제한" && chart_data.da_arr[i].data[1] == "무제한"){
-				$(el_dd).find(".bar").eq(0).css("height", "100%").next().css("bottom", "105%");
-				$(el_dd).find(".bar").eq(1).css("height", "100%").next().css("bottom", "105%");
-			}else if(chart_data.da_arr[i].data[0] == "무제한"){
-				$(el_dd).find(".bar").eq(0).css("height", "100%").next().css("bottom", "105%");
-				$(el_dd).find(".bar").eq(1).css("height", "50%").next().css("bottom", "55%");
-			}else if(chart_data.da_arr[i].data[1] == "무제한"){
-				$(el_dd).find(".bar").eq(0).css("height", "50%").next().css("bottom", "55%");
-				$(el_dd).find(".bar").eq(1).css("height", "100%").next().css("bottom", "105%");
-			}else{
-				if(chart_data.da_arr[i].data[0] > chart_data.da_arr[i].data[1]){
-					$(el_dd).find(".bar").eq(0).css("height", "100%").next().css("bottom", "105%");
-					$(el_dd).find(".bar").eq(1).css("height", (chart_data.da_arr[i].data[1] / chart_data.da_arr[i].data[0] * 100) + "%").next().css("bottom", ((chart_data.da_arr[i].data[1] / chart_data.da_arr[i].data[0] * 100) + 5) + "%");
-				}else{
-					$(el_dd).find(".bar").eq(0).css("height", (chart_data.da_arr[i].data[0] / chart_data.da_arr[i].data[1] * 100) + "%").next().css("bottom", ((chart_data.da_arr[i].data[0] / chart_data.da_arr[i].data[1] * 100) + 5) + "%");
-					$(el_dd).find(".bar").eq(1).css("height", "100%").next().css("bottom", "105%");
-				}
-			}
-		}
-		/* 중앙선 */
-		var line_box = make_tag("span","line-box",container),
-			line = make_tag("span","line",line_box);
-		line.style.bottom = 100+"%";
-		/* 범례 */
-		var chart_left = make_tag("div","chart-left",container);
-		var rec_box = make_tag("div","rec-box",chart_left),
-			rec_ul = make_tag("ul","rec-ul",rec_box);
-		for(var i=0; i < option.legend.length; i++){ /* legend.length */
-			var rec_li = make_tag("li","rec-li",rec_ul);
-			make_rec("",option.legend[i],rec_li);
-		}
-	}if(option.type == "bar4"){
+	}if(option.type == "bar6"){
 		var chart_ul = make_tag("ul","chart_ul",container);
 		var flag = false;
 		for(var i = 0; i < chart_length; ++i){
@@ -1237,7 +1478,7 @@ $.fn.chart = function(option){
 			}
 			el_dt.innerHTML = chart_data.da_arr[i].na;
 			txt.innerHTML = count_txt;
-			if(count_txt == "0GB" || count_txt == "0초"){
+			if(count_txt == "0GB" || count_txt == "0sec"){
 				txt.setAttribute("class", "txt blind");
 			}
 			if(chart_data.da_arr[i].data[0] == "무제한"){

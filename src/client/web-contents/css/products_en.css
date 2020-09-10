@@ -152,11 +152,17 @@
 
 .prCont .details-toggle .acco-list .acco-box .acco-tit::after { content: ''; display: inline-block; width: 100%; height: 0.63rem; background: #edeef0; position: absolute; bottom: 0; left: 0; border-top: 1px solid #e5e5e5; }
 
+.prCont .details-toggle .acco-list .acco-box .acco-tit button { font-weight: 400; padding: 0.94rem 1rem; }
+
+.prCont .details-toggle .acco-list .acco-box .acco-tit button::after { right: 0.31rem; }
+
 .prCont .details-toggle .acco-list .acco-box.on { padding-bottom: 0; }
 
 .prCont .details-toggle .acco-list .acco-box.on .acco-tit::after { display: none; }
 
 .prCont .details-toggle .acco-cont .tit-type01 { width: 100%; font-size: 1rem; color: #000; font-weight: 500; margin-bottom: 1.25rem; }
+
+.prCont .details-toggle .acco-cont .tit-type01.mt { margin-top: 1.88rem; }
 
 .prCont .details-toggle .acco-cont .table-type { width: 100%; border: 1px solid #cfcfcf; }
 
@@ -164,7 +170,11 @@
 
 .prCont .details-toggle .acco-cont .table-type th { width: 38%; background: #f5f5f5; border-right: 1px solid #cfcfcf; padding: 0.94rem 0.75rem; font-size: 13px; color: #858585; vertical-align: middle; }
 
-.prCont .details-toggle .acco-cont .table-type td { width: 62%; padding: 0.94rem 0.75rem; font-size: 0.81rem; line-height: 1.13rem; color: #000; vertical-align: middle; font-weight: 500; background: #fff; }
+.prCont .details-toggle .acco-cont .table-type td { width: 62%; padding: 0.94rem 0.75rem; font-size: 0.81rem; line-height: 1.13rem; color: #000; vertical-align: middle; background: #fff; }
+
+.prCont .details-toggle .acco-cont .table-type.style2 th { width: auto; word-break: break-all; }
+
+.prCont .details-toggle .acco-cont .table-type.style2 td { width: auto; word-break: break-all; border-right: 1px solid #cfcfcf; }
 
 .prCont .details-toggle .acco-cont .refer-list { padding: 0 0.31rem; }
 
@@ -181,6 +191,18 @@
 .prCont .refer-list.star li { padding-left: 0.5rem; }
 
 .prCont .refer-list.star li::before { content: ''; display: inline-block; width: 0.25rem; height: 0.25rem; background: url("/img/en/products/ico_refer.png") 0 0 no-repeat; background-size: 100% 100%; position: absolute; top: 0.44rem; left: 0; }
+
+.prCont .num-list2 { list-style: decimal; padding-left: 0.94rem; }
+
+.prCont .num-list2 > li { font-size: 0.81rem; line-height: 1.19rem; color: #000; margin-bottom: 1.25rem; position: relative; }
+
+.prCont .num-list2 > li > .refer-list { margin-top: 0.38rem !important; }
+
+.prCont .num-list2 > li > .refer-list > li { color: #858585; }
+
+.prCont .num-list2 > li.other { list-style: none; }
+
+.prCont .num-list2 > li.other::before { content: ''; display: inline-block; width: 0.75rem; height: 0.75rem; background: url("/img/en/products/ico_details.png") 0 0 no-repeat; background-size: 100% 100%; position: absolute; top: 0.19rem; left: -0.94rem; }
 
 .prCont .refer { display: block; font-size: 0.81rem; color: #666; line-height: 1.13rem; position: relative; margin-top: 0.13rem; }
 
@@ -231,6 +253,8 @@
 .prCont .plan-cont > .txt { font-size: 0.88rem; font-weight: 300; color: #666; letter-spacing: -0.7px; }
 
 .prCont .plan-cont > .txt.black { font-size: 1rem; font-weight: 400; color: #000; }
+
+.prCont .plan-cont > .txt.mid { font-size: 1.13rem !important; }
 
 .prCont .plan-cont > .txt > span { font-size: 0.81rem; color: #858585; }
 
@@ -473,17 +497,21 @@
 
 .plan-detail .list-tit:first-of-type { margin-top: 0; }
 
+.plan-detail .list-tit.mt { margin-top: 1.63rem !important; }
+
 .plan-detail .tbl-plan-detail { margin-top: 0.63rem; border-top: 1px solid #cfcfcf; }
 
-.plan-detail .tbl-plan-detail th { font-size: 0.75rem; font-weight: 500; color: #858585; padding: 0.44rem 0.19rem; text-align: left; vertical-align: top; background-color: #f5f5f5; border-bottom: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; word-break: break-all; }
+.plan-detail .tbl-plan-detail th { font-size: 0.75rem; font-weight: 400; color: #858585; padding: 0.44rem 0.19rem; text-align: left; vertical-align: top; background-color: #f5f5f5; border-bottom: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; word-break: break-all; }
 
 .plan-detail .tbl-plan-detail th:last-child { border-right: 1px solid #cfcfcf; }
 
-.plan-detail .tbl-plan-detail td { font-size: 0.75rem; font-weight: 600; color: #000; padding: 0.44rem 0.25rem; text-align: left; vertical-align: top; border-bottom: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; word-break: break-all; }
+.plan-detail .tbl-plan-detail td { font-size: 0.75rem; font-weight: 400; color: #000; padding: 0.44rem 0.25rem; text-align: left; vertical-align: top; border-bottom: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; word-break: break-all; }
 
 .plan-detail .tbl-plan-detail td:last-child { border-right: 1px solid #cfcfcf; }
 
 .plan-detail .tbl-plan-detail td.center { text-align: center; }
+
+.plan-detail .txt { margin-top: 0.63rem; font-size: 0.75rem; font-weight: 300; color: #666666; }
 
 .plan-detail .num-list { margin-top: 0.63rem; counter-reset: numList; }
 
@@ -519,9 +547,9 @@
 
 .plan-detail .dash-list > li + li { margin-top: 0.5rem; }
 
-.plan-detail .refer { position: relative; font-size: 0.75rem; font-weight: 300; color: #666666; padding-left: 0.88rem; margin-top: 0.63rem; }
+.plan-detail .refer { position: relative; font-size: 0.75rem; font-weight: 300; color: #666666; padding-left: 0.63rem; margin-top: 0.63rem; }
 
-.plan-detail .refer::before { position: absolute; display: block; content: '※'; top: 0; left: 0; }
+.plan-detail .refer::before { position: absolute; display: block; content: '*'; top: 0.06rem; left: 0; }
 
 .plan-detail .refer + .refer { margin-top: 0.63rem; }
 

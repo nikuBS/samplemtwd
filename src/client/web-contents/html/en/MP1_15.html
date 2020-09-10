@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/en/favicon.ico" />
+    <link rel="shortcut icon" href="/img/en/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/en/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/en/logo-tworld01.png" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
+
+    <link rel="stylesheet" type="text/css" href="/css/products_en.css" media="all" /><!-- [C] 상품상세 스타일 -->
+</head>
+
+<body class="bg-productdetail"><!-- 추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">Go to Main</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+					</div>
+                    <div class="h-tit t-none">TING ON WEEKENDS 5.0G</div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">contents</h2>
+            <div class="container">
+
+                <!-- 상품타이틀 -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#3583e3;"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                    <div class="productdetails-wrap">
+                        <div class="idpt-product-detail-title">
+                            <h3>
+                                <span>Weekend Bonus Data Plan for Teenagers</span>
+                                <p>TING ON<br>WEEKENDS 5.0G</p>
+                            </h3>
+                        </div>
+                        <div class="productdetails-ledgercase">
+                            <p class="price-text">
+                                <span class="opacity80">Monthly Fees (VAT included)</span><br><!-- opacity80 -->
+                                <span class="unit">₩</span>
+                                <strong class="price-type">47,000</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="detailinfo">
+                        <li>
+                            <p class="gb"><i class="blind">data</i>5GB Data</p>
+                        </li>
+                        <li>
+                            <p class="type"><i class="blind">talktime</i>Unlimited Talktime</p>
+                        </li>
+                        <li>
+                            <p class="sms"><i class="blind">texts</i>Free Texting</p>
+                        </li>
+                    </ul>
+                    <ul class="detailinfo-txt">
+                        <li>5GB Data</li>
+                        <li>1GB/day on weekends at regular speeds + unlimited data at 400kbps after</li>
+                        <li>Video and Commercial Calls 50mins</li>
+                    </ul>
+                </div>
+                <!-- //상품타이틀 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+                <div class="prCont"> <!-- admin 영역 개발 확정 후 class name 추가해야함 -->
+
+                    <div class="check">
+                        <p>To subscribe, call the customer call center or visit an SK Telecom store</p>
+                    </div>
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <div class="cont-box nogaps">
+                        <div class="plan-cont">
+                            <p class="title">5GB data package and data reserved for weekends</p>
+                            <p class="txt">5GB data package included, receive and use shared data after depleting data package</p>
+
+                            <div class="icon-wrap icon03">
+                                <div>
+                                    <img src="/img/en/products/bg-data-disc_m.png" alt="">
+                                    Data 5GB
+                                </div>
+                                <div>
+                                    <img src="/img/en/products/bg-phone-unlimited_m.png" alt="">
+                                    Unlimited<br>Talktime
+                                </div>
+                                <div>
+                                    <img src="/img/en/products/bg-phone-call_m.png" alt="">
+                                    Video & Commercial<br>Calls 300mins
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="plan-cont gray">
+                            <p class="title">Unlimited Talktime and<br>Free Texting</p>
+                            <p class="txt">Unlimited landline · mobile calls and texts</p>
+
+                            <div class="img-box">
+                                <img src="/img/en/products/ting_on_weekends.png" alt="">
+                                <p>Includes unlimited talktime, 50 mins of<br>commercial and video calls, free texting, 5GB data</p>
+                            </div>
+
+                            <hr class="inner-line" aria-hidden="true"/>
+
+                            <p class="title">1GB/day weekend-only data</p>
+                            <p class="txt">5GB data package and additional 1GB/day<br>weekend-only data</p>
+
+                            <div class="img-box">
+                                <img src="/img/en/products/ting_on_weekends_data5.png" alt="">
+                                <p>Speeds restricted to 400Kbps after<br>1GB/day on weekends</p>
+                            </div>
+
+                            <ul class="refer-list border">
+                                <li>Data tethering included within the given data package for each plan. ‘Data Gifts’, ‘Refill’, ‘T Family Data’ can only be used on weekdays.</li>
+                                <li>Use time of weekend-only data will be based on the start of data use from Saturday 00:00 to Sunday 24:00</li>
+                                <li>Weekend-only data is not provided on national holidays that do not fall on weekends. This service is only provided on Saturday and Sunday.</li>
+                                <li>Unlimited landline · mobile calls are limited to domestic wireless (including HD Voice calls) and wired phone calls (including 070 internet-based phone calls)</li>
+                                <li>If the receiving end of the call has call forwarding turned on, the call may not be counted under the unlimited talktime package</li>
+                                <li>Unlimited landline and mobile service cannot be used for commercial or illegal purposes. Messages cannot be sent using illegal spam message sending devices or automatic message sending programs.</li>
+                                <li>In the above cases, unlimited benefits service may be suspended or usage may be charged. Refer to the ‘Subscription/Cancellation’ section for details.</li>
+                                <li>1 second of commercial call talktime to be deducted per second of video call (including HD Voice calls) use including commercial calls (15XX, 16XX, 18XX etc.), personal numbers (050, 060 etc.), 0130, 011-200, 011-700, and local numbers (+153/141/700 etc.) (1.66 second of commercial call basic talktime to be deducted per second of video call use)</li>
+                                <li>Internet-based voice · video calls using data can be used within data package provided with each plan. The total usage amount cannot exceed the data package provided.</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-cont">
+                            <p class="title">Ting On Weekends<br>New Semester Promotion<br>(Discontinued)</p>
+                            <p class="txt">Unlimited landline · mobile calls and texts</p>
+
+                            <ul class="icon-list">
+                                <li class="no-img">
+                                    <div>
+                                        <p class="title">Applicable Customers </p>
+                                        <p>Customers who subscribe to ‘Ting On Weekends (Save, 3.0G, 5.0G)’ under a contract during the promotional period</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="/img/en/products/weekend-ting-benefit_m.png" alt="">
+                                    <div>
+                                        <p class="title">Benefits</p>
+                                        <p>3,000 points/month accumulated for up to 24 months</p>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <ul class="refer-list">
+                                <li>Monthly payment to cover fees for talktime, texts, data and add-on services (mobile payments, content purchase, roaming fees are excluded)</li>
+                                <li>Accumulated points are valid for 36 months from the date of accumulation and will be automatically forfeited after</li>
+                            </ul>
+
+                            <ul class="refer-list border">
+                                <li>Accumulation and discount promotion will be automatically applied within 14 days of signing up for the Ting on Weekends plan (3 types)</li>
+                                <li>Points are accumulated on a pro-rated basis according to use period</li>
+                                <li>When cancelling service or changing ownership, accumulated points will be forfeited and the remaining accumulation period will be no longer valid. Points cannot be reinstated when re-registering.</li>
+                                <li>The accumulation of points will be terminated when changing to a plan not covered by the promotion. Points previously accumulated will be retained.</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-cont gray">
+                            <p class="title">No need to worry about<br>exceeding limits!</p>
+                            <p class="txt">Continue to use talktime and data after<br>exceeding limits</p>
+
+                            <p class="tbl-txt"><img src="/img/en/products/ico_refer.png" alt="" /> Charges for use after limits</p>
+
+                            <div class="tbl-charge-wrap tbl-phone">
+                                <img src="/img/en/products/bg-tbl-phone_m.png" alt="">
+                                <table class="idpt-tbl-charge" summary="Charges for use after limits">
+                                    <caption>Charges for use after limits</caption>
+                                    <colgroup>
+                                        <col style="width:30%;">
+                                        <col style="width:auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Regular Calls</th>
+                                            <td>₩1.98/sec</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Video Calls</th>
+                                            <td>₩3.3/sec</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tbl-charge-wrap tbl-sms">
+                                <img src="/img/en/products/bg-tbl-sms_m.png" alt="">
+                                <table class="idpt-tbl-charge" summary="Charges for use after limits">
+                                    <caption>Charges for use after limits</caption>
+                                    <colgroup>
+                                        <col style="width:45%;">
+                                        <col style="width:auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">SMS</th>
+                                            <td>₩22/text</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Mobile Messenger</th>
+                                            <td>₩22/text<br><span>(₩110/text, for attached files)</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Text MMS</th>
+                                            <td>₩22/text</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Multimedia MMS</th>
+                                            <td>₩110/text</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tbl-charge-wrap tbl-data NA00004775">
+                                <img src="/img/en/products/bg-tbl-data_m.png" alt="">
+                                <table class="idpt-tbl-charge" summary="Charges for use after limits">
+                                    <caption>Charges for use after limits</caption>
+                                    <colgroup>
+                                        <col style="width:30%;">
+                                        <col style="width:auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Data</th>
+                                            <td>₩0.011/0.5KB</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <ul class="refer-list">
+                                <li>VAT included</li>
+                                <li>When talktime and data packages are depleted, outgoing calls and data use will be suspended (suspensions lifted after topping-up)</li>
+                                <li>Top-up is allowed without additional approval within the limits set by legal guardians (Max. ₩22,000, increase limit by steps of ₩1,100)</li>
+                                <li>Paid mobile content can be purchased within topped up balance</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-cont">
+                            <p class="title">Ting On Weekends Series</p>
+
+                            <div class="idpt-series-wrap">
+                                <ul class="series-graph graph03 lte-together clearfix">
+                                    <li class="series03">
+                                        <div>
+                                            <div class="circle">
+                                                <div>
+                                                    <p>800</p>
+                                                    <p>MB</p>
+                                                </div>
+                                            </div>
+                                            <p class="series-name">Ting On<br>Weekends Save</p>
+                                            <p class="series-price">₩<span>31,000</span></p>
+                                        </div>
+                                    </li>
+                                    <li class="series04">
+                                        <div>
+                                            <div class="circle">
+                                                <div>
+                                                    <p>3</p>
+                                                    <p>GB</p>
+                                                </div>
+                                            </div>
+                                            <p class="series-name">Ting On<br>Weekends 3.0G</p>
+                                            <p class="series-price">₩<span>41,000</span></p>
+                                        </div>
+                                    </li>
+                                    <li class="series05 apply">
+                                        <div>
+                                            <div class="circle">
+                                                <div>
+                                                    <p>5</p>
+                                                    <p>GB</p>
+                                                </div>
+                                            </div>
+                                            <p class="series-name">Ting On<br>Weekends 5.0G</p>
+                                            <p class="series-price">₩<span>47,000</span></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 팝업 띄우는 링크 -->
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    Ting On Weekends Subscription/Cancellation
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">detail</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //팝업 띄우는 링크 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>
