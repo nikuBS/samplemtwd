@@ -57,7 +57,6 @@ export default class RoamingOnController extends TwViewController {
     if (!mcc) {
       throw new Error('MCC is required');
     }
-    const testUsage = req.query.use === '1' || false;
 
     const context: any = {
       svcInfo,
@@ -70,6 +69,12 @@ export default class RoamingOnController extends TwViewController {
     const template = 'roaming-next/roaming.on.html';
 
     this.getCountryInfo(mcc).subscribe(info => {
+      if (!info) {
+        // 존재하지 않는 국가인 경우, 로밍모드 종료 후 국내페이지로 이동
+        res.cookie('ROAMING_MCC', '999');
+        res.redirect('/product/roaming');
+        return;
+      }
       context.country = {
         code: info.countryCode,
         name: info.countryNm,
@@ -84,81 +89,87 @@ export default class RoamingOnController extends TwViewController {
       if (!isLogin) {
         res.render(template, context);
       } else {
-        context.usage = {
-          formatBytes: function(value) {
-            const n = parseInt(value, 10);
-            if (!n) { return value; }
-            if (n < 1000) { return n + 'MB'; }
-            if (n % 1000 === 0) { return (n / 1000) + 'GB'; }
-            return (n / 1000).toFixed(2) + 'GB';
-          },
-          formatTime: function(yyyyMMddHH) {
-            return moment(yyyyMMddHH, 'YYYYMMDDHH').format('YY.MM.DD HH:00');
-          }
-        };
+        this.processAuthenticated(req, res, template, context, mcc);
+      }
+    });
+  }
 
-        this.getUsingTariffs().subscribe(usingTariffs => {
-          const noSubscription = !usingTariffs || usingTariffs.length === 0;
-          context.noSubscription = noSubscription;
-          if (noSubscription && !testUsage) {
-            Observable.combineLatest(
-              this.getAvailableTariffs(mcc),
-              this.getPhoneUsage(),
-              this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
-              this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
-            ).subscribe(([allTariffs, phoneUsage, rate, meta]) => {
-              context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
-              context.usage.phone = {
-                voice: 92,
-                sms: 37
-              };
-              context.rate = rate;
-              context.meta = meta;
-              res.render(template, context);
-            });
-          } else {
-            let startDate = moment().subtract(3, 'days').format('YYYY-MM-DD');
-            if (usingTariffs != null) {
-              startDate = usingTariffs[0].scrbDt;
-            }
-            const endDate = moment().format('YYYY-MM-DD');
-            Observable.combineLatest(
-              this.getDataUsage(),
-              this.getPhoneUsage(),
-              this.getBaroPhoneUsage(startDate, endDate),
-              this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
-              this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
-          ).subscribe(([dataUsage, phoneUsage, baroUsage, rate, meta]) => {
-              context.noSubscription = false;
-              context.usage.data = dataUsage;
-              context.usage.phone = phoneUsage;
-              context.usage.baro = baroUsage;
-              context.rate = rate;
-              context.meta = meta;
+  private processAuthenticated(req: Request, res: Response, template: string, context: any, mcc: string) {
+    const testUsage = req.query.use === '1' || false;
 
-              if (testUsage) {
-                // FIXME: Testing
-                context.usage.data = {
-                  prodId: '-',
-                  prodNm: 'baro 3GB',
-                  total: '3000',
-                  used: '1730',
-                  remained: '1270',
-                  rgstDtm: moment().subtract(2, 'days').format('YYYYMMDD') + '10',
-                  exprDtm: moment().subtract(-3, 'days').format('YYYYMMDD') + '22',
-                };
-                context.usage.phone = {
-                  voice: 146,
-                  sms: 200,
-                };
-                context.usage.baro = {
-                  total: '무제한',
-                  used: '7'
-                };
-              }
-              res.render(template, context);
-            });
+    context.usage = {
+      formatBytes: function(value) {
+        const n = parseInt(value, 10);
+        if (!n) { return value; }
+        if (n < 1000) { return n + 'MB'; }
+        if (n % 1000 === 0) { return (n / 1000) + 'GB'; }
+        return (n / 1000).toFixed(2) + 'GB';
+      },
+      formatTime: function(yyyyMMddHH) {
+        return moment(yyyyMMddHH, 'YYYYMMDDHH').format('YY.MM.DD HH:00');
+      }
+    };
+
+    this.getUsingTariffs().subscribe(usingTariffs => {
+      const noSubscription = !usingTariffs || usingTariffs.length === 0;
+      context.noSubscription = noSubscription;
+      if (noSubscription && !testUsage) {
+        Observable.combineLatest(
+          this.getAvailableTariffs(mcc),
+          this.getPhoneUsage(),
+          this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
+          this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
+        ).subscribe(([allTariffs, phoneUsage, rate, meta]) => {
+          context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
+          context.usage.phone = {
+            voice: 92,
+            sms: 37
+          };
+          context.rate = rate;
+          context.meta = meta;
+          res.render(template, context);
+        });
+      } else {
+        let startDate = moment().subtract(3, 'days').format('YYYY-MM-DD');
+        if (usingTariffs != null) {
+          startDate = usingTariffs[0].scrbDt;
+        }
+        const endDate = moment().format('YYYY-MM-DD');
+        Observable.combineLatest(
+          this.getDataUsage(),
+          this.getPhoneUsage(),
+          this.getBaroPhoneUsage(startDate, endDate),
+          this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
+          this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
+        ).subscribe(([dataUsage, phoneUsage, baroUsage, rate, meta]) => {
+          context.noSubscription = false;
+          context.usage.data = dataUsage;
+          context.usage.phone = phoneUsage;
+          context.usage.baro = baroUsage;
+          context.rate = rate;
+          context.meta = meta;
+
+          if (testUsage) {
+            // FIXME: Testing
+            context.usage.data = {
+              prodId: '-',
+              prodNm: 'baro 3GB',
+              total: '3000',
+              used: '1730',
+              remained: '1270',
+              rgstDtm: moment().subtract(2, 'days').format('YYYYMMDD') + '10',
+              exprDtm: moment().subtract(-3, 'days').format('YYYYMMDD') + '22',
+            };
+            context.usage.phone = {
+              voice: 146,
+              sms: 200,
+            };
+            context.usage.baro = {
+              total: '무제한',
+              used: '7'
+            };
           }
+          res.render(template, context);
         });
       }
     });
@@ -167,7 +178,7 @@ export default class RoamingOnController extends TwViewController {
   private _useCountryBackground(uri, mcc: string): string {
     let backgroundUrl = uri;
     if (backgroundUrl) {
-      backgroundUrl = `${this.CDN}${backgroundUrl}`;
+      backgroundUrl = RoamingHelper.penetrateUri(backgroundUrl);
     } else {
       backgroundUrl = `${this.CDN}/img/product/roam/background_aus.png`;
     }

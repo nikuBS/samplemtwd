@@ -370,7 +370,7 @@ body.rn #scheduleDialog {
 }
 body.rn #scheduleDialog .header {
   height: 135px;
-  background-color: black;
+  background-color: white;
   z-index: 1;
   position: fixed;
   top: 0;

@@ -27,6 +27,14 @@ export default class RoamingHelper {
     }
     return 'KOR';
   }
+
+  static penetrateUri(uri: string): string {
+    const env = String(process.env.NODE_ENV);
+    if (env === 'local' && uri.startsWith('/adminupload')) {
+      return 'http://cdnm-dev.tworld.co.kr' + uri;
+    }
+    return uri;
+  }
 }
 
 const ISO3166 = {

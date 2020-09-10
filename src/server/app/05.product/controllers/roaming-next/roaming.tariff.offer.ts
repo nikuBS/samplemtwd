@@ -6,7 +6,6 @@ import FormatHelper from '../../../../utils/format.helper';
 import moment from 'moment';
 import RoamingOnController from './roaming.on';
 import RoamingHelper from './roaming.helper';
-import EnvHelper from '../../../../utils/env.helper';
 
 export default class RoamingTariffOfferController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -29,9 +28,7 @@ export default class RoamingTariffOfferController extends TwViewController {
         country: {
           code: country.countryCode,
           name: country.countryNm,
-          imageUrl: country.mblRepImg
-            // FIXME:
-            || EnvHelper.getEnvironment('CDN') + '/img/product/roam/background_aus.png',
+          imageUrl: RoamingHelper.penetrateUri(country.mblRepImg),
         },
         night: night,
         days: night + 1,

@@ -32,9 +32,12 @@
     $('#date-arrive').html('-');
     if (!topBannerUrl) {
       $('#scheduleDialog .banner').attr('src', '');
-      // topBannerUrl = '<%= CDN %>/img/product/roam/background_aus.png';
       $.get('/product/roaming?queryBg=' + code, function(data) {
-        $('#scheduleDialog .banner').attr('src', '<%= CDN %>' + data.backgroundUrl);
+        var cdn = '<%= CDN %>';
+        if (cdn.indexOf(':3001') > 0) {
+          cdn = 'http://cdnm-dev.tworld.co.kr';
+        }
+        $('#scheduleDialog .banner').attr('src', cdn + data.backgroundUrl);
       });
     } else {
       $('#scheduleDialog .banner').attr('src', topBannerUrl);
