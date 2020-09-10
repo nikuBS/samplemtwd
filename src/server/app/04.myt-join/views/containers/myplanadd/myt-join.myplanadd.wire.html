@@ -28,10 +28,10 @@ _%>
             <%_ const additionsFree = additions.joined.frees; _%>
             <%_ const additionsJoinable = additions.joinable; _%>
             <%_ const additionsReserved = additions.reserved; _%>
-            <%_ const totalAdditions = additionsPaid.length + additionsFree.length; _%>
+            <%_ const totalAdditions = additionsPaid.length + additionsFree.length ;_%>
             <div class="tod-sel-top-wrap">
                 <div class="link-cont">
-                    <a href="#tod-cont0">전체 <%- totalAdditions %></a>
+                    <a href="#tod-cont0" class="on">전체 <%- totalAdditions %></a>
                     <%_ if (additionsPaid.length) { _%>
                     <a href="#tod-cont1">유료 <%- additionsPaid.length %></a>
                     <%_ } _%>
@@ -42,6 +42,7 @@ _%>
             </div>
 
             <%_ if (totalAdditions === 0) { _%>
+            <div class="tod-link-cont-anchor" id="tod-cont0"></div>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="add-prd-wrap">
@@ -59,7 +60,7 @@ _%>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">유료 부가서비스 <%- additionsPaid.length %>개</h3>
-                <div class="add-prd-wrap tod-type02">
+                <div class="add-prd-wrap">
                     <ul class="list-comp-lineinfo">
                         <%_ additionsPaid.forEach(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.joined.html', { addition }); _%>
@@ -76,7 +77,7 @@ _%>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">무료 부가서비스 <%- additionsFree.length %>개</h3>
-                <div class="add-prd-wrap tod-type02">
+                <div class="add-prd-wrap">
                     <ul class="list-comp-lineinfo">
                         <%_ additionsFree.forEach(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.joined.html', { addition }); _%>

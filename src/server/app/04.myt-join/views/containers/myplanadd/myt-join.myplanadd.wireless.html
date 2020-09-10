@@ -27,10 +27,10 @@ _%>
             <%_ const additionsPaid = additions.joined.paids; _%>
             <%_ const additionsFree = additions.joined.frees; _%>
             <%_ const additionsRoaming = additions.roaming; _%>
-            <%_ const totalAdditions = dcPrograms.length + additionsPaid.length + additionsFree.length; _%>
+            <%_ const totalAdditions = additionsPaid.length + additionsFree.length + 3; _%>
             <div class="tod-sel-top-wrap">
                 <div class="link-cont">
-                    <a href="#tod-cont0">전체 <%- totalAdditions %></a>
+                    <a href="#tod-cont0" class="on">전체 <%- totalAdditions %></a>
                     <%_ if (dcPrograms.length) { _%>
                     <a href="#tod-cont1">옵션/할인 <%- dcPrograms.length %></a>
                     <%_ } _%>
@@ -44,6 +44,7 @@ _%>
             </div>
 
             <%_ if (totalAdditions === 0) { _%>
+            <div class="tod-link-cont-anchor" id="tod-cont0"></div>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="add-prd-wrap">

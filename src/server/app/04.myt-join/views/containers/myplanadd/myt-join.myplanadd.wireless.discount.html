@@ -1,7 +1,6 @@
 <%_ var hasButtons = (dcProgram.btnList && dcProgram.btnList.length > 0); _%>
-<%_ var hasLink = dcProgram.prodLinkYn === "Y"; _%>
-<li class="<%- hasLink ? 'add-con' : null %>">
-    <%_ if (hasLink) { _%>
+<li class="<%- hasButtons ? 'add-con' : null; %>">
+    <%_ if (dcProgram.prodLinkYn === "Y") { _%>
     <a href="/product/callplan?prod_id=<%= dcProgram.linkProdId || dcProgram.prodId %>">
         <div class="lineinfo-user">
             <span class="info-title"><%= dcProgram.prodNm %></span>
@@ -17,13 +16,15 @@
             <span class="info-title"><%= dcProgram.prodNm %></span>
             <span class="info-sub">가입일 <%- dcProgram.scrbDt %></span>
         </div>
+        <div class="lineinfo-data">
+            <span class="info-title num tx-red">43,175원</span>
+        </div>
     </div>
     <%_ } _%>
     <%_ if (hasButtons) { _%>
     <div class="bt-wrap">
         <%_ dcProgram.btnList.forEach(btn => { _%>
         <a href="<%= btn.btnLinkUrl %>" class="btn-round5 btn-line-blue" data-prod-id="<%= dcProgram.linkProdId || dcProgram.prodId %>"><%= btn.btnNm %></a>
-        <%_ }); _%>
-    </div>
+        <%_ }); _%>    </div>
     <%_ } _%>
 </li>

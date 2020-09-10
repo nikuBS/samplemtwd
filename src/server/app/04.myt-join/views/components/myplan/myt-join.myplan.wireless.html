@@ -14,14 +14,19 @@ _%>
         <%- include('./myt-join.myplan.wireless.header-info.html', { feePlanProd }) _%>
     </div>
     <%_ } _%>
-    <%# 옵션 변경 항목이 없는 경우, 비노출 _%>
-    <%_ if (svcInfo.svcAttrCd === 'M1' && (feePlanProd.btnList && feePlanProd.btnList.length)) { _%>
+    <%_ if (svcInfo.svcAttrCd === 'M1') { _%>
     <ul class="btn-link-list" data-id="routers">
+        <%_ if (feePlanProd.btnList && feePlanProd.btnList.length) { _%>
         <%_ feePlanProd.btnList.forEach(btn => { _%>
         <li class="full">
             <button data-id="bt-goto" data-href="<%= btn.btnLinkUrl %>?prod_id=<%- feePlanProd.linkProdId %>"><%= btn.btnNm %></button>
         </li>
         <%_ }); _%>
+        <%_ } else { _%>
+        <li class="full">
+            <button class="disabled" disabled>옵션 변경</button>
+        </li>
+        <%_ } _%>
     </ul>
     <%_ } _%>
 </div>
@@ -169,8 +174,7 @@ _%>
 <!--// .cont-box -->
     <%_ } _%>
 <%_ } _%>
-<%# // TODO: 요금안내서, 사용패턴 등... 점검 후 적용 예정 _%>
-<%_ if (false && svcInfo.svcAttrCd === 'M2') { _%>
+<%_ if (svcInfo.svcAttrCd === 'M2') { _%>
 <%# PPS인 경우 _%>
 
 <hr class="cont-sp type1" aria-hidden="true"/>
@@ -205,7 +209,7 @@ _%>
     </ul>
 </div>
 <!--// .cont-box -->
-<%_ } else if (false) { _%>
+<%_ } else { _%>
 
 <hr class="cont-sp type1" aria-hidden="true"/>
 

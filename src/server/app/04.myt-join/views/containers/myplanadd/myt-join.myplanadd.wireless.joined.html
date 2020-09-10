@@ -1,18 +1,13 @@
 <%_ var hasButtons = (addition.btnList && addition.btnList.length > 0); _%>
-<%_ var hasLink = addition.prodLinkYn === "Y"; _%>
-<li class="<%- hasLink ? 'add-con' : null; %>" data-is-free="<%- addition.isNotFree %>">
-    <%_ if (hasLink) { _%>
+<li class="<%- hasButtons ? 'add-con' : null; %>" data-is-free="<%- addition.isNotFree %>">
+    <%_ if (addition.prodLinkYn === "Y") { _%>
     <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>">
         <div class="lineinfo-user">
             <span class="info-title"><%= addition.prodNm %></span>
             <span class="info-sub">가입일 <%- addition.scrbDt %></span>
         </div>
         <div class="lineinfo-data">
-            <%_ if (addition.basFeeTxt) { _%>
-            <span class="info-title tx-red"><%= addition.basFeeTxt %><%- (/^[0-9,]+$/.test(addition.basFeeTxt)) ? '원' : null %></span>
-            <%_ } else { _%>
-            <span class="info-title tx-red">무료</span>
-            <%_ } _%>
+            <span class="info-title num tx-red">43,175원</span>
             <span class="ico"><span class="blind">자세히 보기</span></span>
         </div>
     </a>
@@ -23,11 +18,7 @@
             <span class="info-sub">가입일 <%- addition.scrbDt %></span>
         </div>
         <div class="lineinfo-data">
-            <%_ if (addition.basFeeTxt) { _%>
-            <span class="info-title tx-red"><%= addition.basFeeTxt %><%- (/^[0-9,]+$/.test(addition.basFeeTxt)) ? '원' : null %></span>
-            <%_ } else { _%>
-            <span class="info-title tx-red">무료</span>
-            <%_ } _%>
+            <span class="info-title num tx-red">43,175원</span>
         </div>
     </div>
     <%_ } _%>

@@ -15,7 +15,6 @@ Tw.MyTJoinMyPlanAdd = function(params) {
   this._apiService = Tw.Api;
   this._bpcpService = Tw.Bpcp;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._hashService = Tw.Hash;
   this._bpcpService.setData(this.$container, '/myt-join/additions');
   this._cachedElement();
   this._bindEvent();
@@ -30,7 +29,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
   _cachedElement: function() { // jquery 객체 저장
     this.$list = this.$container.find('ul.list-comp-lineinfo');
     this.$empty = this.$container.find('.contents-empty');
-    this.$todSel = this.$container.find('.tod-sel-top-wrap').children('.link-cont');
+    this.$todSel = this.$container.find('.tod-sel-top-wrap').find('.link-cont');
   },
 
   /**
@@ -38,19 +37,10 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _init: function() {
-    this._applyHash(location.hash);
-
-    this._hashService.initHashNav($.proxy(this._onHashChange, this));
-
     this._getSvcInfo();
 
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
     /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
-  },
-
-  _onHashChange: function(hash) {
-    // Tw.Logger.log('[Tw.MyTJoinMyPlanAdd] Hash Change', hash, location.hash);
-    this._applyHash(hash.base);
   },
 
   /**
@@ -91,19 +81,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
     // NOTE: hash를 변경하되, history를 쌓지 않도록 하여, 되돌아가기를 한번에 하도록 한다.
     // this._historyService.replacePathName(event.currentTarget.href);
     window.location.replace(event.currentTarget.href);
-    // this._applyHash(event.currentTarget.href);
     event.preventDefault();
-  },
-
-  _applyHash: function (hash) {
-    if (hash) {
-      this.$todSel.children()
-        .removeClass('on')
-        .filter(function (i, elem) {
-          return elem.href.includes(hash);
-        })
-        .addClass('on');
-    }
   },
 
   /**
