@@ -402,7 +402,7 @@ Tw.CommonAutoSmsCert.prototype = {
     var remainedText = Tw.SMS_VALIDATION.REMAINED_TIME.replace('${value}', Tw.DateHelper.convertMinSecFormat(remainedSec));
     this.$showTime.val(remainedText);
     this.$showTime.attr('aria-hidden',false);
-    
+
     if ( remainedSec <= 0 ) {
       clearInterval(this._addTimer);
     }
@@ -439,7 +439,7 @@ Tw.CommonAutoSmsCert.prototype = {
    * @param error
    * @private
    */
-  _failRequestCertAdd: function (error) {
+  _failRequestCertAdd: function (/* error */) {
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 

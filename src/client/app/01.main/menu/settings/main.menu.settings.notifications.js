@@ -276,7 +276,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
     this._nativeService.send(Tw.NTV_CMD.TPLACE_TERMS, {
       tplace: isTplaceOn,
       location: this._termsAgreed.twdLocUseAgreeYn,
-      private: this._termsAgreed.twdInfoRcvAgreeYn,
+      private: this._termsAgreed.twdInfoRcvAgreeYn, // jshint ignore:line
       isTplaceOn: isTplaceSwitchedToOn
     });
   },

@@ -93,7 +93,7 @@ Tw.CommonSearchMain.prototype = {
   /**
    * @function
    * @desc 추천메뉴 정보 로드
-   * @param  
+   * @param
    */
   _loadRecommendMenuInfo : function () {
     this._apiService.request(Tw.NODE_CMD.GET_MENU_RCMD, {})
@@ -138,7 +138,8 @@ Tw.CommonSearchMain.prototype = {
       oferStcCd = '';
     }
 
-    returnStr += '<button type="button" id="fe-btn-rcmnd" value="' + href + '" data-xt_eid="' + oferStcCd + '" data-xt_csid="NO" data-xt_action="BC">' + title + '</button></li>';
+    returnStr += '<button type="button" id="fe-btn-rcmnd" value="' + href + '" data-xt_eid="' +
+      oferStcCd + '" data-xt_csid="NO" data-xt_action="BC">' + title + '</button></li>';
 
     return returnStr;
   },
@@ -246,7 +247,7 @@ Tw.CommonSearchMain.prototype = {
     Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
     Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
     Tw.CommonHelper.setCookie('search_sort::direct', 'D');
-    
+
     return recentlyKeywordData;
   },
   /**
@@ -386,7 +387,7 @@ Tw.CommonSearchMain.prototype = {
       this._closeKeywordListBase();
     }
 
-    var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
+    // var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
     //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
     var sort = 'shortcut-A';
     sort += '.rate-A';

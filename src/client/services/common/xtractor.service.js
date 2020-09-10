@@ -168,6 +168,10 @@ Tw.XtractorService.prototype = {
               this.logView(E_ID, CS_ID);
             }
           }
+        } else {
+          if ($elem.data('type') === 'chatbotitem') {
+            this.logView(E_ID, CS_ID);
+          }
         }
       }
     }

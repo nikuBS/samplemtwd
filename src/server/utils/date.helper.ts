@@ -9,10 +9,10 @@ class DateHelper {
    * @returns {Date}
    */
   static convDateFormat(date: any): Date {
-    if ( date  === undefined ) {
+    if (date === undefined) {
       return new Date();
     }
-    if ( !(date instanceof Date) ) {
+    if (!(date instanceof Date)) {
       return moment(date, 'YYYYMMDDhhmmss').toDate();
     }
     return date;
@@ -61,7 +61,7 @@ class DateHelper {
    * @returns {string} : 6
    * @public
    */
-  static getFromCurrentPrevMonth(date: any, before: number ): string {
+  static getFromCurrentPrevMonth(date: any, before: number): string {
     return moment(this.convDateFormat(date)).add(-before, 'months').format('M');
   }
 
@@ -73,7 +73,7 @@ class DateHelper {
    * @returns {string} : 6
    * @public
    */
-  static getFromCurrentPrevYear(date: any, before: number ): string {
+  static getFromCurrentPrevYear(date: any, before: number): string {
     return moment(this.convDateFormat(date)).add(-before, 'months').format('YYYY');
   }
 
@@ -352,15 +352,15 @@ class DateHelper {
   }
 
   /**
-    * @param {string} date, {string} subStr, {string} format
-    * @returns {Date}
-  */
-  static getStartOfMonSubtractDate( date: any, subStr: string, format: string ): any {
-    return moment(this.convDateFormat(date)).subtract( subStr, 'months' ).startOf('month').format(format);
+   * @param {string} date, {string} subStr, {string} format
+   * @returns {Date}
+   */
+  static getStartOfMonSubtractDate(date: any, subStr: string, format: string): any {
+    return moment(this.convDateFormat(date)).subtract(subStr, 'months').startOf('month').format(format);
   }
 
-  static getEndOfMonSubtractDate( date: any, subStr: string, format: string ): any {
-    return moment(this.convDateFormat(date)).subtract( subStr, 'months' ).endOf('month').format(format);
+  static getEndOfMonSubtractDate(date: any, subStr: string, format: string): any {
+    return moment(this.convDateFormat(date)).subtract(subStr, 'months').endOf('month').format(format);
   }
 
   /**
@@ -370,7 +370,7 @@ class DateHelper {
    * @returns {Date}
    * @public
    */
-  static getStartOfMonDate( date: any, format: string ): any {
+  static getStartOfMonDate(date: any, format: string): any {
     return moment(this.convDateFormat(date)).startOf('month').format(format);
   }
 
@@ -381,7 +381,7 @@ class DateHelper {
    * @returns {Date}
    * @public
    */
-  static getEndOfMonDate( date: any, format: string ): any {
+  static getEndOfMonDate(date: any, format: string): any {
     return moment(this.convDateFormat(date)).endOf('month').format(format);
   }
 
@@ -449,7 +449,7 @@ class DateHelper {
    */
   static getKoreanTime(date: any) {
     return moment(this.convDateFormat(date)).format('a h시 m분');
-  };
+  }
 }
 
 export default DateHelper;

@@ -35,17 +35,17 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('click', '.fe-bt-denial', $.proxy(this._sendDeny, this));
-    this.$container.on('click', '.fe-bt-confirm', $.proxy(function() { this._historyService.goBack() }, this));
-    this.$container.on('click', '.fe-bt-cancel', $.proxy(function() { this._historyService.goBack() }, this));
+    this.$container.on('click', '.fe-bt-confirm', $.proxy(function() { this._historyService.goBack(); }, this));
+    this.$container.on('click', '.fe-bt-cancel', $.proxy(function() { this._historyService.goBack(); }, this));
     this.$btnMoreView.on('click', $.proxy(this._showMore, this));
   },
 
   /**
    * 거부 등록/해제
-   * @param {} $event 
+   * @param {} $event
    */
   _sendDeny: function ($event) {
-    var $target = $($event.currentTarget)
+    var $target = $($event.currentTarget);
     var svcMgmtNum = $target.data('svcmgmtnum');
     var api = Tw.API_CMD.BFF_08_0083;
     var willDeny = false;
@@ -66,9 +66,9 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
 
   /**
    * 거부 등록/해제 성공
-   * @param {*} $target 
-   * @param {*} willDeny 
-   * @param {*} res 
+   * @param {*} $target
+   * @param {*} willDeny
+   * @param {*} res
    */
   _successRequestDeny: function ($target, willDeny, resp) {
 
@@ -91,9 +91,9 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
 
   /**
    * 거부 등록/해제 실패
-   * @param {} res 
+   * @param {} res
    */
-  _failRequestDeny: function ($target, res) {
+  _failRequestDeny: function (/* $target, res */) {
     Tw.CommonHelper.endLoading(this.$className);
     this._popupService.openAlert(Tw.ALERT_MSG_COMMON.SUCEESS_SAFETY_NUMBER_PROVIDE_FAIL);
   },
@@ -103,7 +103,8 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
    * @desc 더보기
    */
   _showMore: function () {
-    var $currrSublist = this.$container.find('.fe-sublist.none').slice(0, 20).removeClass('none');
+    // var $currrSublist = this.$container.find('.fe-sublist.none').slice(0, 20).removeClass('none');
+    this.$container.find('.fe-sublist.none').slice(0, 20).removeClass('none');
 
     if (this.$container.find('.fe-sublist.none').length < 1){
       this.$btnMoreView.hide();

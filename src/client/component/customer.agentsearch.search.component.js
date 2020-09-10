@@ -30,7 +30,8 @@ Tw.CustomerAgentsearchComponent.prototype = {
    * @desc DOM caching
    */
   _cacheElements: function () {
-
+    this.$locationAlert = this.$container.find('.fe-location-alert');  // 위치정보 미동의 시 보이는 알럿 영역
+    this.$loading = this.$container.find('.fe-loading');  // 로딩
   },
 
   /**
@@ -171,6 +172,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
       saveTask(o, 'nameTheft');
       saveTask(o, 'callHistSearch');
       saveTask(o, 'rentYn');
+      saveTask(o, 'safeDealKiosk');
 
       // 체험존
       saveTask(o, 'fiveGxYn');
@@ -200,8 +202,8 @@ Tw.CustomerAgentsearchComponent.prototype = {
       var url = Tw.Environment.environment === 'prd' ? Tw.OUTLINK.T_SHOP.PRD : Tw.OUTLINK.T_SHOP.DEV;
       url += Tw.OUTLINK.T_SHOP.RESERVE;
       item.url = Tw.StringHelper.stringf(url, this._svcInfo.userId, this._svcInfo.svcMgmtNum, item.locCode);
-    } else if (''+item.storeType === '1') { // 지점이면
-      item.url = Tw.OUTLINK.BRANCH_RERSERVE;
+    } else if (''+item.agnYn === 'Y') { // 지점이면
+      item.url = Tw.OUTLINK.BRANCH_RERSERVE + item.storeName;
       item.charge = true; // 과금팝업 띄우기
     }
     // 티샵 예약 or 일반 지점 예약 가능 여부
@@ -249,7 +251,33 @@ Tw.CustomerAgentsearchComponent.prototype = {
    * @returns {{done: *}}
    * @desc BFF Request
    */
-  request: function (bff, param) {
+  /*request: function (bff, param) {
     return this._apiService.requestDone(bff, param);
+  }*/
+
+  /**
+   * @function
+   * @param bff
+   * @param param
+   * @return {{done: (function(*): *)}}
+   * @desc BFF 리퀘스트. 결과가 실패이면 로딩중 화면 비노출 및 다음스텝 진행안함.
+   */
+  request: function (bff, param) {
+    var self = this;
+    var fail = function (res) {
+      Tw.Error(res.code, res.msg).pop();
+      self.$loading.addClass('none');
+    };
+    return {
+      done: function (func) {
+        return self._apiService.request(bff, param).done(function (res){
+          if (res.code !== Tw.API_CODE.CODE_00) {
+            fail(res);
+            return;
+          }
+          func(res);
+        }).fail(fail);
+      }
+    };
   }
 };

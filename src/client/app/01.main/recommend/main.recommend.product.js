@@ -84,7 +84,7 @@ Tw.MainRecommendProduct.prototype = {
     });
 
     if (index !== _$context._now) {
-      color = _$context.$list.eq(index).data('bgColor');
+      var color = _$context.$list.eq(index).data('bgColor');
       $('.di-box-container').css('background', color);
       $('.tail').css('border-top-color', color);
       _$context.$list.eq(_$context._now).fadeOut(300).end().eq(index).fadeIn(300);
@@ -106,5 +106,4 @@ Tw.MainRecommendProduct.prototype = {
   _onClickJoinBtn: function(prodId) {
    this._historyService.goLoad('/product/callplan?prod_id=' + prodId);
  }
-}
-  
+};

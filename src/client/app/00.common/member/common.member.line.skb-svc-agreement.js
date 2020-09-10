@@ -34,7 +34,7 @@ Tw.CommonMemberLineSkbSvcAgreement.prototype = {
    * @private
    */
   _bindEvent: function () {
-    this.$container.on('click', '.fe-bt-cancel', $.proxy(function() { this._historyService.goBack() }, this));
+    this.$container.on('click', '.fe-bt-cancel', $.proxy(function() { this._historyService.goBack(); }, this));
     this.$container.on('click', '.fe-bt-term', $.proxy( this._openTermDetail, this ));
     this.$container.on('click', '.fe-bt-next', $.proxy(this._callIsOverFourteen, this));
   },
@@ -69,7 +69,7 @@ Tw.CommonMemberLineSkbSvcAgreement.prototype = {
       if ( resp.result.age >= 14 ) {
         this._callDisagreeLineCheck();
       } else {
-        this._popupService.openAlert(Tw.ALERT_MSG_COMMON.BROADBAND_AGREEMENT_UNDER_FOURTEEN)
+        this._popupService.openAlert(Tw.ALERT_MSG_COMMON.BROADBAND_AGREEMENT_UNDER_FOURTEEN);
       }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -111,7 +111,7 @@ Tw.CommonMemberLineSkbSvcAgreement.prototype = {
           svcName: Tw.BROADBAND_SVC_CODE_NAME[line.svcCd],
           address: line.zssaBasAddr,
           isNone: serialNumber < 10 ? '' : ' none'
-        })
+        });
         serialNumber++;
       });
 
@@ -165,7 +165,7 @@ Tw.CommonMemberLineSkbSvcAgreement.prototype = {
       null,
       null,
       // 닫기 버튼 클릭 시 페이지 진입 이전 화면으로 이동
-      $.proxy( function() { this._historyService.go(-3) }, this));
+      $.proxy( function() { this._historyService.go(-3); }, this));
   },
 
   /**
