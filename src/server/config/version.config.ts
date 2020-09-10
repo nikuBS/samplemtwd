@@ -1,4 +1,4 @@
-const VERSION = '1.250.0';
+const VERSION = '1.251.0';
 const VERSION_TEST = '1.0.0';
 
 export default VERSION;
