@@ -21,6 +21,16 @@ export default class RoamingTariffOfferController extends TwViewController {
       this.getRecommendedTariff(countryCode, from.format('YYYYMMDD'), to.format('YYYYMMDD')),
       this.getAvailableTariffs(countryCode),
     ).subscribe(([country, recommended, allTariffs]) => {
+
+      // this.apiService.request(API_CMD.BFF_10_0001, {prodExpsTypCd: 'P'}, {}, [recommended.prodId]).subscribe(resp => {
+      //   console.log(resp);
+      const detail = RoamingHelper.getTariffHardcoded(recommended.prodId);
+      if (detail) {
+        recommended.data = detail.data;
+        recommended.phone = detail.phone;
+        recommended.price = detail.price;
+      }
+
       res.render('roaming-next/roaming.tariff.offer.html', {
         svcInfo,
         pageInfo,
@@ -69,26 +79,24 @@ export default class RoamingTariffOfferController extends TwViewController {
       svcStartDt: startDate,
       svcEndDt: endDate
     }).map(resp => {
-      console.log(resp);
-      // prodId
-      // prodNm
-      // prodSmryDesc
-      // basFeeInfo
+      // prodId: NA00006489
+      // prodNm: baro 3GB
+      // prodSmryDesc: 아시아,미주,유럽에서
+      // basFeeInfo: 상세참조
       // startEndTerm: '7'
-      // neiborRomPsblNatInfo
+      // neiborRomPsblNatInfo: '캐나다'
       const item: any = resp.result;
-      if (!item.prodId) {
-        // FIXME: 추천요금제가 나오지 않으면, 항상 baro 3GB 리턴
-        item.prodId = 'NA00006489';
-        item.prodNm = 'baro 3GB';
-        item.prodSmryDesc = '아시아,미주,유럽,호주에서 7일간 로밍데이터 3GB를 이용하는 요금제입니다.';
-        item.basFeeInfo = '상세참조';
-        item.startEndTerm = '7';
 
-        item.price = '29,000원/7일';
-        item.data = '4GB';
-        item.phone = 'baro통화 무제한';
-      }
+      // if (!item.prodId) {
+      //   item.prodId = 'NA00006489';
+      //   item.prodNm = 'baro 3GB';
+      //   item.prodSmryDesc = '아시아,미주,유럽,호주에서 7일간 로밍데이터 3GB를 이용하는 요금제입니다.';
+      //   item.basFeeInfo = '상세참조';
+      //   item.startEndTerm = '7';
+      //   item.price = '29,000원/7일';
+      //   item.data = '4GB';
+      //   item.phone = 'baro통화 무제한';
+      // }
       return item;
     });
   }
