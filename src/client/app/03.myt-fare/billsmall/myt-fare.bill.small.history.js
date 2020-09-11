@@ -299,6 +299,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @param {Object} $sheet 월 선택 액션시트 wraper 엘리먼트
    */
   _openMonthSelectHandler: function ($sheet) {
+    Tw.CommonHelper.focusOnActionSheet($sheet); // 접근성
     // 해당 년 월 선택
     var year = parseFloat(this.selectedYear), month = parseFloat(this.selectedMonth);
 
