@@ -21,10 +21,8 @@ _%>
 <!-- .cont-box -->
 <div class="cont-box nogaps">
     <div class="banner-area">
-        <%# // TODO: xtEid이 필요할지 아닐지 확인 필요 _%>
-        <%_ var xtEid = {alarm: 'xtEid:alarm'}; _%>
-        <a href="#none" data-xt_eid="<%= xtEid.alarm %>" data-xt_csid="NO" data-xt_action="BC"><img src="<%= CDN %>/img/etc/banner_combine_prd.png" alt="결합하고 할인도 받으세요. 결합하고 할인도 받으세요. 결합상품 확인하기"></a>
-        <%# // TODO: 결합상품 확인하기 터치 시 상품 원장으로 이동(TB끼리 TV플러스 TW00000016) _%>
+        <%# 결합상품 확인하기 터치 시 상품 원장으로 이동(TB끼리 TV플러스 TW00000016) _%>
+        <a href="/product/callplan?prod_id=TW00000016"><img src="<%= CDN %>/img/etc/banner_combine_prd.png" alt="결합하고 할인도 받으세요. 결합하고 할인도 받으세요. 결합상품 확인하기"></a>
     </div>
 </div>
 <!--// .cont-box -->
