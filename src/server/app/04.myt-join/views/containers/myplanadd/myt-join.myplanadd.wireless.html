@@ -24,6 +24,7 @@ _%>
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
             <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C62-1", multiple: "CMMA_A3_B13_C62-2" } }); _%>
+            <%_ const dcPrograms = additions.dcPrograms; _%>
             <%_ const additionsPaid = additions.joined.paids; _%>
             <%_ const additionsFree = additions.joined.frees; _%>
             <%_ const additionsRoaming = additions.roaming; _%>
