@@ -104,19 +104,19 @@
                                 #데이터 한줄 유형입니다. 말줄임 (..) 처리일때난 span태그로 감싸지 않고 텍스트만 뿌려주시면 됩니다.
                             </div> -->
                             <ul class="products-detailinfo02">
-                                <li class="category-type type01">
+                                <li class="category-type type01 style2"><!-- 200911 classname 추가 -->
                                     <p class="gb"><i class="blind">data</i><span>100</span>GB</p>
                                 </li>
-                                <li class="category-type type02">
+                                <li class="category-type type02 style2"><!-- 200911 classname 추가 -->
                                     <p class="type">
                                         <i class="blind">currency</i>
-                                        Unlimited
+                                        집전화·이동전화 무제한
                                     </p>
                                 </li>
-                                <li class="category-type type03">
+                                <li class="category-type type03 style2"><!-- 200911 classname 추가 -->
                                     <p class="basic">
                                         <i class="blind" >text massage</i>
-                                        Unlimited
+                                        Free
                                     </p>
                                 </li>
                             </ul>
@@ -125,7 +125,23 @@
                 </div>
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-top">
+                <!-- 200911 내용 변경 -->
+                <div class="cont-box nogaps-hoz noborder">
+                    <h3 class="my-info-tit">FREE additional charge service</h3>
+                    <dl class="my-info-data">
+                        <dt>Service</dt>
+                        <dd>Selective Discount Selective <br/>Discount Selective Discount</dd>
+                    </dl>
+                    <dl class="my-info-data">
+                        <dt>Monthly Fee</dt>
+                        <dd>₩7,000</dd>
+                    </dl>
+                    <dl class="my-info-data">
+                        <dt>Date of Application</dt>
+                        <dd>2020.5.19.</dd>
+                    </dl>
+                </div>
+                <div class="cont-box nogaps-top noborder">
                     <h3 class="my-info-tit">DATA additional charge service</h3>
                     <dl class="my-info-data">
                         <dt>Service</dt>
@@ -137,86 +153,14 @@
                     </dl>
                     <dl class="my-info-data">
                         <dt>Date of Application</dt>
-                        <dd>2020.5.19</dd>
+                        <dd>2020.5.19.</dd>
                     </dl>
                 </div>
-                <!--// .cont-box -->
-                <!-- <hr class="cont-sp type1" aria-hidden="true"/> -->
-                <!-- .cont-box -->
-                <!-- <div class="cont-box nogaps-top">
-                    <h3 class="my-info-tit">FREE additional charge service</h3>
-                    <dl class="my-info-data">
-                        <dt>Service</dt>
-                        <dd>Selective Discount Selective Discount Selective Discount</dd>
-                    </dl>
-                    <dl class="my-info-data">
-                        <dt>Monthly Fee</dt>
-                        <dd>₩3,500</dd>
-                    </dl>
-                    <dl class="my-info-data">
-                        <dt>Date of Application</dt>
-                        <dd>2020.5.19</dd>
-                    </dl>
-                </div> -->
-                <!--// .cont-box -->
-
+                <!-- //200911 내용 변경 -->
             </div>
         </div>
         <!--// #contents -->
     </div>
-    <script>
-        /*
-            average : 평균 제공 여부
-            legend : 범례
-            unit : gb, 원, time
-            link : 링크여부 (button태그로 link0 ~ 숫자 증가하는식의 class명)
-            data_arry.t : 기준일
-            data_arry.v : 숫자
-            data_arry.class : link true시 button태그에 class명 생략시 위에 기본률에 따름
-            data_arry.length 에 맞춰서 style 자동 조절
-            ex) 4개 이상일 경우 가로 스크롤 제공
-        */
-        $('body').chart2({
-            target:'.kjs10',
-            type : 'bar5',
-            average : false,
-            // legend : ['청구', '할인'],
-            link : true,
-            unit : '₩', // gb, 원, time
-            data_arry : [
-                {
-                    t : 'Aug.',
-                    v : 80050,
-                    class : 'className1'
-                },
-                {
-                    t : 'Jul.',
-                    v : 83070,
-                    class : 'className2'
-                },
-                {
-                    t : 'Jun.',
-                    v : 79370,
-                    class : 'className3'
-                },
-                {
-                    t : 'May.',
-                    v : 79980,
-                    class : 'className4'
-                },
-                {
-                    t : 'Apr.',
-                    v : 83820,
-                    class : 'className5'
-                },
-                {
-                    t : 'Mar.',
-                    v : 78400,
-                    class : 'className6'
-                }
-            ]
-        });
-    </script>
 </body>
 
 </html>

@@ -214,7 +214,7 @@
 
 .icon-call-48 { display: inline-block; width: 1.5rem; height: 1.5rem; background: url("/img/en/icon_48px_call.svg") no-repeat 0 0; background-size: 100% 100%; }
 
-.tod-icon.tod-icon-notice02::before { width: 0.875rem; height: 0.875rem; top: 0.1rem; left: 0.2rem; background-image: url("/img/en/icon-notice02.png"); }
+.tod-icon.tod-icon-notice02::before { width: 0.875rem; height: 0.875rem; top: 0; left: 0.2rem; background-image: url("/img/en/icon-notice02_red.png"); }
 
 .ti-caption-gray .tod-icon { font-size: 0.81rem; color: #333; }
 
@@ -303,6 +303,14 @@
 .box-suggest .suggest-info .suggest-sub3 { text-align: center; font-size: 1rem; line-height: 1.13rem; }
 
 .bt-top button { position: absolute; left: 50%; top: 1.56rem; display: inline-block; width: 2.31rem; height: 3.19rem; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); background: url("/img/en/ico-group3.png") no-repeat -0.5rem -68.75rem; background-size: 3.13rem; }
+
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line.red { background-color: #fff2f0; }
+
+.myt-note-wrap { width: 100%; }
+
+.myt-note-wrap .tit { position: relative; padding: 0 0.31rem; }
+
+.myt-note-wrap .tit::before { content: ''; display: inline-block; width: 4px; height: 4px; background: url("/img/en/ico_refer.png") 0 0 no-repeat; position: absolute; top: 3px; left: 0; background-size: 100% 100%; }
 
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
@@ -746,7 +754,9 @@
 
 .store-list { margin-top: 1.13rem; }
 
-.store-list > li { padding: 1.25rem 0; border-top: 1px solid #e1e1e1; }
+.store-list > li { padding: 1.25rem 0; border-top: 1px solid #f2f2f2; }
+
+.store-list > li:first-child { border-color: #e5e5e5; }
 
 .store-list > li .info-top { padding: 0 1.25rem; background: url("/img/en/icon_location_pin.png") left top no-repeat; background-size: 0.75rem 1rem; }
 
@@ -932,14 +942,20 @@
 
 .products-detailinfo02 .category-type.type01 { padding-left: 0.94rem; width: 37%; }
 
+.products-detailinfo02 .category-type.type01.style2 { width: 100%; display: inline-block; padding-left: 0; margin: 0.94rem 0 0.47rem 0; }
+
 .products-detailinfo02 .category-type.type02 { width: 34%; }
+
+.products-detailinfo02 .category-type.type02.style2 { width: 100%; display: inline-block; margin-bottom: 0.47rem; }
 
 .products-detailinfo02 .category-type.type03 { width: 29%; }
 
-.products-detailinfo02 .category-type .gb { background-image: url(/img/en/bg_gb.png); }
+.products-detailinfo02 .category-type.type03.style2 { width: 100%; display: inline-block; margin-bottom: 0.47rem; }
 
-.products-detailinfo02 .category-type .type { background-image: url(/img/en/bg_type.png); }
+.products-detailinfo02 .category-type .gb { background-image: url("/img/en/bg_gb.png"); }
 
-.products-detailinfo02 .category-type .basic { background-image: url(/img/en/bg_sms.png); }
+.products-detailinfo02 .category-type .type { background-image: url("/img/en/bg_type.png"); }
+
+.products-detailinfo02 .category-type .basic { background-image: url("/img/en/bg_sms.png"); }
 
 /*# sourceMappingURL=maps/style_en.css.map */
