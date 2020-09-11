@@ -1571,6 +1571,113 @@ body.rn #roamingCoupon .intro ul .inner-box {
 body.rn #roamingCoupon .intro ul .inner-box .card {
   background-color: #f3f4f9;
 }
+body.rn #countriesDialog {
+  background-color: white;
+}
+body.rn #countriesDialog .header {
+  height: 52px;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 1px solid #edeef0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body.rn #countriesDialog .header h1 {
+  color: black;
+  font-size: 16px;
+  letter-spacing: -0.7px;
+  line-height: 52px;
+  text-align: center;
+}
+body.rn #countriesDialog .header .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+  cursor: pointer;
+}
+body.rn #countriesDialog .tariffBox {
+  margin-top: 53px;
+  position: relative;
+  height: 85px;
+}
+body.rn #countriesDialog .dropdown {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 52px;
+  margin: auto;
+  width: 88%;
+  padding: 0px 25px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: #111;
+}
+body.rn #countriesDialog .sortBy {
+  padding-left: 5px;
+  border-bottom: 1px solid #e0e0e0;
+}
+body.rn #countriesDialog .sortBy .by {
+  display: inline-block;
+  padding: 16px 15px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  color: #959595;
+}
+body.rn #countriesDialog .sortBy .active {
+  color: #4559fc;
+}
+body.rn #countriesDialog .scroller {
+  position: relative;
+  height: 300px;
+}
+body.rn #countriesDialog .menu {
+  background-color: #f0f4ff;
+  width: 120px;
+  position: absolute;
+  overflow-y: scroll;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+body.rn #countriesDialog .menu li {
+  height: 56px;
+  line-height: 56px;
+  padding-left: 18px;
+  font-size: 16px;
+  /*border-bottom: 1px solid #e5e5e5;*/
+  color: #959595;
+}
+body.rn #countriesDialog .menu li.active {
+  background-color: white;
+  color: #4559fc;
+}
+body.rn #countriesDialog .content {
+  background-color: #fff;
+  padding-left: 25px;
+  padding-right: 25px;
+  position: absolute;
+  overflow-y: scroll;
+  left: 120px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+body.rn #countriesDialog .content li {
+  height: 50px;
+  line-height: 50px;
+  font-size: 15px;
+  color: #111;
+  /*border-bottom: 1px solid #f2f2f2;*/
+  /*cursor: pointer;*/
+}
 body.scroll #gnb {
   background-color: white;
   border-bottom: 1px solid #e9e9e9;

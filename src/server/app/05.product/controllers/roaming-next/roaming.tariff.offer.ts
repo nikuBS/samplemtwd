@@ -10,6 +10,11 @@ import RoamingHelper from './roaming.helper';
 export default class RoamingTariffOfferController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
+    if (req.query.prodId) {
+      this.queryAvailableCountries(req, res, req.query.prodId);
+      return;
+    }
+
     const countryCode = req.query.code;
 
     const from = moment(req.query.from, 'YYYYMMDD');
@@ -101,7 +106,10 @@ export default class RoamingTariffOfferController extends TwViewController {
     });
   }
 
-  private getAvailableTariffs(countryCode: string): Observable<any> {
+  private getAvailableTariffs(countryCode: string, skip: boolean = false): Observable<any> {
+    if (skip) {
+      return Observable.of([]);
+    }
     return this.apiService.request(API_CMD.BFF_10_0200, {countryCode}).map(resp => {
       // prodGrpId: 'T000000091',
       // prodId: 'NA0000000',
@@ -112,6 +120,39 @@ export default class RoamingTariffOfferController extends TwViewController {
       // prodBaseBenfCtt: 'baro통화 무료', // 상품 기본혜택 내용
       // basFeeInfo: '40000', // 상품금액
       return resp.result;
+    });
+  }
+
+  private getAvailableCountries(prodId: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0201, {prodId}).map(resp => {
+      if (!resp.result && resp.msg && resp.code) {
+        // 서비스 가능한 국가 없을 때 PRD0075
+        return {
+          code: resp.code,
+          msg: resp.msg,
+        };
+      }
+      return resp.result;
+    });
+  }
+
+  private queryAvailableCountries(req: Request, res: Response, prodId: string) {
+    Observable.combineLatest(
+      this.getAvailableTariffs('ALL', req.query.wt ? false : true),
+      this.getAvailableCountries(prodId),
+    ).subscribe(([tariffs, countries]) => {
+      // tariffs
+      //   prodId, prodNm,
+      //   prodGrpId: 'T00000077',
+      //   romUsePrdInfo: '30' (days)
+      //   basOfrMbDataQtyCtt: '상세참조'
+      //   basOfrDataQtyCtt: '4.0'
+      //   basFeeInfo: '무료' | '39000'
+      //   prodBasBenfCtt: 'baro통화 무료'
+      res.json({
+        tariffs: tariffs,
+        items: countries,
+      });
     });
   }
 }

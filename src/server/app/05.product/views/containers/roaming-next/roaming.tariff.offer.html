@@ -37,7 +37,7 @@
                     </div>
                 </a>
                 <div class="others">
-                    <a href="#">더보기 +</a>
+                    <a href="#" onclick="return showCountries('<%= recommended.prodId %>')">더보기 +</a>
                     <p>
                         <span class="colorPoint"><%= recommended.neiborRomPsblNatInfo %></span> 등의 국가에서도<br />사용 가능해요.
                     </p>
@@ -89,10 +89,11 @@
                 </a>
                 <% } %>
             </div>
-            <a href="/product/roaming/tariffs" class="link">로밍 전체 요금제 보러 가기</a>
+            <a href="/product/roaming/fee" class="link">로밍 전체 요금제 보러 가기</a>
         </div>
     </div>
 </div>
+<%- include('../../components/roaming-next/countries.tariff.html', {svcInfo}); %>
 <%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 </body>
 <% include ../../components/javascript.component.html %>
