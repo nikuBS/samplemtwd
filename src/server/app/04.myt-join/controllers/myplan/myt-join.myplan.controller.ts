@@ -156,7 +156,7 @@ const convertAdditionData = (addition: any) => {
     ...addition,
     basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
     isNotFree: addition.payFreeYn === 'N' || addition.payFreeYn === 'Y' && PRODUCT_CALLPLAN.SEE_CONTENTS.includes(addition.basFeeTxt),
-    scrbDt: DateHelper.getShortDate(addition.scrbDt)
+    scrbDt: DateHelper.getShortDate(addition.scrbDt) // 신청일
   };
 };
 
@@ -346,7 +346,7 @@ class MyTJoinMyplan extends TwViewController {
         ...data,
         basFeeAmt: isBasFeeAmtNumber && parseInt(data.basFeeAmt, 10) > 0 ?
             FormatHelper.addComma(data.basFeeAmt.toString()) + CURRENCY_UNIT.WON : 0, // 금액 값 단위 붙여서 제공
-        svcScrbDt: DateHelper.getShortDateWithFormat(data.svcScrbDt, 'YYYY.M.D.')  // 가입일
+        scrbDt: DateHelper.getShortDateWithFormat(data.svcScrbDt, 'YYYY.M.D.') // 신청일
       },
       dcBenefits: this._convertWireDcBenefits(data.dcBenefits)  // 혜택 값 변환
     };
@@ -376,7 +376,7 @@ class MyTJoinMyplan extends TwViewController {
    */
   private _convertWirelessDcPrograms(dcPrograms: Array<any>): Array<any> {
     return dcPrograms/*.map(program => {
-      program.scrbDt = DateHelper.getShortDateWithFormat(program.scrbDt, 'YYYY.M.D.'); // 가입일
+      program.scrbDt = DateHelper.getShortDateWithFormat(program.scrbDt, 'YYYY.M.D.'); // 신청일
       program.btnList = this._convertBtnList(program.btnList, program.prodSetYn); // 버튼 목록 변환
       program.dcStaDt = FormatHelper.isEmpty(program.dcStaDt) ? null : DateHelper.getShortDateWithFormat(program.dcStaDt, 'YYYY.M.D.'); // 시작일
       program.dcEndDt = FormatHelper.isEmpty(program.dcEndDt) ? null : convertDcEndDt(program.dcEndDt); // 종료일
