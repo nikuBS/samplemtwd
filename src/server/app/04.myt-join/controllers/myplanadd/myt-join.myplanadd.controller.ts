@@ -110,10 +110,8 @@ class MyTJoinMyPlanAdd extends TwViewController {
     if (svcInfo.svcAttrCd.includes('M')) {
       // 무선 회선일 경우
       Observable.combineLatest(
-          this._getWirelessAdditions(svcInfo),
-          this._getWirelessPlan()
-          // this._getBenefits(svcInfo)
-      ).subscribe(([additions, feePlan]) => {
+          this._getWirelessAdditions(svcInfo)
+      ).subscribe(([additions]) => {
         if (additions.code) {
           return this.error.render(res, {
             ...additions,
@@ -122,14 +120,13 @@ class MyTJoinMyPlanAdd extends TwViewController {
             pageInfo: pageInfo
           });
         }
-        res.render('myplanadd/myt-join.myplanadd.wireless.html', {svcInfo, pageInfo, additions, dcPrograms: feePlan.dcPrograms || []});
+        res.render('myplanadd/myt-join.myplanadd.wireless.html', {svcInfo, pageInfo, additions});
       });
     } else {
       // 유선 회선일 경우
       Observable.combineLatest(
-          this._getWireAdditions(),
-          this._getWirePlan()
-      ).subscribe(([additions, feePlan]) => {
+          this._getWireAdditions()
+      ).subscribe(([additions]) => {
         if (additions.code) {
           return this.error.render(res, {
             ...additions,
@@ -138,9 +135,144 @@ class MyTJoinMyPlanAdd extends TwViewController {
             pageInfo: pageInfo
           });
         }
-        res.render('myplanadd/myt-join.myplanadd.wire.html', {svcInfo, pageInfo, additions, dcBenefits: feePlan.dcBenefits || []});
+        res.render('myplanadd/myt-join.myplanadd.wire.html', {svcInfo, pageInfo, additions});
       });
     }
+  }
+
+  /**
+   * @desc 무선 부가서비스 가져오기
+   * @private
+   */
+  private _getWirelessAdditions(svcInfo: any): Observable<any> {
+    return Observable.zip(
+        this.apiService.request(API_CMD.BFF_05_0222, {}),
+        this.apiService.request(API_CMD.BFF_10_0185, {}, {
+          svcMgmtNum: svcInfo.svcMgmtNum,
+          svcNum: svcInfo.svcNum,
+          custNum: svcInfo.custNum
+        }),
+        (...resps) => {
+          const apiError = resps.find(resp => (resp && !!resp.code && resp.code !== '00'));
+          if (!FormatHelper.isEmpty(apiError)) {
+            return {
+              msg: apiError.msg,
+              code: apiError.code
+            };
+          }
+          const [additionProds = {}, smartCallPickProds] = resps.map(resp => resp.result);
+          const joinedPaid = (additionProds.addProdPayList || []).map(convertAdditionData);
+          const joinedFree = (additionProds.addProdFreeList || []).map(convertAdditionData);
+          // 가입된 로밍 요금제가 있을 경우
+          const roaming = additionProds.roamingProd ? {
+                ...additionProds.roamingProd,
+                addRoamingProdCnt: additionProds.roamingProd.recentlyJoinsProdNm ?
+                    Number(additionProds.roamingProd.addRoamingProdCnt) - 1 :
+                    Number(additionProds.roamingProd.addRoamingProdCnt)
+              } :
+              {};
+          const smartCallPick = smartCallPickProds.listSmartPick;
+          // 부가상품에 스마트콜Pick이 있는 경우
+          if (smartCallPickProds.length) {
+            if (joinedPaid.length) {
+              if (joinedPaid.filter(item => item.prodId === 'NA00006399').length > 0) {
+                // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
+                // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
+                smartCallPick.forEach((product: any) => {
+                  const smtCpItemIdx = joinedPaid.findIndex(prod => prod.prodId === product.prod_id);
+                  if (smtCpItemIdx > -1) {
+                    joinedPaid.splice(smtCpItemIdx, 1);
+                  }
+                });
+              }
+            }
+            // TODO: 무료 상품에도 스마트콜픽이 있지 않을 듯 하지만, 확인 후 제거하자!
+            if (joinedFree.length) {
+              if (joinedFree.filter(item => item.prodId === 'NA00006399').length > 0) {
+                // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
+                // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
+                smartCallPick.forEach((product: any) => {
+                  const smtCpItemIdx = joinedFree.findIndex(prod => prod.prodId === product.prod_id);
+                  if (smtCpItemIdx > -1) {
+                    joinedFree.splice(smtCpItemIdx, 1);
+                  }
+                });
+              }
+            }
+          }
+          return {
+            joined: {
+              paids: joinedPaid, // 유료 부가 상품
+              frees: joinedFree // 무료 부가 상품
+            },
+            roaming, // 로밍 요금제
+            dcPrograms: this._convertWirelessDcPrograms(additionProds.disProdList), // 옵션/할인 프로그램
+          };
+        });
+  }
+
+  private _getWireAdditions1(): Observable<any> {
+    return Observable.zip(
+        this.apiService.request(API_CMD.BFF_05_0129, {}),
+        this.apiService.request(API_CMD.BFF_05_0128, {}),
+        (...resps) => {
+          const apiError = resps.find(resp => (resp && !!resp.code && resp.code !== '00'));
+          if (!FormatHelper.isEmpty(apiError)) {
+            return {
+              msg: apiError.msg,
+              code: apiError.code
+            };
+          }
+          const [additionProds = {}, feePlan] = resps.map(resp => resp.result);
+          const joinedPaid = (additionProds.pays || []).map(convertAdditionData);
+          const joinedFree = (additionProds.frees || []).map(convertAdditionData);
+          const joinables = additionProds.joinables.map(convertAdditionData).sort(sortAdditionData);
+          const reserveds = additionProds.reserveds.map(convertAdditionData);
+          return {
+            joined: {
+              paids: joinedPaid, // 가입된 유료 부가서비스
+              frees: joinedFree // 가입된 무료 부가서비스
+            },
+            joinable: joinables, // 가입 가능한 부가서비스 목록
+            reserved: reserveds, // 가입 예약된 부가서비스 목록
+            // dcBenefits: this._convertWirePlan(feePlan).dcBenefits, // 무료 혜택
+            // TODO: 나의 부가상품에는 필요없다.
+            // dcBenefits: this._convertWireDcBenefits(feePlan.dcBenefits) // 무료 혜택
+          };
+        });
+  }
+
+  /**
+   * @desc 유선 부가서비스 가져오기
+   * @private
+   */
+  private _getWireAdditions(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0129, {}).map(resp => {
+      if (resp.code === API_CODE.CODE_00) {
+        const data = resp.result;
+        return {
+          joined: {
+            paids: (data.pays || []).map(convertAdditionData), // 가입된 유료 부가서비스
+            frees: (data.frees || []).map(convertAdditionData) // 가입된 무료 부가서비스
+          },
+          joinable: data.joinables.map(convertAdditionData).sort(sortAdditionData), // 가입 가능한 부가서비스 목록
+          reserved: data.reserveds.map(convertAdditionData)  // 가입 예약된 부가서비스 목록
+        };
+      }
+      return resp;
+    });
+  }
+
+  //
+  private _getWirePlan(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0128, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        const data = resp.result;
+        return this._convertWirePlan(data);
+      }
+      // error
+      return null;
+    });
   }
 
   /**
@@ -164,33 +296,6 @@ class MyTJoinMyPlanAdd extends TwViewController {
     });
 
     return settingBtnList;
-  }
-
-  // 무선 옵션 및 할인프로그램
-  private _getWirelessPlan(): Observable<any> { // command: any): Observable<any> {
-    // BFF_05_0222 신규
-    // @site: http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=119906839
-    // return this.apiService.request(API_CMD.BFF_05_0222, {}).map((resp) => {
-    return this.apiService.request(API_CMD.BFF_05_0136, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return this._convertWirelessPlan(data);
-      }
-      // error
-      return null;
-    });
-  }
-
-  //
-  private _getWirePlan(): Observable<any> { // command: any): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0128, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return this._convertWirePlan(data);
-      }
-      // error
-      return null;
-    });
   }
 
   /**
@@ -240,45 +345,6 @@ class MyTJoinMyPlanAdd extends TwViewController {
   }
 
   /**
-   * 무선 데이터 변환
-   * @param data - 무선 요금제 데이터
-   */
-  private _convertWirelessPlan(data): any {
-    if (FormatHelper.isEmpty(data.feePlanProd)) {
-      return null;
-    }
-    // 금액, 음성, 문자, 할인상품 값 체크
-    /*
-    const basFeeTxt = FormatHelper.getValidVars(data.feePlanProd.basFeeTxt),
-        basOfrVcallTmsCtt = FormatHelper.getValidVars(data.feePlanProd.basOfrVcallTmsTxt),
-        basOfrCharCntCtt = FormatHelper.getValidVars(data.feePlanProd.basOfrLtrAmtTxt),
-        disProdList = FormatHelper.getValidVars(data.disProdList, []);
-    // 데이터 값 변환
-    const basDataGbTxt = FormatHelper.getValidVars(data.feePlanProd.basDataGbTxt),
-        basDataMbTxt = FormatHelper.getValidVars(data.feePlanProd.basDataMbTxt),
-        basDataTxt = this._convertBasDataTxt(basDataGbTxt, basDataMbTxt);
-    // 상품 스펙 공통 헬퍼 사용하여 컨버팅
-    const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
-    */
-    const disProdList = FormatHelper.getValidVars(data.disProdList, []);
-    return {
-      // ...data,
-      /*
-      product: FormatHelper.isEmpty(data.feePlanProd) ? null : {
-        ...data.feePlanProd,
-        scrbDt: DateHelper.getShortDateWithFormat(data.feePlanProd.scrbDt, 'YYYY.M.D.'), // 신청일
-        basFeeInfo: spec.basFeeInfo,  // 금액
-        basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
-        basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
-        basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
-        btnList: this._convertBtnList(data.feePlanProd.btnList, data.feePlanProd.prodSetYn) // 버튼 목록
-      },
-      */
-      dcPrograms: this._convertWirelessDcPrograms(disProdList) // 옵션 및 할인 프로그램
-    };
-  }
-
-  /**
    * 유선 값 변환
    * @param {Object} data - 유선 요금제 정보
    * @return {Object}
@@ -296,221 +362,6 @@ class MyTJoinMyPlanAdd extends TwViewController {
       */
       dcBenefits: this._convertWireDcBenefits(data.dcBenefits) // 혜택 값 변환
     };
-  }
-
-  /**
-   * @desc 무선 부가서비스 가져오기
-   * @private
-   */
-  private _getWirelessAdditions(svcInfo: any): Observable<any> {
-    return Observable.zip(
-        this.apiService.request(API_CMD.BFF_05_0137, {}),
-        this.apiService.request(API_CMD.BFF_10_0185, {}, {
-          svcMgmtNum: svcInfo.svcMgmtNum,
-          svcNum: svcInfo.svcNum,
-          custNum: svcInfo.custNum
-        }),
-        (...resps) => {
-          const apiError = resps.find(item => (item && !!item.code && item.code !== '00'));
-          if (!FormatHelper.isEmpty(apiError)) {
-            return {
-              msg: apiError.msg,
-              code: apiError.code
-            };
-          }
-          const [additionProds = {}, smartCallPickProds] = resps.map(resp => resp.result);
-          const joined = (additionProds.addProdList || []).map(convertAdditionData);
-          // 가입된 로밍 요금제가 있을 경우
-          const roaming = additionProds.roamingProd ? {
-                ...additionProds.roamingProd,
-                addRoamingProdCnt: additionProds.roamingProd.recentlyJoinsProdNm ?
-                    Number(additionProds.roamingProd.addRoamingProdCnt) - 1 :
-                    Number(additionProds.roamingProd.addRoamingProdCnt)
-              } :
-              {};
-          let smartCallPick;
-          const listSmartPick = smartCallPickProds.listSmartPick; // || [];
-          if (joined.length && listSmartPick.length) {
-            // 부가상품에 스마트콜Pick이 있는 경우
-
-            if (joined.filter(item => item.prodId === 'NA00006399').length > 0) {
-              // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
-              // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
-              listSmartPick.forEach((product: any) => {
-                const smtCpItemIdx = joined.findIndex(prod => prod.prodId === product.prod_id);
-                if (smtCpItemIdx > -1) {
-                  joined.splice(smtCpItemIdx, 1);
-                }
-              });
-            }
-            smartCallPick = listSmartPick;
-          }
-          return {
-            joined: {
-              paids: joined.filter(addition => addition.payFreeYn === 'N'), // 유료 부가 상품
-              frees: joined.filter(addition => addition.payFreeYn === 'Y') // 무료 부가 상품
-            },
-            roaming, // 로밍 요금제
-            smartCallPick // 스마트콜픽 상품
-          };
-        });
-  }
-
-  /**
-   * @desc 유선 부가서비스 가져오기
-   * @private
-   */
-  private _getWireAdditions(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0129, {}).map(resp => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return {
-          joined: {
-            paids: (data.pays || []).map(convertAdditionData), // 가입된 유료 부가서비스
-            frees: (data.frees || []).map(convertAdditionData) // 가입된 무료 부가서비스
-          },
-          joinable: data.joinables.map(convertAdditionData).sort(sortAdditionData), // 가입 가능한 부가서비스 목록
-          reserved: data.reserveds.map(convertAdditionData)  // 가입 예약된 부가서비스 목록
-        };
-      }
-      return resp;
-    });
-  }
-
-  // 혜택/할인: 요금 할인 (bill-discounts)
-  private _getBillBenefits(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0106, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
-      }
-      // error
-      return resp;
-    });
-  }
-
-  // 혜택/할인: 결합할인 (combination-discounts)
-  private _getCombinationBenefits(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0094, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
-      }
-      // error
-      return resp;
-    });
-  }
-
-  // 혜택/할인: 장기가입혜택 (loyalty-benefits)
-  private _getLoyaltyBenefits(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0196, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
-      }
-      // error
-      return resp;
-    });
-  }
-
-  // 혜택/할인: 리필쿠폰 내역 (refill-coupons)
-  private _getRefillCoupons(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_06_0001, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
-      }
-      // error
-      return resp;
-    });
-  }
-
-  // 혜택/할인
-  // XXX: svcInfo의 type이 정해진 적 없음
-  private _getBenefits(svcInfo: any): Observable<any> {
-    if (['M1', 'M3', 'M4'].indexOf(svcInfo.svcAttrCd) > -1) {
-      return Observable.combineLatest(
-          this._getBillBenefits(),
-          this._getCombinationBenefits(),
-          this._getLoyaltyBenefits(),
-          this._getRefillCoupons()
-      ).pipe(
-          switchMap((resps: Array<any>) => {
-            const apiError = resps.find(item => (item && !!item.code && item.code !== '00'));
-            if (!FormatHelper.isEmpty(apiError)) {
-              return Observable.of({
-                msg: apiError.msg,
-                code: apiError.code
-              });
-            }
-            const [bill, combination, loyalty, coupons] = resps;
-            const benefits: any = {
-              count: 0
-            };
-
-            const billList = bill.priceAgrmtList.filter(item =>
-                (item.prodId !== bill.clubCd || item.prodId !== bill.tplusCd || item.prodId !== bill.chucchucCd));
-            // 요금할인
-            if (billList.length > 0) {
-              benefits.bill = {
-                total: billList.length,
-                item: billList[0].prodNm
-              };
-              benefits.count += billList.length;
-            }
-            // club상품
-            if (bill.clubYN) {
-              benefits.club = {
-                name: bill.clubNm
-              };
-              benefits.count += 1;
-            }
-            // 척척 할인
-            if (bill.chucchuc) {
-              benefits.goodDiscount = true;
-              benefits.count += 1;
-            }
-            // T끼리 Plus 상품
-            if (bill.tplus) {
-              benefits.tplus = true;
-              benefits.count += 1;
-            }
-            // 데이터 선물하기
-            if (bill.dataGiftYN) {
-              benefits.dataGift = true;
-              benefits.count += 1;
-            }
-            // 특화혜택
-            if (bill.thigh5 || bill.kdbthigh5) {
-              const thighCount = (bill.thigh5 && bill.kdbthigh5) ? 2 : 1;
-              benefits.special = {thighCount};
-              benefits.count += thighCount;
-            }
-            // 요금할인- 복지고객
-            if (bill.wlfCustDcList && bill.wlfCustDcList.length > 0) {
-              benefits.welfare = true;
-              benefits.count += bill.wlfCustDcList.length;
-            }
-            // 결합할인
-            if (combination.prodNm.trim().length > 0) {
-              combination.bond = {
-                name: combination.prodNm,
-                total: parseInt(combination.etcCnt, 10) + 1
-              };
-              benefits.count += combination.bond.total;
-            }
-            // 데이터 쿠폰
-            if (loyalty.benfList.length > 0 && loyalty.benfList.findIndex((item) => (item.benfCd === '1')) > -1) {
-              benefits.coupons = coupons.length;
-              benefits.count += 1;
-            }
-            // 장기가입 요금
-            if (bill.longjoin) {
-              // 장기요금할인 복수개 가능여부 확인 필요
-              benefits.loyalty = true;
-              benefits.count += loyalty.dcList.length;
-            }
-            return Observable.of(benefits);
-          })
-      );
-    }
-    return Observable.of([]);
   }
 }
 

@@ -184,7 +184,7 @@ class MyTJoinSubmainController extends TwViewController {
             break;
         }
         // 옵션/할인프로그램 개수 추가
-        data.addProdTotCnt = data.myAddProduct.addTotCnt + data.myAddProduct.disProdCnt || 0;
+        data.addProdTotCnt = data.myAddProduct.addTotCnt + (data.myAddProduct.disProdCnt || 0);
       } else {
         // TODO: 이 부분은 오류가 나지 않도록 보정한 코드인데, 확인 필요 (myAddProduct가 없으면, disProdCnt도 없기 때문)
         // 옵션/할인프로그램 개수 추가
