@@ -1482,11 +1482,17 @@ class ApiRouter {
         };
         // 요청받은 데이터 공제코드가 없을 경우 합산 데이터(기본값)로 설정
         const dataCodes: string[] = dataCode ? (dataCode.includes(',') ? dataCode.split(',') : [dataCode]) : [];
+        let etcGnrlData: string[] = [];
         // 팅요금제 이면서 gnrlData 가 없는 경우 etc 데이터를 gnrlData로 처리 - native 요청 사항
         if ( balancesResponse.result && (!balancesResponse.result.gnrlData || !balancesResponse.result.gnrlData.length)) {
           balancesResponse.result.gnrlData =  balancesResponse.result.etc || [];
           console.log(balancesResponse.result.gnrlData);
         }
+        balancesResponse.result.gnrlData.map((data) => {
+          if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1 ) {
+            etcGnrlData.push(data.skipId);
+          }
+        });
         if ( balancesResponse.result && balancesResponse.result.gnrlData ) {
           balancesResponse.result.gnrlData.map((data) => {
             const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
@@ -1706,7 +1712,9 @@ class ApiRouter {
             remainedValueSmall: '-', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           },
-          original: balancesResponse.result
+          original: balancesResponse.result,
+          etcGnrlData: etcGnrlData,
+          etcSpclData: []
 
         };
 
