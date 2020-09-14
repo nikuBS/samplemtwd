@@ -273,10 +273,15 @@ class MyTJoinMyplan extends TwViewController {
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(defaultOptions, apiError));
       }
-      const [feePlan, /* joinProduct, */ additions, agreements, usageFee, benefits, usagePattern, pps] = subscriptions;
+      const [feePlan, additions, agreements, usageFee, benefits, usagePattern, pps] = subscriptions;
       // 컨버팅 결과 값이 없을 시 오류 처리
       if (FormatHelper.isEmpty(feePlan)) {
         return this.error.render(res, defaultOptions);
+      }
+
+      if (!this._isWireless) {
+        additions.dcBenefits = feePlan.dcBenefits;
+        delete feePlan.dcBenefits;
       }
 
       const tipList = this._getTipList(svcInfo.svcAttrCd);  // 회선 카테고리 값을 기준으로 툴팁 목록 가져오기
