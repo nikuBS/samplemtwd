@@ -312,7 +312,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
       .end().siblings().attr('aria-selected', false);
 
     // 클릭 이벤트 바인드
-    $sheet.find('li').on('click', $.proxy(this._updateMicroPayContentsList, this));
+    $sheet.on('change', '.ac-list', $.proxy(this._updateMicroPayContentsList, this));
   },
 
   /**
@@ -321,11 +321,9 @@ Tw.MyTFareBillSmallHistory.prototype = {
    * @param {event} event
    */
   _updateMicroPayContentsList: function (event) {
-    var year = $(event.currentTarget).find('input').data('year') || this.data.curYear;
-    var month = $(event.currentTarget).find('input').data('month') || this.data.curMonth;
-    //선택표기
-    $(event.currentTarget).attr('aria-selected', true).siblings().attr('aria-selected', false);
-    $(event.currentTarget).find('input[type=radio]').prop('checked', true);
+    var $input = $(event.target);
+    var year = $input.data('year') || this.data.curYear;
+    var month = $input.data('month') || this.data.curMonth;
     // 선택 text
     this.$selectMonth.text(month + Tw.PERIOD_UNIT.MONTH);
 
@@ -339,6 +337,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
     this.$selectMonth = null;
 
     this._showWholeList();
+    this.$selectMonth.focus(); // 접근성 수정. 팝업 닫힌 후 월선택 버튼 포커스.
   },
 
   /**
@@ -445,8 +444,9 @@ Tw.MyTFareBillSmallHistory.prototype = {
         month -= month_limit;
       }
       tempArr.push({
+        'label-attr': 'for=' +i,
         txt: year + Tw.PERIOD_UNIT.YEAR + ' ' + month + Tw.PERIOD_UNIT.MONTH,
-        'radio-attr': 'data-index="' + (i - 1) + '"' +
+        'radio-attr': 'data-index="' + (i - 1) + '"' + 'id=\'' + i + '\'' +
           'data-year = \'' + year + '\' data-month=\'' + month + '\''
       });
       keyArr.push(this._getStrYearMonth(year, month));
