@@ -1705,7 +1705,8 @@ class ApiRouter {
             remainedValue: '-', // 표기될 잔여량 숫자(또는 텍스트)
             remainedValueSmall: '-', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
-          }
+          },
+          original: balancesResponse.result
 
         };
 
