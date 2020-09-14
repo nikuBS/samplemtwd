@@ -135,6 +135,10 @@ body.rn #roamingMain #content .card .field-container {
 body.rn #roamingMain #content .card .field-container input {
   width: 100%;
 }
+body.rn #roamingMain #content .card .field-container input::placeholder {
+  width: 100%;
+  color: #959595;
+}
 body.rn #roamingMain #content .card .field-container img {
   position: absolute;
   top: 12px;
@@ -1677,6 +1681,105 @@ body.rn #countriesDialog .content li {
   color: #111;
   /*border-bottom: 1px solid #f2f2f2;*/
   /*cursor: pointer;*/
+}
+body.rn #roamingRates {
+
+}
+body.rn #roamingRates .tip {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: -0.52px;
+  background-color: #4559fc;
+  color: #fff;
+  padding: 3px 10px 0 10px;
+  vertical-align: middle;
+  border-radius: 9px;
+  margin-left: 5px;
+}
+body.rn #roamingRates .card {
+  padding: 28px 20px;
+  margin-bottom: 8px;
+  background-color: #fff;
+}
+body.rn #roamingRates .card h2 {
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+body.rn #roamingRates .card h3 {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  color: #111;
+  margin-bottom: 6px;
+}
+body.rn #roamingRates .card .number {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+body.rn #roamingRates .card .device {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: #959595;
+}
+body.rn #roamingRates .card .separator {
+  font-size: 12px;
+  font-weight: 400;
+  color: #e0e0e0;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+body.rn #roamingRates .card .field-container {
+  background-color: #f3f4f9;
+  border-radius: 10px;
+  padding: 12px 18px 12px 18px;
+  position: relative;
+}
+body.rn #roamingRates .card .field-container input {
+  width: 100%;
+}
+body.rn #roamingRates .card .field-container input::placeholder {
+  color: #959595;
+}
+body.rn #roamingRates .card .field-container img {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+}
+body.rn #roamingRates .card .link {
+  text-align: right;
+  padding-top: 20px;
+}
+body.rn #roamingRates .card .link a {
+  font-size: 13px;
+  color: #4559FC;
+  letter-spacing: -1px;
+  text-decoration: underline;
+}
+body.rn #roamingRates .card .button {
+  height: 36px;
+  line-height: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 18px;
+  margin: 20px auto 20px auto;
+
+  background-color: #4559fc;
+  color: white;
+  text-align: center;
+}
+body.rn #roamingRates .card ul.description {
+  font-size: 13px;
+  color: #959595;
+  list-style-type: circle;
+  list-style-position: outside;
+  margin-left: 20px;
+}
+body.rn #roamingRates .card ul.description li {
+  margin-bottom: 10px;
 }
 body.scroll #gnb {
   background-color: white;

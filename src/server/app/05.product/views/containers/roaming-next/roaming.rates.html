@@ -1,0 +1,186 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<body class="rn">
+<div id="roamingRates">
+    <div id="gnb" class="gnb-opaque">
+        <span class="menu icon-gnb-menu">
+            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
+        </span>
+        <h1>국가별 로밍 이용요금 조회</h1>
+    </div>
+    <%- include('../components/header.component.html', { title: '국가별 로밍 이용요금 조회', svcInfo: svcInfo }) %>
+    <div style="height: 60px;"></div>
+    <% if (equipment.number) { %>
+    <div class="card">
+        <h3>휴대폰</h3>
+        <h2 class="number" id="svcNum"><%= equipment.number %></h2>
+        <% if (equipment.name != null) { %>
+        <span class="device">현 사용기기</span>
+        <span class="separator">|</span>
+        <span class="device"><%= equipment.name %></span>
+        <% } %>
+    </div>
+    <% } %>
+    <div class="card">
+        <h2>출국 국가 검색 <span class="tip">TIP</span></h2>
+
+        <form id="searchForm" action="/product/roaming/search-result" method="get"
+              onsubmit="return searchNation();">
+            <input type="hidden" name="code" value="" />
+            <input type="hidden" name="nm" value="" />
+            <input type="hidden" name="eqpNm" value="<%= equipment.name %>" />
+            <input type="hidden" name="eqpCd" value="<%= equipment.code %>" />
+            <div class="field-container">
+                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
+                <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
+            </div>
+        </form>
+        <div class="link">
+            <a href="#" onclick="openNationsDialog(); return false;">전체 국가 보기</a>
+        </div>
+        <div class="button" onclick="searchNation();">
+            조회
+        </div>
+        <ul class="description">
+        <% if (isLogin) { %>
+            <li>휴대폰이 없어도 국가명 입력만으로 조회가 가능합니다.</li>
+            <li>휴대폰 단말기 선택 시 더 정확한 맞춤 정보를 보여줍니다.</li>
+        <% } else { %>
+            <li>로그인을 하시면 가입된 휴대폰 정보로 확인하실 수 있습니다.</li>
+        <% } %>
+        </ul>
+    </div>
+</div>
+<div id="nationsDialog" class="dialog">
+    <div class="header">
+        <h1>로밍 가능한 전체 국가</h1>
+        <div class="close" onclick="closeDialog()">
+            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+        </div>
+    </div>
+    <div class="menu">
+        <ul>
+            <li id="EUR">유럽</li>
+            <li id="ASP">아시아</li>
+            <li id="AMC">미주</li>
+            <li id="OCN">오세아니아</li>
+            <li id="MET">중동</li>
+            <li id="AFR">아프리카</li>
+        </ul>
+    </div>
+    <div class="content">
+        <ul>
+
+        </ul>
+    </div>
+</div>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    new Tw.NextRoamingMenu($('#roamingRates')).install();
+
+    var numberContainer = document.getElementById('svcNum');
+    var number = numberContainer.innerText;
+    if (number.length == 11) {
+      numberContainer.innerText =
+        number.substring(0, 3) + '-' +
+        number.substring(3, 7) + '-' +
+        number.substring(7);
+    }
+
+    prepareNations();
+    $('#nation-search').autocomplete({
+      source: allNations.map(function(value) {
+        return {label: value.countryNameKor, value: value.countryNameKor, code: value.countryCode};
+      }),
+      delay: 100,
+      minLength: 1,
+      select: function(event, ui) {
+        sendQuery(ui.item.code, ui.item.label);
+      },
+    });
+    setupNationsDialog();
+  });
+  function prepareNations() {
+    let all = [];
+    const categories = Object.keys(nations);
+    for (let i=0; i<categories.length; i+=1) {
+      let category = categories[i];
+      const items = nations[category];
+      all = all.concat(items);
+    }
+    all.sort();
+    allNations = all;
+  }
+  function setupNationsDialog() {
+    const menuItems = $('#nationsDialog .menu li');
+    for (var i=0; i<menuItems.length; i++) {
+      menuItems[i].onclick = function (event) {
+        onClickNationGroup(event.target)
+      };
+    }
+  }
+  function searchNation() {
+    if ($('#searchForm input[name="code"]').val().length === 3) {
+      return true;
+    }
+
+    var name = $('#nation-search').val();
+    if (name.trim().length == 0) {
+      $('#nation-search').focus();
+      return false;
+    }
+    for (var item of allNations) {
+      if (item.countryNameKor == name) {
+        sendQuery(item.countryCode, item.countryNameKor);
+        break;
+      }
+    }
+    // console.log('해당 국가가 존재하지 않습니다');
+    return false;
+  }
+  function onClickNationGroup(menu) {
+    $('#nationsDialog .menu li').removeClass('active');
+    menu.className = 'active';
+    const selectedNations = nations[menu.id];
+    const targetList = $('#nationsDialog .content ul')
+    targetList.html('');
+    for (var nation of selectedNations) {
+      var li = document.createElement('li');
+      li.onclick = function(e) {
+        var nationName = e.target.innerText
+        var nationCode = e.target.getAttribute('data-country');
+        sendQuery(nationCode, nationName);
+      };
+      li.innerText = nation.countryNameKor;
+      li.setAttribute('data-country', nation.countryCode);
+      targetList.append(li);
+    }
+  }
+  function openNationsDialog() {
+    onClickNationGroup(document.getElementById('EUR'));
+    $('#roamingRates').css('display', 'none');
+    $('#nationsDialog').css('display', 'block');
+  }
+
+  function closeDialog() {
+    $('#nationsDialog').css('display', 'none');
+    $('#roamingRates').css('display', 'block');
+  }
+  function sendQuery(code, name) {
+    $('#searchForm input[name="code"]').val(code);
+    $('#searchForm input[name="nm"]').val(name);
+    $('#searchForm').submit();
+  }
+  var nations = {
+    'EUR': <%- JSON.stringify(nations.eur) %>,
+    'AFR': <%- JSON.stringify(nations.afr) %>,
+    'ASP': <%- JSON.stringify(nations.asp) %>,
+    'AMC': <%- JSON.stringify(nations.amc) %>,
+    'MET': <%- JSON.stringify(nations.met) %>,
+    'OCN': <%- JSON.stringify(nations.ocn) %>,
+  };
+  var allNations = [];
+</script>
+<% include ../../components/end.component.html %>
