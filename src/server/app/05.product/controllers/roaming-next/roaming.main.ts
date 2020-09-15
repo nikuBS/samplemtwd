@@ -29,10 +29,10 @@ export default class RoamingMainController extends TwViewController {
       this.getNationsByContinents('EUR'),
       this.getNationsByContinents('MET'),
       this.getNationsByContinents('OCN'),
+      this.getCurrentUsingTariff(isLogin),
       this.getRecentUsedTariff(isLogin),
       this.getBanners(pageInfo),
-    ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn, recentUsed, banners]) => {
-
+    ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn, currentUse, recentUse, banners]) => {
       if (popularNations.length > 6) {
         popularNations = popularNations.slice(0, 6);
       }
@@ -43,7 +43,8 @@ export default class RoamingMainController extends TwViewController {
         isLogin: isLogin,
         popularNations,
         nations: {afr, asp, amc, eur, met, ocn},
-        recentUsed,
+        currentUse,
+        recentUse,
         banners,
       });
     });
@@ -74,6 +75,21 @@ export default class RoamingMainController extends TwViewController {
     });
   }
 
+  private getCurrentUsingTariff(isLogin: boolean): Observable<any> {
+    if (!isLogin) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_10_0055, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {code: resp.code, msg: resp.msg};
+      }
+      // prodInfoTxt: 'T로밍 OnePass300 기간형 외 2건",
+      // feeProdYn: Y, 로밍요금제 여부
+      // addProdYn: N, 로밍부가서비스 여부
+      return resp.result;
+    });
+  }
+
   private getRecentUsedTariff(isLogin: boolean): Observable<any> {
     if (!isLogin) {
       return Observable.of(null);
@@ -82,14 +98,23 @@ export default class RoamingMainController extends TwViewController {
       // prodId, prodNm: 'baro 4GB',
       // svcStartDt, svcEndDt: '20190828',
       // startEndTerm: '30',
-      if (resp.result) {
+      if (resp.result && resp.result.prodId) {
         const startDate = moment(resp.result.svcStartDt, 'YYYYMMDD');
         const endDate = moment(resp.result.svcEndDt, 'YYYYMMDD');
-        resp.result.nights = endDate.diff(startDate, 'days');
-        resp.result.formattedStartDate = startDate.format('YY.MM.DD');
-        resp.result.formattedEndDate = endDate.format('YY.MM.DD');
+        const isAfter = endDate.isAfter(moment());
+        // 아직 종료되지 않은 요금제는 표시하지 않기로 함
+        if (endDate.isAfter(moment())) {
+          return null;
+        }
+        return {
+          prodId: resp.result.prodId,
+          prodNm: resp.result.prodNm,
+          nights: endDate.diff(startDate, 'days'),
+          formattedStartDate: startDate.format('YY.MM.DD'),
+          formattedEndDate: endDate.format('YY.MM.DD'),
+        };
       }
-      return resp.result;
+      return null;
     });
   }
 
