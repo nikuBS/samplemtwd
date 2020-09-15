@@ -12,8 +12,8 @@
  */
 Tw.MyTFareBillCard = function (rootEl) {
   this.$container = rootEl;
-
-  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl); // 납부할 회선 선택하는 공통 컴포넌트
+  // 카드결제인 경우 부분납부 기능 추가 건으로 params 추가
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl, true); // 납부할 회선 선택하는 공통 컴포넌트
   this._bankList = new Tw.MyTFareBillBankList(rootEl); // 은행리스트 가져오는 공통 컴포넌트
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
 
@@ -77,7 +77,7 @@ Tw.MyTFareBillCard.prototype = {
   _onChangeOption: function (event) {
     var $target = $(event.currentTarget);
 
-    if ($target.hasClass('fe-manual-input')) {
+    if ( $target.hasClass('fe-manual-input') ) {
       $target.addClass('checked');
       this.$refundBank.removeAttr('disabled');
       this.$refundNumber.removeAttr('disabled');
@@ -98,10 +98,10 @@ Tw.MyTFareBillCard.prototype = {
     var $target = $(event.currentTarget);
     var $parentTarget = $target.parents('.fe-refund-check-btn');
 
-    if ($target.is(':checked')) {
+    if ( $target.is(':checked') ) {
       $parentTarget.addClass('on');
 
-      if (this._isFirstCheck) {
+      if ( this._isFirstCheck ) {
         this.$refundNumber.on('keyup', $.proxy(this._checkNumber, this));
         this._isFirstCheck = false;
       }
@@ -146,7 +146,7 @@ Tw.MyTFareBillCard.prototype = {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
 
     var $id = $target.attr('id');
-    if (!Tw.FormatHelper.isEmpty($id)) {
+    if ( !Tw.FormatHelper.isEmpty($id) ) {
       $layer.find('input#' + $id).attr('checked', 'checked');
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
@@ -185,8 +185,8 @@ Tw.MyTFareBillCard.prototype = {
    * @param e
    */
   _checkPay: function (e) {
-    if (this._isAvailable()) {
-      if (this._validationService.isAllValid()) {
+    if ( this._isAvailable() ) {
+      if ( this._paymentCommon._isPartialVaild() && this._validationService.isAllValid() ) {
         this._popupService.open({
             'hbs': 'MF_01_01_01',
             'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
@@ -206,7 +206,7 @@ Tw.MyTFareBillCard.prototype = {
    */
   _isAvailable: function () {
     var amount = this._paymentCommon.getAmount();
-    if (amount < 50000 && this.$container.find('.fe-select-card-type').attr('id') !== '00') {
+    if ( amount < 50000 && this.$container.find('.fe-select-card-type').attr('id') !== '00' ) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_CARD_TYPE);
       return false;
     }
@@ -244,7 +244,7 @@ Tw.MyTFareBillCard.prototype = {
     $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(data.cardNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
 
-    if (this.$refundCheckBox.hasClass('on')) {
+    if ( this.$refundCheckBox.hasClass('on') ) {
       $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
         .text(data.refundNm + ' ' + data.refundNum);
     }
@@ -260,8 +260,8 @@ Tw.MyTFareBillCard.prototype = {
     var data = {};
     data.cardNum = $.trim(this.$cardNumber.val());
 
-    if (this.$refundCheckBox.hasClass('on')) {
-      if (isRefundInput) {
+    if ( this.$refundCheckBox.hasClass('on') ) {
+      if ( isRefundInput ) {
         data.refundCd = this.$refundBank.attr('id');
         data.refundNm = this.$refundBank.text();
         data.refundNum = this.$refundNumber.val();
@@ -282,9 +282,9 @@ Tw.MyTFareBillCard.prototype = {
    * @desc 납부 완료 및 에러 처리
    */
   _afterPaySuccess: function () {
-    if (this._isPaySuccess) {
+    if ( this._isPaySuccess ) {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete'); // 완료 페이지로 이동
-    } else if (this._isPayFail) {
+    } else if ( this._isPayFail ) {
       Tw.Error(this._err.code, this._err.msg).pop(); // 에러 시 공통팝업 호출
     }
   },
@@ -310,7 +310,7 @@ Tw.MyTFareBillCard.prototype = {
    * @desc close 이후 원래 페이지로 돌아가기
    */
   _afterClose: function () {
-    if (this._isClose) {
+    if ( this._isClose ) {
       this._historyService.resetHistory(-2);
     }
   },
@@ -344,7 +344,7 @@ Tw.MyTFareBillCard.prototype = {
       bankOrCardName: this.$container.find('.fe-payment-option-name').text(),
       bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
       ccPwd: $.trim(this.$cardPw.val()),
-      cdexpy: $.trim(this.$cardY.val()).substr(2,2),
+      cdexpy: $.trim(this.$cardY.val()).substr(2, 2),
       cdexpm: $.trim(this.$cardM.val()),
       instmm: this.$cardTypeSelector.attr('id'),
       unpaidBillList: this._paymentCommon.getBillList()
@@ -358,7 +358,7 @@ Tw.MyTFareBillCard.prototype = {
    * @param res
    */
   _paySuccess: function ($target, res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.endLoading('.popup-page');
       this._isPaySuccess = true;
       this._popupService.close();
