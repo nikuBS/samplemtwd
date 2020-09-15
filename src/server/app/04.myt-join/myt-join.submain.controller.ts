@@ -11,14 +11,13 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
-import {CURRENCY_UNIT, DATA_UNIT, MYT_FEEPLAN_BENEFIT, MYT_SUSPEND_STATE_EXCLUDE, NEW_NUMBER_MSG} from '../../types/string.type';
+import {MYT_SUSPEND_STATE_EXCLUDE, NEW_NUMBER_MSG} from '../../types/string.type';
 import {MYT_JOIN_SUBMAIN_TITLE} from '../../types/title.type';
 import {MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE, SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import BrowserHelper from '../../utils/browser.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
 import CommonHelper from '../../utils/common.helper';
-import ProductHelper from '../../utils/product.helper';
 
 
 class MyTJoinSubmainController extends TwViewController {
@@ -48,11 +47,10 @@ class MyTJoinSubmainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     this.__setType(svcInfo);
     const data: any = {
-      svcInfo: svcInfo, // Object.assign({}, svcInfo),
+      svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       // 다른 회선 항목
-      // otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
-      otherLines: this.convertOtherLines(svcInfo, allSvc),
+      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       // 현재 회선의 아이콘 클래스 이름
       currLineIconClass: this.getLineIconClassName(svcInfo.svcAttrCd),
       isApp: BrowserHelper.isApp(req) // App 여부
@@ -86,7 +84,7 @@ class MyTJoinSubmainController extends TwViewController {
         this._getPausedState(),
         this._getLongPausedState(),
         this._getChangeNumInfoService(),
-        this._wirelessAdditionProduct(svcInfo),
+        this._wirelessAdditionProduct(),
         this._smartCallPickProduct(svcInfo)
         // this._getWireFreeCall(data.svcInfo.svcNum), // 성능개선건으로 해당 API 호출 하지 않도록 변경[DV001-15523]
         // this._getOldNumberInfo(), // 성능이슈로 해당 API 호출 하지 않도록 변경 (DV001-14167)
@@ -170,25 +168,14 @@ class MyTJoinSubmainController extends TwViewController {
             if (data.myAddProduct.productCntInfo) {
               data.myAddProduct = data.myAddProduct.productCntInfo;
             }
+            data.myAddProduct.addTotCnt = parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10);
             // 스마트콜Pick 상품이 있는 경우
-            if (smcp > 0) {
+            if (smcp.length > 0) {
               // 가입된 부가상품모두에서 스마트콜pick 옵션상품 제외
-              data.myAddProduct.addTotCnt = wilp - smcp;
-              if (data.myAddProduct.addTotCnt < 0) {
-                // XXX: 이럴 수 없을 듯한데, 혹시나...
-                data.myAddProduct.addTotCnt = 0;
-              }
-            } else {
-              data.myAddProduct.addTotCnt = parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10);
+              data.myAddProduct.addTotCnt = wilp.length - smcp.length;
             }
             break;
         }
-        // 옵션/할인프로그램 개수 추가
-        data.addProdTotCnt = data.myAddProduct.addTotCnt + (data.myAddProduct.disProdCnt || 0);
-      } else {
-        // TODO: 이 부분은 오류가 나지 않도록 보정한 코드인데, 확인 필요 (myAddProduct가 없으면, disProdCnt도 없기 때문)
-        // 옵션/할인프로그램 개수 추가
-        data.addProdTotCnt = 0;
       }
       // 약정할부 노출여부
       if (data.myInstallement && data.myInstallement.disProdNm) {
@@ -338,12 +325,18 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   isMasking(target): boolean {
-    return target && target.indexOf('*') > -1;
+    let result = false;
+    const MASK_CODE = '*';
+    if (target && target.indexOf(MASK_CODE) > -1) {
+      result = true;
+    }
+    return result;
   }
 
   isCheckingChgNum(target): boolean {
     // 010, 012 제외 [DVI001-14863]
-    return /^01([1|3-9])/g.test(target);
+    const regexp = /^01([1|3-9]{1})/g;
+    return regexp.test(target);
   }
 
   recompare(a, b) {
@@ -426,27 +419,27 @@ class MyTJoinSubmainController extends TwViewController {
    * @private
    */
   _convertWireInfo(data) {
-    return {
-      // 가입자명
-      custNm: data.wireReqrNm,
-      // 서비스 약정
-      svcPrdStaDt: this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt :
-          (data.svcPrdStaDt ? DateHelper.getShortDate(data.svcPrdStaDt) : data.svcPrdStaDt),
-      svcPrdEndDt: this.isMasking(data.setPrdStaDt) ? data.svcPrdEndDt :
-          (data.setPrdStaDt ? DateHelper.getShortDate(data.svcPrdEndDt) : data.svcPrdEndDt),
-      svcAgrmtMth: data.svcAgrmtMth,
-      // 세트 약정
-      setNm: data.setNm,
-      setPrdStaDt: this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt :
-          (data.setPrdStaDt ? DateHelper.getShortDate(data.setPrdStaDt) : data.setPrdStaDt),
-      setPrdEndDt: this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt :
-          (data.setPrdEndDt ? DateHelper.getShortDate(data.setPrdEndDt) : data.setPrdEndDt),
-      setAgrmtMth: data.setAgrmtMth,
-      // 유선상품 수
-      wireProdCnt: data.wireProdCnt,
-      // 설치 주소
-      address: data.fullAddr /*data.basAddr + data.dtlAddr;*/
-    };
+    const result: any = {};
+    // 가입자명
+    result.custNm = data.wireReqrNm;
+    // 서비스 약정
+    result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt :
+        (data.svcPrdStaDt ? DateHelper.getShortDate(data.svcPrdStaDt) : data.svcPrdStaDt);
+    result.svcPrdEndDt = this.isMasking(data.setPrdStaDt) ? data.svcPrdEndDt :
+        (data.setPrdStaDt ? DateHelper.getShortDate(data.svcPrdEndDt) : data.svcPrdEndDt);
+    result.svcAgrmtMth = data.svcAgrmtMth;
+    // 세트 약정
+    result.setNm = data.setNm;
+    result.setPrdStaDt = this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt :
+        (data.setPrdStaDt ? DateHelper.getShortDate(data.setPrdStaDt) : data.setPrdStaDt);
+    result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt :
+        (data.setPrdEndDt ? DateHelper.getShortDate(data.setPrdEndDt) : data.setPrdEndDt);
+    result.setAgrmtMth = data.setAgrmtMth;
+    // 유선상품 수
+    result.wireProdCnt = data.wireProdCnt;
+    // 설치 주소
+    result.address = data.fullAddr; /*data.basAddr + data.dtlAddr;*/
+    return result;
   }
 
   // 가입회선조회
@@ -460,6 +453,7 @@ class MyTJoinSubmainController extends TwViewController {
       }
     });
   }
+
 
   // 가입정보
   _getMyInfo() {
@@ -509,20 +503,17 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   // 나의 가입 부가,결합 상품
-  private _getAddtionalProduct() {
-    let command;
+  _getAddtionalProduct() {
+    let API_URL = API_CMD.BFF_05_0161;
     switch (this.type) {
       case 2:
-        command = API_CMD.BFF_05_0179;
+        API_URL = API_CMD.BFF_05_0179;
         break;
       case 3:
-        command = API_CMD.BFF_05_0166;
-        break;
-      default:
-        command = API_CMD.BFF_05_0161;
+        API_URL = API_CMD.BFF_05_0166;
         break;
     }
-    return this.apiService.request(command, {}).map((resp) => {
+    return this.apiService.request(API_URL, {}).map((resp) => {
       // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
@@ -533,46 +524,33 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   /**
-   * @desc 무선 부가서비스 상품 조회
-   * @private
-   */
-  private _wirelessAdditionProduct(svcInfo: any): Observable<any> {
-    const { svcAttrCd } = svcInfo;
-    if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) === -1) { // 무선이 아닌 경우 (유선 및 기타)
-      return Observable.of(0);
-    }
-    return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return (data.addProdList || []).length;
-      }
-      return 0;
-    });
-  }
-
-  /**
    * 스마트콜 Pick 상품 조회
    * @param svcInfo
    * @private
    */
   private _smartCallPickProduct(svcInfo: any): Observable<any> {
-    /*
-    // NOTE: 무선인 경우, 성능 개선을 위해... 확인 후 적용하자
-    const { svcAttrCd } = svcInfo;
-    if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) === -1) { // 무선이 아닌 경우 (유선 및 기타)
-      return Observable.of([]);
-    }
-    */
     return this.apiService.request(API_CMD.BFF_10_0185, {}, {
       svcMgmtNum: svcInfo.svcMgmtNum,
       svcNum: svcInfo.svcNum,
       custNum: svcInfo.custNum
     }).map(resp => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return (data.listSmartPick || []).length;
+      if (resp.code !== API_CODE.CODE_00) {
+        return [];
       }
-      return 0;
+      return resp.result.listSmartPick || [];
+    });
+  }
+
+  /**
+   * @desc 무선 부가서비스 상품 조회
+   * @private
+   */
+  private _wirelessAdditionProduct(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return [];
+      }
+      return resp.result.addProdList || [];
     });
   }
 
@@ -580,6 +558,7 @@ class MyTJoinSubmainController extends TwViewController {
   _getInstallmentInfo() {
     // [DV001-14401] 성능개선으로 API 주소 변경함 (버전 변경됨 v1 -> v2)
     return this.apiService.request(API_CMD.BFF_05_0155, {}, null, [], API_VERSION.V2).map((resp) => {
+      // return this.apiService.request(API_CMD.BFF_05_0155, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
       }

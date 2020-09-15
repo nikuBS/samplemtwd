@@ -168,7 +168,7 @@ export const API_CMD = {
   BFF_05_0028: { path: '/core-bill/:version/bill-reissue', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   // BFF_05_0030: { path: '/core-bill/:version/bill-pay/unpaid-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0030: { path: '/core-bill/:version/bill-pay/unpaid-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-
+  
   BFF_05_0031: { path: '/core-bill/:version/bill-pay/payment-possible-day', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0032: { path: '/core-bill/:version/bill-pay/payment-possible-day-input', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0033: { path: '/core-bill/:version/bill-pay/autopay-schedule', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -360,8 +360,7 @@ export const API_CMD = {
   BFF_05_0218: { path: '/core-modification/:version/specialized-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0219: { path: '/core-modification/:version/custum-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0222: { path: '/core-product/v1/services/wireless/additions/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-
+  
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/:version/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
