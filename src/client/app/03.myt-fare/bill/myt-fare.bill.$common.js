@@ -488,7 +488,7 @@ Tw.MyTFareBillCommon.prototype = {
       // 납부하실 금액 최소 금액 (10원이상)
       this.$partialErrors.eq(1).removeClass('none');
       return false;
-    } else if ( partialAmount % 10 > 0 ) {
+    } else if ( (partialAmount <= paymentAmount) && partialAmount % 10 > 0 ) {
       // 10원 단위로 표시 노출
       this.$partialErrors.eq(2).removeClass('none');
       return false;
