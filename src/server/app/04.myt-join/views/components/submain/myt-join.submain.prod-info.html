@@ -14,17 +14,18 @@ _%>
                 <span class="inner">
                     <span class="tit">나의 요금제</span>
                     <%# // NOTE: 임시로 메뉴(나의 부가서비스)를 다시 살린다 _%>
-                    <span class="text"><%= data.svcInfo.prodNm %><!-- <%- data.addProdTotCnt ? `&nbsp;/ ${data.addProdTotCnt}개` : '' %> --></span>
+                    <%# // TODO: isAddProduct보다, data.myAddProduct.addTotCnt로 구분되어야 할 것으로 보인다. "옵션/할인"까지 포함이라 _%>
+                    <span class="text"><%= data.svcInfo.prodNm %><!-- <%- data.isAddProduct ? `&nbsp;/ ${data.myAddProduct.addTotCnt}개` : '' %> --></span>
                 </span>
             </button>
         </li>
         <%# // TODO: 임시로 메뉴(나의 부가서비스)를 다시 살린다. 정리되면, 지운다. _%>
-        <%_ if (data.addProdTotCnt) { _%>
+        <%_ if (data.isAddProduct) { _%>
         <li>
             <button type="button" data-id="add-prod" title="나의 부가서비스" aria-haspopup="true">
                 <span class="inner">
                     <span class="tit">나의 부가서비스</span>
-                    <span class="text"><%- data.addProdTotCnt %>개</span>
+                    <span class="text"><%- data.myAddProduct.addTotCnt %>개</span>
                 </span>
             </button>
         </li>
