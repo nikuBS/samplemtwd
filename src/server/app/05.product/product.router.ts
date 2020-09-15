@@ -117,8 +117,8 @@ import RoamingTariffsController from './controllers/roaming-next/roaming.tariffs
 import RoamingOnController from './controllers/roaming-next/roaming.on';
 import RoamingAddonsController from './controllers/roaming-next/roaming.addons';
 import RoamingHistoryController from './controllers/roaming-next/roaming.history';
-import RoamingCouponController from './controllers/roaming-next/roaming.coupon';
 import RoamingRatesByCountryController from './controllers/roaming-next/roaming.rates';
+import RoamingRatesByCountryResultController from './controllers/roaming-next/roaming.rates.result';
 
 
 class ProductRouter extends TwRouter {
@@ -197,7 +197,7 @@ class ProductRouter extends TwRouter {
 
     this.controllers.push({ url: '/__/roaming', controller: ProductRoaming });
     this.controllers.push({ url: '/__/roaming/do/search-before', controller: ProductRoamingSearchBefore });
-    this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult });
+    this.controllers.push({ url: '/__/roaming/search-result', controller: ProductRoamingSearchResult });
     this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
     this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });
     this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming });
@@ -239,6 +239,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/planadd', controller: RoamingAddonsController });
     this.controllers.push({ url: '/roaming/history', controller: RoamingHistoryController });
     this.controllers.push({ url: '/roaming/do/search-before', controller: RoamingRatesByCountryController });
+    this.controllers.push({ url: '/roaming/search-result', controller: RoamingRatesByCountryResultController });
 
     this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplanBackup });

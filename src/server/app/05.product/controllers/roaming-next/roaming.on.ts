@@ -123,6 +123,7 @@ export default class RoamingOnController extends TwViewController {
       const noSubscription = !usingTariffs || usingTariffs.length === 0;
       context.noSubscription = noSubscription;
       if (noSubscription) {
+        // FIXME: 아래 2줄 뭐임?
         const startDate = '20200701';
         const endDate = '20200730';
         Observable.combineLatest(

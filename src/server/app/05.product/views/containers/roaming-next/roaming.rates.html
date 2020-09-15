@@ -30,7 +30,7 @@
             <input type="hidden" name="eqpNm" value="<%= equipment.name %>" />
             <input type="hidden" name="eqpCd" value="<%= equipment.code %>" />
             <div class="field-container">
-                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
+                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" value="<%= lastQuery.countryNm %>"/>
                 <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
             </div>
         </form>
@@ -49,6 +49,128 @@
         <% } %>
         </ul>
     </div>
+    <% if (meta) { %>
+    <div class="card">
+        <h2>
+            <span class="colorPoint"><%= lastQuery.countryNm %></span>의<br />
+            로밍 맞춤 정보를 안내해 드립니다.
+        </h2>
+        <h3 class="section">서비스 방식 안내</h3>
+        <div class="availables">
+            이용할 수 있는 로밍 서비스 방식은<br />
+            <span class="colorPoint">LTE 자동로밍, 3G 자동로밍, GSM 자동로밍</span> 입니다.
+        </div>
+        <ul class="description">
+            <li>종량요금은 요금제에 가입하지 않고 데이터를 사용했을 때 부과되는 금액입니다.</li>
+            <li>안내 요금은 부가세가 포함된 금액입니다.</li>
+        </ul>
+
+        <div class="attentionHead" onclick="toggleAttention()">
+            <svg class="icon" width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(-41 -1864)"><path d="m0-50h720v6288h-720z" fill="#f6f6f6"/><path d="m0 1162h720v1380h-720z" fill="#fff"/><g transform="translate(41 1864)"><path d="m0 0h40v40h-40z" fill="#9d9d9d" opacity="0"/><g stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m13 18-6 4-4 15 9-5 8 5 8-5 9 5-4-15-6-4"/><path d="m27 23 2 5"/><path d="m13 23-2 5"/></g><g fill="#333" transform="translate(10 2)"><path d="m10 0c-5.523 0-10 4.478-10 10s10 17 10 17 10-11.478 10-17-4.477-10-10-10m0 2c4.411 0 8 3.589 8 8 0 3.026-4.429 9.484-8 13.889-3.572-4.403-8-10.859-8-13.889 0-4.411 3.589-8 8-8"/><path d="m10 5c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4m0 2c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2"/></g></g></g></svg>
+            <span class="title">
+              로밍 시 국가별 주의사항
+            </span>
+            <img class="toggle" src="<%= CDN %>/img/product/roam/ico_expand.svg" />
+        </div>
+        <div class="attentionBody">
+            <ul class="description">
+                <li>수신요금은 현지사업자의 요금과 국제전화 사업자의 요금이 합산된 금액이며, 현지사업자의 수신요금은
+                    분당 과금, 국제전화사업자의 수신요금은 초당 과금됩니다.</li>
+                <li>현지사업자의 수신요금은 음성통화 과금을 1분 단위로 이루어집니다. (예) 45초 통화시 1분 과금, 5분 10초 통화시 6분 과금.
+                    수신을 위한 국제전화사업자(SK텔링크, SK브로드밴드, 데이콤, KT, 온세텔레콤)는 로밍센터 방문 또는 T로밍 고객센터
+                    1599-2011(유료), T월드에서 선택하실 수 있으며, 선택하지 않을 경우 SK텔링크로 자동 설정됩니다.
+                    <br /><a href="https://m.tworld.co.kr/product/callplan?prod_id=TW61000002">국제전화 사업자 선택 자세히 보기</a>
+                </li>
+                <li>수신요금은 국제전화사업자의 요금정책에 따라 차이가 있을 수 있으며, 초당 과금됩니다.</li>
+                <li>로밍요금 전체금액에 대한 10%가 부가세로 적용됩니다.</li>
+            </ul>
+        </div>
+        <h3 class="section">종량 요금 안내 <span class="tip">TIP</span></h3>
+        <div class="rateHead" id="rateData">
+            <span class="title">데이터</span>
+            <span class="values">
+                <span class="colorPoint">0.275원</span>/패킷
+            </span>
+            <div class="opener" onclick="divExpand('rateData')">더보기</div>
+            <div class="rateBody">
+                <ul class="description">
+                    <li>데이터 종량 과금이 5,000원 일 상한 도달 시,
+                        baro OnePass 300/500(기본형,기간형) 제휴 사업자 접속의 경우 200 kbps 속도제어, 비제휴 사업자 접속의 경우
+                        데이터가 차단됩니다.</li>
+                </ul>
+                <div class="align-right">
+                    <span class="closer" onclick="divCollapse('rateData')">닫기</span>
+                </div>
+            </div>
+        </div>
+        <div class="rateHead" id="rateVoice">
+            <span class="title">음성 (방문국에서 한국/해외로)</span>
+            <span class="values">
+                <span class="colorPoint">0.0원</span>/초
+            </span>
+            <div class="opener" onclick="divExpand('rateVoice')">더보기</div>
+            <div class="rateBody">
+                <ul class="description">
+                    <li>내용</li>
+                </ul>
+                <div class="align-right">
+                    <span class="closer" onclick="divCollapse('rateVoice')">닫기</span>
+                </div>
+            </div>
+        </div>
+        <div class="rateHead" id="rateSms" style="border-bottom: 0;">
+            <span class="title">문자 (SMS발신)</span>
+            <span class="values">
+                <span class="colorPoint">00원</span>/건
+            </span>
+            <div class="opener" onclick="divExpand('rateSms')">더보기</div>
+            <div class="rateBody">
+                <ul class="description">
+                    <li>내용</li>
+                </ul>
+                <div class="align-right">
+                    <span class="closer" onclick="divCollapse('rateSms')">닫기</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h2>현명하게 즐기는 로밍 서비스</h2>
+        <div class="panels">
+            <a href="/product/roaming/fee">
+            <div class="panel">
+                <h3>로밍 요금제</h3>
+                <p>
+                    나의 여행 패턴에<br />
+                    맞는 요금제를 찾아보세요
+                </p>
+            </div>
+            </a>
+            <a href="/product/roaming/planadd">
+            <div class="panel">
+                <h3>로밍 부가서비스</h3>
+                <p>
+                    간편하게 가입, 해지할 수 있는<br />
+                    무료 부가 서비스를 추천해 드립니다.
+                </p>
+            </div>
+            </a>
+            <a href="/product/roaming/coupon">
+            <div class="panel">
+                <h3>로밍 카드/쿠폰</h3>
+                <p>
+                    직접 이용하거나 선물용으로 필요하시다면<br />
+                    로밍 카드/쿠폰을 이용해보세요.
+                </p>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <h2>꼭 확인해주세요</h2>
+        <h3>요금제 관련 안내 <span class="tip">TIP</span></h3>
+    </div>
+    <% } %>
 </div>
 <div id="nationsDialog" class="dialog">
     <div class="header">
@@ -173,6 +295,31 @@
     $('#searchForm input[name="nm"]').val(name);
     $('#searchForm').submit();
   }
+
+
+  function toggleAttention() {
+    var imagePrefix = '<%= CDN %>/img/product/roam/ico_';
+    var imageSuffix = '.svg';
+    $('.attentionBody').toggle('blind', {}, 250, function() {
+      var info = $('.attentionBody')[0];
+      $('.attentionHead img.toggle').attr(
+        'src',
+        imagePrefix + (info.style.display === 'none' ? 'expand' : 'collapse') + imageSuffix
+      )
+    });
+  }
+
+  function divExpand(id) {
+    $('#' + id + ' .opener').css('display', 'none');
+    $('#' + id + ' .rateBody').toggle('blind', {}, 250, function() {
+    });
+  }
+  function divCollapse(id) {
+    $('#' + id + ' .rateBody').toggle('blind', {}, 250, function() {
+      $('#' + id + ' .opener').css('display', 'block');
+    });
+  }
+
   var nations = {
     'EUR': <%- JSON.stringify(nations.eur) %>,
     'AFR': <%- JSON.stringify(nations.afr) %>,
