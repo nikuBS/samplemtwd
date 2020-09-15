@@ -81,6 +81,8 @@ class MyTJoinSubmainController extends TwViewController {
         this._getMyInfo(),
         this._getMyHistory(),
         this._getAddtionalProduct(),
+        // 옵션/할인프로그램 요청
+        this._getOptionsAndDiscountPrograms(svcInfo),
         this._getContractPlanPoint(),
         this._getInstallmentInfo(),
         this._getPausedState(),
@@ -91,7 +93,7 @@ class MyTJoinSubmainController extends TwViewController {
         // this._getWireFreeCall(data.svcInfo.svcNum), // 성능개선건으로 해당 API 호출 하지 않도록 변경[DV001-15523]
         // this._getOldNumberInfo(), // 성능이슈로 해당 API 호출 하지 않도록 변경 (DV001-14167)
         // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
-    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, numSvc, wilp, smcp/*wirefree,*/ /*oldnum,*/ /*, banner*/]) => {
+    ).subscribe(([myline, myif, myhs, myap, myod, mycpp, myinsp, myps, mylps, numSvc, wilp, smcp/*wirefree,*/ /*oldnum,*/ /*, banner*/]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
       if (this.type === 1) {
         if (myhs.info) {
@@ -184,7 +186,7 @@ class MyTJoinSubmainController extends TwViewController {
             break;
         }
         // 옵션/할인프로그램 개수 추가
-        data.myAddProduct.addTotCnt = data.myAddProduct.addTotCnt + myap.disProdCnt || 0;
+        data.myAddProduct.addTotCnt = data.myAddProduct.addTotCnt + myod;
       }
       // 약정할부 노출여부
       if (data.myInstallement && data.myInstallement.disProdNm) {
@@ -334,12 +336,18 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   isMasking(target): boolean {
-    return target && target.indexOf('*') > -1;
+    let result = false;
+    const MASK_CODE = '*';
+    if (target && target.indexOf(MASK_CODE) > -1) {
+      result = true;
+    }
+    return result;
   }
 
   isCheckingChgNum(target): boolean {
     // 010, 012 제외 [DVI001-14863]
-    return /^01([1|3-9])/g.test(target);
+    const regexp = /^01([1|3-9]{1})/g;
+    return regexp.test(target);
   }
 
   recompare(a, b) {
@@ -504,6 +512,21 @@ class MyTJoinSubmainController extends TwViewController {
     });
   }
 
+  private _convertWirePlan(data): Array<Object> {
+    // return FormatHelper.getValidVars(data.dcBenefits, []); // 굳이?
+    return data.dcBenefits || [];
+  }
+
+  private _convertWirelessPlan(data): Array<Object> | null {
+    if (FormatHelper.isEmpty(data.feePlanProd)) {
+      return null;
+    }
+
+    // 옵션 및 할인 프로그램
+    return FormatHelper.getValidVars(data.disProdList, []); // 굳이?
+    // return data.disProdList || [];
+  }
+
   // 나의 가입 부가,결합 상품
   private _getAddtionalProduct() {
     let command;
@@ -525,6 +548,29 @@ class MyTJoinSubmainController extends TwViewController {
       }
       // error
       return null;
+    });
+  }
+
+  /**
+   * 무선 옵션/할인 프로그램 갯수
+   * @param {Object} svcInfo
+   * @param {string} svcInfo.svcAttrCd
+   * @return {Observable}
+   */
+  // XXX: svcInfo의 type이 정해진 적 없음
+  private _getOptionsAndDiscountPrograms(svcInfo: any): Observable<any> {
+    const { svcAttrCd } = svcInfo;
+    if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) === -1) { // 무선이 아닌 경우 (유선 및 기타)
+      return Observable.of(0);
+    }
+    return this.apiService.request(API_CMD.BFF_05_0161, {}).map((resp) => {
+      // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
+      if (resp.code === API_CODE.CODE_00) {
+        const data = resp.result;
+        return data.disProdCnt || 0;
+      }
+      // error
+      return resp;
     });
   }
 
@@ -576,6 +622,7 @@ class MyTJoinSubmainController extends TwViewController {
   _getInstallmentInfo() {
     // [DV001-14401] 성능개선으로 API 주소 변경함 (버전 변경됨 v1 -> v2)
     return this.apiService.request(API_CMD.BFF_05_0155, {}, null, [], API_VERSION.V2).map((resp) => {
+      // return this.apiService.request(API_CMD.BFF_05_0155, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
       }

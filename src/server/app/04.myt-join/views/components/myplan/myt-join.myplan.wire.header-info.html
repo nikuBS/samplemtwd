@@ -1,12 +1,14 @@
 <div class="plan">
     <strong class="tit" data-tracker="V" data-tracker_tw_prod_id="<%- feePlanProd.prodId %>" data-tracker_tw_prod_nm="<%= feePlanProd.feeProdNm %>"><%= feePlanProd.feeProdNm %></strong>
-    <span class="date">신청일: <%- feePlanProd.scrbDt %></span>
+    <span class="date">신청일: <%- feePlanProd.svcScrbDt %></span>
     <span class="val">
-        <%_ if (feePlanProd.feeManlSetYn === 'Y' && feePlanProd.feeManlSetTitNm) { _%>
-        <%= feePlanProd.feeManlSetTitNm %> <br /> <strong><%= feePlanProd.basFeeAmt %></strong>
-        <%_ } else { _%>
-        월정액(부가세 포함) <br /> <strong><%- feePlanProd.basFeeAmt %></strong>
+        <%_ if (feePlanProd.feeManlSetYn === 'Y' && feePlanProd.feeManlSetTitNm) {_%>
+        <!--<span class="hash">#<%= feePlan.feeManlSetTitNm %></span>-->
         <%_ } _%>
+        <%_ if (feePlanProd.feeManlSetYn === 'N' || !feePlanProd.feeManlSetTitNm) { _%>
+        월정액(부가세 포함) <br />&nbsp;
+        <%_ } _%>
+        <strong><%= feePlanProd.basFeeAmt %></strong>
     </span>
 </div>
 <%# // TODO: 과거에는 S1(인터넷), S2(IPTV)에 대해서만 처리함, OP002-9884로 S3(전화 추가됨) _%>
