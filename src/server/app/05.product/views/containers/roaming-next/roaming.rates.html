@@ -58,7 +58,7 @@
         <h3 class="section">서비스 방식 안내</h3>
         <div class="availables">
             이용할 수 있는 로밍 서비스 방식은<br />
-            <span class="colorPoint">LTE 자동로밍, 3G 자동로밍, GSM 자동로밍</span> 입니다.
+            <span class="colorPoint" id="availableServices">-</span> 입니다.
         </div>
         <ul class="description">
             <li>종량요금은 요금제에 가입하지 않고 데이터를 사용했을 때 부과되는 금액입니다.</li>
@@ -73,7 +73,8 @@
             <img class="toggle" src="<%= CDN %>/img/product/roam/ico_expand.svg" />
         </div>
         <div class="attentionBody">
-            <ul class="description">
+            <ul class="description" id="attentionList">
+                <!--
                 <li>수신요금은 현지사업자의 요금과 국제전화 사업자의 요금이 합산된 금액이며, 현지사업자의 수신요금은
                     분당 과금, 국제전화사업자의 수신요금은 초당 과금됩니다.</li>
                 <li>현지사업자의 수신요금은 음성통화 과금을 1분 단위로 이루어집니다. (예) 45초 통화시 1분 과금, 5분 10초 통화시 6분 과금.
@@ -83,13 +84,14 @@
                 </li>
                 <li>수신요금은 국제전화사업자의 요금정책에 따라 차이가 있을 수 있으며, 초당 과금됩니다.</li>
                 <li>로밍요금 전체금액에 대한 10%가 부가세로 적용됩니다.</li>
+                -->
             </ul>
         </div>
         <h3 class="section">종량 요금 안내 <span class="tip">TIP</span></h3>
         <div class="rateHead" id="rateData">
-            <span class="title">데이터</span>
+            <span class="title">데이터<span class="tip">TIP</span></span>
             <span class="values">
-                <span class="colorPoint">0.275원</span>/패킷
+                <span class="colorPoint" id="dataCharge">-</span>/패킷
             </span>
             <div class="opener" onclick="divExpand('rateData')">더보기</div>
             <div class="rateBody">
@@ -106,12 +108,36 @@
         <div class="rateHead" id="rateVoice">
             <span class="title">음성 (방문국에서 한국/해외로)</span>
             <span class="values">
-                <span class="colorPoint">0.0원</span>/초
+                <span class="colorPoint" id="voiceChargeOut">-</span>/초
             </span>
             <div class="opener" onclick="divExpand('rateVoice')">더보기</div>
             <div class="rateBody">
+                <div class="rateBodyRow">
+                    <span class="value">
+                        <span class="colorPoint" id="voiceChargeLocal">-</span>/초
+                    </span>
+                    <span class="name">방문국에서 방문국으로</span>
+                </div>
+                <div class="rateBodyRow">
+                    <span class="value">
+                        <span class="colorPoint" id="voiceChargeIncoming">-</span>/초
+                    </span>
+                    <span class="name">수신</span>
+                </div>
+
                 <ul class="description">
-                    <li>내용</li>
+                    <li>
+                        음성통화 수신요금: SK텔링크 기준이며,
+                        SK브로드밴드 <span id="voiceSKB"></span>,
+                        LG U+ <span id="voiceLGU"></span>,
+                        KT <span id="voiceKT"></span>,
+                        세종텔레콤 <span id="voiceOS"></span>입니다.
+                    </li>
+                    <li>
+                        음성통화 수신을 위한 국제전화사업자를 선택하실 수 있으며, 미선택 시 SK텔링크로 자동 설정됩니다.
+                        <p><a class="lo" href="/product/callplan?prod_id=TW61000002">국제전화 사업자 선택 자세히 보기</a></p>
+                    </li>
+                    <li>부가서비스: <span id="voiceAddon">-</span></li>
                 </ul>
                 <div class="align-right">
                     <span class="closer" onclick="divCollapse('rateVoice')">닫기</span>
@@ -121,12 +147,36 @@
         <div class="rateHead" id="rateSms" style="border-bottom: 0;">
             <span class="title">문자 (SMS발신)</span>
             <span class="values">
-                <span class="colorPoint">00원</span>/건
+                <span class="colorPoint" id="smsOut">-</span>/건
             </span>
             <div class="opener" onclick="divExpand('rateSms')">더보기</div>
             <div class="rateBody">
+                <div class="rateBodyRow">
+                    <span class="value">
+                        <span id="smsIn">무료</span>
+                    </span>
+                    <span class="name">SMS 수신</span>
+                </div>
+                <div class="rateBodyRow">
+                    <span class="value">
+                        <span class="colorPoint" id="mmsTextOut">-</span>/<span id="mmsTextOutUnit">건</span>
+                    </span>
+                    <span class="name">MMS 텍스트 발신</span>
+                </div>
+                <div class="rateBodyRow">
+                    <span class="value">
+                        <span class="colorPoint" id="mmsMediaOut">-</span>/<span id="mmsMediaOutUnit">건</span>
+                    </span>
+                    <span class="name">MMS 멀티미디어 발신</span>
+                </div>
+                <div class="rateBodyRow">
+                    <span class="value">
+                        <span id="mmsIn">무료</span>
+                    </span>
+                    <span class="name">MMS 수신</span>
+                </div>
                 <ul class="description">
-                    <li>내용</li>
+                    <li>현지 발신 또는 제 3국 발신 SMS의 경우 국제전화사업자가 부과하는 국제 SMS 비용(건당 최대 165원, 부가세 포함)이 추가로 발생합니다.</li>
                 </ul>
                 <div class="align-right">
                     <span class="closer" onclick="divCollapse('rateSms')">닫기</span>
@@ -223,6 +273,10 @@
       },
     });
     setupNationsDialog();
+
+    if (roamingMeta) {
+      setupResult(roamingMeta);
+    }
   });
   function prepareNations() {
     let all = [];
@@ -320,6 +374,273 @@
     });
   }
 
+  var manageType = [];
+  var typeTxt = [];
+  var reqParams = {};
+  function setupResult(meta) {
+    var type = {     // 로밍 서비스 방식
+      lte:0,      // LTE
+      wcdma:1,    // 3G
+      cdma:2,     // 2G
+      gsm:3,      // GSM
+      rent:4      // 임대
+    };
+    reqParams = {
+      countryCd: '<%= lastQuery.countryCd %>',
+      manageType: '',                           // 로밍 서비스 방식
+      showDailyPrice: 'N'                       // 로밍서비스방식이 임대로밍 인경우는 Y , 나머지는 N
+    };
+    managerType = [];
+    typeTxt = [];
+
+    // 국가별 이용가능 서비스 리스트 생성
+    if(meta.iPoPhone){    // 단말기 가능폰 확인
+      if(meta.iPoPhone === '0') {   // 지원가능 서비스 없는 경우
+        if(meta.eqpMthdCd === 'W'){   // wcdma+gsm
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
+        }else if(meta.eqpMthdCd === 'D'){ // cdma
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
+        }else {
+          if(meta.lte > 0 && meta.iLtePhone !== '' && meta.iLtePhone !== 'N'){
+            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte].txt);
+            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte]);
+          }
+          if(meta.wcdma > 0){
+            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
+            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
+          }
+          if(meta.cdma > 0){
+            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
+            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
+          }
+          if(meta.gsm > 0){
+            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
+            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
+          }
+        }
+      } else {
+        if(meta.lte > 0 && meta.iLtePhone !== '' && meta.iLtePhone !== 'N'){
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte]);
+        }
+
+        if(meta.iPoPhone === '1' && meta.wcdma > 0) {    // WCDMA Only
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
+        } else if(meta.iPoPhone === '2' && meta.wcdma > 0 && meta.gsm > 0){ // WCDMA+GSM
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
+        } else if(meta.iPoPhone === '4' && meta.wcdma > 0 && meta.cdma > 0){ // WCDMA+CDMA
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
+        } else if(meta.iPoPhone === '3' && meta.gsm > 0 && meta.cdma > 0){ // GSM+CDMA(SIM자동 로밍)
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
+          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
+          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
+        }
+      }
+    } else {
+      if(meta.lte > 0 && meta.iLtePhone !== '' && meta.iLtePhone !== 'N'){
+        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte].txt);
+        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte]);
+      }
+      if(meta.wcdma > 0){
+        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
+        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
+      }
+      if(meta.cdma > 0){
+        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
+        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
+      }
+      if(meta.gsm > 0){
+        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
+        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
+      }
+    }
+
+    // 임대 로밍 서비스가 가능한 경우
+    if(meta.rent > 0){
+      reqParams.showDailyPrice = 'Y';
+      typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.rent].txt);
+      manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.rent]);
+    }else {
+      reqParams.showDailyPrice = 'N';
+    }
+
+    // 이용가능 서비스가 있는 경우 로밍 요금 조회 요청.
+    if(manageType.length > 0) {
+      // 3G 자동로밍 선택이 가능할 경우 기본 노출로 설정
+      var defaultType = 0;
+      for (var key in manageType) {
+        if (manageType[key].type === 'W') {
+          defaultType = key;
+        }
+      }
+      reqParams.manageType = manageType[defaultType].type;
+      $('#availableServices').text(typeTxt.join(', '))
+
+      $.get('/bypass/core-product/v1/roaming/country-rate?' +
+        'countryCode=<%= lastQuery.countryCd %>&manageType=' + reqParams.manageType +
+        '&showDailyPrice=' + reqParams.showDailyPrice, fillRateProperties);
+    } else {
+      alert('이용 가능한 서비스가 없습니다');
+    }
+  }
+
+  function fillRateProperties(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+      return;
+    }
+    var _result = resp.result;
+    _result.countryCd = '<%= lastQuery.countryCd %>';
+
+    var typeIndex = null;
+    for(var idx in manageType) {
+      if(manageType[idx].type === reqParams.manageType) {
+        typeIndex = idx;
+      }else {
+      }
+    }
+
+    var noticeParam = {
+      voiceShown: true,   // 음성통화 수신 요금 안내 노출 여부
+      ableShown: true,
+      attentionShown: false,  // 로밍 시 국가별 주의사항 노출 여부
+      svcAttention: _result.svcAttention, // 로밍 시 국가별 주의 사항 내용
+      hanaroMtCharge: _result.hanaroMtCharge, // 음성통화 수신 요금 sk브로드밴드
+      dacomMtCharge: _result.dacomMtCharge,   // 음성통화 수신 요금 LG U+
+      ktMtCharge: _result.ktMtCharge,         // 음성통화 수신 요금 KT
+      onseMtCharge: _result.onseMtCharge      // 음성통화 수신 요금 세종텔레콤
+    };
+
+    if(reqParams.manageType === 'L') {  // 서비스 방식이 LTE인 경우
+      _result.lteShown = true;    // LTE 안내 사항 노출 및 음성 '서비스 이용 불가' 문구 변경
+      noticeParam.voiceShown = false;
+    } else if (reqParams.manageType === '') { // 서비스 방식이 임대로밍 인 경우
+      _result.rentShown = true;   // 임대로밍 안내사항 노출
+    } else if (reqParams.manageType === 'C') {   // 서비스 방식이 2G인 경우
+      if(_result.dMoChargeMin){       //데이터 이용료가 있는 경우
+        _result.cdmaUnit = true;
+        _result.mTxtCharge = _result.dMoChargeMin;
+        _result.mMtmCharge = _result.dMoChargeMin;
+      }
+    }
+
+    var chargeWhenConnected = ['CAN', 'MEX']; // 통화가 연결된 후 요금 청구되는 국가 리스트
+    if ( chargeWhenConnected.indexOf(_result.countryCd) !== -1) {
+      _result.isChargeWhenConnected = true;
+    }
+
+    if(_result.ableAreaType === 'A'){   // 이용가능 지역 상세보기 여부
+      noticeParam.ableShown = false;
+    }
+
+    _result.dMoChargeMin = Number(_result.dMoChargeMin);    // 데이터 이용료
+    _result.mTxtCharge =  Number(_result.mTxtCharge);       // MMS-텍스트 발신
+    _result.mMtmCharge =  Number(_result.mMtmCharge);       // MMS 멀티미디어 발신
+    noticeParam.attentionShown = (_result.svcAttention) ? true : false;
+
+    if(typeIndex === null || typeIndex === ''){
+      typeIndex = -1;
+    }
+
+    var currentType = manageType[typeIndex].txt; // 현재 선택된 서비스명 e.g. '3G 자동로밍'
+    console.log({currentType, _result, noticeParam});
+
+    $('#attentionList').html(noticeParam.svcAttention);
+
+    if (_result.dMoChargeMin) {
+      $('#dataCharge').html(_result.dMoChargeMin + '원');
+    } else {
+      $('#dataCharge').html('-');
+    }
+
+    if (_result.pMoChargeMin) {
+      $('#voiceChargeOut').html(_result.pMoChargeMin + '원');
+    } else {
+      $('#voiceChargeOut').html('-');
+    }
+
+    if (_result.vMoChargeMin) {
+      $('#voiceChargeLocal').html(_result.vMoChargeMin+ '원');
+    } else {
+      $('#voiceChargeLocal').html('-');
+    }
+
+    if (_result.vMtChargeMin) {
+      $('#voiceChargeIncoming').html(_result.vMtChargeMin + '원');
+    } else {
+      $('#voiceChargeIncoming').html('-');
+    }
+
+    $('#voiceSKB').html(_result.hanaroMtCharge || '-');
+    $('#voiceLGU').html(_result.dacomMtCharge || '-');
+    $('#voiceKT').html(_result.ktMtCharge || '-');
+    $('#voiceOS').html(_result.onseMtCharge || '-');
+    $('#voiceAddon').html(_result.suplSvcNm);
+
+    if (_result.sMoChargeMin) {
+      $('#smsOut').html(_result.sMoChargeMin + '원');
+    } else {
+      $('#smsOut').html('-');
+    }
+
+    if (_result.mTxtCharge) {
+      $('#mmsTextOut').html(_result.mTxtCharge + '원');
+    } else {
+      $('#mmsTextOut').html('-');
+    }
+
+    if (_result.mMtmCharge) {
+      $('#mmsMediaOut').html(_result.mMtmCharge + '원');
+    } else {
+      $('#mmsMediaOut').html('-');
+    }
+
+    $('#mmsTextOutUnit').text(_result.cdmaUnit ? '패킷' : '건');
+    $('#mmsMediaOutUnit').text(_result.cdmaUnit ? '패킷' : '건');
+
+    // 서비스 국가가 러시아이고, 3G인 경우 안내팝업 호출
+    // if(reqParams.manageType === 'W' && reqParams.countryCd === 'RUS'){
+    //   this._popupService.close();
+    //   this._popupService.open({
+    //     hbs: 'RM_10',
+    //     layer: true
+    //   }, $.proxy(this._closeRusNotiPopup, this), null, null, $(event.currentTarget));
+    // }
+    //
+    // 팔라우, 세이셸, 마다가스카르의 국가의 경우 공지팝업 호출
+    // if(_result.dablYn === 'Y') {
+    //   var popupDesc = _result.dablCtt;
+    //   setTimeout($.proxy(this._openNoticePopup, this, popupDesc, event), 500);
+    // }
+  }
+
+  function popup(e, popupId) {
+    /*
+    Tw.Popup.open({
+      url: '/hbs/',
+      hbs: 'popup',
+      'title': '타이틀',
+      'btn-close': 'btn-tooltip-close tw-popup-closeBtn',
+      'title_type': 'tit-tooltip',
+      'cont_align': 'tl font-only-black',
+      'contents': '내용',
+      'tooltip': 'tooltip-pd'
+    }, null, null, null, $(e.currentTarget));
+     */
+  }
+
   var nations = {
     'EUR': <%- JSON.stringify(nations.eur) %>,
     'AFR': <%- JSON.stringify(nations.afr) %>,
@@ -329,5 +650,6 @@
     'OCN': <%- JSON.stringify(nations.ocn) %>,
   };
   var allNations = [];
+  var roamingMeta = <%- JSON.stringify(meta) %>;
 </script>
 <% include ../../components/end.component.html %>
