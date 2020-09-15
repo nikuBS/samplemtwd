@@ -88,7 +88,8 @@ Tw.MyTFareBillCommon.prototype = {
   _selectLine: function (e) {
     this._isfirstPop = false;
     this._popupService.open({
-        'hbs': 'MF_01_01_02'
+        'hbs': 'MF_01_01_02',
+        cardPayment: this.cardPayment
       },
       $.proxy(this._openSelectLine, this), // open callback
       $.proxy(this._afterClose, this), // close callback
@@ -487,14 +488,17 @@ Tw.MyTFareBillCommon.prototype = {
     if ( !partialAmount || partialAmount < 10 ) {
       // 납부하실 금액 최소 금액 (10원이상)
       this.$partialErrors.eq(1).removeClass('none');
+      this.$flexibleBill.find('input[type=tel]').focus();
       return false;
     } else if ( (partialAmount <= paymentAmount) && partialAmount % 10 > 0 ) {
       // 10원 단위로 표시 노출
       this.$partialErrors.eq(2).removeClass('none');
+      this.$flexibleBill.find('input[type=tel]').focus();
       return false;
     } else if ( partialAmount > paymentAmount ) {
       // 납부 가능한 금액보다 입력된 금액이 큰 경우
       this.$partialErrors.eq(0).removeClass('none');
+      this.$flexibleBill.find('input[type=tel]').focus();
       return false;
     } else {
       // 정상
