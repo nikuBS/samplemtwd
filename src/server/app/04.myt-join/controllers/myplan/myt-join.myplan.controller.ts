@@ -269,7 +269,7 @@ class MyTJoinMyplan extends TwViewController {
         this._getUsagePattern(),
         this._getPPS()
     ).subscribe((subscriptions: Array<any>) => {
-      const apiError = subscriptions.find(subscription => (subscription && !!subscription.code && subscription.code !== '00'));
+      const apiError = subscriptions.find(item => (item && !!item.code && item.code !== '00'));
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(defaultOptions, apiError));
       }
@@ -330,8 +330,7 @@ class MyTJoinMyplan extends TwViewController {
         basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
         btnList: this._convertBtnList(data.feePlanProd.btnList, data.feePlanProd.prodSetYn) // 버튼 목록
       },
-      // TODO: 제거하고 BFF_05_0222로 사용해야 함
-      // dcPrograms: this._convertWirelessDcPrograms(disProdList) // 옵션 및 할인 프로그램
+      dcPrograms: this._convertWirelessDcPrograms(disProdList) // 옵션 및 할인 프로그램
     };
   }
 
@@ -893,15 +892,15 @@ class MyTJoinMyplan extends TwViewController {
           this._getLoyaltyBenefits(),
           this._getRefillCoupons()
       ).pipe(
-          switchMap((subscriptions: Array<any>) => {
-            const apiError = subscriptions.find(subscription => (subscription && !!subscription.code && subscription.code !== '00'));
+          switchMap((resps: Array<any>) => {
+            const apiError = resps.find(item => (item && !!item.code && item.code !== '00'));
             if (!FormatHelper.isEmpty(apiError)) {
               return Observable.of({
                 msg: apiError.msg,
                 code: apiError.code
               });
             }
-            const [bill, combination, loyalty, coupons] = subscriptions;
+            const [bill, combination, loyalty, coupons] = resps;
             const benefits: any = {
               count: 0
             };
@@ -1011,14 +1010,14 @@ class MyTJoinMyplan extends TwViewController {
 
   private _getWirelessAdditions(svcInfo: any): Observable<any> {
     return Observable.zip(
-        this.apiService.request(API_CMD.BFF_05_0222, {}),
+        this.apiService.request(API_CMD.BFF_05_0137, {}),
         this.apiService.request(API_CMD.BFF_10_0185, {}, {
           svcMgmtNum: svcInfo.svcMgmtNum,
           svcNum: svcInfo.svcNum,
           custNum: svcInfo.custNum
         }),
         (...resps) => {
-          const apiError = resps.find(resp => (resp && !!resp.code && resp.code !== '00'));
+          const apiError = resps.find(item => (item && !!item.code && item.code !== '00'));
           if (!FormatHelper.isEmpty(apiError)) {
             return {
               msg: apiError.msg,
@@ -1026,8 +1025,7 @@ class MyTJoinMyplan extends TwViewController {
             };
           }
           const [additionProds = {}, smartCallPickProds] = resps.map(resp => resp.result);
-          const joinedPaid = (additionProds.addProdPayList || []).map(convertAdditionData);
-          const joinedFree = (additionProds.addProdFreeList || []).map(convertAdditionData);
+          const joined = (additionProds.addProdList || []).map(convertAdditionData);
           // 가입된 로밍 요금제가 있을 경우
           const roaming = additionProds.roamingProd ? {
                 ...additionProds.roamingProd,
@@ -1036,44 +1034,29 @@ class MyTJoinMyplan extends TwViewController {
                     Number(additionProds.roamingProd.addRoamingProdCnt)
               } :
               {};
-          const smartCallPick = smartCallPickProds.listSmartPick;
-          // 부가상품에 스마트콜Pick이 있는 경우
-          if (smartCallPickProds.length) {
-            if (joinedPaid.length) {
-              if (joinedPaid.filter(item => item.prodId === 'NA00006399').length > 0) {
-                // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
-                // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
-                smartCallPick.forEach((product: any) => {
-                  const smtCpItemIdx = joinedPaid.findIndex(prod => prod.prodId === product.prod_id);
-                  if (smtCpItemIdx > -1) {
-                    joinedPaid.splice(smtCpItemIdx, 1);
-                  }
-                });
-              }
+          let smartCallPick;
+          const listSmartPick = smartCallPickProds.listSmartPick; // || [];
+          if (joined.length && listSmartPick.length) {
+            // 부가상품에 스마트콜Pick이 있는 경우
+            if (joined.filter(item => item.prodId === 'NA00006399').length > 0) {
+              // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
+              // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
+              listSmartPick.forEach((product: any) => {
+                const smtCpItemIdx = joined.findIndex(prod => prod.prodId === product.prod_id);
+                if (smtCpItemIdx > -1) {
+                  joined.splice(smtCpItemIdx, 1);
+                }
+              });
             }
-            // TODO: 무료 상품에도 스마트콜픽이 있지 않을 듯 하지만, 확인 후 제거하자!
-            if (joinedFree.length) {
-              if (joinedFree.filter(item => item.prodId === 'NA00006399').length > 0) {
-                // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
-                // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
-                smartCallPick.forEach((product: any) => {
-                  const smtCpItemIdx = joinedFree.findIndex(prod => prod.prodId === product.prod_id);
-                  if (smtCpItemIdx > -1) {
-                    joinedFree.splice(smtCpItemIdx, 1);
-                  }
-                });
-              }
-            }
+            smartCallPick = listSmartPick;
           }
           return {
             joined: {
-              paids: joinedPaid, // 유료 부가 상품
-              frees: joinedFree // 무료 부가 상품
+              paids: joined.filter(addition => addition.payFreeYn === 'N'), // 유료 부가 상품
+              frees: joined.filter(addition => addition.payFreeYn === 'Y') // 무료 부가 상품
             },
             roaming, // 로밍 요금제
-            dcPrograms: additionProds.disProdList, // 옵션/할인 프로그램
-            // NOTE: 제목만 노출할 것이므로, 데이터 가공이 필요없다. 아까자
-            // dcPrograms: this._convertWirelessDcPrograms(additionProds.disProdList), // 옵션/할인 프로그램
+            smartCallPick // 스마트콜픽 상품
           };
         });
   }
