@@ -50,7 +50,7 @@
       parentEl: 'div#calendar',
       minDate: moment().add(1, 'days').format('YYYY-MM-DD'),
     }, function(start, end) {
-      if (start && end) {
+      if (start && end && end.diff(start, 'days') <= 30) {
         $('#scheduleConfirm').removeClass('not-prepared');
       } else {
         $('#scheduleConfirm').addClass('not-prepared');
@@ -74,6 +74,10 @@
 
     var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
     var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
+    if (endDate.diff(startDate, 'days') > 30) {
+      alert('30일 이상은 선택하실 수 없습니다.');
+      return false;
+    }
     var countryCode = $('#target-nation').attr('data-code');
     document.location.href = '/product/roaming/offer?code=' + countryCode +
       '&from=' + startDate.format('YYYYMMDD') +

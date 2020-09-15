@@ -29,11 +29,15 @@ export default class RoamingTariffOfferController extends TwViewController {
 
       // this.apiService.request(API_CMD.BFF_10_0001, {prodExpsTypCd: 'P'}, {}, [recommended.prodId]).subscribe(resp => {
       //   console.log(resp);
-      const detail = RoamingHelper.getTariffHardcoded(recommended.prodId);
-      if (detail) {
-        recommended.data = detail.data;
-        recommended.phone = detail.phone;
-        recommended.price = detail.price;
+      if (recommended) {
+        const detail = RoamingHelper.getTariffHardcoded(recommended.prodId);
+        if (detail) {
+          recommended.data = detail.data;
+          recommended.phone = detail.phone;
+          recommended.price = detail.price;
+        }
+      } else {
+        recommended = {};
       }
 
       res.render('roaming-next/roaming.tariff.offer.html', {

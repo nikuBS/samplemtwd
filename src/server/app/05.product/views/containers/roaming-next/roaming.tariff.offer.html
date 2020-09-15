@@ -23,6 +23,7 @@
                 여행과<br />
                 가장 잘 맞는 로밍 요금제
             </h2>
+            <% if (recommended.prodId) { %>
             <div class="offered">
                 <a href="/product/callplan?prod_id=<%= recommended.prodId %>">
                     <div class="tariff">
@@ -43,6 +44,7 @@
                     </p>
                 </div>
             </div>
+            <% } %>
             <% if (isLogin) { %>
             <div class="past">
                 <p class="description">
