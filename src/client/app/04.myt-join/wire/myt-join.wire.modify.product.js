@@ -251,6 +251,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
   // 요금상품 선택 클릭시 실행
   select_product_billEvtOpen: function( $target, $layer ) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+
     var tempData = this.productFormData.prodNm;
     var indexOfVal = this.productBillSelect.child[this.productSelect.id].indexOf(tempData);
 

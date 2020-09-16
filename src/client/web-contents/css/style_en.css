@@ -100,17 +100,17 @@
 
 .donut-chart.small, .donut-chart.small .donut-chart-area { width: 2.88rem; height: 2.88rem; }
 
-.donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill { border: 0.56rem solid #f76252; clip: rect(0, 1.44rem, 2.88rem, 0); }
+.donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill { border: 0.56rem solid #f76252; clip: rect(0, 23px, 46px, 0); }
 
-.donut-chart.small .donut-chart .c100.p0 .slice.transparent::before { display: none; }
+.donut-chart.small .c100.p0 .slice.transparent::before { display: none; }
 
-.donut-chart.small .donut-chart .c100.p0 .slice.transparent .bar::before { display: none; }
+.donut-chart.small .c100.p0 .slice.transparent .bar::before { display: none; }
 
-.donut-chart.small .donut-chart .c100 .slice.transparent { clip: inherit; }
+.donut-chart.small .c100 .slice.transparent { clip: inherit; }
 
-.donut-chart.small .donut-chart .c100 .slice.transparent * { border-color: transparent !important; }
+.donut-chart.small .c100 .slice.transparent * { border-color: transparent !important; }
 
-.donut-chart.small .donut-chart .c100 .slice.transparent .bar { clip: inherit; }
+.donut-chart.small .c100 .slice.transparent .bar { clip: inherit; }
 
 .donut-chart.small .donut-chart-area .c100 .slice.transparent::before { margin: 0; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); width: 0.56rem; height: 0.56rem; }
 
@@ -119,8 +119,6 @@
 .tod-line-sel-box .line-sel-btn:after { background: url("/img/en/ico-white-arr-down.png") no-repeat 50% 50%; background-size: 100% 100%; }
 
 .notice-point .t-np1 { background: url("/img/en/ico_notice_point_gray.png") center 0 no-repeat; background-size: 60px auto; font-weight: 400; }
-
-.user-month-bill { margin-bottom: 1.88rem; }
 
 .user-month-bill .this-month-bill .stit { font-size: 1rem; color: #000; }
 
@@ -216,7 +214,7 @@
 
 .icon-call-48 { display: inline-block; width: 1.5rem; height: 1.5rem; background: url("/img/en/icon_48px_call.svg") no-repeat 0 0; background-size: 100% 100%; }
 
-.tod-icon.tod-icon-notice02::before { width: 0.875rem; height: 0.875rem; top: 0.1rem; left: 0.2rem; background-image: url("/img/en/icon-notice02.png"); }
+.tod-icon.tod-icon-notice02::before { width: 0.875rem; height: 0.875rem; top: 0; left: 0.2rem; background-image: url("/img/en/icon-notice02_red.png"); }
 
 .ti-caption-gray .tod-icon { font-size: 0.81rem; color: #333; }
 
@@ -305,6 +303,14 @@
 .box-suggest .suggest-info .suggest-sub3 { text-align: center; font-size: 1rem; line-height: 1.13rem; }
 
 .bt-top button { position: absolute; left: 50%; top: 1.56rem; display: inline-block; width: 2.31rem; height: 3.19rem; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); background: url("/img/en/ico-group3.png") no-repeat -0.5rem -68.75rem; background-size: 3.13rem; }
+
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line.red { background-color: #fff2f0; }
+
+.myt-note-wrap { width: 100%; }
+
+.myt-note-wrap .tit { position: relative; padding: 0 0.31rem; }
+
+.myt-note-wrap .tit::before { content: ''; display: inline-block; width: 4px; height: 4px; background: url("/img/en/ico_refer.png") 0 0 no-repeat; position: absolute; top: 3px; left: 0; background-size: 100% 100%; }
 
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
@@ -499,9 +505,11 @@
 
 .bg-gray .comm-charges .bill-cont dt { width: 75%; display: table-cell; color: #000; font-size: 0.88rem; }
 
-.bg-gray .comm-charges .bill-cont dt .refer { font-size: 0.75rem; color: #666; font-weight: 300; }
+.bg-gray .comm-charges .bill-cont dt .refer { width: 100%; font-size: 0.75rem; color: #666; font-weight: 300; margin-top: 0.63rem; display: inline-block; }
 
-.bg-gray .comm-charges .bill-cont dd { width: 25%; display: table-cell; text-align: right; font-size: 0.88rem !important; }
+.bg-gray .comm-charges .bill-cont dd { width: 25%; display: table-cell; text-align: right; font-size: 0.88rem !important; font-weight: 500; }
+
+.bg-gray .comm-charges .bill-cont dd.red { color: #f76252; }
 
 .bg-gray .service-charge .totall::after { content: ''; display: inline-block; width: 100%; height: 1px; background: #e5e5e5; position: absolute; top: 0; left: 0; }
 
@@ -525,7 +533,7 @@
 
 .charge-list .acco-list .acco-box { min-height: 3.06rem; }
 
-.charge-list .acco-list .acco-box .acco-tit > button { width: 100%; height: 100%; position: relative; font-size: 0.88rem; color: #000; }
+.charge-list .acco-list .acco-box .acco-tit > button { width: 100%; height: 100%; position: relative; font-size: 0.88rem; color: #000; font-weight: 400; }
 
 .charge-list .acco-list .acco-box .acco-tit > button .phone-num-ico { width: 0.88rem; height: 1.25rem; vertical-align: text-bottom; }
 
@@ -534,6 +542,18 @@
 .charge-list .acco-list .acco-box .acco-tit > button .fee { width: calc(35% - 0.93rem); display: block; text-align: right; float: left; padding-right: 0.31rem; }
 
 .charge-list .acco-list .acco-box .acco-tit > button .fee.red { color: #f76252; }
+
+.charge-list .acco-list .acco-box .num-list { width: 100%; display: table; padding: 1.06rem 1.25rem 0.53rem 1.25rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.charge-list .acco-list .acco-box .num-list dt { display: table-cell; width: 65%; font-size: 0.88rem; }
+
+.charge-list .acco-list .acco-box .num-list dt .phone-num-ico { width: 0.88rem; height: 1.25rem; vertical-align: text-bottom; margin-right: 0.63rem; }
+
+.charge-list .acco-list .acco-box .num-list dd { display: table-cell; width: 35%; font-size: 1.06rem; font-weight: 500; text-align: right; }
+
+.charge-list .acco-list .acco-box.on .acco-cont { padding: 0 1rem !important; }
+
+.charge-list .acco-list .acco-box.on::after { display: none; }
 
 .call-plan { width: 100%; height: 3.25rem; line-height: 3.25rem; padding: 0 0.94rem; display: table; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
@@ -551,7 +571,7 @@
 
 .my-info-data dd { display: table-cell; width: 62%; padding: 0.94rem 0.75rem; font-size: 0.81rem; line-height: 1.13rem; color: #000; vertical-align: middle; font-weight: 500; }
 
-.terms h3 { width: 100%; padding: 1.25rem; line-height: 1.25rem; font-size: 1.13rem; font-weight: 600; background: #fff; }
+.terms h3 { width: 100%; padding: 1.25rem; line-height: 1.5rem; font-size: 1.13rem; font-weight: 600; background: #fff; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 .terms .chapter { display: inline-block; width: 100%; padding: 1.06rem 1.25rem; font-size: 0.81rem; background: #f5f5f5; font-weight: 500; }
 
@@ -581,9 +601,25 @@
 
 .fees-list:last-of-type { border-bottom: none; }
 
+.info-charge-data { width: 100%; padding-left: 1.5rem; font-size: 0.88rem; line-height: 1.19rem; -webkit-box-sizing: border-box; box-sizing: border-box; color: #000; font-weight: 300; position: relative; margin-top: 1.56rem; }
+
+.info-charge-data > strong { font-weight: 500; }
+
+.info-charge-data::before { content: ''; display: inline-block; width: 0.94rem; height: 0.94rem; background: url("/img/en/ico_fs-info.png") 0 0 no-repeat; background-size: 100% 100%; position: absolute; top: 2px; left: 0; }
+
+.no-charge { text-align: center; padding: 2.38rem 2.19rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+.no-charge > img { width: 3.75rem; height: 3.75rem; }
+
+.no-charge > span.txt { width: 100%; display: inline-block; font-size: 0.94rem; color: #8d8d8d; padding-top: 1.88rem; }
+
 .mb100 { margin-bottom: 3.13rem; }
 
+.pb120 { padding-bottom: 7.5rem; }
+
 .half-gaps { padding: 0.63rem 0.94rem; }
+
+.notice-point .t-np2 { line-height: 1.25rem; }
 
 /* Tool Bar */
 #gnb .g-wrap { padding: 0 1.56rem; }
@@ -718,7 +754,9 @@
 
 .store-list { margin-top: 1.13rem; }
 
-.store-list > li { padding: 1.25rem 0; border-top: 1px solid #e1e1e1; }
+.store-list > li { padding: 1.25rem 0; border-top: 1px solid #f2f2f2; }
+
+.store-list > li:first-child { border-color: #e5e5e5; }
 
 .store-list > li .info-top { padding: 0 1.25rem; background: url("/img/en/icon_location_pin.png") left top no-repeat; background-size: 0.75rem 1rem; }
 
@@ -753,6 +791,10 @@
 .custom-form input[type=radio]:disabled + .r-type1 { background-image: url(/img/en/component_radio_small_off_disabled.svg); }
 
 .custom-form input[type=radio]:checked:disabled + .r-type1 { background-image: url(/img/en/component_radio_small_on_disabled.svg); }
+
+.videoGuide-bn { width: 100%; height: 100%; -webkit-box-sizing: border-box; box-sizing: border-box; overflow: hidden; }
+
+.videoGuide-bn > img { width: 100%; height: 100%; }
 
 .video-list > li { padding: 1.88rem 0; }
 
@@ -872,29 +914,31 @@
 
 .plan-list .plan-title .plan-desc { display: inline-block; font-size: 0.81rem; font-weight: 300; color: #959595; line-height: 1.4em !important; }
 
-.plan-list .plan-card { padding: 1rem; border-radius: 0.25rem; background-color: #fff; -webkit-box-shadow: 0 0.06rem 0.63rem #e5e6e8; box-shadow: 0 0.06rem 0.63rem #e5e6e8; }
+.plan-list .plan-card { display: block; width: 100%; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 1rem; border-radius: 0.25rem; background-color: #fff; -webkit-box-shadow: 0 0.06rem 0.63rem #e5e6e8; box-shadow: 0 0.06rem 0.63rem #e5e6e8; }
 
-.plan-list .plan-card > button { display: inline-block; width: 100%; text-align: left; background: url("/img/en/arrow_support.png") right top 0.19rem no-repeat; background-size: 0.44rem 0.69rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.plan-list .plan-card > span { display: inline-block; width: 100%; text-align: left; background: url("/img/en/arrow_support.png") right top 0.19rem no-repeat; background-size: 0.44rem 0.69rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.plan-list .plan-card > button .plan-name { display: inline-block; width: 100%; font-size: 0.88rem; font-weight: 500; color: #000; }
+.plan-list .plan-card > span .plan-name { display: inline-block; width: 100%; font-size: 0.88rem; font-weight: 500; color: #000; }
 
-.plan-list .plan-card > button .fee { display: inline-block; font-size: 1rem; font-weight: 700; color: #f76252; margin-top: 0.31rem; }
+.plan-list .plan-card > span .fee { display: inline-block; font-size: 1rem; font-weight: 700; color: #f76252; margin-top: 0.31rem; }
 
 .plan-list .plan-card > ul { margin-top: 0.88rem; padding-top: 0.88rem; border-top: 1px solid #f2f2f2; font-size: 0; }
 
-.plan-list .plan-card > ul > li { display: inline-block; width: 33.33%; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 5.125%; }
+.plan-list .plan-card > ul > li { display: inline-block; width: 33.33%; text-align: left; padding-left: 4%; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.plan-list .plan-card > ul > li > p { display: inline-block; font-size: 0.81rem; font-weight: 500; color: #666666; }
+.plan-list .plan-card > ul > li:nth-child(2) { padding-left: 3%; }
 
-.plan-list .plan-card > ul > li > p > i { display: inline-block; margin-right: 0.31rem; }
+.plan-list .plan-card > ul > li > span { display: inline-block; font-size: 0.81rem; font-weight: 500; color: #666666; }
 
-.plan-list .plan-card > ul > li > p.data { font-weight: 700; color: #178bce; }
+.plan-list .plan-card > ul > li > span > i { display: inline-block; margin-right: 0.31rem; }
 
-.plan-list .plan-card > ul > li > p.data > i { width: 0.81rem; height: 0.81rem; background: url("/img/en/bg_gb.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
+.plan-list .plan-card > ul > li > span.data { color: #178bce; }
 
-.plan-list .plan-card > ul > li > p.talktime > i { width: 0.88rem; height: 0.88rem; background: url("/img/en/bg_type.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
+.plan-list .plan-card > ul > li > span.data > i { width: 0.81rem; height: 0.81rem; background: url("/img/en/bg_gb.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
 
-.plan-list .plan-card > ul > li > p.units > i { width: 0.88rem; height: 0.63rem; background: url("/img/en/bg_sms.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.06rem; }
+.plan-list .plan-card > ul > li > span.talktime > i { width: 0.88rem; height: 0.88rem; background: url("/img/en/bg_type.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
+
+.plan-list .plan-card > ul > li > span.units > i { width: 0.88rem; height: 0.63rem; background: url("/img/en/bg_sms.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.06rem; }
 
 .plan-list .plan-card + .plan-card { margin-top: 0.63rem; }
 
@@ -902,14 +946,20 @@
 
 .products-detailinfo02 .category-type.type01 { padding-left: 0.94rem; width: 37%; }
 
+.products-detailinfo02 .category-type.type01.style2 { width: 100%; display: inline-block; padding-left: 0; margin: 0.94rem 0 0.47rem 0; }
+
 .products-detailinfo02 .category-type.type02 { width: 34%; }
+
+.products-detailinfo02 .category-type.type02.style2 { width: 100%; display: inline-block; margin-bottom: 0.47rem; }
 
 .products-detailinfo02 .category-type.type03 { width: 29%; }
 
-.products-detailinfo02 .category-type .gb { background-image: url(/img/en/bg_gb.png); }
+.products-detailinfo02 .category-type.type03.style2 { width: 100%; display: inline-block; margin-bottom: 0.47rem; }
 
-.products-detailinfo02 .category-type .type { background-image: url(/img/en/bg_type.png); }
+.products-detailinfo02 .category-type .gb { background-image: url("/img/en/bg_gb.png"); }
 
-.products-detailinfo02 .category-type .basic { background-image: url(/img/en/bg_sms.png); }
+.products-detailinfo02 .category-type .type { background-image: url("/img/en/bg_type.png"); }
+
+.products-detailinfo02 .category-type .basic { background-image: url("/img/en/bg_sms.png"); }
 
 /*# sourceMappingURL=maps/style_en.css.map */

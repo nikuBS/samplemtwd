@@ -67,7 +67,7 @@ Tw.ChatbotService = function() {
         // '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop',           // 2. 나의요금 서브메인
         // '/myt-data/submain'   : 'mytdata_submain_chatbot_pop'            // 3. 나의 데이터/통화
         '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop_new'           // 2. 나의요금 서브메인        
-        // ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
+        ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
     };
     
     // 챗봇 상담하기 화면 경로

@@ -24,10 +24,13 @@
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
     <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common_en.js"></script>
     <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
     <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
 
 </head>
 
@@ -96,65 +99,122 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
-                <!-- 200901 버튼 삭제 -->
-                <div class="cont-box noborder">
+                <!-- 200911 내용 변경 -->
+                <div class="cont-box">
                     <div class="user-month-bill">
                         <div class="this-month-bill">
-                            <p class="stit">Current Usages <span class="term">(2020.8.1 ~ 2020.8.17)</span></p>
-                            <p class="price"><span class="won">₩</span>46,443</p>
+                            <p class="stit">Aug. Fees <span class="term">2020.7.1. ~ 2020.7.31.</span></p>
+                            <p class="price"><span class="won">₩</span>85,050</p>
                         </div>
                     </div>
                 </div>
-                <!-- //200901 버튼 삭제 -->
+                <!-- //200911 내용 변경 -->
                 <!--// .cont-box -->
 
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
                 <!-- .cont-box -->
+                <!-- 200911 내용 변경 -->
                 <div class="cont-box nogaps">
-                    <div class="bg-gray">
-                        <div class="comm-charges">
-                            <dl class="totall">
-                                <dt>Communication Charges</dt>
-                                <dd class="red">₩75,325</dd>
-                            </dl>
-                            <dl class="bill-cont">
-                                <dt>Monthly Flat Rates<br /> <span class="refer">(Monthly Charge)</span></dt>
-                                <dd>₩63,866</dd>
-                            </dl>
-                            <dl class="bill-cont">
-                                <dt>Rate Discounts<br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Decimal Amounts)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
-                                <dd>-₩2</dd>
-                            </dl>
-                            <dl class="bill-cont">
-                                <dt>Value-added Tax (VAT) <i class="icon-fnote" role="note" aria-labelledby="aria-footnote-01"><span class="blind">Refer to Footnotes</span></i><br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">(Total Amount of Value-added Tax)<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
-                                <dd>₩6,915</dd>
-                            </dl>
-                        </div>
-                        <div class="service-charge">
-                            <dl class="totall">
-                                <dt>Additional Service Charge(s)</dt>
-                                <dd class="red">₩9,725</dd>
-                            </dl>
-                            <dl class="bill-cont">
-                                <dt>Additional Service Charge</dt>
-                                <dd><span class="article">Music Ringtone</span><span class="fee">₩725</span></dd>
-                            </dl>
-                            <dl class="bill-cont">
-                                <dt>Micropayment</dt>
-                                <dd><span class="article" role="note" aria-labelledby="aria-footnote-01">Micropayment_Mobilians <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">₩10,000</span></dd>
-                                <dd><span class="article" role="note" aria-labelledby="aria-footnote-01"> Micropayment Advance Payment <i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span><span class="fee">-₩1,000</span></dd>
-                            </dl>
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <div class="acco-cover">
+                                <div class="acco-style charge-list">
+                                    <ul class="acco-list pt0">
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="true">
+                                                    <span class="phone-num">Communication Charges</span>
+                                                    <span class="fee">₩89,090</span>
+                                                </button>
+                                            </div>
+                                            <div class="acco-cont information-usebox">
+                                                <div class="bg-gray">
+                                                    <div class="comm-charges">
+                                                        <dl class="bill-cont">
+                                                            <dt>Monthly Flat Rates<br /> <span class="refer">Monthly Charge</span></dt>
+                                                            <dd>₩63,866</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Rate Discounts<br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">Decimal Amounts<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd class="red">-₩2</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Value-added Tax (VAT) <i class="icon-fnote" role="note" aria-labelledby="aria-footnote-01"><span class="blind">Refer to Footnotes</span></i><br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">Total Amount of Value-added Tax<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd>₩6,915</dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="true">
+                                                    <span class="phone-num">Additional Service Charge(s)</span>
+                                                    <span class="fee">₩900</span>
+                                                </button>
+                                            </div>
+                                            <div class="acco-cont information-usebox">
+                                                <div class="bg-gray">
+                                                    <div class="comm-charges">
+                                                        <dl class="bill-cont">
+                                                            <dt>Monthly Flat Rates<br /> <span class="refer">Monthly Charge</span></dt>
+                                                            <dd>₩63,866</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Rate Discounts<br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">Decimal Amounts<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd class="red">-₩2</dd>
+                                                        </dl>
+                                                        <dl class="bill-cont">
+                                                            <dt>Value-added Tax (VAT) <i class="icon-fnote" role="note" aria-labelledby="aria-footnote-01"><span class="blind">Refer to Footnotes</span></i><br /> <span class="refer" role="note" aria-labelledby="aria-footnote-01">Total Amount of Value-added Tax<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></span></dt>
+                                                            <dd>₩6,915</dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- // 200911 내용 변경 -->
                 <!--// .cont-box -->
 
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
                 <!-- .cont-box -->
-                <div class="cont-box noborder bgnone">
+                <div class="cont-box noborder">
                     <p class="fs-info footnote01" id="aria-footnote-01">The target display items are exclude VAT</p>
                     <p class="fs-info footnote02" id="aria-footnote-02">Display item is a third-party fees charged on our behalf</p>
                 </div>
                 <!--// .cont-box -->
 
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- 200911 User Guide 영역 추가 -->
+				<div class="cont-box nogaps">
+					<div class="widget">
+						<div class="widget-box accordion">
+							<div class="acco-cover toggle">
+								<div class="acco-style  type-qa qa-lease">
+									<ul class="acco-list pt0">
+										<li class="acco-box">
+											<div class="acco-tit">
+												<button role="button" aria-pressed="true"><img src="/img/en/ico_fs-info.png" alt="" />Check Important Things to Know</button>
+											</div>
+											<div class="acco-cont information-usebox">
+												<p class="fs-info">You can check your usage from the 1st of the month until present Please use the information only for reference purposes since the usage amount shown may differ from that of the actual invoice. E.g.) In case of the ‘NATE card gift certificate’, you can check usage in ‘Data Information Fees. However, these fees are not actually charged as they are deducted at the end of the month</p>
+												<p class="fs-info">In the case of one-off payment items, the fees are shown as duplicate from the previous month until the 7th of each month , but are not actually charged twice.E.g.) Subscription fees, discounts for cell phones, USIM, additional fees, discounts for automatic payment, unpaid fees, etc.</p>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                <!-- //200911 User Guide 영역 추가 -->
             </div>
         </div>
         <!--// #contents -->

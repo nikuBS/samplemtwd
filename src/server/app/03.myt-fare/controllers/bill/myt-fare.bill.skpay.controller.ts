@@ -51,7 +51,8 @@ class MyTFareBillSkpay extends MyTFareBillPaymentCommon {
             unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc, pageInfo),
             // autoInfo: this.parseInfo(autoInfo), // 자동납부 정보를 선택할 수 없게 수정.
             autoInfo: null,
-            formatHelper: FormatHelper
+            formatHelper: FormatHelper,
+            card: false
           });
         } else {
           this.error.render(res, {

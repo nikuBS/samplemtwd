@@ -24,10 +24,13 @@
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
     <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common_en.js"></script>
     <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
     <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
 
 </head>
 
@@ -96,50 +99,21 @@
                 <div class="cont-box">
                     <div class="user-month-bill mb100">
                         <div class="this-month-bill">
-                            <p class="stit">Aug. Fees <span class="term">(2020.7.1 ~ 2020.7.31)</span></p>
+                            <p class="stit">Aug. Fees <span class="term">2020.7.1. ~ 2020.7.31.</span></p>
                             <p class="price"><span class="won">₩</span>85,050</p>
                         </div>
                         <p class="msg-type2 mt4">Total of <span class="txt-point">₩7,500</span> discount received</p>
                     </div>
-                    <div class="gray-box">
-                        <dl class="charge">
-                            <dt>Previous Balance</dt>
-                            <dd>₩20,000</dd>
-                        </dl>
-                        <dl class="charge">
-                            <dt>Total charges including<br/>
-                                previous balance</dt>
-                            <dd class="red fw-500">₩105,050</dd>
-                        </dl>
-                    </div>
+                    <dl class="fees-list">
+                        <dt>Previous Balance</dt>
+                        <dd>₩20,000</dd>
+                    </dl>
+                    <dl class="fees-list">
+                        <dt>Total charges including <br/>previous balance</dt>
+                        <dd class="red">₩105,050</dd>
+                    </dl>
                     <ul class="bt-slice mb4">
                         <li><button type="button" class="btn-round1 btn-style1">Detailed breakdown by item</button></li>
-                    </ul>
-                </div>
-                <!--// .cont-box -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-top">
-                    <button class="charge-line">
-                        <span class="inner">
-                            <span class="tit">Check the charged amounts for each line</span>
-                        </span>
-                    </button>
-                    <ul class="review-list">
-                        <li>
-                            <div class="txt">
-                                <strong class="tit"><img src="/img/en/sel-ico-mobile-black.png" alt="cell phone" class="phone-num-ico" />010-50**-25**</strong>
-                            </div>
-                            <span class="val vt">₩80,050</span>
-                        </li>
-                        <li>
-                            <div class="txt">
-                                <strong class="tit"><img src="/img/en/sel-ico-mobile-black.png" alt="cell phone" class="phone-num-ico" />010-50**-25**</strong>
-                            </div>
-                            <span class="val vt">₩5,000</span>
-                        </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
@@ -164,15 +138,10 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-ver pb0">
-                    <h3 class="graph-tit">Charges for the previous six (6) months</h3>
+                    <h3 class="graph-tit">Charges for the previous<br/> six (6) months</h3>
                     <div class="chart-wrap kjs10"></div>
                 </div>
                 <!--// .cont-box -->
-				<div class="cont-box noborder bgnone">
-					<p class="fs-info">You can check the last six (6) months details only</p>
-					<p class="fs-info">When paying by automatic payment, you can check the transaction record three (3) to four (4) days after the date of withdrawal</p>
-					<p class="fs-info">When transferring your number during a particular month, take note that due to the system format the period of use is indicated as from the first until the end of the month</p>
-                </div>
             </div>
         </div>
         <!--// #contents -->
@@ -187,44 +156,50 @@
             data_arry.v : 숫자
             data_arry.class : link true시 button태그에 class명 생략시 위에 기본률에 따름
             data_arry.length 에 맞춰서 style 자동 조절
-            ex) 4개 이상일 경우 가로 스크롤 제공
+            ex) 4개 이상일 경우 가로 스크롤 제공₩
         */
         $('body').chart2({
             target:'.kjs10',
-            type : 'bar5',
-            average : false,
-            // legend : ['청구', '할인'],
+            type : 'bar6',
+            average : true,
+            legend : ['Fees', 'Discount'],
             link : true,
             unit : '₩', // gb, 원, time
             data_arry : [
                 {
-                    t : 'Aug.',
+                    t : 'Sep.',
                     v : 80050,
+                    v2 : 1000,
                     class : 'className1'
                 },
                 {
-                    t : 'Jul.',
-                    v : 83070,
+                    t : 'Aug.',
+                    v : 83170,
+                    v2 : 3000,
                     class : 'className2'
                 },
                 {
-                    t : 'Jun.',
+                    t : 'Jul.',
                     v : 79370,
+                    v2 : 30000,
                     class : 'className3'
                 },
                 {
-                    t : 'May.',
+                    t : 'Jun.',
                     v : 79980,
+                    v2 : 60000,
                     class : 'className4'
                 },
                 {
-                    t : 'Apr.',
+                    t : 'May',
                     v : 83820,
+                    v2 : 10000,
                     class : 'className5'
                 },
                 {
-                    t : 'Mar.',
+                    t : 'Apr.',
                     v : 78400,
+                    v2 : 10000,
                     class : 'className6'
                 }
             ]

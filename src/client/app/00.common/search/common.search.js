@@ -1694,7 +1694,7 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _calculateAdditionsFee: function (usingAdditions) {
-    // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [S]
+    // [OP002-9968] 의 배포 일정 연기 (9/24) 로 연기됨에 따라 기존 로직으로 복구함. 9/24 배포시에 본 로직은 제거 필요 [S]
     var addProdList = usingAdditions.addProdList || []; // 이용중인 부가서비스 리스트
     var totalPaidAdditionsCnt = 0;
     var totalUnpaidAdditionsCnt = 0;
@@ -1716,10 +1716,10 @@ Tw.CommonSearch.prototype = {
 
     this.$container.find('.fe-unpaid-additions-cnt').text(returnStr1);
     this.$container.find('.fe-paid-additions-cnt').text(returnStr2);
-    // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [E]
+    // [OP002-9968] 의 배포 일정 연기 (9/24) 로 연기됨에 따라 기존 로직으로 복구함. 9/24 배포시에 본 로직은 제거 필요 [E]
 
 
-    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/17) 로 연기됨에 따라 원복처리함 [S]
+    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/24) 로 연기됨에 따라 원복처리함 [S]
     // var returnStr1 = '';
     // var returnStr2 = '';
     // var returnStr3 = '';
@@ -1775,15 +1775,15 @@ Tw.CommonSearch.prototype = {
     // else {
     //   // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 무선인 경우', '');
 
-    //   var comProdCnt = usingAdditions.comProdCnt;               // 가입한 무선 션/할인 프로그램 카운트
+    //   var disProdCnt = usingAdditions.disProdCnt;               // 가입한 무선 션/할인 프로그램 카운트
     //   var addProdPayCnt = usingAdditions.addProdPayCnt;         // 가입한 무선 유료 부가상품 카운트
     //   var addProdPayFreeCnt = usingAdditions.addProdPayFreeCnt; // 가입한 무선 무료 부가상품 카운트
 
-    //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', comProdCnt);
+    //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', disProdCnt);
     //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
     //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
 
-    //   if ( comProdCnt === '0' && addProdPayCnt === '0' && addProdPayFreeCnt === '0' ) {
+    //   if ( disProdCnt === '0' && addProdPayCnt === '0' && addProdPayFreeCnt === '0' ) {
     //     $('.tod-search-mytbox').parent().hide();
 
     //     // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
@@ -1795,7 +1795,7 @@ Tw.CommonSearch.prototype = {
     //       }
     //     }
     //   } else {
-    //     returnStr1 = comProdCnt + '건';
+    //     returnStr1 = disProdCnt + '건';
     //     returnStr2 = addProdPayCnt + '건';
     //     returnStr3 = addProdPayFreeCnt + '건';
 
@@ -1803,7 +1803,7 @@ Tw.CommonSearch.prototype = {
     //     this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
     //     this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
-    //     if ( comProdCnt === '0' ) {
+    //     if ( disProdCnt === '0' ) {
     //       this.$container.find('.fe-wireless-discount-additions-cnt').removeAttr('href');
     //     }
 
@@ -1819,7 +1819,7 @@ Tw.CommonSearch.prototype = {
     //     $('.fe-prod-cnt-wire').hide();
     //   }
     // }
-    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/17) 로 연기됨에 따라 원복처리함 [E]
+    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/24) 로 연기됨에 따라 원복처리함 [E]
   },
   /**
    * @function

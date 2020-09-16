@@ -43,7 +43,8 @@ class MyTFareBillPoint extends MyTFareBillPaymentCommon {
           res.render('bill/myt-fare.bill.point.html', {
             ...data,
             unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc, pageInfo),
-            formatHelper: FormatHelper
+            formatHelper: FormatHelper,
+            card: false
           });
         } else {
           this.error.render(res, {

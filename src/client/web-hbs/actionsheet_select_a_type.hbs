@@ -14,15 +14,15 @@
                                         <li>
                                             <button {{#ifCond option '!==' 'checked'}}class="{{option}}"{{/ifCond}} {{{attr}}}>
                                                 <div class="link-info">
-                                                    <span class="info-value" id="act-item-{{@index}}">{{value}}</span> <!-- 웹 접근성 라디오 항목 매핑 id="act-item-" -->
+                                                    <label class="info-value" for="ra{{@index}}">{{value}}</label>
                                                     {{#if explain}}
                                                         <p class="tx-explain">{{explain}}</p>
                                                     {{/if}}
                                                     <span class="ico">
                                                         <span class="table-cell right">
                                                             <span class="custom-form">
-                                                                <input type="radio" id="ra1" name="r1" aria-labelledby="act-item-{{@index}}"
-                                                                       {{#ifCond option '===' 'checked'}}checked{{/ifCond}}> <!-- 웹 접근성 라디오 항목 매핑 id="act-item-" -->
+                                                                <input type="radio" id="ra{{@index}}" name="r{{@index}}"
+                                                                       {{#ifCond option '===' 'checked'}}checked{{/ifCond}}>
                                                                 <span class="r-type1"></span>
                                                             </span>
                                                             <span class="link"></span>

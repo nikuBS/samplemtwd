@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/en/favicon.ico" />
+    <link rel="shortcut icon" href="/img/en/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/en/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/en/logo-tworld01.png" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
+
+    <link rel="stylesheet" type="text/css" href="/css/products_en.css" media="all" /><!-- [C] 상품상세 스타일 -->
+</head>
+
+<body class="bg-productdetail"><!-- 추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">Go to Main</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+					</div>
+                    <div class="h-tit t-none">T PLAN SAFETY 4G</div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">contents</h2>
+            <div class="container">
+
+                <!-- 상품타이틀 -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#3583e3;"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                    <div class="productdetails-wrap">
+                        <div class="idpt-product-detail-title">
+                            <h3>
+                                <span>A Wide Variety of Data and Content Benefits<br>for a Wholesome LTE Lifestyle!</span>
+                                <strong>T PLAN<br>SAFETY 4G</strong><!-- 200914 접근성 관련 수정 -->
+                            </h3>
+                        </div>
+                        <div class="productdetails-ledgercase">
+                            <p class="price-text">
+                                <span class="opacity80">Monthly Fees (VAT included)</span><br><!-- opacity80 -->
+                                <span class="unit">₩</span>
+                                <strong class="price-type">50,000</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="detailinfo">
+                        <li>
+                            <p class="gb"><i class="blind">data</i>4GB Data</p>
+                        </li>
+                        <li>
+                            <p class="type"><i class="blind">talktime</i>Unlimited Talktime</p>
+                        </li>
+                        <li>
+                            <p class="sms"><i class="blind">texts</i>Free Texting</p>
+                        </li>
+                    </ul>
+                    <ul class="detailinfo-txt">
+                        <li>Speeds restricted to 1Mbps after 4GB</li>
+                        <li>Video &middot; Commercial Calls 300mins</li>
+                        <li>T Family Data benefits(Only receiving is allowed)</li>
+                        <li>4X data everyday from 00:00 to 07:00</li>
+                    </ul>
+                </div>
+                <!-- //상품타이틀 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+                <div class="prCont"> <!-- admin 영역 개발 확정 후 class name 추가해야함 -->
+
+                    <div class="promotion">
+                        <p class="sub-title">₩100 for max. 2 months!</p>
+                        <p class="title">FLO/wavve Promotion</p>
+                        <p class="txt">For all LTE/5G subscribers subscribing to the above<br>add-on service for the first time
+                            <span class="refer bullet">Subscribers who signed up for the service in<br>2019 will receive this discount for max. 3 months</span>
+                        </p>
+                        <div class="bg"></div>
+                    </div>
+
+                    <div class="night-keeper">
+                        <p class="title">Night Keeper 4X Data</p>
+                        <p class="txt">75% discount on data usage<br>Everyday from 00:00 to 07:00</p>
+                    </div>
+
+                    <div class="cont-box gaps-btm">
+                        <span class="tit-line-wrap">
+                            <span>DATA</span>
+                        </span>
+                        <div class="data-account line3">
+                            <strong>4GB</strong>
+                            <span>Mobile Data Allowance <br><span>Speeds restricted to 1Mbps after 4GB/month</span></span>
+                        </div>
+
+                        <div class="img-box">
+                            <p><strong>T Plan Safety 4G subscribers only can receive data</strong></p>
+                            <img src="/img/en/products/tplan-family-essence_m.png" alt="Receive T Family Data">
+                        </div>
+
+                        <ul class="refer-list">
+                            <li>At least 1 family member should be selected as the main representative of T Family and must subscribe to Data Infinity, Family, T Plan Max or T Plan Special</li>
+                            <li>T Family Data Compatible Mobile Plans : Small, Medium, Large, Family, Data Infinity, T Plan Max, T Plan Special, T Plan Essence, T Plan Safety 4G, T Plan Safety2 5G, Weekend Ting (3 Types), ZEM Plan Smart, Band/T Signature</li>
+                        </ul>
+                    </div>
+
+                    <!-- details - admin 등록부분으로 개발 프로세스 확정 후 css 수정 및 추가 -->
+                    <div class="details">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style details-toggle"><!-- style별 클래스 추가 -->
+                                        <ul class="acco-list pd0">
+                                            <li class="acco-box"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="true"><span class="details-ico">Details</span></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <span class="tit-type01">Shareable Data</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>Shareable <br/>Data Limit</th>
+                                                            <td>4GB</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Tethering Limit</th>
+                                                            <td>4GB</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Refill Limit</th>
+                                                            <td>4GB</td>
+                                                        </tr>
+                                                    </table>
+                                                    <ul class="num-list2 mt20">
+                                                        <li>
+                                                            Shareable Data Limit
+                                                            <ul class="refer-list">
+                                                                <li>‘T Family Data Sharing’ (limited to applicable plans), ‘Data Gift’, ‘Data Sharing’, ‘2nd Device Sharing’ can be used according to the limits stated above</li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            Tethering Limit
+                                                            <ul class="refer-list">
+                                                                <li>Tethering and file sharing P2P services can be used according to the limits above</li>
+                                                                <li>Tethering and shareable-type service is limited by the mobile plan’s data package, and will be deducted from the data package according to actual usage amounts</li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            Refill Limit
+                                                            <ul class="refer-list">
+                                                                <li>When refilling data, the amount of refillable data for each plan is stated as per above</li>
+                                                                <li>Refilled data cannot be used for Tethering, P2P, ‘T Data Coworker’, ‘Data Gift’, ‘Data Sharing’, ‘2nd Device Sharing’ and Internet-based Voice/Video calls. (m-VolP)</li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="other">
+                                                            Others
+                                                            <ul class="refer-list">
+                                                                <li>Data shared in ‘T Family Data’ cannot be used when changing plans, cancelling plans, or leaving the designated group</li>
+                                                                <li>Minors under the age of 19 are not allowed to share data with family members through ‘T Family Data’. (They can only use data shared with them via ‘T Family Data’)</li>
+                                                                <li>‘Night Keeper 4X Data’ is implemented based on data packets from 00:00 to 07:00 every day, implementation may differ slightly depending the on subscribers’ usage patterns</li>
+                                                                <li>When using T plan, band LTE WiFi service cannot be used</li>
+                                                                <li>Content benefits can be terminated/changed based on the circumstances of SK Telecom and its partners, after providing an announcement to subscribers in advance</li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //details -->
+
+                    <div class="cont-box gaps-btm">
+                        <span class="tit-line-wrap">
+                            <span>Call/Text</span>
+                        </span>
+                        <div class="call-cont">
+                            <p>
+                                <strong>Unlimited</strong> Talktime<br/>
+                                Commercial Calls <strong>300 mins</strong><br/>
+                                <strong>Free</strong> SMS/MMS
+                            </p>
+                        </div>
+                        <ul class="refer-list">
+                            <li>1 second of commercial call basic talktime to be deducted per second of commercial call use</li>
+                            <li>1.66 seconds of commercial call basic talktime to be deducted per second of video call use</li>
+                        </ul>
+                    </div>
+                </div>
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 팝업 띄우는 링크 -->
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    T Plan Subscription/Cancellation
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">detail</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //팝업 띄우는 링크 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

@@ -47,7 +47,8 @@ class MyTFareBillSms extends MyTFareBillPaymentCommon {
           svcInfo: this.getSvcInfo(svcInfo), // 회선정보 (필수 데이터)
           pageInfo: pageInfo, // 페이지정보 (필수 데이터)
           formatHelper: FormatHelper,
-          mobileList
+          mobileList,
+          card: false
         });
       } else {
         this.error.render(res, {
