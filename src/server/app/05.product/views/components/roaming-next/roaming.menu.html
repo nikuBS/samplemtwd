@@ -117,7 +117,7 @@
             </div>
         </a>
     </div>
-    <% if (isLogin) { %>
+    <% if (svcInfo && svcInfo.mbrNm) { %>
     <a href="#" onclick="return logout();">
         <div class="logout">
             로그아웃
