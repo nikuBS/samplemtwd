@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/en/favicon.ico" />
+    <link rel="shortcut icon" href="/img/en/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/en/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/en/logo-tworld01.png" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
+
+    <link rel="stylesheet" type="text/css" href="/css/products_en.css" media="all" /><!-- [C] 상품상세 스타일 -->
+</head>
+
+<body class="bg-productdetail"><!-- 추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">Go to Main</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+					</div>
+                    <div class="h-tit t-none">T PLAN SENIOR SAFETY 4.5G</div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">contents</h2>
+            <div class="container">
+
+                <!-- 상품타이틀 -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#3583e3;"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                    <div class="productdetails-wrap">
+                        <div class="idpt-product-detail-title">
+                            <h3>
+                                <span>Data & content benefits for seniors over 65</span>
+                                <strong>T PLAN SENIOR<br>SAFETY 4.5G</strong> <!-- 200914 접근성 관련 수정 -->
+                            </h3>
+                        </div>
+                        <div class="productdetails-ledgercase">
+                            <p class="price-text">
+                                <span class="opacity80">Monthly Fees (VAT included)</span><br><!-- opacity80 -->
+                                <span class="unit">₩</span>
+                                <strong class="price-type">50,000</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="detailinfo">
+                        <li>
+                            <p class="gb"><i class="blind">data</i>4.5GB Data</p>
+                        </li>
+                        <li>
+                            <p class="type"><i class="blind">talktime</i>Unlimited Talktime</p>
+                        </li>
+                        <li>
+                            <p class="sms"><i class="blind">texts</i>Free Texting</p>
+                        </li>
+                    </ul>
+                    <ul class="detailinfo-txt">
+                        <li>Speeds restricted to 1Mbps after 4.5GB</li>
+                        <li>300 mins of Video and Commercial calls</li>
+                        <li>Receive T Family Data benefits</li>
+                        <li>4 times the data everyday from 00:00 to 07:00</li>
+                    </ul>
+                </div>
+                <!-- //상품타이틀 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+                <div class="prCont"> <!-- admin 영역 개발 확정 후 class name 추가해야함 -->
+
+                    <div class="cont-box nogaps">
+                        <div class="plan-cont">
+                            <p class="title">T Plan Senior! Data &<br>content for seniors over 65</p>
+
+                            <ul class="decimal-list">
+                                <li>More data, less fees
+                                    <p>From ₩43,000 for 2.8GB of data to 100GB of data</p>
+                                </li>
+                                <li>Night Keeper 4X Data
+                                    <p>Everyday from 00:00 to 07:00, 75% discount on data used(Only for Senior Safety 4.5G, Safety 2.8G)</p>
+                                </li>
+                                <li>Enhanced data benefits with T Family Data
+                                    <p>Let’s share our data with our family!</p>
+                                </li>
+                                <li>Enjoy a massive range of contents with unlimited data
+                                    <p>wavve and Data, FLO and Data benefits</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- details - admin 등록부분으로 개발 프로세스 확정 후 css 수정 및 추가 -->
+                    <div class="details">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style details-toggle"><!-- style별 클래스 추가 -->
+                                        <ul class="acco-list pd0">
+                                            <li class="acco-box"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="true"><span class="details-ico">Details</span></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <span class="tit-type01">Benefits</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>Monthly Fees<br/>
+                                                                (VAT included)</th>
+                                                            <td>₩50,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Talk/Text</th>
+                                                            <td>Unlimited Landline/Mobile + Video/ Commercial calls 300mins, Free Texts</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <td>4.5GB + speeds reduced to 1Mbps,<br/>
+                                                                4 times the data from 00:00<br/>
+                                                                to 07:00</td>
+                                                        </tr>
+                                                    </table>
+                                                    <span class="tit-type01 mt">Shareable Data</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>T Family Sharable Limits<br/>
+                                                                (VAT included)</th>
+                                                            <td class="align-c">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>T Sharable Data* Limits</th>
+                                                            <td rowspan="2">Permitted within data package</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Tethering Limits</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Other Benefits</th>
+                                                            <td class="align-c">-</td>
+                                                        </tr>
+                                                    </table>
+                                                    <ul class="refer-list">
+                                                        <li>Shareable data: Total data used for Data Gifts/Sharing with others/2nd Device Sharing. (Watch, T tab etc.)</li>
+                                                        <li>T Family / Shareable data / Tethering data can be used within data package limits. (usage is deducted from the data package accordingly)</li>
+                                                        <li>
+                                                            Commercial and Video Calls:<br/>
+                                                            - 1 second of commercial call basic talktime to be deducted per second of commercial call use (15XX, 16XX, 18XX etc.), personal numbers (050, 060 etc.),  0130, 011-200, 011-700 and local number. (+153/141/700 etc.)<br/>
+                                                            - 1.66 second of commercial call basic talktime to be deducted per second of video call use. (Including HD Video call)
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //details -->
+                </div>
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 팝업 띄우는 링크 -->
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    T Plan Senior Subscription/Cancellation
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">detail</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //팝업 띄우는 링크 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

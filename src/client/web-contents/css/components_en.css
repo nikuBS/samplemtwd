@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('components_local_en.css'); /* local용 CSS */
+/* @import url('components_local_en.css'); local용 CSS */
 
 /** components **/
 /* home-slider(slick slider) */
@@ -35230,3 +35230,27 @@ body.apphome .section-box {
 .callingplan-info.tod-txcolor1 .category-type .str{
   color: #000;
 }
+
+/* 191204 [OP002-5303] 회선관리 및 선택영역 강화 */
+.tod-line-sel-box .line-sel-btn{display:inline-block; width:100%; padding:1rem; box-sizing:border-box; background:-webkit-linear-gradient(left, #f7645c 0%,#f65b7e 100%); background: linear-gradient(to right, #f7645c 0%,#f65b7e 100%); text-align:left; color:#fff; position:relative }
+.tod-line-sel-box .line-sel-btn .sel-ico{display:inline-block; vertical-align:middle; width:1.1875rem; height:1.25rem; margin-right:0.4375rem }
+.tod-line-sel-box .line-sel-btn .sel-ico img{width:100%; height:100%; }
+.tod-line-sel-box .line-sel-btn .item{display:inline-block; vertical-align:middle; font-size:0.9375rem; font-weight:500; line-height:1.25rem; margin-right:0.4375rem  }
+.tod-line-sel-box .line-sel-btn .detail-info{display:inline-block; max-width:-webkit-calc(100% - 8.625rem); max-width:calc(100% - 8.625rem); vertical-align:middle; line-height:1.25rem; font-size:0.8125rem; white-space:nowrap; text-overflow:ellipsis; box-sizing:border-box; }
+.tod-line-sel-box .line-sel-btn:after{content:''; display:inline-block; position:absolute; right:1rem; top:50%; transform:translateY(-50%); width:0.875rem; height:0.4375rem; background:url('/img/common/ico-white-arr-down.png') no-repeat 50% 50% ; background-size:100% auto ;  }
+.tod-line-sel-box + .cont-sp.type1{display:none}
+.cont-actionsheet .ac-list .type1 .table-cell > span.add .badge.tod-child{background-image:url('/img/en/badge_family_04.svg'); }
+.cont-actionsheet .ac-list .type1.tod-bg{background:#e6f2fb; padding:0.6875rem 0.75rem 0.625rem 1rem; box-sizing:border-box; height:2.75rem}
+.cont-actionsheet .ac-list .type1.tod-bg > button{vertical-align:top}
+.cont-actionsheet .ac-list .type1.tod-bg .table-cell > span.add{white-space:nowrap;}
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico4 {background: url('/img/en/icon_80px_realtime_data.svg') no-repeat 0 0;background-size: 100% 100%; }
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/en/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
+.cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/en/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
+.my-subscription-wrap .basic-list.tod-basic-list ul li button.bt-link-tx.underline{padding:0 !important}
+.tod-line-sel-box .line-sel-btn.side-arr:after{background:url('/img/en/ico-white-arr-right.png') no-repeat left top; background-size:100%; width:0.5rem; height:0.875rem; } /* 191204 [OP002-5303] - 추가 */
+  /* 다른회선관리 */
+  .tod-line-sel-box.tod-line-sel-new {position:relative; min-height:3.313rem}
+  .tod-line-sel-box.tod-line-sel-new .tod-line-sel-fixed {position:fixed; top:52px; z-index:25; width:100%}
+  .tod-line-sel-box.tod-line-sel-new .line-sel-btn {font-size:0.938rem}
+  .tod-line-sel-box.tod-line-sel-new .line-sel-btn:after {display:none}
+  .tod-line-sel-box.tod-line-sel-new .btn-other-line {position:absolute; top:0.813rem; right:1rem; color:#fff; border:1px solid #fff}

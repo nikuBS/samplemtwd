@@ -49,7 +49,8 @@ class MyTFareBillAccount extends MyTFareBillPaymentCommon {
             ...data,
             unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc, pageInfo),
             autoInfo: this.parseInfo(autoInfo),
-            formatHelper: FormatHelper
+            formatHelper: FormatHelper,
+            card: false
           });
         } else {
           this.error.render(res, {

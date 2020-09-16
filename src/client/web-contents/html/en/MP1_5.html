@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/en/favicon.ico" />
+    <link rel="shortcut icon" href="/img/en/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/en/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/en/logo-tworld01.png" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
+
+    <link rel="stylesheet" type="text/css" href="/css/products_en.css" media="all" /><!-- [C] 상품상세 스타일 -->
+</head>
+
+<body class="bg-productdetail"><!-- 추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">Go to Main</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+					</div>
+                    <div class="h-tit t-none">0 Teen 5G</div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">contents</h2>
+            <div class="container">
+
+                <!-- 상품타이틀 -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#cd0e2c url(/img/en/products/bg-5gx-pr-platinum01_m.png) right 5.75rem no-repeat; background-size:10.5rem 11.938rem"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                    <div class="productdetails-wrap">
+                        <div class="idpt-product-detail-title">
+                            <h3>
+                                <span>The 5G Plan for subscribers under 18</span>
+                                <strong>0 Teen 5G</strong> <!-- 200914 접근성 관련 수정 -->
+                            </h3>
+                        </div>
+                        <div class="productdetails-ledgercase">
+                            <p class="price-text">
+                                <span class="opacity80">Monthly Fees (VAT included)</span><br><!-- opacity80 -->
+                                <span class="unit">₩</span>
+                                <strong class="price-type">45,000</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="detailinfo">
+                        <li>
+                            <p class="gb"><i class="blind">data</i>9GB Data</p>
+                        </li>
+                        <li>
+                            <p class="type"><i class="blind">talktime</i>Unlimited Talktime</p>
+                        </li>
+                        <li>
+                            <p class="sms"><i class="blind">texts</i>Free Texting</p>
+                        </li>
+                    </ul>
+                    <ul class="detailinfo-txt">
+                        <li>Data 9GB + continue using at 1Mbps</li>
+                        <li>Sharing of packaged data available</li>
+                    </ul>
+                </div>
+                <!-- //상품타이틀 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+                <div class="prCont"> <!-- admin 영역 개발 확정 후 class name 추가해야함 -->
+                    <div class="cont-box nogaps">
+                        <span class="tit-line-wrap">
+                            <span>Plan Benefits</span>
+                        </span>
+                        <div class="pro-detail">
+                            <div class="cont sec-02">
+                                <span class="sub-tit mb">
+                                    The mobile plan for<br/> <strong> teenagers</strong> To experience<br/>5G to its fullest
+                                </span>
+                                <img src="/img/en/products/img_5G_0_teen.png" alt="" class="mt30" />
+                                <dl class="ico-list mt00">
+                                    <dt class="ico-shaling"><img src="/img/en/products/ico_0_teen_9gb.png" alt="" /></dt>
+                                    <dd>
+                                        <span class="txt-big">9GB Data</span>
+                                        Speeds reduced to 1Mbps after 9GB
+                                    </dd>
+                                </dl>
+                                <dl class="ico-list">
+                                    <dt class="ico-flo-free"><img src="/img/en/products/ico_0_teen_sharing.png" alt="" /></dt>
+                                    <dd>
+                                        <span class="txt-big">Data Sharing</span>
+                                        Sharing data with others / tethering / <br/>Internet-based phone calls <br/>within 9GB data limit
+                                        <span class="refer bullet">
+                                            Data can be shared with ‘Data Sharing’,<br/> Smart Watch and Tablet PC lines
+                                        </span>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- details - admin 등록 -->
+                    <div class="details">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style details-toggle"><!-- style별 클래스 추가 -->
+                                        <ul class="acco-list pd0">
+                                            <li class="acco-box"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="true"><span class="details-ico">Details</span></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <span class="tit-type01">Basic Package</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>Monthly Fees<br/>
+                                                                (VAT included)</th>
+                                                            <td>₩45,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Talk/Text</th>
+                                                            <td>Unlimited talk & text<br/>
+                                                                + Video/Commercial Calls<br/> 300 mins</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <td>Speeds reduced to 1Mbps after 9GB</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //details -->
+                    <div class="cont-box nogaps">
+                        <span class="tit-line-wrap">
+                            <span>DATA</span>
+                        </span>
+                        <div class="data-account line3">
+                            <strong>9GB</strong>
+                            <span>No speed restriction<br/>
+                                <span>Speeds restricted to 1Mbps after 9GB</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- details - admin 등록 -->
+                    <div class="details">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style details-toggle"><!-- style별 클래스 추가 -->
+                                        <ul class="acco-list pd0">
+                                            <li class="acco-box"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="true"><span class="details-ico">Details</span></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <span class="tit-type01">Shareable Data</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>Shareable <br/>Data Limit</th>
+                                                            <td rowspan="2">Permitted within data package</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Tethering Limit</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Mobile Internet <br/>Call (mVolP) Limit</th>
+                                                            <td>Continue using with QoS limit after the data package</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Refill Limit</th>
+                                                            <td>9GB</td>
+                                                        </tr>
+                                                    </table>
+                                                    <ul class="refer-list">
+                                                        <li>Shareable Data: Data can be shared with ‘Data Sharing’, Smart Watch and Tablet PC lines</li>
+                                                        <li>Tethering and sharing data with others allowed, limited within data packages for each plan</li>
+                                                        <li>Refilled data cannot be shared. (including tethering, P2P, Data Gifts, Data Sharing add-on service, smart devices including smart watches and tablets, ‘Coworker Data Sharing’)</li>
+                                                        <li>Sending a data gifts and subscribing to ’T Family data’ with 0 Teen 5G plan is not allowed for subscribers under the age of 18</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //details -->
+                    <div class="cont-box gaps-btm">
+                        <span class="tit-line-wrap">
+                            <span>Call/Text</span>
+                        </span>
+                        <div class="call-cont">
+                            <p>
+                                <strong>Unlimited</strong> Talktime<br/>
+                                Commercial Calls <strong>300 mins</strong><br/>
+                                <strong>Free</strong> SMS/MMS
+                            </p>
+                        </div>
+                        <ul class="refer-list">
+                            <li>1 second of commercial call basic talktime to be deducted per second of commercial call use</li>
+                            <li>1.66 seconds of commercial call basic talktime to be deducted per second of video call use</li>
+                        </ul>
+                    </div>
+                </div>
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 팝업 띄우는 링크 -->
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    5GX Plan Subscription/Cancellation
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">detail</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //팝업 띄우는 링크 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

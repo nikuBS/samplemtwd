@@ -74,8 +74,8 @@ Tw.ProductMobileplanAddJoin.prototype = {
     Tw.Tooltip.separateMultiInit(this.$container);
 
     if (this._prodId === 'NA00007017') {
-      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00000929'])
-      .done($.proxy(this._resIsAdditionUseJoin, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.V_COLORING_PROD_ID.join('~')] )
+        .done($.proxy(this._resIsAdditionUseJoin, this));
     } else {
       var isAdditionUse = 'N';
       this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
@@ -85,51 +85,25 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
   /**
    * @function
-   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우1
+   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우
    * @param isAdditionUse - 특정 상품 가입여부(Y,N)
    * @param resp - 무선 부가상품 가입여부 API 응답 값
    */
   _resIsAdditionUseJoin: function(resp) {
-    var isAdditionUse = resp.result.isAdditionUse;
-    if (isAdditionUse === 'Y') {
-      this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
-      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
-    } else {
-      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00001583'])
-      .done($.proxy(this._resIsAdditionUseJoin2nd, this));
+    var isAdditionUse = 'N'; // V컬러링 자동선해지 상품 미가입
+
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      // V컬러링 가입 시 자동선해지 상품 체크
+      for ( var i = 0 ; i < Tw.V_COLORING_PROD_ID.length; i++ ) {
+        if ( resp.result[Tw.V_COLORING_PROD_ID[i]] !== 'N') {
+          isAdditionUse = 'Y'; //V컬러링 자동선해지 상품 가입
+          break;
+        }
+      }
     }
 
-  },
-
-  /**
-   * @function
-   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우2
-   * @param isAdditionUse - 특정 상품 가입여부(Y,N)
-   * @param resp - 무선 부가상품 가입여부 API 응답 값
-   */
-  _resIsAdditionUseJoin2nd: function(resp) {
-    var isAdditionUse = resp.result.isAdditionUse;
-    if (isAdditionUse === 'Y') {
-      this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
-      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
-    } else {
-      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00003723'])
-      .done($.proxy(this._resIsAdditionUseJoin3rd, this));
-    }
-
-  },
-
-  /**
-   * @function
-   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우3
-   * @param isAdditionUse - 특정 상품 가입여부(Y,N)
-   * @param resp - 무선 부가상품 가입여부 API 응답 값
-   */
-  _resIsAdditionUseJoin3rd: function(resp) {
-    var isAdditionUse = resp.result.isAdditionUse;
     this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
-      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
-
+    .done($.proxy(this._isJoinTerm, this, isAdditionUse));
   },
 
   /**
@@ -261,13 +235,6 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    // Swing 문자 발송 API 호출 (단말보험 상품(22종) 가입 시 [OP002-9829])
-    if (Tw.DEVICE_INSURE_PROD_ID.indexOf(this._prodId) === -1) {
-      this._apiService.request(Tw.API_CMD.BFF_10_0181, {
-        smsPhrsGrpId: 'SMART'
-      }, {}, [this._prodId]);
     }
 
     // Swing 문자 발송 API 호출 (분실안심990+_예약 가입 시)

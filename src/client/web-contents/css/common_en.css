@@ -7497,14 +7497,14 @@ a.ui-button:active,
 .device_ios .products-detailinfo02 .category-type .gb {
   display: inline-block;
   padding: 0.19rem 0 0.13rem 1.25rem;
-  background: url(/img/product/bg_gb.png) no-repeat 0 0.19rem;
+  background: url(/img/en/bg_gb.png) no-repeat 0 0.19rem;
   background-size: 14px 14px;
   color: #178bce; }
 
 .device_ios .products-detailinfo02 .category-type .type {
   display: inline-block;
   padding: 0.19rem 0 0.13rem 1.19rem;
-  background: url(/img/product/bg_type.png) no-repeat 0 50%;
+  background: url(/img/en/bg_type.png) no-repeat 0 50%;
   background-size: 14px 14px; }
 
 .device_ios .products-detailinfo02 .category-type .basic {

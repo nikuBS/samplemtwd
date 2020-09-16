@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/en/favicon.ico" />
+    <link rel="shortcut icon" href="/img/en/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/en/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/en/logo-tworld01.png" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+
+
+    <link rel="stylesheet" type="text/css" href="/css/products_en.css" media="all" /><!-- [C] 상품상세 스타일 -->
+</head>
+
+<body class="bg-productdetail"><!-- 추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">Go to Main</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+					</div>
+                    <div class="h-tit t-none">5GX Platinum</div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">contents</h2>
+            <div class="container">
+
+                <!-- 상품타이틀 -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#cd0e2c url(/img/en/products/bg-5gx-pr-platinum01_m.png) right 5.75rem no-repeat; background-size:10.5rem 11.938rem"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                    <div class="productdetails-wrap">
+                        <div class="idpt-product-detail-title">
+                            <h3>
+                                <span>Enjoy 5G contents and services with unlimited data!</span>
+                                <strong>5GX Platinum</strong><!-- 200914 접근성 수정 -->
+                            </h3>
+                        </div>
+                        <div class="productdetails-ledgercase">
+                            <p class="price-text">
+                                <span class="opacity80">Monthly Fees (VAT included)</span><br><!-- opacity80 -->
+                                <span class="unit">₩</span>
+                                <strong class="price-type">125,000</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="detailinfo">
+                        <li>
+                            <p class="gb"><i class="blind">data</i>Unlimited Data</p>
+                        </li>
+                        <li>
+                            <p class="type"><i class="blind">talktime</i>Unlimited Talktime</p>
+                        </li>
+                        <li>
+                            <p class="sms"><i class="blind">texts</i>Free Texting</p>
+                        </li>
+                    </ul>
+                    <ul class="detailinfo-txt">
+                        <li>Free FLO and Data Plus and wave and Data Plus</li>
+                        <li>2 free lines for Smart Watch / Tablet / ZEM Plan Watch / 5G Sharing</li>
+                    </ul>
+                </div>
+                <!-- //상품타이틀 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+                <div class="prCont"> <!-- admin 영역 개발 확정 후 class name 추가해야함 -->
+                    <div class="cont-box nogaps">
+                        <span class="tit-line-wrap">
+                            <span>Plan Benefits</span>
+                        </span>
+                        <div class="pro-detail">
+                            <div class="cont sec-01">
+                                <span class="sub-tit mt30">How to enjoy unlimited 5G!<br/><strong>Unlimited </strong>5GX data!!</span>
+                                <span class="sub-txt">Subscribe to 5GX Platinum/Prime<br/>and enjoy unlimited data <br/>without any speed restrictions</span>
+                                <img src="/img/en/products/img_5G_01.png" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- details - admin 등록 -->
+                    <div class="details">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style details-toggle"><!-- style별 클래스 추가 -->
+                                        <ul class="acco-list pd0">
+                                            <li class="acco-box"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="true"><span class="details-ico">Details</span></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <span class="tit-type01">Basic Package</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>Monthly Fees<br/>
+                                                                (VAT included)</th>
+                                                            <td>₩125,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Talk/Text</th>
+                                                            <td>Unlimited talk & text <br/>
+                                                                + Video/Commercial Calls <br/>
+                                                                300 mins</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <td>Unlimited</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //details -->
+                    <div class="cont-box nogaps">
+                        <div class="pro-detail">
+                            <div class="cont sec-02 bot-line">
+                                <span class="sub-tit"><strong>Loss/Damage</strong> Insurance</span>
+                                <span class="sub-txt sm">
+                                    ‘Loss & Damage 80’ Insurance 50% Discount <br/>
+                                    (For max. 24 months including month of registration)<br/>
+                                    (Must sign up for both T membership and insurance,<br/>
+                                    when subscribing to insurance<br/>
+                                    products other than ‘Loss & Damage 80’,<br/>
+                                    discounts are offered based on monthly fees (₩2,900)<br/>
+                                    for ‘Loss & Damage 80’)
+                                </span>
+                                <img src="/img/en/products/img_5G_02_safe.png" alt="" class="img_5G_02_safe"  />
+                            </div>
+                            <div class="cont sec-02 bot-line">
+                                <span class="sub-tit mb">
+                                    Enjoy in Ultra<br/>High-Definition
+                                    <span>
+                                        wavve and Data Plus<br/>
+                                        Unlimited Real-Time Terrestrial TV and<br/>
+                                        VOD Streaming
+                                    </span>
+                                </span>
+                                <img src="/img/en/products/img_5G_03.png" alt="" class="img_5G_03" />
+                                <span class="sub-txt mt00">
+                                    Subscribe to the wavve and Data Plus add-on <br/>
+                                    and watch real-time terrestrial TV without extra charges<br/>
+                                    Simultaneous viewing with 2 mobile lines
+                                </span>
+                            </div>
+                            <div class="cont sec-02">
+                                <span class="sub-tit"><strong>Check out</strong> more<br>benefits for 5GX Plans</span>
+                                <dl class="ico-list">
+                                    <dt class="ico-vip"><img src="/img/en/products/ico_vip.png" alt="" /></dt>
+                                    <dd>
+                                        <span class="txt-big">T VIP Membership</span>
+                                        6 free movies / year<br/>
+                                        Discounts at affiliated family<br/>
+                                        restaurants/convenience stores
+                                        <span class="refer bullet">
+                                            Members who subscribed to the plan between the 1st and 15th day, and between the 16th and last day of each month will be automatically upgraded to VIP level on the 1st day and 16th day of following month respectively
+                                        </span>
+                                    </dd>
+                                </dl>
+                                <dl class="ico-list">
+                                    <dt class="ico-flo-free"><img src="/img/en/products/ico_flo_free.png" alt="" /></dt>
+                                    <dd>
+                                        <span class="txt-big">FLO and Data Plus</span>
+                                        Free unlimited access to FLO Mobile/NUGU
+                                        <span class="refer">
+                                            (Sign up for add-on service)
+                                        </span>
+                                    </dd>
+                                </dl>
+                                <dl class="ico-list">
+                                    <dt class="ico-flo-free"><img src="/img/en/products/ico_video_free.png" alt="" /></dt>
+                                    <dd>
+                                        <span class="txt-big">wavve and Data Plus</span>
+                                        Free real-time terrestrial TV<br/>(PC/mobile) for 2 lines
+                                        <span class="refer">
+                                            (Sign up for add-on service)
+                                        </span>
+                                    </dd>
+                                </dl>
+                                <dl class="ico-list">
+                                    <dt class="ico-watch"><img src="/img/en/products/ico_watch.png" alt="" /></dt>
+                                    <dd>
+                                        <span class="txt-big">5G Smart Watch TAB discount</span>
+                                        Service fees waived for Smart Watch/Tablet<br/>/ZEM Plan Watch/5G Sharing registered<br/>under the same name
+                                        <span class="refer">
+                                            (Sign up for add-on service, max. 2 lines)
+                                        </span>
+                                    </dd>
+                                </dl>
+                                <dl class="ico-list">
+                                    <dt class="ico-broken"><img src="/img/en/products/ico_broken.png" alt="" /></dt>
+                                    <dd>
+                                        <span class="txt-big">100% discount on <br/>‘Loss & Damage 80’<br/>Insurance</span>
+                                        <span class="refer bullet">Max. ₩2,900 discount</span>
+                                        <span class="refer bullet">Service offered for max. 24 months including month of registration.</span>
+                                        <span class="refer bullet">Sign up for add-on service. Discounts on insurance fees will be applied based on the monthly subscription fees for ‘Loss & Damage 80’ (₩2,900) when other insurance products are chosen</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- details - admin 등록 -->
+                    <div class="details">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style details-toggle"><!-- style별 클래스 추가 -->
+                                        <ul class="acco-list pd0">
+                                            <li class="acco-box"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="true"><span class="details-ico">Details</span></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <span class="tit-type01">Special Benefits</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>Mobile Phone<br />Insurance</th>
+                                                            <td>‘Loss & Damage 80’ Insurance 10% discount<br/> (Max. ₩2,900 discount)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>VIP Membership</th>
+                                                            <td>Offered</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>FLO and Data</th>
+                                                            <td>FREE</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>wavve and Data</th>
+                                                            <td>FREE</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                Smart Watch <br/>
+                                                                / ZEM plan Watch<br/>
+                                                                / Tablet PC<br/>
+                                                                / 5G Sharing
+                                                            </th>
+                                                            <td>2 lines free</td>
+                                                        </tr>
+                                                    </table>
+                                                    <ul class="refer-list star">
+                                                        <li>Subscribers of 5GX Platinum, may subscribe to ‘FLO and Data Plus’ and ‘wavve and Data Plus’ instead of ‘FLO and Data’ and ‘wavve and Data’ respectively</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //details -->
+                    <div class="cont-box nogaps">
+                        <span class="tit-line-wrap">
+                            <span>DATA</span>
+                        </span>
+                        <div class="data-account">
+                            <strong>Unlimited</strong>
+                            <span>No speed restriction</span>
+                        </div>
+                    </div>
+                    <!-- details - admin 등록 -->
+                    <div class="details">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style details-toggle"><!-- style별 클래스 추가 -->
+                                        <ul class="acco-list pd0">
+                                            <li class="acco-box"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="true"><span class="details-ico">Details</span></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <span class="tit-type01">Shareable Data</span>
+                                                    <table class="table-type">
+                                                        <tr>
+                                                            <th>Shareable <br/>Data Limit</th>
+                                                            <td>50GB</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Tethering Limit</th>
+                                                            <td>50GB</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Mobile Internet <br/>Call (mVolP) Limit</th>
+                                                            <td>Speeds restricted to 10Mbps after 300GB</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Refill Limit</th>
+                                                            <td>Unlimited data</td>
+                                                        </tr>
+                                                    </table>
+                                                    <ul class="refer-list">
+                                                        <li>Shareable Data: Total amount of data which can be sent to and shared with others and other devices including smart watch and tablet PC</li>
+                                                        <li>Data sharing and tethering are allowed within the data package for each plan</li>
+                                                        <li>Refilled data cannot be shared. (Cannot be used with Tethering and P2P, T Family Data Sharing, Data Gift, Data Sharing, Smartwatch/Tablet devices, T Data Sharing)</li>
+                                                        <li>Subscription to T Family Data is not allowed</li>
+                                                        <li>Data refill is not available for unlimited data plans i.e. 5GX Platinum/Prime. (Giving data to family members is allowed)</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //details -->
+                    <div class="cont-box gaps-btm">
+                        <span class="tit-line-wrap">
+                            <span>Call/Text</span>
+                        </span>
+                        <div class="call-cont">
+                            <p>
+                                <strong>Unlimited</strong> Talktime<br/>
+                                Commercial Calls <strong>300 mins</strong><br/>
+                                <strong>Free</strong> SMS/MMS
+                            </p>
+                        </div>
+                        <ul class="refer-list">
+                            <li>1 second of commercial call basic talktime to be deducted per second of commercial call use</li>
+                            <li>1.66 seconds of commercial call basic talktime to be deducted per second of video call use</li>
+                        </ul>
+                    </div>
+                </div>
+<!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 팝업 띄우는 링크 -->
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    5GX Plan Subscription/Cancellation
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">detail</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //팝업 띄우는 링크 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>
