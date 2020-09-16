@@ -1069,8 +1069,10 @@ Tw.MyTDataSubMain.prototype = {
    */
   _onOtherPages: function (event) {
     var $target = $(event.currentTarget);
-    var href = $target.attr('data-href');
-    this._historyService.goLoad(href);
+    var href = $.trim($target.data('href'));
+    if (href) {
+      this._historyService.goLoad(href);
+    }
   },
   /**
    * @function

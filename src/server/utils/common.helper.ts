@@ -36,9 +36,7 @@ class CommonHelper {
    */
   static clearCookieWithPreFix(req, res, preFix) {
     const cookies = req.cookies;
-    let key;
-
-    for (key in cookies) {
+    for (const key in cookies) {
       if (key.indexOf(preFix) === 0) {
         res.clearCookie(key);
       }
@@ -48,9 +46,7 @@ class CommonHelper {
   /**
    * OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
    * 회선선택 영역에 출력될 데이터를 생성한다.
-   * @param req 
-   * @param res 
-   * @param preFix 
+   * @param {Object} svcInfo
    */
   static addCurLineInfo(svcInfo) {
     svcInfo['lineNickNm'] = ['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1 ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : svcInfo.nickNm;
