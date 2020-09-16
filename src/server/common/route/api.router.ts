@@ -1484,15 +1484,15 @@ class ApiRouter {
         const dataCodes: string[] = dataCode ? (dataCode.includes(',') ? dataCode.split(',') : [dataCode]) : [];
         let etcGnrlData: string[] = [];
         // 팅요금제 이면서 gnrlData 가 없는 경우 etc 데이터를 gnrlData로 처리 - native 요청 사항
-        if (balancesResponse.result && (!balancesResponse.result.gnrlData || !balancesResponse.result.gnrlData.length)) {
-          balancesResponse.result.gnrlData = balancesResponse.result.etc || [];
-          console.log(balancesResponse.result.gnrlData);
-        }
-        balancesResponse.result.gnrlData.map((data) => {
-          if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1) {
-            etcGnrlData.push(data.skipId);
-          }
-        });
+        // if (balancesResponse.result && (!balancesResponse.result.gnrlData || !balancesResponse.result.gnrlData.length)) {
+        //   balancesResponse.result.gnrlData = balancesResponse.result.etc || [];
+        //   console.log(balancesResponse.result.gnrlData);
+        // }
+        // balancesResponse.result.gnrlData.map((data) => {
+        //   if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1) {
+        //     etcGnrlData.push(data.skipId);
+        //   }
+        // });
         if (balancesResponse.result && balancesResponse.result.gnrlData) {
           balancesResponse.result.gnrlData.map((data) => {
             const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
@@ -1528,27 +1528,27 @@ class ApiRouter {
                 remainedData.unit = UNIT_E.DATA;
               }
               // 팅요금제인 경우 요금 합산하여 데이터 전달 - native 요청사항
-              if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1) {
-                remainedData.isEmpty = false;
-                // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
-                switch (data.unlimit) {
-                  // 무제한
-                  case '1':
-                  case 'M':
-                    remainedData.unlimit = true;
-                    return;
-                  // 기본제공
-                  case 'B':
-                    remainedData.unlimit_default = true;
-                    return;
-                }
-                // 각 항목 별 제공량 합산
-                remainedData.total += +data.total;
-                // 각 항목 별 잔여량 합산
-                remainedData.sharedRemained += +data.remained;
-                // 단위 설정 (합산은 무조건 KB)
-                remainedData.unit = UNIT_E.FEE;
-              }
+              // if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1) {
+              //   remainedData.isEmpty = false;
+              //   // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
+              //   switch (data.unlimit) {
+              //     // 무제한
+              //     case '1':
+              //     case 'M':
+              //       remainedData.unlimit = true;
+              //       return;
+              //     // 기본제공
+              //     case 'B':
+              //       remainedData.unlimit_default = true;
+              //       return;
+              //   }
+              //   // 각 항목 별 제공량 합산
+              //   remainedData.total += +data.total;
+              //   // 각 항목 별 잔여량 합산
+              //   remainedData.sharedRemained += +data.remained;
+              //   // 단위 설정 (합산은 무조건 KB)
+              //   remainedData.unit = UNIT_E.FEE;
+              // }
             }
           });
         }
