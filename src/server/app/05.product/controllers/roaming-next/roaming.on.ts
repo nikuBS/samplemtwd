@@ -123,24 +123,19 @@ export default class RoamingOnController extends TwViewController {
       const noSubscription = !usingTariffs || usingTariffs.length === 0;
       context.noSubscription = noSubscription;
       if (noSubscription) {
-        // FIXME: 아래 2줄 뭐임?
-        const startDate = '20200701';
-        const endDate = '20200730';
         Observable.combineLatest(
           this.getAvailableTariffs(mcc),
           this.getPhoneUsage(),
           this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
           this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
-          this.getBaroPhoneUsage(startDate, endDate),
-        ).subscribe(([allTariffs, phoneUsage, rate, meta, baroUsage]) => {
+        ).subscribe(([allTariffs, phoneUsage, rate, meta]) => {
           context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
-          context.usage.phone = {
-            voice: 92,
-            sms: 37
+          context.usage.phone = { // FIXME: hardcoded
+            voice: 1,
+            sms: 1,
           };
           context.rate = rate;
           context.meta = meta;
-          console.log(baroUsage);
           res.render(template, context);
         });
       } else {

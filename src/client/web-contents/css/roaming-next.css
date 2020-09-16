@@ -1956,6 +1956,92 @@ body.rn #roamingRates .rateBody .lo {
   letter-spacing: -1px;
   text-decoration: underline;
 }
+body.rn #roamingMyuse .card {
+  margin-top: 10px;
+  background-color: white;
+  padding: 32px 20px 20px 20px;
+}
+body.rn #roamingMyuse .card h2 {
+  font-size: 21px;
+  font-weight: 600;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+}
+body.rn #roamingMyuse .card h2 .count {
+  font-size: 14px;
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+}
+body.rn #roamingMyuse .card p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3em;
+  color: #000;
+}
+body.rn #roamingMyuse .empty {
+  text-align: center;
+  padding: 24px;
+}
+body.rn #roamingMyuse .empty p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #000;
+  letter-spacing: -0.36px;
+  margin-top: 15px;
+}
+body.rn #roamingMyuse .item h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  position: relative;
+  margin-bottom: 16px;
+}
+body.rn #roamingMyuse .item .arrow {
+  position: absolute;
+  right: 0px;
+  top: 4px;
+}
+body.rn #roamingMyuse .item .divider {
+  height: 2px;
+  border-bottom: 1px dashed #e0e0e0;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+body.rn #roamingMyuse .item .row {
+  position: relative;
+  height: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}
+body.rn #roamingMyuse .item .row .label {
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+body.rn #roamingMyuse .item .row .value {
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+body.rn #roamingMyuse .item .colorGray {
+  color: #959595;
+}
+body.rn #roamingMyuse .item .fontsize15 {
+  font-size: 15px;
+}
+body.rn #roamingMyuse .item .bold {
+  font-weight: 700;
+}
+body.rn #roamingMyuse .item .button {
+  text-decoration: underline;
+  font-size: 13px;
+  font-weight: 400;
+  color: #4559fc;
+}
 body.scroll #gnb {
   background-color: white;
   border-bottom: 1px solid #e9e9e9;

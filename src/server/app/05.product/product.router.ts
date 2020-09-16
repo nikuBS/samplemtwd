@@ -112,6 +112,7 @@ import ProductRoamingEventRightRoam from './controllers/roaming/product.roaming.
 import ProductRoamingWithBaro from './controllers/roaming/product.roaming.with-baro.controller';
 
 import RoamingMainController from './controllers/roaming-next/roaming.main';
+import RoamingMyUseController from './controllers/roaming-next/roaming.myuse';
 import RoamingTariffOfferController from './controllers/roaming-next/roaming.tariff.offer';
 import RoamingTariffsController from './controllers/roaming-next/roaming.tariffs';
 import RoamingOnController from './controllers/roaming-next/roaming.on';
@@ -196,15 +197,17 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
 
     this.controllers.push({ url: '/__/roaming', controller: ProductRoaming });
+    this.controllers.push({ url: '/__/roaming/my-use', controller: ProductRoamingMyUse });
     this.controllers.push({ url: '/__/roaming/do/search-before', controller: ProductRoamingSearchBefore });
     this.controllers.push({ url: '/__/roaming/search-result', controller: ProductRoamingSearchResult });
     this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
-    this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });
-    this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming });
-    this.controllers.push({ url: '/roaming/info/data-roaming', controller: ProductRoamingDataRoaming });
     this.controllers.push({ url: '/roaming/info/barocall', controller: ProductRoamingBaroCall });
-    this.controllers.push({ url: '/roaming/info/baropromotion', controller: ProductRoamingBaroPromotion });
+    this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming });
     this.controllers.push({ url: '/roaming/info/guamsaipan', controller: ProductRoamingGuamSaipan });
+    this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });
+    this.controllers.push({ url: '/roaming/info/data-roaming', controller: ProductRoamingDataRoaming });
+    this.controllers.push({ url: '/roaming/fee-info', controller: ProductRoamingFeeInfo });
+    this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
     this.controllers.push({ url: '/__/roaming/fee', controller: ProductRoamingFee });
     this.controllers.push({ url: '/__/roaming/planadd', controller: ProductRoamingPlanAdd });
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
@@ -212,7 +215,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/coupon', controller: ProductRoamingCoupon });
     this.controllers.push({ url: '/roaming/fi/reservation', controller: ProductRoamingFiReservation });
     this.controllers.push({ url: '/roaming/fi/reservation-complete', controller: ProductRoamingFiReservationComplete });
-    this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
     this.controllers.push({ url: '/roaming/join/roaming-setup', controller: ProductRoamingJoinRoamingSetup });
     this.controllers.push({ url: '/roaming/join/roaming-begin-setup', controller: ProductRoamingJoinRoamingBeginSetup });
     this.controllers.push({ url: '/roaming/join/roaming-auto', controller: ProductRoamingJoinRoamingAuto });
@@ -224,13 +226,13 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/setting/roaming-auto', controller: ProductRoamingSettingRoamingAuto });
     this.controllers.push({ url: '/roaming/setting/roaming-alarm', controller: ProductRoamingSettingRoamingAlarm });
     this.controllers.push({ url: '/roaming/setting/roaming-combine', controller: ProductRoamingSettingRoamingCombine });
-    this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
     this.controllers.push({ url: '/roaming/lookup', controller: ProductRoamingLookup });
-    this.controllers.push({ url: '/roaming/fee-info', controller: ProductRoamingFeeInfo });
     this.controllers.push({ url: '/roaming/event/right-roam', controller: ProductRoamingEventRightRoam });
+    this.controllers.push({ url: '/roaming/info/baropromotion', controller: ProductRoamingBaroPromotion });
     this.controllers.push({ url: '/roaming/with-baro', controller: ProductRoamingWithBaro });
 
     this.controllers.push({ url: '/roaming', controller: RoamingMainController });
+    this.controllers.push({ url: '/roaming/my-use', controller: RoamingMyUseController });
     this.controllers.push({ url: '/roaming/on', controller: RoamingOnController });
     this.controllers.push({ url: '/roaming/offer', controller: RoamingTariffOfferController });
     this.controllers.push({ url: '/roaming/fee', controller: RoamingTariffsController });

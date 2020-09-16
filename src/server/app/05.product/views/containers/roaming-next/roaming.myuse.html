@@ -1,0 +1,122 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<body class="rn">
+<div id="roamingMyuse">
+    <div id="gnb" class="gnb-opaque">
+        <span class="menu icon-gnb-menu">
+            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
+        </span>
+        <h1>나의 T로밍 이용현황</h1>
+    </div>
+    <%- include('../components/header.component.html', { title: '나의 T로밍 이용현황', svcInfo: svcInfo }) %>
+    <div class="card" style="margin-top: 60px;">
+        <h2>
+            로밍 요금제
+            <span class="count">총 <span class="colorPoint" id="countTariff"><%= tariffs.length %></span>건</span>
+        </h2>
+        <% if (tariffs.length === 0) { %>
+        <div class="empty">
+            <svg width="60" height="60" viewBox="0 0 120 120"><mask id="a" fill="#fff"><path d="m0 .0001h120v119.9999h-120z" fill="#fff" fill-rule="evenodd"/></mask><g fill="none" fill-rule="evenodd" transform="translate(-300 -535)"><path d="m0 0h720v1560h-720z" fill="#f6f6f6"/><g transform="translate(0 282)"><path d="m0 0h720v559h-720z" fill="#fff"/><g transform="translate(300 253)"><path d="m0 120h120v-120h-120z" fill="#fff"/><path d="m60 .0001c33.137 0 60 26.863 60 60s-26.863 60-60 60-60-26.863-60-60 26.863-60 60-60" fill="#dcdcdc" mask="url(#a)"/><path d="m54 34.7999v-2.8h11.36v2.8l-2.96 35.521h-5.36zm.4 53.2h10.64v-10.96h-10.64z" fill="#fff"/></g></g></g></svg>
+            <p>
+                이용중인 로밍 요금제가 없습니다.
+            </p>
+        </div>
+        <% } %>
+        <% for (var tariff of tariffs) { %>
+        <div class="item">
+            <a href="/product/callplan?prod_id=<%= tariff.prodId %>">
+                <h3>
+                    <%= tariff.prodNm %>
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                </h3>
+            </a>
+            <div class="row">
+                <span class="label colorPoint fontsize15">이용중</span> <!-- 이용예정 -->
+                <!--
+                D-00
+                <span class="value colorPoint">12일 남음</span>
+                -->
+            </div>
+            <div class="row">
+<!--                <span class="label colorGray">가입기간</span>-->
+<!--                <span class="value colorGray">20.07.21 13:00 - 20.07.23 18:00</span>-->
+                <span class="label colorGray">가입일</span>
+                <span class="value colorGray"><%= tariff.scrbDt %></span>
+            </div>
+
+            <% for (var button of tariff.btnList) { %>
+            <div class="row">
+                <a href="<%= button.btnLinkUrl %>?prod_id=<%= tariff.linkProdId %>">
+                <span class="value button">
+                    <%= button.btnNm %>
+                </span>
+                </a>
+            </div>
+            <% } %>
+
+            <!--
+            <div class="divider"></div>
+            <div class="row">
+                <span class="label">데이터</span>
+            </div>
+            <div class="row">
+                <span class="label colorGray">제공량</span>
+                <span class="value bold">500MB</span>
+            </div>
+            <div class="row">
+                <span class="label colorGray">사용량</span>
+                <span class="value bold">120MB</span>
+            </div>
+            -->
+        </div>
+        <% } %>
+    </div>
+    <div class="card">
+        <h2>
+            로밍 부가서비스
+            <span class="count">총 <span class="colorPoint" id="countAddon"><%= addons.length %></span>건</span>
+        </h2>
+        <% if (addons.length === 0) { %>
+        <div class="empty">
+            <svg width="60" height="60" viewBox="0 0 120 120"><mask id="a" fill="#fff"><path d="m0 .0001h120v119.9999h-120z" fill="#fff" fill-rule="evenodd"/></mask><g fill="none" fill-rule="evenodd" transform="translate(-300 -535)"><path d="m0 0h720v1560h-720z" fill="#f6f6f6"/><g transform="translate(0 282)"><path d="m0 0h720v559h-720z" fill="#fff"/><g transform="translate(300 253)"><path d="m0 120h120v-120h-120z" fill="#fff"/><path d="m60 .0001c33.137 0 60 26.863 60 60s-26.863 60-60 60-60-26.863-60-60 26.863-60 60-60" fill="#dcdcdc" mask="url(#a)"/><path d="m54 34.7999v-2.8h11.36v2.8l-2.96 35.521h-5.36zm.4 53.2h10.64v-10.96h-10.64z" fill="#fff"/></g></g></g></svg>
+            <p>
+                이용중인 로밍 부가서비스가 없습니다.
+            </p>
+        </div>
+        <% } %>
+        <% for (var addon of addons) { %>
+        <div class="item">
+            <a href="/product/callplan?prod_id=<%= addon.prodId %>">
+                <h3>
+                    <%= addon.prodNm %>
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                </h3>
+            </a>
+            <div class="row">
+                <span class="label colorPoint fontsize15">이용중</span>
+            </div>
+            <div class="row">
+                <span class="label colorGray">가입일</span>
+                <span class="value colorGray"><%= addon.scrbDt %></span>
+            </div>
+            <% for (var button of addon.btnList) { %>
+                <div class="row">
+                    <a href="<%= button.btnLinkUrl %>?prod_id=<%= tariff.linkProdId %>">
+                <span class="value button">
+                    <%= button.btnNm %>
+                </span>
+                    </a>
+                </div>
+            <% } %>
+        </div>
+        <% } %>
+    </div>
+</div>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    new Tw.NextRoamingMenu($('#roamingMyuse')).install();
+  });
+</script>
+<% include ../../components/end.component.html %>
