@@ -117,6 +117,13 @@
             </div>
         </a>
     </div>
+    <% if (isLogin) { %>
+    <a href="#" onclick="return logout();">
+        <div class="logout">
+            로그아웃
+        </div>
+    </a>
+    <% } %>
 </div>
 <script type="text/x-handlebars-template" id="tpl-switch-off">
     <div id="{{ id }}">
@@ -275,6 +282,12 @@
           }, 250);
         }
       }, 530);
+      return false;
+    }
+
+    function logout() {
+      var tidLanding = new Tw.TidLandingComponent();
+      tidLanding.goLogout();
       return false;
     }
 </script>
