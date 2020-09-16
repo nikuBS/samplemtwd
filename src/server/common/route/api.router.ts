@@ -123,7 +123,7 @@ class ApiRouter {
   private setApi() {
     Object.keys(this.NODE_CMD).map((key) => {
       const cmd = this.NODE_CMD[key];
-      switch ( cmd.method ) {
+      switch (cmd.method) {
         case API_METHOD.GET:
           this.setGetApi(cmd);
           break;
@@ -193,7 +193,7 @@ class ApiRouter {
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.set('expires', '0');
     res.set('pragma', 'no-cache');
-    if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+    if (FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y') {
       this.logger.error('sessionCheck::loginCookie: ' + loginCookie);
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
@@ -268,7 +268,7 @@ class ApiRouter {
     const env = String(process.env.NODE_ENV);
     this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
-        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+        if (resp.code === API_CODE.REDIS_SUCCESS) {
           resp.result = {
             ver: resp.result.ver,
             signGateGW: resp.result.signGateGW,
@@ -290,7 +290,7 @@ class ApiRouter {
   private getSplash(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
-        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+        if (resp.code === API_CODE.REDIS_SUCCESS) {
           resp.result = resp.result.splash;
         }
 
@@ -307,7 +307,7 @@ class ApiRouter {
   private getAppNotice(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
-        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+        if (resp.code === API_CODE.REDIS_SUCCESS) {
           resp.result = resp.result.notice;
         }
 
@@ -343,13 +343,13 @@ class ApiRouter {
     const value: any = req.query.value || null;
     // typeYn: any = req.query.type_yn || 'N';
 
-    if ( FormatHelper.isEmpty(value) ) {
+    if (FormatHelper.isEmpty(value)) {
       return res.json({ code: '01' });
     }
 
     this.redisService.getData(REDIS_KEY.PRODUCT_CHANGEGUIDE + value)
       .subscribe((resp) => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
+        if (resp.code !== API_CODE.CODE_00) {
           return res.json(resp);
         }
 
@@ -371,13 +371,13 @@ class ApiRouter {
     const value: any = req.query.value || null,
       typeYn: any = req.query.type_yn || 'N';
 
-    if ( FormatHelper.isEmpty(value) ) {
+    if (FormatHelper.isEmpty(value)) {
       return res.json({ code: '01' });
     }
 
     this.redisService.getData((typeYn === 'Y' ? REDIS_KEY.PRODUCT_DOWNGRADE_TYPE : REDIS_KEY.PRODUCT_DOWNGRADE) + value)
       .subscribe((resp) => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
+        if (resp.code !== API_CODE.CODE_00) {
           return res.json(resp);
         }
 
@@ -421,12 +421,12 @@ class ApiRouter {
     this.logger.info(this, '[get menu]', req.cookies[COOKIE_KEY.TWM], loginService.getSessionId(req), svcInfo);
     this.redisService.getData(REDIS_KEY.MENU + code)
       .subscribe((resp) => {
-        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+        if (resp.code === API_CODE.REDIS_SUCCESS) {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
-          if ( resp.result.isLogin ) {
+          if (resp.result.isLogin) {
             resp.result.userInfo = svcInfo;
             // null 객체 접근 방지
-            if ( !!allSvcInfo && !!allSvcInfo.m ) {
+            if (!!allSvcInfo && !!allSvcInfo.m) {
               resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.length > 0;
             }
             resp.result.userInfo.canSendFreeSMS = svcInfo.loginType === 'T';
@@ -438,7 +438,7 @@ class ApiRouter {
             // }
             // return memo;
             // }, false);
-            if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
+            if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') {
               resp.result.userInfo.canSendFreeSMS = true;
             }
           }
@@ -465,7 +465,7 @@ class ApiRouter {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
     this.redisService.getData(REDIS_KEY.RCM_MENU + code)
       .subscribe((resp) => {
-        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+        if (resp.code === API_CODE.REDIS_SUCCESS) {
           res.json(resp);
         }
       });
@@ -496,7 +496,7 @@ class ApiRouter {
     const loginService = new LoginService();
     const code = req.query.code;
     const svcInfo = loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
@@ -512,12 +512,12 @@ class ApiRouter {
 
     this.redisService.getData(REDIS_KEY.BANNER_TOS_LINK + code)
       .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          if ( resp.result.bltnYn === 'N' ) {
+        if (resp.code === API_CODE.CODE_00) {
+          if (resp.result.bltnYn === 'N') {
             throw resp;
           } else {
             resp.result.bltnYn = 'Y';
-            if ( resp.result.tosLnkgYn === 'Y' ) {
+            if (resp.result.tosLnkgYn === 'Y') {
               bannerLink = resp.result;
               return this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ':' + userId + ':' + svcMgmtNum);
             } else {
@@ -529,12 +529,12 @@ class ApiRouter {
         }
       })
       .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
+        if (resp.code === API_CODE.CODE_00) {
           serialNums = resp.result;
           targetSerial = serialNums;
-          if ( serialNums.indexOf('R') !== -1 ) {
+          if (serialNums.indexOf('R') !== -1) {
             targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[0] : serialNums;
-          } else if ( serialNums.indexOf('|') !== -1 ) {
+          } else if (serialNums.indexOf('|') !== -1) {
             targetSerial = serialNums.split('|')[0];
           }
           return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
@@ -543,18 +543,18 @@ class ApiRouter {
         }
       })
       .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          if ( targetSerial === '' ) {
+        if (resp.code === API_CODE.CODE_00) {
+          if (targetSerial === '') {
             return Observable.of(resp);
           } else {
             const start = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnStaDt + resp.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
             const end = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnEndDt + resp.result.summary.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
             const today = new Date().getTime();
-            if ( start < today && end > today ) {
+            if (start < today && end > today) {
               targetSerial = '';
               return Observable.of(resp);
             } else {
-              if ( targetSerial.indexOf('R') !== -1 && serialNums.indexOf('C') !== -1 ) {
+              if (targetSerial.indexOf('R') !== -1 && serialNums.indexOf('C') !== -1) {
                 targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[1] : '';
                 return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
               } else {
@@ -564,9 +564,9 @@ class ApiRouter {
             }
           }
         } else {
-          if ( targetSerial === '' ) {
+          if (targetSerial === '') {
             throw resp;
-          } else if ( targetSerial.indexOf('R') !== -1 && serialNums.indexOf('C') !== -1 ) {
+          } else if (targetSerial.indexOf('R') !== -1 && serialNums.indexOf('C') !== -1) {
             targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[1] : '';
             return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
           } else {
@@ -575,14 +575,14 @@ class ApiRouter {
         }
       })
       .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          if ( !targetSerial ) {
+        if (resp.code === API_CODE.CODE_00) {
+          if (!targetSerial) {
             return Observable.of(resp);
           } else {
             const start = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnStaDt + resp.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
             const end = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnEndDt + resp.result.summary.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
             const today = new Date().getTime();
-            if ( start < today && end > today ) {
+            if (start < today && end > today) {
               return Observable.of(resp);
             } else {
               targetSerial = '';
@@ -598,7 +598,7 @@ class ApiRouter {
         return res.json(resp);
       }, (err) => {
         // 오류가 발생하면 데이터가 없는 것이기 때문에, admin banner을 출력하도록 유도한다.
-        if ( !FormatHelper.isEmpty(bannerLink) ) {
+        if (!FormatHelper.isEmpty(bannerLink)) {
           bannerLink['tosLnkgYn'] = 'N';
         }
         Object.assign(err, { code: API_CODE.CODE_00, msg: 'success' });
@@ -617,7 +617,7 @@ class ApiRouter {
     const loginService = new LoginService();
     const code = req.query.code;
     const svcInfo = loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
@@ -633,12 +633,12 @@ class ApiRouter {
 
     this.redisService.getData(REDIS_KEY.BANNER_TOS_LINK + code)
       .switchMap((resp) => {  // TOS 정보를 호출함
-        if ( resp.code === API_CODE.CODE_00 ) {
-          if ( resp.result.bltnYn === 'N' ) {
+        if (resp.code === API_CODE.CODE_00) {
+          if (resp.result.bltnYn === 'N') {
             throw resp;
           } else {
             resp.result.bltnYn = 'Y';
-            if ( resp.result.tosLnkgYn === 'Y' ) {
+            if (resp.result.tosLnkgYn === 'Y') {
               bannerLink = resp.result;
               return this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ':' + userId + ':' + svcMgmtNum);
             } else {
@@ -650,12 +650,12 @@ class ApiRouter {
         }
       })
       .switchMap((resp) => {// 조회된 TOS정보 중 실시간배너(R)인것만 추출하여 배너를 조회함
-        if ( resp.code === API_CODE.CODE_00 ) {
+        if (resp.code === API_CODE.CODE_00) {
           serialNums = (resp.result || '').trim();
           realTimeBanner = serialNums.split('|').filter(e => e.indexOf('R') > -1);
           campaignBanner = serialNums.split('|').filter(e => e.indexOf('C') > -1);
 
-          if ( serialNums === '' ) {
+          if (serialNums === '') {
             return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
           } else {
             return Observable.combineLatest(
@@ -692,7 +692,7 @@ class ApiRouter {
         }
       })
       .subscribe((resp) => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
+        if (resp.code !== API_CODE.CODE_00) {
           resp.code = API_CODE.CODE_00;
           resp.result = {};
         }
@@ -813,10 +813,10 @@ class ApiRouter {
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const svcInfo = loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) {
+    if (FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0') {
       this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + 'N')
         .subscribe((resp) => {
-          if ( resp.code === API_CODE.CODE_00 ) {
+          if (resp.code === API_CODE.CODE_00) {
             resp.result.enableEdit = 'N';
           }
           return res.json(resp);
@@ -826,7 +826,7 @@ class ApiRouter {
       const svcGr = svcInfo.svcGr;
       this.redisService.getDataTos(REDIS_TOS_KEY.QUICK_MENU + svcMgmtNum)
         .switchMap((resp) => {
-          if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+          if (resp.code === API_CODE.REDIS_SUCCESS) {
             resp.result.enableEdit = 'Y';
             return Observable.of(resp);
           } else {
@@ -835,7 +835,7 @@ class ApiRouter {
         })
         .subscribe((resp) => {
           // 응답값 조회 실패한 svcGr 입력 탐지 로그
-          if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
+          if (resp.code !== API_CODE.REDIS_SUCCESS) {
             this.logger.error(this, 'Invalid svcGr :', svcGr + ', ' + resp.msg, '\n', svcInfo);
           }
           resp.result.enableEdit = 'Y';
@@ -855,7 +855,7 @@ class ApiRouter {
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
     const svcInfo = loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
@@ -935,7 +935,7 @@ class ApiRouter {
     apiService.setCurrentReq(req, res);
 
     const svcInfo = loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
@@ -965,7 +965,7 @@ class ApiRouter {
     apiService.setCurrentReq(req, res);
 
     const svcInfo = loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return res.json({
         code: API_CODE.NODE_1001,
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
@@ -989,16 +989,16 @@ class ApiRouter {
       destination: (req, file, cb) => {
         let storagePath = path.resolve(__dirname, '../../../../', 'uploads/');
 
-        if ( !FormatHelper.isEmpty(req.body.dest) ) {
+        if (!FormatHelper.isEmpty(req.body.dest)) {
           const dateFormat = dateHelper.getShortDateWithFormat(new Date(), 'YYMMDD');
 
           storagePath += '/' + req.body.dest + '/';
-          if ( !fs.existsSync(storagePath) ) {
+          if (!fs.existsSync(storagePath)) {
             fs.mkdirSync(storagePath);
           }
 
           storagePath += dateFormat + '/';
-          if ( !fs.existsSync(storagePath) ) {
+          if (!fs.existsSync(storagePath)) {
             fs.mkdirSync(storagePath);
           }
         }
@@ -1022,7 +1022,7 @@ class ApiRouter {
    */
   private uploadFile(req: Request, res: Response, next: NextFunction) {
     this.upload()(req, res, (err) => {
-      if ( err ) {
+      if (err) {
         this.logger.error(this, err);
         res.json({ code: err.errno, msg: err.code });
         return;
@@ -1174,7 +1174,7 @@ class ApiRouter {
     apiService.setCurrentReq(req, res);
 
     const svcInfo = loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return res.json({
         code: API_CODE.NODE_1003,
         msg: NODE_API_ERROR[API_CODE.NODE_1003]
@@ -1352,7 +1352,7 @@ class ApiRouter {
       return (url.indexOf(item.host) !== -1);
     });
 
-    if ( FormatHelper.isEmpty(serviceList) || serviceList.length < 1 ) {
+    if (FormatHelper.isEmpty(serviceList) || serviceList.length < 1) {
       res.json({
         code: API_CODE.CODE_404
       });
@@ -1363,7 +1363,7 @@ class ApiRouter {
     const loginService = new LoginService();
     const svcInfo = loginService.getSvcInfo(req);
 
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       res.json({
         code: API_CODE.CODE_404
       });
@@ -1372,7 +1372,7 @@ class ApiRouter {
 
     let value = svcInfo[service.session_key];
 
-    if ( FormatHelper.isEmpty(value) ) {
+    if (FormatHelper.isEmpty(value)) {
       res.json({
         code: API_CODE.CODE_404
       });
@@ -1409,7 +1409,7 @@ class ApiRouter {
     const ret = {};
 
     // 임시로 kjh1234@gmail.com로 로그인 된 경우만 조회 가능하도록 추가
-    if ( !FormatHelper.isEmpty(req.session.svcInfo) && req.session.svcInfo.userId === 'kjh1234@gmail.com' ) {
+    if (!FormatHelper.isEmpty(req.session.svcInfo) && req.session.svcInfo.userId === 'kjh1234@gmail.com') {
       this.redisService.getData(key)
         .switchMap((resp) => {
           ret['userId'] = resp.result.svcInfo.userId;
@@ -1445,12 +1445,12 @@ class ApiRouter {
     const isSpclData = !!dataCode;
     // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
     apiService.request(API_CMD.BFF_01_0002, {}).subscribe((sessionsResponse) => {
-      if ( sessionsResponse.code !== API_CODE.CODE_00 ) {
+      if (sessionsResponse.code !== API_CODE.CODE_00) {
         return res.json(sessionsResponse);
       }
       const mobileLine = sessionsResponse.result && sessionsResponse.result.m && sessionsResponse.result.m.length ?
         sessionsResponse.result.m : [];
-      if ( svcMgmtNum ) {
+      if (svcMgmtNum) {
         // 입력된 서비스관리번호가 조회 된 서비스 관리번호 포함여부 확인 (유효성체크)
         const filterSvcMgmtNum = mobileLine.filter(line => line.svcMgmtNum === svcMgmtNum);
         svcMgmtNum = filterSvcMgmtNum.length ? svcMgmtNum : '';
@@ -1458,7 +1458,7 @@ class ApiRouter {
         // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
         svcMgmtNum = mobileLine.length ? mobileLine[0].svcMgmtNum : svcMgmtNum;
       }
-      if ( !svcMgmtNum ) {
+      if (!svcMgmtNum) {
         // 서비스관리번호 조회되지 않을 경우 Error Return
         return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
       }
@@ -1467,7 +1467,7 @@ class ApiRouter {
         'T-svcMgmtNum': svcMgmtNum
       }).subscribe((balancesResponse) => {
         // 잔여량 조회 실패 시 Error return
-        if ( balancesResponse.code !== API_CODE.CODE_00 ) {
+        if (balancesResponse.code !== API_CODE.CODE_00) {
           return res.json(balancesResponse);
         }
         // 잔여 데이터 객체 생성
@@ -1484,28 +1484,28 @@ class ApiRouter {
         const dataCodes: string[] = dataCode ? (dataCode.includes(',') ? dataCode.split(',') : [dataCode]) : [];
         let etcGnrlData: string[] = [];
         // 팅요금제 이면서 gnrlData 가 없는 경우 etc 데이터를 gnrlData로 처리 - native 요청 사항
-        if ( balancesResponse.result && (!balancesResponse.result.gnrlData || !balancesResponse.result.gnrlData.length)) {
-          balancesResponse.result.gnrlData =  balancesResponse.result.etc || [];
+        if (balancesResponse.result && (!balancesResponse.result.gnrlData || !balancesResponse.result.gnrlData.length)) {
+          balancesResponse.result.gnrlData = balancesResponse.result.etc || [];
           console.log(balancesResponse.result.gnrlData);
         }
         balancesResponse.result.gnrlData.map((data) => {
-          if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1 ) {
+          if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1) {
             etcGnrlData.push(data.skipId);
           }
         });
-        if ( balancesResponse.result && balancesResponse.result.gnrlData ) {
+        if (balancesResponse.result && balancesResponse.result.gnrlData) {
           balancesResponse.result.gnrlData.map((data) => {
             const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
             // KB 단위 잔여량만 합산
-            if ( skipId.length ) {
+            if (skipId.length) {
               // dataCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
-              if ( !dataCode ) {
+              if (!dataCode) {
                 dataCodes.push(data.skipId);
               }
-              if ( data.unit === UNIT_E.DATA ) {
+              if (data.unit === UNIT_E.DATA) {
                 remainedData.isEmpty = false;
                 // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
-                switch ( data.unlimit ) {
+                switch (data.unlimit) {
                   // 무제한
                   case '1':
                   case 'M':
@@ -1519,7 +1519,7 @@ class ApiRouter {
                 // 각 항목 별 제공량 합산
                 remainedData.total += +data.total;
                 // 각 항목 별 잔여량 합산 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
-                if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                if (TPLAN_SHARE_LIST.indexOf(data.skipId) === -1) {
                   remainedData.remained += +data.remained;
                 } else {
                   remainedData.sharedRemained += +data.remained;
@@ -1528,10 +1528,10 @@ class ApiRouter {
                 remainedData.unit = UNIT_E.DATA;
               }
               // 팅요금제인 경우 요금 합산하여 데이터 전달 - native 요청사항
-              if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1 ) {
+              if (['NA00002591', 'NA00002592', 'NA00002593', 'NA00002594'].indexOf(data.prodId) > -1) {
                 remainedData.isEmpty = false;
                 // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
-                switch ( data.unlimit ) {
+                switch (data.unlimit) {
                   // 무제한
                   case '1':
                   case 'M':
@@ -1554,16 +1554,16 @@ class ApiRouter {
         }
 
         // 특별공제 데이터는 실제 입력된 값이 넘어오는 경우에만 처리
-        if ( isSpclData ) {
-          if ( balancesResponse.result && balancesResponse.result.spclData ) {
+        if (isSpclData) {
+          if (balancesResponse.result && balancesResponse.result.spclData) {
             balancesResponse.result.spclData.map((data) => {
               const dataSkipIds: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
               // KB 단위 잔여량만 합산
-              if ( dataSkipIds.length ) {
-                if ( data.unit === UNIT_E.DATA ) {
+              if (dataSkipIds.length) {
+                if (data.unit === UNIT_E.DATA) {
                   remainedData.isEmpty = false;
                   // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
-                  switch ( data.unlimit ) {
+                  switch (data.unlimit) {
                     // 무제한
                     case '1':
                     case 'M':
@@ -1577,7 +1577,7 @@ class ApiRouter {
                   // 각 항목 별 제공량 합산
                   remainedData.total += +data.total;
                   // 각 항목 별 잔여량 합산 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
-                  if ( TPLAN_SHARE_LIST.indexOf(data.skipId) === -1 ) {
+                  if (TPLAN_SHARE_LIST.indexOf(data.skipId) === -1) {
                     remainedData.remained += +data.remained;
                   } else {
                     remainedData.sharedRemained += +data.remained;
@@ -1603,22 +1603,22 @@ class ApiRouter {
         // 요청받은 음성 공제코드가 없을 경우 첫번째 항목으로 기본값 설정
         const voiceCodes: string[] = voiceCode ? (voiceCode.includes(',') ? voiceCode.split(',') : [voiceCode]) : [];
         // 음성에서 공제코드 검색
-        if ( balancesResponse.result && balancesResponse.result.voice ) {
+        if (balancesResponse.result && balancesResponse.result.voice) {
           balancesResponse.result.voice.map((voice, index) => {
             const voiceSkipIds: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
             // 전달받은 voiceCode 값이 없는 경우에는 첫번째 항목만 노출
-            if( !voiceCode && index !== 0 ) {
+            if (!voiceCode && index !== 0) {
               return;
             }
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( voiceSkipIds.length ) {
+            if (voiceSkipIds.length) {
               // voiceCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
-              if ( !voiceCode ) {
+              if (!voiceCode) {
                 voiceCodes.push(voice.skipId);
               }
               remainedVoice.isEmpty = false;
               // 음성 항목이 무제한 또는 기본제공일 경우 Flag 설정
-              switch ( voice.unlimit ) {
+              switch (voice.unlimit) {
                 // 무제한
                 case '1':
                 case 'M':
@@ -1649,22 +1649,22 @@ class ApiRouter {
         };
         const smsCodes: string[] = smsCode ? (smsCode.includes(',') ? smsCode.split(',') : [smsCode]) : [];
         // SMS에서 공제코드 검색
-        if ( balancesResponse.result && balancesResponse.result.sms ) {
+        if (balancesResponse.result && balancesResponse.result.sms) {
           balancesResponse.result.sms.map((sms, index) => {
             const smsSkipIds: string[] = smsCode ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
             // 전달받은 smsCode 값이 없는 경우에는 첫번째 항목만 노출
-            if( !smsCode && index !== 0 ) {
+            if (!smsCode && index !== 0) {
               return;
             }
             // 요청한 공제코드가 있을 경우 잔여량 입력
-            if ( smsSkipIds.length ) {
+            if (smsSkipIds.length) {
               // smsCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
-              if ( !smsCode ) {
+              if (!smsCode) {
                 smsCodes.push(sms.skipId);
               }
               remainedSms.isEmpty = false;
               // SMS 항목이 무제한 또는 기본제공일 경우 Flag 설정
-              switch ( sms.unlimit ) {
+              switch (sms.unlimit) {
                 // 무제한
                 case '1':
                 case 'M':
@@ -1685,6 +1685,9 @@ class ApiRouter {
           });
         }
         // 잔여 SMS 조회 및 객체(remainedSms) 설정 완료
+
+        // 기존의 myBalance 복제 
+        const originalBalance = Object.assign({}, balancesResponse.result);
 
         // 단위 변경 및 표기 양식 설정
         // 최종 Response 객체 선언 (Widget 표기용)
@@ -1712,14 +1715,14 @@ class ApiRouter {
             remainedValueSmall: '-', // 표기될 잔여량 (remainValue 와 동일) - native 요청사항
             remainedPercentage: 0 // 총 제공량 대비 잔여 SMS의 비율
           },
-          original: balancesResponse.result,
-          etcGnrlData: etcGnrlData,
+          original: originalBalance,
+          etcGnrlData: [],
           etcSpclData: []
 
         };
 
         // 위젯에서 미설정으로 설정한 경우
-        if ( dataCode === 'NULL' ) {
+        if (dataCode === 'NULL') {
           responseRemains.data = {
             skipId: dataCode, // 조회한 음성 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
@@ -1729,7 +1732,7 @@ class ApiRouter {
             sharedRemainedPercentage: 0 // 총 제공량 대비 잔여 T가족모아데이터의 비율
           };
         }
-        if ( voiceCode === 'NULL' ) {
+        if (voiceCode === 'NULL') {
           responseRemains.voice = {
             skipId: voiceCode, // 조회한 음성 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
@@ -1738,7 +1741,7 @@ class ApiRouter {
             remainedPercentage: 0 // 총 제공량 대비 잔여 음성의 비율
           };
         }
-        if ( smsCode === 'NULL' ) {
+        if (smsCode === 'NULL') {
           responseRemains.sms = {
             skipId: smsCode, // 조회한 SMS 공제코드
             isValid: true, // 해당 공제코드의 잔여량 조회 성공 여부
@@ -1749,18 +1752,18 @@ class ApiRouter {
         }
 
         // 잔여 데이터 Response 양식 설정
-        if ( !remainedData.isEmpty ) {
+        if (!remainedData.isEmpty) {
           responseRemains.data.isValid = true;
-          if ( remainedData.unlimit ) { // 잔여 데이터가 무제한인 경우
+          if (remainedData.unlimit) { // 잔여 데이터가 무제한인 경우
             responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.data.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT; // native 요청사항
             responseRemains.data.remainedPercentage = 1;
-          } else if ( remainedData.unlimit_default ) { // 잔여 데이터가 기본제공인 경우
+          } else if (remainedData.unlimit_default) { // 잔여 데이터가 기본제공인 경우
             responseRemains.data.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.data.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT; // native 요청사항
             responseRemains.data.remainedPercentage = 1;
           } else { // 잔여 데이터가 무제한이 아닌 경우
-            if ( remainedData.unit === UNIT_E.DATA ) { // 잔여 데이터의 단위가 'KB'인 경우
+            if (remainedData.unit === UNIT_E.DATA) { // 잔여 데이터의 단위가 'KB'인 경우
               responseRemains.data.remainedValue =
                 FormatHelper.convDataFormatWithUnit(
                   remainedData.remained + remainedData.sharedRemained, UNIT[remainedData.unit]); // 용량 단위 변경 및 단위 텍스트 추가
@@ -1771,7 +1774,7 @@ class ApiRouter {
                 remainedData.total !== 0 ? remainedData.remained / remainedData.total : 0;
               responseRemains.data.sharedRemainedPercentage =
                 remainedData.total !== 0 ? remainedData.sharedRemained / remainedData.total : 0;
-            } else if ( remainedData.unit === UNIT_E.FEE ) { // 잔여 데이터의 단위가 '원'인 경우
+            } else if (remainedData.unit === UNIT_E.FEE) { // 잔여 데이터의 단위가 '원'인 경우
               responseRemains.data.remainedValue =
                 FormatHelper.getFeeContents(remainedData.remained + remainedData.sharedRemained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
               responseRemains.data.remainedValueSmall =
@@ -1786,23 +1789,23 @@ class ApiRouter {
           }
         }
         // 잔여 음성 Response 양식 설정
-        if ( !remainedVoice.isEmpty ) {
+        if (!remainedVoice.isEmpty) {
           responseRemains.voice.isValid = true;
-          if ( remainedVoice.unlimit ) { // 잔여 음성이 무제한인 경우
+          if (remainedVoice.unlimit) { // 잔여 음성이 무제한인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.voice.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.voice.remainedPercentage = 1;
-          } else if ( remainedVoice.unlimit_default ) { // 잔여 음성이 기본제공인 경우
+          } else if (remainedVoice.unlimit_default) { // 잔여 음성이 기본제공인 경우
             responseRemains.voice.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.voice.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.voice.remainedPercentage = 1;
           } else { // 잔여 음성이 무제한이 아닌 경우
-            if ( remainedVoice.unit === UNIT_E.VOICE ) { // 잔여 음성의 단위가 '초'인 경우
+            if (remainedVoice.unit === UNIT_E.VOICE) { // 잔여 음성의 단위가 '초'인 경우
               responseRemains.voice.remainedValue =
                 FormatHelper.convVoiceMinFormatWithUnit(Math.floor(remainedVoice.remained / 60), true); // 시간 단위 변경 및 단위 텍스트 추가
               responseRemains.voice.remainedValueSmall = Math.floor(remainedVoice.remained / 60) + TIME_UNIT.MINUTE;
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
-            } else if ( remainedVoice.unit === UNIT_E.FEE ) { // 잔여 음성의 단위가 '원'인 경우
+            } else if (remainedVoice.unit === UNIT_E.FEE) { // 잔여 음성의 단위가 '원'인 경우
               responseRemains.voice.remainedValue = responseRemains.voice.remainedValueSmall
                 = FormatHelper.getFeeContents(remainedVoice.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
               responseRemains.voice.remainedPercentage = remainedVoice.total !== 0 ? remainedVoice.remained / remainedVoice.total : 0;
@@ -1812,24 +1815,24 @@ class ApiRouter {
           }
         }
         // 잔여 SMS Response 양식 설정
-        if ( !remainedSms.isEmpty ) {
+        if (!remainedSms.isEmpty) {
           responseRemains.sms.isValid = true;
-          if ( remainedSms.unlimit ) { // 잔여 SMS가 무제한인 경우
+          if (remainedSms.unlimit) { // 잔여 SMS가 무제한인 경우
             responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT;
             responseRemains.sms.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT; // native 요청사항
             responseRemains.sms.remainedPercentage = 1;
-          } else if ( remainedSms.unlimit_default ) { // 잔여 SMS가 기본제공인 경우
+          } else if (remainedSms.unlimit_default) { // 잔여 SMS가 기본제공인 경우
             responseRemains.sms.remainedValue = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT;
             responseRemains.sms.remainedValueSmall = UNLIMIT_NAME.WIDGET_UNLIMIT_DEFAULT; // native 요청사항
             responseRemains.sms.remainedPercentage = 1;
           } else { // 잔여 SMS가 무제한이 아닌 경우
-            if ( remainedSms.unit === UNIT_E.SMS || remainedSms.unit === UNIT_E.SMS_2 ) { // 잔여 SMS의 단위가 '건'인 경우
+            if (remainedSms.unit === UNIT_E.SMS || remainedSms.unit === UNIT_E.SMS_2) { // 잔여 SMS의 단위가 '건'인 경우
               responseRemains.sms.remainedValue =
                 FormatHelper.convNumFormat(remainedSms.remained) + UNIT[UNIT_E.SMS]; // 3자리 콤마 및 단위 텍스트 추가
               responseRemains.sms.remainedValueSmall =
                 FormatHelper.convNumFormat(remainedSms.remained) + UNIT[UNIT_E.SMS]; // native 요청사항
               responseRemains.sms.remainedPercentage = remainedSms.total !== 0 ? remainedSms.remained / remainedSms.total : 0;
-            } else if ( remainedSms.unit === UNIT_E.FEE ) { // 잔여 SMS의 단위가 '원'인 경우
+            } else if (remainedSms.unit === UNIT_E.FEE) { // 잔여 SMS의 단위가 '원'인 경우
               responseRemains.sms.remainedValue = FormatHelper.getFeeContents(remainedSms.remained) + UNIT[UNIT_E.FEE]; // 원 단위 변경 및 단위 텍스트 추가
               responseRemains.sms.remainedValueSmall = FormatHelper.getFeeContents(remainedSms.remained) + UNIT[UNIT_E.FEE]; // native 요청사항
               responseRemains.sms.remainedPercentage = remainedSms.total !== 0 ? remainedSms.remained / remainedSms.total : 0;
@@ -1841,11 +1844,11 @@ class ApiRouter {
         // 잔여량 백분율 변환(소수점 두자리)
         Object.keys(responseRemains).map((key) => {
           const keyObj = responseRemains[key];
-          if ( !FormatHelper.isEmpty(keyObj['remainedPercentage']) ) {
+          if (!FormatHelper.isEmpty(keyObj['remainedPercentage'])) {
             const value = keyObj['remainedPercentage'];
             keyObj['remainedPercentage'] = Number((value * 100).toFixed(2));
           }
-          if ( !FormatHelper.isEmpty(keyObj['sharedRemainedPercentage']) ) {
+          if (!FormatHelper.isEmpty(keyObj['sharedRemainedPercentage'])) {
             const value = keyObj['sharedRemainedPercentage'];
             keyObj['sharedRemainedPercentage'] = Number((value * 100).toFixed(2));
           }
