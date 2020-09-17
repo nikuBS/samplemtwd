@@ -657,7 +657,7 @@ body.apphome .section-box { z-index: 3; }
 
 body.apphome .main-membershop-box { z-index: 3; }
 
-.main-banner-img button, .main-banner-img a { display: block; width: 100%; }
+.main-banner-img button, .main-banner-img a { display: block; width: 100%; vertical-align: top; }
 
 .main-banner-img button img, .main-banner-img a img { width: 100%; vertical-align: top; }
 
@@ -2461,7 +2461,7 @@ body.apphome .container-wrap { background: -webkit-gradient(linear, left top, le
 .main-error-box.welcome.tod-login-box.line-none .desc2 .bt { font-size: 0.81rem; margin: 0 auto; }
 
 /* 로그인 후 */
-.mw-banner01 button { width: 100%; }
+.mw-banner01 button { width: 100%; vertical-align: top; }
 
 .mw-banner01 button img { width: 100%; vertical-align: top; }
 
