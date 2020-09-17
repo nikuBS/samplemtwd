@@ -1483,6 +1483,14 @@ class ApiRouter {
         // 요청받은 데이터 공제코드가 없을 경우 합산 데이터(기본값)로 설정
         const dataCodes: string[] = dataCode ? (dataCode.includes(',') ? dataCode.split(',') : [dataCode]) : [];
         let etcGnrlData: string[] = [];
+        let unlimitYn = false;
+        if (balancesResponse.result && balancesResponse.result.gnrlData) {
+          balancesResponse.result.gnrlData.map((data) => {
+            if (data.total.indexOf('무제한') > -1) {
+              unlimitYn = true;
+            }
+          });
+        }
         if (balancesResponse.result && balancesResponse.result.gnrlData) {
           balancesResponse.result.gnrlData.map((data) => {
             const skipId: string[] = dataCode ? dataCodes.filter((id) => id === data.skipId) : [data.skipId];
@@ -1491,7 +1499,7 @@ class ApiRouter {
               // dataCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
               if (!dataCode) {
                 // 20/09/17 협의된 부분 최초 호출시 무제한 요금제 찾아서 무제한 값만 설정한다. 
-                if (data.total.indexOf('무제한') > -1) {
+                if (data.total.indexOf('무제한') > -1 && unlimitYn) {
                   dataCodes.push(data.skipId);
                   if (data.unit === UNIT_E.DATA) {
                     remainedData.isEmpty = false;
@@ -1502,8 +1510,35 @@ class ApiRouter {
                     remainedData.sharedRemained = data.remained;
                     remainedData.unit = UNIT_E.DATA;
                   }
+                } else { // 무제한을 못찾으면 기존과 동일하게 합산해서 준다. 
+                  dataCodes.push(data.skipId);
+                  if (data.unit === UNIT_E.DATA) {
+                    remainedData.isEmpty = false;
+                    // 데이터 항목 중 무제한 또는 기본제공 있을 경우 Flag 설정
+                    switch (data.unlimit) {
+                      // 무제한
+                      case '1':
+                      case 'M':
+                        remainedData.unlimit = true;
+                        return;
+                      // 기본제공
+                      case 'B':
+                        remainedData.unlimit_default = true;
+                        return;
+                    }
+                    // 각 항목 별 제공량 합산
+                    remainedData.total += +data.total;
+                    // 각 항목 별 잔여량 합산 (T가족모아데이터는 별도 표기하기 위해 따로 합산)
+                    if (TPLAN_SHARE_LIST.indexOf(data.skipId) === -1) {
+                      remainedData.remained += +data.remained;
+                    } else {
+                      remainedData.sharedRemained += +data.remained;
+                    }
+                    // 단위 설정 (합산은 무조건 KB)
+                    remainedData.unit = UNIT_E.DATA;
+                  }
                 }
-              } else {
+              } else { // 데이터 코드가 넘어오는 경우 
 
                 if (data.unit === UNIT_E.DATA) {
                   remainedData.isEmpty = false;
