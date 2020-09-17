@@ -244,13 +244,12 @@
     });
   }
 
-  if (!navigator.mcc) {
-    navigator.__defineGetter__('mcc', function() {
-      return '<%= country.mcc %>';
-    });
-  }
-
   $(document).ready(function () {
+    if (Tw.CommonHelper.getCookie('ROAMING_MCC') == '999') {
+      // 로밍모드 명시적 OFF 이면, 로밍메인으로 튕김
+      document.location.href = '/product/roaming';
+      return;
+    }
     document.cookie = 'ROAMING_MCC=<%= country.mcc %>; path=/';
 
     fillBackgroundImage();

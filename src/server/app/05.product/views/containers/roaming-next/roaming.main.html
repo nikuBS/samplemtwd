@@ -200,11 +200,13 @@
   });
   function beautifyCurrentUse() {
     var dom = document.getElementById('currentUseText');
-    var text = dom.innerText;
-    var match = new RegExp('[0-9]+건$').exec(text);
-    if (match) {
-      var html = text.substring(0, match.index) + '<span class="point">' + text.substring(match.index) + '</span>';
-      dom.innerHTML = html;
+    if (dom != null) {
+      var text = dom.innerText;
+      var match = new RegExp('[0-9]+건$').exec(text);
+      if (match) {
+        var html = text.substring(0, match.index) + '<span class="point">' + text.substring(match.index) + '</span>';
+        dom.innerHTML = html;
+      }
     }
   }
   function prepareNations() {

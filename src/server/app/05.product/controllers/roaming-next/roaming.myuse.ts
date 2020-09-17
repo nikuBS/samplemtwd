@@ -13,48 +13,45 @@ export default class RoamingMyUseController extends TwViewController {
       this.getMyTariffs(),
       this.getMyAddons(),
     ).subscribe(([tariffs, addons]) => {
-      const useTestData = false;
-      if (useTestData) {
-        tariffs = [{
-          prodId: 'NA00006489',
-          prodNm: 'baro 3G',
-          dateStart: '202009141300',
-          dateEnd: '202009211800',
-          usage: {
-            data: { used: '120MB', total: '500MB' },
-            sms: { total: '30' },
-            voice: { total: '30' }
-          }
-        }];
-        addons = [{
-          prodId: 'NA00003200',
-          prodNm: 'T로밍 도착알리미',
-          dateRegister: '20200911',
-          link: {
-            url: 'https://google.com/',
-            name: '지정번호 등록',
-          }
-        }];
-      } else {
-        // prodId, prodNm, scrbDt (2019.1.23.),
-        // basFeeTxt (39,000),
-        // prodLinkYn, prodSetYn, prodTermYn
-        // linkProdId
-        tariffs = tariffs.roamingProdList;
-        // prodId, prodNm, scrbDt (2018.3.18.)
-        // basFeeTxt 무료,
-        // prodLinkYn, prodSetYn, prodTermYn
-        // linkProdId
-        addons = addons.roamingProdList;
-      }
-      console.log(tariffs);
-      console.log(addons);
+      // prodId, prodNm, scrbDt (2019.1.23.),
+      // basFeeTxt (39,000),
+      // prodLinkYn, prodSetYn, prodTermYn
+      // linkProdId
+      tariffs = tariffs.roamingProdList;
+      // prodId, prodNm, scrbDt (2018.3.18.)
+      // basFeeTxt 무료,
+      // prodLinkYn, prodSetYn, prodTermYn
+      // linkProdId
+      addons = addons.roamingProdList;
 
-      res.render('roaming-next/roaming.myuse.html', {
-        svcInfo,
-        pageInfo,
-        tariffs,
-        addons,
+      Observable.combineLatest(tariffs.map(t => {
+        return this.apiService.request(API_CMD.BFF_10_0091, {}, {}, ['NA00005505']).map(r => {
+          if (r.code === API_CODE.CODE_00 && r.result) {
+            return r.result;
+          }
+          return null;
+        });
+      })).subscribe((ranges) => {
+        for (let i = 0; i < tariffs.length; i++) {
+          // svcStartDt: 20200603
+          // svcStartTm: 17
+          // svcEndDt: 20200703
+          // svcEndTm: 17
+          // startEndTerm: 30
+          // prodFee: '39000'
+          // romSetClCd: DNNN: 개시일, DTNN:개시일+시간, DTDN:개시일+시간~종료일, NNNN:설정없음
+          // chk60: Y
+          // chkCurProdStat: true
+          Object.assign(tariffs[i], ranges[i]);
+          console.log(ranges[i]);
+          // 기간별 formatting 처리
+        }
+        res.render('roaming-next/roaming.myuse.html', {
+          svcInfo,
+          pageInfo,
+          tariffs,
+          addons,
+        });
       });
     });
   }
