@@ -1511,6 +1511,10 @@ class ApiRouter {
                     remainedData.unit = UNIT_E.DATA;
                   }
                 } else { // 무제한을 못찾으면 기존과 동일하게 합산해서 준다. 
+                  if (unlimitYn === true) {
+                    // 이미 무제한이면 하나 찾았으므로 통과한다. 
+                    return;
+                  }
                   dataCodes.push(data.skipId);
                   if (data.unit === UNIT_E.DATA) {
                     remainedData.isEmpty = false;
