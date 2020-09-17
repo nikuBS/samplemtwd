@@ -237,6 +237,13 @@ Tw.ProductMobileplanAddJoin.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    // Swing 문자 발송 API 호출 (단말보험 상품(22종) 가입 시 [OP002-9829])
+    if (Tw.DEVICE_INSURE_PROD_ID.indexOf(this._prodId) === -1) {
+      this._apiService.request(Tw.API_CMD.BFF_10_0181, {
+        smsPhrsGrpId: 'SMART'
+      }, {}, [this._prodId]);
+    }
+    
     // Swing 문자 발송 API 호출 (분실안심990+_예약 가입 시)
     // TODO: 특정 상품코드에 대한 하드코딩 개선 필요
     if ( this._prodId == 'NA00006811') {
