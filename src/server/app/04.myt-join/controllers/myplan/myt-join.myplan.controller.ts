@@ -226,12 +226,12 @@ class MyTJoinMyplan extends TwViewController {
     }
 
     Observable.combineLatest(
-        this._getFeePlan(), // 나의 부가상품
-        this._getAdditions(svcInfo),
-        this._getBenefits(),
+        this._getFeePlan(), // 요금제
+        this._getAdditions(svcInfo), // 부가상품
+        // this._getBenefits(),
         // TODO: 성능 문제로 배포 연기
         /*
-        this._getAgreements(),
+        this._getAgreements(),// 약정할인/기기상환정보
         this._getFee(svcInfo, childInfo, allSvc), // 이번 달 청구/이용 요금
         this._getUsagePattern(),
         this._getPPS()
@@ -242,7 +242,7 @@ class MyTJoinMyplan extends TwViewController {
         return this.error.render(res, Object.assign(defaultOptions, apiError));
       }
       // TODO: 성능 문제로 배포 연기
-      const [feePlan, additions, benefits /* ,  agreements, fee, usagePattern, pps */] = subscriptions;
+      const [feePlan, additions /* , benefits,  agreements, fee, usagePattern, pps */] = subscriptions;
 
       // 컨버팅 결과 값이 없을 시 오류 처리
       if (FormatHelper.isEmpty(feePlan)) {
@@ -263,7 +263,7 @@ class MyTJoinMyplan extends TwViewController {
         templateType: this._isWireless ? 'wireless' : 'wire',  // 회선 별 렌더링 파일 명
         feePlan, // 요금제
         additions, // 부가 상품
-        benefits, // 혜택/할인 (Mobile/T-Pocket-Fi/T-Login)
+        benefits: { count: 99 }, // 혜택/할인 (Mobile/T-Pocket-Fi/T-Login)
         // TODO: 성능 문제로 배포 연기
         /*
         agreements, // 약정할인/기기상환정보
