@@ -31,7 +31,7 @@ _%>
             <%_ const totalAdditions = additionsPaid.length + additionsFree.length; _%>
             <div class="tod-sel-top-wrap">
                 <div class="link-cont">
-                    <a href="#">전체 <%- totalAdditions %></a>
+                    <span class="total">전체 <%- totalAdditions %></span>
                     <%_ if (additionsPaid.length) { _%>
                     <a href="#tod-cont1">유료 <%- additionsPaid.length %></a>
                     <%_ } _%>
@@ -155,6 +155,17 @@ _%>
 </div>
 <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
 <%- include('../../components/javascript.component.html') _%>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('scroll', function () {
+            $('.tod-link-cont-anchor').each(function (index, ele) {
+                if (parseInt($(ele).offset().top, 0) <= $(window).scrollTop()) {
+                    $('.link-cont > a').removeClass('on').eq(index).addClass('on');
+                }
+            });
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         new Tw.MyTJoinMyPlanAdd({
