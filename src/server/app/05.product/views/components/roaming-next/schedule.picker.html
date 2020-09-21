@@ -23,6 +23,29 @@
         추천 요금제 확인
     </div>
 </div>
+<div id="nationsDialog" class="dialog">
+    <div class="header">
+        <h1>로밍 가능한 전체 국가</h1>
+        <div class="close" onclick="closeDialog()">
+            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+        </div>
+    </div>
+    <div class="menu">
+        <ul>
+            <li id="EUR">유럽</li>
+            <li id="ASP">아시아</li>
+            <li id="AMC">미주</li>
+            <li id="OCN">오세아니아</li>
+            <li id="MET">중동</li>
+            <li id="AFR">아프리카</li>
+        </ul>
+    </div>
+    <div class="content">
+        <ul>
+
+        </ul>
+    </div>
+</div>
 <script type="text/javascript">
   function openScheduleDialog(code, name, topBannerUrl, baseDiv) {
     $('#scheduleDialog').css('display', 'block');
@@ -35,9 +58,13 @@
       $.get('/product/roaming?queryBg=' + code, function(data) {
         var cdn = '<%= CDN %>';
         if (cdn.indexOf(':3001') > 0) {
-          cdn = 'http://cdnm-dev.tworld.co.kr';
+          cdn = 'http://mtw.told.me/cdn/';
         }
-        $('#scheduleDialog .banner').attr('src', cdn + data.backgroundUrl);
+        if (data.backgroundUrl) {
+          $('#scheduleDialog .banner').attr('src', cdn + data.backgroundUrl);
+        } else {
+          $('#scheduleDialog .banner').attr('src', cdn + '/img/product/roam/schedule_top_fallback.png');
+        }
       });
     } else {
       $('#scheduleDialog .banner').attr('src', topBannerUrl);
@@ -57,10 +84,10 @@
       }
 
       if (start) {
-        $('#date-depart').html(start.format('YYYY.MM.DD'));
+        $('#date-depart').html(start.format('YYYY.MM.DD (dd)'));
       }
       if (end) {
-        $('#date-arrive').html(end.format('YYYY.MM.DD'));
+        $('#date-arrive').html(end.format('YYYY.MM.DD (dd)'));
       } else {
         $('#date-arrive').html('-');
       }
@@ -84,4 +111,81 @@
       '&to=' + endDate.format('YYYYMMDD');
     closeDialog();
   }
+
+
+  function installNationSearch() {
+    prepareNations();
+    $('#nation-search').autocomplete({
+      source: allNations.map(function(value) {
+        return {label: value.countryNameKor, value: value.countryNameKor, code: value.countryCode};
+      }),
+      delay: 100,
+      minLength: 1,
+      select: function(event, ui) {
+        openScheduleDialog(ui.item.code, ui.item.label, null, baseDiv);
+      }
+    });
+    setupNationsDialog();
+  }
+  function prepareNations() {
+    let all = [];
+    const categories = Object.keys(nations);
+    for (let i=0; i<categories.length; i+=1) {
+      let category = categories[i];
+      const items = nations[category];
+      all = all.concat(items);
+    }
+    all.sort();
+    allNations = all;
+  }
+  function setupNationsDialog() {
+    const menuItems = $('#nationsDialog .menu li');
+    for (var i=0; i<menuItems.length; i++) {
+      menuItems[i].onclick = function (event) {
+        onClickNationGroup(event.target)
+      };
+    }
+  }
+  function onClickNationGroup(menu) {
+    $('#nationsDialog .menu li').removeClass('active');
+    menu.className = 'active';
+    const selectedNations = nations[menu.id];
+    const targetList = $('#nationsDialog .content ul')
+    targetList.html('');
+    for (var nation of selectedNations) {
+      var li = document.createElement('li');
+      li.onclick = function(e) {
+        var nationName = e.target.innerText
+        var nationCode = e.target.getAttribute('data-country');
+        openScheduleDialog(nationCode, nationName, null, '#nationsDialog');
+      };
+      li.innerText = nation.countryNameKor;
+      li.setAttribute('data-country', nation.countryCode);
+      targetList.append(li);
+    }
+  }
+  function searchNation() {
+    var name = $('#nation-search').val();
+    for (var item of allNations) {
+      if (item.countryNameKor == name) {
+        openScheduleDialog(item.countryCode, name, null, baseDiv);
+        break;
+      }
+    }
+  }
+  function openNationsDialog() {
+    onClickNationGroup(document.getElementById('EUR'));
+    $(baseDiv).css('display', 'none');
+    $('#nationsDialog').css('display', 'block');
+  }
+
+  var nations = {
+    'EUR': <%- JSON.stringify(nations.eur) %>,
+    'AFR': <%- JSON.stringify(nations.afr) %>,
+    'ASP': <%- JSON.stringify(nations.asp) %>,
+    'AMC': <%- JSON.stringify(nations.amc) %>,
+    'MET': <%- JSON.stringify(nations.met) %>,
+    'OCN': <%- JSON.stringify(nations.ocn) %>,
+  };
+  var allNations = [];
 </script>

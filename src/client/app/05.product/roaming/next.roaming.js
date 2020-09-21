@@ -40,10 +40,6 @@ Tw.NextRoamingMenu.prototype = {
     $('#header').hide();
 
     var mcc = Tw.CommonHelper.getCookie('ROAMING_MCC');
-    if (!mcc) {
-      mcc = navigator.mcc;
-    }
-
     if (mcc && mcc !== '450' && mcc !== '999') {
       $('#gnb .menu').on('click', function() {
         $('#roamingMenu').css('display', 'block');

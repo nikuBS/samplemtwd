@@ -126,20 +126,20 @@ body.rn #roamingMain #content .card #nations .name-dark {
   font-weight: 600;
   border-top-left-radius: 4px;
 }
-body.rn #roamingMain #content .card .field-container {
+body.rn .card .field-container {
   background-color: #f3f4f9;
   border-radius: 10px;
   padding: 12px 18px 12px 18px;
   position: relative;
 }
-body.rn #roamingMain #content .card .field-container input {
+body.rn .card .field-container input {
   width: 100%;
 }
-body.rn #roamingMain #content .card .field-container input::placeholder {
+body.rn .card .field-container input::placeholder {
   width: 100%;
   color: #959595;
 }
-body.rn #roamingMain #content .card .field-container img {
+body.rn .card .field-container img {
   position: absolute;
   top: 12px;
   right: 14px;
@@ -265,7 +265,7 @@ body.rn #roamingMain #content #groups .group {
   padding-right: 16px;
   margin-right: 8px;
   cursor: pointer;
-  overflow-x: hidden;
+  vertical-align: top;
 }
 body.rn #roamingMain #content #groups .group img {
   height: 30px;
@@ -329,6 +329,27 @@ body.rn #roamingMain .links .divider {
   margin-top: 3px;
   height: 14px;
   background-color: #e5e5e5;
+}
+#roamingMain .buttons {
+  text-align: center;
+}
+#roamingMain .button {
+  width: 196px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 18px;
+  margin: 0 auto 10px auto;
+}
+#roamingMain .button-1 {
+  background-color: #4559fc;
+  color: white;
+}
+#roamingMain .button-2 {
+  background-color: white;
+  border: 1.5px solid #4559fc;
+  color: #4559fc;
 }
 body.rn ul.ui-autocomplete li.ui-menu-item {
   font-size: 13px;
@@ -680,7 +701,7 @@ body.rn #roamingTariffs .header .anchors .anchor {
   vertical-align: top;
 }
 body.rn #roamingTariffs #groups {
-  padding-bottom: 300px;
+  padding-bottom: 0px;
 }
 body.rn #roamingTariffs .summary {
   position: relative;
@@ -713,7 +734,7 @@ body.rn #roamingTariffs .tariffs {
   position: relative;
   margin: -33px 16px 32px 16px;
   background: #FFFFFF;
-  box-shadow: 0 8px 24px 2px rgba(0, 45, 237, 0.15);
+  box-shadow: 0 4px 12px 2px rgba(0, 45, 237, 0.15);
   border-radius: 10px;
   padding: 10px 20px 0 20px;
   cursor: pointer;
@@ -726,9 +747,11 @@ body.rn #roamingTariffs .tariff {
 }
 body.rn #roamingTariffs .tariff h3 {
   font-size: 16px;
+  margin-bottom: 4px;
 }
 body.rn #roamingTariffs .tariff .data span {
   font-size: 13px;
+  color: #4559fc;
 }
 body.rn #roamingTariffs .tariff .phone {
   font-size: 13px;
@@ -739,6 +762,28 @@ body.rn #roamingTariffs .tariff .price {
   font-size: 15px;
   font-weight: 700;
   color: #4559fc;
+}
+body.rn #roamingTariffs .card {
+  background-color: #f3f4f9;
+  padding: 36px 20px;
+}
+body.rn #roamingTariffs .card h2 {
+  font-size: 21px;
+  font-weight: 600;
+}
+body.rn #roamingTariffs .card .link {
+  text-align: right;
+  padding-top: 20px;
+}
+body.rn #roamingTariffs .card .link a {
+  font-size: 13px;
+  color: #4559FC;
+  letter-spacing: -1px;
+  text-decoration: underline;
+}
+body.rn #roamingTariffs .card .field-container {
+  background-color: white;
+  margin-top: 16px;
 }
 body.rn #roamingMenu {
   background-color: white;
@@ -886,6 +931,14 @@ body.rn #roamingMenu .contacts .contact .phone {
   letter-spacing: 0;
   color: #111;
 }
+body.rn #roamingMenu .logout {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: #959595;
+  padding: 14px;
+  border-top: 1px solid #e0e0e0;
+}
 body.rn .modal {
   display: none;
   position: fixed;
@@ -903,7 +956,7 @@ body.rn .modal .content {
   padding: 24px;
   border-radius: 6px;
   width: 272px;
-  margin: 50% auto;
+  margin: 55% auto;
 }
 body.rn .modal .content .close {
   position: absolute;
@@ -932,6 +985,29 @@ body.rn .modal .content .buttons a {
   font-size: 15px;
   color: #4559fc;
 }
+body.rn .modal .tm {
+  padding: 48px 24px 24px 24px;
+}
+body.rn .modal .content .today {
+  position: absolute;
+  right: 55px;
+  top: 19px;
+  cursor: pointer;
+}
+body.rn .modal .content .today .box {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #e0e0e0;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+body.rn .modal .content .today label {
+  line-height: 18px;
+  font-size: 12px;
+  color: #959595;
+}
+
 body.rn #roamingOff {
   display: none;
   position: fixed;
@@ -1259,7 +1335,9 @@ body.rn #roamingOn #content .card h3 img {
   vertical-align: bottom;
 }
 body.rn #roamingOn #content .card h3 .phone {
+  margin-left: 0px;
   vertical-align: middle;
+  padding: 1px 0px 4px 2px;
 }
 body.rn #roamingOn #content .card h3 .beta {
   font-family: Roboto;
@@ -1288,6 +1366,9 @@ body.rn #roamingOn #content .card ul.description {
 body.rn #roamingOn #content .card ul.description li {
   margin-bottom: 10px;
 }
+body.rn #roamingOn #content ul.description li.warn {
+  color: red;
+}
 body.rn #roamingOn #content .card .info {
   border-radius: 6px;
   background-color: #f6f6f6;
@@ -1313,6 +1394,24 @@ body.rn #roamingOn #content .card-toggle {
 body.rn #roamingOn #content .toggle {
   text-align: center;
   padding-top: 12px;
+}
+body.rn #roamingOn #content .card .curtain {
+  margin-left: -24px;
+  margin-right: -24px;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 16px;
+}
+body.rn #roamingOn #content .card .hc {
+  display: inline-block;
+  position: relative;
+}
+body.rn #roamingOn #content .card .hu {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-color: rgba(109, 136, 255, 0.3);
 }
 body.rn #roamingOn #content .anonymous {
   padding: 40px 24px 8px 24px;
@@ -1399,20 +1498,44 @@ body.rn #roamingOn #content .data-usages .charts .chart .progress {
   width: 100px;
   height: 100px;
 }
+#roamingOn #content .data-usages .charts .chart .message {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  font-family: Roboto;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #4559fc;
+}
+
+body.rn #roamingOn #content .data-usages .charts .chart .label {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: #999;
+}
 body.rn #roamingOn #content .data-usages .charts .chart .value-max {
   position: absolute;
-  top: 28px;
+  top: 64px;
   left: 0;
   right: 0;
   text-align: center;
   font-family: "Noto Sans";
-  font-size: 13px;
-  font-weight: 500;
-  color: #999;
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
 }
 body.rn #roamingOn #content .data-usages .charts .chart .value {
   position: absolute;
-  top: 46px;
+  top: 38px;
   left: 0;
   right: 0;
   text-align: center;

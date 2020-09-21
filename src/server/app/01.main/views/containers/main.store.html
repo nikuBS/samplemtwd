@@ -315,7 +315,7 @@
       if (result && result.params && result.params.mcc) {
         var mcc = result.params.mcc;
         if (Tw.CommonHelper.getCookie('ROAMING_MCC') != '999' && mcc != '450') {
-          document.cookie = 'ROAMING_MCC=' + mcc;
+          document.cookie = 'ROAMING_MCC=' + mcc + '; path=/';
           document.location.href = '/product/roaming/on?mcc=' + mcc;
         }
       }

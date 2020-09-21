@@ -11,7 +11,7 @@
     <div class="filters">
         <h2>부가서비스 종류</h2>
         <% Object.keys(filters).map(filterId => {%>
-        <span class="tag" id="tag<%= filterId %>" onclick="fillItems('<%= filterId %>')">
+        <span class="tag" id="tag<%= filterId %>" onclick="toggleFilter('<%= filterId %>')">
             #<%= filters[filterId] %>
         </span>
         <% }) %>
@@ -27,7 +27,11 @@
         {{#if using}}
         <span class="status inuse">이용중</span>
         {{else}}
-        <span class="status">가입가능</span>
+            <% if (svcInfo && svcInfo.mbrNm) { %>
+            <a href="/product/roaming/join/confirm-info?prod_id={{ prodId }}">
+              <span class="status">가입가능</span>
+            </a>
+            <% } %>
         {{/if}}
         <a href="/product/callplan?prod_id={{ prodId }}">
         <h3 class="name">{{ prodNm }}<span class="comment">{{ basFeeAmt.value }}</span></h3>
@@ -44,15 +48,22 @@
     fillItems();
   });
 
-  function fillItems(tagId) {
+  function fillItems() {
+    var activeTags = $('.filters span.active');
+    var activeIds = [];
+    for (var i=0; i<activeTags.length; i++) {
+      var filterId = activeTags[i].id.substring(3);
+      activeIds .push(filterId);
+    }
+
     const itemsDiv = document.querySelector('#roamingAddons .items');
     itemsDiv.innerHTML = '';
     const template = Handlebars.compile($('#tpl-item').html());
     for (var item of items) {
       item.using = using.indexOf(item.prodId) != -1;
-      if (tagId) {
+      if (activeIds.length > 0) {
         for (var filter of item.filters) {
-          if (filter.prodFltId === tagId) {
+          if (activeIds.indexOf(filter.prodFltId) >= 0) {
             itemsDiv.innerHTML += template(item);
             break;
           }
@@ -61,11 +72,17 @@
       }
       itemsDiv.innerHTML += template(item);
     }
+  }
 
-    if (tagId) {
-      $('.filters span.tag').removeClass('active');
-      $('#tag' + tagId).addClass('active');
+  function toggleFilter(filterId) {
+    var dom = document.getElementById('tag' + filterId);
+    var className = dom.className;
+    if (className.indexOf('active') >= 0) {
+      dom.className = 'tag';
+    } else {
+      dom.className = 'tag active';
     }
+    fillItems();
   }
 
   var items = <%- JSON.stringify(addonData.products) %>;

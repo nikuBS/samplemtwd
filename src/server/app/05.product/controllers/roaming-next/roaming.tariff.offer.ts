@@ -6,6 +6,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import moment from 'moment';
 import RoamingOnController from './roaming.on';
 import RoamingHelper from './roaming.helper';
+import {REDIS_KEY} from '../../../../types/redis.type';
 
 export default class RoamingTariffOfferController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -22,15 +23,27 @@ export default class RoamingTariffOfferController extends TwViewController {
     const night = to.diff(from) / 86400 / 1000;
 
     Observable.combineLatest(
-      this.getCountryInfo(RoamingHelper.getMCC(countryCode)),
+      this.getCountryInfo(countryCode),
       this.getRecommendedTariff(countryCode, from.format('YYYYMMDD'), to.format('YYYYMMDD')),
       this.getAvailableTariffs(countryCode),
-    ).subscribe(([country, recommended, allTariffs]) => {
+      this.getRecentUsedTariff(),
+      this.getTariffGroups(),
+    ).subscribe(([country, recommended, allTariffs, recentUsed, tariffGroups]) => {
+      if (country.mblNflagImgAlt && country.mblNflagImgAlt.indexOf('공통 이미지') >= 0) {
+        country.mblNflagImg = null;
+      }
 
-      // this.apiService.request(API_CMD.BFF_10_0001, {prodExpsTypCd: 'P'}, {}, [recommended.prodId]).subscribe(resp => {
-      //   console.log(resp);
       if (recommended) {
-        const detail = RoamingHelper.getTariffHardcoded(recommended.prodId);
+        let detail: any = {};
+        for (const g of tariffGroups) {
+          for (const t of g.prodList) {
+            if (t.prodId === recommended.prodId) {
+              detail = RoamingOnController.formatTariff(t);
+              break;
+            }
+          }
+        }
+
         if (detail) {
           recommended.data = detail.data;
           recommended.phone = detail.phone;
@@ -40,20 +53,31 @@ export default class RoamingTariffOfferController extends TwViewController {
         recommended = {};
       }
 
-      res.render('roaming-next/roaming.tariff.offer.html', {
-        svcInfo,
-        pageInfo,
-        isLogin: isLogin,
-        country: {
-          code: country.countryCode,
-          name: country.countryNm,
-          imageUrl: RoamingHelper.penetrateUri(country.mblRepImg),
-        },
-        night: night,
-        days: night + 1,
-        recommended,
-        availableTariffs: allTariffs.map(t => RoamingOnController.formatTariff(t)),
-      });
+      if (!allTariffs) {
+        allTariffs = [];
+      }
+
+      try {
+        res.render('roaming-next/roaming.tariff.offer.html', {
+          svcInfo,
+          pageInfo,
+          isLogin: isLogin,
+          country: {
+            code: country.countryCode,
+            name: country.countryNm,
+            imageUrl: RoamingHelper.penetrateUri(country.mblRepImg),
+            flagUrl: RoamingHelper.penetrateUri(country.mblNflagImg),
+            flagAlt: country.mblNflagImgAlt,
+          },
+          night: night,
+          days: night + 1,
+          recommended,
+          recentUsed,
+          availableTariffs: allTariffs.map(t => RoamingOnController.formatTariff(t)),
+        });
+      } catch (e) {
+        console.error(e);
+      }
     });
   }
 
@@ -61,18 +85,82 @@ export default class RoamingTariffOfferController extends TwViewController {
     return true;
   }
 
+  private getTariffGroups(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
+      let items = resp.result.grpProdList;
+      if (!items) {
+        items = [];
+      }
+      return items;
+    });
+  }
+
+  private getRecentUsedTariff(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0197, {}).map(resp => {
+      if (resp.result && resp.result.prodId) {
+        return resp.result;
+      }
+      return null;
+    });
+  }
+
   /**
    * 해당 국가의 메타정보인 국가명, 한국과의 tzOffset, 국기 이미지 리소스 등
    *
-   * @param mcc mobileCountryCode 3자리
+   * @param countryCode ISO3601 3자리 국가코드
    * @private
    */
-  private getCountryInfo(mcc: string): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0199, {mcc}).map(resp => {
+  private getCountryInfo(countryCode: string): Observable<any> {
+    const mcc = RoamingHelper.getMCC(countryCode);
+    const noFlag = mcc === '';
+    return this.apiService.request(API_CMD.BFF_10_0199, {mcc: noFlag ? '202' : mcc}).switchMap(resp => {
       // countryCode, countryNm, countryNmEng, tmdiffTms
-      return resp.result;
+      const item = resp.result;
+      if (!item) {
+        return item;
+      }
+
+      if (noFlag) {
+        item.countryCode = countryCode;
+        item.countryNm = '...';
+        return this.getNationsByContinents().map(r => {
+          for (const continent of Object.keys(r)) {
+            const list = r[continent];
+            for (const c of list) {
+              if (c['countryCode'] === countryCode) {
+                item.countryNm = c['countryNameKor'];
+                item.countryNmEng = c['countryNameEng'];
+                return item;
+              }
+            }
+          }
+          return item;
+        });
+      }
+      return Observable.of(item);
     });
   }
+
+  private getNationsByContinents(): Observable<any> {
+    return Observable.combineLatest(
+      this.getNationsByContinent('AFR'),
+      this.getNationsByContinent('ASP'),
+      this.getNationsByContinent('AMC'),
+      this.getNationsByContinent('EUR'),
+      this.getNationsByContinent('MET'),
+      this.getNationsByContinent('OCN')
+    ).map(([afr, asp, amc, eur, met, ocn]) => {
+      return {afr, asp, amc, eur, met, ocn};
+    });
+  }
+
+  private getNationsByContinent(continent: string): Observable<any> {
+    return this.redisService.getData(`${REDIS_KEY.ROAMING_NATIONS_BY_CONTINENT}:${continent}`).map(resp => {
+      // contnCd, countryCode, countryNameKor, commCdValNm
+      return resp.result.contnPsbNation;
+    });
+  }
+
 
   /**
    * 해당 국가로의 주어진 일정동안 사용하기 적절한 추천 요금제를 가져온다.
@@ -95,6 +183,11 @@ export default class RoamingTariffOfferController extends TwViewController {
       // startEndTerm: '7'
       // neiborRomPsblNatInfo: '캐나다'
       const item: any = resp.result;
+      if (!item) {
+        console.log('* 추천실패: ' + JSON.stringify(resp));
+      } else {
+        console.log('* 추천성공: ' + JSON.stringify(item));
+      }
 
       // if (!item.prodId) {
       //   item.prodId = 'NA00006489';

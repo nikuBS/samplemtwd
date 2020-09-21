@@ -30,17 +30,31 @@
                 </h3>
             </a>
             <div class="row">
-                <span class="label colorPoint fontsize15">이용중</span> <!-- 이용예정 -->
-                <!--
-                D-00
-                <span class="value colorPoint">12일 남음</span>
-                -->
+                <% if (tariff.startDate.isAfter(now)) { %>
+                <span class="label colorPoint fontsize15">이용예정</span>
+                <span class="value colorPoint bold">D-<%= Math.floor(tariff.startDate.diff(now) / 86400000) %></span>
+                <% } else if (tariff.endDate && tariff.endDate.isBefore(now)) { %>
+                <span class="label fontsize15">이용완료</span>
+                <span class="value bold"><%= Math.floor(now.diff(tariff.endDate) / 86400000) %>일 지남</span>
+                <% } else { %>
+                <span class="label colorPoint fontsize15">이용중</span>
+                    <% if (tariff.endDate) { %>
+                    <span class="value colorPoint bold"><%= Math.floor(tariff.endDate.diff(now) / 86400000) %>일 남음</span>
+                    <% } %>
+                <% } %>
             </div>
             <div class="row">
-<!--                <span class="label colorGray">가입기간</span>-->
-<!--                <span class="value colorGray">20.07.21 13:00 - 20.07.23 18:00</span>-->
-                <span class="label colorGray">가입일</span>
-                <span class="value colorGray"><%= tariff.scrbDt %></span>
+                <% if (tariff.endDate) { %>
+                    <span class="label colorGray">가입기간</span>
+                    <span class="value colorGray">
+                        <%= tariff.startDate.format('YY.MM.DD') %> <%= tariff.startTime %>
+                        -
+                        <%= tariff.endDate.format('YY.MM.DD') %> <%= tariff.endTime %>
+                    </span>
+                <% } else { %>
+                    <span class="label colorGray">가입일</span>
+                    <span class="value colorGray"><%= tariff.scrbDt %></span>
+                <% } %>
             </div>
 
             <% for (var button of tariff.btnList) { %>
@@ -53,20 +67,45 @@
             </div>
             <% } %>
 
-            <!--
+            <% if (tariff.data || tariff.phone || tariff.sms) { %>
             <div class="divider"></div>
-            <div class="row">
+            <% } %>
+
+            <% if (tariff.data) { %>
+            <div class="row" style="margin-top: 5px;">
                 <span class="label">데이터</span>
             </div>
             <div class="row">
                 <span class="label colorGray">제공량</span>
-                <span class="value bold">500MB</span>
+                <span class="value bold"><%= tariff.data.total %></span>
             </div>
+                <% if (tariff.data.used) { %>
             <div class="row">
                 <span class="label colorGray">사용량</span>
-                <span class="value bold">120MB</span>
+                <span class="value bold"><%= tariff.data.used %></span>
             </div>
-            -->
+                <% } %>
+            <% } %>
+
+            <% if (tariff.sms) { %>
+            <div class="row" style="margin-top: 5px;">
+                <span class="label">문자</span>
+            </div>
+            <div class="row">
+                <span class="label colorGray">제공량</span>
+                <span class="value bold"><%= tariff.sms.total %></span>
+            </div>
+            <% } %>
+
+            <% if (tariff.phone) { %>
+            <div class="row" style="margin-top: 5px;">
+                <span class="label">음성</span>
+            </div>
+            <div class="row">
+                <span class="label colorGray">제공량</span>
+                <span class="value bold"><%= tariff.phone.total %></span>
+            </div>
+            <% } %>
         </div>
         <% } %>
     </div>

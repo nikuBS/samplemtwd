@@ -21,40 +21,51 @@ export default class RoamingMainController extends TwViewController {
     }
 
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
+    const debugTid = req.query.tid;
+    if (debugTid && process.env['NODE_ENV'] === 'local') {
+      if (!isLogin) {
+        res.redirect('/product/roaming?userId=' + debugTid);
+        return;
+      }
+      this.apiService.request(API_CMD.BFF_03_0001, {}).subscribe(r0 => {
+        this.loginService.logoutSession(req, res).subscribe(r1 => {
+          res.cookie('ROAMING_DTD', debugTid);
+          res.redirect('/common/member/logout/complete?n=/product/roaming');
+        });
+      });
+      return;
+    }
+
     Observable.combineLatest(
       this.getPopularNations(),
-      this.getNationsByContinents('AFR'),
-      this.getNationsByContinents('ASP'),
-      this.getNationsByContinents('AMC'),
-      this.getNationsByContinents('EUR'),
-      this.getNationsByContinents('MET'),
-      this.getNationsByContinents('OCN'),
+      RoamingHelper.nationsByContinents(this.redisService),
       this.getCurrentUsingTariff(isLogin),
       this.getRecentUsedTariff(isLogin),
       this.getBanners(pageInfo),
-    ).subscribe(([popularNations, afr, asp, amc, eur, met, ocn, currentUse, recentUse, banners]) => {
+      this.getFirstRoaming(isLogin),
+    ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie]) => {
       if (popularNations.length > 6) {
         popularNations = popularNations.slice(0, 6);
       }
-
       res.render('roaming-next/roaming.main.html', {
         svcInfo,
         pageInfo,
         isLogin: isLogin,
         popularNations,
-        nations: {afr, asp, amc, eur, met, ocn},
+        nations,
         currentUse,
         recentUse,
         banners,
+        newbie,
       });
     });
   }
 
-  private getNationsByContinents(continent: string): Observable<any> {
-    return this.redisService.getData(`${REDIS_KEY.ROAMING_NATIONS_BY_CONTINENT}:${continent}`).map(resp => {
-      // contnCd, countryCode, countryNameKor, commCdValNm
-      return resp.result.contnPsbNation;
-    });
+  private getFirstRoaming(isLogin: boolean): Observable<any> {
+    if (!isLogin) {
+      return Observable.of({});
+    }
+    return this.apiService.request(API_CMD.BFF_10_0190, {}).map(r => r.result);
   }
 
   private getPopularNations(): Observable<any> {
@@ -95,10 +106,10 @@ export default class RoamingMainController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_10_0197, {}).map(resp => {
-      // prodId, prodNm: 'baro 4GB',
-      // svcStartDt, svcEndDt: '20190828',
-      // startEndTerm: '30',
       if (resp.result && resp.result.prodId) {
+        // prodId, prodNm: 'baro 4GB',
+        // svcStartDt, svcEndDt: '20190828',
+        // startEndTerm: '30',
         const startDate = moment(resp.result.svcStartDt, 'YYYYMMDD');
         const endDate = moment(resp.result.svcEndDt, 'YYYYMMDD');
         const isAfter = endDate.isAfter(moment());
@@ -118,10 +129,12 @@ export default class RoamingMainController extends TwViewController {
     });
   }
 
-  private getCountryInfo(mcc): Observable<any> {
+  private getCountryInfo(mcc: string): Observable<any> {
+    if (mcc === '') {
+      mcc = '202';
+    }
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
       // countryCode, countryNm, countryNmEng, tmdiffTms
-      console.log(resp.result);
       return resp.result;
     });
   }

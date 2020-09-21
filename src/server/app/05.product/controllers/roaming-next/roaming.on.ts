@@ -6,21 +6,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import moment from 'moment';
 import RoamingHelper from './roaming.helper';
-
-const DATA_PROVIDED = {
-  'NA00006489': '3GB',
-  'NA00006493': '4GB',
-  'NA00006497': '7GB',
-  'NA00006491': '4GB',
-  'NA00006499': '8GB',
-  'NA00004088': '매일 300MB',
-  'NA00005047': '매일 500MB',
-  'NA00006745': '데이터 무제한',
-  'NA00006487': '데이터 무제한',
-  'NA00005300': '2GB',
-  'NA00005505': '3GB',
-  'NA00005252': '5GB',
-};
+import MyTHelper from '../../../../utils/myt.helper';
 
 export default class RoamingOnController extends TwViewController {
   CDN = EnvHelper.getEnvironment('CDN');
@@ -44,10 +30,44 @@ export default class RoamingOnController extends TwViewController {
       t.duration = 1;
     }
     if (!t.basOfrDataQtyCtt || t.basOfrDataQtyCtt === '-') {
-      t.data = DATA_PROVIDED[t.prodId];
+      // t.data = DATA_PROVIDED[t.prodId];
+      t.data = '-';
+
+      if (t.basOfrMbDataQtyCtt && t.romUsePrdInfo === '0') {
+        t.data = '매일 ' + t.basOfrMbDataQtyCtt + 'MB';
+      } else if (t.prodId === 'NA00006229') {
+        // T괌사이판 5천원
+        t.data = '매일 500MB';
+      } else if (parseInt(t.basOfrGbDataQtyCtt, 10) > 0) {
+        const gbData = parseInt(t.basOfrGbDataQtyCtt, 10);
+        t.data = gbData + 'GB';
+      } else {
+        t.data = t.basOfrMbDataQtyCtt;
+      }
     } else {
-      t.data = t.basOfrDataQtyCtt;
+      const gbData = parseInt(t.basOfrDataQtyCtt, 10);
+      if (gbData > 0) {
+        t.data = gbData + 'GB';
+      } else {
+        t.data = t.basOfrDataQtyCtt;
+      }
     }
+
+    // OnePass VIP 설명 예외처리
+    // NA00006486, NA00006487  VIP
+    if (['NA00006486', 'NA00006487'].indexOf(t.prodId) >= 0) {
+      t.data = '무제한';
+      t.phone = '음성 30분 / 문자 30건 / baro통화 무제한';
+    }
+    // NA00006744, NA00006745  DATA VIP
+    if (['NA00006744', 'NA00006745'].indexOf(t.prodId) >= 0) {
+      t.data = '무제한';
+    }
+
+    if (!t.phone) {
+      t.phone = 'baro통화 무제한';
+    }
+
     return t;
   }
 
@@ -55,7 +75,22 @@ export default class RoamingOnController extends TwViewController {
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     const mcc = req.query.mcc || req.cookies['ROAMING_MCC'];
     if (!mcc) {
-      throw new Error('MCC is required');
+      res.redirect('/product/roaming');
+      return;
+    }
+    const debugTid = req.query.tid;
+    if (debugTid && process.env['NODE_ENV'] === 'local') {
+      if (!isLogin) {
+        res.redirect('/product/roaming/on?userId=' + debugTid + '&mcc=' + mcc);
+        return;
+      }
+      this.apiService.request(API_CMD.BFF_03_0001, {}).subscribe(r0 => {
+        this.loginService.logoutSession(req, res).subscribe(r1 => {
+          res.cookie('ROAMING_DTD', debugTid);
+          res.redirect('/common/member/logout/complete?n=/product/roaming/on');
+        });
+      });
+      return;
     }
 
     const context: any = {
@@ -64,52 +99,90 @@ export default class RoamingOnController extends TwViewController {
       isLogin,
       noSubscription: true,
       availableTariffs: [],
+      currentTariff: null,
       usage: {},
+      isAvailable: function() {
+        return context.meta && context.meta.voiceRoamingYn === 'Y' && context.meta.dataRoamingYn === 'Y';
+      },
+      nations: {},
     };
     const template = 'roaming-next/roaming.on.html';
 
-    this.getCountryInfo(mcc).subscribe(info => {
+    Observable.combineLatest(
+      this.getCountryInfo(mcc),
+      RoamingHelper.nationsByContinents(this.redisService),
+    ).subscribe(([info, nations]) => {
+      context.nations = nations;
       if (!info) {
-        // 존재하지 않는 국가인 경우, 로밍모드 종료 후 국내페이지로 이동
-        res.cookie('ROAMING_MCC', '999');
-        res.redirect('/product/roaming');
+        // res.cookie('ROAMING_MCC', '999');
+        // res.redirect('/product/roaming');
+        // return;
+        context.country = {
+          mcc: mcc,
+          code: null,
+          name: null,
+          nameEnglish: null,
+          timezoneOffsets: 0,
+          flagUrl: null,
+          backgroundUrl: null,
+          meta: null,
+        };
+        this.getCountryInfo('202').subscribe(common => {
+          context.country.backgroundUrl = RoamingHelper.penetrateUri(common.mblRepImg);
+          res.render(template, context);
+        });
         return;
       }
+
       context.country = {
         code: info.countryCode,
         name: info.countryNm,
         mcc: mcc,
         nameEnglish: info.countryNmEng,
         timezoneOffset: info.tmdiffTms,
-        flagUrl: `${this.CDN}${info.mblNflagImg}`,
-        flagCode: RoamingHelper.getAlpha2ByMCC(mcc).toLowerCase(),
+        flagUrl: RoamingHelper.penetrateUri(info.mblNflagImg),
         backgroundUrl: this._useCountryBackground(info.mblRepImg, mcc),
         backgroundMiniUrl: this._useCountryBackground(info.mblBgImg, mcc),
       };
       if (!isLogin) {
-        res.render(template, context);
+        this.getRoamingMeta(context.country.code).subscribe(meta => {
+          context.meta = meta;
+          res.render(template, context);
+        });
       } else {
-        this.processAuthenticated(req, res, template, context, mcc);
+        this.processAuthenticated(req, res, template, context, mcc, info.countryCode);
       }
     });
   }
 
-  private processAuthenticated(req: Request, res: Response, template: string, context: any, mcc: string) {
-    // const testUsage = req.query.use === '1' || false;
-
+  private processAuthenticated(req: Request, res: Response, template: string, context: any, mcc: string, countryCode: string) {
     context.usage = {
       formatBytes: function(value) {
         const n = parseInt(value, 10);
+        if (n === 0) {
+          return '0GB';
+        }
         if (!n) { return value; }
-        if (n < 1000) { return n + 'MB'; }
-        if (n % 1000 === 0) { return (n / 1000) + 'GB'; }
-        return (n / 1000).toFixed(2) + 'GB';
+        if (n < 1024) { return n + 'MB'; }
+        if (n % 1024 === 0) { return (n / 1024) + 'GB'; }
+        return (n / 1024).toFixed(2) + 'GB';
       },
-      formatTime: function(yyyyMMddHH: string) {
-        return moment(yyyyMMddHH, 'YYYYMMDDHH').format('YY.MM.DD HH:00');
+      formatTime: function(date: moment.Moment, time: string) {
+        if (!date) {
+          return '';
+        }
+        let s = date.format('YY.MM.DD');
+        if (time) {
+          s += time;
+        }
+        return s;
+        // return moment(yyyyMMddHH, 'YYYYMMDDHH').format('YY.MM.DD HH:00');
       },
       formatDuration: function(duration: string) {
         let minutes = parseInt(duration, 10);
+        if (isNaN(minutes)) {
+          return '';
+        }
         if (minutes > 60) {
           const hours = Math.floor(minutes / 60);
           minutes = minutes % 60;
@@ -125,10 +198,13 @@ export default class RoamingOnController extends TwViewController {
       if (noSubscription) {
         Observable.combineLatest(
           this.getAvailableTariffs(mcc),
-          this.getPhoneUsage(),
-          this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
-          this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
+          this.getPhoneUsage({}),
+          this.getRateByCountry(countryCode),
+          this.getRoamingMeta(countryCode),
         ).subscribe(([allTariffs, phoneUsage, rate, meta]) => {
+          if (!allTariffs) {
+            allTariffs = [];
+          }
           context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
           context.usage.phone = { // FIXME: hardcoded
             voice: 1,
@@ -139,51 +215,135 @@ export default class RoamingOnController extends TwViewController {
           res.render(template, context);
         });
       } else {
-        let startDate = moment().subtract(3, 'days').format('YYYYMMDD');
-        if (usingTariffs != null) {
-          startDate = usingTariffs[0].scrbDt;
-        }
-        const endDate = moment().format('YYYYMMDD');
-        Observable.combineLatest(
-          this.getDataUsage(),
-          this.getPhoneUsage(),
-          this.getBaroPhoneUsage(startDate, endDate),
-          this.getRateByCountry(RoamingHelper.getAlpha3ByMCC(mcc)),
-          this.getRoamingMeta(RoamingHelper.getAlpha3ByMCC(mcc)),
-        ).subscribe(([dataUsage, phoneUsage, baroUsage, rate, meta]) => {
-          // dataUsage: undefined
-          // phoneUsage: POT10, T가족모아데이터
-          // baroUsage: {usgStartDate: '20200701', used: '650'}
+        const current = usingTariffs[0];
+        current.group = RoamingHelper.getTariffGroup(current.prodId);
 
-          context.noSubscription = false;
-          context.usage.data = dataUsage;
-          context.usage.phone = phoneUsage;
-          context.usage.baro = baroUsage;
-          context.rate = rate;
-          context.meta = meta;
+        this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [current.prodId]).subscribe(r => {
+          if (r.result && r.code === API_CODE.CODE_00) {
+            const range = r.result;
+            if (!range.svcStartDt) {
+              range.svcStartDt = moment().subtract(3, 'days').format('YYYYMMDD');
+            }
+            current.startDate = moment(range.svcStartDt, 'YYYYMMDD');
+            if (range.svcEndDt) {
+              current.endDate = moment(range.svcEndDt, 'YYYYMMDD');
+            } else {
+              current.endDate = null;
+            }
 
-          // if (testUsage) {
-          //   context.usage.data = {
-          //     prodId: '-',
-          //     prodNm: 'baro 3GB',
-          //     total: '3000',
-          //     used: '1730',
-          //     remained: '1270',
-          //     rgstDtm: moment().subtract(2, 'days').format('YYYYMMDD') + '10',
-          //     exprDtm: moment().subtract(-3, 'days').format('YYYYMMDD') + '22',
-          //   };
-          //   context.usage.phone = {
-          //     voice: 146,
-          //     sms: 200,
-          //   };
-          //   context.usage.baro = {
-          //     total: '무제한',
-          //     used: '7'
-          //   };
-          // }
-          res.render(template, context);
+            current.startTime = '';
+            current.endTime = '';
+            if (range.svcStartTm) {
+              current.startTime = ` ${range.svcStartTm}:00`;
+              current.startDate.hours(parseInt(range.svcStartTm, 10)).minutes(0).seconds(0).milliseconds(0);
+            }
+            if (range.svcEndTm) {
+              current.endTime = ` ${range.svcEndTm}:00`;
+              current.endDate.hours(parseInt(range.svcEndTm, 10)).minutes(0).seconds(0).milliseconds(0);
+            }
+
+            // FIXME: DEBUG 이용전 테스트
+            if (req.query.reserved === '1') {
+              current.startDate = moment().add(2, 'days');
+              current.endDate = moment().add(8, 'days');
+            }
+            if (req.query.reserved === '2') {
+              current.startDate = moment().subtract(10, 'days');
+              current.endDate = moment().subtract(2, 'days');
+            }
+          }
+
+          const now = moment();
+          current.status = 1;
+          current.statusMessage = '이용중';
+          if (current.startDate.isAfter(now)) {
+            current.status = 0;
+            current.statusMessage = '이용예정';
+          } else if (current.endDate && current.endDate.isBefore(now)) {
+            current.status = 2;
+            current.statusMessage = '이용완료';
+          }
+
+          this.processTariff(context, current, res, template, countryCode);
         });
       }
+    });
+  }
+
+  private processTariff(context: any, current: any, res: Response, template: string, countryCode: string) {
+    Observable.combineLatest(
+      this.getDataUsage(current),
+      this.getPhoneUsage(current),
+      this.getBaroPhoneUsage(current, current.startDate, current.endDate),
+      this.getRateByCountry(countryCode),
+      this.getRoamingMeta(countryCode),
+    ).subscribe(([dataUsage, phoneUsage, baroUsage, rate, meta]) => {
+      // BFF_05_0201 (getDataUsage)
+      //   troaming-data =>
+      // BFF_05_0001 (getPhoneUsage)
+      //   my-t/balances => BLN0006 => 잔여량 조회에 실패하였습니다
+      // BFF_10_0202 (getBaroPhoneUsage)
+      //   roaming/mode/baro-traffic-info => BFF0001 => 요청이 실패했습니다.
+
+      context.noSubscription = false;
+      context.currentTariff = current;
+      context.usage.data = dataUsage;
+      context.usage.baro = baroUsage;
+      context.usage.phone = phoneUsage;
+      context.rate = rate;
+      context.meta = meta;
+
+      if (current.group === 4) {
+        if (dataUsage.totalRemainUnLimited) {
+          context.usage.data = {code: '-', msg: '무제한'};
+        } else if (dataUsage.gnrlData) {
+          const total = dataUsage.gnrlData.reduce((p, item) => {
+            return p + (item.total ? parseInt(item.total, 10) : 0);
+          }, 0);
+          const used = dataUsage.gnrlData.reduce((p, item) => {
+            return p + (item.used ? parseInt(item.used, 10) : 0);
+          }, 0);
+          context.usage.data = {
+            used: '' + Math.floor(used / 1024),
+            total: '' + Math.floor(total / 1024),
+          };
+        } else {
+          if (dataUsage.code === 'BLN0004') {
+            dataUsage.msg = '국내 잔여량<br />조회 불가';
+          }
+        }
+      }
+      if ([5, 6, 12, 13].indexOf(current.group) >= 0) {
+        context.usage.data = {code: '-', msg: '무제한'};
+      }
+      if (current.group === 7) {
+        const m = new RegExp('[0-9]+').exec(current.prodNm);
+        if (m) {
+          context.usage.data = {code: '-', msg: '일일 제공<br />' + m[0] + 'MB'};
+        } else {
+          context.usage.data = {code: '-', msg: '일일 제공'};
+        }
+      }
+      if (current.group === 8) {
+        context.usage.data = {code: '-', msg: '일일 제공<br />500MB'};
+      }
+      if (current.group === 9) {
+        context.usage.data = {code: '-', msg: '일일 제공<br />300MB'};
+      }
+      if (current.group === 10) {
+        context.usage.data = {code: '-', msg: '제한속도<br />데이터 제공'};
+      }
+      if (current.group === 11) {
+        context.usage.data = null;
+      }
+      if (current.group === 14) {
+        context.usage.data = {code: '-', msg: '일일 제공<br />300MB'};
+      }
+
+      if ([12, 13, 14].indexOf(current.group) >= 0) {
+        context.currentTariff.startDate = null;
+      }
+      res.render(template, context);
     });
   }
 
@@ -210,6 +370,9 @@ export default class RoamingOnController extends TwViewController {
   private getCountryInfo(mcc): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
       // countryCode, countryNm, countryNmEng, tmdiffTms
+      // mblNflagImg, alt
+      // mblRepImg, alt
+      // mblBgImg, alt
       return resp.result;
     });
   }
@@ -255,7 +418,40 @@ export default class RoamingOnController extends TwViewController {
    * @param isLogin
    * @private
    */
-  private getDataUsage(): Observable<any> {
+  private getDataUsage(current: any): Observable<any> {
+    if (current.status === 0) {
+      // 이용예정
+      return Observable.of({});
+    }
+    if (current.group >= 5) {
+      return Observable.of({});
+    }
+    if (current.group === 4) {
+      // 괌사이판 국내처럼의 경우, 국내 데이터 잔여량 체크
+      return this.apiService.request(API_CMD.BFF_05_0001, {}).map(resp => {
+        if (!resp.result) {
+          // BLN0004: 잔여량 조회 가능 항목이 없습니다
+          if (false) {
+            return MyTHelper.parseUsageData({
+              gnrlData: [
+                {
+                  used: '15660',
+                  total: '28384',
+                  unit: '140',
+                },
+                {
+                  used: '15000',
+                  total: '20000',
+                  unit: '140',
+                },
+              ]
+            });
+          }
+          return {code: resp.code, msg: resp.msg};
+        }
+        return MyTHelper.parseUsageData(resp.result);
+      });
+    }
     return this.apiService.request(API_CMD.BFF_05_0201, {}).map(resp => {
       // prodId,
       // prodNm,
@@ -265,8 +461,10 @@ export default class RoamingOnController extends TwViewController {
       // rgstDtm: '2018112803', // 등록일시 YYYYMMDDHH
       // exprDtm: '2018112823', // 종료일시 YYYYMMDDHH
       if (!resp.result) {
-        // BLN0007
-        return {};
+        console.log('BFF_05_0201 failed: ' + JSON.stringify(resp));
+        // BLN0007: 잔여량 조회 가능 항목이 없습니다
+        // BLN0012: 조회 대상이 아닙니다
+        return {code: resp.code, msg: resp.msg};
       }
       return resp.result;
     });
@@ -277,7 +475,10 @@ export default class RoamingOnController extends TwViewController {
    * @param isLogin
    * @private
    */
-  private getPhoneUsage(): Observable<any> {
+  private getPhoneUsage(current: any): Observable<any> {
+    if (current.status === 0) {
+      return Observable.of({});
+    }
     // 타회선 조회시 T-SvcMgmtNum 넘겨야함
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map(resp => {
       // dataTopUp
@@ -305,10 +506,20 @@ export default class RoamingOnController extends TwViewController {
    * @param endDate 종료일 YYYY-MM-DD
    * @private
    */
-  private getBaroPhoneUsage(startDate: string, endDate: string): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0202, {
-      usgStartDate: startDate,
-      usgEndDate: endDate,
+  private getBaroPhoneUsage(current: any, startDate: moment.Moment, endDate: moment.Moment): Observable<any> {
+    if (current.status === 0) {
+      return Observable.of({});
+    }
+    if (!current.endDate) {
+      endDate = moment();
+    }
+    if (current.endDate && current.endDate.isAfter(moment())) {
+      endDate = moment();
+    }
+
+    return this.apiService.request(API_CMD.BFF_05_0227, {
+      usgStartDate: startDate.format('YYYYMMDD'),
+      usgEndDate: endDate.format('YYYYMMDD'),
     }).map(resp => {
       // svcMgmtNo: '10003154' // 서비스관리번호
       // extrnid: '01012340000', // 서비스번호
@@ -316,8 +527,15 @@ export default class RoamingOnController extends TwViewController {
       // usgStartDate: '20200701', // '개시일'
       // sumTotDur: '10', // 일 사용량 (분)
       const result = resp.result;
-      if (!result) {
-        return {};
+      if (!result || result.length === 0) {
+        if (result && result.length === 0) {
+          return {
+            usgStartDate: startDate,
+            total: '무제한',
+            used: '0'
+          };
+        }
+        return {code: result.code, msg: result.msg};
       }
 
       const first = result[0];
@@ -350,7 +568,7 @@ export default class RoamingOnController extends TwViewController {
   private getRoamingMeta(countryCode: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0061, {
       countryCode: countryCode,
-      command: 'onlyCountry',
+      command: 'withCountry',
     }).map(resp => {
       // voiceRoamingYn: 'Y'
       // dataRoamingYn: 'Y'
