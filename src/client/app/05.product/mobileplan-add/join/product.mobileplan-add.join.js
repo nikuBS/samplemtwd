@@ -74,7 +74,10 @@ Tw.ProductMobileplanAddJoin.prototype = {
     Tw.Tooltip.separateMultiInit(this.$container);
 
     if (this._prodId === 'NA00007017') {
-      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.V_COLORING_PROD_ID.join('~')] )
+      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.V_COLORING_JOIN_PROD_ID.join('~')] )
+        .done($.proxy(this._resIsAdditionUseJoin, this));
+    } else if (this._prodId === 'NA00000282') {
+      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.COLORING_JOIN_PROD_ID.join('~')] )
         .done($.proxy(this._resIsAdditionUseJoin, this));
     } else {
       var isAdditionUse = 'N';
@@ -94,10 +97,19 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // V컬러링 가입 시 자동선해지 상품 체크
-      for ( var i = 0 ; i < Tw.V_COLORING_PROD_ID.length; i++ ) {
-        if ( resp.result[Tw.V_COLORING_PROD_ID[i]] !== 'N') {
-          isAdditionUse = 'Y'; //V컬러링 자동선해지 상품 가입
-          break;
+      if (this._prodId === 'NA00007017') {
+        for ( var i = 0 ; i < Tw.V_COLORING_JOIN_PROD_ID.length; i++ ) {
+          if ( resp.result[Tw.V_COLORING_JOIN_PROD_ID[i]] !== 'N') {
+            isAdditionUse = 'Y'; //V컬러링 자동선해지 상품 가입
+            break;
+          }
+        }
+      } else if (this._prodId === 'NA00000282') {
+        for ( var i = 0 ; i < Tw.COLORING_JOIN_PROD_ID.length; i++ ) {
+          if ( resp.result[Tw.COLORING_JOIN_PROD_ID[i]] !== 'N') {
+            isAdditionUse = 'Y'; //V컬러링 자동선해지 상품 가입
+            break;
+          }
         }
       }
     }
@@ -119,6 +131,8 @@ Tw.ProductMobileplanAddJoin.prototype = {
     }
 
     if (this._prodId === 'NA00007017' && isAdditionUse !== 'Y') {
+      return ;
+    } else if (this._prodId === 'NA00000282' && isAdditionUse !== 'Y') {
       return ;
     } else {
       this._openJoinTermPopup(resp.result);
