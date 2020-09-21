@@ -218,7 +218,7 @@ export default class RoamingOnController extends TwViewController {
         const current = usingTariffs[0];
         current.group = RoamingHelper.getTariffGroup(current.prodId);
 
-        this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [current.prodId]).subscribe(r => {
+        this.getTariffDateRange(current.prodId).subscribe(r => {
           if (r.result && r.code === API_CODE.CODE_00) {
             const range = r.result;
             if (!range.svcStartDt) {
@@ -240,16 +240,6 @@ export default class RoamingOnController extends TwViewController {
             if (range.svcEndTm) {
               current.endTime = ` ${range.svcEndTm}:00`;
               current.endDate.hours(parseInt(range.svcEndTm, 10)).minutes(0).seconds(0).milliseconds(0);
-            }
-
-            // FIXME: DEBUG 이용전 테스트
-            if (req.query.reserved === '1') {
-              current.startDate = moment().add(2, 'days');
-              current.endDate = moment().add(8, 'days');
-            }
-            if (req.query.reserved === '2') {
-              current.startDate = moment().subtract(10, 'days');
-              current.endDate = moment().subtract(2, 'days');
             }
           }
 
@@ -284,7 +274,6 @@ export default class RoamingOnController extends TwViewController {
       //   my-t/balances => BLN0006 => 잔여량 조회에 실패하였습니다
       // BFF_10_0202 (getBaroPhoneUsage)
       //   roaming/mode/baro-traffic-info => BFF0001 => 요청이 실패했습니다.
-
       context.noSubscription = false;
       context.currentTariff = current;
       context.usage.data = dataUsage;
@@ -414,6 +403,15 @@ export default class RoamingOnController extends TwViewController {
   }
 
   /**
+   * 사용중인 로밍요금제의 기간 조회
+   * @param prodId
+   * @private
+   */
+  private getTariffDateRange(prodId: string): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0091, {prodId});
+  }
+
+  /**
    * 실시간 로밍데이터 잔여량
    * @param isLogin
    * @private
@@ -535,7 +533,8 @@ export default class RoamingOnController extends TwViewController {
             used: '0'
           };
         }
-        return {code: result.code, msg: result.msg};
+        // INFO0030 시스템 사정으로 서비스를 일시적으로 이용하실 수 없습니다.
+        return {code: resp.code, msg: resp.msg};
       }
 
       const first = result[0];

@@ -725,6 +725,7 @@ body.rn #roamingTariffs .summary h2 {
 body.rn #roamingTariffs .summary p {
   position: absolute;
   left: 20px;
+  right: 20px;
   top: 70px;
   font-size: 13px;
   font-weight: 400;
