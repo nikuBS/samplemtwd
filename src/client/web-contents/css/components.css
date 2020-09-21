@@ -36677,7 +36677,7 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 
   /* 다른회선관리 */
 .tod-line-sel-box.tod-line-sel-new {position:relative; min-height:3.313rem}
-.tod-line-sel-box.tod-line-sel-new .tod-line-sel-fixed {position:fixed; top:52px; z-index:25; width:100%}
+.tod-line-sel-box.tod-line-sel-new .tod-line-sel-fixed {position:fixed; z-index:25; width:100%}
 .tod-line-sel-box.tod-line-sel-new .line-sel-btn {font-size:0.938rem}
 .tod-line-sel-box.tod-line-sel-new .line-sel-btn:after {display:none}
 .tod-line-sel-box.tod-line-sel-new .btn-other-line {position:absolute; top:0.813rem; right:1rem; color:#fff; border:1px solid #fff}
