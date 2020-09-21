@@ -365,7 +365,7 @@ Tw.ProductCommonCallplan.prototype = {
     } else {
       // 설정 버튼 주소값에 BPCP 포함되어 있을 경우
       if (this._bpcpService.isBpcp(this._settingBtnList[0].url)) {
-        if(this._prodId === 'NA00007017') {
+        if(this._prodId === 'NA00007017' && Tw.BrowserHelper.isApp()) {
           return Tw.CommonHelper.showDataCharge($.proxy(function() {this._bpcpService.open(this._settingBtnList[0].url)}, this), null);
         } else {
           return this._bpcpService.open(this._settingBtnList[0].url);
