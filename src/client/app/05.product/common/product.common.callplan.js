@@ -675,10 +675,13 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    */
   _reqIsAdditionUse: function(joinTermCd, url) {
-    if (this._prodId === 'NA00000282'){
+    if (this._prodId === 'NA00000282') {
       this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00007017'])
       .done($.proxy(this._resIsAdditionUse, this, joinTermCd, url));
-    }else{
+    } else if (this._prodId === 'NA00007017') {
+      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00000282'])
+      .done($.proxy(this._resIsAdditionUse, this, joinTermCd, url));
+    } else {
       this._reqTerminateDefense(joinTermCd, url);
     }
   },
@@ -728,7 +731,7 @@ Tw.ProductCommonCallplan.prototype = {
       return this._procPreCheck(joinTermCd, url);
     }
 
-    if (this._prodId === 'NA00000282' && isAdditionUse !== 'Y') {
+    if ((this._prodId === 'NA00000282' && isAdditionUse !== 'Y') || (this._prodId === 'NA00007017' && isAdditionUse !== 'Y')) {
       return this._procPreCheck(joinTermCd, url);
     }
 
