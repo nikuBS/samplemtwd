@@ -31,7 +31,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
     this.$list = this.$container.find('ul.list-comp-lineinfo');
     this.$empty = this.$container.find('.contents-empty');
     this.$todSel = this.$container.find('.tod-sel-top-wrap').children('.link-cont');
-    this.$todSelButtons = this.$todSel.children();
+    this.$todSelButtons = this.$todSel.children('a');
   },
 
   /**
@@ -103,6 +103,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
       selectedButton = this.$todSelButtons.filter(function (i, elem) {
         return elem.href.includes(hash);
       });
+      // selectedButton = this.$todSel.children(`a[href$=${hash}]`);
     } else {
       // NOTE: hash가 없으면, 첫번째("전체")를 자동으로 선택
       selectedButton = this.$todSelButtons.eq(0);
