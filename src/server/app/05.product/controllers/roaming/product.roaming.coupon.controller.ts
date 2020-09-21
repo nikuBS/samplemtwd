@@ -15,4 +15,8 @@ export default class ProductRoamingCoupon extends TwViewController {
 
     res.render('roaming/product.roaming.coupon.html', { svcInfo , pageInfo, bpcpServiceId : bpcpServiceId });
   }
+
+  protected get noUrlMeta(): boolean {
+    return true;
+  }
 }

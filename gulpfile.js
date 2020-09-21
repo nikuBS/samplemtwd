@@ -323,6 +323,7 @@ gulp.task('css-rb', function () {
     'src/client/web-contents/css/layout.css',
     'src/client/web-contents/css/widgets.css',
     'src/client/web-contents/css/components.css',
+    'src/client/web-contents/css/roaming-next.css',
     'src/client/web-contents/css/m_product.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/web-contents/',
@@ -452,10 +453,10 @@ gulp.task('post-clean', function () {
 });
 
 gulp.task('watch', function () {
-  livereload.listen();
-  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
-  gulp.watch('src/client/**/*.js', { interval: 500 }, ['client-build']);
-  gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
+//  livereload.listen();
+//  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
+//  gulp.watch('src/client/**/*.js', { interval: 500 }, ['client-build']);
+//  gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
 });
 
 gulp.task('get-manifest', function () {

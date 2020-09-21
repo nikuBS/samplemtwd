@@ -1,0 +1,124 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<body class="rn">
+<div id="roamingTariffOffer">
+    <div id="gnb" class="gnb-opaque">
+        <span class="menu icon-gnb-menu">
+            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
+        </span>
+        <h1>요금제 추천</h1>
+    </div>
+    <div class="decoration">
+        <img class="banner" src="<%= country.imageUrl %>" />
+        <p>
+            사용하기 좋은 요금제를 <br />
+            추천해 드려요!
+        </p>
+    </div>
+    <%- include('../components/header.component.html', { title: '요금제 추천', svcInfo: svcInfo }) %>
+    <div class="contents">
+        <div class="card">
+            <% if (recommended.prodId) { %>
+            <h2>
+                <span class="colorPoint"><%= country.name %></span>
+                <span class="colorPoint"><%= night %>박<%= days %>일</span>
+                여행과<br />
+                가장 잘 맞는 로밍 요금제
+            </h2>
+            <div class="offered">
+                <a href="/product/callplan?prod_id=<%= recommended.prodId %>">
+                    <div class="tariff">
+                        <h3><%= recommended.prodNm %></h3>
+                        <div class="data">
+                            <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                            <span><%= recommended.data %></span>
+                        </div>
+                        <span class="phone"><%= recommended.phone %></span>
+                        <span class="price"><%= recommended.price %></span>
+                        <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                    </div>
+                </a>
+                <div class="others">
+                    <a href="#" onclick="return showCountries('<%= recommended.prodId %>')">더보기 +</a>
+                    <p>
+                        <span class="colorPoint"><%= recommended.neiborRomPsblNatInfo %></span> 등의 국가에서도<br />사용 가능해요.
+                    </p>
+                </div>
+            </div>
+            <div class="past">
+                <% if (recentUsed) { %>
+                    <p class="description">
+                        지난 T로밍요금제 사용 내역을 기반으로 보여드립니다.
+                    </p>
+                    <!--
+                    <a href="/product/roaming/history">
+                        <div class="button">
+                            지난 여행 이력보기
+                        </div>
+                    </a>
+                    -->
+                <% } else { %>
+                    <p class="description">
+                        여행 가시는 국가와 일정을 기반으로 보여드립니다.
+                    </p>
+                <% } %>
+            </div>
+            <% } else { %>
+            <h2>
+                <span class="colorPoint"><%= country.name %></span>
+                <span class="colorPoint"><%= night %>박<%= days %>일</span>
+                여행에 <br />
+                추천 가능한 요금제가 없습니다.
+            </h2>
+            <% } %>
+        </div>
+        <div class="card">
+            <h2>다른 해외 데이터 서비스 간 비교</h2>
+            <img class="diff" src="<%= CDN %>/img/product/roam/img_vs_01.png" alt="타서비스 비교" />
+            <img class="diff margin0" src="<%= CDN %>/img/product/roam/img_vs_02.png" alt="타서비스 비교" />
+        </div>
+        <% if (availableTariffs && availableTariffs.length > 0) { %>
+        <div class="card" style="margin-bottom: 100px; ">
+            <h2>
+                <% if (country.flagUrl) { %>
+                <img src="<%= country.flagUrl %>" alt="<%= country.flagAlt %>" style="width: 32px; vertical-align: middle;" />
+                <% } %>
+                <span class="colorPoint" style="vertical-align: middle;"><%= country.name %></span>에서 이용 가능한<br />
+                모든 요금제
+            </h2>
+            <p class="description" style="margin-top: -12px;">
+                편리하고 합리적인 가격의 로밍 요금제를 이용하세요
+            </p>
+            <div class="tariff-list">
+                <% for (var t of availableTariffs) { %>
+                <a href="/product/callplan?prod_id=<%= t.prodId %>">
+                    <div class="tariff-box">
+                        <div class="tariff">
+                            <h3><%= t.prodNm %></h3>
+                            <div class="data">
+                                <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                                <span><%= t.data %></span>
+                            </div>
+                            <span class="price"><%= t.price %>/<%= t.duration %>일</span>
+                            <span class="phone"><%= t.prodBasBenfCtt %></span>
+                            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+            </div>
+            <a href="/product/roaming/fee" class="link">로밍 전체 요금제 보러 가기</a>
+        </div>
+        <% } %>
+    </div>
+</div>
+<%- include('../../components/roaming-next/countries.tariff.html', {svcInfo}); %>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).on('ready', function() {
+    new Tw.NextRoamingMenu($('#roamingTariffOffer')).install();
+  });
+</script>
+
+<% include ../../components/end.component.html %>

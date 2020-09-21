@@ -361,6 +361,7 @@ export const API_CMD = {
   BFF_05_0219: { path: '/core-modification/:version/custum-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0222: { path: '/core-product/v1/services/wireless/additions/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0227: { path: '/core-balance/:version/roaming/mode/baro-traffic-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -997,6 +998,14 @@ export const API_CMD = {
   BFF_10_0123: { path: '/core-product/:version/submain/roaming-sprateprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0141: { path: '/core-product/:version/services/t-roam-tog/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0190: { path: '/core-product/:version/roaming-use-firstTime', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0196: { path: '/core-product/:version/roaming/fee-plans/recommend-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0197: { path: '/core-product/:version/roaming/fee-plans/latest-used-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0198: { path: '/core-product/:version/roaming/submain/group-products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0199: { path: '/core-product/:version/roaming/mode/country-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0200: { path: '/core-product/:version/roaming/mode/country-fee-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0201: { path: '/core-product/:version/roaming/mode/prod-countrys-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0202: { path: '/core-product/:version/roaming/mode/baro-traffic-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/:version/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

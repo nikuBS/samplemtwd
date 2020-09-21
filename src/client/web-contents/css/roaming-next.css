@@ -1,0 +1,2189 @@
+@charset "utf-8";
+
+body.rn {
+  background-color: #f8f8f8;
+}
+body.rn .colorPoint {
+  color: #4559fc;
+}
+body.rn #gnb {
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+body.rn #gnb .menu {
+  position: absolute;
+  left: 20px;
+  top: 13px;
+  cursor: pointer;
+}
+body.rn #gnb .icon-gnb-menu {
+  background: none;
+  width: 24px;
+  height: 24px;
+}
+body.rn #gnb .logo {
+  margin-top: 12px;
+}
+body.rn #gnb h1 {
+  font-size: 17px;
+  line-height: 50px;
+  font-weight: 500;
+  color: #0f0f0f;
+  letter-spacing: -0.4px;
+}
+body.rn .gnb-opaque {
+  background-color: white;
+  border-bottom: 1px solid #e9e9e9;
+}
+body.rn #roamingMain {
+  margin-bottom: 40px;
+}
+body.rn #roamingMain .background {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 360px;
+  height: 180px;
+}
+body.rn #roamingMain #content {
+  margin: 20px;
+  padding-top: 50px;
+  padding-bottom: 2px;
+}
+body.rn #roamingMain #content h2 {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+body.rn #roamingMain #content .description {
+  margin-top: 12px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  letter-spacing: -1px;
+  color: #9f9f9f;
+}
+body.rn #roamingMain #content .card {
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px 1px rgba(0, 45, 237, 0.15);
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+body.rn #roamingMain #content .card h3 {
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin-top: 5px;
+}
+body.rn #roamingMain #content .card .description {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+body.rn #roamingMain #content .card #nations {
+  margin-bottom: 20px;
+}
+body.rn #roamingMain #content .card #nations li {
+  display: inline-block;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  position: relative;
+  white-space: normal;
+  cursor: pointer;
+  min-width: 80px;
+  min-height: 50px;
+}
+body.rn #roamingMain #content .card #nations .flag-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+body.rn #roamingMain #content .card #nations .name {
+  position: absolute;
+  display: block;
+  bottom: 8px;
+  left: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+}
+body.rn #roamingMain #content .card #nations .name-dark {
+  position: absolute;
+  display: block;
+  bottom: 0;
+  right: 0px;
+  height: 14px;
+  line-height: 14px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2px 5px 1px 5px;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  border-top-left-radius: 4px;
+}
+body.rn .card .field-container {
+  background-color: #f3f4f9;
+  border-radius: 10px;
+  padding: 12px 18px 12px 18px;
+  position: relative;
+}
+body.rn .card .field-container input {
+  width: 100%;
+}
+body.rn .card .field-container input::placeholder {
+  width: 100%;
+  color: #959595;
+}
+body.rn .card .field-container img {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+}
+body.rn #roamingMain #content .card .link {
+  text-align: right;
+  padding-top: 20px;
+}
+body.rn #roamingMain #content .card .link a {
+  font-size: 13px;
+  color: #4559FC;
+  letter-spacing: -1px;
+  text-decoration: underline;
+}
+body.rn #roamingMain #content .card .menu-link {
+  height: 65px;
+  cursor: pointer;
+  position: relative;
+}
+body.rn #roamingMain #content .card .menu-link .icon {
+  position: absolute;
+  top: 15px;
+  left: 22px;
+}
+body.rn #roamingMain #content .card .menu-link .arrow {
+  position: absolute;
+  top: 26px;
+  right: 21px;
+}
+body.rn #roamingMain #content .card .menu-link span {
+  position: absolute;
+  top: 22px;
+  left: 70px;
+  font-size: 15px;
+  font-weight: 600;
+}
+body.rn #roamingMain #content .card .border-bottom {
+  border-bottom: 1px solid #f2f2f2;
+}
+body.rn #roamingMain #content .card-compact {
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px 1px rgba(0, 45, 237, 0.15);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+
+  position: relative;
+}
+body.rn #roamingMain #content .card-compact .status {
+  border: 2px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 3px 8px 2px 8px;
+  margin-right: 5px;
+  color: #4559fc;
+  font-size: 10px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+body.rn #roamingMain #content .card-compact .text {
+  color: #111;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  vertical-align: middle;
+}
+body.rn #roamingMain #content .card-compact .point {
+  color: #4559fc;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingMain #content .card-compact .arrow {
+  position: absolute;
+  right: 13px;
+  top: 20px;
+}
+body.rn #roamingMain #content .history {
+  background-color: #f3f4f9;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 20px;
+}
+body.rn #roamingMain #content .history h4 {
+  font-size: 18px;
+  font-family: Roboto, "Noto Sans KR", sans-serif;
+  font-weight: 500;
+  color: #4559fc;
+  margin-bottom: 20px;
+}
+body.rn #roamingMain #content .history .range {
+  font-size: 15px;
+  letter-spacing: -0.47px;
+  color: #111;
+  margin-bottom: 3px;
+}
+body.rn #roamingMain #content .history .range svg {
+  vertical-align: middle;
+}
+body.rn #roamingMain #content .history .days {
+  font-size: 14px;
+  color: #666;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingMain #content .no-padding {
+  padding: 0;
+}
+body.rn #roamingMain #content #groups {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  height: 154px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+body.rn #roamingMain #content #groups .group {
+  display: inline-block;
+  width: 94px;
+  height: 136px;
+  background-color: #f0f4ff;
+  border-radius: 6px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 8px;
+  cursor: pointer;
+  vertical-align: top;
+}
+body.rn #roamingMain #content #groups .group img {
+  height: 30px;
+  margin-top: 30px;
+}
+body.rn #roamingMain #content #groups .group h4 {
+  font-size: 15px;
+  font-weight: 700;
+}
+body.rn #roamingMain #content #groups .group h5 {
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+  white-space: normal;
+}
+body.rn #roamingMain .banner img {
+  width: 100%;
+}
+body.rn #roamingMain .info-link {
+  height: 52px;
+  background-color: #fff;
+  padding-left: 20px;
+  position: relative;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 52px;
+  font-weight: 400;
+  letter-spacing: -0.44px;
+}
+body.rn #roamingMain .info-link .arrow {
+  position: absolute;
+  right: 13px;
+  top: 16px;
+}
+body.rn #roamingMain .info-link .separator-top {
+  position: absolute;
+  top: 1px;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background-color: #ededed;
+}
+body.rn #roamingMain .links {
+  text-align: center;
+  margin: 20px 0;
+}
+body.rn #roamingMain .links .other-link {
+  display: inline-block;
+  width: 48%;
+  text-align: center;
+}
+body.rn #roamingMain .links .other-link a {
+  font-size: 14px;
+  letter-spacing: -1px;
+  color: #4559fc;
+  text-decoration: underline;
+}
+body.rn #roamingMain .links .divider {
+  display: inline-block;
+  width: 1px;
+  margin-top: 3px;
+  height: 14px;
+  background-color: #e5e5e5;
+}
+#roamingMain .buttons {
+  text-align: center;
+}
+#roamingMain .button {
+  width: 196px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 18px;
+  margin: 0 auto 10px auto;
+}
+#roamingMain .button-1 {
+  background-color: #4559fc;
+  color: white;
+}
+#roamingMain .button-2 {
+  background-color: white;
+  border: 1.5px solid #4559fc;
+  color: #4559fc;
+}
+body.rn ul.ui-autocomplete li.ui-menu-item {
+  font-size: 13px;
+  padding: 4px;
+}
+body.rn ul.ui-autocomplete .ui-state-active {
+  background: #4559fc;
+}
+body.rn .dialog {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+body.rn #nationsDialog {
+  background-color: white;
+}
+body.rn #nationsDialog .header {
+  height: 52px;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 1px solid #edeef0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body.rn #nationsDialog .header h1 {
+  color: black;
+  font-size: 16px;
+  letter-spacing: -0.7px;
+  line-height: 52px;
+  text-align: center;
+}
+body.rn #nationsDialog .header .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+  cursor: pointer;
+}
+body.rn #nationsDialog .menu {
+  background-color: #f0f4ff;
+  width: 120px;
+  position: fixed;
+  top: 53px;
+  height: 100%;
+}
+body.rn #nationsDialog .menu li {
+  height: 56px;
+  line-height: 56px;
+  padding-left: 18px;
+  font-size: 16px;
+  border-bottom: 1px solid #e5e5e5;
+}
+body.rn #nationsDialog .menu li.active {
+  background-color: white;
+  color: #4559fc;
+}
+body.rn #nationsDialog .content {
+  background-color: #fff;
+  margin-left: 120px;
+  margin-top: 53px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+body.rn #nationsDialog .content li {
+  height: 50px;
+  line-height: 50px;
+  font-size: 15px;
+  color: #666;
+  border-bottom: 1px solid #f2f2f2;
+  cursor: pointer;
+}
+body.rn #scheduleDialog {
+  background-color: white;
+}
+body.rn #scheduleDialog .header {
+  height: 135px;
+  background-color: white;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+body.rn #scheduleDialog .header .banner {
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+}
+body.rn #scheduleDialog .header .banner-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #1c1462;
+  opacity: 0.49;
+}
+body.rn #scheduleDialog .header .summary {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: white;
+  font-size: 16px;
+}
+body.rn #scheduleDialog .header .summary h1 {
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 0.8;
+  letter-spacing: -1.11px;
+  margin-bottom: 16px;
+}
+body.rn #scheduleDialog .header .summary .date {
+  display: inline-block;
+  width: 130px;
+  height: 42px;
+}
+body.rn #scheduleDialog .header .summary .date h2 {
+  font-size: 12px;
+  font-weight: 300;
+}
+body.rn #scheduleDialog .header .summary .date h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+body.rn #scheduleDialog .header .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px 15px 15px 15px;
+  cursor: pointer;
+}
+body.rn #scheduleDialog #scheduleContent {
+  margin-top: 135px;
+  margin-bottom: 55px;
+  background-color: #fff;
+}
+body.rn #scheduleDialog .bottom-button {
+  height: 55px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 55px;
+  text-align: center;
+  background-color: #4559fc;
+  color: white;
+  cursor: pointer;
+}
+body.rn #scheduleDialog .not-prepared {
+  background-color: #dddddd;
+}
+body.rn #roamingTariffOffer {
+  background-color: #fff;
+}
+body.rn #roamingTariffOffer .decoration {
+  height: 170px;
+  margin-top: 50px;
+  position: relative;
+  overflow: hidden;
+}
+body.rn #roamingTariffOffer .decoration .banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+body.rn #roamingTariffOffer .decoration .banner-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 170px;
+  background-color: #1c1462;
+  opacity: 0.4;
+}
+body.rn #roamingTariffOffer .decoration p {
+  position: absolute;
+  left: 20px;
+  top: 62px;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}
+body.rn #roamingTariffOffer .contents {
+  min-height: 500px;
+  background-color: #f6f6f6;
+}
+body.rn #roamingTariffOffer .card {
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 32px 20px;
+}
+body.rn #roamingTariffOffer .card h2 {
+  font-size: 21px;
+  font-weight: 600;
+  color: black;
+  letter-spacing: -0.52px;
+  margin-bottom: 20px;
+}
+body.rn #roamingTariffOffer .card .description {
+  font-size: 13px;
+  color: #959595;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+body.rn #roamingTariffOffer .offered {
+  background-color: #f3f4f9;
+  border-radius: 12px;
+}
+body.rn #roamingTariffOffer .offered .others {
+  padding: 16px 16px 20px 16px;
+  background-color: #eaebef;
+  font-size: 13px;
+  color: #2a2a2a;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+body.rn #roamingTariffOffer .offered .others a {
+  text-decoration: underline;
+  color: #4559fc;
+  float: right;
+  padding-top: 20px;
+}
+body.rn #roamingTariffOffer .tariff {
+  padding: 16px;
+  position: relative;
+}
+body.rn #roamingTariffOffer .tariff .arrow {
+  position: absolute;
+  right: 13px;
+  top: 21px;
+}
+body.rn #roamingTariffOffer .tariff h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4559fc;
+  margin-bottom: 20px;
+}
+body.rn #roamingTariffOffer .tariff .data {
+  font-size: 16px;
+  color: #111;
+}
+body.rn #roamingTariffOffer .tariff .data span {
+  margin-left: 4px;
+}
+body.rn #roamingTariffOffer .tariff .phone {
+  font-size: 13px;
+  color: #666;
+}
+body.rn #roamingTariffOffer .tariff .price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  float: right;
+}
+body.rn #roamingTariffOffer .diff {
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+}
+body.rn #roamingTariffOffer .margin0 {
+  margin-bottom: 0;
+}
+body.rn #roamingTariffOffer .past .button {
+  border-radius: 40px;
+  border: 1px solid #4559fc;
+  height: 36px;
+  line-height: 36px;
+  background: #fff;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+  color: #4559fc;
+}
+body.rn #roamingTariffOffer .tariff-list {
+  height: 188px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+body.rn #roamingTariffOffer .tariff-list .tariff-box {
+  display: inline-block;
+  width: 180px;
+  height: 168px;
+  margin-right: 8px;
+  background-color: #f3f4f9;
+  border-radius: 12px;
+}
+body.rn #roamingTariffOffer .tariff-list .tariff-box .tariff h3 {
+  position: absolute;
+  left: 16px;
+  right: 36px;
+  white-space: normal;
+}
+body.rn #roamingTariffOffer .tariff-list .tariff-box .tariff .data {
+  padding-top: 65px;
+}
+body.rn #roamingTariffOffer .tariff-list .tariff-box .tariff .price {
+  float: inherit;
+  display: block;
+  margin-top: 4px;
+}
+body.rn #roamingTariffOffer .link {
+  font-size: 13px;
+  color: #4559fc;
+  text-decoration: underline;
+  float: right;
+  padding-bottom: 20px;
+}
+body.rn #roamingTariffs .header {
+  top: 50px;
+  height: 170px;
+  background-color: white;
+  margin-top: 50px;
+}
+body.rn #roamingTariffs .header h2 {
+  font-size: 21px;
+  font-weight: 500;
+  color: black;
+  padding-top: 32px;
+  margin-left: 20px;
+  margin-bottom: 0px;
+}
+body.rn #roamingTariffs .header .anchors {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-top: 12px;
+  padding-left: 20px;
+  padding-right: 15px;
+  background-color: white;
+  z-index: 10;
+}
+body.rn #roamingTariffs .header .anchors .anchor {
+  display: inline-block;
+  width: 128px;
+  height: 82px;
+  margin-right: 5px;
+  vertical-align: top;
+}
+body.rn #roamingTariffs #groups {
+  padding-bottom: 0px;
+}
+body.rn #roamingTariffs .summary {
+  position: relative;
+  height: 160px;
+  overflow-y: hidden;
+}
+body.rn #roamingTariffs .summary img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+body.rn #roamingTariffs .summary h2 {
+  position: absolute;
+  left: 20px;
+  top: 32px;
+  font-size: 21px;
+  font-weight: 600;
+  color: black;
+}
+body.rn #roamingTariffs .summary p {
+  position: absolute;
+  left: 20px;
+  top: 70px;
+  font-size: 13px;
+  font-weight: 400;
+  color: black;
+}
+body.rn #roamingTariffs .tariffs {
+  position: relative;
+  margin: -33px 16px 32px 16px;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px 2px rgba(0, 45, 237, 0.15);
+  border-radius: 10px;
+  padding: 10px 20px 0 20px;
+  cursor: pointer;
+}
+body.rn #roamingTariffs .tariff {
+  margin-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f2f2f2;
+  cursor: pointer;
+}
+body.rn #roamingTariffs .tariff h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+body.rn #roamingTariffs .tariff .data span {
+  font-size: 13px;
+  color: #4559fc;
+}
+body.rn #roamingTariffs .tariff .phone {
+  font-size: 13px;
+  color: #959595;
+}
+body.rn #roamingTariffs .tariff .price {
+  float: right;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4559fc;
+}
+body.rn #roamingTariffs .card {
+  background-color: #f3f4f9;
+  padding: 36px 20px;
+}
+body.rn #roamingTariffs .card h2 {
+  font-size: 21px;
+  font-weight: 600;
+}
+body.rn #roamingTariffs .card .link {
+  text-align: right;
+  padding-top: 20px;
+}
+body.rn #roamingTariffs .card .link a {
+  font-size: 13px;
+  color: #4559FC;
+  letter-spacing: -1px;
+  text-decoration: underline;
+}
+body.rn #roamingTariffs .card .field-container {
+  background-color: white;
+  margin-top: 16px;
+}
+body.rn #roamingMenu {
+  background-color: white;
+  min-height: 500px;
+  z-index: 99;
+}
+body.rn #roamingMenu .header {
+  background-color: #4559fc;
+  padding: 20px 0 20px 0;
+}
+body.rn #roamingMenu .header .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+  cursor: pointer;
+}
+body.rn #roamingMenu .header h2 {
+  font-size: 22px;
+  font-weight: 400;
+  color: white;
+  margin-top: 25px;
+  padding-left: 20px;
+}
+body.rn #roamingMenu .header .mode {
+  margin-top: 10px;
+  padding: 0 20px 0 20px;
+}
+body.rn #roamingMenu .header .mode span {
+  font-size: 14px;
+  font-weight: 400;
+  color: #7FE5FF;
+  float: left;
+}
+body.rn #roamingMenu .header .mode .switch {
+  float: right;
+  position: relative;
+  height: 20px;
+  cursor: pointer;
+}
+body.rn #roamingMenu .header .mode .switch .track {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  width: 40px;
+  height: 14px;
+  opacity: 0.4;
+  background-color: white;
+  border-radius: 7px;
+}
+body.rn #roamingMenu .header .mode .switch #thumb {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #3ee5ff;
+  border-radius: 10px;
+}
+body.rn #roamingMenu .header .mode .switch .thumb-on {
+  right: 0;
+}
+body.rn #roamingMenu .header .mode .switch .thumb-off {
+  right: 20px;
+}
+body.rn #roamingMenu .header .mode .reset {
+  clear: both;
+}
+body.rn #roamingMenu .header .sticky-menu {
+  margin-top: 16px;
+  text-align: center;
+}
+body.rn #roamingMenu .header .sticky-menu .menu {
+  display: inline-block;
+  width: 48%;
+  text-align: center;
+  cursor: pointer;
+}
+body.rn #roamingMenu .header .sticky-menu .menu svg {
+  margin-right: 2px;
+  vertical-align: bottom;
+}
+body.rn #roamingMenu .header .sticky-menu .menu span {
+  display: inline-block;
+  color: white;
+  font-size: 14px;
+  height: 18px;
+  line-height: 18px;
+  vertical-align: bottom;
+}
+body.rn #roamingMenu .header .sticky-menu .divider {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.2);
+  vertical-align: middle;
+}
+body.rn #roamingMenu .menus {
+  padding: 10px 20px 30px 20px;
+}
+body.rn #roamingMenu .menus h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #959595;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+body.rn #roamingMenu .menus li {
+  padding: 8px 0;
+}
+body.rn #roamingMenu .menus li svg {
+  margin-right: 5px;
+  vertical-align: top;
+}
+body.rn #roamingMenu .menus li span {
+  display: inline-block;
+  color: black;
+  font-size: 15px;
+  font-weight: 500;
+  height: 18px;
+  line-height: 18px;
+  vertical-align: top;
+  margin-top: 1px;
+}
+body.rn #roamingMenu .contacts {
+  padding: 20px 22px;
+}
+body.rn #roamingMenu .contacts .contact {
+  margin: 5px 0;
+}
+body.rn #roamingMenu .contacts .contact svg {
+  vertical-align: middle;
+  margin-right: 3px;
+}
+body.rn #roamingMenu .contacts .contact .name {
+  display: inline-block;
+  width: 120px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #959595;
+}
+body.rn #roamingMenu .contacts .contact .phone {
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0;
+  color: #111;
+}
+body.rn #roamingMenu .logout {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: #959595;
+  padding: 14px;
+  border-top: 1px solid #e0e0e0;
+}
+body.rn .modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+body.rn .modal .content {
+  position: relative;
+  background-color: white;
+  padding: 24px;
+  border-radius: 6px;
+  width: 272px;
+  margin: 55% auto;
+}
+body.rn .modal .content .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+body.rn .modal .content .message {
+  font-size: 21px;
+  font-weight: 600;
+  color: black;
+  padding: 12px 0;
+}
+body.rn .modal .content .note {
+  font-size: 14px;
+  color: #959595;
+}
+body.rn .modal .content .divider {
+  background-color: #e2e2e2;
+  height: 1px;
+  margin: 24px -24px;
+}
+body.rn .modal .content .buttons {
+  text-align: right;
+}
+body.rn .modal .content .buttons a {
+  font-size: 15px;
+  color: #4559fc;
+}
+body.rn .modal .tm {
+  padding: 48px 24px 24px 24px;
+}
+body.rn .modal .content .today {
+  position: absolute;
+  right: 55px;
+  top: 19px;
+  cursor: pointer;
+}
+body.rn .modal .content .today .box {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #e0e0e0;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+body.rn .modal .content .today label {
+  line-height: 18px;
+  font-size: 12px;
+  color: #959595;
+}
+
+body.rn #roamingOff {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: #4559fc;
+  background-image: linear-gradient(90deg, #5945FC 0%, #4559FC 100%);
+  padding-left: 25px;
+}
+body.rn #roamingOff .decoration {
+  display: block;
+  margin-top: 50%;
+}
+body.rn #roamingOff .progress {
+  margin-top: 20px;
+}
+body.rn #roamingOff .progress .circle {
+  display: inline-block;
+  background-color: white;
+  margin-right: 9px;
+  vertical-align: middle;
+}
+body.rn #roamingOff .progress .off {
+  width: 11px;
+  height: 11px;
+  border-radius: 5px;
+  opacity: 0.3;
+}
+body.rn #roamingOff .progress .on {
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+}
+body.rn #roamingOff .message {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.61px;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+body.rn #roamingOff .note {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: white;
+  opacity: 0.7;
+}
+body.rn #roamingAddons .filters {
+  margin-top: 50px;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+body.rn #roamingAddons .filters h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: -0.42px;
+  margin-bottom: 10px;
+}
+body.rn #roamingAddons .filters .tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: -0.29px;
+  padding: 5px 12px;
+  margin-right: 8px;
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+}
+body.rn #roamingAddons .filters .active {
+  background-color: #4559fc;
+  color: #fff;
+  border: 0;
+}
+body.rn #roamingAddons .items .item {
+  padding: 28px 20px;
+  margin-bottom: 8px;
+  background-color: #fff;
+}
+body.rn #roamingAddons .items .item .name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.43px;
+  color: #000;
+  margin-bottom: 8px;
+}
+body.rn #roamingAddons .items .item .name .comment {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4559fc;
+  vertical-align: top;
+  margin-top: 1px;
+  margin-left: 5px;
+}
+body.rn #roamingAddons .items .item .tag {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  color: #4559fc;
+}
+body.rn #roamingAddons .items .item .description {
+  font-size: 13px;
+  font-weight: 400;
+  color: #959595;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingAddons .items .item .status {
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #111;
+  letter-spacing: -0.29px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  float: right;
+}
+body.rn #roamingAddons .items .item .inuse {
+  background-color: #4559fc;
+  color: white;
+  border: 0;
+}
+body.rn #roamingHistory .card {
+  margin-top: 10px;
+  background-color: white;
+  padding: 32px 20px;
+}
+body.rn #roamingHistory .card h2 {
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+body.rn #roamingHistory .card p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3em;
+  color: #000;
+}
+body.rn #roamingHistory .chart {
+  position: relative;
+}
+body.rn #roamingHistory .chart .bubble {
+  position: absolute;
+  right: 1px;
+  top: 6px;
+  width: 70px;
+  height: 28px;
+  border-radius: 6px;
+  background-color: #4559fc;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  line-height: 28px;
+  text-align: center;
+  display: block;
+}
+body.rn #roamingHistory .chart .date {
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+}
+body.rn #roamingHistory .chart .right {
+  float: right;
+}
+body.rn #roamingHistory .items .item {
+  margin-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  position: relative;
+}
+body.rn #roamingHistory .items .item h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  letter-spacing: -0.5px;
+  margin-bottom: 5px;
+}
+body.rn #roamingHistory .items .item span {
+  display: block;
+}
+body.rn #roamingHistory .items .item .flag-icon {
+  position: absolute;
+  left: 0;
+  top: 0px;
+  width: 33px;
+  height: 25px;
+  border: 1px solid #f0f0f0;
+}
+body.rn #roamingHistory .items .item .night {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4559fc;
+}
+body.rn #roamingHistory .items .item .range {
+  font-size: 12px;
+  font-weight: 500;
+  color: #a0a0a0;
+}
+body.rn #roamingHistory .items .item .total {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4559fc;
+  margin-bottom: 4px;
+}
+body.rn #roamingHistory .items .item .average {
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+}
+body.rn #roamingHistory .items .item .right {
+  float: right;
+  text-align: right;
+}
+body.rn #roamingHistory .items .item .content {
+  margin-left: 50px;
+}
+body.rn #roamingHistory .items .item:last-child {
+  border-bottom: 0;
+}
+body.rn #roamingOn #gnb .menu .white {
+  display: block;
+}
+body.rn #roamingOn #gnb .menu .black {
+  display: none;
+}
+body.rn #roamingOn #gnb .appbar {
+  display: none;
+  margin-top: 16px;
+  line-height: 19px;
+}
+body.rn #roamingOn #gnb .appbar img,
+body.rn #roamingOn #gnb .appbar .flag-icon {
+  vertical-align: top;
+  margin-right: 5px;
+}
+body.rn #roamingOn #gnb .appbar .cname {
+  line-height: 18px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #111;
+}
+body.rn #roamingOn #content .hud {
+  margin: 0px 20px 100px 20px;
+  padding-top: 90px;
+}
+body.rn #roamingOn #content .hud h1 img,
+body.rn #roamingOn #content .hud h1 .flag-icon {
+  vertical-align: middle;
+  margin-right: 2px;
+  width: 36px;
+  height: 24px;
+}
+body.rn #roamingOn #content .hud h1 .cname {
+  line-height: 36px;
+  font-size: 26px;
+  font-weight: 500;
+  color: white;
+}
+body.rn #roamingOn #content .hud .clocks {
+  text-align: left;
+  width: 100%;
+  margin-top: 20px;
+}
+body.rn #roamingOn #content .hud .clocks .clock {
+  display: inline-block;
+  text-align: left;
+  color: white;
+  vertical-align: top;
+}
+body.rn #roamingOn #content .hud .clocks .clock .note {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: -0.55px;
+  opacity: 0.5;
+}
+body.rn #roamingOn #content .hud .clocks .clock .note img {
+  vertical-align: middle;
+  margin-left: 2px;
+  margin-right: 4px;
+  width: 14px;
+  height: 14px;
+}
+body.rn #roamingOn #content .hud .clocks .clock .note .nation {
+  font-size: 13px;
+  vertical-align: middle;
+}
+body.rn #roamingOn #content .hud .clocks .clock .value {
+  font-size: 18px;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+body.rn #roamingOn #content .hud .clocks .divider {
+  vertical-align: top;
+  display: inline-block;
+  width: 1px;
+  margin-top: 3px;
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 45px;
+  background-color: #fff;
+  opacity: 0.2;
+}
+body.rn #roamingOn #content .card {
+  background-color: #fff;
+  box-shadow: 0 8px 24px 2px rgba(0, 45, 237, 0.15);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 16px;
+}
+body.rn #roamingOn #content .card h3 {
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin-top: 5px;
+}
+body.rn #roamingOn #content .card h3 img {
+  vertical-align: bottom;
+}
+body.rn #roamingOn #content .card h3 .phone {
+  margin-left: 0px;
+  vertical-align: middle;
+  padding: 1px 0px 4px 2px;
+}
+body.rn #roamingOn #content .card h3 .beta {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -1px;
+  color: #4559fc;
+  text-decoration: underline;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+body.rn #roamingOn #content .card .description {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: #959595;
+}
+body.rn #roamingOn #content .card ul.description {
+  font-size: 13px;
+  color: #959595;
+  list-style-type: circle;
+  list-style-position: outside;
+  margin-left: 20px;
+}
+body.rn #roamingOn #content .card ul.description li {
+  margin-bottom: 10px;
+}
+body.rn #roamingOn #content ul.description li.warn {
+  color: red;
+}
+body.rn #roamingOn #content .card .info {
+  border-radius: 6px;
+  background-color: #f6f6f6;
+  text-align: center;
+  margin-top: 8px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+body.rn #roamingOn #content .card .info h4 {
+  font-family: Roboto;
+  font-size: 19px;
+  font-weight: 500;
+  color: #666;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingOn #content .card .divider {
+  height: 1px;
+  background-color: #e0e0e0;
+}
+body.rn #roamingOn #content .card-toggle {
+  padding-bottom: 10px;
+}
+body.rn #roamingOn #content .toggle {
+  text-align: center;
+  padding-top: 12px;
+}
+body.rn #roamingOn #content .card .curtain {
+  margin-left: -24px;
+  margin-right: -24px;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 16px;
+}
+body.rn #roamingOn #content .card .hc {
+  display: inline-block;
+  position: relative;
+}
+body.rn #roamingOn #content .card .hu {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-color: rgba(109, 136, 255, 0.3);
+}
+body.rn #roamingOn #content .anonymous {
+  padding: 40px 24px 8px 24px;
+  text-align: center;
+}
+body.rn #roamingOn #content .unavailable {
+  padding: 64px 0 56px 0;
+  text-align: center;
+}
+body.rn #roamingOn #content .unavailable p {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0d0d0d;
+  margin-top: 20px;
+}
+body.rn #roamingOn #content .buttons {
+  padding-bottom: 12px;
+}
+body.rn #roamingOn #content .button {
+  width: 196px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 18px;
+  margin: 0 auto 10px auto;
+}
+body.rn #roamingOn #content .button-1 {
+  background-color: #4559fc;
+  color: white;
+}
+body.rn #roamingOn #content .button-2 {
+  background-color: white;
+  border: 1.5px solid #4559fc;
+  color: #4559fc;
+}
+body.rn #roamingOn #content .data-usages {
+  text-align: center;
+}
+body.rn #roamingOn #content .data-usages h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.92px;
+  color: black;
+  margin-bottom: 4px;
+}
+body.rn #roamingOn #content .data-usages .range {
+  font-size: 13px;
+  font-weight: 400;
+  color: #8d8d8d;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingOn #content .data-usages .status {
+  display: block;
+  width: 65px;
+  border: 1.5px solid #dcdcdc;
+  border-radius: 13px;
+  color: #4559fc;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 0;
+  margin: 8px auto;
+}
+body.rn #roamingOn #content .data-usages .charts {
+  text-align: center;
+  margin-bottom: 8px;
+}
+body.rn #roamingOn #content .data-usages .charts .chart {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+}
+body.rn #roamingOn #content .data-usages .charts .chart .track {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+}
+body.rn #roamingOn #content .data-usages .charts .chart .progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 100px;
+  height: 100px;
+}
+#roamingOn #content .data-usages .charts .chart .message {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  font-family: Roboto;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #4559fc;
+}
+
+body.rn #roamingOn #content .data-usages .charts .chart .label {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: #999;
+}
+body.rn #roamingOn #content .data-usages .charts .chart .value-max {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
+}
+body.rn #roamingOn #content .data-usages .charts .chart .value {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 17px;
+  font-weight: 500;
+  color: #4559fc;
+}
+body.rn #roamingOn #content .data-usages .charts .chart h4 {
+  margin-top: 115px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+}
+body.rn #roamingOn #content .phone-usages {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+body.rn #roamingOn #content .phone-usages .usage {
+  margin: 10px 0;
+}
+body.rn #roamingOn #content .phone-usages .usage svg {
+  vertical-align: middle;
+  margin-right: 4px;
+}
+body.rn #roamingOn #content .phone-usages .usage .usage-type {
+  vertical-align: middle;
+  font-size: 15px;
+  font-weight: 500;
+  color: #0f0f0f;
+}
+body.rn #roamingOn #content .phone-usages .usage .usage-value {
+  vertical-align: middle;
+  font-size: 15px;
+  font-weight: 700;
+  color: #030303;
+  letter-spacing: 0;
+  float: right;
+}
+body.rn #roamingOn #content .tariff-list {
+  height: 174px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+body.rn #roamingOn #content .tariff-list .tariff-box {
+  display: inline-block;
+  width: 170px;
+  height: 160px;
+  margin-right: 8px;
+  background-color: #f3f4f9;
+  border-radius: 12px;
+}
+body.rn #roamingOn #content .tariff-list .tariff-box .tariff {
+  padding: 16px;
+  position: relative;
+}
+body.rn #roamingOn #content .tariff-list .tariff-box .tariff h3 {
+  position: absolute;
+  font-size: 18px;
+  font-family: Roboto;
+  font-weight: 500;
+  color: #4559fc;
+  white-space: normal;
+  left: 16px;
+  right: 16px;
+  top: 12px;
+}
+body.rn #roamingOn #content .tariff-list .tariff-box .tariff .data {
+  margin-top: 58px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #757575;
+  padding-top: 5px;
+}
+body.rn #roamingOn #content .tariff-list .tariff-box .tariff .data span {
+  margin-left: 2px;
+}
+body.rn #roamingOn #content .tariff-list .tariff-box .tariff .phone {
+  font-size: 13px;
+  font-weight: 700;
+  color: #757575;
+}
+body.rn #roamingOn #content .tariff-list .tariff-box .tariff .price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  display: block;
+  margin-top: 2px;
+}
+body.rn #roamingCoupon .card {
+  margin-top: 10px;
+  background-color: #fff;
+  padding: 35px 20px;
+  min-height: 80px;
+}
+body.rn #roamingCoupon .card p {
+  font-size: 13px;
+  font-weight: 400;
+  color: #959595;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingCoupon .card .help {
+  position: relative;
+  height: 60px;
+}
+body.rn #roamingCoupon .card .help .note {
+  position: absolute;
+  left: 25px;
+  top: 12px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #959595;
+}
+body.rn #roamingCoupon .card .help .title {
+  position: absolute;
+  left: 25px;
+  top: 35px;
+  font-size: 19px;
+  font-weight: 600;
+  color: #4559fc;
+}
+body.rn #roamingCoupon .card .help .phone {
+  position: absolute;
+  right: 25px;
+  top: 1px;
+  width: 45px;
+  height: 60px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingCoupon .header {
+  margin-top: 60px;
+}
+body.rn #roamingCoupon .header h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 10px;
+}
+body.rn #roamingCoupon .header .inquire {
+  float: right;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4559fc;
+  letter-spacing: -0.5px;
+}
+body.rn #roamingCoupon .button {
+  border-radius: 18px;
+  border: 1px solid #4559fc;
+  height: 36px;
+  text-align: center;
+  cursor: pointer;
+  margin: 15px 0;
+  color: #4559fc;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 36px;
+}
+body.rn #roamingCoupon .anchors {
+  background-color: #4559fc;
+  color: white;
+}
+body.rn #roamingCoupon .anchors .anchor {
+  display: inline-block;
+  height: 60px;
+  line-height: 60px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.75px;
+  color: #fff;
+  padding: 0 20px;
+  opacity: 0.4;
+}
+body.rn #roamingCoupon .anchors .selected {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  opacity: 1;
+}
+body.rn #roamingCoupon .intro ul {
+  height: 330px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+body.rn #roamingCoupon .intro ul li {
+  display: inline-block;
+}
+body.rn #roamingCoupon .intro ul .inner-box {
+  display: inline-block;
+  background-color: #f3f4f9;
+  border-radius: 6px;
+}
+body.rn #roamingCoupon .intro ul .inner-box .card {
+  background-color: #f3f4f9;
+}
+body.rn #countriesDialog {
+  background-color: white;
+}
+body.rn #countriesDialog .header {
+  height: 52px;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 1px solid #edeef0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body.rn #countriesDialog .header h1 {
+  color: black;
+  font-size: 16px;
+  letter-spacing: -0.7px;
+  line-height: 52px;
+  text-align: center;
+}
+body.rn #countriesDialog .header .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+  cursor: pointer;
+}
+body.rn #countriesDialog .tariffBox {
+  margin-top: 53px;
+  position: relative;
+  height: 85px;
+}
+body.rn #countriesDialog .dropdown {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 52px;
+  margin: auto;
+  width: 88%;
+  padding: 0px 25px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: #111;
+}
+body.rn #countriesDialog .sortBy {
+  padding-left: 5px;
+  border-bottom: 1px solid #e0e0e0;
+}
+body.rn #countriesDialog .sortBy .by {
+  display: inline-block;
+  padding: 16px 15px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  color: #959595;
+}
+body.rn #countriesDialog .sortBy .active {
+  color: #4559fc;
+}
+body.rn #countriesDialog .scroller {
+  position: relative;
+  height: 300px;
+}
+body.rn #countriesDialog .menu {
+  background-color: #f0f4ff;
+  width: 120px;
+  position: absolute;
+  overflow-y: scroll;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+body.rn #countriesDialog .menu li {
+  height: 56px;
+  line-height: 56px;
+  padding-left: 18px;
+  font-size: 16px;
+  /*border-bottom: 1px solid #e5e5e5;*/
+  color: #959595;
+}
+body.rn #countriesDialog .menu li.active {
+  background-color: white;
+  color: #4559fc;
+}
+body.rn #countriesDialog .content {
+  background-color: #fff;
+  padding-left: 25px;
+  padding-right: 25px;
+  position: absolute;
+  overflow-y: scroll;
+  left: 120px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+body.rn #countriesDialog .content li {
+  height: 50px;
+  line-height: 50px;
+  font-size: 15px;
+  color: #111;
+  /*border-bottom: 1px solid #f2f2f2;*/
+  /*cursor: pointer;*/
+}
+body.rn #roamingRates {
+
+}
+body.rn #roamingRates .tip {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: -0.52px;
+  background-color: #4559fc;
+  color: #fff;
+  padding: 3px 10px 0 10px;
+  vertical-align: middle;
+  border-radius: 9px;
+  margin-left: 5px;
+}
+body.rn #roamingRates .card {
+  padding: 28px 20px;
+  margin-bottom: 8px;
+  background-color: #fff;
+}
+body.rn #roamingRates .card h2 {
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+body.rn #roamingRates .card h3 {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  color: #111;
+  margin-bottom: 6px;
+}
+body.rn #roamingRates .card .number {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+body.rn #roamingRates .card .device {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: #959595;
+}
+body.rn #roamingRates .card .separator {
+  font-size: 12px;
+  font-weight: 400;
+  color: #e0e0e0;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+body.rn #roamingRates .card .field-container {
+  background-color: #f3f4f9;
+  border-radius: 10px;
+  padding: 12px 18px 12px 18px;
+  position: relative;
+}
+body.rn #roamingRates .card .field-container input {
+  width: 100%;
+}
+body.rn #roamingRates .card .field-container input::placeholder {
+  color: #959595;
+}
+body.rn #roamingRates .card .field-container img {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+}
+body.rn #roamingRates .card .link {
+  text-align: right;
+  padding-top: 20px;
+}
+body.rn #roamingRates .card .link a {
+  font-size: 13px;
+  color: #4559FC;
+  letter-spacing: -1px;
+  text-decoration: underline;
+}
+body.rn #roamingRates .card .button {
+  height: 36px;
+  line-height: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 18px;
+  margin: 20px auto 20px auto;
+
+  background-color: #4559fc;
+  color: white;
+  text-align: center;
+}
+body.rn #roamingRates .card ul.description {
+  font-size: 13px;
+  color: #959595;
+  list-style-type: circle;
+  list-style-position: outside;
+  margin-left: 20px;
+}
+body.rn #roamingRates .card ul.description li {
+  margin-bottom: 10px;
+}
+body.rn #roamingRates .card .section {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+body.rn #roamingRates .availables {
+  background-color: #f3f4f9;
+  border-radius: 6px;
+  padding: 16px 20px;
+  font-size: 14px;
+  letter-spacing: -0.47px;
+  line-height: 21px;
+  margin-bottom: 20px;
+}
+body.rn #roamingRates .attentionHead {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+  height: 60px;
+  margin-top: 20px;
+}
+body.rn #roamingRates .attentionHead .icon {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+}
+body.rn #roamingRates .attentionHead .title {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.44px;
+  margin-left: 35px;
+  line-height: 60px;
+}
+body.rn #roamingRates .attentionHead .toggle {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  right: 10px;
+  top: 22px;
+}
+body.rn #roamingRates .attentionBody {
+  display: none;
+  padding: 28px 0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 15px;
+}
+body.rn #roamingRates .attentionBody a {
+  color: #4559fc;
+  text-decoration: underline;
+}
+body.rn #roamingRates .attentionBody ul.description li {
+  color: #000;
+}
+body.rn #roamingRates .rateHead {
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  border-bottom: 1px solid #e0e0e0;
+  min-height: 58px;
+  margin-top: 20px;
+}
+body.rn #roamingRates .rateHead .values {
+  position: absolute;
+  right: 0;
+  top: 2px;
+}
+body.rn #roamingRates .rateHead .opener {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #aaa;
+}
+body.rn #roamingRates .rateBody {
+  display: none;
+  margin-top: 16px;
+  border-top: 1px solid #f2f2f2;
+  padding-top: 16px;
+}
+body.rn #roamingRates .rateBody .closer {
+  font-size: 13px;
+  font-weight: 400;
+  color: #aaa;
+}
+body.rn #roamingRates .rateBody .align-right {
+  text-align: right;
+  padding-bottom: 10px;
+}
+body.rn #roamingRates .panels {
+  margin-top: 20px;
+  /*margin-bottom: 10px;*/
+  height: 128px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+body.rn #roamingRates .panel {
+  display: inline-block;
+  width: 192px;
+  height: 110px;
+  background-color: #e5ebff;
+  border-radius: 4px;
+  padding: 0 20px;
+  margin-right: 8px;
+  cursor: pointer;
+  overflow-x: hidden;
+}
+body.rn #roamingRates .panel h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+body.rn #roamingRates .panel p {
+  font-size: 12px;
+  color: #666;
+}
+body.rn #roamingRates .rateBody .rateBodyRow {
+  margin-bottom: 15px;
+}
+body.rn #roamingRates .rateBody .rateBodyRow .name {
+  display: block;
+}
+body.rn #roamingRates .rateBody .rateBodyRow .value {
+  display: block;
+  float: right;
+}
+body.rn #roamingRates .rateBody .lo {
+  font-size: 13px;
+  color: #4559FC;
+  letter-spacing: -1px;
+  text-decoration: underline;
+}
+body.rn #roamingMyuse .card {
+  margin-top: 10px;
+  background-color: white;
+  padding: 32px 20px 20px 20px;
+}
+body.rn #roamingMyuse .card h2 {
+  font-size: 21px;
+  font-weight: 600;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+}
+body.rn #roamingMyuse .card h2 .count {
+  font-size: 14px;
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+}
+body.rn #roamingMyuse .card p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3em;
+  color: #000;
+}
+body.rn #roamingMyuse .empty {
+  text-align: center;
+  padding: 24px;
+}
+body.rn #roamingMyuse .empty p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #000;
+  letter-spacing: -0.36px;
+  margin-top: 15px;
+}
+body.rn #roamingMyuse .item h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  position: relative;
+  margin-bottom: 16px;
+}
+body.rn #roamingMyuse .item .arrow {
+  position: absolute;
+  right: 0px;
+  top: 4px;
+}
+body.rn #roamingMyuse .item .divider {
+  height: 2px;
+  border-bottom: 1px dashed #e0e0e0;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+body.rn #roamingMyuse .item .row {
+  position: relative;
+  height: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}
+body.rn #roamingMyuse .item .row .label {
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+body.rn #roamingMyuse .item .row .value {
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+body.rn #roamingMyuse .item .colorGray {
+  color: #959595;
+}
+body.rn #roamingMyuse .item .fontsize15 {
+  font-size: 15px;
+}
+body.rn #roamingMyuse .item .bold {
+  font-weight: 700;
+}
+body.rn #roamingMyuse .item .button {
+  text-decoration: underline;
+  font-size: 13px;
+  font-weight: 400;
+  color: #4559fc;
+}
+body.scroll #gnb {
+  background-color: white;
+  border-bottom: 1px solid #e9e9e9;
+}
+body.scroll #roamingOn #gnb {
+  background-color: white;
+  border-bottom: 0;
+  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.15);
+}
+body.scroll #roamingOn #gnb .logo {
+  display: none;
+}
+body.scroll #roamingOn #gnb .menu .white {
+  display: none;
+}
+body.scroll #roamingOn #gnb .menu .black {
+  display: block;
+}
+body.scroll #roamingOn #gnb .appbar {
+  display: inline-block;
+}
+

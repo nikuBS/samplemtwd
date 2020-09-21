@@ -1,9 +1,10 @@
 const environment = {
   local: {
-    BFF_SERVER: 'http://61.250.19.37:31020',
-    BFF_SERVER_G: 'http://211.188.180.73:31010',
+    BFF_SERVER: 'http://61.250.19.37:31010',
+    BFF_SERVER_G: 'http://211.188.180.73:31020',
     CDN: 'http://localhost:3001',
     CDN_ORIGIN: 'http://localhost:3001',
+    CDN_DEV: 'https://cdnm-dev.tworld.co.kr',
     SHORTCUT: 'skt.sh:3000',
     REDIS: {
       host: '61.250.19.37',

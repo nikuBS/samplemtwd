@@ -1,0 +1,254 @@
+<div id="roamingMenu" class="dialog">
+    <div class="header">
+        <div class="close">
+            <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#fff">
+                    <rect height="3" rx="1.5" transform="matrix(.70710678 .70710678 -.70710678 .70710678 20.353553 -8.137825)" width="42" x="-1" y="19"/>
+                    <rect height="3" rx="1.5" transform="matrix(-.70710678 .70710678 .70710678 .70710678 19.646447 -8.137825)" width="42" x="-1" y="19"/>
+                </g>
+            </svg>
+        </div>
+        <% if (svcInfo && svcInfo.mbrNm) { %>
+        <h2>
+            안녕하세요. <%= svcInfo.mbrNm %>님
+            <% if (process.env['NODE_ENV'] == 'local') { %>
+            <span style="font-size: 16px;">
+                <%= svcInfo.userId %>
+            </span>
+            <% } %>
+        </h2>
+        <% } else { %>
+        <h2 class="login">로그인 해주세요 &gt;</h2>
+        <% } %>
+        <div class="mode">
+            <span>T로밍 모드 이용 중</span>
+            <div class="switch" onclick="confirmOff();">
+                <div class="track"></div>
+                <div id="thumb" class="thumb-on"></div>
+            </div>
+            <div class="reset"></div>
+        </div>
+        <div class="sticky-menu">
+            <div class="menu" onclick="showHome();">
+                <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-width="1.8"><path d="m17.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round"/><path d="m16.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round"/><path d="m34.6084798 14-12.6084798 9.1907418v2.8092582l14-4.3092582z" stroke-linejoin="round" transform="matrix(-1 0 0 1 58 0)"/><path d="m27.0364033 29-5.0364033 3.8934897v3.1065103l7-2.3287325-.3684211-4.6712675z" stroke-linejoin="round" transform="matrix(-1 0 0 1 51 0)"/><path d="m20.5 3.9c-.0392524 0-.0785019.0006701-.1177314.00201001-1.903678.06502126-3.3942038 1.66096732-3.3291825 3.5646453l.787746 23.06345159c.0489547 1.4332862 1.2250459 2.5698931 2.6591679 2.5698931s2.6102132-1.1366069 2.6591679-2.5698931l.787746-23.06345159c.0013399-.0392295.00201-.07847902.00201-.1177314 0-1.90478808-1.5441358-3.44892391-3.4489239-3.44892391z" fill="#4559fc"/></g></g></svg>
+                <span>T로밍 모드</span>
+            </div>
+            <div class="divider"></div>
+            <div class="menu" onclick="showMyServices();">
+                <svg height="20" viewBox="0 0 40 40" width="20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h40v40h-40z" fill="#fff" opacity="0"/><g stroke="#fff" stroke-linejoin="round" stroke-width="1.8"><path d="m4 34v-2.5c0-6.9035594 5.59644063-12.5 12.5-12.5 6.9035594 0 12.5 5.5964406 12.5 12.5v2.5c-6.8857191 0-15.2190525 0-25 0z" stroke-linecap="square"/><g transform="translate(20 19)"><circle cx="8.5" cy="8.5" fill="#4559fc" r="8.5" stroke-linecap="square"/><path d="m1 8.5h16" fill="#4559fc" stroke-linecap="square"/><g stroke-linecap="round"><path d="m8 0c-4 5.35671158-4 11.0233782 0 17"/><path d="m12 0c-4 5.35671158-4 11.0233782 0 17" transform="matrix(-1 0 0 1 21 0)"/></g></g><circle cx="17" cy="12" r="7" stroke-linecap="square"/></g></g></svg>
+                <span>T로밍 이용현황</span>
+            </div>
+        </div>
+    </div>
+    <div class="menus">
+        <h3>상품 둘러보기</h3>
+        <ul>
+            <li>
+                <a href="/product/roaming">
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8" transform="translate(4.5 5.2)"><path d="m.9 26.1h25.2v-21.6h-12.9727922l-3.60000001-3.6h-8.62720779z"/><path d="m8.1 14.04 4.4571429 4.86 7.2428571-8.1"/></g></g></svg>
+                <span>T로밍</span>
+                </a>
+            </li>
+            <li>
+                <a href="/product/roaming/fee">
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><circle cx="18" cy="18.7" r="14.4"/><g stroke-linecap="square" transform="translate(9.9 15.1)"><path d="m2.7 0 2.49230769 8.1 2.91764178-8.06006892 2.89774283 8.06006892 2.4923077-8.1" stroke-linejoin="bevel"/><path d="m2.7 3.6h-2.7"/><path d="m16.2 3.6h-2.7"/></g></g></g></svg>
+                <span>T로밍 요금제</span>
+                </a>
+            </li>
+            <li>
+                <a href="/product/roaming/addons">
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(0 .7)"><path d="m0 0h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><path d="m5.4 30.6h25.2v-25.2h-25.2z"/><path d="m23.4 16.2c0-2.9823376-2.4176624-5.4-5.4-5.4s-5.4 2.4176624-5.4 5.4" stroke-linecap="square" transform="matrix(1 0 0 -1 0 27)"/></g></g></svg>
+                <span>T로밍 부가서비스</span>
+                </a>
+            </li>
+            <li>
+                <a href="/product/roaming/coupon">
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(0 .7)"><path d="m0 0h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><path d="m5.4 30.6h25.2v-25.2h-25.2z"/><path d="m9.9 15.3h5.4v-5.4h-5.4z" fill="#fff"/><path d="m20.7 26.1h5.4" stroke-linecap="square"/></g></g></svg>
+                <span>T로밍 카드/쿠폰</span>
+                </a>
+            </li>
+            <li>
+                <a href="/product/roaming/do/search-before">
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><circle cx="18" cy="18.7" r="14.4"/><g stroke-linecap="square" transform="translate(14.4 11.5)"><path d="m7.0875 4.34700808c0-.17959457-.02777351-.35544758-.0825699-.52306918-.3280277-1.02668227-1.59885353-1.7989389-3.10612953-1.7989389h-.70859987c-1.75423507 0-3.1902007 1.04464173-3.1902007 2.32200808 0 .75205224.49767131 1.42253862 1.26557138 1.8475791l4.55710787 2.20003343c.76714944.42504047 1.26482075 1.09627516 1.26482075 1.84757909 0 1.2773664-1.435215 2.4140503-3.18869943 2.4140503h-.70859987c-1.75423507 0-3.1902007-1.1366839-3.1902007-2.4140503"/><path d="m3.54375 0v2.025"/><path d="m3.54375 12.65625v2.025"/></g></g></g></svg>
+                <span>국가별 로밍 이용요금 조회</span>
+                </a>
+            </li>
+        </ul>
+
+        <h3>이용 안내</h3>
+        <ul>
+            <li>
+                <a href="/product/roaming/info/guide">
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8" transform="translate(4.5 5.2)"><path d="m.9 26.1h25.2v-21.6h-12.9727922l-3.60000001-3.6h-8.62720779z" fill="#fff"/><path d="m8.1 14.04 4.4571429 4.86 7.2428571-8.1"/></g></g></svg>
+                <span>T로밍 안내</span>
+                </a>
+            </li>
+            <li>
+                <a href="/product/roaming/info/center">
+                <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 .7h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><circle cx="18" cy="18.7" r="14.4"/><g stroke-linecap="square" transform="translate(9.9 15.1)"><path d="m2.7 0 2.49230769 8.1 2.91764178-8.06006892 2.89774283 8.06006892 2.4923077-8.1" stroke-linejoin="bevel"/><path d="m2.7 3.6h-2.7"/><path d="m16.2 3.6h-2.7"/></g></g></g></svg>
+                <span>T로밍 센터</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <a href="/product/roaming/info/barocall">
+    <div class="banner">
+        <img src="<%= CDN %>/img/product/roam/img_menu_01.png" width="100%" />
+    </div>
+    </a>
+    <div class="contacts">
+        <a href="tel:+82232100404">
+            <div class="contact">
+                <svg width="16" height="16" viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="none" fill-rule="evenodd">
+                        <path d="m0 0h41v41h-41z"/>
+                        <path d="m37.979199 31.3171533c-.0737434.5601963-.3376671 1.1275082-.6895655 1.4794098l-2.6178907 2.6243836c-8.9268327 7.4727335-20.2626165-3.6593883-20.3751722-3.771945l-5.92728752-5.9312235c-.11320259-.1132036-11.24910295-11.4465044-3.81072257-20.34172244l2.66381863-2.66578383c.35125146-.3512547.91855814-.61582776 1.47810237-.68892496.10932136-.01487819.21540835-.02134697.31761412-.02134697.41076368 0 .75231206.11255675.94572677.30338574l5.5385175 6.39115365c.6630437.66369673.6630437 1.74398281 0 2.40703271l-2.0208279 2.0227872c-.4955039.5343211-.8506366 1.0427671-1.0725137 1.5499194-.4424604 1.2103086-1.1449633 4.3748352 1.8933942 7.6486843l3.4057807 3.4071059c3.2544127 3.0235073 6.4156759 2.3184104 7.6647856 1.859774.4670415-.2044135.974836-.5601963 1.5285583-1.0744642l2.0027155-2.0040278c.6429908-.6436435 1.7265012-.6766343 2.4412947.0342846l6.3302888 5.4887589c.2632769.2768638.373892.7426159.3033829 1.2827589z"
+                              fill="#bebebe"/>
+                    </g>
+                </svg>
+                <span class="name">외교부 영사콜센터</span>
+                <span class="phone">+82-2-3210-0404</span>
+            </div>
+        </a>
+        <a href="tel:+82263439000">
+            <div class="contact">
+                <svg width="16" height="16" viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="none" fill-rule="evenodd">
+                        <path d="m0 0h41v41h-41z"/>
+                        <path d="m37.979199 31.3171533c-.0737434.5601963-.3376671 1.1275082-.6895655 1.4794098l-2.6178907 2.6243836c-8.9268327 7.4727335-20.2626165-3.6593883-20.3751722-3.771945l-5.92728752-5.9312235c-.11320259-.1132036-11.24910295-11.4465044-3.81072257-20.34172244l2.66381863-2.66578383c.35125146-.3512547.91855814-.61582776 1.47810237-.68892496.10932136-.01487819.21540835-.02134697.31761412-.02134697.41076368 0 .75231206.11255675.94572677.30338574l5.5385175 6.39115365c.6630437.66369673.6630437 1.74398281 0 2.40703271l-2.0208279 2.0227872c-.4955039.5343211-.8506366 1.0427671-1.0725137 1.5499194-.4424604 1.2103086-1.1449633 4.3748352 1.8933942 7.6486843l3.4057807 3.4071059c3.2544127 3.0235073 6.4156759 2.3184104 7.6647856 1.859774.4670415-.2044135.974836-.5601963 1.5285583-1.0744642l2.0027155-2.0040278c.6429908-.6436435 1.7265012-.6766343 2.4412947.0342846l6.3302888 5.4887589c.2632769.2768638.373892.7426159.3033829 1.2827589z"
+                              fill="#bebebe"/>
+                    </g>
+                </svg>
+                <span class="name">T로밍 고객 센터</span>
+                <span class="phone">+82-2-6343-9000</span>
+            </div>
+        </a>
+    </div>
+    <% if (svcInfo && svcInfo.mbrNm) { %>
+    <a href="#" onclick="return logout();">
+        <div class="logout">
+            로그아웃
+        </div>
+    </a>
+    <% } %>
+</div>
+<script type="text/x-handlebars-template" id="tpl-switch-off">
+    <div id="{{ id }}">
+        <img class="decoration" src="<%= CDN %>/img/product/roam/ico_loading.svg" width="145" />
+        <div class="progress">
+            <span class="circle off"></span>
+            <span class="circle off"></span>
+            <span class="circle off"></span>
+            <span class="circle off"></span>
+        </div>
+        <p class="message">
+            T로밍 모드를 끄고 <br />
+            T월드 국내 모드로 이동합니다
+        </p>
+        <p class="note">
+            로밍 중 T월드 국내 모드 접속 시 데이터 요금 발생 <br />
+            앱 종료 후 재실행시 다시 T로밍 모드로 전환
+        </p>
+    </div>
+</script>
+<script type="text/x-handlebars-template" id="tpl-dialog-off">
+    <div id="{{ id }}" class="modal">
+        <div class="content">
+            <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+            <p class="message">
+                T로밍 모드를 끌 경우 <br />
+                T월드 국내모드로 이동하며 <br />
+                <span class="colorPoint">데이터 요금이 발생</span>됩니다.
+            </p>
+            <p class="note">로밍 서비스는 계속 이용 가능</p>
+            <p class="note">앱 종료 후 재실행시 다시 T로밍 모드로 전환</p>
+            <div class="divider"></div>
+            <div class="buttons">
+                <a href="#" onclick="return switchOff()">T로밍모드 종료</a>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">
+    function dismiss(id, container, callback) {
+      $('#' + id).hide();
+      if (!container) {
+        container = 'roamingMenu';
+      }
+      document.getElementById(container).removeChild(document.getElementById(id));
+
+      if (callback) {
+        callback();
+      }
+    }
+    function showModal(id, onDismiss, container) {
+      $('#' + id).on('click', function(e) {
+        if (e.target === document.getElementById(id)) {
+          dismiss(id, container);
+          if (onDismiss) {
+            onDismiss();
+          }
+        }
+      });
+      $('#' + id + ' .close').on('click', function() {
+        dismiss(id, container);
+        if (onDismiss) {
+          onDismiss();
+        }
+      });
+      $('#' + id).show();
+    }
+    function showHome() {
+      document.location.href = '/product/roaming/on';
+    }
+    function showMyServices() {
+      document.location.href = '/product/roaming/my-use';
+    }
+    function confirmOff() {
+      var thumb = $('#thumb');
+      thumb.removeClass('thumb-on');
+      thumb.addClass('thumb-off');
+
+      const id = 'dialogOff';
+      const template = Handlebars.compile($('#tpl-dialog-off').html());
+      document.getElementById('roamingMenu').innerHTML += template({id: id});
+      showModal(id, function() {
+        var thumb = $('#thumb');
+        thumb.removeClass('thumb-off');
+        thumb.addClass('thumb-on');
+      });
+    }
+
+    var switchOffIndex = 0;
+    var switchOffTimer;
+    function switchOff() {
+      document.cookie = 'ROAMING_MCC=999; path=/';
+
+      dismiss('dialogOff');
+      const id = 'roamingOff';
+      const template = Handlebars.compile($('#tpl-switch-off').html());
+      document.getElementById('roamingMenu').innerHTML += template({id: id});
+      $('#roamingOff').show();
+      const circles = $('#roamingOff .progress span')
+      switchOffTimer = setInterval(function() {
+        if (switchOffIndex > 0) {
+          circles[switchOffIndex-1].className = 'circle off';
+        }
+        circles[switchOffIndex].className = 'circle on';
+        switchOffIndex += 1;
+        if (switchOffIndex >= 4) {
+          clearInterval(switchOffTimer);
+          setTimeout(function() {
+            document.location.href = '/product/roaming';
+          }, 250);
+        }
+      }, 530);
+      return false;
+    }
+
+    function logout() {
+      var tidLanding = new Tw.TidLandingComponent();
+      tidLanding.goLogout();
+      return false;
+    }
+</script>
