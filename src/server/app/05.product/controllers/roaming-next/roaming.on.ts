@@ -12,6 +12,9 @@ export default class RoamingOnController extends TwViewController {
   CDN = EnvHelper.getEnvironment('CDN');
 
   static formatTariff(t) {
+    if (!t) {
+      return t;
+    }
     if (t.basFeeInfo) {
       let iFee: any = parseInt(t.basFeeInfo, 10);
       if (iFee) {

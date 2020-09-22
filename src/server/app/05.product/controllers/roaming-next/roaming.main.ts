@@ -6,6 +6,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
 import moment from 'moment';
 import RoamingHelper from './roaming.helper';
+import {ObserveOnMessage} from 'rxjs/operators/observeOn';
 
 export default class RoamingMainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -90,36 +91,34 @@ export default class RoamingMainController extends TwViewController {
     if (!isLogin) {
       return Observable.of(null);
     }
-    return this.apiService.request(API_CMD.BFF_10_0055, {}).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0055, {}).switchMap(resp => {
       if (resp.code !== API_CODE.CODE_00) {
-        return {code: resp.code, msg: resp.msg};
+        return Observable.of({code: resp.code, msg: resp.msg});
       }
       // prodInfoTxt: 'T로밍 OnePass300 기간형 외 2건",
       // feeProdYn: Y, 로밍요금제 여부
       // addProdYn: N, 로밍부가서비스 여부
-
       if (resp.result.feeProdYn === 'Y') {
-        // 이용기간이 지났을 경우 filter out 시키기 위해 별도 API 호출
-        // return this.apiService.request(API_CMD.BFF_10_0056, {}).switchMap(r0 => {
-        //   if (r0.result && r0.result.roamingProdList) {
-        //     const prodList = r0.result.roamingProdList;
-        //     if (prodList.length > 0) {
-        //       return this.apiService.request(API_CMD.BFF_10_0091, null, null, [prodList[0].prodId]).map(r1 => {
-        //         if (r1.result && r1.result.svcEndDt) {
-        //           const endDate = moment(r1.result.svcEndDt, 'YYYYMMDD');
-        //           const today = moment();
-        //           if (today.isAfter(endDate)) {
-        //             return null;
-        //           }
-        //         }
-        //         return resp.result;
-        //       });
-        //     }
-        //   }
-        //   return resp.result;
-        // });
+        return this.apiService.request(API_CMD.BFF_10_0056, {}).switchMap(r0 => {
+          if (r0.result && r0.result.roamingProdList) {
+            const prodList = r0.result.roamingProdList;
+            if (prodList.length > 0) {
+              return this.apiService.request(API_CMD.BFF_10_0091, null, null, [prodList[0].prodId]).map(r1 => {
+                if (r1.result && r1.result.svcEndDt) {
+                  const endDate = moment(r1.result.svcEndDt, 'YYYYMMDD');
+                  const today = moment();
+                  if (today.isAfter(endDate)) {
+                    return null;
+                  }
+                }
+                return resp.result;
+              });
+            }
+          }
+          return Observable.of(resp.result);
+        });
       }
-      return resp.result;
+      return Observable.of(resp.result);
     });
   }
 

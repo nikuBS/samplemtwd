@@ -31,12 +31,14 @@
                 <a href="/product/callplan?prod_id=<%= recommended.prodId %>">
                     <div class="tariff">
                         <h3><%= recommended.prodNm %></h3>
+                        <% if (recommended.data) { %>
                         <div class="data">
                             <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
                             <span><%= recommended.data %></span>
                         </div>
                         <span class="phone"><%= recommended.phone %></span>
                         <span class="price"><%= recommended.price %></span>
+                        <% } %>
                         <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
                     </div>
                 </a>

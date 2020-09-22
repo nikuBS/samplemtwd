@@ -3,7 +3,7 @@
     includeCalendar: true,
   }); %>
 <body class="rn">
-<div id="roamingMain">
+<div id="roamingMain" class="wrap">
     <div id="gnb">
         <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
@@ -48,10 +48,12 @@
                 <ul></ul> 
             </div>
             <p class="description">찾으시는 나라가 없으신가요?</p>
-            <form action="#" onsubmit="searchNation(); return false;">
+            <form action="#" onsubmit="return searchNation();">
                 <div class="field-container">
                     <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
-                    <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
+                    <img src="<%= CDN %>/img/product/roam/ico_search_a.png" class="search"
+                         onclick="searchNation();"
+                         width="21" height="21" alt="Search" />
                 </div>
             </form>
             <div class="link">
@@ -184,7 +186,7 @@
     fillPopularNations();
     fillTariffGroups();
 
-    installNationSearch();
+    installNationSearch(openScheduleDialog);
     beautifyCurrentUse();
   });
 
