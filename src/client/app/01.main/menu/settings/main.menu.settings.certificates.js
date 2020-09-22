@@ -40,7 +40,7 @@ Tw.MainMenuSettingsCertificates.prototype = {
   },
   _bindEvents: function () {
 
-    this.$container.on('click', '#prev-step', $.proxy(function () {
+    this.$container.on('click', '.prev-step', $.proxy(function () {
       window.location.replace('/main/menu/settings');
     }, this));
 
