@@ -37,12 +37,14 @@
                         <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
                     </div>
                 </a>
+                <% if (recommended.neiborRomPsblNatInfo) { %>
                 <div class="others">
                     <a href="#" onclick="return showCountries('<%= recommended.prodId %>')">더보기 +</a>
                     <p>
                         <span class="colorPoint"><%= recommended.neiborRomPsblNatInfo %></span> 등의 국가에서도<br />사용 가능해요.
                     </p>
                 </div>
+                <% } %>
             </div>
             <div class="past">
                 <% if (recentUsed) { %>
