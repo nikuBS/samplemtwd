@@ -198,6 +198,7 @@ Tw.MainMenuSettings.prototype = {
         // this._popupService.open({
         //   hbs: 'MA_03_01_02_03_01_01'
         // }, $.proxy(this._onUpdatePopup, this));
+        $.proxy(this._onUpdatePopup, this);
         return;
 
       } else { // 최신버전 
