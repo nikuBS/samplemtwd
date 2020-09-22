@@ -22,6 +22,7 @@
         </div>
         <% } %>
         <% for (var tariff of tariffs) { %>
+            <% if (tariff.endDate && tariff.endDate.isBefore(now)) { continue; } %>
         <div class="item">
             <a href="/product/callplan?prod_id=<%= tariff.prodId %>">
                 <h3>
