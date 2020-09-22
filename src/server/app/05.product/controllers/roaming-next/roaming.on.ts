@@ -221,10 +221,12 @@ export default class RoamingOnController extends TwViewController {
         this.getTariffDateRange(current.prodId).subscribe(r => {
           if (r.result && r.code === API_CODE.CODE_00) {
             const range = r.result;
-            if (!range.svcStartDt) {
-              range.svcStartDt = moment().subtract(3, 'days').format('YYYYMMDD');
+            // if (!range.svcStartDt) {
+            //   range.svcStartDt = moment().subtract(3, 'days').format('YYYYMMDD');
+            // }
+            if (range.svcStartDt) {
+              current.startDate = moment(range.svcStartDt, 'YYYYMMDD');
             }
-            current.startDate = moment(range.svcStartDt, 'YYYYMMDD');
             if (range.svcEndDt) {
               current.endDate = moment(range.svcEndDt, 'YYYYMMDD');
             } else {
@@ -408,7 +410,7 @@ export default class RoamingOnController extends TwViewController {
    * @private
    */
   private getTariffDateRange(prodId: string): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0091, {prodId});
+    return this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId]);
   }
 
   /**
@@ -459,7 +461,7 @@ export default class RoamingOnController extends TwViewController {
       // rgstDtm: '2018112803', // 등록일시 YYYYMMDDHH
       // exprDtm: '2018112823', // 종료일시 YYYYMMDDHH
       if (!resp.result) {
-        console.log('BFF_05_0201 failed: ' + JSON.stringify(resp));
+        this.logger.warn('BFF_05_0201 failed', resp);
         // BLN0007: 잔여량 조회 가능 항목이 없습니다
         // BLN0012: 조회 대상이 아닙니다
         return {code: resp.code, msg: resp.msg};

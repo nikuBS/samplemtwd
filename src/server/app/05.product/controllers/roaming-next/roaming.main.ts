@@ -97,6 +97,28 @@ export default class RoamingMainController extends TwViewController {
       // prodInfoTxt: 'T로밍 OnePass300 기간형 외 2건",
       // feeProdYn: Y, 로밍요금제 여부
       // addProdYn: N, 로밍부가서비스 여부
+
+      if (resp.result.feeProdYn === 'Y') {
+        // 이용기간이 지났을 경우 filter out 시키기 위해 별도 API 호출
+        // return this.apiService.request(API_CMD.BFF_10_0056, {}).switchMap(r0 => {
+        //   if (r0.result && r0.result.roamingProdList) {
+        //     const prodList = r0.result.roamingProdList;
+        //     if (prodList.length > 0) {
+        //       return this.apiService.request(API_CMD.BFF_10_0091, null, null, [prodList[0].prodId]).map(r1 => {
+        //         if (r1.result && r1.result.svcEndDt) {
+        //           const endDate = moment(r1.result.svcEndDt, 'YYYYMMDD');
+        //           const today = moment();
+        //           if (today.isAfter(endDate)) {
+        //             return null;
+        //           }
+        //         }
+        //         return resp.result;
+        //       });
+        //     }
+        //   }
+        //   return resp.result;
+        // });
+      }
       return resp.result;
     });
   }
@@ -107,6 +129,13 @@ export default class RoamingMainController extends TwViewController {
     }
     return this.apiService.request(API_CMD.BFF_10_0197, {}).map(resp => {
       if (resp.result && resp.result.prodId) {
+        // 아래 상품은 원장 존재하지 않으므로 미표시
+        // NA00005904 자동안심T로밍 데이터,
+        // NA00004963 T로밍 Biz 요금제,
+        // if (['NA00005904', 'NA00004963'].indexOf(resp.result.prodId) >= 0) {
+        //   return null;
+        // }
+
         // prodId, prodNm: 'baro 4GB',
         // svcStartDt, svcEndDt: '20190828',
         // startEndTerm: '30',

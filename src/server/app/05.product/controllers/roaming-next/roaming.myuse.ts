@@ -45,7 +45,14 @@ export default class RoamingMyUseController extends TwViewController {
         })).subscribe((ranges) => {
           try {
             this.mergeRanges(tariffs, ranges, dataUsages);
-            context.tariffs = tariffs;
+            const filtered: any = [];
+            for (const t of tariffs) {
+              if (t.endDate && t.endDate.isBefore(context.now)) {
+                continue;
+              }
+              filtered.push(t);
+            }
+            context.tariffs = filtered;
             res.render('roaming-next/roaming.myuse.html', context);
           } catch (e) {
             console.error(e);
