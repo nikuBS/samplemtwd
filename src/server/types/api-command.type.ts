@@ -551,6 +551,8 @@ export const API_CMD = {
   BFF_07_0102: { path: '/core-bill/:version/affiliatecard-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0103: { path: '/core-bill/:version/micro-prepay/spec-sp-yn', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0104: { path: '/core-bill/:version/micro-prepay/prepay-swing-error-msg', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0105: { path: '/core-bill/:version/micro-prepay/auto-process-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0106: { path: '/core-bill/:version/use-contents-prepay/auto-process-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -1000,7 +1002,11 @@ export const API_CMD = {
   BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0190: { path: '/core-product/:version/roaming-use-firstTime', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0196: { path: '/core-product/:version/roaming/fee-plans/recommend-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0197: { path: '/core-product/:version/roaming/fee-plans/latest-used-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0197: {
+    path: '/core-product/:version/roaming/fee-plans/latest-used-fee-plans',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: true },
   BFF_10_0198: { path: '/core-product/:version/roaming/submain/group-products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0199: { path: '/core-product/:version/roaming/mode/country-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0200: { path: '/core-product/:version/roaming/mode/country-fee-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
