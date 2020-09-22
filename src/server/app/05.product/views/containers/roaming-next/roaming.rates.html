@@ -41,7 +41,7 @@
     </div>
     <% } %>
     <div class="card">
-        <h2>출국 국가 검색 <span class="tip">TIP</span></h2>
+        <h2>출국 국가 검색 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_01')">TIP</span></h2>
 
         <form id="searchForm" action="/product/roaming/search-result" method="get"
               onsubmit="return searchNation();">
@@ -107,9 +107,9 @@
                 -->
             </ul>
         </div>
-        <h3 class="section">종량 요금 안내 <span class="tip">TIP</span></h3>
+        <h3 class="section">종량 요금 안내</h3>
         <div class="rateHead" id="rateData">
-            <span class="title">데이터<span class="tip">TIP</span></span>
+            <span class="title">데이터<span class="tip" onclick="showTip(this, 'RM_04_tip_01')">TIP</span></span>
             <span class="values">
                 <span class="colorPoint" id="dataCharge">-</span>/패킷
             </span>
@@ -239,7 +239,8 @@
     <% } %>
     <div class="card">
         <h2>꼭 확인해주세요</h2>
-        <h3>요금제 관련 안내 <span class="tip">TIP</span></h3>
+        <h3>이용 관련 안내 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_03')">TIP</span></h3>
+        <h3>요금제 관련 안내 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_04')">TIP</span></h3>
     </div>
 </div>
 <div id="nationsDialog" class="dialog">
@@ -283,6 +284,8 @@
           number.substring(7);
       }
     }
+
+    prepareTooltips();
 
     prepareNations();
     $('#nation-search').autocomplete({
@@ -654,19 +657,32 @@
     // }
   }
 
-  function popup(e, popupId) {
-    /*
-    Tw.Popup.open({
-      url: '/hbs/',
-      hbs: 'popup',
-      'title': '타이틀',
-      'btn-close': 'btn-tooltip-close tw-popup-closeBtn',
-      'title_type': 'tit-tooltip',
-      'cont_align': 'tl font-only-black',
-      'contents': '내용',
-      'tooltip': 'tooltip-pd'
-    }, null, null, null, $(e.currentTarget));
-     */
+
+
+  var tooltips = {
+
+  };
+  function showTip(e, tipId) {
+    var tooltipService = new Tw.TooltipService();
+    var tip = tooltips[tipId];
+    tooltipService._openTip(tooltips[tipId], e);
+  }
+  function collectTooltips(items) {
+    for (var item of items) {
+      tooltips[item.mtwdTtipId] = {
+        ttipTitNm: item.ttipTitNm,
+        ttipCtt: item.ttipCtt,
+        type: item.ttipPreTypCd,
+      }
+    }
+  }
+  function prepareTooltips() {
+    Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: 'M000455'}).done(function(r) {
+      if (r.result && r.result.tooltip) collectTooltips(r.result.tooltip);
+    });
+    Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: 'M000460'}).done(function(r) {
+      if (r.result && r.result.tooltip) collectTooltips(r.result.tooltip);
+    });
   }
 
   var nations = {
