@@ -214,7 +214,7 @@ Tw.MainMenuSettings.prototype = {
     }, this));
     // 취소 버튼 이전 화면 이동 
     $popupContainer.on('click', '.prev-step', $.proxy(function () {
-      this._popupService.close();
+      window.location.replace('/main/menu/settings');
     }, this));
   }
 
