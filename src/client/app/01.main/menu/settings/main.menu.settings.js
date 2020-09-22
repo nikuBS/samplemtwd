@@ -73,7 +73,7 @@ Tw.MainMenuSettings.prototype = {
       this._osType = 'A';
       var versionArray = version.split('.');
       if (versionArray[2] % 2 === 0) { // 대문자
-        version = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1);
+        version = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2] * 1 + 1);
       }
       this._currentVersion = version;
     }
@@ -94,8 +94,8 @@ Tw.MainMenuSettings.prototype = {
         return item.osType === currentOsType;
       });
       var latestVersion = versionInfo[0].newVer;
-      if(Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) {
-      // if (latestVersion > this._currentVersion) {
+      if (Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) {
+        // if (latestVersion > this._currentVersion) {
         this.$updateBox.removeClass('none');
         this.$versionText.removeClass('point');
       } else {
@@ -135,7 +135,7 @@ Tw.MainMenuSettings.prototype = {
       url = 'intent://scan/#Intent;package=com.sktelecom.minit;end';
 
       if (!Tw.FormatHelper.isEmpty(this._xRequestedWith)) {
-          url = 'intent://scan/#Intent;package='+ this._xRequestedWith.replace(' ', '').replace('.qa', '') +';end';
+        url = 'intent://scan/#Intent;package=' + this._xRequestedWith.replace(' ', '').replace('.qa', '') + ';end';
       }
     } else if (Tw.BrowserHelper.isIos()) {
       url = 'https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8';
@@ -164,14 +164,14 @@ Tw.MainMenuSettings.prototype = {
     // }, $.proxy(this._onUpdatePopup, this));
 
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
-        .done($.proxy(this._lastestVersionPopup, this));
+      .done($.proxy(this._lastestVersionPopup, this));
   },
 
   _onWidgetSettingClicked: function () {
     this._nativeService.send(Tw.NTV_CMD.WIDGET_SETTING, { type: 0 });
   },
 
-  _lastestVersionPopup: function(res) {
+  _lastestVersionPopup: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
 
       var userAgentString = Tw.BrowserHelper.getUserAgent();
@@ -182,7 +182,7 @@ Tw.MainMenuSettings.prototype = {
         this._osType = 'A';
         var versionArray = version.split('.')
         if (versionArray[2] % 2 === 0) { // 대문자 
-          this._currentVersion = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2]*1+1)
+          this._currentVersion = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2] * 1 + 1)
         }
       } else {
         this._osType = 'I';
@@ -193,11 +193,12 @@ Tw.MainMenuSettings.prototype = {
       });
       var latestVersion = versionInfo[0].newVer;
       // console.log(latestVersion, this._currentVersion);// 5.0.10 > 5.0.9
-      if(Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) { // 이전버전 
-        // 업데이트 안내 페이지 팝업 
-        this._popupService.open({
-          hbs: 'MA_03_01_02_03_01_01'
-        }, $.proxy(this._onUpdatePopup, this));
+      if (Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) { // 이전버전 
+        // // 업데이트 안내 페이지 팝업 
+        // this._popupService.open({
+        //   hbs: 'MA_03_01_02_03_01_01'
+        // }, $.proxy(this._onUpdatePopup, this));
+        return;
 
       } else { // 최신버전 
         // 네이티브 페이지 이동 
@@ -206,13 +207,13 @@ Tw.MainMenuSettings.prototype = {
     }
   },
 
-  _onUpdatePopup: function($popupContainer) {
+  _onUpdatePopup: function ($popupContainer) {
     // 업데이트 화면 이동 
-    $popupContainer.on('click', '.btn-style1', $.proxy(function() {
+    $popupContainer.on('click', '.btn-style1', $.proxy(function () {
       this._onUpdate(); // 업데이트 안내 페이지 이동
     }, this));
     // 취소 버튼 이전 화면 이동 
-    $popupContainer.on('click', '.prev-step', $.proxy(function() {
+    $popupContainer.on('click', '.prev-step', $.proxy(function () {
       this._popupService.close();
     }, this));
   }
