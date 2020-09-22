@@ -36,7 +36,7 @@ Tw.MainMenuSettingsCertificates.prototype = {
    * @desc 현재 버전 정보 설정 및 단말 지원범위에 따른 인증메뉴 설정
    */
   _init: function () {
-    $.proxy(this._onCertificates, this);
+    this._onCertificates();
   },
   _bindEvents: function () {
 
