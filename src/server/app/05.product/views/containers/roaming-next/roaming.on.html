@@ -4,7 +4,7 @@
   includeCalendar: true,
 }); %>
 <body class="rn">
-<div id="roamingOn">
+<div id="roamingOn" class="wrap">
     <div id="gnb">
         <span class="menu">
             <img class="white" src="<%= CDN %>/img/product/roam/ico_menu_w.svg" alt="메뉴" width="24" height="24" />
@@ -332,6 +332,9 @@
                 <div class="button button-1" onclick="debugLandingPopup();">
                     진입팝업 Simulation
                 </div>
+                <div class="button button-2" onclick="debugLocationAgreement();">
+                    위치정보 동의 프로세스
+                </div>
             </div>
         </div>
         <% } %>
@@ -413,10 +416,12 @@
 <script type="text/x-handlebars-template" id="tpl-dialog-welcome">
     <div id="{{ id }}" class="modal">
         <div class="content tm">
+            <!--
             <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday);">
                 <span class="box"></span>
                 <label for="notToday">오늘 하루 그만 보기</label>
             </div>
+            -->
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
                 고객님 안녕하세요 <br />
@@ -685,6 +690,16 @@
   function preventToday() {
     var due = moment().add(1, 'day').hours(0).minutes(0).seconds(0);
     document.cookie = 'ROAMING_POPUP=NO; path=/; expires=' + due.toDate().toUTCString();
+  }
+
+  function debugLocationAgreement() {
+    if (Tw.BrowserHelper.isApp()) {
+      new Tw.ProductRoamingMode($('#roamingOn')).checkMcc(function () {
+        alert('이미 동의하셨습니다 :)');
+      });
+    } else {
+      alert('앱에서 확인해주세요 :)')
+    }
   }
 </script>
 <% include ../../components/roaming-next/calendar.javascript.html %>

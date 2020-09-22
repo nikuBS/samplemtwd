@@ -311,16 +311,8 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    Tw.Native.send('getMcc', {}, function(result) {
-      if (result && result.params && result.params.mcc) {
-        var mcc = result.params.mcc;
-        if (Tw.CommonHelper.getCookie('ROAMING_MCC') != '999' && mcc != '450') {
-          document.cookie = 'ROAMING_MCC=' + mcc + '; path=/';
-          document.location.href = '/product/roaming/on?mcc=' + mcc;
-        }
-      }
-    });
     new Tw.MainStore($('#mainStore'), '<%= pageInfo.menuId %>');
+    new Tw.ProductRoamingMode($('#mainStore')).checkMcc();
   });
   function addComma(num) {
   var regexp = /\B(?=(\d{3})+(?!\d))/g;
