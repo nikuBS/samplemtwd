@@ -29,7 +29,7 @@ Tw.MainMenuSettingsCertificates = function (rootEl) {
   this._bindEvents();
 };
 
-Tw.MainMenuSettings.prototype = {
+Tw.MainMenuSettingsCertificates.prototype = {
 
   /**
    * @function
