@@ -118,7 +118,7 @@
 
 .tod-line-sel-box .line-sel-btn:after { background: url("/img/en/ico-white-arr-down.png") no-repeat 50% 50%; background-size: 100% 100%; }
 
-.notice-point .t-np1 { background: url("/img/en/ico_notice_point_gray.png") center 0 no-repeat; background-size: 60px auto; font-weight: 400; }
+.notice-point .t-np1 { background: url("/img/en/ico_notice_point_gray.png") center 0 no-repeat; background-size: 60px auto; font-weight: 400; padding-top: 4.88rem; }
 
 .user-month-bill .this-month-bill .stit { font-size: 1rem; color: #000; }
 
@@ -312,6 +312,22 @@
 
 .myt-note-wrap .tit::before { content: ''; display: inline-block; width: 4px; height: 4px; background: url("/img/en/ico_refer.png") 0 0 no-repeat; position: absolute; top: 3px; left: 0; background-size: 100% 100%; }
 
+.icon-comm-bi122 { display: inline-block; width: 3.75rem; height: 3.75rem; background: url("/img/en/graphic_120px_warning.svg") no-repeat 0 0; background-size: 100% 100%; }
+
+.long-error { padding-top: 2.88rem; }
+
+.long-error .title-box .tx-tit .tx-highlight { font-size: 1.31rem; line-height: 1.5rem; }
+
+.long-error .title-box .tx-tit + .tx-tit { padding-top: 0.69rem; line-height: 1.69rem; }
+
+.long-error .title-box .tx-tit + .tx-tit .tx-highlight { font-size: 1.19rem; line-height: 1.31rem; }
+
+.long-error .txt-center { padding: 0.94rem 1.25rem 0.63rem 1.25rem; }
+
+.long-error .txt-center .basic-txt { font-size: 0.75rem; line-height: 1rem; }
+
+.long-error .txt-center .basic-txt + .basic-txt { padding-top: 0.75rem; }
+
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
 
@@ -365,7 +381,7 @@
 
 .gray-box.pl-30 { width: 95%; margin: 0.94rem auto; background: #f7f9fa; }
 
-.gray-box .charge { width: 100%; display: table; position: relative; font-size: 0.81rem; color: #000; padding: 1.25rem 0.63rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom: 1px solid #e5e5e5; }
+.gray-box .charge { width: 100%; display: table; position: relative; font-size: 1rem; color: #000; padding: 1.25rem 0.63rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom: 1px solid #e5e5e5; }
 
 .gray-box .charge:last-of-type { border-bottom: none; }
 
