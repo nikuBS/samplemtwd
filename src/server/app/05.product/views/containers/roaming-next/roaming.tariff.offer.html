@@ -71,11 +71,13 @@
             </h2>
             <% } %>
         </div>
+        <% if (newbie && newbie.isRoamingFirstTime === 'Y') { %>
         <div class="card">
             <h2>다른 해외 데이터 서비스 간 비교</h2>
             <img class="diff" src="<%= CDN %>/img/product/roam/img_vs_01.png" alt="타서비스 비교" />
             <img class="diff margin0" src="<%= CDN %>/img/product/roam/img_vs_02.png" alt="타서비스 비교" />
         </div>
+        <% } %>
         <% if (availableTariffs && availableTariffs.length > 0) { %>
         <div class="card" style="margin-bottom: 100px; ">
             <h2>

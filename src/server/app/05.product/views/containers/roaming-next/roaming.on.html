@@ -4,7 +4,7 @@
   includeCalendar: true,
 }); %>
 <body class="rn">
-<div id="roamingOn">
+<div id="roamingOn" class="wrap">
     <div id="gnb">
         <span class="menu">
             <img class="white" src="<%= CDN %>/img/product/roam/ico_menu_w.svg" alt="메뉴" width="24" height="24" />
@@ -329,19 +329,11 @@
                     (<%= svcInfo.userId %>)
                     <% } %>
                 </div>
-                <!--
-                <div class="button button-1" onclick="debugMarkAsReserved();">
-                    요금제 기간 '이용예정' 강제
-                </div>
-                <div class="button button-2" onclick="debugMarkAsDone();">
-                    요금제 기간 '이용완료' 강제
-                </div>
-                <div class="button button-2" onclick="debugRestore();">
-                    원복
-                </div>
-                -->
                 <div class="button button-1" onclick="debugLandingPopup();">
                     진입팝업 Simulation
+                </div>
+                <div class="button button-2" onclick="debugLocationAgreement();">
+                    위치정보 동의 프로세스
                 </div>
             </div>
         </div>
@@ -424,10 +416,12 @@
 <script type="text/x-handlebars-template" id="tpl-dialog-welcome">
     <div id="{{ id }}" class="modal">
         <div class="content tm">
-            <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday); return true;">
+            <!--
+            <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday);">
                 <span class="box"></span>
                 <label for="notToday">오늘 하루 그만 보기</label>
             </div>
+            -->
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
                 고객님 안녕하세요 <br />
@@ -438,7 +432,7 @@
             <p class="note"><span class="colorPoint">T로밍 요금제</span>와 함께 해보세요.</p>
             <div class="divider"></div>
             <div class="buttons">
-                <a href="/product/roaming/fee" onclick="dismiss('{{id}}', 'modals', preventSession); return true;">나에게 맞는 요금제 보기</a>
+                <a href="#" onclick="switchScheduleDialog('{{id}}')">나에게 맞는 요금제 보기</a>
             </div>
         </div>
     </div>
@@ -558,7 +552,7 @@
       }
 
       if (baroUsage.code) {
-        $('#baroMessage').html(baroUsage.msg);
+        $('#baroMessage').html(baroUsage.code);
         chartPhone.animate(1.0);
         setTimeout(function() {
           var measuredHeight = document.getElementById('baroMessage').offsetHeight;
@@ -574,6 +568,12 @@
       <% } %>
     }
   });
+  function switchScheduleDialog(previousDialogId) {
+    dismiss(previousDialogId, 'modals', preventSession);
+    openScheduleDialog('<%= country.code %>', '<%= country.name %>',
+      '<%= country.backgroundMiniUrl %>', baseDiv);
+    return false;
+  }
   function markAsDone() {
     $('#content .data-usages h2').css('color', '#999999');
     $('#content .data-usages h4').css('color', '#999999');
@@ -641,15 +641,6 @@
       document.location.href = '/product/roaming/on?tid=' + userId;
     }
   }
-  function debugMarkAsReserved() {
-    document.location.href = '/product/roaming/on?reserved=1';
-  }
-  function debugMarkAsDone() {
-    document.location.href = '/product/roaming/on?reserved=2';
-  }
-  function debugRestore() {
-    document.location.href = '/product/roaming/on';
-  }
   function debugLandingPopup() {
     document.cookie = 'ROAMING_POPUP=NO; expires=' + new Date(0).toUTCString() + '; path=/';
     checkLandingPopup();
@@ -699,6 +690,16 @@
   function preventToday() {
     var due = moment().add(1, 'day').hours(0).minutes(0).seconds(0);
     document.cookie = 'ROAMING_POPUP=NO; path=/; expires=' + due.toDate().toUTCString();
+  }
+
+  function debugLocationAgreement() {
+    if (Tw.BrowserHelper.isApp()) {
+      new Tw.ProductRoamingMode($('#roamingOn')).checkMcc(function () {
+        alert('이미 동의하셨습니다 :)');
+      });
+    } else {
+      alert('앱에서 확인해주세요 :)')
+    }
   }
 </script>
 <% include ../../components/roaming-next/calendar.javascript.html %>

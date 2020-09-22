@@ -183,37 +183,26 @@
     $(baseDiv).css('display', 'block');
   }
 
-  var LOST_BANNERS = {
-    'T000000081': {background: 'img_baro01.png', id: 'group-baro'}, // baro
-    'T000000078': {background: 'img_baro02.png', id: 'group-onepass'}, // OnePass 300/500
-    'T000000099': {background: 'img_baro03.png', id: 'group-vip'}, // OnePass VIP
-    'T000000077': {background: 'img_baro04.png', id: 'group-guam'}, // 괌사이판
-    'T000000082': {background: 'img_baro05.png', id: 'group-longpass'}, // LongPass
-  };
+  var LOST_BANNERS = [
+    {background: 'img_baro01.png', id: 'group-baro'}, // baro
+    {background: 'img_baro02.png', id: 'group-onepass'}, // OnePass 300/500
+    {background: 'img_baro03.png', id: 'group-vip'}, // OnePass VIP
+    {background: 'img_baro04.png', id: 'group-guam'}, // 괌사이판
+    {background: 'img_baro05.png', id: 'group-longpass'}, // LongPass
+  ];
 
   function fillTariffs() {
     var template = Handlebars.compile($('#tpl-tariff-group').html());
     var target = document.getElementById('groups');
     target.innerHTML = '';
 
-    var groupMap = {}
+    var i0 = 0;
     for (var group of groups) {
-      groupMap[group.prodGrpId] = group;
-    }
-    var sortedGroups = [
-      groupMap['T000000081'],
-      groupMap['T000000078'],
-      groupMap['T000000099'],
-      groupMap['T000000077'],
-      groupMap['T000000082'],
-    ];
-
-    for (var group of sortedGroups) {
       target.innerHTML += template({
-        id: LOST_BANNERS[group.prodGrpId].id,
+        id: LOST_BANNERS[i0].id,
         name: group.prodGrpNm,
         description: group.prodGrpDesc,
-        background: imagePrefix0 + LOST_BANNERS[group.prodGrpId].background,
+        background: imagePrefix0 + LOST_BANNERS[i0].background,
         items: group.items.map(item => {
           var match = new RegExp('[0-9]+').exec(item.price);
           if (match) {
@@ -228,6 +217,7 @@
           };
         })
       });
+      i0 += 1;
     }
   }
 </script>

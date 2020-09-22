@@ -27,8 +27,9 @@ export default class RoamingTariffOfferController extends TwViewController {
       this.getRecommendedTariff(countryCode, from.format('YYYYMMDD'), to.format('YYYYMMDD')),
       this.getAvailableTariffs(countryCode),
       this.getRecentUsedTariff(),
+      this.getFirstRoaming(),
       this.getTariffGroups(),
-    ).subscribe(([country, recommended, allTariffs, recentUsed, tariffGroups]) => {
+    ).subscribe(([country, recommended, allTariffs, recentUsed, newbie, tariffGroups]) => {
       if (country.mblNflagImgAlt && country.mblNflagImgAlt.indexOf('공통 이미지') >= 0) {
         country.mblNflagImg = null;
       }
@@ -57,27 +58,24 @@ export default class RoamingTariffOfferController extends TwViewController {
         allTariffs = [];
       }
 
-      try {
-        res.render('roaming-next/roaming.tariff.offer.html', {
-          svcInfo,
-          pageInfo,
-          isLogin: isLogin,
-          country: {
-            code: country.countryCode,
-            name: country.countryNm,
-            imageUrl: RoamingHelper.penetrateUri(country.mblRepImg),
-            flagUrl: RoamingHelper.penetrateUri(country.mblNflagImg),
-            flagAlt: country.mblNflagImgAlt,
-          },
-          night: night,
-          days: night + 1,
-          recommended,
-          recentUsed,
-          availableTariffs: allTariffs.map(t => RoamingOnController.formatTariff(t)),
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      res.render('roaming-next/roaming.tariff.offer.html', {
+        svcInfo,
+        pageInfo,
+        isLogin: isLogin,
+        country: {
+          code: country.countryCode,
+          name: country.countryNm,
+          imageUrl: RoamingHelper.penetrateUri(country.mblRepImg),
+          flagUrl: RoamingHelper.penetrateUri(country.mblNflagImg),
+          flagAlt: country.mblNflagImgAlt,
+        },
+        night: night,
+        days: night + 1,
+        recommended,
+        recentUsed,
+        newbie,
+        availableTariffs: allTariffs.map(t => RoamingOnController.formatTariff(t)),
+      });
     });
   }
 
@@ -93,6 +91,10 @@ export default class RoamingTariffOfferController extends TwViewController {
       }
       return items;
     });
+  }
+
+  private getFirstRoaming(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0190, {}).map(r => r.result);
   }
 
   private getRecentUsedTariff(): Observable<any> {

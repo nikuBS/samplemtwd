@@ -1,10 +1,10 @@
 Tw.NextRoaming = function(rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._xTractorService = new Tw.XtractorService(this.$container);
   this._menuId = menuId;
-  
   this._bindEvent();
 };
 
@@ -27,7 +27,7 @@ Tw.NextRoaming.prototype = {
 
     event.preventDefault();
     event.stopPropagation();
-  }  
+  }
 };
 
 Tw.NextRoamingMenu = function(rootEl) {
@@ -61,5 +61,5 @@ Tw.NextRoamingMenu.prototype = {
         menu._onGnbBtnClicked();
       });
     }
-  },
+  }
 };
