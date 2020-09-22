@@ -198,7 +198,15 @@ Tw.MainMenuSettings.prototype = {
         // this._popupService.open({
         //   hbs: 'MA_03_01_02_03_01_01'
         // }, $.proxy(this._onUpdatePopup, this));
-        $.proxy(this._onUpdatePopup, this);
+
+        $('.popup-page').on('click', '.btn-style1', $.proxy(function () {
+          this._onUpdate(); // 업데이트 안내 페이지 이동
+        }, this));
+
+        $('.popup-page').on('click', '.prev-step', $.proxy(function () {
+          window.location.replace('/main/menu/settings');
+        }, this));
+
         return;
 
       } else { // 최신버전 
