@@ -12,6 +12,9 @@ export default class RoamingOnController extends TwViewController {
   CDN = EnvHelper.getEnvironment('CDN');
 
   static formatTariff(t) {
+    if (!t) {
+      return t;
+    }
     if (t.basFeeInfo) {
       let iFee: any = parseInt(t.basFeeInfo, 10);
       if (iFee) {
@@ -221,10 +224,12 @@ export default class RoamingOnController extends TwViewController {
         this.getTariffDateRange(current.prodId).subscribe(r => {
           if (r.result && r.code === API_CODE.CODE_00) {
             const range = r.result;
-            if (!range.svcStartDt) {
-              range.svcStartDt = moment().subtract(3, 'days').format('YYYYMMDD');
+            // if (!range.svcStartDt) {
+            //   range.svcStartDt = moment().subtract(3, 'days').format('YYYYMMDD');
+            // }
+            if (range.svcStartDt) {
+              current.startDate = moment(range.svcStartDt, 'YYYYMMDD');
             }
-            current.startDate = moment(range.svcStartDt, 'YYYYMMDD');
             if (range.svcEndDt) {
               current.endDate = moment(range.svcEndDt, 'YYYYMMDD');
             } else {
@@ -281,6 +286,15 @@ export default class RoamingOnController extends TwViewController {
       context.usage.phone = phoneUsage;
       context.rate = rate;
       context.meta = meta;
+
+      // 차단 대응
+      if (baroUsage && baroUsage.code === 'BFF0006') {
+        context.currentTariff = null;
+        context.usage.baro.startTime = moment(baroUsage.fromDtm, 'YYYYMMDDHHmmss');
+        context.usage.baro.endTime = moment(baroUsage.toDtm, 'YYYYMMDDHHmmss');
+        res.render(template, context);
+        return;
+      }
 
       if (current.group === 4) {
         if (dataUsage.totalRemainUnLimited) {
@@ -408,7 +422,7 @@ export default class RoamingOnController extends TwViewController {
    * @private
    */
   private getTariffDateRange(prodId: string): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0091, {prodId});
+    return this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId]);
   }
 
   /**
@@ -459,7 +473,7 @@ export default class RoamingOnController extends TwViewController {
       // rgstDtm: '2018112803', // 등록일시 YYYYMMDDHH
       // exprDtm: '2018112823', // 종료일시 YYYYMMDDHH
       if (!resp.result) {
-        console.log('BFF_05_0201 failed: ' + JSON.stringify(resp));
+        this.logger.warn('BFF_05_0201 failed', resp);
         // BLN0007: 잔여량 조회 가능 항목이 없습니다
         // BLN0012: 조회 대상이 아닙니다
         return {code: resp.code, msg: resp.msg};
@@ -519,6 +533,15 @@ export default class RoamingOnController extends TwViewController {
       usgStartDate: startDate.format('YYYYMMDD'),
       usgEndDate: endDate.format('YYYYMMDD'),
     }).map(resp => {
+      // 차단 테스트
+      if (false) {
+        resp.code = 'BFF0006';
+        resp.msg = '안녕하세요, T월드입니다. 바로통화 차단을 해보았어요. 정말 차단이 잘되겠죠? 코로나 조심하시고요!';
+        resp.fromDtm = '20200923110000';
+        resp.toDtm = '20200923115500';
+        resp.result = null;
+      }
+
       // svcMgmtNo: '10003154' // 서비스관리번호
       // extrnid: '01012340000', // 서비스번호
       // transCount: '0', // 명의변경 이력
@@ -534,7 +557,7 @@ export default class RoamingOnController extends TwViewController {
           };
         }
         // INFO0030 시스템 사정으로 서비스를 일시적으로 이용하실 수 없습니다.
-        return {code: resp.code, msg: resp.msg};
+        return {code: resp.code, msg: resp.msg, fromDtm: resp.fromDtm, toDtm: resp.toDtm};
       }
 
       const first = result[0];

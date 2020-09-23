@@ -28,27 +28,16 @@ export default class RoamingTariffOfferController extends TwViewController {
       this.getAvailableTariffs(countryCode),
       this.getRecentUsedTariff(),
       this.getFirstRoaming(),
-      this.getTariffGroups(),
-    ).subscribe(([country, recommended, allTariffs, recentUsed, newbie, tariffGroups]) => {
+      this.getTariffsMap(),
+    ).subscribe(([country, recommended, allTariffs, recentUsed, newbie, tariffsMap]) => {
       if (country.mblNflagImgAlt && country.mblNflagImgAlt.indexOf('공통 이미지') >= 0) {
         country.mblNflagImg = null;
       }
 
       if (recommended) {
-        let detail: any = {};
-        for (const g of tariffGroups) {
-          for (const t of g.prodList) {
-            if (t.prodId === recommended.prodId) {
-              detail = RoamingOnController.formatTariff(t);
-              break;
-            }
-          }
-        }
-
+        const detail = RoamingOnController.formatTariff(tariffsMap[recommended.prodId]);
         if (detail) {
-          recommended.data = detail.data;
-          recommended.phone = detail.phone;
-          recommended.price = detail.price;
+          Object.assign(recommended, detail);
         }
       } else {
         recommended = {};
@@ -83,13 +72,19 @@ export default class RoamingTariffOfferController extends TwViewController {
     return true;
   }
 
-  private getTariffGroups(): Observable<any> {
+  private getTariffsMap(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
-      let items = resp.result.grpProdList;
+      const items = resp.result.grpProdList;
       if (!items) {
-        items = [];
+        return [];
       }
-      return items;
+      const flatten = {};
+      for (const g of items) {
+        for (const i of g.prodList) {
+          flatten[i.prodId] = i;
+        }
+      }
+      return flatten;
     });
   }
 
@@ -218,6 +213,13 @@ export default class RoamingTariffOfferController extends TwViewController {
       // basOfrDataQtyCtt: '-', // 기본제공 데이터량 내용
       // prodBaseBenfCtt: 'baro통화 무료', // 상품 기본혜택 내용
       // basFeeInfo: '40000', // 상품금액
+      if (resp.result) {
+        for (const t of resp.result) {
+          if (t.prodBasBenfCtt) {
+            t.prodBasBenfCtt = t.prodBasBenfCtt.replace('baro통화 무료', 'baro 통화 무제한');
+          }
+        }
+      }
       return resp.result;
     });
   }

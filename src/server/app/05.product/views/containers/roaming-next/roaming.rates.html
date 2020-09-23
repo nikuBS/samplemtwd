@@ -6,6 +6,9 @@
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
         </span>
         <h1>국가별 로밍 이용요금 조회</h1>
+        <a href="/common/search-main">
+            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색" />
+        </a>
     </div>
     <%- include('../components/header.component.html', { title: '국가별 로밍 이용요금 조회', svcInfo: svcInfo }) %>
     <div style="height: 60px;"></div>
@@ -44,20 +47,22 @@
         <h2>출국 국가 검색 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_01')">TIP</span></h2>
 
         <form id="searchForm" action="/product/roaming/search-result" method="get"
-              onsubmit="return searchNation();">
+              onsubmit="return searchNationRate();">
             <input type="hidden" name="code" value="" />
             <input type="hidden" name="nm" value="" />
             <input type="hidden" name="eqpNm" value="<%= equipment.name %>" />
             <input type="hidden" name="eqpCd" value="<%= equipment.code %>" />
             <div class="field-container">
                 <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" value="<%= lastQuery.countryNm %>"/>
-                <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
+                <img src="<%= CDN %>/img/product/roam/ico_search_a.png" class="search"
+                     onclick="searchNationRate();"
+                     width="21" height="21" alt="Search" />
             </div>
         </form>
         <div class="link">
             <a href="#" onclick="openNationsDialog(); return false;">전체 국가 보기</a>
         </div>
-        <div class="button" onclick="searchNation();">
+        <div class="button" onclick="searchNationRate();">
             조회
         </div>
         <ul class="description">
@@ -267,6 +272,7 @@
     </div>
 </div>
 <%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+<%- include('../../components/roaming-next/schedule.picker.html', {svcInfo}); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
@@ -286,97 +292,30 @@
     }
 
     prepareTooltips();
-
-    prepareNations();
-    $('#nation-search').autocomplete({
-      source: allNations.map(function(value) {
-        return {label: value.countryNameKor, value: value.countryNameKor, code: value.countryCode};
-      }),
-      delay: 100,
-      minLength: 1,
-      select: function(event, ui) {
-        sendQuery(ui.item.code, ui.item.label);
-      },
-    });
-    setupNationsDialog();
+    installNationSearch(sendQuery);
 
     if (roamingMeta) {
       setupResult(roamingMeta);
     }
   });
-  function prepareNations() {
-    let all = [];
-    const categories = Object.keys(nations);
-    for (let i=0; i<categories.length; i+=1) {
-      let category = categories[i];
-      const items = nations[category];
-      all = all.concat(items);
-    }
-    all.sort();
-    allNations = all;
-  }
-  function setupNationsDialog() {
-    const menuItems = $('#nationsDialog .menu li');
-    for (var i=0; i<menuItems.length; i++) {
-      menuItems[i].onclick = function (event) {
-        onClickNationGroup(event.target)
-      };
-    }
-  }
-  function searchNation() {
+
+  function searchNationRate() {
     if ($('#searchForm input[name="code"]').val().length === 3) {
       return true;
     }
-
-    var name = $('#nation-search').val();
-    if (name.trim().length == 0) {
-      alert('국가명을 입력해주세요');
-      $('#nation-search').focus();
-      return false;
-    }
-    for (var item of allNations) {
-      if (item.countryNameKor == name) {
-        sendQuery(item.countryCode, item.countryNameKor);
-        return false;
-      }
-    }
-    alert('지원하지 않는 국가입니다');
-    return false;
-  }
-  function onClickNationGroup(menu) {
-    $('#nationsDialog .menu li').removeClass('active');
-    menu.className = 'active';
-    const selectedNations = nations[menu.id];
-    const targetList = $('#nationsDialog .content ul')
-    targetList.html('');
-    for (var nation of selectedNations) {
-      var li = document.createElement('li');
-      li.onclick = function(e) {
-        var nationName = e.target.innerText
-        var nationCode = e.target.getAttribute('data-country');
-        sendQuery(nationCode, nationName);
-      };
-      li.innerText = nation.countryNameKor;
-      li.setAttribute('data-country', nation.countryCode);
-      targetList.append(li);
-    }
-  }
-  function openNationsDialog() {
-    onClickNationGroup(document.getElementById('EUR'));
-    $('#roamingRates').css('display', 'none');
-    $('#nationsDialog').css('display', 'block');
+    return searchNation();
   }
 
   function closeDialog() {
     $('#nationsDialog').css('display', 'none');
-    $('#roamingRates').css('display', 'block');
+    $(baseDiv).css('display', 'block');
   }
+
   function sendQuery(code, name) {
     $('#searchForm input[name="code"]').val(code);
     $('#searchForm input[name="nm"]').val(name);
     $('#searchForm').submit();
   }
-
 
   function toggleAttention() {
     var imagePrefix = '<%= CDN %>/img/product/roam/ico_';
@@ -657,11 +596,7 @@
     // }
   }
 
-
-
-  var tooltips = {
-
-  };
+  var tooltips = {};
   function showTip(e, tipId) {
     var tooltipService = new Tw.TooltipService();
     var tip = tooltips[tipId];
@@ -684,16 +619,6 @@
       if (r.result && r.result.tooltip) collectTooltips(r.result.tooltip);
     });
   }
-
-  var nations = {
-    'EUR': <%- JSON.stringify(nations.eur) %>,
-    'AFR': <%- JSON.stringify(nations.afr) %>,
-    'ASP': <%- JSON.stringify(nations.asp) %>,
-    'AMC': <%- JSON.stringify(nations.amc) %>,
-    'MET': <%- JSON.stringify(nations.met) %>,
-    'OCN': <%- JSON.stringify(nations.ocn) %>,
-  };
-  var allNations = [];
   var roamingMeta = <%- JSON.stringify(meta) %>;
 </script>
 <% include ../../components/end.component.html %>

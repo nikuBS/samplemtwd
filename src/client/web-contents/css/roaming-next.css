@@ -129,11 +129,12 @@ body.rn #roamingMain #content .card #nations .name-dark {
 body.rn .card .field-container {
   background-color: #f3f4f9;
   border-radius: 10px;
-  padding: 12px 18px 12px 18px;
+  padding: 12px 42px 12px 18px;
   position: relative;
 }
 body.rn .card .field-container input {
   width: 100%;
+  font-size: 14px;
 }
 body.rn .card .field-container input::placeholder {
   width: 100%;
@@ -1897,19 +1898,7 @@ body.rn #roamingRates .card .separator {
 body.rn #roamingRates .card .field-container {
   background-color: #f3f4f9;
   border-radius: 10px;
-  padding: 12px 18px 12px 18px;
   position: relative;
-}
-body.rn #roamingRates .card .field-container input {
-  width: 100%;
-}
-body.rn #roamingRates .card .field-container input::placeholder {
-  color: #959595;
-}
-body.rn #roamingRates .card .field-container img {
-  position: absolute;
-  top: 12px;
-  right: 14px;
 }
 body.rn #roamingRates .card .link {
   text-align: right;
