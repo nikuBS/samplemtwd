@@ -242,8 +242,8 @@ class MyTJoinMyPlanAdd extends TwViewController {
             paids: (data.pays || []).map(convertAdditionData), // 가입된 유료 부가서비스
             frees: (data.frees || []).map(convertAdditionData) // 가입된 무료 부가서비스
           },
-          reserved: data.reserveds.map(convertAdditionData),  // 가입 예약된 부가서비스 목록
-          joinable: data.joinables.map(convertAdditionData).sort(sortAdditionData) // 가입 가능한 부가서비스 목록
+          joinable: data.joinables.map(convertAdditionData).sort(sortAdditionData), // 가입 가능한 부가서비스 목록
+          reserved: data.reserveds.map(convertAdditionData)  // 가입 예약된 부가서비스 목록
         };
       }
       return resp;

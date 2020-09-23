@@ -26,8 +26,8 @@ _%>
             <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C62-1", multiple: "CMMA_A3_B13_C62-2" } }); _%>
             <%_ const additionsPaid = additions.joined.paids; _%>
             <%_ const additionsFree = additions.joined.frees; _%>
-            <%_ const additionsReserved = additions.reserved; _%>
             <%_ const additionsJoinable = additions.joinable; _%>
+            <%_ const additionsReserved = additions.reserved; _%>
             <%_ const totalAdditions = additionsPaid.length + additionsFree.length; _%>
             <div class="tod-sel-top-wrap">
                 <div class="link-cont">
@@ -53,9 +53,6 @@ _%>
                     </div>
                 </div>
             </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
             <%_ } else { _%>
                 <%_ if (additionsPaid.length) { _%>
             <div class="tod-link-cont-anchor" id="tod-cont1"></div>
@@ -109,7 +106,7 @@ _%>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <%_ } _%>
-            <%_ if (additionsJoinable.length > 0) { _%>
+            <%_ if (additionsReserved.length > 0) { _%>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
