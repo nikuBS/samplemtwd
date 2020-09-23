@@ -73,9 +73,6 @@
                         <div class="input-list tod-input-list">
                             <ul>
                                 <%_
-                                    const settlWayCd = autoPrepayInfo.settlWayCd || '41';
-                                    // 02: 카드, 41: 계좌이체
-                                    const isAccount = settlWayCd === '41';
                                     const accountChecked = isAccount ? 'checked':'';
                                     const cardChecked = !isAccount ? 'checked':'';
                                 _%>
@@ -180,8 +177,8 @@
                                     </span>
                                 </span>
                             </li>
-                            <%# 신청일때만 생년월일 노출%>
-                            <%_if (!isChange) {_%>
+                            <%# 신청일때만 생년월일 노출. 변경으로 진입했지만 이용중인 납부방법이 "계좌이체" 인 경우, "체크/신용카드" 로 변경하는 경우는 "카드"가 신규 신청이 되므로 "생년월일" 항목을 노출한다.%>
+                            <%_if (!isChange || isAccount) {_%>
                             <li>
                                 <label class="tit" for="flab07">생년월일</label>
                                 <span class="inputbox">

@@ -78,12 +78,20 @@ export class MyTFareBillPrepayAuto extends TwViewController {
    * @private
    */
   private parseData(req: Request, res: any): any {
-    return {
-      autoPrepayInfo: this.parseAutoPrepayInfo(res[0].result),
-      autoInfo: this.parseInfo(res[1]),
-      type: this.type,
-      isChange: this.isChange
-    };
+    try {
+      const autoPrepayInfo = this.parseAutoPrepayInfo(res[0].result);
+      // 02: 카드, 41: 계좌이체
+      const settlWayCd = autoPrepayInfo.settlWayCd || '41';
+      return {
+        autoPrepayInfo,
+        autoInfo: this.parseInfo(res[1]),
+        type: this.type,
+        isChange: this.isChange,
+        isAccount: settlWayCd === '41' // 계좌이체 여부
+      };
+    } catch (e) {
+      this.logger.error(this, e);
+    }
   }
 
   /**
