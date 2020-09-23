@@ -257,7 +257,8 @@
   function debugChangeMcc() {
     var newMcc = prompt('MCC 값 3자리를 입력해주세요');
     if (newMcc) {
-      document.cookie = 'ROAMING_MCC=' + newMcc + '; path=/';
+      Tw.CommonHelper.setSessionStorage('ROAMING_MCC', newMcc);
+      Tw.CommonHelper.removeSessionStorage('ROAMING_OFF');
       setTimeout(function() {
         document.location.href = '/product/roaming/on?mcc=' + newMcc;
       }, 500);

@@ -1,12 +1,12 @@
-import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import {API_CMD} from '../../../../types/api-command.type';
 import RoamingHelper from './roaming.helper';
-import RoamingOnController from './roaming.on';
 import {Observable} from 'rxjs/Observable';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingTariffsController extends TwViewController {
+export default class RoamingTariffsController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.setDeadline(res);
 
     Observable.combineLatest(
       this.getTariffsByGroup(),
@@ -18,11 +18,11 @@ export default class RoamingTariffsController extends TwViewController {
         item.prodGrpIconImgUrl = RoamingHelper.penetrateUri(item.prodGrpIconImgUrl); // 추천
 
         item.items = item.prodList.map(p => {
-          return RoamingOnController.formatTariff(p);
+          return RoamingHelper.formatTariff(p);
         });
       }
 
-      res.render('roaming-next/roaming.tariffs.html', {
+      this.renderDeadline(res, 'roaming-next/roaming.tariffs.html', {
         svcInfo,
         pageInfo,
         groups: items,

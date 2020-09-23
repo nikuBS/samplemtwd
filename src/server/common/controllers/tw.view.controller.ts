@@ -58,10 +58,6 @@ abstract class TwViewController {
     return this._error;
   }
 
-  protected get noUrlMeta(): boolean {
-    return false;
-  }
-
   /**
    * controller 초기화
    * @param req
@@ -325,7 +321,7 @@ abstract class TwViewController {
         });
       } else {
         // 등록되지 않은 메뉴
-        if ( String(process.env.NODE_ENV) === 'prd' || this.noUrlMeta) {
+        if ( String(process.env.NODE_ENV) === 'prd') {
           this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
         } else {
           if ( /\/product\/callplan/.test(path) ) {

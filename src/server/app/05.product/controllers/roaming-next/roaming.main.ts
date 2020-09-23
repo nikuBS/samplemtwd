@@ -6,10 +6,12 @@ import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
 import moment from 'moment';
 import RoamingHelper from './roaming.helper';
-import {ObserveOnMessage} from 'rxjs/operators/observeOn';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingMainController extends TwViewController {
+export default class RoamingMainController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.setDeadline(res);
+
     if (req.query.queryBg) {
       const countryCode = req.query.queryBg;
       this.getCountryInfo(RoamingHelper.getMCC(countryCode)).subscribe(resp => {
@@ -25,11 +27,13 @@ export default class RoamingMainController extends TwViewController {
     const debugTid = req.query.tid;
     if (debugTid && process.env['NODE_ENV'] === 'local') {
       if (!isLogin) {
+        this.releaseDeadline(res);
         res.redirect('/product/roaming?userId=' + debugTid);
         return;
       }
       this.apiService.request(API_CMD.BFF_03_0001, {}).subscribe(r0 => {
         this.loginService.logoutSession(req, res).subscribe(r1 => {
+          this.releaseDeadline(res);
           res.cookie('ROAMING_DTD', debugTid);
           res.redirect('/common/member/logout/complete?n=/product/roaming');
         });
@@ -48,7 +52,7 @@ export default class RoamingMainController extends TwViewController {
       if (popularNations.length > 6) {
         popularNations = popularNations.slice(0, 6);
       }
-      res.render('roaming-next/roaming.main.html', {
+      this.renderDeadline(res, 'roaming-next/roaming.main.html', {
         svcInfo,
         pageInfo,
         isLogin: isLogin,
@@ -108,6 +112,13 @@ export default class RoamingMainController extends TwViewController {
                   const endDate = moment(r1.result.svcEndDt, 'YYYYMMDD');
                   const today = moment();
                   if (today.isAfter(endDate)) {
+                    return null;
+                  }
+                }
+                if (r1.result && r1.result.svcStartDt) {
+                  const startDate = moment(r1.result.svcStartDt, 'YYYYMMDD');
+                  const today = moment().hours(0).minutes(0);
+                  if (today.isBefore(startDate)) {
                     return null;
                   }
                 }

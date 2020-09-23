@@ -24,7 +24,7 @@ Tw.ProductRoamingMode.prototype = {
     var t = this;
     this._locationInfo.checkLocationAgreement(function(r) {
       var agreed = moment(r.result.twdLocUseAgreeDtm, 'YYYYMMDDHHmmss');
-      var baseDate = moment('202009220740', 'YYYYMMDDHHmm');
+      var baseDate = moment('202009240200', 'YYYYMMDDHHmm');
 
       // 이미 동의했어도 개정된 약관을 보지 않았으면 재표시
       if (agreed.isBefore(baseDate)) {
@@ -38,8 +38,6 @@ Tw.ProductRoamingMode.prototype = {
       }
     }, function(r) {
       if (r.code === '00') {
-        // var date = moment(r.result.twdLocUseAgreeDtm, 'YYYYMMDDHHmmss');
-        // console.log('미동의: ' + date.format('YYYY.MM.DD HH:mm:ss'));
         t.showLocationAgreement(mcc);
       }
     });
@@ -76,24 +74,25 @@ Tw.ProductRoamingMode.prototype = {
       root.on('click', '.fe-agree', $.proxy(function () {
         Tw.Popup.close();
         Tw.Api.request(Tw.API_CMD.BFF_03_0022, {twdLocUseAgreeYn: 'Y'})
-          .done(function(resp) {
-            console.log(resp);
+          .done(function() {
             t.showRoamingModeHome(mcc);
           });
       }, this));
     }, this), null, 'roamingMcc');
   },
   showRoamingModeHome: function(mcc) {
-    document.cookie = 'ROAMING_MCC=' + mcc + '; path=/';
+    Tw.CommonHelper.setSessionStorage('ROAMING_MCC', mcc);
     document.location.href = '/product/roaming/on?mcc=' + mcc;
   },
   checkMcc: function(agreedCallback) {
     var t = this;
     Tw.Native.send('getMcc', {}, function(result) {
-      if (result && result.params && result.params.mcc) {
+      if (result && result.params) {
         var mcc = result.params.mcc;
-        if (Tw.CommonHelper.getCookie('ROAMING_MCC') != '999' && mcc != '450') {
-          t.checkLocationAgreement(mcc, agreedCallback);
+        if (mcc && mcc !== '450') {
+          if (Tw.CommonHelper.getSessionStorage('ROAMING_OFF') !== 'Y') {
+            t.checkLocationAgreement(mcc, agreedCallback);
+          }
         }
       }
     });

@@ -248,29 +248,6 @@
         <h3>요금제 관련 안내 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_04')">TIP</span></h3>
     </div>
 </div>
-<div id="nationsDialog" class="dialog">
-    <div class="header">
-        <h1>로밍 가능한 전체 국가</h1>
-        <div class="close" onclick="closeDialog()">
-            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
-        </div>
-    </div>
-    <div class="menu">
-        <ul>
-            <li id="EUR">유럽</li>
-            <li id="ASP">아시아</li>
-            <li id="AMC">미주</li>
-            <li id="OCN">오세아니아</li>
-            <li id="MET">중동</li>
-            <li id="AFR">아프리카</li>
-        </ul>
-    </div>
-    <div class="content">
-        <ul>
-
-        </ul>
-    </div>
-</div>
 <%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 <%- include('../../components/roaming-next/schedule.picker.html', {svcInfo}); %>
 </body>
@@ -311,7 +288,7 @@
     $(baseDiv).css('display', 'block');
   }
 
-  function sendQuery(code, name) {
+  function sendQuery(code, name, t0, baseDiv) {
     $('#searchForm input[name="code"]').val(code);
     $('#searchForm input[name="nm"]').val(name);
     $('#searchForm').submit();
@@ -521,7 +498,6 @@
     }
 
     var currentType = manageType[typeIndex].txt; // 현재 선택된 서비스명 e.g. '3G 자동로밍'
-    console.log({currentType, _result, noticeParam});
 
     $('#attentionList').html(noticeParam.svcAttention);
 

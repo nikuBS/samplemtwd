@@ -83,6 +83,67 @@ export default class RoamingHelper {
     }
     return 0;
   }
+
+  static formatTariff(t: any) {
+    if (!t) {
+      return t;
+    }
+    if (t.basFeeInfo) {
+      let iFee: any = parseInt(t.basFeeInfo, 10);
+      if (iFee) {
+        if (iFee >= 1000) {
+          iFee = iFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        t.price = iFee + '원';
+      } else {
+        t.price = t.basFeeInfo;
+      }
+    }
+    if (t.romUsePrdInfo) {
+      const value = parseInt(t.romUsePrdInfo, 10);
+      t.duration = value <= 1 ? 1 : value;
+    } else {
+      t.duration = 1;
+    }
+    if (!t.basOfrDataQtyCtt || t.basOfrDataQtyCtt === '-') {
+      // t.data = DATA_PROVIDED[t.prodId];
+      t.data = '-';
+
+      if (t.basOfrMbDataQtyCtt && t.romUsePrdInfo === '0') {
+        t.data = '매일 ' + t.basOfrMbDataQtyCtt + 'MB';
+      } else if (t.prodId === 'NA00006229') {
+        // T괌사이판 5천원
+        t.data = '매일 500MB';
+      } else if (parseInt(t.basOfrGbDataQtyCtt, 10) > 0) {
+        const gbData = parseInt(t.basOfrGbDataQtyCtt, 10);
+        t.data = gbData + 'GB';
+      } else {
+        t.data = t.basOfrMbDataQtyCtt;
+      }
+    } else {
+      const gbData = parseInt(t.basOfrDataQtyCtt, 10);
+      if (gbData > 0) {
+        t.data = gbData + 'GB';
+      } else {
+        t.data = t.basOfrDataQtyCtt;
+      }
+    }
+
+    // OnePass VIP 설명 예외처리
+    // NA00006486, NA00006487  VIP
+    if (['NA00006486', 'NA00006487'].indexOf(t.prodId) >= 0) {
+      t.data = '무제한';
+      t.phone = '음성 30분 / 문자 30건 / baro통화 무제한';
+    }
+    // NA00006744, NA00006745  DATA VIP
+    if (['NA00006744', 'NA00006745'].indexOf(t.prodId) >= 0) {
+      t.data = '무제한';
+    }
+    if (!t.phone) {
+      t.phone = 'baro통화 무제한';
+    }
+    return t;
+  }
 }
 
 const ISO3166 = {

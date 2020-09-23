@@ -5,7 +5,7 @@
 * ID: RM_13
 %>
 
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -311,12 +311,15 @@
     <!--// #contents -->
     <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+<div id="roamingIntercept"></div>
 </body>
 
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductRoamingCoupon($('.wrap'), '<%= bpcpServiceId %>');
+    $('#roamingIntercept').data('checkCachedMcc', checkInterceptMenu);
   });
 </script>
 

@@ -6,9 +6,11 @@ import FormatHelper from '../../../../utils/format.helper';
 import moment from 'moment';
 import DateHelper from '../../../../utils/date.helper';
 import RoamingHelper from './roaming.helper';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingMyUseController extends TwViewController {
+export default class RoamingMyUseController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.setDeadline(res);
 
     Observable.combineLatest(
       this.getMyTariffs(),
@@ -43,23 +45,19 @@ export default class RoamingMyUseController extends TwViewController {
             return null;
           });
         })).subscribe((ranges) => {
-          try {
-            this.mergeRanges(tariffs, ranges, dataUsages);
-            const filtered: any = [];
-            for (const t of tariffs) {
-              if (t.endDate && t.endDate.isBefore(context.now)) {
-                continue;
-              }
-              filtered.push(t);
+          this.mergeRanges(tariffs, ranges, dataUsages);
+          const filtered: any = [];
+          for (const t of tariffs) {
+            if (t.endDate && t.endDate.isBefore(context.now)) {
+              continue;
             }
-            context.tariffs = filtered;
-            res.render('roaming-next/roaming.myuse.html', context);
-          } catch (e) {
-            console.error(e);
+            filtered.push(t);
           }
+          context.tariffs = filtered;
+          this.renderDeadline(res, 'roaming-next/roaming.myuse.html', context);
         });
       } else {
-        res.render('roaming-next/roaming.myuse.html', context);
+        this.renderDeadline(res, 'roaming-next/roaming.myuse.html', context);
       }
     });
   }
