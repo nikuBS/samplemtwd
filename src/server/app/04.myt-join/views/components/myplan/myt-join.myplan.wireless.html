@@ -40,7 +40,10 @@
                     <span class="join-date">가입일 <%= program.scrbDt %></span>
                     <%_ for (var j in program.btnList) { _%>
                         <%_ var btn = program.btnList[j]; _%>
-                    <button class="bt-link-tx underline" title="<%= btn.btnNm %>" data-id="bt-goto" data-href="<%= btn.btnLinkUrl %>?prod_id=<%- program.linkProdId %>">가입내역 조회</button>
+                    <!-- 2019/12/04 이전 버튼명이 서버에서 받은 버튼 명으로 노출 되고 있었는데 '가입내역 조회'로 고정된 값이
+                     노출 되고 있는 부분 수정 및 특정 버튼 링크 url을 사용하기 위해 'data-link-url' 속성값 추가-->
+                    <button class="bt-link-tx underline" title="<%= btn.btnNm %>"data-id="bt-goto" data-link-url="<%= btn.btnLinkUrl %>"
+                            data-href="<%= btn.btnLinkUrl %>?prod_id=<%- program.linkProdId %>"><%= btn.btnNm %></button>
                     <%_ } _%>
                 </div>
                 <%_ if ( program.prodLinkYn === 'Y' ) { _%>
