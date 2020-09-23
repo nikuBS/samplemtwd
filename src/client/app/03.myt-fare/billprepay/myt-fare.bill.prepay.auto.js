@@ -320,7 +320,10 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       reqData.autoBankCardUdtYn = isAccountChange ? 'Y' : 'N';
     } else { // 체크/신용카드 일때
       // if (!(isChange && reqData.checkRadio === 'A')) {}
-      reqData.cardBirth = $.trim(this.$birth.val());
+      // '신청' 일때만 cardBirth 보냄
+      if (this.$type !== 'change') {
+        reqData.cardBirth = $.trim(this.$birth.val());
+      }
       reqData.cardNum = $.trim(this.$cardNumber.val());
       reqData.cardType = this.$cardNumber.attr('data-code');
       reqData.cardNm = this.$cardNumber.attr('data-name');

@@ -11,7 +11,7 @@
         <div class="popup-page tw-popup fixed-bottom h60 nobg">
             <!-- #header -->
             <%
-                const title = !change ? '자동 선결제' : '자동 선결제 변경';
+                const title = !isChange ? '자동 선결제' : '자동 선결제 변경';
             %>
             <%- include('../components/header.component.html', { title: title, type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
@@ -35,27 +35,27 @@
                             <li class="type2">
                                 <label class="tit">기준금액
                                     <%# 신청일때만 tip 노출%>
-                                    <%if (!change) {%>
+                                    <%_if (!isChange) {_%>
                                     <button id="MF_06_04_tip_03" class="tip-view" aria-haspopup="true">기준금액 정보보기</button>
-                                    <%}%>
+                                    <%_}_%>
                                 </label>
                                 <button id="<%= autoPrepayInfo.standardAmount %>" data-origin-id="<%= autoPrepayInfo.standardAmount %>"
                                         data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-standard-amount" title="기준금액" aria-haspopup="true">
-                                    <%= autoPrepayInfo.comboStandardAmount %>만 원<span class="ico"></span>
+                                    <%- autoPrepayInfo.comboStandardAmount %>만 원<span class="ico"></span>
                                 </button>
                             </li>
                             <li class="type2">
                                 <label class="tit">선결제 금액
                                     <%# 신청일때만 tip 노출%>
-                                    <%if (!change) {%>
+                                    <%_if (!isChange) {_%>
                                     <button id="MF_06_04_tip_04" class="tip-view" aria-haspopup="true">선결제금액 정보보기</button>
-                                    <%}%>
+                                    <%_}_%>
                                 </label>
                                 <button id="<%= autoPrepayInfo.chargeAmount %>" data-origin-id="<%= autoPrepayInfo.chargeAmount %>"
                                         data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
-                                    <%= autoPrepayInfo.comboChargeAmount %>만 원<span class="ico"></span>
+                                    <%- autoPrepayInfo.comboChargeAmount %>만 원<span class="ico"></span>
                                 </button>
                                 <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
                                     선결제 가능 최대금액을 초과하였습니다.
@@ -72,17 +72,17 @@
                         <h3 class="tit">납부방법</h3>
                         <div class="input-list tod-input-list">
                             <ul>
-                                <%
+                                <%_
                                     const settlWayCd = autoPrepayInfo.settlWayCd || '41';
                                     // 02: 카드, 41: 계좌이체
                                     const isAccount = settlWayCd === '41';
                                     const accountChecked = isAccount ? 'checked':'';
                                     const cardChecked = !isAccount ? 'checked':'';
-                                %>
+                                _%>
                                 <li>
                                     <span class="custom-form"><input type="radio" id="rad1-1" name="ad-pay" data-pay-method="fe-account-area" <%- accountChecked%>><span class="r-type1"></span></span>
                                     <label for="rad1-1">계좌이체 자동 선결제
-                                        <%_if(change && isAccount){_%>
+                                        <%_if(isChange && isAccount){_%>
                                         <span class="tod-txcolor7 iblock ml4 none">(이용 중)</span>
                                         <%_}_%>
                                     </label>
@@ -90,7 +90,7 @@
                                 <li>
                                     <span class="custom-form"><input type="radio" id="rad1-2" name="ad-pay" data-pay-method="fe-card-area" <%- cardChecked%>><span class="r-type1"></span></span>
                                     <label for="rad1-2">체크/신용카드 자동 선결제
-                                        <%_if(change && !isAccount){_%>
+                                        <%_if(isChange && !isAccount){_%>
                                         <span class="tod-txcolor7 iblock ml4 none">(이용 중)</span>
                                         <%_}_%>
                                     </label>
@@ -137,7 +137,7 @@
                                                         <span class="tx-tit">직접입력</span>
                                                         <span class="form-wrap half-type mt14">
                                                             <span class="select">
-                                                                <% const {autoBankCardCoCd} = autoPrepayInfo;%>
+                                                                <%_ const {autoBankCardCoCd} = autoPrepayInfo;_%>
                                                                 <button id="<%-autoBankCardCoCd%>" class="bt-dropdown big select-bank fe-select-bank fe-account-bank fe-required-select"
                                                                         data-origin-val="<%-autoBankCardCoCd%>" title="계좌정보 은행 선택" aria-haspopup="true">
                                                                     <%-autoPrepayInfo.bankNm || '은행 선택'%><span class="ico"></span>
@@ -145,7 +145,7 @@
                                                             </span>
                                                             <span class="inputbox ml8">
                                                                 <span class="input">
-                                                                    <% const {bankNum} = autoPrepayInfo;%>
+                                                                    <%_ const {bankNum} = autoPrepayInfo;_%>
                                                                     <input type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
                                                                            title="계좌정보 숫자만 입력" class="fe-account-number required-input-field fe-only-number"
                                                                            data-valid-label="account" data-origin-val="<%-bankNum%>" value="<%-bankNum%>"/>
@@ -180,6 +180,8 @@
                                     </span>
                                 </span>
                             </li>
+                            <%# 신청일때만 생년월일 노출%>
+                            <%_if (!isChange) {_%>
                             <li>
                                 <label class="tit" for="flab07">생년월일</label>
                                 <span class="inputbox">
@@ -191,12 +193,13 @@
                                     <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">생년월일이 올바르지 않습니다.</span>
                                 </span>
                             </li>
+                            <%_}_%>
                             <li>
                                 <label class="tit" for="flab04">카드번호</label>
                                 <div class="fe-exp-wrap">
                                     <span class="inputbox bt-add inp-btn">
                                         <span class="input">
-                                            <% const {cardNum} = autoPrepayInfo;%>
+                                            <%_ const {cardNum} = autoPrepayInfo;_%>
                                             <input id="flab04" class="fe-card-number required-input-field fe-only-number" type="tel" minlength="14" maxlength="16"
                                                    inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="card" data-err-target="fe-exp-wrap"
                                                    placeholder="숫자만 입력" title="카드번호 숫자만 입력" data-origin-val="<%-cardNum%>" value="<%-cardNum%>"/>
@@ -260,7 +263,7 @@
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
-                                <button class="fe-pay" disabled="disabled"><%-!change ? '신청하기' : '변경하기'%></button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
+                                <button class="fe-pay" disabled="disabled"><%-!isChange ? '신청하기' : '변경하기'%></button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
                             </li>
                         </ul>
                     </div>
@@ -279,7 +282,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillPrepayAuto($('.wrap'), '<%-path%>', '<%-change%>', '<%= pageInfo.masking%>');
+    new Tw.MyTFareBillPrepayAuto($('.wrap'), '<%-path%>', '<%-type%>', '<%= pageInfo.masking%>');
   });
 </script>
 <% include ../../components/end.component.html %>
