@@ -129,9 +129,9 @@ export default class RoamingMyUseController extends TwViewController {
       if (t.group === 7) {
         const m = new RegExp('[0-9]+').exec(t.prodNm);
         if (m) {
-          t.data = {code: '-', msg: m[0] + 'MB (일)'};
+          t.data = { used: null, total: m[0] + 'MB (일)'};
         } else {
-          t.data = {code: '-', msg: '-'};
+          t.data = { used: null, total: '-'};
         }
       }
       if (t.group === 8) {
