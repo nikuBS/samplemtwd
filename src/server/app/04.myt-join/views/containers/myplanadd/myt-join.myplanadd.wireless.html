@@ -31,7 +31,7 @@ _%>
             <%_ const totalAdditions = dcPrograms.length + additionsPaid.length + additionsFree.length; _%>
             <div class="tod-sel-top-wrap">
                 <div class="link-cont">
-                    <span class="total">전체 <%- totalAdditions %></span>
+                    <a href="#">전체 <%- totalAdditions %></a>
                     <%_ if (dcPrograms.length) { _%>
                     <a href="#tod-cont1">옵션/할인 <%- dcPrograms.length %></a>
                     <%_ } _%>
@@ -171,17 +171,6 @@ _%>
 </div>
 <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
 <%- include('../../components/javascript.component.html') _%>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(document).on('scroll', function () {
-            $('.tod-link-cont-anchor').each(function (index, ele) {
-                if (parseInt($(ele).offset().top, 0) <= $(window).scrollTop()) {
-                    $('.link-cont > a').removeClass('on').eq(index).addClass('on');
-                }
-            });
-        });
-    });
-</script>
 <script>
     $(document).ready(function () {
         new Tw.MyTJoinMyPlanAdd({
