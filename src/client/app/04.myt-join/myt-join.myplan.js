@@ -55,9 +55,13 @@ Tw.MyTJoinMyPlan.prototype = {
     if ( targetUrl ) {
       if ( this._bpcpService.isBpcp(linkUrl) ) {
         // 요금 상품 중 BPCP 경로가 있는 경우
-        Tw.CommonHelper.showDataCharge($.proxy(function () {
-          this._bpcpService.open(linkUrl)
-        }, this));
+        if (Tw.BrowserHelper.isApp()) {
+          Tw.CommonHelper.showDataCharge($.proxy(function () {
+            this._bpcpService.open(linkUrl);
+          }, this));
+        } else {
+          this._bpcpService.open(linkUrl);
+        }
       } else {
         this._historyService.goLoad(targetUrl);
       }
