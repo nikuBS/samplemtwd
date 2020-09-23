@@ -24,7 +24,8 @@ export class MyTFareBillPrepayAuto extends TwViewController {
   }
 
   private path;
-  private change;
+  private type;
+  private isChange;
 
   /**
    * @function
@@ -38,10 +39,12 @@ export class MyTFareBillPrepayAuto extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if (true || BrowserHelper.isApp(req)) { // 앱인 경우에만 진입 가능
+    if (BrowserHelper.isApp(req)) { // 앱인 경우에만 진입 가능
       this.path = req.path.indexOf('small') > -1 ? 'small' : 'contents';  // 경로 (small:소액결제, contents:콘텐츠 이용료)
-      // change: 변경, !change: 신청
-      this.change = req.path.indexOf('change') > -1 ? 'change' : '';
+      // change: 변경, auto: 신청
+      this.type = req.path.indexOf('change') > -1 ? 'change' : 'auto';
+      this.isChange = req.path.indexOf('change') > -1;
+
       Observable.combineLatest(
         this.getAutoPrepayInfo(),
         this.getAutoInfo()
@@ -78,7 +81,8 @@ export class MyTFareBillPrepayAuto extends TwViewController {
     return {
       autoPrepayInfo: this.parseAutoPrepayInfo(res[0].result),
       autoInfo: this.parseInfo(res[1]),
-      change: this.change
+      type: this.type,
+      isChange: this.isChange
     };
   }
 
@@ -101,7 +105,8 @@ export class MyTFareBillPrepayAuto extends TwViewController {
   private parseAutoPrepayInfo(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
       let  autoChrgStrdAmt = 'cmbAutoChrgStrdAmt', autoChrgAmt = 'cmbAutoChrgAmt';
-      if (this.change) {
+      // 변경일 때는 'cmb' 가 안붙은 필드명 사용함.
+      if (this.isChange) {
         // OP002-1757 필드명 변경(cmb 프리픽스 제거). cmbAutoChrgStrdAmt, cmbAutoChrgAmt -> autoChrgStrdAmt, autoChrgAmt
         autoChrgStrdAmt = 'autoChrgStrdAmt', autoChrgAmt = 'autoChrgAmt';
       }
@@ -117,7 +122,7 @@ export class MyTFareBillPrepayAuto extends TwViewController {
       result.bankNum = '';
       // 자동 선결제 변경 일때
       const {settlWayCd} = result;
-      if (this.change && settlWayCd) {
+      if (this.isChange && settlWayCd) {
         // 카드일때
         if (settlWayCd === '02') {
           result.cardNum = result.autoBankCardNumH;
@@ -136,7 +141,6 @@ export class MyTFareBillPrepayAuto extends TwViewController {
    * @returns {Observable<any>}
    */
   private getAutoInfo(): Observable<any> {
-    // todo JK : 어드민에 BFF_07_0022 추가하기
     return this.apiService.request(API_CMD.BFF_07_0022, {});
   }
 
