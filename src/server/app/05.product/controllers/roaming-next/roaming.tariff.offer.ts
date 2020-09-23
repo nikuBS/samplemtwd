@@ -213,6 +213,13 @@ export default class RoamingTariffOfferController extends TwViewController {
       // basOfrDataQtyCtt: '-', // 기본제공 데이터량 내용
       // prodBaseBenfCtt: 'baro통화 무료', // 상품 기본혜택 내용
       // basFeeInfo: '40000', // 상품금액
+      if (resp.result) {
+        for (const t of resp.result) {
+          if (t.prodBasBenfCtt) {
+            t.prodBasBenfCtt = t.prodBasBenfCtt.replace('baro통화 무료', 'baro 통화 무제한');
+          }
+        }
+      }
       return resp.result;
     });
   }

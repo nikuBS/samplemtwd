@@ -287,6 +287,15 @@ export default class RoamingOnController extends TwViewController {
       context.rate = rate;
       context.meta = meta;
 
+      // 차단 대응
+      if (baroUsage && baroUsage.code === 'BFF0006') {
+        context.currentTariff = null;
+        context.usage.baro.startTime = moment(baroUsage.fromDtm, 'YYYYMMDDHHmmss');
+        context.usage.baro.endTime = moment(baroUsage.toDtm, 'YYYYMMDDHHmmss');
+        res.render(template, context);
+        return;
+      }
+
       if (current.group === 4) {
         if (dataUsage.totalRemainUnLimited) {
           context.usage.data = {code: '-', msg: '무제한'};
@@ -524,6 +533,15 @@ export default class RoamingOnController extends TwViewController {
       usgStartDate: startDate.format('YYYYMMDD'),
       usgEndDate: endDate.format('YYYYMMDD'),
     }).map(resp => {
+      // 차단 테스트
+      if (false) {
+        resp.code = 'BFF0006';
+        resp.msg = '안녕하세요, T월드입니다. 바로통화 차단을 해보았어요. 정말 차단이 잘되겠죠? 코로나 조심하시고요!';
+        resp.fromDtm = '20200923110000';
+        resp.toDtm = '20200923115500';
+        resp.result = null;
+      }
+
       // svcMgmtNo: '10003154' // 서비스관리번호
       // extrnid: '01012340000', // 서비스번호
       // transCount: '0', // 명의변경 이력
@@ -539,7 +557,7 @@ export default class RoamingOnController extends TwViewController {
           };
         }
         // INFO0030 시스템 사정으로 서비스를 일시적으로 이용하실 수 없습니다.
-        return {code: resp.code, msg: resp.msg};
+        return {code: resp.code, msg: resp.msg, fromDtm: resp.fromDtm, toDtm: resp.toDtm};
       }
 
       const first = result[0];

@@ -70,6 +70,25 @@
             </p>
         </div>
         <% } %>
+        <% if (!currentTariff && usage && usage.baro && usage.baro.code && usage.baro.msg) { %>
+        <div class="card">
+            <h3>
+                <svg style="float: left; margin-right: 15px;"
+                     height="32" viewBox="0 0 126 126" width="32" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h126v126h-126z" fill="#8d8d8d" opacity="0"/><circle cx="63.5" cy="62.5" fill="#4559fc" r="61.5"/><g fill="#fff" fill-rule="nonzero"><path d="m68.32 36-2 36.48h-5.76l-2-36.48z"/><path d="m67.32 81v8.64h-7.76v-8.64z"/></g></g></svg>
+                서비스 점검 중 입니다.
+            </h3>
+            <p class="naMessage">
+                <%= usage.baro.msg %>
+            </p>
+            <% if (usage.baro.startTime && usage.baro.endTime) { %>
+            <p class="naTime">
+                <%= usage.baro.startTime.format('YYYY.M.D HH:mm') %>
+                ~
+                <%= usage.baro.endTime.format('YYYY.M.D HH:mm') %>
+            </p>
+            <% } %>
+        </div>
+        <% } %>
         <% if (isLogin == true) { %>
         <%   if (noSubscription == true && availableTariffs && isAvailable()) { %>
         <div class="card">
