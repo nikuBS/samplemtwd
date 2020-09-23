@@ -18,7 +18,17 @@
             <img src="<%= CDN %>/img/product/roam/ico_close_w.svg" width="20" height="20" alt="Close"/>
         </div>
     </div>
-    <div id="scheduleContent"><div id="calendar"></div></div>
+    <div id="scheduleContent">
+        <div id="calendar">
+            <div id="calendarGuide">
+                <span class="date">0월 0일</span>
+                오는 날을 선택하세요
+                <div class="tailContainer">
+                    <div class="tail"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="scheduleConfirm" class="bottom-button not-prepared" onclick="tryConfirm();">
         추천 요금제 확인
     </div>
@@ -90,6 +100,47 @@
         $('#date-arrive').html(end.format('YYYY.MM.DD (dd)'));
       } else {
         $('#date-arrive').html('-');
+      }
+
+      if (start && !end) {
+        setTimeout(function () {
+          var startDateCells = document.querySelectorAll('.active.start-date.available');
+          if (!startDateCells || startDateCells.length < 1) {
+            return;
+          }
+          var startDateCell;
+          for (var cell of startDateCells) {
+            if (cell.className.indexOf('off') >= 0) {
+              continue;
+            }
+            startDateCell = cell;
+            break;
+          }
+          if (!startDateCell) {
+            return;
+          }
+          var rect = startDateCell.getBoundingClientRect();
+          var x = rect.left;
+          var y = rect.top; // 스크롤 상태 반영
+          y -= 70;
+          x -= 35;
+
+          if (x < 10) {
+            x = 10;
+            $('#scheduleDialog #calendarGuide .tail').css('left', '13px');
+          } else if (x + 128 + 10 > window.innerWidth) {
+            x = window.innerWidth - 128 - 10;
+            $('#scheduleDialog #calendarGuide .tail').css('left', '65px');
+          } else {
+            $('#scheduleDialog #calendarGuide .tail').css('left', '43px');
+          }
+          $('#scheduleDialog #calendarGuide .date').text(start.format('M월 D일'));
+          $('#scheduleDialog #calendarGuide').css('left', x + 'px');
+          $('#scheduleDialog #calendarGuide').css('top', y + 'px');
+          $('#scheduleDialog #calendarGuide').css('display', 'block');
+        }, 200);
+      } else {
+        $('#scheduleDialog #calendarGuide').css('display', 'none');
       }
     });
   }
