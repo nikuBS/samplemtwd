@@ -797,15 +797,19 @@ class MainHome extends TwViewController {
    * @param {Request} req
    * @return {object}
    */
+  // private getPersonAgentTypeCheck(req): any {
+  //   const userAgent: string = this.getUserAgent(req);
+  //   const agentTypeChk = TARGET_AGENT_LIST.find((targetAgent) =>
+  //     userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
+  //   /**
+  //    * userAgent에 포함된 단말기인 경우 노출
+  //    * true: 노출, false: 미노출
+  //    */
+  //   return !!agentTypeChk;
+  // }
+
   private getPersonAgentTypeCheck(req): any {
-    const userAgent: string = this.getUserAgent(req);
-    const agentTypeChk = TARGET_AGENT_LIST.find((targetAgent) =>
-      userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
-    /**
-     * userAgent에 포함된 단말기인 경우 노출
-     * true: 노출, false: 미노출
-     */
-    return !!agentTypeChk;
+    return this.getOsVersionCheck(req);
   }
 
   /**
@@ -818,6 +822,62 @@ class MainHome extends TwViewController {
       return request.headers['user-agent'];
     }
     return '';
+  }
+
+  public compareVer (versionA, versionB): boolean {
+    let compareResult = false;
+    versionA = versionA.split('.');
+    versionB = versionB.split('.');
+    const length = Math.max(versionA.length, versionB.length);
+    for (let i = 0; i < length; i += 1) {
+      const a = versionA[i] ? parseInt(versionA[i], 10) : 0;
+      const b = versionB[i] ? parseInt(versionB[i], 10) : 0;
+      if (b >= a) {
+        compareResult = true;
+        break;
+      }
+    }
+    return compareResult;
+  }
+
+  public getOsVersionCheck(req): boolean {
+    try {
+      let agentString = this.getUserAgent(req);
+      let os = agentString.indexOf('Mac') > -1 ? 'ios' : 'aos';
+      if (os === 'ios') {
+        let reg = new RegExp('X [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
+        var ios_text = '  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15 TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.10|osVersion:27|model:LM-V409N|id:6ae9a542-fcb6-44ae-9cbd-8cbf45538933|APP_API:app|TWM_CHANNEL=mobile-app|widget:0 x-requested-with: com.sktelecom.minit.qa';
+        ios_text = agentString;
+        let mac_version_temp = reg.exec(ios_text);
+        let mac_version: string = '';
+        if (mac_version_temp) {
+          mac_version = mac_version_temp[0].split(' ')[1] 
+        }
+        let mac_check_version = '12.4.8';
+
+        // true: 노출, false: 비노출 
+        return this.compareVer(mac_check_version, mac_version);
+        
+      } else { // aos
+        let reg = new RegExp('Android [0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}');
+        let aos_text = 'Mozilla/5.0 (Linux; Android 8.1.0; LM-V409N Build/OPM1.171019.026; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/72.0.3626.105 Mobile Safari/537.36 TWM_APP TWM_DEVICE=osType:aos|appVersion:0.1.7|osVersion:27|model:SM-G995N|id:6ae9a542-fcb6-44ae-9cbd-8cbf45538933|APP_API:app|TWM_CHANNEL=mobile-app|widget:0 x-requested-with: com.sktelecom.minit.qa';
+        aos_text = agentString;
+        let mac_version_temp = reg.exec(aos_text);
+        let mac_version: string = '';
+        if (mac_version_temp) {
+          mac_version = mac_version_temp[0].split(' ')[1] 
+        }
+        let mac_check_version = '4.4.4';
+
+        return this.compareVer(mac_check_version, mac_version);
+      }
+    
+    } catch (e) {
+      console.error(e);
+    }
+
+    return false;
+    
   }
 
 }
