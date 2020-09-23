@@ -11,6 +11,9 @@
             <img class="black" src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
         </span>
         <img class="logo" src="<%= CDN %>/img/product/roam/logo_w.png" alt="로고" width="104" />
+        <a href="/common/search-main">
+            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색" />
+        </a>
         <h1 class="appbar">
             <% if (country.code) { %>
             <img src="<%= country.flagUrl %>" alt="국기" width="25" />
@@ -67,12 +70,31 @@
             </p>
         </div>
         <% } %>
+        <% if (!currentTariff && usage && usage.baro && usage.baro.code && usage.baro.msg) { %>
+        <div class="card">
+            <h3>
+                <svg style="float: left; margin-right: 15px;"
+                     height="32" viewBox="0 0 126 126" width="32" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h126v126h-126z" fill="#8d8d8d" opacity="0"/><circle cx="63.5" cy="62.5" fill="#4559fc" r="61.5"/><g fill="#fff" fill-rule="nonzero"><path d="m68.32 36-2 36.48h-5.76l-2-36.48z"/><path d="m67.32 81v8.64h-7.76v-8.64z"/></g></g></svg>
+                서비스 점검 중 입니다.
+            </h3>
+            <p class="naMessage">
+                <%= usage.baro.msg %>
+            </p>
+            <% if (usage.baro.startTime && usage.baro.endTime) { %>
+            <p class="naTime">
+                <%= usage.baro.startTime.format('YYYY.M.D HH:mm') %>
+                ~
+                <%= usage.baro.endTime.format('YYYY.M.D HH:mm') %>
+            </p>
+            <% } %>
+        </div>
+        <% } %>
         <% if (isLogin == true) { %>
         <%   if (noSubscription == true && availableTariffs && isAvailable()) { %>
         <div class="card">
             <h3>
                 <span class="colorPoint"><%= country.name %>에서 이용 가능한</span><br />
-                로밍 요금제
+                추천 로밍 요금제
             </h3>
             <p class="description">
                 편리하고 합리적인 가격의 로밍 요금제를 이용하세요
@@ -440,10 +462,12 @@
 <script type="text/x-handlebars-template" id="tpl-dialog-usage">
     <div id="{{ id }}" class="modal">
         <div class="content tm">
+            <!--
             <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday); return true;">
                 <span class="box"></span>
                 <label for="notToday">오늘 하루 그만 보기</label>
             </div>
+            -->
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
                 사용시간을 <br />
@@ -693,13 +717,17 @@
   }
 
   function debugLocationAgreement() {
-    if (Tw.BrowserHelper.isApp()) {
-      new Tw.ProductRoamingMode($('#roamingOn')).checkMcc(function () {
-        alert('이미 동의하셨습니다 :)');
-      });
-    } else {
-      alert('앱에서 확인해주세요 :)')
-    }
+    new Tw.ProductRoamingMode($('#roamingOn')).checkLocationAgreement('234', function () {
+      alert('이미 동의하셨습니다 :)');
+    });
+
+    // if (Tw.BrowserHelper.isApp()) {
+    //   new Tw.ProductRoamingMode($('#roamingOn')).checkMcc(function () {
+    //     alert('이미 동의하셨습니다 :)');
+    //   });
+    // } else {
+    //   alert('앱에서 확인해주세요 :)')
+    // }
   }
 </script>
 <% include ../../components/roaming-next/calendar.javascript.html %>

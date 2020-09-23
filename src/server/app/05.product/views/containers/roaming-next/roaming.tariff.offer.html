@@ -6,6 +6,9 @@
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
         </span>
         <h1>요금제 추천</h1>
+        <a href="/common/search-main">
+            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색"/>
+        </a>
     </div>
     <div class="decoration">
         <img class="banner" src="<%= country.imageUrl %>" />
@@ -28,12 +31,14 @@
                 <a href="/product/callplan?prod_id=<%= recommended.prodId %>">
                     <div class="tariff">
                         <h3><%= recommended.prodNm %></h3>
+                        <% if (recommended.data) { %>
                         <div class="data">
                             <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
                             <span><%= recommended.data %></span>
                         </div>
                         <span class="phone"><%= recommended.phone %></span>
                         <span class="price"><%= recommended.price %></span>
+                        <% } %>
                         <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
                     </div>
                 </a>
@@ -87,7 +92,7 @@
                 <img src="<%= country.flagUrl %>" alt="<%= country.flagAlt %>" style="width: 32px; vertical-align: middle;" />
                 <% } %>
                 <span class="colorPoint" style="vertical-align: middle;"><%= country.name %></span>에서 이용 가능한<br />
-                모든 요금제
+                로밍 요금제
             </h2>
             <p class="description" style="margin-top: -12px;">
                 편리하고 합리적인 가격의 로밍 요금제를 이용하세요

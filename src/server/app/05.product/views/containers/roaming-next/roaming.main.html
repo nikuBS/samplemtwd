@@ -3,22 +3,25 @@
     includeCalendar: true,
   }); %>
 <body class="rn">
-<div id="roamingMain">
+<div id="roamingMain" class="wrap">
     <div id="gnb">
         <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
         </span>
         <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="로고" width="94" height="24" />
+        <a href="/common/search-main">
+            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색"/>
+        </a>
     </div>
     <img class="background" src="<%= CDN %>/img/product/roam/bg-map.png" alt="배경"/>
     <%- include('../components/header.component.html', { title: 'T로밍', svcInfo: svcInfo }) %>
     <div id="content">
         <% if (newbie && newbie.isRoamingFirstTime === 'Y') { %>
-        <h2>T로밍 첫고객,</h2>
-        <h2 class="colorPoint">50% 할인 혜택!</h2>
+        <h2><span class="colorPoint">baro 무료통화</span>와 함께</h2>
+        <h2>안전한 여행하세요!</h2>
         <p class="description">
             로밍이 처음이신가요?<br />
-            할인 혜택으로 해외에서도 편하고 안전하게 T로밍을 이용해보세요.
+            로밍요금제를 이용하시면 baro를 통해 음성통화가 무료로 제공됩니다.
         </p>
         <% } else { %>
         <h2>해외여행 갈 땐</h2>
@@ -45,10 +48,12 @@
                 <ul></ul> 
             </div>
             <p class="description">찾으시는 나라가 없으신가요?</p>
-            <form action="#" onsubmit="searchNation(); return false;">
+            <form action="#" onsubmit="return searchNation();">
                 <div class="field-container">
                     <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
-                    <img src="<%= CDN %>/img/product/roam/ico_search_a.png" width="21" height="21" alt="Search" />
+                    <img src="<%= CDN %>/img/product/roam/ico_search_a.png" class="search"
+                         onclick="searchNation();"
+                         width="21" height="21" alt="Search" />
                 </div>
             </form>
             <div class="link">
@@ -87,11 +92,6 @@
                 <img src="<%= CDN %><%= banners.topBanners[0].bnnrFilePathNm %>"
                      alt="<%= banners.topBanners[0].bnnrImgAltCtt %>" />
             </a>
-            <!--
-            <a href="/product/roaming/info/barocall">
-                <img src="<%= CDN %>/img/product/roam/banner_01.png" alt="광고배너 Baro 통화" />
-            </a>
-            -->
         </div>
         <% } %>
         <div class="card">
@@ -186,7 +186,7 @@
     fillPopularNations();
     fillTariffGroups();
 
-    installNationSearch();
+    installNationSearch(openScheduleDialog);
     beautifyCurrentUse();
   });
 

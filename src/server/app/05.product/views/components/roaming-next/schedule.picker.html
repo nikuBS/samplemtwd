@@ -18,7 +18,17 @@
             <img src="<%= CDN %>/img/product/roam/ico_close_w.svg" width="20" height="20" alt="Close"/>
         </div>
     </div>
-    <div id="scheduleContent"><div id="calendar"></div></div>
+    <div id="scheduleContent">
+        <div id="calendar">
+            <div id="calendarGuide">
+                <span class="date">0월 0일</span>
+                오는 날을 선택하세요
+                <div class="tailContainer">
+                    <div class="tail"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="scheduleConfirm" class="bottom-button not-prepared" onclick="tryConfirm();">
         추천 요금제 확인
     </div>
@@ -77,7 +87,7 @@
       parentEl: 'div#calendar',
       minDate: moment().add(1, 'days').format('YYYY-MM-DD'),
     }, function(start, end) {
-      if (start && end && end.diff(start, 'days') <= 30) {
+      if (start && end && end.diff(start, 'days') < 30) {
         $('#scheduleConfirm').removeClass('not-prepared');
       } else {
         $('#scheduleConfirm').addClass('not-prepared');
@@ -91,6 +101,47 @@
       } else {
         $('#date-arrive').html('-');
       }
+
+      if (start && !end) {
+        setTimeout(function () {
+          var startDateCells = document.querySelectorAll('.active.start-date.available');
+          if (!startDateCells || startDateCells.length < 1) {
+            return;
+          }
+          var startDateCell;
+          for (var cell of startDateCells) {
+            if (cell.className.indexOf('off') >= 0) {
+              continue;
+            }
+            startDateCell = cell;
+            break;
+          }
+          if (!startDateCell) {
+            return;
+          }
+          var rect = startDateCell.getBoundingClientRect();
+          var x = rect.left;
+          var y = rect.top; // 스크롤 상태 반영
+          y -= 70;
+          x -= 35;
+
+          if (x < 10) {
+            x = 10;
+            $('#scheduleDialog #calendarGuide .tail').css('left', '13px');
+          } else if (x + 128 + 10 > window.innerWidth) {
+            x = window.innerWidth - 128 - 10;
+            $('#scheduleDialog #calendarGuide .tail').css('left', '65px');
+          } else {
+            $('#scheduleDialog #calendarGuide .tail').css('left', '43px');
+          }
+          $('#scheduleDialog #calendarGuide .date').text(start.format('M월 D일'));
+          $('#scheduleDialog #calendarGuide').css('left', x + 'px');
+          $('#scheduleDialog #calendarGuide').css('top', y + 'px');
+          $('#scheduleDialog #calendarGuide').css('display', 'block');
+        }, 200);
+      } else {
+        $('#scheduleDialog #calendarGuide').css('display', 'none');
+      }
     });
   }
   function tryConfirm() {
@@ -101,7 +152,8 @@
 
     var startDate = moment($('#date-depart').html(), 'YYYY.MM.DD');
     var endDate = moment($('#date-arrive').html(), 'YYYY.MM.DD');
-    if (endDate.diff(startDate, 'days') > 30) {
+    var diffDays = endDate.diff(startDate, 'days');
+    if (diffDays >= 30) {
       alert('30일 이상은 선택하실 수 없습니다.');
       return false;
     }
@@ -112,17 +164,58 @@
     closeDialog();
   }
 
+  var onSelectCallback = openScheduleDialog; // with code, label, topImageUrl, baseDiv
 
-  function installNationSearch() {
+  function installNationSearch(selectionCb) {
+    if (!selectionCb) {
+      throw new Error('Selection callback should not be null');
+    }
+    onSelectCallback = selectionCb;
+
     prepareNations();
     $('#nation-search').autocomplete({
-      source: allNations.map(function(value) {
-        return {label: value.countryNameKor, value: value.countryNameKor, code: value.countryCode};
-      }),
-      delay: 100,
+      // source: allNations.map(function(value) {
+      //   return {label: value.countryNameKor, value: value.countryNameKor, code: value.countryCode};
+      // }),
+      source: function(req, res) {
+        var term = req.term.toLowerCase().trim();
+        if (term.length >= 1) {
+          var suggestions = [];
+          for (var nation of allNations) {
+            if (nation.countryNameKor.indexOf(term) >= 0 ||
+              nation.countryNameEng.toLowerCase().indexOf(term) >= 0) {
+              var index = nation.countryNameKor.indexOf(term);
+              if (index < 0) {
+                index = nation.countryNameEng.toLowerCase().indexOf(term);
+              }
+              suggestions.push({
+                label: nation.countryNameKor,
+                value: nation.countryNameKor,
+                code: nation.countryCode,
+                index: index,
+              });
+            }
+          }
+          // 정렬, index 값이 작고, 전체 길이 짧을수록 상단에 노출
+          suggestions.sort(function(a, b) {
+            return (a.index * 1000 + a.label.length) - (b.index * 1000 + b.label.length);
+          });
+          res(suggestions);
+        }
+      },
       minLength: 1,
+      focus: function(event, ui) {
+        if (ui.item && ui.item.code) {
+          $('#nation-search').val(ui.item.label);
+          $('#nation-search').blur();
+          onSelectCallback(ui.item.code, ui.item.label, null, baseDiv);
+          return false;
+        }
+        return false;
+      },
       select: function(event, ui) {
-        openScheduleDialog(ui.item.code, ui.item.label, null, baseDiv);
+        $('#nation-search').blur();
+        onSelectCallback(ui.item.code, ui.item.label, null, baseDiv);
       }
     });
     setupNationsDialog();
@@ -155,9 +248,9 @@
     for (var nation of selectedNations) {
       var li = document.createElement('li');
       li.onclick = function(e) {
-        var nationName = e.target.innerText
+        var nationName = e.target.innerText;
         var nationCode = e.target.getAttribute('data-country');
-        openScheduleDialog(nationCode, nationName, null, '#nationsDialog');
+        onSelectCallback(nationCode, nationName, null, '#nationsDialog');
       };
       li.innerText = nation.countryNameKor;
       li.setAttribute('data-country', nation.countryCode);
@@ -166,12 +259,21 @@
   }
   function searchNation() {
     var name = $('#nation-search').val();
+    if (name.trim().length == 0) {
+      Tw.Popup.openAlert('국가명을 입력해주세요', '국가 검색');
+      $('#nation-search').focus();
+      return false;
+    }
+    name = name.trim();
     for (var item of allNations) {
-      if (item.countryNameKor == name) {
-        openScheduleDialog(item.countryCode, name, null, baseDiv);
-        break;
+      if (item.countryNameKor == name || item.countryNameEng.toLowerCase() == name.toLowerCase()) {
+        $('#nation-search').blur();
+        onSelectCallback(item.countryCode, item.countryNameKor, null, baseDiv);
+        return false;
       }
     }
+    Tw.Popup.openAlert('해당 국가는 로밍서비스 국가가 아닙니다.', '국가 검색');
+    return false;
   }
   function openNationsDialog() {
     onClickNationGroup(document.getElementById('EUR'));

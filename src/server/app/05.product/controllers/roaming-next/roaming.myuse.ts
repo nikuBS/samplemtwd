@@ -45,7 +45,14 @@ export default class RoamingMyUseController extends TwViewController {
         })).subscribe((ranges) => {
           try {
             this.mergeRanges(tariffs, ranges, dataUsages);
-            context.tariffs = tariffs;
+            const filtered: any = [];
+            for (const t of tariffs) {
+              if (t.endDate && t.endDate.isBefore(context.now)) {
+                continue;
+              }
+              filtered.push(t);
+            }
+            context.tariffs = filtered;
             res.render('roaming-next/roaming.myuse.html', context);
           } catch (e) {
             console.error(e);
@@ -122,9 +129,9 @@ export default class RoamingMyUseController extends TwViewController {
       if (t.group === 7) {
         const m = new RegExp('[0-9]+').exec(t.prodNm);
         if (m) {
-          t.data = {code: '-', msg: m[0] + 'MB (일)'};
+          t.data = { used: null, total: m[0] + 'MB (일)'};
         } else {
-          t.data = {code: '-', msg: '-'};
+          t.data = { used: null, total: '-'};
         }
       }
       if (t.group === 8) {
