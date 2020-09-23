@@ -251,7 +251,7 @@ export default class RoamingOnController extends TwViewController {
           const now = moment();
           current.status = 1;
           current.statusMessage = '이용중';
-          if (current.startDate.isAfter(now)) {
+          if (current.startDate && current.startDate.isAfter(now)) {
             current.status = 0;
             current.statusMessage = '이용예정';
           } else if (current.endDate && current.endDate.isBefore(now)) {
@@ -521,6 +521,9 @@ export default class RoamingOnController extends TwViewController {
   private getBaroPhoneUsage(current: any, startDate: moment.Moment, endDate: moment.Moment): Observable<any> {
     if (current.status === 0) {
       return Observable.of({});
+    }
+    if (!startDate) {
+      return Observable.of({used: 0, total: '무제한'});
     }
     if (!current.endDate) {
       endDate = moment();
