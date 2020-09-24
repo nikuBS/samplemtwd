@@ -118,6 +118,7 @@ Tw.MainMenuSettingsCertificates.prototype = {
 
       } else { // 최신버전 
         // 네이티브 페이지 이동 
+        window.location.replace('/main/menu/settings');
         this._nativeService.send(Tw.NTV_CMD.GO_CERT, {}); // 기존 네이티브 페이지 이동 
       }
     }

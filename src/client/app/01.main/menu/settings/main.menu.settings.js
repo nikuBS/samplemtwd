@@ -22,6 +22,8 @@ Tw.MainMenuSettings = function (rootEl, xRequestedWith) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
+  this._historyService = new Tw.HistoryService();
+
   this._currentVersion = '';
   this._xRequestedWith = xRequestedWith;
 
@@ -153,7 +155,8 @@ Tw.MainMenuSettings.prototype = {
    * @function
    * @desc 공인인증서 선택시 native 화면 호출
    */
-  _onCertificates: function () {
+  _onCertificates: function (e) {
+    e.preventDefault();
     // 최신버전 체크 
     // 1. 조건 최신버전 == 현재버전 => 네이티브 호출 
     // 2. 최신버전이 아니면 App 업데이트 안내 페이지 호출 
@@ -195,17 +198,9 @@ Tw.MainMenuSettings.prototype = {
       // console.log(latestVersion, this._currentVersion);// 5.0.10 > 5.0.9
       if (Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) { // 이전버전 
         // // 업데이트 안내 페이지 팝업 
-        // this._popupService.open({
-        //   hbs: 'MA_03_01_02_03_01_01'
-        // }, $.proxy(this._onUpdatePopup, this));
-
-        $('.popup-page').on('click', '.btn-style1', $.proxy(function () {
-          this._onUpdate(); // 업데이트 안내 페이지 이동
-        }, this));
-
-        $('.popup-page').on('click', '.prev-step', $.proxy(function () {
-          window.location.replace('/main/menu/settings');
-        }, this));
+        this._popupService.open({
+          hbs: 'MA_03_01_02_03_01_01'
+        }, $.proxy(this._onUpdatePopup, this));
 
         return;
 
@@ -223,7 +218,7 @@ Tw.MainMenuSettings.prototype = {
     }, this));
     // 취소 버튼 이전 화면 이동 
     $popupContainer.on('click', '.prev-step', $.proxy(function () {
-      window.location.replace('/main/menu/settings');
+      this._historyService.goBack();
     }, this));
   }
 
