@@ -824,20 +824,28 @@ class MainHome extends TwViewController {
     return '';
   }
 
-  public compareVer (versionA, versionB): boolean {
-    let compareResult = false;
-    versionA = versionA.split('.');
-    versionB = versionB.split('.');
-    const length = Math.max(versionA.length, versionB.length);
-    for (let i = 0; i < length; i += 1) {
-      const a = versionA[i] ? parseInt(versionA[i], 10) : 0;
-      const b = versionB[i] ? parseInt(versionB[i], 10) : 0;
-      if (b >= a) {
-        compareResult = true;
-        break;
-      }
+  public compareVer (a, b): boolean {
+    let x=a.split('.').map(e=> parseInt(e));
+    let y=b.split('.').map(e=> parseInt(e));
+    let z = "";
+
+    for(let i=0;i<x.length;i++) {
+        if(x[i] === y[i]) {
+            z+="e";
+        } else
+        if(x[i] > y[i]) {
+            z+="m";
+        } else {
+            z+="l";
+        }
     }
-    return compareResult;
+    if (!z.match(/[l|m]/g)) {
+      return true;
+    } else if (z.split('e').join('')[0] == "m") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public getOsVersionCheck(req): boolean {
@@ -856,7 +864,7 @@ class MainHome extends TwViewController {
         let mac_check_version = '12.4.8';
 
         // true: 노출, false: 비노출 
-        return this.compareVer(mac_check_version, mac_version);
+        return this.compareVer(mac_version, mac_check_version);
         
       } else { // aos
         let reg = new RegExp('Android [0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}');
@@ -868,8 +876,7 @@ class MainHome extends TwViewController {
           mac_version = mac_version_temp[0].split(' ')[1] 
         }
         let mac_check_version = '4.4.4';
-
-        return this.compareVer(mac_check_version, mac_version);
+        return this.compareVer(mac_version, mac_check_version);
       }
     
     } catch (e) {
