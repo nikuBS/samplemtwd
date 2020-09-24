@@ -195,17 +195,9 @@ Tw.MainMenuSettings.prototype = {
       // console.log(latestVersion, this._currentVersion);// 5.0.10 > 5.0.9
       if (Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) { // 이전버전 
         // // 업데이트 안내 페이지 팝업 
-        // this._popupService.open({
-        //   hbs: 'MA_03_01_02_03_01_01'
-        // }, $.proxy(this._onUpdatePopup, this));
-
-        $('.popup-page').on('click', '.btn-style1', $.proxy(function () {
-          this._onUpdate(); // 업데이트 안내 페이지 이동
-        }, this));
-
-        $('.popup-page').on('click', '.prev-step', $.proxy(function () {
-          window.location.replace('/main/menu/settings');
-        }, this));
+        this._popupService.open({
+          hbs: 'MA_03_01_02_03_01_01'
+        }, $.proxy(this._onUpdatePopup, this));
 
         return;
 
