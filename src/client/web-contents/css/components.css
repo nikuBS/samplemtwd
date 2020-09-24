@@ -36668,7 +36668,11 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
   .tod-offer-prd-options.tod-v2 .label-tit {font-size:0.81rem}
  }
 
+ /* 200825 [OP002-10215][UX/PUB] 소액결제/컨텐트 이용요금 결제화면 내 실시간 계좌이체 납부 방법 추가 */
+ .tod-input-list.input-list label{font-size:0.94rem; line-height:1.5rem}
+
  /* 200903 [OP002-10356][UX/PUB] T World PC Web 하단부 이미지 적용 */
 .co-info2 .link-long-list .cert06 button, .co-info2 .link-long-list .cert06 a {
   background: url(/img/ico/ico-cert06.png) 0 50% no-repeat;
   background-size: 36px auto; }
+
