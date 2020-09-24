@@ -4,9 +4,11 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingRatesByCountryResultController extends TwViewController {
+export default class RoamingRatesByCountryResultController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.setDeadline(res);
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
 
     const query = {
@@ -54,7 +56,7 @@ export default class RoamingRatesByCountryResultController extends TwViewControl
       this.getNationsByContinents('OCN'),
       this.getRoamingMeta(apiParams),
     ).subscribe(([afr, asp, amc, eur, met, ocn, meta]) => {
-      res.render('roaming-next/roaming.rates.html', {
+      this.renderDeadline(res, 'roaming-next/roaming.rates.html', {
         svcInfo,
         pageInfo,
         equipment,

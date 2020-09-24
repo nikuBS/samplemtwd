@@ -7,73 +7,9 @@ import EnvHelper from '../../../../utils/env.helper';
 import moment from 'moment';
 import RoamingHelper from './roaming.helper';
 import MyTHelper from '../../../../utils/myt.helper';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingOnController extends TwViewController {
-  CDN = EnvHelper.getEnvironment('CDN');
-
-  static formatTariff(t) {
-    if (!t) {
-      return t;
-    }
-    if (t.basFeeInfo) {
-      let iFee: any = parseInt(t.basFeeInfo, 10);
-      if (iFee) {
-        if (iFee >= 1000) {
-          iFee = iFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
-        t.price = iFee + '원';
-      } else {
-        t.price = t.basFeeInfo;
-      }
-    }
-    if (t.romUsePrdInfo) {
-      const value = parseInt(t.romUsePrdInfo, 10);
-      t.duration = value <= 1 ? 1 : value;
-    } else {
-      t.duration = 1;
-    }
-    if (!t.basOfrDataQtyCtt || t.basOfrDataQtyCtt === '-') {
-      // t.data = DATA_PROVIDED[t.prodId];
-      t.data = '-';
-
-      if (t.basOfrMbDataQtyCtt && t.romUsePrdInfo === '0') {
-        t.data = '매일 ' + t.basOfrMbDataQtyCtt + 'MB';
-      } else if (t.prodId === 'NA00006229') {
-        // T괌사이판 5천원
-        t.data = '매일 500MB';
-      } else if (parseInt(t.basOfrGbDataQtyCtt, 10) > 0) {
-        const gbData = parseInt(t.basOfrGbDataQtyCtt, 10);
-        t.data = gbData + 'GB';
-      } else {
-        t.data = t.basOfrMbDataQtyCtt;
-      }
-    } else {
-      const gbData = parseInt(t.basOfrDataQtyCtt, 10);
-      if (gbData > 0) {
-        t.data = gbData + 'GB';
-      } else {
-        t.data = t.basOfrDataQtyCtt;
-      }
-    }
-
-    // OnePass VIP 설명 예외처리
-    // NA00006486, NA00006487  VIP
-    if (['NA00006486', 'NA00006487'].indexOf(t.prodId) >= 0) {
-      t.data = '무제한';
-      t.phone = '음성 30분 / 문자 30건 / baro통화 무제한';
-    }
-    // NA00006744, NA00006745  DATA VIP
-    if (['NA00006744', 'NA00006745'].indexOf(t.prodId) >= 0) {
-      t.data = '무제한';
-    }
-
-    if (!t.phone) {
-      t.phone = 'baro통화 무제한';
-    }
-
-    return t;
-  }
-
+export default class RoamingOnController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     const mcc = req.query.mcc || req.cookies['ROAMING_MCC'];
@@ -90,11 +26,12 @@ export default class RoamingOnController extends TwViewController {
       this.apiService.request(API_CMD.BFF_03_0001, {}).subscribe(r0 => {
         this.loginService.logoutSession(req, res).subscribe(r1 => {
           res.cookie('ROAMING_DTD', debugTid);
-          res.redirect('/common/member/logout/complete?n=/product/roaming/on');
+          res.redirect('/common/member/logout/complete?n=/product/roaming/on?mcc=' + mcc);
         });
       });
       return;
     }
+    this.setDeadline(res);
 
     const context: any = {
       svcInfo,
@@ -117,9 +54,6 @@ export default class RoamingOnController extends TwViewController {
     ).subscribe(([info, nations]) => {
       context.nations = nations;
       if (!info) {
-        // res.cookie('ROAMING_MCC', '999');
-        // res.redirect('/product/roaming');
-        // return;
         context.country = {
           mcc: mcc,
           code: null,
@@ -132,7 +66,7 @@ export default class RoamingOnController extends TwViewController {
         };
         this.getCountryInfo('202').subscribe(common => {
           context.country.backgroundUrl = RoamingHelper.penetrateUri(common.mblRepImg);
-          res.render(template, context);
+          this.renderDeadline(res, template, context);
         });
         return;
       }
@@ -150,7 +84,7 @@ export default class RoamingOnController extends TwViewController {
       if (!isLogin) {
         this.getRoamingMeta(context.country.code).subscribe(meta => {
           context.meta = meta;
-          res.render(template, context);
+          this.renderDeadline(res, template, context);
         });
       } else {
         this.processAuthenticated(req, res, template, context, mcc, info.countryCode);
@@ -208,14 +142,14 @@ export default class RoamingOnController extends TwViewController {
           if (!allTariffs) {
             allTariffs = [];
           }
-          context.availableTariffs = allTariffs.map(t => RoamingOnController.formatTariff(t));
+          context.availableTariffs = allTariffs.map(t => RoamingHelper.formatTariff(t));
           context.usage.phone = { // FIXME: hardcoded
             voice: 1,
             sms: 1,
           };
           context.rate = rate;
           context.meta = meta;
-          res.render(template, context);
+          this.renderDeadline(res, template, context);
         });
       } else {
         const current = usingTariffs[0];
@@ -290,9 +224,9 @@ export default class RoamingOnController extends TwViewController {
       // 차단 대응
       if (baroUsage && baroUsage.code === 'BFF0006') {
         context.currentTariff = null;
-        context.usage.baro.startTime = moment(baroUsage.fromDtm, 'YYYYMMDDHHmmss');
-        context.usage.baro.endTime = moment(baroUsage.toDtm, 'YYYYMMDDHHmmss');
-        res.render(template, context);
+        context.usage.baro.startTime = moment(baroUsage.result.fromDtm, 'YYYYMMDDHHmmss');
+        context.usage.baro.endTime = moment(baroUsage.result.toDtm, 'YYYYMMDDHHmmss');
+        this.renderDeadline(res, template, context);
         return;
       }
 
@@ -346,7 +280,7 @@ export default class RoamingOnController extends TwViewController {
       if ([12, 13, 14].indexOf(current.group) >= 0) {
         context.currentTariff.startDate = null;
       }
-      res.render(template, context);
+      this.renderDeadline(res, template, context);
     });
   }
 
@@ -355,13 +289,9 @@ export default class RoamingOnController extends TwViewController {
     if (backgroundUrl) {
       backgroundUrl = RoamingHelper.penetrateUri(backgroundUrl);
     } else {
-      backgroundUrl = `${this.CDN}/img/product/roam/background_aus.png`;
+      backgroundUrl = `${EnvHelper.getEnvironment('CDN')}/img/product/roam/background_aus.png`;
     }
     return backgroundUrl;
-  }
-
-  protected get noUrlMeta(): boolean {
-    return true;
   }
 
   /**
@@ -443,22 +373,6 @@ export default class RoamingOnController extends TwViewController {
       return this.apiService.request(API_CMD.BFF_05_0001, {}).map(resp => {
         if (!resp.result) {
           // BLN0004: 잔여량 조회 가능 항목이 없습니다
-          if (false) {
-            return MyTHelper.parseUsageData({
-              gnrlData: [
-                {
-                  used: '15660',
-                  total: '28384',
-                  unit: '140',
-                },
-                {
-                  used: '15000',
-                  total: '20000',
-                  unit: '140',
-                },
-              ]
-            });
-          }
           return {code: resp.code, msg: resp.msg};
         }
         return MyTHelper.parseUsageData(resp.result);
@@ -473,7 +387,7 @@ export default class RoamingOnController extends TwViewController {
       // rgstDtm: '2018112803', // 등록일시 YYYYMMDDHH
       // exprDtm: '2018112823', // 종료일시 YYYYMMDDHH
       if (!resp.result) {
-        this.logger.warn('BFF_05_0201 failed', resp);
+        this.logger.warn(this, 'BFF_05_0201 failed', resp);
         // BLN0007: 잔여량 조회 가능 항목이 없습니다
         // BLN0012: 조회 대상이 아닙니다
         return {code: resp.code, msg: resp.msg};
@@ -523,7 +437,12 @@ export default class RoamingOnController extends TwViewController {
       return Observable.of({});
     }
     if (!startDate) {
-      return Observable.of({used: 0, total: '무제한'});
+      // 시작일이 없으면... 적당히 가입일로 맞춰주는 센스
+      if (current.scrbDt) {
+        startDate = moment(current.scrbDt, 'YYYYMMDD').add(-1, 'days');
+      } else {
+        return Observable.of({used: 0, total: '무제한'});
+      }
     }
     if (!current.endDate) {
       endDate = moment();
@@ -537,12 +456,8 @@ export default class RoamingOnController extends TwViewController {
       usgEndDate: endDate.format('YYYYMMDD'),
     }).map(resp => {
       // 차단 테스트
-      if (false) {
-        resp.code = 'BFF0006';
-        resp.msg = '안녕하세요, T월드입니다. 바로통화 차단을 해보았어요. 정말 차단이 잘되겠죠? 코로나 조심하시고요!';
-        resp.fromDtm = '20200923110000';
-        resp.toDtm = '20200923115500';
-        resp.result = null;
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
       }
 
       // svcMgmtNo: '10003154' // 서비스관리번호
@@ -560,7 +475,7 @@ export default class RoamingOnController extends TwViewController {
           };
         }
         // INFO0030 시스템 사정으로 서비스를 일시적으로 이용하실 수 없습니다.
-        return {code: resp.code, msg: resp.msg, fromDtm: resp.fromDtm, toDtm: resp.toDtm};
+        return {code: resp.code, msg: resp.msg};
       }
 
       const first = result[0];

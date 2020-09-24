@@ -220,7 +220,8 @@ class ApiService {
               // this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
               this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
               const path = this.loginService.getFullPath(req);
-              if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
+              if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
+                || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
                 this.checkServiceBlock(resp.result);
               }
             }
@@ -248,6 +249,10 @@ class ApiService {
    * @param err
    */
   private handleError(observer, command, req, res, options, err) {
+    if (!err.response && err.stack) {
+      this.logger.error(this, '[Programming error]', err.stack);
+    }
+
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       let error = err.response.data;
       const headers = err.response.headers;
@@ -284,7 +289,8 @@ class ApiService {
                 this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
                 this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
                 const path = this.loginService.getFullPath(req);
-                if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
+                if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
+                  || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
                   this.checkServiceBlock(resp.result);
                 }
               }

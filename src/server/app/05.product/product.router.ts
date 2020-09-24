@@ -236,8 +236,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/on', controller: RoamingOnController });
     this.controllers.push({ url: '/roaming/offer', controller: RoamingTariffOfferController });
     this.controllers.push({ url: '/roaming/fee', controller: RoamingTariffsController });
-    this.controllers.push({ url: '/roaming/tariffs', controller: RoamingTariffsController });
-    this.controllers.push({ url: '/roaming/addons', controller: RoamingAddonsController });
     this.controllers.push({ url: '/roaming/planadd', controller: RoamingAddonsController });
     this.controllers.push({ url: '/roaming/history', controller: RoamingHistoryController });
     this.controllers.push({ url: '/roaming/do/search-before', controller: RoamingRatesByCountryController });

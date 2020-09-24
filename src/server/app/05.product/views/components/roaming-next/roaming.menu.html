@@ -11,11 +11,6 @@
         <% if (svcInfo && svcInfo.mbrNm) { %>
         <h2>
             안녕하세요. <%= svcInfo.mbrNm %>님
-            <% if (process.env['NODE_ENV'] == 'local') { %>
-            <span style="font-size: 16px;">
-                <%= svcInfo.userId %>
-            </span>
-            <% } %>
         </h2>
         <% } else { %>
         <h2 class="login">로그인 해주세요 &gt;</h2>
@@ -56,7 +51,7 @@
                 </a>
             </li>
             <li>
-                <a href="/product/roaming/addons">
+                <a href="/product/roaming/planadd">
                 <svg height="18" viewBox="0 0 36 37" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(0 .7)"><path d="m0 0h36v36h-36z" fill-rule="nonzero" opacity=".5"/><g stroke="#333" stroke-width="1.8"><path d="m5.4 30.6h25.2v-25.2h-25.2z"/><path d="m23.4 16.2c0-2.9823376-2.4176624-5.4-5.4-5.4s-5.4 2.4176624-5.4 5.4" stroke-linecap="square" transform="matrix(1 0 0 -1 0 27)"/></g></g></svg>
                 <span>T로밍 부가서비스</span>
                 </a>
@@ -151,7 +146,7 @@
     </div>
 </script>
 <script type="text/x-handlebars-template" id="tpl-dialog-off">
-    <div id="{{ id }}" class="modal">
+    <div id="{{ id }}" class="roaming-modal">
         <div class="content">
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
@@ -197,7 +192,10 @@
       $('#' + id).show();
     }
     function showHome() {
-      document.location.href = '/product/roaming/on';
+      var mcc = Tw.CommonHelper.getSessionStorage('ROAMING_MCC');
+      if (mcc) {
+        document.location.href = '/product/roaming/on?mcc=' + mcc;
+      }
     }
     function showMyServices() {
       document.location.href = '/product/roaming/my-use';
@@ -220,7 +218,7 @@
     var switchOffIndex = 0;
     var switchOffTimer;
     function switchOff() {
-      document.cookie = 'ROAMING_MCC=999; path=/';
+      Tw.CommonHelper.setSessionStorage('ROAMING_OFF', 'Y');
 
       dismiss('dialogOff');
       const id = 'roamingOff';
@@ -248,5 +246,30 @@
       var tidLanding = new Tw.TidLandingComponent();
       tidLanding.goLogout();
       return false;
+    }
+
+    function checkInterceptMenu() {
+      var turnOff = Tw.CommonHelper.getSessionStorage('ROAMING_OFF');
+      var mcc = Tw.CommonHelper.getSessionStorage('ROAMING_MCC');
+      if (mcc && mcc != '450' && turnOff != 'Y') {
+        openRoamingMenu();
+        return true;
+      }
+      return false;
+    }
+
+    function openRoamingMenu() {
+      $('#roamingMenu').css('display', 'block');
+      $('.wrap').css('display', 'none');
+      $('#roamingMenu .header .login').on('click', function(e) {
+        new Tw.TidLandingComponent().goLogin('/product/roaming');
+        e.stopPropagation();
+      });
+
+      $(document).on('click', '#roamingMenu .header .close', function() {
+        $('#roamingMenu').css('display', 'none');
+        $('#fe-close').click();
+        $('.wrap').css('display', 'inherit');
+      });
     }
 </script>

@@ -360,6 +360,7 @@
             </div>
         </div>
         <% } %>
+        <a href="/product/roaming/info/barocall">
         <div class="card">
             <h3 style="margin-bottom: 10px;">
                 T전화를 통해<br />
@@ -371,6 +372,7 @@
                 <span class="colorPoint">유료 요금이 발생</span>합니다. (국내는 무료)
             </p>
         </div>
+        </a>
         <div class="card card-toggle" id="info-consulate">
             <p class="description mb2">
                 언제 어디서나 재외국민 안전은
@@ -436,14 +438,12 @@
 <div id="modals">
 </div>
 <script type="text/x-handlebars-template" id="tpl-dialog-welcome">
-    <div id="{{ id }}" class="modal">
+    <div id="{{ id }}" class="roaming-modal">
         <div class="content tm">
-            <!--
             <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday);">
                 <span class="box"></span>
                 <label for="notToday">오늘 하루 그만 보기</label>
             </div>
-            -->
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
                 고객님 안녕하세요 <br />
@@ -460,14 +460,12 @@
     </div>
 </script>
 <script type="text/x-handlebars-template" id="tpl-dialog-usage">
-    <div id="{{ id }}" class="modal">
+    <div id="{{ id }}" class="roaming-modal">
         <div class="content tm">
-            <!--
             <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday); return true;">
                 <span class="box"></span>
                 <label for="notToday">오늘 하루 그만 보기</label>
             </div>
-            -->
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
                 사용시간을 <br />
@@ -494,12 +492,12 @@
   var baseDiv = '#roamingOn';
 
   $(document).ready(function () {
-    if (Tw.CommonHelper.getCookie('ROAMING_MCC') == '999') {
+    if (Tw.CommonHelper.getSessionStorage('ROAMING_OFF') == 'Y') {
       // 로밍모드 명시적 OFF 이면 로밍메인으로 튕김
       document.location.href = '/product/roaming';
       return;
     }
-    document.cookie = 'ROAMING_MCC=<%= country.mcc %>; path=/';
+    Tw.CommonHelper.setSessionStorage('ROAMING_MCC', '<%= country.mcc %>');
 
     new Tw.NextRoamingMenu($(baseDiv)).install();
     fillBackgroundImage();
@@ -653,7 +651,7 @@
   function debugChangeMcc() {
     var newMcc = prompt('MCC 3자리를 입력해주세요');
     if (newMcc) {
-      document.cookie = 'ROAMING_MCC=' + newMcc + '; path=/';
+      Tw.CommonHelper.setSessionStorage('ROAMING_MCC', newMcc.trim());
       setTimeout(function() {
         document.location.href = '/product/roaming/on?mcc=' + newMcc;
       }, 500);
@@ -662,15 +660,19 @@
   function debugChangeUserId() {
     var userId = prompt('TID를 입력하세요');
     if (userId) {
-      document.location.href = '/product/roaming/on?tid=' + userId;
+      document.location.href = '/product/roaming/on?tid=' + userId + '&mcc=<%= country.mcc %>';
     }
   }
   function debugLandingPopup() {
-    document.cookie = 'ROAMING_POPUP=NO; expires=' + new Date(0).toUTCString() + '; path=/';
+    Tw.CommonHelper.removeLocalStorage('ROAMING_POPUP');
+    Tw.CommonHelper.removeSessionStorage('ROAMING_POPUP');
     checkLandingPopup();
   }
   function checkLandingPopup() {
-    if (Tw.CommonHelper.getCookie('ROAMING_POPUP') == 'NO') {
+    if (Tw.CommonHelper.getLocalStorageExpire('ROAMING_POPUP')) {
+      return;
+    }
+    if (Tw.CommonHelper.getSessionStorage('ROAMING_POPUP')) {
       return;
     }
     <% if (isLogin && isAvailable()) { %>
@@ -709,18 +711,20 @@
     showModal(id, preventSession, 'modals');
   }
   function preventSession() {
-    document.cookie = 'ROAMING_POPUP=NO; path=/';
+    Tw.CommonHelper.setSessionStorage('ROAMING_POPUP', 'NO');
   }
   function preventToday() {
     var due = moment().add(1, 'day').hours(0).minutes(0).seconds(0);
-    document.cookie = 'ROAMING_POPUP=NO; path=/; expires=' + due.toDate().toUTCString();
+    Tw.CommonHelper.setLocalStorage('ROAMING_POPUP', JSON.stringify({
+      value: 'NO',
+      expireTime: due.toDate(),
+    }));
   }
 
   function debugLocationAgreement() {
     new Tw.ProductRoamingMode($('#roamingOn')).checkLocationAgreement('234', function () {
       alert('이미 동의하셨습니다 :)');
     });
-
     // if (Tw.BrowserHelper.isApp()) {
     //   new Tw.ProductRoamingMode($('#roamingOn')).checkMcc(function () {
     //     alert('이미 동의하셨습니다 :)');

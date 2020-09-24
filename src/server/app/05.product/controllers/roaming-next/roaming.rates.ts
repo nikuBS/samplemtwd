@@ -1,12 +1,13 @@
-import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingRatesByCountryController extends TwViewController {
+export default class RoamingRatesByCountryController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.setDeadline(res);
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
 
     const equipment = {
@@ -28,7 +29,7 @@ export default class RoamingRatesByCountryController extends TwViewController {
       this.getNationsByContinents('MET'),
       this.getNationsByContinents('OCN'),
     ).subscribe(([afr, asp, amc, eur, met, ocn]) => {
-      res.render('roaming-next/roaming.rates.html', {
+      this.renderDeadline(res, 'roaming-next/roaming.rates.html', {
         svcInfo,
         pageInfo,
         equipment,

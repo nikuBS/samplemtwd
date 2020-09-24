@@ -4,9 +4,12 @@ import {Observable} from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import ProductHelper from '../../../../utils/product.helper';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingAddonsController extends TwViewController {
+export default class RoamingAddonsController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.setDeadline(res);
+
     Observable.combineLatest(
       this.getAddonsUsing(svcInfo),
       this.getAddonsAll(),
@@ -17,6 +20,7 @@ export default class RoamingAddonsController extends TwViewController {
       };
 
       if (error.code) {
+        this.releaseDeadline(res);
         return this.error.render(res, {...error, svcInfo, pageInfo});
       }
 
@@ -44,7 +48,7 @@ export default class RoamingAddonsController extends TwViewController {
         }
       }
 
-      res.render('roaming-next/roaming.addons.html', {
+      this.renderDeadline(res, 'roaming-next/roaming.addons.html', {
         svcInfo, pageInfo,
         addonUsing,
         addonData,

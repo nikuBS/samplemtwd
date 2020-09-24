@@ -1,15 +1,16 @@
-import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import moment from 'moment';
-import RoamingOnController from './roaming.on';
 import RoamingHelper from './roaming.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
+import {RoamingController} from './roaming.abstract';
 
-export default class RoamingTariffOfferController extends TwViewController {
+export default class RoamingTariffOfferController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.setDeadline(res);
+
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     if (req.query.prodId) {
       this.queryAvailableCountries(req, res, req.query.prodId);
@@ -35,7 +36,7 @@ export default class RoamingTariffOfferController extends TwViewController {
       }
 
       if (recommended) {
-        const detail = RoamingOnController.formatTariff(tariffsMap[recommended.prodId]);
+        const detail = RoamingHelper.formatTariff(tariffsMap[recommended.prodId]);
         if (detail) {
           Object.assign(recommended, detail);
         }
@@ -47,7 +48,7 @@ export default class RoamingTariffOfferController extends TwViewController {
         allTariffs = [];
       }
 
-      res.render('roaming-next/roaming.tariff.offer.html', {
+      this.renderDeadline(res, 'roaming-next/roaming.tariff.offer.html', {
         svcInfo,
         pageInfo,
         isLogin: isLogin,
@@ -63,13 +64,9 @@ export default class RoamingTariffOfferController extends TwViewController {
         recommended,
         recentUsed,
         newbie,
-        availableTariffs: allTariffs.map(t => RoamingOnController.formatTariff(t)),
+          availableTariffs: allTariffs.map(t => RoamingHelper.formatTariff(t)),
       });
     });
-  }
-
-  protected get noUrlMeta(): boolean {
-    return true;
   }
 
   private getTariffsMap(): Observable<any> {
@@ -180,12 +177,6 @@ export default class RoamingTariffOfferController extends TwViewController {
       // startEndTerm: '7'
       // neiborRomPsblNatInfo: '캐나다'
       const item: any = resp.result;
-      if (!item) {
-        console.log('* 추천실패: ' + JSON.stringify(resp));
-      } else {
-        console.log('* 추천성공: ' + JSON.stringify(item));
-      }
-
       // if (!item.prodId) {
       //   item.prodId = 'NA00006489';
       //   item.prodNm = 'baro 3GB';
@@ -250,6 +241,7 @@ export default class RoamingTariffOfferController extends TwViewController {
       //   basOfrDataQtyCtt: '4.0'
       //   basFeeInfo: '무료' | '39000'
       //   prodBasBenfCtt: 'baro통화 무료'
+      this.releaseDeadline(res);
       res.json({
         tariffs: tariffs,
         items: countries,

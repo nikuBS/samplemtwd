@@ -787,46 +787,47 @@ body.rn #roamingTariffs .card .field-container {
   background-color: white;
   margin-top: 16px;
 }
-body.rn #roamingMenu {
+#roamingMenu {
+  display: none;
   background-color: white;
   min-height: 500px;
-  z-index: 99;
+  z-index: 290;
 }
-body.rn #roamingMenu .header {
+#roamingMenu .header {
   background-color: #4559fc;
   padding: 20px 0 20px 0;
 }
-body.rn #roamingMenu .header .close {
+#roamingMenu .header .close {
   position: absolute;
   right: 0;
   top: 0;
   padding: 15px;
   cursor: pointer;
 }
-body.rn #roamingMenu .header h2 {
+#roamingMenu .header h2 {
   font-size: 22px;
   font-weight: 400;
   color: white;
   margin-top: 25px;
   padding-left: 20px;
 }
-body.rn #roamingMenu .header .mode {
+#roamingMenu .header .mode {
   margin-top: 10px;
   padding: 0 20px 0 20px;
 }
-body.rn #roamingMenu .header .mode span {
+#roamingMenu .header .mode span {
   font-size: 14px;
   font-weight: 400;
   color: #7FE5FF;
   float: left;
 }
-body.rn #roamingMenu .header .mode .switch {
+#roamingMenu .header .mode .switch {
   float: right;
   position: relative;
   height: 20px;
   cursor: pointer;
 }
-body.rn #roamingMenu .header .mode .switch .track {
+#roamingMenu .header .mode .switch .track {
   position: absolute;
   top: 3px;
   right: 0;
@@ -836,7 +837,7 @@ body.rn #roamingMenu .header .mode .switch .track {
   background-color: white;
   border-radius: 7px;
 }
-body.rn #roamingMenu .header .mode .switch #thumb {
+#roamingMenu .header .mode .switch #thumb {
   position: absolute;
   top: 0;
   width: 20px;
@@ -844,30 +845,30 @@ body.rn #roamingMenu .header .mode .switch #thumb {
   background-color: #3ee5ff;
   border-radius: 10px;
 }
-body.rn #roamingMenu .header .mode .switch .thumb-on {
+#roamingMenu .header .mode .switch .thumb-on {
   right: 0;
 }
-body.rn #roamingMenu .header .mode .switch .thumb-off {
+#roamingMenu .header .mode .switch .thumb-off {
   right: 20px;
 }
-body.rn #roamingMenu .header .mode .reset {
+#roamingMenu .header .mode .reset {
   clear: both;
 }
-body.rn #roamingMenu .header .sticky-menu {
+#roamingMenu .header .sticky-menu {
   margin-top: 16px;
   text-align: center;
 }
-body.rn #roamingMenu .header .sticky-menu .menu {
+#roamingMenu .header .sticky-menu .menu {
   display: inline-block;
   width: 48%;
   text-align: center;
   cursor: pointer;
 }
-body.rn #roamingMenu .header .sticky-menu .menu svg {
+#roamingMenu .header .sticky-menu .menu svg {
   margin-right: 2px;
   vertical-align: bottom;
 }
-body.rn #roamingMenu .header .sticky-menu .menu span {
+#roamingMenu .header .sticky-menu .menu span {
   display: inline-block;
   color: white;
   font-size: 14px;
@@ -875,31 +876,31 @@ body.rn #roamingMenu .header .sticky-menu .menu span {
   line-height: 18px;
   vertical-align: bottom;
 }
-body.rn #roamingMenu .header .sticky-menu .divider {
+#roamingMenu .header .sticky-menu .divider {
   display: inline-block;
   width: 1px;
   height: 14px;
   background-color: rgba(255, 255, 255, 0.2);
   vertical-align: middle;
 }
-body.rn #roamingMenu .menus {
+#roamingMenu .menus {
   padding: 10px 20px 30px 20px;
 }
-body.rn #roamingMenu .menus h3 {
+#roamingMenu .menus h3 {
   font-size: 13px;
   font-weight: 600;
   color: #959595;
   margin-top: 20px;
   margin-bottom: 10px;
 }
-body.rn #roamingMenu .menus li {
+#roamingMenu .menus li {
   padding: 8px 0;
 }
-body.rn #roamingMenu .menus li svg {
+#roamingMenu .menus li svg {
   margin-right: 5px;
   vertical-align: top;
 }
-body.rn #roamingMenu .menus li span {
+#roamingMenu .menus li span {
   display: inline-block;
   color: black;
   font-size: 15px;
@@ -909,31 +910,31 @@ body.rn #roamingMenu .menus li span {
   vertical-align: top;
   margin-top: 1px;
 }
-body.rn #roamingMenu .contacts {
+#roamingMenu .contacts {
   padding: 20px 22px;
 }
-body.rn #roamingMenu .contacts .contact {
+#roamingMenu .contacts .contact {
   margin: 5px 0;
 }
-body.rn #roamingMenu .contacts .contact svg {
+#roamingMenu .contacts .contact svg {
   vertical-align: middle;
   margin-right: 3px;
 }
-body.rn #roamingMenu .contacts .contact .name {
+#roamingMenu .contacts .contact .name {
   display: inline-block;
   width: 120px;
   font-size: 13px;
   font-weight: 500;
   color: #959595;
 }
-body.rn #roamingMenu .contacts .contact .phone {
+#roamingMenu .contacts .contact .phone {
   font-family: Roboto;
   font-weight: 500;
   font-size: 15px;
   letter-spacing: 0;
   color: #111;
 }
-body.rn #roamingMenu .logout {
+#roamingMenu .logout {
   text-align: center;
   font-size: 14px;
   font-weight: 400;
@@ -941,10 +942,10 @@ body.rn #roamingMenu .logout {
   padding: 14px;
   border-top: 1px solid #e0e0e0;
 }
-body.rn .modal {
+.roaming-modal {
   display: none;
   position: fixed;
-  z-index: 100;
+  z-index: 300;
   left: 0;
   top: 0;
   width: 100%;
@@ -952,7 +953,7 @@ body.rn .modal {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.6);
 }
-body.rn .modal .content {
+.roaming-modal .content {
   position: relative;
   background-color: white;
   padding: 24px;
@@ -960,43 +961,43 @@ body.rn .modal .content {
   width: 272px;
   margin: 50% auto;
 }
-body.rn .modal .content .close {
+.roaming-modal .content .close {
   position: absolute;
   right: 20px;
   top: 20px;
 }
-body.rn .modal .content .message {
+.roaming-modal .content .message {
   font-size: 21px;
   font-weight: 600;
   color: black;
   padding: 12px 0;
 }
-body.rn .modal .content .note {
+.roaming-modal .content .note {
   font-size: 14px;
   color: #959595;
 }
-body.rn .modal .content .divider {
+.roaming-modal .content .divider {
   background-color: #e2e2e2;
   height: 1px;
   margin: 24px -24px;
 }
-body.rn .modal .content .buttons {
+.roaming-modal .content .buttons {
   text-align: right;
 }
-body.rn .modal .content .buttons a {
+.roaming-modal .content .buttons a {
   font-size: 15px;
   color: #4559fc;
 }
-body.rn .modal .tm {
+.roaming-modal .tm {
   padding: 48px 24px 24px 24px;
 }
-body.rn .modal .content .today {
+.roaming-modal .content .today {
   position: absolute;
   right: 55px;
   top: 19px;
   cursor: pointer;
 }
-body.rn .modal .content .today .box {
+.roaming-modal .content .today .box {
   display: inline-block;
   width: 18px;
   height: 18px;
@@ -1004,13 +1005,13 @@ body.rn .modal .content .today .box {
   margin-right: 6px;
   vertical-align: middle;
 }
-body.rn .modal .content .today label {
+.roaming-modal .content .today label {
   line-height: 18px;
   font-size: 12px;
   color: #959595;
 }
 
-body.rn #roamingOff {
+#roamingOff {
   display: none;
   position: fixed;
   left: 0;
@@ -1022,31 +1023,31 @@ body.rn #roamingOff {
   background-image: linear-gradient(90deg, #5945FC 0%, #4559FC 100%);
   padding-left: 25px;
 }
-body.rn #roamingOff .decoration {
+#roamingOff .decoration {
   display: block;
   margin-top: 50%;
 }
-body.rn #roamingOff .progress {
+#roamingOff .progress {
   margin-top: 20px;
 }
-body.rn #roamingOff .progress .circle {
+#roamingOff .progress .circle {
   display: inline-block;
   background-color: white;
   margin-right: 9px;
   vertical-align: middle;
 }
-body.rn #roamingOff .progress .off {
+#roamingOff .progress .off {
   width: 11px;
   height: 11px;
   border-radius: 5px;
   opacity: 0.3;
 }
-body.rn #roamingOff .progress .on {
+#roamingOff .progress .on {
   width: 18px;
   height: 18px;
   border-radius: 9px;
 }
-body.rn #roamingOff .message {
+#roamingOff .message {
   font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.61px;
@@ -1054,7 +1055,7 @@ body.rn #roamingOff .message {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-body.rn #roamingOff .note {
+#roamingOff .note {
   font-size: 14px;
   font-weight: 400;
   letter-spacing: -0.5px;
