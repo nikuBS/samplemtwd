@@ -23,19 +23,17 @@ Tw.ProductRoamingMode.prototype = {
 
     var t = this;
     this._locationInfo.checkLocationAgreement(function(r) {
-      var agreed = moment(r.result.twdLocUseAgreeDtm, 'YYYYMMDDHHmmss');
-      var baseDate = moment('202009240200', 'YYYYMMDDHHmm');
-
-      // 이미 동의했어도 개정된 약관을 보지 않았으면 재표시
-      if (agreed.isBefore(baseDate)) {
-        t.showLocationAgreement(mcc);
-      } else {
+      // var agreed = moment(r.result.twdLocUseAgreeDtm, 'YYYYMMDDHHmmss');
+      // var baseDate = moment('202009240200', 'YYYYMMDDHHmm');
+      // if (agreed.isBefore(baseDate)) {
+      //   t.showLocationAgreement(mcc);
+      // } else {
         if (agreedCallback) {
           agreedCallback();
         } else {
           t.showRoamingModeHome(mcc);
         }
-      }
+      // }
     }, function(r) {
       if (r.code === '00') {
         t.showLocationAgreement(mcc);
