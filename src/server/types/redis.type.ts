@@ -32,7 +32,9 @@ export enum REDIS_KEY {
   STORE_PRODUCT = 'StoreProduct:',
   PERSON_DISABLE_TIME = 'person_icon.disable.time',
   PERSON_SMS_DISABLE_TIME = 'freesms.block.time',
-  COMMON_BLOCK = 'str.scrn_isol_phrs'
+  COMMON_BLOCK = 'str.scrn_isol_phrs',
+  ROAMING_POPULAR_NATIONS = 'RoamingPopularNation:RoamingPopularNationList',
+  ROAMING_NATIONS_BY_CONTINENT = 'RoamingContnPsbNation'
 }
 
 export enum REDIS_TOS_KEY {

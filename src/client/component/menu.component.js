@@ -274,6 +274,10 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @desc 헤더영역에 햄버거 메뉴 클릭시 동작 정의
    */
   _onGnbBtnClicked: function () {
+    var checkFunction = $('#roamingIntercept').data('checkCachedMcc');
+    if (checkFunction && checkFunction()) {
+      return false;
+    }
     if (this.$container.find('.fe-menu-section').hasClass('none')) {
       this.$container.find('.fe-menu-section').removeClass('none');
       this.$container.find('.fe-search-section').addClass('none');

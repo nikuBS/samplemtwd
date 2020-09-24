@@ -5,7 +5,7 @@
 * @since 2018.11.08
 %>
 
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
 
 <body>
 <!-- #skip_navigation -->
@@ -129,11 +129,14 @@
     </div>
     <!--// #contents -->
 </div>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+<div id="roamingIntercept"></div>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductRoamingDataRoaming($('.wrap'));
+    $('#roamingIntercept').data('checkCachedMcc', checkInterceptMenu);
   });
 </script>
 <% include ../../components/end.component.html %>

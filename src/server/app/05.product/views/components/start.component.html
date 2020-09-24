@@ -24,4 +24,10 @@ if ( locals.prodTitle ) {
     <meta property="og:description" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
     <title><%= pageTitle %></title>
     <% include ../components/stylesheet.component.html %>
+    <% if (locals.includeRoam) { %>
+    <%- include('../components/roaming-next/stylesheet.component.html'); %>
+    <% } %>
+    <% if (locals.includeCalendar) { %>
+    <%- include('../components/roaming-next/calendar.stylesheet.html'); %>
+    <% } %>
 </head>

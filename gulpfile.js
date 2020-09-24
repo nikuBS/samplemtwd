@@ -323,6 +323,7 @@ gulp.task('css-rb', function () {
     'src/client/web-contents/css/layout.css',
     'src/client/web-contents/css/widgets.css',
     'src/client/web-contents/css/components.css',
+    'src/client/web-contents/css/roaming-next.css',
     'src/client/web-contents/css/m_product.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/web-contents/',

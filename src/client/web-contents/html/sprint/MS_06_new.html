@@ -89,15 +89,15 @@
 							<i class="sel-ico"><img src="/img/myt/sel-ico-internet.png" alt=""></i><span class="item">인터넷</span>
 							<span class="detail-info">세종특별자치시 전** ****</span>
 						</div>
-						<button type="button" class="btn-round3 btn-other-line">다른 회선 관리</button>
+						<button type="button" class="btn-round3 btn-other-line">다른 회선 조회</button><!-- 200917 명칭 수정 -->
 					</div>
 				</div>
 				<!-- //다른 회선 관리 -->
 				
 				<div class="tod-sel-top-wrap">
 					<div class="link-cont">
-						<a href="#" class="on">전체 9</a><!-- 200908 top 이동 수정 -->
-						<a href="#tod-cont1">옵션/할인 2</a>
+						<span class="total">전체 9</span><!-- 200917 수정 -->
+						<a href="#tod-cont1" class="on">옵션/할인 2</a>
 						<a href="#tod-cont2">유료 2</a>
 						<a href="#tod-cont3">무료 5</a>
 					</div>
@@ -286,6 +286,18 @@
 		</div>
 		<!--// #contents -->
 	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$(document).on('scroll', function () {
+				$('.tod-link-cont-anchor').each(function (index, ele) {
+					if (parseInt($(ele).offset().top, 0) <= $(window).scrollTop()) {
+						$('.link-cont > a').removeClass('on').eq(index).addClass('on');
+					}
+				});
+			});
+		});
+	</script>
 </body>
 
 </html>

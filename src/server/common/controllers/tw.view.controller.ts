@@ -321,7 +321,7 @@ abstract class TwViewController {
         });
       } else {
         // 등록되지 않은 메뉴
-        if ( String(process.env.NODE_ENV) === 'prd' ) {
+        if ( String(process.env.NODE_ENV) === 'prd') {
           this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
         } else {
           if ( /\/product\/callplan/.test(path) ) {

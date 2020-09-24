@@ -1,0 +1,230 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo,
+  includeRoam: true, includeCalendar: true }); %>
+<body class="rn">
+<div id="roamingTariffs" class="wrap">
+    <div id="gnb" class="gnb-opaque">
+        <span class="menu icon-gnb-menu">
+            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
+        </span>
+        <h1>T로밍 요금제</h1>
+        <a href="/common/search-main">
+            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색"/>
+        </a>
+    </div>
+    <%- include('../components/header.component.html', { title: 'T로밍 요금제', svcInfo: svcInfo }) %>
+    <div class="header">
+        <h2>나의 여행 <span class="colorPoint">패턴</span>을 <span class="colorPoint">선택</span>해보세요!</h2>
+        <div class="anchors">
+            <div class="anchor" id="a-group-baro" onclick="showGroup(this)">
+                <img src="<%= CDN %>/img/product/roam/tab_01_on.png" width="128" />
+            </div>
+            <div class="anchor" id="a-group-onepass" onclick="showGroup(this)">
+                <img src="<%= CDN %>/img/product/roam/tab_02_off.png" width="128" />
+            </div>
+            <div class="anchor" id="a-group-vip" onclick="showGroup(this)">
+                <img src="<%= CDN %>/img/product/roam/tab_03_off.png" width="128" />
+            </div>
+            <div class="anchor" id="a-group-guam" onclick="showGroup(this)">
+                <img src="<%= CDN %>/img/product/roam/tab_04_off.png" width="128" />
+            </div>
+            <div class="anchor" id="a-group-longpass" onclick="showGroup(this)">
+                <img src="<%= CDN %>/img/product/roam/tab_05_off.png" width="128" />
+            </div>
+        </div>
+    </div>
+    <div id="groups">
+    </div>
+    <div class="card">
+      <h2>국가 별 요금제 찾기</h2>
+
+      <form action="#" onsubmit="return searchNation();">
+        <div class="field-container">
+          <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" />
+          <img src="<%= CDN %>/img/product/roam/ico_search_a.png" class="search"
+               onclick="searchNation();"
+               width="21" height="21" alt="Search" />
+        </div>
+      </form>
+      <div class="link">
+        <a href="#" onclick="openNationsDialog(); return false;">전체 국가 보기</a>
+      </div>
+    </div>
+</div>
+<script type="text/x-handlebars-template" id="tpl-tariff-group">
+    <div class="group" id="{{id}}">
+        <div class="summary">
+            <img src="{{ background }}" />
+            <h2>{{ name }}</h2>
+            <p>
+                {{{ description }}}
+            </p>
+        </div>
+        <div class="tariffs">
+            {{#each items}}
+                <div class="tariff" onclick="showPlan('{{ id }}');">
+                    <span class="price">{{ price }}</span>
+                    <h3>{{ name }}</h3>
+                    <div class="data">
+                        <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                        <span>{{ data }}</span>
+                    </div>
+                    <span class="phone">{{ phone }}</span>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+<%- include('../../components/roaming-next/schedule.picker.html'); %>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  var baseDiv = '#roamingTariffs';
+  var groups = <%- JSON.stringify(groups) %>;
+  var groupMetas = {
+    'group-baro': {top: 0, height: 0},
+    'group-onepass': {},
+    'group-vip': {},
+    'group-guam': {},
+    'group-longpass': {},
+  }
+  var imagePrefix0 = "<%= CDN %>/img/product/roam/";
+  var imagePrefix = "<%= CDN %>/img/product/roam/tab_0";
+  var scrollMonitor = true;
+  var selectedAnchor = 'a-group-baro';
+
+  function showPlan(id) {
+    var path = '/product/callplan?prod_id=' + id;
+    document.location.href = path;
+  }
+
+  $(document).ready(function () {
+    fillTariffs();
+    initScrollAnchors();
+    new Tw.NextRoamingMenu($(baseDiv)).install();
+
+    var i0 = document.location.href.lastIndexOf('#');
+    if (i0 !== -1) {
+      var hash = document.location.href.substring(i0 + 1);
+      showGroupImpl('group-' + hash, 'a-group-' + hash);
+    }
+
+    installNationSearch(openScheduleDialog);
+  });
+
+  function initScrollAnchors() {
+    for (var k of Object.keys(groupMetas)) {
+      var div = document.getElementById(k);
+      groupMetas[k].top = div.offsetTop;
+      groupMetas[k].height = div.offsetHeight;
+    }
+
+    var anchors = $('.header .anchors');
+    $(window).scroll(function(e) {
+      if (!scrollMonitor)
+        return;
+
+      var scrollTop = $(window).scrollTop();
+      if (scrollTop > 63) {
+        anchors.css('position', 'fixed');
+        anchors.css('left', '0');
+        anchors.css('right', '0');
+        anchors.css('top', '50px');
+        anchors.css('height', '94px');
+
+        for (var k of Object.keys(groupMetas)) {
+          var meta = groupMetas[k];
+          if (scrollTop > meta.top - 200 && scrollTop < meta.top - 200 + meta.height) {
+            var thatId = 'a-' + k;
+            $('.header .anchor').each(function(i, val) {
+              var state = val.id === thatId ? 'on' : 'off';
+              $('#' + val.id + ' img').attr('src', imagePrefix + (i+1) + '_' + state + '.png');
+              if (state === 'on' && selectedAnchor !== thatId) {
+                var offsetLeft = val.offsetLeft - 20;
+                $('.anchors').animate({
+                  scrollLeft: offsetLeft,
+                }, 250);
+                selectedAnchor = thatId;
+              }
+            });
+            break;
+          }
+        }
+      } else {
+        anchors.css('position', 'static');
+      }
+    });
+  }
+
+  function showGroup(e) {
+    var groupId = e.id.substring(2);
+    showGroupImpl(groupId, e.id);
+  }
+
+  function showGroupImpl(groupId, anchorId) {
+    scrollMonitor = false;
+    $([document.documentElement, document.body]).animate({
+      scrollTop: groupMetas[groupId].top - 200,
+    }, 280, function() {
+      scrollMonitor = true;
+    });
+
+    $('.header .anchor').each(function(i, val) {
+      var state = val.id === anchorId ? 'on' : 'off';
+      $('#' + val.id + ' img').attr('src', imagePrefix + (i+1) + '_' + state + '.png');
+
+      if (state === 'on') {
+        var offsetLeft = val.offsetLeft - 20;
+        $('.anchors').animate({
+          scrollLeft: offsetLeft,
+        }, 200);
+      }
+    });
+  }
+
+  function closeDialog() {
+    $('#nationsDialog').css('display', 'none');
+    $('#scheduleDialog').css('display', 'none');
+    $(baseDiv).css('display', 'block');
+  }
+
+  var LOST_BANNERS = [
+    {background: 'img_baro01.png', id: 'group-baro'}, // baro
+    {background: 'img_baro02.png', id: 'group-onepass'}, // OnePass 300/500
+    {background: 'img_baro03.png', id: 'group-vip'}, // OnePass VIP
+    {background: 'img_baro04.png', id: 'group-guam'}, // 괌사이판
+    {background: 'img_baro05.png', id: 'group-longpass'}, // LongPass
+  ];
+
+  function fillTariffs() {
+    var template = Handlebars.compile($('#tpl-tariff-group').html());
+    var target = document.getElementById('groups');
+    target.innerHTML = '';
+
+    var i0 = 0;
+    for (var group of groups) {
+      target.innerHTML += template({
+        id: LOST_BANNERS[i0].id,
+        name: group.prodGrpNm,
+        description: group.prodGrpDesc,
+        background: imagePrefix0 + LOST_BANNERS[i0].background,
+        items: group.items.map(item => {
+          var match = new RegExp('[0-9]+').exec(item.price);
+          if (match) {
+            item.price = item.price + '/' + item.duration + '일';
+          }
+          return {
+            id: item.prodId,
+            name: item.prodNm,
+            price: item.price,
+            data: item.data,
+            phone: item.phone,
+          };
+        })
+      });
+      i0 += 1;
+    }
+  }
+</script>
+<% include ../../components/roaming-next/calendar.javascript.html %>
+<% include ../../components/end.component.html %>

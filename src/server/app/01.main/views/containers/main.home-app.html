@@ -896,6 +896,7 @@
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>');
+    new Tw.ProductRoamingMode($('#mainHome')).checkMcc();
   });
 </script>
 </body>

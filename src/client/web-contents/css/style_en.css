@@ -100,7 +100,7 @@
 
 .donut-chart.small, .donut-chart.small .donut-chart-area { width: 2.88rem; height: 2.88rem; }
 
-.donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill { border: 0.56rem solid #f76252; clip: rect(0, 23px, 46px, 0); }
+.donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill { border: 0.5rem solid #f76252; clip: rect(0, 23px, 46px, 0); }
 
 .donut-chart.small .c100.p0 .slice.transparent::before { display: none; }
 
@@ -112,13 +112,13 @@
 
 .donut-chart.small .c100 .slice.transparent .bar { clip: inherit; }
 
-.donut-chart.small .donut-chart-area .c100 .slice.transparent::before { margin: 0; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); width: 0.56rem; height: 0.56rem; }
+.donut-chart.small .donut-chart-area .c100 .slice.transparent::before { margin: 0; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); width: 0.5rem; height: 0.5rem; }
 
-.donut-chart.small .donut-chart-area .c100 .slice.transparent .bar::before { top: -0.56rem; margin: 0; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); width: 0.56rem; height: 0.56rem; }
+.donut-chart.small .donut-chart-area .c100 .slice.transparent .bar::before { top: -0.5rem; margin: 0; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); width: 0.5rem; height: 0.5rem; }
 
 .tod-line-sel-box .line-sel-btn:after { background: url("/img/en/ico-white-arr-down.png") no-repeat 50% 50%; background-size: 100% 100%; }
 
-.notice-point .t-np1 { background: url("/img/en/ico_notice_point_gray.png") center 0 no-repeat; background-size: 60px auto; font-weight: 400; }
+.notice-point .t-np1 { background: url("/img/en/ico_notice_point_gray.png") center 0 no-repeat; background-size: 60px auto; font-weight: 400; padding-top: 4.88rem; }
 
 .user-month-bill .this-month-bill .stit { font-size: 1rem; color: #000; }
 
@@ -312,6 +312,22 @@
 
 .myt-note-wrap .tit::before { content: ''; display: inline-block; width: 4px; height: 4px; background: url("/img/en/ico_refer.png") 0 0 no-repeat; position: absolute; top: 3px; left: 0; background-size: 100% 100%; }
 
+.icon-comm-bi122 { display: inline-block; width: 3.75rem; height: 3.75rem; background: url("/img/en/graphic_120px_warning.svg") no-repeat 0 0; background-size: 100% 100%; }
+
+.long-error { padding-top: 2.88rem; }
+
+.long-error .title-box .tx-tit .tx-highlight { font-size: 1.31rem; line-height: 1.5rem; }
+
+.long-error .title-box .tx-tit + .tx-tit { padding-top: 0.69rem; line-height: 1.69rem; }
+
+.long-error .title-box .tx-tit + .tx-tit .tx-highlight { font-size: 1.19rem; line-height: 1.31rem; }
+
+.long-error .txt-center { padding: 0.94rem 1.25rem 0.63rem 1.25rem; }
+
+.long-error .txt-center .basic-txt { font-size: 0.75rem; line-height: 1rem; }
+
+.long-error .txt-center .basic-txt + .basic-txt { padding-top: 0.75rem; }
+
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
 
@@ -365,7 +381,7 @@
 
 .gray-box.pl-30 { width: 95%; margin: 0.94rem auto; background: #f7f9fa; }
 
-.gray-box .charge { width: 100%; display: table; position: relative; font-size: 0.81rem; color: #000; padding: 1.25rem 0.63rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom: 1px solid #e5e5e5; }
+.gray-box .charge { width: 100%; display: table; position: relative; font-size: 1rem; color: #000; padding: 1.25rem 0.63rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom: 1px solid #e5e5e5; }
 
 .gray-box .charge:last-of-type { border-bottom: none; }
 
@@ -378,6 +394,10 @@
 .gray-box .charge dd.fw-500 { font-weight: 500; }
 
 .gray-box .charge .ico-miri { width: 32px; height: 14px; margin-right: 0.19rem; }
+
+.gray-box.bg-none { padding: 0; background-color: #fff; }
+
+.gray-box.bg-none .charge:first-of-type { padding-top: 0; }
 
 .chart-wrap.bar5 { position: relative; padding: 1.25rem 1rem; margin-top: 3.13rem; }
 
@@ -464,6 +484,10 @@
 .chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dd .price .v > button { display: inline-block; position: relative; padding-right: 0.56rem; line-height: 1em; }
 
 .chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dd .price .v > button::after { content: ''; display: inline-block; width: 0.28rem; height: 0.5rem; position: absolute; top: 50%; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); right: 0; background: url("/img/en/chart_tit_arrow.png") 0 0 no-repeat; background-size: 100% 100%; }
+
+.chart-wrap.bar6 .data-arry .data-belt .data-ul > li.average > dl > dd .bar { background: url("/img/en/pattern1.png") repeat 0 0; background-size: 0.44rem 0.72rem; }
+
+.chart-wrap.bar6 .data-arry .data-belt .data-ul > li.average > dl > dd .bar2 { background: url("/img/en/pattern2.png") repeat 0 0; background-size: 0.44rem 0.72rem; }
 
 .chart-wrap.bar6 .data-arry .data-belt .data-ul > li.average > dl > dd .price .v { padding-right: 0.56rem; }
 
@@ -651,7 +675,7 @@
 /* Logout */
 .popup-page.sign-page .container-wrap .container.logout, .popup-page.sign-page .container-wrap .container.warning { top: 44%; }
 
-.container.logout .complete-title > img, .container.warning .complete-title > img { width: 3.75rem; height: 3.75rem; margin-bottom: 2.5rem; }
+.container.logout .complete-title > img, .container.warning .complete-title > img { width: 3.75rem; height: 3.75rem; margin-bottom: 3rem; }
 
 .container.logout .complete-title > span, .container.warning .complete-title > span { padding-top: 0; }
 
@@ -794,7 +818,7 @@
 
 .videoGuide-bn { width: 100%; height: 100%; -webkit-box-sizing: border-box; box-sizing: border-box; overflow: hidden; }
 
-.videoGuide-bn > img { width: 100%; height: 100%; }
+.videoGuide-bn > img { width: 100%; height: 100%; vertical-align: top; }
 
 .video-list > li { padding: 1.88rem 0; }
 

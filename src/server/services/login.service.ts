@@ -574,6 +574,9 @@ class LoginService {
     if ( path.indexOf('?') !== -1 ) {
       path = path.split('?')[0];
     }
+    if (path.startsWith('/product/roaming')) {
+      path = '/product/roaming';
+    }
     return path;
   }
 

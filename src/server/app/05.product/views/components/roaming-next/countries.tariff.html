@@ -1,0 +1,156 @@
+<div id="countriesDialog" class="dialog">
+    <div class="header">
+        <h1>서비스 이용 가능 국가</h1>
+        <div class="close" onclick="closeCountries()">
+            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+        </div>
+    </div>
+    <div class="tariffBox">
+        <select name="tariff" class="dropdown" onchange="onChangeTariff(this)">
+        </select>
+    </div>
+    <div class="sortBy">
+        <span id="byConsonant" class="by active" onclick="sortBy(this)">가나다</span>
+        <span id="byContinent" class="by" onclick="sortBy(this)">대륙</span>
+    </div>
+    <div class="scroller">
+        <div class="menu">
+            <ul id="groupList">
+            </ul>
+        </div>
+        <div class="content">
+            <ul id="itemList">
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  var baseDiv = '#roamingTariffOffer';
+  var menus = {
+    byConsonant: [
+      {label: 'ㄱ', code: 'ga'}, {label: 'ㄴ', code: 'na'}, {label: 'ㄷ', code: 'da'},
+      {label: 'ㄹ', code: 'ra'}, {label: 'ㅁ', code: 'ma'}, {label: 'ㅂ', code: 'ba'},
+      {label: 'ㅅ', code: 'sa'}, {label: 'ㅇ', code: 'oa'}, {label: 'ㅈ', code: 'ja'},
+      {label: 'ㅊ', code: 'cha'}, {label: 'ㅋ', code: 'ka'}, {label: 'ㅌ', code: 'ta'},
+      {label: 'ㅍ', code: 'pa'}, {label: 'ㅎ', code: 'ha'},
+    ],
+    byContinent: [
+      {label: '유럽', code: 'eur'},
+      {label: '아시아', code: 'asp'},
+      {label: '미주', code: 'amc'},
+      {label: '오세아니아', code: 'ocn'},
+      {label: '중동', code: 'met'},
+      {label: '아프리카', code: 'afr'},
+    ],
+  }
+  var currentSortBy = 'byConsonant';
+  var data = {
+    byConsonant: [],
+    byContinent: []
+  };
+
+  function showCountries(defaultProdId) {
+    $(baseDiv).css('display', 'none');
+    $('#countriesDialog').css('display', 'block');
+    $.get('/product/roaming/offer?prodId=' + defaultProdId + '&wt=1', function(data) {
+      adjustScrollContainer();
+      fillTariffs(data.tariffs, defaultProdId);
+      fillCountries(data.items.consonant, data.items.continent);
+    });
+    return false;
+  }
+  function closeCountries() {
+    $('#countriesDialog').css('display', 'none');
+    $(baseDiv).css('display', 'block');
+  }
+  function fillTariffs(items, selectedProdId) {
+    var select = document.querySelector('.tariffBox .dropdown');
+    select.innerHTML = '';
+    for (var i=0; i<items.length; i++) {
+      var item = items[i];
+      var opt = document.createElement('option');
+      opt.innerText = item.prodNm;
+      opt.value = item.prodId;
+      if (item.prodId == selectedProdId) {
+        opt.selected = true;
+      }
+      select.appendChild(opt);
+    }
+  }
+  function fillCountries(byConsonant, byContinent) {
+    if (!byConsonant || !byContinent) {
+      data.byConsonant = [];
+      data.byContinent = [];
+      fillGroups();
+      document.getElementById('itemList').innerHTML = '';
+      return;
+    }
+    data.byConsonant = byConsonant;
+    data.byContinent = byContinent;
+    fillGroups();
+  }
+  function fillGroups() {
+    var groupList = document.getElementById('groupList');
+    groupList.innerHTML = '';
+
+    for (var i=0; i<menus[currentSortBy].length; i++) {
+      var menu = menus[currentSortBy][i];
+
+      var dataset = data[currentSortBy][menu.code];
+      if (!dataset || dataset.length == 0) {
+        continue;
+      }
+
+      var li = document.createElement('li');
+      li.id = 'group-' + menu.code;
+      li.innerText = menu.label;
+      li.setAttribute('data-code', menu.code);
+      li.onclick = function(e) {
+        var code = e.target.getAttribute('data-code');
+        fillItems(code);
+      };
+      groupList.appendChild(li);
+    }
+
+    var firstChild = document.getElementById('groupList').firstChild;
+    if (firstChild) {
+      var firstCode = firstChild.getAttribute('data-code');
+      fillItems(firstCode);
+    }
+  }
+  function fillItems(code) {
+    $('#groupList li').removeClass('active');
+    $('#group-' + code).addClass('active');
+
+    var ul = document.getElementById('itemList');
+    ul.innerHTML = '';
+
+    var l = data[currentSortBy][code];
+    for (var i=0; i<l.length; i++) {
+      var li = document.createElement('li');
+      li.innerText = l[i].countryNm;
+      ul.appendChild(li);
+    }
+  }
+  function sortBy(element) {
+    $('.sortBy .by').removeClass('active');
+    $('#' + element.id).addClass('active');
+    currentSortBy = element.id;
+    fillGroups();
+  }
+  function onChangeTariff(element) {
+    var prodId = element.options[element.selectedIndex].value;
+    $.get('/product/roaming/offer?prodId=' + prodId, function(data) {
+      fillCountries(data.items.consonant, data.items.continent);
+      if (data.items.code) {
+
+      }
+    });
+  }
+  function adjustScrollContainer() {
+    var body = document.querySelector('#countriesDialog');
+    var scroller = document.querySelector('.scroller');
+    var containerHeight = body.offsetHeight - scroller.offsetTop
+    scroller.style.height = containerHeight + 'px';
+  }
+</script>

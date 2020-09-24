@@ -1,0 +1,107 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<body class="rn">
+<div id="roamingHistory">
+    <div id="gnb" class="gnb-opaque">
+        <span class="menu icon-gnb-menu">
+            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
+        </span>
+        <h1>지난 여행 정보</h1>
+        <a href="/common/search-main">
+            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색" />
+        </a>
+    </div>
+    <%- include('../components/header.component.html', { title: '지난 여행 정보', svcInfo: svcInfo }) %>
+    <div class="card" style="margin-top: 60px;">
+        <h2>지난 여행 평균 데이터</h2>
+        <p>
+            지난 일본 여행에서 <br />
+            <span class="colorPoint">하루 평균 약 159MB</span>의 데이터를 <br />
+            사용하셨습니다.
+        </p>
+        <div class="chart">
+            <svg width="100%" viewBox="0 0 200 45" style="margin-top: 32px;">
+                <path d="M 200 5 L 200 45 L 0 45 L 0 10 C 40 0, 65 0, 95 10 S 150 30, 200 5"
+                      stroke="#f0f0f0" stroke-width="0" fill="#e8ebfe" />
+                <path d="M 0 10 C 40 0, 65 0, 95 10 S 150 30, 200 5"
+                      stroke="#4559fc" stroke-width="1" fill="transparent"/>
+                <path d="M 0 10 L 210 10" stroke="#4559fc" stroke-width="1.5" stroke-linecap="round"
+                      stroke-dasharray="1, 3" fill="transparent" />
+
+<!--                <path d="M 200 10 L 200 45 L 0 45 L 0 10 L 200 10" stroke="#f0f0f0" stroke-width="0" fill="#e8ebfe" />-->
+<!--                <path d="M 0 10 L 200 10" stroke="#4559fc" stroke-width="1" fill="transparent" />-->
+
+                <path d="M 180 6 L 183 1 L 177 1 L 180 6" fill="#4559fc" />
+            </svg>
+            <span class="bubble">159MB</span>
+            <div>
+                <span class="date">02.07</span>
+                <span class="date right">02.10</span>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h2>지난 여행 이력</h2>
+        <div class="items">
+            <div class="item">
+                <span class="flag-icon flag-icon-jp"></span>
+                <div class="right">
+                    <span class="total">총 492MB 사용</span>
+                    <span class="average">하루 평균 159MB</span>
+                </div>
+                <div class="content">
+                    <h3>baro OnePass VIP</h3>
+                    <span class="night">일본 2박 3일</span>
+                    <span class="range">20.02.07 - 20.02.09</span>
+                </div>
+            </div>
+            <div class="item">
+                <span class="flag-icon flag-icon-us"></span>
+                <div class="right">
+                    <span class="total">총 3.82GB 사용</span>
+                    <span class="average">하루 평균 512MB</span>
+                </div>
+                <div class="content">
+                    <h3>baro OnePass VIP</h3>
+                    <span class="night">미국 5박 6일</span>
+                    <span class="range">20.02.07 - 20.02.09</span>
+                </div>
+            </div>
+            <div class="item">
+                <span class="flag-icon flag-icon-gb"></span>
+                <div class="right">
+                    <span class="total">총 3.12GB 사용</span>
+                    <span class="average">하루 평균 370MB</span>
+                </div>
+                <div class="content">
+                    <h3>baro OnePass Data VIP 기본형</h3>
+                    <span class="night">영국 5박 6일</span>
+                    <span class="range">20.02.07 - 20.02.09</span>
+                </div>
+            </div>
+            <div class="item">
+                <span class="flag-icon flag-icon-cn"></span>
+                <div class="right">
+                    <span class="total">총 2.79GB 사용</span>
+                    <span class="average">하루 평균 251MB</span>
+                </div>
+                <div class="content">
+                    <h3>baro OnePass VIP</h3>
+                    <span class="night">중국 7박 8일</span>
+                    <span class="range">20.02.07 - 20.02.09</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 40px;">
+
+    </div>
+</div>
+<%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    new Tw.NextRoamingMenu($('#roamingHistory')).install();
+  });
+</script>
+<% include ../../components/end.component.html %>

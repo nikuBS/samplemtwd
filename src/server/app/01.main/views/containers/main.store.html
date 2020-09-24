@@ -312,6 +312,7 @@
 <script>
   $(document).ready(function () {
     new Tw.MainStore($('#mainStore'), '<%= pageInfo.menuId %>');
+    new Tw.ProductRoamingMode($('#mainStore')).checkMcc();
   });
   function addComma(num) {
   var regexp = /\B(?=(\d{3})+(?!\d))/g;
