@@ -394,8 +394,6 @@ Tw.API_CMD = {
   BFF_07_0100: { path: '/core-bill/:version/skpay-prepay/use-contents-prepay', method: Tw.API_METHOD.POST },
   BFF_07_0101: { path: '/core-bill/:version/skpay-prepay/micro-prepay', method: Tw.API_METHOD.POST },
   BFF_07_0104: { path: '/core-bill/:version/micro-prepay/prepay-swing-error-msg', method: Tw.API_METHOD.GET },
-  BFF_07_0105: { path: '/core-bill/:version/micro-prepay/auto-process-bank', method: Tw.API_METHOD.POST },
-  BFF_07_0106: { path: '/core-bill/:version/use-contents-prepay/auto-process-bank', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
