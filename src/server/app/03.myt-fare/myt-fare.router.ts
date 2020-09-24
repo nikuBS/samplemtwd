@@ -35,7 +35,13 @@ import MyTFareBillTPoint from './controllers/bill/myt-fare.bill.tpoint.controlle
 import MyTFareBillRainbow from './controllers/bill/myt-fare.bill.rainbow.controller';
 import MyTFareBillOption from './controllers/bill/myt-fare.bill.option.controller';
 import MyTFareBillSmall from './controllers/billsmall/myt-fare.bill.small.controller';
+import MyTFareBillSmallAuto from './controllers/billsmall/myt-fare.bill.small.auto.controller';
+import MyTFareBillSmallAutoInfo from './controllers/billsmall/myt-fare.bill.small.auto.info.controller';
+import MyTFareBillSmallAutoChange from './controllers/billsmall/myt-fare.bill.small.auto.change.controller';
 import MyTFareBillContents from './controllers/billcontents/myt-fare.bill.contents.controller';
+import MyTFareBillContentsAuto from './controllers/billcontents/myt-fare.bill.contents.auto.controller';
+import MyTFareBillContentsAutoInfo from './controllers/billcontents/myt-fare.bill.contents.auto.info.controller';
+import MyTFareBillContentsAutoChange from './controllers/billcontents/myt-fare.bill.contents.auto.change.controller';
 import MyTFareBillPayComplete from './controllers/bill/myt-fare.bill.pay-complete.controller';
 import MyTFareBillPointComplete from './controllers/bill/myt-fare.bill.point-complete.controller';
 import MyTFareBillGuideChild from './controllers/billguide/myt-fare.bill.guide.child.controllers';
@@ -54,8 +60,6 @@ import MyTFareBillSmallSKpay from './controllers/billsmall/myt-fare.bill.small.s
 import MyTFareBillContentsSKpay from './controllers/billcontents/myt-fare.bill.contents.skpay.controller';
 import MyTFareBillSkpayResultPrepay from './controllers/bill/myt-fare.bill.skpay.result.prepay.controller';
 import MyTFareBillPrepayAccount from './controllers/bill/myt-fare.bill.prepay-account.controller';
-import {MyTFareBillPrepayAuto} from './controllers/billprepay/myt-fare.bill.prepay.auto.controller';
-import {MyTFareBillPrepayAutoInfo} from './controllers/billprepay/myt-fare.bill.prepay.auto.info.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -84,19 +88,19 @@ class MytFareRouter extends TwRouter {
     // 소액결제
     this.controllers.push({ url: '/bill/small', controller: MyTFareBillSmall });
     this.controllers.push({ url: '/bill/small/prepay', controller: MyTFareBillSmallPrepay });
-
+    this.controllers.push({ url: '/bill/small/auto', controller: MyTFareBillSmallAuto });
+    this.controllers.push({ url: '/bill/small/auto/info', controller: MyTFareBillSmallAutoInfo });
+    this.controllers.push({ url: '/bill/small/auto/change', controller: MyTFareBillSmallAutoChange });
     this.controllers.push({ url: '/bill/small/skpay', controller: MyTFareBillSmallSKpay });
     this.controllers.push({ url: '/bill(/:page)?/prepay-account', controller: MyTFareBillPrepayAccount });
 
     // 콘텐츠이용내역
     this.controllers.push({ url: '/bill/contents', controller: MyTFareBillContents });
     this.controllers.push({ url: '/bill/contents/prepay', controller: MyTFareBillContentsPrepay });
+    this.controllers.push({ url: '/bill/contents/auto', controller: MyTFareBillContentsAuto });
+    this.controllers.push({ url: '/bill/contents/auto/info', controller: MyTFareBillContentsAutoInfo });
+    this.controllers.push({ url: '/bill/contents/auto/change', controller: MyTFareBillContentsAutoChange });
     this.controllers.push({ url: '/bill/contents/skpay', controller: MyTFareBillContentsSKpay });
-
-    // 소액결제/콘텐츠 이용료 자동 선결제(공통 사용)
-    this.controllers.push({ url: '/bill(/small|/contents)?/auto', controller: MyTFareBillPrepayAuto });
-    this.controllers.push({ url: '/bill(/small|/contents)?/auto/change', controller: MyTFareBillPrepayAuto });
-    this.controllers.push({ url: '/bill(/small|/contents)?/auto/info', controller: MyTFareBillPrepayAutoInfo });
 
     // 소액결제, 컨텐츠 이용료 상세내역
     this.controllers.push({ url: '/bill/small/history', controller: MyTFareBillSmallHistory });
