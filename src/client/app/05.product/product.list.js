@@ -13,6 +13,7 @@ Tw.ProductList = function(rootEl, params, pageInfo) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._cachedElement();
   this._bindEvent();
@@ -279,6 +280,8 @@ Tw.ProductList.prototype = {
       this._openSelectFiltersPopup($target);
     }
   },
+
+  
 
   /**
    * @desc 필터 리스트 요청 응답 시
