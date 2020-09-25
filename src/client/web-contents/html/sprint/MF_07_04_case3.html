@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -47,7 +46,10 @@
             <div class="header-wrap">
                 <div class="page-header noborder">
                     <div class="header-ti">
-                        <h1>자동 선결제 변경</h1>
+                        <h1>자동 선결제</h1>
+                    </div>
+					<div class="header-mask">
+                        <button type="button" class="btn-mask"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
                     </div>
                 </div>
             </div>
@@ -56,35 +58,27 @@
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
-                    <!-- 200825 [OP002-10215] 수정01 -->
-                    <hr class="cont-sp type1" aria-hidden="true"/>
-                    <!-- .cont-box -->
-                    <div class="cont-box">
+					<hr class="cont-sp type1" aria-hidden="true"/>
+					<!-- .cont-box -->
+					<div class="cont-box">
                         <div class="ti-caption-type01 pb20">
                             <h3 class="tit">금액정보<button class="btn-tip" title="금액정보 정보보기" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></h3>
                             <p class="tit-txt">기준/선결제 금액 변경 필요 시 변경 할 금액을 선택 해주세요. </p>
                         </div>
                         <ul class="form-data-list">
-                            <!--접근성 수정-->
                             <li class="type2">
-                                <label class="tit">기준금액</label>
-                                <!-- 200522 [OP002-8229] 수정_01 -->
+                                <label class="tit">기준금액<button aria-haspopup="true" class="tip-view">기준금액 정보보기</button></label>
                                 <button class="bt-dropdown big" title="기준금액" aria-haspopup="true">50만 원<span class="ico"></span></button>
-                                <!-- //200522 [OP002-8229] 수정_01 -->
                             </li>
                             <li class="type2">
-                                <label class="tit">선결제 금액</label>
-                                <!-- 200522 [OP002-8229] 수정_02 -->
+                                <label class="tit">선결제 금액<button aria-haspopup="true" class="tip-view">선결제 금액 정보보기</button></label>
                                 <button class="bt-dropdown big" title="선결제 금액" aria-haspopup="true">50만 원<span class="ico"></span></button>
-                                <!-- //200522 [OP002-8229] 수정_02 -->
                             </li>
-                            <!-- //접근성 수정-->
                         </ul>
                     </div>
                     <!--// .cont-box -->
                     <hr class="cont-sp type1" aria-hidden="true"/>
-                     <!-- .cont-box -->
-                     <div class="cont-box">
+                    <div class="cont-box">
                         <h3 class="tit">납부방법</h3>
                         <div class="input-list tod-input-list">
                             <ul>
@@ -99,12 +93,8 @@
                             </ul>
                         </div>
                     </div>
-                    <!--// .cont-box -->
-                    <!-- //200825 [OP002-10215] 수정01 -->
                     <hr class="cont-sp type1" aria-hidden="true"/>
-
                     <!-- .cont-box -->
-                    <!-- 200825 [OP002-10215] 수정02 -->
                     <div class="cont-box nogaps-hoz">
                         <div class="base-list">
                             <ul>
@@ -131,16 +121,18 @@
                                                         <span class="tx-tit">직접입력</span>
                                                         <span class="form-wrap half-type mt14">
                                                             <span class="select">
-                                                                <button class="bt-dropdown big" title="계좌정보 은행 선택" aria-haspopup="true">은행 선택<span class="ico"></span></button>
+                                                                <button class="bt-dropdown big" disabled="" title="계좌정보 은행 선택" aria-haspopup="true">은행 선택<span class="ico"></span></button>
                                                             </span>
                                                             <span class="inputbox ml8">
                                                                 <span class="input">
-                                                                    <input type="number" placeholder="숫자만 입력" title="계좌정보 숫자만 입력" />
+                                                                    <input type="number" placeholder="숫자만 입력" title="계좌정보 숫자만 입력" disabled="" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                                 </span>
                                                             </span>
                                                         </span>
                                                     </label>
+                                                    <span class="error-txt ml36 tod-clearboth">계좌번호가 올바르지 않습니다.</span>
+                                                    <span class="error-txt ml36 tod-clearboth">은행정보가 올바르지 않습니다.</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -149,22 +141,21 @@
                             </ul>   
                         </div>
                     </div>
-                    <!-- //200825 [OP002-10215] 수정02 -->
                     <!--// .cont-box -->
 
-                    <!-- .cont-box -->
-                    <div class="cont-box noborder bgnone">
-                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-                        <ul class="pg-chk-list02">
-                            <li><button class="btn-tip" aria-haspopup="true">이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                        </ul>
-                    </div>
+					<!-- .cont-box -->
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<li><button class="btn-tip" aria-haspopup="true">이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						</ul>
+					</div>
                     <!--// .cont-box -->
 
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
-                                <button>변경하기</button>
+                                <button>신청하기</button>
                             </li>
                         </ul>
                     </div>
