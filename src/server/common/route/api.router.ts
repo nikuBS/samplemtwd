@@ -1453,6 +1453,9 @@ class ApiRouter {
     const smsCode: any = req.headers.smscode;
     // 특별공제항목은 데이터 코드 값이 입력된 경우에만 처리한다.
     const isSpclData = !!dataCode;
+
+    // return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
+
     // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
     apiService.request(API_CMD.BFF_01_0002, {}).subscribe((sessionsResponse) => {
       if (sessionsResponse.code !== API_CODE.CODE_00) {
