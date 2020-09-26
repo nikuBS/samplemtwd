@@ -1454,27 +1454,27 @@ class ApiRouter {
     // 특별공제항목은 데이터 코드 값이 입력된 경우에만 처리한다.
     const isSpclData = !!dataCode;
 
-    return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
-    
+    // return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
+
     // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
-    //apiService.request(API_CMD.BFF_01_0002, {}).subscribe((sessionsResponse) => {
-      // if (sessionsResponse.code !== API_CODE.CODE_00) {
-      //   return res.json(sessionsResponse);
-      // }
-      // const mobileLine = sessionsResponse.result && sessionsResponse.result.m && sessionsResponse.result.m.length ?
-      //   sessionsResponse.result.m : [];
-      // if (svcMgmtNum) {
-      //   // 입력된 서비스관리번호가 조회 된 서비스 관리번호 포함여부 확인 (유효성체크)
-      //   const filterSvcMgmtNum = mobileLine.filter(line => line.svcMgmtNum === svcMgmtNum);
-      //   svcMgmtNum = filterSvcMgmtNum.length ? svcMgmtNum : '';
-      // } else {
-      //   // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
-      //   svcMgmtNum = mobileLine.length ? mobileLine[0].svcMgmtNum : svcMgmtNum;
-      // }
-      // if (!svcMgmtNum) {
-      //   // 서비스관리번호 조회되지 않을 경우 Error Return
-      //   return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
-      // }
+    apiService.request(API_CMD.BFF_01_0002, {}).subscribe((sessionsResponse) => {
+      if (sessionsResponse.code !== API_CODE.CODE_00) {
+        return res.json(sessionsResponse);
+      }
+      const mobileLine = sessionsResponse.result && sessionsResponse.result.m && sessionsResponse.result.m.length ?
+        sessionsResponse.result.m : [];
+      if (svcMgmtNum) {
+        // 입력된 서비스관리번호가 조회 된 서비스 관리번호 포함여부 확인 (유효성체크)
+        const filterSvcMgmtNum = mobileLine.filter(line => line.svcMgmtNum === svcMgmtNum);
+        svcMgmtNum = filterSvcMgmtNum.length ? svcMgmtNum : '';
+      } else {
+        // 서비스관리번호 입력되지 않은 경우 첫 번째 무선 회선으로 설정
+        svcMgmtNum = mobileLine.length ? mobileLine[0].svcMgmtNum : svcMgmtNum;
+      }
+      if (!svcMgmtNum) {
+        // 서비스관리번호 조회되지 않을 경우 Error Return
+        return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
+      }
       // 잔여량 조회 BFF 호출
       apiService.request(API_CMD.BFF_05_0001, {}, {
         'T-svcMgmtNum': svcMgmtNum
@@ -1890,7 +1890,7 @@ class ApiRouter {
         balancesResponse.result = responseRemains;
         return res.json(balancesResponse);
       });
-    //});
+    });
   }
 }
 
