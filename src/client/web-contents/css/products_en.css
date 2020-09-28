@@ -47,6 +47,12 @@
 
 .detailinfo-txt li + li { margin-top: 0.63rem; }
 
+.detailinfo-txt.miri { margin-top: -1rem; padding-top: 0; padding-bottom: 0.5rem; border-top: 0; }
+
+.detailinfo-txt.miri > li { font-size: 0.88rem; font-weight: 400; padding-left: 1.25rem; line-height: 1.6em; }
+
+.detailinfo-txt.miri > li::after { top: 0.38rem; width: 0.75rem; height: 0.5rem; background: url("/img/en/products/icon_miri_check.png") no-repeat; background-size: 100% 100%; }
+
 /* 시각화 원장 */
 .prCont .cont-box.gaps-btm { padding: 0 0 2.5rem; }
 
@@ -246,6 +252,10 @@
 
 .prCont .plan-cont.gray + .plan-cont { border-top: 0; }
 
+.prCont .plan-cont.sky { background-color: #ecf0f6; }
+
+.prCont .plan-cont.no-border { border-top: 0 !important; }
+
 .prCont .plan-cont > .title { font-size: 1.56rem; font-weight: 300; color: #000; line-height: 1.3em; letter-spacing: -1px; }
 
 .prCont .plan-cont > .title + .txt { margin-top: 0.75rem; }
@@ -300,9 +310,17 @@
 
 .prCont .plan-cont .icon-list > li.no-img > div { padding-left: 0; }
 
+.prCont .plan-cont .icon-list.miri > li:nth-child(3) > img { top: 0.88rem; }
+
+.prCont .plan-cont .icon-list.miri > li:last-child > img { top: 0.75rem; }
+
 .prCont .plan-cont .refer-list { padding: 0; }
 
 .prCont .plan-cont .refer-list.border { padding-top: 1.25rem; border-top: 1px solid #f2f2f2; }
+
+.prCont .plan-cont .refer-list.miri > li::before { width: 0.19rem; height: 0.19rem; }
+
+.prCont .plan-cont .refer-list.miri.border { border-color: #e5e5e5; }
 
 .prCont .plan-cont .inner-line { width: 100%; height: 1px; margin: 1.69rem 0; background-color: #f2f2f2; }
 
@@ -435,6 +453,70 @@
 .prCont .plan-cont .series-graph.lte-together > li.series05 .circle > div > p:nth-child(1) { font-size: 1rem; }
 
 .prCont .plan-cont .series-graph.lte-together > li.series05 .circle > div > p:nth-child(2) { font-size: 0.75rem; }
+
+.prCont .plan-cont > .miri-cont { padding-top: 1.5rem; }
+
+.prCont .plan-cont > .miri-cont:first-of-type { padding-top: 0; }
+
+.prCont .plan-cont > .miri-cont + .miri-cont { margin-top: 1.63rem; border-top: 1px solid #f2f2f2; }
+
+.prCont .plan-cont > .miri-cont .miri-intro-tit { font-size: 1.63rem; font-weight: 700; color: #4564c2; text-align: center; }
+
+.prCont .plan-cont > .miri-cont .miri-intro-txt { font-size: 0.88rem; font-weight: 500; color: #000; text-align: center; margin-top: 0.63rem; letter-spacing: -0.6px; }
+
+.prCont .plan-cont > .miri-cont > .title { font-size: 1.56rem; font-weight: 300; color: #000; line-height: 1.3em; letter-spacing: -1px; }
+
+.prCont .plan-cont > .miri-cont > .title + .txt { margin-top: 0.75rem; }
+
+.prCont .plan-cont > .miri-cont > .txt { font-size: 0.88rem; font-weight: 300; color: #666; letter-spacing: -0.7px; }
+
+.prCont .plan-cont > .miri-cont > .txt.black { font-size: 1rem; color: #000; }
+
+.prCont .plan-cont > .miri-cont > .txt.mid { font-size: 1.13rem !important; }
+
+.prCont .plan-cont > .miri-cont .img-box { margin-top: 1.38rem; }
+
+.prCont .plan-cont > .miri-cont .img-box + .title { margin-top: 2.5rem; }
+
+.prCont .plan-cont .miri-topup { margin-top: 2.19rem; }
+
+.prCont .plan-cont .miri-topup > p { font-size: 0.81rem; font-weight: 500; color: #666; padding-left: 2.06rem; }
+
+.prCont .plan-cont .miri-topup > p > strong { display: block; font-size: 1.06rem; color: #4564c2; }
+
+.prCont .plan-cont .miri-topup > p.store { background: url("/img/en/products/icon_miri_pin.png") left 0.25rem center no-repeat; background-size: 1rem 1.44rem; }
+
+.prCont .plan-cont .miri-topup > p.callcenter { background: url("/img/en/products/icon_miri_phone.png") left 0.13rem center no-repeat; background-size: 1.38rem 1.38rem; }
+
+.prCont .plan-cont .miri-topup > p + p { margin-top: 1.25rem; }
+
+.prCont .plan-cont .miri-list { margin-top: 1.25rem; }
+
+.prCont .plan-cont .miri-list > li { position: relative; font-size: 0.81rem; font-weight: 300; color: #666; padding-left: 0.5rem; }
+
+.prCont .plan-cont .miri-list > li::before { position: absolute; display: block; content: '*'; top: 0; left: 0; }
+
+.prCont .plan-cont .miri-video { margin-top: 2.25rem; padding-bottom: 0.63rem; }
+
+.prCont .plan-cont .miri-video .video-card { -webkit-box-shadow: 0 0.63rem 0.94rem #eaeaea; box-shadow: 0 0.63rem 0.94rem #eaeaea; border-radius: 0.88rem; overflow: hidden; }
+
+.prCont .plan-cont .miri-video .video-card .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; }
+
+.prCont .plan-cont .miri-video .video-card .embed-container iframe, .prCont .plan-cont .miri-video .video-card .embed-container object, .prCont .plan-cont .miri-video .video-card .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+.prCont .plan-cont .miri-video .video-card > div:not(.embed-container) { padding: 0.75rem 1.25rem 0.88rem; }
+
+.prCont .plan-cont .miri-video .video-card > div:not(.embed-container) > p { font-size: 0.81rem; font-weight: 300; color: #666; }
+
+.prCont .plan-cont .miri-video .video-card > div:not(.embed-container) > p.title { font-weight: 500; color: #4564c2; margin-bottom: 0.38rem; }
+
+.prCont .plan-cont .miri-video .video-card > div:not(.embed-container) > p.title > strong { font-size: 1.06rem; font-weight: 600; color: #000; }
+
+.prCont .plan-cont .miri-video .video-card + .video-card { margin-top: 1.88rem; }
+
+.prCont .plan-cont .miri-bottom .miri-info { padding-left: 0.94rem; font-size: 0.81rem; font-weight: 500; color: #000; background: url("/img/en/products/icon_details_miri.png") left center no-repeat; background-size: 0.75rem 0.75rem; }
+
+.prCont .plan-cont .miri-bottom .refer-list { margin-top: 0.63rem; padding-left: 0.63rem; }
 
 .prCont .cont-box .img-box { padding: 0 1.25rem 0.63rem; }
 
