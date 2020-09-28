@@ -24,6 +24,7 @@ class ApiService {
   private logger: LoggerService = new LoggerService();
   private req;
   private res;
+  private timeout = 30000;
 
   constructor() {
   }
@@ -37,6 +38,14 @@ class ApiService {
     this.req = req;
     this.res = res;
     this.logger.info(this, '[API setCurrentReq]', !!req.session);
+  }
+
+  public setTimeout(sec) {
+    this.timeout = sec;
+  }
+
+  public getTimeout() {
+    return this.timeout;
   }
 
   /**
@@ -89,7 +98,7 @@ class ApiService {
       url: apiUrl + this.makePath(command.path, command.method, params, args, version),
       method: command.method,
       headers: this.makeHeader(command, header, params, req),
-      timeout: 30000,
+      timeout: this.getTimeout() || 30000,
       data: params
     };
 
