@@ -206,7 +206,7 @@ class ApiService {
       this.setServerSession(resp.headers, req, res, command).subscribe((data) => {
         if ( contentType.includes('json') ) {
           // client에서 API를 직접 호출하지 않는 경우(server에서 API를 호출하는 경우)
-          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
             // BFF server session이 변경되었을 경우
             if ( data && data.code === API_CODE.NODE_1005) {
               this.redirectInvalidSession(req, res, data);
@@ -229,9 +229,12 @@ class ApiService {
               // this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
               this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
               const path = this.loginService.getFullPath(req);
-              if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
-                || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
-                this.checkServiceBlock(resp.result);
+              if (path) {
+                // fix: 정규표현식으로 값 비교시 값이 undefined 인 경우 오류가 발생하여 이후 처리가 불가로 수정
+                if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
+                  || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
+                  this.checkServiceBlock(resp.result);
+                }
               }
             }
           // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
@@ -273,8 +276,8 @@ class ApiService {
         this.setServerSession(headers, req, res, command).subscribe((resp) => {
           if ( contentType.includes('json') ) {
             // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
-            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
-            
+            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
+
               // BFF server session이 변경되었을 경우
               if ( resp && resp.code === API_CODE.NODE_1005) {
                 this.redirectInvalidSession(req, res, resp);
@@ -298,18 +301,19 @@ class ApiService {
                 this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
                 this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
                 const path = this.loginService.getFullPath(req);
-                if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
-                  || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
-                  this.checkServiceBlock(resp.result);
+                if (path) {
+                  // fix: 정규표현식으로 값 비교시 값이 undefined 인 경우 오류가 발생하여 이후 처리가 불가로 수정
+                  if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
+                    || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
+                    this.checkServiceBlock(resp.result);
+                  }
                 }
               }
             // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
             } else if ( resp && resp.code === API_CODE.NODE_1005) {
               error = {code: API_CODE.NODE_1005, result: resp.result};
             }
-
           }
-
           observer.next(error);
           observer.complete();
         });
@@ -347,7 +351,7 @@ class ApiService {
           //                   , req.session.svcInfo);
 
           return Observable.of({
-              code : API_CODE.NODE_1005, 
+              code : API_CODE.NODE_1005,
               result : {
                 commandPath : command.path,
                 preServerSession : req.session.serverSession,
@@ -870,7 +874,7 @@ class ApiService {
       let referer = '';
 
       if ( !FormatHelper.isEmpty(req.baseUrl)
-          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
         referer = this.loginService.getReferer(req);
       }
 
@@ -895,11 +899,11 @@ class ApiService {
        * 사용자 정보(사용자ID, 로그인 type, 서비스관리번호, 멤버채널ID, 접속방식)
        * error
        */
-      this.logger.error(this, 
+      this.logger.error(this,
         prefix,
         '\n code :', error.code || '',
         '\n base url :', baseUrl,
-        '\n referer :', referer, 
+        '\n referer :', referer,
         '\n command.path :', FormatHelper.isEmpty(command) ? {} : (command.path || ''),
         '\n options :', options,
         '\n userInfo: ', userInfo,
