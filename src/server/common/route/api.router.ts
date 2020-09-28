@@ -1445,6 +1445,7 @@ class ApiRouter {
   private getWidgetRemains(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
+    apiService.setTimeout(3000);
 
     // 조회대상 회선 및 공제코드 변수 생성
     let svcMgmtNum: any = req.headers.svcmgmtnum;
