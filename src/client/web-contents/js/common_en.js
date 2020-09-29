@@ -1638,7 +1638,7 @@ skt_landing.action = {
 				$(".userinfo").find(".bt").prop("disabled", false);
 			}
 		});
-		$(".bt-depth1 .more").on("click", function(e){
+		$(".bt-depth1 .more").off("click").on("click", function(e){
 			if($(this).parent().next().is(".depth2")){
 				$(this).parent().parent().toggleClass("open");
 			}
