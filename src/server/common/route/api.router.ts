@@ -1500,7 +1500,7 @@ class ApiRouter {
               }
              */
             res.json({
-              code: API_CODE.BFF_0006,
+              code: API_CODE.BFF_SRV0000,
               msg: "msg: " + title,
               result: {
                 fromDtm: fromDtm,
