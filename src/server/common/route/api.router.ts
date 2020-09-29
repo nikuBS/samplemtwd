@@ -1478,8 +1478,8 @@ class ApiRouter {
         startTime = DateHelper.convDateFormat(result[1]).getTime();
         endTime = DateHelper.convDateFormat(result[2]).getTime();
 
-        fromDtm = DateHelper.getShortDateAnd24Time(result[1]);
-        toDtm = DateHelper.getShortDateAnd24Time(result[2]);
+        fromDtm = result[1];
+        toDtm = result[2];
 
         title = result[3];
         if (blockYn === 'Y') {
