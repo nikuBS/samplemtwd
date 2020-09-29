@@ -34,7 +34,8 @@ export enum REDIS_KEY {
   PERSON_SMS_DISABLE_TIME = 'freesms.block.time',
   COMMON_BLOCK = 'str.scrn_isol_phrs',
   ROAMING_POPULAR_NATIONS = 'RoamingPopularNation:RoamingPopularNationList',
-  ROAMING_NATIONS_BY_CONTINENT = 'RoamingContnPsbNation'
+  ROAMING_NATIONS_BY_CONTINENT = 'RoamingContnPsbNation',
+  WIDGET_BLOCK = 'str.widget_block',
 }
 
 export enum REDIS_TOS_KEY {
