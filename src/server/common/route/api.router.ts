@@ -1501,11 +1501,11 @@ class ApiRouter {
              */
             res.json({
               code: API_CODE.BFF_0006,
-              msg: title + " " + fromDtm + " ~ " + toDtm,
+              msg: "msg: " + title,
               result: {
                 fromDtm: fromDtm,
                 fallbackClCd: "F0004",
-                fallbackMsg: title,
+                fallbackMsg: "fallback: " + title,
                 fallbackUrl: "",
                 toDtm: toDtm
               },
