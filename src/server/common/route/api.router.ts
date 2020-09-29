@@ -1477,6 +1477,10 @@ class ApiRouter {
         blockYn = result[0];
         startTime = DateHelper.convDateFormat(result[1]).getTime();
         endTime = DateHelper.convDateFormat(result[2]).getTime();
+
+        fromDtm = DateHelper.getShortDateAnd24Time(result[1]);
+        toDtm = DateHelper.getShortDateAnd24Time(result[2]);
+
         title = result[3];
         if (blockYn === 'Y') {
           // 기간 체크
@@ -1497,7 +1501,7 @@ class ApiRouter {
              */
             res.json({
               code: API_CODE.BFF_0006,
-              msg: title,
+              msg: title + " " + fromDtm + " ~ " + toDtm,
               result: {
                 fromDtm: fromDtm,
                 fallbackClCd: "F0004",
