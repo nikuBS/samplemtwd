@@ -1455,6 +1455,68 @@ class ApiRouter {
     const isSpclData = !!dataCode;
 
     // return res.json(WIDGET_ERROR.SVCMGMTNUM_INVALID);
+<<<<<<< HEAD
+=======
+    const DEFAULT_PARAM = {
+      property: REDIS_KEY.WIDGET_BLOCK
+    };
+    apiService.request(API_CMD.BFF_01_0069, DEFAULT_PARAM).subscribe((resp) => {
+      let fromDtm = DateHelper.getShortDateAnd24Time(req.query.fromDtm);
+      let toDtm = DateHelper.getShortDateAnd24Time(req.query.toDtm);
+      let today = new Date().getTime();
+      let result;
+      let blockYn = 'N';
+      let startTime;
+      let endTime;
+      let title;
+
+      console.log("[TEST] ", resp);
+            
+      if (resp.code === API_CODE.CODE_00) {
+        today = new Date().getTime();
+        result = resp.result.split('|');
+        blockYn = result[0];
+        startTime = DateHelper.convDateFormat(result[1]).getTime();
+        endTime = DateHelper.convDateFormat(result[2]).getTime();
+
+        fromDtm = DateHelper.getShortDateAnd24Time(result[1]);
+        toDtm = DateHelper.getShortDateAnd24Time(result[2]);
+
+        title = result[3];
+        if (blockYn === 'Y') {
+          // 기간 체크
+          if ((today >= startTime && today <= endTime)) {
+            /**
+             * {
+                  "code": "BFF0006",
+                  "msg": "안녕하세요, T월드 운영팀입니다. 서비스 준비 및 점검 중입니다. 보다 나은 서비스 제공을 위하여 최선을 다하겠습니다. 감사합니다.",
+                  "result": {
+                    "fromDtm": "202009280000",
+                    "fallbackClCd": "F0004",
+                    "fallbackMsg": "안녕하세요, T월드 운영팀입니다. 서비스 준비 및 점검 중입니다. 보다 나은 서비스 제공을 위하여 최선을 다하겠습니다. 감사합니다.",
+                    "fallbackUrl": "",
+                    "toDtm": "202009281810"
+                  },
+                  "loginType": "T"
+              }
+             */
+            res.json({
+              code: API_CODE.BFF_0006,
+              msg: title + " " + fromDtm + " ~ " + toDtm,
+              result: {
+                fromDtm: fromDtm,
+                fallbackClCd: "F0004",
+                fallbackMsg: title,
+                fallbackUrl: "",
+                toDtm: toDtm
+              },
+              loginType: "T"
+            });
+          }
+        }
+      }
+    });
+>>>>>>> 612e3d642f... [WIDGET] block msg edit
 
     // 회선정보 조회 API 호출해서 잔여량 조회할 서비스관리번호 유효성 체크
     apiService.request(API_CMD.BFF_01_0002, {}).subscribe((sessionsResponse) => {
