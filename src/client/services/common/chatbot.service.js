@@ -41,9 +41,22 @@ Tw.ChatbotService = function() {
     // 2차 사외 오픈 (8/27) 시점 접근 대상 단말 리스트
     this._accessAllowedDevice0827 = [
         // 'LGM-G600S',     // TEST
+        // [1차]
         'SM-G977N'      // 갤럭시S10 5G
         ,'SM-N971N'     // 갤럭시노트10 5G
         ,'SM-N976N'     // 갤럭시노트10 플러스 5G
+        // [2차]
+        ,'SM-G981N'     // 갤럭시S20 5G
+        ,'SM-G986N'     // 갤럭시S20 + 5G
+        ,'SM-G988N'     // 갤럭시S20울트라 5G
+        ,'SM-F907N'     // 갤럭시폴드 5G
+        ,'SM-A716S'     // 갤럭시A퀀텀
+        ,'LM-G900N'     // LG 벨벳
+        ,'SM-A516N'     // 갤럭시 A51 5G
+        ,'LM-V500N'     // V50 ThinQ 
+        ,'LM-V510N'     // V50S ThinQ 
+        ,'SM-A908N'     // 갤럭시 A90 5G
+
         // ,'SM-N960N'     // 갤럭시노트9
         // ,'SM-G960N'     // 갤럭시S9
         // ,'SM-G973N'     // 갤럭시S10
