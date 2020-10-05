@@ -852,11 +852,11 @@ class MainHome extends TwViewController {
     try {
       let agentString = this.getUserAgent(req);
       console.log("[10650-DEBUG-UserAgent] ", agentString);
-      let os = agentString.indexOf('Mac') > -1 ? 'ios' : 'aos';
+      let os = agentString.indexOf('iPhone') > -1 ? 'ios' : 'aos';
       if (os === 'ios') {
-        let reg = new RegExp('X [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
-        let reg2 = new RegExp('X [0-9]{0,3}_[0-9]{0,3}');
-        let reg3 = new RegExp('X [0-9]{0,3}');
+        let reg = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
+        let reg2 = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}');
+        let reg3 = new RegExp('OS [0-9]{0,3}');
         var ios_text = '  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15 TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.10|osVersion:27|model:LM-V409N|id:6ae9a542-fcb6-44ae-9cbd-8cbf45538933|APP_API:app|TWM_CHANNEL=mobile-app|widget:0 x-requested-with: com.sktelecom.minit.qa';
         ios_text = agentString;
         let mac_version_temp = reg.exec(ios_text);
