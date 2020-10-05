@@ -6,29 +6,39 @@ body.rn {
 body.rn .colorPoint {
   color: #4559fc;
 }
-body.rn #gnb {
+body.rn .colorGray {
+  color: #757575;
+}
+body.rn #appbar {
   height: 50px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   text-align: center;
+  z-index: 30;
 }
-body.rn #gnb .menu {
+body.rn #appbar .search {
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  font-size: 14px;
+}
+body.rn #appbar .menu {
   position: absolute;
   left: 20px;
   top: 13px;
   cursor: pointer;
 }
-body.rn #gnb .icon-gnb-menu {
+body.rn #appbar .icon-gnb-menu {
   background: none;
   width: 24px;
   height: 24px;
 }
-body.rn #gnb .logo {
+body.rn #appbar .logo {
   margin-top: 12px;
 }
-body.rn #gnb h1 {
+body.rn #appbar h1 {
   font-size: 17px;
   line-height: 50px;
   font-weight: 500;
@@ -51,12 +61,12 @@ body.rn #roamingMain .background {
 }
 body.rn #roamingMain #content {
   margin: 20px;
-  padding-top: 50px;
+  padding-top: 70px;
   padding-bottom: 2px;
 }
 body.rn #roamingMain #content h2 {
   font-size: 26px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
 }
 body.rn #roamingMain #content .description {
@@ -65,6 +75,9 @@ body.rn #roamingMain #content .description {
   font-size: 13px;
   letter-spacing: -1px;
   color: #9f9f9f;
+}
+body.rn #roamingMain #content > .description {
+  margin-bottom: 30px;
 }
 body.rn #roamingMain #content .card {
   background: #FFFFFF;
@@ -85,46 +98,16 @@ body.rn #roamingMain #content .card .description {
   margin-bottom: 15px;
 }
 body.rn #roamingMain #content .card #nations {
+  width: inherit;
+  margin-right: -5px;
   margin-bottom: 20px;
 }
-body.rn #roamingMain #content .card #nations li {
-  display: inline-block;
-  margin-right: 6px;
-  margin-bottom: 4px;
-  position: relative;
-  white-space: normal;
-  cursor: pointer;
-  min-width: 80px;
-  min-height: 50px;
+body.rn #roamingMain #content .pn {
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
-body.rn #roamingMain #content .card #nations .flag-icon {
-  display: block;
+body.rn #roamingMain #content .pn img {
   width: 100%;
-  height: 100%;
-  position: absolute;
-}
-body.rn #roamingMain #content .card #nations .name {
-  position: absolute;
-  display: block;
-  bottom: 8px;
-  left: 10px;
-  font-size: 14px;
-  font-weight: 800;
-  color: white;
-}
-body.rn #roamingMain #content .card #nations .name-dark {
-  position: absolute;
-  display: block;
-  bottom: 0;
-  right: 0px;
-  height: 14px;
-  line-height: 14px;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2px 5px 1px 5px;
-  color: white;
-  font-size: 11px;
-  font-weight: 600;
-  border-top-left-radius: 4px;
 }
 body.rn .card .field-container {
   background-color: #f3f4f9;
@@ -175,7 +158,7 @@ body.rn #roamingMain #content .card .menu-link span {
   top: 22px;
   left: 70px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
 }
 body.rn #roamingMain #content .card .border-bottom {
   border-bottom: 1px solid #f2f2f2;
@@ -191,13 +174,13 @@ body.rn #roamingMain #content .card-compact {
   position: relative;
 }
 body.rn #roamingMain #content .card-compact .status {
-  border: 2px solid #dcdcdc;
+  border: 1px solid #dcdcdc;
   border-radius: 10px;
   padding: 3px 8px 2px 8px;
   margin-right: 5px;
   color: #4559fc;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   vertical-align: middle;
 }
 body.rn #roamingMain #content .card-compact .text {
@@ -237,7 +220,7 @@ body.rn #roamingMain #content .history .range {
   color: #111;
   margin-bottom: 3px;
 }
-body.rn #roamingMain #content .history .range svg {
+body.rn #roamingMain #content .history .range img {
   vertical-align: middle;
 }
 body.rn #roamingMain #content .history .days {
@@ -248,43 +231,38 @@ body.rn #roamingMain #content .history .days {
 body.rn #roamingMain #content .no-padding {
   padding: 0;
 }
+
 body.rn #roamingMain #content #groups {
   margin-top: 24px;
-  margin-bottom: 8px;
   height: 154px;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
 }
 body.rn #roamingMain #content #groups .group {
   display: inline-block;
-  width: 94px;
+  width: 126px;
   height: 136px;
   background-color: #f0f4ff;
   border-radius: 6px;
-  padding-left: 16px;
-  padding-right: 16px;
   margin-right: 8px;
   cursor: pointer;
   vertical-align: top;
 }
 body.rn #roamingMain #content #groups .group img {
-  height: 30px;
-  margin-top: 30px;
+  /*height: 30px;*/
+  /*margin-top: 30px;*/
+  width: 126px;
+  height: 136px;
 }
-body.rn #roamingMain #content #groups .group h4 {
-  font-size: 15px;
-  font-weight: 700;
+body.rn #roamingMain .slick-list {
+  border-radius: 10px;
 }
-body.rn #roamingMain #content #groups .group h5 {
-  font-size: 12px;
-  font-weight: 400;
-  color: #666;
-  white-space: normal;
-}
-body.rn #roamingMain .banner img {
-  width: 100%;
-}
+
 body.rn #roamingMain .info-link {
   height: 52px;
   background-color: #fff;
@@ -296,10 +274,13 @@ body.rn #roamingMain .info-link {
   font-weight: 400;
   letter-spacing: -0.44px;
 }
+body.rn #roamingMain .info-link.tail {
+  border-bottom: 1px solid #ededed;
+}
 body.rn #roamingMain .info-link .arrow {
   position: absolute;
-  right: 13px;
-  top: 16px;
+  right: 18px;
+  top: 18px;
 }
 body.rn #roamingMain .info-link .separator-top {
   position: absolute;
@@ -369,6 +350,202 @@ body.rn .dialog {
   height: 100%;
   overflow: auto;
 }
+body.rn .guide-dialog {
+  padding-top: 52px;
+  background-color: white;
+}
+body.rn .guide-dialog .tabs {
+  border-bottom: 1px solid #e0e0e0;
+  height: 50px;
+  font-size: 0;
+}
+body.rn #baroTariffs .tabs {
+  height: 60px;
+}
+body.rn .guide-dialog .tabs .tab {
+  display: inline-block;
+  width: 50%;
+  height: 97%;
+  text-align: center;
+  color: #959595;
+}
+body.rn .guide-dialog .tabs .tab span {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: -0.75px;
+}
+body.rn .guide-dialog .tabs .tab span.title {
+  display: inline-block;
+  line-height: 18px;
+  padding-top: 14px;
+}
+body.rn .guide-dialog .tabs .active {
+  border-bottom: 3px solid #4559fc;
+  font-weight: 500;
+  color: #4559fc;
+}
+body.rn .guide-dialog .card {
+  background-color: white;
+  padding: 24px 20px;
+
+  font-size: 13px;
+  letter-spacing: -0.5px;
+}
+body.rn .guide-dialog .footer {
+  height: 80px;
+}
+body.rn .background-f6 {
+  background-color: #f6f6f6;
+  height: 10px;
+}
+body.rn .guide-dialog .checklist .tags {
+  margin-top: -5px;
+  background-color: #f6f6f6;
+  padding: 20px;
+}
+body.rn .guide-dialog .checklist .tags .tag {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid #dddddd;
+  border-radius: 18px;
+  background-color: #fff;
+  color: #111;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+body.rn .guide-dialog .checklist .tags .active {
+  background-color: #4559fc;
+  border: 1px solid #4559fc;
+  color: #fff;
+}
+body.rn .guide-dialog .checklist .card {
+  padding-top: 0;
+  padding-bottom: 32px;
+}
+body.rn .guide-dialog .checklist .section .subtitle {
+  float: right;
+  color: #4559fc;
+}
+body.rn .guide-dialog .checklist li {
+  font-size: 15px;
+  font-weight: 500;
+  padding: 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+body.rn .guide-dialog .checklist li .no {
+  display: inline-block;
+  margin-right: 10px;
+}
+body.rn .guide-dialog .checklist li .arrow {
+  margin-top: 4px;
+  float: right;
+}
+body.rn .guide-dialog .checklist .description {
+  display: none;
+  margin-top: 15px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+body.rn .guide-dialog .checklist li .description ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 20px;
+  /*margin-bottom: 15px;*/
+}
+body.rn .guide-dialog .checklist li .description ul li {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.45px;
+  border-bottom: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+body.rn .guide-dialog .checklist .description .button {
+  width: 100%;
+  height: 36px;
+  border: 1px solid #4559fc;
+  border-radius: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #4559fc;
+  line-height: 36px;
+  margin-top: 15px;
+}
+body.rn .guide-dialog .tariffs ul {
+  margin-top: -20px;
+}
+body.rn .guide-dialog .tariffs li {
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+body.rn .guide-dialog .tariffs li h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111;
+}
+body.rn .guide-dialog .tariffs li p {
+  font-size: 12px;
+  font-weight: 400;
+  color: #757575;
+}
+body.rn .guide-dialog .section {
+  background-color: #eaefff;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 500;
+}
+body.rn .guide-dialog .document {
+  position: relative;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e0e0e0;
+}
+/*body.rn .guide-dialog .document:not(:last-child) {*/
+/*  border-bottom: 1px solid #e0e0e0;*/
+/*}*/
+body.rn .guide-dialog .document h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0px 0 3px 0;
+  color: #111;
+}
+body.rn .guide-dialog .document p {
+  font-size: 13px;
+  font-weight: 500;
+  color: #959595;
+}
+body.rn .guide-dialog .document img {
+  position: absolute;
+  right: 0;
+  top: 18px;
+}
+body.rn .dialog .appbar {
+  height: 52px;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 1px solid #edeef0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body.rn .dialog .appbar h1 {
+  color: black;
+  font-size: 16px;
+  letter-spacing: -0.7px;
+  line-height: 52px;
+  text-align: center;
+}
+body.rn .dialog .appbar .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 15px;
+  cursor: pointer;
+}
 body.rn #nationsDialog {
   background-color: white;
 }
@@ -408,7 +585,6 @@ body.rn #nationsDialog .menu li {
   line-height: 56px;
   padding-left: 18px;
   font-size: 16px;
-  border-bottom: 1px solid #e5e5e5;
 }
 body.rn #nationsDialog .menu li.active {
   background-color: white;
@@ -426,14 +602,13 @@ body.rn #nationsDialog .content li {
   line-height: 50px;
   font-size: 15px;
   color: #666;
-  border-bottom: 1px solid #f2f2f2;
   cursor: pointer;
 }
 body.rn #scheduleDialog {
   background-color: white;
 }
 body.rn #scheduleDialog .header {
-  height: 135px;
+  height: 150px;
   background-color: white;
   z-index: 1;
   position: fixed;
@@ -444,18 +619,9 @@ body.rn #scheduleDialog .header {
 }
 body.rn #scheduleDialog .header .banner {
   position: absolute;
-  bottom: -16px;
+  bottom: -1px;
   left: 0;
   right: 0;
-}
-body.rn #scheduleDialog .header .banner-cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #1c1462;
-  opacity: 0.49;
 }
 body.rn #scheduleDialog .header .summary {
   position: absolute;
@@ -473,16 +639,22 @@ body.rn #scheduleDialog .header .summary h1 {
 }
 body.rn #scheduleDialog .header .summary .date {
   display: inline-block;
-  width: 130px;
+  width: 140px;
   height: 42px;
+}
+body.rn #scheduleDialog .header .summary .borderRight {
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+  margin-right: 20px;
 }
 body.rn #scheduleDialog .header .summary .date h2 {
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
 }
 body.rn #scheduleDialog .header .summary .date h3 {
+  margin-top: 5px;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
 }
 body.rn #scheduleDialog .header .close {
   position: absolute;
@@ -493,7 +665,6 @@ body.rn #scheduleDialog .header .close {
 }
 body.rn #scheduleDialog #scheduleContent {
   margin-top: 135px;
-  margin-bottom: 55px;
   background-color: #fff;
 }
 body.rn #scheduleDialog .bottom-button {
@@ -508,8 +679,46 @@ body.rn #scheduleDialog .bottom-button {
   color: white;
   cursor: pointer;
 }
+body.rn #scheduleDialog .bottom-space {
+  height: 55px;
+}
 body.rn #scheduleDialog .not-prepared {
   background-color: #dddddd;
+}
+body.rn #scheduleDialog #calendarGuide {
+  display: none;
+  position: absolute;
+  top: 180px;
+  right: 20px;
+  width: 102px;
+  height: 32px;
+  background-color: #5d60ff;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 13px;
+  border-radius: 6px;
+}
+body.rn #scheduleDialog #calendarGuide .tailContainer {
+  position: relative;
+  height: 20px;
+}
+body.rn #scheduleDialog #calendarGuide .tail {
+  position: absolute;
+  bottom: 2px;
+  left: 43px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid #5d60ff;
+}
+body.rn #scheduleDialog #calendarGuide .title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 3px;
+  color: white;
+}
+body.rn #scheduleDialog #calendarGuide .message {
+
 }
 body.rn #roamingTariffOffer {
   background-color: #fff;
@@ -554,10 +763,14 @@ body.rn #roamingTariffOffer .card {
 }
 body.rn #roamingTariffOffer .card h2 {
   font-size: 21px;
-  font-weight: 600;
-  color: black;
+  font-weight: 500;
+  color: #000;
   letter-spacing: -0.52px;
   margin-bottom: 20px;
+  vertical-align: middle;
+}
+body.rn #roamingTariffOffer .card h2 span {
+  vertical-align: middle;
 }
 body.rn #roamingTariffOffer .card .description {
   font-size: 13px;
@@ -594,7 +807,7 @@ body.rn #roamingTariffOffer .tariff .arrow {
 }
 body.rn #roamingTariffOffer .tariff h3 {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
   color: #4559fc;
   margin-bottom: 20px;
 }
@@ -611,7 +824,7 @@ body.rn #roamingTariffOffer .tariff .phone {
 }
 body.rn #roamingTariffOffer .tariff .price {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: #111;
   float: right;
 }
@@ -640,6 +853,10 @@ body.rn #roamingTariffOffer .tariff-list {
   overflow-y: hidden;
   white-space: nowrap;
   margin-bottom: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 body.rn #roamingTariffOffer .tariff-list .tariff-box {
   display: inline-block;
@@ -720,7 +937,7 @@ body.rn #roamingTariffs .summary h2 {
   left: 20px;
   top: 32px;
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 500;
   color: black;
 }
 body.rn #roamingTariffs .summary p {
@@ -730,7 +947,7 @@ body.rn #roamingTariffs .summary p {
   top: 70px;
   font-size: 13px;
   font-weight: 400;
-  color: black;
+  color: #666666;
 }
 body.rn #roamingTariffs .tariffs {
   position: relative;
@@ -744,8 +961,10 @@ body.rn #roamingTariffs .tariffs {
 body.rn #roamingTariffs .tariff {
   margin-top: 16px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #f2f2f2;
   cursor: pointer;
+}
+body.rn #roamingTariffs a:not(:last-child) .tariff {
+  border-bottom: 1px solid #f2f2f2;
 }
 body.rn #roamingTariffs .tariff h3 {
   font-size: 16px;
@@ -771,7 +990,7 @@ body.rn #roamingTariffs .card {
 }
 body.rn #roamingTariffs .card h2 {
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 500;
 }
 body.rn #roamingTariffs .card .link {
   text-align: right;
@@ -864,7 +1083,7 @@ body.rn #roamingTariffs .card .field-container {
   text-align: center;
   cursor: pointer;
 }
-#roamingMenu .header .sticky-menu .menu svg {
+#roamingMenu .header .sticky-menu .menu img {
   margin-right: 2px;
   vertical-align: bottom;
 }
@@ -896,7 +1115,7 @@ body.rn #roamingTariffs .card .field-container {
 #roamingMenu .menus li {
   padding: 8px 0;
 }
-#roamingMenu .menus li svg {
+#roamingMenu .menus li img {
   margin-right: 5px;
   vertical-align: top;
 }
@@ -916,7 +1135,7 @@ body.rn #roamingTariffs .card .field-container {
 #roamingMenu .contacts .contact {
   margin: 5px 0;
 }
-#roamingMenu .contacts .contact svg {
+#roamingMenu .contacts .contact img {
   vertical-align: middle;
   margin-right: 3px;
 }
@@ -938,9 +1157,16 @@ body.rn #roamingTariffs .card .field-container {
   text-align: center;
   font-size: 14px;
   font-weight: 400;
-  color: #959595;
+  color: #111;
   padding: 14px;
   border-top: 1px solid #e0e0e0;
+}
+#roamingMenu .logout .icon {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+#roamingMenu .logout span {
+  vertical-align: middle;
 }
 .roaming-modal {
   display: none;
@@ -968,7 +1194,7 @@ body.rn #roamingTariffs .card .field-container {
 }
 .roaming-modal .content .message {
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 500;
   color: black;
   padding: 12px 0;
 }
@@ -986,6 +1212,7 @@ body.rn #roamingTariffs .card .field-container {
 }
 .roaming-modal .content .buttons a {
   font-size: 15px;
+  font-weight: 500;
   color: #4559fc;
 }
 .roaming-modal .tm {
@@ -1049,7 +1276,7 @@ body.rn #roamingTariffs .card .field-container {
 }
 #roamingOff .message {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.61px;
   color: white;
   margin-top: 20px;
@@ -1069,14 +1296,14 @@ body.rn #roamingAddons .filters {
 }
 body.rn #roamingAddons .filters h2 {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: #000;
   letter-spacing: -0.42px;
   margin-bottom: 10px;
 }
 body.rn #roamingAddons .filters .tag {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   color: #111;
   letter-spacing: -0.29px;
   padding: 5px 12px;
@@ -1088,7 +1315,7 @@ body.rn #roamingAddons .filters .tag {
 body.rn #roamingAddons .filters .active {
   background-color: #4559fc;
   color: #fff;
-  border: 0;
+  border: 1px solid #4559fc;
 }
 body.rn #roamingAddons .items .item {
   padding: 28px 20px;
@@ -1097,7 +1324,7 @@ body.rn #roamingAddons .items .item {
 }
 body.rn #roamingAddons .items .item .name {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.43px;
   color: #000;
   margin-bottom: 8px;
@@ -1146,7 +1373,7 @@ body.rn #roamingHistory .card {
 }
 body.rn #roamingHistory .card h2 {
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 32px;
 }
 body.rn #roamingHistory .card p {
@@ -1167,7 +1394,7 @@ body.rn #roamingHistory .chart .bubble {
   border-radius: 6px;
   background-color: #4559fc;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: white;
   line-height: 28px;
   text-align: center;
@@ -1236,30 +1463,36 @@ body.rn #roamingHistory .items .item .content {
 body.rn #roamingHistory .items .item:last-child {
   border-bottom: 0;
 }
-body.rn #roamingOn #gnb .menu .white {
-  display: block;
-}
-body.rn #roamingOn #gnb .menu .black {
+body.rn #roamingOn #appbar .search {
   display: none;
 }
-body.rn #roamingOn #gnb .appbar {
+body.scroll #roamingOn #appbar .search {
+  display: block;
+}
+body.rn #roamingOn #appbar .menu .white {
+  display: block;
+}
+body.rn #roamingOn #appbar .menu .black {
+  display: none;
+}
+body.rn #roamingOn #appbar .appbar {
   display: none;
   margin-top: 16px;
   line-height: 19px;
 }
-body.rn #roamingOn #gnb .appbar img,
-body.rn #roamingOn #gnb .appbar .flag-icon {
+body.rn #roamingOn #appbar .appbar img,
+body.rn #roamingOn #appbar .appbar .flag-icon {
   vertical-align: top;
   margin-right: 5px;
 }
-body.rn #roamingOn #gnb .appbar .cname {
+body.rn #roamingOn #appbar .appbar .cname {
   line-height: 18px;
   font-size: 18px;
   font-weight: 500;
   color: #111;
 }
 body.rn #roamingOn #content .hud {
-  margin: 0px 20px 100px 20px;
+  margin: 0px 20px 120px 20px;
   padding-top: 90px;
 }
 body.rn #roamingOn #content .hud h1 img,
@@ -1279,12 +1512,16 @@ body.rn #roamingOn #content .hud .clocks {
   text-align: left;
   width: 100%;
   margin-top: 20px;
+  white-space: nowrap;
 }
 body.rn #roamingOn #content .hud .clocks .clock {
   display: inline-block;
   text-align: left;
   color: white;
   vertical-align: top;
+  width: 50%;
+  overflow-x: hidden;
+  position: relative;
 }
 body.rn #roamingOn #content .hud .clocks .clock .note {
   font-size: 11px;
@@ -1311,19 +1548,39 @@ body.rn #roamingOn #content .hud .clocks .clock .value {
   margin-bottom: 2px;
 }
 body.rn #roamingOn #content .hud .clocks .divider {
-  vertical-align: top;
-  display: inline-block;
+  position: absolute;
+  top: 3px;
+  right: 0;
   width: 1px;
-  margin-top: 3px;
-  margin-left: 20px;
-  margin-right: 20px;
   height: 45px;
   background-color: #fff;
   opacity: 0.2;
 }
+body.rn #roamingOn .card .links {
+  text-align: right;
+}
+body.rn #roamingOn .card .links .link {
+  font-size: 13px;
+  color: #4559fc;
+  text-decoration: underline;
+}
+body.rn #roamingOn .card .naMessage {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  margin-left: 45px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #959595;
+}
+body.rn #roamingOn .card .naTime {
+  color: #959595;
+  font-size: 13px;
+  font-weight: 300;
+  margin-left: 45px;
+}
 body.rn #roamingOn #content .card {
   background-color: #fff;
-  box-shadow: 0 8px 24px 2px rgba(0, 45, 237, 0.15);
+  box-shadow: 0 4px 12px 1px rgba(0, 45, 237, 0.15);
   border-radius: 10px;
   padding: 24px;
   margin: 16px;
@@ -1362,7 +1619,7 @@ body.rn #roamingOn #content .card .description {
 body.rn #roamingOn #content .card ul.description {
   font-size: 13px;
   color: #959595;
-  list-style-type: circle;
+  list-style-type: disc;
   list-style-position: outside;
   margin-left: 20px;
 }
@@ -1373,6 +1630,7 @@ body.rn #roamingOn #content ul.description li.warn {
   color: red;
 }
 body.rn #roamingOn #content .card .info {
+  display: none;
   border-radius: 6px;
   background-color: #f6f6f6;
   text-align: center;
@@ -1436,14 +1694,17 @@ body.rn #roamingOn #content .buttons {
 body.rn #roamingOn #content .button {
   width: 196px;
   height: 36px;
-  line-height: 36px;
+  line-height: 33px;
   font-size: 13px;
   font-weight: 500;
   border-radius: 18px;
+  box-sizing: border-box;
   margin: 0 auto 10px auto;
+  text-align: center;
 }
 body.rn #roamingOn #content .button-1 {
   background-color: #4559fc;
+  border: 1.5px solid #4559fc;
   color: white;
 }
 body.rn #roamingOn #content .button-2 {
@@ -1453,8 +1714,12 @@ body.rn #roamingOn #content .button-2 {
 }
 body.rn #roamingOn #content .data-usages {
   text-align: center;
+  padding-top: 32px;
 }
 body.rn #roamingOn #content .data-usages h2 {
+  font-weight: 500;
+}
+body.rn #roamingOn #content .data-usages h3 {
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.92px;
@@ -1486,6 +1751,12 @@ body.rn #roamingOn #content .data-usages .charts .chart {
   display: inline-block;
   position: relative;
   width: 100px;
+}
+body.rn #roamingOn #content .data-usages .charts .chart .colorLeft {
+  color: #607dff;
+}
+body.rn #roamingOn #content .data-usages .charts .chart .colorRight {
+  color: #7e82ff;
 }
 body.rn #roamingOn #content .data-usages .charts .chart .track {
   position: absolute;
@@ -1531,7 +1802,6 @@ body.rn #roamingOn #content .data-usages .charts .chart .value-max {
   left: 0;
   right: 0;
   text-align: center;
-  font-family: "Noto Sans";
   font-size: 12px;
   font-weight: 600;
   color: #111;
@@ -1550,8 +1820,13 @@ body.rn #roamingOn #content .data-usages .charts .chart .value {
 body.rn #roamingOn #content .data-usages .charts .chart h4 {
   margin-top: 115px;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   color: #111;
+}
+body.rn #roamingOn #content .data-usages ul.description {
+  text-align: left;
+  margin-top: 20px;
+  font-size: 13px;
 }
 body.rn #roamingOn #content .phone-usages {
   margin-top: 25px;
@@ -1560,7 +1835,7 @@ body.rn #roamingOn #content .phone-usages {
 body.rn #roamingOn #content .phone-usages .usage {
   margin: 10px 0;
 }
-body.rn #roamingOn #content .phone-usages .usage svg {
+body.rn #roamingOn #content .phone-usages .usage img {
   vertical-align: middle;
   margin-right: 4px;
 }
@@ -1630,115 +1905,6 @@ body.rn #roamingOn #content .tariff-list .tariff-box .tariff .price {
   display: block;
   margin-top: 2px;
 }
-body.rn #roamingCoupon .card {
-  margin-top: 10px;
-  background-color: #fff;
-  padding: 35px 20px;
-  min-height: 80px;
-}
-body.rn #roamingCoupon .card p {
-  font-size: 13px;
-  font-weight: 400;
-  color: #959595;
-  letter-spacing: -0.5px;
-}
-body.rn #roamingCoupon .card .help {
-  position: relative;
-  height: 60px;
-}
-body.rn #roamingCoupon .card .help .note {
-  position: absolute;
-  left: 25px;
-  top: 12px;
-  font-size: 13px;
-  font-weight: 400;
-  color: #959595;
-}
-body.rn #roamingCoupon .card .help .title {
-  position: absolute;
-  left: 25px;
-  top: 35px;
-  font-size: 19px;
-  font-weight: 600;
-  color: #4559fc;
-}
-body.rn #roamingCoupon .card .help .phone {
-  position: absolute;
-  right: 25px;
-  top: 1px;
-  width: 45px;
-  height: 60px;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-}
-body.rn #roamingCoupon .header {
-  margin-top: 60px;
-}
-body.rn #roamingCoupon .header h2 {
-  font-size: 26px;
-  font-weight: 600;
-  color: #111;
-  margin-bottom: 10px;
-}
-body.rn #roamingCoupon .header .inquire {
-  float: right;
-  font-size: 13px;
-  font-weight: 500;
-  color: #4559fc;
-  letter-spacing: -0.5px;
-}
-body.rn #roamingCoupon .button {
-  border-radius: 18px;
-  border: 1px solid #4559fc;
-  height: 36px;
-  text-align: center;
-  cursor: pointer;
-  margin: 15px 0;
-  color: #4559fc;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 36px;
-}
-body.rn #roamingCoupon .anchors {
-  background-color: #4559fc;
-  color: white;
-}
-body.rn #roamingCoupon .anchors .anchor {
-  display: inline-block;
-  height: 60px;
-  line-height: 60px;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.75px;
-  color: #fff;
-  padding: 0 20px;
-  opacity: 0.4;
-}
-body.rn #roamingCoupon .anchors .selected {
-  font-size: 17px;
-  font-weight: 700;
-  color: #fff;
-  opacity: 1;
-}
-body.rn #roamingCoupon .intro ul {
-  height: 330px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
-body.rn #roamingCoupon .intro ul li {
-  display: inline-block;
-}
-body.rn #roamingCoupon .intro ul .inner-box {
-  display: inline-block;
-  background-color: #f3f4f9;
-  border-radius: 6px;
-}
-body.rn #roamingCoupon .intro ul .inner-box .card {
-  background-color: #f3f4f9;
-}
 body.rn #countriesDialog {
   background-color: white;
 }
@@ -1771,12 +1937,16 @@ body.rn #countriesDialog .tariffBox {
   position: relative;
   height: 85px;
 }
+body.rn #countriesDialog .tariffBox .arrow {
+  position: absolute;
+  right: 40px;
+  top: 39px;
+}
 body.rn #countriesDialog .dropdown {
   position: absolute;
   top: 20px;
   left: 20px;
   height: 52px;
-  margin: auto;
   width: 88%;
   padding: 0px 25px;
   background-color: #f5f5f5;
@@ -1784,7 +1954,7 @@ body.rn #countriesDialog .dropdown {
   border-radius: 8px;
 
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   color: #111;
 }
 body.rn #countriesDialog .sortBy {
@@ -1849,14 +2019,24 @@ body.rn #countriesDialog .content li {
 body.rn #roamingRates {
 
 }
+body.rn #roamingRates .phone span {
+  vertical-align: middle;
+}
+body.rn #roamingRates .phone img {
+  vertical-align: middle;
+  padding-bottom: 2px;
+  margin-left: 2px;
+  width: 15px;
+  height: 15px;
+}
 body.rn #roamingRates .tip {
   display: inline-block;
-  font-weight: 600;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 11px;
   letter-spacing: -0.52px;
   background-color: #4559fc;
   color: #fff;
-  padding: 3px 10px 0 10px;
+  padding: 1px 10px 0 10px;
   vertical-align: middle;
   border-radius: 9px;
   margin-left: 5px;
@@ -1867,7 +2047,7 @@ body.rn #roamingRates .card {
   background-color: #fff;
 }
 body.rn #roamingRates .card h2 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 21px;
   letter-spacing: -0.5px;
   margin-bottom: 16px;
@@ -1878,6 +2058,12 @@ body.rn #roamingRates .card h3 {
   letter-spacing: -0.5px;
   color: #111;
   margin-bottom: 6px;
+}
+body.rn #roamingRates .card.tips h3 {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  vertical-align: middle;
 }
 body.rn #roamingRates .card .number {
   font-size: 26px;
@@ -1925,8 +2111,8 @@ body.rn #roamingRates .card .button {
 }
 body.rn #roamingRates .card ul.description {
   font-size: 13px;
-  color: #959595;
-  list-style-type: circle;
+  color: #757575;
+  list-style-type: disc;
   list-style-position: outside;
   margin-left: 20px;
 }
@@ -1935,7 +2121,7 @@ body.rn #roamingRates .card ul.description li {
 }
 body.rn #roamingRates .card .section {
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
   margin-top: 25px;
   margin-bottom: 10px;
 }
@@ -2027,7 +2213,10 @@ body.rn #roamingRates .rateBody .align-right {
 }
 body.rn #roamingRates .panels {
   margin-top: 20px;
-  /*margin-bottom: 10px;*/
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
   height: 128px;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -2046,7 +2235,7 @@ body.rn #roamingRates .panel {
 }
 body.rn #roamingRates .panel h3 {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -2059,6 +2248,7 @@ body.rn #roamingRates .rateBody .rateBodyRow {
 }
 body.rn #roamingRates .rateBody .rateBodyRow .name {
   display: block;
+  font-weight: 500;
 }
 body.rn #roamingRates .rateBody .rateBodyRow .value {
   display: block;
@@ -2077,7 +2267,7 @@ body.rn #roamingMyuse .card {
 }
 body.rn #roamingMyuse .card h2 {
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 500;
   padding-bottom: 16px;
   margin-bottom: 20px;
   border-bottom: 1px solid #e0e0e0;
@@ -2107,74 +2297,1336 @@ body.rn #roamingMyuse .empty p {
   letter-spacing: -0.36px;
   margin-top: 15px;
 }
-body.rn #roamingMyuse .item h3 {
+body.rn #roamingMyuse .card .item {
+  margin-top: 20px;
+}
+body.rn #roamingMyuse .card .item h3 {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.5px;
   position: relative;
   margin-bottom: 16px;
 }
-body.rn #roamingMyuse .item .arrow {
+body.rn #roamingMyuse .card .item .arrow {
   position: absolute;
   right: 0px;
   top: 4px;
 }
-body.rn #roamingMyuse .item .divider {
+body.rn #roamingMyuse .card .item .divider {
   height: 2px;
   border-bottom: 1px dashed #e0e0e0;
   margin-top: 8px;
   margin-bottom: 12px;
 }
-body.rn #roamingMyuse .item .row {
+body.rn #roamingMyuse .card .item .row {
   position: relative;
   height: 30px;
   font-size: 14px;
   font-weight: 500;
 }
-body.rn #roamingMyuse .item .row .label {
+body.rn #roamingMyuse .card .item .row .label {
   position: absolute;
   left: 0;
   top: 4px;
 }
-body.rn #roamingMyuse .item .row .value {
+body.rn #roamingMyuse .card .item .row .value {
   position: absolute;
   right: 0;
   top: 4px;
 }
-body.rn #roamingMyuse .item .colorGray {
+body.rn #roamingMyuse .card .item .colorGray {
   color: #959595;
 }
-body.rn #roamingMyuse .item .fontsize15 {
+body.rn #roamingMyuse .card .item .fontsize15 {
   font-size: 15px;
 }
-body.rn #roamingMyuse .item .bold {
-  font-weight: 700;
+body.rn #roamingMyuse .card .item .bold {
+  font-weight: 500;
 }
-body.rn #roamingMyuse .item .button {
+body.rn #roamingMyuse .card .item .button {
   text-decoration: underline;
   font-size: 13px;
   font-weight: 400;
   color: #4559fc;
 }
-body.scroll #gnb {
+body.rn #roamingGuide .anchorsShadow {
+  display: none;
+  position: static;
+  height: 60px;
+}
+body.rn #roamingGuide .anchors {
+  height: 60px;
+  background-color: #4559fc;
+  padding: 0 10px;
+  z-index: 10;
+  white-space: nowrap;
+}
+body.rn #roamingGuide .anchors a {
+  display: inline-block;
+  color: white;
+  opacity: .4;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 60px;
+  padding: 0 10px;
+}
+body.rn #roamingGuide .anchors .active {
+  color: white;
+  opacity: 1.0;
+}
+body.rn #roamingGuide .card {
+  margin-top: 10px;
+  background-color: white;
+  padding: 36px 20px;
+}
+body.rn #roamingGuide .mt10n {
+  margin-top: 0;
+}
+body.rn #roamingGuide .card.title h2 {
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 500;
+  vertical-align: middle;
+  margin-bottom: 15px;
+}
+body.rn #roamingGuide .card.title h2 img {
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: -4px;
+}
+body.rn #roamingGuide .card .slicks {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 90px;
+  /*height: 28px;*/
+}
+body.rn #roamingGuide .card .slick-dots {
+  text-align: right;
+  bottom: -15px;
+}
+body.rn #roamingGuide .card .slick-dots li {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+}
+body.rn #roamingGuide .card .slick-dots li.slick-active button {
+  background-color: #111;
+}
+body.rn #roamingGuide .card .slick-dots li button {
+  border: 1px solid #111;
+  box-sizing: border-box;
+
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: .8;
+}
+body.rn #roamingGuide .button {
+  width: 100%;
+  height: 36px;
+  border: 1px solid #4559fc;
+  border-radius: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #4559fc;
+  line-height: 36px;
+  margin-top: 15px;
+}
+body.rn #roamingGuide > .first {
+  margin-top: 60px;
+}
+body.rn #roamingGuide > .mtb28 {
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+body.rn #roamingGuide .card h2 {
+  font-size: 21px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+body.rn #roamingGuide .card > p {
+  font-size: 13px;
+  color: #959595;
+}
+body.rn #roamingGuide .card .mb8 {
+  margin-bottom: 8px;
+}
+body.rn #roamingGuide .card .subs {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 0;
+}
+body.rn #roamingGuide .card .sub {
+  display: inline-block;
+  text-align: center;
+}
+body.rn #roamingGuide .card .sub img {
+  display: block;
+  margin-bottom: 12px;
+}
+body.rn #roamingGuide .card .sub span {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+}
+body.rn #roamingGuide .card .points {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow-x: hidden;
+  /*overflow-y: hidden;*/
+  white-space: nowrap;
+}
+body.rn #roamingGuide .card .point {
+  box-shadow: 0 1px 20px 0 rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border-radius: 6px;
+  vertical-align: top;
+  display: inline-block;
+}
+body.rn #roamingGuide .card .point h3 {
+  background-color: #4b52ff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  padding: 14px 0 11px 20px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  position: relative;
+}
+body.rn #roamingGuide .card .point .subtitle {
+  position: absolute;
+  display: inline-block;
+  background-color: white;
+  border-radius: 8px;
+  height: 16px;
+  line-height: 18px;
+  color: #4b52ff;
+  font-size: 9px;
+  font-weight: 800;
+  padding-left: 7px;
+  padding-right: 7px;
+  right: 15px;
+  top: 14px;
+}
+body.rn #roamingGuide .card .point ul {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 5px 0;
+}
+body.rn #roamingGuide .card .point ul li {
+  height: 54px;
+  line-height: 54px;
+  position: relative;
+  padding-right: 25px;
+}
+body.rn #roamingGuide .card .point ul li:not(:last-child) {
+  border-bottom: 1px solid #f2f2f2;
+}
+body.rn #roamingGuide .card .point ul li .no {
+  margin-right: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4b52ff;
+}
+body.rn #roamingGuide .card .point ul li .arrow {
+    position: absolute;
+  right: 4px;
+  top: 18px;
+}
+body.rn #roamingGuide .card .vam {
+  vertical-align: middle;
+}
+body.rn #roamingGuide .card .tags {
+  margin-top: 20px;
+}
+body.rn #roamingGuide .card .tags .tag {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 18px;
+  background-color: #f3f4f9;
+  color: #111;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+body.rn #roamingGuide .why {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #EDEEF0;
+}
+body.rn #roamingGuide .why img {
+  width: 76px;
+  float: left;
+}
+body.rn #roamingGuide .why .condition {
+  margin-left: 92px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #959595;
+  letter-spacing: -0.33px;
+}
+body.rn #roamingGuide .why p {
+  margin: 16px 0 14px 92px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #111;
+  letter-spacing: -0.43px;
+}
+body.rn #roamingGuide .why a {
+  /*float: right;*/
+  text-decoration: underline;
+  font-size: 13px;
+  font-weight: 400;
+  color: #4559fc;
+}
+body.rn #roamingGuide ul.description {
+  margin: 24px 10px 24px 20px;
+  list-style-type: disc;
+  list-style-position: outside;
+}
+body.rn #roamingGuide ul.description li {
+  color: #757575;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+body.rn #roamingGuide .cont-right {
+  padding-right: 100px;
+  position: relative;
+  margin-bottom: 28px;
+}
+body.rn #roamingGuide .cont-right p {
+  font-size: 13px;
+  color: #757575;
+  letter-spacing: -0.31px;
+}
+body.rn #roamingGuide .cont-right img  {
+  position: absolute;
+  width: 58px;
+  top: 6px;
+  right: 16px;
+}
+body.rn #roamingGuide .available-result {
+  display: none;
+  border-radius: 6px;
+  text-align: center;
+  padding: 24px 20px 32px 20px;
+  background-color: #f3f4f9;
+  margin-top: 36px;
+}
+body.rn #roamingGuide .available-result h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #111;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+body.rn #roamingGuide .available-result p {
+  font-size: 13px;
+  font-weight: 400;
+  color: #757575;
+}
+body.rn #roamingGuide .networks {
+  background-color: #3348b1;
+  padding: 28px 20px;
+}
+body.rn #roamingGuide .networks h2 {
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+body.rn #roamingGuide .networks img {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+body.rn #roamingGuide .networks ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 18px;
+  margin-top: 12px;
+  color: white;
+}
+body.rn #roamingGuide .networks ul li {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.33px;
+}
+body.rn #roamingGuide .whole-image {
+  /*white-space: nowrap;*/
+  margin-bottom: -8px;
+}
+body.rn #roamingGuide .whole-image img {
+  width: 100%;
+}
+body.rn #roamingGuide .explain {
+  background-color: white;
+  padding-bottom: 40px;
+}
+body.rn #roamingGuide .explain h2 {
+  font-size: 21px;
+  font-weight: 500;
+  padding: 30px 20px 30px 20px;
+}
+body.rn #roamingGuide .explain .card {
+  margin-top: 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  position: relative;
+}
+
+body.rn #roamingGuide .explain .card .tail {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -16px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 12px solid #5d60ff;
+}
+
+body.rn #roamingGuide .explain .card p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+  position: relative;
+  padding-left: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+body.rn #roamingGuide .explain .card p .face {
+  position: absolute;
+  right: 12px;
+  bottom: 0;
+  width: 70px;
+}
+body.rn #roamingGuide .explain ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 40px;
+  margin-right: 20px;
+}
+body.rn #roamingGuide .explain li {
+  font-size: 13px;
+  font-weight: 400;
+  color: #757575;
+
+  margin-bottom: 5px;
+}
+body.rn #roamingGuide .explain > .color1 {
+  background-color: #ecf1ff;
+}
+body.rn #roamingGuide .explain .tail.color1 {
+  border-top: 12px solid #ecf1ff;
+}
+body.rn #roamingGuide .explain > .color2 {
+  background-color: #e9f7f3;
+}
+body.rn #roamingGuide .explain .tail.color2 {
+  border-top: 12px solid #e9f7f3;
+}
+body.rn #roamingGuide .explain > .color3 {
+  background-color: #e6f3fb;
+}
+body.rn #roamingGuide .explain .tail.color3 {
+  border-top: 12px solid #e6f3fb;
+}
+body.rn #roamingGuide .qna {
+  margin-top: 10px;
+}
+body.rn #roamingGuide .config .qna {
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+body.rn #roamingGuide .config.gsm .qna {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+body.rn #roamingGuide .datasms .qna {
+  margin-top: 30px;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+body.rn #roamingGuide .qna .q {
+  position: relative;
+  min-height: 60px;
+}
+body.rn #roamingGuide .qna .q:not(:first-child) {
+  border-top: 1px solid #f2f2f2;
+}
+body.rn #roamingGuide .product .qna.single .q {
+  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
+}
+body.rn #roamingGuide .product .q {
+  border-top: 1px solid #f2f2f2;
+  /*border-bottom: 1px solid #f2f2f2;*/
+}
+body.rn #roamingGuide .qna .q .mark {
+  position: absolute;
+  left: 0;
+  top: 21px;
+  font-size: 17px;
+  font-weight: 500;
+}
+body.rn #roamingGuide .qna .q .title {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 500;
+  margin: 21px 25px 20px;
+}
+body.rn #roamingGuide .config .qna .q .title {
+  margin-left: 0;
+}
+body.rn #roamingGuide .product .qna .q .title {
+  margin-left: 0;
+}
+body.rn #roamingGuide .datasms .qna .q .title {
+  margin-left: 0;
+}
+body.rn #roamingGuide .qna .q .arrow {
+  position: absolute;
+  right: 0;
+  top: 24px;
+}
+body.rn #roamingGuide .qna .a {
+  background-color: #f3f4f9;
+  padding: 28px 20px;
+  display: none;
+}
+body.rn #roamingGuide .config .qna .a {
+  background-color: #fff;
+  padding: 0;
+}
+body.rn #roamingGuide .config .qna .a.pb15 {
+  background-color: #fff;
+  padding: 0 0 15px 0;
+}
+body.rn #roamingGuide .product .qna .a {
+  background-color: #fff;
+  padding: 0;
+}
+body.rn #roamingGuide .datasms .qna .a {
+  background-color: #fff;
+  padding: 0 0 20px 0;
+
+}
+body.rn #roamingGuide .qna .a p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #757575;
+}
+body.rn #roamingGuide .qna .a p:not(:last-child) {
+  margin-bottom: 15px;
+}
+body.rn #roamingGuide .qna .a ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 20px;
+}
+body.rn #roamingGuide .product .qna .a ul {
+  margin-bottom: 20px;
+}
+body.rn #roamingGuide .qna .a ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+body.rn #roamingGuide .qna .a li {
+  font-size: 14px;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 5px;
+}
+body.rn #roamingGuide .config .qna .a li {
+  font-size: 13px;
+}
+body.rn #roamingGuide .tips {
+
+}
+body.rn #roamingGuide .tips h3 {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  vertical-align: middle;
+}
+body.rn #roamingGuide .tips h3 .tip {
+  margin-left: 5px;
+  display: inline-block;
+  background-color: #4559fc;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 10px 0 10px;
+  border-radius: 12px;
+  vertical-align: middle;
+}
+body.rn #roamingGuide .links {
+  text-align: right;
+}
+body.rn #roamingGuide .links h3 {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.52px;
+}
+body.rn #roamingGuide .links .left {
+  text-align: left;
+}
+body.rn #roamingGuide .links .other-link {
+  display: inline-block;
+  width: 48%;
+  text-align: center;
+}
+body.rn #roamingGuide .links .phone-link {
+  width: 48%;
+  display: inline-block;
+  text-align: left;
+  position: relative;
+}
+body.rn #roamingGuide .links .phone-link .text {
+  font-size: 15px;
+  letter-spacing: -0.46px;
+    margin-left: 8px;
+}
+body.rn #roamingGuide .links .phone-link .phone {
+  position: absolute;
+  right: 6px;
+  top: -1px;
+}
+body.rn #roamingGuide .links .other-link a {
+  font-size: 14px;
+  letter-spacing: -1px;
+  color: #4559fc;
+  text-decoration: underline;
+}
+body.rn #roamingGuide .links .divider {
+  display: inline-block;
+  width: 1px;
+  margin-top: 3px;
+  height: 14px;
+  background-color: #e5e5e5;
+}
+body.rn #roamingGuide .link {
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: underline;
+  color: #4559fc;
+}
+body.rn #roamingGuide .card .baro-qna {
+  font-size: 17px;
+  font-weight: 500;
+}
+body.rn #roamingGuide .card.product h3 {
+  font-size: 17px;
+  font-weight: 500;
+}
+body.rn #roamingGuide .card.product .artwork {
+  display: block;
+  width: 100%;
+  margin: 20px 0;
+}
+body.rn #roamingGuide .card.product .mtb15 {
+  margin: 15px 0;
+}
+body.rn #roamingGuide .card.guam h3 {
+  font-size: 17px;
+  font-weight: 500;
+}
+body.rn #roamingGuide .guam-table {
+  border-collapse: collapse;
+  border: 1px solid #979797;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+body.rn #roamingGuide .guam-table, #roamingGuide .guam-table th, #roamingGuide .guam-table td {
+  border: 1px solid #e5e5e5;
+}
+body.rn #roamingGuide .guam-table th {
+  background-color: #f3f4f9;
+  color: #000;
+  opacity: 0.6;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  height: 44px;
+}
+body.rn #roamingGuide .guam-table td {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  padding: 12px 10px;
+  vertical-align: top;
+}
+body.rn #roamingGuide .guam-explain {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  position: relative;
+  min-height: 75px;
+}
+body.rn #roamingGuide .guam-explain .icon {
+  position: absolute;
+  left: 0;
+  top: 16px;
+  width: 76px;
+}
+body.rn #roamingGuide .guam-explain h4 {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  margin-left: 96px;
+}
+body.rn #roamingGuide .guam-explain p {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.33px;
+  margin-bottom: 10px;
+  margin-left: 96px;
+}
+body.rn #roamingGuide .guam-explain p.notice {
+  font-size: 12px;
+  font-weight: 400;
+  color: #959595;
+}
+body.rn #roamingGuide .auto-explain {
+  position: relative;
+  padding-left: 90px;
+}
+body.rn #roamingGuide .auto-explain .icon {
+  width: 62px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+body.rn #roamingGuide .auto-explain h3 {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.43px;
+  margin-bottom: 8px;
+}
+body.rn #roamingGuide .auto-explain ul.description {
+  margin: 5px 0 5px 20px;
+}
+body.rn #roamingGuide .auto-explain ul.description li {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111;
+  margin-bottom: 2px;
+}
+body.rn #roamingGuide .auto-explain ul.warning {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin: 20px 0 5px -70px;
+}
+body.rn #roamingGuide .auto-explain ul.warning li {
+  font-size: 13px;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 2px;
+}
+
+body.rn #roamingGuide .config h3 {
+  font-size: 17px;
+  font-weight: 500;
+  color: #4559fc;
+}
+
+body.rn #roamingGuide .config > p {
+  font-size: 13px;
+  font-weight: 400;
+  color: #959595;
+  margin-top: 15px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+body.rn #roamingGuide .tariff-list {
+  height: 188px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-bottom: 0px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+body.rn #roamingGuide .tariff-list .tariff-box {
+  display: inline-block;
+  width: 180px;
+  height: 168px;
+  margin-right: 8px;
+  background-color: #f3f4f9;
+  border-radius: 12px;
+}
+body.rn #roamingGuide .tariff-list .tariff-box .tariff {
+  padding: 16px;
+  position: relative;
+}
+body.rn #roamingGuide .tariff-list .tariff-box .tariff h3 {
+  position: absolute;
+  left: 16px;
+  right: 36px;
+  white-space: normal;
+  font-size: 18px;
+  font-weight: 500;
+  color: #4559fc;
+}
+body.rn #roamingGuide .tariff-list .tariff-box .tariff .data {
+  padding-top: 65px;
+  font-size: 16px;
+  font-weight: 400;
+}
+body.rn #roamingGuide .tariff-list .tariff-box .tariff .price {
+  float: inherit;
+  display: block;
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 500;
+}
+body.rn #roamingGuide .tariff-list .tariff-box .tariff .phone {
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+}
+body.rn #roamingGuide .tariff-list .tariff .arrow {
+  position: absolute;
+  right: 13px;
+  top: 21px;
+}
+body.rn #roamingGuide .product .banner {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+body.rn #roamingGuide .product ul.boxes {
+  list-style-type: none;
+  margin: 4px 15px 20px 15px;
+}
+body.rn #roamingGuide .product ul.boxes li {
+  height: 74px;
+  position: relative;
+  border-bottom: 1px solid #f0f0f0;
+}
+body.rn #roamingGuide .product ul.boxes img {
+  position: absolute;
+  left: 0;
+  top: 21px;
+}
+body.rn #roamingGuide .product ul.boxes .title {
+  position: absolute;
+  left: 40px;
+  top: 14px;
+  color: #111;
+}
+body.rn #roamingGuide .product ul.boxes .price {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  color: #111;
+}
+body.rn #roamingGuide .datasms-table {
+  border-collapse: collapse;
+  border: 1px solid #979797;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+body.rn #roamingGuide .datasms-table, #roamingGuide .datasms-table th, #roamingGuide .datasms-table td {
+  border: 1px solid #e5e5e5;
+}
+body.rn #roamingGuide .datasms-table th {
+  background-color: #f3f4f9;
+  color: #000;
+  opacity: 0.6;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  height: 44px;
+}
+body.rn #roamingGuide .datasms-table td {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  padding: 12px 10px;
+  vertical-align: middle;
+  text-align: center;
+}
+body.rn #roamingGuide .cont-actionsheet .ac-list {
+  padding-top: 4px;
+}
+body.rn #roamingGuide .cont-actionsheet .ac-tit {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4559fc;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #edeef0;
+}
+#roamingGuide .custom-form input[type=radio]:checked+.r-type1 {
+  background-image: url(/img/product/roam/component_radio_small_on.svg);
+}
+#roamingGuide .bt-dropdown.bigger {
+  padding: 15px 15px;
+  font-size: 14px;
+  letter-spacing: -0.32px;
+  width: 100%;
+}
+#roamingGuide .bt-dropdown.bigger:after {
+  content: "";
+  position: absolute;
+  top: 1.06rem;
+  right: .94rem;
+  display: inline-block;
+  width: .75rem;
+  height: .44rem;
+  margin: 0;
+  background: url(/img/ico/btn-select.png) repeat;
+  background-size: .75rem;
+}
+body.rn #roamingGuide .center .tabs {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  height: 50px;
+  font-size: 0;
+}
+body.rn #roamingGuide .center .tabs .tab {
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+  color: #959595;
+  box-sizing: border-box;
+}
+body.rn #roamingGuide .center .tabs .tab span {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: -0.75px;
+}
+body.rn #roamingGuide .center .tabs .tab span.title {
+  display: inline-block;
+  line-height: 18px;
+  padding-top: 14px;
+}
+body.rn #roamingGuide .center .tabs .active {
+  border-bottom: 3px solid #4559fc;
+  color: #000;
+}
+body.rn #roamingGuide .center .tabs .tab.active span {
+  font-weight: 500;
+}
+body.rn #roamingGuide #branch {
+  display: none;
+}
+body.rn #roamingGuide #branch table {
+  margin-bottom: 25px;
+}
+body.rn #roamingGuide #branch table.icons {
+  width: inherit;
+  margin: 30px auto 25px auto;
+}
+body.rn #roamingGuide #branch table.icons td {
+  text-align: center;
+}
+body.rn #roamingGuide #branch table.icons td.caption {
+  font-size: 12px;
+  padding: 5px 20px;
+  vertical-align: top;
+}
+body.rn #roamingGuide table.explain {
+
+}
+body.rn #roamingGuide table.explain tr {
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+body.rn #roamingGuide table.explain td {
+  padding: 15px;
+  font-size: 13px;
+}
+body.rn #roamingGuide table.explain td.label {
+  width: 60px;
+  background-color: #f3f4f9;
+  color: #757575;
+}
+body.rn #roamingGuide #branch ul.description {
+  margin-bottom: 0;
+}
+body.rn #roamingGuide #branch ul.description li {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+}
+body.rn #roamingGuide #airport h3 {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 30px 0 15px 0;
+}
+body.rn #roamingGuide .standby {
+  display: none;
+}
+body.rn .h36 {
+  height: 36px;
+}
+body.rn .h60 {
+  height: 60px;
+}
+body.rn .mtn10 {
+  margin-top: -10px !important;
+}
+body.rn .vmiddle {
+  vertical-align: middle;
+}
+body.rn .fleft {
+  float: left;
+}
+body.rn #roamingGuide .fw400 {
+  font-weight: 400;
+}
+body.rn #roamingGuide .prelative {
+  position: relative;
+}
+body.rn .mh180 {
+  min-height: 180px;
+}
+body.rn .ui-autocomplete {
+  max-height: 100px;
+  overflow-y: auto;
+  /*
+   ul.ui-autocomplete ui-front
+     li.ui-menu-item
+       div.ui-menu-item-wrapper
+  */
+}
+body.rn .guide-contents {
+  display: none;
+}
+
+body.scroll #appbar {
   background-color: white;
   border-bottom: 1px solid #e9e9e9;
 }
-body.scroll #roamingOn #gnb {
+body.scroll #roamingOn #appbar {
   background-color: white;
   border-bottom: 0;
   box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.15);
 }
-body.scroll #roamingOn #gnb .logo {
+body.scroll #roamingOn #appbar .logo {
   display: none;
 }
-body.scroll #roamingOn #gnb .menu .white {
+body.scroll #roamingOn #appbar .menu .white {
   display: none;
 }
-body.scroll #roamingOn #gnb .menu .black {
+body.scroll #roamingOn #appbar .menu .black {
   display: block;
 }
-body.scroll #roamingOn #gnb .appbar {
+body.scroll #roamingOn #appbar .appbar {
   display: inline-block;
 }
 
+.daterangepicker {
+  color: inherit;
+  background-color: #fff;
+  padding: 0;
+  margin-top: 7px;
+  display: none;
+  font-size: 15px;
+  line-height: 1em;
+}
+
+.daterangepicker:before, .daterangepicker:after {
+  display: inline-block;
+  content: '';
+}
+
+.daterangepicker.drop-up {
+  margin-top: -7px;
+}
+
+.daterangepicker.drop-up:before {
+  top: initial;
+  bottom: -7px;
+  border-bottom: initial;
+  border-top: 7px solid #ccc;
+}
+
+.daterangepicker.drop-up:after {
+  top: initial;
+  bottom: -6px;
+  border-bottom: initial;
+  border-top: 6px solid #fff;
+}
+
+.daterangepicker.single .daterangepicker .ranges, .daterangepicker.single .drp-calendar {
+  float: none;
+}
+
+.daterangepicker.single .drp-selected {
+  display: none;
+}
+
+.daterangepicker.show-calendar .drp-calendar {
+  display: block;
+  background-color: #fff;
+}
+
+.daterangepicker .drp-calendar {
+  display: none;
+}
+
+.daterangepicker .drp-calendar.left {
+  padding: 8px 16px;
+}
+
+.daterangepicker .drp-calendar.right {
+  padding: 0 16px;
+}
+
+.daterangepicker .drp-calendar.single .calendar-table {
+  border: none;
+}
+
+.daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
+  color: #fff;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  border-radius: 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.daterangepicker .calendar-table .next span {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.daterangepicker .calendar-table .prev span {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td {
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  /*min-width: 32px;*/
+  /*width: 32px;*/
+  margin-top: 2px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 13px;
+  /*border-radius: 4px;*/
+  border: 1px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.daterangepicker .calendar-table {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.daterangepicker .calendar-table table {
+  width: 100%;
+  margin: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.daterangepicker td.available:hover, .daterangepicker th.available:hover {
+  background-color: #eee;
+  border-color: transparent;
+  color: inherit;
+}
+
+.daterangepicker td.week, .daterangepicker th.week {
+  font-size: 80%;
+  color: #ccc;
+}
+
+.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
+  background-color: #fff;
+  border-color: transparent;
+  color: #999;
+}
+
+.daterangepicker td.in-range {
+  background-color: #e7ebfe;
+  border-color: transparent;
+  color: #000;
+  border-radius: 0;
+}
+
+.daterangepicker td.start-date {
+  border-radius: 18px 0 0 18px;
+}
+
+.daterangepicker td.end-date {
+  border-radius: 0 18px 18px 0;
+}
+
+.daterangepicker td.start-date.end-date {
+  border-radius: 18px;
+}
+
+.daterangepicker td.active, .daterangepicker td.active:hover {
+  background-color: #4559fc;
+  border-color: transparent;
+  color: #fff;
+}
+
+.daterangepicker th.month {
+  width: auto;
+  color: #4559fc;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.daterangepicker td.disabled, .daterangepicker option.disabled {
+  color: #999;
+  cursor: not-allowed;
+  /*text-decoration: line-through;*/
+}
+
+.daterangepicker select.monthselect, .daterangepicker select.yearselect {
+  font-size: 12px;
+  padding: 1px;
+  height: auto;
+  margin: 0;
+  cursor: default;
+}
+
+.daterangepicker select.monthselect {
+  margin-right: 2%;
+  width: 56%;
+}
+
+.daterangepicker select.yearselect {
+  width: 40%;
+}
+
+.daterangepicker .drp-buttons {
+  clear: both;
+  text-align: right;
+  padding: 8px;
+  border-top: 1px solid #ddd;
+  display: none;
+  line-height: 12px;
+  vertical-align: middle;
+}
+
+.daterangepicker .drp-selected {
+  display: inline-block;
+  font-size: 12px;
+  padding-right: 8px;
+}
+
+.daterangepicker .drp-buttons .btn {
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+}
+
+.daterangepicker .ranges {
+  float: none;
+  text-align: left;
+  margin: 0;
+}
+
+.daterangepicker.show-calendar .ranges {
+  margin-top: 8px;
+}
+
+.daterangepicker .ranges ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
+.daterangepicker .ranges li {
+  font-size: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.daterangepicker .ranges li:hover {
+  background-color: #eee;
+}
+
+.daterangepicker .ranges li.active {
+  background-color: #08c;
+  color: #fff;
+}
+
+/*  Larger Screen Styling */
+@media (min-width: 360px) {
+  .daterangepicker {
+    width: auto;
+  }
+
+  .daterangepicker .ranges ul {
+    width: 140px;
+  }
+
+  .daterangepicker.single .ranges ul {
+    width: 100%;
+  }
+
+  .daterangepicker.single .drp-calendar.left {
+    clear: none;
+  }
+
+  .daterangepicker.single .ranges, .daterangepicker.single .drp-calendar {
+    /*float: left;*/
+  }
+
+  .daterangepicker {
+    direction: ltr;
+    text-align: left;
+  }
+
+  .daterangepicker .drp-calendar.left {
+    clear: left;
+    margin-right: 0;
+  }
+
+  .daterangepicker .drp-calendar.left .calendar-table {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .daterangepicker .drp-calendar.right {
+    margin-left: 0;
+  }
+
+  .daterangepicker .drp-calendar.right .calendar-table {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .daterangepicker .drp-calendar.left .calendar-table {
+    padding-right: 8px;
+  }
+
+  .daterangepicker .ranges, .daterangepicker .drp-calendar {
+    /*float: left;*/
+  }
+}
