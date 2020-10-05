@@ -851,6 +851,7 @@ class MainHome extends TwViewController {
   public getOsVersionCheck(req): boolean {
     try {
       let agentString = this.getUserAgent(req);
+      console.log("[10650-DEBUG-UserAgent] ", agentString);
       let os = agentString.indexOf('Mac') > -1 ? 'ios' : 'aos';
       if (os === 'ios') {
         let reg = new RegExp('X [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
