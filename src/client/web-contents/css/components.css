@@ -36676,3 +36676,5 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
   background: url(/img/ico/ico-cert06.png) 0 50% no-repeat;
   background-size: 36px auto; }
 
+/* 200929 [OP002-10868]  행복커뮤니티_갤러리 내 "서울-보신각점" tab 활성화 및 전시작품 안내 등록 요청 */
+.tod-program-intro .tit-copy span.tit-copy2{font-size:0.93rem;}
