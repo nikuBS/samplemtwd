@@ -1,3 +1,8 @@
+/**
+ * 로밍 국가별 이용요금 조회.
+ *
+ * 검색전에 사용하는 컨트롤러로 BFF API를 사용하지 않는다.
+ */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';

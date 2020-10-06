@@ -1,7 +1,7 @@
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="roamingRates" class="wrap">
-    <div id="gnb" class="gnb-opaque">
+    <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
         </span>
@@ -11,71 +11,52 @@
         </a>
     </div>
     <%- include('../components/header.component.html', { title: '국가별 로밍 이용요금 조회', svcInfo: svcInfo }) %>
-    <div style="height: 60px;"></div>
+    <div id="contents" class="mt60">
     <% if (equipment.number) { %>
     <div class="card">
-        <h3>
-            <span style="vertical-align: middle;">휴대폰</span>
-            <svg width="15" height="15" viewBox="0 0 30 30"
-                 style="vertical-align: middle; padding-bottom: 2px; margin-left: 2px;">
-                <g fill="none" fill-rule="evenodd">
-                    <path d="m-118-268h720v1560h-720z" fill="#f6f6f6"/>
-                    <g transform="translate(-118 -74)">
-                        <path d="m0 0h720v305h-720z" fill="#fff"/>
-                        <g transform="translate(118 74)">
-                            <path d="m0 0h30v30h-30z" fill="#a2a2a2" opacity="0"/>
-                            <g stroke="#111" stroke-width="2">
-                                <path d="m3 26.938359 8.938359-8.938359" stroke-linecap="round"/>
-                                <path d="m7 23c.2992248-4.0521763 2.06712612-6.8566761 5.3037039-8.4134993v-6.73422931h-2.43648513v-3.85227139h13.26556243v3.85227139h-2.4364851v6.73422931c3.1691491 1.5243894 4.9301791 4.2450103 5.28309 8.1618629l.0206139.2516364z"
-                                      fill="#4559fc" stroke-linejoin="round"
-                                      transform="matrix(.70710678 .70710678 -.70710678 .70710678 14.37868 -7.713203)"/>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-            </svg>
+        <h3 class="phone">
+            <span>휴대폰</span>
+            <img src="<%= CDN %>/img/product/roam/ico_pin.svg" />
         </h3>
         <h2 class="number" id="svcNum"><%= equipment.number %></h2>
         <% if (equipment.name != null) { %>
-        <span class="device">현 사용기기</span>
+        <span class="device">현 이용기기</span>
         <span class="separator">|</span>
         <span class="device"><%= equipment.name %></span>
         <% } %>
     </div>
     <% } %>
     <div class="card">
-        <h2>출국 국가 검색 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_01')">TIP</span></h2>
+        <h2>출국 국가 검색 <span class="tip" data-tip="RM_03_01_01_01_tip_01">TIP</span></h2>
 
-        <form id="searchForm" action="/product/roaming/search-result" method="get"
-              onsubmit="return searchNationRate();">
+        <form id="searchForm" action="/product/roaming/search-result" method="get">
             <input type="hidden" name="code" value="" />
             <input type="hidden" name="nm" value="" />
             <input type="hidden" name="eqpNm" value="<%= equipment.name %>" />
             <input type="hidden" name="eqpCd" value="<%= equipment.code %>" />
             <div class="field-container">
-                <input type="text" placeholder="원하시는 국가 명을 입력해주세요" id="nation-search" value="<%= lastQuery.countryNm %>"/>
-                <img src="<%= CDN %>/img/product/roam/ico_search_a.png" class="search"
-                     onclick="searchNationRate();"
-                     width="21" height="21" alt="Search" />
+                <input type="text" placeholder="원하는 국가명을 입력해 주세요." id="nation-search" value="<%= lastQuery.countryNm %>"/>
+                <button role="link" title="국가 검색">
+                    <img src="<%= CDN %>/img/product/roam/ico_search_a.png" alt="Search" />
+                </button>
             </div>
         </form>
         <div class="link">
-            <a href="#" onclick="openNationsDialog(); return false;">전체 국가 보기</a>
+            <a class="fe-show-nations">전체 국가 보기</a>
         </div>
+        <!--
         <div class="button" onclick="searchNationRate();">
             조회
         </div>
-        <ul class="description">
-        <% if (isLogin) { %>
-            <li>휴대폰이 없어도 국가명 입력만으로 조회가 가능합니다.</li>
-            <li>휴대폰 단말기 선택 시 더 정확한 맞춤 정보를 보여줍니다.</li>
-        <% } else { %>
-            <li>로그인을 하시면 가입된 휴대폰 정보로 확인하실 수 있습니다.</li>
+        -->
+        <ul class="description mt16">
+        <% if (!isLogin) { %>
+            <li>로그인하면 가입된 휴대폰 정보로 확인하실 수 있습니다.</li>
         <% } %>
         </ul>
     </div>
     <% if (meta) { %>
-    <div class="card">
+    <div class="card rate-result">
         <h2>
             <span class="colorPoint"><%= lastQuery.countryNm %></span>의<br />
             로밍 맞춤 정보를 안내해 드립니다.
@@ -86,39 +67,29 @@
             <span class="colorPoint" id="availableServices">-</span> 입니다.
         </div>
         <ul class="description">
-            <li>종량요금은 요금제에 가입하지 않고 데이터를 사용했을 때 부과되는 금액입니다.</li>
+            <li>종량 요금은 요금제에 가입하지 않고 데이터를 사용했을 때 부과되는 금액입니다.</li>
             <li>안내 요금은 부가세가 포함된 금액입니다.</li>
         </ul>
 
-        <div class="attentionHead" onclick="toggleAttention()">
-            <svg class="icon" width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(-41 -1864)"><path d="m0-50h720v6288h-720z" fill="#f6f6f6"/><path d="m0 1162h720v1380h-720z" fill="#fff"/><g transform="translate(41 1864)"><path d="m0 0h40v40h-40z" fill="#9d9d9d" opacity="0"/><g stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m13 18-6 4-4 15 9-5 8 5 8-5 9 5-4-15-6-4"/><path d="m27 23 2 5"/><path d="m13 23-2 5"/></g><g fill="#333" transform="translate(10 2)"><path d="m10 0c-5.523 0-10 4.478-10 10s10 17 10 17 10-11.478 10-17-4.477-10-10-10m0 2c4.411 0 8 3.589 8 8 0 3.026-4.429 9.484-8 13.889-3.572-4.403-8-10.859-8-13.889 0-4.411 3.589-8 8-8"/><path d="m10 5c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4m0 2c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2"/></g></g></g></svg>
+        <div class="attentionHead">
+            <img class="icon" src="<%= CDN %>/img/product/roam/ico_attention.svg" />
             <span class="title">
-              로밍 시 국가별 주의사항
+              로밍 시 국가별 주의 사항
             </span>
             <img class="toggle" src="<%= CDN %>/img/product/roam/ico_expand.svg" />
         </div>
         <div class="attentionBody">
             <ul class="description" id="attentionList">
-                <!--
-                <li>수신요금은 현지사업자의 요금과 국제전화 사업자의 요금이 합산된 금액이며, 현지사업자의 수신요금은
-                    분당 과금, 국제전화사업자의 수신요금은 초당 과금됩니다.</li>
-                <li>현지사업자의 수신요금은 음성통화 과금을 1분 단위로 이루어집니다. (예) 45초 통화시 1분 과금, 5분 10초 통화시 6분 과금.
-                    수신을 위한 국제전화사업자(SK텔링크, SK브로드밴드, 데이콤, KT, 온세텔레콤)는 로밍센터 방문 또는 T로밍 고객센터
-                    1599-2011(유료), T월드에서 선택하실 수 있으며, 선택하지 않을 경우 SK텔링크로 자동 설정됩니다.
-                    <br /><a href="https://m.tworld.co.kr/product/callplan?prod_id=TW61000002">국제전화 사업자 선택 자세히 보기</a>
-                </li>
-                <li>수신요금은 국제전화사업자의 요금정책에 따라 차이가 있을 수 있으며, 초당 과금됩니다.</li>
-                <li>로밍요금 전체금액에 대한 10%가 부가세로 적용됩니다.</li>
-                -->
+
             </ul>
         </div>
         <h3 class="section">종량 요금 안내</h3>
         <div class="rateHead" id="rateData">
-            <span class="title">데이터<span class="tip" onclick="showTip(this, 'RM_04_tip_01')">TIP</span></span>
+            <span class="title">데이터<span class="tip" data-tip="RM_04_tip_01">TIP</span></span>
             <span class="values">
                 <span class="colorPoint" id="dataCharge">-</span>/패킷
             </span>
-            <div class="opener" onclick="divExpand('rateData')">더보기</div>
+            <div class="opener" data-section="rateData">더보기</div>
             <div class="rateBody">
                 <ul class="description">
                     <li>데이터 종량 과금이 5,000원 일 상한 도달 시,
@@ -126,7 +97,7 @@
                         데이터가 차단됩니다.</li>
                 </ul>
                 <div class="align-right">
-                    <span class="closer" onclick="divCollapse('rateData')">닫기</span>
+                    <span class="closer" data-section="rateData">닫기</span>
                 </div>
             </div>
         </div>
@@ -135,7 +106,7 @@
             <span class="values">
                 <span class="colorPoint" id="voiceChargeOut">-</span>/초
             </span>
-            <div class="opener" onclick="divExpand('rateVoice')">더보기</div>
+            <div class="opener" data-section="rateVoice">더보기</div>
             <div class="rateBody">
                 <div class="rateBodyRow">
                     <span class="value">
@@ -165,16 +136,16 @@
                     <li>부가서비스: <span id="voiceAddon">-</span></li>
                 </ul>
                 <div class="align-right">
-                    <span class="closer" onclick="divCollapse('rateVoice')">닫기</span>
+                    <span class="closer" data-section="rateVoice">닫기</span>
                 </div>
             </div>
         </div>
         <div class="rateHead" id="rateSms" style="border-bottom: 0;">
-            <span class="title">문자 (SMS발신)</span>
+            <span class="title">문자메시지(SMS발신)</span>
             <span class="values">
                 <span class="colorPoint" id="smsOut">-</span>/건
             </span>
-            <div class="opener" onclick="divExpand('rateSms')">더보기</div>
+            <div class="opener" data-section="rateSms">더보기</div>
             <div class="rateBody">
                 <div class="rateBodyRow">
                     <span class="value">
@@ -201,10 +172,10 @@
                     <span class="name">MMS 수신</span>
                 </div>
                 <ul class="description">
-                    <li>현지 발신 또는 제 3국 발신 SMS의 경우 국제전화사업자가 부과하는 국제 SMS 비용(건당 최대 165원, 부가세 포함)이 추가로 발생합니다.</li>
+                    <li>현지 발신 또는 제3국 발신 문자메시지의 경우 국제전화사업자가 부과하는 국제 문자메시지 비용(건당 최대 165원, 부가세 포함)이 추가로 발생합니다.</li>
                 </ul>
                 <div class="align-right">
-                    <span class="closer" onclick="divCollapse('rateSms')">닫기</span>
+                    <span class="closer" data-section="rateSms">닫기</span>
                 </div>
             </div>
         </div>
@@ -217,7 +188,7 @@
                 <h3>로밍 요금제</h3>
                 <p>
                     나의 여행 패턴에<br />
-                    맞는 요금제를 찾아보세요
+                    맞는 요금제를 찾아 보세요.
                 </p>
             </div>
             </a>
@@ -225,8 +196,8 @@
             <div class="panel">
                 <h3>로밍 부가서비스</h3>
                 <p>
-                    간편하게 가입, 해지할 수 있는<br />
-                    무료 부가 서비스를 추천해 드립니다.
+                    쉽고 간편하게 끄고 켤 수 있는<br />
+                    무료 부가서비스를 추천해 드립니다.
                 </p>
             </div>
             </a>
@@ -234,20 +205,35 @@
             <div class="panel">
                 <h3>로밍 카드/쿠폰</h3>
                 <p>
-                    직접 이용하거나 선물용으로 필요하시다면<br />
-                    로밍 카드/쿠폰을 이용해보세요.
+                    직접 이용하거나 선물용으로<br />
+                    로밍 카드/쿠폰을 이용해 보세요.
                 </p>
             </div>
             </a>
         </div>
     </div>
     <% } %>
-    <div class="card">
-        <h2>꼭 확인해주세요</h2>
-        <h3>이용 관련 안내 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_03')">TIP</span></h3>
-        <h3>요금제 관련 안내 <span class="tip" onclick="showTip(this, 'RM_03_01_01_01_tip_04')">TIP</span></h3>
+    <div class="card tips">
+        <h2>꼭 확인해 주세요</h2>
+        <h3>이용 관련 안내 <span class="tip" data-tip="RM_03_01_01_01_tip_03">TIP</span></h3>
+        <h3>요금제 관련 안내 <span class="tip" data-tip="RM_03_01_01_01_tip_04">TIP</span></h3>
+    </div>
+    </div>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
+</div>
+<!-- 190508 괌사이판 팝업 추가 -->
+<div id="fe-guamsaipan-pop" class="rm-pop-search none">
+    <div class="rm-pop-bg"></div>
+    <div class="rm-pop-ct">
+        <button class="icon-titlebar-exit-48 rm-pop-close fe-close"><span class="blind">팝업 닫기</span></button>
+        <ul class="bt-slice">
+            <li class="bt-red1">
+                <a href="/product/roaming/info/guamsaipan">자세히 보기</a>
+            </li>
+        </ul>
     </div>
 </div>
+<!-- // 190508 괌사이판 팝업 추가 -->
 <%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 <%- include('../../components/roaming-next/schedule.picker.html', {svcInfo}); %>
 </body>
@@ -255,346 +241,14 @@
 <script type="text/javascript">
   var baseDiv = '#roamingRates';
   $(document).ready(function () {
-    new Tw.NextRoamingMenu($(baseDiv)).install();
-
-    var numberContainer = document.getElementById('svcNum');
-    if (numberContainer) {
-      var number = numberContainer.innerText;
-      if (number.length == 11) {
-        numberContainer.innerText =
-          number.substring(0, 3) + '-' +
-          number.substring(3, 7) + '-' +
-          number.substring(7);
-      }
-    }
-
-    prepareTooltips();
-    installNationSearch(sendQuery);
-
-    if (roamingMeta) {
-      setupResult(roamingMeta);
-    }
+    new Tw.RoamingRates($(baseDiv), {
+      'EUR': JSON.parse('<%- JSON.stringify(nations.eur) %>'),
+      'AFR': JSON.parse('<%- JSON.stringify(nations.afr) %>'),
+      'ASP': JSON.parse('<%- JSON.stringify(nations.asp) %>'),
+      'AMC': JSON.parse('<%- JSON.stringify(nations.amc) %>'),
+      'MET': JSON.parse('<%- JSON.stringify(nations.met) %>'),
+      'OCN': JSON.parse('<%- JSON.stringify(nations.ocn) %>'),
+    }, JSON.parse('<%- JSON.stringify(meta) %>'), JSON.parse('<%- JSON.stringify(lastQuery) %>'))
   });
-
-  function searchNationRate() {
-    if ($('#searchForm input[name="code"]').val().length === 3) {
-      return true;
-    }
-    return searchNation();
-  }
-
-  function closeDialog() {
-    $('#nationsDialog').css('display', 'none');
-    $(baseDiv).css('display', 'block');
-  }
-
-  function sendQuery(code, name, t0, baseDiv) {
-    $('#searchForm input[name="code"]').val(code);
-    $('#searchForm input[name="nm"]').val(name);
-    $('#searchForm').submit();
-  }
-
-  function toggleAttention() {
-    var imagePrefix = '<%= CDN %>/img/product/roam/ico_';
-    var imageSuffix = '.svg';
-    $('.attentionBody').toggle('blind', {}, 250, function() {
-      var info = $('.attentionBody')[0];
-      $('.attentionHead img.toggle').attr(
-        'src',
-        imagePrefix + (info.style.display === 'none' ? 'expand' : 'collapse') + imageSuffix
-      )
-    });
-  }
-
-  function divExpand(id) {
-    $('#' + id + ' .opener').css('display', 'none');
-    $('#' + id + ' .rateBody').toggle('blind', {}, 250, function() {
-    });
-  }
-  function divCollapse(id) {
-    $('#' + id + ' .rateBody').toggle('blind', {}, 250, function() {
-      $('#' + id + ' .opener').css('display', 'block');
-    });
-  }
-
-  var manageType = [];
-  var typeTxt = [];
-  var reqParams = {};
-  function setupResult(meta) {
-    var type = {     // 로밍 서비스 방식
-      lte:0,      // LTE
-      wcdma:1,    // 3G
-      cdma:2,     // 2G
-      gsm:3,      // GSM
-      rent:4      // 임대
-    };
-    reqParams = {
-      countryCd: '<%= lastQuery.countryCd %>',
-      manageType: '',                           // 로밍 서비스 방식
-      showDailyPrice: 'N'                       // 로밍서비스방식이 임대로밍 인경우는 Y , 나머지는 N
-    };
-    managerType = [];
-    typeTxt = [];
-
-    // 국가별 이용가능 서비스 리스트 생성
-    if(meta.iPoPhone){    // 단말기 가능폰 확인
-      if(meta.iPoPhone === '0') {   // 지원가능 서비스 없는 경우
-        if(meta.eqpMthdCd === 'W'){   // wcdma+gsm
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
-        }else if(meta.eqpMthdCd === 'D'){ // cdma
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
-        }else {
-          if(meta.lte > 0 && meta.iLtePhone !== '' && meta.iLtePhone !== 'N'){
-            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte].txt);
-            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte]);
-          }
-          if(meta.wcdma > 0){
-            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
-            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
-          }
-          if(meta.cdma > 0){
-            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
-            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
-          }
-          if(meta.gsm > 0){
-            typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
-            manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
-          }
-        }
-      } else {
-        if(meta.lte > 0 && meta.iLtePhone !== '' && meta.iLtePhone !== 'N'){
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte]);
-        }
-
-        if(meta.iPoPhone === '1' && meta.wcdma > 0) {    // WCDMA Only
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
-        } else if(meta.iPoPhone === '2' && meta.wcdma > 0 && meta.gsm > 0){ // WCDMA+GSM
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
-        } else if(meta.iPoPhone === '4' && meta.wcdma > 0 && meta.cdma > 0){ // WCDMA+CDMA
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
-        } else if(meta.iPoPhone === '3' && meta.gsm > 0 && meta.cdma > 0){ // GSM+CDMA(SIM자동 로밍)
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
-          typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
-          manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
-        }
-      }
-    } else {
-      if(meta.lte > 0 && meta.iLtePhone !== '' && meta.iLtePhone !== 'N'){
-        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte].txt);
-        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.lte]);
-      }
-      if(meta.wcdma > 0){
-        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma].txt);
-        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.wcdma]);
-      }
-      if(meta.cdma > 0){
-        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma].txt);
-        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.cdma]);
-      }
-      if(meta.gsm > 0){
-        typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm].txt);
-        manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.gsm]);
-      }
-    }
-
-    // 임대 로밍 서비스가 가능한 경우
-    if(meta.rent > 0){
-      reqParams.showDailyPrice = 'Y';
-      typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[type.rent].txt);
-      manageType.push(Tw.ROAMING_MANAGE_TYPE.list[type.rent]);
-    }else {
-      reqParams.showDailyPrice = 'N';
-    }
-
-    // 이용가능 서비스가 있는 경우 로밍 요금 조회 요청.
-    if(manageType.length > 0) {
-      // 3G 자동로밍 선택이 가능할 경우 기본 노출로 설정
-      var defaultType = 0;
-      for (var key in manageType) {
-        if (manageType[key].type === 'W') {
-          defaultType = key;
-        }
-      }
-      reqParams.manageType = manageType[defaultType].type;
-      $('#availableServices').text(typeTxt.join(', '))
-
-      $.get('/bypass/core-product/v1/roaming/country-rate?' +
-        'countryCode=<%= lastQuery.countryCd %>&manageType=' + reqParams.manageType +
-        '&showDailyPrice=' + reqParams.showDailyPrice, fillRateProperties);
-    } else {
-      alert('이용 가능한 서비스가 없습니다');
-    }
-  }
-
-  function fillRateProperties(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      Tw.Error(resp.code, resp.msg).pop();
-      return;
-    }
-    var _result = resp.result;
-    _result.countryCd = '<%= lastQuery.countryCd %>';
-
-    var typeIndex = null;
-    for(var idx in manageType) {
-      if(manageType[idx].type === reqParams.manageType) {
-        typeIndex = idx;
-      }else {
-      }
-    }
-
-    var noticeParam = {
-      voiceShown: true,   // 음성통화 수신 요금 안내 노출 여부
-      ableShown: true,
-      attentionShown: false,  // 로밍 시 국가별 주의사항 노출 여부
-      svcAttention: _result.svcAttention, // 로밍 시 국가별 주의 사항 내용
-      hanaroMtCharge: _result.hanaroMtCharge, // 음성통화 수신 요금 sk브로드밴드
-      dacomMtCharge: _result.dacomMtCharge,   // 음성통화 수신 요금 LG U+
-      ktMtCharge: _result.ktMtCharge,         // 음성통화 수신 요금 KT
-      onseMtCharge: _result.onseMtCharge      // 음성통화 수신 요금 세종텔레콤
-    };
-
-    if(reqParams.manageType === 'L') {  // 서비스 방식이 LTE인 경우
-      _result.lteShown = true;    // LTE 안내 사항 노출 및 음성 '서비스 이용 불가' 문구 변경
-      noticeParam.voiceShown = false;
-    } else if (reqParams.manageType === '') { // 서비스 방식이 임대로밍 인 경우
-      _result.rentShown = true;   // 임대로밍 안내사항 노출
-    } else if (reqParams.manageType === 'C') {   // 서비스 방식이 2G인 경우
-      if(_result.dMoChargeMin){       //데이터 이용료가 있는 경우
-        _result.cdmaUnit = true;
-        _result.mTxtCharge = _result.dMoChargeMin;
-        _result.mMtmCharge = _result.dMoChargeMin;
-      }
-    }
-
-    var chargeWhenConnected = ['CAN', 'MEX']; // 통화가 연결된 후 요금 청구되는 국가 리스트
-    if ( chargeWhenConnected.indexOf(_result.countryCd) !== -1) {
-      _result.isChargeWhenConnected = true;
-    }
-
-    if(_result.ableAreaType === 'A'){   // 이용가능 지역 상세보기 여부
-      noticeParam.ableShown = false;
-    }
-
-    _result.dMoChargeMin = Number(_result.dMoChargeMin);    // 데이터 이용료
-    _result.mTxtCharge =  Number(_result.mTxtCharge);       // MMS-텍스트 발신
-    _result.mMtmCharge =  Number(_result.mMtmCharge);       // MMS 멀티미디어 발신
-    noticeParam.attentionShown = (_result.svcAttention) ? true : false;
-
-    if(typeIndex === null || typeIndex === ''){
-      typeIndex = -1;
-    }
-
-    var currentType = manageType[typeIndex].txt; // 현재 선택된 서비스명 e.g. '3G 자동로밍'
-
-    $('#attentionList').html(noticeParam.svcAttention);
-
-    if (_result.dMoChargeMin) {
-      $('#dataCharge').html(_result.dMoChargeMin + '원');
-    } else {
-      $('#dataCharge').html('-');
-    }
-
-    if (_result.pMoChargeMin) {
-      $('#voiceChargeOut').html(_result.pMoChargeMin + '원');
-    } else {
-      if (_result.vIntChargeMin) {
-        $('#voiceChargeOut').html(_result.vIntChargeMin + '원');
-      } else {
-        $('#voiceChargeOut').html('-');
-      }
-    }
-
-    if (_result.vMoChargeMin) {
-      $('#voiceChargeLocal').html(_result.vMoChargeMin+ '원');
-    } else {
-      $('#voiceChargeLocal').html('-');
-    }
-
-    if (_result.vMtChargeMin) {
-      $('#voiceChargeIncoming').html(_result.vMtChargeMin + '원');
-    } else {
-      $('#voiceChargeIncoming').html('-');
-    }
-
-    $('#voiceSKB').html(_result.hanaroMtCharge || '-');
-    $('#voiceLGU').html(_result.dacomMtCharge || '-');
-    $('#voiceKT').html(_result.ktMtCharge || '-');
-    $('#voiceOS').html(_result.onseMtCharge || '-');
-    $('#voiceAddon').html(_result.suplSvcNm);
-
-    if (_result.sMoChargeMin) {
-      $('#smsOut').html(_result.sMoChargeMin + '원');
-    } else {
-      $('#smsOut').html('-');
-    }
-
-    if (_result.mTxtCharge) {
-      $('#mmsTextOut').html(_result.mTxtCharge + '원');
-    } else {
-      $('#mmsTextOut').html('-');
-    }
-
-    if (_result.mMtmCharge) {
-      $('#mmsMediaOut').html(_result.mMtmCharge + '원');
-    } else {
-      $('#mmsMediaOut').html('-');
-    }
-
-    $('#mmsTextOutUnit').text(_result.cdmaUnit ? '패킷' : '건');
-    $('#mmsMediaOutUnit').text(_result.cdmaUnit ? '패킷' : '건');
-
-    // 서비스 국가가 러시아이고, 3G인 경우 안내팝업 호출
-    // if(reqParams.manageType === 'W' && reqParams.countryCd === 'RUS'){
-    //   this._popupService.close();
-    //   this._popupService.open({
-    //     hbs: 'RM_10',
-    //     layer: true
-    //   }, $.proxy(this._closeRusNotiPopup, this), null, null, $(event.currentTarget));
-    // }
-    //
-    // 팔라우, 세이셸, 마다가스카르의 국가의 경우 공지팝업 호출
-    // if(_result.dablYn === 'Y') {
-    //   var popupDesc = _result.dablCtt;
-    //   setTimeout($.proxy(this._openNoticePopup, this, popupDesc, event), 500);
-    // }
-  }
-
-  var tooltips = {};
-  function showTip(e, tipId) {
-    var tooltipService = new Tw.TooltipService();
-    var tip = tooltips[tipId];
-    tooltipService._openTip(tooltips[tipId], e);
-  }
-  function collectTooltips(items) {
-    for (var item of items) {
-      tooltips[item.mtwdTtipId] = {
-        ttipTitNm: item.ttipTitNm,
-        ttipCtt: item.ttipCtt,
-        type: item.ttipPreTypCd,
-      }
-    }
-  }
-  function prepareTooltips() {
-    Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: 'M000455'}).done(function(r) {
-      if (r.result && r.result.tooltip) collectTooltips(r.result.tooltip);
-    });
-    Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: 'M000460'}).done(function(r) {
-      if (r.result && r.result.tooltip) collectTooltips(r.result.tooltip);
-    });
-  }
-  var roamingMeta = <%- JSON.stringify(meta) %>;
 </script>
 <% include ../../components/end.component.html %>

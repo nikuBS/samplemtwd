@@ -1,7 +1,7 @@
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo, includeRoam: true }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="roamingHistory">
-    <div id="gnb" class="gnb-opaque">
+    <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
         </span>
@@ -11,7 +11,8 @@
         </a>
     </div>
     <%- include('../components/header.component.html', { title: '지난 여행 정보', svcInfo: svcInfo }) %>
-    <div class="card" style="margin-top: 60px;">
+    <div id="contents" class="mt60">
+    <div class="card">
         <h2>지난 여행 평균 데이터</h2>
         <p>
             지난 일본 여행에서 <br />
@@ -92,16 +93,16 @@
             </div>
         </div>
     </div>
-    <div style="height: 40px;">
-
+    <div class="h36"></div>
     </div>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
 </div>
 <%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 </body>
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
   $(document).ready(function () {
-    new Tw.NextRoamingMenu($('#roamingHistory')).install();
+    new Tw.RoamingMenu($('#roamingHistory')).install();
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -1,3 +1,11 @@
+/**
+ * 로밍 부가서비스 컨트롤러.
+ *
+ * 전체 서비스는 BFF_10_0031 idxCtgCd:F01600 사용.
+ * 이용중인 서비스는 BFF_10_0057 사용.
+ *
+ * 석연실님 요청으로 로밍오토다이얼(TW61000005), 데이터로밍무조건허용(NA00003157) 은 숨김.
+ */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
@@ -31,7 +39,7 @@ export default class RoamingAddonsController extends RoamingController {
         }
       });
 
-      // addonData sort
+      // 이용중인 아이템이 상단에 노출되도록 정렬
       for (let i = addonUsing.length - 1; i >= 0; i--) {
         const using = addonUsing[i];
         let i0 = -1;

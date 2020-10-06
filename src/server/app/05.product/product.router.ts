@@ -120,6 +120,16 @@ import RoamingAddonsController from './controllers/roaming-next/roaming.addons';
 import RoamingHistoryController from './controllers/roaming-next/roaming.history';
 import RoamingRatesByCountryController from './controllers/roaming-next/roaming.rates';
 import RoamingRatesByCountryResultController from './controllers/roaming-next/roaming.rates.result';
+import {
+  RoamingGuideIndex,
+  RoamingGuideBaro,
+  RoamingGuideGuamSaipan,
+  RoamingGuideSecureT,
+  RoamingGuideProduct,
+  RoamingGuideAuto,
+  RoamingGuideDataSms,
+  RoamingGuideCenterLocation
+} from './controllers/roaming-next/roaming.guides';
 
 
 class ProductRouter extends TwRouter {
@@ -200,14 +210,14 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/__/roaming/my-use', controller: ProductRoamingMyUse });
     this.controllers.push({ url: '/__/roaming/do/search-before', controller: ProductRoamingSearchBefore });
     this.controllers.push({ url: '/__/roaming/search-result', controller: ProductRoamingSearchResult });
-    this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
-    this.controllers.push({ url: '/roaming/info/barocall', controller: ProductRoamingBaroCall });
-    this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming });
-    this.controllers.push({ url: '/roaming/info/guamsaipan', controller: ProductRoamingGuamSaipan });
-    this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });
-    this.controllers.push({ url: '/roaming/info/data-roaming', controller: ProductRoamingDataRoaming });
-    this.controllers.push({ url: '/roaming/fee-info', controller: ProductRoamingFeeInfo });
-    this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
+    this.controllers.push({ url: '/__/roaming/info/guide', controller: ProductRoamingGuide });
+    this.controllers.push({ url: '/__/roaming/info/barocall', controller: ProductRoamingBaroCall });
+    this.controllers.push({ url: '/__/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming });
+    this.controllers.push({ url: '/__/roaming/info/guamsaipan', controller: ProductRoamingGuamSaipan });
+    this.controllers.push({ url: '/__/roaming/info/lte', controller: ProductRoamingLteGuide });
+    this.controllers.push({ url: '/__/roaming/info/data-roaming', controller: ProductRoamingDataRoaming });
+    this.controllers.push({ url: '/__/roaming/fee-info', controller: ProductRoamingFeeInfo });
+    this.controllers.push({ url: '/__/roaming/info/center', controller: ProductRoamingInfoCenter });
     this.controllers.push({ url: '/__/roaming/fee', controller: ProductRoamingFee });
     this.controllers.push({ url: '/__/roaming/planadd', controller: ProductRoamingPlanAdd });
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
@@ -240,6 +250,14 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/history', controller: RoamingHistoryController });
     this.controllers.push({ url: '/roaming/do/search-before', controller: RoamingRatesByCountryController });
     this.controllers.push({ url: '/roaming/search-result', controller: RoamingRatesByCountryResultController });
+    this.controllers.push({ url: '/roaming/info/guide', controller: RoamingGuideIndex });
+    this.controllers.push({ url: '/roaming/info/barocall', controller: RoamingGuideBaro });
+    this.controllers.push({ url: '/roaming/info/secure-troaming', controller: RoamingGuideSecureT });
+    this.controllers.push({ url: '/roaming/info/guamsaipan', controller: RoamingGuideGuamSaipan });
+    this.controllers.push({ url: '/roaming/fee-info', controller: RoamingGuideProduct });
+    this.controllers.push({ url: '/roaming/info/lte', controller: RoamingGuideAuto });
+    this.controllers.push({ url: '/roaming/info/data-roaming', controller: RoamingGuideDataSms });
+    this.controllers.push({ url: '/roaming/info/center', controller: RoamingGuideCenterLocation });
 
     this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplanBackup });
