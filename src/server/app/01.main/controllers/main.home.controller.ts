@@ -797,20 +797,20 @@ class MainHome extends TwViewController {
    * @param {Request} req
    * @return {object}
    */
-  // private getPersonAgentTypeCheck(req): any {
-  //   const userAgent: string = this.getUserAgent(req);
-  //   const agentTypeChk = TARGET_AGENT_LIST.find((targetAgent) =>
-  //     userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
-  //   /**
-  //    * userAgent에 포함된 단말기인 경우 노출
-  //    * true: 노출, false: 미노출
-  //    */
-  //   return !!agentTypeChk;
-  // }
-
   private getPersonAgentTypeCheck(req): any {
-    return this.getOsVersionCheck(req);
+    const userAgent: string = this.getUserAgent(req);
+    const agentTypeChk = TARGET_AGENT_LIST.find((targetAgent) =>
+      userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
+    /**
+     * userAgent에 포함된 단말기인 경우 노출
+     * true: 노출, false: 미노출
+     */
+    return !!agentTypeChk;
   }
+
+  // private getPersonAgentTypeCheck(req): any {
+  //   return this.getOsVersionCheck(req);
+  // }
 
   /**
    * user agent 조회
