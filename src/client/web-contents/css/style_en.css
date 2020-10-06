@@ -389,7 +389,7 @@
 
 .fs-info.footnote02 { padding-left: 0.88rem; }
 
-.fs-info.footnote02::before { content: ''; display: inline-block; position: absolute; left: 0; top: 0.25rem; width: 0.5rem; height: 0.44rem; background: url("/img/en/ico-require02.png") 0 0 no-repeat; background-size: 100% 100%; }
+.fs-info.footnote02::before { content: ''; display: inline-block; position: absolute; left: 0; top: 0.25rem; width: 0.63rem; height: 0.5rem; background: url("/img/en/ico-require02.png") 0 0 no-repeat; background-size: 100% 100%; }
 
 .charge-line { position: relative; display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 1.25rem 0; text-align: left; font-size: 0; line-height: 1; color: #000000; }
 
@@ -613,6 +613,10 @@
 
 .my-info-tit { height: 3.25rem; line-height: 3.25rem; font-size: 1rem; font-weight: 500; }
 
+.info-wrap { margin-bottom: 0.63rem; }
+
+.info-wrap:last-of-type { margin-bottom: 0; }
+
 .my-info-data { width: 100%; display: table; border: 1px solid #cfcfcf; border-top: 0; }
 
 .my-info-data:first-of-type { border-top: 1px solid #cfcfcf; }
@@ -678,6 +682,10 @@
 .table-type th { width: 30%; background: #f5f5f5; border-right: 1px solid #cfcfcf; padding: 0.94rem 0.75rem; font-size: 13px; color: #858585; vertical-align: middle; word-break: keep-all; }
 
 .table-type td { width: 70%; padding: 0.94rem 0.75rem; font-size: 0.81rem; line-height: 1.13rem; color: #000; vertical-align: middle; background: #fff; word-break: keep-all; }
+
+.container.logout .complete-title > span > strong.txt-bold { font-size: 1.63rem !important; }
+
+.container.logout .complete-error-tx .tx2 > strong { font-weight: 500; }
 
 /* Tool Bar */
 #gnb .g-wrap { padding: 0 1.56rem; }
