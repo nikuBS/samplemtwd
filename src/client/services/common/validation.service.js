@@ -333,7 +333,7 @@ Tw.ValidationService.prototype = {
    * @param $target
    */
   _getFail: function ($target) {
-    $target.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show().attr('aria-hidden', 'false');
+    this._getMessageTarget($target).empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show().attr('aria-hidden', 'false');
     this.$cardNumber = '';
   },
   /**
