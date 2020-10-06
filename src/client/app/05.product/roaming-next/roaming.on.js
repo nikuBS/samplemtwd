@@ -9,8 +9,14 @@ Tw.RoamingModeOn = function (rootEl, country, currentTariff, usage, loginAvailab
     document.location.href = '/product/roaming';
     return;
   }
+  // 아래 코드는 확인사살. product.roaming-mode.js 에서 SessionStorage 에 값을 넣었으나,
+  // 메인을 거치지 않고 진입한 특수 케이스를 커버해주기 위해 다시 넣는다.
+  // 예를들어 주소창에 직접 $host/product/roaming/on?mcc=222 이렇게 입력해서 들어오는 경우가 있다.
   Tw.CommonHelper.setSessionStorage('ROAMING_MCC', country.mcc);
+
   // 쿠키도 구워 놓는 이유는 BE 인증세션에 MCC 전달하기 위함이며 그 외에는 사용하지 않음.
+  // FIXME: 현재는 로그인 없이 로밍모드를 사용하지 못하여, 로그인 시 BE가 MCC를 전달 받을 기회가 없다.
+  //        그러므로 OP002-10123 를 폐기하고 ROAMING_MCC 를 쿠키에 굽지 않아야 깔끔하다.
   Tw.CommonHelper.setCookie('ROAMING_MCC', country.mcc);
 
   this.$container = rootEl;

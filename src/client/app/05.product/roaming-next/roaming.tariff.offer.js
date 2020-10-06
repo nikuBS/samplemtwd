@@ -1,6 +1,6 @@
 /**
  * @file roaming.tariff.offer.js
- * @desc T로밍 > 추천 요금제
+ * @desc T로밍 > 요금제 추천
  */
 
 Tw.RoamingTariffOffer = function (rootEl) {
@@ -25,10 +25,27 @@ Tw.RoamingTariffOffer.prototype = {
   afterInit: function() {
 
   },
+  /**
+   * @desc 추천된 요금제 우하단의 '더보기 +' 버튼 눌렀을 때 표시할 국가 팝업 노출
+   * @param e Event
+   */
   _handleShowCountries: function(e) {
-    // 추천된 요금제 우하단의 '더보기 +' 버튼 눌렀을 때 표시할 국가 팝업 노출
     var target = e.currentTarget;
     var defaultProdId = target.getAttribute('data-prodId');
+    
+    // YT 요금제의 경우, 근접한 요금제 정보로 대치하여 표시 (2020-10-05 석연실님 요청)
+    // baro YT 4GB NA6491 ---> baro 3GB NA 6489
+    // baro YT 5GB NA6495 ---> baro 4GB NA 6493
+    // baro YT 8GB NA6499 ---> baro 7GB NA 6497
+    if (defaultProdId === 'NA00006491') { // baro YT 4GB
+      defaultProdId = 'NA00006489'; // baro 3GB
+    }
+    if (defaultProdId === 'NA00006495') { // baro YT 5GB
+      defaultProdId = 'NA00006493'; // baro 4GB
+    }
+    if (defaultProdId === 'NA00006499') { // baro YT 8GB
+      defaultProdId = 'NA00006497'; // baro 7GB
+    }
     this.$countries.showCountries(defaultProdId);
   }
 };

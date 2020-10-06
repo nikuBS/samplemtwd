@@ -1,5 +1,7 @@
 /**
- * 로밍모드.
+ * @desc 로밍모드.
+ * @author 황장호
+ * @since 2020-09-01
  *
  * BFF_10_0056: 현재 사용중인 요금제 목록
  * BFF_10_0058: 국가별 로밍 이용요금 조회
@@ -53,7 +55,8 @@ export default class RoamingOnController extends RoamingController {
       currentTariff: null,
       usage: {},
       isAvailable: function() {
-        return context.meta && context.meta.voiceRoamingYn === 'Y' && context.meta.dataRoamingYn === 'Y';
+        var avail = context.meta && context.meta.voiceRoamingYn === 'Y' && context.meta.dataRoamingYn === 'Y';
+        return avail ? true : false;
       },
       nations: {},
     };
