@@ -18,7 +18,7 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type, isMasking) {
   this._isSmall = title === 'small';
   this.$type = type;
   this.$isPage = true;
-  this._isMasking = isMasking && isMasking === 'true' ? true : false;
+  this._isMasking = isMasking && isMasking === 'true';
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -53,9 +53,10 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     setTimeout($.proxy(this._checkStandardAmount, this), 100); // 기준금액 체크
 
     // 마스킹 해제 시 [카드 자동납부 정보] 자동으로 호출한다.
-    if (this._isMasking) {
+    // 20.10.6 다시 자동 호출 제거. 기획 문종수 책임 요청.
+    /*if (this._isMasking) {
       this.$container.find('.fe-card-info').trigger('click');
-    }
+    }*/
   },
   /**
    * @function
