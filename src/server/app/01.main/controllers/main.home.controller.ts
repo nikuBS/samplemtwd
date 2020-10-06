@@ -851,17 +851,44 @@ class MainHome extends TwViewController {
   public getOsVersionCheck(req): boolean {
     try {
       let agentString = this.getUserAgent(req);
-      let os = agentString.indexOf('Mac') > -1 ? 'ios' : 'aos';
+      console.log("[10650-DEBUG-UserAgent] ", agentString);
+      let os = agentString.indexOf('iPhone') > -1 ? 'ios' : 'aos';
       if (os === 'ios') {
-        let reg = new RegExp('X [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
+        let reg = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
+        let reg2 = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}');
+        let reg3 = new RegExp('OS [0-9]{0,3}');
         var ios_text = '  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15 TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.10|osVersion:27|model:LM-V409N|id:6ae9a542-fcb6-44ae-9cbd-8cbf45538933|APP_API:app|TWM_CHANNEL=mobile-app|widget:0 x-requested-with: com.sktelecom.minit.qa';
         ios_text = agentString;
         let mac_version_temp = reg.exec(ios_text);
+        // console.log(">> [TEST] mac_version_temp : ", mac_version_temp);
+
+        if (mac_version_temp === null) {
+          mac_version_temp = reg2.exec(ios_text);
+          // console.log(">> [TEST] mac_version_temp : ", mac_version_temp);
+        }
+
+        if (mac_version_temp === null) {
+          mac_version_temp = reg3.exec(ios_text);
+          // console.log(">> [TEST] mac_version_temp : ", mac_version_temp);
+        }
+
         let mac_version: string = '';
         if (mac_version_temp) {
           mac_version = mac_version_temp[0].split(' ')[1] 
         }
         let mac_check_version = '12.4.8';
+
+        // console.log(">> [TEST] mac_version: ", mac_version);
+        let mac_version_len = mac_version.split('_').length;
+        // console.log(">> [TEST] mac_version_len: ", mac_version_len);
+        if (mac_version_len === 1) {
+          mac_version = mac_version + "_0_0";
+        } else if (mac_version_len === 2) {
+          mac_version = mac_version + "_0";
+        }
+
+        mac_version = mac_version.replace(/_/g, ".");
+        // console.log(mac_check_version, mac_version.replace(/_/g, "."));
 
         // true: 노출, false: 비노출 
         return this.compareVer(mac_version, mac_check_version);

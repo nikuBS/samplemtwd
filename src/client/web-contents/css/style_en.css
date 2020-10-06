@@ -336,6 +336,18 @@
 
 .long-error .txt-center .basic-txt + .basic-txt { padding-top: 0.75rem; }
 
+.popup-page .protect-pass-wrap { padding: 0 0.81rem !important; }
+
+.cellphone-info .ico { width: 1rem; height: 1.44rem; background: url("/img/en/sel-ico-mobile-black.png") 0 0 no-repeat; background-size: 100%; display: inline-block; margin-top: 0.19rem; }
+
+.cellphone-info .txt .name { text-align: left; }
+
+.popup-page.layer .popup-closeBtn { position: absolute; width: 1.5rem; height: 1.5rem; background: url("/img/en/icon_48px_titlebar_exit.svg") no-repeat 0 0; background-size: 100% 100%; }
+
+.protect-pass-wrap .tit .str { margin-left: -0.75rem; }
+
+.msg-guide.align-l { text-align: left; background: url("/img/en/ico_refer.png") 0 4px no-repeat; padding-left: 0.63rem; background-size: 0.38rem 0.38rem; }
+
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
 
@@ -658,6 +670,14 @@
 .half-gaps { padding: 0.63rem 0.94rem; }
 
 .notice-point .t-np2 { line-height: 1.25rem; }
+
+.table-type { width: 100%; border: 1px solid #cfcfcf; }
+
+.table-type tr { border-bottom: 1px solid #cfcfcf; }
+
+.table-type th { width: 30%; background: #f5f5f5; border-right: 1px solid #cfcfcf; padding: 0.94rem 0.75rem; font-size: 13px; color: #858585; vertical-align: middle; word-break: keep-all; }
+
+.table-type td { width: 70%; padding: 0.94rem 0.75rem; font-size: 0.81rem; line-height: 1.13rem; color: #000; vertical-align: middle; background: #fff; word-break: keep-all; }
 
 /* Tool Bar */
 #gnb .g-wrap { padding: 0 1.56rem; }
