@@ -47,7 +47,7 @@ import { timer } from '../../node_modules/rxjs/observable/timer';
 module.exports = require('../../nodejs-exporter');
 
 const manifest = require('./manifest.json');
-
+const cors = require('cors');
 class App {
   public app: Application = express();
   public redisService: RedisService;
@@ -66,6 +66,12 @@ class App {
   }
 
   private config() {
+    this.app.use((req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+      next();
+    });
+    this.app.use(cors());
     this.app.set('view engine', 'ejs');
     this.app.engine('html', ejs.renderFile);
     this.app.use(express.json());       // to support JSON-encoded bodies
