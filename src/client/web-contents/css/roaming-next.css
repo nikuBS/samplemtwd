@@ -102,9 +102,12 @@ body.rn #roamingMain #content .card #nations {
   margin-right: -5px;
   margin-bottom: 20px;
 }
+body.rn #roamingMain #content .card #nations td {
+  width: 33%;
+}
 body.rn #roamingMain #content .pn {
   margin-right: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
 }
 body.rn #roamingMain #content .pn img {
   width: 100%;
@@ -123,10 +126,17 @@ body.rn .card .field-container input::placeholder {
   width: 100%;
   color: #959595;
 }
-body.rn .card .field-container img {
+body.rn .card .field-container button {
   position: absolute;
   top: 12px;
   right: 14px;
+}
+body.rn .card .field-container img {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 21px;
+  height: 21px;
 }
 body.rn #roamingMain #content .card .link {
   text-align: right;
@@ -580,13 +590,13 @@ body.rn #nationsDialog .menu {
   top: 53px;
   height: 100%;
 }
-body.rn #nationsDialog .menu li {
+body.rn #nationsDialog .menu li button {
+  width: 100%;
   height: 56px;
   line-height: 56px;
-  padding-left: 18px;
   font-size: 16px;
 }
-body.rn #nationsDialog .menu li.active {
+body.rn #nationsDialog .menu li button.active {
   background-color: white;
   color: #4559fc;
 }
@@ -597,12 +607,14 @@ body.rn #nationsDialog .content {
   padding-left: 25px;
   padding-right: 25px;
 }
-body.rn #nationsDialog .content li {
+body.rn #nationsDialog .content li button {
+  width: 100%;
   height: 50px;
   line-height: 50px;
   font-size: 15px;
   color: #666;
   cursor: pointer;
+  text-align: left;
 }
 body.rn #scheduleDialog {
   background-color: white;
@@ -916,6 +928,9 @@ body.rn #roamingTariffs .header .anchors .anchor {
   width: 128px;
   height: 82px;
   margin-right: 5px;
+  vertical-align: top;
+}
+body.rn #roamingTariffs .header .anchors .anchor img {
   vertical-align: top;
 }
 body.rn #roamingTariffs #groups {
@@ -2888,6 +2903,15 @@ body.rn #roamingGuide .links .other-link {
   display: inline-block;
   width: 48%;
   text-align: center;
+}
+body.rn #roamingGuide .links .other-link.left {
+  text-align: left;
+}
+body.rn #roamingGuide .cs-divider {
+  height: 1px;
+  background-color: #edeef0;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 body.rn #roamingGuide .links .phone-link {
   width: 48%;

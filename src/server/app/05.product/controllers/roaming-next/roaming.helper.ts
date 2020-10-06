@@ -1,3 +1,11 @@
+/**
+ * 로밍 서비스 전체에서 공통으로 사용하는 Helper.
+ *
+ * 요금제의 가격이나 설명을 포매팅하는 범용 함수인 formatTariff.
+ * 전체 국가 목록을 가져오는 nationsByContinents.
+ * 유명국가 30개에 대한 MCC 테이블 ISO3166.
+ * 요금제 그룹 1~12에 대한 테이블 getTariffGroup.
+ */
 import EnvHelper from '../../../../utils/env.helper';
 import {Observable} from 'rxjs/Observable';
 import {REDIS_KEY} from '../../../../types/redis.type';
@@ -133,14 +141,14 @@ export default class RoamingHelper {
     // NA00006486, NA00006487  VIP
     if (['NA00006486', 'NA00006487'].indexOf(t.prodId) >= 0) {
       t.data = '무제한';
-      t.phone = '음성 30분 / 문자 30건 / baro통화 무제한';
+      t.phone = '음성 30분 / 문자 30건 / baro 통화 무제한';
     }
     // NA00006744, NA00006745  DATA VIP
     if (['NA00006744', 'NA00006745'].indexOf(t.prodId) >= 0) {
       t.data = '무제한';
     }
     if (!t.phone) {
-      t.phone = 'baro통화 무제한';
+      t.phone = 'baro 통화 무제한';
     }
     return t;
   }

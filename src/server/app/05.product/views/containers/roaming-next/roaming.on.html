@@ -1,11 +1,7 @@
-<%- include('../../components/start.component.html', {
-  pageInfo: locals.pageInfo,
-  includeRoam: true,
-  includeCalendar: true,
-}); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="roamingOn" class="wrap">
-    <div id="gnb">
+    <div id="appbar">
         <span class="menu">
             <img class="white" src="<%= CDN %>/img/product/roam/ico_menu_w.svg" alt="메뉴" width="24" height="24" />
             <img class="black" src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
@@ -23,6 +19,7 @@
             <% } %>
         </h1>
     </div>
+    <div id="contents">
     <div id="content">
         <% if (country.code) { %>
         <div class="hud">
@@ -36,14 +33,14 @@
                         <span class="nation"><%= country.name %></span>
                         <img src="<%= CDN %>/img/product/roam/ico_time.png" />
                         <% if (country.timezoneOffset !== '0') { %>
-                        한국기준 <%= country.timezoneOffset %>시간
+                        한국 기준 <%= country.timezoneOffset %>시간
                         <% } %>
                     </p>
                     <h2 class="value" id="timeLocal">-</h2>
-                    <p class="note">*수도시각 기준 (섬머타임 미반영)</p>
+                    <p class="note">* 수도 시각 기준 (서머타임 미반영)</p>
+                    <div class="divider"></div>
                 </div>
-                <div class="divider"></div>
-                <div class="clock">
+                <div class="clock ml12">
                     <p class="note">
                         <span class="nation">한국</span>
                         <img src="<%= CDN %>/img/product/roam/ico_time.png" />
@@ -53,17 +50,17 @@
             </div>
         </div>
         <% } else { %>
-        <div class="hud" style="min-height: 180px;">
+        <div class="hud mh180">
         </div>
         <% } %>
 
         <% if (!isAvailable()) { %>
         <div class="card unavailable">
-            <svg height="63" viewBox="0 0 126 126" width="63" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h126v126h-126z" fill="#8d8d8d" opacity="0"/><circle cx="63.5" cy="62.5" fill="#4559fc" r="61.5"/><g fill="#fff" fill-rule="nonzero"><path d="m68.32 36-2 36.48h-5.76l-2-36.48z"/><path d="m67.32 81v8.64h-7.76v-8.64z"/></g></g></svg>
+            <img src="<%= CDN %>/img/product/roam/ico_baro_fail.svg" width="63" />
             <p>
                 죄송합니다. <br />
                 <% if (country.code) { %>
-                현재 로밍이 불가합니다.
+                현재 로밍을 할 수 없습니다.
                 <% } else { %>
                 지원하지 않는 국가입니다.
                 <% } %>
@@ -73,8 +70,7 @@
         <% if (!currentTariff && usage && usage.baro && usage.baro.code && usage.baro.msg) { %>
         <div class="card">
             <h3>
-                <svg style="float: left; margin-right: 15px;"
-                     height="32" viewBox="0 0 126 126" width="32" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h126v126h-126z" fill="#8d8d8d" opacity="0"/><circle cx="63.5" cy="62.5" fill="#4559fc" r="61.5"/><g fill="#fff" fill-rule="nonzero"><path d="m68.32 36-2 36.48h-5.76l-2-36.48z"/><path d="m67.32 81v8.64h-7.76v-8.64z"/></g></g></svg>
+                <img src="<%= CDN %>/img/product/roam/ico_baro_fail.svg" width="32" class="mr14 fleft" />
                 서비스 점검 중 입니다.
             </h3>
             <p class="naMessage">
@@ -93,11 +89,11 @@
         <%   if (noSubscription == true && availableTariffs && isAvailable()) { %>
         <div class="card">
             <h3>
-                <span class="colorPoint"><%= country.name %>에서 이용 가능한</span><br />
+                <span class="colorPoint"><%= country.name %>에서 이용할 수 있는</span><br />
                 추천 로밍 요금제
             </h3>
             <p class="description">
-                편리하고 합리적인 가격의 로밍 요금제를 이용하세요
+                편리하고 합리적인 가격의 로밍 요금제를 이용해 보세요.
             </p>
             <div class="tariff-list">
                 <% for (var t of availableTariffs) { %>
@@ -116,8 +112,8 @@
                 </a>
                 <% } %>
             </div>
-            <div class="button button-1" id="offer" style="text-align: center;">
-                추천 요금제 보러가기
+            <div class="button button-1" id="offer">
+                추천 요금제 보기
             </div>
         </div>
         <%   } %>
@@ -137,19 +133,19 @@
                 <%= currentTariff.statusMessage %>
             </span>
             <% } else { %>
-            <div style="margin-bottom: 20px;"></div>
+            <div class="mb20"></div>
             <% } %>
 
             <% if (usage.data && currentTariff.status > 0) { %>
             <div class="charts">
-                <div class="chart" style="margin-right: 36px;" id="dataChartContainer">
+                <div class="chart mr36" id="dataChartContainer">
                     <div class="track">
                         <img src="<%= CDN %>/img/product/roam/track.svg" width="100" height="100" />
                     </div>
                     <div id="chart-data" class="progress"></div>
 
                     <div class="label">사용량</div>
-                    <div class="value" style="color: #607dff;"><%= usage.formatBytes(usage.data.used) %></div>
+                    <div class="value colorLeft"><%= usage.formatBytes(usage.data.used) %></div>
                     <div class="value-max">/<%= usage.formatBytes(usage.data.total) %></div>
                     <div class="message" id="dataMessage"></div>
                     <h4>데이터</h4>
@@ -162,64 +158,63 @@
 
                     <div class="label">사용량</div>
                     <div class="value-max">/<%= usage.baro.total %></div>
-                    <div class="value" style="color: #7e82ff;"><%= usage.formatDuration(usage.baro.used) %></div>
+                    <div class="value colorRight"><%= usage.formatDuration(usage.baro.used) %></div>
                     <div class="message" id="baroMessage"></div>
-                    <h4 style="font-family: Roboto;">baro 통화</h4>
+                    <h4>baro 통화</h4>
                 </div>
             </div>
             <% } %>
 
             <% if (currentTariff.status > 0) { %>
-            <ul class="description" style="text-align: left; margin-top: 20px; font-size: 13px;">
+            <ul class="description">
                 <% if (currentTariff.group === 1) { %>
-                    <li>이용기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 데이터 계속 사용</li>
+                    <li>이용 기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 계속 사용</li>
                 <% } %>
                 <% if (currentTariff.group === 2) { %>
-                    <li>이용기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 데이터 계속 사용</li>
+                    <li>이용 기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 계속 사용</li>
                 <% } %>
                 <% if (currentTariff.group === 3) { %>
-                    <li>기본제공 데이터 다 쓰면 데이터 사용 제한</li>
+                    <li>기본제공 데이터 다 쓰면 사용 제한</li>
                 <% } %>
                 <% if (currentTariff.group === 4) { %>
                     <li>국내 가입 요금제의 기본제공 데이터를 그대로 사용</li>
                 <% } %>
                 <% if (currentTariff.group === 7) { %>
-                    <li>이용기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 데이터 계속 사용</li>
+                    <li>이용 기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 계속 사용</li>
                 <% } %>
                 <% if (currentTariff.group === 8) { %>
-                    <li>이용기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 데이터 계속 사용</li>
+                    <li>이용 기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 계속 사용</li>
                 <% } %>
                 <% if (currentTariff.group === 9) { %>
-                    <li>이용기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 데이터 계속 사용</li>
+                    <li>이용 기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 계속 사용</li>
                 <% } %>
                 <% if (currentTariff.group === 10) { %>
                     <li>제한된 속도로 데이터 계속 사용</li>
                 <% } %>
                 <% if (currentTariff.group === 11) { %>
-                    <li>해당 요금제 이용자는 데이터 로밍이 차단됩니다.</li>
+                    <li>해당 요금제 이용 고객님은 데이터 로밍이 차단됩니다.</li>
                 <% } %>
                 <% if (currentTariff.group === 12) { %>
-                    <li class="warn">해당 국가의 할인망에서 데이터를 이용한 시점을 서비스 개시일로 인식하여 혜택을 적용합니다.</li>
+                    <li class="warn">해당 국가의 할인망에서 데이터를 사용한 시점을 서비스 개시일로 인식하여 혜택을 적용합니다.</li>
                 <% } %>
                 <% if (currentTariff.group === 13) { %>
-                    <li class="warn">해당 국가의 할인망에서 데이터를 이용한 시점을 서비스 개시일로 인식하여 혜택을 적용합니다.</li>
+                    <li class="warn">해당 국가의 할인망에서 데이터를 사용한 시점을 서비스 개시일로 인식하여 혜택을 적용합니다.</li>
                 <% } %>
                 <% if (currentTariff.group === 14) { %>
-                    <li class="warn">해당 국가의 할인망에서 데이터를 이용한 시점을 서비스 개시일로 인식하여 혜택을 적용합니다.</li>
-                    <li>이용기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 데이터 계속 사용</li>
+                    <li class="warn">해당 국가의 할인망에서 데이터를 사용한 시점을 서비스 개시일로 인식하여 혜택을 적용합니다.</li>
+                    <li>이용 기간 동안 기본제공 데이터 다 쓰면 제한된 속도로 계속 사용</li>
                 <% } %>
             </ul>
             <% } else { %>
-            <div style="text-align: right;">
-                <a href="/product/roaming/setting/roaming-auto?prod_id=<%= currentTariff.prodId %>"
-                   class="link" style="font-size: 13px; color: #4559fc; text-decoration: underline;"
-                >기간 확인</a>
-            </div>
+                <div class="links">
+                    <a href="/product/roaming/setting/roaming-auto?prod_id=<%= currentTariff.prodId %>"
+                       class="link">기간 확인</a>
+                </div>
             <% } %>
 
             <% if (currentTariff.status == 2) { %>
-            <div class="button button-1" id="offer" style="text-align: center;">
-                추천 요금제 보러가기
+            <div class="button button-1" id="offer">
+                추천 요금제 보기
             </div>
             <% } %>
         </div>
@@ -227,7 +222,7 @@
         <% } %>
         <% if (isAvailable() && isLogin == false) { %>
         <div class="card anonymous">
-            <h3>반갑습니다. 고객님</h3>
+            <h3>고객님, 반갑습니다.</h3>
             <p class="description">로그인 후 고객님의 정보를 확인하세요</p>
             <div class="buttons">
                 <div class="button button-1" id="login">
@@ -250,13 +245,13 @@
             </h3>
             <div class="phone-usages">
                 <div class="usage">
-                    <svg width="21" viewBox="0 0 43 42" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h43v42h-43z" fill="#4559fc" opacity="0"/><g stroke="#111" stroke-width="2"><g transform="translate(7 1)"><path d="m3.6 1c-1.43594035 0-2.6 1.16405965-2.6 2.6v31.8c0 1.4359403 1.16405965 2.6 2.6 2.6h17.2565217c1.4359404 0 2.6-1.1640597 2.6-2.6v-31.8c0-1.43594035-1.1640596-2.6-2.6-2.6z" fill="#fff"/><path d="m0 31.071952h24.456522"/><path d="m9.782609 5.5h5.147358" stroke-linecap="round"/></g><ellipse cx="30.5" cy="36.5" fill="#b9c0ff" rx="7.5" ry="3.5"/><ellipse cx="30.5" cy="32.5" fill="#b9c0ff" rx="7.5" ry="3.5"/><ellipse cx="30.5" cy="28.5" fill="#b9c0ff" rx="7.5" ry="3.5"/></g></g></svg>
+                    <img src="<%= CDN %>/img/product/roam/ico_usage_voice.svg" />
                     <span class="usage-type">음성</span>
                     <span class="usage-value"><%= usage.phone.voice > 60 ? Math.floor(usage.phone.voice / 60) + '시간 ' + usage.phone.voice % 60 + '분' : usage.phone.voice + '분' %></span>
                 </div>
                 <div class="divider"></div>
                 <div class="usage">
-                    <svg width="21" viewBox="0 0 43 42" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m0 0h43v42h-43z" fill="#4559fc" opacity="0"/><g stroke="#111" stroke-width="2"><g transform="translate(5 8)"><path d="m3.6 1c-1.43594035 0-2.6 1.16405965-2.6 2.6v17.2565217c0 1.4359404 1.16405965 2.6 2.6 2.6h26.26875c1.4359403 0 2.6-1.1640596 2.6-2.6v-17.2565217c0-1.43594035-1.1640597-2.6-2.6-2.6z" fill="#fff"/><path d="m1.55914398 2.73951445 15.16836642 11.68511245 15.1683664-11.68511245" stroke-linecap="round" stroke-linejoin="round"/></g><ellipse cx="31" cy="34.5" fill="#b9c0ff" rx="7" ry="3.5"/><ellipse cx="31" cy="30.5" fill="#b9c0ff" rx="7" ry="3.5"/><ellipse cx="31" cy="26.5" fill="#b9c0ff" rx="7" ry="3.5"/></g></g></svg>
+                    <img src="<%= CDN %>/img/product/roam/ico_usage_sms.svg" />
                     <span class="usage-type">SMS/MMS</span>
                     <span class="usage-value"><%= usage.phone.sms %>건</span>
                 </div>
@@ -264,75 +259,73 @@
             <% if (rate) { %>
             <ul class="description">
                 <% if (currentTariff.group === 1) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 2) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 3) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 4) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 5) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 6) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>문자 발신 30건 이용 가능합니다. 30건 초과 시 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월
-                        청구내역서를 확인해주세요.
-                    </li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>문자메시지는 30건 무료로 이용하실 수 있습니다. 30건 초과 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다.
+                        발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 7) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 8) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 9) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 10) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 11) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 12) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 13) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>문자 발신 30건 이용 가능합니다. 30건 초과 시 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월
-                        청구내역서를 확인해주세요.
-                    </li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>문자메시지는 30건 무료로 이용하실 수 있습니다. 30건 초과 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다.
+                        발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
                 <% if (currentTariff.group === 14) { %>
-                    <li>해외에서 사용한 유료 음성통화시간은 실시간 확인이 불가하여 조회에 다소 시차가 존재할 수 있습니다. 기준시간을 확인 해주세요.</li>
-                    <li>SMS발신 <%= rate.sMoChargeMin %>원/건 별도 요금 발생, 발생한 청구 요금은 서비스 이용 후 다음 월 청구내역서를 확인해주세요.</li>
-                    <li>이용 요금제별 혜택은 요금제 상세 참조</li>
+                    <li>해외에서 사용한 유료 음성통화 시간은 실시간 확인을 할 수 없어 조회에 시차가 다소 발생할 수 있습니다. 기준 시간을 확인해 주세요.</li>
+                    <li>SMS 발신 시 <%= rate.sMoChargeMin %>원/건 별도 요금이 발생합니다. 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>
+                    <li>이용 요금제별 혜택은 요금제 상세 안내 참조</li>
                 <% } %>
             </ul>
             <% } %>
@@ -341,7 +334,7 @@
         <% if (process.env['NODE_ENV'] == 'local') { %>
         <div class="card">
             <h3>SUPPORT CARD</h3>
-            <div class="buttons" style="padding-top: 20px; text-align: center;">
+            <div class="buttons pt20">
                 <div class="button button-1" onclick="debugChangeMcc();">
                     MCC Update
                 </div>
@@ -362,7 +355,7 @@
         <% } %>
         <a href="/product/roaming/info/barocall">
         <div class="card">
-            <h3 style="margin-bottom: 10px;">
+            <h3 class="mb10">
                 T전화를 통해<br />
                 <img src="<%= CDN %>/img/product/roam/img_barocall.png" width="95" />
                 <span class="colorPoint">이용시 <span class="hc"><div class="hu"></div>통화 무료!</span></span>
@@ -379,27 +372,27 @@
             </p>
             <a href="tel:+82232100404">
                 <h3 class="hc">
-                    외교부 영사콜센터 (24시간)
+                    외교부 영사콜센터(24시간)
                     <img src="<%= CDN %>/img/product/roam/ico_phone.svg" width="20" height="20" alt="phone" class="phone"/>
-                    <div class="hu" style="right: 1px;"></div>
+                    <div class="hu"></div>
                 </h3>
             </a>
-            <div class="info" style="display: none;">
+            <div class="info">
                 <img src="<%= CDN %>/img/product/roam/img_hand01.png" width="108" alt="Peaceful hand" />
                 <p class="description">
                     현지 언어 소통에 어려움을 겪고 있다면? <br />
-                    해외재난 및 사건사고가 일어났다면? <br />
+                    해외에서 재난 및 사건 사고가 일어났다면? <br />
                     긴급 경비가 필요한 상황이라면? <br />
                     여행 경보 단계를 확인하고 싶다면? <br />
                     <br />
                     이럴 때 <span class="colorPoint">외교부 영사콜센터로 전화</span>하세요!
                 </p>
                 <a href="tel:+82232100404">
-                    <h4>+82-2-3210-0404 (무료)</h4>
+                    <h4>+82-2-3210-0404(무료)</h4>
                 </a>
             </div>
             <div class="curtain"></div>
-            <div class="toggle" onclick="toggleInfo(this);">
+            <div class="toggle">
                 <img src="<%= CDN %>/img/product/roam/ico_expand.svg" alt="카드 접기" />
             </div>
         </div>
@@ -409,52 +402,54 @@
             </p>
             <a href="tel:+82263439000">
                 <h3 class="hc">
-                    T로밍 고객 센터 (24시간)
+                    T로밍 고객센터(24시간)
                     <img src="<%= CDN %>/img/product/roam/ico_phone.svg" width="20" height="20" alt="phone" class="phone" />
-                    <div class="hu" style="right: 1px;"></div>
+                    <div class="hu"></div>
                 </h3>
             </a>
-            <div class="info" style="display: none;">
+            <div class="info">
                 <img src="<%= CDN %>/img/product/roam/img_hand02.png" width="108" alt="Peaceful hand" />
                 <p class="description">
-                    T로밍 요금제 이용방법이 궁금하다면? <br />
-                    T로밍 사용 시 불편사항이 있다면? <br />
-                    baro 통화 이용방법을 더 알고 싶다면? <br />
-                    기타 모든 로밍 관련 문의사항이 있다면? <br />
+                    T로밍 요금제 이용 방법이 궁금하다면? <br />
+                    T로밍 이용 시 불편 사항이 있다면? <br />
+                    baro 통화 이용 방법을 더 알고 싶다면? <br />
+                    기타 모든 로밍 관련 문의 사항이 있다면? <br />
                     <br />
-                    이럴 때 <span class="colorPoint">T로밍 고객 센터로 전화</span>하세요!
+                    이럴 때 <span class="colorPoint">T로밍 고객센터로 전화</span>하세요!
                 </p>
                 <a href="tel:+82263439000">
-                    <h4>+82-2-6343-9000 (무료)</h4>
+                    <h4>+82-2-6343-9000(무료)</h4>
                 </a>
             </div>
             <div class="curtain"></div>
-            <div class="toggle" onclick="toggleInfo(this)">
+            <div class="toggle">
                 <img src="<%= CDN %>/img/product/roam/ico_expand.svg" alt="카드 접기" />
             </div>
         </div>
     </div>
+    </div>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
 </div>
 <div id="modals">
 </div>
 <script type="text/x-handlebars-template" id="tpl-dialog-welcome">
     <div id="{{ id }}" class="roaming-modal">
         <div class="content tm">
-            <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday);">
+            <div class="today">
                 <span class="box"></span>
                 <label for="notToday">오늘 하루 그만 보기</label>
             </div>
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
-                고객님 안녕하세요 <br />
+                고객님, 안녕하세요 <br />
                 T로밍입니다. <br/>
-                편안한 비행 되셨나요?
+                비행은 편안하셨나요?
             </p>
             <p class="note">해외에서도 <span class="colorPoint">편하고 쉬운 데이터 사용</span>을 위해</p>
-            <p class="note"><span class="colorPoint">T로밍 요금제</span>와 함께 해보세요.</p>
+            <p class="note"><span class="colorPoint">T로밍 요금제</span>와 함께해 보세요.</p>
             <div class="divider"></div>
             <div class="buttons">
-                <a href="#" onclick="switchScheduleDialog('{{id}}')">나에게 맞는 요금제 보기</a>
+                <a href="#">나에게 맞는 요금제 보기</a>
             </div>
         </div>
     </div>
@@ -462,23 +457,22 @@
 <script type="text/x-handlebars-template" id="tpl-dialog-usage">
     <div id="{{ id }}" class="roaming-modal">
         <div class="content tm">
-            <div class="today" onclick="dismiss('{{id}}', 'modals', preventToday); return true;">
+            <div class="today">
                 <span class="box"></span>
                 <label for="notToday">오늘 하루 그만 보기</label>
             </div>
             <img class="close" src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
             <p class="message">
-                사용시간을 <br />
+                이용 시간을 <br />
                 변경하시겠습니까?
             </p>
             <p class="note">고객님께서 가입하신 <span class="colorPoint">{{ prodNm }}</span>는</p>
             <p class="note">현지 시각 <span class="colorPoint">{{ timeLocal }}</span></p>
             <p class="note">한국 시각 <span class="colorPoint">{{ timeKorea }}</span> 부터</p>
-            <p class="note">사용 가능합니다.</p>
+            <p class="note">이용하실 수 있습니다.</p>
             <div class="divider"></div>
             <div class="buttons">
-                <a href="/product/roaming/setting/roaming-auto?prod_id={{ prodId }}"
-                  onclick="dismiss('{{id}}', 'modals', preventSession); return true;">변경하기</a>
+                <a href="/product/roaming/setting/roaming-auto?prod_id={{ prodId }}">변경하기</a>
             </div>
         </div>
     </div>
@@ -487,167 +481,20 @@
 <%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>
 </body>
 <% include ../../components/javascript.component.html %>
-<%- include('../../components/roaming-next/circlebar.javascript.html'); %>
 <script type="text/javascript">
   var baseDiv = '#roamingOn';
+  var instance;
 
   $(document).ready(function () {
-    if (Tw.CommonHelper.getSessionStorage('ROAMING_OFF') == 'Y') {
-      // 로밍모드 명시적 OFF 이면 로밍메인으로 튕김
-      document.location.href = '/product/roaming';
-      return;
-    }
-    Tw.CommonHelper.setSessionStorage('ROAMING_MCC', '<%= country.mcc %>');
-
-    new Tw.NextRoamingMenu($(baseDiv)).install();
-    fillBackgroundImage();
-
-    var target = '/product/roaming';
-    var landing = new Tw.TidLandingComponent();
-
-    $('#login').on('click', function(e) {
-      landing.goLogin(target)
-      e.stopPropagation();
-    });
-    $('#slogin').on('click', function(e) {
-      landing.goSLogin(target)
-      e.stopPropagation();
-    });
-    $('#signup').on('click', function(e) {
-      landing.goSignup();
-      e.stopPropagation();
-    })
-    $('#offer').on('click', function(e) {
-      openScheduleDialog('<%= country.code %>', '<%= country.name %>',
-        '<%= country.backgroundMiniUrl %>', baseDiv);
-      e.stopPropagation();
-    });
-
-    $('#timeKorea').html(moment().format('YY.MM.DD HH:mm'));
-    $('#timeLocal').html(moment().add('<%= country.timezoneOffset %>', 'hours').format('YY.MM.DD HH:mm'));
-
-    var status = 1;
-    <% if (currentTariff && currentTariff.status == 2) { %>
-    status = 2;
-    markAsDone();
-    <% } %>
-    <% if (currentTariff && currentTariff.status == 0) { %>
-    markAsReserved();
-    <% } %>
-
-    setTimeout(checkLandingPopup, 500);
-
-    if (document.getElementById('chart-data')) {
-      var chartData = new ProgressBar.Circle('#chart-data', {
-        easing: 'easeInOut',
-        strokeWidth: 7,
-        color: status == 2 ? '#999999' : '#607dff',
-      });
-      var chartPhone = new ProgressBar.Circle('#chart-phone', {
-        easing: 'easeInOut',
-        strokeWidth: 7,
-        color: status == 2 ? '#999999': '#7e82ff',
-      });
-
-      <% if (usage.data && usage.baro) { %>
-      var dataUsage = <%- JSON.stringify(usage.data) %>;
-      var baroUsage = <%- JSON.stringify(usage.baro) %>;
-
-      if (dataUsage.code) {
-        if (dataUsage.code == '-') {
-          $('#dataMessage').html(dataUsage.msg);
-        } else {
-          $('#dataMessage').html(dataUsage.code);
-        }
-        chartData.animate(1.0);
-        setTimeout(function() {
-          var measuredHeight = document.getElementById('dataMessage').offsetHeight;
-          if (measuredHeight > 0) {
-            document.getElementById('dataMessage').style.top = ((100 - measuredHeight) / 2 + 1) + 'px';
-          }
-        }, 150);
-
-        $('#dataChartContainer .label').html('');
-        $('#dataChartContainer .value-max').html('');
-      } else if (dataUsage.used) {
-        chartData.animate(parseFloat(dataUsage.used) / parseFloat(dataUsage.total));
-      }
-
-      if (baroUsage.code) {
-        $('#baroMessage').html(baroUsage.code);
-        chartPhone.animate(1.0);
-        setTimeout(function() {
-          var measuredHeight = document.getElementById('baroMessage').offsetHeight;
-          if (measuredHeight > 0) {
-            document.getElementById('baroMessage').style.top = ((100 - measuredHeight) / 2 + 1) + 'px';
-          }
-        }, 150);
-        $('#phoneChartContainer .label').html('');
-        $('#phoneChartContainer .value-max').html('');
-      } else {
-        chartPhone.animate(1.0);
-      }
-      <% } %>
-    }
+    instance = new Tw.RoamingModeOn($(baseDiv),
+      JSON.parse('<%- JSON.stringify(country) %>'),
+      JSON.parse('<%- JSON.stringify(currentTariff) %>'),
+      JSON.parse('<%- JSON.stringify(usage) %>'),
+      JSON.parse('<%= isLogin && isAvailable() %>'),
+    );
   });
-  function switchScheduleDialog(previousDialogId) {
-    dismiss(previousDialogId, 'modals', preventSession);
-    openScheduleDialog('<%= country.code %>', '<%= country.name %>',
-      '<%= country.backgroundMiniUrl %>', baseDiv);
-    return false;
-  }
-  function markAsDone() {
-    $('#content .data-usages h2').css('color', '#999999');
-    $('#content .data-usages h4').css('color', '#999999');
-    $('#content .data-usages .status').css('color', '#999999');
-    $('#content .data-usages .value').css('color', '#999999');
-    $('#content .data-usages .value-max').css('color', '#999999');
-    $('#content .data-usages .message').css('color', '#999999');
-    $('#content .data-usages .label').css('color', '#999999');
-  }
-  function markAsReserved() {
-    $('#content .data-usages .status').css('color', '#999999');
-  }
-  function fillBackgroundImage() {
-    const url = '<%= country.backgroundUrl %>'
-    const backgroundImage = new Image();
-    backgroundImage.onload = function() {
-      var container = document.getElementById('roamingOn');
-      var scaleFactor = this.height / this.width;
 
-      var width = container.clientWidth;
-      if (width > 480) {
-        width = 480;
-      }
-
-      var realHeight = Math.floor(width * scaleFactor);
-      var offsetY = 0;
-      if (realHeight > 380) {
-        offsetY = 380 - realHeight;
-      }
-
-      container.style.backgroundImage = "url('" + url + "')";
-      container.style.backgroundRepeat = 'no-repeat';
-      container.style.backgroundSize = width + 'px ' + realHeight + 'px';
-      container.style.backgroundPositionY = offsetY + 'px';
-    };
-    backgroundImage.src = url;
-  }
-  function closeDialog() {
-    $('#scheduleDialog').css('display', 'none');
-    $(baseDiv).css('display', 'block');
-  }
-  function toggleInfo(e) {
-    var id = e.parentElement.id;
-    var imagePrefix = '<%= CDN %>/img/product/roam/ico_';
-    var imageSuffix = '.svg';
-    $('#' + id + ' .info').toggle('blind', {}, 250, function() {
-      var info = $('#' + id + ' .info')[0];
-      var hidden = info.style.display === 'none';
-      $('#' + id + ' .toggle img').attr('src', imagePrefix + (hidden ? 'expand' : 'collapse') + imageSuffix);
-      $('#' + id + ' .curtain').css('display', hidden ? 'block' : 'none');
-    });
-  }
+  <% if (process.env['NODE_ENV'] == 'local') { %>
   function debugChangeMcc() {
     var newMcc = prompt('MCC 3자리를 입력해주세요');
     if (newMcc) {
@@ -666,73 +513,14 @@
   function debugLandingPopup() {
     Tw.CommonHelper.removeLocalStorage('ROAMING_POPUP');
     Tw.CommonHelper.removeSessionStorage('ROAMING_POPUP');
-    checkLandingPopup();
+    instance.checkLandingPopup();
   }
-  function checkLandingPopup() {
-    if (Tw.CommonHelper.getLocalStorageExpire('ROAMING_POPUP')) {
-      return;
-    }
-    if (Tw.CommonHelper.getSessionStorage('ROAMING_POPUP')) {
-      return;
-    }
-    <% if (isLogin && isAvailable()) { %>
-      <% if (!currentTariff) { %>
-      showWelcome();
-      <% } %>
-      <% if (currentTariff && currentTariff.startDate && currentTariff.status === 0) { %>
-      showTariff(
-        '<%= currentTariff.prodId %>',
-        '<%= currentTariff.prodNm %>',
-        <%= currentTariff.startDate.toDate().getTime() %>,
-        parseInt('<%= country.timezoneOffset %>', 10)
-      );
-      <% } %>
-    <% } %>
-  }
-  function showWelcome() {
-    const id = 'dialogWelcome';
-    const template = Handlebars.compile($('#tpl-dialog-welcome').html());
-    document.getElementById('modals').innerHTML += template({id: id});
-    showModal(id, preventSession, 'modals');
-  }
-  function showTariff(prodId, prodNm, timestamp, timezoneOffset) {
-    var baseDate = moment(timestamp);
-    var localDate = moment(timestamp).add(timezoneOffset, 'hour');
-
-    const id = 'dialogUsage';
-    const template = Handlebars.compile($('#tpl-dialog-usage').html());
-    document.getElementById('modals').innerHTML += template({
-      id: id,
-      prodId: prodId,
-      prodNm: prodNm,
-      timeLocal: localDate.format('YY.MM.DD HH') + '시',
-      timeKorea: baseDate.format('YY.MM.DD HH') + '시',
-    });
-    showModal(id, preventSession, 'modals');
-  }
-  function preventSession() {
-    Tw.CommonHelper.setSessionStorage('ROAMING_POPUP', 'NO');
-  }
-  function preventToday() {
-    var due = moment().add(1, 'day').hours(0).minutes(0).seconds(0);
-    Tw.CommonHelper.setLocalStorage('ROAMING_POPUP', JSON.stringify({
-      value: 'NO',
-      expireTime: due.toDate(),
-    }));
-  }
-
   function debugLocationAgreement() {
     new Tw.ProductRoamingMode($('#roamingOn')).checkLocationAgreement('234', function () {
       alert('이미 동의하셨습니다 :)');
     });
-    // if (Tw.BrowserHelper.isApp()) {
-    //   new Tw.ProductRoamingMode($('#roamingOn')).checkMcc(function () {
-    //     alert('이미 동의하셨습니다 :)');
-    //   });
-    // } else {
-    //   alert('앱에서 확인해주세요 :)')
-    // }
   }
+  <% } %>
 </script>
 <% include ../../components/roaming-next/calendar.javascript.html %>
 <% include ../../components/end.component.html %>

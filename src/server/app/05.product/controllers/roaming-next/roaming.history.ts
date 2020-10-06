@@ -1,4 +1,6 @@
-import TwViewController from '../../../../common/controllers/tw.view.controller';
+/**
+ * 로밍 지난여행이력
+ */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
