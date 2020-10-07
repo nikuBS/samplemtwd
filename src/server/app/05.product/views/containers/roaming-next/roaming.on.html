@@ -490,7 +490,7 @@
       JSON.parse('<%- JSON.stringify(country) %>'),
       JSON.parse('<%- JSON.stringify(currentTariff) %>'),
       JSON.parse('<%- JSON.stringify(usage) %>'),
-      JSON.parse('<%= isLogin && isAvailable() %>'),
+      JSON.parse('<%- JSON.stringify(isLogin && isAvailable()) %>'),
     );
   });
 

@@ -246,20 +246,23 @@ Tw.RoamingRates.prototype = {
       $.get('/bypass/core-product/v1/roaming/country-rate?' +
         'countryCode=' + this.lastQuery.countryCd + '&manageType=' + this.reqParams.manageType +
         '&showDailyPrice=' + this.reqParams.showDailyPrice, $.proxy(this.fillRateProperties, this));
-      if (['GUM', 'MNP'].indexOf(this.reqParams.countryCd) >= 0) {
-        $('#fe-guamsaipan-pop').removeClass('none');
-      }
     } else {
       // alert('이용 가능한 서비스가 없습니다');
     }
   },
   fillRateProperties: function (resp) {
+    var popupPresented = false;
+    if (['GUM', 'MNP'].indexOf(this.reqParams.countryCd) >= 0) {
+      $('#fe-guamsaipan-pop').removeClass('none');
+      popupPresented = true;
+    }
+    
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
       return;
     }
     var _result = resp.result;
-    _result.countryCd = '<%= lastQuery.countryCd %>';
+    _result.countryCd = this.lastQuery.countryCd;
 
     var typeIndex = null;
     for (var idx in this.manageType) {
@@ -279,6 +282,11 @@ Tw.RoamingRates.prototype = {
       ktMtCharge: _result.ktMtCharge,         // 음성통화 수신 요금 KT
       onseMtCharge: _result.onseMtCharge      // 음성통화 수신 요금 세종텔레콤
     };
+    
+    // svcAttention 내용 대치. 현재는 PC웹 기준의 HTML fragment 가 와서 살며시 대치한다.
+    noticeParam.svcAttention = noticeParam.svcAttention.replace(
+      /국제전화사업자선택 <a .*?<\/a>/,
+      '<p><a class="lo" href="/product/callplan?prod_id=TW61000002">국제전화 사업자 선택 자세히 보기</a></p>');
 
     if (this.reqParams.manageType === 'L') {  // 서비스 방식이 LTE인 경우
       _result.lteShown = true;    // LTE 안내 사항 노출 및 음성 '서비스 이용 불가' 문구 변경
@@ -385,6 +393,7 @@ Tw.RoamingRates.prototype = {
           }, 300);
         });
       }, null, null, $(event.currentTarget));
+      popupPresented = true;
     }
 
     // 팔라우, 세이셸, 마다가스카르의 국가의 경우 공지팝업 호출
@@ -399,10 +408,11 @@ Tw.RoamingRates.prototype = {
         'contents': popupDesc,
         'bt_b': Tw.ROAMING_ERROR.BUTTON
       }, null, Tw.Popup.close, null, $(event.currentTarget));
+      popupPresented = true;
     }
 
     var resultY = this.$container.find('.rate-result').offset().top;
-    if (resultY) {
+    if (resultY && !popupPresented) {
       $([document.documentElement, document.body]).animate({
         scrollTop: resultY - 50
       }, 180, function () {});
