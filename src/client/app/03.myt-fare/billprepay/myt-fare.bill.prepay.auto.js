@@ -15,16 +15,19 @@
 Tw.MyTFareBillPrepayAuto = function (rootEl, title, type, isMasking) {
   this.$container = rootEl;
   this.$title = title;
+  this._isSmall = title === 'small';
   this.$type = type;
   this.$isPage = true;
-  this._isMasking = isMasking && isMasking === 'true' ? true : false;
+  this._isMasking = isMasking && isMasking === 'true';
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-pay'), true); // 유효성 검증
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-pay')); // 유효성 검증
+  // this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-pay'), true); // 유효성 검증
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
+  this._bankList = new Tw.MyTFareBillBankList(rootEl); // 은행리스트 가져오는 공통 컴포넌트
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 공통 얼럿 노출
   this._recvAutoCardNumber = ''; // 수신한 자동납부 카드번호
 
@@ -40,13 +43,20 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this._initVariables();
     this._bindEvent();
 
-    this._validationService.bindEvent();
+    // this._validationService.bindEvent();
+    /*
+        납부방법(계좌이체, 체크/신용카드) 별 서버 렌더링시에 노출/비노출 해야하나,
+        미리 비노출 하게되면, ValidationService 가 먹히지 않아서 일단 노출 후
+        트리거(click) 으로 비선택 영역을 비노출 처리한다.
+     */
+    this.$payMethod.filter(':checked').trigger('click');
     setTimeout($.proxy(this._checkStandardAmount, this), 100); // 기준금액 체크
 
     // 마스킹 해제 시 [카드 자동납부 정보] 자동으로 호출한다.
-    if (this._isMasking) {
+    // 20.10.6 다시 자동 호출 제거. 기획 문종수 책임 요청.
+    /*if (this._isMasking) {
       this.$container.find('.fe-card-info').trigger('click');
-    }
+    }*/
   },
   /**
    * @function
@@ -56,35 +66,59 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this._standardAmountList = [];
     this._prepayAmountList = [];
 
+    this.$selectBank = this.$container.find('.fe-select-bank');
     this.$standardAmount = this.$container.find('.fe-standard-amount');
     this.$prepayAmount = this.$container.find('.fe-prepay-amount');
-    this.$cardWrap = this.$container.find('.fe-card-wrap');
-    this.$firstCardNum = this.$container.find('.fe-card-num:first');
-    this.$lastCardNum = this.$container.find('.fe-card-num:last');
+    this.$birth = this.$container.find('.fe-birth');
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
-    this.$changeMoneyInfo = this.$container.find('.fe-change-money-info');
-    this.$changeCardInfo = this.$container.find('.fe-change-card-info');
     this.$payBtn = this.$container.find('.fe-pay');
-    this.$changeType = 'A';
-    this.$isFirstChangeToC = true;
-    this.$isFirstChangeToT = true;
+
+    this.$accountArea = this.$container.find('.fe-account-area'); // 예금주명 영역
+    this.$cardArea = this.$container.find('.fe-card-area'); // 카드주명 영역
+    this.$accountNumber = this.$container.find('.fe-account-number');
+    this.$payMethod = this.$container.find('input[data-pay-method]'); // 납부방법
   },
   /**
    * @function
    * @desc event binding
    */
   _bindEvent: function () {
-    this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
+    this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this)); // 자동납부 정보와 수동입력 중 선택
     this.$container.on('click', '.fe-standard-amount', $.proxy(this._selectAmount, this, this._standardAmountList));
     this.$container.on('click', '.fe-prepay-amount', $.proxy(this._selectAmount, this, this._prepayAmountList));
     this.$container.on('click', '.fe-card-info', _.debounce($.proxy(this._getCardInfo, this), 500));
+    this.$payMethod.on('click', $.proxy(this._showPayMethod, this));
     this.$payBtn.click(_.debounce($.proxy(this._autoPrepay, this), 500));
+    this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this)); // 은행선택
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
-
   },
+
+  /**
+   * @function
+   * @desc 납부방법 변경시 선택영역 노출/비노출
+   * @param event
+   * @private
+   */
+  _showPayMethod: function (event) {
+    var showArea = $(event.currentTarget).data('payMethod');
+    this.$container.find('.fe-box').addClass('none')
+      .filter('.'+showArea).removeClass('none');
+    this._checkIsAbled();
+  },
+
+  /**
+   * @function
+   * @desc 납부방법(계좌이체, 체크/신용카드) 중에서 계좌이체 방법인지 유무
+   * @return {boolean}
+   * @private
+   */
+  _isAccountMethod: function () {
+    return this.$payMethod.filter(':checked').data('payMethod') === 'fe-account-area';
+  },
+
   /**
    * @function
    * @desc 기준금액 0원일 경우 에러 팝업 보여주고 뒤로가기
@@ -101,59 +135,43 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   _goBack: function () {
     this._historyService.goBack();
   },
+
   /**
    * @function
-   * @desc type change 처리
+   * @desc 자동납부계좌가 존재할 경우 자동납부계좌 및 수동입력 선택에 대한 처리
    * @param event
    */
-  _changeType: function (event) {
-    var $target = $(event.target);
+  _onChangeOption: function (event) {
+    var $target = $(event.currentTarget);
+    // target setting
+    var $bankTarget = this.$selectBank; // 납부할 은행
+    var $numberTarget = this.$accountNumber; // 납부할 계좌번호
 
-    if ($target.hasClass('fe-money')) { // 금액만
-      this.$changeType = 'A';
-
-      this.$cardWrap.hide();
-      this.$changeMoneyInfo.show();
-      this.$changeCardInfo.hide();
-      this.$firstCardNum.hide();
-      this.$lastCardNum.hide();
-
-      this._checkSelected();
-    } else if ($target.hasClass('fe-card')) { // 카드만
-      this.$changeType = 'C';
-
-      this.$cardWrap.show();
-      this.$changeMoneyInfo.hide();
-      this.$changeCardInfo.hide();
-      this.$firstCardNum.hide();
-      this.$lastCardNum.show();
-
-      if (this.$isFirstChangeToC) {
-        this._validationService.bindEvent();
-      }
-      this.$isFirstChangeToC = false;
-    } else { // 금액 및 카드
-      this.$changeType = 'T';
-
-      this.$cardWrap.show();
-      this.$changeMoneyInfo.show();
-      this.$changeCardInfo.hide();
-      this.$firstCardNum.hide();
-      this.$lastCardNum.show();
-
-      if (this.$isFirstChangeToT) {
-        this._validationService.bindEvent();
-      }
-      this.$isFirstChangeToT = false;
+    if ($target.hasClass('fe-manual-input')) {
+      $target.addClass('checked');
+      $bankTarget.removeAttr('disabled');
+      $numberTarget.removeAttr('disabled');
+    } else {
+      $target.siblings().removeClass('checked');
+      $bankTarget.attr('disabled', 'disabled');
+      $numberTarget.attr('disabled', 'disabled');
+      $numberTarget.parents('.fe-bank-wrap').find('.fe-error-msg').hide().attr('aria-hidden', 'true');
+      $numberTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide().attr('aria-hidden', 'true');
     }
     this._checkIsAbled();
   },
+
   /**
    * @function
    * @desc 필수 입력 필드 체크 후 버튼 활성화 처리
    */
   _checkIsAbled: function () {
-    this._validationService.checkIsAbled(); // 공통 모듈 호출
+    // this._validationService.checkIsAbled(); // 공통 모듈 호출
+    if (this._isAccountMethod() && this.$accountNumber.attr('disabled') === 'disabled') {
+      this.$payBtn.removeAttr('disabled');
+    } else {
+      this._validationService.checkIsAbled(); // 공통 validation service 호출
+    }
   },
   /**
    * @function
@@ -204,7 +222,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       this.$prepayAmount.text($selectedValue.parents('label').text());
     }
 
-    this._checkSelected();
+    // this._checkSelected();
     this._popupService.close();
   },
   /**
@@ -270,11 +288,11 @@ Tw.MyTFareBillPrepayAuto.prototype = {
    */
   _pay: function (e) {
     var reqData = this._makeRequestData();
-    var apiName = this._getApiName();
+    var bffId = this._getBffId();
     var $target = $(e.currentTarget);
 
     Tw.CommonHelper.startLoading('.container', 'grey');
-    this._apiService.request(apiName, reqData)
+    this._apiService.request(bffId, reqData)
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
   },
@@ -286,37 +304,54 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   _makeRequestData: function () {
     var reqData = {
       checkAuto: 'N',
-      autoChrgStrdAmt: this.$standardAmount.attr('id'),
-      autoChrgAmt: this.$prepayAmount.attr('id')
+      autoChrgStrdAmt: this.$standardAmount.attr('id'), // 기준금액
+      autoChrgAmt: this.$prepayAmount.attr('id') // 자동 선결제 금액
     };
 
-    if (this.$type === 'change') {
-      reqData.checkRadio = this.$changeType;
-    }
-
-    if (!(this.$type === 'change' && this.$changeType === 'A')) {
+    // 납부방법 분기
+    if (this._isAccountMethod()) { // 계좌이체 일때
+      // 계좌유형(자동납부 계좌, 직접입력)
+      var accountNumber = this.$accountNumber.val(),
+        accountCd = this.$selectBank.attr('id');
+      reqData.isAutoBankInfo = this.$container.find('[name="isAutoBankInfo"]:checked').val();
+      reqData.bankAccount = accountNumber; // 계좌번호
+      reqData.bank_card_co_cd = accountCd; // 은행코드
+      var isAccountChange = accountCd !== String(this.$selectBank.data('origin-val'));
+      isAccountChange = isAccountChange || accountNumber !== String(this.$accountNumber.data('origin-val'));
+      reqData.autoBankCardUdtYn = isAccountChange ? 'Y' : 'N';
+    } else { // 체크/신용카드 일때
+      // if (!(isChange && reqData.checkRadio === 'A')) {}
+      // '신청' 일때만 cardBirth 보냄
+      if (this.$type !== 'change') {
+        reqData.cardBirth = $.trim(this.$birth.val());
+      }
       reqData.cardNum = $.trim(this.$cardNumber.val());
       reqData.cardType = this.$cardNumber.attr('data-code');
       reqData.cardNm = this.$cardNumber.attr('data-name');
       reqData.cardEffYM = $.trim(this.$cardY.val())+ $.trim(this.$cardM.val());
       reqData.cardPwd = $.trim(this.$cardPw.val());
       reqData.isAutoCardInfo = this._recvAutoCardNumber === this.$cardNumber.val() ? 'Y':'N'; // [OP002-1754]2019-07-02 추가
+      // 기존카드 사용여부 (Y: 변경, N: 기존카드 사용)
+      reqData.autoBankCardUdtYn = this.$cardNumber.val() !== String(this.$cardNumber.data('origin-val')) ? 'Y' : 'N';
     }
+
     return reqData;
   },
   /**
    * @function
-   * @desc api name 조회
-   * @returns {string}
+   * @desc bff id 조회
+   * @returns bff id
    */
-  _getApiName: function () {
-    var apiName = '';
-    if (this.$title === 'small') {
-      apiName = Tw.API_CMD.BFF_07_0076; // 소액결제
-    } else {
-      apiName = Tw.API_CMD.BFF_07_0083; // 콘텐츠이용료
+  _getBffId: function () {
+    var bffId;
+    // 납부방법 (계좌이체, 체크/신용카드) 소액결제, 콘텐츠이용료 별로 bff 구분
+    // 계좌이체 일때
+    if (this._isAccountMethod()) {
+      bffId = this._isSmall ? Tw.API_CMD.BFF_07_0105 : Tw.API_CMD.BFF_07_0106;
+    } else { // 체크/신용카드 일때
+      bffId = this._isSmall ? Tw.API_CMD.BFF_07_0076 : Tw.API_CMD.BFF_07_0083;
     }
-    return apiName;
+    return bffId;
   },
   /**
    * @function
@@ -408,5 +443,14 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this._getMessageTarget($(e.currentTarget)).text(Tw.ALERT_MSG_MYT_FARE.EMPTY_CARD_INFO)
       .show()
       .attr('aria-hidden', 'false');
+  },
+
+  /**
+   * @function
+   * @desc 은행리스트 가져오는 공통 컴포넌트 호출
+   * @param event
+   */
+  _selectBank: function (event) {
+    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
   }
 };
