@@ -48,11 +48,9 @@
                     <div class="header-ti">
                         <h1>자동 선결제</h1>
                     </div>
-                    <!-- 190619 추가_01 -->
 					<div class="header-mask">
                         <button type="button" class="btn-mask"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
                     </div>
-					<!-- //190619 추가_01 -->
                 </div>
             </div>
             <!--// #header -->
@@ -60,14 +58,15 @@
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
-					<hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- 200825 [OP002-10215] 수정01 -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
 					<!-- .cont-box -->
 					<div class="cont-box">
                         <div class="ti-caption-type01 pb20">
                             <h3 class="tit">금액정보<button class="btn-tip" title="금액정보 정보보기" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></h3>
+                            <p class="tit-txt">기준/선결제 금액 변경 필요 시 변경 할 금액을 선택 해주세요. </p>
                         </div>
                         <ul class="form-data-list">
-                            <!-- 200522 [OP002-8229] 수정_01 -->
                             <li class="type2">
                                 <label class="tit">기준금액<button aria-haspopup="true" class="tip-view">기준금액 정보보기</button></label>
                                 <button class="bt-dropdown big" title="기준금액" aria-haspopup="true">50만 원<span class="ico"></span></button>
@@ -76,12 +75,27 @@
                                 <label class="tit">선결제 금액<button aria-haspopup="true" class="tip-view">선결제 금액 정보보기</button></label>
                                 <button class="bt-dropdown big" title="선결제 금액" aria-haspopup="true">50만 원<span class="ico"></span></button>
                             </li>
-                            <!-- //200522 [OP002-8229] 수정_01 -->
                         </ul>
                     </div>
                     <!--// .cont-box -->
-
                     <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="cont-box">
+                        <h3 class="tit">납부방법</h3>
+                        <div class="input-list tod-input-list">
+                            <ul>
+                                <li>
+                                    <span class="custom-form"><input type="radio" id="rad1-1" name="ad-pay" checked><span class="r-type1"></span></span>
+                                    <label for="rad1-1">계좌이체 자동 선결제</label>
+                                </li>
+                                <li>
+                                    <span class="custom-form"><input type="radio" id="rad1-2" name="ad-pay"><span class="r-type1"></span></span>
+                                    <label for="rad1-2">체크/신용카드 자동 선결제</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //200825 [OP002-10215] 수정01 -->
+					<hr class="cont-sp type1" aria-hidden="true"/>
 
                     <!-- .cont-box -->
                     <div class="cont-box">

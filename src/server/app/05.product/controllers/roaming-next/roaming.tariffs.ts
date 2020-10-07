@@ -1,3 +1,8 @@
+/**
+ * 로밍 요금제 목록.
+ *
+ * BFF_10_0198: 요금제 그룹별 전체 목록
+ */
 import { NextFunction, Request, Response } from 'express';
 import {API_CMD} from '../../../../types/api-command.type';
 import RoamingHelper from './roaming.helper';

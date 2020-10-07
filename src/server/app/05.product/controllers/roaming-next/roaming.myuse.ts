@@ -1,3 +1,11 @@
+/**
+ * 로밍 나의 이용현황.
+ *
+ * BFF_10_0091: 요금제 사용 기간 조회
+ * BFF_10_0056: 이용중인 요금제
+ * BFF_10_0057: 이용중인 부가서비스
+ * BFF_10_0201: 로밍 데이터 사용량 조회
+ */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
@@ -33,7 +41,8 @@ export default class RoamingMyUseController extends RoamingController {
         pageInfo,
         addons,
         tariffs: [],
-        now: moment().hours(0).minutes(0).seconds(0).milliseconds(0),
+        // now: moment().hours(0).minutes(0).seconds(0).milliseconds(0),
+        now: moment(),
       };
 
       if (tariffs.length > 0) {
@@ -48,9 +57,10 @@ export default class RoamingMyUseController extends RoamingController {
           this.mergeRanges(tariffs, ranges, dataUsages);
           const filtered: any = [];
           for (const t of tariffs) {
-            if (t.endDate && t.endDate.isBefore(context.now)) {
-              continue;
-            }
+            // [로밍개선과제] 이용완료 상품 미표시가 SB에 있으나, 혼란 가중되어 살려둠
+            // if (t.endDate && t.endDate.isBefore(context.now)) {
+            //   continue;
+            // }
             filtered.push(t);
           }
           context.tariffs = filtered;
@@ -92,9 +102,15 @@ export default class RoamingMyUseController extends RoamingController {
       t.endTime = '';
       if (range.svcStartTm) {
         t.startTime = ` ${range.svcStartTm}:00`;
+        if (t.startDate) {
+          t.startDate.add(parseInt(range.svcStartTm, 10), 'hours');
+        }
       }
       if (range.svcEndTm) {
         t.endTime = ` ${range.svcEndTm}:00`;
+        if (t.endDate) {
+          t.endDate.add(parseInt(range.svcEndTm, 10), 'hours');
+        }
       }
 
       if ([6, 13].indexOf(t.group) >= 0) {

@@ -1,3 +1,14 @@
+/**
+ * 로밍 요금제 추천.
+ *
+ * BFF_10_0190: 첫 로밍 여부 조회 (첫 로밍이면 중간에 이미지 노출)
+ * BFF_10_0196: 추천 요금제
+ * BFF_10_0197: 최근 이용한 요금제 조회
+ * BFF_10_0198: 요금제 그룹 전체 조회
+ * BFF_10_0199: 국가정보 조회
+ * BFF_10_0200: 국가별 이용 가능한 요금제 목록
+ * BFF_10_0201: 요금제별 이용 가능한 국가 목록
+ */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
@@ -55,7 +66,7 @@ export default class RoamingTariffOfferController extends RoamingController {
         country: {
           code: country.countryCode,
           name: country.countryNm,
-          imageUrl: RoamingHelper.penetrateUri(country.mblRepImg),
+          imageUrl: RoamingHelper.penetrateUri(country.mblBgImg),
           flagUrl: RoamingHelper.penetrateUri(country.mblNflagImg),
           flagAlt: country.mblNflagImgAlt,
         },

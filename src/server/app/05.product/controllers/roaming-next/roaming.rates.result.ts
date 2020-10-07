@@ -1,4 +1,8 @@
-import TwViewController from '../../../../common/controllers/tw.view.controller';
+/**
+ * 로밍 국가별 이용요금 조회.
+ *
+ * BFF_10_0061: 국가별 로밍 가능여부 조회
+ */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
@@ -56,6 +60,16 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
       this.getNationsByContinents('OCN'),
       this.getRoamingMeta(apiParams),
     ).subscribe(([afr, asp, amc, eur, met, ocn, meta]) => {
+      for (const continent of [afr, asp, amc, eur, met, ocn]) {
+        const list = continent;
+        for (const c of list) {
+          if (c['countryCode'] === query.countryCd) {
+            query.countryNm = c['countryNameKor'];
+            break;
+          }
+        }
+      }
+
       this.renderDeadline(res, 'roaming-next/roaming.rates.html', {
         svcInfo,
         pageInfo,

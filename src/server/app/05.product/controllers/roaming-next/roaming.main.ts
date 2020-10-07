@@ -1,4 +1,15 @@
-import TwViewController from '../../../../common/controllers/tw.view.controller';
+/**
+ * 로밍 메인 컨트롤러.
+ *
+ * BFF_10_0190: 첫로밍 판별
+ * BFF_10_0055: 현재 이용중인 요금제 (최상단 카드)
+ * BFF_10_0197: 최근 이용한 요금제
+ * BFF_10_0199: 국가정보 조회
+ * BFF_10_0198: 요금제 그룹 전체 조회
+ *
+ * 쿼리스트링 queryBg로 접근할 경우, 일정선택 팝업 상단에 표시할 국가 이미지를 XHR 로 제공.
+ * 로컬환경의 경우, 빠른 유저 스위칭을 위한 코드가 있다.
+ */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
@@ -48,7 +59,8 @@ export default class RoamingMainController extends RoamingController {
       this.getRecentUsedTariff(isLogin),
       this.getBanners(pageInfo),
       this.getFirstRoaming(isLogin),
-    ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie]) => {
+      this.getTariffGroups(),
+    ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie, groups]) => {
       if (popularNations.length > 6) {
         popularNations = popularNations.slice(0, 6);
       }
@@ -62,6 +74,7 @@ export default class RoamingMainController extends RoamingController {
         recentUse,
         banners,
         newbie,
+        groups,
       });
     });
   }
@@ -102,33 +115,35 @@ export default class RoamingMainController extends RoamingController {
       // prodInfoTxt: 'T로밍 OnePass300 기간형 외 2건",
       // feeProdYn: Y, 로밍요금제 여부
       // addProdYn: N, 로밍부가서비스 여부
-      if (resp.result.feeProdYn === 'Y') {
-        return this.apiService.request(API_CMD.BFF_10_0056, {}).switchMap(r0 => {
-          if (r0.result && r0.result.roamingProdList) {
-            const prodList = r0.result.roamingProdList;
-            if (prodList.length > 0) {
-              return this.apiService.request(API_CMD.BFF_10_0091, null, null, [prodList[0].prodId]).map(r1 => {
-                if (r1.result && r1.result.svcEndDt) {
-                  const endDate = moment(r1.result.svcEndDt, 'YYYYMMDD');
-                  const today = moment();
-                  if (today.isAfter(endDate)) {
-                    return null;
-                  }
-                }
-                if (r1.result && r1.result.svcStartDt) {
-                  const startDate = moment(r1.result.svcStartDt, 'YYYYMMDD');
-                  const today = moment().hours(0).minutes(0);
-                  if (today.isBefore(startDate)) {
-                    return null;
-                  }
-                }
-                return resp.result;
-              });
-            }
-          }
-          return Observable.of(resp.result);
-        });
-      }
+
+      // [로밍개선과제] BFF_10_0055 결함을 FE 에서 막아보려 했으나 부작용으로 혼란만 가중되어 bypass 하였다.
+      // if (resp.result.feeProdYn === 'Y') {
+      //   return this.apiService.request(API_CMD.BFF_10_0056, {}).switchMap(r0 => {
+      //     if (r0.result && r0.result.roamingProdList) {
+      //       const prodList = r0.result.roamingProdList;
+      //       if (prodList.length > 0) {
+      //         return this.apiService.request(API_CMD.BFF_10_0091, null, null, [prodList[0].prodId]).map(r1 => {
+      //           if (r1.result && r1.result.svcEndDt) {
+      //             const endDate = moment(r1.result.svcEndDt, 'YYYYMMDD');
+      //             const today = moment();
+      //             if (today.isAfter(endDate)) {
+      //               return null;
+      //             }
+      //           }
+      //           if (r1.result && r1.result.svcStartDt) {
+      //             const startDate = moment(r1.result.svcStartDt, 'YYYYMMDD');
+      //             const today = moment().hours(0).minutes(0);
+      //             if (today.isBefore(startDate)) {
+      //               return null;
+      //             }
+      //           }
+      //           return resp.result;
+      //         });
+      //       }
+      //     }
+      //     return Observable.of(resp.result);
+      //   });
+      // }
       return Observable.of(resp.result);
     });
   }
@@ -151,7 +166,6 @@ export default class RoamingMainController extends RoamingController {
         // startEndTerm: '30',
         const startDate = moment(resp.result.svcStartDt, 'YYYYMMDD');
         const endDate = moment(resp.result.svcEndDt, 'YYYYMMDD');
-        const isAfter = endDate.isAfter(moment());
         // 아직 종료되지 않은 요금제는 표시하지 않기로 함
         if (endDate.isAfter(moment())) {
           return null;
@@ -160,8 +174,8 @@ export default class RoamingMainController extends RoamingController {
           prodId: resp.result.prodId,
           prodNm: resp.result.prodNm,
           nights: endDate.diff(startDate, 'days'),
-          formattedStartDate: startDate.format('YY.MM.DD'),
-          formattedEndDate: endDate.format('YY.MM.DD'),
+          formattedStartDate: startDate.format('YYYY. M. D.'),
+          formattedEndDate: endDate.format('YYYY. M. D.'),
         };
       }
       return null;
@@ -170,6 +184,7 @@ export default class RoamingMainController extends RoamingController {
 
   private getCountryInfo(mcc: string): Observable<any> {
     if (mcc === '') {
+      // 공통 이미지 읽어오기 위한 용도로 그리스 mcc 지정
       mcc = '202';
     }
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
@@ -194,13 +209,28 @@ export default class RoamingMainController extends RoamingController {
         return resp.result;
       }
 
-      resp.result.topBanners = resp.result.banners.filter(function (banner) {
-        return banner.bnnrLocCd === 'T';
-      });
-      resp.result.topBanners.sort(function (a, b) {
-        return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
-      });
-      return resp.result;
+      if (resp.result.banners) {
+        return resp.result.banners;
+      }
+      return null;
+    });
+  }
+
+  /**
+   * 요금제그룹 목록 조회
+   * @private
+   */
+  private getTariffGroups(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
+      let items = resp.result.grpProdList;
+      if (!items) {
+        items = [];
+      }
+      // prodGrpId: T0000094
+      // prodGrpNm: baro 3/4/7
+      // prodGrpDesc: 장거리 또는 ..
+      // prodGrpBnnrImgUrl: /adminupload/
+      return items;
     });
   }
 }

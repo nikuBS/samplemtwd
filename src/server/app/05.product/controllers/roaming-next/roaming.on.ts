@@ -1,9 +1,22 @@
-import TwViewController from '../../../../common/controllers/tw.view.controller';
+/**
+ * @desc 로밍모드.
+ * @author 황장호
+ * @since 2020-09-01
+ *
+ * BFF_10_0056: 현재 사용중인 요금제 목록
+ * BFF_10_0058: 국가별 로밍 이용요금 조회
+ * BFF_10_0061: 국가별 로밍 가능여부 조회
+ * BFF_10_0091: 사용중인 요금제의 이용 기간 조회
+ * BFF_10_0199: 국가정보 조회
+ * BFF_10_0200: 해당 국가에서 이용 가능한 모든 요금제 조회
+ * BFF_05_0001: 실시간 잔여량
+ * BFF_05_0201: 실시간 잔여량 (로밍)
+ * BFF_05_0227: baro 통화 사용량
+ */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
-import EnvHelper from '../../../../utils/env.helper';
 import moment from 'moment';
 import RoamingHelper from './roaming.helper';
 import MyTHelper from '../../../../utils/myt.helper';
@@ -42,7 +55,8 @@ export default class RoamingOnController extends RoamingController {
       currentTariff: null,
       usage: {},
       isAvailable: function() {
-        return context.meta && context.meta.voiceRoamingYn === 'Y' && context.meta.dataRoamingYn === 'Y';
+        var avail = context.meta && context.meta.voiceRoamingYn === 'Y' && context.meta.dataRoamingYn === 'Y';
+        return avail ? true : false;
       },
       nations: {},
     };
@@ -64,6 +78,7 @@ export default class RoamingOnController extends RoamingController {
           backgroundUrl: null,
           meta: null,
         };
+        // 국가정보가 없을 때, 공통배경이미지를 가져오기 위해 그리스 mcc=202를 사용
         this.getCountryInfo('202').subscribe(common => {
           context.country.backgroundUrl = RoamingHelper.penetrateUri(common.mblRepImg);
           this.renderDeadline(res, template, context);
@@ -78,8 +93,8 @@ export default class RoamingOnController extends RoamingController {
         nameEnglish: info.countryNmEng,
         timezoneOffset: info.tmdiffTms,
         flagUrl: RoamingHelper.penetrateUri(info.mblNflagImg),
-        backgroundUrl: this._useCountryBackground(info.mblRepImg, mcc),
-        backgroundMiniUrl: this._useCountryBackground(info.mblBgImg, mcc),
+        backgroundUrl: RoamingHelper.penetrateUri(info.mblRepImg),
+        backgroundMiniUrl: RoamingHelper.penetrateUri(info.mblBgImg),
       };
       if (!isLogin) {
         this.getRoamingMeta(context.country.code).subscribe(meta => {
@@ -108,7 +123,7 @@ export default class RoamingOnController extends RoamingController {
         if (!date) {
           return '';
         }
-        let s = date.format('YY.MM.DD');
+        let s = date.format('YYYY. M. D.');
         if (time) {
           s += time;
         }
@@ -184,13 +199,13 @@ export default class RoamingOnController extends RoamingController {
 
           const now = moment();
           current.status = 1;
-          current.statusMessage = '이용중';
+          current.statusMessage = '이용 중';
           if (current.startDate && current.startDate.isAfter(now)) {
             current.status = 0;
-            current.statusMessage = '이용예정';
+            current.statusMessage = '이용 예정';
           } else if (current.endDate && current.endDate.isBefore(now)) {
             current.status = 2;
-            current.statusMessage = '이용완료';
+            current.statusMessage = '이용 완료';
           }
 
           this.processTariff(context, current, res, template, countryCode);
@@ -268,7 +283,7 @@ export default class RoamingOnController extends RoamingController {
         context.usage.data = {code: '-', msg: '일일 제공<br />300MB'};
       }
       if (current.group === 10) {
-        context.usage.data = {code: '-', msg: '제한속도<br />데이터 제공'};
+        context.usage.data = {code: '-', msg: '제한 속도<br />데이터 제공'};
       }
       if (current.group === 11) {
         context.usage.data = null;
@@ -282,16 +297,6 @@ export default class RoamingOnController extends RoamingController {
       }
       this.renderDeadline(res, template, context);
     });
-  }
-
-  private _useCountryBackground(uri, mcc: string): string {
-    let backgroundUrl = uri;
-    if (backgroundUrl) {
-      backgroundUrl = RoamingHelper.penetrateUri(backgroundUrl);
-    } else {
-      backgroundUrl = `${EnvHelper.getEnvironment('CDN')}/img/product/roam/background_aus.png`;
-    }
-    return backgroundUrl;
   }
 
   /**
@@ -437,12 +442,13 @@ export default class RoamingOnController extends RoamingController {
       return Observable.of({});
     }
     if (!startDate) {
-      // 시작일이 없으면... 적당히 가입일로 맞춰주는 센스
-      if (current.scrbDt) {
-        startDate = moment(current.scrbDt, 'YYYYMMDD').add(-1, 'days');
-      } else {
-        return Observable.of({used: 0, total: '무제한'});
-      }
+      // 시작일이 없는 경우, 오늘 사용량이 나오게 해달라고 함 (by 석연실 매니저)
+      startDate = moment();
+      // if (current.scrbDt) {
+      //   startDate = moment(current.scrbDt, 'YYYYMMDD').add(-1, 'days');
+      // } else {
+      //   return Observable.of({used: 0, total: '무제한'});
+      // }
     }
     if (!current.endDate) {
       endDate = moment();

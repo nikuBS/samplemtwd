@@ -1125,16 +1125,6 @@ class ApiRouter {
     });
   }
 
-  private fillRoamingProperties(req: Request, params: any) {
-    const roamMcc = req.cookies['ROAMING_MCC'];
-    if (roamMcc && roamMcc !== '450') {
-      params.roamingYn = 'Y';
-      params.mCntrCd = roamMcc;
-    } else {
-      params.roamingYn = 'N';
-    }
-  }
-
   /**
    * 고객비밀번호 로그인
    * @param req
@@ -1162,7 +1152,7 @@ class ApiRouter {
     const apiService = new ApiService();
     const params = req.body;
     apiService.setCurrentReq(req, res);
-    apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
+    apiService.requestLoginTid({token: params.tokenId, state: params.state}).subscribe((resp) => {
       this.logger.info(this, '[TID login]', resp);
       res.json(resp);
     }, (error) => {
@@ -1445,6 +1435,7 @@ class ApiRouter {
   private getWidgetRemains(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
+    apiService.setTimeout(3000);
 
     // 조회대상 회선 및 공제코드 변수 생성
     let svcMgmtNum: any = req.headers.svcmgmtnum;

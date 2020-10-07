@@ -133,7 +133,7 @@ abstract class TwViewController {
   private login(req, res, next, path, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       const state = req.query.stateVal || req.query.state;
-      this.apiService.requestLoginTid(tokenId, state).subscribe((resp) => {
+      this.apiService.requestLoginTid({token: tokenId, state}).subscribe((resp) => {
         this.renderPage(req, res, next, path);
       }, (error) => {
         this.failLogin(req, res, next, path, error.code);

@@ -24,6 +24,7 @@ class ApiService {
   private logger: LoggerService = new LoggerService();
   private req;
   private res;
+  private timeout = 30000;
 
   constructor() {
   }
@@ -37,6 +38,14 @@ class ApiService {
     this.req = req;
     this.res = res;
     this.logger.info(this, '[API setCurrentReq]', !!req.session);
+  }
+
+  public setTimeout(sec) {
+    this.timeout = sec;
+  }
+
+  public getTimeout() {
+    return this.timeout;
   }
 
   /**
@@ -89,7 +98,7 @@ class ApiService {
       url: apiUrl + this.makePath(command.path, command.method, params, args, version),
       method: command.method,
       headers: this.makeHeader(command, header, params, req),
-      timeout: 30000,
+      timeout: this.getTimeout() || 30000,
       data: params
     };
 
@@ -610,12 +619,29 @@ class ApiService {
   }
 
   /**
+   * 로밍 중인 경우 roamingYn, mCntrCd 값을 params 딕셔너리에 채움
+   * @param params
+   */
+  private fillRoamingProperties(params: any) {
+    if (this.req) {
+      const roamMcc = this.req.cookies['ROAMING_MCC'];
+      if (roamMcc && roamMcc !== '450' && roamMcc.length > 1) {
+        params.roamingYn = 'Y';
+        params.mCntrCd = roamMcc;
+      } else {
+        params.roamingYn = 'N';
+      }
+    }
+  }
+
+  /**
    * TID 토큰을 이용한 로그인 요청
    * @param token
    * @param state
    */
-  public requestLoginTid(token: string, state: string): Observable<any> {
-    const params = {token,state,roamingYn:"1",mCntrCd:"2",globalYn:"3"};
+  public requestLoginTid(params: any): Observable<any> {
+    // const params = {token,state,roamingYn:"1",mCntrCd:"2",globalYn:"3"};
+    this.fillRoamingProperties(params);
     return this.requestLogin(API_CMD.BFF_03_0008, params, LOGIN_TYPE.TID);
   }
 
@@ -624,6 +650,7 @@ class ApiService {
    * @param params
    */
   public requestLoginSvcPassword(params: any): Observable<any> {
+    this.fillRoamingProperties(params);
     return this.requestLogin(API_CMD.BFF_03_0009, params, LOGIN_TYPE.TID);
   }
 
@@ -640,6 +667,7 @@ class ApiService {
    * @param params
    */
   public requestEasyLoginAos(params): Observable<any> {
+    this.fillRoamingProperties(params);
     return this.requestSLogin(API_CMD.BFF_03_0017, params, LOGIN_TYPE.EASY);
   }
 
@@ -648,6 +676,7 @@ class ApiService {
    * @param params
    */
   public requestEasyLoginIos(params): Observable<any> {
+    this.fillRoamingProperties(params);
     return this.requestSLogin(API_CMD.BFF_03_0018, params, LOGIN_TYPE.EASY);
   }
 
