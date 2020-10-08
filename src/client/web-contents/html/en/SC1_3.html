@@ -1036,19 +1036,23 @@
         </div>
         <!--// #contents -->
     </div>
+    <!-- 201008 스크립트 수정 -->
     <script>
         $( document ).ready( function() {
-            var jbOffset = $( '.sc-util' ).offset();
+            var jbHeight = $( '.sc-util' ).outerHeight();
             $( window ).scroll( function() {
-                if ( $( document ).scrollTop() > jbOffset.top ) {
+                if ( $( document ).scrollTop() > 0 ) {
                     $( '.sc-util' ).addClass( 'jbFixed' );
+                    $(".cont-box").css("padding-top", jbHeight + "px");
                 }
                 else {
                     $( '.sc-util' ).removeClass( 'jbFixed' );
+                    $(".cont-box").css("padding-top", "");
                 }
             });
         } );
     </script>
+    <!--// 201008 스크립트 수정 -->
 </body>
 
 </html>
