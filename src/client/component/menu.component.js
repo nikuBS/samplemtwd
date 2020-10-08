@@ -274,6 +274,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @desc 헤더영역에 햄버거 메뉴 클릭시 동작 정의
    */
   _onGnbBtnClicked: function () {
+    // 아래 3줄은, 로밍모드 전용 메뉴로 대치하기 위한 코드이다.
+    // 관련된 로직은 roaming.menu.js 파일의 checkInterceptMenu 함수와,
+    // product.roaming.coupon.html 하단에 추가된 3줄의 코드 (div#roamingIntercept)를 참조하면 된다.
     var checkFunction = $('#roamingIntercept').data('checkCachedMcc');
     if (checkFunction && checkFunction()) {
       return false;

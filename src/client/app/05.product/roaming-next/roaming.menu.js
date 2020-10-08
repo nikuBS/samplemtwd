@@ -19,7 +19,12 @@ Tw.RoamingMenu.prototype = {
     var roamOff = Tw.CommonHelper.getSessionStorage('ROAMING_OFF');
     var mcc = Tw.CommonHelper.getSessionStorage('ROAMING_MCC');
 
-    if (mcc && mcc !== '450' && roamOff !== 'Y') {
+    /**
+     * MCC 값과 로밍모드 OFF 여부에 따라, 로밍모드 전용 메뉴를 보여줄지 기존 메뉴를 보여줄지 판단하는 부분.
+     * 공통 스크립트의 경우 transform: translate(0px, -2100px) 식으로 스크롤바를 숨기지만,
+     * 로밍모드 메뉴의 경우, 단순히 display: none으로 기존 화면($rootEl)을 숨긴다.
+     */
+    if (mcc && mcc !== '450' && roamOff !== 'Y') { // 해외여서 로밍모드 메뉴 출력
       $('#appbar .menu').on('click', function () {
         $('#roamingMenu').css('display', 'block');
         container.css('display', 'none');

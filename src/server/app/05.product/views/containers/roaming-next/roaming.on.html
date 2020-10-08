@@ -50,6 +50,7 @@
             </div>
         </div>
         <% } else { %>
+        <%# 국가정보가 없을 때 UI 깨지지 않게 처리 %>
         <div class="hud mh180">
         </div>
         <% } %>
@@ -67,6 +68,8 @@
             </p>
         </div>
         <% } %>
+        <%# baro 통화 잔여량 예외의 경우 bypass된 code, msg 필드가 있다 %>
+        <%# 차단(BFF0006)의 경우 컨트롤러에서 currentTariff = null 대입함 %>
         <% if (!currentTariff && usage && usage.baro && usage.baro.code && usage.baro.msg) { %>
         <div class="card">
             <h3>
@@ -133,6 +136,7 @@
                 <%= currentTariff.statusMessage %>
             </span>
             <% } else { %>
+            <%# 레이아웃이 정상적으로 보이기 위해 margin bottom 추가 %>
             <div class="mb20"></div>
             <% } %>
 
@@ -165,6 +169,7 @@
             </div>
             <% } %>
 
+            <%# 이용 중, 이용 완료일 때만 표시 %>
             <% if (currentTariff.status > 0) { %>
             <ul class="description">
                 <% if (currentTariff.group === 1) { %>
@@ -206,12 +211,14 @@
                 <% } %>
             </ul>
             <% } else { %>
+                <%# 이용 예정 %>
                 <div class="links">
                     <a href="/product/roaming/setting/roaming-auto?prod_id=<%= currentTariff.prodId %>"
                        class="link">기간 확인</a>
                 </div>
             <% } %>
 
+            <%# 이용 완료 케이스 %>
             <% if (currentTariff.status == 2) { %>
             <div class="button button-1" id="offer">
                 추천 요금제 보기
@@ -221,6 +228,7 @@
         <%   } %>
         <% } %>
         <% if (isAvailable() && isLogin == false) { %>
+            <%# 비로그인으로 접근하는 공식 경로가 없으나, 주소창에 직접 써서 들어온 경우에만 노출 %>
         <div class="card anonymous">
             <h3>고객님, 반갑습니다.</h3>
             <p class="description">로그인 후 고객님의 정보를 확인하세요</p>
@@ -237,7 +245,7 @@
         </div>
         <% } %>
         <% if (isAvailable() && isLogin == true && usage.phone && currentTariff && false) { %>
-        <!-- 1차 오픈 스펙에서 빠짐 -->
+        <!-- 2020. 9. 24 오픈 스펙에서 빠짐 -->
         <div class="card">
             <h3>
                 로밍 음성/SMS
@@ -329,28 +337,6 @@
                 <% } %>
             </ul>
             <% } %>
-        </div>
-        <% } %>
-        <% if (process.env['NODE_ENV'] == 'local') { %>
-        <div class="card">
-            <h3>SUPPORT CARD</h3>
-            <div class="buttons pt20">
-                <div class="button button-1" onclick="debugChangeMcc();">
-                    MCC Update
-                </div>
-                <div class="button button-2" onclick="debugChangeUserId();">
-                    TID Update
-                    <% if (svcInfo && svcInfo.userId) { %>
-                    (<%= svcInfo.userId %>)
-                    <% } %>
-                </div>
-                <div class="button button-1" onclick="debugLandingPopup();">
-                    진입팝업 Simulation
-                </div>
-                <div class="button button-2" onclick="debugLocationAgreement();">
-                    위치정보 동의 프로세스
-                </div>
-            </div>
         </div>
         <% } %>
         <a href="/product/roaming/info/barocall">
@@ -494,33 +480,6 @@
     );
   });
 
-  <% if (process.env['NODE_ENV'] == 'local') { %>
-  function debugChangeMcc() {
-    var newMcc = prompt('MCC 3자리를 입력해주세요');
-    if (newMcc) {
-      Tw.CommonHelper.setSessionStorage('ROAMING_MCC', newMcc.trim());
-      setTimeout(function() {
-        document.location.href = '/product/roaming/on?mcc=' + newMcc;
-      }, 500);
-    }
-  }
-  function debugChangeUserId() {
-    var userId = prompt('TID를 입력하세요');
-    if (userId) {
-      document.location.href = '/product/roaming/on?tid=' + userId + '&mcc=<%= country.mcc %>';
-    }
-  }
-  function debugLandingPopup() {
-    Tw.CommonHelper.removeLocalStorage('ROAMING_POPUP');
-    Tw.CommonHelper.removeSessionStorage('ROAMING_POPUP');
-    instance.checkLandingPopup();
-  }
-  function debugLocationAgreement() {
-    new Tw.ProductRoamingMode($('#roamingOn')).checkLocationAgreement('234', function () {
-      alert('이미 동의하셨습니다 :)');
-    });
-  }
-  <% } %>
 </script>
 <% include ../../components/roaming-next/calendar.javascript.html %>
 <% include ../../components/end.component.html %>

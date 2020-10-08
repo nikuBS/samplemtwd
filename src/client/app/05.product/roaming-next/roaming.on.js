@@ -44,8 +44,14 @@ Tw.RoamingModeOn.prototype = {
   bindEvents: function () {
     $('.card-toggle .toggle').on('click', $.proxy(this.toggleInfo, this));
   },
+  /**
+   * 높은 디자인 요구사항을 맞추기 위해 들어간 함수.
+   * 기기별로 조금씩 이미지가 다르게 표시될 필요가 없다면 불필요하다.
+   */
   fillBackgroundImage: function () {
     // 국가 배경 이미지를 적절히 crop 하여 배치
+    // 각 배경 이미지들은 어드민에 있어서, 이미지 비율이 일정할 것이라 신뢰할 수 없기 때문에,
+    // 아래와 같이 width / height aspectRatio를 계산하고, 넘치는 부분에 대해 crop 한다.
     var url = this.$country.backgroundUrl;
     var backgroundImage = new Image();
     backgroundImage.onload = function () {
@@ -54,12 +60,16 @@ Tw.RoamingModeOn.prototype = {
 
       var width = container.clientWidth;
       if (width > 480) {
+        // 기기 너비가 아무리 넓어도 480px 넘는 경우를 지원할 이유가 없어서 480px 에서 커트
+        // 커트하지 않으면, 배경이미지가 화면을 꽉 채운다. (물론 PC웹에서만)
+        // 테블릿은 고려하지 않았다.
         width = 480;
       }
 
       var realHeight = Math.floor(width * scaleFactor);
       var offsetY = 0;
       if (realHeight > 400) {
+        // 배경이미지가 상단으로부터 400px 이상 표시되지 않는 것이 디자인 요구사항이라 아래와 같이 커트
         offsetY = 400 - realHeight;
       }
 
@@ -70,11 +80,15 @@ Tw.RoamingModeOn.prototype = {
     };
     backgroundImage.src = url;
   },
+  /**
+   * 진입팝업이 표시될 필요가 있는지 확인하여 팝업 노출
+   */
   checkLandingPopup: function () {
     // 진입팝업 표시
     var lsValue = Tw.CommonHelper.getLocalStorage('ROAMING_POPUP');
     if (lsValue) {
       // LocalStorage 는 '오늘 하루 안보기' 했을 경우에만 사용
+      // 공통함수 getLocalStorageExpire는 timezone 정보가 무시되는 버그가 있어 아래와 같이 자체 구현하였다.
       var expireTime = moment(JSON.parse(lsValue).expireTime);
       if (expireTime.diff(moment()) > 0) {
         return;
@@ -268,13 +282,21 @@ Tw.RoamingModeOn.prototype = {
     $(document).on('click', '#' + id + ' .content .today', $.proxy(this._handleCloseToday, this, id));
     this.$menu.showModal(id, this.preventSession, 'modals');
   },
+  /**
+   * 진입팝업을 정상적으로 닫았을 때
+   */
   preventSession: function () {
     // 팝업 닫을 때
     Tw.CommonHelper.setSessionStorage('ROAMING_POPUP', 'NO');
   },
+  /**
+   * 진입팝업을 '오늘 하루 안보기' 통해 닫을 때
+   */
   preventToday: function () {
-    // '오늘 하루 안보기'를 통해 팝업 닫을 때.
+    // LocalStorage 코드에 버그가 생겼을 때 팝업이 계속 뜨는 것을 방지하기 위한 방어코드
     Tw.CommonHelper.setSessionStorage('ROAMING_POPUP', 'NO');
+
+    // setLocalStorageExpire 공통함수에 timezone이 무시되는 버그가 발견되어, 아래와 같이 자체 구현하였다.
     var due = moment().add(1, 'day').hours(0).minutes(0).seconds(0);
     Tw.CommonHelper.setLocalStorage('ROAMING_POPUP', JSON.stringify({
       value: 'NO',
@@ -283,6 +305,7 @@ Tw.RoamingModeOn.prototype = {
   }
 };
 
+// 로밍모드 상단 PieChart 렌더링을 위한 써드파티 라이브러리이다.
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ProgressBar = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
     /*! Shifty 2.8.3 - https://github.com/jeremyckahn/shifty */
