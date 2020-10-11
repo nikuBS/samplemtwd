@@ -1,4 +1,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<!--
+    스펙 아웃 되었으나, UI 구현된 상태라 그대로 뒀으니 추후 구현 시 참조하면 좋다.
+-->
 <body class="rn">
 <div id="roamingHistory">
     <div id="appbar" class="gnb-opaque">
@@ -19,6 +22,9 @@
             <span class="colorPoint">하루 평균 약 159MB</span>의 데이터를 <br />
             사용하셨습니다.
         </p>
+        <!--
+            차트 내용을 SVG로 렌더링 했다. 추후, SVG 코드 유지보수 이슈가 있을 경우 이미지로 교체하면 된다.
+        -->
         <div class="chart">
             <svg width="100%" viewBox="0 0 200 45" style="margin-top: 32px;">
                 <path d="M 200 5 L 200 45 L 0 45 L 0 10 C 40 0, 65 0, 95 10 S 150 30, 200 5"

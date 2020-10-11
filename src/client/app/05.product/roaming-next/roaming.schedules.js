@@ -2,11 +2,15 @@
  * @file roaming.schedules.js
  * @desc 일정선택 팝업창에서 사용하는 스크립트 모음.
  *       로밍메인, 요금제목록, 국가별 로밍요금제 조회에서 사용된다.
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingSchedules = function (rootEl, nations, baseDiv, closeCallback) {
   this.$container = rootEl;
+  // 대륙별 모든 국가
   this.$nations = nations;
+  // 대륙별 모든 국가를 flatten 한 목록
   this.$allNations = [];
   this.$baseDiv = baseDiv;
   this.$onSelectCallback = this.openScheduleDialog;
@@ -20,18 +24,38 @@ Tw.RoamingSchedules = function (rootEl, nations, baseDiv, closeCallback) {
 };
 
 Tw.RoamingSchedules.prototype = {
+  /**
+   * 이벤트 핸들러
+   */
   bindEvents: function () {
+    // 다이얼로그 최하단 '추천 요금제 확인' 버튼 링크
     $('#scheduleConfirm').on('click', $.proxy(this.tryConfirm, this));
+    // 다이얼로그 닫기 버튼
     $('#scheduleDialog .header .close').on('click', $.proxy(this.closeScheduleDialog, this));
+    // 전체 국가 보기 다이얼로그 닫기 버튼
     $('#nationsDialog .header .close').on('click', $.proxy(this._closeDialog, this));
   },
+  /**
+   * Tw 모듈 초기화 직후
+   */
   afterInit: function () {
 
   },
+  /**
+   * 전체 국가 보기 다이얼로그 닫기
+   * @private
+   */
   _closeDialog: function() {
     this.$closeCallback();
     $(document).scrollTop(this._baseLastScrollTop);
   },
+  /**
+   * 일정 선택 다이얼로그 오픈
+   * @param code 국가 코드
+   * @param name 국가 이름
+   * @param topBannerUrl 상단 이미지 배너 url
+   * @param baseDiv 다이얼로그를 띄운 base division id
+   */
   openScheduleDialog: function (code, name, topBannerUrl, baseDiv) {
     if (baseDiv !== '#nationsDialog') {
       this._baseLastScrollTop = $(document).scrollTop();
@@ -45,6 +69,7 @@ Tw.RoamingSchedules.prototype = {
     $('#date-arrive').html('-');
     if (!topBannerUrl) {
       $('#scheduleDialog .banner').attr('src', '');
+      // 만약 topBannerUrl 이 없다면 XHR로 가져온다.
       $.get('/product/roaming?queryBg=' + code, function (data) {
         if (data.backgroundUrl) {
           var cdn = Tw.Environment.cdn;
@@ -60,13 +85,21 @@ Tw.RoamingSchedules.prototype = {
       element: $('div#calendar'),
       parentEl: 'div#calendar',
       minDate: moment().add(1, 'days').format('YYYY-MM-DD'),
+      // 가는 날은 오늘로부터 60일 이내이고, 오는 날은 가는 날로부터 30일이라, 최대 90일까지만 선택 가능
       maxDate: moment().add(90, 'days').format('YYYY-MM-DD')
     }, $.proxy(this._handleDatePick, this));
   },
+  /**
+   * 달력에서 데이터 선택 시
+   * @param start 가는 날
+   * @param end 오는 날
+   * @private
+   */
   _handleDatePick: function(start, end) {
     $('#scheduleDialog #calendarGuide').css('display', 'none');
 
     var today = moment();
+    // 가는 날이 60일 이내이고, 오는 날이 가는 날로부터 30일 이내인 것은 구혜선 수석이 알려준 스펙이다.
     if (start && start.diff(today, 'days') >= 60) {
       $('#scheduleConfirm').addClass('not-prepared');
       // showDateGuide('60일 이내만', '선택 가능합니다', '.active.start-date.available');
@@ -96,16 +129,27 @@ Tw.RoamingSchedules.prototype = {
     }
 
     if (start && !end) {
+      // 가는 날만 선택했을 경우, 툴팁 표시
       this.showDateGuide(start.format('M월 D일'), '오는 날을 선택하세요', '.active.start-date.available');
     }
   },
+  /**
+   * 일정선택 다이얼로그 닫기
+   */
   closeScheduleDialog: function () {
     $('#scheduleDialog').removeClass('wrap');
     this.$closeCallback();
     $(document).scrollTop(this._baseLastScrollTop);
   },
+  /**
+   * 가는 날 선택 시 표시될 작은 말풍선 레이어 표시
+   *
+   * @param title 레이어 상단 타이틀
+   * @param message 하단 메시지
+   * @param selector
+   */
   showDateGuide: function (title, message, selector) {
-    // 가는날 선택 시 말풍선 렌더링
+    // 선택한 날짜가 DOM 적용될 때까지 setTimeout 으로 잠시 대기
     setTimeout(function () {
       var dateCells = document.querySelectorAll(selector);
       if (!dateCells || dateCells.length < 1) {
@@ -115,6 +159,7 @@ Tw.RoamingSchedules.prototype = {
       for (var i=0; i<dateCells.length; i++) {
         var cell = dateCells[i];
         if (cell.className.indexOf('off') >= 0) {
+          // 비활성화 된 회색 일은 넘어간다.
           continue;
         }
         dateCell = cell;
@@ -146,10 +191,14 @@ Tw.RoamingSchedules.prototype = {
       $('#scheduleDialog #calendarGuide').css('display', 'block');
     }, 200);
   },
+  /**
+   * '추천 요금제 확인' 클릭 핸들러
+   * @returns {boolean}
+   */
   tryConfirm: function () {
-    // 하단 '추천 요금제 확인' 버튼 눌렀을 때
     var classes = $('#scheduleConfirm').attr('class');
     if (classes.indexOf('not-prepared') >= 0) {
+      // 입력 조건이 불충분하면 무시
       return false;
     }
 
@@ -162,10 +211,16 @@ Tw.RoamingSchedules.prototype = {
     }
     var countryCode = $('#target-nation').attr('data-code');
     this.closeScheduleDialog();
+    // 요금제 추천 페이지로 이동
     this._history.goLoad('/product/roaming/offer?code=' + countryCode +
       '&from=' + startDate.format('YYYYMMDD') +
       '&to=' + endDate.format('YYYYMMDD'));
   },
+  /**
+   * 현재 페이지(baseDiv)에 국가 검색 auto complete 설치
+   * @param selectionCb 자동완성 레이어에서 국가 선택시 실행될 콜백
+   * @param baseDiv 현재 페이지 division id
+   */
   installNationSearch: function (selectionCb, baseDiv) {
     // 국가 검색 auto complete 설치
     if (!selectionCb) {
@@ -177,12 +232,15 @@ Tw.RoamingSchedules.prototype = {
     var allNations = this.$allNations;
     var proxy = this;
     $('#nation-search').autocomplete({
+      // 국가 검색 로직
       source: function (req, res) {
+        // 대소문자 무시
         var term = req.term.toLowerCase().trim();
         if (term.length >= 1) {
           var suggestions = [];
           for (var i=0; i<allNations.length; i++) {
             var nation = allNations[i];
+            // 검색어 중간 포함은 막는다 (SB 참조)
             if (nation.countryNameKor.indexOf(term) === 0 ||
               nation.countryNameEng.toLowerCase().indexOf(term) === 0) {
               var index = nation.countryNameKor.indexOf(term);
@@ -207,6 +265,7 @@ Tw.RoamingSchedules.prototype = {
       minLength: 1,
       focus: function (event, ui) {
         if (ui.item && ui.item.code) {
+          // 아이폰에서 키보드 내려가도록 처리
           $('#nation-search').val(ui.item.label);
           $('#nation-search').blur();
           selectionCb.apply(proxy, [ui.item.code, ui.item.label, null, baseDiv]);
@@ -221,6 +280,9 @@ Tw.RoamingSchedules.prototype = {
     });
     this.setupNationsDialog();
   },
+  /**
+   * 컨트롤러로부터 받은 국가 정보를 FE가 쓰기 쉽게 가공하여 $allNations 변수에 채움
+   */
   prepareNations: function () {
     var all = [];
     var categories = Object.keys(this.$nations);
@@ -232,13 +294,25 @@ Tw.RoamingSchedules.prototype = {
     all.sort();
     this.$allNations = all;
   },
+  /**
+   * 전체 국가 검색 다이얼로그 준비
+   */
   setupNationsDialog: function () {
     var menuItems = $('#nationsDialog .menu li button');
     menuItems.on('click', $.proxy(this._onClickNationGroup, this));
   },
+  /**
+   * 국가 검색 다이얼로그 내에서 좌측 그룹 선택시
+   * @param e EventObject
+   * @private
+   */
   _onClickNationGroup: function(e) {
     this.onClickNationGroup(e.currentTarget);
   },
+  /**
+   * 국가 검색 다이얼로그 내에서 좌측 그룹 선택시
+   * @param menu currentTarget element
+   */
   onClickNationGroup: function (menu) {
     $('#nationsDialog .menu li button').removeClass('active');
     menu.className = 'active';
@@ -265,6 +339,9 @@ Tw.RoamingSchedules.prototype = {
       targetList.append(li);
     }
   },
+  /**
+   * 국가 검색 버튼 클릭시
+   */
   searchNation: function () {
     var name = $('#nation-search').val();
     if (name.trim().length == 0) {
@@ -284,6 +361,9 @@ Tw.RoamingSchedules.prototype = {
     Tw.Popup.openAlert('해당 국가는 로밍 서비스 가능 국가가 아닙니다.', '국가 검색');
     return false;
   },
+  /**
+   * '전체 국가 보기' 다이얼로그 오픈
+   */
   openNationsDialog: function () {
     this._baseLastScrollTop = $(document).scrollTop();
     this.onClickNationGroup(document.getElementById('EUR'));

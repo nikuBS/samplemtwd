@@ -1,6 +1,8 @@
 /**
  * @file roaming.menu.js
  * @desc T로밍 서브메뉴들에서 로밍모드일 때 표시되는 메뉴
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingMenu = function (rootEl) {
@@ -11,8 +13,10 @@ Tw.RoamingMenu = function (rootEl) {
 };
 
 Tw.RoamingMenu.prototype = {
+  /**
+   * 로밍모드 on/off 여부를 판단하여 좌상단 버거 메뉴 설치
+   */
   install: function () {
-    // 로밍모드 on/off 여부에 따라 좌상단 메뉴 설치
     var container = this.$container;
     $('#header').hide();
 
@@ -41,18 +45,33 @@ Tw.RoamingMenu.prototype = {
       });
       $('#common-menu').hide();
     } else {
+      // 로밍모드가 아닐 경우, T 월드 기존 버거 메뉴를 열기 위해 _onGnbBtnClicked 호출
       var menu = new Tw.MenuComponent();
       $('#appbar .menu').on('click', function () {
         menu._onGnbBtnClicked();
       });
     }
   },
+  /**
+   * 이벤트 핸들러
+   */
   bindEvents: function() {
+    // 로밍모드 강제 OFF 핸들러
     $(document).on('click', '#roamingMenu .mode .switch', $.proxy(this.confirmOff, this));
+    // 로밍모드 홈 링크
     $(document).on('click', '#roamingMenu .sticky-menu .menu.home', $.proxy(this.showHome, this));
+    // 나의 T로밍 이용현황 링크
     $(document).on('click', '#roamingMenu .sticky-menu .menu.myuse', $.proxy(this.showMyServices, this));
+    // 로그아웃 링크 (현재 사용되지 않음. SB 참조)
     $(document).on('click', '#roamingMenu .logout-anchor', $.proxy(this.logout, this));
   },
+  /**
+   * 로밍모드 메뉴 내의 작은 모달 다이얼로그를 닫았을 때
+   *
+   * @param id 다이얼로그 division id
+   * @param container 다이얼로그를 포함하고 있는 컨테이너 id
+   * @param callback 후처리 콜백
+   */
   dismiss: function (id, container, callback) {
     $('#' + id).hide();
     if (!container) {
@@ -64,6 +83,13 @@ Tw.RoamingMenu.prototype = {
       callback();
     }
   },
+  /**
+   * 작은 모달 다이얼로그 표시 (진입팝업 등)
+   *
+   * @param id 다이얼로그 division id
+   * @param onDismiss 모달 close 콜백
+   * @param container 모달을 포함하는 division id
+   */
   showModal: function (id, onDismiss, container) {
     var t = this;
     $('#' + id).on('click', function (e) {
@@ -82,15 +108,24 @@ Tw.RoamingMenu.prototype = {
     });
     $('#' + id).show();
   },
+  /**
+   * 로밍모드 홈 링크 핸들러
+   */
   showHome: function () {
     var mcc = Tw.CommonHelper.getSessionStorage('ROAMING_MCC');
     if (mcc) {
       document.location.href = '/product/roaming/on?mcc=' + mcc;
     }
   },
+  /**
+   * 나의 T로밍 이용현황 링크 핸들러
+   */
   showMyServices: function () {
     document.location.href = '/product/roaming/my-use';
   },
+  /**
+   * 로밍모드 OFF 링크 핸들러. 정말로 OFF 할 것인지 묻는 모달 다이얼로그를 표시한다.
+   */
   confirmOff: function () {
     var thumb = $('#thumb');
     thumb.removeClass('thumb-on');
@@ -108,6 +143,10 @@ Tw.RoamingMenu.prototype = {
       thumb.addClass('thumb-on');
     });
   },
+  /**
+   * 로밍모드 OFF 시 호출.
+   * ROAMING_OFF 에 Y 를 넣고, 로밍모드가 꺼지는 연출(#roamingOff)을 시작한다.
+   */
   switchOff: function () {
     Tw.CommonHelper.setSessionStorage('ROAMING_OFF', 'Y');
     Tw.CommonHelper.setCookie('ROAMING_MCC', '0', -1);
@@ -116,29 +155,39 @@ Tw.RoamingMenu.prototype = {
     var id = 'roamingOff';
     var template = Handlebars.compile($('#tpl-switch-off').html());
     document.getElementById('roamingMenu').innerHTML += template({id: id});
+    // 로밍모드 종료 화면 표시
     $('#roamingOff').show();
     var circles = $('#roamingOff .progress span');
     var T = this;
+    // 로밍모드 종료 화면의 애니메이션
     this.$switchOffTimer = setInterval(function () {
       if (T.$switchOffIndex > 0) {
         circles[T.$switchOffIndex - 1].className = 'circle off';
       }
+      // 중앙의 원 4개가 차례대로 켜진다.
       circles[T.$switchOffIndex].className = 'circle on';
       T.$switchOffIndex += 1;
       if (T.$switchOffIndex >= 4) {
         clearInterval(T.$switchOffTimer);
         setTimeout(function () {
+          // 다 켜지면, 로밍메인으로 이동
           document.location.href = '/product/roaming';
         }, 250);
       }
     }, 500);
     return false;
   },
+  /**
+   * 로그아웃 핸들러
+   */
   logout: function () {
     var tidLanding = new Tw.TidLandingComponent();
     tidLanding.goLogout();
     return false;
   },
+  /**
+   * 공통 메뉴 오픈 시, 이를 가로채서 로밍모드 메뉴를 표시할 필요가 있는지 확인하는 함수.
+   */
   checkInterceptMenu: function () {
     var turnOff = Tw.CommonHelper.getSessionStorage('ROAMING_OFF');
     var mcc = Tw.CommonHelper.getSessionStorage('ROAMING_MCC');
@@ -148,6 +197,9 @@ Tw.RoamingMenu.prototype = {
     }
     return false;
   },
+  /**
+   * 로밍모드 메뉴 오픈
+   */
   openRoamingMenu: function () {
     $('#roamingMenu').css('display', 'block');
     $('.wrap').css('display', 'none');
@@ -164,6 +216,10 @@ Tw.RoamingMenu.prototype = {
   }
 };
 
+/**
+ * client/component/menu.component.js 280라인에서 호출될 함수.
+ * 공통 버거메뉴 오픈 시, 이를 가로채서 로밍모드 확인을 할 필요가 있는지 확인하는 함수.
+ */
 function checkInterceptMenu() {
   new Tw.RoamingMenu(null).checkInterceptMenu();
 }

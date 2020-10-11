@@ -1,6 +1,8 @@
 /**
  * @file roaming.on.js
  * @desc T로밍 > 로밍모드
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingModeOn = function (rootEl, country, currentTariff, usage, loginAvailable) {
@@ -41,7 +43,11 @@ Tw.RoamingModeOn = function (rootEl, country, currentTariff, usage, loginAvailab
 };
 
 Tw.RoamingModeOn.prototype = {
+  /**
+   * 이벤트 핸들러
+   */
   bindEvents: function () {
+    // 하단 정보 카드 토글
     $('.card-toggle .toggle').on('click', $.proxy(this.toggleInfo, this));
   },
   /**
@@ -117,6 +123,11 @@ Tw.RoamingModeOn.prototype = {
       }
     }
   },
+  /**
+   * '추천 요금제 보기' 버튼 클릭 핸들러
+   * @param e EventObject
+   * @private
+   */
   _handleOffer: function(e) {
     this.$schedule.openScheduleDialog(
       this.$country.code,
@@ -126,6 +137,9 @@ Tw.RoamingModeOn.prototype = {
     );
     e.stopPropagation();
   },
+  /**
+   * 화면 데이터 초기화 함수
+   */
   setup: function() {
     var target = '/product/roaming';
     var landing = new Tw.TidLandingComponent();
@@ -144,7 +158,9 @@ Tw.RoamingModeOn.prototype = {
     });
     $('#offer').on('click', $.proxy(this._handleOffer, this));
 
+    // 화면 상단 국내 시각 표시
     $('#timeKorea').html(moment().format('YYYY. M. D. HH:mm'));
+    // 화면 상단 현지 시각 표시
     $('#timeLocal').html(moment().add(this.$country.timezoneOffset, 'hours').format('YYYY. M. D. HH:mm'));
 
     // 요금제 기간에 따라 1) 이용예정 2) 이용중 3) 이용완료 로 상태가 나뉘며,
@@ -165,15 +181,16 @@ Tw.RoamingModeOn.prototype = {
     }, 500);
 
     if (document.getElementById('chart-data')) {
+      // 차트 생성
       var chartData = new ProgressBar.Circle('#chart-data', {
         easing: 'easeInOut',
         strokeWidth: 7,
-        color: status == 2 ? '#999999' : '#607dff',
+        color: status === 2 ? '#999999' : '#607dff'
       });
       var chartPhone = new ProgressBar.Circle('#chart-phone', {
         easing: 'easeInOut',
         strokeWidth: 7,
-        color: status == 2 ? '#999999': '#7e82ff',
+        color: status === 2 ? '#999999': '#7e82ff'
       });
 
       if (this.$usage.data && this.$usage.baro) {
@@ -182,8 +199,10 @@ Tw.RoamingModeOn.prototype = {
 
         if (dataUsage.code) {
           if (dataUsage.code === '-') {
+            // 오류 발생시, 에러코드가 '-' 이면, 메시지를 차트 내부에 표시하고
             $('#dataMessage').html(dataUsage.msg);
           } else {
+            // 그렇지 않으면 에러코드 자체를 표시한다.
             $('#dataMessage').html(dataUsage.code);
           }
           chartData.animate(1.0);
@@ -217,8 +236,10 @@ Tw.RoamingModeOn.prototype = {
       }
     }
   },
+  /**
+   * 이용 완료인 경우, 카드 전체를 회색으로 표시
+   */
   markAsDone: function () {
-    // 이용완료인 경우, 카드 전체를 회색빛으로
     $('#content .data-usages h2').css('color', '#999999');
     $('#content .data-usages h4').css('color', '#999999');
     $('#content .data-usages .status').css('color', '#999999');
@@ -227,12 +248,17 @@ Tw.RoamingModeOn.prototype = {
     $('#content .data-usages .message').css('color', '#999999');
     $('#content .data-usages .label').css('color', '#999999');
   },
+  /**
+   * 이용 예정인 경우, status를 회색으로 표시
+   */
   markAsReserved: function () {
-    // 이용예정인 경우
     $('#content .data-usages .status').css('color', '#999999');
   },
+  /**
+   * 하단 콜센터 토글 핸들러
+   * @param e EventObject
+   */
   toggleInfo: function (e) {
-    // 하단 콜센터 아코디언
     e = e.currentTarget;
     var id = e.parentElement.id;
     var imagePrefix = Tw.Environment.cdn + '/img/product/roam/ico_';
@@ -244,6 +270,9 @@ Tw.RoamingModeOn.prototype = {
       $('#' + id + ' .curtain').css('display', hidden ? 'block' : 'none');
     });
   },
+  /**
+   * 진입팝업 - 요금제 가입 유도 모달 표시
+   */
   showWelcome: function () {
     // 진입팝업 표시
     var id = 'dialogWelcome';
@@ -253,17 +282,38 @@ Tw.RoamingModeOn.prototype = {
     $(document).on('click', '#' + id + ' .content .today', $.proxy(this._handleCloseToday, this, id));
     this.$menu.showModal(id, this.preventSession, 'modals');
   },
+  /**
+   * 진입팝업에서 '나에게 맞는 요금제 보기' 선택시
+   * @private
+   */
   _handleWelcome: function() {
     this.$menu.dismiss('dialogWelcome', 'modals', this.preventSession);
     this.$schedule.openScheduleDialog(this.$country.code, this.$country.name,
       this.$country.backgroundMiniUrl, this.$baseDiv);
   },
+  /**
+   * 모달 close 핸들러
+   * @param dialogId 다이얼로그 id
+   * @private
+   */
   _handleClose: function(dialogId) {
     this.$menu.dismiss(dialogId, 'modals', this.preventSession);
   },
+  /**
+   * 모달 close 핸들러 (오늘 하루 보지 않기)
+   * @param dialogId 다이얼로그 id
+   * @private
+   */
   _handleCloseToday: function(dialogId) {
     this.$menu.dismiss(dialogId, 'modals', this.preventToday);
   },
+  /**
+   * 진입팝업 - 이용 예정인 케이스의 모달 표시
+   * @param prodId 요금제 원장 id
+   * @param prodNm 요금제 이름
+   * @param timestamp 요금제 시작일
+   * @param timezoneOffset 한국과의 시차 (시간)
+   */
   showTariff: function (prodId, prodNm, timestamp, timezoneOffset) {
     // 진입팝업 (이용예정) 표시
     var baseDate = moment(timestamp);

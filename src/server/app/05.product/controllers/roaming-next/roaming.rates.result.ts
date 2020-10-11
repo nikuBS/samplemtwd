@@ -1,7 +1,10 @@
 /**
- * 로밍 국가별 이용요금 조회.
+ * @desc 로밍 국가별 이용요금 조회. (M000455)
  *
  * BFF_10_0061: 국가별 로밍 가능여부 조회
+ *
+ * @author 황장호
+ * @since 2020-09-01
  */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
@@ -16,9 +19,13 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
 
     const query = {
+      // 조회하고자 하는 국가 코드
       countryCd: req.query.code,
+      // 조회하고자 하는 국가 명
       countryNm: decodeURIComponent(req.query.nm),
+      // 단말 이름
       eqpMdlNm: decodeURIComponent(req.query.eqpNm),
+      // 단말 코드
       eqpMdlCd: decodeURIComponent(req.query.eqpCd)
     };
     const apiParams = {
@@ -26,6 +33,7 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
       command: 'onlyCountry',
       eqpMdlCd: query.eqpMdlCd,
     };
+    // 로그인 여부, 단말 정보 여부에 따라 BFF_10_0061 파라미터를 조합한다.
     if (svcInfo) {
       if (!svcInfo.eqpMdlNm) {
         apiParams.command = 'onlyCountry';
@@ -40,6 +48,7 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
       }
     }
 
+    // 단말 정보. 기존 코드에서 옮겨왔으나 현재는 이용하지 않는다.
     const equipment = {
       number: null,
       name: null,
@@ -62,6 +71,7 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
     ).subscribe(([afr, asp, amc, eur, met, ocn, meta]) => {
       for (const continent of [afr, asp, amc, eur, met, ocn]) {
         const list = continent;
+        // 어떤 이유에서든 '국가명' 누락시, 국가코드로 부터 이를 복원하는 방어코드
         for (const c of list) {
           if (c['countryCode'] === query.countryCd) {
             query.countryNm = c['countryNameKor'];
@@ -73,15 +83,26 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
       this.renderDeadline(res, 'roaming-next/roaming.rates.html', {
         svcInfo,
         pageInfo,
+        // 단말 정보
         equipment,
+        // 로밍 지원 여부 (BFF_10_0061)
         meta,
+        // 마지막 조회했던 파라미터
         lastQuery: query,
+        // 로그인 여부
         isLogin: isLogin,
+        // 전체 국가보기 다이얼로그 표시용 데이터
         nations: {afr, asp, amc, eur, met, ocn},
       });
     });
   }
 
+  /**
+   * 국가별 로밍 서비스 지원 여부 조회. (BFF_10_0061)
+   *
+   * @param param command (onlyCountry/withCountry), countryCode (국가코드), eqpMdlCd(단말기 모델 코드)
+   * @private
+   */
   private getRoamingMeta(param: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0061, param).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -101,6 +122,12 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
     });
   }
 
+  /**
+   * 대륙별 로밍 지원 국가 목록 Redis 조회.
+   *
+   * @param continent 대륙 코드 (AFR, ASP, AMC, EUR, MET, OCN)
+   * @private
+   */
   private getNationsByContinents(continent: string): Observable<any> {
     return this.redisService.getData(`${REDIS_KEY.ROAMING_NATIONS_BY_CONTINENT}:${continent}`).map(resp => {
       // contnCd, countryCode, countryNameKor, commCdValNm

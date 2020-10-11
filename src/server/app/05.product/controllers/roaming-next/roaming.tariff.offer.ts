@@ -1,5 +1,5 @@
 /**
- * 로밍 요금제 추천.
+ * @desc 로밍 요금제 추천. (M002257)
  *
  * BFF_10_0190: 첫 로밍 여부 조회 (첫 로밍이면 중간에 이미지 노출)
  * BFF_10_0196: 추천 요금제
@@ -8,6 +8,9 @@
  * BFF_10_0199: 국가정보 조회
  * BFF_10_0200: 국가별 이용 가능한 요금제 목록
  * BFF_10_0201: 요금제별 이용 가능한 국가 목록
+ *
+ * @author 황장호
+ * @since 2020-09-01
  */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
@@ -24,6 +27,7 @@ export default class RoamingTariffOfferController extends RoamingController {
 
     const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
     if (req.query.prodId) {
+      // 서비스 이용가능 국가 Dialog 에서 XHR로 조회하는 함수.
       this.queryAvailableCountries(req, res, req.query.prodId);
       return;
     }
@@ -32,6 +36,7 @@ export default class RoamingTariffOfferController extends RoamingController {
 
     const from = moment(req.query.from, 'YYYYMMDD');
     const to = moment(req.query.to, 'YYYYMMDD');
+    // 가는 날, 오는 날 기반으로 몇 박인지 계산
     const night = to.diff(from) / 86400 / 1000;
 
     Observable.combineLatest(
@@ -42,19 +47,24 @@ export default class RoamingTariffOfferController extends RoamingController {
       this.getFirstRoaming(),
       this.getTariffsMap(),
     ).subscribe(([country, recommended, allTariffs, recentUsed, newbie, tariffsMap]) => {
+      // 유명 국가 30개가 아닌 경우, 화면 최하단 UI 카드에 국기를 표시하지 않는 것이 스펙이다.
+      // 그러므로 조회된 국가 정보에 '공통 이미지'가 포함된 경우, 국기 이미지를 제거.
       if (country.mblNflagImgAlt && country.mblNflagImgAlt.indexOf('공통 이미지') >= 0) {
         country.mblNflagImg = null;
       }
 
       if (recommended) {
+        // 추천 요금제가 존재하는 경우, 요금제 정보를 정규화
         const detail = RoamingHelper.formatTariff(tariffsMap[recommended.prodId]);
         if (detail) {
           Object.assign(recommended, detail);
         }
       } else {
+        // 방어코드
         recommended = {};
       }
 
+      // 방어코드
       if (!allTariffs) {
         allTariffs = [];
       }
@@ -63,23 +73,37 @@ export default class RoamingTariffOfferController extends RoamingController {
         svcInfo,
         pageInfo,
         isLogin: isLogin,
+        // 국가 정보
         country: {
           code: country.countryCode,
           name: country.countryNm,
           imageUrl: RoamingHelper.penetrateUri(country.mblBgImg),
+          // 국기 이미지
           flagUrl: RoamingHelper.penetrateUri(country.mblNflagImg),
+          // 국기 이미지 alt
           flagAlt: country.mblNflagImgAlt,
         },
+        // n박 m일의 '박'
         night: night,
+        // n박 m일의 '일'
         days: night + 1,
+        // 추천된 요금제
         recommended,
+        // 최근 이용한 요금제
         recentUsed,
+        // 첫 로밍고객 여부
         newbie,
-          availableTariffs: allTariffs.map(t => RoamingHelper.formatTariff(t)),
+        // 해당 국가에서 이용 가능한 모든 요금제
+        availableTariffs: allTariffs.map(t => RoamingHelper.formatTariff(t)),
       });
     });
   }
 
+  /**
+   * 모든 로밍 요금제(BFF_10_0198)를 조회하여 그룹 정보를 제외한 flatten map을 리턴.
+   *
+   * @private
+   */
   private getTariffsMap(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
       const items = resp.result.grpProdList;
@@ -96,10 +120,20 @@ export default class RoamingTariffOfferController extends RoamingController {
     });
   }
 
+  /**
+   * 로밍 요금제 첫 이용여부 조회. (BFF_10_0190)
+   *
+   * @private
+   */
   private getFirstRoaming(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0190, {}).map(r => r.result);
   }
 
+  /**
+   * 최근 사용한 로밍 요금제 조회. (BFF_10_0197)
+   *
+   * @private
+   */
   private getRecentUsedTariff(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0197, {}).map(resp => {
       if (resp.result && resp.result.prodId) {
@@ -111,6 +145,7 @@ export default class RoamingTariffOfferController extends RoamingController {
 
   /**
    * 해당 국가의 메타정보인 국가명, 한국과의 tzOffset, 국기 이미지 리소스 등
+   * (BFF_10_0199)
    *
    * @param countryCode ISO3601 3자리 국가코드
    * @private
@@ -126,9 +161,10 @@ export default class RoamingTariffOfferController extends RoamingController {
       }
 
       if (noFlag) {
+        // 로밍 미지원 국가의 경우, 화면이 완전히 깨지지 않게 한다.
         item.countryCode = countryCode;
         item.countryNm = '...';
-        return this.getNationsByContinents().map(r => {
+        return RoamingHelper.nationsByContinents(this.redisService).map( r => {
           for (const continent of Object.keys(r)) {
             const list = r[continent];
             for (const c of list) {
@@ -146,29 +182,8 @@ export default class RoamingTariffOfferController extends RoamingController {
     });
   }
 
-  private getNationsByContinents(): Observable<any> {
-    return Observable.combineLatest(
-      this.getNationsByContinent('AFR'),
-      this.getNationsByContinent('ASP'),
-      this.getNationsByContinent('AMC'),
-      this.getNationsByContinent('EUR'),
-      this.getNationsByContinent('MET'),
-      this.getNationsByContinent('OCN')
-    ).map(([afr, asp, amc, eur, met, ocn]) => {
-      return {afr, asp, amc, eur, met, ocn};
-    });
-  }
-
-  private getNationsByContinent(continent: string): Observable<any> {
-    return this.redisService.getData(`${REDIS_KEY.ROAMING_NATIONS_BY_CONTINENT}:${continent}`).map(resp => {
-      // contnCd, countryCode, countryNameKor, commCdValNm
-      return resp.result.contnPsbNation;
-    });
-  }
-
-
   /**
-   * 해당 국가로의 주어진 일정동안 사용하기 적절한 추천 요금제를 가져온다.
+   * 해당 국가로의 주어진 일정동안 사용하기 적절한 추천 요금제를 가져온다. (BFF_10_0196)
    *
    * @param countryCode 3자리 국가코드
    * @param startDate yyyyMMdd
@@ -202,6 +217,13 @@ export default class RoamingTariffOfferController extends RoamingController {
     });
   }
 
+  /**
+   * 주어진 국가에서 이용 가능한 모든 요금제 목록을 리턴. (BFF_10_0200)
+   *
+   * @param countryCode 국가코드 ISO3166 3자리
+   * @param skip true 인 경우 BFF 호출을 하지 않고 빈 배열을 바로 리턴.
+   * @private
+   */
   private getAvailableTariffs(countryCode: string, skip: boolean = false): Observable<any> {
     if (skip) {
       return Observable.of([]);
@@ -218,6 +240,7 @@ export default class RoamingTariffOfferController extends RoamingController {
       if (resp.result) {
         for (const t of resp.result) {
           if (t.prodBasBenfCtt) {
+            // baro 통화 사이에 띄어쓰기가 안된 경우 FE 에서 방어코드로 막아준다.
             t.prodBasBenfCtt = t.prodBasBenfCtt.replace('baro통화 무료', 'baro 통화 무제한');
           }
         }
@@ -226,6 +249,13 @@ export default class RoamingTariffOfferController extends RoamingController {
     });
   }
 
+  /**
+   * 주어진 요금제를 이용 가능한 모든 국가 목록을 리턴한다.
+   * 서비스 가능한 국가가 없는 경우 error code PRD0075.
+   *
+   * @param prodId 요금제 원장번호
+   * @private
+   */
   private getAvailableCountries(prodId: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0201, {prodId}).map(resp => {
       if (!resp.result && resp.msg && resp.code) {
@@ -239,6 +269,15 @@ export default class RoamingTariffOfferController extends RoamingController {
     });
   }
 
+  /**
+   * 특정 요금제에 대해 이용 가능한 모든 국가를 조회.
+   * 서비스 이용가능국가 다이얼로그에서 XHR로 조회한다.
+   *
+   * @param req Express Request 객체. query.wt(withTariffs) 여부에 따라 전체 요금제 목록을 리턴.
+   * @param res 조회 결과를 JSON으로 보낼 Express Response 객체.
+   * @param prodId 로밍 요금제 prodId
+   * @private
+   */
   private queryAvailableCountries(req: Request, res: Response, prodId: string) {
     Observable.combineLatest(
       this.getAvailableTariffs('ALL', req.query.wt ? false : true),

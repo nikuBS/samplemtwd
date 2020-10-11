@@ -1,17 +1,25 @@
 /**
  * @file roaming.rates.js
  * @desc T로밍 > 국가별 이용요금 조회
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingRates = function (rootEl, nations, meta, lastQuery) {
   this.$container = rootEl;
+  // 로밍 지원여부 데이터
   this.roamingMeta = meta;
+  // 마지막 쿼리 데이터
   this.lastQuery = lastQuery;
 
+  // 로밍 지원 타입 (Object 형태)
   this.manageType = [];
+  // 로밍 지원 타입 (텍스트 형태)
   this.typeTxt = [];
+  // BFF 요청시 넘길 파라미터
   this.reqParams = {};
 
+  // 이 페이지에 표시될 툴팁 데이터 내용
   this.tooltips = {};
   this.tooltipService = new Tw.TooltipService();
 
@@ -23,43 +31,78 @@ Tw.RoamingRates = function (rootEl, nations, meta, lastQuery) {
   new Tw.RoamingMenu(rootEl).install();
 
   var baseDiv = '#roamingRates';
+  // 일정선택 팝업 모듈 초기화
   this.$schedule = new Tw.RoamingSchedules(rootEl, nations, baseDiv, function () {
     $('#nationsDialog').css('display', 'none');
     $(baseDiv).css('display', 'block');
     $(baseDiv).addClass('wrap');
   });
+  // 국가 검색 창에서, 특정 국가 선택시 실행될 콜백 준비
   this.$schedule.installNationSearch(this.sendQuery, baseDiv);
 
   this.bindEvents();
 };
 
 Tw.RoamingRates.prototype = {
+  /**
+   * 이벤트 핸들러
+   */
   bindEvents: function () {
+    // '전체 국가 보기' 클릭
     this.$container.find('.fe-show-nations').on('click', $.proxy(this._openNationsDialog, this));
+    // 국가 검색 창 돋보기 클릭
     this.$container.find('.field-container .search').on('click', $.proxy(this.searchNationRate, this));
+    // 국가 검색 창 onSubmit
     $('#searchForm').on('submit', $.proxy(this.searchNationRate, this));
+    // '로밍 시 국가별 주의 사항'
     this.$container.find('.attentionHead').on('click', $.proxy(this.toggleAttention, this));
+    // 툴팁 핸들러
     this.$container.find('.tip').on('click', $.proxy(this._showTip, this));
 
+    // 요금 더보기 핸들러
     this.$container.find('.opener').on('click', $.proxy(this._divOpen, this));
+    // 요금 닫기 핸들러
     this.$container.find('.closer').on('click', $.proxy(this._divClose, this));
   },
+  /**
+   * 전체 국가 목록 링크 핸들러
+   * @returns {boolean}
+   * @private
+   */
   _openNationsDialog: function() {
     this.$schedule.openNationsDialog();
     return false;
   },
+  /**
+   * 툴팁 핸들러
+   * @param e EventObject
+   * @private
+   */
   _showTip: function(e) {
     var tipId = e.currentTarget.getAttribute('data-tip');
     this.tooltipService._openTip(this.tooltips[tipId], e.currentTarget);
   },
+  /**
+   * 요금 더보기 핸들러
+   * @param e EventObject
+   * @private
+   */
   _divOpen: function(e) {
     var section = e.currentTarget.getAttribute('data-section');
     this.divExpand(section);
   },
+  /**
+   * 요금 닫기 핸들러
+   * @param e EventObject
+   * @private
+   */
   _divClose: function(e) {
     var section = e.currentTarget.getAttribute('data-section');
     this.divCollapse(section);
   },
+  /**
+   * 모듈 초기화 후 후속처리
+   */
   afterInit: function () {
     // 전화번호 포매팅
     var numberContainer = document.getElementById('svcNum');
@@ -77,6 +120,11 @@ Tw.RoamingRates.prototype = {
     }
     this.prepareTooltips();
   },
+  /**
+   * 이 메뉴에 포함된 툴팁을 가져온다.
+   * 이 페이지인 M000455 만 사용할 경우 pageInfo 값만 참조하면 되지만,
+   * 타 페이지에 등록된 툴팁도 여기서 사용하므로 M00460 툴팁도 함께 가져온다.
+   */
   prepareTooltips: function() {
     var proxy = this;
     Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: 'M000455'}).done(function(r) {
@@ -86,6 +134,10 @@ Tw.RoamingRates.prototype = {
       if (r.result && r.result.tooltip) proxy.collectTooltips(r.result.tooltip);
     });
   },
+  /**
+   * 툴팁 요청 XHR 응답 핸들러
+   * @param items JSON 응답
+   */
   collectTooltips: function(items) {
     for (var i = 0; i < items.length; i++) {
       var item = items[i];
@@ -96,17 +148,30 @@ Tw.RoamingRates.prototype = {
       };
     }
   },
+  /**
+   * 국가 선택 다이얼로그에서 특정 국가를 선택하여 요율 조회를 시작
+   * @param code 국가 코드
+   * @param name 국가 이름
+   */
   sendQuery: function (code, name) {
     $('#searchForm input[name="code"]').val(code);
     $('#searchForm input[name="nm"]').val(name);
     $('#searchForm').submit();
   },
+  /**
+   * 검색 핸들러.
+   * #searchForm code 가 준비됐으면 바로 검색을 하고,
+   * 그렇지 않으면 autocomplete 국가 검색을 수행.
+   */
   searchNationRate: function () {
     if ($('#searchForm input[name="code"]').val().length === 3) {
       return true;
     }
     return this.$schedule.searchNation();
   },
+  /**
+   * '로밍 시 국가별 주의 사항' 토글 핸들러
+   */
   toggleAttention: function () {
     var imagePrefix = Tw.Environment.cdn + '/img/product/roam/ico_';
     var imageSuffix = '.svg';
@@ -118,16 +183,30 @@ Tw.RoamingRates.prototype = {
       );
     });
   },
+  /**
+   * 요율 정보 더보기 핸들러
+   * @param id 각 요율 섹션
+   */
   divExpand: function (id) {
     $('#' + id + ' .opener').css('display', 'none');
     $('#' + id + ' .rateBody').toggle('blind', {}, 250, function () {
     });
   },
+  /**
+   * 요율 정보 닫기 핸들러
+   * @param id 각 요율 섹션
+   */
   divCollapse: function (id) {
     $('#' + id + ' .rateBody').toggle('blind', {}, 250, function () {
       $('#' + id + ' .opener').css('display', 'block');
     });
   },
+  /**
+   * 요율 정보 BFF_10_0061 응답을 처리하는 핵심 함수.
+   * roaming/product.roaming.search-result.js 기존 코드로부터 복사했다.
+   *
+   * @param meta BFF_10_0061 응답 JSON
+   */
   setupResult: function (meta) {
     $('#fe-guamsaipan-pop').on('click', '.fe-close', function () {
       $('#fe-guamsaipan-pop').addClass('none');
@@ -243,6 +322,7 @@ Tw.RoamingRates.prototype = {
       this.reqParams.manageType = this.manageType[defaultType].type;
       $('#availableServices').text(this.typeTxt.join(', '));
 
+      // 아래 XHR 은 BFF_10_0058 이다.
       $.get('/bypass/core-product/v1/roaming/country-rate?' +
         'countryCode=' + this.lastQuery.countryCd + '&manageType=' + this.reqParams.manageType +
         '&showDailyPrice=' + this.reqParams.showDailyPrice, $.proxy(this.fillRateProperties, this));
@@ -250,8 +330,15 @@ Tw.RoamingRates.prototype = {
       // alert('이용 가능한 서비스가 없습니다');
     }
   },
+  /**
+   * BFF_10_0058 응답값을 받아 요율 정보 데이터들을 채운다.
+   * roaming/product.roaming.search-result.js 의 _handleSuccessRateResult 내용을 복사했다.
+   *
+   * @param resp BFF_10_0058 응답 JSON
+   */
   fillRateProperties: function (resp) {
     var popupPresented = false;
+    // 괌/사이판 팝업
     if (['GUM', 'MNP'].indexOf(this.reqParams.countryCd) >= 0) {
       $('#fe-guamsaipan-pop').removeClass('none');
       popupPresented = true;

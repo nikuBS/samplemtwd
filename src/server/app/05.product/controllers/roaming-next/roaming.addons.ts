@@ -1,10 +1,13 @@
 /**
- * 로밍 부가서비스 컨트롤러.
+ * @desc 로밍 부가서비스 컨트롤러.
  *
  * 전체 서비스는 BFF_10_0031 idxCtgCd:F01600 사용.
  * 이용중인 서비스는 BFF_10_0057 사용.
  *
  * 석연실님 요청으로 로밍오토다이얼(TW61000005), 데이터로밍무조건허용(NA00003157) 은 숨김.
+ *
+ * @author 황장호
+ * @since 2020-09-01
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
@@ -65,10 +68,12 @@ export default class RoamingAddonsController extends RoamingController {
     });
   }
 
-  protected get noUrlMeta(): boolean {
-    return true;
-  }
-
+  /**
+   * 로그인 여부 확인
+   *
+   * @param svcInfo
+   * @private
+   */
   private isLogin(svcInfo: any): boolean {
     if (FormatHelper.isEmpty(svcInfo)) {
       return false;
@@ -76,12 +81,20 @@ export default class RoamingAddonsController extends RoamingController {
     return true;
   }
 
+  /**
+   * 이 사용자가 이용 중인 부가서비스의 prodId 목록을 리턴한다.
+   *
+   * @param svcInfo
+   * @private
+   */
   private getAddonsUsing(svcInfo): Observable<any> {
     if (!this.isLogin(svcInfo)) {
+      // 만약 비로그인 상태인 경우 빈 목록을 리턴한다.
       return Observable.of([]);
     }
     return this.apiService.request(API_CMD.BFF_10_0057, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
+        // 부가서비스 내용은 getAddonsAll 을 참조하고, 이용중인 목록은 prodId 만 사용한다.
         return resp.result.roamingProdList.map(item => item.prodId);
       } else {
         return {
@@ -92,12 +105,18 @@ export default class RoamingAddonsController extends RoamingController {
     });
   }
 
+  /**
+   * 표시할 모든 부가서비스 목록을 리턴한다.
+   * BFF_10_0031 호출시 idxCtgCd=F01600 파라미터를 사용하는데, 이 코드는 로밍개선 이전부터 사용한 코드라 그대로 옮겨왔다.
+   *
+   * @private
+   */
   private getAddonsAll(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0031, {idxCtgCd: 'F01600'}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         const filtered: any = [];
         for (const p of resp.result.products) {
-          // 로밍오토다이얼, 데이터로밍무조건허용 숨김
+          // 로밍오토다이얼, 데이터로밍무조건허용 숨김. 석연실 매니저님 요청.
           if (['TW61000005', 'NA00003157'].indexOf(p.prodId) === -1) {
             filtered.push(p);
           }
@@ -108,6 +127,7 @@ export default class RoamingAddonsController extends RoamingController {
           products: filtered.map(product => {
             return {
               ...product,
+              // 아래 ProductHelper 코드는 로밍개선 이전에 있던 코드를 그대로 옮겨왔다.
               basFeeAmt: ProductHelper.convProductBasfeeInfo(product.basFeeAmt)
             };
           })

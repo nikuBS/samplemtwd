@@ -1,6 +1,8 @@
 /**
  * @file roaming.main.js
- * @desc T로밍
+ * @desc T로밍 메인
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingMain = function (rootEl, popularNations, nations, banners) {
@@ -17,13 +19,14 @@ Tw.RoamingMain = function (rootEl, popularNations, nations, banners) {
   }
   new Tw.RoamingMenu(rootEl).install();
 
-  // 일정선택 팝업 컴포넌트
+  // 일정선택 팝업 컴포넌트 초기화
   this.$schedule = new Tw.RoamingSchedules(rootEl, nations, baseDiv, function() {
     $('#nationsDialog').css('display', 'none');
     $('#scheduleDialog').css('display', 'none');
     $(baseDiv).css('display', 'block');
     $(baseDiv).addClass('wrap');
   });
+  // '전체 국가 보기' 다이얼로그 내 특정 국가 선택시 실행되야 할 콜백함수 등록
   this.$schedule.installNationSearch(this.$schedule.openScheduleDialog, baseDiv);
 
   this.bindEvents();
@@ -31,24 +34,43 @@ Tw.RoamingMain = function (rootEl, popularNations, nations, banners) {
 
 Tw.RoamingMain.prototype = {
   bindEvents: function () {
+    // '전체 국가 보기' 링크 선택
     this.$container.find('.fe-show-nations').on('click', $.proxy(this._openNationsDialog, this));
+    // 국가 검색 창의 돋보기 선택
     this.$container.find('.field-container .search').on('click', $.proxy(this.$schedule.searchNation, this.$schedule));
+    // 국가 검색 창의 onSubmit 핸들러
     this.$container.find('.search-form').on('submit', $.proxy(this._handleSearchSubmit, this));
   },
+  /**
+   * 국가 검색 창의 onSubmit 핸들러
+   * @private
+   */
   _handleSearchSubmit: function() {
     return this.$schedule.searchNation();
   },
+  /**
+   * '전체 국가 보기' 링크 핸들러
+   * @private
+   */
   _openNationsDialog: function() {
     this.$schedule.openNationsDialog();
     return false;
   },
+  /**
+   * 모듈 초기화.
+   * 1) 인기여행지 데이터 처리
+   * 2) 상단 현재 이용중인 요금제의 '~~ 외 2건' colorize
+   * 3) 어드민 배너 처리
+   */
   afterInit: function() {
     this.fillPopularNations();
     this.beautifyCurrentUse();
     this.setupBanners();
   },
+  /**
+   * 상단 현재 이용 중인 요금제의 '~~ 외 2건' colorize
+   */
   beautifyCurrentUse: function () {
-    // 상단 이용중인 카드의 '~외 1건' colorize
     var dom = document.getElementById('currentUseText');
     if (dom != null) {
       var text = dom.innerText;
@@ -59,8 +81,10 @@ Tw.RoamingMain.prototype = {
       }
     }
   },
+  /**
+   * 인기 여행지 데이터 준비
+   */
   fillPopularNations: function () {
-    // 인기 여행지 6개 데이터 준비
     var template = Handlebars.compile($('#tpl-nation-card').html());
     var cdn = Tw.Environment.cdn;
 
@@ -80,13 +104,20 @@ Tw.RoamingMain.prototype = {
     }
     this.$container.find('div.pn').on('click', $.proxy(this._handlePopularNation, this));
   },
+  /**
+   * 인기 여행지 클릭 핸들러
+   * @param e EventObject
+   * @private
+   */
   _handlePopularNation: function(e) {
     var code = e.currentTarget.getAttribute('data-code');
     var name = e.currentTarget.getAttribute('data-name');
     this.$schedule.openScheduleDialog(code, name, null, this.$schedule.$baseDiv);
   },
+  /**
+   * 어드민 배너 준비
+   */
   setupBanners: function() {
-    // 어드민 배너 준비
     if ($('#fe-banner-t').length) {
       new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, this.$banners, 'T', 'M');
     }

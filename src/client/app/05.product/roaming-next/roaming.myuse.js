@@ -1,6 +1,8 @@
 /**
  * @file roaming.myuse.js
  * @desc T로밍 > 나의 T로밍 이용현황
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingMyuse = function (rootEl) {
