@@ -212,7 +212,7 @@
 
 .main-chart-box > .ti { display: block; margin-top: 0.56rem; }
 
-.main-chart-box > .ti .bt { color: inherit; font-size: 1.63rem; font-weight: 500; line-height: normal; padding: 0 0.69rem; background: url(/img/ico/chart_tit_arrow.png) no-repeat right 50%; background-size: 4.5px 8px; }
+.main-chart-box > .ti .bt { color: inherit; font-size: 1.63rem; font-weight: 500; line-height: normal; padding: 0 0.69rem; background: url(/img/ico/chart_tit_arrow.png) no-repeat right 50%; background-size: 4.5px 8px; word-break: break-all; }
 
 .main-chart-box .donutchart { position: relative; margin-bottom: -0.94rem; }
 
