@@ -375,6 +375,10 @@ Tw.MyTFareBillPrepayAuto.prototype = {
    */
   _payFail: function ($target, err) {
     Tw.CommonHelper.endLoading('.container');
+    // 실패 메시지를 안주는 경우가 있어서 default 내용을 넣어준다.
+    if (Tw.FormatHelper.isEmpty(err.msg)) {
+      err.msg = Tw.ALERT_MSG_MYT_FARE.AUTO_PREPAY_FAIL;
+    }
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
   /**
