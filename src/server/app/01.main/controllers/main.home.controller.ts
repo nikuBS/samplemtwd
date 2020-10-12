@@ -827,16 +827,16 @@ class MainHome extends TwViewController {
   public compareVer (a, b): boolean {
     let x=a.split('.').map(e=> parseInt(e));
     let y=b.split('.').map(e=> parseInt(e));
-    let z = "";
+    let z = '';
 
     for(let i=0;i<x.length;i++) {
         if(x[i] === y[i]) {
-            z+="e";
+            z+='e';
         } else
         if(x[i] > y[i]) {
-            z+="m";
+            z+='m';
         } else {
-            z+="l";
+            z+='l';
         }
     }
     if (!z.match(/[l|m]/g)) {
@@ -851,8 +851,17 @@ class MainHome extends TwViewController {
   public getOsVersionCheck(req): boolean {
     try {
       let agentString = this.getUserAgent(req);
-      console.log("[10650-DEBUG-UserAgent] ", agentString);
+      // console.log("[10650-DEBUG-UserAgent] ", agentString);
       let os = agentString.indexOf('iPhone') > -1 ? 'ios' : 'aos';
+      if (os === 'aos') {
+        if (agentString.indexOf('Mac')) {
+          os = 'ios';
+        } else if (agentString.indexOf('iPad')) {
+          os = 'ios';
+        } else if (agentString.indexOf('iPod')) {
+          os = 'ios';
+        }
+      }
       if (os === 'ios') {
         let reg = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
         let reg2 = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}');
@@ -882,12 +891,12 @@ class MainHome extends TwViewController {
         let mac_version_len = mac_version.split('_').length;
         // console.log(">> [TEST] mac_version_len: ", mac_version_len);
         if (mac_version_len === 1) {
-          mac_version = mac_version + "_0_0";
+          mac_version = mac_version + '_0_0';
         } else if (mac_version_len === 2) {
-          mac_version = mac_version + "_0";
+          mac_version = mac_version + '_0';
         }
 
-        mac_version = mac_version.replace(/_/g, ".");
+        mac_version = mac_version.replace(/_/g, '.');
         // console.log(mac_check_version, mac_version.replace(/_/g, "."));
 
         // true: 노출, false: 비노출 
