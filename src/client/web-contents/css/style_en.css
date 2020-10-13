@@ -24,7 +24,9 @@
 
 #common-menu .footer .f-menu li { display: block; }
 
-#common-menu .footer .f-menu li .bt { font-size: 0.75rem; height: 0.94rem; font-weight: 300; border-bottom: 1px solid #666; }
+#common-menu .footer .f-menu li + li { margin-top: 0.25rem; }
+
+#common-menu .footer .f-menu li .bt { font-size: 0.81rem; height: 0.94rem; font-weight: 300; border-bottom: 1px solid #666; }
 
 #common-menu.tod-common-menu .footer .f-menu li:not(:last-child):before { display: none; }
 
@@ -96,9 +98,7 @@
 
 .date-graph-list .tit { width: 100%; display: block; font-size: 1rem; font-weight: 500; margin-bottom: 0.94rem; }
 
-.donut-chart.small { width: 2.88rem; height: 2.88rem; background: url("/img/en/bg-donut-small.png") no-repeat 0 0; background-size: 100% 100%; }
-
-.donut-chart.small, .donut-chart.small .donut-chart-area { width: 2.88rem; height: 2.88rem; }
+.donut-chart.small { background: url("/img/en/bg-donut-small.png") no-repeat 0 0; background-size: 100% 100%; }
 
 .donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill { border: 0.5rem solid #f76252; clip: rect(0, 23px, 46px, 0); }
 
@@ -196,11 +196,17 @@
 
 .extraservice-list > .category-type .products-titleinfo .info .money > span { font-size: 1.19rem; }
 
-.extraservice-list > .category-type .products-titleinfo .info .taglist-wrap { display: block; font-weight: 300; margin-top: 0; text-align: right; }
+.extraservice-list > .category-type .products-titleinfo .info .taglist-wrap { display: block; font-weight: 300; margin-top: 0; text-align: right; font-size: 0.81rem; color: #000; }
 
 .products-detailinfo02 { padding-top: 0.94rem; }
 
 .products-detailinfo02 > li:last-of-type { margin-bottom: 0 !important; }
+
+.products-detailinfo02 .category-type { font-size: 0.81rem; }
+
+.products-detailinfo02 .category-type .gb { background-position: 0 0.29rem !important; }
+
+.products-detailinfo02 .category-type .basic { background-position: 0 0.41rem; }
 
 .icon-cellphone-48 { background: url("/img/en/icon_48px_cellphone.svg") no-repeat 0 0; background-size: 100% 100%; }
 
@@ -256,11 +262,15 @@
 
 .txt-24 { font-size: 1.5rem; }
 
-.box-suggest .suggest-info .suggest-list li { font-size: 0.81rem; color: #666; line-height: 1.06rem; text-align: center; margin-bottom: 0.94rem; }
+.box-suggest .suggest-info .suggest-list li { font-size: 0.88rem; color: #666; line-height: 1.06rem; text-align: center; margin-bottom: 0.94rem; }
 
 .box-suggest .suggest-info .suggest-list li:before { display: none; }
 
 .box-suggest .suggest-info .suggest-list li:last-of-type { margin-bottom: 0; }
+
+.cont-actionsheet .ac-list .type1 button .table-cell.cell-title2 .add-txt { font-size: 0.81rem; }
+
+.cont-actionsheet .ac-tit { font-size: 0.81rem; }
 
 .checkbox.type01-big:before { content: ""; display: inline-block; margin-top: -0.31rem; width: 1.5rem; height: 1.5rem; vertical-align: middle; background: url("/img/en/component_check_small_off.svg") no-repeat 0 0; background-size: 1.5rem; top: 1.75rem !important; }
 
@@ -336,7 +346,7 @@
 
 .long-error .txt-center .basic-txt + .basic-txt { padding-top: 0.75rem; }
 
-.popup-page .protect-pass-wrap { padding: 0 0.81rem !important; }
+.popup-page .protect-pass-wrap { padding: 0 !important; }
 
 .cellphone-info .ico { width: 1rem; height: 1.44rem; background: url("/img/en/sel-ico-mobile-black.png") 0 0 no-repeat; background-size: 100%; display: inline-block; margin-top: 0.19rem; }
 
@@ -348,6 +358,10 @@
 
 .msg-guide.align-l { text-align: left; background: url("/img/en/ico_refer.png") 0 4px no-repeat; padding-left: 0.63rem; background-size: 0.38rem 0.38rem; }
 
+.complete-error-tx .tx2 { font-size: 0.88rem; }
+
+.link-caption-type li button .txt, .link-caption-type li a .txt { font-size: 0.88rem; }
+
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
 
@@ -355,9 +369,13 @@
 
 .link-area .rang-kor::before { content: ''; display: inline-block; width: 1.56rem; height: 1.56rem; background: url("/img/en/ico_kor.png") 0 0 no-repeat; background-size: 100% 100%; position: absolute; top: 50%; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); left: 0; }
 
-.link-area { -webkit-box-sizing: border-box; box-sizing: border-box; }
+.link-area { -webkit-box-sizing: border-box; box-sizing: border-box; position: relative; }
 
-.link-area .f-site { width: 6.56rem; height: 1.88rem; line-height: 1.88rem; font-size: 0.75rem; color: #666; padding-top: 0; background: url("/img/en/arr_Fsite.png") 90% center no-repeat; background-size: 0.78rem 0.44rem; position: absolute; top: 1.56rem; right: 0.94rem; }
+.link-area > div { width: 6.56rem; height: 1.88rem; position: absolute; top: 1.56rem; right: 0.94rem; border: 1px solid #ccc; }
+
+.link-area > div .f-site { width: 100%; height: 1.88rem; line-height: 1.88rem; font-size: 0.75rem; color: #666; padding-top: 0; opacity: 0; }
+
+.link-area > div > label { width: 6.44rem; height: 1.75rem; display: inline-block; position: absolute; top: 1px; right: 1px; font-size: 0.81rem; color: #666; padding: 0 0.31rem; -webkit-box-sizing: border-box; box-sizing: border-box; background: #edeef0 url("/img/en/arr_Fsite.png") 95% center no-repeat; background-size: 0.78rem 0.44rem; z-index: -1; }
 
 .date-graph-list li { padding: 0.94rem 0; }
 
@@ -369,9 +387,9 @@
 
 .date-graph-list li .cont .my-data::after { clear: both; }
 
-.date-graph-list li .cont .my-data dt { width: 50%; font-size: 0.81rem; color: #666; float: left; font-weight: 300; }
+.date-graph-list li .cont .my-data dt { width: 50%; font-size: 0.94rem; color: #666; float: left; font-weight: 300; }
 
-.date-graph-list li .cont .my-data dd { width: 50%; font-size: 1rem; text-align: right; float: right; font-weight: 500; color: #858585; margin-top: -2px; }
+.date-graph-list li .cont .my-data dd { width: 50%; font-size: 1.06rem; text-align: right; float: right; font-weight: 500; color: #858585; margin-top: -2px; }
 
 .date-graph-list li .cont .my-data dd.red { color: #f76252; }
 
@@ -479,7 +497,7 @@
 
 .chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl { width: 100%; font-size: 0; }
 
-.chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dt { display: inline-block; width: 3.44rem; font-size: 0.81rem; font-weight: 400; color: #666; vertical-align: middle; }
+.chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dt { display: inline-block; width: 3.44rem; font-size: 0.88rem; font-weight: 400; color: #666; vertical-align: middle; }
 
 .chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dd { display: inline-block; width: calc(100% - 3.44rem); font-size: 0; vertical-align: middle; }
 
@@ -499,7 +517,7 @@
 
 .chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dd .price { display: inline-block; width: 5rem; text-align: right; vertical-align: middle; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dd .price .v { font-size: 0.81rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dd .price .v { font-size: 0.88rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 .chart-wrap.bar6 .data-arry .data-belt .data-ul > li > dl > dd .price .v > button { display: inline-block; position: relative; padding-right: 0.56rem; line-height: 1em; }
 
@@ -583,7 +601,7 @@
 
 .charge-list .acco-list .acco-box { min-height: 3.06rem; }
 
-.charge-list .acco-list .acco-box .acco-tit > button { width: 100%; height: 100%; position: relative; font-size: 0.88rem; color: #000; font-weight: 400; }
+.charge-list .acco-list .acco-box .acco-tit > button { width: 100%; height: 100%; position: relative; font-size: 1rem; color: #000; font-weight: 400; }
 
 .charge-list .acco-list .acco-box .acco-tit > button .phone-num-ico { width: 0.88rem; height: 1.25rem; vertical-align: text-bottom; }
 
@@ -595,11 +613,11 @@
 
 .charge-list .acco-list .acco-box .num-list { width: 100%; display: table; padding: 1.06rem 1.25rem 0.53rem 1.25rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.charge-list .acco-list .acco-box .num-list dt { display: table-cell; width: 65%; font-size: 0.88rem; }
+.charge-list .acco-list .acco-box .num-list dt { display: table-cell; width: 65%; font-size: 1rem; }
 
 .charge-list .acco-list .acco-box .num-list dt .phone-num-ico { width: 0.88rem; height: 1.25rem; vertical-align: text-bottom; margin-right: 0.63rem; }
 
-.charge-list .acco-list .acco-box .num-list dd { display: table-cell; width: 35%; font-size: 1.06rem; font-weight: 500; text-align: right; }
+.charge-list .acco-list .acco-box .num-list dd { display: table-cell; width: 35%; font-size: 1.13rem; font-weight: 500; text-align: right; }
 
 .charge-list .acco-list .acco-box.on .acco-cont { padding: 0 1rem !important; }
 
@@ -607,9 +625,9 @@
 
 .call-plan { width: 100%; height: 3.25rem; line-height: 3.25rem; padding: 0 0.94rem; display: table; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.call-plan dt { width: 65%; display: table-cell; font-size: 0.81rem; color: #666; text-align: left; }
+.call-plan dt { width: 65%; display: table-cell; font-size: 1rem; color: #666; text-align: left; }
 
-.call-plan dd { width: 35%; display: table-cell; font-size: 0.94rem; color: #000; font-weight: 500; text-align: right; }
+.call-plan dd { width: 35%; display: table-cell; font-size: 1.06rem; color: #000; font-weight: 500; text-align: right; }
 
 .my-info-tit { height: 3.25rem; line-height: 3.25rem; font-size: 1rem; font-weight: 500; }
 
@@ -736,7 +754,7 @@
 .container.logout .complete-error-tx .tx2 + .tx2, .container.warning .complete-error-tx .tx2 + .tx2 { margin-top: 0.88rem; }
 
 /* 이용안내(Support) */
-.support-video > p { font-size: 0.81rem; font-weight: 300; color: #000; }
+.support-video > p { font-size: 0.88rem; font-weight: 300; color: #000; }
 
 .support-video > p.title { font-size: 1.13rem; font-weight: 500; margin-bottom: 0.5rem; }
 
@@ -770,9 +788,9 @@
 
 .support-link > li.doc { background: url("/img/en/icon_58px_document.png") left 0.38rem center no-repeat; background-size: 1.19rem 1.75rem; }
 
-.support-link > li > button { display: inline-block; width: 100%; padding-left: 2.75rem; font-size: 0.81rem; font-weight: 300; color: #858585; text-align: left; line-height: 1.2em; background: url("/img/en/arrow_support.png") right top 0.06rem no-repeat; background-size: 0.44rem 0.69rem; }
+.support-link > li > button { display: inline-block; width: 100%; padding-left: 2.75rem; font-size: 0.88rem; font-weight: 300; color: #858585; text-align: left; line-height: 1.2em; background: url("/img/en/arrow_support.png") right top 0.13rem no-repeat; background-size: 0.44rem 0.69rem; }
 
-.support-link > li > button > strong { display: block; font-size: 0.94rem; font-weight: 500; color: #000; margin-bottom: 0.31rem; }
+.support-link > li > button > strong { display: block; font-size: 1rem; font-weight: 500; color: #000; margin-bottom: 0.44rem; }
 
 .support-link > li + li { border-top: 1px solid #f2f2f2; }
 
@@ -780,7 +798,7 @@
 
 .cs-info.rc { background: url("/img/en/bg_rc.png") right center no-repeat; background-size: 5.31rem 5rem; }
 
-.cs-info > p { font-size: 0.94rem; font-weight: 500; color: #000; }
+.cs-info > p { font-size: 1rem; font-weight: 500; color: #000; }
 
 .cs-info > p .lang-badge { display: inline-block; height: 0.88rem; line-height: 0.88rem; padding: 0 0.31rem; font-size: 0.5rem; font-weight: 400; color: #178bce; background-color: #e6f2fb; border-radius: 0.13rem; vertical-align: middle; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
@@ -790,11 +808,11 @@
 
 .cs-info > dl { margin-top: 1rem; padding-left: 0.63rem; font-size: 0; }
 
-.cs-info > dl > dt { display: inline-block; width: 3.94rem; vertical-align: top; margin-top: 0.5rem; font-size: 0.81rem; font-weight: 300; color: #858585; }
+.cs-info > dl > dt { display: inline-block; width: 3.94rem; vertical-align: top; margin-top: 0.5rem; font-size: 0.88rem; font-weight: 300; color: #858585; }
 
 .cs-info > dl > dt:first-of-type { margin-top: 0; }
 
-.cs-info > dl > dd { display: inline-block; width: calc(100% - 3.94rem); vertical-align: top; margin-top: 0.5rem; font-size: 0.81rem; font-weight: 300; color: #000; }
+.cs-info > dl > dd { display: inline-block; width: calc(100% - 3.94rem); vertical-align: top; margin-top: 0.5rem; font-size: 0.88rem; font-weight: 300; color: #000; }
 
 .cs-info > dl > dd:first-of-type { margin-top: 0; }
 
@@ -828,9 +846,9 @@
 
 .store-list > li .info-top .location { font-size: 0.81rem; font-weight: 300; color: #000; }
 
-.store-list > li .info-top .name { font-size: 0.94rem; font-weight: 500; color: #000; margin-top: 0.44rem; }
+.store-list > li .info-top .name { font-size: 1rem; font-weight: 500; color: #000; margin-top: 0.44rem; }
 
-.store-list > li .info-top .address { font-size: 0.81rem; font-weight: 400; color: #858585; margin-top: 0.44rem; }
+.store-list > li .info-top .address { font-size: 0.88rem; font-weight: 400; color: #858585; margin-top: 0.44rem; }
 
 .store-list > li .info-top .lang { margin-top: 0.63rem; font-size: 0; }
 
@@ -844,11 +862,11 @@
 
 .store-list > li .info-bottom > p.time { border-right: 0; border-radius: 0.25rem 0 0 0.25rem; }
 
-.store-list > li .info-bottom > p.time > span { display: inline-block; padding-left: 0.94rem; font-size: 0.81rem; font-weight: 400; color: #858585; background: url("/img/en/icon_22px_time.png") left center no-repeat; background-size: 0.69rem 0.69rem; vertical-align: middle; }
+.store-list > li .info-bottom > p.time > span { display: inline-block; padding-left: 1.06rem; font-size: 0.88rem; font-weight: 400; color: #858585; background: url("/img/en/icon_22px_time.png") left center no-repeat; background-size: 0.81rem 0.81rem; vertical-align: middle; }
 
 .store-list > li .info-bottom > p.tel { border-radius: 0 0.25rem 0.25rem 0; }
 
-.store-list > li .info-bottom > p.tel > button { display: inline-block; padding-left: 0.94rem; font-size: 0.81rem; font-weight: 300; color: #178bce; text-decoration: underline; background: url("/img/en/icon_22px_call.png") left center no-repeat; background-size: 0.69rem 0.69rem; vertical-align: middle; }
+.store-list > li .info-bottom > p.tel > button { display: inline-block; padding-left: 1.06rem; font-size: 0.88rem; font-weight: 300; color: #178bce; text-decoration: underline; background: url("/img/en/icon_22px_call.png") left center no-repeat; background-size: 0.81rem 0.81rem; vertical-align: middle; }
 
 .custom-form input[type=radio] + .r-type1 { background-image: url(/img/en/component_radio_small_off.svg); }
 
@@ -864,11 +882,11 @@
 
 .video-list > li { padding: 1.88rem 0; }
 
-.video-list > li > p { font-size: 0.75rem; font-weight: 300; color: #666666; line-height: 1.6em; }
+.video-list > li > p { font-size: 0.88rem; font-weight: 300; color: #666666; line-height: 1.6em; }
 
-.video-list > li > p.num { font-weight: 500; color: #000; margin-bottom: 0.13rem; }
+.video-list > li > p.num { font-size: 0.81rem; font-weight: 500; color: #f76252; margin-bottom: 0.13rem; }
 
-.video-list > li > p.title { font-size: 1.13rem; font-weight: 700; color: #000; margin-bottom: 0.13rem; }
+.video-list > li > p.title { font-size: 1.38rem; font-weight: 700; color: #000; margin-bottom: 0.13rem; }
 
 .video-list > li .video-card { margin-top: 1.13rem; border-radius: 0.38rem; overflow: hidden; }
 
@@ -944,69 +962,45 @@
 /* 요금제 리스트 */
 .subscribed-plan { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; padding: 1rem 0; }
 
-.subscribed-plan > p { font-size: 0.81rem; font-weight: 400; color: #666666; }
+.subscribed-plan > p { font-size: 1rem; font-weight: 400; color: #666666; }
 
-.subscribed-plan > p.plan-name { font-size: 0.94rem; font-weight: 500; color: #000; }
+.subscribed-plan > p.plan-name { font-size: 1.06rem; font-weight: 500; color: #000; }
 
 .plan-banner { width: 100%; }
 
 .plan-banner > img { width: 100%; vertical-align: top; }
 
-.plan-list .headingbox-wrap .title { font-size: 1rem; font-weight: 500; color: #000; }
+.representcharge-list > li .representcharge-info:after { background: url(/img/en/ico-group.png) no-repeat -1.94rem -22.5rem; background-size: 50px; }
 
-.plan-list .representcharge-list > li .representcharge-info { padding-left: 0; }
+.productinfoscroll-box.slide-nopd { padding-left: 0.94rem !important; padding-right: 0.94rem !important; }
 
-.plan-list .representcharge-list > li .representcharge-info:after { background-image: url("/img/en/ico-group.png"); top: 50%; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); }
+.productinfoscroll-box.slide-nopd .plan-card { display: block; width: 100%; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 1rem; border-radius: 0.25rem; background-color: #fff; -webkit-box-shadow: 0 0.06rem 0.63rem #e5e6e8; box-shadow: 0 0.06rem 0.63rem #e5e6e8; }
 
-.plan-list .plan-title { display: inline-block; width: 100%; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 0 2.5rem 0 3.44rem; background-repeat: no-repeat; background-position: left center; background-size: 2.75rem 2.75rem; }
+.productinfoscroll-box.slide-nopd .plan-card > span { display: inline-block; width: 100%; text-align: left; background: url("/img/en/arrow_support.png") right top 0.19rem no-repeat; background-size: 0.44rem 0.69rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.plan-list .plan-title.p-5gx { background-image: url("/img/en/icon_plan_5gx.png"); }
+.productinfoscroll-box.slide-nopd .plan-card > span .plan-name { display: inline-block; width: 100%; font-size: 0.88rem; font-weight: 500; color: #000; }
 
-.plan-list .plan-title.p-0teen { background-image: url("/img/en/icon_plan_0teen.png"); }
+.productinfoscroll-box.slide-nopd .plan-card > span .fee { display: inline-block; font-size: 1rem; font-weight: 700; color: #f76252; margin-top: 0.31rem; }
 
-.plan-list .plan-title.tplan { background-image: url("/img/en/icon_plan_tplan.png"); }
+.productinfoscroll-box.slide-nopd .plan-card > ul { margin-top: 0.88rem; padding-top: 0.88rem; border-top: 1px solid #f2f2f2; font-size: 0; }
 
-.plan-list .plan-title.p-0plan { background-image: url("/img/en/icon_plan_0plan.png"); }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li { display: inline-block; width: 33.33%; text-align: center; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.plan-list .plan-title.ting { background-image: url("/img/en/icon_plan_ting.png"); }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li:first-child { text-align: left; padding-left: 5%; }
 
-.plan-list .plan-title.senior { background-image: url("/img/en/icon_plan_senior.png"); }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li > span { display: inline-block; font-size: 0.81rem; font-weight: 500; color: #666666; }
 
-.plan-list .plan-title.p-5gtab { background-image: url("/img/en/icon_plan_5gtab.png"); }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li > span > i { display: inline-block; margin-right: 0.31rem; }
 
-.plan-list .plan-title .plan-name { display: inline-block; width: 100%; font-size: 1rem; font-weight: 400; margin-bottom: 0.25rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li > span.data { color: #178bce; }
 
-.plan-list .plan-title .plan-name .plan-badge { display: inline-block; height: 0.94rem; line-height: 0.94rem; padding: 0 0.31rem; font-size: 0.56rem; font-weight: 400; color: #178bce; background-color: #e6f2fb; border-radius: 0.13rem; vertical-align: middle; -webkit-box-sizing: border-box; box-sizing: border-box; margin-left: 0.38rem; }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li > span.data > i { width: 0.81rem; height: 0.81rem; background: url("/img/en/bg_gb.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
 
-.plan-list .plan-title .plan-desc { display: inline-block; font-size: 0.81rem; font-weight: 300; color: #959595; line-height: 1.4em !important; }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li > span.talktime > i { width: 0.88rem; height: 0.88rem; background: url("/img/en/bg_type.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
 
-.plan-list .plan-card { display: block; width: 100%; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 1rem; border-radius: 0.25rem; background-color: #fff; -webkit-box-shadow: 0 0.06rem 0.63rem #e5e6e8; box-shadow: 0 0.06rem 0.63rem #e5e6e8; }
+.productinfoscroll-box.slide-nopd .plan-card > ul > li > span.units > i { width: 0.88rem; height: 0.63rem; background: url("/img/en/bg_sms.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.06rem; }
 
-.plan-list .plan-card > span { display: inline-block; width: 100%; text-align: left; background: url("/img/en/arrow_support.png") right top 0.19rem no-repeat; background-size: 0.44rem 0.69rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
-
-.plan-list .plan-card > span .plan-name { display: inline-block; width: 100%; font-size: 0.88rem; font-weight: 500; color: #000; }
-
-.plan-list .plan-card > span .fee { display: inline-block; font-size: 1rem; font-weight: 700; color: #f76252; margin-top: 0.31rem; }
-
-.plan-list .plan-card > ul { margin-top: 0.88rem; padding-top: 0.88rem; border-top: 1px solid #f2f2f2; font-size: 0; }
-
-.plan-list .plan-card > ul > li { display: inline-block; width: 33.33%; text-align: left; padding-left: 4%; -webkit-box-sizing: border-box; box-sizing: border-box; }
-
-.plan-list .plan-card > ul > li:nth-child(2) { padding-left: 3%; }
-
-.plan-list .plan-card > ul > li > span { display: inline-block; font-size: 0.81rem; font-weight: 500; color: #666666; }
-
-.plan-list .plan-card > ul > li > span > i { display: inline-block; margin-right: 0.31rem; }
-
-.plan-list .plan-card > ul > li > span.data { color: #178bce; }
-
-.plan-list .plan-card > ul > li > span.data > i { width: 0.81rem; height: 0.81rem; background: url("/img/en/bg_gb.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
-
-.plan-list .plan-card > ul > li > span.talktime > i { width: 0.88rem; height: 0.88rem; background: url("/img/en/bg_type.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.13rem; }
-
-.plan-list .plan-card > ul > li > span.units > i { width: 0.88rem; height: 0.63rem; background: url("/img/en/bg_sms.png") center center no-repeat; background-size: 100% 100%; vertical-align: -0.06rem; }
-
-.plan-list .plan-card + .plan-card { margin-top: 0.63rem; }
+.productinfoscroll-box.slide-nopd .plan-card + .plan-card { margin-top: 0.63rem; }
 
 .products-detailinfo02 .category-type { -webkit-box-sizing: border-box; box-sizing: border-box; }
 
@@ -1027,5 +1021,58 @@
 .products-detailinfo02 .category-type .type { background-image: url("/img/en/bg_type.png"); }
 
 .products-detailinfo02 .category-type .basic { background-image: url("/img/en/bg_sms.png"); }
+
+/* 201008 [OP002-10791] 추가 : MIRI 납부금액*/
+.tod-ico-miri { display: block; width: 2.1875rem; height: 0.9375rem; background: url(/img/ico/ico-miri.png) no-repeat 0 0; background-size: 100%; }
+
+.tod-miri-bill { margin-top: 0.9375rem; }
+
+.tod-miri-bill .btn-miri { position: relative; border-radius: 0.3125rem; background-color: #eff6fb; padding: 0.625rem 0; width: 100%; text-align: left; }
+
+.tod-miri-bill .btn-miri:after { position: absolute; right: 0.63rem; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 23% 50%; background-size: 100%; }
+
+.tod-miri-bill .inner-flex { -webkit-display: flex; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+
+.tod-miri-bill .tod-ico-miri { margin: 0 0 0 1.25rem; }
+
+.tod-miri-bill .txt-wrap { font-size: 0.8125rem; margin-left: 1.25rem; }
+
+.tod-miri-list { padding: 0 0 1.25rem; background: #fff; }
+
+.tod-miri-list .tod-miri-list-inner { position: relative; }
+
+.tod-miri-list .tod-miri-list-inner:before { content: ''; position: absolute; top: 25px; bottom: 0; left: 3px; width: 1px; background: #ebebeb; }
+
+.tod-miri-list .tod-miri-item { padding-top: 1.25rem; }
+
+.tod-miri-list .tod-miri-info { margin-left: 1.25rem; }
+
+.tod-miri-date { position: relative; font-size: 0.875rem; color: #666; padding-left: 0.375rem; }
+
+.tod-miri-date:before { content: ''; display: block; position: absolute; left: 0; top: 50%; margin-top: -4px; width: 0.375rem; height: 0.375rem; border-radius: 50%; background-color: #c6c6c6; }
+
+.tod-miri-date .sp-date { display: inline-block; margin-left: 0.375rem; }
+
+.tod-miri-info { border: 1px solid #edeef0; border-radius: 0.1875rem; padding: 0.9375rem 0.9375rem 0.625rem; margin-top: 0.625rem; }
+
+.tod-miri-info .item { display: -webkit-box; display: -ms-flexbox; display: flex; font-size: 0.8125rem; color: #959595; margin-bottom: 0.625rem; }
+
+.tod-miri-info .item.blue { font-size: 1rem; color: #178bce; }
+
+.tod-miri-info .item.org { font-size: 1rem; color: #f76252; }
+
+.tod-miri-info .item .tit { width: 50%; text-align: left; }
+
+.tod-miri-info .item .data { width: 50%; text-align: right; }
+
+.tod-miri-info .item .data .data-item { display: block; }
+
+.tod-miri-info .item-result { border-top: 1px solid #f2f2f2; padding-top: 0.625rem; font-size: 0.875rem; text-align: right; }
+
+.sort-area .btn-select:after { background-image: url(/img/en/btn-select.png); }
+
+.result-none { background-image: url(/img/en/ico_notice_point_gray.png); }
+
+/* //201008 [OP002-10791] 추가 : MIRI 납부금액*/
 
 /*# sourceMappingURL=maps/style_en.css.map */
