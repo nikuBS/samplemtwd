@@ -7,11 +7,12 @@
 
 import { NextFunction, Request, Response } from 'express-serve-static-core';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { MYT_FARE_COMPLETE_MSG, MYT_FARE_ERROR_MSG } from '../../../../types/string.type';
+import { MYT_FARE_ERROR_MSG } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
 interface Query {
   orderNumber: string;
+  amount: string;
 }
 
 interface ResultJsonError {
@@ -42,7 +43,8 @@ class MyTFareBillSkpayResult extends TwViewController {
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query: Query = {
-      orderNumber: req.query.dataKey
+      orderNumber: req.query.dataKey,
+      amount: req.query.amount
     };
     const status = req.body.status;
     const result = req.body.result;
@@ -53,13 +55,12 @@ class MyTFareBillSkpayResult extends TwViewController {
     const renderUrl = 'bill/myt-fare.bill.skpay.result.html';
 
     resultUtf = this.getResultUtf(result, resultUtf);
-
     if (status === '200') {
       paymentToken = this.getPaymentToken(resultUtf, paymentToken);
       const data = this.getDataApi(query, paymentToken);
       this.apiService.request(API_CMD.BFF_07_0097, data).subscribe((createInfo) => {
         if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
-          return res.redirect('/myt-fare/bill/pay-complete');
+          return res.redirect('/myt-fare/bill/pay-complete?type=skpay&amount=' + query.amount);
         } else {
           return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, createInfo.msg), {
             pageInfo,

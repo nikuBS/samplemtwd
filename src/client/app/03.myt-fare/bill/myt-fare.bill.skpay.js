@@ -369,7 +369,7 @@ Tw.MyTFareBillSkpay.prototype = {
         authorizationGrant: resp.result.authorizationGrant,
         offerToken: resp.result.offerToken,
         orderNumber: resp.result.orderNumber,
-        redirectUri: this.redirectUri + '?dataKey=' + resp.result.orderNumber
+        redirectUri: this.redirectUri + '?dataKey=' + resp.result.orderNumber + '&amount=' + this._paymentCommon.getAmount()
       });
       /* jshint ignore:end */
     } else {
