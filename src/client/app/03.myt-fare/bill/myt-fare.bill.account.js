@@ -13,7 +13,7 @@
 Tw.MyTFareBillAccount = function (rootEl) {
   this.$container = rootEl;
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl); // 납부할 회선 선택하는 공통 컴포넌트
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl, 'account'); // 납부할 회선 선택하는 공통 컴포넌트
   this._bankList = new Tw.MyTFareBillBankList(rootEl); // 은행리스트 가져오는 공통 컴포넌트
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
 
@@ -265,7 +265,12 @@ Tw.MyTFareBillAccount.prototype = {
    */
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._historyService.replaceURL('/myt-fare/bill/pay-complete'); // 완료 페이지로 이동
+      this._paymentCommon.goComplete({
+        bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
+        bankOrCardName: $.trim(this.$container.find('.fe-payment-option-name').text()),
+        bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id')
+      });
+      // this._historyService.replaceURL('/myt-fare/bill/pay-complete'); // 완료 페이지로 이동
     } else if (this._isPayFail) {
       Tw.Error(this._err.code, this._err.msg).pop(); // 에러 시 공통팝업 호출
     }

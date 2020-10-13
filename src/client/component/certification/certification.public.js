@@ -245,6 +245,12 @@ Tw.CertificationPublic.prototype = {
    */
   _successComplete: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      /*
+        OP002-10665 실시간 계좌이체 납부 후 미인증 자동납부 신청/변경(BFF_07_0107, BFF_07_0108)에서 drwagrPrfKeyVal(증빙키) 사용하기 위해
+        session storage에 증빙키를 저장한다.
+       */
+      var drwagrPrfKeyVal = resp.result && resp.result.drwagrPrfKeyVal ? resp.result.drwagrPrfKeyVal : '';
+      Tw.CommonHelper.setSessionStorage('drwagrPrfKeyVal', drwagrPrfKeyVal);
       this._callback(resp);
     } else {
       Tw.Error(resp.code, resp.msg).pop();

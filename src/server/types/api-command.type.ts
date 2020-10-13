@@ -552,6 +552,8 @@ export const API_CMD = {
   BFF_07_0104: { path: '/core-bill/:version/micro-prepay/prepay-swing-error-msg', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0105: { path: '/core-bill/:version/micro-prepay/auto-process-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0106: { path: '/core-bill/:version/use-contents-prepay/auto-process-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0107: { path: '/core-bill/:version/auto-payments-nc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true},
+  BFF_07_0108: { path: '/core-bill/:version/auto-payments-nc', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true},
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
