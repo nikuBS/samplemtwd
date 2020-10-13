@@ -1,11 +1,15 @@
 <%_ if (svcInfo.loginType === 'T') { _%>
-<div class="tod-line-sel-box">
-    <button type="button" class="line-sel-btn<% if (parseInt(svcInfo.selectableExpsSvcCnt, 10) === 1) { %> side-arr<% } %> fe-bt-line" data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? xtEid.multiple: xtEid.single %>" data-xt_csid="CS_ID" data-xt_action="BC">
-        <i class="sel-ico">
-            <img src="<%= CDN %>/img/myt/<%= svcInfo.ico %>" aria-hidden="true">
-        </i>
-        <span class="item"><%= svcInfo.lineNickNm %></span>
-        <span class="detail-info"><%= svcInfo.add %></span>
+<div class="tod-line-sel-box tod-line-sel-new">
+  <div class="tod-line-sel-fixed">
+    <div class="line-sel-btn">
+      <i class="sel-ico"><img src="<%= CDN %>/img/myt/<%= svcInfo.ico %>" alt=""></i><span class="item"><%= svcInfo.lineNickNm %></span>
+      <span class="detail-info"><%= svcInfo.add %></span>
+    </div>
+    <button class="fe-bt-line btn-round3 btn-other-line" data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? xtEid.multiple: xtEid.single %>" data-xt_csid="CS_ID" data-xt_action="BC">
+      <%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) === 1) ? '회선 관리' : '다른 회선' %>
     </button>
+  </div>
 </div>
+<%# } else { _%>
+<!--<hr class="cont-sp type1" aria-hidden="true">-->
 <%_ } _%>
