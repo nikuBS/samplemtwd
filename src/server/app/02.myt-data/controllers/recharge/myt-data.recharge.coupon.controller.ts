@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
+import {REDIS_KEY} from '../../../../types/redis.type';
 
 interface Coupon {
   copnIsueNum: string;
@@ -28,9 +29,14 @@ export default class MyTDataRechargeCoupon extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
 
     Observable.combineLatest(
-      this.getUsableCouponList(res, svcInfo, pageInfo), this.getAvailability(res, svcInfo, pageInfo)).subscribe(
-        ([coupons, available]) => {
-          if (coupons !== null && !FormatHelper.isEmpty(available)) {
+      this.getUsableCouponList(res, svcInfo, pageInfo),
+        this.getAvailability(res, svcInfo, pageInfo),
+        this.getCouponInfinityProducts()).subscribe(
+        ([coupons, available, products]) => {
+          if (coupons && available) {
+            if (products && products.includes(svcInfo.prodId)) {
+              available = 'INFINITY';
+            }
             res.render('recharge/myt-data.recharge.coupon.html', {
               svcInfo,
               pageInfo,
@@ -103,6 +109,25 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     });
   }
 
+  /**
+   * 무제한 요금제 정보 조회 (환경설정데이터 로 저장 된 값 호출)
+   * @private
+   */
+  private getCouponInfinityProducts() {
+    return this.apiService.request(API_CMD.BFF_01_0069, {
+      property: REDIS_KEY.COUPON_INFINITY_PRODUCTS
+    }).map((response) => {
+      if (response.code === API_CODE.CODE_00) {
+        if (!response.result) {
+          return null;
+        }
+        // 'a,b,c' 형태로 전달 받음
+        return response.result.trim();
+      } else {
+        return null;
+      }
+    });
+  }
   /**
    * @function
    * @desc BFF로 조회된 쿠폰 리스트를 ejs 렌더링이 용이하도록 정제
