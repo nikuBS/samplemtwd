@@ -183,12 +183,11 @@ Tw.TidLandingComponent.prototype = {
   goSLogin: function (target) {
     target = target || '/main/home';
     if ( Tw.BrowserHelper.isApp() ) {
-      this._historyService.goLoad('/common/member/slogin/aos?target=' + encodeURIComponent(target));
-      // if ( Tw.BrowserHelper.isAndroid() ) {
-      //   this._historyService.goLoad('/common/member/slogin/aos?target=' + encodeURIComponent(target));
-      // } else {
-      //   this._historyService.goLoad('/common/member/slogin/ios?target=' + encodeURIComponent(target));
-      // }
+      if ( Tw.BrowserHelper.isAndroid() ) {
+        this._historyService.goLoad('/common/member/slogin/aos?target=' + encodeURIComponent(target));
+      } else {
+        this._historyService.goLoad('/common/member/slogin/ios?target=' + encodeURIComponent(target));
+      }
     }
   },
 
