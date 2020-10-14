@@ -468,10 +468,7 @@ export const MYT_FARE_COMPLETE_MSG = {
   CANCEL_HISTORY: '해지내역 보기',
   NUMBER: '번호로',
   SMS: '문자 전송 완료',
-  SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.',
-  CARD: '카드 자동납부',
-  ONLY_ACCOUNT: '입금전용계좌',
-  JIRO: '지로납부'
+  SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
 };
 
 export const MYT_FARE_ERROR_MSG = {

@@ -13,7 +13,7 @@
 Tw.MyTFareBillPoint = function (rootEl) {
   this.$container = rootEl;
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl, 'point'); // 납부할 회선 선택하는 공통 컴포넌트
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl); // 납부할 회선 선택하는 공통 컴포넌트
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay')); // validation check
@@ -221,8 +221,7 @@ Tw.MyTFareBillPoint.prototype = {
    */
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._paymentCommon.goComplete();
-      // this._historyService.replaceURL('/myt-fare/bill/pay-complete');
+      this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     } else if (this._isPayFail) {
       Tw.Error(this._err.code, this._err.msg).pop();
     }
