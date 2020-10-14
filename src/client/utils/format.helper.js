@@ -20,7 +20,7 @@ Tw.FormatHelper = (function () {
    */
   var isEmpty = function (value) {
     if ( value === '' || value == null || value === undefined ||
-      (value != null && typeof value === 'object' && !Object.keys(value).length) ) {
+      (value != null && typeof value === 'object' && Object.keys(value).length < 1) ) {
       return true;
     }
     return false;
