@@ -9,12 +9,11 @@
  * @namespace
  * @desc 미납요금회선 선택 namespace
  * @param rootEl - dom 객체
- * @param paymentType - 납부방법
+ * @param cardPayment - 카드 결제여부
  */
-Tw.MyTFareBillCommon = function (rootEl, paymentType) {
+Tw.MyTFareBillCommon = function (rootEl, cardPayment) {
   this.$container = rootEl;
-  this.type = paymentType || ''; // 납부방법
-  this.cardPayment = paymentType === 'card'; // 카드 결제인지 여부
+  this.cardPayment = !!cardPayment;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
   this._historyService.init();
@@ -185,7 +184,7 @@ Tw.MyTFareBillCommon.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.SELECT_LINE, null, null, null, null, $(e.currentTarget));
     } else {
       this._isClicked = true;
-      // 카드 결제이면서 선택된 회선이 한 개인 경우 부분납부 화면 노출
+      // 카드결제인 이면서 선택된 회선이 한 개인 경우 부분납부 화면 노출
       if ( this.cardPayment ) {
         if ( this._selectedLine.length === 1 ) {
           this.$flexibleBill.removeClass('none');
@@ -505,20 +504,5 @@ Tw.MyTFareBillCommon.prototype = {
       // 정상
       return true;
     }
-  },
-
-  /**
-   * @function
-   * @desc 완료 페이지 이동
-   */
-  goComplete: function (options) {
-    /*if (Tw.FormatHelper.isEmpty(options)) {
-      Tw.Logger.error('[goComplete] options is Empty!!');
-      return;
-    }*/
-    options = options || {};
-    options.type = this.type;
-    options.amount = this.getAmount();
-    this._historyService.replaceURL('/myt-fare/bill/pay-complete?' + $.param(options)); // 완료 페이지로 이동
   }
 };
