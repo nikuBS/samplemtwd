@@ -725,13 +725,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A100: { TITLE: '선결제를 종료하시겠습니까?', MSG: '선결제가 종료됩니다.', BUTTON: '종료하기' },
   ALERT_2_A101: { TITLE: '요금납부를 종료하시겠습니까?', MSG: '요금납부가 종료됩니다.', BUTTON: '종료하기' },
   ALERT_2_DATA: { TITLE: '데이터 충전을 종료하시겠습니까?', MSG: '데이터 충전이 종료됩니다.', BUTTON: '종료하기' },
-  AUTO_PREPAY_FAIL: '자동선결제 신청/변경에 실패하였습니다.',
-  AUTO_PAYMENT_COMPLETE: {
-    TITLE: '변경이 완료되었습니다.</br> {month}월 요금부터 적용됩니다.',
-    MSG:  '<li>납부방법: {0}</li>' +
-          '<li>예금주: {1}</li>' +
-          '<li>계좌정보: {2}</li>'
-  }
+  AUTO_PREPAY_FAIL: '자동선결제 신청/변경에 실패하였습니다.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
