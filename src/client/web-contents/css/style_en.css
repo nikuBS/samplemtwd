@@ -356,8 +356,6 @@
 
 .popup-page.layer .popup-closeBtn { position: absolute; width: 1.5rem; height: 1.5rem; background: url("/img/en/icon_48px_titlebar_exit.svg") no-repeat 0 0; background-size: 100% 100%; }
 
-.protect-pass-wrap .tit .str { margin-left: -0.75rem; }
-
 .msg-guide.align-l { text-align: left; background: url("/img/en/ico_refer.png") 0 4px no-repeat; padding-left: 0.63rem; background-size: 0.38rem 0.38rem; }
 
 .complete-error-tx .tx2 { font-size: 0.88rem; }
@@ -1025,20 +1023,6 @@
 .products-detailinfo02 .category-type .basic { background-image: url("/img/en/bg_sms.png"); }
 
 /* 201008 [OP002-10791] 추가 : MIRI 납부금액*/
-.tod-ico-miri { display: block; width: 2.1875rem; height: 0.9375rem; background: url(/img/ico/ico-miri.png) no-repeat 0 0; background-size: 100%; }
-
-.tod-miri-bill { margin-top: 0.9375rem; }
-
-.tod-miri-bill .btn-miri { position: relative; border-radius: 0.3125rem; background-color: #eff6fb; padding: 0.625rem 0; width: 100%; text-align: left; }
-
-.tod-miri-bill .btn-miri:after { position: absolute; right: 0.63rem; top: 50%; width: 1rem; height: 1rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); content: ''; background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 23% 50%; background-size: 100%; }
-
-.tod-miri-bill .inner-flex { -webkit-display: flex; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
-
-.tod-miri-bill .tod-ico-miri { margin: 0 0 0 1.25rem; }
-
-.tod-miri-bill .txt-wrap { font-size: 0.8125rem; margin-left: 1.25rem; }
-
 .tod-miri-list { padding: 0 0 1.25rem; background: #fff; }
 
 .tod-miri-list .tod-miri-list-inner { position: relative; }

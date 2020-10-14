@@ -8370,7 +8370,7 @@ a.bt-link-tx.underline.small {
 
 .protect-pass-wrap.type2 .tit {
   margin-bottom: 1rem;
-  font-size: 0.94rem; }
+  font-size: 1.06rem; }
 
 .cellphone-info {
   overflow: hidden;
@@ -35360,39 +35360,4 @@ body.apphome .section-box {
 .tod-miri-bill .inner-flex{ -webkit-display: flex; display: flex; -webkit-align-items: center; align-items: center;}
 .tod-miri-bill .tod-ico-miri{margin: 0 0 0 1.25rem;}
 .tod-miri-bill .txt-wrap{font-size: 0.8125rem; margin-left: 1.25rem}
-.tod-miri-list{padding: 0 0 1.25rem; background: #fff;}
-.tod-miri-list .tod-miri-list-inner{position: relative; }
-.tod-miri-list .tod-miri-list-inner:before{
-  content: '';
-  position: absolute;
-  top: 25px;
-  bottom: 0;
-  left: 3px;
-  width: 1px;
-  background: #ebebeb;
-}
-.tod-miri-list .tod-miri-item{padding-top: 1.25rem;}
-.tod-miri-list .tod-miri-info{margin-left: 1.25rem;}
-.tod-miri-date{position: relative; font-size: 0.875rem; color: #666; padding-left: 0.375rem;}
-.tod-miri-date:before{
-  content: '';
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  margin-top: -4px;
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 50%;
-  background-color: #c6c6c6;
-}
-.tod-miri-date .sp-date{display:inline-block; margin-left: 0.375rem;}
-.tod-miri-info{border:1px solid #edeef0; border-radius: 0.1875rem; padding: 0.9375rem 0.9375rem 0.625rem; margin-top: 0.625rem;}
-.tod-miri-info .item{display: flex; font-size: 0.8125rem; color: #959595; margin-bottom: 0.625rem;}
-.tod-miri-info .item.blue{font-size: 1rem; color: #178bce;}
-.tod-miri-info .item.org{font-size: 1rem; color: #f76252;}
-.tod-miri-info .item .tit{width: 50%; text-align: left;}
-.tod-miri-info .item .data{width: 50%; text-align: right;}
-.tod-miri-info .item .data .data-item{display: block;}
-.tod-miri-info .item-result{border-top: 1px solid #f2f2f2; padding-top: 0.625rem; font-size: 0.875rem; text-align: right;}
 /* //201013 MIRI 납부금액*/
