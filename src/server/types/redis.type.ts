@@ -36,6 +36,7 @@ export enum REDIS_KEY {
   ROAMING_POPULAR_NATIONS = 'RoamingPopularNation:RoamingPopularNationList',
   ROAMING_NATIONS_BY_CONTINENT = 'RoamingContnPsbNation',
   WIDGET_BLOCK = 'str.widget_block',
+  COUPON_INFINITY_PRODUCTS = 'bool.datainfiniti.yn'
 }
 
 export enum REDIS_TOS_KEY {
