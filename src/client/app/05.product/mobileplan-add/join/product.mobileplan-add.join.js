@@ -401,7 +401,28 @@ Tw.ProductMobileplanAddJoin.prototype = {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
     new Tw.XtractorService(this.$container);
+
+    if(Tw.FLO_AND_DATA_PROD_ID.indexOf(this._prodId) !== -1){ //FLO 상품 가입 시 가입안내팝업의 외부링크로 자동연결 [OP002-11213] 
+      setTimeout($.proxy(function () {
+        this._confirmAutoExternalUrl(this.$container);
+      }, this), 5000);
+    }
   },
+
+  /**
+   * @function
+   * @desc 외부 링크 자동지원
+   */
+  _confirmAutoExternalUrl: function(e) {
+    this.$autoLink = e.find('.fe-auto-external');
+
+    if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl(this.$autoLink.attr('href'));
+    }
+
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, this.$autoLink.attr('href')));
+  },
+
 
   /**
    * @function
