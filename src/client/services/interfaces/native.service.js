@@ -169,7 +169,7 @@ Tw.NativeService.prototype = {
    */
   _onEasyLogin: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      window.location.href = '/common/member/slogin/aos?mdn=' + resp.params.mdn;
+      window.location.href = '/common/member/slogin/ios';
       // if ( Tw.BrowserHelper.isAndroid() ) {
       //   window.location.href = '/common/member/slogin/aos?mdn=' + resp.params.mdn;
       // } else {
