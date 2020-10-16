@@ -31,14 +31,14 @@ _%>
             <%_ const totalAdditions = additionsPaid.length + additionsFree.length; _%>
             <div class="tod-sel-top-wrap">
                 <div class="link-cont">
-                    <a href="#">전체 <%- totalAdditions %></a>
+                    <a href="#tod-all" title="선택">전체 <%- totalAdditions %></a>
                     <%_ if (additionsPaid.length) { _%>
                     <a href="#tod-cont1">유료 <%- additionsPaid.length %></a>
                     <%_ } _%>
                     <%_ if (additionsFree.length) { _%>
                     <a href="#tod-cont2">무료 <%- additionsFree.length %></a>
                     <%_ } _%>
-            </div>
+                </div>
             </div>
 
             <%_ if (totalAdditions === 0) { _%>
@@ -53,14 +53,15 @@ _%>
                     </div>
                 </div>
             </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <%_ } else { _%>
                 <%_ if (additionsPaid.length) { _%>
-            <div class="tod-link-cont-anchor" id="tod-cont1"></div>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">유료 부가서비스 <%- additionsPaid.length %>개</h3>
                 <div class="add-prd-wrap tod-type02">
-                    <ul class="list-comp-lineinfo">
+                    <ul class="list-comp-lineinfo tod-js-list-ctrl" id="tod-cont1">
                         <%_ additionsPaid.forEach(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.joined.html', { addition }); _%>
                         <%_ }); _%>
@@ -72,12 +73,11 @@ _%>
             <hr class="cont-sp type1" aria-hidden="true"/>
                 <%_ } _%>
                 <%_ if (additionsFree.length) { _%>
-            <div class="tod-link-cont-anchor" id="tod-cont2"></div>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">무료 부가서비스 <%- additionsFree.length %>개</h3>
                 <div class="add-prd-wrap tod-type02">
-                    <ul class="list-comp-lineinfo">
+                    <ul class="list-comp-lineinfo tod-js-list-ctrl" id="tod-cont2">
                         <%_ additionsFree.forEach(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.joined.html', { addition }); _%>
                         <%_ }); _%>
@@ -87,20 +87,20 @@ _%>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-                        <%_ } _%>
-                        <%_ } _%>
+                <%_ } _%>
+            <%_ } _%>
             <%_ if (additionsReserved.length > 0) { _%>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">신청 접수 중인 부가서비스</h3>
                 <div class="add-prd-wrap tod-type02">
-                    <ul class="list-comp-lineinfo">
+                    <ul class="list-comp-lineinfo tod-js-list-ctrl">
                         <%_ additionsReserved.map(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.reserved.html', { addition }); _%>
-                    <%_ }); _%>
-                </ul>
-            </div>
+                        <%_ }); _%>
+                    </ul>
+                </div>
             </div>
             <!--// .cont-box -->
 
@@ -112,7 +112,7 @@ _%>
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">가입 가능한 부가서비스</h3>
                 <div class="add-prd-wrap tod-type02">
-                    <ul class="list-comp-lineinfo">
+                    <ul class="list-comp-lineinfo tod-js-list-ctrl">
                         <%_ additionsJoinable.map(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.reserved.html', { addition }); _%>
                         <%_ }); _%>
@@ -154,20 +154,33 @@ _%>
 <%- include('../../components/javascript.component.html') _%>
 <script type="text/javascript">
     $(document).ready(function () {
-        $(document).on('scroll', function () {
-            $('.tod-link-cont-anchor').each(function (index, ele) {
-                if (parseInt($(ele).offset().top, 0) <= $(window).scrollTop()) {
-                    $('.link-cont > a').removeClass('on').eq(index).addClass('on');
-                }
-            });
-        });
+      var $anchor = $('.tod-sel-top-wrap > .link-cont > a'),
+        $content = $('.tod-js-list-ctrl');
+
+      $anchor.on('click', function (e) {
+        e.preventDefault();
+        $(this).addClass('on').attr('title', '선택').siblings().removeClass('on').attr('title', '');
+        if ($(this).attr('href') === '#tod-all') {
+          $content.show();
+        } else {
+          $content.hide();
+          $($(this).attr('href')).show();
+        }
+        $(window).scrollTop(0);
+      });
     });
 </script>
 <script>
     $(document).ready(function () {
-        new Tw.MyTJoinMyPlanAdd({
-            $element: $('#contents')
-        });
+      new Tw.MyTJoinMyPlanAdd({
+        $element: $('#contents')
+      });
     });
+    // NOTE: hash가 있는 채로 들어오면, scroll이 발생하게 되는데, 무조건 맨 위로 올려버린다.
+    if (location.hash) {
+      $(window).on('load', function () {
+        $(window).scrollTop(0);
+      });
+    }
 </script>
 <%- include('../../components/end.component.html') _%>
