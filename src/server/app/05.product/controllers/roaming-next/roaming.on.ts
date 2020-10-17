@@ -278,7 +278,6 @@ export default class RoamingOnController extends RoamingController {
         this.releaseDeadline(res);
         return;
       }
-      console.log(dataUsage);
 
       // BFF_05_0201 (getDataUsage)
       //   troaming-data =>

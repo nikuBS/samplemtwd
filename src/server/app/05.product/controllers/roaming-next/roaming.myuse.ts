@@ -29,11 +29,11 @@ export default class RoamingMyUseController extends RoamingController {
       // 로밍 실시간 데이터 잔여량
       this.apiService.request(API_CMD.BFF_05_0201, {}).map(resp => {
         const error = RoamingHelper.checkBffError(resp);
-        if (error) { return null; }
+        if (error) { return error; }
         return resp.result;
       }),
     ).subscribe(([tariffs, addons, dataUsages]) => {
-      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [tariffs, addons, dataUsages])) {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [tariffs, addons])) {
         this.releaseDeadline(res);
         return;
       }
