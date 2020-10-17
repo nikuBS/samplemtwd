@@ -92,6 +92,9 @@ Tw.RoamingSchedules.prototype = {
       // 가는 날은 오늘로부터 60일 이내이고, 오는 날은 가는 날로부터 30일이라, 최대 90일까지만 선택 가능
       maxDate: moment().add(90, 'days').format('YYYY-MM-DD')
     }, $.proxy(this._handleDatePick, this));
+    $(document).on('click', 'th.next,th.prev', function() {
+      $('#calendarGuide').css('display', 'none');
+    });
   },
   /**
    * 달력에서 날짜 선택 시
