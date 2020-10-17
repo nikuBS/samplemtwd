@@ -163,7 +163,7 @@ export default class RoamingHelper {
       t.data = '-';
 
       // romUsePrdInfo(로밍사용기간정보)가 0이면 basOfrMbDataQtyCtt에 매일 사용량이 들어온다.
-      if (t.basOfrMbDataQtyCtt && t.romUsePrdInfo === '0') {
+      if (parseInt(t.basOfrMbDataQtyCtt, 10) > 0 && t.romUsePrdInfo === '0') {
         t.data = '매일 ' + t.basOfrMbDataQtyCtt + 'MB';
       } else if (t.prodId === 'NA00006229') {
         // T괌사이판 5천원인 경우 데이터 이용량 하드코딩 (BE 이지민 수석 요청)
@@ -171,8 +171,10 @@ export default class RoamingHelper {
       } else if (parseInt(t.basOfrGbDataQtyCtt, 10) > 0) {
         const gbData = parseInt(t.basOfrGbDataQtyCtt, 10);
         t.data = gbData + 'GB';
+      } else if (parseInt(t.basOfrMbDataQtyCtt, 10) > 0) {
+        t.data = t.basOfrMbDataQtyCtt + 'MB';
       } else {
-        t.data = t.basOfrMbDataQtyCtt;
+        t.data = t.basOfrGbDataQtyCtt;
       }
     } else {
       // basOfrDataQtyCtt 값이 있는 경우, GB 이므로 단위량을 붙여준다.
@@ -188,24 +190,6 @@ export default class RoamingHelper {
     // 상품 특이사항 정규화
     if (t.prodBasBenfCtt) {
       t.phone = t.prodBasBenfCtt;
-    }
-
-    // BE가 처리하지 못한 요구사항들을 FE에서 방어적으로 처리하는 부분으로,
-    // BE 개선이 되면 불필요해진다.
-
-    // OnePass VIP 설명 예외처리
-    // NA00006486, NA00006487  VIP (요금제 그룹 6번)
-    if (['NA00006486', 'NA00006487'].indexOf(t.prodId) >= 0) {
-      t.data = '무제한';
-      t.phone = '음성 30분 / 문자 30건 / baro 통화 무제한';
-    }
-    // NA00006744, NA00006745  DATA VIP (요금제 그룹 5번)
-    if (['NA00006744', 'NA00006745'].indexOf(t.prodId) >= 0) {
-      t.data = '무제한';
-    }
-
-    if (!t.phone) {
-      t.phone = 'baro 통화 무제한';
     }
     return t;
   }
