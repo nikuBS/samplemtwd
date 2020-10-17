@@ -175,7 +175,7 @@
   var baseDiv = '#roamingMain';
 
   $(document).ready(function () {
-    new Tw.RoamingMain($(baseDiv), <%- JSON.stringify(popularNations) %>,
+    new Tw.RoamingMain($(baseDiv), JSON.parse('<%- JSON.stringify(popularNations) %>'),
       {
         'EUR': JSON.parse('<%- JSON.stringify(nations.eur) %>'),
         'AFR': JSON.parse('<%- JSON.stringify(nations.afr) %>'),

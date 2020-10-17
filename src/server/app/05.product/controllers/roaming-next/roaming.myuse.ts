@@ -1,10 +1,13 @@
 /**
- * 로밍 나의 이용현황.
+ * @desc 로밍 나의 이용현황.
  *
  * BFF_10_0091: 요금제 사용 기간 조회
  * BFF_10_0056: 이용중인 요금제
  * BFF_10_0057: 이용중인 부가서비스
  * BFF_10_0201: 로밍 데이터 사용량 조회
+ *
+ * @author 황장호
+ * @since 2020-09-01
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -94,6 +97,7 @@ export default class RoamingMyUseController extends RoamingController {
       // startEndTerm: 30
       // prodFee: '39000'
       // romSetClCd: DNNN: 개시일, DTNN:개시일+시간, DTDN:개시일+시간~종료일, NNNN:설정없음
+      //   romSetClCd 값은 항상 정확하지 않아서 사용하지 않고, svcStartDt/svcEndDt 존재여부로 파악하였다.
       // chk60: Y
       // chkCurProdStat: true
       const range: any = ranges[i];
@@ -113,13 +117,13 @@ export default class RoamingMyUseController extends RoamingController {
       }
       t.startTime = '';
       t.endTime = '';
-      if (range.svcStartTm) {
+      if (range.svcStartTm) { // BFF 에서 시작시각이 '17' 형태로 넘어온다.
         t.startTime = ` ${range.svcStartTm}:00`;
         if (t.startDate) {
           t.startDate.add(parseInt(range.svcStartTm, 10), 'hours');
         }
       }
-      if (range.svcEndTm) {
+      if (range.svcEndTm) { // BFF 에서 종료시각이 '09' 형태로 넘어온다.
         t.endTime = ` ${range.svcEndTm}:00`;
         if (t.endDate) {
           t.endDate.add(parseInt(range.svcEndTm, 10), 'hours');

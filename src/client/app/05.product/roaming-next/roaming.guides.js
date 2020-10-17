@@ -151,6 +151,7 @@ Tw.RoamingGuides.prototype = {
    * 스크롤를 검사하여 앵커탭을 자동으로 전환하도록 이벤트 핸들러를 설치.
    */
   prepareAnchorTabs: function () {
+    // offset().top: 앵커탭 y 좌표
     var thresholdY = $('.anchors').offset().top - this.appbarHeight;
     var topMargin = this.appbarHeight + $('.anchors').height();
 
@@ -243,7 +244,7 @@ Tw.RoamingGuides.prototype = {
   /**
    * Q&A 아코디언 구현. 앵커탭과 함께 엮여 있으므로 퍼블리싱 공통요소를 사용할 수 없다.
    *
-   * @param source 이벤트를 발생시킨 source element
+   * @param source 이벤트를 발생시킨 source element (q)
    */
   toggleQna: function (source) {
     var proxy = this;

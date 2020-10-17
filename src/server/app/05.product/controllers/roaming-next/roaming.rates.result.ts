@@ -34,6 +34,7 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
       eqpMdlCd: query.eqpMdlCd,
     };
     // 로그인 여부, 단말 정보 여부에 따라 BFF_10_0061 파라미터를 조합한다.
+    // product.roaming.search-result.controller.ts 에서 복사됨
     if (svcInfo) {
       if (!svcInfo.eqpMdlNm) {
         apiParams.command = 'onlyCountry';
@@ -41,6 +42,8 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
         apiParams.command = 'withCountry';
       }
     } else {
+      // 로밍개선 이전에는 비로그인 시에도 단말 정보를 수동으로 입력할 수 있었기 때문에 아래 코드가 유효했으나,
+      // 현재는 단말 정보 수동 지정이 불가능하므로 실행될 기회가 없다.
       if (!query.eqpMdlNm) {
         apiParams.command = 'onlyCountry';
       } else {

@@ -77,13 +77,13 @@ Tw.RoamingCountriesTariff.prototype = {
     this.closeCountries();
   },
   /**
-   * 요금제 추천(M00225) 화면에서 '서비스 이용가능 국가' 선택 시 호출.
+   * 요금제 추천(M00225) 화면에서 '서비스 이용가능 국가' 선택 시 한 번만 호출.
    *
    * @param defaultProdId 요금제 드롭다운에 기본 선택되어 있어야할 요금제의 원장 id
    */
   showCountries: function (defaultProdId) {
     // `defaultProdId` 요금제 사용이 가능한 국가 목록을 가져온다.
-    // wt=1 을 함께 보냈으므로, 이용가능한 모든 요금제 목록도 함께 가져온다.
+    // wt=1 (withTariffs) 을 함께 보냈으므로, 이용가능한 모든 요금제 목록도 함께 가져온다.
     $.get('/product/roaming/offer?prodId=' + defaultProdId + '&wt=1',
       $.proxy(this._handleData, this, defaultProdId)
     );
@@ -141,7 +141,6 @@ Tw.RoamingCountriesTariff.prototype = {
    */
   fillCountries: function (byConsonant, byContinent) {
     if (!byConsonant || !byContinent) {
-      // TODO:
       this.data.byConsonant = [];
       this.data.byContinent = [];
       this.fillGroups();

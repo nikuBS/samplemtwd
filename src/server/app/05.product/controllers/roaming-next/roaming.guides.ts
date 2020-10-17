@@ -108,8 +108,7 @@ class RoamingGuideProduct extends RoamingGuideController {
       const group4: any = []; // OnePass VIP 기본형
 
       for (const g of groups) {
-        // 요금제 그룹 이름이 'baro'로 시작하는 것들에 대하여
-        if (g.prodGrpNm.startsWith('baro')) {
+        // if (g.prodGrpNm.startsWith('baro')) {
           g.prodList.forEach(item => {
             RoamingHelper.formatTariff(item);
             // '로밍 상품 이용안내'의 '내게 주는 선물, 일주일의 여행이라면?' 섹션 상품들
@@ -129,7 +128,7 @@ class RoamingGuideProduct extends RoamingGuideController {
               group4.push(item);
             }
           });
-        }
+        // }
       }
       this.renderDeadline(res, this.templatePath, {
         pageInfo,

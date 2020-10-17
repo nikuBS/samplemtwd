@@ -5,6 +5,15 @@
  * @since 2020-09-30
  */
 
+/**
+ * 생성자
+ *
+ * @param rootEl Root Element
+ * @param popularNations 인기여행지 목록
+ * @param nations 대륙별 전체 국가 목록
+ * @param banners 배너 목록
+ * @constructor
+ */
 Tw.RoamingMain = function (rootEl, popularNations, nations, banners) {
   this.$container = rootEl;
   this.$popularNations = popularNations;
@@ -12,6 +21,7 @@ Tw.RoamingMain = function (rootEl, popularNations, nations, banners) {
   var baseDiv = '#roamingMain';
 
   if (!Tw.Environment.init) {
+    // INIT_COMPLETE 대기하는 이유는 BannerService가 Tw.init 에 의존성이 있기 때문이다.
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this.afterInit, this));
   } else {
     this.afterInit();
@@ -91,6 +101,7 @@ Tw.RoamingMain.prototype = {
     for (var i = 0; i < this.$popularNations.length; i++) {
       var item = this.$popularNations[i];
       var imageUrl = cdn + item.mblBtnImg;
+      // mblBtnImg 가 없는 케이스는 없음. 방어코드.
       if (!item.mblBtnImg) {
         imageUrl = null;
       }
@@ -119,6 +130,8 @@ Tw.RoamingMain.prototype = {
    */
   setupBanners: function() {
     if ($('#fe-banner-t').length) {
+      // FIXME: priority M 이면 admin > tos 인데, 정말로 tos 배너를 미표시해도 되는지 확인
+      // FIXME: this.$banners의 chnlClCd를 지정해줘야하는게 아닐지. 모바일 전용 요청이 필요한가?
       new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, this.$banners, 'T', 'M');
     }
   }

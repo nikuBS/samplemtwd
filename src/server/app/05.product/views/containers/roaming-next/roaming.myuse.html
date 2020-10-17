@@ -61,6 +61,7 @@
                 <% } %>
             </div>
 
+            <%# 요금제별로 설정 버튼이 있는 경우 %>
             <% for (var button of tariff.btnList) { %>
             <div class="row">
                 <a href="<%= button.btnLinkUrl %>?prod_id=<%= tariff.linkProdId %>">
@@ -141,6 +142,7 @@
                 <span class="label colorGray">가입일</span>
                 <span class="value colorGray"><%= addon.scrbDt %></span>
             </div>
+            <%# 부가서비스는 btnList 가 간혹 있다 %>
             <% for (var button of addon.btnList) { %>
                 <div class="row">
                     <a href="<%= button.btnLinkUrl %>?prod_id=<%= addon.prodId %>">

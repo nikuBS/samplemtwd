@@ -26,6 +26,9 @@ export default class RoamingRatesByCountryController extends RoamingController {
     };
     if (isLogin) {
       // 로그인 되어있는 경우, svcInfo에 저장된 단말정보를 복사
+      // 여기서 지정된 equipment 정보는 요율정보 검색시 단말정보 파라미터로 넘어가게 된다.
+      // 이 파라미터에 따라 지원되는 로밍서비스 타입(manageType) 결과가 달라질 수 있다.
+      // 또한, UI 상단 고객 정보 카드를 표시하는 목적으로도 사용한다.
       equipment.number = svcInfo.svcNum;
       equipment.name = svcInfo.eqpMdlNm;
       equipment.code = svcInfo.eqpMdlCd;
@@ -46,7 +49,7 @@ export default class RoamingRatesByCountryController extends RoamingController {
         // 로밍 지원 여부 (검색전에는 항상 null)
         meta: null,
         // 마지막 조회했던 파라미터 (항상 null)
-        lastQuery: {countryNm: ''},
+        lastQuery: {countryNm: ''}, // 초기값
         isLogin: isLogin,
         // 전체 국가보기 다이얼로그 표시용 데이터
         nations: {afr, asp, amc, eur, met, ocn},

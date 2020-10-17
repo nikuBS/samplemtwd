@@ -29,7 +29,7 @@ export default class RoamingMainController extends RoamingController {
     if (req.query.queryBg) {
       const countryCode = req.query.queryBg;
       // 국가별 이미지 상단 배너 XHR 쿼리
-      // queryBg는 ISO3166 알파벳 국가코드 3자리 이며, 아래와 같이 MCC로 변환 후, 배경이미지 주소를 리턴.
+      // queryBg는 ISO3166 알파벳 국가코드 3자리(KOR, JPN) 이며, 아래와 같이 MCC로 변환 후, 배경이미지 주소를 리턴.
       this.getCountryInfo(RoamingHelper.getMCC(countryCode)).subscribe(resp => {
         res.json({
           code: countryCode,
@@ -113,6 +113,8 @@ export default class RoamingMainController extends RoamingController {
    * @private
    */
   private getPopularNations(): Observable<any> {
+    // redis.type.ts 에 신규 추가한 프로퍼티 2개는 아래와 같다.
+    // ROAMING_POPULAR_NATIONS, ROAMING_NATIONS_BY_CONTINENT
     return this.redisService.getData(REDIS_KEY.ROAMING_POPULAR_NATIONS).map(resp => {
       // countryCode
       // countryNameEng
@@ -132,7 +134,7 @@ export default class RoamingMainController extends RoamingController {
   }
 
   /**
-   * 현재 이용 중인 로밍 요금제를 Text 형태로 리턴.
+   * 현재 '이용 중'인 로밍 요금제를 Text 형태로 리턴.
    *
    * BFF_10_0055 사용하며 BE 로부터 'T로밍 OnePass300 기간형 외 2건' 를 받는다.
    * 이용 예정, 이용 완료의 경우의 추가 핸들링을 FE에서 해보았으나 부작용이 많이 생겨서,
@@ -145,6 +147,8 @@ export default class RoamingMainController extends RoamingController {
     if (!isLogin) {
       return Observable.of(null);
     }
+    // 1) 나의 T로밍 이용현황, 2) 로밍메인 상단 3) 로밍모드 상단
+    // 위 3개에서 요금제의 '상태' 가 다르게 표시되어 혼란의 여지가 있다.
     return this.apiService.request(API_CMD.BFF_10_0055, {}).switchMap(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return Observable.of({code: resp.code, msg: resp.msg});
@@ -190,7 +194,7 @@ export default class RoamingMainController extends RoamingController {
    *
    * 로밍메인 화면 중간쯤에 카드 형태로 표시할 내용으로,
    * BFF_10_0197 결과값을 사용하는데, 아직 종료되지 않은 요금제는 안나와야 한다고 하여 (석연실 매니저)
-   * BFF 호출 후, svcEndDt를 참조하여 종료여부에 따라 미표시하는 로직이 있다.
+   * BFF 호출 후, svcEndDt를 참조하여 종료여부에 따라 미표시하는 방어코드 로직이 있다.
    *
    * @param isLogin 로그인 여부
    * @private
@@ -213,7 +217,7 @@ export default class RoamingMainController extends RoamingController {
         // startEndTerm: '30',
         const startDate = moment(resp.result.svcStartDt, 'YYYYMMDD');
         const endDate = moment(resp.result.svcEndDt, 'YYYYMMDD');
-        // 아직 종료되지 않은 요금제는 표시하지 않기로 함
+        // 아직 종료되지 않은 요금제는 표시하지 않기로 함. 방어코드.
         if (endDate.isAfter(moment())) {
           return null;
         }
@@ -251,7 +255,7 @@ export default class RoamingMainController extends RoamingController {
    * REDIS_KEY.BANNER_ADMIN + pageInfo.menuId
    *
    * @param pageInfo 페이지정보
-   * @returns 성공 시 result에 상단, 중단 배너를 분류한 프로퍼티를 추가하여 반한하고, 실패 시 null 반환
+   * @returns Redis:$(MENU_ID) 내의 모든 배너 목록
    */
   private getBanners(pageInfo): Observable<any> {
     return this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId).map(resp => {
@@ -272,7 +276,7 @@ export default class RoamingMainController extends RoamingController {
   }
 
   /**
-   * 요금제그룹 목록 조회
+   * 요금제그룹(5개) 목록 조회
    * BFF_10_0198
    *
    * @private

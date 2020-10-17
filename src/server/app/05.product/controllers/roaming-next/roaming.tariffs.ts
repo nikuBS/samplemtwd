@@ -1,7 +1,7 @@
 /**
  * @desc 로밍 요금제 목록. (M000473)
  *
- * BFF_10_0198: 요금제 그룹별 전체 목록
+ * BFF_10_0198: 요금제 그룹(5)별 전체 목록
  *
  * @author 황장호
  * @since 2020-09-01
@@ -22,8 +22,9 @@ export default class RoamingTariffsController extends RoamingController {
     ).subscribe(([items, nations]) => {
       for (const item of items) {
         item.prodGrpBnnrImgUrl = RoamingHelper.penetrateUri(item.prodGrpBnnrImgUrl); // 로밍메인 노출 카드
-        item.prodGrpFlagImgUrl = RoamingHelper.penetrateUri(item.prodGrpFlagImgUrl); // 추천
-        item.prodGrpIconImgUrl = RoamingHelper.penetrateUri(item.prodGrpIconImgUrl); // 추천
+        // 아래 2개 속성 prodGrpFlagImgUrl, prodGrpIconImgUrl 은 현재 FE 에서 사용하는 부분이 없다.
+        item.prodGrpFlagImgUrl = RoamingHelper.penetrateUri(item.prodGrpFlagImgUrl);
+        item.prodGrpIconImgUrl = RoamingHelper.penetrateUri(item.prodGrpIconImgUrl);
 
         item.items = item.prodList.map(p => {
           return RoamingHelper.formatTariff(p);
@@ -50,6 +51,10 @@ export default class RoamingTariffsController extends RoamingController {
     return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
       let items = resp.result.grpProdList;
       if (!items) {
+        // prodGrpId: T0000094
+        // prodGrpNm: baro 3/4/7
+        // prodGrpDesc: 장거리 또는 ..
+        // prodGrpBnnrImgUrl: /adminupload/
         items = [];
       }
       return items;

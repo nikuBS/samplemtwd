@@ -35,7 +35,7 @@ export default class RoamingAddonsController extends RoamingController {
         return this.error.render(res, {...error, svcInfo, pageInfo});
       }
 
-      const filters = {};
+      const filters = {}; // {'FLT0001': '인기', 'FLT0002': '로밍최초'}
       addonData.products.map(item => {
         for (const filter of item.filters) {
           filters[filter.prodFltId] = filter.prodFltNm;

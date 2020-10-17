@@ -168,6 +168,7 @@ Tw.RoamingGuideIndex.prototype = {
       }
       new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, banners, 'T', 'M', function(e) {
         var dataIndex = e.currentTarget.getAttribute('data-idx');
+        // iOS 에서 slick-dots 미노출 되는 경우가 있어 이를 방지하기 위한 코드
         if (dataIndex === '0') {
           $('.main-slide-banner .slick-dots').css('overflow', 'inherit');
         }

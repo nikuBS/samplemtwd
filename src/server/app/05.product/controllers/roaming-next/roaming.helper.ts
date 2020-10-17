@@ -66,7 +66,7 @@ export default class RoamingHelper {
 
   static _getNationsByContinent(rs: RedisService, continent: string): Observable<any> {
     return rs.getData(`${REDIS_KEY.ROAMING_NATIONS_BY_CONTINENT}:${continent}`).map(resp => {
-      // contnCd, countryCode, countryNameKor, commCdValNm
+      // contnCd, countryCode, countryNameKor, countryNameEng, commCdValNm
       return resp.result.contnPsbNation;
     });
   }
@@ -186,8 +186,8 @@ export default class RoamingHelper {
     }
 
     // 상품 특이사항 정규화
-    if (t.prodBaseBenfCtt) {
-      t.phone = t.prodBaseBenfCtt;
+    if (t.prodBasBenfCtt) {
+      t.phone = t.prodBasBenfCtt;
     }
 
     // BE가 처리하지 못한 요구사항들을 FE에서 방어적으로 처리하는 부분으로,

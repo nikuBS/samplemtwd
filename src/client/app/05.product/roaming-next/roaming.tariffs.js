@@ -107,6 +107,7 @@ Tw.RoamingTariffs.prototype = {
     // 스크롤 감지하여 상단 앵커탭 상태 업데이트
     if (!this.$scrollMonitor)
       return;
+    // NOTE: thresholdY = 63, topMargin = 200
 
     var anchors = $('.header .anchors');
     var scrollTop = $(window).scrollTop();
@@ -117,6 +118,7 @@ Tw.RoamingTariffs.prototype = {
       for (var i=0; i<Object.keys(this.$groupMetas).length; i++) {
         var k = Object.keys(this.$groupMetas)[i];
         var meta = this.$groupMetas[k];
+        // 200px 이 빠지는 이유는, 앵커바디 상단에 가려지는 영역이 200px 이기 때문이다.
         if (scrollTop > meta.top - 200 && scrollTop < meta.top - 200 + meta.height) {
           var thatId = 'a-' + k;
           // 상단 앵커탭을 선택된 상태로 변경
@@ -140,7 +142,7 @@ Tw.RoamingTariffs.prototype = {
     $('#' + val.id + ' img').attr('src', this.$imagePrefix + (i + 1) + '_' + state + '.png');
     if (state === 'on' && this.$selectedAnchor !== thatId) {
       // 선택된 앵커탭이 화면이 노출되도록 스크롤
-      var offsetLeft = val.offsetLeft - 20;
+      var offsetLeft = val.offsetLeft - 20; // 20은 padding-left
       $('.anchors').scrollLeft(offsetLeft);
       this.$selectedAnchor = thatId;
     }
@@ -216,6 +218,7 @@ Tw.RoamingTariffs.prototype = {
     var i;
     for (i=0; i<this.$groups.length; i++) {
       var group = this.$groups[i];
+      // top, height=0 초기화는 필수가 아니나 코드 가독성을 위해 적었다.
       this.$groupMetas['group-' + group.prodGrpId] = {top: 0, height: 0};
 
       target.innerHTML += template({

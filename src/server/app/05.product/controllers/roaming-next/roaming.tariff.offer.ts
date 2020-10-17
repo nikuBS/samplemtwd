@@ -37,6 +37,8 @@ export default class RoamingTariffOfferController extends RoamingController {
     const from = moment(req.query.from, 'YYYYMMDD');
     const to = moment(req.query.to, 'YYYYMMDD');
     // 가는 날, 오는 날 기반으로 몇 박인지 계산
+    // 86400: 하루는 60*60*24=86400초
+    // 1000 : moment.diff 리턴값은 milliseconds 단위.
     const night = to.diff(from) / 86400 / 1000;
 
     Observable.combineLatest(
@@ -55,6 +57,9 @@ export default class RoamingTariffOfferController extends RoamingController {
 
       if (recommended) {
         // 추천 요금제가 존재하는 경우, 요금제 정보를 정규화
+        // 요금제 정보를 굳이 따로 정규화 하는 이유는,
+        // BFF_10_0196(추천)의 메타정보보다 BFF_10_0198(요금제 전체목록, tariffsMap) 메타정보가 개발당시 신뢰성이 높았기 때문이다.
+        // 메타정보는 가격, 기간 등의 정보이다.
         const detail = RoamingHelper.formatTariff(tariffsMap[recommended.prodId]);
         if (detail) {
           Object.assign(recommended, detail);
@@ -151,23 +156,35 @@ export default class RoamingTariffOfferController extends RoamingController {
    * @private
    */
   private getCountryInfo(countryCode: string): Observable<any> {
+    // 아래에 noFlag, 202, 미지원 국가의 경우 국가명 복원 등의 긴 코드가 들어간 이유는,
+    // BFF_10_0199 가 countryCode 를 지원하지 않고 mcc 만 지원하기 때문이며,
+    // BFF_10_0199 가 countryCode 파라미터를 지원할 경우, 코드가 깔끔해질 것이다.
+
     const mcc = RoamingHelper.getMCC(countryCode);
-    const noFlag = mcc === '';
+    const noFlag = mcc === ''; // 유명 국가가 아닐 경우
+    // 유명 국가가 아니여도 공통 배경이미지는 필요하므로, 임의의 비유명 국가인 그리스(202)를 보낸다.
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: noFlag ? '202' : mcc}).switchMap(resp => {
       // countryCode, countryNm, countryNmEng, tmdiffTms
       const item = resp.result;
       if (!item) {
+        // undefined 예외처리 필요
         return item;
       }
 
       if (noFlag) {
+        // 유명국가가 아닌 경우, 국가명을 Redis 에서 받아오는데, Redis 에도 존재하지 않는 국가일 경우 '...'
+
         // 로밍 미지원 국가의 경우, 화면이 완전히 깨지지 않게 한다.
         item.countryCode = countryCode;
+        // 아래 '...'은 정상적인 케이스에는 발생할 수 없고, 주소창에서 querystring code를 직접 조작했을 때만 노출된다.
         item.countryNm = '...';
+        // 유명 국가가 아닌 경우, 위에서 그리스(202)를 요청하여 '국가명'을 알 수 없는 상태이므로,
+        // 국가명을 복원하기 위해 Redis 에서 로밍 가능한 전체 국가 카탈로그를 받아 온다.
         return RoamingHelper.nationsByContinents(this.redisService).map( r => {
           for (const continent of Object.keys(r)) {
             const list = r[continent];
             for (const c of list) {
+              // Redis 의 국가정보 필드를 BFF_10_0199 리턴값 필드로 채워 넣는 코드
               if (c['countryCode'] === countryCode) {
                 item.countryNm = c['countryNameKor'];
                 item.countryNmEng = c['countryNameEng'];
@@ -235,23 +252,25 @@ export default class RoamingTariffOfferController extends RoamingController {
       // romUsePrdInfo: '30', // 로밍사용기간정보
       // basOfrMbDataQtyCtt: '-', // 기본제공 MB데이터량 내용
       // basOfrDataQtyCtt: '-', // 기본제공 데이터량 내용
-      // prodBaseBenfCtt: 'baro통화 무료', // 상품 기본혜택 내용
+      // prodBasBenfCtt: 'baro통화 무료', // 상품 기본혜택 내용
       // basFeeInfo: '40000', // 상품금액
-      if (resp.result) {
-        for (const t of resp.result) {
-          if (t.prodBasBenfCtt) {
-            // baro 통화 사이에 띄어쓰기가 안된 경우 FE 에서 방어코드로 막아준다.
-            t.prodBasBenfCtt = t.prodBasBenfCtt.replace('baro통화 무료', 'baro 통화 무제한');
-          }
-        }
-      }
+
+      // 어드민에서 잘못 입력한 경우 FE 에서 패치했던 코드인데, 어드민 데이터가 올바르게 바뀌어서 이제는 필요치 않다.
+      // if (resp.result) {
+      //   for (const t of resp.result) {
+      //     if (t.prodBasBenfCtt) {
+      //       baro 통화 사이에 띄어쓰기가 안된 경우 FE 에서 방어코드로 막아준다.
+            // t.prodBasBenfCtt = t.prodBasBenfCtt.replace('baro통화 무료', 'baro 통화 무제한');
+          // }
+        // }
+      // }
       return resp.result;
     });
   }
 
   /**
    * 주어진 요금제를 이용 가능한 모든 국가 목록을 리턴한다.
-   * 서비스 가능한 국가가 없는 경우 error code PRD0075.
+   * 서비스 가능한 국가가 없는 경우 error code PRD0075. (BE 이지민 수석이 이야기해줌)
    *
    * @param prodId 요금제 원장번호
    * @private
@@ -280,6 +299,8 @@ export default class RoamingTariffOfferController extends RoamingController {
    */
   private queryAvailableCountries(req: Request, res: Response, prodId: string) {
     Observable.combineLatest(
+      // query.wt(withTariffs) 여부에 따라 전체 요금제 목록을 리턴.
+      // 최초 요청시에는 요금제 목록이 필요하지만, 그 이후부터는 값이 변하지 않으므로 BFF_10_0200 을 다시 부를 필요가 없다.
       this.getAvailableTariffs('ALL', req.query.wt ? false : true),
       this.getAvailableCountries(prodId),
     ).subscribe(([tariffs, countries]) => {

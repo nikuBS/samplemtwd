@@ -359,6 +359,7 @@ Tw.RoamingRates.prototype = {
       }
     }
 
+    // noticeParam 은 기존코드 복사 중 함께 복사 되었으나, 최종값을 사용하지 않는다.
     var noticeParam = {
       voiceShown: true,   // 음성통화 수신 요금 안내 노출 여부
       ableShown: true,
@@ -369,8 +370,8 @@ Tw.RoamingRates.prototype = {
       ktMtCharge: _result.ktMtCharge,         // 음성통화 수신 요금 KT
       onseMtCharge: _result.onseMtCharge      // 음성통화 수신 요금 세종텔레콤
     };
-    
-    // svcAttention 내용 대치. 현재는 PC웹 기준의 HTML fragment 가 와서 살며시 대치한다.
+
+    // svcAttention 내용 대치. 현재는 PC웹 기준의 HTML fragment 가 와서 살며시 대치한다. (2020-10-05 추가)
     noticeParam.svcAttention = noticeParam.svcAttention.replace(
       /국제전화사업자선택 <a .*?<\/a>/,
       '<p><a class="lo" href="/product/callplan?prod_id=TW61000002">국제전화 사업자 선택 자세히 보기</a></p>');
@@ -498,10 +499,11 @@ Tw.RoamingRates.prototype = {
       popupPresented = true;
     }
 
+    // 검색 결과 division 으로 자동 스크롤. 단, 팝업이 뜬 경우는 제외한다.
     var resultY = this.$container.find('.rate-result').offset().top;
     if (resultY && !popupPresented) {
       $([document.documentElement, document.body]).animate({
-        scrollTop: resultY - 50
+        scrollTop: resultY - 50 // 50px 는 appbar 의 높이
       }, 180, function () {});
     }
   }

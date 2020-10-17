@@ -6,6 +6,14 @@
  * @since 2020-09-30
  */
 
+/**
+ * 생성자
+ * @param rootEl Root Element
+ * @param nations 대륙별 모든 국가
+ * @param baseDiv 기존 화면 division id
+ * @param closeCallback close callback
+ * @constructor
+ */
 Tw.RoamingSchedules = function (rootEl, nations, baseDiv, closeCallback) {
   this.$container = rootEl;
   // 대륙별 모든 국가
@@ -36,12 +44,6 @@ Tw.RoamingSchedules.prototype = {
     $('#nationsDialog .header .close').on('click', $.proxy(this._closeDialog, this));
   },
   /**
-   * Tw 모듈 초기화 직후
-   */
-  afterInit: function () {
-
-  },
-  /**
    * 전체 국가 보기 다이얼로그 닫기
    * @private
    */
@@ -68,6 +70,7 @@ Tw.RoamingSchedules.prototype = {
     $('#date-depart').html('-');
     $('#date-arrive').html('-');
     if (!topBannerUrl) {
+      // 인기여행지 Redis 데이터에는 topBannerUrl 이 없어서 그때 그때 XHR로 조회
       $('#scheduleDialog .banner').attr('src', '');
       // 만약 topBannerUrl 이 없다면 XHR로 가져온다.
       $.get('/product/roaming?queryBg=' + code, function (data) {
@@ -77,6 +80,7 @@ Tw.RoamingSchedules.prototype = {
         }
       });
     } else {
+      // 전체 국가 보기 다이얼로그에서 들어올 때는 존재하는 topBannerUrl 을 그대로 사용
       $('#scheduleDialog .banner').attr('src', topBannerUrl);
     }
     $('#target-nation').html(name);
@@ -90,9 +94,9 @@ Tw.RoamingSchedules.prototype = {
     }, $.proxy(this._handleDatePick, this));
   },
   /**
-   * 달력에서 데이터 선택 시
+   * 달력에서 날짜 선택 시
    * @param start 가는 날
-   * @param end 오는 날
+   * @param end 오는 날 (null 일 수 있음)
    * @private
    */
   _handleDatePick: function(start, end) {
@@ -172,13 +176,18 @@ Tw.RoamingSchedules.prototype = {
       var rect = dateCell.getBoundingClientRect();
       var x = rect.left;
       var y = rect.top; // 스크롤 상태 반영
+      // 선택한 날짜보다 70px 위, 35px 좌측을 기준 좌표로 삼는다.
       y -= 70;
       x -= 35;
+      // .tail class는, 말풍선의 꼬리이다.
 
       if (x < 10) {
+        // 말풍선이 화면 좌측을 넘어갈 경우, margin-left: 10px 보정
         x = 10;
         $('#scheduleDialog #calendarGuide .tail').css('left', '13px');
       } else if (x + 128 + 10 > window.innerWidth) {
+        // 말풍선이 화면 우측을 넘어갈 경우, margin-right 보정.
+        // 128은 말풍선의 너비
         x = window.innerWidth - 128 - 10;
         $('#scheduleDialog #calendarGuide .tail').css('left', '65px');
       } else {
@@ -217,7 +226,7 @@ Tw.RoamingSchedules.prototype = {
       '&to=' + endDate.format('YYYYMMDD'));
   },
   /**
-   * 현재 페이지(baseDiv)에 국가 검색 auto complete 설치
+   * 현재 페이지(baseDiv)에 국가 검색 autocomplete 설치.
    * @param selectionCb 자동완성 레이어에서 국가 선택시 실행될 콜백
    * @param baseDiv 현재 페이지 division id
    */
@@ -231,6 +240,7 @@ Tw.RoamingSchedules.prototype = {
     this.prepareNations();
     var allNations = this.$allNations;
     var proxy = this;
+    // https://jqueryui.com/autocomplete/
     $('#nation-search').autocomplete({
       // 국가 검색 로직
       source: function (req, res) {
@@ -248,9 +258,9 @@ Tw.RoamingSchedules.prototype = {
                 index = nation.countryNameEng.toLowerCase().indexOf(term);
               }
               suggestions.push({
-                label: nation.countryNameKor,
-                value: nation.countryNameKor,
-                code: nation.countryCode,
+                label: nation.countryNameKor, // jqueryui autocomplete 에서 사용
+                value: nation.countryNameKor, // jqueryui autocomplete 에서 사용
+                code: nation.countryCode, // 국가 코드
                 index: index
               });
             }
@@ -262,26 +272,35 @@ Tw.RoamingSchedules.prototype = {
           res(suggestions);
         }
       },
+      // 최소 n글자 입력시에만 자동완성 레이어 노출
       minLength: 1,
+      // 노출된 자동완성 레이어에서 특정 아이템(국가)를 방향키 등을 이용해 focus 만 잡혔을 때.
+      // 모바일웹에서는 호출될 일이 없어서 이 콜백의 중요성은 상대적으로 낮다.
+      // [공식문서] The default action is to replace the text field's value with the value of the focused item,
+      //          though only if the event was triggered by a keyboard interaction.
       focus: function (event, ui) {
         if (ui.item && ui.item.code) {
-          // 아이폰에서 키보드 내려가도록 처리
           $('#nation-search').val(ui.item.label);
+          // 아이폰에서 키보드 내려가도록 처리
           $('#nation-search').blur();
           selectionCb.apply(proxy, [ui.item.code, ui.item.label, null, baseDiv]);
           return false;
         }
         return false;
       },
+      // 자동완성 레이어에서 특정 아이템(국가)를 선택(터치) 시.
       select: function (event, ui) {
+        // 아이폰에서 키보드 내려가도록 처리
         $('#nation-search').blur();
+        // jqueryui autocomplete focus 기본 동작은 선택된 값을 input value 에 채우기만 하므로,
+        // 아래와 같이 selectionCallback 을 직접 호출
         selectionCb.apply(proxy, [ui.item.code, ui.item.label, null, baseDiv]);
       }
     });
     this.setupNationsDialog();
   },
   /**
-   * 컨트롤러로부터 받은 국가 정보를 FE가 쓰기 쉽게 가공하여 $allNations 변수에 채움
+   * 컨트롤러로부터 받은 국가 정보($nations)를 FE가 쓰기 쉽게 가공하여 $allNations 변수에 채움
    */
   prepareNations: function () {
     var all = [];
@@ -299,6 +318,7 @@ Tw.RoamingSchedules.prototype = {
    */
   setupNationsDialog: function () {
     var menuItems = $('#nationsDialog .menu li button');
+    // 국가 그룹 선택 핸들러
     menuItems.on('click', $.proxy(this._onClickNationGroup, this));
   },
   /**
@@ -310,7 +330,7 @@ Tw.RoamingSchedules.prototype = {
     this.onClickNationGroup(e.currentTarget);
   },
   /**
-   * 국가 검색 다이얼로그 내에서 좌측 그룹 선택시
+   * 국가 검색 다이얼로그 내에서 좌측 그룹(대륙) 선택시
    * @param menu currentTarget element
    */
   onClickNationGroup: function (menu) {
@@ -324,6 +344,11 @@ Tw.RoamingSchedules.prototype = {
     var THIS = this;
     for (var i = 0; i<selectedNations.length; i++) {
       var nation = selectedNations[i];
+      /**
+       * <li>
+       *   <button role="link" title="캐나다" data-country="CAN">캐나다</button>
+       * </li>
+       */
       var li = document.createElement('li');
       var bt = document.createElement('button');
       bt.setAttribute('role', 'link');
@@ -350,6 +375,7 @@ Tw.RoamingSchedules.prototype = {
       return false;
     }
     name = name.trim();
+    // 국가명으로부터 국가코드 복원을 위해 loop
     for (var i=0; i<this.$allNations.length; i++) {
       var item = this.$allNations[i];
       if (item.countryNameKor === name || item.countryNameEng.toLowerCase() === name.toLowerCase()) {

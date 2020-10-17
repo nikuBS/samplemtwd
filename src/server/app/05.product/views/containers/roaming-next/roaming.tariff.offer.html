@@ -53,17 +53,16 @@
                 <% } %>
             </div>
             <div class="past">
+                <%# '지난 여행 이력' 스펙 아웃으로 false를 넣었고, 지난여행이력 주요 진입점 중 하나이다. %>
                 <% if (recentUsed && false) { %>
                     <p class="description">
                         지난 T로밍 요금제 사용 내역을 기반으로 보여 드립니다.
                     </p>
-                    <!--
                     <a href="/product/roaming/history">
                         <div class="button">
                             지난 여행 이력보기
                         </div>
                     </a>
-                    -->
                 <% } else { %>
                     <p class="description">
                         여행할 국가와 일정을 기반으로 보여 드립니다.
