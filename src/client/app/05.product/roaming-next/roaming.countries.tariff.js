@@ -160,6 +160,11 @@ Tw.RoamingCountriesTariff.prototype = {
     groupList.innerHTML = '';
 
     var proxy = this;
+    var clickHandler = function(e) {
+      // 각 그룹 요소 선택 시, 그룹 내 국가를 채우기 위해 fillItems 호출
+      var code = e.target.getAttribute('data-code');
+      proxy.fillItems(code);
+    };
     // 현재 선택된 분류(currentSortBy)의 메뉴데이터로 루프
     for (var i = 0; i < this.menus[this.currentSortBy].length; i++) {
       var menu = this.menus[this.currentSortBy][i];
@@ -175,11 +180,7 @@ Tw.RoamingCountriesTariff.prototype = {
       li.id = 'group-' + menu.code;
       li.innerText = menu.label;
       li.setAttribute('data-code', menu.code);
-      li.onclick = function (e) {
-        // 각 그룹 요소 선택 시, 그룹 내 국가를 채우기 위해 fillItems 호출
-        var code = e.target.getAttribute('data-code');
-        proxy.fillItems(code);
-      };
+      li.onclick = clickHandler;
       groupList.appendChild(li);
     }
 

@@ -79,7 +79,7 @@ Tw.RoamingModeOn.prototype = {
         offsetY = 400 - realHeight;
       }
 
-      container.style.backgroundImage = "url('" + url + "')";
+      container.style.backgroundImage = 'url(\'' + url + '\')';
       container.style.backgroundRepeat = 'no-repeat';
       container.style.backgroundSize = width + 'px ' + realHeight + 'px';
       container.style.backgroundPositionY = offsetY + 'px';

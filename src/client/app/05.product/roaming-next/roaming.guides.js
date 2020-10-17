@@ -157,6 +157,11 @@ Tw.RoamingGuides.prototype = {
 
     var proxy = this;
     var as = $('.anchors a');
+    var anchorHandler = function(e) {
+      // var meta = $(e.target).data('meta');
+      proxy.showAnchor(e.target);
+      e.preventDefault();
+    };
     for (var i = 0; i < as.length; i++) {
       var a = as[i];
       var anchorId = $(a).attr('href');
@@ -165,11 +170,7 @@ Tw.RoamingGuides.prototype = {
       // 각 앵커탭의 body 좌표값들을 저장
       $(a).data('offset', {top: anchor.offsetTop, height: anchor.offsetHeight, topMargin: topMargin});
       $(a).data('meta', {id: id});
-      $(a).on('click', function (e) {
-        // var meta = $(e.target).data('meta');
-        proxy.showAnchor(e.target);
-        e.preventDefault();
-      });
+      $(a).on('click', anchorHandler);
     }
 
     var anchorsHeight = $('.anchors').height();

@@ -345,6 +345,11 @@ Tw.RoamingSchedules.prototype = {
 
     var onSelectCallback = this.$onSelectCallback;
     var THIS = this;
+    var clickHandler = function(e) {
+      var nationName = e.target.innerText;
+      var nationCode = e.target.getAttribute('data-country');
+      onSelectCallback.apply(THIS, [nationCode, nationName, null, '#nationsDialog']);
+    };
     for (var i = 0; i<selectedNations.length; i++) {
       var nation = selectedNations[i];
       /**
@@ -356,11 +361,7 @@ Tw.RoamingSchedules.prototype = {
       var bt = document.createElement('button');
       bt.setAttribute('role', 'link');
       bt.setAttribute('title', nation.countryNameKor);
-      bt.onclick = function (e) {
-        var nationName = e.target.innerText;
-        var nationCode = e.target.getAttribute('data-country');
-        onSelectCallback.apply(THIS, [nationCode, nationName, null, '#nationsDialog']);
-      };
+      bt.onclick = clickHandler;
       bt.innerText = nation.countryNameKor;
       bt.setAttribute('data-country', nation.countryCode);
       li.appendChild(bt);
@@ -372,7 +373,7 @@ Tw.RoamingSchedules.prototype = {
    */
   searchNation: function () {
     var name = $('#nation-search').val();
-    if (name.trim().length == 0) {
+    if (name.trim().length === 0) {
       Tw.Popup.openAlert('국가명을 입력해주세요', '국가 검색');
       $('#nation-search').focus();
       return false;

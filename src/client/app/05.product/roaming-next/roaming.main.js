@@ -109,7 +109,7 @@ Tw.RoamingMain.prototype = {
         name: item.countryNameKor,
         code: item.countryCode,
         imageUrl: imageUrl,
-        imageAlt: item.mblBtnImgAltCtt,
+        imageAlt: item.mblBtnImgAltCtt
       });
       $('#pc' + (i + 1)).html(cell);
     }

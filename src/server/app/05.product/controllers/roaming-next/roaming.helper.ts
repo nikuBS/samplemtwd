@@ -11,6 +11,13 @@ import {Observable} from 'rxjs/Observable';
 import {REDIS_KEY} from '../../../../types/redis.type';
 import RedisService from '../../../../services/redis.service';
 
+const ISO3166 = {
+  'CHN': 460, 'JPN': 440, 'VNM': 452, 'USA': 310, 'PHL': 515, 'ITA': 222, 'TWN': 466, 'HKG': 454,
+  'MYS': 502, 'SGP': 525, 'FRA': 208, 'IDN': 510, 'ESP': 214, 'CAN': 302, 'GBR': 234, 'RUS': 250,
+  'MAC': 455, 'AUS': 505, 'ARE': 424, 'TUR': 286, 'GUM': 535, 'AUT': 232, 'CHE': 228, 'IND': 404,
+  'KHM': 456, 'CZE': 230, 'NLD': 204, 'LAO': 457, 'DEU': 262, 'THA': 520,
+};
+
 export default class RoamingHelper {
   /**
    * @desc /adminupload/123/456/a.png 형식의 uri을 받아,
@@ -194,11 +201,3 @@ export default class RoamingHelper {
     return t;
   }
 }
-
-const ISO3166 = {
-  'CHN': 460, 'JPN': 440, 'VNM': 452, 'USA': 310, 'PHL': 515, 'ITA': 222, 'TWN': 466, 'HKG': 454,
-  'MYS': 502, 'SGP': 525, 'FRA': 208, 'IDN': 510, 'ESP': 214, 'CAN': 302, 'GBR': 234, 'RUS': 250,
-  'MAC': 455, 'AUS': 505, 'ARE': 424, 'TUR': 286, 'GUM': 535, 'AUT': 232, 'CHE': 228, 'IND': 404,
-  'KHM': 456, 'CZE': 230, 'NLD': 204, 'LAO': 457, 'DEU': 262, 'THA': 520,
-};
-

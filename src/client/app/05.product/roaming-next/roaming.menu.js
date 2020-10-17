@@ -220,6 +220,7 @@ Tw.RoamingMenu.prototype = {
  * client/component/menu.component.js 280라인에서 호출될 함수.
  * 공통 버거메뉴 오픈 시, 이를 가로채서 로밍모드 확인을 할 필요가 있는지 확인하는 함수.
  */
+/*exported checkInterceptMenu */
 function checkInterceptMenu() {
   new Tw.RoamingMenu(null).checkInterceptMenu();
 }
