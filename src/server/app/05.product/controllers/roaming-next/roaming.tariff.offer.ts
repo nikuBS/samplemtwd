@@ -49,6 +49,12 @@ export default class RoamingTariffOfferController extends RoamingController {
       this.getFirstRoaming(),
       this.getTariffsMap(),
     ).subscribe(([country, recommended, allTariffs, recentUsed, newbie, tariffsMap]) => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo,
+        [country, recommended, allTariffs, newbie, tariffsMap])) {
+        this.releaseDeadline(res);
+        return;
+      }
+
       // 유명 국가 30개가 아닌 경우, 화면 최하단 UI 카드에 국기를 표시하지 않는 것이 스펙이다.
       // 그러므로 조회된 국가 정보에 '공통 이미지'가 포함된 경우, 국기 이미지를 제거.
       if (country.mblNflagImgAlt && country.mblNflagImgAlt.indexOf('공통 이미지') >= 0) {
@@ -111,6 +117,8 @@ export default class RoamingTariffOfferController extends RoamingController {
    */
   private getTariffsMap(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       const items = resp.result.grpProdList;
       if (!items) {
         return [];
@@ -131,7 +139,11 @@ export default class RoamingTariffOfferController extends RoamingController {
    * @private
    */
   private getFirstRoaming(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_10_0190, {}).map(r => r.result);
+    return this.apiService.request(API_CMD.BFF_10_0190, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+      return resp.result;
+    });
   }
 
   /**
@@ -141,6 +153,8 @@ export default class RoamingTariffOfferController extends RoamingController {
    */
   private getRecentUsedTariff(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0197, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       if (resp.result && resp.result.prodId) {
         return resp.result;
       }
@@ -164,6 +178,8 @@ export default class RoamingTariffOfferController extends RoamingController {
     const noFlag = mcc === ''; // 유명 국가가 아닐 경우
     // 유명 국가가 아니여도 공통 배경이미지는 필요하므로, 임의의 비유명 국가인 그리스(202)를 보낸다.
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: noFlag ? '202' : mcc}).switchMap(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // countryCode, countryNm, countryNmEng, tmdiffTms
       const item = resp.result;
       if (!item) {
@@ -213,6 +229,9 @@ export default class RoamingTariffOfferController extends RoamingController {
       svcStartDt: startDate,
       svcEndDt: endDate
     }).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+
       // prodId: NA00006489
       // prodNm: baro 3GB
       // prodSmryDesc: 아시아,미주,유럽에서
@@ -246,6 +265,9 @@ export default class RoamingTariffOfferController extends RoamingController {
       return Observable.of([]);
     }
     return this.apiService.request(API_CMD.BFF_10_0200, {countryCode}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+
       // prodGrpId: 'T000000091',
       // prodId: 'NA0000000',
       // prodNm: 'T로밍 아시아패스',
@@ -277,13 +299,9 @@ export default class RoamingTariffOfferController extends RoamingController {
    */
   private getAvailableCountries(prodId: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0201, {prodId}).map(resp => {
-      if (!resp.result && resp.msg && resp.code) {
-        // 서비스 가능한 국가 없을 때 PRD0075
-        return {
-          code: resp.code,
-          msg: resp.msg,
-        };
-      }
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+      // 서비스 가능한 국가 없을 때 PRD0075
       return resp.result;
     });
   }

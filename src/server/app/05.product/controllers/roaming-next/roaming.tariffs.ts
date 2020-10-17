@@ -20,6 +20,10 @@ export default class RoamingTariffsController extends RoamingController {
       this.getTariffsByGroup(),
       RoamingHelper.nationsByContinents(this.redisService),
     ).subscribe(([items, nations]) => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [items])) {
+        this.releaseDeadline(res);
+        return;
+      }
       for (const item of items) {
         item.prodGrpBnnrImgUrl = RoamingHelper.penetrateUri(item.prodGrpBnnrImgUrl); // 로밍메인 노출 카드
         // 아래 2개 속성 prodGrpFlagImgUrl, prodGrpIconImgUrl 은 현재 FE 에서 사용하는 부분이 없다.
@@ -49,6 +53,9 @@ export default class RoamingTariffsController extends RoamingController {
    */
   private getTariffsByGroup() {
     return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+
       let items = resp.result.grpProdList;
       if (!items) {
         // prodGrpId: T0000094

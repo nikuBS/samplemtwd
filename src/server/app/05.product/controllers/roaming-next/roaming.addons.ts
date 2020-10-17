@@ -16,6 +16,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import ProductHelper from '../../../../utils/product.helper';
 import {RoamingController} from './roaming.abstract';
+import RoamingHelper from './roaming.helper';
 
 export default class RoamingAddonsController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -25,14 +26,9 @@ export default class RoamingAddonsController extends RoamingController {
       this.getAddonsUsing(svcInfo),
       this.getAddonsAll(),
     ).subscribe(([addonUsing, addonData]) => {
-      const error = {
-        code: addonData.code || addonUsing.code,
-        msg: addonData.msg || addonUsing.msg
-      };
-
-      if (error.code) {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [addonUsing, addonData])) {
         this.releaseDeadline(res);
-        return this.error.render(res, {...error, svcInfo, pageInfo});
+        return;
       }
 
       const filters = {}; // {'FLT0001': '인기', 'FLT0002': '로밍최초'}
@@ -93,15 +89,11 @@ export default class RoamingAddonsController extends RoamingController {
       return Observable.of([]);
     }
     return this.apiService.request(API_CMD.BFF_10_0057, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        // 부가서비스 내용은 getAddonsAll 을 참조하고, 이용중인 목록은 prodId 만 사용한다.
-        return resp.result.roamingProdList.map(item => item.prodId);
-      } else {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
-      }
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+
+      // 부가서비스 내용은 getAddonsAll 을 참조하고, 이용중인 목록은 prodId 만 사용한다.
+      return resp.result.roamingProdList.map(item => item.prodId);
     });
   }
 
@@ -113,31 +105,27 @@ export default class RoamingAddonsController extends RoamingController {
    */
   private getAddonsAll(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0031, {idxCtgCd: 'F01600'}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        const filtered: any = [];
-        for (const p of resp.result.products) {
-          // 로밍오토다이얼, 데이터로밍무조건허용 숨김. 석연실 매니저님 요청.
-          if (['TW61000005', 'NA00003157'].indexOf(p.prodId) === -1) {
-            filtered.push(p);
-          }
-        }
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
 
-        return {
-          ...resp.result,
-          products: filtered.map(product => {
-            return {
-              ...product,
-              // 아래 ProductHelper 코드는 로밍개선 이전에 있던 코드를 그대로 옮겨왔다.
-              basFeeAmt: ProductHelper.convProductBasfeeInfo(product.basFeeAmt)
-            };
-          })
-        };
-      } else {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+      const filtered: any = [];
+      for (const p of resp.result.products) {
+        // 로밍오토다이얼, 데이터로밍무조건허용 숨김. 석연실 매니저님 요청.
+        if (['TW61000005', 'NA00003157'].indexOf(p.prodId) === -1) {
+          filtered.push(p);
+        }
       }
+
+      return {
+        ...resp.result,
+        products: filtered.map(product => {
+          return {
+            ...product,
+            // 아래 ProductHelper 코드는 로밍개선 이전에 있던 코드를 그대로 옮겨왔다.
+            basFeeAmt: ProductHelper.convProductBasfeeInfo(product.basFeeAmt)
+          };
+        })
+      };
     });
   }
 }

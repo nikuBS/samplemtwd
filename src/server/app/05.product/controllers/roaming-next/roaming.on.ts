@@ -108,6 +108,10 @@ export default class RoamingOnController extends RoamingController {
       };
       if (!isLogin) {
         this.getRoamingMeta(context.country.code).subscribe(meta => {
+          if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [meta])) {
+            this.releaseDeadline(res);
+            return;
+          }
           context.meta = meta;
           this.renderDeadline(res, template, context);
         });
@@ -178,6 +182,12 @@ export default class RoamingOnController extends RoamingController {
           this.getRateByCountry(countryCode),
           this.getRoamingMeta(countryCode),
         ).subscribe(([allTariffs, phoneUsage, rate, meta]) => {
+          if (RoamingHelper.renderErrorIfAny(this.error, res, null, null,
+            [allTariffs, rate, meta])) {
+            this.releaseDeadline(res);
+            return;
+          }
+
           if (!allTariffs) {
             allTariffs = [];
           }
@@ -197,6 +207,10 @@ export default class RoamingOnController extends RoamingController {
         current.group = RoamingHelper.getTariffGroup(current.prodId);
 
         this.getTariffDateRange(current.prodId).subscribe(r => {
+          if (RoamingHelper.renderErrorIfAny(this.error, res, null, null, [r])) {
+            this.releaseDeadline(res);
+            return;
+          }
           // svcStartDt - 시작일
           // svcEndDt - 종료일
           // svcStartTm - 시작시간
@@ -260,6 +274,11 @@ export default class RoamingOnController extends RoamingController {
       this.getRateByCountry(countryCode),
       this.getRoamingMeta(countryCode),
     ).subscribe(([dataUsage, phoneUsage, baroUsage, rate, meta]) => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, null, null, [rate, meta])) {
+        this.releaseDeadline(res);
+        return;
+      }
+      console.log(dataUsage);
 
       // BFF_05_0201 (getDataUsage)
       //   troaming-data =>
@@ -380,6 +399,8 @@ export default class RoamingOnController extends RoamingController {
    */
   private getCountryInfo(mcc): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // countryCode, countryNm, countryNmEng, tmdiffTms
       // mblNflagImg, alt
       // mblRepImg, alt
@@ -396,6 +417,8 @@ export default class RoamingOnController extends RoamingController {
    */
   private getAvailableTariffs(mcc): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0200, {mcc: mcc}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // prodGrpId: 'T000000091',
       // prodId: 'NA0000000',
       // prodNm: 'T로밍 아시아패스',
@@ -414,6 +437,8 @@ export default class RoamingOnController extends RoamingController {
    */
   private getUsingTariffs(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0056, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // prodId: 'NA0000000',
       // prodNm: 'T로밍 아시아패스',
       // basFeeTxt: '25000'
@@ -456,10 +481,9 @@ export default class RoamingOnController extends RoamingController {
     if (current.group === 4) {
       // 괌사이판 국내처럼의 경우, 국내 데이터 잔여량 체크
       return this.apiService.request(API_CMD.BFF_05_0001, {}).map(resp => {
-        if (!resp.result) {
-          // BLN0004: 잔여량 조회 가능 항목이 없습니다
-          return {code: resp.code, msg: resp.msg};
-        }
+        const error = RoamingHelper.checkBffError(resp);
+        if (error) { return error; }
+
         // 추후 MyTHelper.parseUsageData가 가공한 .used, .total 필드를 사용하기 위함
         return MyTHelper.parseUsageData(resp.result);
       });
@@ -498,6 +522,8 @@ export default class RoamingOnController extends RoamingController {
     }
     // 타회선 조회시 T-SvcMgmtNum 넘겨야함
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // dataTopUp
       // ting
       // dataDiscount
@@ -551,10 +577,6 @@ export default class RoamingOnController extends RoamingController {
       usgStartDate: startDate.format('YYYYMMDD'),
       usgEndDate: endDate.format('YYYYMMDD'),
     }).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return resp;
-      }
-
       // svcMgmtNo: '10003154' // 서비스관리번호
 
       // [{
@@ -604,6 +626,8 @@ export default class RoamingOnController extends RoamingController {
       manageType: 'W', // 국가별 이용요금 조회에서 기본 요청값이 3G('W')라 여기서도 3G('W')로 요청하였다.
       showDailyPrice: 'N', // BFF_10_0061 응답의 'rent' 값이 0 보다 클 때는 'Y' 아니면 'N'
     }).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // sMoChargeMin/Max: 문자 - SMS 발신, "165",
       // vIntChargeMin/Max: 음성 - 방문국에서 한국으로, "144.8"
       // dMoChargeMin/Max: 데이터 이용료, "0.28"
@@ -622,6 +646,8 @@ export default class RoamingOnController extends RoamingController {
       countryCode: countryCode,
       command: 'withCountry',
     }).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // voiceRoamingYn: 'Y'
       // dataRoamingYn: 'Y'
       // gsm: '3'

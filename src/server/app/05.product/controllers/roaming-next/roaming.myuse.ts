@@ -27,8 +27,17 @@ export default class RoamingMyUseController extends RoamingController {
       this.getMyTariffs(),
       this.getMyAddons(),
       // 로밍 실시간 데이터 잔여량
-      this.apiService.request(API_CMD.BFF_05_0201, {}).map(resp => resp.result),
+      this.apiService.request(API_CMD.BFF_05_0201, {}).map(resp => {
+        const error = RoamingHelper.checkBffError(resp);
+        if (error) { return null; }
+        return resp.result;
+      }),
     ).subscribe(([tariffs, addons, dataUsages]) => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [tariffs, addons, dataUsages])) {
+        this.releaseDeadline(res);
+        return;
+      }
+
       // prodId, prodNm, scrbDt (2019.1.23.),
       // basFeeTxt (39,000),
       // prodLinkYn, prodSetYn, prodTermYn
@@ -54,12 +63,19 @@ export default class RoamingMyUseController extends RoamingController {
           // 이용 중인 모든 요금제에 대하여, BFF_10_0091(기간 조회 API)를 호출한다.
           // 스펙 상, 이용기간을 표시해야 하고, 이용기간에 따라 '이용 예정', '이용 중', '이용 완료' 표시를 하기 위함이다.
           return this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [t.prodId]).map(r => {
-            if (r.code === API_CODE.CODE_00 && r.result) {
+            const error = RoamingHelper.checkBffError(r);
+            if (error) { return error; }
+            if (r.result) {
               return r.result;
             }
             return null;
           });
         })).subscribe((ranges) => {
+          if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [ranges])) {
+            this.releaseDeadline(res);
+            return;
+          }
+
           // BFF_10_0091(기간조회) 응답을 기존 tariffs 객체에 병합.
           this.mergeRanges(tariffs, ranges, dataUsages);
           const filtered: any = [];
@@ -208,8 +224,8 @@ export default class RoamingMyUseController extends RoamingController {
    */
   private getMyTariffs(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0056, {}).map((resp) => {
-        return this._mapResult(resp);
-      });
+      return this._mapResult(resp);
+    });
   }
 
   /**
@@ -232,9 +248,8 @@ export default class RoamingMyUseController extends RoamingController {
    * @private
    */
   private _mapResult(resp) {
-    if (resp.code !== API_CODE.CODE_00) {
-      return { code: resp.code, msg: resp.msg };
-    }
+    const error = RoamingHelper.checkBffError(resp);
+    if (error) { return error; }
 
     if (FormatHelper.isEmpty(resp.result)) {
       resp.result.roamingProdList = [];

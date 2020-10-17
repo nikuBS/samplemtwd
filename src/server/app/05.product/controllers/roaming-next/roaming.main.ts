@@ -50,6 +50,11 @@ export default class RoamingMainController extends RoamingController {
       this.getFirstRoaming(isLogin),
       this.getTariffGroups(),
     ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie, groups]) => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo,
+        [currentUse, newbie, groups])) {
+        this.releaseDeadline(res);
+        return;
+      }
       // 인기 여행지의 경우 스펙은 최근 6개만 표시인데, Redis가 30여개 리턴하므로 최근 6개만 컷
       if (popularNations.length > 6) {
         popularNations = popularNations.slice(0, 6);
@@ -103,7 +108,11 @@ export default class RoamingMainController extends RoamingController {
     if (!isLogin) {
       return Observable.of({});
     }
-    return this.apiService.request(API_CMD.BFF_10_0190, {}).map(r => r.result);
+    return this.apiService.request(API_CMD.BFF_10_0190, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+      return resp.result;
+    });
   }
 
   /**
@@ -150,9 +159,8 @@ export default class RoamingMainController extends RoamingController {
     // 1) 나의 T로밍 이용현황, 2) 로밍메인 상단 3) 로밍모드 상단
     // 위 3개에서 요금제의 '상태' 가 다르게 표시되어 혼란의 여지가 있다.
     return this.apiService.request(API_CMD.BFF_10_0055, {}).switchMap(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return Observable.of({code: resp.code, msg: resp.msg});
-      }
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return Observable.of(error); }
       // prodInfoTxt: 'T로밍 OnePass300 기간형 외 2건",
       // feeProdYn: Y, 로밍요금제 여부
       // addProdYn: N, 로밍부가서비스 여부
@@ -204,6 +212,8 @@ export default class RoamingMainController extends RoamingController {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_10_0197, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       if (resp.result && resp.result.prodId) {
         // 아래 상품은 원장 존재하지 않으므로 미표시 했었으나, 코드이력 관리에 어려움이 있어 주석처리.
         // NA00005904 자동안심T로밍 데이터,
@@ -245,6 +255,8 @@ export default class RoamingMainController extends RoamingController {
       mcc = '202';
     }
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // countryCode, countryNm, countryNmEng, tmdiffTms
       return resp.result;
     });
@@ -283,6 +295,8 @@ export default class RoamingMainController extends RoamingController {
    */
   private getTariffGroups(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       let items = resp.result.grpProdList;
       if (!items) {
         items = [];

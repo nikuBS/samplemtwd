@@ -53,12 +53,18 @@ class RoamingGuideSecureT extends RoamingGuideController {
 
     // BFF_10_0198: 요금제 전체 목록 조회
     this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       let items = resp.result.grpProdList;
       if (!items) {
         items = [];
       }
       return items;
     }).subscribe(groups => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [groups])) {
+        this.releaseDeadline(res);
+        return;
+      }
       const tariffs: any = [];
       // 로밍 요금제 목록 중 그룹명이 `baro`로 시작하는 그룹 내의 모든 요금제를 리턴.
       for (const g of groups) {
@@ -96,12 +102,18 @@ class RoamingGuideProduct extends RoamingGuideController {
 
     // BFF_10_0198: 요금제 전체 목록 조회
     this.apiService.request(API_CMD.BFF_10_0198, {}).map(resp => {
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       let items = resp.result.grpProdList;
       if (!items) {
         items = [];
       }
       return items;
     }).subscribe(groups => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [groups])) {
+        this.releaseDeadline(res);
+        return;
+      }
       const group1: any = []; // 3GB
       const group2: any = []; // 4GB, 7GB
       const group3: any = []; // OnePass 300, 500 기본형

@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {REDIS_KEY} from '../../../../types/redis.type';
 import {RoamingController} from './roaming.abstract';
+import RoamingHelper from './roaming.helper';
 
 export default class RoamingRatesByCountryResultController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -72,6 +73,10 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
       this.getNationsByContinents('OCN'),
       this.getRoamingMeta(apiParams),
     ).subscribe(([afr, asp, amc, eur, met, ocn, meta]) => {
+      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [meta])) {
+        this.releaseDeadline(res);
+        return;
+      }
       for (const continent of [afr, asp, amc, eur, met, ocn]) {
         const list = continent;
         // 어떤 이유에서든 '국가명' 누락시, 국가코드로 부터 이를 복원하는 방어코드
@@ -108,12 +113,8 @@ export default class RoamingRatesByCountryResultController extends RoamingContro
    */
   private getRoamingMeta(param: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0061, param).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
-      }
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
       // voiceRoamingYn: 'Y'
       // dataRoamingYn: 'Y'
       // gsm: '3'

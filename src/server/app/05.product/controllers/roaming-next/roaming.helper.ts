@@ -10,6 +10,10 @@ import EnvHelper from '../../../../utils/env.helper';
 import {Observable} from 'rxjs/Observable';
 import {REDIS_KEY} from '../../../../types/redis.type';
 import RedisService from '../../../../services/redis.service';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
+import {API_CODE} from '../../../../types/api-command.type';
+import {Response} from 'express';
+import ErrorService from '../../../../services/error.service';
 
 const ISO3166 = {
   'CHN': 460, 'JPN': 440, 'VNM': 452, 'USA': 310, 'PHL': 515, 'ITA': 222, 'TWN': 466, 'HKG': 454,
@@ -199,5 +203,37 @@ export default class RoamingHelper {
       t.phone = t.prodBasBenfCtt;
     }
     return t;
+  }
+
+  /**
+   * BFF API 에 예외가 있는지 확인
+   *
+   * @param resp BFF API response
+   */
+  static checkBffError(resp: any): any {
+    if (resp && resp.code && resp.code !== API_CODE.CODE_00) {
+      return {code: resp.code, msg: resp.msg};
+    }
+    return null;
+  }
+
+  /**
+   * BFF API 응답들에 예외가 하나라도 있을 경우,
+   * 공통 에러 페이지를 렌더링 후, code 와 msg 리턴.
+   *
+   * @param errorService 공통 ErrorService
+   * @param res Express Response
+   * @param svcInfo
+   * @param pageInfo
+   * @param responses 오류가 있는지 확인할 BFF 응답 목록
+   */
+  static renderErrorIfAny(errorService: ErrorService, res: Response, svcInfo: any, pageInfo: any, responses: any[]): boolean {
+    for (const resp of responses) {
+      if (resp && resp.code && resp.code !== API_CODE.CODE_00) {
+        errorService.render(res, {code: resp.code, msg: resp.msg, svcInfo, pageInfo});
+        return true;
+      }
+    }
+    return false;
   }
 }
