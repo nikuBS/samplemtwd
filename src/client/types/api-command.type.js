@@ -244,6 +244,11 @@ Tw.API_CMD = {
   BFF_05_0222: { path: '/core-product/:version/services/wireless/additions/info', method: Tw.API_METHOD.GET },
   BFF_05_0230: { path: '/core-modification/:version/total-benefits', method: Tw.API_METHOD.GET },
 
+  // [OP002-11230]
+  BFF_05_0231: { path: '/core-modification/:version/mls/recommend-multiItem', method: Tw.API_METHOD.POST },
+  BFF_05_0232: { path: '/core-modification/:version/mls/conversion-impression', method: Tw.API_METHOD.POST },
+  BFF_05_0233: { path: '/core-modification/:version/mls/conversion-click', method: Tw.API_METHOD.POST },
+
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
   BFF_06_0002: { path: '/core-recharge/:version/refill-usages', method: Tw.API_METHOD.GET },
