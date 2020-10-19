@@ -94,6 +94,7 @@
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
 </div>
 <script type="text/x-handlebars-template" id="tpl-state-card">
+    <!-- 로밍 시 꼭 알아야 할 상황별 포인트, POINT 1, 2, 3 -->
     <div class="point" id="{{ id }}">
         <h3>
             {{ title }}
@@ -111,6 +112,7 @@
     </div>
 </script>
 <script type="text/x-handlebars-template" id="tpl-state-panel">
+    <!-- '출국 전 필수 확인' 다이얼로그 내, 상황별 탭 속 POINT 1, 2, 3 -->
     <div class="section">
         {{ title }}
         <span class="subtitle">{{ subtitle }}</span>
@@ -128,7 +130,16 @@
         </ul>
     </div>
 </script>
+<script type="text/x-handlebars-template" id="tpl-tags">
+    <!-- '출국 전 필수 확인' 다이얼로그 내, 카테고리별 탭, 해시태그 모음 -->
+    <div class="tags">
+        {{#each items}}
+            <span class="tag" id="chip-tag-{{ id }}" data-id="{{ id }}" data-command="filterTag">#{{ name }}</span>
+        {{/each}}
+    </div>
+</script>
 <script type="text/x-handlebars-template" id="tpl-tag-panel">
+    <!-- '출국 전 필수 확인' 다이얼로그 내, 카테고리별 탭, 해시태그 아래 UI 요소 목록 -->
     <div id="tag-{{ id }}" class="tag-panel">
         <div class="section">
             {{ name }}
@@ -146,17 +157,12 @@
         </div>
     </div>
 </script>
-<script type="text/x-handlebars-template" id="tpl-tags">
-    <div class="tags">
-        {{#each items}}
-        <span class="tag" id="chip-tag-{{ id }}" data-id="{{ id }}" data-command="filterTag">#{{ name }}</span>
-        {{/each}}
-    </div>
-</script>
 <script type="text/x-handlebars-template" id="tpl-tag-card">
+    <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
     <span class="tag" data-id="{{ id }}" data-command="showChecklist">#{{ name }}</span>
 </script>
 
+<!-- '출국 전 필수 확인' 다이얼로그 -->
 <div id="checklistDialog" class="dialog guide-dialog">
     <div class="appbar">
         <h1>출국 전 필수 확인</h1>
@@ -174,6 +180,7 @@
     </div>
     <div class="footer"></div>
 </div>
+<!-- '로밍 이용 가이드' 다이얼로그 -->
 <div id="documentsDialog" class="dialog guide-dialog">
     <div class="appbar">
         <h1>로밍 이용 가이드</h1>
@@ -215,7 +222,11 @@
         </div>
     </div>
 </div>
+<!--
+    '출국 전 필수 확인' 다이얼로그 내, 아코디언 펼쳤을 때 나올 내용들 모음
+-->
 <div class="guide-contents">
+    <!-- 출국 전 준비 > T로밍 요금제 가입은 필수 -->
     <div class="state-01-01">
         <ul>
             <li>baro OnePass 300 기본형 등 내게 맞는 로밍 요금제에 가입하세요.
@@ -227,6 +238,7 @@
             </div>
         </a>
     </div>
+    <!-- 출국 전 준비 > 로밍과 현지 유심(USIM)의 차이 -->
     <div class="state-01-02">
         <div class="loaming-visual"><img src="<%= CDN %>/img/product/rm-vsusim-img1.png" alt="SKT 로밍과 현지 유심(USIM) 차이점. 상세 다음 참조"></div>
         <div class="blind-height0">
@@ -273,11 +285,13 @@
             </div>
         </a>
     </div>
+    <!-- 현지에서 > 로밍 요금제 가입을 잊었어요 -->
     <div class="state-02-01">
         <ul>
             <li>데이터 접속료 무료인 모바일 T로밍 웹사이트(m.troaming.co.kr 또는 T로밍.com)로 접속하거나, 고객센터(+82-2-6343-9000, 해외에서 SKT폰 무료)로 전화해 주세요.</li>
         </ul>
     </div>
+    <!-- 현지에서 > 로밍 이용 요금과 안내 문구 확인 -->
     <div class="state-02-02">
         <ul>
             <li>해외 도착 후 국가별 로밍 요금, 데이터 사용 유의사항 등 휴대폰으로 발송되는 안내 문구를 꼭 확인하세요.</li>
@@ -330,6 +344,7 @@
             </div>
         </a>
     </div>
+    <!-- 요금 > 요금 청구 / 부과 안내 -->
     <div class="tag-01-01">
         <ul>
             <li>T로밍은 별도 가입비, 기본료가 없습니다.</li>
@@ -343,6 +358,7 @@
             <li>로밍 이용요금은 해외사업자 또는 국제전화 사업자의 정책 변경에 따라 변경될 수 있습니다.</li>
         </ul>
     </div>
+    <!-- 데이터 로밍 > 데이터 로밍 기본정보 -->
     <div class="tag-02-01">
         <ul>
             <li>데이터 로밍은 전 세계 패킷(0.5KB)당 0.275원(부가세 포함)으로 단일화되었습니다.</li>

@@ -14,6 +14,7 @@
     <%- include('../components/header.component.html', { title: '', svcInfo: svcInfo }) %>
     <div id="contents">
     <div id="content">
+        <%# 첫 로밍 고객인 경우 다른 문구 노출 %>
         <% if (newbie && newbie.isRoamingFirstTime === 'Y') { %>
         <h2><span class="colorPoint">baro 무료통화</span>와 함께</h2>
         <h2>안전한 여행하세요!</h2>
@@ -124,22 +125,6 @@
                 <% } %>
             </div>
         </div>
-        <% if (process.env['NODE_ENV'] == 'local') { %>
-        <div class="card">
-            <h3>SUPPORT CARD</h3>
-            <div class="buttons pt20">
-                <div class="button button-1" onclick="debugChangeMcc();">
-                    MCC Update
-                </div>
-                <div class="button button-2" onclick="debugChangeUserId();">
-                    TID Update
-                    <% if (svcInfo && svcInfo.userId) { %>
-                        (<%= svcInfo.userId %>)
-                    <% } %>
-                </div>
-            </div>
-        </div>
-        <% } %>
         <div class="card no-padding">
             <a href="/product/roaming/coupon">
                 <div class="menu-link border-bottom">
@@ -190,7 +175,7 @@
   var baseDiv = '#roamingMain';
 
   $(document).ready(function () {
-    new Tw.RoamingMain($(baseDiv), <%- JSON.stringify(popularNations) %>,
+    new Tw.RoamingMain($(baseDiv), JSON.parse('<%- JSON.stringify(popularNations) %>'),
       {
         'EUR': JSON.parse('<%- JSON.stringify(nations.eur) %>'),
         'AFR': JSON.parse('<%- JSON.stringify(nations.afr) %>'),
@@ -200,24 +185,6 @@
         'OCN': JSON.parse('<%- JSON.stringify(nations.ocn) %>'),
       }, <%- JSON.stringify(banners) %>);
   });
-
-  function debugChangeMcc() {
-    var newMcc = prompt('MCC 값 3자리를 입력해주세요');
-    if (newMcc) {
-      Tw.CommonHelper.setSessionStorage('ROAMING_MCC', newMcc);
-      Tw.CommonHelper.removeSessionStorage('ROAMING_OFF');
-      setTimeout(function() {
-        document.location.href = '/product/roaming/on?mcc=' + newMcc;
-      }, 500);
-    }
-  }
-
-  function debugChangeUserId() {
-    var userId = prompt('TID를 입력하세요');
-    if (userId) {
-      document.location.href = '/product/roaming?tid=' + userId;
-    }
-  }
 </script>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
     <button tabIndex="-1" title="{{ name }}" role="link">
