@@ -7,9 +7,8 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
-import {API_CMD, API_CODE, SESSION_CMD} from '../../../../types/api-command.type';
+import {API_CMD, SESSION_CMD} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
-import StringHelper from '../../../../utils/string.helper';
 import {Observable} from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {MYT_DATA_USAGE_CANCEL_TSHARE} from '../../../../types/string.type';
@@ -21,8 +20,8 @@ class MyTJoinOpeningDetail extends TwViewController {
         this.apiService.request(API_CMD.BFF_05_0216, {
           svcNum: svcInfo.svcNum
         })
-    ).subscribe(([resHistories, resDetails]) => {
-      const apiError = this.error.apiError([resHistories, resDetails]);
+    ).subscribe(([resHistories, resDetail]) => {
+      const apiError = this.error.apiError([resHistories, resDetail]);
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
           title: MYT_DATA_USAGE_CANCEL_TSHARE.TITLE,
@@ -33,11 +32,10 @@ class MyTJoinOpeningDetail extends TwViewController {
         });
       }
       const histories = resHistories.result;
-      const details = resDetails.result;
       const options = {
         svcInfo,
         pageInfo,
-        details
+        detail: resDetail.result,
       };
       // NOTE: 2007년 3월 1일 이후에는 자료가 있다. 즉, 자료가 없으면, 2007년 3월 1일 이전 가입자다.
       if (histories && histories.length > 0) {
@@ -47,7 +45,7 @@ class MyTJoinOpeningDetail extends TwViewController {
           return {
             // 개통일자 (마스킹시 ****.**.** 이와 같이 변경)
             chgDt: this.isMasking(chgDt) ? this.dateMaskingReplace(chgDt) : DateHelper.getShortDate(chgDt),
-            // FIXME: 내용이면서도 코드처럼 표현되어 있어 임의로 보정
+            // NOTE: 내용이면서도 코드처럼 표현되어 있어 임의로 보정
             chgNm: history.chgCd
           };
         });
