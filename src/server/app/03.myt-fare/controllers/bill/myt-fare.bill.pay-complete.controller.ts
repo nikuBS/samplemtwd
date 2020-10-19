@@ -111,16 +111,17 @@ class MyTFareBillPayComplete extends TwViewController {
     if (params === null) {
       return;
     }
-    const {type, amount, bankOrCardCode, bankOrCardName, bankOrCardAccn} = params;
+    const {type, amount, bankOrCardCode, bankOrCardName, bankOrCardAccn, cardNum} = params;
     Object.assign(data, {
       type,
       useTypeText: '',
       paymentOption: {},
       amount,
       amountFmt: FormatHelper.addComma(amount),
-      bankOrCardCode,
+      // bankOrCardCode,
       bankOrCardName,
-      bankOrCardAccn
+      bankOrCardAccn,
+      cardNum
     });
     // 즉시납부(계좌이체) 가 아닌경우는 resp 가 null 이다. 이후 로직은 수행 불필요.
     if (resp === null) {

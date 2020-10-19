@@ -944,14 +944,14 @@ export const CUSTOMER_SITE_OPTION_TYPE = [
     code: 'D00008',
     className: 'ico-etc',
     listIndex: 5
-  },
-  {
-    cat: '기타',
-    title: 'T world의 모든 메뉴 꼼꼼히 살펴보기',
-    code: 'D00009',
-    className: 'ico-etc',
-    listIndex: 6
   }
+  // {
+  //   cat: '기타',
+  //   title: 'T world의 모든 메뉴 꼼꼼히 살펴보기',
+  //   code: 'D00009',
+  //   className: 'ico-etc',
+  //   listIndex: 6
+  // }
 ];
 
 export const CUSTOMER_RESEARCH_ERROR = {
