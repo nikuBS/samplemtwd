@@ -117,14 +117,14 @@ Tw.MyTDataPrepaidData.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-wrap > li', $.proxy(this._changeTab, this));
-    this.$dataSelector.on('click', $.proxy(this._openSelectPop, this, false));
-    this.$skpaySelector.on('click', $.proxy(this._openSelectPop, this, true));
+    this.$dataSelector.on('click', _.debounce($.proxy(this._openSelectPop, this, false), 500));
+    this.$skpaySelector.on('click', _.debounce($.proxy(this._openSelectPop, this, true), 500));
     this.$container.on('click', '.fe-close-popup', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._checkPay, this));
     this.$container.on('click', '.fe-request-skpay', $.proxy(this._skpayPopDetail, this));
     this.$container.on('click', '.fe-skpay-complete', $.proxy(this._requestSKpay, this));
   },
-    /**
+  /**
    * @function
    * @desc tab change (SK pay/신용카드)
    * @param event
@@ -177,15 +177,15 @@ Tw.MyTDataPrepaidData.prototype = {
     }
 
     this._popupService.open({
-      url: '/hbs/',
-      hbs: 'actionsheet01',
-      layer: true,
-      data: popupName,
-      btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    },
+        url: '/hbs/',
+        hbs: 'actionsheet01',
+        layer: true,
+        data: popupName,
+        btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
+      },
       $.proxy(this._selectPopupCallback, this, $target, isSkpay),
-      $.proxy(this._checkIsAbled, this),
-      null,
+      $.proxy(this._onCloseSelectDataPopup, this, isSkpay),
+      'select-data',
       $target);
   },
   /**
@@ -202,8 +202,11 @@ Tw.MyTDataPrepaidData.prototype = {
     if (!Tw.FormatHelper.isEmpty($id)) {
       $layer.find('input#' + $id).attr('checked', 'checked');
     }
-    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target, isSkpay));
-    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this, isSkpay));
+    if (!this.$selectDataPopup) {
+      this.$selectDataPopup = $layer;
+    }
+    this.$selectDataPopup.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target, isSkpay));
+    this.$selectDataPopup.on('click', '.fe-popup-close', this._popupService.close);
   },
   /**
    * @function
@@ -215,13 +218,13 @@ Tw.MyTDataPrepaidData.prototype = {
   _setSelectedValue: function ($target, isSkpay, event) {
     var $selectedValue = $(event.target);
     $target.attr({
-      'id': $selectedValue.attr('id'), 
+      'id': $selectedValue.attr('id'),
       'data-value': $selectedValue.attr('data-value'),
       'data-amount': $selectedValue.attr('data-amount')
     });
     $target.text($selectedValue.parents('label').text());
 
-    if (isSkpay){
+    if (isSkpay) {
       this.$skpaySelector.siblings('.fe-error-msg').hide();
       this._checkSkpayIsAbled();
     } else {
@@ -229,13 +232,14 @@ Tw.MyTDataPrepaidData.prototype = {
       this._validationService.checkIsAbled();
     }
     this._popupService.close();
+    return false;
   },
   /**
    * @function
    * @desc check 여부 검증 및 에러메시지 노출
    */
   _checkSelected: function (isSkpay) {
-    if (isSkpay){
+    if (isSkpay) {
       if (Tw.FormatHelper.isEmpty(this.$skpaySelector.attr('id'))) {
         this.$skpaySelector.siblings('.fe-error-msg').show();
         this.$skpaySelector.focus();
@@ -246,7 +250,19 @@ Tw.MyTDataPrepaidData.prototype = {
         this.$dataSelector.focus();
       }
     }
-    this._popupService.close();
+  },
+  /**
+   * 데이터 항목 리스트 팝업 닫는 경우 호출
+   * @param isSkpay
+   * @private
+   */
+  _onCloseSelectDataPopup: function (isSkpay) {
+    this._checkSelected(isSkpay);
+    if (this.$selectDataPopup) {
+      this.$selectDataPopup.off('change', '.ac-list');
+      this.$selectDataPopup.off('click', '.fe-popup-close');
+      this.$selectDataPopup = null;
+    }
   },
   /**
    * @function
@@ -263,9 +279,9 @@ Tw.MyTDataPrepaidData.prototype = {
   _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
       this._popupService.open({
-        'hbs': 'DC_09_03_01',
-        'title': Tw.MYT_DATA_PREPAID.DATA_TITLE
-      },
+          'hbs': 'DC_09_03_01',
+          'title': Tw.MYT_DATA_PREPAID.DATA_TITLE
+        },
         $.proxy(this._openCheckPay, this, false),
         $.proxy(this._afterRechargeSuccess, this),
         'check-pay',
@@ -290,7 +306,7 @@ Tw.MyTDataPrepaidData.prototype = {
    */
   _afterRechargeSuccess: function () {
     if (this._isRechargeSuccess) {
-      var data = Tw.FormatHelper.customDataFormat(this._afterData.toString().replace(',',''), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
+      var data = Tw.FormatHelper.customDataFormat(this._afterData.toString().replace(',', ''), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
       this._historyService.replaceURL('/myt-data/recharge/prepaid/data-complete?data=' + data.data);
     } else if (this._isRechargeFail) {
       Tw.Error(this._err.code, this._err.msg).pop();
@@ -307,7 +323,7 @@ Tw.MyTDataPrepaidData.prototype = {
     this._afterData = parseInt(remainData, 10) +
       parseInt(this.$dataSelector.attr('data-value'), 10);
 
-    if(isSkpay){
+    if (isSkpay) {
       this._afterData = parseInt(remainData, 10) + parseInt(this.$skpaySelector.attr('data-value'), 10);
     }
     $layer.find('.fe-remain-data').text(Tw.FormatHelper.addComma(remainData.toString()));
@@ -369,7 +385,7 @@ Tw.MyTDataPrepaidData.prototype = {
       amt: this.$dataSelector.attr('data-amount'),
       cardNum: $.trim(this.$cardNumber.val()),
       expireMM: $.trim(this.$cardM.val()),
-      expireYY: $.trim(this.$cardY.val()).substr(2,2),
+      expireYY: $.trim(this.$cardY.val()).substr(2, 2),
       pwd: $.trim(this.$cardPw.val())
     };
   },
@@ -413,13 +429,13 @@ Tw.MyTDataPrepaidData.prototype = {
    * @desc input null check 후 버튼 활성화/비활성화 처리
    */
   _checkSkpayIsAbled: function () {
-    if ( this.$skpaySelector.attr('id')) {
+    if (this.$skpaySelector.attr('id')) {
       this.$btnRequestSKpay.prop('disabled', false);
     } else {
       this.$btnRequestSKpay.prop('disabled', true);
     }
   },
-      /**
+  /**
    * @function
    * @desc SK pay 결제 준비
    * @param e
@@ -436,16 +452,16 @@ Tw.MyTDataPrepaidData.prototype = {
     };
 
     this._popupService.open({
-      'hbs': 'DC_09_03_02',
-      'title': Tw.MYT_DATA_PREPAID.DATA_TITLE
-    },
+        'hbs': 'DC_09_03_02',
+        'title': Tw.MYT_DATA_PREPAID.DATA_TITLE
+      },
       $.proxy(this._openCheckPay, this, true),
       null,
       'check-pay',
       $(e.currentTarget)
     );
   },
-    /**
+  /**
    * @function
    * @desc SK pay 결제 요청
    */
@@ -463,13 +479,13 @@ Tw.MyTDataPrepaidData.prototype = {
 
     var remainData = this.$data.attr('data-value');
     var afterData = parseInt(remainData, 10) + parseInt(this.$skpaySelector.attr('data-value'), 10);
-    var mb = Tw.FormatHelper.customDataFormat(afterData.toString().replace(',',''), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
+    var mb = Tw.FormatHelper.customDataFormat(afterData.toString().replace(',', ''), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
     this.skpayInfo.mb = mb.data; // 용량
     this.skpayInfo.amtCd = this.$skpaySelector.attr('id'); // 충전코드
 
     new Tw.MyTDataPrepaySKPaySdk({
       $element: this.$container,
-      data : {
+      data: {
         skpayInfo: this.skpayInfo,
         title: 'data',
         requestSum: this.$skpaySelector.attr('data-amount')

@@ -77,7 +77,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
    * @desc event binding
    */
   _bindEvent: function () {
-    this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
+    this.$dataSelector.on('click', _.debounce($.proxy(this._openSelectPop, this), 500));
     this.$cancelBtn.on('click', $.proxy(this._cancel, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._recharge, this));
@@ -161,8 +161,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
         btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._selectPopupCallback, this, $target),
-      $.proxy(this._checkIsAbled, this),
-      null,
+      $.proxy(this._onCloseSelectDataPopup, this),
+      'select-data',
       $target);
   },
   /**
@@ -178,8 +178,11 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     if (!Tw.FormatHelper.isEmpty($id)) {
       $layer.find('input#' + $id).attr('checked', 'checked');
     }
-    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
-    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
+    if (!this.$selectDataPopup) {
+      this.$selectDataPopup = $layer;
+    }
+    this.$selectDataPopup.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
+    this.$selectDataPopup.on('click', '.fe-popup-close', this._popupService.close);
   },
   /**
    * @function
@@ -199,6 +202,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$dataSelector.siblings('.fe-error-msg').hide();
     this._validationService.checkIsAbled();
     this._popupService.close();
+    return false;
   },
   /**
    * @function
@@ -209,7 +213,18 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
       this.$dataSelector.siblings('.fe-error-msg').show();
       this.$dataSelector.focus();
     }
-    this._popupService.close();
+  },
+  /**
+   * 데이터 항목 리스트 팝업 닫는 경우 호출
+   * @private
+   */
+  _onCloseSelectDataPopup: function () {
+    this._checkSelected();
+    if (this.$selectDataPopup) {
+      this.$selectDataPopup.off('change', '.ac-list');
+      this.$selectDataPopup.off('click', '.fe-popup-close');
+      this.$selectDataPopup = null;
+    }
   },
   /**
    * @function
@@ -222,7 +237,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
       amt: this.$dataSelector.attr('data-amount'),
       cardNum: $.trim(this.$cardNumber.val()),
       expireMM: $.trim(this.$cardM.val()),
-      expireYY: $.trim(this.$cardY.val()).substr(2,2),
+      expireYY: $.trim(this.$cardY.val()).substr(2, 2),
       maskedYn: ''
     };
   },

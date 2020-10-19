@@ -130,8 +130,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-close-example-card', $.proxy(this._onCloseExampleCard, this));
     this.$container.on('click', '.fe-btn-show-example', $.proxy(this._onShowExampleCard, this));
-    this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowSelectAmount, this));
-    this.$container.on('click', '.fe-select-amount-skpay', $.proxy(this._onShowSelectAmount, this));
+    this.$container.on('click', '.fe-select-amount', _.debounce($.proxy(this._onShowSelectAmount, this), 500));
+    this.$container.on('click', '.fe-select-amount-skpay', _.debounce($.proxy(this._onShowSelectAmount, this), 500));
     this.$container.on('click', '.fe-request-prepaid-card', $.proxy(this._requestPrepaidCard, this));
     this.$container.on('click', '.fe-request-credit-card', $.proxy(this._validateCreditCard, this));
     this.$container.on('click', '.fe-request-skpay', $.proxy(this._skpayPopDetail, this));
@@ -202,9 +202,9 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
 
-    if ( Tw.FormatHelper.isEmpty(this.$prepaid_card.val()) ) {
+    if (Tw.FormatHelper.isEmpty(this.$prepaid_card.val())) {
       $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
-    } else if ( !this._validation.checkMoreLength(this.$prepaid_card, 10) ) {
+    } else if (!this._validation.checkMoreLength(this.$prepaid_card, 10)) {
       $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
@@ -220,9 +220,9 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
 
-    if ( Tw.FormatHelper.isEmpty(this.$prepaid_serial.val()) ) {
+    if (Tw.FormatHelper.isEmpty(this.$prepaid_serial.val())) {
       $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
-    } else if ( !this._validation.checkMoreLength(this.$prepaid_serial, 10) ) {
+    } else if (!this._validation.checkMoreLength(this.$prepaid_serial, 10)) {
       $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
@@ -299,10 +299,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
 
-    if ( this.$cardY.val() === '' || this.$cardM.val() === '' ) {
+    if (this.$cardY.val() === '' || this.$cardM.val() === '') {
       $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
-    } else if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) &&
-      this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
+    } else if (!(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) &&
+      this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY))) {
       $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
@@ -560,8 +560,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
         data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, $elButton),
-      $.proxy(this._validSelectedValue, this, $elButton),
-      null,
+      $.proxy(this._onCloseSelectPopup, this, $elButton),
+      'select_amount',
       $elButton
     );
   },
@@ -573,7 +573,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
    * @param $layer
    */
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', 'li', $.proxy(this._setSelectedValue, this, $target));
+    if (!this.$selectAmoutPopup) {
+      this.$selectAmoutPopup = $layer;
+      this.$selectAmoutPopup.on('click', 'li', $.proxy(this._setSelectedValue, this, $target));
+    }
     // $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, $target));
   },
 
@@ -606,6 +609,18 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this._validSelectedValue($target);
     this._checkIsAbled();
     this._checkSkpayIsAbled();
+    return false; // event 발생 시 상위로 전달되는 거 방지
+  },
+
+  /**
+   * 금액선택 팝업 close 시 처리
+   */
+  _onCloseSelectPopup: function ($elButton) {
+    this._validSelectedValue($elButton);
+    if (this.$selectAmoutPopup) {
+      this.$selectAmoutPopup.off('click', 'li');
+      this.$selectAmoutPopup = null;
+    }
   },
 
   /**
