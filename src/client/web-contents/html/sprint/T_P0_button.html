@@ -472,7 +472,7 @@
 	</div>
 	 <!-- 191115 [OP002-3913] 추가01 -->
 	 <!-- ###admin### -->
-	 <div class="tod-floating" style="bottom:60px;display: none;" >
+	 <div class="tod-floating" style="bottom:60px;display: none;" > <!-- 숨김 -->
 		<div class="floating-wrap">
 			<a href="#" class="comment">고객님의 의견을 듣습니다.고객님의 의견을 듣습니다</a>
 			<button class="floating-close"><span class="tod-blind">닫기</span></button>
@@ -481,206 +481,64 @@
 	<!-- //###admin### -->
 	<!-- //191115 [OP002-3913] 추가01 -->
 
-	<!-- 200727 [OP002-7810] 추가_01 -->
-		<!-- .tod-ui-chabot2 -->
-		<div class="tod-ui-chabot2" data-scroll="true"><!-- class="tod-ui-chabot2  slideup expanded"-->
-			<div class="tod-ui-chabot2-inner">
-                <!-- button -->
-				<!-- title -->
-				<div class="title-wrap">
-                        <button type="button" class="btn-tab">
-							<!-- 200818 [OP002-7810] 수정_01 -->
-                            <span class="tod-chatbot-img profile2"></span>
-							<!-- //200818 [OP002-7810] 수정_01 -->	
-                            <span class="chatbot-tit"><strong>T월드 챗봇</strong>이 도와드릴까요?</span>
-                        </button>
-				</div>
+    <!--  201005 [OP002-10741]  추가 : SKT-챗봇 버튼형 -->
+    <div class="tod-combot-wrap">
+        <div class="tod-combot-btn">
+			<span class="beta"><span class="blind">beta</span></span>
+			<button type="button" class="chat-btn">
+                <span class="chat-icon profile1"></span>
+                <span class="chat-txt"><span class="inner">이번 달 요금 얼마나 나왔어?</span></span>
+            </button>
+            <button type="button" class="btn-close"><img src="/img/common/chatbot/button_close_bg_gray.svg" alt="닫기"></button>
+        </div>
+    </div>
+    <script type="text/javascript" src="/js/lottie_svg.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            var profile1;
+            var $combot = $('.tod-combot-btn');
+			var $combotBeta = $('.tod-combot-btn .beta');
+            var $combotClose = $('.tod-combot-btn .btn-close');
 
-				<!-- list -->
-				<!-- 최대 노출 케이스 4개. -->
-				<!--  Keyword를 발화어 클래스로 사용한다. 
-						ico-chatbot initial // 공통 
-						ico-chatbot pay_mthd : 요금납부 방법
-						ico-chatbot  micro_pay :  소액결제 금액 
-						ico-chatbot pay_bill : 이번 달 요금 
-						ico-chatbot data_gift : 데이터선물
-						ico-chatbot refill_coupon : 리필쿠폰
-						ico-chatbot unpaid_amt : 미납 요금
-						ico-chatbot hotbill :  실시간 요금
-						ico-chatbot membership_benefit :  멤버십 혜택
-						ico-chatbot cancel_pause : 휴대폰 일시정지
-						ico-chatbot hotdata : 실시간 잔여량
-				-->
-				<div class="list-wrap nowrap">
-					<div class="list">
-						<button class="item">
-							<span class="ico-chatbot initial"><em class="tod-blind">Ai</em></span><span class="txt">챗봇으로 빠른 상담하기</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot hotbill"><em class="tod-blind">실시간 요금</em></span>
-							<span class="txt">실시간 이용 요금 알려줘</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot pay_bill"><em class="tod-blind">이번달 요금</em></span>
-							<span class="txt">이번 달 요금 얼마 나왔어</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot hotdata"><em class="tod-blind">실시간 잔여량</em></span>
-							<span class="txt">실시간 잔여량 알려줘</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot refill_coupon"><em class="tod-blind">리필쿠폰</em></span>
-							<span class="txt">리필 쿠폰 사용할래</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot  pay_mthd"><em class="tod-blind">납부</em></span>
-							<span class="txt">요금납부 방법</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot unpaid_amt"><em class="tod-blind">미납 요금</em></span>
-							<span class="txt">미납요금 얼마야?</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot membership_benefit"><em class="tod-blind">멤버십 혜택</em></span>
-							<span class="txt">내 멤버십 혜택이 뭐야?</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot  micro_pay"><em class="tod-blind">소액결제 금액</em></span>
-							<span class="txt">소액결제 금액 알려줘</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot data_gift"><em class="tod-blind">데이터선물</em></span>
-							<span class="txt">데이터 선물할래</span>
-						</button>
-						<button class="item">
-							<span class="ico-chatbot cancel_pause"><em class="tod-blind">휴대폰 일시정지</em></span>
-							<span class="txt">휴대폰 일시정지 취소하고 싶어</span>
-						</button>
-					</div>
-				</div>
+            function animateSvg(elements, path, loop){
+                var target = document.querySelectorAll(elements);
 
-				<!-- 상담하기 -->
-				<div class="link-wrap">
-					<a href="#" title="새창 열림" class="link-chatbot-go">챗봇으로 빠른 상담하기</a>
-				</div>
+                profile1 = bodymovin.loadAnimation({
+                    container: target[target.length - 1],
+                    path: path,
+                    renderer: 'svg',
+                    loop: loop,
+                    autoplay: true,
+                    rendererSettings: { progressiveLoad: false, }
+                });
 
-				<!-- close -->
-				<!--
-				<div class="close-wrap">
-					<button class="btn-close"><span class="tod-blind">닫기</span></button>
-				</div>
-				-->
+				//beta icon 추가 
+				setTimeout( function () {
+					$combotBeta.addClass("on");
+				}, 200);
 
-			</div>
-		</div>
-		<!--//.tod-ui-chabot2 -->
-		<script type="text/javascript">
-			$(document).ready(function () {
-				var $elChabot = $(".tod-ui-chabot2"),
-					$btnTab = $('.btn-tab'),
-					isStartY = 0,
-					isLastY = 0,
-					timer;
+				$(profile1).on('complete', function () {
+                    $combot.css({'background-image':'linear-gradient(to right, #609aff , #877efc)'});
+										
+                    setTimeout( function () {
+                        $combot.addClass("open");
+					}, 1500);
+                });
+                profile1.play();
+            }
 
-				function toggleNowrap() {
-					$elChabot.attr("data-scroll", "true");
-					$(".tod-ui-chabot .list-wrap").addClass('nowrap');
-				}
+            $combotClose.on('click', function () {
+                $combot.removeClass("open");
+                
+                setTimeout( function () {
+                    $combot.addClass("open");
+                   
+                }, 1800);
+            });
 
-				function expanded() {
-					if ( $elChabot.hasClass('expanded')){
-						$('body').removeClass("noscroll");
-						$elChabot.removeClass("expanded");
-						$elChabot.attr("data-scroll", "true")
-						$elChabot.on("webkitTransitionEnd", toggleNowrap);
-
-					} else {
-						$("body").addClass("noscroll");
-						$elChabot.attr("data-scroll", "false").addClass("expanded");
-						$elChabot.off("webkitTransitionEnd", toggleNowrap);
-					}
-				}
-
-				/* 200818 스크립트 삭제 
-				function toggleEmoticon() {
-					// Math.random 함수는 보안 이슈가 있으므로 사용 금지. 2 ~ 5초 사이에 랜덤으로 움직인다.
-					setTimeout(function () {
-						$('.tod-chatbot-img').toggleClass('on');
-						toggleEmoticon();
-					}, (((window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296) * (5 - 2)) + 2) * 1000);
-				}
-				// 아이콘 랜덤 토글
-				toggleEmoticon();
-				*/
-
-				// 3초후 안내 팝업 슬라이드 업
-				timer = setTimeout(function() {
-					$elChabot.addClass("slideUp");
-				}, 3000);
-			
-				//윈도우 스크롤 시 챗봇
-				$(window).on('scroll', function() {
-					clearTimeout(timer);
-					timer = setTimeout(function() {
-						$elChabot.addClass("slideUp");
-					}, 1000);
-				});
-
-				//touch event
-				$btnTab.on('touchstart', function(e) {
-					e.preventDefault();
-					isStartY = e.originalEvent.touches[0].clientY;
-				});
-
-				$btnTab.on('touchmove', function(e) {
-					e.preventDefault();
-					isLastY = e.originalEvent.touches[0].clientY;
-				});
-
-				$btnTab.on('touchend', function(e) {
-					e.preventDefault();
-					// click인 경우
-					if (Math.abs(isStartY - isLastY) < 20) {
-						expanded();
-					// 닫혀 있는데 아래로 내린 경우 - 창 최대화
-					} else if (!$elChabot.hasClass('expanded') && isStartY > isLastY ) {
-						expanded();
-					// 열려 있는데 아래로 내린 경우 - 창 최소화
-					} else if ($elChabot.hasClass('expanded') && isStartY < isLastY ) {
-						expanded();
-					// 닫혀 있는데 아래로 내린 경우 - 창 숨김
-					} else if (!$elChabot.hasClass('expanded') && isStartY < isLastY ) {
-						$elChabot.removeClass("slideUp");
-					}
-				});
-			});
-		</script>
-	<!-- // 200727 [OP002-7810] 추가_01  -->
-	
-	<!-- 200818 [OP002-7810] 스크립트 추가_01  -->
-	<script type="text/javascript" src="/js/lottie_svg.min.js"></script>
-	<script type="text/javascript">
-		window.onload = function(){
-			setTimeout( function() {
-			function animateSvg(elements, path, loop){
-				var target = document.querySelectorAll(elements);
-
-				bodymovin.loadAnimation({
-					container: target[target.length - 1],
-					path: path,
-					renderer: 'svg',
-					loop: loop,
-					autoplay: true,
-					rendererSettings: { progressiveLoad: false, }
-				}).play();
-			}
-
-			animateSvg('.profile2', '/js/chatbot_1.json', false);
-		}, 3200);
-		};
-	</script>
-<!-- // 200818 [OP002-7810] 스크립트 추가_01  -->
-
-
+            animateSvg('.profile1', '/js/chatbot_1.json', false);
+        };
+    </script>
+    <!-- //201005 [OP002-10741]  추가 : SKT-챗봇 버튼형 -->
 </body>
 </html>
