@@ -403,24 +403,47 @@ Tw.ProductMobileplanAddJoin.prototype = {
     new Tw.XtractorService(this.$container);
 
     if(Tw.FLO_AND_DATA_PROD_ID.indexOf(this._prodId) !== -1){ //FLO 상품 가입 시 가입안내팝업의 외부링크로 자동연결 [OP002-11213] 
-      setTimeout($.proxy(function () {
-        this._confirmAutoExternalUrl(this.$container);
-      }, this), 5000);
+      this._countNumbers(4, 1);
     }
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 배너 숫자 카운트하기
+   * @param from - 시작 숫자
+   * @param to - 종료 숫자
+   */
+  _countNumbers: function(from, to) {
+    var current = from;
+    var self=this;
+
+    setTimeout($.proxy(function go() {
+      $('.count_timer').text(current);
+
+      if (current > to) {
+        setTimeout(go, 1000);
+      } else {
+        setTimeout($.proxy(function () {
+          self._confirmAutoExternalUrl();
+        }, this), 1000);
+      }
+      current--;
+      
+    }, this), 1000);
   },
 
   /**
    * @function
    * @desc 외부 링크 자동지원
    */
-  _confirmAutoExternalUrl: function(e) {
-    this.$autoLink = e.find('.fe-auto-external');
+  _confirmAutoExternalUrl: function() {
+    this._popupService.close();
 
     if (!Tw.BrowserHelper.isApp()) {
-      return this._openExternalUrl(this.$autoLink.attr('href'));
+      return this._openExternalUrl($('.fe-auto-external').attr('href'));
     }
 
-    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, this.$autoLink.attr('href')));
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $('.fe-auto-external').attr('href')));
   },
 
 
