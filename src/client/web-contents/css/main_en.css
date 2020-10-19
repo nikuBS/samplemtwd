@@ -2207,7 +2207,7 @@ body.apphome .main-membershop-box { z-index: 3; }
 /* 190617 추가 [OP002-1531] 간편로그인 */
 .main-error-box.welcome.tod-login-box .tx { margin-top: 12px; }
 
-.main-error-box.welcome.tod-login-box .btn-area .btn-round1.btn-style1 { max-width: 100%; }
+.main-error-box.welcome.tod-login-box .btn-area .btn-round1.btn-style1 { width: auto; min-width: 10rem; max-width: 100%; }
 
 .main-error-box.welcome.tod-login-box .tod-simple-login-btn { text-align: center; }
 
