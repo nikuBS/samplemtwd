@@ -3388,6 +3388,13 @@ body.apphome .main-membershop-box {
   min-height: 12.75rem;
   height: auto; }
 
+/* 201016 [OP002-11366] 320 배너 영역 : 예외처리 */ 
+ @media screen and (max-width: 320px){
+  .main-charge-box.section-swiper-box {
+    min-height: auto;
+    height: auto; }
+  }
+
 .main-charge-box.ti-line2 {
   height: 14rem; }
 
