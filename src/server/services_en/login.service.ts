@@ -578,7 +578,7 @@ class LoginService {
       path = '/en/product/roaming';
     }
     //이준엽임시
-    path = path.replace('/en/','/');
+    // path = path.replace('/en/','/');
     return path;
   }
 
