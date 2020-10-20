@@ -11,7 +11,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <%- include('../../../../common_en/views/components/header.component.html', { title: 'MY BILLS', svcInfo: data.svcInfo }); %>
+        <%- include('../../../../common_en/views/components/header.component.html', { title: 'BILLS', svcInfo: data.svcInfo }); %>
         <!--
 		<div id="header" class="header-wrap">
 			<div class="h-belt">
@@ -31,7 +31,7 @@
             <h2 id="contents-area" tabindex="-1"><span class="blind">Main Section</span></h2>
 
             <div class="container" data-id="submain-container">
-                <%- include('../../../../common_en/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: { single: "", multiple : "" } }); _%>
+                <%- include('../../../../common_en/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "", multiple : "" } }); _%>
 
                 <!-- .cont-box -->
                 <div class="cont-box">
@@ -62,7 +62,7 @@
             </div>
         </div>
         <!--// #contents -->
-        <%- include('../../../../common_en/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+        <%- include('../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 
     </div>
 <script>
