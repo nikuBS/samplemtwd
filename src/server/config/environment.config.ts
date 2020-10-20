@@ -7,14 +7,13 @@ const environment = {
     SHORTCUT: 'skt.sh:3000',
     REDIS: {
       host: '61.250.19.37',
-      //port: 31300,
+      // port: 31300,
       port: 32300,
       password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
     REDIS_TOS: {
       host: '61.250.19.37',
-      //port: 31400,
       port: 32400,
       db: 0
     },
