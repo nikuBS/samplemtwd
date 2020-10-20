@@ -9986,7 +9986,7 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 .tod-chatbotIntro-copy .txt{ font-size: 0.6875rem; color: #858585;}
 
 /* 201005 [OP002-10741]  추가 : SKT-챗봇 버튼형 */
-.tod-combot-wrap{position:fixed; bottom:3.75rem; right:1.0625rem;}
+.tod-combot-wrap{z-index:29; position:fixed; bottom:3.75rem; right:1.0625rem;}
 .tod-combot-btn{
     position: relative;
     border-radius: 0.625rem; box-sizing: border-box; border-bottom-right-radius: 0;
