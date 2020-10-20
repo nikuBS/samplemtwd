@@ -1,0 +1,15 @@
+<script id="fe-tmpl-banner" type="text/x-handlebars-template">
+    {{#each banners}}
+    <li>
+        {{#if isHTML}}
+        <button>
+            {{{bnnrHtmlCtt}}}
+        </button>
+        {{else}}
+            <button class="fe-banner" data-idx="{{idx}}" data-location="{{../location}}">
+                <img src="{{bnnrFilePathNm}}" alt="{{bnnrImgAltCtt}}">
+            </button>
+        {{/if}}
+    </li>
+    {{/each}}
+</script>
