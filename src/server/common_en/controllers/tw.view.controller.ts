@@ -257,7 +257,7 @@ abstract class TwViewController {
     // request 에 해당 쿠키가 존재하지 않는 경우 새로 발급하도록 처리
     this.checkXtCookie(req, res);
     //이준엽임시
-    path = path.replace('/en/','/');
+    // path = path.replace('/en/','/');
       this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[EN/URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});

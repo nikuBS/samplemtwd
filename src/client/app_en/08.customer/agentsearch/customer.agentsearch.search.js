@@ -59,7 +59,7 @@ Tw.CustomerAgentsearch.prototype = {
     },
       $.proxy(this._onOpenPopup, this),
       null,
-      'select',
+      'store_info',
       $(e.currentTarget));
 
   },
