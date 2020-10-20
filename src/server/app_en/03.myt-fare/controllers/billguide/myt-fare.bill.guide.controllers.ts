@@ -229,13 +229,13 @@ class MyTFareBillGuide extends TwViewController {
             FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt.replace(/,/g, '')))));
 
     //    thisMain._commDataInfo.paidAmtMonthSvcCnt     = thisMain._billpayInfo.paidAmtMonthSvcCnt;
-  //      thisMain._commDataInfo.paidAmtDetailInfoList  = thisMain._billpayInfo.paidAmtDetailInfoList;
+    //    thisMain._commDataInfo.paidAmtDetailInfoList  = thisMain._billpayInfo.paidAmtDetailInfoList;
     //    thisMain._commDataInfo.dtlLst = thisMain.arrangeCategory( thisMain._billpayInfo.paidAmtDetailInfoList );
-     //   thisMain.arrangeCategory( thisMain._billpayInfo.paidAmtDetailInfoList );
+    //    thisMain.arrangeCategory( thisMain._billpayInfo.paidAmtDetailInfoList );
 
 
         let beLineLst = thisMain._billpayInfo.paidAmtDetailInfoList;
-        console.log("### line length =>"+beLineLst.length);
+      //  console.log("### line length =>"+beLineLst.length);
 
         let _lineDtlLst :Array<any> = [];
         for( let i=0; i<beLineLst.length; i++ ){
@@ -248,9 +248,9 @@ class MyTFareBillGuide extends TwViewController {
         //  console.log(" ===============================================================================" );
           _lineDtlLst.push( lineGroup );
         }
-        console.log("### _lineDtlLst length =>"+_lineDtlLst.length);
+        //  console.log("### _lineDtlLst length =>"+_lineDtlLst.length);
 
-        // 청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
+        //  청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
         thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
       //  console.log('[ ## EN thisMain._commDataInfo.conditionChangeDtList]',thisMain._commDataInfo.conditionChangeDtList);
         const data: any = {
@@ -359,16 +359,14 @@ class MyTFareBillGuide extends TwViewController {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
 
       // 6개월간 청구요금 없음
-      if ( err.code === 'BIL0076' ) {
+      if ( err.code === 'BIL0076' || err.code === 'BIL0114') {
         return res.render( 'billguide/en.myt-fare.bill.guide.nopay6month.html',
-          { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+          { data: defaultData ,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       }
-
       // 회선이 query에 있어 오류가 나면 기본 페이지로 돌아간다.
       if ( thisMain.reqQuery.line ) {
         res.redirect('/en/myt-fare/billguide/guide');
       }
-
       return thisMain.error.render(res, {
         title: 'title',
         code: err.code,
@@ -414,9 +412,8 @@ class MyTFareBillGuide extends TwViewController {
   public getSelClaimDtM(date: string): any {
     // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
     return this._commDataInfo.selClaimDtM =
-      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'MMM' );
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'MMMM' );
   }
-
 
   /**
    * 회선정보 목록 리턴

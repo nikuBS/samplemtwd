@@ -477,6 +477,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _parseBillData: function (billData) {
+    
     if ( billData.code === Tw.API_CODE.BFF_0006 || billData.code === Tw.API_CODE.BFF_0011 ) {
       if ( billData.result.fallbackClCd === 'F0004' ) {
         // 대체문구 추후적용
@@ -484,14 +485,20 @@ Tw.MainHome.prototype = {
       } else {
         return null;
       }
-    } else if ( billData.code === Tw.API_CODE.CODE_00 ) {
+    // billData.result 가 Object이나 내용이 없는 경우가 있음. -> invDt 가 있는지 체크 추가.
+    } else if ( billData.code === Tw.API_CODE.CODE_00 && billData.result && billData.result.invDt) {  
+
       var invMonth = Tw.DateHelper.getCurrentMonth(billData.result.invDt);
+      var invMonthMMM  = moment(billData.result.invDt).locale('en').format('MMM.');
+      var billMonthMMM = moment(billData.result.invDt).locale('en').add(1, 'days').format('MMM.');
+
       var billMonth = '1';
       if ( invMonth === '12' ) {
         billMonth = '1';
       } else {
         billMonth = +invMonth + 1;
       }
+
       return {
         showData: true,
         isActRep: this._isActRep,
@@ -501,7 +508,9 @@ Tw.MainHome.prototype = {
         // invMonth: Tw.DateHelper.getCurrentMonth(billData.result.invDt),
         // billMonth: +Tw.DateHelper.getCurrentMonth(billData.result.invDt) + 1
         invMonth: invMonth,
-        billMonth: billMonth
+        billMonth: billMonth,
+        invMonthMMM: invMonthMMM,
+        billMonthMMM: billMonthMMM
       };
     } else {
       return {
@@ -517,7 +526,6 @@ Tw.MainHome.prototype = {
    * @private
    */
   _getMicroContentsData: function (element) {
-
     if(element.length == 0)
       return;
 

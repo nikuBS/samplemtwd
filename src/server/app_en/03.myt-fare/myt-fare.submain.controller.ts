@@ -23,10 +23,7 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    console.log( "###########################################################" );
-    console.log( "########################   render  ########################" );
-    console.log( "###########################################################" );
-
+    
     const thisMain = this;
     const BLOCK_ON_FIRST_DAY = false;
     const data: any = {
@@ -58,17 +55,6 @@ class MyTFareSubmainController extends TwViewController {
 
     if( test === '6month') return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
     if( test === '500' ) return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
-    
-
-    //접근권한 체크
-    console.log( "###########################################################" );
-    console.log( "svcInfo.caseType   ==>"+svcInfo.caseType );
-    console.log( "svcInfo.svcAttrCd   ==>"+svcInfo.svcAttrCd );
-    console.log( "svcInfo.totalSvcCnt ==>"+svcInfo.totalSvcCnt );
-    console.log( "svcInfo.expsSvcCnt   ==>"+svcInfo.expsSvcCnt );
-    console.log( "svcInfo.nonSvcCnt   ==>"+svcInfo.nonSvcCnt );
-    console.log( "###########################################################" );
-
 
     //무선회선이 없는경우
     if( svcInfo.caseType === '02' || test === 'notLine' ) {
@@ -90,10 +76,9 @@ class MyTFareSubmainController extends TwViewController {
     }
 
    
-    console.log("## 대표회선 여부 [svcInfo.actRepYn] =>"+svcInfo.actRepYn);
+    this.logger.info("## 대표회선 여부 [svcInfo.actRepYn] =>"+svcInfo.actRepYn);
     // 대표청구 여부
     if ( svcInfo.actRepYn === 'Y' ) {
-      console.log("## [ BFF_05_229 ]");
 
       // 페이지url 통합으로 삭제 DV001-16372
       /*if ( data.type === 'UF' ) {
@@ -128,7 +113,10 @@ class MyTFareSubmainController extends TwViewController {
             data.claimUseAmt = FormatHelper.addComma((this._parseInt(claim.totInvAmt) + Math.abs(this._parseInt(claim.dcAmt))).toString() );
             let _totSumPay =  this._parseInt(claim.totInvAmt)+this._parseInt(claim.colBamt);
 
-            data.colBamtText = '₩'+FormatHelper.addComma( (claim.colBamt).toString() );
+            if( claim.colBamt !== '0' ){
+              data.colBamtText = '₩'+FormatHelper.addComma( (claim.colBamt).toString() );
+            }
+
             data.totSumPayText = '₩'+FormatHelper.addComma( (_totSumPay).toString() );
 
             // 할인요금
@@ -173,12 +161,7 @@ class MyTFareSubmainController extends TwViewController {
         res.redirect('/myt-fare/submain/usagefee?count=0');
       }*/
       this._requestUsageFee(req, res, data);
-      console.log("#### CONTROLLER END");
     }
-
-    console.log( "###########################################################" );
-    console.log( "########################   render ENd ########################" );
-    console.log( "###########################################################" );
 
   }
   //차트 청구월 변경
@@ -232,7 +215,6 @@ class MyTFareSubmainController extends TwViewController {
         // 사용요금
         if ( usage ) {
 
-
           data.usage = usage;
           data.usageFirstDay = DateHelper.getShortFirstDate(usage.invDt);
           data.usageLastDay = DateHelper.getShortLastDate(usage.invDt);
@@ -243,15 +225,15 @@ class MyTFareSubmainController extends TwViewController {
 
           data.selClaimDtM = (usage) ?  DateHelper.getShortDateWithFormatAddByUnit(usage.invDt, 1, 'days', 'MMM' ) : null;
 
-          console.log("#### [ BFF_05_204 ] >> ",usage);
-          console.log("#######################################################################################");
-          console.log("### data.usage         ==>"+ data.usage);
-          console.log("### data.usageFirstDay ==>"+ data.usageFirstDay);
-          console.log("### data.usageLastDay  ==>"+ data.usageLastDay);
-          console.log("### usage.invAmt  ==>"+ usage.invAmt);
-          console.log("### data.useAmtTot  ==>"+ data.useAmtTot);
-          console.log("### data.usedAmtList.length  ==>"+ usage.usedAmtList.length);
-          console.log("#######################################################################################");
+          this.logger.debug("#### [ BFF_05_204 ] >> ",usage);
+          this.logger.debug("#######################################################################################");
+          this.logger.debug("### data.usage         ==>"+ data.usage);
+          this.logger.debug("### data.usageFirstDay ==>"+ data.usageFirstDay);
+          this.logger.debug("### data.usageLastDay  ==>"+ data.usageLastDay);
+          this.logger.debug("### usage.invAmt  ==>"+ usage.invAmt);
+          this.logger.debug("### data.useAmtTot  ==>"+ data.useAmtTot);
+          this.logger.debug("### data.usedAmtList.length  ==>"+ usage.usedAmtList.length);
+          this.logger.debug("#######################################################################################");
 
           const test = this;
           usage.usedAmtList.forEach(function(info){

@@ -36,7 +36,7 @@
                 
                 <!-- .cont-box -->
                 <div class="cont-box">
-                    <div class="user-month-bill">
+                    <div class="user-month-bill mb100">
                         <div class="this-month-bill">
                         <!--
                             <p class="stit">Aug. Fees <span class="term">2020.7.1. ~ 2020.7.31.</span></p>
@@ -58,9 +58,7 @@
                         <dt>Previous Balance</dt>
                         <dd><%=data.colBamtText%></dd>
                     </dl>
-                    <% } %>
-                    <%_if(data.colBamtText){_%>
-                        <dl class="fees-list">
+                    <dl class="fees-list">
                         <dt>Total charges including <br/>previous balance</dt>
                         <dd class="red"><%=data.totSumPayText%></dd>
                     </dl>

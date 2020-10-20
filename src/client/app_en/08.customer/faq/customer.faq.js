@@ -125,7 +125,7 @@ Tw.CustomerFaq.prototype = {
     },
       $.proxy(this._onOpenPopup, this),
       null,
-      'select',
+      'faq',
       $(e.currentTarget));
   },
 
