@@ -1301,7 +1301,7 @@ Tw.ChatbotService.prototype = {
         if ( pauseInfo.code === Tw.API_CODE.CODE_00 ) {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 일시정지  : ', pauseInfo.result.svcStCd);
 
-            if ( pauseInfo.result.svcStCd === 'SP' ) {
+            if ( pauseInfo.result.svcStCd === 'AC' ) {
                 this._pauseYn = 'N';
             } else {
                 this._pauseYn = 'Y';
