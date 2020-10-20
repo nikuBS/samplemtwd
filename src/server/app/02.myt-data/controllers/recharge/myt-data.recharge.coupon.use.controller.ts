@@ -12,6 +12,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 import { TPLAN_LARGE_PROD_ID } from '../../../../types/bff.type';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 interface Option {
   dataVoiceClCd: string;
@@ -41,8 +42,9 @@ interface Coupon {
 }
 
 export default class MyTDataRechargeCouponUse extends TwViewController {
-
-  private planType: Map<string, number> = new Map([
+  private planType: Map<string, number> = new Map();
+  private fixedProdValue: string = 'NA000';
+ /* private planType: Map<string, number> = new Map([
     // ['NA00004098', 0],
     // ['NA00004099', 0],
     // ['NA00004100', 0],
@@ -63,7 +65,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     ['NA00006536', 4],  // T플랜 안심4G
     ['NA00006537', 15], // T플랜 에센스
     ['NA00006538', 20] // T플랜 스페셜
-  ]);
+  ]);*/
 
   private planAdaptive = {  // 맞춤형 요금제 - '요금상품별 상이' 표기
     'NA00004153': true,
@@ -128,10 +130,21 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
   private renderCouponUse(res: Response, svcInfo: any, pageInfo: any, no: string, name: string,
                           period: string, tab: string, isGift: boolean, isAuto: boolean) {
     Observable.combineLatest(
+      this.getRechargeProdIds(),
       this.getCouponUsageOptions(res, svcInfo, pageInfo),
       this.getProductInfo(res, svcInfo, pageInfo, svcInfo.prodId)
     ).subscribe(
-      ([couponUsage, productSummary]) => {
+      ([splProds, couponUsage, productSummary]) => {
+        if (splProds) {
+          splProds.split(',')
+            .map((item) => {
+              this.planType.set(
+                this.fixedProdValue + item.split(':')[0].trim(),
+                parseFloat(item.split(':')[1].trim())
+              );
+            });
+        }
+
         if (!FormatHelper.isEmpty(productSummary)) {
           const options = this.purifyCouponOptions(couponUsage, productSummary, svcInfo.prodId);
           res.render('recharge/myt-data.recharge.coupon-use.html', {
@@ -270,6 +283,17 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         option.qttText = '0'; // Do not show voice amount that expected
       }
       return option;
+    });
+  }
+  private getRechargeProdIds() {
+    return this.apiService.request(API_CMD.BFF_01_0069, {
+      property: REDIS_KEY.DATA_RECHARGE_PRODUCTS
+    }).map((response) => {
+      if (!response.result) {
+        return null;
+      }
+      // 'a:1, b:2, c:3' 형태로 전달 받음
+      return response.result.trim();
     });
   }
 }
