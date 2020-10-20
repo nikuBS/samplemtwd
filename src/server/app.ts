@@ -1,7 +1,7 @@
 // for APM
 const os = require('os');
 process.env.WHATAP_NAME = 'NodeAgent-{ip2}-{ip3}-{cluster}';
-//const WhatapAgent = require('whatap').NodeAgent;
+const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
 import * as path from 'path';
@@ -30,7 +30,9 @@ import BypassRouter from './common/route/bypass.router';
 import ApiRouter from './common/route/api.router';
 import NativeRouter from './common/route/native.router';
 import StoreRouter from './common/route/store.router';
+
 import ChatbotRouter from './app/98.chatbot/chatbot.router';
+
 import TestRouter from './app/99.test/test.router';
 import ShortcutRouter from './common/route/shortcut.router';
 
@@ -42,48 +44,20 @@ import ErrorService from './services/error.service';
 import Axios from 'axios';
 import { timer } from '../../node_modules/rxjs/observable/timer';
 
-//영문추가
-
-import AppRouter_en from './common_en/route/app.router';
-import CommonRouter_en from './app_en/00.common/common.router';
-import MainRouter_en from './app_en/01.main/main.router';
-import MyTDataRouter_en from './app_en/02.myt-data/myt-data.router';
-import MyTFareRouter_en from './app_en/03.myt-fare/myt-fare.router';
-import MyTJoinRouter_en from './app_en/04.myt-join/myt-join.router';
-import ProductRouter_en from './app_en/05.product/product.router';
-import CustomerRouter_en from './app_en/08.customer/customer.router';
-import BypassRouter_en from './common_en/route/bypass.router';
-import ApiRouter_en from './common_en/route/api.router';
-import NativeRouter_en from './common_en/route/native.router';
-import StoreRouter_en from './common_en/route/store.router';
-
-import RedisService_en from './services_en/redis.service';
-import LoggerService_en from './services_en/logger.service';
-import VERSION_en from './config_en/version.config';
-import ErrorService_en from './services_en/error.service';
-
 module.exports = require('../../nodejs-exporter');
 
 const manifest = require('./manifest.json');
-//영문추가
-const manifest_en = require('./manifest_en.json');
-
 
 class App {
   public app: Application = express();
   public redisService: RedisService;
-  public redisService_en: RedisService_en;
   private logger = new LoggerService();
-  private logger_en = new LoggerService_en();
   private errorService: ErrorService;
-  private errorService_en: ErrorService_en;
 
 
   constructor() {
     this.redisService = RedisService.getInstance();
-    this.redisService_en = RedisService_en.getInstance();
     this.errorService = new ErrorService();
-    this.errorService_en = new ErrorService_en();
     this.config();
   }
 
@@ -98,7 +72,6 @@ class App {
     this.app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
     this.app.use(cookie());
     this.app.use(this.redisService.getMiddleWare());
-    this.app.use(this.redisService_en.getMiddleWare());
     this.app.use(UA.express()); // req.useragent
     this.app.use(morgan(this.accessLogFormat.bind(this)));
     // development env
@@ -116,28 +89,23 @@ class App {
     this.setShortCut();
     this.setGlobalVariables();
     this.setClientMap();
-    this.setClientMap_en();
     this.setErrorHandler();
   }
 
   private setApis() {
     this.app.use('/api', new ApiRouter().router);
-    this.app.use('/en/api', new ApiRouter_en().router);
   }
 
   private setBypass() {
     this.app.use('/bypass', new BypassRouter().router);
-    this.app.use('/en/bypass', new BypassRouter_en().router);
   }
 
   private setNative() {
     this.app.use('/native', new NativeRouter().router);
-    this.app.use('/en/native', new NativeRouter_en().router);
   }
 
   private setStore() {
     this.app.use('/store', new StoreRouter().router);
-    this.app.use('/en/store', new StoreRouter_en().router);
   }
 
 
@@ -187,44 +155,6 @@ class App {
     //   }
     // });
   }
-   //영문
-   private setClientMap_en() {
-    const env = String(process.env.NODE_ENV);
-    // const manifestFile = String(process.env.NODE_ENV) === 'local' ? 'manifest.json' : 'manifest.' + VERSION + '.json';
-    const manifestFile = String(process.env.NODE_ENV) === 'prd' ? 'manifest_en.' + VERSION + '.json' : 'manifest_en.json';
-    Axios.get(environment[env].CDN_ORIGIN + '/' + manifestFile)
-      .then((res: any) => {
-        this.logger.error(this, res.data);
-        Object.keys(res.data).map((key) => {
-          if ( key.indexOf('.') !== -1 ) {
-            let appName = key.split('.')[0];
-            if ( appName.indexOf('-') !== -1 ) {
-              appName = appName.replace('-', '');
-            }
-            this.app.locals[appName] = res.data[key];
-            this.logger.error(this, appName, res.data[key]);
-          }
-        });
-      })
-      .catch((err) => { // If it fails, re-try for every 5 seconds
-        // this.logger.error(this, err.response.status, err.response.data);
-        timer(3000).subscribe(() => {
-          this.logger.error(this, manifestFile + ' > Retry');
-          this.setClientMap_en();
-        });
-      });
-
-    // Object.keys(manifest).map((key) => {
-    //   if ( key.indexOf('.') !== -1 ) {
-    //     let appName = key.split('.')[0];
-    //     if ( appName.indexOf('-') !== -1 ) {
-    //       appName = appName.replace('-', '');
-    //     }
-    //     this.app.locals[appName] = manifest[key];
-    //     this.logger.error(this, appName, manifest[key]);
-    //   }
-    // });
-  }
 
   private setErrorHandler() {
     this.app.use(this.handleNotFoundError);
@@ -246,14 +176,6 @@ class App {
     this.app.use('/chatbot', new AppRouter(ChatbotRouter.instance.controllers).router);
 
     this.app.use('/test', new AppRouter(TestRouter.instance.controllers).router);
-     //영문추가
-     this.app.use('/en/common', new AppRouter_en(CommonRouter_en.instance.controllers).router);
-     this.app.use('/en/main', new AppRouter_en(MainRouter_en.instance.controllers).router);
-     this.app.use('/en/myt-data', new AppRouter_en(MyTDataRouter_en.instance.controllers).router);
-     this.app.use('/en/myt-fare', new AppRouter_en(MyTFareRouter_en.instance.controllers).router);
-     this.app.use('/en/myt-join', new AppRouter_en(MyTJoinRouter_en.instance.controllers).router);
-     this.app.use('/en/product', new AppRouter_en(ProductRouter_en.instance.controllers).router);
-     this.app.use('/en/customer', new AppRouter_en(CustomerRouter_en.instance.controllers).router);    
   }
 
   private setShortCut() {
@@ -277,16 +199,7 @@ class App {
 
       path.join(__dirname, 'app/98.chatbot/views/containers'),
 
-      path.join(__dirname, 'app/99.test/views/containers'),
-       //영문추가
-       path.join(__dirname, 'app_en/00.common/views/containers'),
-       path.join(__dirname, 'app_en/01.main/views/containers'),
-       path.join(__dirname, 'app_en/02.myt-data/views/containers'),
-       path.join(__dirname, 'app_en/03.myt-fare/views/containers'),
-       path.join(__dirname, 'app_en/04.myt-join/views/containers'),
-       path.join(__dirname, 'app_en/05.product/views/containers'),
-       path.join(__dirname, 'app_en/08.customer/views/containers'),
-       path.join(__dirname, 'common_en/views/containers')
+      path.join(__dirname, 'app/99.test/views/containers')
 
     ]);
   }
