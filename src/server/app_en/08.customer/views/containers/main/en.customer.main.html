@@ -1,0 +1,134 @@
+<%#
+* @file customer.main.html
+* @author Jiman Park (jiman.park@sk.com)
+* @since 2018.10.24
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common_en/views/components/header.component.html',
+    { title: 'SUPPORT', svcInfo: svcInfo, option:{ line: false } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="support-video">
+                    <p class="title">CONTACT INFORMATION</p>
+                    <p>Do you need more information?<br>SK Telecom is always ready to help</p>
+                    <div class="video-card">
+                        <div class='embed-container' style="position: relative; z-index:0.0000000001">
+                            <div id="videoConfirm" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 100; display:none"></div>
+                            <iframe id="video" src='https://www.youtube.com/embed/fUMu9LdtVeE' allowfullscreen></iframe>
+                        </div>
+                        <button onclick='location.href="customer/videoguide"'>
+                            <strong>Watch and learn</strong>
+                            Using Telco Services in Korea
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="store-info">
+                    <p>Reluctant to visit an SK Telecom T world<br>store <strong>due to the language barrier?</strong></p>
+                    <button class="btn-round1 btn-style1" onclick='location.href="customer/agentsearch"'>T world store for Foreigners</button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <ul class="support-link">
+                    <li class="faq" onclick='location.href="customer/faq"'>
+                        <button>
+                            <strong>FAQ</strong>
+                            Frequently Asked Questions
+                        </button>
+                    </li>
+                    <li class="doc" onclick='location.href="customer/document"'>
+                        <!-- 200917 text 변경 -->
+                        <button>
+                            <strong>Required Documents</strong>
+                            Find out what you need to sign up for<br>a mobile phone as a foreign resident
+                        </button>
+                        <!-- //200917 text 변경 -->
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="cs-info cc">
+                    <p>Customer Center
+                        <span class="lang-badge">ENG</span>
+                        <span class="lang-badge">ARB</span>
+                        <span class="lang-badge">IND</span>
+                    </p>
+                    <dl>
+                        <dt>E-mail</dt>
+                        <dd><button class="bt-link-tx underline">callcenter@sk.com</button></dd>
+                        <dt>Tel</dt>
+                        <dd>080-252-5011</dd>
+                    </dl>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="cs-info rc">
+                    <p>Roaming Center
+                        <span class="lang-badge">ENG</span>
+                        <span class="lang-badge">ARB</span>
+                        <span class="lang-badge">IND</span>
+                    </p>
+                    <dl>
+                        <dt>Domestic</dt>
+                        <dd>1599-2011 <span>(Domestic)</span></dd>
+                        <dt>Overseas</dt>
+                        <dd>+82-2-6343-9000 <span>(press 5)</span></dd>
+                        <dt>Website</dt>
+                        <dd><button class="bt-link-tx underline fe-outlink" value="https://www.skroaming.com/main.asp?isSKT=Yes">www.skroaming.com</button></dd><!-- 200911 website 추가 -->
+                    </dl>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+        <%- include('../en.customer.confirm.a5.html', {svcInfo: svcInfo }); %>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oCustomerMain = new Tw.CustomerMain($('.wrap'));
+  });
+</script>
+</body>
+<% include ../../components/end.component.html %>
