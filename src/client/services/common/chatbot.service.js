@@ -631,7 +631,7 @@ Tw.ChatbotService.prototype = {
                 _this.$combot.addClass("open");
               }, 1500); 
               _this.$combotClose.on('click', function () {
-                _this.$combot.hide();
+                //_this.$combot.hide();
                 _this.$combot.removeClass("open");
                 console.log('[chatbot.service] [_bindEvent] $(document).on(scroll)', '닫으면 안열리게 수정');
               });  
@@ -962,24 +962,58 @@ Tw.ChatbotService.prototype = {
                 
                 if (this._loginType !== 'S'){
                     this._requestApis();
-                } else { // 간편로그인일 경우 API 태우지 않고 바로 _drawchatbot
-                    var defaultGreetingRangking = ['initial', 'hotbill', 'pay_bill', 'hotdata'];      // 기본 발화어
-                    var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType + '|' + 'initial' + '|' + 'hotbill' + '|' + 'pay_bill' + '|' + 'hotdata';
+                } else { // 간편로그인일 경우 API 태우지 않고 MLS 랭킹 순서만 맞춰서 _drawchatbot 호출
 
-                    for (var i = 0; i < defaultGreetingRangking.length; i++) {
+                    // BFF_05_0232에서 쓰일 item_id
+                    var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType + '|';
+
+                    // 실제 발화어 정보 리스트 세팅        
+                    var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
+                    var greetingRangkingSize = 0;   // 발화어 노출 조건에 부합한 발화어 배열 크기
+                    
+                    // imageType이 B인 경우는 발화어 한개, 그 외의 경우(A타입)는 발화어 4개
+                    Tw.Logger.info('[chatbot.service] [_successGetIsolTime] this._mlsGreetingImageType : ', this._mlsGreetingImageType);
+                    if (this._mlsGreetingImageType === 'B'){
+                        greetingRangkingSize = 1;
+                    }else{
+                        greetingRangkingSize = 4;
+                    }
+
+                    Tw.Logger.info('[chatbot.service] [_successGetIsolTime] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
+
+                    // 간편 로그인의 경우는 발화어 세개( hotbill, pay_bill, hotdata ) 만 표시
+                    for (var i = 0; i < this._mlsGreetingRangking.length; i++) {
+                        var mlsKeyword = this._mlsGreetingRangking[i];
+                        if (greetingRangking.length < greetingRangkingSize ){
+                            if (mlsKeyword === 'hotbill'){ // 1. hotbill
+                                greetingRangking.push(mlsKeyword);
+                                mlsItemIds = mlsItemIds + '|' + mlsKeyword;
+                            } else if (mlsKeyword === 'pay_bill'){ // 2. pay_bill
+                                greetingRangking.push(mlsKeyword);
+                                mlsItemIds = mlsItemIds + '|' + mlsKeyword;                                
+                            } else if (mlsKeyword === 'hotdata'){ // 3. hotdata
+                                greetingRangking.push(mlsKeyword);
+                                mlsItemIds = mlsItemIds + '|' + mlsKeyword;     
+                            }
+                        }
+                    }
+                    Tw.Logger.info('[chatbot.service] [_successGetIsolTime] greetingRangking : ', greetingRangking);
+                    
+                    for (var i = 0; i < greetingRangking.length; i++) {
                         for (var j = 0; j < this._greetingKeywords.length; j++){
-                            if ((defaultGreetingRangking[i] === this._greetingKeywords[j].keyword) && (this._mlsGreetingTextType === this._greetingKeywords[j].type)){
+                            if ((greetingRangking[i] === this._greetingKeywords[j].keyword) && (this._mlsGreetingTextType === this._greetingKeywords[j].type)){
                                 var greetingKeywordInfo = {keyword : this._greetingKeywords[j].keyword, text : this._greetingKeywords[j].text, type : this._greetingKeywords[j].type};
                                 this._greetingKeywordInfos.push(greetingKeywordInfo);
                             }
                         }
                     }
+                    Tw.Logger.info('[chatbot.service] [_successGetIsolTime] this._greetingKeywordInfos : ', this._greetingKeywordInfos);
 
                     var option = [{
                         cdn: Tw.Environment.cdn,
                         greetingKeywordInfos : this._greetingKeywordInfos,
-                        typeA : true,
-                        typeB : false
+                        typeA : this._typeA,
+                        typeB : this._typeB
                     }];
                     Tw.Logger.info('[chatbot.service] [_successGetIsolTime] option : ', option);
                     this._drawChatbotPop(option, mlsItemIds);
@@ -1452,7 +1486,6 @@ Tw.ChatbotService.prototype = {
      * @param (String) param2 - Mls API에서 사용할 item_id ( 'imageType | textType | keywords' 의 형태)
      */
     _drawChatbotPop: function (param1, param2) {
-        
         var mlsChannelId = this._mlsChannelId;
         var mlsProCessId = this._mlsProcessId;
         
