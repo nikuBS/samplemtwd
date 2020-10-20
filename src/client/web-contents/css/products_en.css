@@ -3,7 +3,7 @@
 
 .bg-productdetail.scroll .h-belt .icon-gnb-menu { background-image: url("/img/en/icon_48px_titlebar_menu.svg"); }
 
-.bg-productdetail .productdetails-bg { padding-bottom: 2.19rem; }
+.bg-productdetail .productdetails-bg { padding-bottom: 2.19rem; background-color: #3583e3; }
 
 .productdetails-wrap { min-height: auto; padding-bottom: 2.75rem; }
 
