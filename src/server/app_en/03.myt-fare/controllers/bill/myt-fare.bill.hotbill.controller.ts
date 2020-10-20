@@ -2,7 +2,7 @@
  * My Bills > REAL-TIME MONTHLY FEES
  * @file myt-fare.bill.hotbill.controller.ts
  * @author (skt.P165332@partner.sk.com)
- * @since 2018-9-20
+ * @since 2020.09
  */
 import TwViewController from '../../../../common_en/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -19,11 +19,6 @@ import FormatHelper from '../../../../utils_en/format.helper';
 import CommonHelper from '../../../../utils_en/common.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 
-/**
- * [실시간 사용요금] API호출 및 렌더링
- * @author Hyeryoun Lee
- * @since 2018-9-20
- */
 class MyTFareBillHotbill extends TwViewController {
   _svcInfo: any;
   _isPrev: boolean = false;
@@ -109,20 +104,18 @@ class MyTFareBillHotbill extends TwViewController {
     // } else {
       // 자녀 or 본인 전월 실시간 요금
     const svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
-    if( !this._isPrev && !req.query.child && svcs && svcs.length > 0 ) {
-      let data = {
-        svcInfo,
-        pageInfo,
-        lines: svcs,
-        billAvailable: true,
-        isPrev:  this._isPrev,
-        xtEid: {}
-      };
-      // 다른 페이지를 찾고 계신가요 통계코드 추가
-      BrowserHelper.isApp(req)?thisMain.getAppXtEid(data):thisMain.getMWebXtEid(data);
-      res.render('bill/en.myt-fare.bill.hotbill.html', data);
-    }
-//    }
+    let data = {
+      svcInfo,
+      pageInfo,
+      lines: svcs,
+      billAvailable: true,
+      isPrev:  this._isPrev,
+      xtEid: {}
+    };
+    // 다른 페이지를 찾고 계신가요 통계코드 추가
+    BrowserHelper.isApp(req)?thisMain.getAppXtEid(data):thisMain.getMWebXtEid(data);
+    res.render('bill/en.myt-fare.bill.hotbill.html', data);
+//  }
   }
 
   /**
