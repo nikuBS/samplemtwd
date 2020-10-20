@@ -162,7 +162,7 @@ Tw.ChatbotService = function() {
     // this._twdAgreeYn = 'N~0';    //사용하지 않아서 주석처리 / 개인정보 이용동의 여부 및 동의일자 (Y~숫자: 동의함~동의일자, N~0: 미동의) 
     this._refilYn = 'N';         // 1. 사용가능 리필쿠폰 있음 (Y: 있음, N: 없음) - refill_coupon
     this._autopayYn = 'N';       // 2. 자동납부 신청 여부 (Y: 신청, N: 미신청) - pay_mthd
-    this._unpaidYn = 'Y';        // 3. 미납내역 존재 여부 (Y: 미납 존재, N: 미납 없음) - unpaid_amp
+    this._unpaidYn = 'Y';        // 3. 미납내역 존재 여부 (Y: 미납 존재, N: 미납 없음) - unpaid_amt
     this._membershipYn = 'N';    // 4. 멤버십 가입 여부 (Y: 가입, N: 미가입) - membership_benefit
     this._micropayYn = 'N';      // 5. 소액결제 이용 여부 (Y: 이용, N: 미이용) - micro_pay
     this._dataGiftYn='N';        // 6. 데이타 선물 가능 여부 (Y:가능 , N: 불가능) - data_gift
@@ -770,6 +770,12 @@ Tw.ChatbotService.prototype = {
             } else {
                 chatbotGubun = $(e.currentTarget).attr('class').replace('item bpcpItem', '').trim();
             }
+            
+            // B타입 말풍선이 닫혀 있는 상태에서 클릭할 경우는 initial 호출
+            if (!_this.$combot.hasClass('open')) {
+                chatbotGubun = 'initial';
+            }
+
             var serviceType = '';     // 유무선 여부 (M:무선, W:유선)
             Tw.Logger.info('[chatbot.service] [_bindEvent] 챗봇 발화어 구분 : ', '[' + chatbotGubun + ']');
 
@@ -1359,7 +1365,7 @@ Tw.ChatbotService.prototype = {
                         greetingRangking.push(mlsKeyword);
                         mlsItemIds = mlsItemIds + '|' + mlsKeyword;
                     }
-                } else if (mlsKeyword === 'unpaid_amp'){ // 3. unpaid_amp - 미납 요금 있음
+                } else if (mlsKeyword === 'unpaid_amt'){ // 3. unpaid_amt - 미납 요금 있음
                     if (this._unpaidYn === 'Y'){
                         greetingRangking.push(mlsKeyword);
                         mlsItemIds = mlsItemIds + '|' + mlsKeyword;
