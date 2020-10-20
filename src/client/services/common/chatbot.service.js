@@ -199,7 +199,8 @@ Tw.ChatbotService.prototype = {
      */
     _init: function () {
         var _this = this;
-
+        var chatCloseIcoClickYN = Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED');
+         
         // Tw.Logger.log('[chatbot.service] [_init] App/WEB 체크', '');
         console.log('[chatbot.service] [_init] App/WEB 체크', '');
 
@@ -339,6 +340,7 @@ Tw.ChatbotService.prototype = {
                 this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
                 .done($.proxy(function(res) {
                     if (res.code===Tw.API_CODE.CODE_00) {
+                        
                         if (res.result !== null) {
                             if (res.result !== null && res.result.loginType !== 'S') {
                                 if (res.result.expsSvcCnt !== '0') {
@@ -624,65 +626,70 @@ Tw.ChatbotService.prototype = {
         var mlsProCessId = this._mlsProcessId;
 
         var _this = this;
+        console.log('CHAT_ICO_CLICKED:', Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED'));
+        if(Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED') !=='Y') {
+            // 3초 후 안내 팝업 슬라이드 업
+            if(this._typeB){
+                _this._timer = setTimeout( function () {
+                    _this.$combot.addClass("open");
+                }, 1500); 
+                _this.$combotClose.on('click', function () {
+                    //_this.$combot.hide();
+                    _this.$combot.removeClass("open");
+                    Tw.CommonHelper.setSessionStorage('CHAT_ICO_CLICKED', 'Y');
 
-        // 3초 후 안내 팝업 슬라이드 업
-        if(this._typeB){
-            _this._timer = setTimeout( function () {
-                _this.$combot.addClass("open");
-              }, 1500); 
-              _this.$combotClose.on('click', function () {
-                //_this.$combot.hide();
-                _this.$combot.removeClass("open");
-                console.log('[chatbot.service] [_bindEvent] $(document).on(scroll)', '닫으면 안열리게 수정');
-              });  
-              _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_1.json', false);  
-        }else{
-            _this._timer = setTimeout(function() {
-                _this.$elChabot.addClass('slideUp'); 
-            }, 3000);
-        }
-
-        // 윈도우 스크롤 시 챗봇
-        $(document).on('scroll',$.proxy(function () {
-            console.log('[chatbot.service] [_bindEvent] $(document).on(scroll)', '임시 윈도우 스크롤시 올라오지 않게 수정처리');
-           _this._timer = setTimeout(function(){
-             _this.$elChabot.addClass('slideUp');
-           }, 1000);
-           clearTimeout(_this._timer);
-          }, _this));
-
-        //touch event
-        _this.$btnTab.on('touchstart', function(e) {
-            // e.preventDefault();
-            _this._isStartY = e.originalEvent.touches[0].clientY;
-        });
-
-        _this.$btnTab.on('touchmove', function(e) {
-            // e.preventDefault();
-            _this._isLastY = e.originalEvent.touches[0].clientY;
-        });
-
-        _this.$btnTab.on('touchend', function(e) {
-            // e.preventDefault();
-            // click인 경우
-            if (Math.abs(_this._isStartY - _this._isLastY) < 20) {
-                _this.expanded();
-            // 닫혀 있는데 아래로 내린 경우 - 창 최대화
-            } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY > _this._isLastY ) {
-                _this.expanded();
-            // 열려 있는데 아래로 내린 경우 - 창 최소화
-            } else if (_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
-                _this.expanded();
-            // 닫혀 있는데 아래로 내린 경우 - 창 숨김
-            } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
-                _this.$elChabot.removeClass('slideUp');
+                    console.log('[chatbot.service] [_bindEvent] $(document).on(scroll)', '닫으면 안열리게 수정');
+                    
+                });  
+                _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_1.json', false);  
+            }else{
+                _this._timer = setTimeout(function() {
+                    _this.$elChabot.addClass('slideUp'); 
+                }, 3000);
             }
-        });
 
-        setTimeout( function () {
-            _this._animateSvg('.profile2', Tw.Environment.cdn + '/js/chatbot_1.json', false);
-        }, 3200 );
-        
+            // 윈도우 스크롤 시 챗봇
+            $(document).on('scroll',$.proxy(function () {
+                console.log('[chatbot.service] [_bindEvent] $(document).on(scroll)', '임시 윈도우 스크롤시 올라오지 않게 수정처리');
+                _this._timer = setTimeout(function(){
+                    _this.$elChabot.addClass('slideUp');
+                }, 1000);
+                clearTimeout(_this._timer);
+            }, _this));
+
+            //touch event
+            _this.$btnTab.on('touchstart', function(e) {
+                // e.preventDefault();
+                _this._isStartY = e.originalEvent.touches[0].clientY;
+            });
+
+            _this.$btnTab.on('touchmove', function(e) {
+                // e.preventDefault();
+                _this._isLastY = e.originalEvent.touches[0].clientY;
+            });
+
+            _this.$btnTab.on('touchend', function(e) {
+                // e.preventDefault();
+                // click인 경우
+                if (Math.abs(_this._isStartY - _this._isLastY) < 20) {
+                    _this.expanded();
+                // 닫혀 있는데 아래로 내린 경우 - 창 최대화
+                } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY > _this._isLastY ) {
+                    _this.expanded();
+                // 열려 있는데 아래로 내린 경우 - 창 최소화
+                } else if (_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
+                    _this.expanded();
+                // 닫혀 있는데 아래로 내린 경우 - 창 숨김
+                } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
+                    _this.$elChabot.removeClass('slideUp');
+                    Tw.CommonHelper.setSessionStorage('CHAT_ICO_CLICKED', 'Y');
+                }
+            });
+
+            setTimeout( function () {
+                _this._animateSvg('.profile2', Tw.Environment.cdn + '/js/chatbot_1.json', false);
+            }, 3200 );
+        }
         // 20/08/11 디자인 변경으로 인한 삭제 [S]
         // /*
         // 1. 페이지 진입시 스크롤 없을 경우 3초 후 노출  (노출 후 스크롤시 팝업유지)
@@ -770,10 +777,12 @@ Tw.ChatbotService.prototype = {
             } else {
                 chatbotGubun = $(e.currentTarget).attr('class').replace('item bpcpItem', '').trim();
             }
-            
-            // B타입 말풍선이 닫혀 있는 상태에서 클릭할 경우는 initial 호출
-            if (!_this.$combot.hasClass('open')) {
-                chatbotGubun = 'initial';
+
+             // B타입 말풍선이 닫혀 있는 상태에서 클릭할 경우는 initial 호출
+            if (mlsGreetingImageType === 'B'){
+                if (!_this.$combot.hasClass('open')) {
+                    chatbotGubun = 'initial';
+                }
             }
 
             var serviceType = '';     // 유무선 여부 (M:무선, W:유선)
@@ -1517,8 +1526,10 @@ Tw.ChatbotService.prototype = {
                 if ($('.tod-floating').length > 0) {
                     $('.tod-floating').hide();
                 }
-
-                _this.$elChabot.addClass('slideUp');
+                if(Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED') !=='Y'){
+                    _this.$elChabot.addClass('slideUp');
+                }
+ 
             }, 3000);
         }).done(function () {
             _this._cacheElements();
