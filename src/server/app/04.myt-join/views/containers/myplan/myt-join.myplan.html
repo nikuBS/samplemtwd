@@ -30,14 +30,6 @@ _%>
   <!--// #footer -->
 </div>
 <%- include('../../components/javascript.component.html') _%>
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('.cont-box').on('click', '> .btn-more > button', function (e) {
-      e.preventDefault();
-      $(this).parent().hide().siblings('.tod-full-link-list').removeClass('tod-hidden-list').find('button, a').eq(0).focus();
-    });
-  });
-</script>
 <script>
   $(document).ready(function () {
     new Tw.MyTJoinMyPlan({ $element: $('#contents') });
