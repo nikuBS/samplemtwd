@@ -56,6 +56,7 @@ import MyTFareBillSkpayResultPrepay from './controllers/bill/myt-fare.bill.skpay
 import MyTFareBillPrepayAccount from './controllers/bill/myt-fare.bill.prepay-account.controller';
 import {MyTFareBillPrepayAuto} from './controllers/billprepay/myt-fare.bill.prepay.auto.controller';
 import {MyTFareBillPrepayAutoInfo} from './controllers/billprepay/myt-fare.bill.prepay.auto.info.controller';
+import MyTFareInfoMiri from './controllers/info/myt-fare.info.miri.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -118,6 +119,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/info/overpay-refund', controller: MyTFareInfoOverpayRefund });
     this.controllers.push({ url: '/info/overpay-refund/detail', controller: MyTFareInfoOverpayRefundDetail });
     this.controllers.push({ url: '/info/cancel-draw', controller: MyTFareInfoCancelDraw });
+    this.controllers.push({ url: '/info/miri', controller: MyTFareInfoMiri });
 
     // new url
     this.controllers.push({ url: '/submain', controller: MyTFareSubMain });

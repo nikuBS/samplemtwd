@@ -496,6 +496,15 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_MIRI_FILTER: [
+    {
+      'list': [
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2"', txt: '전체' },
+        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r2"', txt: 'MIRI 선납 차감' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2"', txt: 'MIRI 선납 충전' }
+      ]
+    }
+  ],
   JOIN_INFO_NO_AGREEMENT: [
     {
       'list': [

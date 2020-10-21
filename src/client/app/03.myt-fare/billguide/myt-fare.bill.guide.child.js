@@ -141,6 +141,7 @@ Tw.MyTFareBillGuideChild.prototype = {
     }, this));
 
     this.$container.on('click', '[data-target="goProdPageBtn"]', $.proxy(this._goProdPage, this)); // 상품원장페이지로 이동
+    this.$container.on('click', '[data-url]', $.proxy(this._goLoad, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   /**
@@ -408,7 +409,9 @@ Tw.MyTFareBillGuideChild.prototype = {
     this._history.setHistory();
     this._history.goHash(hash);
     //window.location.hash = hash;
+  },
+
+  _goLoad: function (event) {
+    this._history.goLoad($(event.currentTarget).data('url'));
   }
-
-
 };
