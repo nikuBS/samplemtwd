@@ -1105,7 +1105,7 @@ Tw.ChatbotService.prototype = {
         if ( refillInfo.code === Tw.API_CODE.CODE_00 ) {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 리필쿠폰  : ', refillInfo.result);
 
-            if ( refillInfo.result!== null ) {
+            if ( refillInfo.result.length > 0 ) {
                 this._refilYn = 'Y';
             } else {
                 this._refilYn = 'N';
@@ -1236,6 +1236,8 @@ Tw.ChatbotService.prototype = {
 
             // 은행자동납부 (01) 일 때
             if (rtnPayMthCd === '01') {
+                this._autopayYn = 'N';
+            }else{
                 this._autopayYn = 'Y';
             }
 
@@ -1323,7 +1325,7 @@ Tw.ChatbotService.prototype = {
                         mlsItemIds = mlsItemIds + '|' + mlsKeyword;
                     }
                 } else if (mlsKeyword === 'pay_mthd'){ // 2. pay_mthd - 납부 방법 != 은행 자동이체
-                    if (this._autopayYn === 'N'){
+                    if (this._autopayYn === 'Y'){
                         greetingRangking.push(mlsKeyword);
                         mlsItemIds = mlsItemIds + '|' + mlsKeyword;
                     }
