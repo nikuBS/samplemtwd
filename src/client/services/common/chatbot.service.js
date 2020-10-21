@@ -364,7 +364,7 @@ Tw.ChatbotService.prototype = {
                 this._apiService.requestArray([
                     { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} },
                     { command: Tw.API_CMD.BFF_05_0220, params: {} },
-                    { command: Tw.API_CMD.BFF_05_0231, params: {'channel_ids':[this._mlsChannelId], 'sale_org_id':'dummy'} }
+                    { command: Tw.API_CMD.BFF_05_0231, params: {'channel_ids':[this._mlsChannelId], 'sale_org_id':'V990550000'} }
                 ])
                 .done($.proxy(function() {
                     var resp1 = arguments[0];   // GET_SVC_INFO
