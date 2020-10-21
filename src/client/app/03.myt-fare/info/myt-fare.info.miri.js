@@ -34,6 +34,7 @@ Tw.MyTFareInfoMiri.prototype = {
    * @private
    */
   _cachedElement: function () {
+    this._count = this.$container.find('.fe-count'); // 총 건수
     this._emptyData = this.$container.find('.fe-empty-data'); // 내용 없음 영역
     this._miriList = this.$container.find('.fe-miri-list'); // MIRI 리스트 영역
     this._filter = this.$container.find('.fe-filter'); // 필터 조건
@@ -138,13 +139,16 @@ Tw.MyTFareInfoMiri.prototype = {
    */
   _reRender: function (type, isMoreView) {
     var selectItems = type === '0' ?  this.$container.find('[data-pay-cl-cd]') : this.$container.find('[data-pay-cl-cd="'+ type +'"]');
+    // 더보기 일때
     if (isMoreView){
       selectItems = selectItems.filter('.none');
-    } else {
-      var isHide = selectItems.length < 1;
+    } else { // 상단 필터 검색일때
+      var count = selectItems.length;
+      var isHide = count < 1;
       this._emptyData.toggleClass('none', !isHide);
       this._miriList.toggleClass('none', isHide);
       this._btnMore.toggleClass('none', isHide);
+      this._count.text(count);
     }
     $.each(selectItems.slice(0, 20), function (idx, item) {
       $(item).removeClass('none').closest('.fe-miri-item').removeClass('none');

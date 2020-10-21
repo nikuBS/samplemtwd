@@ -62,12 +62,15 @@ export class MytFareInfoMiriService {
       if (resp.code) {
         return null;
       }
-      targetMonth = DateHelper.getAddDays(targetMonth, 1, 'YYYYMMDD');
+      // targetMonth = DateHelper.getAddDays(targetMonth, 1, 'YYYYMMDD');
+      const startDt = DateHelper.getAddDays(targetMonth, 1, 'YYYYMM05');
+      const endDt = DateHelper.getShortDateWithFormatAddByUnit(startDt, 1, 'month', 'YYYYMM02');
       const totalSum = resp.reduce( (acc, cur) => {
         const {opDt, ppayAmt, payClCd} = cur;
         // const _opDt = (opDt || '').substring(0, 6) + '02';
         // 청구일자가 타켓일자와 같거나 클때
-        if (opDt >= targetMonth && payClCd === '4') {
+        // if (opDt >= targetMonth && payClCd === '4') {
+        if (payClCd === '4' && DateHelper.isBetween(opDt, startDt, endDt)) {
           acc += parseInt(ppayAmt || 0, 10);
         }
         return acc;

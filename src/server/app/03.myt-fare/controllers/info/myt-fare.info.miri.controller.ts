@@ -69,7 +69,7 @@ class MyTFareInfoMiri extends TwViewController {
         ...item,
         lineType: this.getSvcAttrName(allSvc, item.svcMgmtNum), // 회선정보
         opDt: DateHelper.getShortDateWithFormat(item.opDt, 'YY.M.D'), // 처리일자
-        month: DateHelper.getCurrentMonth(item.opDt), // 청구월
+        billMonth: DateHelper.getAddDays(item.invDt, 1, 'M'), // 청구월
         ppayAmt: FormatHelper.addComma(item.ppayAmt), // 처리금액
         invAmt: FormatHelper.addComma(item.invAmt), // 청구금액
         payAmt: FormatHelper.addComma(item.payAmt), // 미납금액
