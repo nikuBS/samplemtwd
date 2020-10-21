@@ -95,7 +95,7 @@ _%>
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">신청 접수 중인 부가서비스</h3>
                 <div class="add-prd-wrap tod-type02">
-                    <ul class="list-comp-lineinfo">
+                    <ul class="list-comp-lineinfo tod-js-list-ctrl">
                         <%_ additionsReserved.map(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.reserved.html', { addition }); _%>
                         <%_ }); _%>
@@ -112,7 +112,7 @@ _%>
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type7">가입 가능한 부가서비스</h3>
                 <div class="add-prd-wrap tod-type02">
-                    <ul class="list-comp-lineinfo">
+                    <ul class="list-comp-lineinfo tod-js-list-ctrl">
                         <%_ additionsJoinable.map(addition => { _%>
                             <%- include('./myt-join.myplanadd.wire.reserved.html', { addition }); _%>
                         <%_ }); _%>
