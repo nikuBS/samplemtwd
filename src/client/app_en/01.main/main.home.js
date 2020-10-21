@@ -71,7 +71,7 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
     }
   }
 
-  this._getProductData(this.$container.find('#plan-ul'));
+  //this._getProductData(this.$container.find('#plan-ul'));
   // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 

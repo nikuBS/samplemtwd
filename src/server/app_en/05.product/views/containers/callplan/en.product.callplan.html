@@ -18,7 +18,7 @@
             <div class="container">
 
                 <!-- 상품타이틀 -->
-                <div class="cont-box nogaps-hoz productdetails-bg" style="background: <%= backgroundColor.value %> url(https://cdnm-dev.tworld.co.kr<%=prodData.prodIconImgUrl%>) right 5.75rem no-repeat; background-size: 10.5rem 11.938rem"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background: url(https://cdnm-dev.tworld.co.kr<%=prodData.prodIconImgUrl%>)"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
                     <div class="productdetails-wrap">
                         <div class="idpt-product-detail-title">
                             <h3>
@@ -34,7 +34,7 @@
                             </p>
                         </div>
                     </div>
-                    <ul class="detailinfo">
+                    <ul class="detailinfo <%if(prodData.smryHtmlEngCtt==''||prodData.smryHtmlEngCtt==null){%>pb00<%}%>">
                         <li>
                             <p class="gb"><i class="blind">data</i><%if(prodData.basOfrGbDataQtyEngCtt!=null){ %>
                                 <%- prodData.basOfrGbDataQtyEngCtt%> <% } else { %>

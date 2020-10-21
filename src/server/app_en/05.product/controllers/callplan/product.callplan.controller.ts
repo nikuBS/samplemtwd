@@ -37,7 +37,7 @@ export default class CallPlan2 extends TwViewController {
       Observable.combineLatest([
         this.redisService.getData('GlobalProductLedger:' + prod),
         this.redisService.getData('GlobalProductLedgerContents:' + prod)
-    ]).subscribe(([result,contentsResult]) => {
+    ]).subscribe(([result, contentsResult]) => {
         const jsonResult = JSON.parse(JSON.stringify(result));
         const jsonContentsResult = JSON.parse(JSON.stringify(contentsResult));
         const prodData = jsonResult['result']['summary'];
@@ -49,7 +49,7 @@ export default class CallPlan2 extends TwViewController {
         // //const changingStringDoubleQuotes = "\"http://localhost:3001/img"; //로컬
         // const changingStringDoubleQuotes = "\"https://cdnm-dev.tworld.co.kr/img"; // 개발 서버
       const changed = /{{cdn}}/gi;
-      const changing = "https://cdnm-dev.tworld.co.kr";
+      const changing = 'https://cdnm-dev.tworld.co.kr';
         const prodNm = prodData.prodEngNm;
         const backgroundColor = {value:"#3583e3"};
         if ( jsonResult.code === API_CODE.CODE_00 ) {
@@ -60,23 +60,32 @@ export default class CallPlan2 extends TwViewController {
         if (FormatHelper.isEmpty(result.result)) {
           return result.result;
         }
-        else if(FormatHelper.isEmpty(contentsResult.result)){
+        else if (FormatHelper.isEmpty(contentsResult.result)) {
           return contentsResult.result;
         }
       }
+          
+            if (prodData.smryHtmlEngCtt === '<p>&nbsp;</p>') {
+              console.log('^^^^^^^^^^^^^');
+              console.log(prodData.smryHtmlEngCtt);
+              console.log('^^^^^^^^^^^^^');
+              prodData.smryHtmlEngCtt = '';
+            }
+          
       
-          for(let i = 0; i < contentsData.length;i++){
-            contentsData[i].popupDtlCtt = contentsData[i].popupDtlCtt.replace(changed,changing);
-            contentsData[i].dtlCtt = contentsData[i].dtlCtt.replace(changed,changing);
-            if(contentsData[i].dtlCtt == "<p>&nbsp;</p>"){
-              contentsData[i].dtlCtt = "";
+          for(let i = 0; i < contentsData.length; i++) {
+            contentsData[i].popupDtlCtt = contentsData[i].popupDtlCtt.replace(changed, changing);
+            contentsData[i].dtlCtt = contentsData[i].dtlCtt.replace(changed, changing);
+            if (contentsData[i].dtlCtt === '<p>&nbsp;</p>') {
+              contentsData[i].dtlCtt = '';
             }
           }
         
         prodData.basFeeInfo = ProductHelper.convProductBasfeeInfo(prodData.basFeeEngInfo);
 
-        if((prodNm=="5GX Platinum")||(prodNm=="5GX Prime")||(prodNm=="5GX Standard")||(prodNm=="Slim")||(prodNm=="0teen 5G")){
-          backgroundColor.value="#cd0e2c";
+        if ((prodNm === '5GX Platinum') || (prodNm === '5GX Prime' ) ||
+         (prodNm === '5GX Standard' ) || (prodNm === 'Slim') || (prodNm === '0teen 5G')) {
+          backgroundColor.value = '#cd0e2c';
         }      
           res.render('callplan/en.product.callplan.html', {svcInfo, pageInfo, prodData, contentsData, backgroundColor});
         
