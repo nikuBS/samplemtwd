@@ -48,6 +48,10 @@
 <%- include('../components/javascript.component.html'); %>
 <script>
   $(document).ready(function () {
+    $('#gotoLine').click(function() {
+        window.location.href = '/en/common/member/line';
+    });
+
     new Tw.LineComponent($('#contents'), '.fe-bt-line', true, null);
   });
 </script>
