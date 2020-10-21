@@ -31,8 +31,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
     this.$list = this.$container.find('ul.list-comp-lineinfo');
     this.$empty = this.$container.find('.contents-empty');
     this.$todSel = this.$container.find('.tod-sel-top-wrap').children('.link-cont');
-    this.$todSelAnchors = this.$todSel.children('a');
-    this.$todSelContents = this.$container.find('.tod-js-list-ctrl');
+    this.$todSelButtons = this.$todSel.children();
   },
 
   /**
@@ -42,7 +41,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
   _init: function() {
     this._applyHash(location.hash);
 
-    // this._hashService.initHashNav($.proxy(this._onHashChange, this));
+    this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
     this._getSvcInfo();
 
@@ -60,7 +59,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _bindEvent: function() {
-    // this.$todSel.on('click', 'a', $.proxy(this._handleTodSelClick, this));  // 전체 보기 버튼 클릭 시
+    this.$todSel.on('click', 'a', $.proxy(this._handleTodSelClick, this));  // 전체 보기 버튼 클릭 시
     this.$container.on('click', '.fe-btn-link',  $.proxy(this._handleClickLink, this));  // 부가서비스 버튼 클릭시
   },
 
@@ -98,35 +97,17 @@ Tw.MyTJoinMyPlanAdd.prototype = {
   },
 
   _applyHash: function (hash) {
-    // 초기화 (외부에서 hash를 달고 오는 경우에 대한 처리)
-    var $selectedAnchor;
-
-    if (hash && hash !== '#tod-all') {
-      $selectedAnchor = this.$todSelAnchors.filter(function (i, elem) {
-        return elem.href.includes(hash);
-      });
-      this.$todSelContents.hide();
-      $($selectedAnchor.attr('href')).show();
-    } else {
-      // NOTE: hash가 없으면, 첫번째("전체")를 자동으로 선택
-      $selectedAnchor = this.$todSelAnchors.eq(0);
-      this.$todSelContents.show();
-    }
-    $selectedAnchor.addClass('on').attr('title', '선택');
-    // $(window).scrollTop(0);
-    /*
     var selectedButton;
-    this.$todSelAnchors.removeClass('on');
+    this.$todSelButtons.removeClass('on');
     if (hash) {
-      selectedButton = this.$todSelAnchors.filter(function (i, elem) {
+      selectedButton = this.$todSelButtons.filter(function (i, elem) {
         return elem.href.includes(hash);
       });
     } else {
       // NOTE: hash가 없으면, 첫번째("전체")를 자동으로 선택
-      selectedButton = this.$todSelAnchors.eq(0);
+      selectedButton = this.$todSelButtons.eq(0);
     }
-    selectedButton.addClass('on').attr('title', '선택');
-    */
+    selectedButton.addClass('on');
   },
 
   /**
@@ -135,16 +116,14 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _handleClickLink: function(e) {
-    var $target = $(e.currentTarget);
-    var link = $target.data('url');
+    var link = e.currentTarget.getAttribute('data-url'),
+        prodId = e.currentTarget.getAttribute('data-prod-id');
 
     if (this._bpcpService.isBpcp(link)) {
       return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, null);
-    }
-    if (link.indexOf('http') !== -1) {
+    } else if (link.indexOf('http') !== -1) {
       Tw.CommonHelper.openUrlExternal(link);
     } else {
-      var prodId = $target.data('prod-id');
       window.location.href = link + (prodId ? '?prod_id=' + prodId : '');
     }
   }
