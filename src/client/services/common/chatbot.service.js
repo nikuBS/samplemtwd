@@ -38,20 +38,76 @@ Tw.ChatbotService = function() {
     ];
     
     // 1차 사외 오픈 (7/23) 시점 접근 대상 단말 리스트
-    this._accessAllowedDevice0723 = [
-        // 'LGM-G600S',    // TEST
-        'SM-G977N'      // 갤럭시S10 5G
-        ,'SM-N971N'     // 갤럭시노트10 5G
-        ,'SM-N976N'     // 갤럭시노트10 플러스 5G
-    ];
+    // this._accessAllowedDevice0723 = [
+    //     // 'LGM-G600S',    // TEST
+    //     'SM-G977N'      // 갤럭시S10 5G
+    //     ,'SM-N971N'     // 갤럭시노트10 5G
+    //     ,'SM-N976N'     // 갤럭시노트10 플러스 5G
+    // ];
     // 1차 사외 오픈 (7/23) 시점 챗봇 팝업 노출대상 화면 리스트
-    this._chatbotPopDispPageUrls0723 = {
-        // '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop'           // 나의요금 서브메인
-        '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop_new'           // 나의요금 서브메인
-    };
+    // this._chatbotPopDispPageUrls0723 = {
+    //     // '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop'           // 나의요금 서브메인
+    //     '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop_new'           // 나의요금 서브메인
+    // };
 
     // 2차 사외 오픈 (8/27) 시점 접근 대상 단말 리스트
-    this._accessAllowedDevice0827 = [
+    // this._accessAllowedDevice0827 = [
+    //     // 'LGM-G600S',     // TEST
+    //     // [1차]
+    //     'SM-G977N'      // 갤럭시S10 5G
+    //     ,'SM-N971N'     // 갤럭시노트10 5G
+    //     ,'SM-N976N'     // 갤럭시노트10 플러스 5G
+    //     // [2차]
+    //     ,'SM-G981N'     // 갤럭시S20 5G
+    //     ,'SM-G986N'     // 갤럭시S20 + 5G
+    //     ,'SM-G988N'     // 갤럭시S20울트라 5G
+    //     ,'SM-F907N'     // 갤럭시폴드 5G
+    //     ,'SM-A716S'     // 갤럭시A퀀텀
+    //     ,'LM-G900N'     // LG 벨벳
+    //     ,'SM-A516N'     // 갤럭시 A51 5G
+    //     ,'LM-V500N'     // V50 ThinQ 
+    //     ,'LM-V510N'     // V50S ThinQ 
+    //     ,'SM-A908N'     // 갤럭시 A90 5G
+
+    //     // ,'SM-N960N'     // 갤럭시노트9
+    //     // ,'SM-G960N'     // 갤럭시S9
+    //     // ,'SM-G973N'     // 갤럭시S10
+    //     // ,'SM-A516N'     // 갤A51 5G
+    //     // ,'iPhone12_1'   // 아이폰11
+    //     // ,'iPhone12_3'   // 아이폰11Pro
+
+    //     // 8/26 SKT임원테스트를 위한 단말기 등록 [S]
+    //     //, 'LM-V510N'
+    //     //, 'SM-A220S'
+    //     //, 'SM-N960N'
+    //     //, 'SM-A805N'
+    //     //, 'SM-A205S'
+    //     // 8/26 SKT임원테스트를 위한 단말기 등록 [E]
+    // ];
+    // 2차 사외 오픈 (8/27) 시점 챗봇 팝업 노출대상 화면 리스트
+    // this._chatbotPopDispPageUrls0827 = {
+    //     // 20/08/11 요건 삭제로 주석 처리 [S]
+    //     '/product/mobileplan' : 'product_mobileplan_chatbot_pop_new',        // 1. 요금제 서브메인
+    //     // 20/08/11 요건 삭제로 주석 처리 [E]
+    //     // '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop',           // 2. 나의요금 서브메인
+    //     // '/myt-data/submain'   : 'mytdata_submain_chatbot_pop'            // 3. 나의 데이터/통화
+    //     '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop_new'           // 2. 나의요금 서브메인        
+    //     ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
+    // };
+
+    // 챗봇 팝업 노출대상 화면 리스트 (10/22)
+     this._chatbotPopDispPageUrls = {
+        '/main/home' : 'greeting_pop',                // 0. 메인
+         '/myt-data/submain' : 'greeting_pop',        // 1. 나의 데이터/통화
+         '/myt-fare/submain'   : 'greeting_pop',      // 2. 나의요금
+         '/myt-join/submain'   : 'greeting_pop',      // 3. 나의 가입정보
+         '/membership/submain'   : 'greeting_pop',    // 4. T 멤버십
+         '/product/mobileplan'   : 'greeting_pop',    // 5. 요금제
+         '/product/mobileplan-add'   : 'greeting_pop' // 6. 부가서비스
+    };
+
+    // 접근 대상 단말 리스트  (10/22)
+    this._accessAllowedDevice = [
         // 'LGM-G600S',     // TEST
         // [1차]
         'SM-G977N'      // 갤럭시S10 5G
@@ -84,27 +140,8 @@ Tw.ChatbotService = function() {
         //, 'SM-A205S'
         // 8/26 SKT임원테스트를 위한 단말기 등록 [E]
     ];
-    // 2차 사외 오픈 (8/27) 시점 챗봇 팝업 노출대상 화면 리스트
-    this._chatbotPopDispPageUrls0827 = {
-        // 20/08/11 요건 삭제로 주석 처리 [S]
-        '/product/mobileplan' : 'product_mobileplan_chatbot_pop_new',        // 1. 요금제 서브메인
-        // 20/08/11 요건 삭제로 주석 처리 [E]
-        // '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop',           // 2. 나의요금 서브메인
-        // '/myt-data/submain'   : 'mytdata_submain_chatbot_pop'            // 3. 나의 데이터/통화
-        '/myt-fare/submain'   : 'mytfare_submain_chatbot_pop_new'           // 2. 나의요금 서브메인        
-        ,'/myt-data/submain'   : 'mytdata_submain_chatbot_pop_new'          // 3. 나의 데이터/통화
-    };
 
-    // 챗봇 팝업 노출대상 화면 리스트 (10/22)
-     this._chatbotPopDispPageUrls1022 = {
-        '/main/home' : 'greeting_pop',                // 0. 메인
-         '/myt-data/submain' : 'greeting_pop',        // 1. 나의 데이터/통화
-         '/myt-fare/submain'   : 'greeting_pop',      // 2. 나의요금
-         '/myt-join/submain'   : 'greeting_pop',      // 3. 나의 가입정보
-         '/membership/submain'   : 'greeting_pop',    // 4. T 멤버십
-         '/product/mobileplan'   : 'greeting_pop',    // 5. 요금제
-         '/product/mobileplan-add'   : 'greeting_pop' // 6. 부가서비스
-    };
+
     // url 을 삭제하고 처리할 수 있도록 리팩토링 해야할듯?
     // this._chatbotPopDispPageUrls1022 = [
         // '/myt-data/submain',      // 1. 나의 데이터/통화
@@ -260,77 +297,29 @@ Tw.ChatbotService.prototype = {
                 break;                    
         }
 
-        // Tw.Logger.info('[chatbot.service] [_init] 접속한 페이지 URL : ', urlPath);
-        // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 : ', this._firstOoenDate);
-        // Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 일자 : ', this._secondOpenDate);
-        // Tw.Logger.info('[chatbot.service] [_init] 현재 일자 : ', this._currentDate);
         console.log('[chatbot.service] [_init] 접속한 페이지 URL : ', urlPath);
-        console.log('[chatbot.service] [_init] 1차 사외 오픈 일자 : ', this._firstOoenDate);
-        console.log('[chatbot.service] [_init] 2차 사외 오픈 일자 : ', this._secondOpenDate);
         console.log('[chatbot.service] [_init] 현재 일자 : ', this._currentDate);
 
-        var isAllowed = false;      // 오픈 일자 경과 여부
+        var isAllowed = false;      // urlPath에 따라 챗봇 오픈여부 결정
         var isDefaultPage = false;  // 전체메뉴 > 챗봇 상담하기 를 통한 진입 여부
-        if (Tw.DateHelper.getDiffByUnit(this._currentDate, this._firstOoenDate, 'day') > -1) {
-            // 1차 사외 오픈 일자 이후
+        if (this._chatbotPopDispPageUrls[urlPath] !== undefined) {    
+            // 노출 대상 화면인 경우
+            console.log('[chatbot.service] [_init] 노출 대상 화면인 경우', '');
 
-            if (Tw.DateHelper.getDiffByUnit(this._currentDate, this._secondOpenDate, 'day') > -1) {
-                // 2차 사외 오픈 일자 이후
-                // Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 일자 이후인 경우', '');
-                console.log('[chatbot.service] [_init] 2차 사외 오픈 일자 이후인 경우', '');
-
-                //if (this._chatbotPopDispPageUrls0827[urlPath] !== undefined) {
-                if (this._chatbotPopDispPageUrls1022[urlPath] !== undefined) {    
-                    // 2차 사외 오픈 시점 노출 대상 화면인 경우
-                    // Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 시점 노출 대상 화면인 경우', '');
-                    console.log('[chatbot.service] [_init] 2차 사외 오픈 시점 노출 대상 화면인 경우', '');
-
-                    isAllowed = true;
-                } else if (urlPath === this._chatbotDefaultPage) {
-                    // 전체 메뉴 > 챗봇 체험하기 접근 시
-                    // 진입화면, 유무선, 발화어, T월드 앱 버전, 개인정보 수집/이용동의
-                    // Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
-                    console.log('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
-                    
-                    isAllowed = true;
-                    isDefaultPage = true;
-                } else {
-                    // 대상화면이 아닌 경우
-                    // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
-                    console.log('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
-                }
-
-            } else {
-                // 1차 사외 오픈 일자 이후 && 2차 사외 오픈 일자 이전
-                // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 이후지만 2차 사외 오픈 일자 이전인 경우', '');
-                console.log('[chatbot.service] [_init] 1차 사외 오픈 일자 이후지만 2차 사외 오픈 일자 이전인 경우', '');
-
-                if (this._chatbotPopDispPageUrls0723[urlPath] !== undefined) {
-                    // 1차 사외 오픈 시점 노출 대상 화면인 경우
-                    // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 시점 노출 대상 화면인 경우', '');
-                    console.log('[chatbot.service] [_init] 1차 사외 오픈 시점 노출 대상 화면인 경우', '');
-
-                    isAllowed = true;
-                } else if (urlPath === this._chatbotDefaultPage) {
-                    // 전체 메뉴 > 챗봇 체험하기 접근 시
-                    // 진입화면, 유무선, 발화어, T월드 앱 버전, 개인정보 수집/이용동의
-                    // Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
-                    console.log('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
-
-                    isAllowed = true;
-                    isDefaultPage = true;
-                } else {
-                    // 대상화면이 아닌 경우
-                    // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
-                    console.log('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
-                }
-            }
+            isAllowed = true;
+        } else if (urlPath === this._chatbotDefaultPage) {
+            // 전체 메뉴 > 챗봇 체험하기 접근 시
+            // 진입화면, 유무선, 발화어, T월드 앱 버전, 개인정보 수집/이용동의
+            // Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
+            console.log('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
+            
+            isAllowed = true;
+            isDefaultPage = true;
         } else {
-            // Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 이전인 경우', '');
-            console.log('[chatbot.service] [_init] 1차 사외 오픈 일자 이전인 경우', '');
+            // 대상화면이 아닌 경우
+            // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
+            console.log('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
         }
-
-
 
         if (isAllowed) {
             if (isDefaultPage) {
@@ -391,140 +380,103 @@ Tw.ChatbotService.prototype = {
                     }
 
                     if (resp1.code===Tw.API_CODE.CODE_00) {
-                        this._loginType = resp1.result.loginType;
+                        //if (resp1.result !== null && resp1.result.loginType !== 'S') {   // 간편로그인은 제외
                         if (resp1.result !== null) {
-                            //if (resp1.result !== null && resp1.result.loginType !== 'S') {   // 간편로그인은 제외
-                            if (resp1.result !== null) {
-                                
-                                if (resp1.result.mbrCardNum.length > 0){
-                                    this._membershipYn = 'Y';
-                                }
-                                if (resp2.code===Tw.API_CODE.CODE_00) {
-    
-                                    var eqpMthdCd = resp2.result.eqpMthdCd;
-                                    Tw.Logger.info('[chatbot.service] [_init] 단말기 기술방식 코드 (5G : F / LTE : L / 3G : W) : ', eqpMthdCd);
 
-                                    var beqpSclEqpClSysCd = resp2.result.beqpSclEqpClSysCd;
-                                    Tw.Logger.info('[chatbot.service] [_init] 단말기분류체계코드 (0102001 : Voice or Data 가능한 tablet / 0202001 : Voice 불가능한 Tablet) : ', beqpSclEqpClSysCd);
-            
-                                    // 챗봇 노출 접근대상  : 5G (F) / LTE (L) / 3G (W)
-                                    // 태블릿은 접근 불가 (태블릿 : 0102001, 0202001)
-                                    if (resp1.result.svcAttrCd === 'M1' && ['W', 'L', 'F'].indexOf(eqpMthdCd) > -1 
-                                        && ['0102001', '0202001'].indexOf(beqpSclEqpClSysCd) < 0
-                                    ) {
-                                        Tw.Logger.info('[chatbot.service] [_init] 챗봇 접근 대상 (5G/LTE/3G 이고 태블릿이 아닌 경우) 인 경우', '');
-
-                                        // 챗봇 발화어 노출 대상 단말 여부
-                                        var isAllowedDevice = false;
-    
-                                        if (Tw.DateHelper.getDiffByUnit(this._currentDate, this._firstOoenDate, 'day') > -1) {
-                                            // 1차 사외 오픈 일자 이후
-            
-                                            if (Tw.DateHelper.getDiffByUnit(this._currentDate, this._secondOpenDate, 'day') > -1) {
-                                                // 2차 사외 오픈 일자 이후
-                                                Tw.Logger.info('[chatbot.service] [_init] 2차 사외 오픈 시점 접근 가능 단말 여부 체크', '');
-    
-                                                for (var idx = 0; idx < _this._accessAllowedDevice0827.length; idx++) {
-                                                    var allowed_device = _this._accessAllowedDevice0827[idx];
-    
-                                                    if (_this._deviceModelCode.indexOf(allowed_device) > -1) {
-                                                        isAllowedDevice = true;
-                                                    }
-                                                } // end for
-    
-                                                // 접근 대상 단말인 경우 종류별 발화어 노출여부 판단을 위한 API 를 호출한다.
-                                                if (isAllowedDevice) {
-                                                    //this._hbsFile = this._chatbotPopDispPageUrls0827[urlPath];
-                                                    this._hbsFile = this._chatbotPopDispPageUrls1022[urlPath];
-                                                    var menuList = JSON.parse(Tw.CommonHelper.getSessionStorage('MENU_DATA_INFO'));
-                
-                                                    if (menuList.length > 0) {
-                                                        for (var i = 0; i < menuList.length; i++) {
-                                                            if (urlPath === menuList[i].menuUrl) {
-                                                                _this._menuId = menuList[i].menuId;
-                                                            }
-                                                        }
-                                                    }
-    
-                                                    this._svcInfo = resp1.result;
-                                                }
-                                            } else {
-                                                // 1차 사외 오픈 일자 이후 && 2차 사외 오픈 일자 이전
-                                                Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 시점 접근 가능 단말 여부 체크', '');
-    
-                                                for (var idx = 0; idx < _this._accessAllowedDevice0723.length; idx++) {
-                                                    var allowed_device = _this._accessAllowedDevice0723[idx];
-    
-                                                    if (_this._deviceModelCode.indexOf(allowed_device) > -1) {
-                                                        isAllowedDevice = true;
-                                                    }
-                                                } // end for
-    
-                                                // 접근 대상 단말인 경우 종류별 발화어 노출여부 판단을 위한 API 를 호출한다.
-                                                if (isAllowedDevice) {
-                                                    this._hbsFile = this._chatbotPopDispPageUrls0723[urlPath];
-                                                    var menuList = JSON.parse(Tw.CommonHelper.getSessionStorage('MENU_DATA_INFO'));
-                
-                                                    if (menuList.length > 0) {
-                                                        for (var i = 0; i < menuList.length; i++) {
-                                                            if (urlPath === menuList[i].menuUrl) {
-                                                                _this._menuId = menuList[i].menuId;
-                                                            }
-                                                        }
-                                                    }
-    
-                                                    this._svcInfo = resp1.result;
-                                                }
-                                            }
-                                        } else {
-                                            Tw.Logger.info('[chatbot.service] [_init] 1차 사외 오픈 일자 이전인 경우', '');
-                                            return;
-                                        }
-                                    } else {
-                                        // 챗봇 노출 비대상 (2G / 선불폰 / 태블릿/2nd device / 인터넷 / 집전화 / TV) 인 경우
-                                        Tw.Logger.info('[chatbot.service] [_init] 챗봇 노출 비대상 (2G / 선불폰 / 태블릿/2nd device / 인터넷 / 집전화 / TV) 인 경우', '');
-                                        return;
-                                    }
-
-                                    // MLS API 호출 성공시
-                                    if (resp3.code===Tw.API_CODE.CODE_00) {
-                                        Tw.Logger.info('[chatbot.service] [_init] MLS API 호출 성공', '');
-                                        console.log('[chatbot.service] [_init] MLS API 호출 성공', '');
-                                        
-                                        var resultData = resp3.result.results[this._mlsChannelId];
-
-                                        for (var i = 0; i < resultData.length; i++) {
-                                            if (resultData[i].id === 'tw_greeting_image'){
-                                                // imageType
-                                                this._mlsGreetingImageType = resultData[i].props.bucket;
-                                                // processId
-                                                this._mlsProcessId = resultData[i].process_id;
-                                            }
-                                            if (resultData[i].id === 'tw_greeting_text'){
-                                                // textType
-                                                this._mlsGreetingTextType = resultData[i].props.bucket;
-                                            }
-                                            if (resultData[i].id === 'tw_greeting_ranking'){
-                                                // 발화어 배열
-                                                this._mlsGreetingRangking = resultData[i].props.ranking;
-                                            }
-                                        }
-                                        Tw.Logger.info('[chatbot.service] [_init] MLS API _mlsGreetingRangking : ', this._mlsGreetingRangking);
-                                        console.log('[chatbot.service] [_init] MLS API _mlsGreetingRangking : ', this._mlsGreetingRangking);
-
-                                        // hbs 파일에서 사용할 타입 정의
-                                        if (this._mlsGreetingImageType === 'A'){
-                                            this._typeA = true;
-                                            this._typeB = false;
-                                        }else if (this._mlsGreetingImageType === 'B'){
-                                            this._typeA = false;
-                                            this._typeB = true;
-                                        }
-                                        // 챗봇 서비스 차단 여부 체크
-                                        this._checkBlockChatbotService();
-                                    }
-                                }
+                            // 로그인타입 
+                            this._loginType = resp1.result.loginType;
+                            
+                            // 멤버십카드 번호가 존재하면
+                            if (resp1.result.mbrCardNum.length > 0){
+                                this._membershipYn = 'Y';
                             }
+
+                            if (resp2.code===Tw.API_CODE.CODE_00) {
+
+                                var eqpMthdCd = resp2.result.eqpMthdCd;
+                                Tw.Logger.info('[chatbot.service] [_init] 단말기 기술방식 코드 (5G : F / LTE : L / 3G : W) : ', eqpMthdCd);
+
+                                var beqpSclEqpClSysCd = resp2.result.beqpSclEqpClSysCd;
+                                Tw.Logger.info('[chatbot.service] [_init] 단말기분류체계코드 (0102001 : Voice or Data 가능한 tablet / 0202001 : Voice 불가능한 Tablet) : ', beqpSclEqpClSysCd);
+        
+                                // 챗봇 노출 접근대상  : 5G (F) / LTE (L) / 3G (W)
+                                // 태블릿은 접근 불가 (태블릿 : 0102001, 0202001)
+                                if (resp1.result.svcAttrCd === 'M1' && ['W', 'L', 'F'].indexOf(eqpMthdCd) > -1 
+                                    && ['0102001', '0202001'].indexOf(beqpSclEqpClSysCd) < 0
+                                ) {
+                                    Tw.Logger.info('[chatbot.service] [_init] 챗봇 접근 대상 (5G/LTE/3G 이고 태블릿이 아닌 경우) 인 경우', '');
+
+                                    // 챗봇 발화어 노출 대상 단말 여부
+                                    var isAllowedDevice = false;
+
+                                    Tw.Logger.info('[chatbot.service] [_init] 접근 가능 단말 여부 체크', '');
+
+                                    for (var idx = 0; idx < _this._accessAllowedDevice.length; idx++) {
+                                        var allowed_device = _this._accessAllowedDevice[idx];
+
+                                        if (_this._deviceModelCode.indexOf(allowed_device) > -1) {
+                                            isAllowedDevice = true;
+                                        }
+                                    } // end for
+
+                                    // 접근 대상 단말인 경우 종류별 발화어 노출여부 판단을 위한 API 를 호출한다.
+                                    if (isAllowedDevice) {                                        
+                                        this._hbsFile = this._chatbotPopDispPageUrls[urlPath];
+                                        var menuList = JSON.parse(Tw.CommonHelper.getSessionStorage('MENU_DATA_INFO'));
+    
+                                        if (menuList.length > 0) {
+                                            for (var i = 0; i < menuList.length; i++) {
+                                                if (urlPath === menuList[i].menuUrl) {
+                                                    _this._menuId = menuList[i].menuId;
+                                                }
+                                            }
+                                        }
+                                        this._svcInfo = resp1.result;
+                                    }                                        
+                                } else {
+                                    // 챗봇 노출 비대상 (2G / 선불폰 / 태블릿/2nd device / 인터넷 / 집전화 / TV) 인 경우
+                                    Tw.Logger.info('[chatbot.service] [_init] 챗봇 노출 비대상 (2G / 선불폰 / 태블릿/2nd device / 인터넷 / 집전화 / TV) 인 경우', '');
+                                    return;
+                                }
+
+                                // MLS API 호출 성공시
+                                if (resp3.code===Tw.API_CODE.CODE_00) {
+                                    Tw.Logger.info('[chatbot.service] [_init] MLS API 호출 성공', '');
+                                    console.log('[chatbot.service] [_init] MLS API 호출 성공', '');
+                                    
+                                    var resultData = resp3.result.results[this._mlsChannelId];
+
+                                    for (var i = 0; i < resultData.length; i++) {
+                                        if (resultData[i].id === 'tw_greeting_image'){
+                                            // imageType
+                                            this._mlsGreetingImageType = resultData[i].props.bucket;
+                                            // processId
+                                            this._mlsProcessId = resultData[i].process_id;
+                                        }
+                                        if (resultData[i].id === 'tw_greeting_text'){
+                                            // textType
+                                            this._mlsGreetingTextType = resultData[i].props.bucket;
+                                        }
+                                        if (resultData[i].id === 'tw_greeting_ranking'){
+                                            // 발화어 배열
+                                            this._mlsGreetingRangking = resultData[i].props.ranking;
+                                        }
+                                    }
+                                    Tw.Logger.info('[chatbot.service] [_init] MLS API _mlsGreetingRangking : ', this._mlsGreetingRangking);
+                                    console.log('[chatbot.service] [_init] MLS API _mlsGreetingRangking : ', this._mlsGreetingRangking);
+
+                                    // hbs 파일에서 사용할 타입 정의
+                                    if (this._mlsGreetingImageType === 'A'){
+                                        this._typeA = true;
+                                        this._typeB = false;
+                                    }else if (this._mlsGreetingImageType === 'B'){
+                                        this._typeA = false;
+                                        this._typeB = true;
+                                    }
+                                    // 챗봇 서비스 차단 여부 체크
+                                    this._checkBlockChatbotService();
+                                }
+                            }                            
                         } else {
                             // 미로그인
                             Tw.Logger.info('[chatbot.service] [_init] 미로그인', '');
@@ -1280,14 +1232,11 @@ Tw.ChatbotService.prototype = {
         ******************************************* */
        if ( billmthInfo.code === Tw.API_CODE.CODE_00 ) {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 납부방법 코드 : ', billmthInfo.result.payMthdCd);
-
-            var autopayValueList = ['01', '02', 'G1'];      // 01: 은행자동납부, 02: 카드자동납부, G1:은행지로자동납부
             var rtnPayMthCd = billmthInfo.result.payMthdCd;    // 납부방법코드
 
-            for (var i = 0; i < autopayValueList.length; i++) {
-                if (rtnPayMthCd === autopayValueList[i]) {
-                    this._autopayYn = 'Y';
-            }
+            // 은행자동납부 (01) 일 때
+            if (rtnPayMthCd === '01') {
+                this._autopayYn = 'Y';
             }
 
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 5. 자동납부 신청 관련 말풍선 노출 대상군 여부 : ', this._autopayYn);
