@@ -71,6 +71,8 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
     }
   }
 
+  setTimeout(function(){$(window).scrollTop(0);},100)
+  
   this._getProductData(this.$container.find('#plan-ul'));
   // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
@@ -160,7 +162,6 @@ Tw.MainHome.prototype = {
         list: list
       }))
       
-      console.log($planTemp.html())
       skt_landing.widgets.widget_init(); // 이게 핵심
     }
   },
