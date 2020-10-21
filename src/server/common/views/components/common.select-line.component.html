@@ -6,7 +6,7 @@
       <span class="detail-info"><%= svcInfo.add %></span>
     </div>
     <button class="fe-bt-line btn-round3 btn-other-line" data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? xtEid.multiple: xtEid.single %>" data-xt_csid="CS_ID" data-xt_action="BC">
-      <%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) === 1) ? '회선 관리' : '다른 회선 조회' %>
+      <%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) === 1) ? '회선 관리' : '다른 회선' %>
     </button>
   </div>
 </div>
