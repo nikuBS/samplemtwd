@@ -33,8 +33,10 @@ _%>
 <%_
 var additionsPaid = additions.joined.paids;
 var additionsFree = additions.joined.frees;
-var showMoreButton = (additionsPaid && additionsPaid.length > 2) || (additionsFree && additionsFree.length > 2);
+var showMoreButton = (additionsPaid && additionsPaid.length > 2)
+  || (additionsFree && additionsFree.length > 2);
 _%>
+
 <%_ if ((additionsPaid && additionsPaid.length > 0) || (additionsFree && additionsFree.length > 0)) { _%>
 
 <!-- .cont-box -->
@@ -85,46 +87,6 @@ _%>
 <!--// .cont-box -->
 
 <hr class="cont-sp type1" aria-hidden="true"/>
-<%_ } else { _%>
-  <%_
-  var additionsReserved = additions.reserved;
-  var additionsJoinable = additions.joinable;
-  _%>
-  <%_ if (additionsReserved && additionsReserved.length > 0) { _%>
-
-<!-- .cont-box -->
-<div class="cont-box nogaps">
-  <ul class="full-link-list type02">
-    <li>
-      <a href="/myt-join/additions">
-        <span class="inner">
-          <span class="tit">신청 접수 중인 부가서비스</span>
-        </span>
-      </a>
-    </li>
-  </ul>
-</div>
-<!--// .cont-box -->
-
-<hr class="cont-sp type1" aria-hidden="true"/>
-  <%_ } else if (additionsJoinable && additionsJoinable.length > 0) { _%>
-
-<!-- .cont-box -->
-<div class="cont-box nogaps">
-  <ul class="full-link-list type02">
-    <li>
-      <a href="/myt-join/additions">
-        <span class="inner">
-          <span class="tit">가입 가능한 부가서비스</span>
-        </span>
-      </a>
-    </li>
-  </ul>
-</div>
-<!--// .cont-box -->
-
-<hr class="cont-sp type1" aria-hidden="true"/>
-  <%_ } _%>
 <%_ } _%>
 <%# 무료 할인 혜택 _%>
 <%_ var dcBenefits = additions.dcBenefits; _%>
