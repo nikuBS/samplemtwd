@@ -54,8 +54,8 @@ export default class RoamingMyUseController extends RoamingController {
         pageInfo,
         addons, // 부가서비스 목록
         tariffs: [], // 요금제 목록
-        // now: moment().hours(0).minutes(0).seconds(0).milliseconds(0),
         now: moment(),
+        nowDate: moment().hours(0).minutes(0).seconds(0)
       };
 
       if (tariffs.length > 0) {
@@ -158,7 +158,7 @@ export default class RoamingMyUseController extends RoamingController {
 
       // DATA --------
       // 요금제 그룹 1~4는 로밍 실시간 데이터 잔여량이 제공되므로 이 값을 병합
-      if ([1, 2, 3, 4].indexOf(t.group) >= 0 && dataUsages) {
+      if ([1, 2, 3, 4].indexOf(t.group) >= 0 && dataUsages && dataUsages.used && dataUsages.total) {
         // 잔여량 포매팅
         if (parseInt(dataUsages.used, 10) > 1024) {
           dataUsages.used = Math.floor(parseInt(dataUsages.used, 10) / 1024);
