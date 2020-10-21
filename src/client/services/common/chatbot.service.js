@@ -199,7 +199,7 @@ Tw.ChatbotService.prototype = {
      */
     _init: function () {
         var _this = this;
-        var chatCloseIcoClickYN = Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED');
+        var chatCloseIcoClickYN = Tw.CommonHelper.getSessionStorage('GREETING_DISABLED');
          
         // Tw.Logger.log('[chatbot.service] [_init] App/WEB 체크', '');
         console.log('[chatbot.service] [_init] App/WEB 체크', '');
@@ -385,6 +385,10 @@ Tw.ChatbotService.prototype = {
                     Tw.Logger.info('[chatbot.service] [_init] 회선 정보 (GET_SVC_INFO) : ', resp1.result);
                     Tw.Logger.info('[chatbot.service] [_init] 단말기 기술방식 (BFF_05_0220) : ', resp2);
                     Tw.Logger.info('[chatbot.service] [_init] 채널당 복수 실험연결 (BFF_05_0231) : ', resp3);
+
+                    if(resp1.result===null){
+                        Tw.CommonHelper.removeSessionStorage('GREETING_DISABLED');
+                    }
 
                     if (resp1.code===Tw.API_CODE.CODE_00) {
                         this._loginType = resp1.result.loginType;
@@ -626,8 +630,8 @@ Tw.ChatbotService.prototype = {
         var mlsProCessId = this._mlsProcessId;
 
         var _this = this;
-        console.log('CHAT_ICO_CLICKED:', Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED'));
-        if(Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED') !=='Y') {
+        console.log('GREETING_DISABLED:', Tw.CommonHelper.getSessionStorage('GREETING_DISABLED'));
+        if(Tw.CommonHelper.getSessionStorage('GREETING_DISABLED') !=='Y') {
             // 3초 후 안내 팝업 슬라이드 업
             if(this._typeB){
                 _this._timer = setTimeout( function () {
@@ -636,7 +640,7 @@ Tw.ChatbotService.prototype = {
                 _this.$combotClose.on('click', function () {
                     //_this.$combot.hide();
                     _this.$combot.removeClass("open");
-                    Tw.CommonHelper.setSessionStorage('CHAT_ICO_CLICKED', 'Y');
+                    Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
 
                     console.log('[chatbot.service] [_bindEvent] $(document).on(scroll)', '닫으면 안열리게 수정');
                     
@@ -682,7 +686,7 @@ Tw.ChatbotService.prototype = {
                 // 닫혀 있는데 아래로 내린 경우 - 창 숨김
                 } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
                     _this.$elChabot.removeClass('slideUp');
-                    Tw.CommonHelper.setSessionStorage('CHAT_ICO_CLICKED', 'Y');
+                    Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
                 }
             });
 
@@ -1526,7 +1530,7 @@ Tw.ChatbotService.prototype = {
                 if ($('.tod-floating').length > 0) {
                     $('.tod-floating').hide();
                 }
-                if(Tw.CommonHelper.getSessionStorage('CHAT_ICO_CLICKED') !=='Y'){
+                if(Tw.CommonHelper.getSessionStorage('GREETING_DISABLED') !=='Y'){
                     _this.$elChabot.addClass('slideUp');
                 }
  
