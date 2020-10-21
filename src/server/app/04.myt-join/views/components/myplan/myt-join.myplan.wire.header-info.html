@@ -1,30 +1,31 @@
 <div class="plan">
-  <strong class="tit" data-tracker="V" data-tracker_tw_prod_id="<%- feePlanProd.prodId %>" data-tracker_tw_prod_nm="<%= feePlanProd.feeProdNm %>"><%= feePlanProd.feeProdNm %></strong>
-  <span class="date">신청일: <%- feePlanProd.scrbDt %></span>
-  <span class="val">
-    <%_ if (feePlanProd.feeManlSetYn === 'Y' && feePlanProd.feeManlSetTitNm) { _%>
-    <%= feePlanProd.feeManlSetTitNm %> <br /> <strong><%= feePlanProd.basFeeAmt %></strong>
-    <%_ } else { _%>
-    월정액(부가세 포함) <br /> <strong><%- feePlanProd.basFeeAmt %></strong>
-    <%_ } _%>
-    </span>
+    <strong class="tit" data-tracker="V" data-tracker_tw_prod_id="<%- feePlan.prodId %>" data-tracker_tw_prod_nm="<%= feePlan.feeProdNm %>"><%= feePlan.feeProdNm %></strong>
+    <span class="val"><%= feePlan.basFeeAmt %></span>
 </div>
-<%# // TODO: 과거에는 S1(인터넷), S2(IPTV)에 대해서만 처리함, OP002-9884로 S3(전화 추가됨) _%>
-<%_ if (feePlanProd.prodBasBenfCtt && ['S1', 'S2', 'S3'].includes(svcInfo.svcAttrCd)) { _%>
-<div class="service-wrap">
-  <div class="service">
-    <%_ if (feePlanProd.basOfrDataQtyCtt) { _%>
-    <span class="sv-spec">
-      <%_ if (['S1', 'S3'].includes(svcInfo.svcAttrCd)) { _%>
-        <%# 인터넷, 전화 _%>
-      <i class="ico-speed-plan" title="속도"></i>
-      <%_ } else /* if (svcInfo.svcAttrCd === 'S2') */ { _%>
-        <%# IPTV _%>
-      <i class="ico-chan-plan" title="채널"></i>
-      <%_ } _%>
-      <%= feePlan.prodBasBenfCtt %>
-    </span>
+<div class="sub">
+    <%_ if ( feePlan.feeManlSetYn === 'N' || !feePlan.feeManlSetTitNm ) { _%>
+    <span class="rest">월정액(부가세 포함)</span>
+    <%_
+    }
+    if ( feePlan.feeManlSetYn === 'Y' && feePlan.feeManlSetTitNm ) {
+    _%>
+    <span class="rest"><%= feePlan.feeManlSetTitNm %></span>
     <%_ } _%>
-  </div>
+</div>
+<%_ if ( feePlan.prodBasBenfCtt && (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2') ) { _%>
+<div class="service-wrap">
+    <div class="service">
+        <span class="sv-spec">
+            <%_ if (svcInfo.svcAttrCd === 'S1') { _%>
+            <i class="ico-speed-plan" title="속도"></i>
+            <%_
+            }
+            if (svcInfo.svcAttrCd === 'S2') {
+            _%>
+            <i class="ico-chan-plan" title="채널"></i>
+            <%_ } _%>
+            <%= feePlan.prodBasBenfCtt %>
+        </span>
+    </div>
 </div>
 <%_ } _%>

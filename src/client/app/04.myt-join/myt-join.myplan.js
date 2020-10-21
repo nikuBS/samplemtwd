@@ -12,16 +12,15 @@ Tw.MyTJoinMyPlan = function (params) {
   this.$container = params.$element;
   this._historyService = new Tw.HistoryService(this.$container);
   this._bpcpService = Tw.Bpcp;
-  this._cachedElement();
+  this._rendered();
   this._bindEvent();
   this._initialize();
 };
 
 Tw.MyTJoinMyPlan.prototype = {
-  _cachedElement: function () {
+  _rendered: function () {
     this.$routers = this.$container.find('[data-id=routers]');
     this.$actions = this.$container.find('[data-id=actions]');
-    this.$btnMore = this.$container.find('.btn-more'); // .children().eq(0);
   },
 
   /**
@@ -38,7 +37,8 @@ Tw.MyTJoinMyPlan.prototype = {
 
   _initialize: function () {
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    /* this._lineComponent = */
+    new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**
@@ -48,11 +48,6 @@ Tw.MyTJoinMyPlan.prototype = {
    */
   _onBtGotoClicked: function (event) {
     var $target = $(event.target);
-    var href = $.trim($target.data('href'));
-    if (href) {
-      this._historyService.goLoad(href);
-    }
-    /*
     // [OP002-10778] V컬러링 옵션 상품인 경우 설정 버튼에서 과금팝업 노출 후 BPCP 화면으로 이동처리
     // API에서 전달받은 가공하지 않은 버튼 링크
     var linkUrl = $target.data('link-url');
@@ -71,7 +66,6 @@ Tw.MyTJoinMyPlan.prototype = {
         this._historyService.goLoad(targetUrl);
       }
     }
-    */
   },
 
   /**

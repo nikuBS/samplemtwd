@@ -30,14 +30,16 @@ class CommonHelper {
 
   /**
    * 특정 문자열이 포함된 cookie를 삭제한다.
-   * @param req
-   * @param res
-   * @param preFix
+   * @param req 
+   * @param res 
+   * @param preFix 
    */
   static clearCookieWithPreFix(req, res, preFix) {
     const cookies = req.cookies;
-    for (const key in cookies) {
-      if (cookies.hasOwnProperty(key) && key.indexOf(preFix) === 0) {
+    let key;
+
+    for (key in cookies) {
+      if (key.indexOf(preFix) === 0) {
         res.clearCookie(key);
       }
     }
@@ -46,12 +48,14 @@ class CommonHelper {
   /**
    * OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
    * 회선선택 영역에 출력될 데이터를 생성한다.
-   * @param {Object} svcInfo
+   * @param req 
+   * @param res 
+   * @param preFix 
    */
   static addCurLineInfo(svcInfo) {
-    svcInfo.lineNickNm = ['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1 ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : svcInfo.nickNm;
-    svcInfo.add = ['S1', 'S2'].indexOf(svcInfo.svcAttrCd) === -1 ? StringHelper.phoneStringToDash(svcInfo.svcNum) : svcInfo.addr;
-    svcInfo.ico = LINE_SVC_ATTR_ICO_FILE_NM[svcInfo.svcAttrCd];
+    svcInfo['lineNickNm'] = ['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1 ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : svcInfo.nickNm;
+    svcInfo['add'] = ['S1', 'S2'].indexOf(svcInfo.svcAttrCd) === -1 ? StringHelper.phoneStringToDash(svcInfo.svcNum) : svcInfo.addr;
+    svcInfo['ico'] = LINE_SVC_ATTR_ICO_FILE_NM[svcInfo.svcAttrCd];
   }
 }
 
