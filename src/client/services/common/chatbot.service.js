@@ -7,7 +7,7 @@ Tw.ChatbotService = function() {
     this._hbsFile;     // 챗봇 발화어 노출 대상 화면별 팝업 디자인
     this._menuId;      // 어느 화면에서 진입한 케이스인지 구분하기 위해 챗봇으로 I/F 하기 위한 메뉴ID
     this._appVersion;  // 챗봇으로 I/F 하기 위한 모바일Tworld App 버전
-    this._loginType;   // 로그인 타입 ( T(정상로그인), S(간편로그인) )
+    this._loginType = 'N';   // 로그인 타입 ( T(정상로그인), S(간편로그인) )
 
     // 1, 2차 오픈일 경과 여부 체크를 위한 일자 관련 변수 [S]
     this._currentDate = Tw.DateHelper.getCurrentShortDate();
@@ -359,30 +359,38 @@ Tw.ChatbotService.prototype = {
                 }, this));
             } else {
                 // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');
-                console.log('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');
+                console.log('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');            
 
                 this._apiService.requestArray([
-                    { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} },
-                    { command: Tw.API_CMD.BFF_05_0220, params: {} },
-                    { command: Tw.API_CMD.BFF_05_0231, params: {'channel_ids':[this._mlsChannelId], 'sale_org_id':'V990550000'} }
+                    { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
                 ])
                 .done($.proxy(function() {
                     var resp1 = arguments[0];   // GET_SVC_INFO
-                    var resp2 = arguments[1];   // BFF_05_0220
-                    var resp3 = arguments[2];   // BFF_05_0231
-
                     Tw.Logger.info('[chatbot.service] [_init] 회선 정보 (GET_SVC_INFO) : ', resp1.result);
-                    Tw.Logger.info('[chatbot.service] [_init] 단말기 기술방식 (BFF_05_0220) : ', resp2);
-                    Tw.Logger.info('[chatbot.service] [_init] 채널당 복수 실험연결 (BFF_05_0231) : ', resp3);
+                    console.log('[chatbot.service] [_init] 회선 정보 (GET_SVC_INFO) : ', resp1.result);
 
                     if(resp1.result===null){
                         Tw.CommonHelper.removeSessionStorage('GREETING_DISABLED');
-                    }
-
-                    if (resp1.code===Tw.API_CODE.CODE_00) {
-                        //if (resp1.result !== null && resp1.result.loginType !== 'S') {   // 간편로그인은 제외
-                        if (resp1.result !== null) {
-
+                        // 미로그인
+                        Tw.Logger.info('[chatbot.service] [_init] 미로그인', '');
+                        console.log('[chatbot.service] [_init] 미로그인', '');
+                        return;
+                    }else{
+                        Tw.Logger.info('[chatbot.service] [_init] 회선 정보 있음 : ', '');
+                        console.log('[chatbot.service] [_init] 회선 정보 있음 : ', '');
+                        this._apiService.requestArray([
+                            { command: Tw.API_CMD.BFF_05_0220, params: {} },
+                            { command: Tw.API_CMD.BFF_05_0231, params: {'channel_ids':[this._mlsChannelId], 'sale_org_id':'V990550000'} }
+                        ])
+                        .done($.proxy(function() {
+                            var resp2 = arguments[0];   // BFF_05_0220
+                            var resp3 = arguments[1];   // BFF_05_0231
+                            
+                            Tw.Logger.info('[chatbot.service] [_init] 단말기 기술방식 (BFF_05_0220) : ', resp2);
+                            Tw.Logger.info('[chatbot.service] [_init] 채널당 복수 실험연결 (BFF_05_0231) : ', resp3);
+                            console.log('[chatbot.service] [_init] 단말기 기술방식 (BFF_05_0220) : ', resp2);
+                            console.log('[chatbot.service] [_init] 채널당 복수 실험연결 (BFF_05_0231) : ', resp3);
+                            
                             // 로그인타입 
                             this._loginType = resp1.result.loginType;
                             
@@ -476,14 +484,12 @@ Tw.ChatbotService.prototype = {
                                     // 챗봇 서비스 차단 여부 체크
                                     this._checkBlockChatbotService();
                                 }
-                            }                            
-                        } else {
-                            // 미로그인
-                            Tw.Logger.info('[chatbot.service] [_init] 미로그인', '');
-                            console.log('[chatbot.service] [_init] 미로그인', '');
-                            return;
-                        }
+                            }         
+                        }, this));
                     }
+
+
+
                 }, this));
             }
 

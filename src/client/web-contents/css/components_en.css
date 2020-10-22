@@ -19049,16 +19049,6 @@ a.bt-link-tx.underline.small {
   -webkit-transform: translateZ(0);
           transform: translateZ(0); }
 
-/* home 에서 scroll발생시 */
-.fly .header-wrap .h-belt .h-default .h-logo {
-  top: -3.13rem;
-  opacity: 0; }
-
-.fly .header-wrap .h-belt .h-default .h-menu {
-  z-index: 27; }
-
-.fly .header-wrap .h-belt .h-default .h-serarch {
-  z-index: 27; }
 
 /* donut chart */
 .donut-chart {
