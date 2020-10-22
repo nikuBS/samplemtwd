@@ -74,7 +74,7 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
 
   setTimeout(function(){$(window).scrollTop(0);},100)
 
-  //this._getProductData(this.$container.find('#plan-ul'));
+  this._getProductData(this.$container.find('#plan-ul'));
 
   // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
@@ -168,11 +168,11 @@ Tw.MainHome.prototype = {
     }
   },
 
-  _parsePlanData: function(planData) {
+  _parsePlanData: function(planData, productCode) {
     if ( planData.code === Tw.API_CODE.CODE_00 ) {
-      var CODE_5GX_PLAN = 'T000000079';
-      var CODE_T_PLAN = 'T000000075';
-      var CODE_0_PLAN = 'T000000029';
+      var CODE_5GX_PLAN = $('input[name="5gx_code"]').val();
+      var CODE_T_PLAN = $('input[name="t_plan_code"]').val();
+      var CODE_0_PLAN = $('input[name="0_plan_code"]').val();
 
       var dataList = planData.result.grpProdList;
       return dataList.reduce(function(arr, item) {
