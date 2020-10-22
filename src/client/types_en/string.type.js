@@ -90,9 +90,9 @@ Tw.SMS_VALIDATION = {
 };
 
 Tw.POPUP_TITLE = {
-  NOTIFY: 'alert',
-  CONFIRM: 'confrim',
-  ERROR: 'error',
+  NOTIFY: 'Alert',
+  CONFIRM: 'Confrim',
+  ERROR: 'Error',
   SELECT_BANK: '은행선택',
   SELECT_AMOUNT: '금액 선택',
   SELECT: '선택',
