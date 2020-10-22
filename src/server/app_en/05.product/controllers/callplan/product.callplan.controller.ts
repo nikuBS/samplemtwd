@@ -77,7 +77,8 @@ export default class CallPlan2 extends TwViewController {
         if ( prod === 'NA00006405' || prod === 'NA00006404' || prod === 'NA00006403' || prod === 'NA00006402' || prod === 'NA00006817') {
           groupName.value = '5GX Plan';
         }
-        else if ( prod === 'NA00006538' || prod === 'NA00006537' || prod === 'NA00006536' || prod === 'NA00006535' || prod === 'NA00006534') {
+        else if ( prod === 'NA00006539' || prod === 'NA00006538' || prod === 'NA00006537' 
+        || prod === 'NA00006536' || prod === 'NA00006535' || prod === 'NA00006534') {
           groupName.value = 'T Plan';
         }
         else if ( prod === 'NA00006157' || prod === 'NA00006156' || prod === 'NA00006155') {
