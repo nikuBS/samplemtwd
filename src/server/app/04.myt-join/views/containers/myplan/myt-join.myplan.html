@@ -1,5 +1,5 @@
 <%#
-* 나의 가입정보 > 나의 요금제/부가상품 (MS_05)
+* 나의 가입정보 > 나의 요금제
 * @file myt-join.myplan.html
 * @author Ji Hun Yang (jihun202@sk.com)
 * @since 2018.09.19
@@ -7,40 +7,34 @@ _%>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); _%>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
-  <ul>
-    <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-  </ul>
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%- pageInfo.menuId %>">
-  <%- include('../components/header.component.html', { title: '나의 요금제/부가상품', svcInfo: svcInfo }); _%>
-  <!-- #contents -->
-  <div id="contents" class="container-wrap">
-    <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C61-1", multiple: "CMMA_A3_B13_C61-2" } }); _%>
-    <div class="container" data-id="sub-container">
-      <%# // TODO: 성능 문제로 배포 연기 _%>
-      <%- include('../../components/myplan/myt-join.myplan.' + templateType + '.html', feePlan, additions, benefits, /* agreements, fee, usagePattern, pps, */ tipList) _%>
+    <%- include('../components/header.component.html', { title: '나의 요금제', svcInfo: svcInfo }); _%>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <%# OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
+        <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C61-1", multiple: "CMMA_A3_B13_C61-2" } }); _%>
+        <%# // OP002-8156: [개선][FE](W-1910-078-01) 회선선택 영역 확대 2차 _%>
+        <div class="container" data-id="sub-container">
+            <%- include('../../components/myplan/myt-join.myplan.' + feeMainTemplate + '.html') _%>
+        </div>
     </div>
-  </div>
-  <!--// #contents -->
-  <!-- #footer -->
-  <footer id="fe-all-menu">
-    <%- include('../components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
-  </footer>
-  <!--// #footer -->
+    <!--// #contents -->
+    <!-- #footer -->
+    <footer id="fe-all-menu">
+        <%- include('../components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
+    </footer>
+    <!--// #footer -->
 </div>
-<%- include('../../components/javascript.component.html') _%>
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('.cont-box').on('click', '> .btn-more > button', function (e) {
-      e.preventDefault();
-      $(this).parent().hide().siblings('.tod-full-link-list').removeClass('tod-hidden-list').find('button, a').eq(0).focus();
-    });
-  });
-</script>
+<% include ../../components/javascript.component.html _%>
 <script>
-  $(document).ready(function () {
-    new Tw.MyTJoinMyPlan({ $element: $('#contents') });
-  });
+    $(document).ready(function () {
+        new Tw.MyTJoinMyPlan({ $element: $('#contents') });
+        // new Tw.MyTJoinMyPlan({ $element: $('[data-id=sub-container]') });
+    });
 </script>
-<%- include('../../components/end.component.html') _%>
+<% include ../../components/end.component.html _%>
