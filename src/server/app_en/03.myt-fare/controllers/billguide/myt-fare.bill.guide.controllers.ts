@@ -246,7 +246,7 @@ class MyTFareBillGuide extends TwViewController {
         _lineDtlLst.sort(function(a,b){
           return a.totAmtInt > b.totAmtInt ? -1 : a.totAmtInt < b.totAmtInt ? 1 : 0;
         });
-        
+
         //  console.log("### _lineDtlLst length =>"+_lineDtlLst.length);
 
         //  청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
@@ -356,13 +356,13 @@ class MyTFareBillGuide extends TwViewController {
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
       // 6개월간 청구요금 없음 에러페이지로 표시
-      return thisMain.error.render(res, {
-        title: 'title',
-        code: err.code,
-        msg: err.msg,
-        pageInfo: pageInfo,
-        svcInfo: svcInfo
-      });
+      // return thisMain.error.render(res, {
+      //   title: 'title',
+      //   code: err.code,
+      //   msg: err.msg,
+      //   pageInfo: pageInfo,
+      //   svcInfo: svcInfo
+      // });
 
       // 6개월간 청구요금 없음
       if ( err.code === 'BIL0076' || err.code === 'BIL0114') {
