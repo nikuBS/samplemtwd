@@ -1694,132 +1694,132 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _calculateAdditionsFee: function (usingAdditions) {
-    // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [S]
-    // var addProdList = usingAdditions.addProdList || []; // 이용중인 부가서비스 리스트
-    // var totalPaidAdditionsCnt = 0;
-    // var totalUnpaidAdditionsCnt = 0;
-    // var returnStr1 = '';
-    // var returnStr2 = '';
-
-    // if( addProdList.length > 0 ) {
-    //   addProdList.map(function (_data) {
-    //     if( _data.payFreeYn !== 'Y' ) {
-    //       totalPaidAdditionsCnt++;
-    //     } else {
-    //       totalUnpaidAdditionsCnt++;
-    //     }
-    //   });
-    // }
-
-    // returnStr1 = totalUnpaidAdditionsCnt + '건';
-    // returnStr2 = totalPaidAdditionsCnt + '건';
-
-    // this.$container.find('.fe-unpaid-additions-cnt').text(returnStr1);
-    // this.$container.find('.fe-paid-additions-cnt').text(returnStr2);
-    // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [E]
-
-
-    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/17) 로 연기됨에 따라 원복처리함 [S]
+    // [OP002-9968] 의 배포 일정 연기 (9/24) 로 연기됨에 따라 기존 로직으로 복구함. 9/24 배포시에 본 로직은 제거 필요 [S]
+    var addProdList = usingAdditions.addProdList || []; // 이용중인 부가서비스 리스트
+    var totalPaidAdditionsCnt = 0;
+    var totalUnpaidAdditionsCnt = 0;
     var returnStr1 = '';
     var returnStr2 = '';
-    var returnStr3 = '';
-    var keyName = '';
 
-    console.log('[common.search] [_calculateAdditionsFee] usingAdditions : ', usingAdditions);
-    console.log('[common.search] [_calculateAdditionsFee] this._svcInfo.svcAttrCd : ', this._svcInfo.svcAttrCd);
-
-    // 선택된 회선이 유선인 경우
-    if ( !Tw.FormatHelper.isEmpty(this._svcInfo) && this._svcInfo.svcAttrCd.startsWith('S') ) {
-      // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 유선인 경우', '');
-
-      var paidProdList = usingAdditions.pays || [];
-      var unpaidProdList = usingAdditions.frees || [];
-
-      var paidProdCnt = paidProdList.length;        // 가입한 유료 유선 부가상품 카운트
-      var unpaidProdCnt = unpaidProdList.length;  // 가입한 무료 유선 부가상품 카운트
-
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 유료 유선 부가상품 카운트 : ', paidProdCnt);
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
-
-      if ( paidProdCnt === '0' && unpaidProdCnt === '0' ) {
-        $('.tod-search-mytbox').parent().hide();
-
-        // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
-        for ( var i = 0; i < this._searchInfo.search.length; i++ ) {
-          keyName = Object.keys(this._searchInfo.search[i])[0];
-
-          if ( keyName === 'smart' ) {
-            this._showSmart(this._searchInfo.search[i][keyName].data[0]);
-          }
+    if( addProdList.length > 0 ) {
+      addProdList.map(function (_data) {
+        if( _data.payFreeYn !== 'Y' ) {
+          totalPaidAdditionsCnt++;
+        } else {
+          totalUnpaidAdditionsCnt++;
         }
-      } else {
-        returnStr1 = paidProdCnt + '건';
-        returnStr2 = unpaidProdCnt + '건';
-
-        this.$container.find('.fe-wire-paid-additions-cnt').text(returnStr1);
-        this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
-
-        if ( paidProdCnt === '0' ) {
-          this.$container.find('.fe-wire-paid-additions-cnt').removeAttr('href');
-        }
-
-        if ( unpaidProdCnt === '0' ) {
-          this.$container.find('.fe-wire-unpaid-additions-cnt').removeAttr('href');
-        }
-
-        $('.fe-prod-cnt-wireless').hide();
-        $('.fe-prod-cnt-wire').show();
-      }
+      });
     }
-    // 선택된 회선이 무선인 경우
-    else {
-      // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 무선인 경우', '');
 
-      var disProdCnt = usingAdditions.disProdCnt;               // 가입한 무선 션/할인 프로그램 카운트
-      var addProdPayCnt = usingAdditions.addProdPayCnt;         // 가입한 무선 유료 부가상품 카운트
-      var addProdPayFreeCnt = usingAdditions.addProdPayFreeCnt; // 가입한 무선 무료 부가상품 카운트
+    returnStr1 = totalUnpaidAdditionsCnt + '건';
+    returnStr2 = totalPaidAdditionsCnt + '건';
 
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', disProdCnt);
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
-      // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
+    this.$container.find('.fe-unpaid-additions-cnt').text(returnStr1);
+    this.$container.find('.fe-paid-additions-cnt').text(returnStr2);
+    // [OP002-9968] 의 배포 일정 연기 (9/24) 로 연기됨에 따라 기존 로직으로 복구함. 9/24 배포시에 본 로직은 제거 필요 [E]
 
-      if ( disProdCnt === '0' && addProdPayCnt === '0' && addProdPayFreeCnt === '0' ) {
-        $('.tod-search-mytbox').parent().hide();
 
-        // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
-        for ( var addIndex = 0; addIndex < this._searchInfo.search.length; addIndex++ ) {
-          keyName = Object.keys(this._searchInfo.search[addIndex])[0];
+    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/24) 로 연기됨에 따라 원복처리함 [S]
+    // var returnStr1 = '';
+    // var returnStr2 = '';
+    // var returnStr3 = '';
+    // var keyName = '';
 
-          if ( keyName === 'smart' ) {
-            this._showSmart(this._searchInfo.search[addIndex][keyName].data[0]);
-          }
-        }
-      } else {
-        returnStr1 = disProdCnt + '건';
-        returnStr2 = addProdPayCnt + '건';
-        returnStr3 = addProdPayFreeCnt + '건';
+    // console.log('[common.search] [_calculateAdditionsFee] usingAdditions : ', usingAdditions);
+    // console.log('[common.search] [_calculateAdditionsFee] this._svcInfo.svcAttrCd : ', this._svcInfo.svcAttrCd);
 
-        this.$container.find('.fe-wireless-discount-additions-cnt').text(returnStr1);
-        this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
-        this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
+    // // 선택된 회선이 유선인 경우
+    // if ( !Tw.FormatHelper.isEmpty(this._svcInfo) && this._svcInfo.svcAttrCd.startsWith('S') ) {
+    //   // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 유선인 경우', '');
 
-        if ( disProdCnt === '0' ) {
-          this.$container.find('.fe-wireless-discount-additions-cnt').removeAttr('href');
-        }
+    //   var paidProdList = usingAdditions.pays || [];
+    //   var unpaidProdList = usingAdditions.frees || [];
 
-        if ( addProdPayCnt === '0' ) {
-          this.$container.find('.fe-wireless-paid-additions-cnt').removeAttr('href');
-        }
+    //   var paidProdCnt = paidProdList.length;        // 가입한 유료 유선 부가상품 카운트
+    //   var unpaidProdCnt = unpaidProdList.length;  // 가입한 무료 유선 부가상품 카운트
 
-        if ( addProdPayFreeCnt === '0' ) {
-          this.$container.find('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
-        }
+    //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 유료 유선 부가상품 카운트 : ', paidProdCnt);
+    //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
 
-        $('.fe-prod-cnt-wireless').show();
-        $('.fe-prod-cnt-wire').hide();
-      }
-    }
-    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/17) 로 연기됨에 따라 원복처리함 [E]
+    //   if ( paidProdCnt === '0' && unpaidProdCnt === '0' ) {
+    //     $('.tod-search-mytbox').parent().hide();
+
+    //     // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
+    //     for ( var i = 0; i < this._searchInfo.search.length; i++ ) {
+    //       keyName = Object.keys(this._searchInfo.search[i])[0];
+
+    //       if ( keyName === 'smart' ) {
+    //         this._showSmart(this._searchInfo.search[i][keyName].data[0]);
+    //       }
+    //     }
+    //   } else {
+    //     returnStr1 = paidProdCnt + '건';
+    //     returnStr2 = unpaidProdCnt + '건';
+
+    //     this.$container.find('.fe-wire-paid-additions-cnt').text(returnStr1);
+    //     this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
+
+    //     if ( paidProdCnt === '0' ) {
+    //       this.$container.find('.fe-wire-paid-additions-cnt').removeAttr('href');
+    //     }
+
+    //     if ( unpaidProdCnt === '0' ) {
+    //       this.$container.find('.fe-wire-unpaid-additions-cnt').removeAttr('href');
+    //     }
+
+    //     $('.fe-prod-cnt-wireless').hide();
+    //     $('.fe-prod-cnt-wire').show();
+    //   }
+    // }
+    // // 선택된 회선이 무선인 경우
+    // else {
+    //   // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 무선인 경우', '');
+
+    //   var disProdCnt = usingAdditions.disProdCnt;               // 가입한 무선 션/할인 프로그램 카운트
+    //   var addProdPayCnt = usingAdditions.addProdPayCnt;         // 가입한 무선 유료 부가상품 카운트
+    //   var addProdPayFreeCnt = usingAdditions.addProdPayFreeCnt; // 가입한 무선 무료 부가상품 카운트
+
+    //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 카운트 : ', disProdCnt);
+    //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
+    //   // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
+
+    //   if ( disProdCnt === '0' && addProdPayCnt === '0' && addProdPayFreeCnt === '0' ) {
+    //     $('.tod-search-mytbox').parent().hide();
+
+    //     // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
+    //     for ( var addIndex = 0; addIndex < this._searchInfo.search.length; addIndex++ ) {
+    //       keyName = Object.keys(this._searchInfo.search[addIndex])[0];
+
+    //       if ( keyName === 'smart' ) {
+    //         this._showSmart(this._searchInfo.search[addIndex][keyName].data[0]);
+    //       }
+    //     }
+    //   } else {
+    //     returnStr1 = disProdCnt + '건';
+    //     returnStr2 = addProdPayCnt + '건';
+    //     returnStr3 = addProdPayFreeCnt + '건';
+
+    //     this.$container.find('.fe-wireless-discount-additions-cnt').text(returnStr1);
+    //     this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
+    //     this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
+
+    //     if ( disProdCnt === '0' ) {
+    //       this.$container.find('.fe-wireless-discount-additions-cnt').removeAttr('href');
+    //     }
+
+    //     if ( addProdPayCnt === '0' ) {
+    //       this.$container.find('.fe-wireless-paid-additions-cnt').removeAttr('href');
+    //     }
+
+    //     if ( addProdPayFreeCnt === '0' ) {
+    //       this.$container.find('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
+    //     }
+
+    //     $('.fe-prod-cnt-wireless').show();
+    //     $('.fe-prod-cnt-wire').hide();
+    //   }
+    // }
+    // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/24) 로 연기됨에 따라 원복처리함 [E]
   },
   /**
    * @function
