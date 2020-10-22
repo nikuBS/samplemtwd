@@ -1081,7 +1081,11 @@ body.apphome .main-membershop-box { z-index: 3; }
 /* icon */
 .icon-gnb-home { display: inline-block; width: 3.06rem; height: 2.5rem; background: url(/img/svg/graphic_80px_bi_skt_beta.svg) no-repeat 0 0; background-size: 100% 100%; }
 
+.icon-gnb-home.e_beta { display: inline-block; width: 3.22rem; height: 2.25rem; background: url("/img/en/logo-t_beta.png") no-repeat 0 0; background-size: 100% 100%; }
+
 .icon-gnb-home-T { display: inline-block; width: 3.06rem; height: 2.5rem; background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0; background-size: 100% 100%; }
+
+.icon-gnb-home-T.e_beta { display: inline-block; width: 3.22rem; height: 2.25rem; background: url("/img/en/logo-t_beta.png") no-repeat 0 0; background-size: 100% 100%; }
 
 .icon-gnb-bi { display: inline-block; width: 1.44rem; height: 1.63rem; background: url(/img/ico/ico-gnb-bi.png) no-repeat 0 0; background-size: 100% 100%; }
 
@@ -2436,6 +2440,8 @@ body.apphome .container-wrap { background: -webkit-gradient(linear, left top, le
 .icon-gnb-menu { background-image: url("/img/en/icon_48px_titlebar_menu.svg"); }
 
 .icon-gnb-home-T { background-image: url("/img/en/graphic_80px_bi_skt.svg"); }
+
+.icon-gnb-home-T.e_beta { background-image: url("/img/en/logo-t_beta.png"); }
 
 /* 로그인 전 */
 .section-box.mw { margin-top: -2.81rem; }
