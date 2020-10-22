@@ -4,7 +4,7 @@
 * @since 2018.10.24
 %>
 
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -16,7 +16,7 @@
 <div class="wrap">
     <!-- #header -->
     <%- include('../../../../../common_en/views/components/header.component.html',
-    { title: 'SUPPORT', svcInfo: svcInfo, option:{ line: false } }); %>
+    { title: 'SUPPORT', svcInfo: svcInfo}); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -118,7 +118,9 @@
             </div>
             <!--// .cont-box -->
         </div>
-        <%- include('../en.customer.confirm.a5.html', {svcInfo: svcInfo }); %>
+       
+            <div class="popupDiv"></div>
+        </div>
     </div>
     <!--// #contents -->
     <%- include('../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>

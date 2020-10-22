@@ -191,7 +191,7 @@ Tw.LineComponent.prototype = {
   _successGetLineList: function ($target, allSvcResp, childSvcResp, exposableResp) {
     var  totNonCnt = 0;
     if ( exposableResp.code === Tw.API_CODE.CODE_00 ) {
-      totNonCnt = exposableResp.result.totalCnt;
+      totNonCnt = exposableResp.result.mCnt;
     }
 
     if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) { // 10.16 회선이 1개만 있더라도 액션시트가 출력될 수 있도록 변경 요청 (기획)

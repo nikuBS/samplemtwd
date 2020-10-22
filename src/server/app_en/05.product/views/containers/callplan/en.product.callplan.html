@@ -13,12 +13,12 @@
     <div class="wrap">
         <%- include('../../../../../common_en/views/components/header.component.html', { title: prodData.prodEngNm, svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         <!-- #contents -->
-        <div id="contents" class="container-wrap">
+    <div id="contents" class="container-wrap">
             <h2 class="blind">contents</h2>
             <div class="container">
 
                 <!-- 상품타이틀 -->
-                <div class="cont-box nogaps-hoz productdetails-bg" style="background: <%= backgroundColor.value %> url(https://cdnm-dev.tworld.co.kr<%=prodData.prodIconImgUrl%>) right 5.75rem no-repeat; background-size: 10.5rem 11.938rem"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background: url(https://cdnm-stg.tworld.co.kr<%=prodData.prodIconImgUrl%>)"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
                     <div class="productdetails-wrap">
                         <div class="idpt-product-detail-title">
                             <h3>
@@ -34,7 +34,7 @@
                             </p>
                         </div>
                     </div>
-                    <ul class="detailinfo">
+                    <ul class="detailinfo <%if(prodData.smryHtmlEngCtt==''||prodData.smryHtmlEngCtt==null){%>pb00<%}%>">
                         <li>
                             <p class="gb"><i class="blind">data</i><%if(prodData.basOfrGbDataQtyEngCtt!=null){ %>
                                 <%- prodData.basOfrGbDataQtyEngCtt%> <% } else { %>
@@ -58,10 +58,11 @@
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="prCont">
+                <% if (contentsData!=undefined){ %>
                 <% for(let i= 0; i < contentsData.length ; i++){ if(contentsData[i].popupUseYn=='N'){%>
                     <%- contentsData[i].popupDtlCtt %>
                     <%- contentsData[i].dtlCtt %>
-                <% }} %>
+                <% }}} %>
                 
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true"/>
@@ -72,34 +73,7 @@
         <%- include('../../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
-<div class="popup-page nobg tw-popup" style="display:none"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
-    <!-- #header -->
-    <div class="header-wrap">
-        <div class="page-header">
-            <div class="header-ti">
-                <h1>DETAILS</h1>
-            </div>
-        </div>
-    </div>
-    <!--// #header -->
-    <!-- .container-wrap -->
-    <div class="container-wrap">
-        <h2 class="blind">contents</h2>
-        <div class="container">
-            <div class="plan-detail">
-                <% for(let i= 0; i < contentsData.length ; i++){ if(contentsData[i].popupUseYn=='Y'){%>
-                    <%- contentsData[i].popupDtlCtt %>
-                    <hr class="cont-sp type1" aria-hidden="true"/>
-                <% }} %>
-            </div>
-        </div>
-        <!--// .container-wrap -->
-        <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">popup close</span></button>
-        <!--// .popup-closeBtn -->
-    </div>
-    <!--// .popup hbs -->
-</div>
+
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {

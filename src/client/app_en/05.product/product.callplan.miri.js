@@ -19,39 +19,43 @@ Tw.ProductCallplanMiri = function (rootEl) {
      }, this)
    );
   // 핸드폰에 적용시 수정
-  //this._init();
+  // this._init();
 };
 
 Tw.ProductCallplanMiri.prototype = {
      _init : function(res) { //핸드폰에 적용 시 수정
     //_init : function(){
             if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-       //     if(true){
+     //       if(true){
               this._$confirm0.css("display","block");
               this._$confirm1.css("display","block");
-              this._$confirm0.on('click', $.proxy(this._setConfirm0, this));
-              this._$confirm1.on('click', $.proxy(this._setConfirm1, this));
-              this._$cancelbtn.on('click', $.proxy(this._cancel, this));
-              this._$confirmbtn.on('click', $.proxy(this._confirm, this));
+              this._$confirm0.on('click', $.proxy(this._loadpopup0, this));
+              this._$confirm1.on('click', $.proxy(this._loadpopup1, this));
             }
           },
-      
-        _setConfirm0: function() {
+        
+        _loadpopup0: function () {
           this.crtVideo=0;
-          this._$popup.css("display","block");
-        },
-      
-        _setConfirm1: function() {
+          var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
+            $('.popupDiv').html(tplPlanCard({}));
+            $('.pos-left').on('click', $.proxy(this._cancel, this));
+            $('.pos-right').on('click', $.proxy(this._confirm, this));
+          },
+
+        _loadpopup1: function () {
           this.crtVideo=1;
-          this._$popup.css("display","block");
+          var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
+            $('.popupDiv').html(tplPlanCard({}));
+            $('.pos-left').on('click', $.proxy(this._cancel, this));
+            $('.pos-right').on('click', $.proxy(this._confirm, this));
         },
       
         _cancel: function () {
-          this._$popup.css("display","none");
+          $('.popup').remove();
         },
       
         _confirm: function () {
-          this._$popup.css("display","none");
+          $('.popup').remove();
           if(this.crtVideo==0){
             this._$video0.attr("allow","autoplay");
             this._$video0.attr("src","https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0");

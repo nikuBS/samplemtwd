@@ -30,18 +30,18 @@ class MyTDataHotdata extends TwViewController {
     CommonHelper.addCurLineInfo(svcInfo);
     const lineType = CommonHelper.getLineType(svcInfo);
 
-    // 유선 회선 및 무선 회선이 아닌 고객은 정보조회 불가 페이지로 이동
-    if( lineType.isWireLine || lineType.isPPSLine ) {
-      _renderError(res, svcInfo, pageInfo, {
-        code: 'WIRE_OR_PPS'
-      });
-      return;
-    }
-
     // 모바일 회선은 있지만 등록된 회선이 하나도 없다면 에러페이지로 이동
     if ( lineType.isLineCountIsZero || lineType.isLineNotExist ) { 
       _renderError(res, svcInfo, pageInfo, {
         code: 'LINE_NOT_EXIST'
+      });
+      return;
+    }
+    
+    // 유선 회선 및 무선 회선이 아닌 고객은 정보조회 불가 페이지로 이동
+    if( lineType.isWireLine || lineType.isPPSLine ) {
+      _renderError(res, svcInfo, pageInfo, {
+        code: 'WIRE_OR_PPS'
       });
       return;
     }

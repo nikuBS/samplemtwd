@@ -46,18 +46,18 @@
                                         data-xt_csid="NO" 
                                         data-xt_action="BC"
                                         data-target="conditionChangeBtn"
-                                        class="btn-round2 btn-style3"       >Select Bill</button>
+                                        class="btn-round2 btn-style3"   >Select Bill</button>
                             </div>
                         </div>
                         <p class="msg-type2 mt4">Total of <span class="txt-point">₩<%=data.commDataInfo.discount%></span> discount received</p>
                     </div>
-                    <%_ if( data.typeChk == 'A5'){ _%>
+                    <%_ if( data.typeChk == 'A5' && data.lineDtlLst && data.lineDtlLst.length > 0){ _%>
                     <p class="info-charge-data">
                         The total charged amount for the number <br/>
                         <strong><%=data.repSvcNum%> </strong> is shown as you have requested<br/>
                         a combined charged total for more than <strong><%=data.paidAmtMonthSvcCnt%></strong> lines
                     </p>
-                    <%  } %>
+                    <% } %>
                 </div>
                 <!--// .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true"/>

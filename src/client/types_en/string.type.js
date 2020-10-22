@@ -90,9 +90,9 @@ Tw.SMS_VALIDATION = {
 };
 
 Tw.POPUP_TITLE = {
-  NOTIFY: '알림',
-  CONFIRM: '확인',
-  ERROR: '에러',
+  NOTIFY: 'Alert',
+  CONFIRM: 'Confrim',
+  ERROR: 'Error',
   SELECT_BANK: '은행선택',
   SELECT_AMOUNT: '금액 선택',
   SELECT: '선택',
@@ -748,7 +748,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
   ALERT_2_A40: { TITLE: '알림', MSG: '요금제 변경 가능일 알림이 해지 되었습니다.' },
   ALERT_2_A61: { TITLE: 'Notice', MSG: 'Please enter your passcode correctly.' },
   ALERT_2_A62: { TITLE: '알림', MSG: '고객보호 비밀번호가 변경되었습니다.' },
-  ALERT_2_A63: { TITLE: 'Notice', MSG: 'Passcode incorrect.' },
+  ALERT_2_A63: { TITLE: 'Notice', MSG: 'Passcodes do not match.' },
   ALERT_2_A64: { TITLE: 'Notice', MSG: 'Privacy Protection Passcode setting is completed.' },
   ALERT_2_A66: { TITLE: '알림', MSG: '망 작업 SMS 알림 신청이 완료 되었습니다.' },
   ALERT_2_A67: { TITLE: '알림', MSG: '망 작업 SMS 알림 수신번호가 변경 되었습니다.' },
@@ -1824,7 +1824,7 @@ Tw.T_FAMILY_MOA_NO_LIMITATION = '자유 사용';
 
 Tw.LOGIN_CUS_PW_GUIDE = {
   TITLE: 'Set up Privacy Protection</br>Passcode',
-  CONTENTS: '<p>No passcode set</br>This service can be used after setting up a</br>privacy protection passcode</p>',
+  CONTENTS: '<p>No passcode set</br>This service can be used after setting up</br>a privacy protection passcode</p>',
   INFO: '',
   BUTTON: 'Settings'
 };

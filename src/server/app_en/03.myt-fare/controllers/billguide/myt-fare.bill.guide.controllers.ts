@@ -19,6 +19,7 @@ import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types_en/title.type';
 // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
 import CommonHelper from '../../../../utils_en/common.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
+import { SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER } from 'constants';
 
 class MyTFareBillGuide extends TwViewController {
   constructor() {
@@ -41,15 +42,7 @@ class MyTFareBillGuide extends TwViewController {
     joinSvcList: '', // 가입 서비스 리스트
     useAmtTot: '', // 사용요금
 
-    intBillLineList: '', // 조건변경 > 회선
     conditionChangeDtList: '', // 조건변경 > 기간
-    repSvcNm: '', // 대표서비스회선정보
-
-    curDt: '', // 현재날짜
-    remained: '', // 잔여데이터 KB | 공백일 경우 표시안함
-    dataYn: '', // 음성+데이터 'Y'
-    dataProdYn: '', // MB 'Y' | 원 'N'
-
     repSvcNum: ''
 
   };
@@ -196,8 +189,8 @@ class MyTFareBillGuide extends TwViewController {
 
         Object.assign(thisMain._billpayInfo, resArr[0].result);
 
-        //  영문화 --확인필요.  _intBillLineInfo(회선변경)
-        //  thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
+        thisMain.logger.debug("[ API BFF_05_0226 Result ]",thisMain._billpayInfo);
+
 
         // 청구 시작, 종료일
         thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -236,10 +229,10 @@ class MyTFareBillGuide extends TwViewController {
 
         let beLineLst = thisMain._billpayInfo.paidAmtDetailInfoList;
       //  console.log("### line length =>"+beLineLst.length);
-
-        let _lineDtlLst :Array<any> = [];
+        
+        let _lineDtlLst :Array<any> = [];        
         for( let i=0; i<beLineLst.length; i++ ){
-        //  console.log(" ============================== jgmik ========================================" );
+
           let line = beLineLst[i];
         //  console.log("cate length =>"+line.paidAmtDetailInfo.length);
           let lineGroup = thisMain._arrayToGroup( line.svcNm ,line.paidAmtDetailInfo );
@@ -248,6 +241,12 @@ class MyTFareBillGuide extends TwViewController {
         //  console.log(" ===============================================================================" );
           _lineDtlLst.push( lineGroup );
         }
+
+        //큰금액순으로 정렬
+        _lineDtlLst.sort(function(a,b){
+          return a.totAmtInt > b.totAmtInt ? -1 : a.totAmtInt < b.totAmtInt ? 1 : 0;
+        });
+
         //  console.log("### _lineDtlLst length =>"+_lineDtlLst.length);
 
         //  청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
@@ -320,8 +319,7 @@ class MyTFareBillGuide extends TwViewController {
             if ( svcInfo.actRepYn === 'Y' || (svcInfo.actRepYn === 'Y' && thisMain.reqQuery.line) ) {
               thisMain.logger.info(thisMain, '[ 통합청구회선 > LINE:' + thisMain.reqQuery.line + ']', svcInfo.actRepYn);
               thisMain._typeChk = 'A5';
-
-              thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
+              //thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
 
               // 요금납부버튼 무조건 노출로 삭제
               // thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
@@ -329,7 +327,6 @@ class MyTFareBillGuide extends TwViewController {
               // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
               // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
               // data['showConditionInfo'] = thisMain._showConditionInfo;
-            
             }
           }
         }
@@ -339,7 +336,7 @@ class MyTFareBillGuide extends TwViewController {
 //      thisMain.reqButtonView(res, thisMain._urlTplInfo.commonPage, data);//영문화 사용안함
 
         thisMain.renderView(res, thisMain._urlTplInfo.commonPage, data);
-        
+
         thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
         thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
 
@@ -352,11 +349,20 @@ class MyTFareBillGuide extends TwViewController {
         //   pageInfo: pageInfo,
         //   svcInfo: svcInfo
         // });
+        
         return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
 
       }
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      // 6개월간 청구요금 없음 에러페이지로 표시
+      // return thisMain.error.render(res, {
+      //   title: 'title',
+      //   code: err.code,
+      //   msg: err.msg,
+      //   pageInfo: pageInfo,
+      //   svcInfo: svcInfo
+      // });
 
       // 6개월간 청구요금 없음
       if ( err.code === 'BIL0076' || err.code === 'BIL0114') {
@@ -629,7 +635,7 @@ class MyTFareBillGuide extends TwViewController {
     };
 
     const NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
-    const HOTBILL_UNPAID_TITLE = '미납요금';
+    const HOTBILL_UNPAID_TITLE = '';
 
     // var self = this;
     var amount = 0;
@@ -638,6 +644,7 @@ class MyTFareBillGuide extends TwViewController {
     var line = {
       name: ''
       ,totAmt: ''
+      ,totAmtInt: 0
       ,group:{}
     };
     var group = {};
@@ -737,6 +744,7 @@ class MyTFareBillGuide extends TwViewController {
       }
       line.group  = group;
       line.totAmt = (totAmt < 0 ?'-₩':'₩')+func.commaSeparatedString( Math.abs(totAmt) );
+      line.totAmtInt = totAmt;
       line.name   = func.phoneStrToDash(name);
       
       return line;
