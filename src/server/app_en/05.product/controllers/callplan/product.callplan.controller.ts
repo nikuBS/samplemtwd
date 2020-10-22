@@ -47,7 +47,7 @@ export default class CallPlan2 extends TwViewController {
         const prodNm = prodData.prodEngNm;
         if ( jsonResult.code === API_CODE.CODE_00 ) {
           console.log('^^^^^^^^^^^^^');
-          console.log(jsonContentsResult['result']['contents']);
+          console.log(jsonResult['result']['summary']);
           console.log('^^^^^^^^^^^^^');
       } else {
         if (FormatHelper.isEmpty(result.result)) {
@@ -72,8 +72,28 @@ export default class CallPlan2 extends TwViewController {
           }
         }
         prodData.basFeeInfo = ProductHelper.convProductBasfeeInfo(prodData.basFeeEngInfo);
-   
-          res.render('callplan/en.product.callplan.html', {svcInfo, pageInfo, prodData, contentsData});
+
+        const groupName = {value: '5GX Plan' };
+        if ( prod === 'NA00006405' || prod === 'NA00006404' || prod === 'NA00006403' || prod === 'NA00006402' || prod === 'NA00006817') {
+          groupName.value = '5GX Plan';
+        }
+        else if ( prod === 'NA00006538' || prod === 'NA00006537' || prod === 'NA00006536' || prod === 'NA00006535' || prod === 'NA00006534') {
+          groupName.value = 'T Plan';
+        }
+        else if ( prod === 'NA00006157' || prod === 'NA00006156' || prod === 'NA00006155') {
+          groupName.value = '0 Plan';
+        }
+        else if ( prod === 'NA00005629' || prod === 'NA00005628' || prod === 'NA00005627') {
+          groupName.value = 'Ting On Weekends';
+        }
+        else if ( prod === 'NA00006797' || prod === 'NA00006796' || prod === 'NA00006795' || prod === 'NA00006794' || prod === 'NA00006793') {
+          groupName.value = 'T Plan Senior';
+        }
+        else if ( prod === 'NA00006864' || prod === 'NA00006862') {
+          groupName.value = '5G Tab';
+        }
+
+        res.render('callplan/en.product.callplan.html', {svcInfo, pageInfo, prodData, contentsData, groupName});
         
     });
      }
