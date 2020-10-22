@@ -1,4 +1,4 @@
-export enum REDIS_KEY { 
+export enum REDIS_KEY {
   URL_META = 'UrlMetaNode:',
   MASKING_METHOD = 'MaskAuthMethods',
   APP_VERSION = 'AppVersion:appLoad',
@@ -36,7 +36,8 @@ export enum REDIS_KEY {
   ROAMING_POPULAR_NATIONS = 'RoamingPopularNation:RoamingPopularNationList',
   ROAMING_NATIONS_BY_CONTINENT = 'RoamingContnPsbNation',
   WIDGET_BLOCK = 'str.widget_block',
-  COUPON_INFINITY_PRODUCTS = 'bool.datainfiniti.yn'
+  COUPON_INFINITY_PRODUCTS = 'bool.datainfiniti.yn',
+  DATA_RECHARGE_PRODUCTS = 'data.recharge.prodId'
 }
 
 export enum REDIS_TOS_KEY {

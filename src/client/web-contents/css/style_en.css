@@ -362,6 +362,14 @@
 
 .link-caption-type li button .txt, .link-caption-type li a .txt { font-size: 0.88rem; }
 
+.pg-member .logo-t { display: inline-block; width: 3.94rem; height: 4.38rem; background: url("/img/en/logo-t.png") 0 0 no-repeat; background-size: 100% auto; }
+
+.pg-member .radiobox.type01:before, .pg-member .shop-info .shop-txt .radiobox.type02:before, .shop-info .shop-txt .pg-member .radiobox.type02:before, .pg-member .shop-info .shop-txt .radiobox.type03:before, .shop-info .shop-txt .pg-member .radiobox.type03:before { content: ""; display: inline-block; width: 1.5rem; height: 1.5rem; background: url("/img/en/ico-radio-style05.png") no-repeat 0 0; background-size: 1.5rem; vertical-align: middle; }
+
+.pg-member .radiobox.type01.checked:before, .pg-member .shop-info .shop-txt .radiobox.checked.type02:before, .shop-info .shop-txt .pg-member .radiobox.checked.type02:before, .pg-member .shop-info .shop-txt .radiobox.checked.type03:before, .shop-info .shop-txt .pg-member .radiobox.checked.type03:before { background-image: url("/img/en/ico-radio-style05.png"); background-position: 0 -1.5rem; }
+
+.popup-page .popup-closeBtn { display: block; position: fixed; top: 0.88rem; right: 0.75rem; width: 1.5rem; height: 1.5rem; background: url("/img/en/icon_48px_titlebar_exit.svg") no-repeat 0 0; background-size: 100% 100%; z-index: 30; line-height: 0; -webkit-transform: translateZ(0); transform: translateZ(0); -webkit-transform: rotate(0deg); -ms-transform: rotate(0deg); transform: rotate(0deg); }
+
 /*영문만 추가*/
 .link-area { width: 100%; position: relative; padding: 1.56rem 0.94rem 0 0.94rem; }
 
@@ -408,6 +416,8 @@
 .fs-info.footnote02 { padding-left: 0.88rem; }
 
 .fs-info.footnote02::before { content: ''; display: inline-block; position: absolute; left: 0; top: 0.25rem; width: 0.63rem; height: 0.5rem; background: url("/img/en/ico-require02.png") 0 0 no-repeat; background-size: 100% 100%; }
+
+.fs-info > .bt-link { position: relative; display: inline-block; font-size: 0.75rem; color: #178bce; font-weight: 400; vertical-align: baseline; text-decoration: underline; padding-top: 0.31rem; }
 
 .charge-line { position: relative; display: block; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; padding: 1.25rem 0; text-align: left; font-size: 0; line-height: 1; color: #000000; }
 
@@ -705,6 +715,12 @@
 
 .container.logout .complete-error-tx .tx2 > strong { font-weight: 500; }
 
+.info-tit { font-size: 0.81rem; color: #666; padding-bottom: 0.63rem; display: inline-block; }
+
+.inputbox .input.size12 input[type=number]::-webkit-input-placeholder { font-size: 12px; }
+
+.pg-member .error-txt { text-align: left; }
+
 /* Tool Bar */
 #gnb .g-wrap { padding: 0 1.56rem; }
 
@@ -733,25 +749,25 @@
 .icon-gnb-next-p { display: inline-block; width: 2.75rem; height: 2.5rem; background: url("/img/en/icon_gnb_next_p.svg") no-repeat 0 0; background-size: 100% 100%; }
 
 /* Logout */
-.popup-page.sign-page .container-wrap .container.logout, .popup-page.sign-page .container-wrap .container.warning { top: 44%; }
+.popup-page.sign-page .container-wrap .container.logout, .popup-page.sign-page .container-wrap .container.warning, .popup-page.sign-page .container-wrap .container.login { top: 44%; }
 
-.container.logout .complete-title > img, .container.warning .complete-title > img { width: 3.75rem; height: 3.75rem; margin-bottom: 3rem; }
+.container.logout .complete-title > img, .container.warning .complete-title > img, .container.login .complete-title > img { width: 3.75rem; height: 3.75rem; margin-bottom: 3rem; }
 
-.container.logout .complete-title > span, .container.warning .complete-title > span { padding-top: 0; }
+.container.logout .complete-title > span, .container.warning .complete-title > span, .container.login .complete-title > span { padding-top: 0; }
 
-.container.logout .complete-title > span > strong, .container.warning .complete-title > span > strong { font-size: 2rem; font-weight: 700; }
+.container.logout .complete-title > span > strong, .container.warning .complete-title > span > strong, .container.login .complete-title > span > strong { font-size: 2rem; font-weight: 700; }
 
-.container.logout .complete-title > span:not(.mid-txt), .container.warning .complete-title > span:not(.mid-txt) { margin-bottom: 1.13rem; }
+.container.logout .complete-title > span:not(.mid-txt), .container.warning .complete-title > span:not(.mid-txt), .container.login .complete-title > span:not(.mid-txt) { margin-bottom: 1.13rem; }
 
-.container.logout .complete-title > span.mid-txt, .container.warning .complete-title > span.mid-txt { font-size: 1.38rem; font-weight: 500; line-height: 1.4em; }
+.container.logout .complete-title > span.mid-txt, .container.warning .complete-title > span.mid-txt, .container.login .complete-title > span.mid-txt { font-size: 1.38rem; font-weight: 500; line-height: 1.4em; }
 
-.container.logout .complete-error-tx, .container.warning .complete-error-tx { padding-top: 1.13rem; }
+.container.logout .complete-error-tx, .container.warning .complete-error-tx, .container.login .complete-error-tx { padding-top: 1.13rem; }
 
-.container.logout .complete-error-tx .tx2, .container.warning .complete-error-tx .tx2 { display: inline-block; width: 100%; }
+.container.logout .complete-error-tx .tx2, .container.warning .complete-error-tx .tx2, .container.login .complete-error-tx .tx2 { display: inline-block; width: 100%; }
 
-.container.logout .complete-error-tx .tx2 .block, .container.warning .complete-error-tx .tx2 .block { display: block; margin: 0.63rem auto 0; }
+.container.logout .complete-error-tx .tx2 .block, .container.warning .complete-error-tx .tx2 .block, .container.login .complete-error-tx .tx2 .block { display: block; margin: 0.63rem auto 0; }
 
-.container.logout .complete-error-tx .tx2 + .tx2, .container.warning .complete-error-tx .tx2 + .tx2 { margin-top: 0.88rem; }
+.container.logout .complete-error-tx .tx2 + .tx2, .container.warning .complete-error-tx .tx2 + .tx2, .container.login .complete-error-tx .tx2 + .tx2 { margin-top: 0.88rem; }
 
 /* 이용안내(Support) */
 .support-video > p { font-size: 0.88rem; font-weight: 300; color: #000; }
@@ -1060,5 +1076,141 @@
 .result-none { background-image: url(/img/en/ico_notice_point_gray.png); }
 
 /* //201008 [OP002-10791] 추가 : MIRI 납부금액*/
+/* 201021 이용약관 추가 */
+.terms_area { position: relative; }
+
+.terms_area .hidden { position: absolute !important; width: 1px; height: 1px; margin: -1px; clip: rect(0, 0, 0, 0); overflow: hidden; color: transparent; }
+
+.terms_area .h5 { margin-top: .3125rem; }
+
+.terms_area .h10 { margin-top: .625rem; }
+
+.terms_area .h15 { margin-top: .9375rem; }
+
+.terms_area .h20 { margin-top: 1.25rem; }
+
+.terms_area .terms_tit { padding: 2.5rem 0 0; font-size: 1.125rem; }
+
+.terms_area .terms_tit:first-child { padding-top: 0; }
+
+.terms_area .terms_stit { padding: 1.25rem 0 .625rem; font-size: .875rem; }
+
+.terms_area .terms_oList > li { margin-left: 1.125rem; text-indent: -1.125rem; }
+
+.terms_area .terms_oList li + li { margin-top: .625rem; }
+
+.terms_area .terms_oList li li + li { margin-top: .4375rem; }
+
+.terms_area .terms_oList li p { margin-top: .4375rem; text-indent: 0; }
+
+.terms_area .terms_oList ol { margin-top: .625rem; }
+
+.terms_area .terms_oList ul { margin-top: .625rem; padding: 0 0 0 1.313rem; }
+
+.terms_area .terms_oList ul ol { padding: 0 0 0 1.313rem; }
+
+.terms_area .terms_oList > li > ol > li { position: relative; margin-left: 1.125rem; text-indent: 0; list-style-type: decimal; }
+
+.terms_area .terms_oList > li > ol > li > ol > li { margin-left: 1.313rem; text-indent: -1.313rem; }
+
+.terms_area .terms_oList > li table td, .terms_area .terms_oList > li table th { text-indent: 0; }
+
+.terms_area p + .terms_oList { margin-top: .625rem; }
+
+.terms_area .terms_txt strong { display: block; padding-bottom: .3125rem; font-weight: 400; }
+
+.terms_area .terms_txt .terms_oList { margin-top: .3125rem; }
+
+.terms_area .terms_txt .terms_oList li + li { margin-top: .3125rem; }
+
+.terms_area .terms_txt .terms_oList ol { margin-top: .3125rem; }
+
+.terms_area .terms_stit2 { display: block; margin-top: .625rem; }
+
+.terms_area .terms_tit2 { padding: 0 0 1rem; font-size: 1rem; font-weight: 700; }
+
+.terms_area .terms_txt { font-size: 1rem; font-weight: 700; }
+
+.terms_area table { width: 100%; margin-top: .625rem; border: 0; }
+
+.terms_area table * { word-break: break-all; }
+
+.terms_area table th { padding: .8125rem .3125rem; border: 1px solid #e1e1e1; background: #f5f5f5; color: #666; font-size: .8125rem; text-align: center; }
+
+.terms_area table td { padding: .8125rem .3125rem; border: 1px solid #e1e1e1; background: #fff; font-size: .8125rem; text-align: center; }
+
+.terms_area table td.left, .terms_area table th.left { text-align: left; }
+
+.terms_area a.bt-link-tx.underline, .terms_area button.bt-link-tx.underline { display: inline; padding: 0 !important; margin: 0; }
+
+.terms_area .txtInfo { position: relative; padding-left: 1rem; font-size: .8125rem; }
+
+.terms_area .txtInfo:before { content: '◎'; position: absolute; top: 0; left: 0; }
+
+.terms_area .terms-graybox { margin: 10px 0; padding: 15px 20px; background: #eee; font-size: .8125rem; }
+
+.terms-pc { display: none !important; }
+
+.termsInfoWrap { margin: -1.25rem -1rem 0; }
+
+.termsInfoWrap .termsInfo { overflow: hidden; display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; position: relative; padding: 0 1rem; }
+
+.termsInfoWrap .termsInfo li { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; position: relative; width: 50%; padding: .8125rem 0 .8125rem .63rem; border-bottom: 1px solid #e5e5e5; -webkit-box-sizing: border-box; box-sizing: border-box; font-size: .875rem; line-height: 1.0625rem; }
+
+.termsInfoWrap .termsInfo li:before { content: ''; position: absolute; top: 50%; left: 0; width: .19rem; height: .19rem; margin-top: -.095rem; background: #464646; border-radius: 50%; }
+
+.termsInfoWrap .termsInfo li a { display: block; }
+
+.termsInfoWrap .termsInfo + .btn-more { margin-top: -1px; }
+
+.termsInfoWrap .termsInfo + .btn-more.idpt-mobile { display: block !important; }
+
+.termsInfoWrap .termsInfo li.hide { position: absolute; top: 0; left: -100%; visibility: hidden; }
+
+.termsInfoWrap .termsInfo.expand li { position: relative; top: auto; left: auto; visibility: visible; }
+
+.termsScroll > div { padding: 1.375rem 0; border-top: 1px solid #e4e4e4; }
+
+.termsScroll > div:first-child { border-top: 0 none; }
+
+.termsScroll > div h3 { display: block; margin-bottom: 1rem; font-size: 1.125rem; }
+
+.termsScroll .sTit1 { display: block; margin-bottom: .75rem; font-weight: 700; font-size: .8125rem; line-height: 1.1875rem; color: #666; }
+
+.termsScroll .sTxt1 { display: block; font-size: .8125rem; line-height: 1.1875rem; color: #666; }
+
+.termsScroll .sTxt1 strong { padding-right: .25rem; }
+
+.termsScroll .sTxt1 img { max-width: 100%; }
+
+.termsScroll .terms-txt { font-size: .8125rem; line-height: 1.1875rem; color: #666; }
+
+.termsScroll .txtInfo, .termsScroll .txtInfo:before { color: #666; }
+
+.termsScroll .listType1 > li { position: relative; padding-left: .63rem; font-size: .8125rem; color: #666; }
+
+.termsScroll .listType1 > li:before { content: ''; position: absolute; top: .44rem; left: 0; width: .19rem; height: .06rem; background: #666; }
+
+.termsScroll .listType1 > li + li { margin-top: .75rem; }
+
+.termsScroll .listType2 > li { position: relative; padding-left: .63rem; color: #666; }
+
+.termsScroll .listType2 > li:before { content: ''; position: absolute; top: .38rem; left: 0; width: .19rem; height: .19rem; border-radius: 50%; background: #666; }
+
+.termsScroll .listType2 > li + li { margin-top: .75rem; }
+
+.termsScroll dl { border-top: 1px solid #e4e4e4; border-bottom: 1px solid #e4e4e4; font-size: .8125rem; color: #666; }
+
+.termsScroll dl dt { padding: .625rem 0; border-bottom: 1px solid #e4e4e4; }
+
+.termsScroll dl dd { padding: .625rem 0; }
+
+.termsScroll dl dd + dd { padding-top: 0; }
+
+.termsScroll * + .sTit1, .termsScroll .sTxt1 + .sTxt1, .termsScroll [class^=listType] + .sTxt1, .termsScroll [class^=tableType] + .sTxt1 { margin-top: 1.1875rem; }
+
+.termsScroll .listType1 [class^=listType], .termsScroll .sTit1 + [class^=listType], .termsScroll .txtInfo + [class^=listType] { margin-top: .75rem; }
+
+.termsScroll * + .txtInfo { margin-top: .625rem; }
 
 /*# sourceMappingURL=maps/style_en.css.map */

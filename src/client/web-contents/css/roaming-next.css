@@ -1343,6 +1343,7 @@ body.rn #roamingAddons .items .item .name {
   letter-spacing: -0.43px;
   color: #000;
   margin-bottom: 8px;
+  margin-right: 64px;
 }
 body.rn #roamingAddons .items .item .name .comment {
   display: inline-block;

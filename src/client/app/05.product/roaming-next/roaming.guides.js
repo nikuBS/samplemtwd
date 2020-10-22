@@ -1,13 +1,21 @@
 /**
  * @file roaming.guides.js
  * @desc T로밍 > T로밍안내 서브 페이지들 공용 클래스
+ *       이용안내 페이지들에서 반복하여 사용되는 JS 함수들이 모여있다.
+ *
+ * @author 황장호
+ * @since 2020-09-25
  */
 
 Tw.RoamingGuides = function (rootEl, pageInfo) {
   this.$container = rootEl;
+  // 현재 선택된 앵커탭
   this.selectedAnchor = null;
+  // 스크롤 모니터링 여부
   this.scrollMonitor = true;
+  // 상단 앱바 높이 (Immutable)
   this.appbarHeight = 50;
+  // Dialog 표시 직전 scrollTop
   this.baseLastScrollTop = 0;
   this.pageInfo = pageInfo;
   this.baseDiv = '#roamingGuide';
@@ -20,19 +28,27 @@ Tw.RoamingGuides = function (rootEl, pageInfo) {
 };
 
 Tw.RoamingGuides.prototype = {
+  /**
+   * 이벤트 핸들러
+   */
   bindEvents: function () {
     var proxy = this;
+    // Q&A 핸들러
     this.$container.find('.qna .q').on('click', $.proxy(this._handleQna, this));
     this.$container.find('.links .link').on('click', $.proxy(this._handleLink, this));
+    // baro 통화, 이용 가능 여부 확인
     this.$container.find('#available .button').on('click', $.proxy(this.queryBaroAvailable, this));
+    // baro 통화, 다이얼로그 처리
     $(document).on('click', '#baroTariffs .appbar .close', function() {
       $('#baroTariffs').css('display', 'none');
       proxy.showBaseDiv();
     });
+    // baro 통화, 탭 전환
     $(document).on('click', '#baroTariffs .tabs .tab', function(e) {
       var tabId = e.currentTarget.getAttribute('data-tabid');
       proxy.selectBaroTab(tabId);
     });
+    // T로밍센터 탭 전환
     $(document).on('click', '.center .tabs .tab', function(e) {
       var tabId = e.currentTarget.getAttribute('data-tabid');
       $('.tabs .tab').removeClass('active');
@@ -40,7 +56,9 @@ Tw.RoamingGuides.prototype = {
       $('.tab-body').hide();
       $('#' + tabId).show();
     });
+    // 툴팁 핸들러
     this.$container.find('.tips .tip').on('click', $.proxy(this._handleTip, this));
+    // T로밍센터, 터미널 선택 ActionSheet
     this.$container.find('#terminal').on('click', $.proxy(this.openTerminalActionSheet, this));
   },
   _handleQna: function(e) {
@@ -49,6 +67,7 @@ Tw.RoamingGuides.prototype = {
   _handleLink: function(e) {
     var command = e.currentTarget.getAttribute('data-command');
     if (command === 'showCountries') {
+      // 이용안내 > 자동로밍 (M000532) '이용 가능 국가 보기' 팝업 연결
       Tw.Popup.open({
         hbs: 'RM_16_02_01_01',
         title: Tw.POPUP_TITLE.ROAMING_SERVICE_COUNTRY
@@ -56,16 +75,30 @@ Tw.RoamingGuides.prototype = {
       return false;
     }
     if (command === 'showTariffs') {
+      // 이용안내 > baro 통화 (M001879) '혜택 대상 로밍 요금제 확인하기' 링크
       this.showBaroTariffs();
     }
   },
   _handleTip: function(e) {
+    // 이용안내 툴팁들의 경우 'data-tip' attribute에 tipId가 보관되어 있다.
     var tipId = e.currentTarget.getAttribute('data-tip');
     this.showTip(e, tipId);
   },
+  /**
+   * 툴팁 노출 함수
+   *
+   * @param e EventObject
+   * @param tipId 툴팁 ID
+   */
   showTip: function (e, tipId) {
     this.tooltipService._openTip(this.tooltips[tipId], e.currentTarget);
   },
+  /**
+   * 서버가 리턴한 툴팁 JSON 받아, this.tooltips Object 에 보관.
+   * 이렇게 보관된 데이터는 showTip 함수에서 추후 참조될 목적으로 보관한다.
+   *
+   * @param items [{mtwdTtipId, ttipTitNm, ttipCtt, ttipPreTypCd},]
+   */
   collectTooltips: function (items) {
     for (var i = 0; i < items.length; i++) {
       var item = items[i];
@@ -76,6 +109,10 @@ Tw.RoamingGuides.prototype = {
       };
     }
   },
+  /**
+   * 현재 페이지의 MenuId로 이 페이지에 포함된 모든 툴팁을 가져와
+   * collectTooltips 함수로 보낸다.
+   */
   prepareTooltips: function () {
     var menuId = this.pageInfo.menuId;
     var proxy = this;
@@ -83,7 +120,13 @@ Tw.RoamingGuides.prototype = {
       if (r.result && r.result.tooltip) proxy.collectTooltips(r.result.tooltip);
     });
   },
+  /**
+   * 특정 앵커탭이 선택된 상태로 전환.
+   *
+   * @param target 선택할 앵커탭의 selector.
+   */
   showAnchor: function (target) {
+    // 지정된 target active 클래스 추가
     $('.anchors a').removeClass('active');
     $(target).addClass('active');
 
@@ -103,35 +146,45 @@ Tw.RoamingGuides.prototype = {
       proxy.scrollMonitor = true;
     });
   },
+  /**
+   * 해당 페이지에 앵커탭이 있는지 검사하고, 앵커탭 존재시 각 앵커의 좌표와 높이를 계산하고
+   * 스크롤를 검사하여 앵커탭을 자동으로 전환하도록 이벤트 핸들러를 설치.
+   */
   prepareAnchorTabs: function () {
+    // offset().top: 앵커탭 y 좌표
     var thresholdY = $('.anchors').offset().top - this.appbarHeight;
     var topMargin = this.appbarHeight + $('.anchors').height();
 
     var proxy = this;
     var as = $('.anchors a');
+    var anchorHandler = function(e) {
+      // var meta = $(e.target).data('meta');
+      proxy.showAnchor(e.target);
+      e.preventDefault();
+    };
     for (var i = 0; i < as.length; i++) {
       var a = as[i];
       var anchorId = $(a).attr('href');
       var id = anchorId.substring(1);
       var anchor = document.getElementById(id);
+      // 각 앵커탭의 body 좌표값들을 저장
       $(a).data('offset', {top: anchor.offsetTop, height: anchor.offsetHeight, topMargin: topMargin});
       $(a).data('meta', {id: id});
-      $(a).on('click', function (e) {
-        // var meta = $(e.target).data('meta');
-        proxy.showAnchor(e.target);
-        e.preventDefault();
-      });
+      $(a).on('click', anchorHandler);
     }
 
     var anchorsHeight = $('.anchors').height();
     var anchors = $('.anchors');
     var shadow = $('.anchorsShadow');
+    // 스크롤 검사
     $(window).scroll(function () {
       if (!proxy.scrollMonitor) {
+        // 스크롤 애니메이션 처리 중에는 검사하지 않음
         return;
       }
       var scrollTop = $(window).scrollTop();
       if (scrollTop > thresholdY) {
+        // 스크롤이 thresholdY 보다 크면, 앵커탭이 fixed 로 노출되는 케이스
         anchors.css({position: 'fixed', left: 0, right: 0, top: proxy.appbarHeight, height: anchorsHeight, transform: 'inherit'});
         shadow.css({display: 'block'});
 
@@ -144,6 +197,7 @@ Tw.RoamingGuides.prototype = {
             selectedA = a;
           }
         }
+        // 반복적으로 호출되면 성능에 문제가 될 수 있으므로, 이미 선택된 앵커인 경우 실행 금지
         if (selectedA && proxy.selectedAnchor !== selectedA.href) {
           proxy.selectedAnchor = selectedA.href;
           $('.anchors a').removeClass('active');
@@ -152,20 +206,29 @@ Tw.RoamingGuides.prototype = {
       } else {
         var position = $('#contents').css('position');
         if (position === 'fixed') {
-          // 팝업이 떠있는지 확인
+          // 공통팝업이 떠 있는지 확인.
+          // 공통팝업이 떠 있는 경우, transform 속성이 켜 있다.
           var tf = $('#contents').css('transform');
+          // translate 값을 가져와서,
           var match = /([\-0-9]+)\)/.exec(tf);
           if (match) {
             var y = parseInt(match[1], 10);
+            // translatedY 만큼 거꾸로 밀어서, 앵커탭이 깨지지 않게 보정
             anchors.css({transform: 'translate(0px, ' + Math.abs(y) + 'px)', top: -10});
           }
         } else {
+          // scrollTop < thresholdY 케이스에는, 앵커탭 position static 으로 정상 상태이다.
           anchors.css({position: 'static', transform: 'inherit'});
+          // anchorShadow 는 fixed 상태일 때 요소들이 밀리지 않게 하는 것이므로 static 일 때는 노출할 필요가 없다.
           shadow.css({display: 'none'});
         }
       }
     });
   },
+  /**
+   * Q&A 접고 피는 등 (아코디언) 이벤트 발생 시 앵커탭의 좌표가 전부 변하므로,
+   * 이 경우 앵커탭 요소의 좌표를 모두 재계산 한다.
+   */
   updateAnchorsOffset: function () {
     var as = $('.anchors a');
     for (var i = 0; i < as.length; i++) {
@@ -179,6 +242,11 @@ Tw.RoamingGuides.prototype = {
       $(a).data('offset', data);
     }
   },
+  /**
+   * Q&A 아코디언 구현. 앵커탭과 함께 엮여 있으므로 퍼블리싱 공통요소를 사용할 수 없다.
+   *
+   * @param source 이벤트를 발생시킨 source element (q)
+   */
   toggleQna: function (source) {
     var proxy = this;
     var cdn = Tw.Environment.cdn;
@@ -191,6 +259,10 @@ Tw.RoamingGuides.prototype = {
       proxy.updateAnchorsOffset();
     });
   },
+  /**
+   * baro 통화 이용 가능 여부 조회 response handler.
+   * @param resp /svcInfo 응답 JSON
+   */
   processSvcInfo: function (resp) {
     if (resp && resp.code === '00') {
       $('.available-result').css('display', 'none');
@@ -200,9 +272,16 @@ Tw.RoamingGuides.prototype = {
       new Tw.TidLandingComponent().goLogin('/product/roaming/info/barocall');
     }
   },
+  /**
+   * baro 통화 이용 가능 여부 조회
+   */
   queryBaroAvailable: function() {
     Tw.Api.request(Tw.NODE_CMD.GET_SVC_INFO, {}).done($.proxy(this.processSvcInfo, this));
   },
+  /**
+   * baro 통화 이용 가능 여부 조회 response handler.
+   * @param resp BFF_10_0182 응답 JSON
+   */
   processBaroAvailable: function (resp) {
     var result = resp.result;
     if ((result.baroPlanYn === 'Y' && result.baroDeviceYn === 'Y' && result.baroVasYn === 'Y') ||
@@ -214,29 +293,46 @@ Tw.RoamingGuides.prototype = {
       $('.available-result.case3').css('display', 'block');
     }
   },
+  /**
+   * 기존 화면의 Division 숨김.
+   * 숨기기 직전에 scrollTop 을 저장한다.
+   */
   hideBaseDiv: function() {
     this.baseLastScrollTop = $(document).scrollTop();
     $(this.baseDiv).css('display', 'none');
   },
+  /**
+   * 숨겼던 기존 화면 Division 복원.
+   * 저장해뒀던 scrollTop 을 복원한다.
+   */
   showBaseDiv: function() {
     $(this.baseDiv).css('display', 'block');
     $(document).scrollTop(this.baseLastScrollTop);
   },
+  /**
+   * baro 통화 탭 전환
+   * @returns {boolean} preventDefaults 목적의 bool
+   */
   showBaroTariffs: function() {
     this.hideBaseDiv();
     this.selectBaroTab('yes');
     $('#baroTariffs').css('display', 'block');
     return false;
   },
+  /**
+   * 이용안내 > baro 통화 > 'baro 통화 혜택 대상 로밍 요금제' 다이얼로그 내 탭
+   * @param tabId
+   */
   selectBaroTab: function(tabId) {
     $('.tab').removeClass('active');
     $('.tab.' + tabId).addClass('active');
 
     // yes, no
     var list = '';
+    var p = {};
     var template = Handlebars.compile($('#tpl-tariff-list').html());
     if (tabId === 'yes') {
-      var p = {
+      p = {
         items: [
           {name: 'T로밍 함께쓰기 3GB', description: '기본 제공 데이터를 다 쓰면 데이터 사용 제한'},
           {name: 'T로밍 함께쓰기 6GB', description: '기본 제공 데이터를 다 쓰면 데이터 사용 제한'},
@@ -276,7 +372,7 @@ Tw.RoamingGuides.prototype = {
       list += template(p);
     }
     if (tabId === 'no') {
-      var p = {
+      p = {
         items: [
           {name: '내집처럼 T로밍 중국'}
         ]
@@ -285,6 +381,10 @@ Tw.RoamingGuides.prototype = {
     }
     $('#baroTariffs .tariffs').html(list);
   },
+  /**
+   * T로밍센터 > 터미널 변경하는 ActionSheet 선택시 핸들러
+   * @param e EventObject
+   */
   openTerminalActionSheet: function(e) {
     var proxy = this;
     Tw.Popup.open({
@@ -318,6 +418,10 @@ Tw.RoamingGuides.prototype = {
       $layer.one('click', '#fe-back', Tw.Popup.close);
     }, null, null, $(e.currentTarget));
   },
+  /**
+   * T로밍센터, 액션시트 통해 터미널 변경 시 화면 처리
+   * @param e EventObject
+   */
   onSelectCenter: function(e) {
     var centerId = Number($(e.target).parents('label').attr('id'));
     var centerName = $(e.target).parents('label').find('.txt').text();

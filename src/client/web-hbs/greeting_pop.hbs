@@ -1,0 +1,45 @@
+{{#if param.[0].typeA}}
+    <!--  A 타입 -->
+    <div class="tod-ui-chabot2" data-scroll="true">
+        <div class="tod-ui-chabot2-inner">
+            <!-- button -->
+            <!-- title -->
+            <div class="title-wrap">
+                    <button class="btn-tab">
+                        <span class="tod-chatbot-img profile2 on"></span>
+                        <span class="chatbot-tit"><strong>T월드 챗봇</strong>이 도와드릴까요?</span>
+                    </button>
+            </div>
+
+            <!-- list -->
+            <div class="list-wrap nowrap">
+                <div class="list">            
+                {{#each param.[0].greetingKeywordInfos}}
+                    <button class="item bpcpItem {{keyword}}">
+                        <span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{text}}</span>
+                    </button>
+                {{/each}}
+                </div>
+            </div>
+
+            <!-- 상담하기 -->
+            <div class="link-wrap">
+                <a href="" title="새창 열림" class="link-chatbot-go bpcpItem initial">챗봇으로 빠른 상담하기</a>
+            </div>
+        </div>
+    </div>
+{{/if}}
+
+{{#if param.[0].typeB}}
+    <!--  B 타입 -->
+    <div class="tod-combot-wrap">
+        <div class="tod-combot-btn">
+			<span class="beta"><span class="blind">beta</span></span>
+			<button type="button" class="item bpcpItem {{param.[0].greetingKeywordInfos.[0].keyword}}">
+                <span class="chat-icon profile1"></span>
+                <span class="chat-txt"><span class="inner">{{param.[0].greetingKeywordInfos.[0].text}}</span></span>
+            </button>
+            <button type="button" class="btn-close"><img src="{{param.[0].cdn}}/img/common/chatbot/button_close_bg_gray.svg" alt="닫기"></button>
+        </div>
+    </div>
+{{/if}}

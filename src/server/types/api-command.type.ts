@@ -362,6 +362,11 @@ export const API_CMD = {
   BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0227: { path: '/core-balance/:version/roaming/mode/baro-traffic-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
+  // [OP002-11230] 
+  BFF_05_0231: { path: '/core-modification/:version/mls/recommend-multiItem', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0232: { path: '/core-modification/:version/mls/conversion-impression', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0233: { path: '/core-modification/:version/mls/conversion-click', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/:version/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

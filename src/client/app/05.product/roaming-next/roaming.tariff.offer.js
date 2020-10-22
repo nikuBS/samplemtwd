@@ -1,6 +1,8 @@
 /**
  * @file roaming.tariff.offer.js
  * @desc T로밍 > 요금제 추천
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingTariffOffer = function (rootEl) {
@@ -14,12 +16,14 @@ Tw.RoamingTariffOffer = function (rootEl) {
   this.$menu = new Tw.RoamingMenu(rootEl);
   this.$menu.install();
 
+  // 서비스별 이용 가능 국가 모듈
   this.$countries = new Tw.RoamingCountriesTariff(rootEl);
   this.bindEvents();
 };
 
 Tw.RoamingTariffOffer.prototype = {
   bindEvents: function () {
+    // 서비스별 이용 가능 국가 다이얼로그 핸들러
     this.$container.on('click', '.others a', $.proxy(this._handleShowCountries, this));
   },
   afterInit: function() {
@@ -27,7 +31,7 @@ Tw.RoamingTariffOffer.prototype = {
   },
   /**
    * @desc 추천된 요금제 우하단의 '더보기 +' 버튼 눌렀을 때 표시할 국가 팝업 노출
-   * @param e Event
+   * @param e EventObject
    */
   _handleShowCountries: function(e) {
     var target = e.currentTarget;

@@ -1,5 +1,8 @@
 /**
- * 로밍 지난여행이력
+ * 로밍 지난여행이력 (M002258)
+ *
+ * @author 황장호
+ * @since 2020-09-01
  */
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';

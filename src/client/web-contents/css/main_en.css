@@ -175,13 +175,13 @@
 
 .main-error-box .btn-area { display: block; text-align: center; margin-top: 1.88rem; }
 
-.main-error-box .btn-area .btn-round1 { display: inline-block; max-width: 10rem; }
+.main-error-box .btn-area .btn-round1 { display: inline-block; max-width: 12rem; }
 
 .main-error-box .btn-area .btn-round1 + .btn-round1 { margin-left: 0.5rem; }
 
 .main-error-box.welcome { padding: 4.38rem 0 6.25rem 0; }
 
-@media all and (max-width: 360px) { .main-error-box .btn-area .btn-round1 { display: inline-block; max-width: 8.5rem; }
+@media all and (max-width: 360px) { .main-error-box .btn-area .btn-round1 { display: inline-block; max-width: 12rem; }
 	.member-info-box .call-message .message { padding-left: 0.63rem; } }
 
 .main-chart-box { position: relative; z-index: 2; padding: 1.56rem 0 0 0; text-align: center; }
@@ -1834,7 +1834,7 @@ body.apphome .main-membershop-box { z-index: 3; }
 
 .complete-wrap .tx-contents .bt-slice.item-one > li { text-align: center; }
 
-.complete-wrap .tx-contents .bt-slice.item-one > li a, .complete-wrap .tx-contents .bt-slice.item-one > li button { display: inline-block; width: auto; min-width: 10rem; padding: 0 1.5rem; line-height: 2.5rem; }
+.complete-wrap .tx-contents .bt-slice.item-one > li a, .complete-wrap .tx-contents .bt-slice.item-one > li button { display: inline-block; width: auto; min-width: 12rem; padding: 0 1.5rem; line-height: 2.5rem; }
 
 .cont-box.b-line-none { border-bottom: 0; }
 
@@ -2207,7 +2207,7 @@ body.apphome .main-membershop-box { z-index: 3; }
 /* 190617 추가 [OP002-1531] 간편로그인 */
 .main-error-box.welcome.tod-login-box .tx { margin-top: 12px; }
 
-.main-error-box.welcome.tod-login-box .btn-area .btn-round1.btn-style1 { max-width: 10rem; }
+.main-error-box.welcome.tod-login-box .btn-area .btn-round1.btn-style1 { width: auto; min-width: 10rem; max-width: 100%; }
 
 .main-error-box.welcome.tod-login-box .tod-simple-login-btn { text-align: center; }
 
@@ -2454,7 +2454,7 @@ body.apphome .container-wrap { background: -webkit-gradient(linear, left top, le
 
 .main-error-box.welcome.tod-login-box .desc2 { position: static; margin-top: 1.63rem; }
 
-.main-error-box.welcome.tod-login-box.line-none .btn-area .btn-style1 { width: 10rem; font-size: 0.94rem; }
+.main-error-box.welcome.tod-login-box.line-none .btn-area .btn-style1 { width: auto; font-size: 0.94rem; padding: 0 1.06rem; }
 
 .main-error-box.welcome.tod-login-box.line-none .desc2 { font-size: 0.88rem; line-height: 1.6em; }
 
@@ -2635,6 +2635,6 @@ body.apphome .error-code { padding-bottom: 1.88rem; }
 
 .suggest-bt { margin-top: 1.25rem; }
 
-.suggest-bt .bt-slice > li > button.btn-style1 { font-size: 1rem; font-weight: 400; width: 10rem !important; }
+.suggest-bt .bt-slice > li > button.btn-style1 { font-size: 1rem; font-weight: 400; width: 10rem; }
 
 /*# sourceMappingURL=maps/main_en.css.map */

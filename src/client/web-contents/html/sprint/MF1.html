@@ -404,34 +404,38 @@
 				</div>
 
 			    <!-- list -->
-				<!-- 
-					ico-chatbot ai :  ai, 
-					ico-chatbot pay : 납부, 소액결제 금액 알려줘
-					ico-chatbot data: 데이터 선물, 
-					ico-chatbot coupon: 리필쿠폰,
-					ico-chatbot unpaid-charge : 미납 요금,
-					ico-chatbot live-charge :  실시간 요금,
-					ico-chatbot thismonth-charge :  이번달 요금
-				 -->
+                <!--  Keyword를 발화어 클래스로 사용한다. 
+                    ico-chatbot initial // 공통 
+                    ico-chatbot pay_mthd : 요금납부 방법
+                    ico-chatbot  micro_pay :  소액결제 금액 
+                    ico-chatbot pay_bill : 이번 달 요금 
+                    ico-chatbot data_gift : 데이터선물
+                    ico-chatbot refill_coupon : 리필쿠폰
+                    ico-chatbot unpaid_amt : 미납 요금
+                    ico-chatbot hotbill :  실시간 요금
+                    ico-chatbot membership_benefit :  멤버십 혜택
+                    ico-chatbot cancel_pause : 휴대폰 일시정지
+                    ico-chatbot hotdata : 실시간 잔여량
+                -->
                  <div class="list-wrap nowrap">
 					<div class="list">
                         <button class="item">
-							<span class="ico-chatbot unpaid-charge"><em class="tod-blind">미납 요금</em></span>
-							<span class="txt">미납요금 얼마야?</span>
+                            <span class="ico-chatbot unpaid_amt"><em class="tod-blind">미납 요금</em></span>
+                            <span class="txt">미납요금 얼마야?</span>
                         </button>
                         <button class="item">
-							<span class="ico-chatbot live-charge"><em class="tod-blind">실시간 요금</em></span>
-							<span class="txt">실시간 이용요금 알려줘</span>
-						</button>
-                        <button class="item">
-							<span class="ico-chatbot thismonth-charge"><em class="tod-blind">이번달 요금</em></span>
-							<span class="txt">이번달 요금 얼마 나왔어?</span>
+                            <span class="ico-chatbot hotbill"><em class="tod-blind">실시간 요금</em></span>
+                            <span class="txt">실시간 이용요금 알려줘</span>
                         </button>
                         <button class="item">
-							<span class="ico-chatbot pay"><em class="tod-blind">납부</em></span>
-							<span class="txt">소액결제 금액 알려줘</span>
-						</button>
-					</div>
+                            <span class="ico-chatbot pay_bill"><em class="tod-blind">이번달 요금</em></span>
+                            <span class="txt">이번달 요금 얼마 나왔어?</span>
+                        </button>
+                        <button class="item">
+                            <span class="ico-chatbot micro_pay"><em class="tod-blind">소액결제</em></span>
+                            <span class="txt">소액결제 금액 알려줘</span>
+                        </button>
+                    </div>
 				</div>
 
 				<!-- 상담하기 -->

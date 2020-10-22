@@ -1,19 +1,24 @@
 /**
  * @file roaming.guide.index.js
  * @desc T로밍 > T로밍안내 인덱스
+ * @author 황장호
+ * @since 2020-09-30
  */
 
 Tw.RoamingGuideIndex = function (rootEl, pageInfo) {
   this.$container = rootEl;
   this.baseDiv = '#roamingGuide';
   this.pageInfo = pageInfo;
+  // 기존 화면의 window.scrollTop
   this.baseLastScrollTop = 0;
 
-  // pointsStart, pointsDiff 는 '상황 별 포인트' 횡스크롤 swipe event를 감지하기 위한 변수이다.
+  // pointsStart, pointsDiff 는 '상황 별 포인트' 횡스크롤 swipe event 를 감지하기 위한 변수이다.
   this.pointsStart = {};
   this.pointsDiff = {};
 
+  // 상황별 포인트 Q&A 분류/질문 데이터
   this.checklistByState = this.dataByState();
+  // 카테고리별 포인트 Q&A 분류/질문 데이터
   this.checklistByTag = this.dataByTag();
 
   new Tw.RoamingMenu(rootEl).install();
@@ -22,48 +27,100 @@ Tw.RoamingGuideIndex = function (rootEl, pageInfo) {
 };
 
 Tw.RoamingGuideIndex.prototype = {
+  /**
+   * 이벤트 핸들러
+   */
   bindEvents: function () {
+    // '로밍 이용 가이드' 핸들러
     this.$container.find('.subs .sub.documents').on('click', $.proxy(this.showDocuments, this));
+    // 상황별 포인트 클릭 핸들러
     this.$container.find('.point .item').on('click', $.proxy(this._handleChecklist, this));
+    // 상황별 포인트 횡스크롤 slick dots 핸들러
     this.$container.find('.slick-dots li button').on('click', $.proxy(this._handleSlickDots, this));
+    // 내부 다이얼로그 close 핸들러
     $(document).on('click', '.guide-dialog .appbar .close', $.proxy(this._handleClose, this));
+    // '출국 전 필수 확인' 다이얼로그, 상황별 데이터 토글 핸들러
     $(document).on('click', '.card ul li.toggleItem', $.proxy(this._handleToggleItem, this));
+    // '출국 전 필수 확인' 다이얼로그, 상황별 데이터, 내용부분 토글을 방지하기 위한 핸들러
     $(document).on('click', '.card li.toggleItem .description', $.proxy(this._handleStop, this));
+    // '출국 전 필수 확인' 다이얼로그, 탭 전환 핸들러
     $(document).on('click', '#checklistDialog .tabs .tab', $.proxy(this._handleSelectTab, this));
+    // 카테고리 선택 핸들러
     $(document).on('click', 'span.tag', $.proxy(this._handleTag, this));
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그 띄우는 핸들러.
+   * showChecklist 함수를 호출한다.
+   *
+   * @param e EventObject
+   * @private
+   */
   _handleChecklist: function(e) {
     var itemId = e.currentTarget.getAttribute('data-checklist');
     this.showChecklist(itemId);
   },
+  /**
+   * 상황별 포인트 횡스크롤 slick dots 핸들러
+   * @param e EventObject
+   * @private
+   */
   _handleSlickDots: function(e) {
     var stateId = e.currentTarget.getAttribute('text');
     this.showPoints(e.currentTarget, 'state' + stateId);
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그 내 내용 toggle 핸들러
+   * @param e EventObject
+   * @private
+   */
   _handleToggleItem: function(e) {
     this.toggleCheckItem(e.currentTarget);
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그 내 내용 toggle 방지 핸들러
+   * @param e EventObject
+   * @private
+   */
   _handleStop: function(e) {
     e.stopPropagation();
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그 내 탭 선택 핸들러
+   * @param e EventObject
+   * @private
+   */
   _handleSelectTab: function(e) {
     var tabId = e.currentTarget.getAttribute('data-tabid');
     this.selectTab(tabId);
   },
+  /**
+   * 필수 점검 리스트 '카테고리' 핸들러
+   * @param e EventObject
+   * @private
+   */
   _handleTag: function(e) {
     var tagId = e.currentTarget.getAttribute('data-id');
     var command = e.currentTarget.getAttribute('data-command');
 
+    // '출국 전 필수 확인' 다이얼로그 내 카테고리 command
     if (command === 'filterTag') {
       this.filterTag('tag-' + tagId);
     }
+    // 필수 점검 리스트 섹션 내 카테고리 command
     if (command === 'showChecklist') {
       this.showChecklist('tag-' + tagId);
     }
   },
+  /**
+   * 다이얼로그 close 핸들러
+   * @private
+   */
   _handleClose: function() {
     this.closeDialog();
   },
+  /**
+   * 화면 내 필요한 데이터들을 모두 채운다.
+   */
   setup: function() {
     var subsWidth = $('.card .subs').width();
     var itemWidth = $('.card .sub').width();
@@ -111,6 +168,7 @@ Tw.RoamingGuideIndex.prototype = {
       }
       new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, banners, 'T', 'M', function(e) {
         var dataIndex = e.currentTarget.getAttribute('data-idx');
+        // iOS 에서 slick-dots 미노출 되는 경우가 있어 이를 방지하기 위한 코드
         if (dataIndex === '0') {
           $('.main-slide-banner .slick-dots').css('overflow', 'inherit');
         }
@@ -164,8 +222,10 @@ Tw.RoamingGuideIndex.prototype = {
       }
     }
   },
+  /**
+   * 상황별 포인트 좌측 스와이프 감지 시
+   */
   nextPoint: function () {
-    // 상황별 포인트 swipe left 감지
     var current = $('#slickPoints li.slick-active');
     var next = current.attr('data-next');
     if (next) {
@@ -173,8 +233,10 @@ Tw.RoamingGuideIndex.prototype = {
       this.showPoints(source, 'state' + next);
     }
   },
+  /**
+   * 상황별 포인트 우측 스와이프 감지 시
+   */
   prevPoint: function () {
-    // 상황별 포인트 swipe right 감지
     var current = $('#slickPoints li.slick-active');
     var prev = current.attr('data-prev');
     if (prev) {
@@ -182,6 +244,12 @@ Tw.RoamingGuideIndex.prototype = {
       this.showPoints(source, 'state' + prev);
     }
   },
+  /**
+   * 상황별 포인트, 현재 선택된 카드를 중앙에 표시하고 slick dots 싱크.
+   *
+   * @param e EventObject
+   * @param checklistId 체크리스트 아이디로, state1, state2, state3 이렇게 3개가 있다.
+   */
   showPoints: function (e, checklistId) {
     // 상황별 포인트, 횡스크롤로 현재 선택된 포인트 카드 표시
     $('#slickPoints li').removeClass('slick-active');
@@ -192,29 +260,41 @@ Tw.RoamingGuideIndex.prototype = {
       scrollLeft: offsetLeft - 20
     }, 180, null);
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그를 열고, itemId 포커스를 잡고 내용을 표시한다.
+   * @param itemId 체크리스트 아이디 (state-01-01 형식)
+   */
   showChecklist: function (itemId) {
     // '출국 전 필수확인' 다이얼로그 표시 후, `itemId` 포커스
     this.hideBaseDiv();
 
+    // 상황별 포인트인 케이스
     if (itemId.match('state-.*')) {
       this.selectTab('state');
       this.toggleCheckItemImpl(itemId);
 
+      // 다이얼로그 오픈 직후, 해당 itemId가 바로 보이도록 offset.top 계산하여 스크롤
       setTimeout(function () {
         var itemOffset = $('#checklistDialog #' + itemId).offset();
         $('#checklistDialog').animate({
           scrollTop: itemOffset.top - 60
         }, 200, function () {
+          // 스크롤 직후, 2초동안 highlight 한다. (스펙에는 없었지만 사용성 개선 차원에서 넣음)
           $('#checklistDialog #' + itemId + ' .title').effect('highlight', {}, 2000);
         });
       }, 200);
     }
+    // 카테고리별 케이스
     if (itemId.match('tag-.*')) {
       this.selectTab('tag');
       this.filterTag(itemId);
     }
     $('#checklistDialog').css('display', 'block');
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그 내 특정 카테고리(태그) 핸들러
+   * @param tagId 카테고리(태그) 아이디
+   */
   filterTag: function (tagId) {
     var activeId = $('.tags .active').attr('id');
     if (activeId === 'chip-' + tagId) {
@@ -227,10 +307,17 @@ Tw.RoamingGuideIndex.prototype = {
       $('.checklist #' + tagId).css('display', 'block');
     }
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그 내 설명 toggle
+   * @param source currentTarget
+   */
   toggleCheckItem: function (source) {
-    // 설명 아코디언 toggle
     this.toggleCheckItemImpl(source.id);
   },
+  /**
+   * toggleCheckItem 과 동일하나 파라미터로 itemId를 바로 받는 구현체.
+   * @param itemId 항목 아이디 (e.g. tag-02-01, state-01-01)
+   */
   toggleCheckItemImpl: function (itemId) {
     var content = $('.guide-contents .' + itemId).html();
     var descId = '#' + itemId + ' .description';
@@ -243,6 +330,10 @@ Tw.RoamingGuideIndex.prototype = {
       $('#' + itemId + ' .arrow').attr('src', imagePrefix + (hidden ? 'expand' : 'collapse') + '.svg');
     });
   },
+  /**
+   * '출국 전 필수 확인' 다이얼로그 내 탭 전환 핸들러
+   * @param tabId
+   */
   selectTab: function (tabId) {
     $('.tab').removeClass('active');
     $('.tab.' + tabId).addClass('active');
@@ -253,6 +344,7 @@ Tw.RoamingGuideIndex.prototype = {
     var i;
     var checklist;
     if (tabId === 'state') {
+      // 상황별 데이터를 생성
       template = Handlebars.compile($('#tpl-state-panel').html());
       for (i=0; i<this.checklistByState.length; i++) {
         checklist = this.checklistByState[i];
@@ -260,6 +352,7 @@ Tw.RoamingGuideIndex.prototype = {
       }
     }
     if (tabId === 'tag') {
+      // 카테고리별 데이터 생성
       template = Handlebars.compile($('#tpl-tags').html());
       list += template({items: this.checklistByTag});
 
@@ -271,18 +364,30 @@ Tw.RoamingGuideIndex.prototype = {
     }
     $('#checklistDialog .checklist').html(list);
   },
+  /**
+   * '로밍 이용 가이드' 다이얼로그 표시
+   */
   showDocuments: function () {
     this.hideBaseDiv();
     $('#documentsDialog').css('display', 'block');
   },
+  /**
+   * 기존 화면 숨김
+   */
   hideBaseDiv: function() {
     this.baseLastScrollTop = $(document).scrollTop();
     $(this.baseDiv).css('display', 'none');
   },
+  /**
+   * 기존 화면 복원
+   */
   showBaseDiv: function() {
     $(this.baseDiv).css('display', 'block');
     $(document).scrollTop(this.baseLastScrollTop);
   },
+  /**
+   * 다이얼로그 close
+   */
   closeDialog: function() {
     $('#documentsDialog').css('display', 'none');
 

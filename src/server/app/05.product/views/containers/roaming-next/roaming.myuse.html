@@ -36,7 +36,8 @@
             <div class="row">
                 <% if (tariff.startDate.isAfter(now)) { %>
                 <span class="label colorPoint fontsize15">이용 예정</span>
-                <span class="value colorPoint bold">D-<%= Math.floor(tariff.startDate.diff(now) / 86400000) %></span>
+                <%# D-DAY 는 시/분/초 데이터를 제거한 뒤 계산 %>
+                <span class="value colorPoint bold">D-<%= Math.floor(tariff.startDate.hours(0).minutes(0).seconds(0).diff(nowDate) / 86400000) %></span>
                 <% } else if (tariff.endDate && tariff.endDate.isBefore(now)) { %>
                 <span class="label fontsize15">이용 완료</span>
                 <span class="value bold"><%= Math.floor(now.diff(tariff.endDate) / 86400000) %>일 지남</span>
@@ -61,6 +62,7 @@
                 <% } %>
             </div>
 
+            <%# 요금제별로 설정 버튼이 있는 경우 %>
             <% for (var button of tariff.btnList) { %>
             <div class="row">
                 <a href="<%= button.btnLinkUrl %>?prod_id=<%= tariff.linkProdId %>">
@@ -141,6 +143,7 @@
                 <span class="label colorGray">가입일</span>
                 <span class="value colorGray"><%= addon.scrbDt %></span>
             </div>
+            <%# 부가서비스는 btnList 가 간혹 있다 %>
             <% for (var button of addon.btnList) { %>
                 <div class="row">
                     <a href="<%= button.btnLinkUrl %>?prod_id=<%= addon.prodId %>">
@@ -154,7 +157,7 @@
         <% } %>
     </div>
     </div>
-    <div class="mh32"></div>
+    <div class="h36"></div>
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
 </div>
 <%- include('../../components/roaming-next/roaming.menu.html', {svcInfo}); %>

@@ -32,8 +32,8 @@
 <script type="text/javascript">
   $(document).on('ready', function () {
     new Tw.RoamingAddons($('#roamingAddons'),
-      <%- JSON.stringify(addonData.products) %>,
-      <%- JSON.stringify(addonUsing) %>
+      JSON.parse('<%- JSON.stringify(addonData.products) %>'),
+      JSON.parse('<%- JSON.stringify(addonUsing) %>')
     );
   });
 </script>

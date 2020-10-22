@@ -1,0 +1,100 @@
+<%#
+* @file en.myt-fare.bill.hotbill.billgroup
+* @author P165332
+* @since  2020.09
+%>
+<script id="tmplBillGroup" type="text/x-handlebars-template">
+{{#each lines}}
+<div class="cont-box nogaps">    
+    <div class="widget">
+        <div class="widget-box accordion">
+            <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                <div class="acco-style charge-list">
+                    <ul class="acco-list pt0">
+                        {{#each this.group}}
+                        <li class="acco-box">
+                            <div class="acco-tit">
+                                {{#if @first}}
+                                    {{#if ../../isTypeRep}}
+                                    <dl class="num-list">
+                                        <dt><img src="<%=CDN%>/img/en/sel-ico-mobile-black.png" alt="cell phone" class="phone-num-ico">{{../name}}</dt>
+                                        <dd>{{../totAmt}}</dd>
+                                    </dl>
+                                    {{/if}}
+                                {{/if}}
+
+                                <button role="button" aria-pressed="true">
+                                    <span class="phone-num">{{@key}}</span>
+                                    {{#if this.discount }}
+                                    <span class="fee red" >{{this.total}}</span>
+                                    {{else}}
+                                    <span class="fee" >{{this.total}}</span>
+                                    {{/if}}
+                                </button>
+                            </div>
+                            
+                            <div class="acco-cont information-usebox">
+                                <div class="bg-gray">
+                                    
+                                    {{#each this}}
+                                        {{#isBill @key}}
+                                        <div class="comm-charges">
+                                            <dl class="bill-cont">
+                                                {{#if noVAT}}
+                                                <dt>{{@key}} <i class="icon-fnote" role="note" aria-labelledby="aria-footnote-01"><span class="blind">Refer to Footnotes</span></i></dt>
+                                                {{else}}
+                                                {{#if is3rdParty}}
+                                                <dt>{{@key}}</dt>
+                                                {{else}}
+                                                <dt>{{@key}}</dt>
+                                                {{/if}}
+                                                {{/if}}
+
+                                                {{#if discount }}
+                                                <dd class="red" >{{this.total}}</dd>
+                                                {{else}}
+                                                <dd>{{this.total}}</dd>
+                                                {{/if}}
+                                            </dl>
+                                            {{#if items.length}}
+                                            {{#items}}
+                                            <dl class="bill-cont row">
+                                                {{#if discount}}
+                                                <dt role="note" aria-labelledby="aria-footnote-01">{{name}}<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></dt>
+                                                {{else}}
+                                                    {{#if noVAT}}
+                                                    <dt role="note" aria-labelledby="aria-footnote-01">{{name}}<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></dt>
+                                                    {{else}}
+                                                    <dt>{{name}}</dt>
+                                                    {{/if}}
+                                                {{/if}}
+
+                                                <dd>{{amount}}</dd>
+                                            </dl>
+                                            {{/items}}
+                                            {{/if}}
+
+                                        </div>
+                                        {{/isBill}}
+                                    {{/each}}
+
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="cont-sp type1" aria-hidden="true"/>
+{{/each}}
+
+<!-- .cont-box -->
+<div class="cont-box noborder">
+    <p class="fs-info footnote01" id="aria-footnote-01">The target display items are exclude VAT</p>
+    <p class="fs-info footnote02" id="aria-footnote-02">Display item is a third-party fees charged on our behalf</p>
+    </div>
+<!--// .cont-box -->
+</script>
