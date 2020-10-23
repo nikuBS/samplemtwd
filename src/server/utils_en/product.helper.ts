@@ -135,6 +135,22 @@ class ProductHelper {
    */
   static convProductBasfeeInfo(basFeeInfo): any {
     const isNaNbasFeeInfo = isNaN(Number(basFeeInfo));
+    let replacedResult: any = null;
+
+    PRODUCT_REPLACED_RULE.PAYMENT.forEach(ruleInfo => {
+      if (ruleInfo.TARGET.indexOf(basFeeInfo) !== -1) {
+        replacedResult = {
+          isNaN: true,
+          value: ruleInfo.RESULT
+        };
+
+        return false;
+      }
+    });
+
+    if (!FormatHelper.isEmpty(replacedResult)) {
+      return replacedResult;
+    }
 
     return {
       isNaN: isNaNbasFeeInfo,
@@ -149,6 +165,22 @@ class ProductHelper {
    */
   static convProductBasOfrDataQtyCtt(basOfrDataQtyCtt, dataUnit = DATA_UNIT.MB): any {
     const isNaNbasOfrDataQtyCtt = isNaN(Number(basOfrDataQtyCtt));
+    let replacedResult: any = null;
+
+    PRODUCT_REPLACED_RULE.DATA.forEach(ruleInfo => {
+      if (ruleInfo.TARGET.indexOf(basOfrDataQtyCtt) !== -1) {
+        replacedResult = {
+          isNaN: true,
+          value: ruleInfo.RESULT
+        };
+
+        return false;
+      }
+    });
+
+    if (!FormatHelper.isEmpty(replacedResult)) {
+      return replacedResult;
+    }
 
     return {
       isNaN: isNaNbasOfrDataQtyCtt,
@@ -213,7 +245,7 @@ class ProductHelper {
 
     return {
       isNaN: isNaNbasOfrCharCntCtt,
-      value: basOfrCharCntCtt,
+      value: basOfrCharCntCtt + ' ',
       unit: UNIT['310']
     };
   }

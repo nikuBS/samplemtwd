@@ -4,7 +4,7 @@ import {Request, Response, NextFunction} from 'express';
 class CustomerVideoGuide extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('../../views/containers/useguide/en.customer.useguide.videoguide.html', {svcInfo,pageInfo});
+    res.render('../../views/containers/useguide/en.customer.useguide.videoguide.html', {svcInfo, pageInfo});
   }
 }
 

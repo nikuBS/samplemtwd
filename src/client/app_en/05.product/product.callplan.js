@@ -89,7 +89,6 @@ Tw.ProductCallplan = function(rootEl) {
 
     _onOpenPopup: function ($layer) {
         Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-       // $('.popup-closeBtn').on('click',$.proxy(this._closePopup,this));
     },
 
     _closePopup: function(){

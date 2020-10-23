@@ -16,7 +16,6 @@ Tw.CustomerAgentsearch = function (rootEl) {
   this._popupService = Tw.Popup;
   this._uri = window.location.search.split('=')[1];
   this._historyService = new Tw.HistoryService();
-  console.log("@@@@@"+this._uri);
   this._init();
   
 };
@@ -27,14 +26,10 @@ Tw.CustomerAgentsearch.prototype = {
     this.$eventSelector = this.$container.find('.bt-select');
     this._bindEvents();
   },
-  /**
-   * @function
-   * @desc 이벤트 바인딩
-   */
+  
   _bindEvents: function () {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
     this.$container.on('click', '.fe-tel', $.proxy(this.goTel, this));
-    
   },
 
   _openEventPop: function (e) {
