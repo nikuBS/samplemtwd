@@ -36,9 +36,9 @@ export default class CallPlan extends TwViewController {
       const changing = this.getProductCode();
         const prodNm = prodData.prodEngNm;
         if ( jsonResult.code === API_CODE.CODE_00 ) {
-          console.log('^^^^^^^^^^^^^');
-          console.log(jsonResult['result']['summary']);
-          console.log('^^^^^^^^^^^^^');
+          // console.log('^^^^^^^^^^^^^');
+          // console.log(jsonResult['result']['summary']);
+          // console.log('^^^^^^^^^^^^^');
       } else {
         if (FormatHelper.isEmpty(result.result)) {
           return result.result;
@@ -62,8 +62,10 @@ export default class CallPlan extends TwViewController {
         prodData.basFeeInfo = ProductHelper.convProductBasfeeInfo(prodData.basFeeEngInfo);
 
         const groupName = {value: '5GX Plan' };
-        if ( prod === 'NA00006405' || prod === 'NA00006404' || prod === 'NA00006403' || prod === 'NA00006402' || prod === 'NA00006817') {
+        if ( prod === 'NA00006405' || prod === 'NA00006404' || prod === 'NA00006403' || prod === 'NA00006402' ) {
           groupName.value = '5GX Plan';
+        } else if ( prod === 'NA00006817' ) {
+          groupName.value = '5G 0 Teen';
         } else if ( prod === 'NA00006539' || prod === 'NA00006538' || prod === 'NA00006537' 
         || prod === 'NA00006536' || prod === 'NA00006535' || prod === 'NA00006534') {
           groupName.value = 'T Plan';
