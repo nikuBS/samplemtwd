@@ -60,16 +60,11 @@
                                                 {{#if items.length}}
                                                 {{#items}}
                                                 <dl class="bill-cont row">
-                                                    {{#if discount}}
+                                                    {{#if noVAT}}
                                                     <dt role="note" aria-labelledby="aria-footnote-01">{{name}}<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></dt>
                                                     {{else}}
-                                                        {{#if noVAT}}
-                                                        <dt role="note" aria-labelledby="aria-footnote-01">{{name}}<i class="icon-fnote"><span class="blind">Refer to Footnotes</span></i></dt>
-                                                        {{else}}
-                                                        <dt>{{name}}</dt>
-                                                        {{/if}}
+                                                    <dt>{{name}}</dt>
                                                     {{/if}}
-
                                                     <dd>{{amount}}</dd>
                                                 </dl>
                                                 {{/items}}

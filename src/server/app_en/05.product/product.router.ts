@@ -8,11 +8,9 @@ import CallplanMiri from './controllers/callplan/product.callplan.miri.controlle
 class ProductRouter extends TwRouter {
   constructor() {
     super();
-
     this.controllers.push({ url: '/mobileplan', controller: MobilePlan });
     this.controllers.push({ url: '/callplan', controller: Callplan });
     this.controllers.push({ url: '/callplan/miri', controller: CallplanMiri });
-
   }
 }
 
