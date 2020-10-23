@@ -16,7 +16,7 @@ import ProductHelper from '../../../../utils/product.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 
-export default class CallPlan2 extends TwViewController {
+export default class CallPlan extends TwViewController {
     constructor() {
       super();
     }
@@ -43,7 +43,7 @@ export default class CallPlan2 extends TwViewController {
         const prodData = jsonResult['result']['summary'];
         const contentsData = jsonContentsResult['result']['contents'];
       const changed = /{{cdn}}/gi;
-      const changing = 'https://cdnm-stg.tworld.co.kr';
+      const changing = this.getProductCode();
         const prodNm = prodData.prodEngNm;
         if ( jsonResult.code === API_CODE.CODE_00 ) {
           console.log('^^^^^^^^^^^^^');
@@ -64,8 +64,8 @@ export default class CallPlan2 extends TwViewController {
           
         if ( contentsData!=null ) {
           for(let i = 0; i < contentsData.length; i++) {
-            contentsData[i].popupDtlCtt = contentsData[i].popupDtlCtt.replace(changed, changing);
-            contentsData[i].dtlCtt = contentsData[i].dtlCtt.replace(changed, changing);
+            contentsData[i].popupDtlCtt = contentsData[i].popupDtlCtt.replace(changed, changing.changingCDN);
+            contentsData[i].dtlCtt = contentsData[i].dtlCtt.replace(changed, changing.changingCDN);
             if (contentsData[i].dtlCtt === '<p>&nbsp;</p>') {
               contentsData[i].dtlCtt = '';
             }
@@ -94,8 +94,20 @@ export default class CallPlan2 extends TwViewController {
           groupName.value = '5G Tab';
         }
 
-        res.render('callplan/en.product.callplan.html', {svcInfo, pageInfo, prodData, contentsData, groupName});
+        res.render('callplan/en.product.callplan.html', {svcInfo, pageInfo, prodData, contentsData, groupName, changing});
         
     });
      }
+
+     private getProductCode() {
+      const env = String(process.env.NODE_ENV);
+      if( env === 'prd' ) { // 운영
+        return {'changingCDN' : 'https://cdnm.tworld.co.kr'};
+      } else if( env === 'stg' ) { // 스테이징
+        return {'changingCDN' : 'https://cdnm-stg.tworld.co.kr'};
+      } else { // local, dev
+        return {'changingCDN' : 'https://cdnm-stg.tworld.co.kr'}; // 원래는 cdnm-dev지만 테스트 위해 변경
+      }
+    }
+
 }
