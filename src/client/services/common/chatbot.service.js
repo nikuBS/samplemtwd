@@ -385,7 +385,8 @@ Tw.ChatbotService.prototype = {
                         .done($.proxy(function() {
                             var resp2 = arguments[0];   // BFF_05_0220
                             var resp3 = arguments[1];   // BFF_05_0231
-                            
+                           // 챗봇 발화어 노출 대상 단말 여부
+                           var isAllowedDevice = false;                           
                             Tw.Logger.info('[chatbot.service] [_init] 단말기 기술방식 (BFF_05_0220) : ', resp2);
                             Tw.Logger.info('[chatbot.service] [_init] 채널당 복수 실험연결 (BFF_05_0231) : ', resp3);
                             console.log('[chatbot.service] [_init] 단말기 기술방식 (BFF_05_0220) : ', resp2);
@@ -414,8 +415,7 @@ Tw.ChatbotService.prototype = {
                                 ) {
                                     Tw.Logger.info('[chatbot.service] [_init] 챗봇 접근 대상 (5G/LTE/3G 이고 태블릿이 아닌 경우) 인 경우', '');
 
-                                    // 챗봇 발화어 노출 대상 단말 여부
-                                    var isAllowedDevice = false;
+
 
                                     Tw.Logger.info('[chatbot.service] [_init] 접근 가능 단말 여부 체크', '');
 
@@ -448,7 +448,7 @@ Tw.ChatbotService.prototype = {
                                 }
 
                                 // MLS API 호출 성공시
-                                if (resp3.code===Tw.API_CODE.CODE_00) {
+                                if (resp3.code===Tw.API_CODE.CODE_00 && isAllowedDevice) {
                                     Tw.Logger.info('[chatbot.service] [_init] MLS API 호출 성공', '');
                                     console.log('[chatbot.service] [_init] MLS API 호출 성공', '');
                                     
