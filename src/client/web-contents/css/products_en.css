@@ -562,7 +562,7 @@
 
 .prCont .other-benefits > p.title { font-size: 1.06rem; color: #000; margin-bottom: 0.75rem; }
 
-.prCont .other-benefits > img { position: absolute; display: block; content: ''; top: 50%; right: 1.25rem; width: 7.25rem; height: 7.25rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); }
+.prCont .other-benefits > img { position: absolute; display: block; top: 50%; right: 1.25rem; width: 7.25rem; height: 7.25rem; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%); }
 
 .prCont .check { padding: 0 1.25rem; background-color: #fff; border-bottom: 1px solid #e6e7e8; }
 
