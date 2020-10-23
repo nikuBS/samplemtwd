@@ -45,10 +45,6 @@ export default class MobilePlan extends TwViewController {
         return this.error.render(res, { ...error, pageInfo, svcInfo });
       }     
 
-      for(let t in productData.grpProdList) {
-        console.log('#######>> ' + t , productData.grpProdList[t]);
-      };
-
       res.render('mobileplan/en.product.mobileplan.html', { svcInfo, pageInfo, productData, 'isSubscribed': svcInfo || false});
     });
   }

@@ -182,8 +182,8 @@ class MainHome extends TwViewController {
   private getProductCode() {
     const env = String(process.env.NODE_ENV);
     if( env === 'prd' ) { // 운영
-      return {'CODE_5GX_PLAN' : 'T000000079', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
-    } else if( env === 'stg' ) { // 스테이징
+      return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
+    } else if ( env === 'stg' ) { // 스테이징
       return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
     } else { // local, dev
       return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
