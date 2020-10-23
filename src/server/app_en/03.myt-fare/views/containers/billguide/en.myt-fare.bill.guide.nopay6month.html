@@ -33,31 +33,28 @@
             <div class="container" data-id="submain-container">
                 <%- include('../../../../common_en/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "", multiple : "" } }); _%>
 
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <div class="container warning pb50">
-                        <h3 class="complete-title pt40">
-                            <img src="<%=CDN%>/img/en/ico_notice_point_gray.png" alt="" class="mb24"/>
-                            <span class="mid-txt">No Billing History<br/>Within the past 6 months</span><!-- 200917 영문번역 -->
-                        </h3>
-                    </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box nogaps">
+                    <dl class="call-plan">
+                        <dt>Subscribed Plan</dt><!-- 201006 text 수정 -->
+                        <dd><%=svcInfo.prodNmEn%></dd>
+                    </dl>
                 </div>
-                <!--// .cont-box -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                   <ul class="full-link-list">
-                        <li>
-                            <button>
-                                <span class="inner">
-                                    <span class="tit" data-id="goHotBill" >Real-time monthly fees</span>
-                                </span>
-                            </button>
-                        </li>
-                    </ul>
+                <!-- 200922 영문번역 -->
+                <div class="cont-box nogaps-hoz"><!-- 200922 class 변경 -->
+                    <div class="no-charge">
+                        <img src="<%=CDN%>/img/en/ico_notice_point_gray.png" alt=""/>
+                        <span class="txt">
+                            No Billing History <br/>Within the past 6 months
+                        </span>
+                    </div>
                 </div>
+                <!-- //200922 영문번역 -->
                 <!--// .cont-box -->
             </div>
         </div>
