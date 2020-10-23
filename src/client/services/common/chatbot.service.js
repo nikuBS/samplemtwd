@@ -1500,7 +1500,7 @@ Tw.ChatbotService.prototype = {
             // BFF_05_0232 MLS CHATBOT 사용자의 채널 / 아이템 노출 이벤트
             _this._apiService.request(Tw.API_CMD.BFF_05_0232, {
                 channel_id: mlsChannelId,
-                process_id: mlsProCessId,
+                process_id: null,
                 item_id: param2
               }).done(
                 Tw.Logger.info('[chatbot.service] [_drawChatbotPop]  : BFF_05_0232', '')
