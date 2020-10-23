@@ -169,7 +169,7 @@ Tw.LineComponent.prototype = {
     if ( exposableResp.code === Tw.API_CODE.CODE_00 ) {
       totNonCnt = exposableResp.result.mCnt;
     }
-console.log("totNonCnt",totNonCnt)
+
     if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) {
       this._lineList = this._parseLineList(allSvcResp.result, childSvcResp.result);
       if ( totNonCnt > 1 ) {
