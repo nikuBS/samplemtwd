@@ -418,9 +418,9 @@ class MyTFareBillGuide extends TwViewController {
   public getSelClaimDtM(date: string): any {
     // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
     return this._commDataInfo.selClaimDtM =
-      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'MMMM' );
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'MMM.' );
   }
-
+  
   /**
    * 회선정보 목록 리턴
    * @param allSvc
