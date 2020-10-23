@@ -83,9 +83,9 @@
                                             <ul>
                                                 <% if(product.basOfrGbDataQtyEngCtt!='-'){ %>
                                                 <li>
-                                                    <span class="data"><i><span class="blind">data</span></i> <%if(product.basOfrGbDataQtyEngCtt!=null){ %>
-                                                    <%= product.basOfrGbDataQtyEngCtt %> <%if(product.basOfrGbDataQtyEngCtt!='Unlimited'){%>GB<%}}else{%>
-                                                    <%= product.basOfrMbDataQtyCtt %> MB <% } %>
+                                                    <span class="data"><i><span class="blind">data</span></i> <%if(product.basOfrGbDataQtyEngCtt!=null){%>
+                                                    <%=product.basOfrGbDataQtyEngCtt%><%if(product.basOfrGbDataQtyEngCtt!='Unlimited'){%>GB<%}}else{%>
+                                                    <%= product.basOfrMbDataQtyCtt %>MB <% } %>
                                                     </span>
                                                 </li>
                                                 <% }else{ %>

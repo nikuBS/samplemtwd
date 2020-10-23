@@ -35,11 +35,7 @@
                     <ul class="detailinfo <%if(prodData.smryHtmlEngCtt==''||prodData.smryHtmlEngCtt==null){%>pb00<%}%>">
                         <li>
                             <p class="gb"><i class="blind">data</i><%if(prodData.basOfrGbDataQtyEngCtt!=null){ %>
-                                <%- prodData.basOfrGbDataQtyEngCtt%> <% } else { %>
-                                <%- prodData.basOfrMbDataQtyCtt%>
-                                <% } %>
-                                
-                                <% if((prodData.basOfrGbDataQtyEngCtt!='Unlimited')&&(prodData.basOfrGbDataQtyEngCtt!=null)){ %>GB 
+                                <%-prodData.basOfrGbDataQtyEngCtt%><% } else { %><%-prodData.basOfrMbDataQtyCtt%><%}%><% if((prodData.basOfrGbDataQtyEngCtt!='Unlimited')&&(prodData.basOfrGbDataQtyEngCtt!=null)){ %>GB 
                                 <% }else if((prodData.basOfrGbDataQtyEngCtt!='Unlimited')&&(prodData.basOfrMbDataQtyCtt!=null)){ %>MB <% } %> Data</p>
                         </li>
                         <% if(prodData.basOfrVcallTmsEngCtt!='-'){ %>

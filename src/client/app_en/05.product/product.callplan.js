@@ -14,7 +14,7 @@ Tw.ProductCallplan = function(rootEl) {
     var prodGroup = $('#prodGroup').val();
     //헤더 요금제 이름 숨기기
     var bgColor = "rgb(0,0,0)"
-        if(prodGroup == '5GX Plan'){
+        if(prodGroup == '5GX Plan' || prodGroup == '5G 0 Teen'){
             bgColor = "rgb(205, 14, 44)";
         }
         else{

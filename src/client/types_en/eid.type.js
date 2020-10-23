@@ -112,11 +112,13 @@ Tw.EID_TYPES = {
      * @param {*} $element 
      */
     replaceHtmlEidCode: function($element) {
-        $element.find('[data-xt_eid^="M"]').each(function(){
-            if(Tw.EID_TYPES[$(this).data('xt_eid')][Tw.BrowserHelper.isApp()])
-                $(this).data('xt_eid',Tw.EID_TYPES[$(this).data('xt_eid')][Tw.BrowserHelper.isApp()]);
+        $element.find('[data-xt_eid^="M"]').each(function() {
+            var eid = $(this).data('xt_eid');
+            var type = Tw.BrowserHelper.isApp() ? 'APP' : 'WEB';
+            var code = Tw.EID_TYPES[eid];
+            if( code ) {
+                $(this).data('xt_eid', code[type]);
+            }
         })
-
     }
-    // data-xt_eid=""
 }

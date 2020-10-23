@@ -172,7 +172,8 @@ Tw.LineComponent.prototype = {
 
     if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) {
       this._lineList = this._parseLineList(allSvcResp.result, childSvcResp.result);
-      if ( totNonCnt > 1 ) {
+      
+      if ( allSvcResp.result.m.length > 1 ) {
         this._openListPopup(this._lineList, totNonCnt, $target);
       } else{
         this._historyService.goLoad('/en/common/member/line');
@@ -195,7 +196,7 @@ Tw.LineComponent.prototype = {
     }
      if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) { // 10.16 회선이 1개만 있더라도 액션시트가 출력될 수 있도록 변경 요청 (기획)
       this._lineList = this._parseLineList(allSvcResp.result, childSvcResp.result);
-      if ( this._index > 0 ) {
+      if ( allSvcResp.result.m.length > 1  ) {
         this._openListPopup(this._lineList, totNonCnt, $target);
       } 
     } else {
