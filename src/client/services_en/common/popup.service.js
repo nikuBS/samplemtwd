@@ -95,6 +95,8 @@ Tw.PopupService.prototype = {
    */
   _onOpenPopup: function (evt) {
     var $popups = $('.tw-popup');
+    Tw.EID_TYPES.replaceHtmlEidCode($popups); // 팝업이 열리는 순간 eid 값을 재 세팅한다.
+
     var $currentPopup = $($popups[$popups.length - 1]);
     Tw.Logger.info('[Popup Open]', this._prevHashList);
     this._bindEvent($currentPopup);

@@ -118,6 +118,7 @@ Tw.EID_TYPES = {
             var code = Tw.EID_TYPES[eid];
             if( code ) {
                 $(this).data('xt_eid', code[type]);
+                $(this).attr('data-xt_eid', code[type]);
             }
         })
     }
