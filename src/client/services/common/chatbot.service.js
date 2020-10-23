@@ -846,9 +846,8 @@ Tw.ChatbotService.prototype = {
                     }).done(
                         Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0233', '')
                     );
-
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
             }
+            _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
         });
 
         // 20/08/11 요건 삭제로 주석 처리 [S]
