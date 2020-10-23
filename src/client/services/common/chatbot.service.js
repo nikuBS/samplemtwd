@@ -179,15 +179,15 @@ Tw.ChatbotService = function() {
     ];
 
     // 챗봇 팝업 타입
-    this._typeA = true;
-    this._typeB = false;
+    this._typeA = false;
+    this._typeB = true;
 
     this._mlsGreetingImageType;         // Mls 에서 받아온 티월드그리팅이미지타입
     this._mlsGreetingTextType;          // Mls 에서 받아온 티월드그리팅텍스트타입
     this._mlsProcessId;                 // Mls 에서 받아온 precess_id (BFF_05_0232, BFF_05_0233에서 사용)
     this._mlsGreetingRangking = [];     // Mls 에서 받아온 티월드그리팅랭킹
     this._greetingKeywordInfos = [];    // 노출할 발화어 정보
-    this._defaultGreetingKeywords = ['hotbill', 'pay_bill', 'hotdata']; // 기본 발화어
+    this._defaultGreetingKeywords = ['pay_bill', 'hotbill', 'hotdata']; // 기본 발화어
     this._defaultMlsItems = 'hotbill|pay_bill|hotdata'; // 기본 발화어의 MLS Item_id
 
     // MLS API 호출시 사용할 ChannelId
@@ -315,6 +315,9 @@ Tw.ChatbotService.prototype = {
         var isAllowed = false;      // urlPath에 따라 챗봇 오픈여부 결정
         var isDefaultPage = false;  // 전체메뉴 > 챗봇 상담하기 를 통한 진입 여부
         if (isAllowedDevice) {
+            Tw.Logger.info('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
+            console.log('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
+
             if (this._chatbotPopDispPageUrls[urlPath] !== undefined) {    
                 // 노출 대상 화면인 경우
                 console.log('[chatbot.service] [_init] 노출 대상 화면인 경우', '');
@@ -463,6 +466,8 @@ Tw.ChatbotService.prototype = {
 
                                 // MLS API 호출 성공시
                                 //if (resp3.code===Tw.API_CODE.CODE_00 && isAllowedDevice) {
+                                Tw.Logger.info('[chatbot.service] [_init] MLS API 조회 후 resp3 : ', resp3.code);
+                                console.log('[chatbot.service] [_init] MLS API 조회 후 resp3 : ', resp3.code);
                                 if (resp3.code===Tw.API_CODE.CODE_00) {    
                                     Tw.Logger.info('[chatbot.service] [_init] MLS API 호출 성공', '');
                                     console.log('[chatbot.service] [_init] MLS API 호출 성공', '');
@@ -496,6 +501,18 @@ Tw.ChatbotService.prototype = {
                                         this._typeA = false;
                                         this._typeB = true;
                                     }
+                                    // 챗봇 서비스 차단 여부 체크
+                                    this._checkBlockChatbotService();
+                                }else{
+                                    // MLS API 0231 호출 후 오류난 경우(ex. 데이터가 없는 경우 등) , imageType = 'B', textType = 'A', 기본발화어
+                                    // imageType
+                                    this._mlsGreetingImageType = 'B';
+                                    // textType
+                                    this._mlsGreetingTextType = 'A';
+                                    // 발화어 배열
+                                    this._mlsGreetingRangking = this._defaultGreetingKeywords;
+                                    // processId (0232, 0233 호출하지 않도록 처리하기 위해 'N'으로)
+                                    this._mlsProcessId = 'N';
                                     // 챗봇 서비스 차단 여부 체크
                                     this._checkBlockChatbotService();
                                 }
@@ -821,15 +838,17 @@ Tw.ChatbotService.prototype = {
             }
 
             // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
-            _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
-                    channel_id: mlsChannelId,
-                    process_id: mlsProcessId,
-                    item_id: mlsGreetingImageType + '|' + mlsGreetingTextType + '|' + chatbotGubun
-                }).done(
-                    Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0233', '')
-                );
+            if ( mlsProcessId !== 'N'){
+                _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
+                        channel_id: mlsChannelId,
+                        process_id: mlsProcessId,
+                        item_id: mlsGreetingImageType + '|' + mlsGreetingTextType + '|' + chatbotGubun
+                    }).done(
+                        Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0233', '')
+                    );
 
-            _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
+                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
+            }
         });
 
         // 20/08/11 요건 삭제로 주석 처리 [S]
@@ -1488,7 +1507,7 @@ Tw.ChatbotService.prototype = {
      */
     _drawChatbotPop: function (param1, param2) {
         var mlsChannelId = this._mlsChannelId;
-        var mlsProCessId = this._mlsProcessId;
+        var mlsProcessId = this._mlsProcessId;
         
         var _this = this;
         var url = Tw.Environment.cdn + '/hbs/';
@@ -1523,13 +1542,15 @@ Tw.ChatbotService.prototype = {
             _this._toggleEmoticon();      
             new Tw.XtractorService($('body'));
             // BFF_05_0232 MLS CHATBOT 사용자의 채널 / 아이템 노출 이벤트
-            _this._apiService.request(Tw.API_CMD.BFF_05_0232, {
-                channel_id: mlsChannelId,
-                process_id: mlsProCessId,
-                item_id: param2
-              }).done(
-                Tw.Logger.info('[chatbot.service] [_drawChatbotPop]  : BFF_05_0232', '')
-              );
+            if ( mlsProcessId !== 'N' ){
+                _this._apiService.request(Tw.API_CMD.BFF_05_0232, {
+                    channel_id: mlsChannelId,
+                    process_id: mlsProcessId,
+                    item_id: param2
+                }).done(
+                    Tw.Logger.info('[chatbot.service] [_drawChatbotPop]  : BFF_05_0232', '')
+                );
+            }
 
             // 20/08/11 요건 삭제로 주석 처리 [S]
             // /*
