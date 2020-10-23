@@ -14,8 +14,9 @@ Tw.MyTJoinMyPlanAdd = function(params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._bpcpService = Tw.Bpcp;
+  this._historyService = new Tw.HistoryService(this.$container);
+  this._hashService = Tw.Hash;
   this._bpcpService.setData(this.$container, '/myt-join/additions');
-
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -23,15 +24,35 @@ Tw.MyTJoinMyPlanAdd = function(params) {
 
 Tw.MyTJoinMyPlanAdd.prototype = {
   /**
+   * @desc jquery element 저장
+   * @private
+   */
+  _cachedElement: function() { // jquery 객체 저장
+    this.$list = this.$container.find('ul.list-comp-lineinfo');
+    this.$empty = this.$container.find('.contents-empty');
+    this.$todSel = this.$container.find('.tod-sel-top-wrap').children('.link-cont');
+    this.$todSelAnchors = this.$todSel.children('a');
+    this.$todSelContents = this.$container.find('.tod-js-list-ctrl');
+  },
+
+  /**
    * @desc 초기화
    * @private
    */
   _init: function() {
-    this._totalCount = Number(this.$container.find('span.counts > em').text()); // 가입 부가서비스 총 갯수 저장
+    this._applyHash(location.hash);
+
+    // this._hashService.initHashNav($.proxy(this._onHashChange, this));
+
     this._getSvcInfo();
 
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
     /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+  },
+
+  _onHashChange: function(hash) {
+    // Tw.Logger.log('[Tw.MyTJoinMyPlanAdd] Hash Change', hash, location.hash);
+    this._applyHash(hash.base);
   },
 
   /**
@@ -39,20 +60,8 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _bindEvent: function() {
-    this.$all.on('click', $.proxy(this._handleShowAllAdditions, this));  // 전체 보기 버튼 클릭 시
-    this.$pay.on('click', $.proxy(this._handleShowPayAdditions, this));  // 유료만 보기 버튼 클릭 시
+    // this.$todSel.on('click', 'a', $.proxy(this._handleTodSelClick, this));  // 전체 보기 버튼 클릭 시
     this.$container.on('click', '.fe-btn-link',  $.proxy(this._handleClickLink, this));  // 부가서비스 버튼 클릭시
-  },
-
-  /**
-   * @desc jquery element 저장
-   * @private
-   */
-  _cachedElement: function() { // jquery 객체 저장
-    this.$list = this.$container.find('ul.list-comp-lineinfo');
-    this.$empty = this.$container.find('.contents-empty');
-    this.$all = this.$container.find('#fe-all-btn');
-    this.$pay = this.$container.find('#fe-pay-btn');
   },
 
   /**
@@ -76,52 +85,48 @@ Tw.MyTJoinMyPlanAdd.prototype = {
   },
 
   /**
-   * @desc 전체 보기 버튼 클릭 시
-   * @param {Event} e 클릭 이벤트 객체
+   * @desc 전체/옵션할인/유료/무료 버튼 클릭 시
+   * @param {Event} event 클릭 이벤트 객체
    * @private
    */
-  _handleShowAllAdditions: function() {
-    if (this._totalCount === 0 || this.$all.hasClass('on')) { // 가입 부가서비스의 총 갯수가 0 이거나, 이미 전체 보기 상태인 경우 return
-      return;
-    }
-
-    this.$all.attr('aria-selected', true);
-    this.$pay.attr('aria-selected', false);
-
-    if (this._totalCount > 0) { // 가입 부가서비스 갯수가 0보다 클 경우, empty element 히든 처리
-      this.$container.find('.fe-empty').addClass('none').attr('aria-hidden', true);
-    }
-
-    this.$all.siblings().removeClass('on'); // 유료만 보기 버튼 off 상태로 변경
-    this.$all.addClass('on'); // 전체 보기 버튼 on 상태로 변경
-    this.$list.find('[data-isFree="true"]').removeClass('none').attr('aria-hidden', false);  // 무료 부가서비스 보이기
-    this.$container.find('span.counts > em').text(this._totalCount);  // 가입 부가 서비스 카운트 변경
+  _handleTodSelClick: function(event) {
+    // NOTE: hash를 변경하되, history를 쌓지 않도록 하여, 되돌아가기를 한번에 하도록 한다.
+    // this._historyService.replacePathName(event.currentTarget.href);
+    window.location.replace(event.currentTarget.href);
+    // this._applyHash(event.currentTarget.href);
+    event.preventDefault();
   },
 
-  /**
-   * @desc 유료만 보기 버튼 클릭 시
-   * @param {Event} e 클릭 이벤트 객체
-   * @private
-   */
-  _handleShowPayAdditions: function() {
-    if (this._totalCount === 0 || this.$pay.hasClass('on')) { // 가입 부가서비스의 총 갯수가 0 이거나, 이미 전체 보기 상태인 경우 return
-      return;
+  _applyHash: function (hash) {
+    // 초기화 (외부에서 hash를 달고 오는 경우에 대한 처리)
+    var $selectedAnchor;
+
+    if (hash && hash !== '#tod-all') {
+      $selectedAnchor = this.$todSelAnchors.filter(function (i, elem) {
+        return elem.href.includes(hash);
+      });
+      this.$todSelContents.hide();
+      $($selectedAnchor.attr('href')).show();
+    } else {
+      // NOTE: hash가 없으면, 첫번째("전체")를 자동으로 선택
+      $selectedAnchor = this.$todSelAnchors.eq(0);
+      this.$todSelContents.show();
     }
-
-    this.$all.attr('aria-selected', false);
-    this.$pay.attr('aria-selected', true);
-
-    this.$pay.siblings().removeClass('on'); // 전체 보기 버튼 off 상태로 변경
-    this.$pay.addClass('on'); // 유료만 보기 버튼 on 상태로 변경
-
-    var additions = this.$list.find('[data-isFree="true"]');  // 무료 부가서비스 select
-    additions.addClass('none').attr('aria-hidden', true); // 무료 부가서비스 히든 처리
-
-    if (this._totalCount === additions.length) {  // 총 갯수와 무료 부가서비스의 갯수가 같을 경우(유료 부가서비스 미가입 상태)
-      this.$empty.removeClass('none').attr('aria-hidden', false);  // empty element 보이기
+    $selectedAnchor.addClass('on').attr('title', '선택');
+    // $(window).scrollTop(0);
+    /*
+    var selectedButton;
+    this.$todSelAnchors.removeClass('on');
+    if (hash) {
+      selectedButton = this.$todSelAnchors.filter(function (i, elem) {
+        return elem.href.includes(hash);
+      });
+    } else {
+      // NOTE: hash가 없으면, 첫번째("전체")를 자동으로 선택
+      selectedButton = this.$todSelAnchors.eq(0);
     }
-
-    this.$container.find('span.counts > em').text(this._totalCount - additions.length); // 가입된 유료 부가서비스 갯수 표시
+    selectedButton.addClass('on').attr('title', '선택');
+    */
   },
 
   /**
@@ -130,14 +135,16 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _handleClickLink: function(e) {
-    var link = e.currentTarget.getAttribute('data-url'),
-        prodId = e.currentTarget.getAttribute('data-prod-id');
+    var $target = $(e.currentTarget);
+    var link = $target.data('url');
 
     if (this._bpcpService.isBpcp(link)) {
       return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, null);
-    } else if (link.indexOf('http') !== -1) {
+    }
+    if (link.indexOf('http') !== -1) {
       Tw.CommonHelper.openUrlExternal(link);
     } else {
+      var prodId = $target.data('prod-id');
       window.location.href = link + (prodId ? '?prod_id=' + prodId : '');
     }
   }
