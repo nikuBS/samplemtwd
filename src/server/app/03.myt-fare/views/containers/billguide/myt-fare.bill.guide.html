@@ -247,7 +247,7 @@ _%>
                     <!-- 201008 [OP002-10791] 추가 -->
                     <%_ if(miriPayment) {_%>
                     <div class="tod-miri-bill">
-                        <button class="btn-miri" data-url="/myt-fare/info/miri">
+                        <button class="btn-miri" data-url="/myt-fare/info/miri?line=<%-data.reqQuery.line%>">
                             <span class="inner-flex">
                                 <span class="tod-ico-miri"><span class="tod-blind">miri</span></span>
                                 <span class="txt-wrap">

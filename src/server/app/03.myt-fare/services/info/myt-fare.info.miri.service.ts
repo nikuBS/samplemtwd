@@ -24,8 +24,17 @@ export class MytFareInfoMiriService {
   private readonly apiService: ApiService;
   private _selSvcMgmtNum: string;
 
-  constructor(selSvcMgmtNum: string, req: Request, res: Response) {
-    this._selSvcMgmtNum = selSvcMgmtNum;
+  /**
+   * @desc MIRI 서비스 생성자
+   * @param req
+   * @param res
+   * @param svcInfo
+   * @param line 현재 접속 회선이 아닌 선택회선의 서비스 관리번호(ex: 종송회선, 자녀회선)
+   */
+  constructor(req: Request, res: Response, svcInfo: any, line?: string) {
+  // constructor(selSvcMgmtNum: string, req: Request, res: Response) {
+  //   this._svcMgmtNum = svcInfo.svcMgmtNum;
+    this._selSvcMgmtNum = line || svcInfo.svcMgmtNum;
     this.apiService = new ApiService();
     this.apiService.setCurrentReq(req, res);
   }
@@ -38,19 +47,36 @@ export class MytFareInfoMiriService {
     return this.apiService.request(API_CMD.BFF_07_0109, {
       selSvcMgmtNum: this._selSvcMgmtNum
       }).map( resp => {
-      if (resp.code !== API_CODE.CODE_00/* || !resp.result.miriInfoList || resp.result.miriInfoList.length < 1*/) {
+      if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
       if (!resp.result.miriInfoList || resp.result.miriInfoList.length < 1) {
         return [];
       }
+
+      /*resp.result.miriInfoList.push({
+        'svcMgmtNum' : '7312382244',
+        // 'svcMgmtNum' : '7312382244',
+        'acntNum' : '1000000000',
+        'opDt' : '20200505',
+        'payOpTm' : '16431111',
+        'payClCd' : '4',
+        'payClCdNm' : 'MIRI 선납 차감',
+        'ppayAmt' : '20000',
+        'ppayBamt' : '140000',
+        'svcNum' : '01000**0***',
+        'invDt' : '20200430',
+        'invAmt' : '40000',
+        'payAmt' : '40000'
+      });*/
+
       // 최근내역이 위로 오도록 정렬
       return FormatHelper.sortObjArrDesc(resp.result.miriInfoList, 'opDt');
     });
   }
 
   /**
-   * @desc 선택월에 해당하는 미리납부하신 금액
+   * @desc 선택회선의 선택월에 해당하는 미리납부하신 금액
    * 선납대체 처리일 : 2,5,6일 (2일에 선납대체된 금액은 전달로 포함한다.)
    * @param targetMonth 선택 월
    */
@@ -62,21 +88,34 @@ export class MytFareInfoMiriService {
       if (resp.code) {
         return null;
       }
-      // targetMonth = DateHelper.getAddDays(targetMonth, 1, 'YYYYMMDD');
       const startDt = DateHelper.getAddDays(targetMonth, 1, 'YYYYMM05');
       const endDt = DateHelper.getShortDateWithFormatAddByUnit(startDt, 1, 'month', 'YYYYMM02');
       const totalSum = resp.reduce( (acc, cur) => {
-        const {opDt, ppayAmt, payClCd} = cur;
-        // const _opDt = (opDt || '').substring(0, 6) + '02';
-        // 청구일자가 타켓일자와 같거나 클때
-        // if (opDt >= targetMonth && payClCd === '4') {
-        if (payClCd === '4' && DateHelper.isBetween(opDt, startDt, endDt)) {
+        const {opDt, ppayAmt, payClCd, svcMgmtNum} = cur;
+        // 선택회선의 청구일자가 타켓일자와 같거나 클때.
+        if (payClCd === '4' && DateHelper.isBetween(opDt, startDt, endDt) && this._selSvcMgmtNum === svcMgmtNum) {
           acc += parseInt(ppayAmt || 0, 10);
         }
         return acc;
       }, 0);
 
       return totalSum > 0 ? FormatHelper.addComma(totalSum.toString()) : null;
+    });
+  }
+
+  /**
+   * @desc 현재 선택회선의 MIRI 납부 잔액
+   * @param targetMonth
+   */
+  public getMiriBalance(): Observable<any> {
+    return this.getMiriData().map(resp => {
+      if (resp.code) {
+        return null;
+      }
+
+      const balance = resp.find( item => item.svcMgmtNum === this._selSvcMgmtNum);
+
+      return balance && balance.ppayBamt > 0 ? FormatHelper.addComma(balance.ppayBamt.toString()) : null;
     });
   }
 

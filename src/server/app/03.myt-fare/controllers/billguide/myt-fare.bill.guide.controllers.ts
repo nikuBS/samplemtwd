@@ -102,12 +102,12 @@ class MyTFareBillGuide extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const thisMain = this;
-
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
-    this._miriService = new MytFareInfoMiriService(svcInfo.svcMgmtNum, req, res);
+    // this._miriService = new MytFareInfoMiriService(this.reqQuery.line || svcInfo.svcMgmtNum, req, res);
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo, req.query.line);
 
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
     CommonHelper.addCurLineInfo(svcInfo);

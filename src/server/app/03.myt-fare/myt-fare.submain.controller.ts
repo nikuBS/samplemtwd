@@ -28,7 +28,8 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this._miriService = new MytFareInfoMiriService(svcInfo.svcMgmtNum, req, res);
+    // this._miriService = new MytFareInfoMiriService(svcInfo.svcMgmtNum, req, res);
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
     this._datas = {
       res,
       svcInfo,
@@ -63,8 +64,8 @@ class MyTFareSubmainController extends TwViewController {
       return;
     }
 
-    this._miriService.getMiriData().subscribe(resp => {
-      data.miriBalance = Array.isArray(resp) ? FormatHelper.addComma((resp[0].ppayBamt).toString()) : ''; // 미리납부 금액 잔액
+    this._miriService.getMiriBalance().subscribe(miriBalance => {
+      data.miriBalance = miriBalance; // 미리납부 금액 잔액
       this.requestData({
         svcInfo,
         data,
