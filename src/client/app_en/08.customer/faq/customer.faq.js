@@ -19,7 +19,7 @@ Tw.CustomerFaq = function (rootEl) {
 };
 
 Tw.CustomerFaq.prototype = {
-  _init: function () {
+  _init: function () {// 필터 별 분기
     if(this._uri=="" || this._uri==null || this._uri == 'tworldguide'){
       this.$allContentsBtn.on('click', $.proxy(this._showContent_all_tworldguide, this));
     }
@@ -38,7 +38,7 @@ Tw.CustomerFaq.prototype = {
     this._setupscroll();
   },
 
-  _showContent_all_tworldguide: function() {
+  _showContent_all_tworldguide: function() { // 필터 별 더보기 버튼 동작
     if(this.viewMoreCount==1){
       if(this.$firstViewMore.length){
         this.$firstViewMore.css("display","list-item");
@@ -74,12 +74,12 @@ Tw.CustomerFaq.prototype = {
 
   },
 
-  _showContent_subscription: function() {
+  _showContent_subscription: function() { // 필터 별 더보기 버튼 동작
     $('.subscription1st').css("display","list-item");
     this.$allContentsBtn.on('click', $.proxy(this._showAllcontent, this));
   },
 
-  _showContent_plans: function() {
+  _showContent_plans: function() { // 필터 별 더보기 버튼 동작
     $('.plans1st').css("display","list-item");
     this.$allContentsBtn.on('click', $.proxy(function(){
       if(this.viewMoreCount==1){
@@ -91,20 +91,17 @@ Tw.CustomerFaq.prototype = {
     }, this));
   },
   
-  _showAllcontent: function() {
+  _showAllcontent: function() { // 더보기 버튼 더이상 필요 없을때 제거하고 모두보여줌
     this.$allContentsBtn.remove();
     this.$allContents.css("display","list-item");
   },
-  /**
-   * @function
-   * @desc 이벤트 바인딩
-   */
+
   _bindEvents: function () {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
     
   },
 
-  _openEventPop: function (e) {
+  _openEventPop: function (e) { // 팝업 생성
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01_en',
@@ -138,7 +135,7 @@ Tw.CustomerFaq.prototype = {
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
   },
 
-  _goLoad: function (event) {
+  _goLoad: function (event) { //url 이동
     var $uri = $(event.target).attr('id');
     if($uri=="all"){
       this._historyService.replaceURL('/en/customer/faq');
@@ -148,7 +145,7 @@ Tw.CustomerFaq.prototype = {
     }
   },
 
-  _setupscroll: function (){
+  _setupscroll: function (){ // 상단 필더 바 고정
     var jbHeight = $( '.sc-util' ).outerHeight();
     $( window ).scroll( function() {
       if ( $( document ).scrollTop() > 0 ) {

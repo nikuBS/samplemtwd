@@ -67,6 +67,4 @@ Tw.ProductCallplanMiri.prototype = {
           this._$confirm0.remove();
           this._$confirm1.remove();
         }
-      
-  
 };

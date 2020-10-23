@@ -237,7 +237,7 @@ class FormatHelper {
       // 시간이 있는 경우에만
       return hours + VOICE_UNIT.HOURS;
     }
-    return (hours > 0 ? hours + VOICE_UNIT.HOURS : '') + min + VOICE_UNIT.MIN;
+    return (hours > 0 ? hours + VOICE_UNIT.HOURS + ' ' : '') + min + VOICE_UNIT.MIN;
   }
 
   static convVoiceFormatWithUnit(data: any): any[] {

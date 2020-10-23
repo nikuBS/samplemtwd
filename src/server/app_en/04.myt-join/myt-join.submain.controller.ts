@@ -70,7 +70,9 @@ class MyTJoinSubmainController extends TwViewController {
             baseFreePriceList : convertFreePriceList,
             baseDataPriceList : convertDataPriceList
           });
-        } 
+        } else {
+          res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 })
+        }
     })
   }
 

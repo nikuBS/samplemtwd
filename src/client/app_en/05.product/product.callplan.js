@@ -12,7 +12,8 @@ Tw.ProductCallplan = function(rootEl) {
     this.body = this.$container.find('.bg-productdetail');
     this._uri = window.location.search.split('=')[1];
     var prodGroup = $('#prodGroup').val();
-    var bgColor = "rgb(53, 131, 227)"
+    //헤더 요금제 이름 숨기기
+    var bgColor = "rgb(0,0,0)"
         if(prodGroup == '5GX Plan'){
             bgColor = "rgb(205, 14, 44)";
         }
@@ -20,8 +21,11 @@ Tw.ProductCallplan = function(rootEl) {
             bgColor = "rgb(53, 131, 227)";
         }
     this.$hTit.css("color",bgColor);
+    if(skt_landing.util.win_info.get_scrollT()>39) {
+        this.$hTit.css("color","rgb(0,0,0)");
+    }
     $(window).bind('scroll', $.proxy(function(){
-        if(skt_landing.util.win_info.get_scrollT()>39){
+        if(skt_landing.util.win_info.get_scrollT()>39) {
             this.$hTit.css("color","rgb(0,0,0)");
         }else{
             this.$hTit.css("color",bgColor);
@@ -36,7 +40,7 @@ Tw.ProductCallplan = function(rootEl) {
     },
     _popup: function(e){
         
-        if( this._uri== 'NA00006405' ||  this._uri== 'NA00006402' || this._uri== 'NA00006403' ) {
+        if( this._uri== 'NA00006405' ||  this._uri== 'NA00006404' || this._uri== 'NA00006403' ) {
             prodNm = "MP2_1"
         }
         else if( this._uri== 'NA00006402' ){
@@ -85,7 +89,6 @@ Tw.ProductCallplan = function(rootEl) {
 
     _onOpenPopup: function ($layer) {
         Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-       // $('.popup-closeBtn').on('click',$.proxy(this._closePopup,this));
     },
 
     _closePopup: function(){

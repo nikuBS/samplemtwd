@@ -1,9 +1,3 @@
-<%#
-* @file customer.agentsearch.search.html
-* @author Hakjoon Sim (hakjoon.sim@sk.com)
-* @since 2018.10.16
-%>
-
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
@@ -29,14 +23,12 @@
                     </div>
 				</div>
                 <!--// .cont-box -->
-
                 <div class="sc-util clearfix">
                     <p class="count">Total <strong id="agent-number"><%= locationInfo.agentNumber %></strong></p>
                     <div class="btn-wrap">
                         <button class="bt-select" title="Select an area" aria-haspopup="true"><%= locationInfo.filterNm %></button>
                     </div>
                 </div>
-
                 <!-- .cont-box -->
 				<div class="cont-box">
                     <p class="cont-box-title">T world for Foreigners</p>
