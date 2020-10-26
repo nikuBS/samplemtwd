@@ -242,6 +242,7 @@ class MyTFareBillGuide extends TwViewController {
         for( let i=0; i<beLineLst.length; i++ ){
 
           let line = beLineLst[i];
+          if(line.svcCd !== 'C') continue;  //무선 아닌경우 표시안함.
         //  console.log("cate length =>"+line.paidAmtDetailInfo.length);
           let lineGroup = thisMain._arrayToGroup( line.svcNm ,line.paidAmtDetailInfo );
     
@@ -272,7 +273,8 @@ class MyTFareBillGuide extends TwViewController {
 
             //영문화 추가
             repSvcNum: thisMain._commDataInfo.repSvcNum,
-            paidAmtMonthSvcCnt: thisMain._billpayInfo.paidAmtMonthSvcCnt,
+//          paidAmtMonthSvcCnt: thisMain._billpayInfo.paidAmtMonthSvcCnt,
+            paidAmtMonthSvcCnt: _lineDtlLst.length,
             paidAmtDetailInfoList: thisMain._commDataInfo.paidAmtDetailInfoList,
             lineDtlLst : _lineDtlLst,
             typeChk: ''
@@ -282,7 +284,7 @@ class MyTFareBillGuide extends TwViewController {
           useFeeInfo: thisMain._useFeeInfo,
           miriAmt :thisMain._miriData 
         };
-        
+
  
         // 다른 페이지를 찾고 계신가요 통계코드 추가
         BrowserHelper.isApp(req)?thisMain.getAppXtEid(data.data):thisMain.getMWebXtEid(data.data);
@@ -313,7 +315,8 @@ class MyTFareBillGuide extends TwViewController {
           thisMain._billpayInfo.existBill = existBill('paidAmtDetailInfoList');
 
           // 개별청구 회선
-          if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+        //if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+          if ( data.data.lineDtlLst.length === 1 ) {
 
             thisMain.logger.info(thisMain, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
             thisMain._typeChk = 'A4';
@@ -598,12 +601,7 @@ class MyTFareBillGuide extends TwViewController {
       this._miriService.getMiriBalance()
     ).subscribe(( miri) => {
 
-
-      
-
-
-      data.miriAmt = miri[0];
-      
+      data.data.miriAmt = miri[0];
       this.logger.info(this, '[ ---------------------------- ] : ', data);
 
       return res.render(view, data);

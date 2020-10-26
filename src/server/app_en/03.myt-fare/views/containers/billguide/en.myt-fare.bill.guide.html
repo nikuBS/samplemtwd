@@ -37,7 +37,7 @@
                 <div class="cont-box">
                     <div class="user-month-bill">
                         <div class="this-month-bill">
-                            <p class="stit"><%=data.commDataInfo.selClaimDtM%>. Fees <span class="term"><%=data.commDataInfo.selStaDt%> ~ <%=data.commDataInfo.selEndDt%></span></p>
+                            <p class="stit"><%=data.commDataInfo.selClaimDtM%> Fees <span class="term"><%=data.commDataInfo.selStaDt%> ~ <%=data.commDataInfo.selEndDt%></span></p>
                             <p class="price"><span class="won">₩</span><%=data.commDataInfo.useAmtTot%></p>
                             <div class="btn-wrap">
                                 <button type="button"
@@ -51,7 +51,6 @@
                         </div>
                         <p class="msg-type2 mt4">Total of <span class="txt-point">₩<%=data.commDataInfo.discount%></span> discount received</p>
                     </div>
-                    //////////////////<%=data.isApp%>/
                     <%_ if( data.miriAmt ){ _%>
                     <div class="tod-miri-bill">
                         <button class="btn-miri">
