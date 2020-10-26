@@ -6,10 +6,8 @@
 
 /**
  * @class
- * @param (Object) rootEl - 최상위 element
  */
  Tw.MainAppUpdate = function () {
-
   if (!Tw.BrowserHelper.isApp()) { // 앱이 아니라면 건너 뜀.
     return;
   }
@@ -55,74 +53,17 @@ Tw.MainAppUpdate.prototype = {
     } else {
       this._osType = 'I';
     }
-    var currentOsType = this._osType;
-    var isUpdate = Tw.ValidationHelper.checkVersionValidation('5.0.13', this._currentVersion, 3);
 
-    alert('현재 앱 버전(삭제 예정입니다):: ' + this._currentVersion + ', ' + isUpdate);
+    var isUpdate = Tw.ValidationHelper.checkVersionValidation('5.0.13', this._currentVersion, 3); // _currentVersion 버전보다 낮다면 업데이트 팝업을 출력한다.
     if( isUpdate ) {
-
-    } else {
-
-    }
-
-    this._popupService.openConfirmUpdateButton(
-      Tw.POPUP_CONTENTS.UPDATE_POPUP_CONTENTS,
-      Tw.POPUP_TITLE.UPDATE_POPUP_TITLE, 
-      $.proxy(this._onUpdate, this), // 'Update' 버튼을 선택하면 업데이트 화면으로 이동
-      $.proxy(this._gotoTworld, this), // 'Go To Tworld KOR' 버튼을 선택하면 국문 메인페이지로 이동
-      Tw.BUTTON_LABEL.GO_TO_TWORLD_KOR,
-      Tw.BUTTON_LABEL.UPDATE
-    );
-
-
-    // this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
-    //   .done($.proxy(this._lastestVersionPopup, this));
-  },
-
-  _lastestVersionPopup: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-
-      var userAgentString = Tw.BrowserHelper.getUserAgent();
-      var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
-      this._currentVersion = version;
-
-      if (userAgentString.indexOf('osType:aos') !== -1) {
-        this._osType = 'A';
-        var versionArray = version.split('.')
-        if (versionArray[2] % 2 === 0) { // 대문자 
-          this._currentVersion = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2] * 1 + 1)
-        }
-      } else {
-        this._osType = 'I';
-      }
-      var currentOsType = this._osType;
-      var versionInfo = _.filter(res.result.ver, function (item) {
-        return item.osType === currentOsType;
-      });
-
-      var latestVersion = versionInfo[0].newVer;
-
-      console.log('##################')
-      console.log('latestVersion:: ' + latestVersion);
-      console.log('_currentVersion:: ' + this._currentVersion);
-      console.log('result:: ' + Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3));
-      console.log('##################');
-
-      $('#a').text(latestVersion);
-      $('#b').text(this._currentVersion);
-      $('#c').text(Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3));
-
-      if (Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) { // 이전버전 이라면 팝업을 출력한다.
-
-        this._popupService.openConfirmUpdateButton(
-          Tw.POPUP_CONTENTS.UPDATE_POPUP_CONTENTS,
-          Tw.POPUP_TITLE.UPDATE_POPUP_TITLE, 
-          $.proxy(this._onUpdate, this), // 'Update' 버튼을 선택하면 업데이트 화면으로 이동
-          $.proxy(this._gotoTworld, this), // 'Go To Tworld KOR' 버튼을 선택하면 국문 메인페이지로 이동
-          Tw.BUTTON_LABEL.GO_TO_TWORLD_KOR,
-          Tw.BUTTON_LABEL.UPDATE
-        );
-      }
+      this._popupService.openConfirmUpdateButton(
+        Tw.POPUP_CONTENTS.UPDATE_POPUP_CONTENTS,
+        Tw.POPUP_TITLE.UPDATE_POPUP_TITLE, 
+        $.proxy(this._onUpdate, this), // 'Update' 버튼을 선택하면 업데이트 화면으로 이동
+        $.proxy(this._gotoTworld, this), // 'Go To Tworld KOR' 버튼을 선택하면 국문 메인페이지로 이동
+        Tw.BUTTON_LABEL.GO_TO_TWORLD_KOR,
+        Tw.BUTTON_LABEL.UPDATE
+      );
     }
   },
 
