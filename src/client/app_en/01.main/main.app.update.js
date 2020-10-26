@@ -10,17 +10,11 @@
  */
  Tw.MainAppUpdate = function () {
 
-  $('#a').text('');
-  $('#b').text('');
-  $('#c').text('');
-
   if (!Tw.BrowserHelper.isApp()) { // 앱이 아니라면 건너 뜀.
     return;
   }
 
   this._popupService = Tw.Popup;
-
-  this.$container = rootEl;
   this._osType = 'I'; // default iOS,  'A': aos
 
   this._nativeService = Tw.Native;
@@ -48,6 +42,7 @@ Tw.MainAppUpdate.prototype = {
    */
   _onAppUpdateCheck: function () {
     var userAgentString = Tw.BrowserHelper.getUserAgent();
+    // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.13|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
     var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
     this._currentVersion = version;
 
@@ -61,12 +56,14 @@ Tw.MainAppUpdate.prototype = {
       this._osType = 'I';
     }
     var currentOsType = this._osType;
-    
-    console.log('##################')
-    console.log('_currentVersion:: ' + this._currentVersion);
-    console.log('##################');
+    var isUpdate = Tw.ValidationHelper.checkVersionValidation('5.0.13', this._currentVersion, 3);
 
-    $('#b').text(this._currentVersion);
+    alert('현재 앱 버전(삭제 예정입니다):: ' + this._currentVersion + ', ' + isUpdate);
+    if( isUpdate ) {
+
+    } else {
+
+    }
 
     this._popupService.openConfirmUpdateButton(
       Tw.POPUP_CONTENTS.UPDATE_POPUP_CONTENTS,
