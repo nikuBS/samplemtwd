@@ -9,6 +9,11 @@
  * @param (Object) rootEl - 최상위 element
  */
  Tw.MainAppUpdate = function () {
+
+  $('#a').text('ready');
+  $('#b').text('ready');
+  $('#c').text('ready');
+
   if (!Tw.BrowserHelper.isApp()) { // 앱이 아니라면 건너 뜀.
     return;
   }
@@ -39,7 +44,7 @@ Tw.MainAppUpdate.prototype = {
 
   /**
    * @function
-   * @desc 공인인증서 선택시 native 화면 호출
+   * @desc 
    */
   _onAppUpdateCheck: function () {
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
@@ -74,6 +79,10 @@ Tw.MainAppUpdate.prototype = {
       console.log('_currentVersion:: ' + this._currentVersion);
       console.log('result:: ' + Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3));
       console.log('##################');
+
+      $('#a').text(latestVersion);
+      $('#b').text(this._currentVersion);
+      $('#c').text(Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3));
 
       if (Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) { // 이전버전 이라면 팝업을 출력한다.
 
