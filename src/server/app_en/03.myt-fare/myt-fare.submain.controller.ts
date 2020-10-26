@@ -17,13 +17,18 @@ import StringHelper from '../../utils_en/string.helper';
 import CommonHelper from '../../utils_en/common.helper';
 import moment from 'moment';
 import BrowserHelper from '../../utils/browser.helper';
+import {MytFareInfoMiriService} from '../../services_en/info/myt-fare.info.miri.service';
 class MyTFareSubmainController extends TwViewController {
+  
+
   constructor() {
     super();
   }
 
+  private _miriService!: MytFareInfoMiriService;
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
     const thisMain = this;
     const BLOCK_ON_FIRST_DAY = false;
     const data: any = {
@@ -194,22 +199,12 @@ class MyTFareSubmainController extends TwViewController {
    */
   _requestUsageFee(req, res, data) {
     data.type = 'UF';
-    Observable.combineLatest(
-      this._getUsageFee()
-      // this.redisService.getData(this.bannerUrl),
-    ).subscribe(([ usage
-              /* microPay, contentPay, banner*/]) => {
+    Observable.combineLatest([
+      this._getUsageFee(),
+      this._miriService.getMiriBalance()
+    ]).subscribe(([ usage,miri]) => {
       if ( usage && usage.info ) {
         return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
-      /*
-        this.error.render(res, {
-          title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-          code: usage.info.code,
-          msg: usage.info.msg,
-          pageInfo: data.pageInfo,
-          svcInfo: data.svcInfo
-        });
-      */
       } else {
 
         // 사용요금
@@ -263,7 +258,7 @@ class MyTFareSubmainController extends TwViewController {
           //최근 6개월 내 청구된 내역이 없습니다.
           return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
         }
-
+        data.miriAmt = miri;
         res.render('en.myt-fare.submain.html', { data });
       }
     });
@@ -333,6 +328,7 @@ class MyTFareSubmainController extends TwViewController {
     return list;
   }
 
+ 
 
   // 사용요금 조회
   _getUsageFee() {

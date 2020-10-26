@@ -28,7 +28,13 @@ class FormatHelper {
     }
     return false;
   }
-
+  /**
+   * @desc 벼일이 비어있는지 확인
+   * @param array
+   */
+  static isEmptyArray(array: Array<any>): boolean {
+    return !Array.isArray(array) || !array.length;
+  }
   /**
    * @desc whether value is object or not
    * @param  {any} value

@@ -450,6 +450,24 @@ class DateHelper {
   static getKoreanTime(date: any) {
     return moment(this.convDateFormat(date)).format('a h시 m분');
   };
+  /**
+   * @desc 대상 날짜가 시작날짜와 종료 날짜 사이에 있는지 여부
+   * @param {date|string} target 대상날짜
+   * @param {date|string} start 시작날짜
+   * @param {date|string} end 종료날짜
+   * @returns {boolean} true | false
+   * @public
+   */
+  static isBetween(target, start, end) {
+    if ( !target || !start || !end ) {
+      throw new Error('[date.helper]\', \'invalid value!!');
+    }
+    target = this.convDateFormat(target);
+    start = this.convDateFormat(start);
+    end = this.convDateFormat(end);
+    return moment(target).isBetween(start, end, undefined, '[]');
+  };
+
 }
 
 export default DateHelper;

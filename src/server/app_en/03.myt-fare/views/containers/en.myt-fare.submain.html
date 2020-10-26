@@ -95,6 +95,16 @@
                                 </span>
                             </button>
                         </li>
+                        <%_ if( data.miriAmt){ _%>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">MIRI Payments</span>
+                                    <span class="text type2">Balance ₩ <%=data.miriAmt%></span>
+                                </span>
+                            </button>
+                        </li>                        
+                        <% } %>                           
                     </ul>
                 </div>
                 <!--// .cont-box -->

@@ -548,6 +548,7 @@ export const API_CMD = {
   BFF_07_0102: { path: '/core-bill/:version/affiliatecard-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0103: { path: '/core-bill/:version/micro-prepay/spec-sp-yn', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0104: { path: '/core-bill/:version/micro-prepay/prepay-swing-error-msg', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0109: { path: '/core-bill/v1/bill-pay/miri', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

@@ -20,8 +20,10 @@ import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types_en/title.type';
 import CommonHelper from '../../../../utils_en/common.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER } from 'constants';
+import {MytFareInfoMiriService} from '../../../../services_en/info/myt-fare.info.miri.service';
 
 class MyTFareBillGuide extends TwViewController {
+  
   constructor() {
     super();
   }
@@ -31,7 +33,7 @@ class MyTFareBillGuide extends TwViewController {
   private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036 , 사용요금조회 | BFF_05_0047
   private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
   private _intBillLineInfo: any = []; // 통합청구등록회선조회 | BFF_05_0049
-
+  private _miriService!: MytFareInfoMiriService;
   // 공통데이터
   private _commDataInfo: any = {
     selClaimDt: '', // 선택 청구 월 | 2017년 10월
@@ -46,6 +48,8 @@ class MyTFareBillGuide extends TwViewController {
     repSvcNum: ''
 
   };
+
+  private _miriData;
 
   private _urlTplInfo: any = {
     commonPage: 'billguide/en.myt-fare.bill.guide.html', // 공통 페이지
@@ -63,12 +67,12 @@ class MyTFareBillGuide extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const thisMain = this;
-
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
-
+    
     const defaultData = {
       reqQuery: thisMain.reqQuery,
       svcMgmtNum: svcInfo.svcMgmtNum,
@@ -137,12 +141,16 @@ class MyTFareBillGuide extends TwViewController {
 
     } else {
 //    console.log("[ API ] BFF_05_0226");
-      reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0226, {
-        invDt: this.reqQuery.date,
-        selSvcMgmtNum : this.reqQuery.line
-      }, null, [], API_VERSION.V1), 'p1'));
-    }
 
+        
+        reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0226, {
+          invDt: this.reqQuery.date,
+          selSvcMgmtNum : this.reqQuery.line
+        }, null, [], API_VERSION.V1), 'p1'));  
+  
+
+    }
+    
     this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
 
     Promise.all(reqArr).then(function(resArr) {
@@ -252,7 +260,7 @@ class MyTFareBillGuide extends TwViewController {
         //  청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
         thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
       //  console.log('[ ## EN thisMain._commDataInfo.conditionChangeDtList]',thisMain._commDataInfo.conditionChangeDtList);
-        const data: any = {
+        let data: any = {
           data : {
             reqQuery: thisMain.reqQuery,
             svcMgmtNum: svcInfo.svcMgmtNum,
@@ -271,9 +279,11 @@ class MyTFareBillGuide extends TwViewController {
           },
           svcInfo: svcInfo,
           pageInfo: thisMain.pageInfo,
-          useFeeInfo: thisMain._useFeeInfo
+          useFeeInfo: thisMain._useFeeInfo,
+          miriAmt :thisMain._miriData 
         };
-
+        
+ 
         // 다른 페이지를 찾고 계신가요 통계코드 추가
         BrowserHelper.isApp(req)?thisMain.getAppXtEid(data.data):thisMain.getMWebXtEid(data.data);
         
@@ -578,14 +588,35 @@ class MyTFareBillGuide extends TwViewController {
 
 
   // -------------------------------------------------------------[클리이어트로 전송]
-  public renderView(res: Response, view: string, data: any): any {
+  public renderView(res, view: string, data: any): any {
     this.logger.info(this, '[ HTML ] : ', view);
     if (data.data) {
       data.data.allSvc = this.getAllSvcClone(data.data.allSvc);
     }
-    res.render(view, data);
-  }
 
+    Observable.combineLatest(
+      this._miriService.getMiriBalance()
+    ).subscribe(( miri) => {
+
+
+      
+
+
+      data.miriAmt = miri[0];
+      
+      this.logger.info(this, '[ ---------------------------- ] : ', data);
+
+      return res.render(view, data);
+    });
+    
+  }
+  _parseInt(str: String) {
+    if ( !str ) {
+      return 0;
+    }
+
+    return parseInt(str.replace(/,/g, ''), 10);
+  }
 
   /**
    * allSvc에서 필요한 정보만 복사
@@ -756,8 +787,7 @@ class MyTFareBillGuide extends TwViewController {
   public commaSeparatedString(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
-
-
+ 
   /**
    * 다른 페이지를 찾고 계신가요 통계코드 생성
    * @param data

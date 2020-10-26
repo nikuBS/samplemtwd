@@ -51,6 +51,20 @@
                         </div>
                         <p class="msg-type2 mt4">Total of <span class="txt-point">₩<%=data.commDataInfo.discount%></span> discount received</p>
                     </div>
+                    //////////////////<%=data.isApp%>/
+                    <%_ if( data.miriAmt ){ _%>
+                    <div class="tod-miri-bill">
+                        <button class="btn-miri">
+                            <span class="inner-flex">
+                                <span class="tod-ico-miri"><span class="tod-blind">miri</span></span>
+                                <span class="txt-wrap">
+                                    ₩<span class="num"><%=data.miriAmt%></span> has been automatically<br>
+                                    deducted from your MIRI balance
+                                </span>
+                            </span>
+                        </button>
+                    </div>               
+                    <% } %>       
                     <%_ if( data.typeChk == 'A5' && data.lineDtlLst && data.lineDtlLst.length > 0){ _%>
                     <p class="info-charge-data">
                         The total charged amount for the number <br/>

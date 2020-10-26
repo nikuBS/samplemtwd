@@ -1,0 +1,219 @@
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<%- include('../../components/javascript.component.html') %>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents">Go to Main</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div id="fe-myt-fare-mini" class="wrap">
+        <!-- #header -->
+        <%- include('../../../../../common_en/views/components/header.component.html', { title: 'MIRI Payments', svcInfo: svcInfo }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+
+            <h2 id="contents-area" tabindex="-1"><span class="blind">Main Section</span></h2>
+            <div class="container" data-id="submain-container">
+            <%- include('../../../../../common_en/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: xtEid.line, multiple : xtEid.line } }); _%>
+
+            <div class="sort-area tod-sort-area">
+                <span class="total-qnt">Total <span class="num">70</span></span>
+                <span class="tod-select-wrap">
+                    <button class="btn-select fe-search-change" >All</button>
+                </span>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <!-- list -->
+                <div class="tod-miri-list" >
+                    <div class="tod-miri-list-inner">
+                        <!-- start : .tod-miri-item -->
+                        <div class="tod-miri-item">
+                            <div class="tod-miri-date"><span class="sp-date">20.8.5</span></div>
+                            <!--  선납 차감 -->
+                            <div class="tod-miri-info">
+                                <div class="item blue"><!-- class="item blue" -->
+                                    <span class="tit">Paid from MIRI</span>
+                                    <span class="data"><strong>₩ 92,000</strong></span>
+                                </div>
+                                <div class="item">
+                                    <span class="tit">Mobile <em>010-88**-09**</em></span>
+                                    <span class="data">
+                                        <span class="data-item">August Fees <em>₩ 92,000</em></span>
+                                    </span>
+                                </div>
+                                <div class="item-result">
+                                    <span class="tit">MIRI Balance</span>
+                                    <span class="data">₩ 68,000</span>
+                                </div>
+                            </div>
+                            <!--  //선납 차감-->
+                            <!--  선납 차감 -->
+                            <div class="tod-miri-info">
+                                <div class="item blue"><!-- class="item blue" -->
+                                    <span class="tit">Paid from MIRI</span>
+                                    <span class="data"><strong>₩ 19,800</strong></span>
+                                </div>
+                                <div class="item">
+                                    <span class="tit">Mobile <em>010-85**-80**</em></span>
+                                    <span class="data">
+                                        <span class="data-item">August Fees <em>₩ 19,900</em></span>
+                                    </span>
+                                </div>
+                                <div class="item-result">
+                                    <span class="tit">MIRI Balance</span>
+                                    <span class="data">₩ 90,200</span>
+                                </div>
+                            </div>
+                            <!--  //선납 차감-->
+                        </div>
+                        <!-- //end -->
+
+                        <div class="tod-miri-item">
+                            <div class="tod-miri-date"><span class="sp-date">20.8.2</span></div>
+                            <div class="tod-miri-info">
+                                <div class="item blue"><!-- class="item blue" -->
+                                    <span class="tit">Paid from MIRI</span>
+                                    <span class="data"><strong>₩ 40,000</strong></span>
+                                </div>
+                                <div class="item">
+                                    <span class="tit">Mobile <em>010-88**-09**</em></span>
+                                    <span class="data">
+                                        <span class="data-item">Unpaid Bills <em>₩ 40,000</em></span>
+                                    </span>
+                                </div>
+                                <div class="item-result">
+                                    <span class="tit">MIRI Balance</span>
+                                    <span class="data">₩ 115,970</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tod-miri-item">
+                            <div class="tod-miri-date"><span class="sp-date">20.8.1</span></div>
+                            <!-- MIRI Top-up -->
+                            <div class="tod-miri-info">
+                                <div class="item org"><!-- class="item org" -->
+                                    <span class="tit">MIRI Top-up</span>
+                                    <span class="data"><strong>₩ 200,000</strong></span>
+                                </div>
+                                <div class="item">
+                                    <span class="tit">Mobile <em>010-88**-09**</em></span>
+                                </div>
+                                <div class="item-result">
+                                    <span class="tit">MIRI Balance</span>
+                                    <span class="data">₩ 200,000</span>
+                                </div>
+                            </div>
+                            <!-- //MIRI Top-up -->
+                            <!-- MIRI Top-up -->
+                            <div class="tod-miri-info">
+                                <div class="item org"><!-- class="item org" -->
+                                    <span class="tit">MIRI Top-up</span>
+                                    <span class="data"><strong>₩ 100,000</strong></span>
+                                </div>
+                                <div class="item">
+                                    <span class="tit">Mobile <em>010-85**-80**</em></span>
+                                </div>
+                                <div class="item-result">
+                                    <span class="tit">MIRI Balance</span>
+                                    <span class="data">₩ 110,000</span>
+                                </div>
+                            </div>
+                            <!-- //MIRI Top-up -->
+                        </div>
+
+                        <div class="tod-miri-item">
+                            <div class="tod-miri-date"><span class="sp-date">20.7.5</span></div>
+                            <!--  선납 차감 -->
+                            <div class="tod-miri-info">
+                                <div class="item blue"><!-- class="item blue" -->
+                                    <span class="tit">Paid from MIRI</span>
+                                    <span class="data"><strong>₩ 50,000</strong></span>
+                                </div>
+                                <div class="item">
+                                    <span class="tit">Mobile <em>010-88**-09**</em></span>
+                                    <span class="data">
+                                        <span class="data-item">July Fees <em>₩ 90,000</em></span>
+                                        <span class="data-item">Unpaid Bills <em>₩ 40,000</em></span>
+                                    </span>
+                                </div>
+                                <div class="item-result">
+                                    <span class="tit">MIRI Balance</span>
+                                    <span class="data">₩ 0</span>
+                                </div>
+                            </div>
+                            <!--  //선납 차감-->
+                            <!--  선납 차감 -->
+                            <div class="tod-miri-info">
+                                <div class="item blue"><!-- class="item blue" -->
+                                    <span class="tit">Paid from MIRI</span>
+                                    <span class="data"><strong>₩ 20,000</strong></span>
+                                </div>
+                                <div class="item">
+                                    <span class="tit">Mobile <em>010-85**-80**</em></span>
+                                    <span class="data">
+                                        <span class="data-item">July Fees <em>₩ 20,000</em></span>
+                                    </span>
+                                </div>
+                                <div class="item-result">
+                                    <span class="tit">MIRI Balance</span>
+                                    <span class="data">₩ 10,000</span>
+                                </div>
+                            </div>
+                            <!--  //선납 차감-->
+                        </div>
+
+                    </div>
+                </div>
+                <!-- //list -->
+                <!-- 더보기 -->
+                <div class="btn-more">
+                    <button>View More</button>
+                </div>
+                <!-- //더보기 -->
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps">
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover toggle">
+                            <div class="acco-style  type-qa qa-lease">
+                                <ul class="acco-list pt0">
+                                    <li class="acco-box">
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="true"><img src="<%=CDN%>/img/en/ico_fs-info.png" alt="" />Check Important Things to Know</button>
+                                        </div>
+                                        <div class="acco-cont information-usebox"> <!-- 201014 영문 반영 -->
+                                            <p class="fs-info">When topping up your MIRI account, details on the topped up amount will be sent to you via text message</p>
+                                            <p class="fs-info">Your monthly fees will be deducted from your topped up MIRI balance</p>
+                                            <p class="fs-info">When paying your bills, details of your payment will be sent to you via text message</p>
+                                            <p class="fs-info">The remaining MIRI balance can only be refunded upon cancellation of the mobile line</p>
+                                            <p class="fs-info">Please contact the customer call center (1599-0011, charged / mobile phones 114) for details</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #contents -->
+        <%- include('../../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </div>
+    <script>
+    $(document).ready(function () {
+        new Tw.MyTFareMiri($('#fe-myt-fare-miri'));
+    });
+    // window.onload = function(){
+    //     $('#information-usebox-btn').click();
+    // }    
+    </script>
+<%- include('../../components/end.component.html') %>
