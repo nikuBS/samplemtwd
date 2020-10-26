@@ -413,7 +413,7 @@ Tw.ChatbotService.prototype = {
                             this._loginType = resp1.result.loginType;
                             
                             // 멤버십카드 번호가 존재하면
-                            if (resp1.result.mbrCardNum  && resp1.result.mbrCardNum !== "undefined"){
+                            if (resp1.result.mbrCardNum){
                                 this._membershipYn = 'Y';
                             }
 
