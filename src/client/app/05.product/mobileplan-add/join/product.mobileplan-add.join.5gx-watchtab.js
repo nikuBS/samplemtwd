@@ -28,7 +28,7 @@ Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId, mo
   /**
    * @desc 요금제에 따른 분기처리
    */
-  if (mobileplanId === 'NA00006405' || mobileplanId === 'NA00006999') {
+  if (mobileplanId === 'NA00006405' || mobileplanId === 'NA00006999' || mobileplanId === 'NA00007010') {
     this._maxLine = 1;
     this._overMaxlineAlert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A92;
   } else {
