@@ -85,6 +85,80 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     if (Tw.BrowserHelper.isIos()) {
       $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);
     }
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinTerm, this));
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 조회 API 요청
+   */
+  _getJoinTerm: function() {
+      this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
+      .done($.proxy(this._isJoinTerm, this));
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 조회 API 응답 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
+  _isJoinTerm: function(resp) {
+
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return ;
+    }
+      this._openJoinTermPopup(resp.result);
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 실행
+   * @param respResult - 가입안내 팝업 조회 API 응답 값
+   */
+  _openJoinTermPopup: function(respResult) {
+    var popupOptions = {
+      hbs: 'MV_01_02_02_01',
+      bt: [
+        {
+          style_class: 'unique fe-btn_back',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }
+      ]
+    };
+
+    if (respResult.prodTmsgTypCd === 'H') {
+      popupOptions = $.extend(popupOptions, {
+        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
+      });
+    }
+
+    if (respResult.prodTmsgTypCd === 'I') {
+      popupOptions = $.extend(popupOptions, {
+        img_url: respResult.rgstImgUrl,
+        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
+      });
+    }
+
+    this._isResultPop = true;
+    this._popupService.open(popupOptions, $.proxy(this._bindJoinTermPopupEvent, this), $.proxy(this._closeResultPopup, this), 'jointerm_pop');
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 이벤트 바인딩
+   * @param $popupContainer - 가입안내팝업 컨테이너 레이어
+   */
+  _bindJoinTermPopupEvent: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeResultPopup, this));
+  },
+
+  /**
+   * @function
+   * @desc 가입안내팝업 내 닫기버튼 클릭 시
+   */
+  _closeResultPopup: function() {
+    this._popupService.close();
   },
 
   /**
