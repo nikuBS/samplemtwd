@@ -187,13 +187,14 @@ Tw.MainHome.prototype = {
             if(basOfrVcallTmsEngCttTrans=='Unlimited landline & mobile phone calls'){
               basOfrVcallTmsEngCttTrans = 'Unlimited';
             }
-           arr.push(Object.assign(item, {
-              odd_even_type: odd_even_type,
-              basFeeInfo : basFeeInfo.value,
-              basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans
-            }));
-            return arr;
-          }, []);
+
+            arr.push(Object.assign(item, {
+                odd_even_type: odd_even_type,
+                basFeeInfo : basFeeInfo.value,
+                basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans
+              }));
+              return arr;
+            }, []);
           if(item.prodGrpId === CODE_5GX_PLAN){
             ariaSelected = "true"
             tempColor = " five-gx";
@@ -224,11 +225,12 @@ Tw.MainHome.prototype = {
             var basOfrVcallTmsEngCttTrans = prodList[index].basOfrVcallTmsEngCtt;
             if(basOfrVcallTmsEngCttTrans=='Unlimited landline & mobile phone calls'){
               basOfrVcallTmsEngCttTrans = 'Unlimited';
-            }
+            } 
            arr.push(Object.assign(item, {
               odd_even_type: odd_even_type,
               basFeeInfo : basFeeInfo.value,
-              basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans
+              basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans,
+              eidvalue : _getEidValue(prodList[index].prodId)
             }));
             return arr;
           }, []);
@@ -240,15 +242,48 @@ Tw.MainHome.prototype = {
             'tab_index' : arr.length + 1,
             'lastContents' : resultProdList.length % 2,
             'ariaSelected' : ariaSelected,
-            'tempColor' : tempColor
+            'tempColor' : tempColor,
+            'eidvalue' : _getEidValue(prodList[index].prodGrpId)
           });
           var assign = Object.assign(item, resultProdList); // 병합
           arr.push(assign);
   },
 
+  _getEidValue: function(id) {
+    switch (id) {
+      case 'NA00006405':
+        return 'MWMA_A10_B79-5';
+      case 'NA00006404':
+        return 'MWMA_A10_B79-6';
+      case 'NA00006403':
+        return 'MWMA_A10_B79-7';
+      case 'NA00006402':
+        return 'MWMA_A10_B79-8';
+      case 'NA00006539':
+        return 'MWMA_A10_B79-10';
+      case 'NA00006538':
+        return 'MWMA_A10_B79-11';
+      case 'NA00006537':
+        return 'MWMA_A10_B79-12';
+      case 'NA00006536':
+        return 'MWMA_A10_B79-13';
+      case 'NA00006535':
+        return 'MWMA_A10_B79-14';
+      case 'NA00006534':
+        return 'MWMA_A10_B79-15';
+      case 'NA00006157':
+        return 'MWMA_A10_B79-17';
+      case 'NA00006156':
+        return 'MWMA_A10_B79-18';
+      case 'NA00006155':
+        return 'MWMA_A10_B79-19';
+      default:
+        return '';     
+      }
+  },
+
   _errorProductData: function(error) {
-    alert('error!##!' + error)
-    console.log(error)
+    console.log(error);
   },
 
   /**
