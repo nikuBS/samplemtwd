@@ -10,9 +10,9 @@
  */
  Tw.MainAppUpdate = function () {
 
-  // if (!Tw.BrowserHelper.isApp()) { // 앱이 아니라면 건너 뜀.
-  //   return;
-  // }
+  if (!Tw.BrowserHelper.isApp()) { // 앱이 아니라면 건너 뜀.
+    return;
+  }
 
   this._popupService = Tw.Popup;
   this._osType = 'I'; // default iOS,  'A': aos
