@@ -368,8 +368,8 @@ Tw.CustomerAgentsearch.prototype = {
    */
   _onReset: function (event) {
     var hash = $(event.currentTarget).find('a').attr('href');
-    history.replaceState(null, null, hash);
-    // history.replaceState(null, null, window.location.pathname + hash);
+    // history.replaceState(null, null, hash);
+    history.replaceState(null, null, window.location.pathname + hash);
     this._selectTab();
     // 로딩중 표시
     this.layout({
