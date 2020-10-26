@@ -248,17 +248,6 @@ Tw.CustomerAgentsearchComponent.prototype = {
    * @function
    * @param bff
    * @param param
-   * @returns {{done: *}}
-   * @desc BFF Request
-   */
-  /*request: function (bff, param) {
-    return this._apiService.requestDone(bff, param);
-  }*/
-
-  /**
-   * @function
-   * @param bff
-   * @param param
    * @return {{done: (function(*): *)}}
    * @desc BFF 리퀘스트. 결과가 실패이면 로딩중 화면 비노출 및 다음스텝 진행안함.
    */

@@ -1,20 +1,41 @@
+<%_ var hasButtons = (addition.btnList && addition.btnList.length > 0); _%>
+<%_ var hasLink = addition.prodLinkYn === "Y"; _%>
+<li class="<%- hasLink ? 'add-con' : null; %>" data-is-free="<%- addition.payFreeYn === 'Y' %>">
+    <%_ if (hasLink) { _%>
+    <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>">
 <div class="lineinfo-user">
     <span class="info-title"><%= addition.prodNm %></span>
-    <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
+            <span class="info-sub">가입일 <%- addition.scrbDt %></span>
 </div>
 <div class="lineinfo-data">
-    <%_ if (/^[0-9,]+$/.test(addition.basFeeTxt)) { _%>
-    <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+            <%_ if (addition.basFeeTxt) { _%>
+            <span class="info-title tx-red"><%= addition.basFeeTxt %><%- (/^[0-9,]+$/.test(addition.basFeeTxt)) ? '원' : null %></span>
     <%_ } else { _%>
-    <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
+            <span class="info-title tx-red">무료</span>
     <%_ } _%>
-    <%_ if (hasLink) { _%><span class="ico"><span class="blind">자세히 보기</span></span><%_ } _%>
+            <span class="ico"><span class="blind">자세히 보기</span></span>
 </div>
-<%# TODO: wire와 wireless가 서로 다르게 처리되는 부분 확인 필요 _%>
+    </a>
+    <%_ } else { _%>
+    <div class="no-link">
+        <div class="lineinfo-user">
+            <span class="info-title"><%= addition.prodNm %></span>
+            <span class="info-sub">가입일 <%- addition.scrbDt %></span>
+        </div>
+        <div class="lineinfo-data">
+            <%_ if (addition.basFeeTxt) { _%>
+            <span class="info-title tx-red"><%= addition.basFeeTxt %><%- (/^[0-9,]+$/.test(addition.basFeeTxt)) ? '원' : null %></span>
+            <%_ } else { _%>
+            <span class="info-title tx-red">무료</span>
+            <%_ } _%>
+        </div>
+    </div>
+    <%_ } _%>
 <%_ if (hasButtons) { _%>
-<span class="bt-wrap">
-    <% addition.btnList.map(btn => { _%>
-    <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
-    <%_ }); %>
-</span>
+    <div class="bt-wrap">
+        <%_ addition.btnList.forEach(btn => { _%>
+        <button class="btn-round5 btn-line-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
+        <%_ }); _%>
+    </div>
 <%_ } _%>
+</li>

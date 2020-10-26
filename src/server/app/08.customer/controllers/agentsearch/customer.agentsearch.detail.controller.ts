@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {CUSTOMER_AGENT_SEARCH} from '../../../../types/string.type';
+import {LOGIN_TYPE} from '../../../../types/bff.type';
 
 interface RegionInfoList {
   locCode: string;
@@ -91,18 +92,19 @@ interface BranchDetail {
 }
 
 class CustomerAgentsearchDetail extends TwViewController {
-  private _svcInfo: any;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
     const branchCode = req.query.code;
     const isExpZone = req.query.isExpZone || false; /* 5gx 및 VR zone 관련 플래그 추가 */
     const isHappy = req.query.isHappy || false; // 행복 커뮤니티 페이지
-    this._svcInfo = svcInfo;
+
     this.getBranchDetailInfo(res, svcInfo, pageInfo, branchCode).subscribe(
       (detail) => {
         if (!FormatHelper.isEmpty(detail)) {
-          res.render('agentsearch/customer.agentsearch.detail.html', {detail, svcInfo, pageInfo, isExpZone, isHappy});
+          // 20-10-22 OP002-10922 비 로그인/간편로그인 사용자도 진입가능
+          const _svcInfo = !svcInfo || svcInfo.loginType === LOGIN_TYPE.EASY ? {} : svcInfo;
+          res.render('agentsearch/customer.agentsearch.detail.html', {detail, svcInfo: _svcInfo, pageInfo, isExpZone, isHappy});
         }
       },
       (err) => {

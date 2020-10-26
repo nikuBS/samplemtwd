@@ -36476,6 +36476,95 @@ body.apphome .section-box {
 .o2o-body .container-wrap{margin-bottom: 0 !important;}
 /* //200807 [OP002-8565] o2o 지점/대리점 고도화 */
 
+/* [start] 200810 [OP002-9649] [고도화] 나의 요금제/나의 부가상품 개선안 */
+.btn-round5 {
+  display: inline-block;
+  height: 1.250rem;
+  padding: 0 0.63rem;
+  border-radius: 1.88rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-size: 0.625rem;
+  text-align: center;
+  line-height: 1.250rem;
+  vertical-align: middle; }
+.btn-line-blue {border:1px solid #178bce; color:#178bce}
+
+  /* 다른회선관리 */
+.tod-line-sel-box.tod-line-sel-new {position:relative; min-height:3.313rem}
+.tod-line-sel-box.tod-line-sel-new .tod-line-sel-fixed {position:fixed; z-index:25; width:100%}
+.tod-line-sel-box.tod-line-sel-new .line-sel-btn {font-size:0.938rem}
+.tod-line-sel-box.tod-line-sel-new .line-sel-btn:after {display:none}
+.tod-line-sel-box.tod-line-sel-new .btn-other-line {position:absolute; top:0.813rem; right:1rem; color:#fff; border:1px solid #fff}
+
+  /* 나의 요금제 */
+.tod-plan-compact-info-v2 {position:relative; overflow:hidden; margin: 0.56rem 1rem; background: #fff; border-radius: 0.25rem; -webkit-box-shadow: 0rem 0.19rem 1.25rem -0.13rem rgba(0, 0, 0, 0.03);     box-shadow: 0rem 0.19rem 1.25rem -0.13rem rgba(0, 0, 0, 0.03); border: 1px solid #e1e2e4; text-align: left; display: block; }
+.tod-plan-compact-info-v2 > a,
+.tod-plan-compact-info-v2 > .none-link {position:relative; display:block; padding: 0.94rem 1rem 1.250rem}
+.tod-plan-compact-info-v2 .plan { display: block; overflow: hidden; }
+.tod-plan-compact-info-v2 .plan .tit {display:block; color: #000000; font-size: 1rem; color: #000}
+.tod-plan-compact-info-v2 .plan .tit .point-txt { color: #178bce; }
+.tod-plan-compact-info-v2 .plan .date {display:block; margin-top:0.625rem; color:#858585; font-size:0.750rem; font-weight:normal}
+.tod-plan-compact-info-v2 .plan .val {display:inline-block; margin-top:1.875rem; color:#666; font-size:.750rem}
+.tod-plan-compact-info-v2 .val > strong {font-size: 1.250rem; color: #ef4b49; font-weight: 700}
+.tod-plan-compact-info-v2 .service-wrap {position:absolute; right:1rem; bottom:1.250rem; display: block; max-width:50%; margin-top:-5.563em}
+.tod-plan-compact-info-v2 .service-wrap .service {display:block; width: 100%; padding-top: 0.69rem; font-size: 0; }
+.tod-plan-compact-info-v2 .service-wrap .service span { vertical-align: top; line-height: 0.94rem; }
+.tod-plan-compact-info-v2 .service-wrap .service .gtxt { display: block; margin-bottom: 0.13rem; font-size: 0.81rem; color: #666666; line-height: 1.19rem; }
+.tod-plan-compact-info-v2 .service-wrap .service .gtxt .point-txt { color: #178bce; vertical-align: baseline; line-height: 1.19rem; }
+.tod-plan-compact-info-v2 .service-wrap .service .sv-spec { display: block; position: relative; width: 100%; padding:0.313rem 0 0.313rem 1.25rem; box-sizing:border-box; font-size: 0.75rem; color: #000; line-height: 1.06rem}
+.tod-plan-compact-info-v2 .service-wrap .service .sv-spec i { position: absolute; left: 0; top: 0.313rem; display: inline-block; width: 0.94rem; height: 0.94rem; content: ''; margin-right: 0.31rem; vertical-align: top; }
+.tod-plan-compact-info-v2 .btn-link-list li {border:none; border-top:1px solid #f2f2f2}
+
+  /* 요금제변경 알림 배너 */
+.tod-bnr-chg-alarm {padding:1rem 1rem 1rem 4.500rem; background: url(/img/ico/ico-bell.png) no-repeat 1rem 50%; background-size:44px 44px}
+.tod-bnr-chg-alarm .txt {font-size:0.875rem}
+.tod-bnr-chg-alarm .btn-line {font-size:0.750rem; color:#178bce; text-decoration:underline}
+
+.tit-type7 + .tod-full-link-list {margin-top:1.19rem}
+.tod-full-link-list > li {padding:0.625rem 0;border-bottom:1px solid #f2f2f2}
+.tod-full-link-list > li:last-child {border-bottom:0}
+.tod-full-link-list > li .sub-tit {color:#666; font-size:0.875rem}
+.tod-full-link-list > li > a {display:block; padding:0.688rem 1.25rem 0.688rem 0}
+.tod-full-link-list > li > a .inner {display:table; width:100%; padding-right:1.25rem; background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat right 50%; background-size:1rem 1rem }
+.tod-full-link-list > li > a .tit {display:table-cell; font-size:1rem}
+.tod-full-link-list > li > a .text {display:table-cell; text-align:right; font-size:1rem}
+.tod-full-link-list > li > a .tod-txt-point {color:#ef4b49; font-weight: 700}
+.tod-full-link-list .inner-list {padding-top:0.625rem}
+.tod-full-link-list .inner-list > li {position:relative; padding-left:0.625rem; line-height:1.500rem; color:#666; font-size:0.813rem;}
+.tod-full-link-list .inner-list > li > a {position:relative; color:#666; font-size:0.813rem}
+.tod-full-link-list .inner-list > li:before {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	content: '';
+	width: 0.188rem;
+	height: 0.188rem;
+	background: #8d8d8d;
+	border-radius: 50%; }
+.tod-full-link-list.tod-hidden-list .inner-list > li:nth-child(n+3) {display:none}
+
+  /* 전체열기 플러스 아이콘 */
+.ico-plus-32 {display:inline-block; width:1rem; height:1rem; margin-left:0.375rem; vertical-align:middle; background: url(/img/ico/ico-plus-32.png) no-repeat 50% 50%; background-size:100%}
+.btn-more .ico-plus-32 {position:relative; top:-2px} 
+
+  /* 나의 부가상품 */
+.tit-type7 + .add-prd-wrap.tod-type02 {margin-top:1.19rem}
+.add-prd-wrap.tod-type02 .list-comp-lineinfo {padding:0}
+.add-prd-wrap.tod-type02 .list-comp-lineinfo li .lineinfo-user .info-sub {font-size: 0.81rem; color: #858585}
+.add-prd-wrap.tod-type02 .list-comp-lineinfo li .lineinfo-user .info-title {font-size: 1rem}
+.add-prd-wrap.tod-type02 .list-comp-lineinfo li .bt-wrap {margin-top:0.313rem}
+.add-prd-wrap.tod-type02 .list-comp-lineinfo li .lineinfo-data .info-title {font-size:1rem !important}
+.add-prd-wrap.tod-type02 .list-comp-lineinfo li button.btn-round5 {display:inline-block; width:auto; padding: 0 0.63rem}
+
+.tod-sel-top-wrap {position:relative; z-index:25; min-height:3.375rem}
+.tod-sel-top-wrap .link-cont {position:fixed; width:100%; padding:0.625rem 1rem; box-sizing:border-box; background-color:#f5f5f5}
+.tod-sel-top-wrap .link-cont > a {display:inline-block; margin-right:0.313rem; padding:0.625rem 0.8125rem 0.5625rem; color:#000; font-size:0.8125rem; border:0.0625rem solid #e6e7e8; border-radius:2.25rem; line-height:1; background:#fff; white-space:nowrap; }
+.tod-sel-top-wrap .link-cont > .total {display:inline-block; margin-right:0.313rem; padding:0.625rem 0.625rem 0.5625rem 0; color:#000; font-size:0.8125rem;  line-height:1; white-space:nowrap; }
+.tod-sel-top-wrap .link-cont > a.on {background:#f76151; border-color:#f76151; color:#fff}
+.tod-link-cont-anchor {position:absolute; margin-top:-9.938rem}
+/* [end] 200810 [OP002-9649] [고도화] 나의 요금제/나의 부가상품 개선안 */
+
 /* 200825 [OP002-10176] wavve 플러스상품 혜택 확대 관련 Tworld공지 */
 .tod-offer-prd-options.tod-v2 .item > label {font-size:0.75rem}
 .tod-offer-prd-options.tod-v2 .label-tit {font-size:0.938rem}

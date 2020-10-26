@@ -75,6 +75,7 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
   setTimeout(function(){$(window).scrollTop(0);},100)
 
   this._getProductData(this.$container.find('#plan-ul'));
+  
 
   // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
@@ -187,11 +188,104 @@ Tw.MainHome.prototype = {
             if(basOfrVcallTmsEngCttTrans=='Unlimited landline & mobile phone calls'){
               basOfrVcallTmsEngCttTrans = 'Unlimited';
             }
+            var eidvalue = '';
+            if(Tw.BrowserHelper.isApp()){
+              switch (prodList[index].prodId) {
+                case "NA00006405":
+                  eidvalue = 'CMMA_A10_B79-42';
+                  break;
+                case "NA00006404":
+                  eidvalue = 'CMMA_A10_B79-43';
+                  break;
+                case "NA00006403":
+                  eidvalue = 'CMMA_A10_B79-44';
+                  break;
+                case 'NA00006402':
+                  eidvalue = 'CMMA_A10_B79-45';
+                  break;
+                case 'NA00006539':
+                  eidvalue = 'CMMA_A10_B79-47';
+                  break;
+                case 'NA00006538':
+                  eidvalue = 'CMMA_A10_B79-48';
+                  break;
+                case 'NA00006537':
+                  eidvalue = 'CMMA_A10_B79-49';
+                  break;
+                case 'NA00006536':
+                  eidvalue = 'CMMA_A10_B79-50';
+                  break;
+                case 'NA00006535':
+                  eidvalue = 'CMMA_A10_B79-51';
+                  break;
+                case 'NA00006534':
+                  eidvalue = 'CMMA_A10_B79-52';
+                  break;
+                case 'NA00006157':
+                  eidvalue = 'CMMA_A10_B79-54';
+                  break;
+                case 'NA00006156':
+                  eidvalue = 'CMMA_A10_B79-55';
+                  break;
+                case 'NA00006155':
+                  eidvalue = 'CMMA_A10_B79-56';
+                  break;
+                default:
+                  eidvalue = '';
+                  break;     
+                }
 
+            } else {
+              switch (prodList[index].prodId) {
+                case "NA00006405":
+                  eidvalue = 'MWMA_A10_B79-5';
+                  break;
+                case "NA00006404":
+                  eidvalue = 'MWMA_A10_B79-6';
+                  break;
+                case "NA00006403":
+                  eidvalue = 'MWMA_A10_B79-7';
+                  break;
+                case 'NA00006402':
+                  eidvalue = 'MWMA_A10_B79-8';
+                  break;
+                case 'NA00006539':
+                  eidvalue = 'MWMA_A10_B79-10';
+                  break;
+                case 'NA00006538':
+                  eidvalue = 'MWMA_A10_B79-11';
+                  break;
+                case 'NA00006537':
+                  eidvalue = 'MWMA_A10_B79-12';
+                  break;
+                case 'NA00006536':
+                  eidvalue = 'MWMA_A10_B79-13';
+                  break;
+                case 'NA00006535':
+                  eidvalue = 'MWMA_A10_B79-14';
+                  break;
+                case 'NA00006534':
+                  eidvalue = 'MWMA_A10_B79-15';
+                  break;
+                case 'NA00006157':
+                  eidvalue = 'MWMA_A10_B79-17';
+                  break;
+                case 'NA00006156':
+                  eidvalue = 'MWMA_A10_B79-18';
+                  break;
+                case 'NA00006155':
+                  eidvalue = 'MWMA_A10_B79-19';
+                  break;
+                default:
+                  eidvalue = '';
+                  break;     
+                }
+              }
             arr.push(Object.assign(item, {
                 odd_even_type: odd_even_type,
                 basFeeInfo : basFeeInfo.value,
-                basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans
+                basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans,
+                eidvalue : eidvalue
               }));
               return arr;
             }, []);
@@ -213,73 +307,6 @@ Tw.MainHome.prototype = {
     } else {
       return [];
     }
-  },
-
-  _setProductData: function(arr,item) {
-      var prodList = item.prodList;
-          var ariaSelected = "false";
-          var tempColor = "";
-          var resultProdList = prodList.reduce(function(arr, item, index) {
-            var odd_even_type = (index % 2) ? 'even' : 'odd'; // 홀수, 짝수를 구함.
-            var basFeeInfo = Tw.ProductHelper.convProductBasfeeInfo(prodList[index].basFeeEngInfo);
-            var basOfrVcallTmsEngCttTrans = prodList[index].basOfrVcallTmsEngCtt;
-            if(basOfrVcallTmsEngCttTrans=='Unlimited landline & mobile phone calls'){
-              basOfrVcallTmsEngCttTrans = 'Unlimited';
-            } 
-           arr.push(Object.assign(item, {
-              odd_even_type: odd_even_type,
-              basFeeInfo : basFeeInfo.value,
-              basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans,
-              eidvalue : _getEidValue(prodList[index].prodId)
-            }));
-            return arr;
-          }, []);
-          if(item.prodGrpId === CODE_5GX_PLAN){
-            ariaSelected = "true"
-            tempColor = " five-gx";
-          }
-          Object.assign(item, {
-            'tab_index' : arr.length + 1,
-            'lastContents' : resultProdList.length % 2,
-            'ariaSelected' : ariaSelected,
-            'tempColor' : tempColor,
-            'eidvalue' : _getEidValue(prodList[index].prodGrpId)
-          });
-          var assign = Object.assign(item, resultProdList); // 병합
-          arr.push(assign);
-  },
-
-  _getEidValue: function(id) {
-    switch (id) {
-      case 'NA00006405':
-        return 'MWMA_A10_B79-5';
-      case 'NA00006404':
-        return 'MWMA_A10_B79-6';
-      case 'NA00006403':
-        return 'MWMA_A10_B79-7';
-      case 'NA00006402':
-        return 'MWMA_A10_B79-8';
-      case 'NA00006539':
-        return 'MWMA_A10_B79-10';
-      case 'NA00006538':
-        return 'MWMA_A10_B79-11';
-      case 'NA00006537':
-        return 'MWMA_A10_B79-12';
-      case 'NA00006536':
-        return 'MWMA_A10_B79-13';
-      case 'NA00006535':
-        return 'MWMA_A10_B79-14';
-      case 'NA00006534':
-        return 'MWMA_A10_B79-15';
-      case 'NA00006157':
-        return 'MWMA_A10_B79-17';
-      case 'NA00006156':
-        return 'MWMA_A10_B79-18';
-      case 'NA00006155':
-        return 'MWMA_A10_B79-19';
-      default:
-        return '';     
-      }
   },
 
   _errorProductData: function(error) {
