@@ -143,7 +143,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
   _conditionChangeEvtInit: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
-    Tw.Init._initEidHanlder();
+    //Tw.Init._initEidHanlder();
     // $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
   },
 
