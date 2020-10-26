@@ -20,7 +20,9 @@ _%>
         <div class="container" data-id="submain-container">
             <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B13-29", multiple : "CMMA_A3_B13-28"} }); _%>
 
-            <%- include('../components/submain/myt-join.submain.more-info.html', data) _%>
+            <%_ if ((data.type !== 2) || data.myInfo) { _%>
+                <%- include('../components/submain/myt-join.submain.more-info.html', data) _%>
+            <%_ } _%>
 
             <%- include('../components/submain/myt-join.submain.prod-info.html', data) _%>
 

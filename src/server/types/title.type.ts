@@ -19,6 +19,10 @@ export const MYT_JOIN_SUBMAIN_TITLE = {
   MAIN: '나의 가입 정보'
 };
 
+export const MYT_JOIN_MYPLAN_TITLE = {
+  MAIN: '나의 요금제/부가상품'
+};
+
 export const MYT_FARE_HOTBILL_TITLE = {
   MAIN: '실시간 이용요금',
   CHILD: '자녀 실시간 이용요금',
