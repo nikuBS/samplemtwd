@@ -20,7 +20,7 @@ import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types_en/title.type';
 import CommonHelper from '../../../../utils_en/common.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER } from 'constants';
-import {MytFareInfoMiriService} from '../../../../services_en/info/myt-fare.info.miri.service';
+import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
 
 class MyTFareBillGuide extends TwViewController {
   
