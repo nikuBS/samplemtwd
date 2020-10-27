@@ -53,7 +53,14 @@
                     </div>
                     <%_ if( data.miriAmt ){ _%>
                     <div class="tod-miri-bill">
-                        <button class="btn-miri">
+                        <button type="button"
+                                data-href="/en/myt-fare/info/miri"
+                                data-id="bill-miri"              
+                                data-xt_eid="<%=data.xtEid.miri%>"
+                                data-xt_csid="NO" 
+                                data-xt_action="BC"
+                                class="btn-miri"
+                                onclick="goMiri();">                      
                             <span class="inner-flex">
                                 <span class="tod-ico-miri"><span class="tod-blind">miri</span></span>
                                 <span class="txt-wrap">
@@ -110,6 +117,8 @@
    */
 
     });
-
+    function goMiri(){
+        document.location.href = "/en/myt-fare/info/miri";
+    }
 </script>
 <% include ../../components/end.component.html _%>
