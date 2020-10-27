@@ -40,7 +40,8 @@ class MyTFareSubmainController extends TwViewController {
       // 1일 기준
       isNotFirstDate: (new Date().getDate() > 1) || !BLOCK_ON_FIRST_DAY,
       // 휴대폰, T-PocketFi 인 경우에만 실시간 요금 조회 노출
-      isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1)
+      isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1),
+      miriAmt: null
     };
     const defaultData = {
       reqQuery: data.reqQuery,
@@ -149,8 +150,8 @@ class MyTFareSubmainController extends TwViewController {
           //   }
           Observable.combineLatest([
             this._miriService.getMiriBalance()
-          ]).subscribe((miri) => {          
-            data.miriAmt = miri;
+          ]).subscribe((miri) => {
+            data.miriAmt =  miri[0];
             res.render('en.myt-fare.submain.html', { data });
           })
 
