@@ -1416,9 +1416,9 @@ export const PREMTERM_MSG = {
 };
 
 export const TID_MSG = {
-  LOGIN_FAIL: '로그인 실패',
-  LOGIN_EXCEED: '1일 로그인 허용횟수 초과',
-  LOGIN_EXCEED_MSG: '30회 초과하여 금일 24시까지 이용 불가합니다.'
+  LOGIN_FAIL: 'Log-in failed',
+  LOGIN_EXCEED: 'Daily log-in attempt exceeded (30 times)',
+  LOGIN_EXCEED_MSG: 'Logged in services restricted until 24:00 today'
 };
 
 export const PREPAY_ERR_MSG = {
