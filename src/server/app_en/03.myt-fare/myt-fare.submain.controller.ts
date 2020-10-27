@@ -61,6 +61,11 @@ class MyTFareSubmainController extends TwViewController {
     if( test === '6month') return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
     if( test === '500' ) return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
 
+    //영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
+      res.render( 'submain/en.myt-fare.submain.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      return;
+    }
     //무선회선이 없는경우
     if( svcInfo.caseType === '02' || test === 'notLine' ) {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
@@ -73,13 +78,6 @@ class MyTFareSubmainController extends TwViewController {
       res.render('submain/en.myt-fare.submain.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
-
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
-      res.render( 'submain/en.myt-fare.submain.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
-      return;
-    }
-
    
     this.logger.info("## 대표회선 여부 [svcInfo.actRepYn] =>"+svcInfo.actRepYn);
     // 대표청구 여부
