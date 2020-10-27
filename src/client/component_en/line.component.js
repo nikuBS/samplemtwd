@@ -350,7 +350,8 @@ Tw.LineComponent.prototype = {
     _.map(lineData, $.proxy(function (line) {
       result.push({
         index: this._index++,
-        txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
+        // txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
+        txt: Tw.SVC_ATTR[line.svcAttrCd], // 김기남 추가. 영문에는 닉네임이 필요없음.
         option: this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',
         badge: line.repSvcYn === 'Y',
         showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',

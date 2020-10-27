@@ -152,7 +152,7 @@ Tw.SVC_CATEGORY = {
 Tw.SVC_ATTR = {
   M1: 'Mobile',
   M2: 'Prepaid',
-  M3: 'T pocket Fi',
+  M3: 'Pocket',
   M4: 'T Login',
   M5: 'T Wibro',
   S1: 'Internet',
