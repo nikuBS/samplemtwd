@@ -353,8 +353,8 @@ class CommonSearch extends TwViewController {
             });
             break;
           case 7:
+            console.log('❖❖❖❖❖❖❖❖❖❖❖ 부가서비스 검색 ❖❖❖❖❖❖❖❖❖❖❖');  
             // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [S]
-            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 부가서비스 검색 ❖❖❖❖❖❖❖❖❖❖❖');
             // this.apiService.request(API_CMD.BFF_05_0137, {}, {})
             // .subscribe((resultData) => {
             //   if (resultData.code !== API_CODE.CODE_00) {
