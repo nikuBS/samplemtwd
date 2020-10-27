@@ -10018,3 +10018,17 @@ background: -webkit-linear-gradient(to right, #5f9aff, #8e87fd);
 .tod-combot-btn.open .chat-icon{opacity: 0;} 
 .tod-combot-btn.open .chat-txt{opacity: 1;} 
 .tod-combot-btn.open .btn-close{ width: 23px; opacity: 1;}
+
+/* 201027 [OP002-11515] T world 내 글로벌 T 바로가기 영역 적용 */
+.tod-i-global {display:inline-block; width:1.5rem; height:1.5rem; vertical-align:middle; background: url(/img/common/icon_global.png) no-repeat 0 0; background-size: 100% 100%}
+.tod-global-link {position:relative; margin:1.25rem 0 -0.3125rem 0; padding:0.9375rem 1.25rem 0 1.25rem; border-top:1px solid #f2f2f2}
+.tod-global-link .tod-gb-box {position:relative; display:flex;align-items: center;}
+.tod-global-link .tod-gb-box::after {position:absolute; right:0; top:50%; transform: translateY(-50%); display: inline-block; content: "";width: 0.41rem; height: 0.69rem;background: url(/img/ico/icon-link-arrow.png) no-repeat right center;background-size: 6.5px 11px; margin: 0 0 0.19rem 0.5rem;color: #000 !important}
+.tod-global-link .tod-gb-box .tod-txt {margin-left:1.25rem; font-size:0.9375rem;color:#000;line-height:1.06rem}
+.tod-global-link .tod-gb-box .i_beta {position:absolute; width:1.4375rem; height:0.6875rem; margin:-1.25rem 0 0 0.875rem}
+.tod-f-gb-area {position:relative; margin-top:1.875rem}
+.tod-f-gb-area .f-ltd {position:absolute; right:0; top:5px; margin-top:0 !important}
+.tod-f-gb-area .tod-f-gb-link a .tod-i-global {width:0.875rem;height:0.875rem}
+.tod-f-gb-area .tod-f-gb-link a em {font-size:0.6875rem; color:#bb0024; vertical-align:middle}
+.tod-f-gb-area .tod-f-gb-link .i_beta {width:1.4375rem; height:0.6875rem;}
+
