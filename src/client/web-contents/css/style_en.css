@@ -1063,6 +1063,8 @@
 
 .tod-miri-info .item.org { font-size: 1rem; color: #f76252; }
 
+.tod-miri-info .item.black { font-size: 1rem; color: #000; }
+
 .tod-miri-info .item .tit { width: 50%; text-align: left; }
 
 .tod-miri-info .item .data { width: 50%; text-align: right; }
