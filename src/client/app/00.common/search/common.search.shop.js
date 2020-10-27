@@ -12,8 +12,8 @@ Tw.CommonSearchShop = function (commonSearch) {
   this._searchInfo = commonSearch._searchInfo;
   this.$container = commonSearch.$container;
   this._historyService = commonSearch._historyService;
-  var svcInfo = commonSearch._svcInfo;
-  this._svcInfo = Tw.FormatHelper.isEmpty(svcInfo) || svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY ? {} : svcInfo;
+  this._svcInfo = commonSearch._svcInfo || {};
+  this._needLogin = Tw.FormatHelper.isEmpty(this._svcInfo) || this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY;
 
   this._locationInfoComponent = new Tw.LocationInfoComponent();
   this._tmapMakerComponent = new Tw.TmapMakerComponent();
@@ -60,7 +60,7 @@ Tw.CommonSearchShop.prototype = {
     this._cacheElements();
     this.customerAgentsearchComponent.registerHelper();
     // OP002-10922 비로그인/간편 로그인 유저도 지점/대리점 검색 가능
-    if (Tw.FormatHelper.isEmpty(this._svcInfo)){
+    if (this._needLogin){
       this._locInfo = {
         over14: true,
         locAgree: false
@@ -104,7 +104,7 @@ Tw.CommonSearchShop.prototype = {
    */
   _onLocationAlert: function () {
     // 미 로그인/간편 로그인은 로그인 페이지로
-    if (Tw.FormatHelper.isEmpty(this._svcInfo)) {
+    if (this._needLogin) {
       var path = location.pathname,
         search = location.search,
         hash = location.hash;
