@@ -46,7 +46,7 @@ Tw.CustomerAgentsearch.prototype = {
             { 'label-attr': 'id="Gwangju"', 'radio-attr': 'name="r2" id="gwangju"', txt: 'Gwangju' },
             { 'label-attr': 'id="Ulsan"', 'radio-attr': 'name="r2" id="ulsan"', txt: 'Ulsan' },
             { 'label-attr': 'id="Gyeongsangnam-do"', 'radio-attr': 'name="r2" id="gyeongsangnamdo"', txt: 'Gyeongsangnam-do' },
-            { 'label-attr': 'id="Busan"', 'radio-attr': 'name="r2" id="busan"', txt: 'Busan' },
+            { 'label-attr': 'id="Busan"', 'radio-attr': 'name="r2" id="busan"', txt: 'Busan' }
           ]
         }
       ],
@@ -61,7 +61,7 @@ Tw.CustomerAgentsearch.prototype = {
 
   _onOpenPopup: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-    if(this._uri==""||this._uri==null){
+    if(this._uri===''||this._uri===null){
       $layer.find('input#all').attr('checked', 'checked');
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
@@ -70,7 +70,7 @@ Tw.CustomerAgentsearch.prototype = {
 
   _goLoad: function (event) {
     var $uri = $(event.target).attr('id');
-    if($uri=="all"){
+    if($uri==='all'){
       this._historyService.replaceURL('/en/customer/agentsearch');
 
     }

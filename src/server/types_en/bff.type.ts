@@ -1,15 +1,15 @@
 
 export enum SVC_ATTR_NAME {
-  M1 = 'Mobile Phone',
-  M2 = 'Prepaid Phone',
-  M3 = 'T pocket Wifi',
+  M1 = 'Mobile',
+  M2 = 'Prepaid',
+  M3 = 'Pocket',
   M4 = 'T Login',
   M5 = 'T Wibro',
   S1 = 'Internet',
   S2 = 'IPTV',
   S3 = 'Landline',
   O1 = 'Point cam'
-}
+};
 
 export enum SVC_ATTR_E {
   MOBILE_PHONE = 'M1',
@@ -559,7 +559,7 @@ export const PRODUCT_REPLACED_RULE = {
     TARGET: ['999999997', '999,999,997', '이동전화 무제한'],
     RESULT: 'Unlimited mobile phone calls'
   }, {
-    TARGET: ['999999998', '999,999,998', '집·이동전화 무제한', '집전화 · 이동전화 무제한'],
+    TARGET: ['999999998', '999,999,998', '집·이동전화 무제한', '집전화·이동전화 무제한', '집전화 · 이동전화 무제한'],
     RESULT: 'Unlimited landline & mobile phone calls'
   }, {
     TARGET: ['상세참조'],
