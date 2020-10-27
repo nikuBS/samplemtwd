@@ -12,9 +12,10 @@ Tw.CommonSearchShop = function (commonSearch) {
   this._searchInfo = commonSearch._searchInfo;
   this.$container = commonSearch.$container;
   this._historyService = commonSearch._historyService;
-  this._svcInfo = commonSearch._svcInfo;
+  this._svcInfo = commonSearch._svcInfo || {};
   this._locationInfoComponent = new Tw.LocationInfoComponent();
   this._tmapMakerComponent = new Tw.TmapMakerComponent();
+  this._tidLanding = new Tw.TidLandingComponent();
   this.customerAgentsearchComponent = new Tw.CustomerAgentsearchComponent(this.$container, this._svcInfo);
   this._apiService = Tw.Api;
 
@@ -56,6 +57,14 @@ Tw.CommonSearchShop.prototype = {
     }
     this._cacheElements();
     this.customerAgentsearchComponent.registerHelper();
+    // OP002-10922 미로그인 유저도 지점/대리점 검색 가능
+    if (Tw.FormatHelper.isEmpty(this._svcInfo)){
+      this._locInfo = {
+        over14: true,
+        locAgree: false
+      };
+      return this._notAgreeLocation();
+    }
     var self = this;
     this._locationInfoComponent.checkLocationAgreementWithAge(function (res) {
       self._locInfo = res;
@@ -81,7 +90,28 @@ Tw.CommonSearchShop.prototype = {
 
   // handlebars 완료 후 이벤트 바인딩 하기
   _bindEvents: function () {
+    this.$container.on('click', '.fe-location-alert', $.proxy(this._onLocationAlert, this)); // 위치정보 이용동의 배너
     this.$container.on('click', '#fe-myLocation', $.proxy(this._requestCurrentPosition, this)); // 내 위치 버튼 클릭 이벤트
+    this.$container.on('click', '#fe-myLocation', $.proxy(this._requestCurrentPosition, this)); // 내 위치 버튼 클릭 이벤트
+  },
+
+  /**
+   * @function
+   * @desc 미로그인/간편로그인 로그인 페이지로 이동
+   * @private
+   */
+  _onLocationAlert: function () {
+    // 미 로그인/간편 로그인은 로그인 페이지로
+    if (Tw.FormatHelper.isEmpty(this._svcInfo)) {
+      var path = location.pathname,
+        search = location.search,
+        hash = location.hash;
+      search += !search ? '?' : '&';
+      search += 'date=' + new Date().getTime();
+      this._tidLanding.goLogin(path+search+hash);
+      return;
+    }
+    this._historyService.goLoad('/main/menu/settings/location');
   },
 
   /**
