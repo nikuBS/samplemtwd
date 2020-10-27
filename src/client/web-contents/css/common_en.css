@@ -9814,3 +9814,17 @@ button:focus span {
 .popup .popup-info.tod-eventpop-type1.sel-line-pop .bt-box .btn-floating{color:#000; font-size:1rem}
 .popup .popup-info.tod-eventpop-type1.sel-line-pop .popup-contents .need-agree{display:inline-block; color:#fff; font-size:0.8125rem; margin-top:1.25rem}
 .complete-title.tod-higher-pt{padding-top:100px !important}
+
+/* 200916 [OP002-10640] [글로벌T] OP.설정/에러페이지_에러페이지 */
+.tod-include-en .tit{font-size:1.3125rem; margin:0.9375rem 0 0.3125rem 0; line-height:1.5rem; }
+.tod-include-en .tit.en{font-size:1.1875rem; margin:0 0 0.5625rem 0; line-height:1.3125rem}
+.tod-include-en .txt{font-size:0.8125rem; line-height:18px; letter-spacing:-1px; margin-top:2.5rem}
+.tod-include-en .txt .break{display:block; padding-top:0.625rem}
+.tod-include-en .txt.en{letter-spacing:0; margin-top:0.8125rem}
+.tod-include-en .subTxt{font-size:0.8125rem; margin-top:1.25rem}
+
+.tod-include-en.complete-wrap{padding-top:3.125rem}
+.tod-include-en.complete-wrap .title-box .icon-comm-bi122{vertical-align:top}
+.tod-include-en.complete-wrap .title-box .icon-comm-bi122 + .tit{margin-top:1.25rem}
+.tod-include-en.complete-wrap .tx-contents{padding:1.25rem}
+/* 201019 chabot case style ( components.css 에서 common.css 이동. ) */
