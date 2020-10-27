@@ -96,7 +96,12 @@ Tw.CustomerAgentsearchMap.prototype = {
   _onLocationAlert: function () {
     // 미 로그인/간편 로그인은 로그인 페이지로
     if (Tw.FormatHelper.isEmpty(this._svcInfo)) {
-      this._tidLanding.goLogin();
+      var path = location.pathname,
+        search = location.search,
+        hash = location.hash;
+      search += !search ? '?' : '&';
+      search += 'date=' + new Date().getTime();
+      this._tidLanding.goLogin(path+search+hash);
       return;
     }
     this._historyService.goLoad('/main/menu/settings/location');
