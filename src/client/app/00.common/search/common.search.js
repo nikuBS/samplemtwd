@@ -1760,11 +1760,11 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
 
         if ( paidProdCnt === '0' ) {
-          this.$container.find('.fe-wire-paid-additions-cnt').removeAttr('href');
+          $('.fe-wire-paid-additions-cnt').removeAttr('href');
         }
 
         if ( unpaidProdCnt === '0' ) {
-          this.$container.find('.fe-wire-unpaid-additions-cnt').removeAttr('href');
+          $('.fe-wire-unpaid-additions-cnt').removeAttr('href');
         }
 
         $('.fe-prod-cnt-wireless').hide();
@@ -1804,15 +1804,15 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
         if ( disProdCnt === '0' ) {
-          this.$container.find('.fe-wireless-discount-additions-cnt').removeAttr('href');
+          $('.fe-wireless-discount-additions-cnt').removeAttr('href');
         }
 
         if ( addProdPayCnt === '0' ) {
-          this.$container.find('.fe-wireless-paid-additions-cnt').removeAttr('href');
+          $('.fe-wireless-paid-additions-cnt').removeAttr('href');
         }
 
         if ( addProdPayFreeCnt === '0' ) {
-          this.$container.find('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
+          $('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
         }
 
         $('.fe-prod-cnt-wireless').show();
