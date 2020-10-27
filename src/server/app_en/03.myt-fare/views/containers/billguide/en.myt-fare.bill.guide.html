@@ -37,7 +37,7 @@
                 <div class="cont-box">
                     <div class="user-month-bill">
                         <div class="this-month-bill">
-                            <p class="stit"><%=data.commDataInfo.selClaimDtM%>. Fees <span class="term"><%=data.commDataInfo.selStaDt%> ~ <%=data.commDataInfo.selEndDt%></span></p>
+                            <p class="stit"><%=data.commDataInfo.selClaimDtM%> Fees <span class="term"><%=data.commDataInfo.selStaDt%> ~ <%=data.commDataInfo.selEndDt%></span></p>
                             <p class="price"><span class="won">₩</span><%=data.commDataInfo.useAmtTot%></p>
                             <div class="btn-wrap">
                                 <button type="button"
@@ -51,6 +51,26 @@
                         </div>
                         <p class="msg-type2 mt4">Total of <span class="txt-point">₩<%=data.commDataInfo.discount%></span> discount received</p>
                     </div>
+                    <%_ if( data.miriAmt ){ _%>
+                    <div class="tod-miri-bill">
+                        <button type="button"
+                                data-href="/en/myt-fare/info/miri"
+                                data-id="bill-miri"              
+                                data-xt_eid="<%=data.xtEid.miri%>"
+                                data-xt_csid="NO" 
+                                data-xt_action="BC"
+                                class="btn-miri"
+                                onclick="goMiri();">                      
+                            <span class="inner-flex">
+                                <span class="tod-ico-miri"><span class="tod-blind">miri</span></span>
+                                <span class="txt-wrap">
+                                    ₩<span class="num"><%=data.miriAmt%></span> has been automatically<br>
+                                    deducted from your MIRI balance
+                                </span>
+                            </span>
+                        </button>
+                    </div>               
+                    <% } %>       
                     <%_ if( data.typeChk == 'A5' && data.lineDtlLst && data.lineDtlLst.length > 0){ _%>
                     <p class="info-charge-data">
                         The total charged amount for the number <br/>
@@ -97,6 +117,8 @@
    */
 
     });
-
+    function goMiri(){
+        document.location.href = "/en/myt-fare/info/miri";
+    }
 </script>
 <% include ../../components/end.component.html _%>

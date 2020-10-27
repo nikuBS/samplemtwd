@@ -1,7 +1,7 @@
 
 export enum SVC_ATTR_NAME {
-  M1 = 'Mobile Phone',
-  M2 = 'Prepaid Phone',
+  M1 = 'Mobile',
+  M2 = 'Prepaid',
   M3 = 'T pocket Wifi',
   M4 = 'T Login',
   M5 = 'T Wibro',

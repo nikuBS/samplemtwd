@@ -50,8 +50,8 @@ export default class CallPlan extends TwViewController {
               prodData.smryHtmlEngCtt = '';
             }
           
-        if ( contentsData!=null ) {
-          for(let i = 0; i < contentsData.length; i++) {
+        if ( contentsData != null ) {
+          for (let i = 0; i < contentsData.length; i++) {
             contentsData[i].popupDtlCtt = contentsData[i].popupDtlCtt.replace(changed, changing.changingCDN);
             contentsData[i].dtlCtt = contentsData[i].dtlCtt.replace(changed, changing.changingCDN);
             if (contentsData[i].dtlCtt === '<p>&nbsp;</p>') {
@@ -89,10 +89,9 @@ export default class CallPlan extends TwViewController {
       if ( env === 'prd' ) { // 운영
         return {'changingCDN' : 'https://cdnm.tworld.co.kr'};
       } else if ( env === 'stg' ) { // 스테이징
-        return {'changingCDN' : 'https://cdnm.tworld.co.kr'};
+        return {'changingCDN' : 'https://cdnm-stg.tworld.co.kr'};
       } else { // local, dev
-        return {'changingCDN' : 'https://cdnm.tworld.co.kr'}; // 원래는 cdnm-dev지만 테스트 위해 변경
+        return {'changingCDN' : 'https://cdnm-stg.tworld.co.kr'}; // 원래는 cdnm-dev지만 테스트 위해 변경
       }
     }
-
 }

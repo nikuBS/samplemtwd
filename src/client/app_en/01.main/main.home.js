@@ -74,7 +74,7 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
 
   setTimeout(function(){$(window).scrollTop(0);},100)
 
-  this._getProductData(this.$container.find('#plan-ul'));
+  this._getProductData(this.$container.find('#plan-ul'));// 홈화면 요금제 목록 표시
   
 
   // new Tw.XtractorService(this.$container);
@@ -106,11 +106,11 @@ Tw.MainHome.prototype = {
 
     // 조건문을 사용하기 위해
     Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+      return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
     });
 
     Handlebars.registerHelper('ifunEquals', function (arg1, arg2, options) {
-      return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+      return (arg1 !== arg2) ? options.fn(this) : options.inverse(this);
     });
   },
   
@@ -163,13 +163,13 @@ Tw.MainHome.prototype = {
       var tplPlanCard = Handlebars.compile(Tw.HOME_PLAN_TMPL);
       $planTemp.html(tplPlanCard({
         list: list
-      }))
+      }));
       
       skt_landing.widgets.widget_init(); // 이게 핵심
     }
   },
 
-  _parsePlanData: function(planData, productCode) {
+  _parsePlanData: function(planData) {
     if ( planData.code === Tw.API_CODE.CODE_00 ) {
       var CODE_5GX_PLAN = $('input[name="5gx_code"]').val();
       var CODE_T_PLAN = $('input[name="t_plan_code"]').val();
@@ -177,27 +177,28 @@ Tw.MainHome.prototype = {
 
       var dataList = planData.result.grpProdList;
       return dataList.reduce(function(arr, item) {
-        if ( item.prodGrpId === CODE_5GX_PLAN || item.prodGrpId === CODE_T_PLAN || item.prodGrpId === CODE_0_PLAN) { // 5GX PLAN, T PLAN, 0 PLAN 의 값만 추출
+        if ( item.prodGrpId === CODE_5GX_PLAN || item.prodGrpId === CODE_T_PLAN || item.prodGrpId === CODE_0_PLAN) { 
+          // 5GX PLAN, T PLAN, 0 PLAN 의 값만 추출
           var prodList = item.prodList;
-          var ariaSelected = "false";
-          var tempColor = "";
+          var ariaSelected = 'false';
+          var tempColor = '';
           var resultProdList = prodList.reduce(function(arr, item, index) {
             var odd_even_type = (index % 2) ? 'even' : 'odd'; // 홀수, 짝수를 구함.
             var basFeeInfo = Tw.ProductHelper.convProductBasfeeInfo(prodList[index].basFeeEngInfo);
             var basOfrVcallTmsEngCttTrans = prodList[index].basOfrVcallTmsEngCtt;
-            if(basOfrVcallTmsEngCttTrans=='Unlimited landline & mobile phone calls'){
+            if(basOfrVcallTmsEngCttTrans==='Unlimited landline & mobile phone calls'){
               basOfrVcallTmsEngCttTrans = 'Unlimited';
             }
             var eidvalue = '';
             if(Tw.BrowserHelper.isApp()){
               switch (prodList[index].prodId) {
-                case "NA00006405":
+                case 'NA00006405':
                   eidvalue = 'CMMA_A10_B79-42';
                   break;
-                case "NA00006404":
+                case 'NA00006404':
                   eidvalue = 'CMMA_A10_B79-43';
                   break;
-                case "NA00006403":
+                case 'NA00006403':
                   eidvalue = 'CMMA_A10_B79-44';
                   break;
                 case 'NA00006402':
@@ -237,13 +238,13 @@ Tw.MainHome.prototype = {
 
             } else {
               switch (prodList[index].prodId) {
-                case "NA00006405":
+                case 'NA00006405':
                   eidvalue = 'MWMA_A10_B79-5';
                   break;
-                case "NA00006404":
+                case 'NA00006404':
                   eidvalue = 'MWMA_A10_B79-6';
                   break;
-                case "NA00006403":
+                case 'NA00006403':
                   eidvalue = 'MWMA_A10_B79-7';
                   break;
                 case 'NA00006402':
@@ -290,8 +291,8 @@ Tw.MainHome.prototype = {
               return arr;
             }, []);
           if(item.prodGrpId === CODE_5GX_PLAN){
-            ariaSelected = "true"
-            tempColor = " five-gx";
+            ariaSelected = 'true';
+            tempColor = ' five-gx';
           }
           Object.assign(item, {
             'tab_index' : arr.length + 1,

@@ -95,6 +95,22 @@
                                 </span>
                             </button>
                         </li>
+                        <%_ if( data.miriAmt){ _%>
+                        <li>
+                            <button type="button"
+                                data-href="/en/myt-fare/info/miri" 
+                                data-id="bill-hot"                                
+                                data-xt_eid="<%=data.xtEid.miri%>"
+                                data-xt_csid="NO" 
+                                data-xt_action="BC"
+                                onclick="goMiri();">
+                                <span class="inner">
+                                    <span class="tit">MIRI Payments</span>
+                                    <span class="text type2">Balance ₩ <%=data.miriAmt%></span>
+                                </span>
+                            </button>
+                        </li>                        
+                        <% } %>                           
                     </ul>
                 </div>
                 <!--// .cont-box -->
@@ -147,8 +163,10 @@
 
     
     function goHotBill(){
-
         document.location.href = "/en/myt-fare/bill/hotbill";
+    }
+    function goMiri(){
+        document.location.href = "/en/myt-fare/info/miri";
     }
 
 

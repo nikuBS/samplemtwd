@@ -17,13 +17,18 @@ import StringHelper from '../../utils_en/string.helper';
 import CommonHelper from '../../utils_en/common.helper';
 import moment from 'moment';
 import BrowserHelper from '../../utils/browser.helper';
+import {MytFareInfoMiriService} from './services/info/myt-fare.info.miri.service';
 class MyTFareSubmainController extends TwViewController {
+  
+
   constructor() {
     super();
   }
 
+  private _miriService!: MytFareInfoMiriService;
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
     const thisMain = this;
     const BLOCK_ON_FIRST_DAY = false;
     const data: any = {
@@ -56,6 +61,11 @@ class MyTFareSubmainController extends TwViewController {
     if( test === '6month') return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
     if( test === '500' ) return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
 
+    //영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
+      res.render( 'submain/en.myt-fare.submain.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      return;
+    }
     //무선회선이 없는경우
     if( svcInfo.caseType === '02' || test === 'notLine' ) {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
@@ -68,13 +78,6 @@ class MyTFareSubmainController extends TwViewController {
       res.render('submain/en.myt-fare.submain.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
-
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
-      res.render( 'submain/en.myt-fare.submain.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
-      return;
-    }
-
    
     this.logger.info("## 대표회선 여부 [svcInfo.actRepYn] =>"+svcInfo.actRepYn);
     // 대표청구 여부
@@ -144,7 +147,12 @@ class MyTFareSubmainController extends TwViewController {
           //  //   dcAmt = Math.abs(this._parseInt(dcAmt));
           //     console.log("########## dcAMt=>"+dcAmt);
           //   }
-          res.render('en.myt-fare.submain.html', { data });
+          Observable.combineLatest([
+            this._miriService.getMiriBalance()
+          ]).subscribe((miri) => {          
+            data.miriAmt = miri;
+            res.render('en.myt-fare.submain.html', { data });
+          })
 
         } else {
           //최근 6개월 내 청구된 내역이 없습니다.
@@ -194,22 +202,12 @@ class MyTFareSubmainController extends TwViewController {
    */
   _requestUsageFee(req, res, data) {
     data.type = 'UF';
-    Observable.combineLatest(
-      this._getUsageFee()
-      // this.redisService.getData(this.bannerUrl),
-    ).subscribe(([ usage
-              /* microPay, contentPay, banner*/]) => {
+    Observable.combineLatest([
+      this._getUsageFee(),
+      this._miriService.getMiriBalance()
+    ]).subscribe(([ usage,miri]) => {
       if ( usage && usage.info ) {
         return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
-      /*
-        this.error.render(res, {
-          title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-          code: usage.info.code,
-          msg: usage.info.msg,
-          pageInfo: data.pageInfo,
-          svcInfo: data.svcInfo
-        });
-      */
       } else {
 
         // 사용요금
@@ -263,8 +261,9 @@ class MyTFareSubmainController extends TwViewController {
           //최근 6개월 내 청구된 내역이 없습니다.
           return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
         }
-
-        res.render('en.myt-fare.submain.html', { data });
+        data.miriAmt = miri;
+        this.logger.debug("### ============================================================" ,data);
+        return res.render('en.myt-fare.submain.html', { data });
       }
     });
   }
@@ -333,6 +332,7 @@ class MyTFareSubmainController extends TwViewController {
     return list;
   }
 
+ 
 
   // 사용요금 조회
   _getUsageFee() {

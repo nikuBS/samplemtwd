@@ -27,8 +27,8 @@ Tw.ProductCallplanMiri.prototype = {
     //_init : function(){
             if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
      //       if(true){
-              this._$confirm0.css("display","block");
-              this._$confirm1.css("display","block");
+              this._$confirm0.css('display','block');
+              this._$confirm1.css('display','block');
               this._$confirm0.on('click', $.proxy(this._loadpopup0, this));
               this._$confirm1.on('click', $.proxy(this._loadpopup1, this));
             }
@@ -56,13 +56,13 @@ Tw.ProductCallplanMiri.prototype = {
       
         _confirm: function () {
           $('.popup').remove();
-          if(this.crtVideo==0){
-            this._$video0.attr("allow","autoplay");
-            this._$video0.attr("src","https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0");
+          if(this.crtVideo === 0){
+            this._$video0.attr('allow','autoplay');
+            this._$video0.attr('src','https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0');
           }
-          if(this.crtVideo==1){
-            this._$video1.attr("allow","autoplay");
-            this._$video1.attr("src","https://www.youtube.com/embed/P9_32clrvLk?rel=0;amp;autoplay=1;amp;autopause=0");
+          if(this.crtVideo === 1){
+            this._$video1.attr('allow','autoplay');
+            this._$video1.attr('src','https://www.youtube.com/embed/P9_32clrvLk?rel=0;amp;autoplay=1;amp;autopause=0');
             }
           this._$confirm0.remove();
           this._$confirm1.remove();
