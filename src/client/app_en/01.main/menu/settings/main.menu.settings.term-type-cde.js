@@ -49,7 +49,7 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
         this._popupService.open({
           hbs: 'HO_04_05_01_02_01',
           title: res.result.title,
-          content: res.result.content.replace(/{{cdn}}/gi, Tw.Environment.cdn),
+          content: res.result.content.replace(/{{cdn}}/gi, Tw.Environment.cdn)
         });
       } else {
         Tw.Error(res.code, res.msg).pop();
