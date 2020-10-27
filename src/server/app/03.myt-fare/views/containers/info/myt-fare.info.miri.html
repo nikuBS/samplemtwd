@@ -49,7 +49,7 @@
                                 data.miriList.forEach( item => {
                             _%>
                             <div class="tod-miri-item fe-miri-item <%-noneCls%>">
-                                <div class="tod-miri-date"><span class="sp-date"><%-item[0].opDt%></span></div>
+                                <div class="tod-miri-date"><span class="sp-date"><%-item[0].opDtFmt%></span></div>
                                 <%_
                                     item.forEach( (subItem, idx) => {
                                     noneCls = rows > 19 ? 'none' : '';
@@ -72,15 +72,15 @@
                                         <span class="tit"><%-subItem.lineType.svcName%> <em><%-subItem.lineType.svcNumOrAddr%></em></span>
                                         <%# 청구요금 or 미납요금 있는경우 노출함.%>
                                         <%_
-                                            const invAmt = subItem.invAmt.replace(/[^0-9]/g, '');
-                                            const payAmt = subItem.payAmt.replace(/[^0-9]/g, '');
-                                            if(invAmt+payAmt > 0) {
-                                            const invCls = invAmt < 1 ? 'none' : '';
-                                            const payCls = payAmt < 1 ? 'none' : '';
+                                            const payAmt = subItem.payAmtText.replace(/[^0-9]/g, '');
+                                            const unpaidAmt = subItem.unPaidAmtText.replace(/[^0-9]/g, '');
+                                            if(payAmt+unpaidAmt > 0) {
+                                            const invCls = payAmt < 1 ? 'none' : '';
+                                            const payCls = unpaidAmt < 1 ? 'none' : '';
                                         _%>
                                         <span class="data">
-                                            <span class="data-item <%-invCls%>"><%-subItem.billMonth%>월 청구요금 <em><%-subItem.invAmt%>원</em></span>
-                                            <span class="data-item <%-payCls%>">미납요금 <em><%-subItem.payAmt%>원</em></span>
+                                            <span class="data-item <%-invCls%>"><%-subItem.billMonth%>월 청구요금 <em><%-subItem.payAmtText%>원</em></span>
+                                            <span class="data-item <%-payCls%>">미납요금 <em><%-subItem.unPaidAmtText%>원</em></span>
                                         </span>
                                         <%_}_%>
                                     </div>
@@ -109,7 +109,7 @@
                 <div class="cont-box noborder bgnone">
                     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                     <ul class="pg-chk-list02">
-                        <li><button class="btn-tip" aria-haspopup="true">MIRI 이용 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button id="TC000112" class="btn-tip" aria-haspopup="true">MIRI 이용 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->

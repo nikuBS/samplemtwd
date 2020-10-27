@@ -30,7 +30,7 @@ class FormatHelper {
   }
 
   /**
-   * @desc 벼일이 비어있는지 확인
+   * @desc 배열이 비어있는지 확인
    * @param array
    */
   static isEmptyArray(array: Array<any>): boolean {
