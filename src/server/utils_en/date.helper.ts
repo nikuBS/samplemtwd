@@ -139,6 +139,32 @@ class DateHelper {
 
   /**
    * @function
+   * @desc get month from date
+   * @param {Date|string} date YYYYMMDDhhmmss|none
+   * @returns {string} : 12
+   */
+  static getCurrentMonthName(date?: any): string {
+
+    const  MONTHS = {
+      '01' : 'Jan', 
+      '02' : 'Feb',
+      '03' : 'Mar',
+      '04' : 'Apr',
+      '05' : 'May',
+      '06' : 'Jun',
+      '07' : 'Jul',
+      '08' : 'Aug',
+      '09' : 'Sep',
+      '10' : 'Oct',
+      '11' : 'Nov',
+      '12' : 'Dec'
+    }; 
+    
+    return MONTHS[moment(this.convDateFormat(date)).format('M')];
+  }  
+
+  /**
+   * @function
    * @desc get year from date
    * @param {Date|string} date YYYYMMDDhhmmss|none
    * @returns {string} : 2018

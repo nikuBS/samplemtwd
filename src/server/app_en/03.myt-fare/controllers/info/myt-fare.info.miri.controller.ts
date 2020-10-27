@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import {SVC_ATTR_NAME} from '../../../../types_en/bff.type';
 import StringHelper from '../../../../utils_en/string.helper';
 import DateHelper from '../../../../utils_en/date.helper';
+import CommonHelper from '../../../../utils_en/common.helper';
 import FormatHelper from '../../../../utils_en/format.helper';
 import {API_CMD, API_CODE, API_VERSION} from '../../../../types_en/api-command.type';
 import {MYT_FARE_BILL_GUIDE, MYT_INFO_MIRI, MYT_JOIN_WIRE_SVCATTRCD} from '../../../../types_en/string.type';
@@ -36,6 +37,7 @@ class MyTFareInfoMiri extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    CommonHelper.addCurLineInfo(svcInfo);
     const {line = '', date = ''} = req.query;
     this._info = {
       svcInfo,
@@ -43,6 +45,35 @@ class MyTFareInfoMiri extends TwViewController {
       date,
       childInfo
     };
+
+    const defaultData = {
+      svcMgmtNum: svcInfo.svcMgmtNum,
+      svcAttrCd: svcInfo.svcAttrCd,
+      allSvc: allSvc,
+      errorMsg: ''
+    };
+
+
+    //무선회선이 없는경우
+    if(svcInfo.caseType === '02') {
+      defaultData.errorMsg = 'LINE_NOT_EXIST';
+      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      return;
+    }
+
+    //무선 회선은 있지만 등록된 회선이 없는경우
+    if(svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 ) {
+      defaultData.errorMsg = 'LINE_NOT_REGIST';
+      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      return;
+    }
+
+    //영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1  ) {
+      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      return;
+    }
+    
     this._miriService = new MytFareInfoMiriService(req, res, svcInfo, req.query.line);
     this.getMiriData().subscribe((resp) => {
       if (!resp.code) {
@@ -110,13 +141,14 @@ class MyTFareInfoMiri extends TwViewController {
       FormatHelper.isEmptyArray(result.invSvcList[0].svcList)) {
       return returnData;
     }
-
+    
     const svc = result.invSvcList[0].svcList.find( item => item.svcMgmtNum === svcMgmtNum);
     if (!svc) {
       return returnData;
     }
-
+    
     const {name} = svc;
+    //returnData.svcName = SVC_ATTR_NAME[svc.svcAttrCd];
     returnData.svcName = this.getSvcType(name);
     returnData.svcNumOrAddr = name.substring(name.indexOf('(') + 1, name.indexOf(')'));
 
@@ -180,30 +212,30 @@ class MyTFareInfoMiri extends TwViewController {
     const {PHONE_TYPE_0, TEL_TYPE_1} = MYT_FARE_BILL_GUIDE;
     // svcType
     if ( nm.indexOf(M1) + nm.indexOf(PHONE_TYPE_0) > -2) { // 이동전화
-      return M1;   // 휴대폰
+      return SVC_ATTR_NAME.M1;   // 휴대폰
     } else if ( nm.indexOf(M2) !== -1) {
-      return M2;      // 선불폰
+      return SVC_ATTR_NAME.M2;      // 선불폰
 
     } else if ( nm.indexOf(replace(M3)) !== -1) {
-      return M3;      // T pocket Fi
+      return SVC_ATTR_NAME.M3;      // T pocket Fi
 
     } else if ( nm.indexOf(replace(M3)) !== -1) {
-      return M4;      // T Login
+      return SVC_ATTR_NAME.M4;      // T Login
 
     } else if ( nm.indexOf(replace(M5)) !== -1) {
-      return M5;      // T Wibro
+      return SVC_ATTR_NAME.M5;      // T Wibro
 
     } else if ( nm.indexOf(S1) !== -1) {
-      return S1;      // 인터넷
+      return SVC_ATTR_NAME.S1;      // 인터넷
 
     } else if ( nm.indexOf(S2.toLowerCase()) !== -1) {
-      return S2;      // TV
+      return SVC_ATTR_NAME.S2;      // TV
 
     } else if ( nm.indexOf(S3) + nm.indexOf(TEL_TYPE_1) > -2 ) {
-      return S3;      // 집전화
+      return SVC_ATTR_NAME.S3;      // 집전화
 
     } else if ( nm.indexOf(O1) !== -1) {
-      return O1;      // 포인트캠
+      return SVC_ATTR_NAME.O1;      // 포인트캠
     }
     return '';
   }
@@ -223,14 +255,14 @@ class MyTFareInfoMiri extends TwViewController {
         ...item,
         lineType: this.getLineType(item.svcMgmtNum), // 회선정보
         opDt: DateHelper.getShortDateWithFormat(item.opDt, 'YY.M.D'), // 처리일자
-        billMonth: DateHelper.getAddDays(item.invDt, 1, 'M'), // 청구월
+        billMonth: DateHelper.getCurrentMonthName(item.opDt), // 청구월
         ppayAmt: FormatHelper.addComma(item.ppayAmt), // 처리금액
         invAmt: FormatHelper.addComma(item.invAmt), // 청구금액
         payAmt: FormatHelper.addComma(item.payAmt), // 미납금액
         ppayBamt: FormatHelper.addComma(item.ppayBamt), // MIRI 잔액
       };
     });
-
+    
     const datas = new Map<string, any>();
     // Map에 처리일자별 배열로 넣어준다.
     data.forEach( val => {
