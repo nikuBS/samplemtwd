@@ -67,6 +67,11 @@ class MyTFareBillHotbill extends TwViewController {
       return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
     }
     
+    //영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notphone'  ) {
+      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      return;
+    }  
     //무선회선이 없는경우
     if(svcInfo.caseType === '02' || test === 'notLine' ) {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
@@ -78,12 +83,6 @@ class MyTFareBillHotbill extends TwViewController {
     if(svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 || test === 'notRegi') {
       defaultData.errorMsg = 'LINE_NOT_REGIST';
       res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
-      return;
-    }
-
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notphone'  ) {
-      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }
     
