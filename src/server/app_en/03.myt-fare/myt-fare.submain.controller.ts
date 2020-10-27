@@ -149,7 +149,12 @@ class MyTFareSubmainController extends TwViewController {
           //  //   dcAmt = Math.abs(this._parseInt(dcAmt));
           //     console.log("########## dcAMt=>"+dcAmt);
           //   }
-          res.render('en.myt-fare.submain.html', { data });
+          Observable.combineLatest([
+            this._miriService.getMiriBalance()
+          ]).subscribe((miri) => {          
+            data.miriAmt = miri;
+            res.render('en.myt-fare.submain.html', { data });
+          })
 
         } else {
           //최근 6개월 내 청구된 내역이 없습니다.
@@ -259,7 +264,8 @@ class MyTFareSubmainController extends TwViewController {
           return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
         }
         data.miriAmt = miri;
-        res.render('en.myt-fare.submain.html', { data });
+        this.logger.debug("### ============================================================" ,data);
+        return res.render('en.myt-fare.submain.html', { data });
       }
     });
   }
