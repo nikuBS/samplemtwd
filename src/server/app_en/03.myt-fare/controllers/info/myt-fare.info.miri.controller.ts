@@ -7,7 +7,7 @@
 
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common_en/controllers/tw.view.controller';
-import {MytFareInfoMiriService} from '../../../../services_en/info/myt-fare.info.miri.service';
+import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
 import { Observable } from 'rxjs/Observable';
 import {SVC_ATTR_NAME} from '../../../../types_en/bff.type';
 import StringHelper from '../../../../utils_en/string.helper';
