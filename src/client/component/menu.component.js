@@ -447,8 +447,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     _url += '/my/booking/list';
     // url 이 이용안내 > "나의 매장상담 예약이력" 인 경우.
     if (url.indexOf(_url) > -1) {
-      // OP002-10922 미로그인인 경우. 나의 예약 페이지가 아닌 로그인 페이지로 이동.
-      if (Tw.FormatHelper.isEmpty(this._svcInfo)) {
+      // OP002-10922 비로그인/간편 로그인. 나의 예약 페이지가 아닌 로그인 페이지로 이동.
+      if (Tw.FormatHelper.isEmpty(this._svcInfo) || this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY) {
         return this._onClickLogin();
       }
       url += '?sso_login_id='+this._svcInfo.userId+'&svc_num=' + this._svcInfo.svcMgmtNum;
