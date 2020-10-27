@@ -17,7 +17,7 @@ import StringHelper from '../../utils_en/string.helper';
 import CommonHelper from '../../utils_en/common.helper';
 import moment from 'moment';
 import BrowserHelper from '../../utils/browser.helper';
-import {MytFareInfoMiriService} from '../../services_en/info/myt-fare.info.miri.service';
+import {MytFareInfoMiriService} from './services/info/myt-fare.info.miri.service';
 class MyTFareSubmainController extends TwViewController {
   
 

@@ -31,9 +31,9 @@ Tw.CustomerUseguideCommon.prototype = {
     //_init : function(){ 
       if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
       //if(true){
-        this._$confirm1.css("display","block");
-        this._$confirm2.css("display","block");
-        this._$confirm3.css("display","block");
+        this._$confirm1.css('display','block');
+        this._$confirm2.css('display','block');
+        this._$confirm3.css('display','block');
         this._$confirm1.on('click', $.proxy(this._loadpopup1, this));
         this._$confirm2.on('click', $.proxy(this._loadpopup2, this));
         this._$confirm3.on('click', $.proxy(this._loadpopup3, this));
@@ -70,17 +70,17 @@ Tw.CustomerUseguideCommon.prototype = {
 
   _confirm: function () {
     $('.popup').remove();
-    if(this.crtVideo==1){
-      this._$video1.attr("allow","autoplay");
-      this._$video1.attr("src","https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0");
+    if(this.crtVideo===1){
+      this._$video1.attr('allow','autoplay');
+      this._$video1.attr('src','https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0');
     }
-    if(this.crtVideo==2){
-      this._$video2.attr("allow","autoplay");
-      this._$video2.attr("src","https://www.youtube.com/embed/JVu2wc1GBpg?rel=0;amp;autoplay=1;amp;autopause=0");
+    if(this.crtVideo===2){
+      this._$video2.attr('allow','autoplay');
+      this._$video2.attr('src','https://www.youtube.com/embed/JVu2wc1GBpg?rel=0;amp;autoplay=1;amp;autopause=0');
       }
-    if(this.crtVideo==3){
-      this._$video3.attr("allow","autoplay");
-      this._$video3.attr("src","https://www.youtube.com/embed/lHqxkq_WfUk?rel=0;amp;autoplay=1;amp;autopause=0");
+    if(this.crtVideo===3){
+      this._$video3.attr('allow','autoplay');
+      this._$video3.attr('src','https://www.youtube.com/embed/lHqxkq_WfUk?rel=0;amp;autoplay=1;amp;autopause=0');
     }
     this._$confirm1.remove();
     this._$confirm2.remove();
