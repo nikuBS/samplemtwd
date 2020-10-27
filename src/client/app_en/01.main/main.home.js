@@ -74,7 +74,7 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
 
   setTimeout(function(){$(window).scrollTop(0);},100)
 
-  this._getProductData(this.$container.find('#plan-ul'));
+  this._getProductData(this.$container.find('#plan-ul'));// 홈화면 요금제 목록 표시
   
 
   // new Tw.XtractorService(this.$container);
