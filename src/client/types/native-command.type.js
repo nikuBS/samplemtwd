@@ -98,6 +98,7 @@ Tw.NTV_STORAGE = {
   COACH_QUICK: 'coachQuick',
   COACH_MYTFARE_INFO_HISTORY_SEARCH: 'coachMyTFareInfoHistorySearch',
   COACH_MYTFARE_BILL_SELECT: 'coachMyTFareBillSelect',
+  COACH_MYTFARE_MIRI: 'coachMyTFareMIRI',
   COACH_MYTDATA_HOTDATA_SHARE: 'coachMyTDataHotDataShare',
   COACH_PRODUCT_MOBILEPLAN_TOTAL: 'coachProductMobilePlanTotal',
   COMMON_MEMBER_LINE_GUIDE: 'commonMemberLineGuide',

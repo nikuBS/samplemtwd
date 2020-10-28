@@ -61,7 +61,7 @@ Tw.CustomerAgentsearch.prototype = {
 
   _onOpenPopup: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-    if(this._uri===''||this._uri===null){
+    if(this._uri===''||this._uri===null||this._uri===undefined){
       $layer.find('input#all').attr('checked', 'checked');
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}

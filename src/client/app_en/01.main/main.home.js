@@ -190,7 +190,7 @@ Tw.MainHome.prototype = {
               basOfrVcallTmsEngCttTrans = 'Unlimited';
             }
             var eidvalue = '';
-            if(Tw.BrowserHelper.isApp()){
+            if(Tw.BrowserHelper.isApp()){ // 공통 선언된 함수를 안타서 해당 부분 js에서 처리
               switch (prodList[index].prodId) {
                 case 'NA00006405':
                   eidvalue = 'CMMA_A10_B79-42';

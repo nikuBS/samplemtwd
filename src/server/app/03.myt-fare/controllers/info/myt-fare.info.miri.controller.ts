@@ -6,16 +6,15 @@
  */
 
 import {NextFunction, Request, Response} from 'express';
-import TwViewController from '../../../../common_en/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
 import { Observable } from 'rxjs/Observable';
-import {SVC_ATTR_NAME} from '../../../../types_en/bff.type';
-import StringHelper from '../../../../utils_en/string.helper';
-import DateHelper from '../../../../utils_en/date.helper';
-import CommonHelper from '../../../../utils_en/common.helper';
-import FormatHelper from '../../../../utils_en/format.helper';
-import {API_CMD, API_CODE, API_VERSION} from '../../../../types_en/api-command.type';
-import {MYT_FARE_BILL_GUIDE, MYT_INFO_MIRI, MYT_JOIN_WIRE_SVCATTRCD} from '../../../../types_en/string.type';
+import {SVC_ATTR_NAME} from '../../../../types/bff.type';
+import StringHelper from '../../../../utils/string.helper';
+import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
+import {API_CMD, API_CODE, API_VERSION} from '../../../../types/api-command.type';
+import {MYT_FARE_BILL_GUIDE, MYT_INFO_MIRI, MYT_JOIN_WIRE_SVCATTRCD} from '../../../../types/string.type';
 
 class MyTFareInfoMiri extends TwViewController {
   private _miriService!: MytFareInfoMiriService;
@@ -37,7 +36,6 @@ class MyTFareInfoMiri extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    CommonHelper.addCurLineInfo(svcInfo);
     const {line = '', date = ''} = req.query;
     this._info = {
       svcInfo,
@@ -45,39 +43,10 @@ class MyTFareInfoMiri extends TwViewController {
       date,
       childInfo
     };
-
-    const defaultData = {
-      svcMgmtNum: svcInfo.svcMgmtNum,
-      svcAttrCd: svcInfo.svcAttrCd,
-      allSvc: allSvc,
-      errorMsg: ''
-    };
-
-
-    //무선회선이 없는경우
-    if(svcInfo.caseType === '02') {
-      defaultData.errorMsg = 'LINE_NOT_EXIST';
-      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
-      return;
-    }
-
-    //무선 회선은 있지만 등록된 회선이 없는경우
-    if(svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 ) {
-      defaultData.errorMsg = 'LINE_NOT_REGIST';
-      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
-      return;
-    }
-
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1  ) {
-      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
-      return;
-    }
-    
     this._miriService = new MytFareInfoMiriService(req, res, svcInfo, req.query.line);
     this.getMiriData().subscribe((resp) => {
       if (!resp.code) {
-        res.render('info/en.myt-fare.info.miri.html', {
+        res.render('info/myt-fare.info.miri.html', {
           svcInfo,
           pageInfo,
           data: this.parseData(resp)
@@ -141,14 +110,13 @@ class MyTFareInfoMiri extends TwViewController {
       FormatHelper.isEmptyArray(result.invSvcList[0].svcList)) {
       return returnData;
     }
-    
+
     const svc = result.invSvcList[0].svcList.find( item => item.svcMgmtNum === svcMgmtNum);
     if (!svc) {
       return returnData;
     }
-    
+
     const {name} = svc;
-    //returnData.svcName = SVC_ATTR_NAME[svc.svcAttrCd];
     returnData.svcName = this.getSvcType(name);
     returnData.svcNumOrAddr = name.substring(name.indexOf('(') + 1, name.indexOf(')'));
 
@@ -212,30 +180,30 @@ class MyTFareInfoMiri extends TwViewController {
     const {PHONE_TYPE_0, TEL_TYPE_1} = MYT_FARE_BILL_GUIDE;
     // svcType
     if ( nm.indexOf(M1) + nm.indexOf(PHONE_TYPE_0) > -2) { // 이동전화
-      return SVC_ATTR_NAME.M1;   // 휴대폰
+      return M1;   // 휴대폰
     } else if ( nm.indexOf(M2) !== -1) {
-      return SVC_ATTR_NAME.M2;      // 선불폰
+      return M2;      // 선불폰
 
     } else if ( nm.indexOf(replace(M3)) !== -1) {
-      return SVC_ATTR_NAME.M3;      // T pocket Fi
+      return M3;      // T pocket Fi
 
     } else if ( nm.indexOf(replace(M3)) !== -1) {
-      return SVC_ATTR_NAME.M4;      // T Login
+      return M4;      // T Login
 
     } else if ( nm.indexOf(replace(M5)) !== -1) {
-      return SVC_ATTR_NAME.M5;      // T Wibro
+      return M5;      // T Wibro
 
     } else if ( nm.indexOf(S1) !== -1) {
-      return SVC_ATTR_NAME.S1;      // 인터넷
+      return S1;      // 인터넷
 
     } else if ( nm.indexOf(S2.toLowerCase()) !== -1) {
-      return SVC_ATTR_NAME.S2;      // TV
+      return S2;      // TV
 
     } else if ( nm.indexOf(S3) + nm.indexOf(TEL_TYPE_1) > -2 ) {
-      return SVC_ATTR_NAME.S3;      // 집전화
+      return S3;      // 집전화
 
     } else if ( nm.indexOf(O1) !== -1) {
-      return SVC_ATTR_NAME.O1;      // 포인트캠
+      return O1;      // 포인트캠
     }
     return '';
   }
@@ -249,31 +217,82 @@ class MyTFareInfoMiri extends TwViewController {
     return StringHelper.phoneStringToDash(strCellphoneNum.replace(/-/g, ''));
   }
 
+  /**
+   * @desc 청구/미납금액 가져오기
+   * payAmt: 대체금액 필드. 청구금액에서 MIRI 납부된 금액
+   * @param originItem
+   * @param item
+   * @private
+   */
+  private getPaymentAmount(originItem: any, item: any) {
+    originItem = originItem || item;
+    // 청구금액 계산
+    originItem.billMonth = originItem.billMonth || '';
+    originItem.payAmtText = originItem.payAmtText || '0';
+    originItem.unPaidAmtText = originItem.unPaidAmtText || '0';
+    // 4: MIRI 선납 차감
+    if (item.payClCd !== '4') {
+      return item;
+    }
+
+    if ( (item.payAmt || 0) > 0 && (item.invDt || '').length === 8) {
+      const opDtM = DateHelper.getShortDateWithFormat(item.opDt, 'M'); // 처리 월
+      const invDtM = DateHelper.getAddDays(item.invDt, 1, 'M'); // 청구 월
+      // 처리 '월' 과 청구 '월' 이 같은경우만 청구금액, 다른 경우는 미납금액 sum
+      if (opDtM === invDtM) {
+        originItem.billMonth = invDtM;
+        originItem.payAmtText = FormatHelper.addComma(item.payAmt);
+      } else { // 미납금액 처리로직
+        originItem.unPaidAmtText = originItem.unPaidAmtText.replace(/[^0-9]/g, '');
+        const unpaid = parseInt(originItem.unPaidAmtText, 10);
+        originItem.unPaidAmtText = unpaid + parseInt(item.payAmt, 10);
+        originItem.unPaidAmtText = FormatHelper.addComma(originItem.unPaidAmtText.toString());
+      }
+    }
+    return originItem;
+  }
+
   private parseData(resp: any): any {
-    const data = resp.map( item => {
-      return {
+    const datas = new Map<string, any>(); // 월 별로 그룹핑 할 Map
+    resp.map( item => {
+      const parseData = {
         ...item,
         lineType: this.getLineType(item.svcMgmtNum), // 회선정보
-        opDt: DateHelper.getShortDateWithFormat(item.opDt, 'YY.M.D'), // 처리일자
-        billMonth: DateHelper.getCurrentMonthName(item.opDt), // 청구월
+        opDtFmt: DateHelper.getShortDateWithFormat(item.opDt, 'YY.M.D'), // 처리일자
         ppayAmt: FormatHelper.addComma(item.ppayAmt), // 처리금액
-        invAmt: FormatHelper.addComma(item.invAmt), // 청구금액
-        payAmt: FormatHelper.addComma(item.payAmt), // 미납금액
-        ppayBamt: FormatHelper.addComma(item.ppayBamt), // MIRI 잔액
+        ppayBamt: FormatHelper.addComma(item.ppayBamt) // MIRI 잔액
       };
-    });
-    
-    const datas = new Map<string, any>();
-    // Map에 처리일자별 배열로 넣어준다.
-    data.forEach( val => {
-      if (!datas.has(val.opDt)) {
-        datas.set(val.opDt, []);
+
+      if (!datas.has(parseData.opDt)) {
+        datas.set(parseData.opDt, []);
       }
-      datas.get(val.opDt).push(val);
+      // 월별로 Map에 넣어준다.
+      datas.get(parseData.opDt).push(parseData);
     });
+
+    let totalCnt = 0;
+    // 월별로 넣은 데이터를 다시 같은 달의 미납금액들을 merge 하여 sum 해준다.
+    const miriList = Array.from(datas.values()).map( item => {
+      const sumData = item.reduce( (acc, cur) => {
+        // '키' 를 서비스 관리번호 와 수납구분코드 로 묶어서 처리한다. 같은달에 다른 회선 및 다른 항목(예: 충전, 환불) 은 노출될 수 있다.
+        const _key = cur.svcMgmtNum + cur.payClCd;
+        const _item = acc[_key];
+        // 누적 변수에 '키' 가 없으면 현재 데이터를 넣는다.
+        if (!_item) {
+          acc[_key] = cur;
+        }
+        this.getPaymentAmount(_item, cur);
+        return acc;
+      }, {});
+
+      const convertSumData = Object.keys(sumData).map( key => sumData[key]);
+      totalCnt += convertSumData.length;
+      return convertSumData;
+    });
+
     return {
-      totalCnt: data.length,
-      miriList: Array.from(datas.values()) // Map 의 값들을 Array 로 변환해서 리턴한다.
+      totalCnt,
+      miriList
     };
   }
 

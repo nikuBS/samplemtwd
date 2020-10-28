@@ -20,7 +20,7 @@ Tw.CustomerFaq = function (rootEl) {
 
 Tw.CustomerFaq.prototype = {
   _init: function () {// 필터 별 분기
-    if(this._uri==='' || this._uri===null || this._uri === 'tworldguide'){
+    if(this._uri==='' || this._uri===null || this._uri === 'tworldguide' || this._uri === undefined){
       this.$allContentsBtn.on('click', $.proxy(this._showContent_all_tworldguide, this));
     }
     else if(this._uri === 'appAddOns' || this._uri === 'roaming'){
@@ -128,7 +128,7 @@ Tw.CustomerFaq.prototype = {
 
   _onOpenPopup: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-    if(this._uri===''||this._uri===null){
+    if(this._uri==='' || this._uri===null || this._uri === undefined){
       $layer.find('input#all').attr('checked', 'checked');
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}

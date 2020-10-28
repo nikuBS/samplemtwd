@@ -43,18 +43,18 @@ Tw.CommonMemberSloginAos.prototype = {
     ATH1005: 'ATH1005'
   },
   SMS_MSG: {
-    ATH1004: 'The information entered is incorrect. 확인 후 재입력해 주세요.',     // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
-    ATH1005: '휴대폰번호 입력오류',     // 휴대폰번호 입력오류
-    ATH2003: '재전송 제한시간이 지난 후에 이용하시기 바랍니다.',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
-    ATH2001: '시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주십시오.',
-    ATH2006: '제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
-    ATH2007: '입력하신 인증번호가 맞지 않습니다.',     // 입력하신 인증번호가 맞지 않습니다.
-    ATH2008: '인증번호를 입력할 수 있는 시간이 초과하였습니다.',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
-    ATH2009: '시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주십시오.',
-    ATH1221: '인증번호 유효시간이 경과되었습니다.',     // 인증번호 유효시간이 경과되었습니다.
-    ATH2011: '인증번호의 입력 오류 횟수가 초과 되었습니다.',
-    ATH2013: '이미 인증을 받은번호입니다.',
-    ATH2014: '잘못된 인증요청입니다.',
+    ATH1004: 'The information entered is incorrect. Please try again.',     // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
+    ATH1005: 'Incorrect mobile phone number',     // 휴대폰번호 입력오류
+    ATH2003: 'Please try again after waiting for awhile',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
+    ATH2001: 'SMS service is temporarily unavailable. We apologize for the inconvenience caused. Please try again later.',
+    ATH2006: 'Exceeded number of times verification numbers can be sent within the time limit',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
+    ATH2007: 'Invalid verification number entered. Please try again. ',     // 입력하신 인증번호가 맞지 않습니다.
+    ATH2008: 'Verification number expired',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+    ATH2009: 'SMS service is temporarily unavailable. We apologize for the inconvenience caused. Please try again later.',
+    ATH1221: 'Time has run out',     // 인증번호 유효시간이 경과되었습니다.
+    ATH2011: 'Exceeded number of attempts to enter verification number',
+    ATH2013: 'Used verification number',
+    ATH2014: 'Invalid verification request',
     ICAS3101: 'Verification number cannot be sent to this mobile number',
     ICAS3162: 'Verification number cannot be sent to this mobile number'
   },

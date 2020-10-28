@@ -11,23 +11,34 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import {API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR, SESSION_CMD} from '../../types/api-command.type';
+import {API_CMD, API_CODE, API_TAX_REPRINT_ERROR, SESSION_CMD} from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import {SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
 import CommonHelper from '../../utils/common.helper';
+import {MytFareInfoMiriService} from './services/info/myt-fare.info.miri.service';
 
 class MyTFareSubmainController extends TwViewController {
+
+  private _miriService!: MytFareInfoMiriService;
+  private _datas: any = {};
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    // this._miriService = new MytFareInfoMiriService(svcInfo.svcMgmtNum, req, res);
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
+    this._datas = {
+      res,
+      svcInfo,
+      pageInfo
+    };
     const BLOCK_ON_FIRST_DAY = false;
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
-      pageInfo: pageInfo,
+      pageInfo,
       // 소액결제 버튼 노출 여부
       isMicroPayment: false,
       // 납부청구 관련 버튼 노출 여부
@@ -45,110 +56,84 @@ class MyTFareSubmainController extends TwViewController {
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
     CommonHelper.addCurLineInfo(data.svcInfo);
 
-    // 페이지url 통합으로 삭제 DV001-16372
-    /*if ( req.params && req.params[0] === '/usagefee' ) {
-      data.type = 'UF';
-      if ( req.query && req.query.count ) {
-        data.svcCount = parseInt(req.query.count, 10);
-      }
-    }*/
-    // this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
-
     // 다른 페이지를 찾고 계신가요 통계코드 추가
     this.getXtEid(data);
     if ( data.svcInfo.svcAttrCd === 'M2' ) {
       data.type = 'UF';
       this._requestPPS(req, res, data);
-    } else {
+      return;
+    }
 
-      // [DV001-15583] Broadband 인 경우에 대한 예외처리 수정
-      if ( svcInfo.actCoClCd === 'B' ) {
-        data.type = 'UF';
-        data.isBroadBand = true;
-      }
+    this._miriService.getMiriBalance().subscribe(miriBalance => {
+      data.miriBalance = miriBalance; // 미리납부 금액 잔액
+      this.requestData({
+        svcInfo,
+        data,
+        req,
+        res
+      });
+    });
 
-      // 대표청구 여부
-      if ( svcInfo.actRepYn === 'Y' ) {
+  }
 
-        // 페이지url 통합으로 삭제 DV001-16372
-        /*if ( data.type === 'UF' ) {
-          // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
-          res.redirect('/myt-fare/submain');
-        }*/
+  private requestData(args: any): any {
+    const {svcInfo, data, req, res} = args;
 
+    // [DV001-15583] Broadband 인 경우에 대한 예외처리 수정
+    if ( svcInfo.actCoClCd === 'B' ) {
+      data.type = 'UF';
+      data.isBroadBand = true;
+    }
 
-        this.apiService.request(API_CMD.BFF_05_0203, {}).subscribe((resp) => {
-          if ( resp.code === API_CODE.CODE_00 ) {
-            // OP002-2986. 통합청구에서 해지할경우(개별청구) 청구번호가 바뀐다고함. 그럼 성공이지만 결과를 안준다고 함.
-            if (!resp.result || FormatHelper.isEmpty(resp.result.invDt)) {
-              this.error.render(res, {
-                title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-                code: API_CODE.CODE_500,
-                msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA,
-                pageInfo: data.pageInfo,
-                svcInfo: data.svcInfo
-              });
-            }
-            const claim = resp.result;
-
-            // PPS, 휴대폰이 아닌 경우는 서비스명 노출
-            if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
-              data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
-            }
-
-            // 청구요금
-            if ( claim && claim.invDt && claim.invDt.length > 0 ) {
-              data.claim = claim;
-              data.claimFirstDay = DateHelper.getShortFirstDate(claim.invDt);
-              data.claimLastDay = DateHelper.getShortLastDate(claim.invDt);
-              // 사용요금
-              // const usedAmt = parseInt(claim.useAmtTot, 10);
-              // data.claimUseAmt = FormatHelper.addComma(usedAmt.toString() || '0');
-              data.claimUseAmt = FormatHelper.addComma((this._parseInt(claim.totInvAmt) + Math.abs(this._parseInt(claim.dcAmt))).toString() );
-              // 할인요금
-              // const disAmt = Math.abs(claim.deduckTotInvAmt);
-              // data.claimDisAmt = FormatHelper.addComma((disAmt.toString() || '0'));
-              data.claimDisAmt = claim.dcAmt || '0';
-              data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(data.claimDisAmt))).toString() );
-
-              // 미납요금
-              // data.claimColBamt = claim.colBamt || '0';
-
-              // Total
-              data.claimPay = claim.totInvAmt || '0';
-            } else {
-              data.isRealTime = false;
-            }
-            this._requestClaim(req, res, data);
-
-          } else {
-
-            // SKB(청구대표회선)인 경우 오류code 처리
-            if ( resp.code === 'BIL0011' ) {
-              data.isBroadBand = true;
-              this._requestUsageFee(req, res, data);
-              return;
-            }
-
-            this.error.render(res, {
+    // 대표청구 여부
+    if ( svcInfo.actRepYn === 'Y' ) {
+      this.apiService.request(API_CMD.BFF_05_0203, {}).subscribe((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          // OP002-2986. 통합청구에서 해지할경우(개별청구) 청구번호가 바뀐다고함. 그럼 성공이지만 결과를 안준다고 함.
+          if (!resp.result || FormatHelper.isEmpty(resp.result.invDt)) {
+            return this.errorRender({
               title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-              code: resp.code,
-              msg: resp.msg,
-              pageInfo: data.pageInfo,
-              svcInfo: data.svcInfo
+              code: API_CODE.CODE_500,
+              msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA,
             });
           }
-        });
+          const claim = resp.result;
 
-      } else {
-        // 페이지url 통합으로 삭제 DV001-16372
-        /*if ( data.type !== 'UF' ) {
-          // res.redirect('/myt-fare/submain/usagefee?count=' + claim.paidAmtMonthSvcCnt);
-          res.redirect('/myt-fare/submain/usagefee?count=0');
-        }*/
-        this._requestUsageFee(req, res, data);
-      }
+          // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+          if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+            data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
+          }
 
+          // 청구요금
+          if ( claim && claim.invDt && claim.invDt.length > 0 ) {
+            data.claim = claim;
+            data.claimFirstDay = DateHelper.getShortFirstDate(claim.invDt);
+            data.claimLastDay = DateHelper.getShortLastDate(claim.invDt);
+            data.claimUseAmt = FormatHelper.addComma((this._parseInt(claim.totInvAmt) + Math.abs(this._parseInt(claim.dcAmt))).toString() );
+            data.claimDisAmt = claim.dcAmt || '0';
+            data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(data.claimDisAmt))).toString() );
+            // Total
+            data.claimPay = claim.totInvAmt || '0';
+          } else {
+            data.isRealTime = false;
+          }
+          this._requestClaim(req, res, data);
+
+        } else {
+
+          // SKB(청구대표회선)인 경우 오류code 처리
+          if ( resp.code === 'BIL0011' ) {
+            data.isBroadBand = true;
+            this._requestUsageFee(req, res, data);
+            return;
+          }
+          resp.title = MYT_FARE_SUBMAIN_TITLE.MAIN;
+          return this.errorRender(resp);
+        }
+      });
+
+    } else {
+      this._requestUsageFee(req, res, data);
     }
   }
 
@@ -575,6 +560,18 @@ class MyTFareSubmainController extends TwViewController {
     }
 
     data.xtEid = eid;
+  }
+
+  private errorRender(resp): any {
+    const {title, code, msg} = resp;
+    const {res, pageInfo, svcInfo} = this._datas;
+    return this.error.render(res, {
+      title,
+      code,
+      msg,
+      pageInfo,
+      svcInfo
+    });
   }
 }
 
