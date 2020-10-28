@@ -225,15 +225,15 @@ class MyTFareInfoMiri extends TwViewController {
    * @private
    */
   private getPaymentAmount(originItem: any, item: any) {
+    // 4: MIRI 선납 차감 일때만
+    if (item.payClCd !== '4') {
+      return item;
+    }
     originItem = originItem || item;
     // 청구금액 계산
     originItem.billMonth = originItem.billMonth || '';
     originItem.payAmtText = originItem.payAmtText || '0';
     originItem.unPaidAmtText = originItem.unPaidAmtText || '0';
-    // 4: MIRI 선납 차감
-    if (item.payClCd !== '4') {
-      return item;
-    }
 
     if ( (item.payAmt || 0) > 0 && (item.invDt || '').length === 8) {
       const opDtM = DateHelper.getShortDateWithFormat(item.opDt, 'M'); // 처리 월
@@ -273,15 +273,16 @@ class MyTFareInfoMiri extends TwViewController {
     let totalCnt = 0;
     // 월별로 넣은 데이터를 다시 같은 달의 미납금액들을 merge 하여 sum 해준다.
     const miriList = Array.from(datas.values()).map( item => {
-      const sumData = item.reduce( (acc, cur) => {
+      const sumData = item.reduce( (acc, cur, idx) => {
         // '키' 를 서비스 관리번호 와 수납구분코드 로 묶어서 처리한다. 같은달에 다른 회선 및 다른 항목(예: 충전, 환불) 은 노출될 수 있다.
-        const _key = cur.svcMgmtNum + cur.payClCd;
+        let _key = cur.svcMgmtNum + cur.payClCd;
+        _key += item.payClCd !== '4' ? idx : '';
         const _item = acc[_key];
         // 누적 변수에 '키' 가 없으면 현재 데이터를 넣는다.
         if (!_item) {
           acc[_key] = cur;
         }
-        this.getPaymentAmount(_item, cur);
+        acc[_key] = this.getPaymentAmount(_item, cur);
         return acc;
       }, {});
 
