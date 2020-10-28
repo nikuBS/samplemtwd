@@ -420,6 +420,22 @@
                         </li>
                         <!-- //광주시 -->
                         <% } %>
+                        <% if( locationInfo.daegu == 'true'){ %>
+                        <li data-location="Daegu">
+                            <div class="info-top">
+                                <p class="location">Jung-gu</p>
+                                <p class="name">SK Telecom Daegu Customer Service Center</p>
+                                <p class="address">SK Broadband 1st floor. 2171, Dalgubeol-daero, Jung-gu, Daegu,<br>Republic of Korea</p>
+                                <div class="lang">
+                                    <span class="lang-badge">ENG</span>
+                                </div>
+                            </div>
+                            <div class="info-bottom">
+                                <p class="time"><span>09:00 ~ 18:30</span></p>
+                                <p class="tel"><button class="fe-tel" data-tel="02-1599-0011">02-1599-0011</button></p>
+                            </div>
+                        </li>
+                        <% } %>
                         <% if( locationInfo.ulsan == 'true'){ %>
                         <!-- 울산시 -->
                         <li data-location="Ulsan">

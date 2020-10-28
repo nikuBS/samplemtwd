@@ -44,6 +44,7 @@ Tw.CustomerAgentsearch.prototype = {
             { 'label-attr': 'id="Seoul"', 'radio-attr': 'name="r2" id="seoul"', txt: 'Seoul' },
             { 'label-attr': 'id="Gyeonggi-do"', 'radio-attr': 'name="r2" id="gyeonggi"', txt: 'Gyeonggi-do' },
             { 'label-attr': 'id="Gwangju"', 'radio-attr': 'name="r2" id="gwangju"', txt: 'Gwangju' },
+            { 'label-attr': 'id="Daegu"', 'radio-attr': 'name="r2" id="daegu"', txt: 'Daegu' },
             { 'label-attr': 'id="Ulsan"', 'radio-attr': 'name="r2" id="ulsan"', txt: 'Ulsan' },
             { 'label-attr': 'id="Gyeongsangnam-do"', 'radio-attr': 'name="r2" id="gyeongsangnamdo"', txt: 'Gyeongsangnam-do' },
             { 'label-attr': 'id="Busan"', 'radio-attr': 'name="r2" id="busan"', txt: 'Busan' }
