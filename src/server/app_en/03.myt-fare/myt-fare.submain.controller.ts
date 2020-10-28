@@ -151,7 +151,9 @@ class MyTFareSubmainController extends TwViewController {
           Observable.combineLatest([
             this._miriService.getMiriBalance()
           ]).subscribe((miri) => {
-            data.miriAmt =  miri[0];
+            if(miri){
+              data.miriAmt =  miri[0];
+            }
             res.render('en.myt-fare.submain.html', { data });
           })
 
