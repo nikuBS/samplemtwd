@@ -41,6 +41,7 @@ class MyTFareInfoMiri extends TwViewController {
     const {line = '', date = ''} = req.query;
     this._info = {
       svcInfo,
+      allSvc,      
       line,
       date,
       childInfo
@@ -123,7 +124,7 @@ class MyTFareInfoMiri extends TwViewController {
       svcNumOrAddr: ''
     };
 
-    const {billsResp} = this._info;
+    const {billsResp, allSvc} = this._info;
     let _svcInfo = this.getChildLineInfo(svcMgmtNum);
     // 자녀회선인 경우
     if (_svcInfo) {
@@ -156,11 +157,30 @@ class MyTFareInfoMiri extends TwViewController {
     const svcName = [M1, M2, M3, M4, S3].find( attrNames => returnData.svcName === attrNames);
     if (svcName) {
       returnData.svcNumOrAddr = this.phoneStrToDash(returnData.svcNumOrAddr);
+      /*
+      const svcItem = this.getAllSvcItem(allSvc, svcMgmtNum);
+      returnData.svcNumOrAddr = this.phoneStrToDash(svcItem ? svcItem.svcNum : returnData.svcNumOrAddr);
+      */
     }
 
     return returnData;
   }
-
+  /**
+   * @desc 전체 회선정보에서 파라미터의 서비스 관리번호와 일치하는 회선정보 리턴
+   * @param allSvc
+   * @param svcMgmtNum
+   * @private
+   */
+  private getAllSvcItem(allSvc: any, svcMgmtNum: string) {
+    if ( !allSvc ) {
+      this.logger.error(this, 'allSvc is ' + allSvc);
+      return null;
+    }
+    const {m, s, o} = allSvc;
+    let services: any = [];
+    services = services.concat(m).concat(s).concat(o);
+    return services.find( item => (item || {}).svcMgmtNum === svcMgmtNum);
+  }
   /**
    * @desc 자녀회선 정보 조회
    * @param childInfo
@@ -256,15 +276,15 @@ class MyTFareInfoMiri extends TwViewController {
    * @private
    */
   private getPaymentAmount(originItem: any, item: any) {
+    // 4: MIRI 선납 차감 일때만
+    if (item.payClCd !== '4') {
+      return item;
+    }    
     originItem = originItem || item;
     // 청구금액 계산
     originItem.billMonth = originItem.billMonth || '';
     originItem.payAmtText = originItem.payAmtText || '0';
     originItem.unPaidAmtText = originItem.unPaidAmtText || '0';
-    // 4: MIRI 선납 차감
-    if (item.payClCd !== '4') {
-      return item;
-    }
 
     if ( (item.payAmt || 0) > 0 && (item.invDt || '').length === 8) {
       const opDtM = DateHelper.getShortDateWithFormat(item.opDt, 'M'); // 처리 월
@@ -306,15 +326,16 @@ class MyTFareInfoMiri extends TwViewController {
     let totalCnt = 0;
     // 월별로 넣은 데이터를 다시 같은 달의 미납금액들을 merge 하여 sum 해준다.
     const miriList = Array.from(datas.values()).map( item => {
-      const sumData = item.reduce( (acc, cur) => {
+      const sumData = item.reduce( (acc, cur, idx) => {
         // '키' 를 서비스 관리번호 와 수납구분코드 로 묶어서 처리한다. 같은달에 다른 회선 및 다른 항목(예: 충전, 환불) 은 노출될 수 있다.
-        const _key = cur.svcMgmtNum + cur.payClCd;
+        let _key = cur.svcMgmtNum + cur.payClCd;
+        _key += cur.payClCd !== '4' ? idx : '';
         const _item = acc[_key];
         // 누적 변수에 '키' 가 없으면 현재 데이터를 넣는다.
         if (!_item) {
           acc[_key] = cur;
         }
-        this.getPaymentAmount(_item, cur);
+        acc[_key] = this.getPaymentAmount(_item, cur);
         return acc;
       }, {});
 
