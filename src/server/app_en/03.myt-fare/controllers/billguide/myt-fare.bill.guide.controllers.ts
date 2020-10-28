@@ -242,10 +242,9 @@ class MyTFareBillGuide extends TwViewController {
         for( let i=0; i<beLineLst.length; i++ ){
 
           let line = beLineLst[i];
-          if(line.svcCd !== 'C') continue;  //무선 아닌경우 표시안함.
+     //     if(line.svcCd !== 'C') continue;  //무선 아닌경우 표시안함.
         //  console.log("cate length =>"+line.paidAmtDetailInfo.length);
-          let lineGroup = thisMain._arrayToGroup( line.svcNm ,line.paidAmtDetailInfo );
-    
+          let lineGroup = thisMain._arrayToGroup( line.svcNm ,line.svcCd,line.paidAmtDetailInfo );
         //  console.log('>> group >>',lineGroup);
         //  console.log(" ===============================================================================" );
           _lineDtlLst.push( lineGroup );
@@ -273,8 +272,8 @@ class MyTFareBillGuide extends TwViewController {
 
             //영문화 추가
             repSvcNum: thisMain._commDataInfo.repSvcNum,
-//          paidAmtMonthSvcCnt: thisMain._billpayInfo.paidAmtMonthSvcCnt,
-            paidAmtMonthSvcCnt: _lineDtlLst.length,
+          paidAmtMonthSvcCnt: thisMain._billpayInfo.paidAmtMonthSvcCnt,
+//            paidAmtMonthSvcCnt: _lineDtlLst.length,
             paidAmtDetailInfoList: thisMain._commDataInfo.paidAmtDetailInfoList,
             lineDtlLst : _lineDtlLst,
             typeChk: ''
@@ -654,7 +653,7 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   //청구요금 상세 그룹화.
-  public _arrayToGroup( name : string ,data : Array<any> ) {
+  public _arrayToGroup( name : string ,svcCd : string ,data : Array<any> ) {
     const func = this;
     var fieldInfo = {
         lcl:    'billItmLclNm'
@@ -667,6 +666,16 @@ class MyTFareBillGuide extends TwViewController {
     const HOTBILL_UNPAID_TITLE = '';
 
     // var self = this;
+    /*
+      C: '휴대폰',
+      S: 'PPS',
+      F: 'TPocket-FI',
+      L: 'Tlogin',
+      W: 'WiBro',
+      P: '집전화',
+      T: 'IPTV',
+      I: '인터넷'
+    */
     var amount = 0;
     var noVAT = false;
     var is3rdParty = false;
@@ -675,6 +684,11 @@ class MyTFareBillGuide extends TwViewController {
       ,totAmt: ''
       ,totAmtInt: 0
       ,group:{}
+      ,isMPhone: false
+      ,isTPhone: false
+      ,isIpTV: false
+      ,isInternet: false 
+      ,isPocket: false 
     };
     var group = {};
     var totAmt = 0;
@@ -771,11 +785,23 @@ class MyTFareBillGuide extends TwViewController {
         // console.log("   itemL.total ==>",itemL.total);
         
       }
+
+      
+      if( svcCd === 'C' ){
+        line.isMPhone   = true;
+      }else if( svcCd === 'P' ){
+        line.isTPhone   = true;
+      }else if( svcCd === 'T' ){
+        line.isIpTV     = true;
+      }else if( svcCd === 'I' ){
+        line.isInternet = true;
+      }else if( svcCd === 'F' ){
+        line.isPocket = true;
+      }
       line.group  = group;
       line.totAmt = (totAmt < 0 ?'-₩':'₩')+func.commaSeparatedString( Math.abs(totAmt) );
       line.totAmtInt = totAmt;
       line.name   = func.phoneStrToDash(name);
-      
       return line;
   };
 

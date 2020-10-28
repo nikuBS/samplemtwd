@@ -58,10 +58,10 @@ Tw.ProductCallplanMiri.prototype = {
           $('.popup').remove();
           var outlinkUrl = '';
           if(this.crtVideo === 0){
-            outlinkUrl = 'https://youtu.be/fUMu9LdtVeE';
+            outlinkUrl = 'https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo';
           }
           if(this.crtVideo === 1){
-            outlinkUrl = 'https://youtu.be/P9_32clrvLk';
+            outlinkUrl = 'https://www.youtube.com/watch?v=P9_32clrvLk&feature=emb_logo';
             }
           this._$confirm0.remove();
           this._$confirm1.remove();

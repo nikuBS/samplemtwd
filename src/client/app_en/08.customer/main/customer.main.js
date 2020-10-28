@@ -50,7 +50,7 @@ Tw.CustomerMain.prototype = {
     $('.popup').remove();
    
     this._$confirm.remove();
-    Tw.CommonHelper.openUrlExternal('https://youtu.be/fUMu9LdtVeE');
+    Tw.CommonHelper.openUrlExternal('https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo');
   },
 
 
