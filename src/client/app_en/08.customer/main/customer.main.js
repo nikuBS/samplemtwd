@@ -12,7 +12,8 @@
 Tw.CustomerMain = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-
+  
+  this._historyService = new Tw.HistoryService();
   this._$confirm = this.$container.find('#videoConfirm');
 
   this._$popup = this.$container.find('.popup');
@@ -56,6 +57,7 @@ Tw.CustomerMain.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.fe-outlink', $.proxy(this._onOutLink, this)); //외부 링크 이동
+    this.$container.on('click', '.fe-tel', $.proxy(this.goTel, this));
   },
   
   /**
@@ -71,5 +73,10 @@ Tw.CustomerMain.prototype = {
     $('.popupDiv').html(tplPlanCard({}));
     $('.pos-left').on('click', $.proxy(this._cancel, this));
     $('.pos-right').on('click', $.proxy(this._confirm, this));
+  },
+  goTel: function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this._historyService.goLoad('tel:'+$(event.currentTarget).data('tel'));
   }
 };
