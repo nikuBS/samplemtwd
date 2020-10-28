@@ -1258,7 +1258,7 @@ Tw.ANDROID_STORE = [
       }
     ],
     'btn-floating': [
-      { 'attr': 'type="button"', 'txt': '닫기' }
+      { 'attr': 'type="button"', 'txt': 'Close' }
     ]
   }
 ];
