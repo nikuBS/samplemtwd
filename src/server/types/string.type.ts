@@ -324,6 +324,10 @@ export const MYT_INFO_DISCOUNT_MONTH = {
   TITLE: '월별 상세 할인 내역'
 };
 
+export const MYT_INFO_MIRI = {
+  NOT_FOUND_LINE: '회선정보 조회 불가'
+};
+
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
   lastAll: '최근 납부 내역',

@@ -21,8 +21,11 @@ import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE_SVCATTRCD } from '../../../../types/
 import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types/title.type';
 // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
 import CommonHelper from '../../../../utils/common.helper';
+import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
 
 class MyTFareBillGuide extends TwViewController {
+  private _miriService!: MytFareInfoMiriService;
+
   constructor() {
     super();
   }
@@ -99,11 +102,12 @@ class MyTFareBillGuide extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const thisMain = this;
-
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
+    // this._miriService = new MytFareInfoMiriService(this.reqQuery.line || svcInfo.svcMgmtNum, req, res);
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo, req.query.line);
 
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
     CommonHelper.addCurLineInfo(svcInfo);
@@ -289,13 +293,6 @@ class MyTFareBillGuide extends TwViewController {
               thisMain._typeChk = 'A5';
 
               thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
-
-              // 요금납부버튼 무조건 노출로 삭제
-              // thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
-
-              // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
-              // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
-              // data['showConditionInfo'] = thisMain._showConditionInfo;
             }
           }
         }
@@ -447,27 +444,10 @@ class MyTFareBillGuide extends TwViewController {
     Observable.combineLatest(
       // this.apiService.request(API_CMD.BFF_05_0044, params),
       this.apiService.request(API_CMD.BFF_05_0038, params),
-      this.apiService.request(API_CMD.BFF_05_0045, params)
+      this.apiService.request(API_CMD.BFF_05_0045, params),
+      this._miriService.getMiriPayment(this._billpayInfo.invDt)
     ).subscribe((resp) => {
-      thisMain.logger.info(thisMain, resp);
-
-      // 로밍api호출이 느려서 일단 무조건 노출함 2019.2.12
-
-      // if ( resp[0].code === API_CODE.CODE_00 &&
-      //   resp[0].result.roamingList && resp[0].result.roamingList.length > 0 ) {
-      //   data.roamDonaCallBtnYn.roamingYn = 'Y';
-      // }
-      //
-      // if ( resp[1].code === API_CODE.CODE_00 &&
-      //   resp[1].result.donationList && resp[1].result.donationList.length > 0 ) {
-      //   data.roamDonaCallBtnYn.donationYn = 'Y';
-      // }
-      //
-      // if ( resp[2].code === API_CODE.CODE_00 &&
-      //   resp[2].result.callData && Number(resp[2].result.callData) ) {
-      //   data.roamDonaCallBtnYn.callgiftYn = 'Y';
-      // }
-
+      // thisMain.logger.info(thisMain, resp);
       if ( resp[0].code === API_CODE.CODE_00 &&
         resp[0].result.donationList && resp[0].result.donationList.length > 0 ) {
         data.roamDonaCallBtnYn.donationYn = 'Y';
@@ -476,6 +456,7 @@ class MyTFareBillGuide extends TwViewController {
         resp[1].result.callData && Number(resp[1].result.callData) ) {
         data.roamDonaCallBtnYn.callgiftYn = 'Y';
       }
+      data.miriPayment = resp[2];
 
       thisMain.logger.info( thisMain, '===================== 로밍 YN : ' + data.roamDonaCallBtnYn.roamingYn);
       thisMain.logger.info( thisMain, '===================== 기부금 YN : ' + data.roamDonaCallBtnYn.donationYn);
@@ -504,18 +485,6 @@ class MyTFareBillGuide extends TwViewController {
       dateVal = thisMain._billpayInfo.invDt;
     }
 
-    /*
-    * test
-     */
-    // const unPaidAmtMonthInfoList = [
-    //   {unPaidInvDt: '20180831', unPaidAmt: '890090'},
-    //   {unPaidInvDt: '20180731', unPaidAmt: '790090'},
-    //   {unPaidInvDt: '20180631', unPaidAmt: '690090'},
-    //   {unPaidInvDt: '20180531', unPaidAmt: '590090'}
-    // ];
-    // dateVal = '20180731';
-
-
     let result;
     result = unPaidAmtMonthInfoList.filter( function(item) {
       return item.unPaidInvDt === dateVal;
@@ -532,9 +501,6 @@ class MyTFareBillGuide extends TwViewController {
     return result;
   }
 
-  // public getCurDate(): any {
-  //   return moment().format('YYYY.MM.DD hh:mm');
-  // }
   // 당월 시작일
   public getStartDateFormat(formatStr): any {
     // return moment().subtract('1', 'months').startOf('month').format(formatStr);
@@ -698,27 +664,6 @@ class MyTFareBillGuide extends TwViewController {
     }
     // return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
     return StringHelper.phoneStringToDash(strCellphoneNum.replace(/-/g, ''));
-  }
-
-  // 안씀
-  public getCircuitChildInfoMask(obj: any): any { // 휴대폰 마스킹 처리
-
-    if ( obj.length !== 0 ) {
-
-      this._commDataInfo.subChildBillInfo = obj.map(item => {
-
-        let phoneNum_0 = item.svcNum.substr(0, 3);
-        let phoneNum_1 = item.svcNum.substr(3, 4);
-        let phoneNum_2 = item.svcNum.substr(7, 4);
-
-        phoneNum_0 = StringHelper.masking(phoneNum_0, '*', 0);
-        phoneNum_1 = StringHelper.masking(phoneNum_1, '*', 2);
-        phoneNum_2 = StringHelper.masking(phoneNum_2, '*', 2);
-
-        return item.svcNum = phoneNum_0 + '-' + phoneNum_1 + '-' + phoneNum_2;
-
-      });
-    }
   }
 
   // -------------------------------------------------------------[프로미스 생성]

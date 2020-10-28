@@ -19,6 +19,20 @@ class StringHelper {
     if (strCellphoneNum.substring(0, 4) === '0504') {
       return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9*]{4})([0-9*]+)([0-9*]{4})/, '$1-$2-$3');
     }
+    // 20-10-23 양정규. 12자리이면서 지역번호, 국번이 0으로 시작하는 경우 앞의 0을 제거함.
+    if (strCellphoneNum.length === 12) {
+      const contact = new Array();
+      contact.push(strCellphoneNum.substr(0, 4));
+      contact.push(strCellphoneNum.substr(4, 4));
+      contact.push(strCellphoneNum.substr(8));
+
+      const removeFirstZero = (num) => {
+        return num.replace(/(^0)/, '');
+      };
+      contact[0] = removeFirstZero(contact[0]);
+      contact[1] = removeFirstZero(contact[1]);
+      strCellphoneNum = contact.join('');
+    }
     return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9*]{3})([0-9*]+)([0-9*]{4})/, '$1-$2-$3');
   }
 
