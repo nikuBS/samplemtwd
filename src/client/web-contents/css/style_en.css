@@ -1000,7 +1000,7 @@
 
 .plan-banner { width: 100%; }
 
-.plan-banner > img { width: 100%; vertical-align: top; }
+.plan-banner > img { width: 100%; vertical-align: bottom; }
 
 .representcharge-list > li .representcharge-info:after { background: url(/img/en/ico-group.png) no-repeat -1.94rem -22.5rem; background-size: 50px; }
 
