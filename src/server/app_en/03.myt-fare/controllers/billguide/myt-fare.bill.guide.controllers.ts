@@ -99,8 +99,8 @@ class MyTFareBillGuide extends TwViewController {
       return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
     }
 
-      //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
+    //영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if(svcInfo.svcAttrCd !== '' && ['M1','M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
       this._typeChk = 'A3';
       res.render( 'billguide/en.myt-fare.bill.guide.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;

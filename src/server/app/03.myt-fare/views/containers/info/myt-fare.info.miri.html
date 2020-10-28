@@ -72,8 +72,13 @@
                                         <span class="tit"><%-subItem.lineType.svcName%> <em><%-subItem.lineType.svcNumOrAddr%></em></span>
                                         <%# 청구요금 or 미납요금 있는경우 노출함.%>
                                         <%_
-                                            const payAmt = subItem.payAmtText.replace(/[^0-9]/g, '');
-                                            const unpaidAmt = subItem.unPaidAmtText.replace(/[^0-9]/g, '');
+                                            let payAmt = 0;
+                                            let unpaidAmt = 0;
+                                            if (subItem.payClCd === '4') {
+                                                payAmt = (subItem.payAmtText || '0').replace(/[^0-9]/g, '');
+                                                unpaidAmt = (subItem.unPaidAmtText || '0').replace(/[^0-9]/g, '');
+                                            }
+
                                             if(payAmt+unpaidAmt > 0) {
                                             const invCls = payAmt < 1 ? 'none' : '';
                                             const payCls = unpaidAmt < 1 ? 'none' : '';

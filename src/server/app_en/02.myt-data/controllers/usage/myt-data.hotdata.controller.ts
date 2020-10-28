@@ -100,6 +100,10 @@ function _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extr
       }
       template = TEMPLATE.PAGE;
       break;
+    default:
+      option['usageData'] = MyTHelper.parseUsageData(result);
+      template = TEMPLATE.PAGE;
+      break;
   }
 
   if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {

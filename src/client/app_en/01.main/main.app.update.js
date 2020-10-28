@@ -40,8 +40,9 @@ Tw.MainAppUpdate.prototype = {
    */
   _onAppUpdateCheck: function () {
     var userAgentString = Tw.BrowserHelper.getUserAgent();
-    // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.13|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
+    // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.20|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
     var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
+    var stdVersion = '';
     this._currentVersion = version;
 
     if (userAgentString.indexOf('osType:aos') !== -1) {
@@ -54,7 +55,13 @@ Tw.MainAppUpdate.prototype = {
       this._osType = 'I';
     }
 
-    var isUpdate = Tw.ValidationHelper.checkVersionValidation('5.0.13', this._currentVersion, 3); // _currentVersion 버전보다 낮다면 업데이트 팝업을 출력한다.
+    if ( this._osType === 'A' ) { // 안드로이드 기준 버전
+      stdVersion = '5.0.20';
+    } else { // 아이폰 기준 버전
+      stdVersion = '5.0.14';
+    }
+
+    var isUpdate = Tw.ValidationHelper.checkVersionValidation(stdVersion, this._currentVersion, 3);
     if( isUpdate ) {
       this._popupService.openConfirmUpdateButton(
         Tw.POPUP_CONTENTS.UPDATE_POPUP_CONTENTS,

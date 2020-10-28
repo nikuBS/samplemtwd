@@ -31,7 +31,7 @@
                     </div>
                     <!--// 메인배너01 -->
                 <% if (svcInfo) { %>
-                    <% if (svcInfo.svcAttrCd && svcInfo.svcAttrCd !== 'M1') { %>
+                    <% if (svcInfo.svcAttrCd && svcInfo.svcAttrCd !== 'M1' && svcInfo.svcAttrCd !== 'M3') { %>
                         <div class="section-box nogaps mw">
                             <div class="main-top-group">
                                 <!-- pps/유선회원 선택시 -->
@@ -42,8 +42,10 @@
                                             lines are still under development<br>
                                             You may access these services on the<br>
                                             Korean version of T World</p>
-                                        <% if( Number(svcInfo.nonSvcCnt) > 0 || (Number(svcInfo.nonSvcCnt) + Number(svcInfo.expsSvcCnt)) >= 1 ) { %>
-                                        <button class="bt-link-tx underline mt10 fe-mainLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button><!-- 200916 간격조정 -->
+
+                                        <% if( Number(svcInfo.nonSvcCnt) > 0 ) { %>
+                                        <!-- <button class="bt-link-tx underline mt10 fe-mainLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button> -->
+                                        <button class="bt-link-tx underline mt10 goRegisterLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button>
                                         <%}%>
                                         <div class="suggest-bt">
                                             <ul class="bt-slice">
@@ -100,9 +102,10 @@
                             <!-- 모바일 회선_잔여 데이터 -->
                             <% if (homeData.usageData.code === '00') { %>
                                 <div class="main-chart-box">
-                                <% if( Number(svcInfo.nonSvcCnt) > 0 || (Number(svcInfo.nonSvcCnt) + Number(svcInfo.expsSvcCnt)) >= 1 ) { %>
+                                <% if( Number(svcInfo.nonSvcCnt) > 0 ) { %>
                                     <em class="line">
-                                        <button class="bt ff-tg-light fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <button class="bt ff-tg-light fe-mainLine" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                        <!-- <button class="bt ff-tg-light fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button> -->
                                     </em>
                                     <strong class="ti">
                                         <button class="bt fe-home-internal" data-url="/en/myt-join/submain"  data-xt_eid="MWMA_A10_B79-30"><%= svcInfo.prodNmEn %></button>
@@ -425,6 +428,10 @@
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%= (svcInfo && svcInfo.svcAttrCd === "M1")%>', '', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>','<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+
+    $('.goRegisterLine').click(function() {
+        location.href = '/en/common/member/line';
+    })
   });
 </script>
 </body>
