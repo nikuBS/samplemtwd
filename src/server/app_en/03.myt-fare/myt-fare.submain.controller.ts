@@ -262,7 +262,9 @@ class MyTFareSubmainController extends TwViewController {
           //최근 6개월 내 청구된 내역이 없습니다.
           return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
         }
-        data.miriAmt = miri[0];
+        if(miri){
+          data.miriAmt = miri[0];
+        }
         this.logger.debug("### ============================================================" ,data);
         return res.render('en.myt-fare.submain.html', { data });
       }
@@ -337,6 +339,7 @@ class MyTFareSubmainController extends TwViewController {
 
   // 사용요금 조회
   _getUsageFee() {
+    
     return this.apiService.request(API_CMD.BFF_05_0204, {}).map((resp) => {
 
       if ( resp.code === API_CODE.CODE_00 ) {
