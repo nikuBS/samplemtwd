@@ -54,6 +54,9 @@ Tw.MainAppUpdate.prototype = {
       this._osType = 'I';
     }
 
+    var iosVersion = '';
+    var aosVersion = '';
+
     var isUpdate = Tw.ValidationHelper.checkVersionValidation('5.0.13', this._currentVersion, 3); // _currentVersion 버전보다 낮다면 업데이트 팝업을 출력한다.
     if( isUpdate ) {
       this._popupService.openConfirmUpdateButton(
