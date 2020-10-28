@@ -18,7 +18,19 @@
                                     {{#if @first}}
                                         {{#if ../../isTypeRep}}
                                         <dl class="num-list">
+                                            {{#if ../isMPhone}}
                                             <dt><img src="<%=CDN%>/img/en/sel-ico-mobile-black.png" alt="cell phone" class="phone-num-ico">{{../name}}</dt>
+                                            {{else if ../isTPhone}}
+                                            <dt><img src="<%=CDN%>/img/en/icon_48px_phon.png" alt="tel" class="tel-ico">{{../name}}</dt>
+                                            {{else if ../isIpTV}}
+                                            <dt><img src="<%=CDN%>/img/en/icon_48px_pc.png" alt="tv" class="tv-ico">{{../name}}</dt>
+                                            {{else if ../isInternet}}
+                                            <dt><img src="<%=CDN%>/img/en/icon_48px_internet.png" alt="internet" class="internet-ico">{{../name}}</dt>
+                                            {{else if ../isPocket}}
+                                            <dt><img src="<%=CDN%>/img/en/icon_48px_wifi.png" alt="wifi" class="wifi-ico">{{../name}}</dt>
+                                            {{else}}
+                                            <dt><img src="<%=CDN%>" alt="wifi" class="wifi-ico">{{../name}}</dt>
+                                            {{/if}}
                                             <dd>{{../totAmt}}</dd>
                                         </dl>
                                         {{/if}}
@@ -101,10 +113,17 @@
     <!--// .cont-box -->
 {{/if}}
 
-<!-- .cont-box -->
+<!-- .cont-box 
 <div class="cont-box noborder">
     <p class="fs-info footnote01" id="aria-footnote-01">The target display items are exclude VAT</p>
     <p class="fs-info footnote02" id="aria-footnote-02">Display item is a third-party fees charged on our behalf</p>
     </div>
+.cont-box -->
+
+<!-- .cont-box -->
+<div class="cont-box noborder">
+    <p class="fs-info footnote01" id="aria-footnote-01">No VAT</p><!-- 201028 text 수정 -->
+    <p class="fs-info footnote02" id="aria-footnote-02">3nd party fees</p><!-- 201028 text 수정 -->
+</div>
 <!--// .cont-box -->
 </script>
