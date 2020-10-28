@@ -914,9 +914,9 @@
 
 .video-list > li .video-sum { width: 100%; height: auto; max-height: 23.63rem; overflow: hidden; border-radius: 0.88rem; }
 
-.video-list > li .video-sum a { display: inline-block; }
+.video-list > li .video-sum a, .video-list > li .video-sum button { display: inline-block; }
 
-.video-list > li .video-sum a > img { width: 100%; vertical-align: top; }
+.video-list > li .video-sum a > img, .video-list > li .video-sum button > img { width: 100%; vertical-align: top; }
 
 .video-list > li .video-card { margin-top: 1.13rem; border-radius: 0.38rem; overflow: hidden; }
 

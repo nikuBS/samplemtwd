@@ -7,12 +7,11 @@ Tw.CustomerUseguideCommon = function (rootEl) {
   this.$container = rootEl;
   this.crtVideo=1;
 
-  this._$video1 = this.$container.find('#video1');
-  this._$video2 = this.$container.find('#video2');
-  this._$video3 = this.$container.find('#video3');
   this._$confirm1 = this.$container.find('#videoConfirm1');
   this._$confirm2 = this.$container.find('#videoConfirm2');
   this._$confirm3 = this.$container.find('#videoConfirm3');
+  this._$confirm4 = this.$container.find('#videoConfirm4');
+  this._$confirm5 = this.$container.find('#videoConfirm5');
   this._$popup = this.$container.find('.popup');
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
@@ -30,15 +29,19 @@ Tw.CustomerUseguideCommon = function (rootEl) {
 
 Tw.CustomerUseguideCommon.prototype = {
     _init : function(res) { //핸드폰에 적용 시 수정
-   // _init : function(){ 
+  //  _init : function(){ 
        if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-     // if(true){
+  //    if(true){
         this._$confirm1.css('display','block');
         this._$confirm2.css('display','block');
         this._$confirm3.css('display','block');
+        this._$confirm4.css('display','block');
+        this._$confirm5.css('display','block');
         this._$confirm1.on('click', $.proxy(this._loadpopup1, this));
         this._$confirm2.on('click', $.proxy(this._loadpopup2, this));
         this._$confirm3.on('click', $.proxy(this._loadpopup3, this));
+        this._$confirm4.on('click', $.proxy(this._loadpopup4, this));
+        this._$confirm5.on('click', $.proxy(this._loadpopup5, this));
       }
     },
 
@@ -66,6 +69,22 @@ Tw.CustomerUseguideCommon.prototype = {
     $('.pos-right').on('click', $.proxy(this._confirm, this));
   },
 
+  _loadpopup4: function () {
+    this.crtVideo=4;
+    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
+    $('.popupDiv').html(tplPlanCard({}));
+    $('.pos-left').on('click', $.proxy(this._cancel, this));
+    $('.pos-right').on('click', $.proxy(this._confirm, this));
+  },
+
+  _loadpopup5: function () {
+    this.crtVideo=5;
+    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
+    $('.popupDiv').html(tplPlanCard({}));
+    $('.pos-left').on('click', $.proxy(this._cancel, this));
+    $('.pos-right').on('click', $.proxy(this._confirm, this));
+  },
+
   _cancel: function () {
     $('.popup').remove();
   },
@@ -86,17 +105,25 @@ Tw.CustomerUseguideCommon.prototype = {
     // }
     var outlinkUrl = '';
     if(this.crtVideo===1){ // 비디오일 때 처리
-      outlinkUrl = 'https://youtu.be/fUMu9LdtVeE';
+      outlinkUrl = 'https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo';
     }
     if(this.crtVideo===2){
-      outlinkUrl = 'https://youtu.be/JVu2wc1GBpg';
+      outlinkUrl = 'https://www.youtube.com/watch?v=JVu2wc1GBpg&feature=emb_logo';
       }
     if(this.crtVideo===3){
-      outlinkUrl = 'https://youtu.be/lHqxkq_WfUk';
+      outlinkUrl = 'https://www.youtube.com/watch?v=lHqxkq_WfUk&feature=emb_logo';
+    }
+    if(this.crtVideo===4){
+      outlinkUrl = 'https://www.youtube.com/watch?v=P9_32clrvLk&feature=emb_logo';
+    }
+    if(this.crtVideo===5){
+      outlinkUrl = 'https://www.youtube.com/watch?time_continue=1&v=KLvdZnF2FZI&feature=emb_logo';
     }
     this._$confirm1.remove();
     this._$confirm2.remove();
     this._$confirm3.remove();
+    this._$confirm4.remove();
+    this._$confirm5.remove();
     Tw.CommonHelper.openUrlExternal(outlinkUrl);
   },
 
