@@ -57,7 +57,8 @@ Tw.MainAppUpdate.prototype = {
     var iosVersion = '';
     var aosVersion = '';
 
-    var isUpdate = Tw.ValidationHelper.checkVersionValidation('5.0.13', this._currentVersion, 3); // _currentVersion 버전보다 낮다면 업데이트 팝업을 출력한다.
+    // var isUpdate = Tw.ValidationHelper.checkVersionValidation('5.0.13', this._currentVersion, 3); // _currentVersion 버전보다 낮다면 업데이트 팝업을 출력한다.
+    var isUpdate = Tw.ValidationHelper.checkVersionValidation('9.0.99', this._currentVersion, 3); // _currentVersion 버전보다 낮다면 업데이트 팝업을 출력한다.
     if( isUpdate ) {
       this._popupService.openConfirmUpdateButton(
         Tw.POPUP_CONTENTS.UPDATE_POPUP_CONTENTS,
