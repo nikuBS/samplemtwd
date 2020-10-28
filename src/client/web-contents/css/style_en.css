@@ -615,8 +615,6 @@
 
 .charge-list .acco-list .acco-box .acco-tit > button .phone-num-ico { width: 0.88rem; height: 1.25rem; vertical-align: text-bottom; }
 
-.charge-list .acco-list .acco-box .acco-tit > button .phone-num { width: 65%; display: block; float: left; }
-
 .charge-list .acco-list .acco-box .acco-tit > button .fee { width: calc(35% - 0.93rem); display: block; text-align: right; float: left; padding-right: 0.31rem; }
 
 .charge-list .acco-list .acco-box .acco-tit > button .fee.red { color: #f76252; }
@@ -626,6 +624,14 @@
 .charge-list .acco-list .acco-box .num-list dt { display: table-cell; width: 65%; font-size: 1rem; }
 
 .charge-list .acco-list .acco-box .num-list dt .phone-num-ico { width: 0.88rem; height: 1.25rem; vertical-align: text-bottom; margin-right: 0.63rem; }
+
+.charge-list .acco-list .acco-box .num-list dt .internet-ico { width: 1.25rem; height: 1.25rem; vertical-align: text-bottom; margin-right: 0.63rem; }
+
+.charge-list .acco-list .acco-box .num-list dt .wifi-ico { width: 1.25rem; height: 1.25rem; vertical-align: text-bottom; margin-right: 0.63rem; }
+
+.charge-list .acco-list .acco-box .num-list dt .tel-ico { width: 1.16rem; height: 1.16rem; vertical-align: text-bottom; margin-right: 0.63rem; }
+
+.charge-list .acco-list .acco-box .num-list dt .tv-ico { width: 1.25rem; height: 1.13rem; vertical-align: text-bottom; margin-right: 0.63rem; }
 
 .charge-list .acco-list .acco-box .num-list dd { display: table-cell; width: 35%; font-size: 1.13rem; font-weight: 500; text-align: right; }
 
@@ -903,6 +909,10 @@
 .video-list > li > p.num { font-size: 0.81rem; font-weight: 500; color: #f76252; margin-bottom: 0.13rem; }
 
 .video-list > li > p.title { font-size: 1.38rem; font-weight: 700; color: #000; margin-bottom: 0.13rem; }
+
+.video-list > li .video-sum { width: 100%; height: auto; min-height: 11.5rem; max-height: 23rem; overflow: hidden; }
+
+.video-list > li .video-sum a > img { width: 100%; }
 
 .video-list > li .video-card { margin-top: 1.13rem; border-radius: 0.38rem; overflow: hidden; }
 
