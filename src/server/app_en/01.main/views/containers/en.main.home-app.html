@@ -447,7 +447,6 @@
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%= (svcInfo && svcInfo.svcAttrCd === "M1")%>', '', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>','<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
-    // new Tw.MainAppUpdate();
   });
 </script>
 </body>
