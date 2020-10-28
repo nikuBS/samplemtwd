@@ -23,6 +23,8 @@ interface Miri {
 export class MytFareInfoMiriService {
   private readonly apiService: ApiService;
   private _selSvcMgmtNum: string;
+  private _isRepresent = true; // 대표회선 여부
+  private _svcInfo: any = {};
 
   /**
    * @desc MIRI 서비스 생성자
@@ -32,6 +34,8 @@ export class MytFareInfoMiriService {
    * @param line 현재 접속 회선이 아닌 선택회선의 서비스 관리번호(ex: 종송회선, 자녀회선)
    */
   constructor(req: Request, res: Response, svcInfo: any, line?: string) {
+    this._isRepresent = !line;
+    this._svcInfo = svcInfo || {};    
     this._selSvcMgmtNum = line || svcInfo.svcMgmtNum;
     this.apiService = new ApiService();
     this.apiService.setCurrentReq(req, res);
@@ -87,10 +91,13 @@ export class MytFareInfoMiriService {
       const startDt = DateHelper.getAddDays(targetMonth, 1, 'YYYYMM05');
       const endDt = DateHelper.getShortDateWithFormatAddByUnit(startDt, 1, 'month', 'YYYYMM02');
       const totalSum = resp.reduce( (acc, cur) => {
-        const {opDt, ppayAmt, payClCd, svcMgmtNum} = cur;
+        const {opDt, payAmt, payClCd, svcMgmtNum} = cur;
+        let condition = payClCd === '4' && DateHelper.isBetween(opDt, startDt, endDt);
+        // 대표 회선이 아니면 서비스 관리번호가 같은 것만
+        condition = this._isRepresent ? condition : condition && this._selSvcMgmtNum === svcMgmtNum;
         // 선택회선의 처리일자가 타켓일자와 같거나 클때.
-        if (payClCd === '4' && DateHelper.isBetween(opDt, startDt, endDt) && this._selSvcMgmtNum === svcMgmtNum) {
-          acc += parseInt(ppayAmt || 0, 10);
+        if (condition) {
+          acc += parseInt(payAmt || 0, 10);
         }
         return acc;
       }, 0);
