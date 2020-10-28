@@ -32,8 +32,6 @@ export class MytFareInfoMiriService {
    * @param line 현재 접속 회선이 아닌 선택회선의 서비스 관리번호(ex: 종송회선, 자녀회선)
    */
   constructor(req: Request, res: Response, svcInfo: any, line?: string) {
-  // constructor(selSvcMgmtNum: string, req: Request, res: Response) {
-  //   this._svcMgmtNum = svcInfo.svcMgmtNum;
     this._selSvcMgmtNum = line || svcInfo.svcMgmtNum;
     this.apiService = new ApiService();
     this.apiService.setCurrentReq(req, res);
@@ -54,27 +52,25 @@ export class MytFareInfoMiriService {
         return [];
       }
 
-      /*resp.result.miriInfoList.push({
-        'svcMgmtNum' : '7312382244',
-        // 'svcMgmtNum' : '7312382244',
-        'acntNum' : '1000000000',
-        'opDt' : '20200505',
-        'payOpTm' : '16431111',
-        'payClCd' : '4',
-        'payClCdNm' : 'MIRI 선납 차감',
-        'ppayAmt' : '20000',
-        'ppayBamt' : '140000',
-        'svcNum' : '01000**0***',
-        'invDt' : '20200430',
-        'invAmt' : '40000',
-        'payAmt' : '40000'
-      });*/
-
       // 최근내역이 위로 오도록 정렬
-      return FormatHelper.sortObjArrDesc(resp.result.miriInfoList, 'opDt');
+      return this.sortObjArrDesc(resp.result.miriInfoList, 'opDt', 'invDt');
     });
   }
-
+  /**
+   * @desc 정렬
+   * @param array
+   * @param key
+   * @param secKey
+   * @private
+   */
+  private sortObjArrDesc(array: any[], key: string, secKey: string): any {
+    return array.sort((a, b) => {
+      if (a[key] === b[key]) {
+        return parseInt(b[secKey], 10) - parseInt(a[secKey], 10);
+      }
+      return parseInt(b[key], 10) - parseInt(a[key], 10);
+    });
+  }
   /**
    * @desc 선택회선의 선택월에 해당하는 미리납부하신 금액
    * 선납대체 처리일 : 2,5,6일 (2일에 선납대체된 금액은 전달로 포함한다.)
@@ -92,7 +88,7 @@ export class MytFareInfoMiriService {
       const endDt = DateHelper.getShortDateWithFormatAddByUnit(startDt, 1, 'month', 'YYYYMM02');
       const totalSum = resp.reduce( (acc, cur) => {
         const {opDt, ppayAmt, payClCd, svcMgmtNum} = cur;
-        // 선택회선의 청구일자가 타켓일자와 같거나 클때.
+        // 선택회선의 처리일자가 타켓일자와 같거나 클때.
         if (payClCd === '4' && DateHelper.isBetween(opDt, startDt, endDt) && this._selSvcMgmtNum === svcMgmtNum) {
           acc += parseInt(ppayAmt || 0, 10);
         }
@@ -118,126 +114,5 @@ export class MytFareInfoMiriService {
       return balance && balance.ppayBamt > 0 ? FormatHelper.addComma(balance.ppayBamt.toString()) : null;
     });
   }
-
-  private getMiriDataMock(): Observable<any> {
-    /*
-      선납대체 처리일자
-      미납대체: 2일
-      무선대체: 5일
-      유선대체: 6일
-     */
-    const resp = {
-      code: '00',
-      msg: 'sucess',
-      result: {
-        miriInfoList: [
-          /*{
-            'svcMgmtNum' : '서비스관리번호',
-            'acntNum' : '계정번호',
-            'opDt' : '처리일자',
-            'payOpTm' : '처리시각',
-            'payClCd' : '수납구분코드 (1: MIRI 충전, 4: MIRI 선납 차감, 5: MIRI 선납 환불)',
-            'payClCdNm' : '수납구분코드명 (1: MIRI 충전, 4: MIRI 선납 차감, 5: MIRI 선납 환불)',
-            'ppayAmt' : '처리금액',
-            'ppayBamt' : '선납금액 (충전/차감 후 잔여금액)',
-            'svcNum' : '서비스번호',
-            'invDt' : '청구일자',
-            'invAmt' : '청구금액 (차감 된 청구일자의 총 청구금액)',
-            'payAmt' : '대체금액 (차감 된 청구일자로 대체된 금액)'
-          },*/
-          {
-            'svcMgmtNum' : '7016134141',
-            'acntNum' : '1000000000',
-            'opDt' : '20201005',
-            'payOpTm' : '16431111',
-            'payClCd' : '4',
-            'payClCdNm' : 'MIRI 선납 차감',
-            'ppayAmt' : '20000',
-            'ppayBamt' : '140000',
-            'svcNum' : '01000**0***',
-            'invDt' : '20200902',
-            'invAmt' : '40000',
-            'payAmt' : '40000'
-          },
-          {
-            'svcMgmtNum' : '7229514533',
-            'acntNum' : '1000000000',
-            'opDt' : '20201002',
-            'payOpTm' : '16431111',
-            'payClCd' : '4',
-            'payClCdNm' : 'MIRI 선납 차감',
-            'ppayAmt' : '20000',
-            'ppayBamt' : '140000',
-            'svcNum' : '01000**0***',
-            'invDt' : '20200905',
-            'invAmt' : '40000',
-            'payAmt' : '40000'
-          },
-          {
-            'svcMgmtNum' : '1234567890',
-            'acntNum' : '1000000000',
-            'opDt' : '20200905',
-            'payOpTm' : '16431111',
-            'payClCd' : '5',
-            'payClCdNm' : 'MIRI 선납 환불',
-            'ppayAmt' : '20000',
-            'ppayBamt' : '140000',
-            'svcNum' : '01000**0***',
-            'invDt' : '20200805',
-            'invAmt' : '40000',
-            'payAmt' : '40000'
-          },
-          {
-            'svcMgmtNum' : '1234567890',
-            'acntNum' : '1000000000',
-            'opDt' : '20201005',
-            'payOpTm' : '16431111',
-            'payClCd' : '4',
-            'payClCdNm' : 'MIRI 선납 차감',
-            'ppayAmt' : '20000',
-            'ppayBamt' : '140000',
-            'svcNum' : '01000**0***',
-            'invDt' : '20201002',
-            'invAmt' : '40000',
-            'payAmt' : '40000'
-          },
-          {
-            'svcMgmtNum' : '1234567890',
-            'acntNum' : '1000000000',
-            'opDt' : '20201005',
-            'payOpTm' : '16431111',
-            'payClCd' : '1',
-            'payClCdNm' : 'MIRI 충전',
-            'ppayAmt' : '10000',
-            'ppayBamt' : '140000',
-            'svcNum' : '01000**0***',
-            'invDt' : '20201002',
-            'invAmt' : '40000',
-            'payAmt' : '40000'
-          },
-        ]
-      }
-    };
-
-    /*for (let i = 0; i < 3; i++) {
-      resp.result.miriList = resp.result.miriList.concat(resp.result.miriList);
-    }*/
-
-    /*resp.result.miriList = resp.result.miriList.concat([{
-      'svcMgmtNum' : '1234567890',
-      'acntNum' : '1000000000',
-      'opDt' : '20200502',
-      'payOpTm' : '16431111',
-      'payClCd' : '1',
-      'payClCdNm' : 'MIRI 충전',
-      'ppayAmt' : '10000',
-      'ppayBamt' : '140000',
-      'svcNum' : '01000**0***',
-      'invDt' : '20201002',
-      'invAmt' : '40000',
-      'payAmt' : '40000'
-    }]);*/
-
-    return Observable.of(resp);
-  }
+ 
 }

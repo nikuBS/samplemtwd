@@ -248,34 +248,87 @@ class MyTFareInfoMiri extends TwViewController {
     // return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
     return StringHelper.phoneStringToDash(strCellphoneNum.replace(/-/g, ''));
   }
+  /**
+   * @desc 청구/미납금액 가져오기
+   * payAmt: 대체금액 필드. 청구금액에서 MIRI 납부된 금액
+   * @param originItem
+   * @param item
+   * @private
+   */
+  private getPaymentAmount(originItem: any, item: any) {
+    originItem = originItem || item;
+    // 청구금액 계산
+    originItem.billMonth = originItem.billMonth || '';
+    originItem.payAmtText = originItem.payAmtText || '0';
+    originItem.unPaidAmtText = originItem.unPaidAmtText || '0';
+    // 4: MIRI 선납 차감
+    if (item.payClCd !== '4') {
+      return item;
+    }
+
+    if ( (item.payAmt || 0) > 0 && (item.invDt || '').length === 8) {
+      const opDtM = DateHelper.getShortDateWithFormat(item.opDt, 'M'); // 처리 월
+      const invDtM = DateHelper.getAddDays(item.invDt, 1, 'M'); // 청구 월
+      // 처리 '월' 과 청구 '월' 이 같은경우만 청구금액, 다른 경우는 미납금액 sum
+      if (opDtM === invDtM) {
+        originItem.billMonth = invDtM;
+        originItem.payAmtText = FormatHelper.addComma(item.payAmt);
+      } else { // 미납금액 처리로직
+        originItem.unPaidAmtText = originItem.unPaidAmtText.replace(/[^0-9]/g, '');
+        const unpaid = parseInt(originItem.unPaidAmtText, 10);
+        originItem.unPaidAmtText = unpaid + parseInt(item.payAmt, 10);
+        originItem.unPaidAmtText = FormatHelper.addComma(originItem.unPaidAmtText.toString());
+      }
+    }
+    return originItem;
+  }
+
 
   private parseData(resp: any): any {
-    const data = resp.map( item => {
-      return {
+    const datas = new Map<string, any>(); // 월 별로 그룹핑 할 Map
+    resp.map( item => {
+      const parseData = {
         ...item,
         lineType: this.getLineType(item.svcMgmtNum), // 회선정보
-        opDt: DateHelper.getShortDateWithFormat(item.opDt, 'YY.M.D'), // 처리일자
+        opDtFmt: DateHelper.getShortDateWithFormat(item.opDt, 'YY.M.D'), // 처리일자
         billMonth: DateHelper.getCurrentMonthName(item.opDt), // 청구월
         ppayAmt: FormatHelper.addComma(item.ppayAmt), // 처리금액
-        invAmt: FormatHelper.addComma(item.invAmt), // 청구금액
-        payAmt: FormatHelper.addComma(item.payAmt), // 미납금액
-        ppayBamt: FormatHelper.addComma(item.ppayBamt), // MIRI 잔액
+        ppayBamt: FormatHelper.addComma(item.ppayBamt) // MIRI 잔액
       };
-    });
-    
-    const datas = new Map<string, any>();
-    // Map에 처리일자별 배열로 넣어준다.
-    data.forEach( val => {
-      if (!datas.has(val.opDt)) {
-        datas.set(val.opDt, []);
+
+      if (!datas.has(parseData.opDt)) {
+        datas.set(parseData.opDt, []);
       }
-      datas.get(val.opDt).push(val);
+      // 월별로 Map에 넣어준다.
+      datas.get(parseData.opDt).push(parseData);
     });
+
+    let totalCnt = 0;
+    // 월별로 넣은 데이터를 다시 같은 달의 미납금액들을 merge 하여 sum 해준다.
+    const miriList = Array.from(datas.values()).map( item => {
+      const sumData = item.reduce( (acc, cur) => {
+        // '키' 를 서비스 관리번호 와 수납구분코드 로 묶어서 처리한다. 같은달에 다른 회선 및 다른 항목(예: 충전, 환불) 은 노출될 수 있다.
+        const _key = cur.svcMgmtNum + cur.payClCd;
+        const _item = acc[_key];
+        // 누적 변수에 '키' 가 없으면 현재 데이터를 넣는다.
+        if (!_item) {
+          acc[_key] = cur;
+        }
+        this.getPaymentAmount(_item, cur);
+        return acc;
+      }, {});
+
+      const convertSumData = Object.keys(sumData).map( key => sumData[key]);
+      totalCnt += convertSumData.length;
+      return convertSumData;
+    });
+
     return {
-      totalCnt: data.length,
-      miriList: Array.from(datas.values()) // Map 의 값들을 Array 로 변환해서 리턴한다.
+      totalCnt,
+      miriList
     };
   }
+
 
 }
 
