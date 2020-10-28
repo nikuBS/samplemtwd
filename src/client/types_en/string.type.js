@@ -125,7 +125,7 @@ Tw.POPUP_TITLE = {
   TPLAN_SMARTWATCH: '스마트워치 회선 선택',
   ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.',
 
-  UPDATE_POPUP_TITLE: 'T World 업데이트 필요'
+  UPDATE_POPUP_TITLE: 'T world update required.'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -150,7 +150,7 @@ Tw.POPUP_CONTENTS = {
   POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.',
   REMOVE_UPLOAD_ITEM: '첨부파일을 삭제하시겠습니까?',
 
-  UPDATE_POPUP_CONTENTS: '영문 업데이트가 필요합니다.<br>업데이트를 진행하시겠습니까?'
+  UPDATE_POPUP_CONTENTS: 'T world needs to be updated to the latest version.<br />Would you like to update the app?'
 };
 
 Tw.CHART_TYPE = {
