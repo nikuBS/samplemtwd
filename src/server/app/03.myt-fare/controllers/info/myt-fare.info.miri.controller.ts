@@ -39,6 +39,7 @@ class MyTFareInfoMiri extends TwViewController {
     const {line = '', date = ''} = req.query;
     this._info = {
       svcInfo,
+      allSvc,
       line,
       date,
       childInfo
@@ -92,7 +93,7 @@ class MyTFareInfoMiri extends TwViewController {
       svcNumOrAddr: ''
     };
 
-    const {billsResp} = this._info;
+    const {billsResp, allSvc} = this._info;
     let _svcInfo = this.getChildLineInfo(svcMgmtNum);
     // 자녀회선인 경우
     if (_svcInfo) {
@@ -123,10 +124,28 @@ class MyTFareInfoMiri extends TwViewController {
     const {M1, M2, M3, M4, S3} = MYT_JOIN_WIRE_SVCATTRCD;
     const svcName = [M1, M2, M3, M4, S3].find( attrNames => returnData.svcName === attrNames);
     if (svcName) {
-      returnData.svcNumOrAddr = this.phoneStrToDash(returnData.svcNumOrAddr);
+      const svcItem = this.getAllSvcItem(allSvc, svcMgmtNum);
+      returnData.svcNumOrAddr = this.phoneStrToDash(svcItem ? svcItem.svcNum : returnData.svcNumOrAddr);
     }
 
     return returnData;
+  }
+
+  /**
+   * @desc 전체 회선정보에서 파라미터의 서비스 관리번호와 일치하는 회선정보 리턴
+   * @param allSvc
+   * @param svcMgmtNum
+   * @private
+   */
+  private getAllSvcItem(allSvc: any, svcMgmtNum: string) {
+    if ( !allSvc ) {
+      this.logger.error(this, 'allSvc is ' + allSvc);
+      return null;
+    }
+    const {m, s, o} = allSvc;
+    let services: any = [];
+    services = services.concat(m).concat(s).concat(o);
+    return services.find( item => (item || {}).svcMgmtNum === svcMgmtNum);
   }
 
   /**
@@ -276,7 +295,7 @@ class MyTFareInfoMiri extends TwViewController {
       const sumData = item.reduce( (acc, cur, idx) => {
         // '키' 를 서비스 관리번호 와 수납구분코드 로 묶어서 처리한다. 같은달에 다른 회선 및 다른 항목(예: 충전, 환불) 은 노출될 수 있다.
         let _key = cur.svcMgmtNum + cur.payClCd;
-        _key += item.payClCd !== '4' ? idx : '';
+        _key += cur.payClCd !== '4' ? idx : '';
         const _item = acc[_key];
         // 누적 변수에 '키' 가 없으면 현재 데이터를 넣는다.
         if (!_item) {
