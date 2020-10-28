@@ -98,7 +98,8 @@ export const MYT_DATA_USAGE = {
     },
     WIRE_OR_PPS: { // 유선 또는 PPS 진입 시 
       title: 'Access Unavailable',
-      contents: 'The service for PPS and non-mobile\nlines are still under development\nYou may access these services on the\nKorean version of T World.'
+      contents: 'The service for PPS and non-mobile\nlines are still under development'
+        + '\nYou may access these services on the\nKorean version of T World.'
     },
     LINE_NOT_EXIST: { // 회선이 없을 시
       title: 'This service is available\nonly for an SK Telecom\nregistered number',
@@ -113,7 +114,8 @@ export const MYT_JOIN_SUBMAIN = {
     DEFAULT_CONTENT: '',
     WIRE_OR_PPS : { // 유선 또는 PPS 진입 시 
       title: 'Access Unavailable',
-      contents: 'The service for PPS and non-mobile\nlines are still under development\nYou may access these services on the\nKorean version of T World'
+      contents: 'The service for PPS and non-mobile\nlines are still under development'
+        + '\nYou may access these services on the\nKorean version of T World'
     },
     LINE_NOT_EXIST : { // 회선이 없을 시
       title: 'This service is available\nonly for an SK Telecom\nregistered number',
@@ -221,7 +223,7 @@ export enum MYT_DATA_CHARGE_TYPES {
   GIFT = '선물',
   CHARGE = '충전',
   FIXED = '자동',
-  CANCEL = '취소'
+  CANCEL = 'Cancel'
 }
 
 export enum MYT_DATA_RECHARGE_MSG {
@@ -368,7 +370,7 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   pointReserve: '포인트 납부 예약',
   pointAuto: '포인트 자동납부',
   PAY_KOR_TITLE: '납부',
-  CANCEL_KOR_TITLE: '취소',
+  CANCEL_KOR_TITLE: 'Cancel',
   AUTO_KOR_TITLE: '자동'
 };
 
