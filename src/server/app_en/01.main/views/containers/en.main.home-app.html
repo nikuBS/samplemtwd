@@ -35,8 +35,10 @@
                                     lines are still under development<br>
                                     You may access these services on the<br>
                                     Korean version of T World</p>
+                                    
                                 <% if( Number(svcInfo.nonSvcCnt) > 0 ) { %>
-                                <button class="bt-link-tx underline mt10 fe-mainLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button><!-- 200916 간격조정 -->
+                                <!-- <button class="bt-link-tx underline mt10 fe-mainLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button> -->
+                                <button class="bt-link-tx underline mt10 goRegisterLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button>
                                 <%}%>
                                 <div class="suggest-bt">
                                     <ul class="bt-slice">
@@ -448,6 +450,11 @@
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%= (svcInfo && svcInfo.svcAttrCd === "M1")%>', '', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>','<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+
+    $('.goRegisterLine').click(function() {
+        location.href = '/en/common/member/line';
+    })
+
   });
 </script>
 </body>
