@@ -14,8 +14,11 @@ import StringHelper from '../../../../utils/string.helper';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
+import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
 
 class MyTFareBillGuideChild extends TwViewController {
+  private _miriService!: MytFareInfoMiriService;
+
   constructor() {
     super();
   }
@@ -84,6 +87,8 @@ class MyTFareBillGuideChild extends TwViewController {
     const thisMain = this;
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
+    // this._miriService = new MytFareInfoMiriService(this.reqQuery.line, req, res);
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo, req.query.line);
 
     if (FormatHelper.isEmpty(req.query.line)) {
       this.logger.error(this, `Not found parameter \'line\'`);
@@ -124,24 +129,9 @@ class MyTFareBillGuideChild extends TwViewController {
     const thisMain = this;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
-    /*
-    * 실 데이터 - 사용요금조회
-    */
-    /*
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
-      invDt: this.reqQuery.date,
-      childSvcMgmtNum: this.reqQuery.line
-    }, null, [], API_VERSION.V2), 'p1');
-
-    // const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p2');
-
-    Promise.all([p1]).then(function(resArr) {
-    */
+    // 실 데이터 - 사용요금조회
     // [OP002-3317] 실제 처리할 API는 하나이므로, 개선을 위하여 1개로 처리
-    this.apiService.request(API_CMD.BFF_05_0047, {
-      invDt: this.reqQuery.date,
-      childSvcMgmtNum: this.reqQuery.line
-    }, null, [], API_VERSION.V2).subscribe((resp) => {
+    this.getUsageFee().switchMap( resp => {
       // [OP002-3317] result가 없는 경우(result = {})가 있음. (요금제 변동, 갑자기 무료 요금제가 되는 경우 5GX 프라임/플랫티넘 + 쿠키즈, 테블릿 등
       const result = FormatHelper.isEmpty(resp.result) ? { dcAmt: 0, totInvAmt: '0', usedAmountDetailList: [] } : resp.result;
       if (FormatHelper.isEmpty(result.invAmtList)) {
@@ -178,7 +168,8 @@ class MyTFareBillGuideChild extends TwViewController {
       // thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
       // 청구월 목록 (화면)
       thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr ? thisMain.conditionChangeDtListFun() : null;
-
+      return this._miriService.getMiriPayment(this._billpayInfo.invDt);
+    }).subscribe((resp) => {
       thisMain.renderView(res, 'billguide/myt-fare.bill.guide.child.html', {
         data : {
           reqQuery: thisMain.reqQuery,
@@ -187,7 +178,8 @@ class MyTFareBillGuideChild extends TwViewController {
           commDataInfo: thisMain._commDataInfo,
           intBillLineInfo: thisMain._intBillLineInfo,
           showConditionInfo: thisMain._showConditionInfo,
-          unpaidBillsInfo: thisMain._unpaidBillsInfo || null
+          unpaidBillsInfo: thisMain._unpaidBillsInfo || null,
+          miriPayment: resp
         },
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
@@ -205,6 +197,17 @@ class MyTFareBillGuideChild extends TwViewController {
       });
     });
 
+  }
+
+  /**
+   * @desc 사용요금 조회
+   * @private
+   */
+  private getUsageFee(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0047, {
+      invDt: this.reqQuery.date,
+      childSvcMgmtNum: this.reqQuery.line
+    }, null, [], API_VERSION.V2);
   }
 
 

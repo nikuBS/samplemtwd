@@ -1786,7 +1786,7 @@ Tw.CommonSearch.prototype = {
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가상품 카운트 : ', addProdPayCnt);
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
 
-      if ( disProdCnt === '0' && addProdPayCnt === '0' && addProdPayFreeCnt === '0' ) {
+      if ( disProdCnt === 0 && addProdPayCnt === 0 && addProdPayFreeCnt === 0 ) {
         console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 및 부가서비스 없음');
         $('.tod-search-mytbox').parent().hide();
 
@@ -1807,17 +1807,17 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.fe-wireless-paid-additions-cnt').text(returnStr2);
         this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
-        if ( disProdCnt === '0' ) {
+        if ( disProdCnt === 0 ) {
           console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 없음');
           $('.fe-wireless-discount-additions-cnt').removeAttr('href');
         }
 
-        if ( addProdPayCnt === '0' ) {
+        if ( addProdPayCnt === 0 ) {
           console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가서비스 없음');
           $('.fe-wireless-paid-additions-cnt').removeAttr('href');
         }
 
-        if ( addProdPayFreeCnt === '0' ) {
+        if ( addProdPayFreeCnt === 0 ) {
           console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가서비스 없음');
           $('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
         }

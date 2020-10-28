@@ -41,7 +41,7 @@ Tw.CURRENCY_UNIT = {
   POINT: 'P'
 };
 
-Tw.TIMEOUT_ERROR_MSG = '요청을 처리하는데 시간이 오래 걸리고 있습니다. 잠시 후 다시 시도해주세요.';
+Tw.TIMEOUT_ERROR_MSG = 'Processing delayed. Please try again later.';
 
 Tw.BUTTON_LABEL = {
   CONFIRM: 'Confirm',
@@ -68,26 +68,26 @@ Tw.BUTTON_LABEL = {
 };
 
 Tw.SMS_VALIDATION = {
-  SUCCESS_SEND: '정상적으로 발송되었습니다.',
-  WAIT_NEXT_TIME: '재전송 제한시간(1분)이 지난 후에 이용해주세요.',
-  EXPIRE_NEXT_TIME: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.',
-  NOT_MATCH_CODE: '인증번호가 일치하지 않습니다',
-  EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.',
-  ALREADY_AUTH: '이미 인증을 받은 번호입니다.',
-  SUCCESS: '인증이 완료 되었습니다.',
-  SUCCESS_EXPIRE: '입력시간이 연장되었습니다.',
-  EMPTY_CERT: '인증번호를 입력해 주세요.',
-  ATH2001: '시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주세요.',
-  ATH2007: '인증번호가 일치하지 않습니다.',
-  ATH2008: '인증번호 입력 시간이 초과했습니다.',
-  ATH2009: '시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주세요.',
-  ATH2011: '인증번호의 입력 오류 횟수가 초과되었습니다.',
-  ATH2013: '이미 인증을 받은 번호입니다.',
-  ATH2014: '잘못된 인증요청입니다.',
-  ATH2000: '로그인한 계정의 회선 번호와 사용중인 휴대폰 번호가 일치하지 않습니다. 두 번호가 일치할 경우에만 휴대폰 인증이 가능합니다.',
+  SUCCESS_SEND: 'Verification number sent',
+  WAIT_NEXT_TIME: 'Please try again after 1 minute',
+  EXPIRE_NEXT_TIME: 'Exceeded number of times verification numbers can be sent within time limit',
+  NOT_MATCH_CODE: 'Incorrect verification number entered',
+  EXPIRE_AUTH_TIME: 'Verification number expired',
+  ALREADY_AUTH: 'Used verification number',
+  SUCCESS: 'Verification complete',
+  SUCCESS_EXPIRE: 'Time has been extended',
+  EMPTY_CERT: 'Please enter the verification number',
+  ATH2001: 'SMS service is temporarily unavailable. We apologize for the inconvenience caused. Please try again later.',
+  ATH2007: 'Invalid verification number entered.',
+  ATH2008: 'Verification number expired',
+  ATH2009: 'SMS service is temporarily unavailable. We apologize for the inconvenience caused. Please try again later.',
+  ATH2011: 'Exceeded number of attempts to enter verification number',
+  ATH2013: 'Used verification number',
+  ATH2014: 'Invalid verification request',
+  ATH2000: 'The registered mobile number of the account you have logged in with does not match the mobile phone number you are currently using. Mobile phone verification is available only when the two numbers are the same.',
   ATH1221: '시간이 만료되었습니다.',
-  ZNGME0098: '입력하신 정보가 확인되지 않습니다. 주의하여 다시 한번 입력해 주세요.',
-  ZORDE6044: '법인 등록번호를 다시 확인해 주세요.',
+  ZNGME0098: 'Incorrect information entered. Please try again',
+  ZORDE6044: 'Please confirm your business registration number',
   REMAINED_TIME: '(남은시간 ${value})'
 };
 
@@ -136,7 +136,7 @@ Tw.POPUP_CONTENTS = {
   REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
   RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.',
-  NO_WIFI: '3G/LTE망 사용 시 데이터 요금이 발생됩니다.',
+  NO_WIFI: 'Data charges will be incurred on 3G, LTE, or 5G network.',
   DONATION: '미환급금을 기부하시겠습니까?',
   BIO_DEREGISTER: '생체인증 해지 후 다시 사용하시려면 생체정보를 재등록 하셔야 합니다.<br />생체인증을 해지하시겠습니까?',
   BIO_FINGER_DEREGISTER: '지문등록 해지 후 다시 사용하시려면 지문정보를 재등록 하셔야 합니다.<br />지문인증을 해지하시겠습니까?',
@@ -189,7 +189,7 @@ Tw.TOAST_TEXT = {
   QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.',
   FIDO_USE: '생체인증을 사용합니다.',
   FIDO_NOT_USE: '생체인증을 사용하지 않습니다.',
-  RCV_AGREE: '수신동의가 완료되었습니다.'
+  RCV_AGREE: 'You have provided consent'
 };
 
 Tw.PERIOD_UNIT = {
@@ -463,7 +463,7 @@ Tw.MYT_FARE_PAYMENT_TYPE = {
 
 Tw.ALERT_MSG_COMMON = {
   EXIT_APP: 'Would you like to exit T world?',
-  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
+  SERVER_ERROR: 'Network error. Please try again later.',
   ALERT_4_A3: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?',
   ALERT_4_A4: '사유를 입력해주셔야 탈퇴가 완료됩니다.',
   ALERT_MORE_TWO: '2자 이상 입력해 주세요.',
@@ -485,11 +485,11 @@ Tw.ALERT_MSG_COMMON = {
     MSG: 'T world에 로그인하신 계정의 이동전화번호와 일치하는 휴대폰에서만 인증 받으실 수 있습니다.<br />고객센터(114)로 문의주세요.'
   },
   CERT_ADMIN_BLOCK: {
-    TITLE: '서비스 이용에<br/>불편을 드려 죄송합니다.',
-    MSG: '현재 인증 수단을 점검하고 있어 정상적인 서비스 제공이 어렵습니다.<br />잠시 후 다시 시도해 주시기 바랍니다.'
+    TITLE: 'We apologize for the inconvenience caused.',
+    MSG: 'Service is currently unavailable due to system maintenance.Please try again later.'
   },
-  STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
-  CHANGE: '변경하시겠습니까?',
+  STEP_CANCEL: { TITLE: 'Would you like to close this screen?', MSG: 'You will lose any information entered' },
+  CHANGE: 'Would you like to change?',
   BIOMETRICS_REGISTER_FAIL: '생체인증 등록에 실패하였습니다.',
   BIOMETRICS_CERT_FAIL: '본인인증이 실패하였습니다.',
   CERT_FAIL: '인증에 실패하였습니다.',
@@ -890,13 +890,13 @@ Tw.ALERT_MSG_PRODUCT_ROAMING = {
 
 Tw.ALERT_MSG_PASSWORD = {
   A16: '비밀번호는 4자리입니다.',
-  A17: '입력하신 비밀번호가 일치하지 않습니다.',
+  A17: 'Passcodes do not match.',
   A18: '연속된 숫자는 설정하실 수 없습니다.',
   A19: '동일한 숫자는 설정하실 수 없습니다.'
 };
 
 Tw.ALERT_MSG_BENEFIT = {
-  CONFIRM_3_A15: '3G/LTE 망 사용시 데이터 요금이 발생됩니다'
+  CONFIRM_3_A15: 'Data charges will be incurred on 3G, LTE, or 5G  network.'
 };
 
 Tw.ALERT_MSG_MEMBERSHIP = {
@@ -958,7 +958,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
 };
 
 Tw.ALERT_CANCEL = {
-  TITLE: '화면을 닫고 이동하시겠습니까?',
+  TITLE: 'Would you like to close this screen?',
   CONTENTS: '입력 및 선택하신 정보는 모두 취소됩니다.'
 };
 
@@ -1561,8 +1561,8 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
 };
 
 Tw.MSG_COMMON = {
-  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
-  DATA_CONFIRM: '3G/LTE망 사용시 데이터 요금이 발생됩니다.'
+  SERVER_ERROR: 'Network error. Please try again later.',
+  DATA_CONFIRM: 'Data charges will be incurred on 3G, LTE, or 5G  network.'
 };
 
 Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE = {

@@ -244,6 +244,21 @@ _%>
                         이번 달에 사용하신 이용요금이 없습니다.
                     </div>
                     <%_ } _%>
+                    <!-- 201008 [OP002-10791] 추가 -->
+                    <%_ if(miriPayment) {_%>
+                    <div class="tod-miri-bill">
+                        <button class="btn-miri" data-url="/myt-fare/info/miri?line=<%-data.reqQuery.line%>">
+                            <span class="inner-flex">
+                                <span class="tod-ico-miri"><span class="tod-blind">miri</span></span>
+                                <span class="txt-wrap">
+                                    미리납부하신 금액(MIRI)으로<br>
+                                    <span class="num"><%-miriPayment%></span>원이 자동 납부되었습니다.
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <%_}_%>
+                    <!-- //201008 [OP002-10791] 추가 -->
                     <%# 통합청구(대표) 일때만 노출 %>
                     <%_ if (typeChk === 'A5') { _%>
                     <div class="detail-bill" id="fe-bill-sum-list">

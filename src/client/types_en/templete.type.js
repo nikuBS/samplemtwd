@@ -1433,15 +1433,15 @@ Tw.HOME_DIRECT_BANNER =
        ' </div>'+
         '<div class="popup-contents" id="alertText">'+
            ' <div class="inner-contents">'+
-               ' <div class="tl font-only-gray">3G/LTE망 사용 시 데이터 요금이 발생됩니다.</div>'+
+               ' <div class="tl font-only-gray">Data charges will be incurred on 3G, LTE, or 5G network.</div>'+
            ' </div>'+
       '  </div>'+
            ' <ul class="bt-bottom">'+
                 '<li class="pos-left">'+
-                   ' <button>취소</button>'+
+                   ' <button>Cancel</button>'+
                 '</li>'+
                 '<li class="bt-red1 pos-right">'+
-                    '<button>확인</button>'+
+                    '<button>Okay</button>'+
                ' </li>'+
           '  </ul>'+
     ' </div>'+
