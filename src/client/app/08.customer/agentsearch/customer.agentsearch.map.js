@@ -99,8 +99,9 @@ Tw.CustomerAgentsearchMap.prototype = {
       var path = location.pathname,
         search = location.search,
         hash = location.hash;
-      search += !search ? '?' : '&';
-      search += 'date=' + new Date().getTime();
+      // 브라우저 캐쉬 때문에 화면 리로딩 안되는거 같아서 쓰려고 했는데, 쿼리 쓰는데에 영향이 있어서 다시 제거함.
+      /*search += !search ? '?' : '&';
+      search += 'date=' + new Date().getTime();*/
       this._tidLanding.goLogin(path+search+hash);
       return;
     }
