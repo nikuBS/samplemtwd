@@ -11,7 +11,7 @@ class CustomerAgentsearch extends TwViewController {
                         gyeongsangnamdo: 'true',
                         seoul: 'true',
                         ulsan : 'true',
-                        agentNumber : 25,
+                        agentNumber : 29,
                         filterNm : 'All'};
     if (filter === 'busan') {
       locationInfo.busan = 'true';
@@ -56,7 +56,7 @@ class CustomerAgentsearch extends TwViewController {
       locationInfo.gyeongsangnamdo = 'false';
       locationInfo.seoul = 'true';
       locationInfo.ulsan = 'false';
-      locationInfo.agentNumber = 7;
+      locationInfo.agentNumber = 11;
       locationInfo.filterNm = 'Seoul';
     } else if (filter === 'ulsan') {
       locationInfo.busan = 'false';
@@ -74,7 +74,7 @@ class CustomerAgentsearch extends TwViewController {
       locationInfo.gyeongsangnamdo = 'true';
       locationInfo.seoul = 'true';
       locationInfo.ulsan = 'true';
-      locationInfo.agentNumber = 25;
+      locationInfo.agentNumber = 29;
       locationInfo.filterNm = 'All';
     }
       res.render('../../views/containers/agentsearch/en.customer.agentsearch.html', {svcInfo, pageInfo, locationInfo});
