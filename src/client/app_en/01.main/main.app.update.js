@@ -39,8 +39,7 @@ Tw.MainAppUpdate.prototype = {
    * @desc 
    */
   _onAppUpdateCheck: function () {
-    alert('임시 팝업 입니다.22 ==>> ' + Tw.Environment.environment);
-    if ( Tw.Environment.environment === 'stg' ) { // 운영 모드 (prd) 일때만 동작 
+    if ( Tw.Environment.environment === 'prd' ) { // 운영 모드 (prd) 일때만 동작 
       var userAgentString = Tw.BrowserHelper.getUserAgent();
       // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.20|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
       var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
