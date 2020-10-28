@@ -17,22 +17,22 @@ Tw.CustomerUseguideCommon = function (rootEl) {
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
   this._bindEvent(); 
-  // Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
-  //    $.proxy(function (res) {
-  //     this._init(res);
-  //    }, this)
-  //  );
+  Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+     $.proxy(function (res) {
+      this._init(res);
+     }, this)
+   );
    
   // 핸드폰에 적용시 수정
-  this._init();
+  // this._init();
 };
 
 
 Tw.CustomerUseguideCommon.prototype = {
-   // _init : function(res) { //핸드폰에 적용 시 수정
-    _init : function(){ 
-      // if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-      if(true){
+    _init : function(res) { //핸드폰에 적용 시 수정
+   // _init : function(){ 
+       if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
+     // if(true){
         this._$confirm1.css('display','block');
         this._$confirm2.css('display','block');
         this._$confirm3.css('display','block');
@@ -86,13 +86,13 @@ Tw.CustomerUseguideCommon.prototype = {
     // }
     var outlinkUrl = '';
     if(this.crtVideo===1){ // 비디오일 때 처리
-      outlinkUrl = 'https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0';
+      outlinkUrl = 'https://youtu.be/fUMu9LdtVeE';
     }
     if(this.crtVideo===2){
-      outlinkUrl = 'https://www.youtube.com/embed/JVu2wc1GBpg?rel=0;amp;autoplay=1;amp;autopause=0';
+      outlinkUrl = 'https://youtu.be/JVu2wc1GBpg';
       }
     if(this.crtVideo===3){
-      outlinkUrl = 'https://www.youtube.com/embed/lHqxkq_WfUk?rel=0;amp;autoplay=1;amp;autopause=0';
+      outlinkUrl = 'https://youtu.be/lHqxkq_WfUk';
     }
     this._$confirm1.remove();
     this._$confirm2.remove();

@@ -18,21 +18,21 @@ Tw.CustomerMain = function (rootEl) {
   this._$popup = this.$container.find('.popup');
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
-  // Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
-  //    $.proxy(function (res) {
-  //     this._init(res);
-  //    }, this)
-  //  );
+  Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+     $.proxy(function (res) {
+      this._init(res);
+     }, this)
+   );
   // 핸드폰에 적용시 수정
-   this._init();
+  // this._init();
   this._bindEvent();
 };
 
 Tw.CustomerMain.prototype = {
-   // _init : function(res) { //핸드폰에 적용 시 수정
-   _init : function(){
-        // if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-         if(true){
+    _init : function(res) { //핸드폰에 적용 시 수정
+   //_init : function(){
+         if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
+        // if(true){
           $('#videoConfirm').css('display','block');
           this._$confirm.on('click', $.proxy(this._setConfirm, this));
         }
@@ -50,7 +50,7 @@ Tw.CustomerMain.prototype = {
     $('.popup').remove();
    
     this._$confirm.remove();
-    Tw.CommonHelper.openUrlExternal('https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0');
+    Tw.CommonHelper.openUrlExternal('https://youtu.be/fUMu9LdtVeE');
   },
 
 

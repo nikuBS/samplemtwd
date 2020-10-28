@@ -13,20 +13,20 @@ Tw.ProductCallplanMiri = function (rootEl) {
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
   this._bindEvent(); 
-  // Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
-  //    $.proxy(function (res) {
-  //     this._init(res);
-  //    }, this)
-  //  );
+    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+    $.proxy(function (res) {
+      this._init(res);
+        }, this)
+    );
   // 핸드폰에 적용시 수정
-   this._init();
+  // this._init();
 };
 
 Tw.ProductCallplanMiri.prototype = {
-    // _init : function(res) { //핸드폰에 적용 시 수정
-    _init : function(){
-           // if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-            if(true){
+     _init : function(res) { //핸드폰에 적용 시 수정
+    // _init : function(){
+            if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
+           // if(true){
               this._$confirm0.css('display','block');
               this._$confirm1.css('display','block');
               this._$confirm0.on('click', $.proxy(this._loadpopup0, this));
@@ -58,10 +58,10 @@ Tw.ProductCallplanMiri.prototype = {
           $('.popup').remove();
           var outlinkUrl = '';
           if(this.crtVideo === 0){
-            outlinkUrl = 'https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0';
+            outlinkUrl = 'https://youtu.be/fUMu9LdtVeE';
           }
           if(this.crtVideo === 1){
-            outlinkUrl = 'https://www.youtube.com/embed/P9_32clrvLk?rel=0;amp;autoplay=1;amp;autopause=0';
+            outlinkUrl = 'https://youtu.be/P9_32clrvLk';
             }
           this._$confirm0.remove();
           this._$confirm1.remove();
