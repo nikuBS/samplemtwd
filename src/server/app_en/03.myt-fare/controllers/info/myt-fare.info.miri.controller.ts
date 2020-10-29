@@ -291,7 +291,7 @@ class MyTFareInfoMiri extends TwViewController {
       const invDtM = DateHelper.getAddDays(item.invDt, 1, 'M'); // 청구 월
       // 처리 '월' 과 청구 '월' 이 같은경우만 청구금액, 다른 경우는 미납금액 sum
       if (opDtM === invDtM) {
-        originItem.billMonth = invDtM;
+        originItem.billMonth = DateHelper.getCurrentMonthName(DateHelper.getAddDays(item.invDt, 1, 'YYYYMMDDhhmmss'));
         originItem.payAmtText = FormatHelper.addComma(item.payAmt);
       } else { // 미납금액 처리로직
         originItem.unPaidAmtText = originItem.unPaidAmtText.replace(/[^0-9]/g, '');
