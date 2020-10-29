@@ -43,7 +43,7 @@
                                             You may access these services on the<br>
                                             Korean version of T World</p>
 
-                                        <% if( Number(svcInfo.nonSvcCnt) > 0 ) { %>
+                                        <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
                                         <!-- <button class="bt-link-tx underline mt10 fe-mainLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button> -->
                                         <button class="bt-link-tx underline mt10 goRegisterLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button>
                                         <%}%>
@@ -102,7 +102,7 @@
                             <!-- 모바일 회선_잔여 데이터 -->
                             <% if (homeData.usageData.code === '00') { %>
                                 <div class="main-chart-box">
-                                <% if( Number(svcInfo.nonSvcCnt) > 0 ) { %>
+                                    <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
                                     <em class="line">
                                         <button class="bt ff-tg-light fe-mainLine" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
                                         <!-- <button class="bt ff-tg-light fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button> -->
