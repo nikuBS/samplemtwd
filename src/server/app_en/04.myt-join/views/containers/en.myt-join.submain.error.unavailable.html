@@ -32,7 +32,7 @@
                         <span class="tx2">
                             <%- error.contents.replace(/\n/gi, '<br />') %>
                         </span>
-                        <% if( Number(svcInfo.nonSvcCnt) != 0 ) { %>
+                        <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
                             <button class="bt-link-tx underline mt10 fe-mainLine" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B81_C1198-3">Select a Mobile Line</button>
                             <!-- <button class="bt-link-tx underline mt10 fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B81_C1198-3">Select a Mobile Line</button> -->
                         <% } %>

@@ -44,7 +44,7 @@
                             You may access these services on the<br/>
                             Korean version of T World
                         </span>
-                        <% if( Number(svcInfo.nonSvcCnt) != 0 ) { %>
+                        <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
                             <button type="button" class="bt-link-tx underline mt10 fe-mainLine" 
                                     data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" 
                                     data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? data.xtEid.notPhone: data.xtEid.notPhone %>" 
