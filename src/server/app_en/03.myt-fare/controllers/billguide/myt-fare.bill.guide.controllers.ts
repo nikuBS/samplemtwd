@@ -597,7 +597,7 @@ class MyTFareBillGuide extends TwViewController {
     }
 
     Observable.combineLatest(
-      this._miriService.getMiriBalance()
+      this._miriService.getMiriPayment(this._billpayInfo.invDt)
     ).subscribe(( miri) => {
 
       data.data.miriAmt = miri[0];
