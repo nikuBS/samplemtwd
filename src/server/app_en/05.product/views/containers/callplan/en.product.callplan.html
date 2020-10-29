@@ -1,5 +1,4 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<div class="bigwrap">
 <body class="bg-productdetail">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -16,14 +15,13 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">contents</h2>
             <div class="container">
-
                 <!-- 상품타이틀 -->
-                <div class="cont-box nogaps-hoz productdetails-bg" style="background: <%= backgroundColor.value %> url(https://cdnm-dev.tworld.co.kr<%=prodData.prodIconImgUrl%>) right 5.75rem no-repeat; background-size: 10.5rem 11.938rem"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background-image: url(<%=changing.changingCDN%><%=prodData.prodIconImgUrl%>)"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
                     <div class="productdetails-wrap">
                         <div class="idpt-product-detail-title">
                             <h3>
                                 <span><%- prodData.prodSmryEngDesc %></span>
-                                <strong><%- prodData.prodEngNm %></strong><!-- 200914 접근성 수정 -->
+                                <strong id="prodNm"><%- prodData.prodEngNm %></strong><!-- 200914 접근성 수정 -->
                             </h3>
                         </div>
                         <div class="productdetails-ledgercase">
@@ -34,19 +32,15 @@
                             </p>
                         </div>
                     </div>
-                    <ul class="detailinfo">
+                    <ul class="detailinfo <%if(prodData.smryHtmlEngCtt==''||prodData.smryHtmlEngCtt==null){%>pb00<%}%>">
                         <li>
                             <p class="gb"><i class="blind">data</i><%if(prodData.basOfrGbDataQtyEngCtt!=null){ %>
-                                <%- prodData.basOfrGbDataQtyEngCtt%> <% } else { %>
-                                <%- prodData.basOfrMbDataQtyCtt%>
-                                <% } %>
-                                
-                                <% if((prodData.basOfrGbDataQtyEngCtt!='Unlimited')&&(prodData.basOfrGbDataQtyEngCtt!=null)){ %>GB 
+                                <%-prodData.basOfrGbDataQtyEngCtt%><% } else { %><%-prodData.basOfrMbDataQtyCtt%><%}%><% if((prodData.basOfrGbDataQtyEngCtt!='Unlimited')&&(prodData.basOfrGbDataQtyEngCtt!=null)){ %>GB 
                                 <% }else if((prodData.basOfrGbDataQtyEngCtt!='Unlimited')&&(prodData.basOfrMbDataQtyCtt!=null)){ %>MB <% } %> Data</p>
                         </li>
                         <% if(prodData.basOfrVcallTmsEngCtt!='-'){ %>
                         <li>
-                            <p class="type"><i class="blind">talktime</i><%- prodData.basOfrVcallTmsEngCtt %> Talktime</p>
+                            <p class="type"><i class="blind">talktime</i><%- prodData.basOfrVcallTmsEngCtt %> </p>
                         </li>
                         <% } if(prodData.basOfrCharCntEngCtt!='-'){ %>
                         <li>
@@ -58,52 +52,41 @@
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="prCont">
+                <% if (contentsData!=undefined){ %>
                 <% for(let i= 0; i < contentsData.length ; i++){ if(contentsData[i].popupUseYn=='N'){%>
                     <%- contentsData[i].popupDtlCtt %>
                     <%- contentsData[i].dtlCtt %>
-                <% }} %>
-                
+                <% }}} %>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true"/>
-
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <%= groupName.value %> Subscription/Cancellation
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">detail</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
                 <!-- 팝업 띄우는 링크 -->
+                <div class="popupDiv"></div>
             </div>
         </div>
         <%- include('../../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <input type="hidden" id="prodGroup" value="<%= groupName.value %>">
+        <input type="hidden" id="prodNm" value="<%= prodData.prodEngNm %>">
     </div>
 </body>
-<div class="popup-page nobg tw-popup" style="display:none"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
-    <!-- #header -->
-    <div class="header-wrap">
-        <div class="page-header">
-            <div class="header-ti">
-                <h1>DETAILS</h1>
-            </div>
-        </div>
-    </div>
-    <!--// #header -->
-    <!-- .container-wrap -->
-    <div class="container-wrap">
-        <h2 class="blind">contents</h2>
-        <div class="container">
-            <div class="plan-detail">
-                <% for(let i= 0; i < contentsData.length ; i++){ if(contentsData[i].popupUseYn=='Y'){%>
-                    <%- contentsData[i].popupDtlCtt %>
-                    <hr class="cont-sp type1" aria-hidden="true"/>
-                <% }} %>
-            </div>
-        </div>
-        <!--// .container-wrap -->
-        <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">popup close</span></button>
-        <!--// .popup-closeBtn -->
-    </div>
-    <!--// .popup hbs -->
-</div>
+
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.ProductCallplan($('.bigwrap'));
+        new Tw.ProductCallplan($('.wrap'));
     })
 </script>
 <% include ../../components/end.component.html %>

@@ -2,6 +2,7 @@ import TwRouter from '../../common_en/route/tw.router';
 import MyTFareSubMain from './myt-fare.submain.controller';
 import MyTFareBillGuide from './controllers/billguide/myt-fare.bill.guide.controllers';
 import MytFareHotbill from './controllers/bill/myt-fare.bill.hotbill.controller';
+import MyTFareInfoMiri from './controllers/info/myt-fare.info.miri.controller';
 
 
 class MytFareRouter extends TwRouter {
@@ -15,6 +16,8 @@ class MytFareRouter extends TwRouter {
 
     // 실시간 이용요금
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
+    //miri 요금
+    this.controllers.push({ url: '/info/miri', controller: MyTFareInfoMiri });
  
   }
 }

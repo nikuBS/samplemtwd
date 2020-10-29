@@ -1,9 +1,3 @@
-<%#
-* @file customer.agentsearch.search.html
-* @author Hakjoon Sim (hakjoon.sim@sk.com)
-* @since 2018.10.16
-%>
-
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
@@ -29,14 +23,12 @@
                     </div>
 				</div>
                 <!--// .cont-box -->
-
                 <div class="sc-util clearfix">
                     <p class="count">Total <strong id="agent-number"><%= locationInfo.agentNumber %></strong></p>
                     <div class="btn-wrap">
                         <button class="bt-select" title="Select an area" aria-haspopup="true"><%= locationInfo.filterNm %></button>
                     </div>
                 </div>
-
                 <!-- .cont-box -->
 				<div class="cont-box">
                     <p class="cont-box-title">T world for Foreigners</p>
@@ -131,6 +123,20 @@
                                 <p class="tel"><button class="fe-tel" data-tel="02-462-6011">02-462-6011</button></p>
                             </div>
                         </li>
+                        <li>
+                            <div class="info-top">
+                                <p class="location">Gwangjin-gu</p>
+                                <p class="name">SK Telecom Technomart Customer Service Center</p>
+                                <p class="address">Technomart 6th floor No.2. 85, Gwangnaru-ro 56-gil, Gwangjin-gu, Seoul,<br>Republic of Korea</p>
+                                <div class="lang">
+                                    <span class="lang-badge">JPN</span>
+                                </div>
+                            </div>
+                            <div class="info-bottom">
+                                <p class="time"><span>10:00 ~ 20:00</span></p>
+                                <p class="tel"><button class="fe-tel" data-tel="02-3424-6630">02-3424-6630</button></p>
+                            </div>
+                        </li>
                         <li data-location="Seoul">
                             <div class="info-top">
                                 <p class="location">Guro-gu</p>
@@ -143,6 +149,48 @@
                             <div class="info-bottom">
                                 <p class="time"><span>10:00 ~ 19:00</span></p>
                                 <p class="tel"><button class="fe-tel" data-tel="02-890-2900">02-890-2900</button></p>
+                            </div>
+                        </li>
+                        <li data-location="Seoul">
+                            <div class="info-top">
+                                <p class="location">Gangnam-gu</p>
+                                <p class="name">SK Telecom Gangnam Customer Service Center</p>
+                                <p class="address">Usin BLD 2nd floor, 145, Teheran-ro, Gangnam-gu, Seoul,<br>Republic of Korea</p>
+                                <div class="lang">
+                                    <span class="lang-badge">ENG</span>
+                                </div>
+                            </div>
+                            <div class="info-bottom">
+                                <p class="time"><span>09:00 ~ 18:00</span></p>
+                                <p class="tel"><button class="fe-tel" data-tel="080-011-6000">080-011-6000</button></p>
+                            </div>
+                        </li>
+                        <li data-location="Seoul">
+                            <div class="info-top">
+                                <p class="location">Gangbuk-gu</p>
+                                <p class="name">SK Telecom Gangbuk Customer Service Center</p>
+                                <p class="address">Samsung fire BLD 2nd floor. 314, Dobong-ro, Gangbuk-gu, Seoul,<br>Republic of Korea</p>
+                                <div class="lang">
+                                    <span class="lang-badge">ENG</span>
+                                </div>
+                            </div>
+                            <div class="info-bottom">
+                                <p class="time"><span>09:00 ~ 19:00</span></p>
+                                <p class="tel"><button class="fe-tel" data-tel="02-1599-0011">02-1599-0011</button></p>
+                            </div>
+                        </li>
+                        <li data-location="Seoul">
+                            <div class="info-top">
+                                <p class="location">Mapo-gu</p>
+                                <p class="name">T factory</p>
+                                <p class="address">144, Yanghwa-ro, Mapo-gu, Seoul,<br>Republic of Korea</p>
+                                <div class="lang">
+                                    <span class="lang-badge">ENG</span>
+                                </div>
+                            </div>
+                            <div class="info-bottom">
+                                <p class="time"><span>24hr</span></p>
+                                <p class="tel">-<button class="fe-tel" data-tel="070-7470-0001">070-7470-0001</button></p>
                             </div>
                         </li>
                         <!-- //서울시 -->
@@ -371,6 +419,22 @@
                             </div>
                         </li>
                         <!-- //광주시 -->
+                        <% } %>
+                        <% if( locationInfo.daegu == 'true'){ %>
+                        <li data-location="Daegu">
+                            <div class="info-top">
+                                <p class="location">Jung-gu</p>
+                                <p class="name">SK Telecom Daegu Customer Service Center</p>
+                                <p class="address">SK Broadband 1st floor. 2171, Dalgubeol-daero, Jung-gu, Daegu,<br>Republic of Korea</p>
+                                <div class="lang">
+                                    <span class="lang-badge">ENG</span>
+                                </div>
+                            </div>
+                            <div class="info-bottom">
+                                <p class="time"><span>09:00 ~ 18:00</span></p>
+                                <p class="tel"><button class="fe-tel" data-tel="02-1599-0011">02-1599-0011</button></p>
+                            </div>
+                        </li>
                         <% } %>
                         <% if( locationInfo.ulsan == 'true'){ %>
                         <!-- 울산시 -->

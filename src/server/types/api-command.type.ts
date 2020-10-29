@@ -360,9 +360,11 @@ export const API_CMD = {
   BFF_05_0218: { path: '/core-modification/:version/specialized-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0219: { path: '/core-modification/:version/custum-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0222: { path: '/core-product/v1/services/wireless/additions/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0227: { path: '/core-balance/:version/roaming/mode/baro-traffic-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0230: { path: '/core-modification/:version/total-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
-  // [OP002-11230] 
+  // [OP002-11230]
   BFF_05_0231: { path: '/core-modification/:version/mls/recommend-multiItem', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0232: { path: '/core-modification/:version/mls/conversion-impression', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0233: { path: '/core-modification/:version/mls/conversion-click', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -559,6 +561,7 @@ export const API_CMD = {
   BFF_07_0106: { path: '/core-bill/:version/use-contents-prepay/auto-process-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0107: { path: '/core-bill/:version/auto-payments-nc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true},
   BFF_07_0108: { path: '/core-bill/:version/auto-payments-nc', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true},
+  BFF_07_0109: { path: '/core-bill/:version/bill-pay/miri', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

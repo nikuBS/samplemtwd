@@ -202,6 +202,7 @@ Tw.MyTFareSubMain.prototype = {
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
     // 타겟배너 (요금납부 화면으로 이동)
     this.$apply.on('click', $.proxy(this._onClickedPayMthd, this));
+    this.$container.on('click', '[data-url]', $.proxy(this._goLoad, this));
   },
 
   // lazyloading 처리
@@ -1026,5 +1027,9 @@ Tw.MyTFareSubMain.prototype = {
       return;
     }
     this._historyService.goLoad(href);
+  },
+
+  _goLoad: function (event) {
+    this._historyService.goLoad($(event.currentTarget).data('url'));
   }
 };

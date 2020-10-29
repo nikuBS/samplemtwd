@@ -19,8 +19,11 @@ import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types_en/title.type';
 // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
 import CommonHelper from '../../../../utils_en/common.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
+import { SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER } from 'constants';
+import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
 
 class MyTFareBillGuide extends TwViewController {
+  
   constructor() {
     super();
   }
@@ -30,7 +33,7 @@ class MyTFareBillGuide extends TwViewController {
   private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036 , 사용요금조회 | BFF_05_0047
   private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
   private _intBillLineInfo: any = []; // 통합청구등록회선조회 | BFF_05_0049
-
+  private _miriService!: MytFareInfoMiriService;
   // 공통데이터
   private _commDataInfo: any = {
     selClaimDt: '', // 선택 청구 월 | 2017년 10월
@@ -41,18 +44,12 @@ class MyTFareBillGuide extends TwViewController {
     joinSvcList: '', // 가입 서비스 리스트
     useAmtTot: '', // 사용요금
 
-    intBillLineList: '', // 조건변경 > 회선
     conditionChangeDtList: '', // 조건변경 > 기간
-    repSvcNm: '', // 대표서비스회선정보
-
-    curDt: '', // 현재날짜
-    remained: '', // 잔여데이터 KB | 공백일 경우 표시안함
-    dataYn: '', // 음성+데이터 'Y'
-    dataProdYn: '', // MB 'Y' | 원 'N'
-
     repSvcNum: ''
 
   };
+
+  private _miriData;
 
   private _urlTplInfo: any = {
     commonPage: 'billguide/en.myt-fare.bill.guide.html', // 공통 페이지
@@ -70,12 +67,12 @@ class MyTFareBillGuide extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const thisMain = this;
-
+    this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
-
+    
     const defaultData = {
       reqQuery: thisMain.reqQuery,
       svcMgmtNum: svcInfo.svcMgmtNum,
@@ -102,6 +99,12 @@ class MyTFareBillGuide extends TwViewController {
       return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
     }
 
+    //영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if(svcInfo.svcAttrCd !== '' && ['M1','M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
+      this._typeChk = 'A3';
+      res.render( 'billguide/en.myt-fare.bill.guide.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      return;
+    }
     //무선회선이 없는경우
     if(svcInfo.caseType === '02' || test === 'notLine' ) {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
@@ -116,12 +119,6 @@ class MyTFareBillGuide extends TwViewController {
       return;
     }
 
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
-      this._typeChk = 'A3';
-      res.render( 'billguide/en.myt-fare.bill.guide.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
-      return;
-    }
 
 
     // ---------------------------------------------------------------------------------[화면 구분]
@@ -144,12 +141,16 @@ class MyTFareBillGuide extends TwViewController {
 
     } else {
 //    console.log("[ API ] BFF_05_0226");
-      reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0226, {
-        invDt: this.reqQuery.date,
-        selSvcMgmtNum : this.reqQuery.line
-      }, null, [], API_VERSION.V1), 'p1'));
-    }
 
+        
+        reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0226, {
+          invDt: this.reqQuery.date,
+          selSvcMgmtNum : this.reqQuery.line
+        }, null, [], API_VERSION.V1), 'p1'));  
+  
+
+    }
+    
     this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
 
     Promise.all(reqArr).then(function(resArr) {
@@ -196,8 +197,8 @@ class MyTFareBillGuide extends TwViewController {
 
         Object.assign(thisMain._billpayInfo, resArr[0].result);
 
-        //  영문화 --확인필요.  _intBillLineInfo(회선변경)
-        //  thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
+        thisMain.logger.debug("[ API BFF_05_0226 Result ]",thisMain._billpayInfo);
+
 
         // 청구 시작, 종료일
         thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -236,24 +237,30 @@ class MyTFareBillGuide extends TwViewController {
 
         let beLineLst = thisMain._billpayInfo.paidAmtDetailInfoList;
       //  console.log("### line length =>"+beLineLst.length);
-
-        let _lineDtlLst :Array<any> = [];
+        
+        let _lineDtlLst :Array<any> = [];        
         for( let i=0; i<beLineLst.length; i++ ){
-        //  console.log(" ============================== jgmik ========================================" );
+
           let line = beLineLst[i];
+     //     if(line.svcCd !== 'C') continue;  //무선 아닌경우 표시안함.
         //  console.log("cate length =>"+line.paidAmtDetailInfo.length);
-          let lineGroup = thisMain._arrayToGroup( line.svcNm ,line.paidAmtDetailInfo );
-    
+          let lineGroup = thisMain._arrayToGroup( line.svcNm ,line.svcCd,line.paidAmtDetailInfo );
         //  console.log('>> group >>',lineGroup);
         //  console.log(" ===============================================================================" );
           _lineDtlLst.push( lineGroup );
         }
+
+        //큰금액순으로 정렬
+        _lineDtlLst.sort(function(a,b){
+          return a.totAmtInt > b.totAmtInt ? -1 : a.totAmtInt < b.totAmtInt ? 1 : 0;
+        });
+
         //  console.log("### _lineDtlLst length =>"+_lineDtlLst.length);
 
         //  청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
         thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
       //  console.log('[ ## EN thisMain._commDataInfo.conditionChangeDtList]',thisMain._commDataInfo.conditionChangeDtList);
-        const data: any = {
+        let data: any = {
           data : {
             reqQuery: thisMain.reqQuery,
             svcMgmtNum: svcInfo.svcMgmtNum,
@@ -265,16 +272,19 @@ class MyTFareBillGuide extends TwViewController {
 
             //영문화 추가
             repSvcNum: thisMain._commDataInfo.repSvcNum,
-            paidAmtMonthSvcCnt: thisMain._billpayInfo.paidAmtMonthSvcCnt,
+          paidAmtMonthSvcCnt: thisMain._billpayInfo.paidAmtMonthSvcCnt,
+//            paidAmtMonthSvcCnt: _lineDtlLst.length,
             paidAmtDetailInfoList: thisMain._commDataInfo.paidAmtDetailInfoList,
             lineDtlLst : _lineDtlLst,
             typeChk: ''
           },
           svcInfo: svcInfo,
           pageInfo: thisMain.pageInfo,
-          useFeeInfo: thisMain._useFeeInfo
+          useFeeInfo: thisMain._useFeeInfo,
+          miriAmt :thisMain._miriData 
         };
 
+ 
         // 다른 페이지를 찾고 계신가요 통계코드 추가
         BrowserHelper.isApp(req)?thisMain.getAppXtEid(data.data):thisMain.getMWebXtEid(data.data);
         
@@ -304,7 +314,8 @@ class MyTFareBillGuide extends TwViewController {
           thisMain._billpayInfo.existBill = existBill('paidAmtDetailInfoList');
 
           // 개별청구 회선
-          if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+        //if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+          if ( data.data.lineDtlLst.length === 1 ) {
 
             thisMain.logger.info(thisMain, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
             thisMain._typeChk = 'A4';
@@ -320,8 +331,7 @@ class MyTFareBillGuide extends TwViewController {
             if ( svcInfo.actRepYn === 'Y' || (svcInfo.actRepYn === 'Y' && thisMain.reqQuery.line) ) {
               thisMain.logger.info(thisMain, '[ 통합청구회선 > LINE:' + thisMain.reqQuery.line + ']', svcInfo.actRepYn);
               thisMain._typeChk = 'A5';
-
-              thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
+              //thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
 
               // 요금납부버튼 무조건 노출로 삭제
               // thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
@@ -329,7 +339,6 @@ class MyTFareBillGuide extends TwViewController {
               // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
               // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
               // data['showConditionInfo'] = thisMain._showConditionInfo;
-            
             }
           }
         }
@@ -339,7 +348,7 @@ class MyTFareBillGuide extends TwViewController {
 //      thisMain.reqButtonView(res, thisMain._urlTplInfo.commonPage, data);//영문화 사용안함
 
         thisMain.renderView(res, thisMain._urlTplInfo.commonPage, data);
-        
+
         thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
         thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
 
@@ -352,11 +361,20 @@ class MyTFareBillGuide extends TwViewController {
         //   pageInfo: pageInfo,
         //   svcInfo: svcInfo
         // });
+        
         return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
 
       }
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      // 6개월간 청구요금 없음 에러페이지로 표시
+      // return thisMain.error.render(res, {
+      //   title: 'title',
+      //   code: err.code,
+      //   msg: err.msg,
+      //   pageInfo: pageInfo,
+      //   svcInfo: svcInfo
+      // });
 
       // 6개월간 청구요금 없음
       if ( err.code === 'BIL0076' || err.code === 'BIL0114') {
@@ -412,9 +430,9 @@ class MyTFareBillGuide extends TwViewController {
   public getSelClaimDtM(date: string): any {
     // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
     return this._commDataInfo.selClaimDtM =
-      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'MMMM' );
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'MMM.' );
   }
-
+  
   /**
    * 회선정보 목록 리턴
    * @param allSvc
@@ -572,14 +590,30 @@ class MyTFareBillGuide extends TwViewController {
 
 
   // -------------------------------------------------------------[클리이어트로 전송]
-  public renderView(res: Response, view: string, data: any): any {
+  public renderView(res, view: string, data: any): any {
     this.logger.info(this, '[ HTML ] : ', view);
     if (data.data) {
       data.data.allSvc = this.getAllSvcClone(data.data.allSvc);
     }
-    res.render(view, data);
-  }
 
+    Observable.combineLatest(
+      this._miriService.getMiriPayment(this._billpayInfo.invDt)
+    ).subscribe(( miri) => {
+
+      data.data.miriAmt = miri[0];
+      this.logger.info(this, '[ ---------------------------- ] : ', data);
+
+      return res.render(view, data);
+    });
+    
+  }
+  _parseInt(str: String) {
+    if ( !str ) {
+      return 0;
+    }
+
+    return parseInt(str.replace(/,/g, ''), 10);
+  }
 
   /**
    * allSvc에서 필요한 정보만 복사
@@ -619,7 +653,7 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   //청구요금 상세 그룹화.
-  public _arrayToGroup( name : string ,data : Array<any> ) {
+  public _arrayToGroup( name : string ,svcCd : string ,data : Array<any> ) {
     const func = this;
     var fieldInfo = {
         lcl:    'billItmLclNm'
@@ -629,16 +663,32 @@ class MyTFareBillGuide extends TwViewController {
     };
 
     const NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
-    const HOTBILL_UNPAID_TITLE = '미납요금';
+    const HOTBILL_UNPAID_TITLE = '';
 
     // var self = this;
+    /*
+      C: '휴대폰',
+      S: 'PPS',
+      F: 'TPocket-FI',
+      L: 'Tlogin',
+      W: 'WiBro',
+      P: '집전화',
+      T: 'IPTV',
+      I: '인터넷'
+    */
     var amount = 0;
     var noVAT = false;
     var is3rdParty = false;
     var line = {
       name: ''
       ,totAmt: ''
+      ,totAmtInt: 0
       ,group:{}
+      ,isMPhone: false
+      ,isTPhone: false
+      ,isIpTV: false
+      ,isInternet: false 
+      ,isPocket: false 
     };
     var group = {};
     var totAmt = 0;
@@ -735,10 +785,23 @@ class MyTFareBillGuide extends TwViewController {
         // console.log("   itemL.total ==>",itemL.total);
         
       }
+
+      
+      if( svcCd === 'C' ){
+        line.isMPhone   = true;
+      }else if( svcCd === 'P' ){
+        line.isTPhone   = true;
+      }else if( svcCd === 'T' ){
+        line.isIpTV     = true;
+      }else if( svcCd === 'I' ){
+        line.isInternet = true;
+      }else if( svcCd === 'F' ){
+        line.isPocket = true;
+      }
       line.group  = group;
       line.totAmt = (totAmt < 0 ?'-₩':'₩')+func.commaSeparatedString( Math.abs(totAmt) );
+      line.totAmtInt = totAmt;
       line.name   = func.phoneStrToDash(name);
-      
       return line;
   };
 
@@ -748,8 +811,7 @@ class MyTFareBillGuide extends TwViewController {
   public commaSeparatedString(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
-
-
+ 
   /**
    * 다른 페이지를 찾고 계신가요 통계코드 생성
    * @param data

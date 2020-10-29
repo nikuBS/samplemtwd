@@ -1,15 +1,15 @@
 
 export enum SVC_ATTR_NAME {
-  M1 = 'Mobile Phone',
-  M2 = 'Prepaid Phone',
-  M3 = 'T pocket Wifi',
+  M1 = 'Mobile',
+  M2 = 'Prepaid',
+  M3 = 'Pocket',
   M4 = 'T Login',
   M5 = 'T Wibro',
   S1 = 'Internet',
   S2 = 'IPTV',
   S3 = 'Landline',
   O1 = 'Point cam'
-}
+};
 
 export enum SVC_ATTR_E {
   MOBILE_PHONE = 'M1',
@@ -507,26 +507,71 @@ export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {
 };
 
 export const PRODUCT_REPLACED_RULE = {
-  CHAR: [{
-    TARGET: ['999999999', '999,999,999', '무제한', '기본제공'],
+  PAYMENT: [{ // 요금제
+    TARGET: ['상세참조'],
+    RESULT: 'Details'
+  }, {
+    TARGET: ['무료'],
     RESULT: 'Free'
+  }, {
+    TARGET: [''],
+    RESULT: ''
   }],
-  VCALL: [{
+
+  DATA: [{ // 데이터
+    TARGET: ['', '0', 0],
+    RESULT: ''
+  }, {
+    TARGET: ['무제한'],
+    RESULT: 'Unlimited'
+  }, {
+    TARGET: ['상세참조'],
+    RESULT: 'Details'
+  }, {
+    TARGET: ['함께쓰기'],
+    RESULT: 'Sharing'
+  }],
+  
+  CHAR: [{ // 문자
+    TARGET: ['999999999', '999,999,999', '기본제공'],
+    RESULT: 'Free'
+  }, {
+    TARGET: ['상세참조'],
+    RESULT: 'Details'
+  }, {
+    TARGET: ['제공안함'],
+    RESULT: 'Pay-per-use'
+  }, {
+    TARGET: ['', '0', 0],
+    RESULT: ''
+  }],
+
+  VCALL: [{ // 음성
     TARGET: ['999999999', '999,999,999', '무제한'],
     RESULT: 'Unlimited'
   }, {
-    TARGET: ['999999995', '999,999,995'],
+    TARGET: ['999999995', '999,999,995', 'SKT 지정회선 무제한'],
     RESULT: 'Unlimited for selected SKT lines'
   }, {
-    TARGET: ['999999996', '999,999,996'],
+    TARGET: ['999999996', '999,999,996', 'SKT 고객간 무제한'],
     RESULT: 'Unlimited when calling other SKT subscribers'
   }, {
-    TARGET: ['999999997', '999,999,997'],
+    TARGET: ['999999997', '999,999,997', '이동전화 무제한'],
     RESULT: 'Unlimited mobile phone calls'
   }, {
-    TARGET: ['999999998', '999,999,998'],
+    TARGET: ['999999998', '999,999,998', '집·이동전화 무제한', '집전화·이동전화 무제한', '집전화 · 이동전화 무제한'],
     RESULT: 'Unlimited landline & mobile phone calls'
-  }]
+  }, {
+    TARGET: ['상세참조'],
+    RESULT: 'Details'
+  }, {
+    TARGET: ['제공안함'],
+    RESULT: 'Pay-per-use'
+  }, {
+    TARGET: [''],
+    RESULT: ''
+  },
+]
 };
 
 export enum SVC_STATE {

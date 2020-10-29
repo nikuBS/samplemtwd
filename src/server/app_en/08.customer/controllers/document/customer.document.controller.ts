@@ -9,11 +9,7 @@ class CustomerDocument extends TwViewController {
 
     
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    for(let t in pageInfo) {
-        console.log('#######>> ' + t + ', ' + pageInfo[t]);
-      }
-
-            res.render('../../views/containers/document/en.customer.document.html', {svcInfo, pageInfo}); 
+        res.render('../../views/containers/document/en.customer.document.html', {svcInfo, pageInfo}); 
     }
 }
 

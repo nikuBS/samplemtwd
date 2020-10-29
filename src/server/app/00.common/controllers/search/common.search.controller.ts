@@ -353,45 +353,45 @@ class CommonSearch extends TwViewController {
             });
             break;
           case 7:
-            // [OP002-9968] 의 배포 일정 연기 (9/24) 로 연기됨에 따라 기존 로직으로 복구함. 9/24 배포시에 본 로직은 제거 필요 [S]
-            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 부가서비스 검색 ❖❖❖❖❖❖❖❖❖❖❖');
-            this.apiService.request(API_CMD.BFF_05_0137, {}, {})
-            .subscribe((resultData) => {
-              if (resultData.code !== API_CODE.CODE_00) {
-                searchResult = removeImmediateData(searchResult);
-              } else {
-                searchResult.result.search[0].immediate.data[0].subData = resultData.result;
-              }
-              showSearchResult(searchResult, relatedKeyword , requestObj , this);
-            });
-            break;
-            // [OP002-9968] 의 배포 일정 연기 (9/24) 로 연기됨에 따라 기존 로직으로 복구함. 9/24 배포시에 본 로직은 제거 필요 [E]
+            console.log('❖❖❖❖❖❖❖❖❖❖❖ 부가서비스 검색 ❖❖❖❖❖❖❖❖❖❖❖');  
+            // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [S]
+            // this.apiService.request(API_CMD.BFF_05_0137, {}, {})
+            // .subscribe((resultData) => {
+            //   if (resultData.code !== API_CODE.CODE_00) {
+            //     searchResult = removeImmediateData(searchResult);
+            //   } else {
+            //     searchResult.result.search[0].immediate.data[0].subData = resultData.result;
+            //   }
+            //   showSearchResult(searchResult, relatedKeyword , requestObj , this);
+            // });
+            // break;
+            // [OP002-9968] 의 배포 일정 연기 (9/17) 로 연기됨에 따라 기존 로직으로 복구함. 9/17 배포시에 본 로직은 제거 필요 [E]
 
-            // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/24) 로 연기됨에 따라 원복처리함 [S]
-            // if (svcInfo && svcInfo.svcAttrCd.startsWith('S')) {
-            //   this.apiService.request(API_CMD.BFF_05_0129, {}, {})
-            //   .subscribe((resultData) => {
-            //     if (resultData.code !== API_CODE.CODE_00) {
-            //       searchResult = removeImmediateData(searchResult);
-            //     } else {
-            //       searchResult.result.search[0].immediate.data[0].subData = resultData.result;
-            //     }
-            //     showSearchResult(searchResult, relatedKeyword , requestObj , this);
-            //   });
-            //   break;
-            // } else {
-            //   this.apiService.request(API_CMD.BFF_05_0161, {}, {})
-            //   .subscribe((resultData) => {
-            //     if (resultData.code !== API_CODE.CODE_00) {
-            //       searchResult = removeImmediateData(searchResult);
-            //     } else {
-            //       searchResult.result.search[0].immediate.data[0].subData = resultData.result;
-            //     }
-            //     showSearchResult(searchResult, relatedKeyword , requestObj , this);
-            //   });
-            //   break;
-            // }
-            // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/24) 로 연기됨에 따라 원복처리함 [E]
+            // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/17) 로 연기됨에 따라 원복처리함 [S]
+            if (svcInfo && svcInfo.svcAttrCd.startsWith('S')) {
+              this.apiService.request(API_CMD.BFF_05_0129, {}, {})
+              .subscribe((resultData) => {
+                if (resultData.code !== API_CODE.CODE_00) {
+                  searchResult = removeImmediateData(searchResult);
+                } else {
+                  searchResult.result.search[0].immediate.data[0].subData = resultData.result;
+                }
+                showSearchResult(searchResult, relatedKeyword , requestObj , this);
+              });
+              break;
+            } else {
+              this.apiService.request(API_CMD.BFF_05_0161, {}, {})
+              .subscribe((resultData) => {
+                if (resultData.code !== API_CODE.CODE_00) {
+                  searchResult = removeImmediateData(searchResult);
+                } else {
+                  searchResult.result.search[0].immediate.data[0].subData = resultData.result;
+                }
+                showSearchResult(searchResult, relatedKeyword , requestObj , this);
+              });
+              break;
+            }
+            // 아래 [OP002-9968] 의 변경사항은 배포 일정 연기 (9/17) 로 연기됨에 따라 원복처리함 [E]
           case 8:
             // console.log('❖❖❖❖❖❖❖❖❖❖❖ 음성잔여량 검색 ❖❖❖❖❖❖❖❖❖❖❖');
             this.apiService.request(API_CMD.BFF_05_0001, {}, {}).

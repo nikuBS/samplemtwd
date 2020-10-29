@@ -204,7 +204,6 @@
                 <!--// .cont-box -->
 
                 <script type="text/javascript">
-                    // 190620 [OP002-1351] [UX/PUB] [바이널2차] 회선관리 편집모드 drag&drop 기능 개선 START
                     skt_landing.dev.sortableInit({
                        axis: 'y',
                        scrollSensitivity: 100,
@@ -212,43 +211,12 @@
                        forceScroll: true
                     });
 
-                    // 191211 [OP002-5208] START 추가_01
                     skt_landing.dev.sortableInit('#sortable-enabled2', {
                         axis: 'y',
                         scrollSensitivity: 100,
                         scrollSpeed: 30,
                         forceScroll: true
                     });
-                    // 191211 [OP002-5208] END 추가_01
-
-                    // 190620 [OP002-1351] [UX/PUB] [바이널2차] 회선관리 편집모드 drag&drop 기능 개선 END
-                    /*
-                        1. option만 설정할 경우 (기본 섹렉터는 #sortable-enabled 입니다.)
-                        skt_landing.dev.sortableInit(
-                            option      // object
-                        );
-
-                        ex)
-                        skt_landing.dev.sortableInit({
-                           connectWith: '#1sortable-enabled',
-                           axis: 'y'
-                        });
-
-
-                        2. selector를 추가할 경우
-                        skt_landing.dev.sortableInit(
-                            selector    //strong || jquery selector
-                            option      // object
-                        );
-
-                        ex)
-                        skt_landing.dev.sortableInit('#sortable-enabled', {
-                           axis: 'y'
-                        });
-                        skt_landing.dev.sortableInit($('.sortList'), {
-                           axis: 'y'
-                        });
-                    */
                 </script>
             </div>
         </div>

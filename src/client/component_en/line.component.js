@@ -167,14 +167,15 @@ Tw.LineComponent.prototype = {
     // childSvcResp = childSvcResp || {};
     var  totNonCnt = 0;
     if ( exposableResp.code === Tw.API_CODE.CODE_00 ) {
-      totNonCnt = exposableResp.result.totalCnt;
+      totNonCnt = exposableResp.result.mCnt;
     }
 
     if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) {
       this._lineList = this._parseLineList(allSvcResp.result, childSvcResp.result);
-      if ( this._index > 1 ) {
+      
+      if ( allSvcResp.result.m.length > 1 ) {
         this._openListPopup(this._lineList, totNonCnt, $target);
-      } else if ( this._index === 1 ){
+      } else{
         this._historyService.goLoad('/en/common/member/line');
       }
     } else {
@@ -191,12 +192,11 @@ Tw.LineComponent.prototype = {
   _successGetLineList: function ($target, allSvcResp, childSvcResp, exposableResp) {
     var  totNonCnt = 0;
     if ( exposableResp.code === Tw.API_CODE.CODE_00 ) {
-      totNonCnt = exposableResp.result.totalCnt;
+      totNonCnt = exposableResp.result.mCnt;
     }
-
-    if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) { // 10.16 회선이 1개만 있더라도 액션시트가 출력될 수 있도록 변경 요청 (기획)
+     if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) { // 10.16 회선이 1개만 있더라도 액션시트가 출력될 수 있도록 변경 요청 (기획)
       this._lineList = this._parseLineList(allSvcResp.result, childSvcResp.result);
-      if ( this._index > 0 ) {
+      if ( allSvcResp.result.m.length > 0 ) {
         this._openListPopup(this._lineList, totNonCnt, $target);
       } 
     } else {
@@ -350,7 +350,8 @@ Tw.LineComponent.prototype = {
     _.map(lineData, $.proxy(function (line) {
       result.push({
         index: this._index++,
-        txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
+        // txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
+        txt: Tw.SVC_ATTR[line.svcAttrCd], // 김기남 추가. 영문에는 닉네임이 필요없음.
         option: this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',
         badge: line.repSvcYn === 'Y',
         showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',

@@ -16,7 +16,6 @@ Tw.CustomerAgentsearch = function (rootEl) {
   this._popupService = Tw.Popup;
   this._uri = window.location.search.split('=')[1];
   this._historyService = new Tw.HistoryService();
-  console.log("@@@@@"+this._uri);
   this._init();
   
 };
@@ -27,14 +26,10 @@ Tw.CustomerAgentsearch.prototype = {
     this.$eventSelector = this.$container.find('.bt-select');
     this._bindEvents();
   },
-  /**
-   * @function
-   * @desc 이벤트 바인딩
-   */
+  
   _bindEvents: function () {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
     this.$container.on('click', '.fe-tel', $.proxy(this.goTel, this));
-    
   },
 
   _openEventPop: function (e) {
@@ -49,9 +44,10 @@ Tw.CustomerAgentsearch.prototype = {
             { 'label-attr': 'id="Seoul"', 'radio-attr': 'name="r2" id="seoul"', txt: 'Seoul' },
             { 'label-attr': 'id="Gyeonggi-do"', 'radio-attr': 'name="r2" id="gyeonggi"', txt: 'Gyeonggi-do' },
             { 'label-attr': 'id="Gwangju"', 'radio-attr': 'name="r2" id="gwangju"', txt: 'Gwangju' },
+            { 'label-attr': 'id="Daegu"', 'radio-attr': 'name="r2" id="daegu"', txt: 'Daegu' },
             { 'label-attr': 'id="Ulsan"', 'radio-attr': 'name="r2" id="ulsan"', txt: 'Ulsan' },
             { 'label-attr': 'id="Gyeongsangnam-do"', 'radio-attr': 'name="r2" id="gyeongsangnamdo"', txt: 'Gyeongsangnam-do' },
-            { 'label-attr': 'id="Busan"', 'radio-attr': 'name="r2" id="busan"', txt: 'Busan' },
+            { 'label-attr': 'id="Busan"', 'radio-attr': 'name="r2" id="busan"', txt: 'Busan' }
           ]
         }
       ],
@@ -66,7 +62,7 @@ Tw.CustomerAgentsearch.prototype = {
 
   _onOpenPopup: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-    if(this._uri==""||this._uri==null){
+    if(this._uri===''||this._uri===null||this._uri===undefined){
       $layer.find('input#all').attr('checked', 'checked');
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
@@ -75,7 +71,7 @@ Tw.CustomerAgentsearch.prototype = {
 
   _goLoad: function (event) {
     var $uri = $(event.target).attr('id');
-    if($uri=="all"){
+    if($uri==='all'){
       this._historyService.replaceURL('/en/customer/agentsearch');
 
     }

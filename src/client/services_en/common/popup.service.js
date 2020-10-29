@@ -95,6 +95,8 @@ Tw.PopupService.prototype = {
    */
   _onOpenPopup: function (evt) {
     var $popups = $('.tw-popup');
+    Tw.EID_TYPES.replaceHtmlEidCode($popups); // 팝업이 열리는 순간 eid 값을 재 세팅한다.
+
     var $currentPopup = $($popups[$popups.length - 1]);
     Tw.Logger.info('[Popup Open]', this._prevHashList);
     this._bindEvent($currentPopup);
@@ -405,6 +407,36 @@ Tw.PopupService.prototype = {
         txt: cancelButton || Tw.BUTTON_LABEL.CANCEL
       }, {
         style_class: 'bt-red1 pos-right tw-popup-confirm',
+        txt: confirmButton || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option, evt);
+  },
+
+  /**
+   * @desc open update confirm popup
+   * @param  {string} contents
+   * @param  {string} title
+   * @param  {Function} confirmCallback
+   * @param  {Function} closeCallback
+   * @param  {string} cancelButton
+   * @param  {string} confirmButton
+   * @param  {$object} evt
+   * @public
+   */
+  openConfirmUpdateButton: function (contents, title, confirmCallback, closeCallback, cancelButton, confirmButton, evt) {
+    var option = {
+      title: title,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn fe-no-blind-close',
+        txt: cancelButton || Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm fe-no-blind-close',
         txt: confirmButton || Tw.BUTTON_LABEL.CONFIRM
       }]
     };

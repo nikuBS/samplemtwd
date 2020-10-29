@@ -139,6 +139,32 @@ class DateHelper {
 
   /**
    * @function
+   * @desc get month from date
+   * @param {Date|string} date YYYYMMDDhhmmss|none
+   * @returns {string} : 12
+   */
+  static getCurrentMonthName(date?: any): string {
+
+    const  MONTHS = {
+      '1' : 'Jan', 
+      '2' : 'Feb',
+      '3' : 'Mar',
+      '4' : 'Apr',
+      '5' : 'May',
+      '6' : 'Jun',
+      '7' : 'Jul',
+      '8' : 'Aug',
+      '9' : 'Sep',
+      '10' : 'Oct',
+      '11' : 'Nov',
+      '12' : 'Dec'
+    }; 
+
+    return MONTHS[moment(this.convDateFormat(date)).format('M') + ''];
+  }  
+
+  /**
+   * @function
    * @desc get year from date
    * @param {Date|string} date YYYYMMDDhhmmss|none
    * @returns {string} : 2018
@@ -450,6 +476,24 @@ class DateHelper {
   static getKoreanTime(date: any) {
     return moment(this.convDateFormat(date)).format('a h시 m분');
   };
+  /**
+   * @desc 대상 날짜가 시작날짜와 종료 날짜 사이에 있는지 여부
+   * @param {date|string} target 대상날짜
+   * @param {date|string} start 시작날짜
+   * @param {date|string} end 종료날짜
+   * @returns {boolean} true | false
+   * @public
+   */
+  static isBetween(target, start, end) {
+    if ( !target || !start || !end ) {
+      throw new Error('[date.helper]\', \'invalid value!!');
+    }
+    target = this.convDateFormat(target);
+    start = this.convDateFormat(start);
+    end = this.convDateFormat(end);
+    return moment(target).isBetween(start, end, undefined, '[]');
+  };
+
 }
 
 export default DateHelper;

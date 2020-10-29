@@ -71,7 +71,12 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
     }
   }
 
-  this._getProductData(this.$container.find('#plan-ul'));
+
+  setTimeout(function(){$(window).scrollTop(0);},100)
+
+  this._getProductData(this.$container.find('#plan-ul'));// 홈화면 요금제 목록 표시
+  
+
   // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 
@@ -101,11 +106,11 @@ Tw.MainHome.prototype = {
 
     // 조건문을 사용하기 위해
     Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+      return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
     });
 
     Handlebars.registerHelper('ifunEquals', function (arg1, arg2, options) {
-      return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+      return (arg1 !== arg2) ? options.fn(this) : options.inverse(this);
     });
   },
   
@@ -158,42 +163,136 @@ Tw.MainHome.prototype = {
       var tplPlanCard = Handlebars.compile(Tw.HOME_PLAN_TMPL);
       $planTemp.html(tplPlanCard({
         list: list
-      }))
+      }));
       
-      console.log($planTemp.html())
       skt_landing.widgets.widget_init(); // 이게 핵심
     }
   },
 
   _parsePlanData: function(planData) {
     if ( planData.code === Tw.API_CODE.CODE_00 ) {
-      var CODE_5GX_PLAN = 'T000000079';
-      var CODE_T_PLAN = 'T000000075';
-      var CODE_0_PLAN = 'T000000029';
+      var CODE_5GX_PLAN = $('input[name="5gx_code"]').val();
+      var CODE_T_PLAN = $('input[name="t_plan_code"]').val();
+      var CODE_0_PLAN = $('input[name="0_plan_code"]').val();
 
       var dataList = planData.result.grpProdList;
       return dataList.reduce(function(arr, item) {
-        if ( item.prodGrpId === CODE_5GX_PLAN || item.prodGrpId === CODE_T_PLAN || item.prodGrpId === CODE_0_PLAN) { // 5GX PLAN, T PLAN, 0 PLAN 의 값만 추출
+        if ( item.prodGrpId === CODE_5GX_PLAN || item.prodGrpId === CODE_T_PLAN || item.prodGrpId === CODE_0_PLAN) { 
+          // 5GX PLAN, T PLAN, 0 PLAN 의 값만 추출
           var prodList = item.prodList;
-          var ariaSelected = "false";
-          var tempColor = "";
+          var ariaSelected = 'false';
+          var tempColor = '';
           var resultProdList = prodList.reduce(function(arr, item, index) {
             var odd_even_type = (index % 2) ? 'even' : 'odd'; // 홀수, 짝수를 구함.
             var basFeeInfo = Tw.ProductHelper.convProductBasfeeInfo(prodList[index].basFeeEngInfo);
             var basOfrVcallTmsEngCttTrans = prodList[index].basOfrVcallTmsEngCtt;
-            if(basOfrVcallTmsEngCttTrans=='Unlimited landline & mobile phone calls'){
+            if(basOfrVcallTmsEngCttTrans==='Unlimited landline & mobile phone calls'){
               basOfrVcallTmsEngCttTrans = 'Unlimited';
             }
-           arr.push(Object.assign(item, {
-              odd_even_type: odd_even_type,
-              basFeeInfo : basFeeInfo.value,
-              basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans
-            }));
-            return arr;
-          }, []);
+            var eidvalue = '';
+            if(Tw.BrowserHelper.isApp()){ // 공통 선언된 함수를 안타서 해당 부분 js에서 처리
+              switch (prodList[index].prodId) {
+                case 'NA00006405':
+                  eidvalue = 'CMMA_A10_B79-42';
+                  break;
+                case 'NA00006404':
+                  eidvalue = 'CMMA_A10_B79-43';
+                  break;
+                case 'NA00006403':
+                  eidvalue = 'CMMA_A10_B79-44';
+                  break;
+                case 'NA00006402':
+                  eidvalue = 'CMMA_A10_B79-45';
+                  break;
+                case 'NA00006539':
+                  eidvalue = 'CMMA_A10_B79-47';
+                  break;
+                case 'NA00006538':
+                  eidvalue = 'CMMA_A10_B79-48';
+                  break;
+                case 'NA00006537':
+                  eidvalue = 'CMMA_A10_B79-49';
+                  break;
+                case 'NA00006536':
+                  eidvalue = 'CMMA_A10_B79-50';
+                  break;
+                case 'NA00006535':
+                  eidvalue = 'CMMA_A10_B79-51';
+                  break;
+                case 'NA00006534':
+                  eidvalue = 'CMMA_A10_B79-52';
+                  break;
+                case 'NA00006157':
+                  eidvalue = 'CMMA_A10_B79-54';
+                  break;
+                case 'NA00006156':
+                  eidvalue = 'CMMA_A10_B79-55';
+                  break;
+                case 'NA00006155':
+                  eidvalue = 'CMMA_A10_B79-56';
+                  break;
+                default:
+                  eidvalue = '';
+                  break;     
+                }
+
+            } else {
+              switch (prodList[index].prodId) {
+                case 'NA00006405':
+                  eidvalue = 'MWMA_A10_B79-5';
+                  break;
+                case 'NA00006404':
+                  eidvalue = 'MWMA_A10_B79-6';
+                  break;
+                case 'NA00006403':
+                  eidvalue = 'MWMA_A10_B79-7';
+                  break;
+                case 'NA00006402':
+                  eidvalue = 'MWMA_A10_B79-8';
+                  break;
+                case 'NA00006539':
+                  eidvalue = 'MWMA_A10_B79-10';
+                  break;
+                case 'NA00006538':
+                  eidvalue = 'MWMA_A10_B79-11';
+                  break;
+                case 'NA00006537':
+                  eidvalue = 'MWMA_A10_B79-12';
+                  break;
+                case 'NA00006536':
+                  eidvalue = 'MWMA_A10_B79-13';
+                  break;
+                case 'NA00006535':
+                  eidvalue = 'MWMA_A10_B79-14';
+                  break;
+                case 'NA00006534':
+                  eidvalue = 'MWMA_A10_B79-15';
+                  break;
+                case 'NA00006157':
+                  eidvalue = 'MWMA_A10_B79-17';
+                  break;
+                case 'NA00006156':
+                  eidvalue = 'MWMA_A10_B79-18';
+                  break;
+                case 'NA00006155':
+                  eidvalue = 'MWMA_A10_B79-19';
+                  break;
+                default:
+                  eidvalue = '';
+                  break;     
+                }
+              }
+            arr.push(Object.assign(item, {
+                odd_even_type: odd_even_type,
+                basFeeInfo : basFeeInfo.value,
+                basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans,
+                eidvalue : eidvalue
+              }));
+              return arr;
+            }, []);
           if(item.prodGrpId === CODE_5GX_PLAN){
-            ariaSelected = "true"
-            tempColor = " five-gx";
+            ariaSelected = 'true';
+            tempColor = ' five-gx';
           }
           Object.assign(item, {
             'tab_index' : arr.length + 1,
@@ -211,41 +310,8 @@ Tw.MainHome.prototype = {
     }
   },
 
-  _setProductData: function(arr,item) {
-      var prodList = item.prodList;
-          var ariaSelected = "false";
-          var tempColor = "";
-          var resultProdList = prodList.reduce(function(arr, item, index) {
-            var odd_even_type = (index % 2) ? 'even' : 'odd'; // 홀수, 짝수를 구함.
-            var basFeeInfo = Tw.ProductHelper.convProductBasfeeInfo(prodList[index].basFeeEngInfo);
-            var basOfrVcallTmsEngCttTrans = prodList[index].basOfrVcallTmsEngCtt;
-            if(basOfrVcallTmsEngCttTrans=='Unlimited landline & mobile phone calls'){
-              basOfrVcallTmsEngCttTrans = 'Unlimited';
-            }
-           arr.push(Object.assign(item, {
-              odd_even_type: odd_even_type,
-              basFeeInfo : basFeeInfo.value,
-              basOfrVcallTmsEngCttTrans : basOfrVcallTmsEngCttTrans
-            }));
-            return arr;
-          }, []);
-          if(item.prodGrpId === CODE_5GX_PLAN){
-            ariaSelected = "true"
-            tempColor = " five-gx";
-          }
-          Object.assign(item, {
-            'tab_index' : arr.length + 1,
-            'lastContents' : resultProdList.length % 2,
-            'ariaSelected' : ariaSelected,
-            'tempColor' : tempColor
-          });
-          var assign = Object.assign(item, resultProdList); // 병합
-          arr.push(assign);
-  },
-
   _errorProductData: function(error) {
-    alert('error!##!' + error)
-    console.log(error)
+    console.log(error);
   },
 
   /**

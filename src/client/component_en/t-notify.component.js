@@ -97,7 +97,7 @@ Tw.TNotifyComponent.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
         .done(function () {
           $popupContainer.find('.fe-banner-area').hide(); // 배너 닫기
-          var toastMsg = '수신동의가 완료되었습니다.';
+          var toastMsg = 'You have provided consent';
           // Tw.CommonHelper.toast(toastMsg);        
           Tw.Popup.toast(toastMsg);
         })

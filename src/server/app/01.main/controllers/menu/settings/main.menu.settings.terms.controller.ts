@@ -31,7 +31,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
-         allSvc: any, childInfo: any, pageInfo: any) {
+    allSvc: any, childInfo: any, pageInfo: any) {
     if (req.query.id) {
       const id = req.query.id;
       if (id === '102') { // 초콜릿 이용약관
@@ -49,26 +49,50 @@ export default class MainMenuSettingsTerms extends TwViewController {
         });
         return;
       }
-
-      this.getTermContent(res, svcInfo, pageInfo, id).subscribe(
-        (resp) => {
-          if (!FormatHelper.isEmpty(resp)) {
-            const title = !!this.titleMap[id] ? this.titleMap[id] : resp.title; // titleMap에 정의된 title 있는지 확인
-            const actionTitle = resp.title.includes('_') ? resp.title.split('_')[1] : resp.title; // BFF에서 내려오는 약관의 title 정제
-            res.render(`menu/settings/main.menu.settings.term-type-${req.query.type}.html`, {
-              svcInfo, pageInfo, title, content: resp.content, viewId, id, actionTitle
+      // 개인정보수집/이용동의약관 팝업 
+      if (id === '55' && req.query.type === 'p') {
+        this.getTermContent(res, svcInfo, pageInfo, id).subscribe(
+          (resp) => {
+            if (!FormatHelper.isEmpty(resp)) {
+              const title = '개인정보수집/이용동의 약관';
+              const actionTitle = resp.title.includes('_') ? resp.title.split('_')[1] : resp.title; // BFF에서 
+              res.render(`menu/settings/main.menu.settings.term-type-${req.query.type}.html`, {
+                svcInfo, pageInfo, title, content: resp.content, viewId, id, actionTitle
+              });
+              return;
+            }
+          },
+          (err) => {
+            this.error.render(res, {
+              code: err.code,
+              msg: err.msg,
+              pageInfo: pageInfo,
+              svcInfo
             });
           }
-        },
-        (err) => {
-          this.error.render(res, {
-            code: err.code,
-            msg: err.msg,
-            pageInfo: pageInfo,
-            svcInfo
-          });
-        }
-      );
+        );
+      } else {
+        this.getTermContent(res, svcInfo, pageInfo, id).subscribe(
+          (resp) => {
+            if (!FormatHelper.isEmpty(resp)) {
+              const title = !!this.titleMap[id] ? this.titleMap[id] : resp.title; // titleMap에 정의된 title 있는지 확인
+              const actionTitle = resp.title.includes('_') ? resp.title.split('_')[1] : resp.title; // BFF에서 내려오는 약관의 title 정제
+              res.render(`menu/settings/main.menu.settings.term-type-${req.query.type}.html`, {
+                svcInfo, pageInfo, title, content: resp.content, viewId, id, actionTitle
+              });
+            }
+          },
+          (err) => {
+            this.error.render(res, {
+              code: err.code,
+              msg: err.msg,
+              pageInfo: pageInfo,
+              svcInfo
+            });
+          }
+        );
+      }
+
     } else {
       res.render('menu/settings/main.menu.settings.terms.html', { svcInfo, pageInfo });
     }

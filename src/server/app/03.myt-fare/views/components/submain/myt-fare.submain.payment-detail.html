@@ -39,6 +39,17 @@
             </button>
         </li>
         <% } %>
+        <%#미리납부하신 금액(MIRI)%>
+        <%_ if(data.miriBalance) { _%>
+        <li>
+            <button type="button" data-url="/myt-fare/info/miri">
+                <span class="inner">
+                    <span class="tit">미리납부하신 금액(MIRI)</span>
+                    <span class="text type2">잔액 <%- data.miriBalance %>원</span>
+                </span>
+            </button>
+        </li>
+        <%_}_%>
         <!--납부/청구 정보 있을때만 노출-->
         <% if (data.paymentInfo) { %>
             <% if (data.type !== 'UF') { %>

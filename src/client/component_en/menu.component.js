@@ -122,12 +122,12 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_family';
     var listData = [
-      {'txt' : 'T-world Biz', 'url' : 'http://b2b.tworld.co.kr/cs/main.bc'},
-      {'txt' : 'Korean', 'url' : 'https://m.tworld.co.kr/'},
-      {'txt' : 'NUGU', 'url' : 'https://www.nugu.co.kr/'},
-      {'txt' : 'You can be anything you want when you are 0', 'url' : 'https://www.younghandong.com/'},
-      {'txt' : 'Creating the Age of Hyper-Innovation for YOU', 'url' : 'https://www.sktinsight.com/113540'},
-      {'txt' : 'ADT Caps', 'url' : 'https://m.adtcaps.co.kr/'}
+      {'txt' : 'T-world Biz', 'url' : 'http://b2b.tworld.co.kr/cs/main.bc', 'eid':'MWMA_A10_B80_C1199-19'},
+      {'txt' : 'Korean', 'url' : 'https://m.tworld.co.kr/', 'eid':'MWMA_A10_B80_C1199-20'},
+      {'txt' : 'NUGU', 'url' : 'https://www.nugu.co.kr/', 'eid':'MWMA_A10_B80_C1199-21'},
+      {'txt' : 'You can be anything you want when you are 0', 'url' : 'https://www.younghandong.com/', 'eid':'MWMA_A10_B80_C1199-22'},
+      {'txt' : 'Creating the Age of Hyper-Innovation for YOU', 'url' : 'https://www.sktinsight.com/113540', 'eid':'MWMA_A10_B80_C1199-23'},
+      {'txt' : 'ADT Caps', 'url' : 'https://m.adtcaps.co.kr/', 'eid':'MWMA_A10_B80_C1199-24'}
     ]
 
     this._popupService.open({
@@ -143,6 +143,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
   _conditionChangeEvtInit: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
+    //Tw.Init._initEidHanlder();
     // $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
   },
 
@@ -521,8 +522,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       switch ( this._memberType ) {
         case 0:
 
-          //M1인경우만 처리해야함
-          if (userInfo.svcAttrCd.indexOf('M1') !== -1) {
+          //M1, M3인경우만 처리해야함
+          if (userInfo.svcAttrCd.indexOf('M1') !== -1 || userInfo.svcAttrCd.indexOf('M3') !== -1) {
             var nonSvcCnt = Number(userInfo.nonSvcCnt);
             var expsSvcCnt = Number(userInfo.expsSvcCnt);
             var total = expsSvcCnt + nonSvcCnt;
@@ -589,7 +590,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
 
 
-    if ( isLogin && userInfo.svcAttrCd.indexOf('M1') !== -1 && !this._isPPS) {
+    if ( isLogin && (userInfo.svcAttrCd.indexOf('M1') !== -1 || userInfo.svcAttrCd.indexOf('M3') !== -1 ) && !this._isPPS) {
       $('.fe-menu-realtime').each($.proxy(function (i, elem) {
         var type = elem.getAttribute('data-value');
         switch ( type ) {

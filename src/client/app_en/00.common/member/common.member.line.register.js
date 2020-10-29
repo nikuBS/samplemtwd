@@ -312,7 +312,7 @@ Tw.CommonMemberLineRegister.prototype = {
   _registerLineList: function (lineList, length, $target) {
     Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
-      params: { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList }
+      params: { svcCtg: Tw.LINE_NAME.MOBILE, svcMgmtNumArr: lineList }
     }).done($.proxy(this._successRegisterLineList, this, length, $target))
       .fail($.proxy(this._failRegisterLineList, this, $target));
   },

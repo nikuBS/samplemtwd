@@ -10,6 +10,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import {NODE_ERROR_MSG} from '../../../../types/string.type';
 import { NextFunction } from 'connect';
+import {LOGIN_TYPE} from '../../../../types/bff.type';
 
 class CustomerAgentsearch extends TwViewController {
 
@@ -18,8 +19,13 @@ class CustomerAgentsearch extends TwViewController {
     // this.logger.info(this, '[ 현재 서비스 관리 번호는? :  ]', svcInfo.svcMgmtNum);
 
     // 20-06-09 OP002-8777 : 미로그인 상태 시 로그인 페이지로 이동
-    if (!svcInfo) {
+    /*if (!svcInfo) {
       res.render('error.login-block.html', { target: req.baseUrl + req.url });
+      return;
+    }*/
+    // 20-10-22 OP002-10922 비 로그인/간편로그인 사용자도 진입가능
+    if (!svcInfo || svcInfo.loginType === LOGIN_TYPE.EASY) {
+      res.render('agentsearch/customer.agentsearch.html', { /*isSearch: false,*/ svcInfo: {}, pageInfo, isAcceptAge: 'Y' });
       return;
     }
 
@@ -38,7 +44,7 @@ class CustomerAgentsearch extends TwViewController {
         });
       }
       res.render('agentsearch/customer.agentsearch.html', { /*isSearch: false,*/ svcInfo, pageInfo, isAcceptAge });
-    });  // end of acceptAgeObserver.subscribe((isAcceptAge) => {
+    });
   }
 }
 

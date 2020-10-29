@@ -83,7 +83,11 @@ Tw.LocationInfoComponent.prototype = {
             notAgreeCallback(res);
           }
         }
-      });
+      }).fail(function (res) {
+      if (notAgreeCallback) {
+        notAgreeCallback(res);
+      }
+    });
   },
 
   checkLocationAgreementWithAge: function (callback) {
@@ -139,7 +143,29 @@ Tw.LocationInfoComponent.prototype = {
    * @returns {{done: *}}
    * @desc BFF 요청 공통. 요청 실패를 공통으로 처리하려고 만듬.
    */
-  _request: function (bff, param) {
+  /*_request: function (bff, param) {
     return this._apiService.requestDone(bff, param);
+  }*/
+
+  /**
+   * @function
+   * @param bff
+   * @param param
+   * @return {{done: (function(*): *)}}
+   * @desc BFF 리퀘스트. 결과가 실패이면 로딩중 화면 비노출 및 다음스텝 진행안함.
+   */
+  _request: function (bff, param) {
+    var $def = $.Deferred();
+    this._apiService.request(bff, param).done(function (res){
+      if (res.code !== Tw.API_CODE.CODE_00) {
+        $def.reject(res);
+      }else {
+        $def.resolve(res);
+      }
+    }).fail(function (res){
+      $def.reject(res);
+    });
+
+    return $def.promise();
   }
 };

@@ -5,13 +5,13 @@
 Tw.CustomerFaq = function (rootEl) {
   this.$container = rootEl;
   this.viewMoreCount=1;
-  this.$allContents = this.$container.find(".acco-box");
-  this.$allContentsBtn = this.$container.find(".btn-more");
-  this.$firstViewMore = this.$container.find(".first-view-more");
-  this.$secondViewMore = this.$container.find(".second-view-more");
-  this.$thirdViewMore = this.$container.find(".third-view-more");
-  this.$fourthViewMore = this.$container.find(".fourth-view-more");
-  this.$fifthViewMore = this.$container.find(".fifth-view-more");
+  this.$allContents = this.$container.find('.acco-box');
+  this.$allContentsBtn = this.$container.find('.btn-more');
+  this.$firstViewMore = this.$container.find('.first-view-more');
+  this.$secondViewMore = this.$container.find('.second-view-more');
+  this.$thirdViewMore = this.$container.find('.third-view-more');
+  this.$fourthViewMore = this.$container.find('.fourth-view-more');
+  this.$fifthViewMore = this.$container.find('.fifth-view-more');
   this._popupService = Tw.Popup;
   this._uri = window.location.search.split('=')[1];
   this._historyService = new Tw.HistoryService();
@@ -19,18 +19,18 @@ Tw.CustomerFaq = function (rootEl) {
 };
 
 Tw.CustomerFaq.prototype = {
-  _init: function () {
-    if(this._uri=="" || this._uri==null || this._uri == 'tworldguide'){
+  _init: function () {// 필터 별 분기
+    if(this._uri==='' || this._uri===null || this._uri === 'tworldguide' || this._uri === undefined){
       this.$allContentsBtn.on('click', $.proxy(this._showContent_all_tworldguide, this));
     }
-    else if(this._uri == 'appAddOns' || this._uri == 'roaming'){
+    else if(this._uri === 'appAddOns' || this._uri === 'roaming'){
       this._showAllcontent();
     }
     
-    else if(this._uri == 'subscription'){
+    else if(this._uri === 'subscription'){
       this._showContent_subscription();
     }
-    else if(this._uri == 'plans'){
+    else if(this._uri === 'plans'){
       this._showContent_plans();
     }
     this.$eventSelector = this.$container.find('.bt-select');
@@ -38,34 +38,34 @@ Tw.CustomerFaq.prototype = {
     this._setupscroll();
   },
 
-  _showContent_all_tworldguide: function() {
-    if(this.viewMoreCount==1){
+  _showContent_all_tworldguide: function() { // 필터 별 더보기 버튼 동작
+    if(this.viewMoreCount===1){
       if(this.$firstViewMore.length){
-        this.$firstViewMore.css("display","list-item");
+        this.$firstViewMore.css('display','list-item');
       }
       else {this._showAllcontent();}
     }
-    else if(this.viewMoreCount==2){
+    else if(this.viewMoreCount===2){
       if(this.$secondViewMore.length){
-        this.$secondViewMore.css("display","list-item");
+        this.$secondViewMore.css('display','list-item');
       }
       else {this._showAllcontent();}
     }
-    else if(this.viewMoreCount==3){
+    else if(this.viewMoreCount===3){
       if(this.$thirdViewMore.length){
-        this.$thirdViewMore.css("display","list-item");
+        this.$thirdViewMore.css('display','list-item');
       }
       else {this._showAllcontent();}
     }
-    else if(this.viewMoreCount==4){
+    else if(this.viewMoreCount===4){
       if(this.$fourthViewMore.length){
-        this.$fourthViewMore.css("display","list-item");
+        this.$fourthViewMore.css('display','list-item');
       }
       else {this._showAllcontent();}
     }
-    else if(this.viewMoreCount==5){
+    else if(this.viewMoreCount===5){
       if(this.$fifthViewMore.length){
-        this.$fifthViewMore.css("display","list-item");
+        this.$fifthViewMore.css('display','list-item');
       }
       else {this._showAllcontent();}
     }
@@ -74,16 +74,16 @@ Tw.CustomerFaq.prototype = {
 
   },
 
-  _showContent_subscription: function() {
-    $('.subscription1st').css("display","list-item");
+  _showContent_subscription: function() { // 필터 별 더보기 버튼 동작
+    $('.subscription1st').css('display','list-item');
     this.$allContentsBtn.on('click', $.proxy(this._showAllcontent, this));
   },
 
-  _showContent_plans: function() {
-    $('.plans1st').css("display","list-item");
+  _showContent_plans: function() { // 필터 별 더보기 버튼 동작
+    $('.plans1st').css('display','list-item');
     this.$allContentsBtn.on('click', $.proxy(function(){
-      if(this.viewMoreCount==1){
-        $('.plans2nd').css("display","list-item");
+      if(this.viewMoreCount===1){
+        $('.plans2nd').css('display','list-item');
         this.viewMoreCount++;
       }else{
         this._showAllcontent();
@@ -91,20 +91,17 @@ Tw.CustomerFaq.prototype = {
     }, this));
   },
   
-  _showAllcontent: function() {
+  _showAllcontent: function() { // 더보기 버튼 더이상 필요 없을때 제거하고 모두보여줌
     this.$allContentsBtn.remove();
-    this.$allContents.css("display","list-item");
+    this.$allContents.css('display','list-item');
   },
-  /**
-   * @function
-   * @desc 이벤트 바인딩
-   */
+
   _bindEvents: function () {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
     
   },
 
-  _openEventPop: function (e) {
+  _openEventPop: function (e) { // 팝업 생성
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01_en',
@@ -117,7 +114,7 @@ Tw.CustomerFaq.prototype = {
             { 'label-attr': 'id="appAddOns"', 'radio-attr': 'name="r2" id="appAddOns"', txt: 'App/Add-ons' },
             { 'label-attr': 'id="roaming"', 'radio-attr': 'name="r2" id="roaming"', txt: 'Roaming' },
             { 'label-attr': 'id="subscription"', 'radio-attr': 'name="r2" id="subscription"', txt: 'Subscription/Change/Cancellation' },
-            { 'label-attr': 'id="plans"', 'radio-attr': 'name="r2" id="plans"', txt: 'Plans' },
+            { 'label-attr': 'id="plans"', 'radio-attr': 'name="r2" id="plans"', txt: 'Plans' }
           ]
         }
       ],
@@ -131,16 +128,16 @@ Tw.CustomerFaq.prototype = {
 
   _onOpenPopup: function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-    if(this._uri==""||this._uri==null){
+    if(this._uri==='' || this._uri===null || this._uri === undefined){
       $layer.find('input#all').attr('checked', 'checked');
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
   },
 
-  _goLoad: function (event) {
+  _goLoad: function (event) { //url 이동
     var $uri = $(event.target).attr('id');
-    if($uri=="all"){
+    if($uri==='all') {
       this._historyService.replaceURL('/en/customer/faq');
     }
     else{
@@ -148,16 +145,16 @@ Tw.CustomerFaq.prototype = {
     }
   },
 
-  _setupscroll: function (){
+  _setupscroll: function (){ // 상단 필더 바 고정
     var jbHeight = $( '.sc-util' ).outerHeight();
     $( window ).scroll( function() {
       if ( $( document ).scrollTop() > 0 ) {
           $( '.sc-util' ).addClass( 'jbFixed' );
-          $(".cont-box").css("padding-top", jbHeight + "px");
+          $('.cont-box').css('padding-top', jbHeight + 'px');
       }
       else {
           $( '.sc-util' ).removeClass( 'jbFixed' );
-          $(".cont-box").css("padding-top", "");
+          $('.cont-box').css('padding-top', '');
       }
   });
   }

@@ -1258,7 +1258,7 @@ Tw.ANDROID_STORE = [
       }
     ],
     'btn-floating': [
-      { 'attr': 'type="button"', 'txt': '닫기' }
+      { 'attr': 'type="button"', 'txt': 'Close' }
     ]
   }
 ];
@@ -1393,7 +1393,7 @@ Tw.HOME_DIRECT_BANNER =
               '{{#each prodList}}' +
                 '{{#ifEquals odd_even_type "odd"}}' +
                   '<li>' + 
-                      '<button class="plan-card{{../tempColor}}" onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'">' + 
+                      '<button class="plan-card{{../tempColor}}" onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}">' + 
                         '<span class="inner">' + 
                           '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
                           '<span class="data">{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
@@ -1404,7 +1404,7 @@ Tw.HOME_DIRECT_BANNER =
                       '</button>' + 
                 '{{/ifEquals}}' +
                     '{{#ifEquals odd_even_type "even"}}' +
-                      '<button class="plan-card right{{../tempColor}}" onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'">' + 
+                      '<button class="plan-card right{{../tempColor}}" onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}">' + 
                         '<span class="inner">' + 
                         '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
                         '<span class="data">{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
@@ -1425,4 +1425,26 @@ Tw.HOME_DIRECT_BANNER =
     '</div>' + 
     '</li>' + 
   '{{/each}}';
+
+  Tw.POPUP_A5 =
+  '<div class="popup tw-popup" role="dialog" aria-hidden="false">'+
+    '<div class="popup-info" role="alertdialog" aria-describedby="alertText">'+
+        '<div class="popup-header">'+
+       ' </div>'+
+        '<div class="popup-contents" id="alertText">'+
+           ' <div class="inner-contents">'+
+               ' <div class="tl font-only-gray">Data charges will be incurred on 3G, LTE, or 5G network.</div>'+
+           ' </div>'+
+      '  </div>'+
+           ' <ul class="bt-bottom">'+
+                '<li class="pos-left">'+
+                   ' <button>Cancel</button>'+
+                '</li>'+
+                '<li class="bt-red1 pos-right">'+
+                    '<button>Okay</button>'+
+               ' </li>'+
+          '  </ul>'+
+    ' </div>'+
+      '<div class="popup-blind"></div>'+
+  '</div>';
   

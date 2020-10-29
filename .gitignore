@@ -53,3 +53,6 @@ package-lock.json
 nodemon-debug.json
 
 .whatap/
+
+# en
+/src/server/manifest_en.json

@@ -13,7 +13,6 @@
             <div id="contents" class="container-wrap">
                 <h2 class="blind">contents</h2>
                 <div class="container">
-
                     <!-- 상품타이틀 -->
                     <div class="cont-box nogaps-hoz productdetails-bg" style="background:#4564c2 url(<%=CDN%>/img/en/products/bg_miri.png) right 0.563rem bottom 2.5rem no-repeat; background-size:7.625rem 6.125rem;"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
                         <div class="productdetails-wrap">
@@ -141,7 +140,9 @@
                                     <div class="video-card">
                                         <div class='embed-container' style="position: relative; z-index:0.0000000001">
                                             <div id="videoConfirm0" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 100; display:none"></div>
-                                            <iframe id="video0" src='https://www.youtube.com/embed/fUMu9LdtVeE' allowfullscreen></iframe>
+                                            <button class="fe-outlink" value='https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo'>
+                                                <img src="<%= CDN %>/img/en/img_video_miri.png" alt="" />
+                                            </button>
                                         </div>
                                         <div>
                                             <p class="title"><strong>MIRI Part 1</strong>&nbsp;&nbsp;A New Way to Pay</p>
@@ -151,7 +152,9 @@
                                     <div class="video-card">
                                         <div class='embed-container' style="position: relative; z-index:0.0000000001">
                                             <div id="videoConfirm1" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 100; display:none"></div>
-                                            <iframe id="video1" src='https://www.youtube.com/embed/P9_32clrvLk' allowfullscreen></iframe>
+                                            <button class="fe-outlink" value='https://www.youtube.com/watch?v=P9_32clrvLk&feature=emb_logo'>
+                                                <img src="<%= CDN %>/img/en/img_video_miri02.png" alt="" />
+                                            </button>
                                         </div>
                                         <div>
                                             <p class="title"><strong>MIRI Part 2</strong>&nbsp;&nbsp;Benefits that come along with MIRI</p>
@@ -174,17 +177,15 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
     <!-- ////////////////////////////////////////////////////////////////////  상품 시각화 원장 ///////////////////////////////////////////////////////////////////////////////////////// -->
-
                 </div>
             </div>
             <!--// #contents -->
             <%- include('../../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
         </div>
     </body>
-    <%- include('../../../../08.customer/views/containers/en.customer.confirm.a5.html', {svcInfo: svcInfo }); %>
+    <div class="popupDiv"></div>
 </div>
 <%- include ../../components/javascript.component.html %>
 <script>

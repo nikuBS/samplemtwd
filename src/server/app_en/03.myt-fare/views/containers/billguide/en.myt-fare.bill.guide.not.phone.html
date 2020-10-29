@@ -45,15 +45,23 @@
                             You may access these services on the<br/>
                             Korean version of T World
                         </span>
-                        <%_ if (svcInfo.loginType === 'T') { _%>
-                        <button class="bt-link-tx underline mt10 fe-bt-line" type="button" 
+                        <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
+                            <button class="bt-link-tx underline mt10 fe-mainLine" type="button" 
                                 data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" 
                                 data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? data.xtEid.notPhone: data.xtEid.notPhone %>" 
                                 data-xt_csid="CS_ID" 
                                 data-xt_action="BC"
                                 >Select a Mobile Line
                         </button>
-                        <%_ } _%>
+
+                        <!-- <button class="bt-link-tx underline mt10 fe-bt-line" type="button" 
+                                data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" 
+                                data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? data.xtEid.notPhone: data.xtEid.notPhone %>" 
+                                data-xt_csid="CS_ID" 
+                                data-xt_action="BC"
+                                >Select a Mobile Line
+                        </button> -->
+                        <% } %>
                     </p>
                     <!-- 201006 button 변경 -->
                     <div class="suggest-bt mt30">
@@ -85,6 +93,10 @@
              $('#fe-wrap')
         ,   data
         );
+
+        $('.fe-mainLine').click(function() {
+            location.href = '/en/common/member/line';
+        })
     });
 </script>
 <% include ../../components/end.component.html %>

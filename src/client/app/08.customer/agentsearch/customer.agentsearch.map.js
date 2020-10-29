@@ -19,6 +19,7 @@ Tw.CustomerAgentsearchMap = function (options) {
   this._locationInfoComponent = new Tw.LocationInfoComponent();
   this.customerAgentsearchComponent = this._customerAgentsearch.customerAgentsearchComponent;
   this._moreViewSvc = new Tw.MoreViewComponent();
+  this._tidLanding = new Tw.TidLandingComponent();
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -69,7 +70,7 @@ Tw.CustomerAgentsearchMap.prototype = {
 
   _cacheElements: function () {
     this.$radiusOption = this.$container.find('.fe-radius');  // 반경 옵션
-    this.$locationAlert = this.$container.find('.fe-location-alert');  // 위치정보 미동의 시 보이는 알럿 영역
+    // this.$locationAlert = this.$container.find('.fe-location-alert');  // 위치정보 미동의 시 보이는 알럿 영역
     this.$filterArea = this.$container.find('.fe-filter-area');  // 필터 영역
     this.$loading = this.$container.find('.fe-loading');  // 로딩
     this.$mapListArea = this.$container.find('.fe-map-list-area');  // 지도+리스트
@@ -82,8 +83,29 @@ Tw.CustomerAgentsearchMap.prototype = {
 
   _bindEvents: function () {
     this.$container.on('click', '#fe-myLocation', $.proxy(this._requestCurrentPosition, this)); // 내 위치 버튼 클릭 이벤트
+    this.$container.on('click', '.fe-location-alert', $.proxy(this._onLocationAlert, this)); // 위치정보 이용동의 배너
     this.$radiusOption.on('click', $.proxy(this._onRadiusOption, this));  // 검색반경 액션시트
     this.$toggleButton.on('click', $.proxy(this._toggleButtonListOrMap, this)); // 리스트/지도 보기 이벤트
+  },
+
+  /**
+   * @function
+   * @desc 미로그인/간편로그인 로그인 페이지로 이동
+   * @private
+   */
+  _onLocationAlert: function () {
+    // 미 로그인/간편 로그인은 로그인 페이지로
+    if (Tw.FormatHelper.isEmpty(this._svcInfo)) {
+      var path = location.pathname,
+        search = location.search,
+        hash = location.hash;
+      // 브라우저 캐쉬 때문에 화면 리로딩 안되는거 같아서 쓰려고 했는데, 쿼리 쓰는데에 영향이 있어서 다시 제거함.
+      /*search += !search ? '?' : '&';
+      search += 'date=' + new Date().getTime();*/
+      this._tidLanding.goLogin(path+search+hash);
+      return;
+    }
+    this._historyService.goLoad('/main/menu/settings/location');
   },
 
   /**
@@ -273,8 +295,8 @@ Tw.CustomerAgentsearchMap.prototype = {
     this._customerAgentsearch.layout({
       type: 3
     });
-    // 만 14세 미만 일때
-    if (!this._isAcceptAge) {
+    // 만 14세 미만, 미 로그인/간편 로그인 일때
+    if (!this._isAcceptAge || Tw.FormatHelper.isEmpty(this._svcInfo)) {
       return this._notAgreeLocation();
     }
     // 이미 위치정보 조회를 했으면 바로 지점 조회한다.
@@ -289,7 +311,15 @@ Tw.CustomerAgentsearchMap.prototype = {
    * @desc 위치정보 이용동의 받기 위한 팝업 노출
    * @param  {Object} location - 좌표값
    */
-  _showPermission: function () { // 위치정보 이용동의를 위한 팝업 보여줌
+  _showPermission: function (res) { // 위치정보 이용동의를 위한 팝업 보여줌
+    // 실패인 경우 진행안함.
+    if (res.code !== Tw.API_CODE.CODE_00) {
+      this._customerAgentsearch.layout({
+        type: 2,
+        res: {}
+      });
+      return;
+    }
     // 이전에 미동의 클릭한 기록이 있으면 비노출.
     var key = 'hideLocationNot_' + this._svcInfo.userId;
     var value = Tw.BrowserHelper.isApp() ? Tw.CommonHelper.getLocalStorageExpire(key) : Tw.CommonHelper.getCookie(key);

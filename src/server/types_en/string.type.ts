@@ -98,7 +98,8 @@ export const MYT_DATA_USAGE = {
     },
     WIRE_OR_PPS: { // 유선 또는 PPS 진입 시 
       title: 'Access Unavailable',
-      contents: 'The service for PPS and non-mobile\nlines are still under development\nYou may access these services on the\nKorean version of T World.'
+      contents: 'The service for PPS and non-mobile\nlines are still under development'
+        + '\nYou may access these services on the\nKorean version of T World.'
     },
     LINE_NOT_EXIST: { // 회선이 없을 시
       title: 'This service is available\nonly for an SK Telecom\nregistered number',
@@ -113,7 +114,8 @@ export const MYT_JOIN_SUBMAIN = {
     DEFAULT_CONTENT: '',
     WIRE_OR_PPS : { // 유선 또는 PPS 진입 시 
       title: 'Access Unavailable',
-      contents: 'The service for PPS and non-mobile\nlines are still under development\nYou may access these services on the\nKorean version of T World'
+      contents: 'The service for PPS and non-mobile\nlines are still under development'
+        + '\nYou may access these services on the\nKorean version of T World'
     },
     LINE_NOT_EXIST : { // 회선이 없을 시
       title: 'This service is available\nonly for an SK Telecom\nregistered number',
@@ -221,7 +223,7 @@ export enum MYT_DATA_CHARGE_TYPES {
   GIFT = '선물',
   CHARGE = '충전',
   FIXED = '자동',
-  CANCEL = '취소'
+  CANCEL = 'Cancel'
 }
 
 export enum MYT_DATA_RECHARGE_MSG {
@@ -354,7 +356,9 @@ export const MYT_FARE_BILL_REISSUE_TYPE = {
 export const MYT_INFO_DISCOUNT_MONTH = {
   TITLE: '월별 상세 할인 내역'
 };
-
+export const MYT_INFO_MIRI = {
+  NOT_FOUND_LINE: '회선정보 조회 불가'
+};
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
   lastAll: '최근 납부 내역',
@@ -366,7 +370,7 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   pointReserve: '포인트 납부 예약',
   pointAuto: '포인트 자동납부',
   PAY_KOR_TITLE: '납부',
-  CANCEL_KOR_TITLE: '취소',
+  CANCEL_KOR_TITLE: 'Cancel',
   AUTO_KOR_TITLE: '자동'
 };
 
@@ -1414,9 +1418,9 @@ export const PREMTERM_MSG = {
 };
 
 export const TID_MSG = {
-  LOGIN_FAIL: '로그인 실패',
-  LOGIN_EXCEED: '1일 로그인 허용횟수 초과',
-  LOGIN_EXCEED_MSG: '30회 초과하여 금일 24시까지 이용 불가합니다.'
+  LOGIN_FAIL: 'Log-in failed',
+  LOGIN_EXCEED: 'Daily log-in attempt exceeded (30 times)',
+  LOGIN_EXCEED_MSG: 'Logged in services restricted until 24:00 today'
 };
 
 export const PREPAY_ERR_MSG = {

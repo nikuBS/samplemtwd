@@ -77,6 +77,7 @@ class MainHome extends TwViewController {
 
     let prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
     let eventBannerCtl = false;
+
     // 갤럭시20
     // app event banner control gallexy20
     if (prodEventCtl) {
@@ -120,7 +121,8 @@ class MainHome extends TwViewController {
               svcInfo,
               homeData,
               pageInfo,
-              convertTelFormat: this.convertTelFormat
+              convertTelFormat: this.convertTelFormat,
+              product_code: this.getProductCode()
             });
           });
         } else if ( ['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1 ) {
@@ -133,7 +135,8 @@ class MainHome extends TwViewController {
             svcInfo,
             homeData,
             pageInfo,
-            convertTelFormat: this.convertTelFormat
+            convertTelFormat: this.convertTelFormat,
+            product_code: this.getProductCode()
           });
         });
       } else {
@@ -151,7 +154,8 @@ class MainHome extends TwViewController {
               svcInfo,
               homeData,
               pageInfo,
-              convertTelFormat: this.convertTelFormat
+              convertTelFormat: this.convertTelFormat,
+              product_code: this.getProductCode()
             });
           });
         }
@@ -166,8 +170,23 @@ class MainHome extends TwViewController {
         svcInfo,
         homeData,
         pageInfo,
-        convertTelFormat: this.convertTelFormat
+        convertTelFormat: this.convertTelFormat,
+        product_code: this.getProductCode()
       });
+    }
+  }
+
+  /**
+   * 제품 코드 명을 얻음
+   */
+  private getProductCode() {
+    const env = String(process.env.NODE_ENV);
+    if( env === 'prd' ) { // 운영
+      return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
+    } else if ( env === 'stg' ) { // 스테이징
+      return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
+    } else { // local, dev
+      return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
     }
   }
 

@@ -16,11 +16,13 @@ _%>
     <%- include('../components/header.component.html', { title: '나의 가입정보', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); _%>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 id="contents-area" tabindex="-1"><spKan class="blind">본문시작</spKan></h2>
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container" data-id="submain-container">
             <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B13-29", multiple : "CMMA_A3_B13-28"} }); _%>
 
-            <%- include('../components/submain/myt-join.submain.more-info.html', data) _%>
+            <%_ if ((data.type !== 2) || data.myInfo) { _%>
+                <%- include('../components/submain/myt-join.submain.more-info.html', data) _%>
+            <%_ } _%>
 
             <%- include('../components/submain/myt-join.submain.prod-info.html', data) _%>
 

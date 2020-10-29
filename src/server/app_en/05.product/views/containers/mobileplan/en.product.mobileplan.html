@@ -1,6 +1,4 @@
-
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -19,7 +17,7 @@
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container">
-                <%_ if( isSubscribed ) { _%>
+                <%_ if( isSubscribed && svcInfo.prodNmEn!=undefined && svcInfo.prodNmEn!=null && svcInfo.prodNmEn!="") {  _%>
                     <hr class="cont-sp type1" aria-hidden="true" />
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-hoz">
@@ -50,7 +48,7 @@
                 </div>
                 <!-- //스와이프 -->
                 <!-- banner -->
-                <button class="plan-banner" onclick='location.href="/en/product/callplan/miri"'>
+                <button class="plan-banner" onclick='location.href="/en/product/callplan/miri"' data-xt_eid="MWMA_A10_B82_C1202-1">
                     <img src="<%= CDN %>/img/en/img_plan_banner.jpg" alt="MIRI. you can pay the fee in advance. view more.">
                 </button>
                 <!--// banner -->
@@ -58,7 +56,6 @@
                 <% const groups = productData.grpProdList; %>
                 <% if (groups && groups.length > 0) { %> 
                 <hr class="cont-sp type1" aria-hidden="true" />
-
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm widget plan-list">
                     <div class="headingbox-wrap">
@@ -70,7 +67,7 @@
                         for (let i = 0; i < Math.min(groups.length, GROUP_MAX_COUNT); i++) {
                             const group = groups[i]; %>
                             <li>
-                                <button role="button" aria-pressed="false" class="representcharge-info">
+                                <button role="button" aria-pressed="false" class="representcharge-info" data-xt_eid="<%=group.eidvalue%>">
                                     <h4 class="title"><%= group.prodGrpEngNm %><% if (group.prodGrpFlagImgUrl) { %><img class="lte" src="<%= group.prodGrpFlagImgUrl %>" alt="<%= group.prodGrpFlagImgAlt %>"><% } %></h4>
                                     <% if (group.prodGrpIconImgUrl) { %> <div class="img-box"><% if (group.prodGrpIconImgUrl) { %><img src="<%= group.prodGrpIconImgUrl %>" alt=""><% } %></div><% } %>
                                     <p class="text"><%= group.prodGrpEngDesc %></p>
@@ -78,7 +75,7 @@
 
                                 <div class="productinfoscroll-box slide-nopd">
                                     <% group.prodList.map(product => { %>
-                                        <button class="plan-card" onclick='location.href="/en/product/callplan?prod_id=<%= product.prodId %>"'>
+                                        <button class="plan-card" onclick='location.href="/en/product/callplan?prod_id=<%= product.prodId %>"' data-xt_eid="<%= product.eidvalue %>">
                                             <span>
                                                 <span class="plan-name"><%= product.prodEngNm %></span>
                                                 <span class="fee">₩<span><%= product.basFeeInfo.value %></span></span>
@@ -86,9 +83,9 @@
                                             <ul>
                                                 <% if(product.basOfrGbDataQtyEngCtt!='-'){ %>
                                                 <li>
-                                                    <span class="data"><i><span class="blind">data</span></i> <%if(product.basOfrGbDataQtyEngCtt!=null){ %>
-                                                    <%= product.basOfrGbDataQtyEngCtt %> <%if(product.basOfrGbDataQtyEngCtt!='Unlimited'){%>GB<%}}else{%>
-                                                    <%= product.basOfrMbDataQtyCtt %> MB <% } %>
+                                                    <span class="data"><i><span class="blind">data</span></i> <%if(product.basOfrGbDataQtyEngCtt!=null){%>
+                                                    <%=product.basOfrGbDataQtyEngCtt%><%if(product.basOfrGbDataQtyEngCtt!='Unlimited'){%>GB<%}}else{%>
+                                                    <%= product.basOfrMbDataQtyCtt %>MB <% } %>
                                                     </span>
                                                 </li>
                                                 <% }else{ %>

@@ -58,7 +58,8 @@ class CommonTidLogout extends TwViewController {
           '/en/common/member/logout/route?target=' + encodeURIComponent(routeUrl),
         sso_logout_redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) +
           '/en/main/home',
-        client_type: TID.CLIENT_TYPE
+        client_type: TID.CLIENT_TYPE,
+        frgnr_yn : 'Y'        
       };
 
       if ( type === TID_LOGOUT.LOGIN_FAIL ) {

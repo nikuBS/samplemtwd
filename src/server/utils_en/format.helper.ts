@@ -28,7 +28,13 @@ class FormatHelper {
     }
     return false;
   }
-
+  /**
+   * @desc 벼일이 비어있는지 확인
+   * @param array
+   */
+  static isEmptyArray(array: Array<any>): boolean {
+    return !Array.isArray(array) || !array.length;
+  }
   /**
    * @desc whether value is object or not
    * @param  {any} value
@@ -237,7 +243,7 @@ class FormatHelper {
       // 시간이 있는 경우에만
       return hours + VOICE_UNIT.HOURS;
     }
-    return (hours > 0 ? hours + VOICE_UNIT.HOURS : '') + min + VOICE_UNIT.MIN;
+    return (hours > 0 ? hours + VOICE_UNIT.HOURS + ' ' : '') + min + VOICE_UNIT.MIN;
   }
 
   static convVoiceFormatWithUnit(data: any): any[] {

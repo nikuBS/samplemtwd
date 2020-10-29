@@ -118,6 +118,7 @@ Tw.MyTFareBillGuideCommon.prototype = {
 
     this.$container.on('click', '[data-target="childBillInfo"]', $.proxy(this._goChildBillInfo, this)); // 자녀사용량 조회화면으로 이동
     this.$container.on('click', '[data-target="goProdPageBtn"]', $.proxy(this._goProdPage, this)); // 상품원장페이지로 이동
+    this.$container.on('click', '[data-url]', $.proxy(this._goLoad, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   /**
@@ -406,5 +407,9 @@ Tw.MyTFareBillGuideCommon.prototype = {
   _go: function (hash) {
     this._history.setHistory();
     this._history.goHash(hash);
+  },
+
+  _goLoad: function (event) {
+    this._history.goLoad($(event.currentTarget).data('url'));
   }
 };
