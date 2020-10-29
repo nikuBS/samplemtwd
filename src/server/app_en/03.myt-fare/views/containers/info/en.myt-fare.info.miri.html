@@ -64,7 +64,7 @@
                                 _%>
                                 <div class="item <%-infoClsNm%>"><!-- class="item blue" -->
                                     <span class="tit"><%-payClsNm%></span>
-                                    <span class="data"><strong>₩ <%-subItem.ppayAmt%></strong></span>
+                                    <span class="data"><strong>₩<%-subItem.ppayAmt%></strong></span>
                                 </div>
                                 <div class="item">
                                     <span class="tit"><%-subItem.lineType.svcName%> <em><%-subItem.lineType.svcNumOrAddr%></em></span>
@@ -76,20 +76,20 @@
                                             payAmt = (subItem.payAmtText || '0').replace(/[^0-9]/g, '');
                                             unpaidAmt = (subItem.unPaidAmtText || '0').replace(/[^0-9]/g, '');
                                         }
-                                        
+
                                         if(payAmt+unpaidAmt > 0) {
                                             const invCls = payAmt < 1 ? 'none' : '';
                                             const payCls = unpaidAmt < 1 ? 'none' : '';                                        
                                     _%>
                                     <span class="data">
-                                        <span class="data-item <%-invCls%>"><%-subItem.billMonth%>. Fees <em>₩ <%-subItem.payAmtText%></em></span>
-                                        <span class="data-item <%-payCls%>">August Fees <em>₩ <%-subItem.unPaidAmtText%></em></span>
+                                        <span class="data-item <%-invCls%>"><%-subItem.billMonth%>. Fees <em>₩<%-subItem.payAmtText%></em></span>
+                                        <span class="data-item <%-payCls%>">Unpaid Bills <em>₩<%-subItem.unPaidAmtText%></em></span>
                                     </span>
                                     <%_}_%>
                                 </div>
                                 <div class="item-result">
                                     <span class="tit">MIRI Balance</span>
-                                    <span class="data">₩ <%-subItem.ppayBamt%></span>
+                                    <span class="data">₩<%-subItem.ppayBamt%></span>
                                 </div>
                             </div>
                             <%_ rows++; })_%>
