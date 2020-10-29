@@ -46,9 +46,10 @@ Tw.MainAppUpdate.prototype = {
 
       if ( env === 'prd' ) { // 운영 모드 (prd) 일때만 동작 
         var userAgentString = Tw.BrowserHelper.getUserAgent();
-        // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.20|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
+        // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:aos|appVersion:5.0.19|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
         var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
         var stdVersion = '';
+        var appType = false;
         this._currentVersion = version;
 
         if (userAgentString.indexOf('osType:aos') !== -1) {
@@ -57,6 +58,8 @@ Tw.MainAppUpdate.prototype = {
           if (versionArray[2] % 2 === 0) { // 대문자 
             this._currentVersion = versionArray[0] + '.' + versionArray[1] + '.' + (versionArray[2] * 1 + 1)
           }
+
+          appType = (versionArray[2] % 2 === 0); // true 짝수 앱 랜더, false 홀수 앱 렌더
         } else {
           this._osType = 'I';
         }
@@ -72,7 +75,7 @@ Tw.MainAppUpdate.prototype = {
           this._popupService.openConfirmUpdateButton(
             Tw.POPUP_CONTENTS.UPDATE_POPUP_CONTENTS,
             Tw.POPUP_TITLE.UPDATE_POPUP_TITLE, 
-            $.proxy(this._onUpdate, this), // 'Update' 버튼을 선택하면 업데이트 화면으로 이동
+            $.proxy(this._onUpdate, this, appType), // 'Update' 버튼을 선택하면 업데이트 화면으로 이동
             $.proxy(this._gotoTworld, this), // 'Go To Tworld KOR' 버튼을 선택하면 국문 메인페이지로 이동
             Tw.BUTTON_LABEL.GO_TO_TWORLD_KOR,
             Tw.BUTTON_LABEL.UPDATE
@@ -87,10 +90,15 @@ Tw.MainAppUpdate.prototype = {
    * @function
    * @desc 업데이트 버튼 선택시 Android/iOS 각 마켓으로 이동
    */
-  _onUpdate: function () {
+  _onUpdate: function (appType) {
     var url = '';
     if (Tw.BrowserHelper.isAndroid()) {
-      url = 'intent://scan/#Intent;package=com.sktelecom.minit;end';
+
+      if( appType ) { // true => 짝수 앱 업데이트 페이지로 이동
+        url = 'intent://scan/#Intent;package=Com.sktelecom.minit;end';
+      } else { // false => 홀수 앱 업데이트 페이지로 이동
+        url = 'intent://scan/#Intent;package=com.sktelecom.minit;end';
+      }
 
       if (!Tw.FormatHelper.isEmpty(this._xRequestedWith)) {
         url = 'intent://scan/#Intent;package=' + this._xRequestedWith.replace(' ', '').replace('.qa', '') + ';end';
