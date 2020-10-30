@@ -4,6 +4,7 @@ ARG DOCKER_REGISTRY
 FROM ${DOCKER_REGISTRY}/infra/nodejs8-utf8:1.0.1
 # FROM node:11.15
 #FROM node:carbon
+RUN ulimit -n 131070
 
 WORKDIR /home/appadmin
 
@@ -16,7 +17,7 @@ RUN npm config set registry http://devops.sktelecom.com/myrepo/content/groups/np
 RUN npm config set strict-ssl false
 
 # npm & pm2 install
-RUN npm install
+RUN npm --verbose install
 RUN npm --verbose install -g pm2
 RUN npm --verbose install -g gulp
 RUN pm2 install typescript
