@@ -33,7 +33,9 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
     'NA00006802', // 분할_오큘러스고_신청
     'NA00006858',
     'NA00006856',
-    'NB00000736'
+    'NB00000736',
+    'NB00000751', // Care8_할인_신청
+    'NB00000749'  // Care8_일시_신청
   ];
 
   /**
