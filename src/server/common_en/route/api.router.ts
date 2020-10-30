@@ -419,11 +419,10 @@ class ApiRouter {
     apiService.setCurrentReq(req, res);
 
 
-    if(!loginService.isLogin(req))
-    {
-      let resp = {
-          code :'00',
-          result:{
+    if ( !loginService.isLogin(req) ) {
+      const resp = {
+          code : '00',
+          result : {
             isLogin : false,
             userInfo : null
           }
@@ -433,16 +432,14 @@ class ApiRouter {
       res.set('pragma', 'no-cache');
       res.json(resp);      
       return;
-    }
-    else{
+    } else {
 
       apiService.getSvcInfo(req)
       .subscribe((svcInfo) => {
         const allSvcInfo = apiService.getAllSvcInfo(req);
-
-        let resp = {
-          code :'00',          
-          result:{
+        const resp = {
+          code : '00',          
+          result : {
             isLogin : !FormatHelper.isEmpty(svcInfo),
             userInfo : svcInfo
           }
@@ -461,7 +458,7 @@ class ApiRouter {
         res.set('expires', '0');
         res.set('pragma', 'no-cache');
         res.json(resp);        
-      })
+      });
     
     }
   }
@@ -1069,21 +1066,19 @@ class ApiRouter {
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
     this.logger.info(this, '[get svcInfo]', req.cookies[COOKIE_KEY.TWM], loginService.getSessionId(req));
-    if(!loginService.isLogin(req))
-    {
+    if ( !loginService.isLogin(req) ) {
       res.json({
         code: API_CODE.CODE_00,
         result: null
       });
-    }
-    else{
+    } else {
       apiService.getSvcInfo(req)
       .subscribe((svcInfo) => {
         res.json({
           code: API_CODE.CODE_00,
           result: svcInfo
         });
-      })
+      });
     }    
 
 
@@ -1113,7 +1108,7 @@ class ApiRouter {
    * @param next
    */
   private getChildInfo(req: Request, res: Response, next: NextFunction) {
-    //const loginService = new LoginService();
+    // const loginService = new LoginService();
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
     this.logger.info(this, '[get childInfo]');
@@ -1619,7 +1614,7 @@ class ApiRouter {
           balancesResponse.result.voice.map((voice, index) => {
             const voiceSkipIds: string[] = voiceCode ? voiceCodes.filter((id) => id === voice.skipId) : [voice.skipId];
             // 전달받은 voiceCode 값이 없는 경우에는 첫번째 항목만 노출
-            if( !voiceCode && index !== 0 ) {
+            if ( !voiceCode && index !== 0 ) {
               return;
             }
             // 요청한 공제코드가 있을 경우 잔여량 입력
@@ -1665,7 +1660,7 @@ class ApiRouter {
           balancesResponse.result.sms.map((sms, index) => {
             const smsSkipIds: string[] = smsCode ? smsCodes.filter((id) => id === sms.skipId) : [sms.skipId];
             // 전달받은 smsCode 값이 없는 경우에는 첫번째 항목만 노출
-            if( !smsCode && index !== 0 ) {
+            if ( !smsCode && index !== 0 ) {
               return;
             }
             // 요청한 공제코드가 있을 경우 잔여량 입력

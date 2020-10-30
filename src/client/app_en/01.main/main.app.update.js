@@ -46,7 +46,7 @@ Tw.MainAppUpdate.prototype = {
 
       if ( env === 'prd' ) { // 운영 모드 (prd) 일때만 동작 
         var userAgentString = Tw.BrowserHelper.getUserAgent();
-        // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:aos|appVersion:5.0.19|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
+        // var userAgentString = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.18|osVersion:14.2|id:5BA27585-2B6A-4287-8D07-A9CD17DCFB7D|model:iPhone12_3|widget:0';
         var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
         var stdVersion = '';
         var appType = false;
@@ -91,6 +91,7 @@ Tw.MainAppUpdate.prototype = {
    * @desc 업데이트 버튼 선택시 Android/iOS 각 마켓으로 이동
    */
   _onUpdate: function (appType) {
+    alert(appType)
     var url = '';
     if (Tw.BrowserHelper.isAndroid()) {
 
