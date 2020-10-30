@@ -563,7 +563,7 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, null, null, null, null, $target);
     } else {
-      Tw.Error(resp.code, resp.msg).pop(null, $target);
+      Tw.Error(resp.code, this.SMS_MSG[resp.code]).pop(null, $target);
     }
   },
 
