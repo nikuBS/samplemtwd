@@ -70,7 +70,7 @@ class CommonHelper {
       isLineNotExist : (svcInfo.caseType === '02') ? true : false, // 회선이 있는지 없는지 체크
       isLineCountIsZero: (svcInfo.caseType === '03') ? true : false, // 회선은 있지만 등록된 회선이 한개도 없는지 체크
       isCompanyLine: (svcInfo.svcGr === 'R' || svcInfo.svcGr === 'D' || svcInfo.svcGr === 'E') ? true : false, // 법인회선 체크
-    }
+    };
   }
 }
 

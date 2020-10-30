@@ -27,7 +27,7 @@ class MyTJoinSubmainController extends TwViewController {
     const lineType = CommonHelper.getLineType(svcInfo);
   
     // 유선 회선 및 무선 회선이 아닌 고객은 정보조회 불가 페이지로 이동
-    if( lineType.isWireLine || lineType.isPPSLine) {
+    if ( lineType.isWireLine || lineType.isPPSLine) {
       _renderError(res, svcInfo, pageInfo, {
         code: 'WIRE_OR_PPS'
       });
@@ -71,9 +71,9 @@ class MyTJoinSubmainController extends TwViewController {
             baseDataPriceList : convertDataPriceList
           });
         } else {
-          res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 })
+          res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
         }
-    })
+    });
   }
 
   /**
@@ -121,7 +121,7 @@ class MyTJoinSubmainController extends TwViewController {
       Object.assign(item, {
         basFeeInfo: isValid(item.basFeeTxt) ? ProductHelper.convProductBasfeeInfo(item.basFeeTxt) : null,
         basDateInfo: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.D.')
-      })
+      });
 
       arr.push(item);
       return arr;

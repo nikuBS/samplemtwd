@@ -220,9 +220,9 @@ class FormatHelper {
    */
   static convVoiceFormat(data: any): any {
     data = +data;
-    let numHours = Math.floor(data / 3600);
-    let numMin = Math.floor((data - (numHours * 3600)) / 60);
-    let numSec = data - (numHours * 3600) - (numMin * 60);
+    const numHours = Math.floor(data / 3600);
+    const numMin = Math.floor((data - (numHours * 3600)) / 60);
+    const numSec = data - (numHours * 3600) - (numMin * 60);
 
     const hours = FormatHelper.appendZeroTimeText(numHours);
     const min = FormatHelper.appendZeroTimeText(numMin);
@@ -249,23 +249,23 @@ class FormatHelper {
   static convVoiceFormatWithUnit(data: any): any[] {
     const formatted: any = [];
     data = +data;
-    let numHours = Math.floor(data / 3600);
+    const numHours = Math.floor(data / 3600);
     if ( numHours > 0 ) {
-      let hours = FormatHelper.appendZeroTimeText(numHours);
+      const hours = FormatHelper.appendZeroTimeText(numHours);
       formatted.push({ data: hours, unit: VOICE_UNIT.HOURS });
     }
     
-    let numMin = Math.floor((data % 3600) / 60);
-    let min = FormatHelper.appendZeroTimeText(numMin);
+    const numMin = Math.floor((data % 3600) / 60);
+    const min = FormatHelper.appendZeroTimeText(numMin);
     formatted.push({ data: min, unit: VOICE_UNIT.MIN });
 
     if (numHours > 0) {
       return formatted;
     }
 
-    let numSec = data % 60;
+    const numSec = data % 60;
     if ( numSec !== 0 ) {
-      let sec = FormatHelper.appendZeroTimeText(numSec);
+      const sec = FormatHelper.appendZeroTimeText(numSec);
       formatted.push({ data: sec, unit: VOICE_UNIT.SEC });
     }
     return formatted;

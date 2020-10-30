@@ -55,7 +55,7 @@ class MainHome extends TwViewController {
    * @return {void}
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    console.log(">>[TEST] main.controller.svcInfo", svcInfo);
+    console.log('>>[TEST] main.controller.svcInfo', svcInfo);
     const homeData = {
       usageData: null,
       membershipData: null,
@@ -70,12 +70,12 @@ class MainHome extends TwViewController {
 
     const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
 
-    let recommendProdsData = {
+    const recommendProdsData = {
       hasRecommendProds: false,
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
-    let prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
+    const prodEventCtl = false; // true: 적용일때만... false: 범위 대상일 아니면 제외
     let eventBannerCtl = false;
 
     // 갤럭시20
@@ -181,7 +181,7 @@ class MainHome extends TwViewController {
    */
   private getProductCode() {
     const env = String(process.env.NODE_ENV);
-    if( env === 'prd' ) { // 운영
+    if ( env === 'prd' ) { // 운영
       return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};
     } else if ( env === 'stg' ) { // 스테이징
       return {'CODE_5GX_PLAN' : 'T000000077', 'CODE_T_PLAN' : 'T000000075', 'CODE_0_PLAN' : 'T000000029'};

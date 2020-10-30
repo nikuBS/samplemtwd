@@ -139,7 +139,7 @@ abstract class TwViewController {
       const state = req.query.stateVal || req.query.state;
       const roamMcc = req.cookies['ROAMING_MCC'];
       this.apiService.setCurrentReq(req, res);
-      this.apiService.requestLoginTid(tokenId,state,roamMcc).subscribe((resp) => {
+      this.apiService.requestLoginTid(tokenId, state, roamMcc).subscribe((resp) => {
 
         this.renderPage(req, res, next, path);
       }, (error) => {
@@ -256,7 +256,7 @@ abstract class TwViewController {
     // APP 을 통한 로그인 시 XTLID, XTLOGINID, XTSVCGR, XTLOGINTYPE 쿠키가 생성되지 않는 (사라지는?) 문제를 해결하기 위해
     // request 에 해당 쿠키가 존재하지 않는 경우 새로 발급하도록 처리
     this.checkXtCookie(req, res);
-    //이준엽임시
+    // 이준엽임시
     // path = path.replace('/en/','/');
       this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[EN/URL META]', path, resp);
@@ -279,10 +279,11 @@ abstract class TwViewController {
           }
           if ( isLogin ) {
 
+            // tslint:disable-next-line: no-shadowed-variable
             this.getPersonSmsDisableTimeCheck().subscribe((resp) => {
 
                 svcInfo.personSmsDisableTimeCheck = resp;
-                console.log(">>[EN/TEST] tw.View.Controller.svcInfo ", svcInfo);
+                console.log('>>[EN/TEST] tw.View.Controller.svcInfo ', svcInfo);
                 urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
                 if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
                   const urlAuth = urlMeta.auth.grades;
@@ -292,7 +293,7 @@ abstract class TwViewController {
                     res.status(404).render('en.error.page-not-found.html', { svcInfo: null, code: res.statusCode });
                     return;
                   }
-                  //영문임시 회선미보유 등록회선없음처리 컨트롤단에서 처리 redis 권한적용후 주석제거.
+                  // 영문임시 회선미보유 등록회선없음처리 컨트롤단에서 처리 redis 권한적용후 주석제거.
                   // if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
                   //   if ( urlAuth.indexOf('N') !== -1 ) {
                   //     // 준회원 접근 가능한 화면
@@ -305,7 +306,7 @@ abstract class TwViewController {
                   if ( urlAuth.indexOf(svcGr) !== -1 ) {
                     this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
   
-                  //영문임시 관리자 권한 설정후 주석 제거. 2020.10.06 영문 실시간요금 PPS인 경우 controller에서 에러 처리.
+                  // 영문임시 관리자 권한 설정후 주석 제거. 2020.10.06 영문 실시간요금 PPS인 경우 controller에서 에러 처리.
                   } else if ( path.indexOf('/myt-fare/bill/hotbill') !== -1 && 'P'.indexOf(svcGr) !== -1  ) {
                     this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
 
@@ -384,17 +385,16 @@ abstract class TwViewController {
    * @param path
    */
   private renderPage(req, res, next, path) {
-    if(this.checkLogin(req))
-    {
+    if (this.checkLogin(req)) {
 
       Observable.combineLatest([
         this.apiService.request(API_CMD.BFF_03_0029, {svcCtg: LINE_NAME.MOBILE  }),
         this.apiService.request(API_CMD.BFF_05_0224, {})
-      ]).subscribe(([LineInfo,prodNmInfo]) => {
+      ]).subscribe(([LineInfo, prodNmInfo]) => {
 
         let caseType = '00';
-        let svcInfo = this.loginService.getSvcInfo(req);
-        let allSvc = this.apiService.getAllSvcInfo(req);
+        const svcInfo = this.loginService.getSvcInfo(req);
+        const allSvc = this.apiService.getAllSvcInfo(req);
         if ( prodNmInfo.code === API_CODE.CODE_00 ) {
           Object.assign(svcInfo,  {
             prodNmEn: prodNmInfo.result.basPricList[0].prodNm || svcInfo.prodNm
@@ -402,14 +402,13 @@ abstract class TwViewController {
         }
         
         let lineCount = 0;
-       if ( LineInfo.code === API_CODE.CODE_00 ) 
-          lineCount = ((LineInfo.result)?LineInfo.result.mCnt:0);
+       if ( LineInfo.code === API_CODE.CODE_00 ) { 
+          lineCount = ((LineInfo.result) ? LineInfo.result.mCnt : 0);
+       }
 
-        if(allSvc)
-        {
+        if (allSvc) {
           
-          if(!allSvc.m || FormatHelper.isEmpty(allSvc.m) )
-          {
+          if (!allSvc.m || FormatHelper.isEmpty(allSvc.m) ) {
               Object.assign(svcInfo,  {
                   mbrChlId: allSvc.mbrChlId,
                   userId: allSvc.userId,
@@ -418,9 +417,7 @@ abstract class TwViewController {
                   expsSvcCnt: '0',
                   nonSvcCnt: (lineCount + '') || '0'
               });          
-          }
-          else
-          {
+          } else {
               Object.assign(svcInfo,  {
                 mbrChlId: allSvc.mbrChlId,
                 userId: allSvc.userId,
@@ -430,19 +427,15 @@ abstract class TwViewController {
                 nonSvcCnt: (lineCount + '') || '0'
             });    
           }
-        }
-        else
-        {
+        } else {
             Object.assign(svcInfo,  {
               totalSvcCnt: '0',
               expsSvcCnt: '0',
               nonSvcCnt: (lineCount + '') || '0'
           });    
-        }
-
-        if(svcInfo.loginType == 'E')
-        {
-          caseType = '01'; //간편로그인
+        } 
+          if (svcInfo.loginType === 'E') {
+          caseType = '01'; // 간편로그인
  
           Object.assign(svcInfo,  {
               caseType: caseType,
@@ -451,15 +444,15 @@ abstract class TwViewController {
               nonSvcCnt: '0'
           });          
               
-        }
-        else
-        {  
+        } else {  
 
-          if(svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt == '0' )
-            caseType = '02'; //회선없음
+          if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt == '0' ) {
+            caseType = '02';
+          } // 회선없음
 
-          if(svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt != '0' )
-            caseType = '03'; //회선등록처리 필요
+          if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt != '0' ) {
+            caseType = '03';
+          } // 회선등록처리 필요
 
 
           Object.assign(svcInfo,  {
@@ -471,16 +464,11 @@ abstract class TwViewController {
         return;
 
       });
-    }
-    else
-    {
+    } else {
       this.getAuth(req, res, next, path, null, null, null);
       return;
     }
-
   }
-
-
   /**
    * 로그인 실패 처리
    * @param req

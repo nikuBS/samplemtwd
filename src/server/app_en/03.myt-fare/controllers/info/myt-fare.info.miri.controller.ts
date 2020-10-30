@@ -55,23 +55,23 @@ class MyTFareInfoMiri extends TwViewController {
     };
 
 
-    //무선회선이 없는경우
-    if(svcInfo.caseType === '02') {
+    // 무선회선이 없는경우
+    if (svcInfo.caseType === '02') {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
-      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' , { data: defaultData, svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
 
-    //무선 회선은 있지만 등록된 회선이 없는경우
-    if(svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 ) {
+    // 무선 회선은 있지만 등록된 회선이 없는경우
+    if (svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 ) {
       defaultData.errorMsg = 'LINE_NOT_REGIST';
-      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' , { data: defaultData, svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
 
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(['M1'].indexOf(svcInfo.svcAttrCd) === -1  ) {
-      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+    // 영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if (['M1'].indexOf(svcInfo.svcAttrCd) === -1  ) {
+      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' , { data: defaultData, svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
     
@@ -149,7 +149,7 @@ class MyTFareInfoMiri extends TwViewController {
     }
     
     const {name} = svc;
-    //returnData.svcName = SVC_ATTR_NAME[svc.svcAttrCd];
+    // returnData.svcName = SVC_ATTR_NAME[svc.svcAttrCd];
     returnData.svcName = this.getSvcType(name);
     returnData.svcNumOrAddr = name.substring(name.indexOf('(') + 1, name.indexOf(')'));
 

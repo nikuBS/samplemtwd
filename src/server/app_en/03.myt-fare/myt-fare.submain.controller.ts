@@ -54,33 +54,33 @@ class MyTFareSubmainController extends TwViewController {
     CommonHelper.addCurLineInfo(data.svcInfo);
 
     // 다른 페이지를 찾고 계신가요 통계코드 추가
-    BrowserHelper.isApp(req)?this.getAppXtEid(data):this.getMWebXtEid(data);
-    BrowserHelper.isApp(req)?this.getAppXtEid(defaultData):this.getMWebXtEid(defaultData);
+    BrowserHelper.isApp(req) ? this.getAppXtEid(data) : this.getMWebXtEid(data);
+    BrowserHelper.isApp(req) ? this.getAppXtEid(defaultData) : this.getMWebXtEid(defaultData);
 
-    let test = data.reqQuery.test;
+    const test = data.reqQuery.test;
 
-    if( test === '6month') return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
-    if( test === '500' ) return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
+    if ( test === '6month') { return res.render('submain/en.myt-fare.submain.nopay6month.html', { data }); }
+    if ( test === '500' ) { return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 }); }
 
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if( svcInfo.svcAttrCd !== '' && ['M1','M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
-      res.render( 'submain/en.myt-fare.submain.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+    // 영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if ( svcInfo.svcAttrCd !== '' && ['M1', 'M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
+      res.render( 'submain/en.myt-fare.submain.not.phone.html', { data: defaultData, svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
-    //무선회선이 없는경우
-    if( svcInfo.caseType === '02' || test === 'notLine' ) {
+    // 무선회선이 없는경우
+    if ( svcInfo.caseType === '02' || test === 'notLine' ) {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
-      res.render('submain/en.myt-fare.submain.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      res.render('submain/en.myt-fare.submain.not.line.html' , { data: defaultData, svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
-    //무선 회선은 있지만 등록된 회선이 없는경우
-    if( svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 || test === 'notRegi') {
+    // 무선 회선은 있지만 등록된 회선이 없는경우
+    if ( svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 || test === 'notRegi') {
       defaultData.errorMsg = 'LINE_NOT_REGIST';
-      res.render('submain/en.myt-fare.submain.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : pageInfo });
+      res.render('submain/en.myt-fare.submain.not.line.html' , { data: defaultData, svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
    
-    this.logger.info("## 대표회선 여부 [svcInfo.actRepYn] =>"+svcInfo.actRepYn);
+    this.logger.info('## 대표회선 여부 [svcInfo.actRepYn] =>' + svcInfo.actRepYn);
     // 대표청구 여부
     if ( svcInfo.actRepYn === 'Y' ) {
 
@@ -115,13 +115,13 @@ class MyTFareSubmainController extends TwViewController {
             // const usedAmt = parseInt(claim.useAmtTot, 10);
             // data.claimUseAmt = FormatHelper.addComma(usedAmt.toString() || '0');
             data.claimUseAmt = FormatHelper.addComma((this._parseInt(claim.totInvAmt) + Math.abs(this._parseInt(claim.dcAmt))).toString() );
-            let _totSumPay =  this._parseInt(claim.totInvAmt)+this._parseInt(claim.colBamt);
+            const _totSumPay =  this._parseInt(claim.totInvAmt) + this._parseInt(claim.colBamt);
 
-            if( claim.colBamt !== '0' ){
-              data.colBamtText = '₩'+FormatHelper.addComma( (claim.colBamt).toString() );
+            if ( claim.colBamt !== '0' ) {
+              data.colBamtText = '₩' + FormatHelper.addComma( (claim.colBamt).toString() );
             }
 
-            data.totSumPayText = '₩'+FormatHelper.addComma( (_totSumPay).toString() );
+            data.totSumPayText = '₩' + FormatHelper.addComma( (_totSumPay).toString() );
 
             // 할인요금
             // const disAmt = Math.abs(claim.deduckTotInvAmt);
@@ -130,7 +130,7 @@ class MyTFareSubmainController extends TwViewController {
             data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(data.claimDisAmt))).toString() );
             data.billInvAmtList = claim.billInvAmtList;
 
-            data.billInvAmtList.forEach(function(info){
+            data.billInvAmtList.forEach(function(info) {
               info.invAmt     = (Math.abs(thisMain._parseInt(info.invAmt))).toString();
               info.dcAmt      = (Math.abs(thisMain._parseInt(info.dcAmt))).toString();
               info.invDtText  = thisMain._getChartMonth(info.invDt);
@@ -151,14 +151,14 @@ class MyTFareSubmainController extends TwViewController {
           Observable.combineLatest([
             this._miriService.getMiriBalance()
           ]).subscribe((miri) => {
-            if(miri){
+            if (miri) {
               data.miriAmt =  miri[0];
             }
             res.render('en.myt-fare.submain.html', { data });
-          })
+          });
 
         } else {
-          //최근 6개월 내 청구된 내역이 없습니다.
+          // 최근 6개월 내 청구된 내역이 없습니다.
           res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
         }
 
@@ -175,24 +175,24 @@ class MyTFareSubmainController extends TwViewController {
     }
 
   }
-  //차트 청구월 변경
-  _getChartMonth(dt){
+  // 차트 청구월 변경
+  _getChartMonth(dt) {
     let rs;
-    let nowDt = new Date();
+    const nowDt = new Date();
 
-    let _yyyy1 = this._convDateCustomFormat(nowDt ,'YYYY');
+    const _yyyy1 = this._convDateCustomFormat(nowDt , 'YYYY');
 
-    let _yyyy2 = this._convDateCustomFormat(dt    ,'YYYY');
+    const _yyyy2 = this._convDateCustomFormat(dt    , 'YYYY');
 
-    if(_yyyy1 == _yyyy2){
-      rs = this._convDateCustomFormat(dt,'MMM.');
-    }else{
-      rs = this._convDateCustomFormat(dt,'MMM. YYYY');
+    if (_yyyy1 === _yyyy2) {
+      rs = this._convDateCustomFormat(dt, 'MMM.');
+    } else {
+      rs = this._convDateCustomFormat(dt, 'MMM. YYYY');
     }
     return rs;
   }
   _convDateCustomFormat(date: any, format: string): string {
-    return moment(date).add(1, "days").locale("en").format(format);
+    return moment(date).add(1, 'days').locale('en').format(format);
   }
 
   /**
@@ -208,7 +208,7 @@ class MyTFareSubmainController extends TwViewController {
     Observable.combineLatest([
       this._getUsageFee(),
       this._miriService.getMiriBalance()
-    ]).subscribe(([ usage,miri]) => {
+    ]).subscribe(([ usage, miri]) => {
       if ( usage && usage.info ) {
         return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
       } else {
@@ -226,18 +226,18 @@ class MyTFareSubmainController extends TwViewController {
 
           data.selClaimDtM = (usage) ?  DateHelper.getShortDateWithFormatAddByUnit(usage.invDt, 1, 'days', 'MMM' ) : null;
 
-          this.logger.debug("#### [ BFF_05_204 ] >> ",usage);
-          this.logger.debug("#######################################################################################");
-          this.logger.debug("### data.usage         ==>"+ data.usage);
-          this.logger.debug("### data.usageFirstDay ==>"+ data.usageFirstDay);
-          this.logger.debug("### data.usageLastDay  ==>"+ data.usageLastDay);
-          this.logger.debug("### usage.invAmt  ==>"+ usage.invAmt);
-          this.logger.debug("### data.useAmtTot  ==>"+ data.useAmtTot);
-          this.logger.debug("### data.usedAmtList.length  ==>"+ usage.usedAmtList.length);
-          this.logger.debug("#######################################################################################");
+          this.logger.debug('#### [ BFF_05_204 ] >> ', usage);
+          this.logger.debug('#######################################################');
+          this.logger.debug('### data.usage         ==>' + data.usage);
+          this.logger.debug('### data.usageFirstDay ==>' + data.usageFirstDay);
+          this.logger.debug('### data.usageLastDay  ==>' + data.usageLastDay);
+          this.logger.debug('### usage.invAmt  ==>' + usage.invAmt);
+          this.logger.debug('### data.useAmtTot  ==>' + data.useAmtTot);
+          this.logger.debug('### data.usedAmtList.length  ==>' + usage.usedAmtList.length);
+          this.logger.debug('#######################################################');
 
           const test = this;
-          usage.usedAmtList.forEach(function(info){
+          usage.usedAmtList.forEach(function(info) {
             info.invAmt = (Math.abs(test._parseInt(info.invAmt))).toString();
             info.dcAmt = (Math.abs(test._parseInt(info.dcAmt))).toString();
             info.invDt = info.invDt;
@@ -261,13 +261,13 @@ class MyTFareSubmainController extends TwViewController {
 
         } else {
           data.isRealTime = false;
-          //최근 6개월 내 청구된 내역이 없습니다.
+          // 최근 6개월 내 청구된 내역이 없습니다.
           return res.render('submain/en.myt-fare.submain.nopay6month.html', { data });
         }
-        if(miri){
+        if (miri) {
           data.miriAmt = miri[0];
         }
-        this.logger.debug("### ============================================================" ,data);
+        this.logger.debug('### ============================================================' , data);
         return res.render('en.myt-fare.submain.html', { data });
       }
     });
