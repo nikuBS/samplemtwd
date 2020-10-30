@@ -4,6 +4,8 @@ ARG DOCKER_REGISTRY
 FROM ${DOCKER_REGISTRY}/infra/nodejs8-utf8:1.0.1
 # FROM node:11.15
 #FROM node:carbon
+RUN ulimit -nS 131070
+
 
 WORKDIR /home/appadmin
 
