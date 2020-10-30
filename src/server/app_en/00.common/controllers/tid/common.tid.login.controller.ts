@@ -42,7 +42,7 @@ class CommonTidLogin extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       // 사파리 로그인 이슈 OP002-8678
-      let redirect_url_context = 'https://'; // this.loginService.getProtocol(req); 
+      const redirect_url_context = 'https://'; // this.loginService.getProtocol(req); 
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
           client_id: resp.result.clientId,

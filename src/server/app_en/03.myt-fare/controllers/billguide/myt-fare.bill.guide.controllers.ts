@@ -81,41 +81,41 @@ class MyTFareBillGuide extends TwViewController {
       errorMsg: ''
     };
      
-    BrowserHelper.isApp(req)?thisMain.getAppXtEid(defaultData):thisMain.getMWebXtEid(defaultData);
+    BrowserHelper.isApp(req) ? thisMain.getAppXtEid(defaultData) : thisMain.getMWebXtEid(defaultData);
 
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
     CommonHelper.addCurLineInfo(svcInfo);
 
     allSvc = allSvc || { 's': [], 'o': [], 'm': [] };
 
-    let test = this.reqQuery.test;  //테스트 parameter
+    const test = this.reqQuery.test;  // 테스트 parameter
 
     /*
      svcInfo.svcAttrCd === 'M2'
      svcInfo.actCoClCd === 'B'
      svcInfo.svcAttrCd === 'O1'
     */
-    if( test === '500' ){
+    if ( test === '500' ) {
       return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
     }
 
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(svcInfo.svcAttrCd !== '' && ['M1','M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
+    // 영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if (svcInfo.svcAttrCd !== '' && ['M1', 'M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
       this._typeChk = 'A3';
-      res.render( 'billguide/en.myt-fare.bill.guide.not.phone.html',{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      res.render( 'billguide/en.myt-fare.bill.guide.not.phone.html', { data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }
-    //무선회선이 없는경우
-    if(svcInfo.caseType === '02' || test === 'notLine' ) {
+    // 무선회선이 없는경우
+    if (svcInfo.caseType === '02' || test === 'notLine' ) {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
-      res.render('billguide/en.myt-fare.bill.guide.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      res.render('billguide/en.myt-fare.bill.guide.not.line.html' , { data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }
 
-    //무선 회선은 있지만 등록된 회선이 없는경우
-    if(svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 || test === 'notRegi') {
+    // 무선 회선은 있지만 등록된 회선이 없는경우
+    if (svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 || test === 'notRegi') {
       defaultData.errorMsg = 'LINE_NOT_REGIST';
-      res.render('billguide/en.myt-fare.bill.guide.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      res.render('billguide/en.myt-fare.bill.guide.not.line.html' , { data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }
 
@@ -134,10 +134,10 @@ class MyTFareBillGuide extends TwViewController {
     // 청구요금 조회 : 대표청구 여부(svcInfo.actRepYn) Y인 경우
  // console.log("[ 대표청구여부 svcInfo.actRepYn ] "+svcInfo.actRepYn);
 
-    //종속 회선인경우 조회불가 페이지로 이동
-    if ( svcInfo.actRepYn !== 'Y' || test == 'subline') {
+    // 종속 회선인경우 조회불가 페이지로 이동
+    if ( svcInfo.actRepYn !== 'Y' || test === 'subline') {
       return res.render( 'billguide/en.myt-fare.bill.guide.subline.html',
-                          {data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+                          {data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
 
     } else {
 //    console.log("[ API ] BFF_05_0226");
@@ -158,7 +158,7 @@ class MyTFareBillGuide extends TwViewController {
       try {
         // OP002-2986. 통합청구에서 해지할경우(개별청구) 청구번호가 바뀐다고함. 그럼 성공이지만 결과를 안준다고 함.
         if (resArr[0].code !== API_CODE.CODE_00 || FormatHelper.isEmpty(resArr[0].result)) {
-          return res.render( 'billguide/en.myt-fare.bill.guide.nopay6month.html'  ,{ svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+          return res.render( 'billguide/en.myt-fare.bill.guide.nopay6month.html'  , { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
 
         //  return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
         /*
@@ -197,7 +197,7 @@ class MyTFareBillGuide extends TwViewController {
 
         Object.assign(thisMain._billpayInfo, resArr[0].result);
 
-        thisMain.logger.debug("[ API BFF_05_0226 Result ]",thisMain._billpayInfo);
+        thisMain.logger.debug('[ API BFF_05_0226 Result ]', thisMain._billpayInfo);
 
 
         // 청구 시작, 종료일
@@ -208,17 +208,17 @@ class MyTFareBillGuide extends TwViewController {
 
         thisMain._commDataInfo.repSvcNum = thisMain.phoneStrToDash(svcInfo.svcNum);
 
-        // console.log("############################################################################################################################");
+        // console.log("#######################################################################");
         // console.log("#### thisMain._commDataInfo.selClaimDt"+thisMain._commDataInfo.selClaimDt);
         // console.log("#### thisMain._commDataInfo.selClaimDtM"+thisMain._commDataInfo.selClaimDtM);
         // console.log("#### thisMain._commDataInfo.selStaDt"+thisMain._commDataInfo.selStaDt);
         // console.log("#### thisMain._commDataInfo.selEndDt"+thisMain._commDataInfo.selEndDt);
-        // console.log("############################################################################################################################");
+        // console.log("######################################################################");
         
         // 총 요금, 할인요금
     //    thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt.replace(/,/g, ''));
     
-        //영문화 필드변경
+        // 영문화 필드변경
         thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.useAmtTot.replace(/,/g, ''));
         
         // console.log(" ===============================================================================" );
@@ -235,23 +235,23 @@ class MyTFareBillGuide extends TwViewController {
     //    thisMain.arrangeCategory( thisMain._billpayInfo.paidAmtDetailInfoList );
 
 
-        let beLineLst = thisMain._billpayInfo.paidAmtDetailInfoList;
+        const beLineLst = thisMain._billpayInfo.paidAmtDetailInfoList;
       //  console.log("### line length =>"+beLineLst.length);
         
-        let _lineDtlLst :Array<any> = [];        
-        for( let i=0; i<beLineLst.length; i++ ){
+        const _lineDtlLst: Array<any> = [];        
+        for ( let i = 0; i < beLineLst.length; i++ ) {
 
-          let line = beLineLst[i];
+          const line = beLineLst[i];
      //     if(line.svcCd !== 'C') continue;  //무선 아닌경우 표시안함.
         //  console.log("cate length =>"+line.paidAmtDetailInfo.length);
-          let lineGroup = thisMain._arrayToGroup( line.svcNm ,line.svcCd,line.paidAmtDetailInfo );
+          const lineGroup = thisMain._arrayToGroup( line.svcNm , line.svcCd, line.paidAmtDetailInfo );
         //  console.log('>> group >>',lineGroup);
         //  console.log(" ===============================================================================" );
           _lineDtlLst.push( lineGroup );
         }
 
-        //큰금액순으로 정렬
-        _lineDtlLst.sort(function(a,b){
+        // 큰금액순으로 정렬
+        _lineDtlLst.sort(function(a, b ) {
           return a.totAmtInt > b.totAmtInt ? -1 : a.totAmtInt < b.totAmtInt ? 1 : 0;
         });
 
@@ -260,7 +260,7 @@ class MyTFareBillGuide extends TwViewController {
         //  청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
         thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
       //  console.log('[ ## EN thisMain._commDataInfo.conditionChangeDtList]',thisMain._commDataInfo.conditionChangeDtList);
-        let data: any = {
+        const data: any = {
           data : {
             reqQuery: thisMain.reqQuery,
             svcMgmtNum: svcInfo.svcMgmtNum,
@@ -270,7 +270,7 @@ class MyTFareBillGuide extends TwViewController {
             commDataInfo: thisMain._commDataInfo,
             intBillLineInfo: thisMain._intBillLineInfo,
 
-            //영문화 추가
+            // 영문화 추가
             repSvcNum: thisMain._commDataInfo.repSvcNum,
           paidAmtMonthSvcCnt: thisMain._billpayInfo.paidAmtMonthSvcCnt,
 //            paidAmtMonthSvcCnt: _lineDtlLst.length,
@@ -281,12 +281,12 @@ class MyTFareBillGuide extends TwViewController {
           svcInfo: svcInfo,
           pageInfo: thisMain.pageInfo,
           useFeeInfo: thisMain._useFeeInfo,
-          miriAmt :thisMain._miriData 
+          miriAmt : thisMain._miriData 
         };
 
  
         // 다른 페이지를 찾고 계신가요 통계코드 추가
-        BrowserHelper.isApp(req)?thisMain.getAppXtEid(data.data):thisMain.getMWebXtEid(data.data);
+        BrowserHelper.isApp(req) ? thisMain.getAppXtEid(data.data) : thisMain.getMWebXtEid(data.data);
         
         const existBill = (listName) => {
           const obj = thisMain._billpayInfo;
@@ -302,7 +302,7 @@ class MyTFareBillGuide extends TwViewController {
         //  영문화 사용안함
         //  thisMain._billpayInfo.existBill = existBill('usedAmountDetailList');
           
-          //영문화 종속회선 조회불가
+          // 영문화 종속회선 조회불가
           return res.render( 'billguide/en.myt-fare.bill.guide.subline.html',
           { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
 
@@ -314,13 +314,13 @@ class MyTFareBillGuide extends TwViewController {
           thisMain._billpayInfo.existBill = existBill('paidAmtDetailInfoList');
 
           // 개별청구 회선
-        //if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+        // if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
           if ( data.data.lineDtlLst.length === 1 ) {
 
             thisMain.logger.info(thisMain, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
             thisMain._typeChk = 'A4';
 
-            //영문화
+            // 영문화
             data.data.typeChk = thisMain._typeChk;
             return thisMain.renderView(res, thisMain._urlTplInfo.individualPage, data);
 
@@ -331,7 +331,7 @@ class MyTFareBillGuide extends TwViewController {
             if ( svcInfo.actRepYn === 'Y' || (svcInfo.actRepYn === 'Y' && thisMain.reqQuery.line) ) {
               thisMain.logger.info(thisMain, '[ 통합청구회선 > LINE:' + thisMain.reqQuery.line + ']', svcInfo.actRepYn);
               thisMain._typeChk = 'A5';
-              //thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
+              // thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
 
               // 요금납부버튼 무조건 노출로 삭제
               // thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
@@ -379,7 +379,7 @@ class MyTFareBillGuide extends TwViewController {
       // 6개월간 청구요금 없음
       if ( err.code === 'BIL0076' || err.code === 'BIL0114') {
         return res.render( 'billguide/en.myt-fare.bill.guide.nopay6month.html',
-          { data: defaultData ,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+          { data: defaultData , svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       }
       // 회선이 query에 있어 오류가 나면 기본 페이지로 돌아간다.
       if ( thisMain.reqQuery.line ) {
@@ -652,10 +652,10 @@ class MyTFareBillGuide extends TwViewController {
     return tmp;
   }
 
-  //청구요금 상세 그룹화.
-  public _arrayToGroup( name : string ,svcCd : string ,data : Array<any> ) {
-    const func = this;
-    var fieldInfo = {
+  // 청구요금 상세 그룹화.
+  public _arrayToGroup( name: string , svcCd: string , data: Array<any> ) {
+    var func = this;
+    const fieldInfo = {
         lcl:    'billItmLclNm'
       , scl:    'billItmSclNm'
       , name:   'billItmNm'
@@ -681,14 +681,14 @@ class MyTFareBillGuide extends TwViewController {
     var is3rdParty = false;
     var line = {
       name: ''
-      ,totAmt: ''
-      ,totAmtInt: 0
-      ,group:{}
-      ,isMPhone: false
-      ,isTPhone: false
-      ,isIpTV: false
-      ,isInternet: false 
-      ,isPocket: false 
+      , totAmt: ''
+      , totAmtInt: 0
+      , group:{}
+      , isMPhone: false
+      , isTPhone: false
+      , isIpTV: false
+      , isInternet: false 
+      , isPocket: false 
     };
     var group = {};
     var totAmt = 0;
@@ -730,7 +730,7 @@ class MyTFareBillGuide extends TwViewController {
 
       var bill_item = {
         name: item[fieldInfo.name].replace(/[*#]/g, ''),
-        amount: (amount < 0 ?'-₩':'₩')+func.commaSeparatedString( Math.abs(item[fieldInfo.value]) ),
+        amount: (amount < 0 ? '-₩' : '₩') + func.commaSeparatedString( Math.abs(item[fieldInfo.value]) ),
         noVAT: item[fieldInfo.name].indexOf('*') > -1,
         is3rdParty: item[fieldInfo.name].indexOf('#') > -1,
         discount: amount < 0
@@ -741,7 +741,7 @@ class MyTFareBillGuide extends TwViewController {
       bill_item.amount = item[fieldInfo.value];
     });
   
-      //아이템 이름과 소분류가 같은 경우 2depth 보여주지 않음
+      // 아이템 이름과 소분류가 같은 경우 2depth 보여주지 않음
       // $.each(group, function (key1, itemL) {
       //   $.each(itemL, function (key2, itemS) {
       //     if ( groupInfoFields.indexOf(key2) < 0 ) {
@@ -756,61 +756,63 @@ class MyTFareBillGuide extends TwViewController {
       //   });
       // });
 
-      //합계처리 단위처리 합계 할인속성 설정.
-      for(var key1 in group){
+      // 합계처리 단위처리 합계 할인속성 설정.
+      // tslint:disable-next-line: forin
+      for (var key1 in group) {
         // console.log("key1 ==>"+key1);
+        // tslint:disable-next-line: prefer-const
         let itemL = group[key1];
         itemL.discount = itemL.total < 0;
-        itemL.total = (itemL.total < 0 ?'-₩':'₩')+func.commaSeparatedString( Math.abs(itemL.total));
-        //console.log("itemL ==>"+itemL);
-        for(var key2 in itemL){
+        itemL.total = (itemL.total < 0 ? '-₩' : '₩') + func.commaSeparatedString( Math.abs(itemL.total));
+        // console.log('itemL ==>' + itemL);
+        for (var key2 in itemL) {
           // console.log("     key2 ==>"+key2);
-          if(groupInfoFields.indexOf(key2) < 0 ){
-            let itemS = itemL[key2];
-            //item 부모 item 과 이름 같은경우 병합. 테스트후 적용.
+          if (groupInfoFields.indexOf(key2) < 0 ) {
+            const itemS = itemL[key2];
+            // item 부모 item 과 이름 같은경우 병합. 테스트후 적용.
             // if ( itemS.items.length === 1 && itemS.items[0].name === key2 ) {
             //   itemS.items.splice(0,1);
             // }
 
-            // console.log("     itemS.total ==>",itemS.total);
+            // console.log ("     itemS.total ==>",itemS.total);
             itemS.discount = itemS.total < 0;
          
-            itemS.total = (itemS.total < 0 ?'-₩':'₩')+func.commaSeparatedString( Math.abs(itemS.total) );
+            itemS.total = (itemS.total < 0 ? '-₩' : '₩') + func.commaSeparatedString( Math.abs(itemS.total) );
           }
 
-        //  console.log("     itemS.discount ==>",itemS.discount);
-        //  console.log("     itemS.total ==>",itemS.total);
+        //  console.log ('     itemS.discount ==>', itemS.discount);
+        //  console.log ('     itemS.total ==>', itemS.total);
         }
-        // console.log("   itemL.discount ==>",itemL.discount);
-        // console.log("   itemL.total ==>",itemL.total);
+        // console.log ('   itemL.discount ==>', itemL.discount);
+        // console.log ('   itemL.total ==>', itemL.total);
         
       }
 
       
-      if( svcCd === 'C' ){
+      if ( svcCd === 'C' ) {
         line.isMPhone   = true;
-      }else if( svcCd === 'P' ){
+      } else if ( svcCd === 'P' ) {
         line.isTPhone   = true;
-      }else if( svcCd === 'T' ){
+      } else if ( svcCd === 'T' ) {
         line.isIpTV     = true;
-      }else if( svcCd === 'I' ){
+      } else if ( svcCd === 'I' ) {
         line.isInternet = true;
-      }else if( svcCd === 'F' ){
+      } else if ( svcCd === 'F' ) {
         line.isPocket = true;
       }
       line.group  = group;
-      line.totAmt = (totAmt < 0 ?'-₩':'₩')+func.commaSeparatedString( Math.abs(totAmt) );
+      line.totAmt = (totAmt < 0 ? '-₩' : '₩') + func.commaSeparatedString( Math.abs(totAmt) );
       line.totAmtInt = totAmt;
       line.name   = func.phoneStrToDash(name);
       return line;
-  };
+  }
 
   public parseCommaedStringToInt(strNum) {
       return parseInt(strNum.replace(/,/g, ''), 10);
-  };
+  }
   public commaSeparatedString(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
+  }
  
   /**
    * 다른 페이지를 찾고 계신가요 통계코드 생성
@@ -823,8 +825,8 @@ class MyTFareBillGuide extends TwViewController {
       miri        : 'CMMA_A10_B81_C1201-14',       // 미리
       notPhone    : 'CMMA_A10_B81_C1201_D4350-11',   // notPhone
       gotoKor     : 'CMMA_A10_B81_C1201_D4350-12',     // goKor   
-      notLine     : 'CMMA_A10_B81_C1201_D4350-16',     //회선미보유
-      subLine     : 'CMMA_A10_B81_C1201_D4350-9'      //종속회선
+      notLine     : 'CMMA_A10_B81_C1201_D4350-16',     // 회선미보유
+      subLine     : 'CMMA_A10_B81_C1201_D4350-9'      // 종속회선
     };
     data.xtEid = eid;
   }
@@ -836,8 +838,8 @@ class MyTFareBillGuide extends TwViewController {
       miri        : 'MWMA_A10_B81_C1201_D4350-13',    // 미리
       notPhone    : 'MWMA_A10_B81_C1201_D4350-5',     // notPhone
       gotoKor     : 'MWMA_A10_B81_C1201_D4350-6',    // goKor
-      notLine     : 'MWMA_A10_B81_C1201_D4350-15',    //회선미보유
-      subLine     : 'MWMA_A10_B81_C1201_D4350-3'      //종속회선
+      notLine     : 'MWMA_A10_B81_C1201_D4350-15',    // 회선미보유
+      subLine     : 'MWMA_A10_B81_C1201_D4350-3'      // 종속회선
     };
     data.xtEid = eid;
   }

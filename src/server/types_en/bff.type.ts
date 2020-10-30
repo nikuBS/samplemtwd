@@ -9,7 +9,7 @@ export enum SVC_ATTR_NAME {
   S2 = 'IPTV',
   S3 = 'Landline',
   O1 = 'Point cam'
-};
+}
 
 export enum SVC_ATTR_E {
   MOBILE_PHONE = 'M1',

@@ -198,7 +198,8 @@ class ApiService {
       this.setServerSession(resp.headers, req, res, command).subscribe((data) => {
         if ( contentType.includes('json') ) {
           // client에서 API를 직접 호출하지 않는 경우(server에서 API를 호출하는 경우)
-          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 
+            || req.baseUrl.indexOf('store') !== -1) ) {  
             // BFF server session이 변경되었을 경우
             if ( data && data.code === API_CODE.NODE_1005) {
               this.redirectInvalidSession(req, res, data);
@@ -260,7 +261,8 @@ class ApiService {
         this.setServerSession(headers, req, res, command).subscribe((resp) => {
           if ( contentType.includes('json') ) {
             // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
-            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 
+              || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
             
               // BFF server session이 변경되었을 경우
               if ( resp && resp.code === API_CODE.NODE_1005) {
@@ -607,7 +609,7 @@ class ApiService {
       */
   public requestLoginTid(token: string, state: string, roamMcc: string): Observable<any> {
     const roamingYn = (roamMcc && roamMcc !== '405') ? 'Y' : 'N';
-    const params = {token,state,roamingYn,mCntrCd:roamMcc,globalYn:"3"};
+    const params = {token, state, roamingYn, mCntrCd: roamMcc, globalYn: '3'};
         
     return this.requestLogin(API_CMD.BFF_03_0008, params, LOGIN_TYPE.TID);
 
@@ -906,21 +908,21 @@ class ApiService {
   public getAllSvcInfo(req: any): any {
     this.logger.info(this, '[getAllSvcInfo]');
 
-    if(!this.loginService.isLogin(req))
-    {
+    if (!this.loginService.isLogin(req)) {
       return null;
     }    
  
     const allSvc = this.loginService.getAllSvcInfo(req);
-    if(!allSvc || FormatHelper.isEmpty(allSvc) )
+    if (!allSvc || FormatHelper.isEmpty(allSvc) ) {
       return null;
+    }
  
       
       return   {
         mbrChlId: allSvc.mbrChlId,
         userId: allSvc.userId,
         xtUserId: allSvc.xtUserId,
-        m:allSvc[LINE_NAME['MOBILE']]
+        m: allSvc[LINE_NAME['MOBILE']]
       };            
 
 
@@ -945,22 +947,22 @@ class ApiService {
   public getSvcInfo(req: any): any {
     this.logger.info(this, '[getSvcInfo]');
 
-    if(!this.loginService.isLogin(req))
-    {
+    if (!this.loginService.isLogin(req)) {
       return null;
     }
 
     return Observable.combineLatest([
       this.request(API_CMD.BFF_03_0029, {svcCtg: LINE_NAME.MOBILE  }),
       this.request(API_CMD.BFF_05_0224, {})
-    ]).map(([LineInfo,prodNmInfo]) => {
+    ]).map(([LineInfo, prodNmInfo]) => {
 
       let caseType = '00';
-      let svcInfo = this.loginService.getSvcInfo(req);
-      let allSvc = this.getAllSvcInfo(req);
+      const svcInfo = this.loginService.getSvcInfo(req);
+      const allSvc = this.getAllSvcInfo(req);
 
-      if(!svcInfo || FormatHelper.isEmpty(svcInfo) )
+      if (!svcInfo || FormatHelper.isEmpty(svcInfo) ) {
         return null;
+      }
 
 
 
@@ -972,15 +974,14 @@ class ApiService {
 
 
       let lineCount = 0;
-      if ( LineInfo.code === API_CODE.CODE_00 ) 
-        lineCount = ((LineInfo.result)?LineInfo.result.mCnt:0);
+      if ( LineInfo.code === API_CODE.CODE_00 ) { 
+        lineCount = ((LineInfo.result) ? LineInfo.result.mCnt : 0);
+      }
 
-      if(allSvc)
-      {
+      if (allSvc) {
 
 
-        if(!allSvc.m || FormatHelper.isEmpty(allSvc.m) )
-        {
+        if (!allSvc.m || FormatHelper.isEmpty(allSvc.m) ) {
             Object.assign(svcInfo,  {
                 mbrChlId: allSvc.mbrChlId,
                 userId: allSvc.userId,
@@ -989,9 +990,7 @@ class ApiService {
                 expsSvcCnt: '0',
                 nonSvcCnt: (lineCount + '') || '0'
             });          
-        }
-        else
-        {
+        } else {
             Object.assign(svcInfo,  {
               mbrChlId: allSvc.mbrChlId,
               userId: allSvc.userId,
@@ -1001,9 +1000,7 @@ class ApiService {
               nonSvcCnt: (lineCount + '') || '0'
           });    
         }
-      }   
-      else
-      {
+      } else {
           Object.assign(svcInfo,  {
             totalSvcCnt: '0',
             expsSvcCnt: '0',
@@ -1011,9 +1008,8 @@ class ApiService {
         });    
       }           
 
-      if(svcInfo.loginType == 'E')
-      {
-        caseType = '01'; //간편로그인
+      if (svcInfo.loginType === 'E') {
+        caseType = '01'; // 간편로그인
 
         Object.assign(svcInfo,  {
             caseType: caseType,
@@ -1022,15 +1018,15 @@ class ApiService {
             nonSvcCnt: '0'
         });          
             
-      }
-      else
-      {  
+      } else {  
 
-        if(svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt == '0' )
-          caseType = '02'; //회선없음
+        if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt == '0' ) {
+          caseType = '02';
+        } // 회선없음
 
-        if(svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt != '0' )
-          caseType = '03'; //회선등록처리 필요
+        if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt != '0' ) {
+          caseType = '03';
+        } // 회선등록처리 필요
 
 
         Object.assign(svcInfo,  {
@@ -1038,7 +1034,7 @@ class ApiService {
         });                    
       }
       return svcInfo;
-    })      
+    });    
   }
 
 
@@ -1057,7 +1053,7 @@ class ApiService {
    * @param svcInfo
    */
   public setSvcInfo(svcInfo: any): any {
-    let sessSvcInfo = this.loginService.getSvcInfo(this.req);    
+    const sessSvcInfo = this.loginService.getSvcInfo(this.req);    
 
     this.request(API_CMD.BFF_05_0224, {})
       .subscribe((resp) => {
@@ -1072,8 +1068,9 @@ class ApiService {
           });
 
         } else {
-          if(FormatHelper.isEmpty(svcInfo.prodNmEn))
-            svcInfo.prodNmEn = svcInfo.prodNm;          
+          if (FormatHelper.isEmpty(svcInfo.prodNmEn)) {
+            svcInfo.prodNmEn = svcInfo.prodNm;
+          }          
          
         }
 
@@ -1082,17 +1079,13 @@ class ApiService {
         });        
 
 
-        //this.loginService.setSvcInfo(this.req,this.res,sessSvcInfo);
+        // this.loginService.setSvcInfo(this.req,this.res,sessSvcInfo);
 
         return svcInfo;
 
      });
 
-    
-     
   }
-
- 
  
 }
 

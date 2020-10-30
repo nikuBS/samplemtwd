@@ -62,7 +62,7 @@ Tw.BUTTON_LABEL = {
   NO: 'No',
   SELECTED: 'Selected',
   COMPLETE: 'Complete',
-  SMS_RESEND: '인증번호 재전송',
+  SMS_RESEND: 'Resend',
   UPDATE: 'Update',
   GO_TO_TWORLD_KOR: 'Go to Tworld KOR'
 };

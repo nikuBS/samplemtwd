@@ -389,7 +389,7 @@ class LoginService {
         req.session.noticeType = noticeType;
 
         // req.session undefined 오류 분석용 log (req.session deep copy)
-        let unsavedSession = Object.assign({}, req.session);
+        const unsavedSession = Object.assign({}, req.session);
 
         req.session.save((err) => {
           // err 값이 return 되는 case
@@ -401,8 +401,8 @@ class LoginService {
           }
 
           // save 후 session 값이 달라지는 case
-          let beforeSaveStr = JSON.stringify(unsavedSession);
-          let afterSaveStr: any = JSON.stringify(req.session);
+          const beforeSaveStr = JSON.stringify(unsavedSession);
+          const afterSaveStr: any = JSON.stringify(req.session);
           if ( beforeSaveStr !== afterSaveStr ) {
             this.logger.error(this, '[OP002-3955] - CASE02', '[BEFORE]' + beforeSaveStr, '[AFTER]' + afterSaveStr);
           }
@@ -577,7 +577,7 @@ class LoginService {
     if (path.startsWith('/en/product/roaming')) {
       path = '/en/product/roaming';
     }
-    //이준엽임시
+    // 이준엽임시
     // path = path.replace('/en/','/');
     return path;
   }
@@ -588,7 +588,7 @@ class LoginService {
    */
   public getFullPath(req: any): string {
     const request = req; // || this.request;
-    if ( !FormatHelper.isEmpty(request) && !FormatHelper.isEmpty(request.baseUrl) ){
+    if ( !FormatHelper.isEmpty(request) && !FormatHelper.isEmpty(request.baseUrl) ) {
       const baseUrl = request.baseUrl;
       if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 ||
         baseUrl.indexOf('native') !== -1 || baseUrl.indexOf('store') !== -1 ) {

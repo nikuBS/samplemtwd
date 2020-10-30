@@ -126,7 +126,7 @@ export const MYT_JOIN_SUBMAIN = {
       contents: 'Please select another line\nThis service is unavailable for the\nselected line'
     }
   }
-}
+};
 
 export const MYT_DATA_USAGE_TOTAL_SHARING_DATA = {
   TITLE: '통합공유 데이터'
