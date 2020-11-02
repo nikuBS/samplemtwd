@@ -92,7 +92,6 @@ class App {
   }
 
   private config() {
-
     this.app.set('view engine', 'ejs');
     this.app.engine('html', ejs.renderFile);
     this.app.use(express.json());       // to support JSON-encoded bodies
@@ -117,8 +116,7 @@ class App {
     this.setShortCut();
     this.setGlobalVariables();
     this.setClientMap();
-    if (!process.argv[2])
-      this.setClientMap_en();
+    this.setClientMap_en();
     this.setErrorHandler();
   }
 

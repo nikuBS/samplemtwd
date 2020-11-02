@@ -837,25 +837,3 @@ gulp.task('build', shell.task([
 gulp.task('client-build', ['get-manifest','get-manifest_en'], function () {
   gulp.start('js-client','en_js-client');
 });
-
-gulp.task('ko-build', shell.task([
-  'gulp pre-clean --ver=' + version,
-  'gulp task --ver=' + version,
-  'gulp hbs-front --ver=' + version,
-  'gulp manifest --ver=' + version,
-  'gulp post-clean --ver=' + version,
-  'gulp ko-run --ver=' + version
-]));
-
-gulp.task('ko-run', ['server', 'ko-watch']);
-
-gulp.task('ko-watch', function () {
-  livereload.listen();
-  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
-  gulp.watch('src/client/**/*.js', { interval: 500 }, ['ko-client-build']);
-  gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
-});
-
-gulp.task('ko-client-build', ['get-manifest'], function () {
-  gulp.start('js-client');
-});
