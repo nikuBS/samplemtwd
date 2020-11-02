@@ -143,8 +143,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
   _conditionChangeEvtInit: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
-    //Tw.Init._initEidHanlder();
-    // $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
+    $layer.on('click', '.fe-outlink', $.proxy(this._onOutLink, this));
   },
 
   // 안씀. 조건변경 팝업 닫히면..
