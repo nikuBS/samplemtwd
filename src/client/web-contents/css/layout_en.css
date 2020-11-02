@@ -1758,7 +1758,8 @@ body.hidden {
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  -webkit-overflow-scrolling: auto; }
+  -webkit-overflow-scrolling: auto;}
+.popup-page.fixed-bottom .container::-webkit-scrollbar{display:none;}
 
 .popup-page.fixed-bottom .container .section-menu-box {
   padding-bottom: 1.63rem; }

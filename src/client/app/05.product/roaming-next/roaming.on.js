@@ -158,10 +158,14 @@ Tw.RoamingModeOn.prototype = {
     });
     $('#offer').on('click', $.proxy(this._handleOffer, this));
 
+    var now = moment();
+    if (now.utcOffset() !== 540) { // 한국이 아니면 utcOffset 조정
+      now = now.add(540 - now.utcOffset(), 'minutes');
+    }
     // 화면 상단 국내 시각 표시
-    $('#timeKorea').html(moment().format('YYYY. M. D. HH:mm'));
+    $('#timeKorea').html(now.format('YYYY. M. D. HH:mm'));
     // 화면 상단 현지 시각 표시
-    $('#timeLocal').html(moment().add(this.$country.timezoneOffset, 'hours').format('YYYY. M. D. HH:mm'));
+    $('#timeLocal').html(now.add(this.$country.timezoneOffset, 'hours').format('YYYY. M. D. HH:mm'));
 
     // 요금제 기간에 따라 1) 이용예정 2) 이용중 3) 이용완료 로 상태가 나뉘며,
     // 이 상태값에 따라 UI 처리

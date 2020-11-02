@@ -543,7 +543,9 @@ Tw.CustomerAgentsearch.prototype = {
       this.$btnMore.off('click').on('click', $.proxy(this._onMoreView, this));
     }
     // "더보기" 에서 사용 하기 위해 요청 전에 파라미터를 저장 해 놓는다.
-    this.$btnMore.data('param', param);
+    // OP002-11699: 아래에서 param 을 decode 하기때문에, "더보기" 버튼에 넣기전 다른 변수에다 deep copy 하여 넣어준다.
+    var moreParam = $.extend(true, {}, param);
+    this.$btnMore.data('param', moreParam);
     var getApiName = {
       'name': Tw.API_CMD.BFF_08_0004,
       'addr': Tw.API_CMD.BFF_08_0005,
