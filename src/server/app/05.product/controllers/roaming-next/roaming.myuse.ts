@@ -55,7 +55,7 @@ export default class RoamingMyUseController extends RoamingController {
         addons, // 부가서비스 목록
         tariffs: [], // 요금제 목록
         now: moment(),
-        nowDate: moment().hours(0).minutes(0).seconds(0)
+        nowDate: moment().hours(0).minutes(0).seconds(0).milliseconds(0)
       };
 
       if (tariffs.length > 0) {

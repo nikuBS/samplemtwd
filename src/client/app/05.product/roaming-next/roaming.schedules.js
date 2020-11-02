@@ -178,7 +178,7 @@ Tw.RoamingSchedules.prototype = {
       // 현재 좌표에 따라 말풍선이 잘리지 않게 적절히 배치
       var rect = dateCell.getBoundingClientRect();
       var x = rect.left;
-      var y = rect.top; // 스크롤 상태 반영
+      var y = rect.top + $('.dialog').scrollTop(); // 스크롤 상태 반영
       // 선택한 날짜보다 70px 위, 35px 좌측을 기준 좌표로 삼는다.
       y -= 70;
       x -= 35;
