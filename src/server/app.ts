@@ -117,8 +117,8 @@ class App {
     this.setShortCut();
     this.setGlobalVariables();
     this.setClientMap();
-    if (!process.argv[2])
-      this.setClientMap_en();
+    // if (!process.argv[2])
+    this.setClientMap_en();
     this.setErrorHandler();
   }
 
