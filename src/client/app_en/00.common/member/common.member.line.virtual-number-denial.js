@@ -35,8 +35,8 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('click', '.fe-bt-denial', $.proxy(this._sendDeny, this));
-    this.$container.on('click', '.fe-bt-confirm', $.proxy(function() { this._historyService.goBack() }, this));
-    this.$container.on('click', '.fe-bt-cancel', $.proxy(function() { this._historyService.goBack() }, this));
+    this.$container.on('click', '.fe-bt-confirm', $.proxy(function() { this._historyService.goBack(); }, this));
+    this.$container.on('click', '.fe-bt-cancel', $.proxy(function() { this._historyService.goBack(); }, this));
     this.$btnMoreView.on('click', $.proxy(this._showMore, this));
   },
 
@@ -45,7 +45,7 @@ Tw.CommonMemberLineVirtualNumberDenial.prototype = {
    * @param {} $event 
    */
   _sendDeny: function ($event) {
-    var $target = $($event.currentTarget)
+    var $target = $($event.currentTarget);
     var svcMgmtNum = $target.data('svcmgmtnum');
     var api = Tw.API_CMD.BFF_08_0083;
     var willDeny = false;

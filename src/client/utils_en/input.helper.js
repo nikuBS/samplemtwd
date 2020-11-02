@@ -138,7 +138,7 @@ Tw.InputHelper = (function () {
   function inputLengthCheck(input){
     var $input = $(input);
     var inputText = $input.val();
-    var inputMaxLength = $input.prop("maxlength");
+    var inputMaxLength = $input.prop('maxlength');
     
     if(inputText.length > inputMaxLength){
       $input.val(inputText.substr(0, inputMaxLength));

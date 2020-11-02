@@ -419,10 +419,10 @@ class ApiRouter {
     apiService.setCurrentReq(req, res);
 
 
-    if (!loginService.isLogin(req)) {
+    if ( !loginService.isLogin(req) ) {
       const resp = {
           code : '00',
-          result: {
+          result : {
             isLogin : false,
             userInfo : null
           }
@@ -437,10 +437,9 @@ class ApiRouter {
       apiService.getSvcInfo(req)
       .subscribe((svcInfo) => {
         const allSvcInfo = apiService.getAllSvcInfo(req);
-
         const resp = {
           code : '00',          
-          result: {
+          result : {
             isLogin : !FormatHelper.isEmpty(svcInfo),
             userInfo : svcInfo
           }
@@ -1067,7 +1066,7 @@ class ApiRouter {
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
     this.logger.info(this, '[get svcInfo]', req.cookies[COOKIE_KEY.TWM], loginService.getSessionId(req));
-    if (!loginService.isLogin(req)) {
+    if ( !loginService.isLogin(req) ) {
       res.json({
         code: API_CODE.CODE_00,
         result: null

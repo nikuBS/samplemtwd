@@ -16,7 +16,7 @@ Tw.MyTFareBillGuideCommon = function (rootEl, resData) {
 
   this.paramDate = this.resData.reqQuery.date || '';
   this.paramLine = this.resData.reqQuery.line || '';
-  console.log( "[EN typeChk] =>"+this.resData.typeChk);
+  console.log( '[EN typeChk] =>' + this.resData.typeChk);
 
   this._init();
 };
@@ -41,8 +41,8 @@ Tw.MyTFareBillGuideCommon.prototype = {
 
     var template = Handlebars.compile(source);
   //  alert("!!!!! template   =>"+template);
-    var isTypeRep = this.resData.typeChk == 'A5';
-    console.log( "[EN isTypeRep] =>"+isTypeRep);
+    var isTypeRep = this.resData.typeChk === 'A5';
+    console.log( '[EN isTypeRep] =>' + isTypeRep);
 
     var output = template({ lines: group,isTypeRep: isTypeRep });
 

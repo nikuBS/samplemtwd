@@ -126,7 +126,7 @@ Tw.PPSRechargeLayer.prototype = {
   _onClickOnce: function (name, event) {
     new Tw.PPSRechargeLayerSKpayAgree({ //skpay 동의 여부 체크
       $element: this.$container,
-      callback: $.proxy(this._goSKpayAgree, this, name, event),
+      callback: $.proxy(this._goSKpayAgree, this, name, event)
     }).skpayAgree(event);
     this._popupService.close();
   },

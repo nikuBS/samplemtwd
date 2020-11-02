@@ -128,7 +128,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       {'txt' : 'You can be anything you want when you are 0', 'url' : 'https://www.younghandong.com/', 'eid':'MWMA_A10_B80_C1199-22'},
       {'txt' : 'Creating the Age of Hyper-Innovation for YOU', 'url' : 'https://www.sktinsight.com/113540', 'eid':'MWMA_A10_B80_C1199-23'},
       {'txt' : 'ADT Caps', 'url' : 'https://m.adtcaps.co.kr/', 'eid':'MWMA_A10_B80_C1199-24'}
-    ]
+    ];
 
     this._popupService.open({
       hbs: hbsName,

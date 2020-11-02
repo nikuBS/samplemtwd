@@ -31,7 +31,7 @@ Tw.ProductMobilePlanAddDowngrade = function(rootEl, data, openEvent, confirmCall
     return;
   }
   this._before();
-}
+};
 
 Tw.ProductMobilePlanAddDowngrade.prototype = {
 
@@ -98,8 +98,8 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
         if(dwonGradeType){
             (promotion.EXTEND||[]).forEach(function(e){
                 $.extend(data, e(data));
-            })
-            this._then(dwonGradeType)
+            });
+            this._then(dwonGradeType);
         }else{
             this._confirmCallback();
             //this._elseCallback();
@@ -396,4 +396,4 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
       context = context.replace(/{{name}}/gi, this._mbrNm);
       return context;
     }
-}
+};

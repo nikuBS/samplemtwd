@@ -20,7 +20,7 @@ Tw.MainMenuSettingsTempDsds = function (params) {
 
 Tw.MainMenuSettingsTempDsds.prototype = {
   goNative: function (e) {
-  var _esimUrl = "https://m.shop.tworld.co.kr/dsds/main";
+  var _esimUrl = 'https://m.shop.tworld.co.kr/dsds/main';
 
   this._nativeService.send(Tw.NTV_CMD.OPEN_ESIMURL, {esimUrl: _esimUrl}, $.proxy(this._onContact, this));
   },

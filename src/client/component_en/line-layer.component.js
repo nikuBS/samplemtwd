@@ -64,7 +64,8 @@ Tw.LineLayerComponent.prototype = {
       var cnt = resp.result.totalSvcCnt - resp.result.expsSvcCnt;
       if ( cnt > 0 ) {
         setTimeout($.proxy(function () {
-          this._historyService.goLoad('/en/common/member/line/register?type=' + layerType + '&landing=' + encodeURIComponent(location.pathname + location.search));
+          this._historyService.goLoad('/en/common/member/line/register?type=' + layerType + '&landing=' + 
+                                        encodeURIComponent(location.pathname + location.search));
         }, this), 1000);
       }
     }

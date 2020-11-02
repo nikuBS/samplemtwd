@@ -654,7 +654,7 @@ class MyTFareBillGuide extends TwViewController {
 
   // 청구요금 상세 그룹화.
   public _arrayToGroup( name: string , svcCd: string , data: Array<any> ) {
-    var func = this;
+    const func = this;
     const fieldInfo = {
         lcl:    'billItmLclNm'
       , scl:    'billItmSclNm'
@@ -676,31 +676,31 @@ class MyTFareBillGuide extends TwViewController {
       T: 'IPTV',
       I: '인터넷'
     */
-    var amount = 0;
-    var noVAT = false;
-    var is3rdParty = false;
-    var line = {
+    let amount = 0;
+    let noVAT = false;
+    let is3rdParty = false;
+    let line = {
       name: ''
-      , totAmt: ''
-      , totAmtInt: 0
-      , group:{}
-      , isMPhone: false
-      , isTPhone: false
-      , isIpTV: false
-      , isInternet: false 
-      , isPocket: false 
+      , totAmt : ''
+      , totAmtInt : 0
+      , group : {}
+      , isMPhone : false
+      , isTPhone : false
+      , isIpTV : false
+      , isInternet : false 
+      , isPocket : false 
     };
-    var group = {};
-    var totAmt = 0;
-    var DEFAULT_DESC_VISIBILITY = true;
-    var groupInfoFields = NO_BILL_FIELDS;
+    let group = {};
+    let totAmt = 0;
+    let DEFAULT_DESC_VISIBILITY = true;
+    let groupInfoFields = NO_BILL_FIELDS;
     
 
     data.forEach(function (item) {
       noVAT = false;
       is3rdParty = false;
-      var groupL = item[fieldInfo.lcl];
-      var groupS = item[fieldInfo.scl];
+      let groupL = item[fieldInfo.lcl];
+      let groupS = item[fieldInfo.scl];
   
       if ( !group[groupL] ) {
         group[groupL] = { total: 0, showDesc: DEFAULT_DESC_VISIBILITY };
@@ -728,7 +728,7 @@ class MyTFareBillGuide extends TwViewController {
       group[groupL][groupS].total += amount;
       totAmt += amount;
 
-      var bill_item = {
+      let bill_item = {
         name: item[fieldInfo.name].replace(/[*#]/g, ''),
         amount: (amount < 0 ? '-₩' : '₩') + func.commaSeparatedString( Math.abs(item[fieldInfo.value]) ),
         noVAT: item[fieldInfo.name].indexOf('*') > -1,
@@ -758,14 +758,14 @@ class MyTFareBillGuide extends TwViewController {
 
       // 합계처리 단위처리 합계 할인속성 설정.
       // tslint:disable-next-line: forin
-      for (var key1 in group) {
+      for (let key1 in group) {
         // console.log("key1 ==>"+key1);
         // tslint:disable-next-line: prefer-const
         let itemL = group[key1];
         itemL.discount = itemL.total < 0;
         itemL.total = (itemL.total < 0 ? '-₩' : '₩') + func.commaSeparatedString( Math.abs(itemL.total));
         // console.log('itemL ==>' + itemL);
-        for (var key2 in itemL) {
+        for (let key2 in itemL) {
           // console.log("     key2 ==>"+key2);
           if (groupInfoFields.indexOf(key2) < 0 ) {
             const itemS = itemL[key2];

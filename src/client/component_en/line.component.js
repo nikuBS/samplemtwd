@@ -228,7 +228,7 @@ Tw.LineComponent.prototype = {
     if(!Tw.FormatHelper.isEmpty(this._$closeFocusEle)) {
       $target = this._$closeFocusEle;
     }
-    var onlyMobile = lineData.length === 1 && lineData[0].isMobile
+    var onlyMobile = lineData.length === 1 && lineData[0].isMobile;
     this._popupService.open({
       hbs: 'actionsheet_line_en',
       layer: true,

@@ -54,7 +54,7 @@ class ShortcutRouter {
         // '/' 로 접근하는 WEB의 페이지에 대해서 '/en/main/home' 으로 redirect 함. [김기남]
         if (!BrowserHelper.isApp(req)) {
           const isEng = req.cookies[COOKIE_KEY.GLOBAL_ENGLISH] || false;
-          if( isEng ) {
+          if ( isEng ) {
             res.redirect('/en/main/home');
             return;
           }
