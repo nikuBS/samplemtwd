@@ -306,26 +306,28 @@ class App {
 
 
   private handleNotFoundError(req, res, next) { 
-    const url = req.url;
+    // const url = req.url;
     if ( req.accepts('html') ) {
-      if ( url.indexOf('/en/') !== -1 ) { // 2020.11.02 김기남 url 중에 '/en/'이 포함되어 있다면 영문용 error page 로 렌더링
-        return res.status(404).render('en.error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-      } else {
-        return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-      }
+      return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+      // if ( url.indexOf('/en/') !== -1 ) { // 2020.11.02 김기남 url 중에 '/en/'이 포함되어 있다면 영문용 error page 로 렌더링
+      //   return res.status(404).render('en.error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+      // } else {
+      //   return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+      // }
     }
     next();
   }
 
   private handleInternalServerError(err, req, res, next) {
-    const url = req.url;
+    // const url = req.url;
     if ( req.accepts('html') ) {
       console.error(err.message);
-      if ( url.indexOf('/en/') !== -1 ) { // 2020.11.02 김기남 url 중에 '/en/'이 포함되어 있다면 영문용 error page 로 렌더링
-        return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-      } else {
-        return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-      }
+      return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+      // if ( url.indexOf('/en/') !== -1 ) { // 2020.11.02 김기남 url 중에 '/en/'이 포함되어 있다면 영문용 error page 로 렌더링
+      //   return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+      // } else {
+      //   return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+      // }
     }
     next();
   }
