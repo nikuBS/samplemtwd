@@ -475,7 +475,7 @@ class DateHelper {
    */
   static getKoreanTime(date: any) {
     return moment(this.convDateFormat(date)).format('a h시 m분');
-  };
+  }
   /**
    * @desc 대상 날짜가 시작날짜와 종료 날짜 사이에 있는지 여부
    * @param {date|string} target 대상날짜
@@ -492,7 +492,7 @@ class DateHelper {
     start = this.convDateFormat(start);
     end = this.convDateFormat(end);
     return moment(target).isBetween(start, end, undefined, '[]');
-  };
+  }
 
 }
 

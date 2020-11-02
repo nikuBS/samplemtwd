@@ -347,7 +347,7 @@ Tw.CertificationSkSmsRefund.prototype = {
     this.$container.find('.fe-cert-txt').addClass('none');
     this.$container.find('#4-v8').removeClass('none');
 
-    this.$btCert.text('인증번호 재전송');
+    this.$btCert.text('Resend');
     this._certBtnStatus += 1;
 
     this._startTime = new Date(); // 인증번호 받기 성공시간

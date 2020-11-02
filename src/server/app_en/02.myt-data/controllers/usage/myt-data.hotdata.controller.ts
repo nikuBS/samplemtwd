@@ -31,7 +31,7 @@ class MyTDataHotdata extends TwViewController {
     const lineType = CommonHelper.getLineType(svcInfo);
 
     // 유선 회선 및 무선 회선이 아닌 고객은 정보조회 불가 페이지로 이동
-    if( lineType.isWireLine || lineType.isPPSLine ) {
+    if ( lineType.isWireLine || lineType.isPPSLine ) {
       _renderError(res, svcInfo, pageInfo, {
         code: 'WIRE_OR_PPS'
       });

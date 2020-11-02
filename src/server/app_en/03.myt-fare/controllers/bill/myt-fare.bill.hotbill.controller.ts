@@ -46,7 +46,7 @@ class MyTFareBillHotbill extends TwViewController {
       allSvc: allSvc,
       errorMsg: ''
     };
-    BrowserHelper.isApp(req)?thisMain.getAppXtEid(defaultData):thisMain.getMWebXtEid(defaultData);
+    BrowserHelper.isApp(req) ? thisMain.getAppXtEid(defaultData) : thisMain.getMWebXtEid(defaultData);
 
     /*
     isWireLine : (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) > -1) ? true : false, // 유선회선타입 체크
@@ -61,28 +61,28 @@ class MyTFareBillHotbill extends TwViewController {
 
     this._svcInfo = svcInfo;
     this._isPrev  = req.url.endsWith('/prev');
-    let test      = this.reqQuery.test;
+    const test      = this.reqQuery.test;
     
-    if( test === '500' ){
+    if ( test === '500' ) {
       return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 });
     }
 
-    //영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if(svcInfo.svcAttrCd !== '' && ['M1','M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notphone'  ) {
-      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+    // 영문화 유선회선인경우 회선변경 안내페이지로 이동
+    if (svcInfo.svcAttrCd !== '' && ['M1', 'M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notphone'  ) {
+      res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' , { data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }
-    //무선회선이 없는경우
-    if(svcInfo.caseType === '02' || test === 'notLine' ) {
+    // 무선회선이 없는경우
+    if (svcInfo.caseType === '02' || test === 'notLine' ) {
       defaultData.errorMsg = 'LINE_NOT_EXIST';
-      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' , { data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }
 
-    //무선 회선은 있지만 등록된 회선이 없는경우
-    if(svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 || test === 'notRegi') {
+    // 무선 회선은 있지만 등록된 회선이 없는경우
+    if (svcInfo.caseType === '03' || svcInfo.nonSvcCnt === 0 || test === 'notRegi') {
       defaultData.errorMsg = 'LINE_NOT_REGIST';
-      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' ,{ data:defaultData,svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      res.render('bill/en.myt-fare.bill.hotbill.not.line.html' , { data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }
     
@@ -103,7 +103,7 @@ class MyTFareBillHotbill extends TwViewController {
     // } else {
       // 자녀 or 본인 전월 실시간 요금
     const svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
-    let data = {
+    const data = {
       svcInfo,
       pageInfo,
       lines: svcs,
@@ -112,7 +112,7 @@ class MyTFareBillHotbill extends TwViewController {
       xtEid: {}
     };
     // 다른 페이지를 찾고 계신가요 통계코드 추가
-    BrowserHelper.isApp(req)?thisMain.getAppXtEid(data):thisMain.getMWebXtEid(data);
+    BrowserHelper.isApp(req) ? thisMain.getAppXtEid(data) : thisMain.getMWebXtEid(data);
     res.render('bill/en.myt-fare.bill.hotbill.html', data);
 //  }
   }

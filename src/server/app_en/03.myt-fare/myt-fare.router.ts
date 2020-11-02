@@ -16,7 +16,7 @@ class MytFareRouter extends TwRouter {
 
     // 실시간 이용요금
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
-    //miri 요금
+    // miri 요금
     this.controllers.push({ url: '/info/miri', controller: MyTFareInfoMiri });
  
   }

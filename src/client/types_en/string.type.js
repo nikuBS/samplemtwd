@@ -62,7 +62,7 @@ Tw.BUTTON_LABEL = {
   NO: 'No',
   SELECTED: 'Selected',
   COMPLETE: 'Complete',
-  SMS_RESEND: '인증번호 재전송',
+  SMS_RESEND: 'Resend',
   UPDATE: 'Update',
   GO_TO_TWORLD_KOR: 'Go to Tworld KOR'
 };
@@ -84,11 +84,12 @@ Tw.SMS_VALIDATION = {
   ATH2011: 'Exceeded number of attempts to enter verification number',
   ATH2013: 'Used verification number',
   ATH2014: 'Invalid verification request',
-  ATH2000: 'The registered mobile number of the account you have logged in with does not match the mobile phone number you are currently using. Mobile phone verification is available only when the two numbers are the same.',
-  ATH1221: '시간이 만료되었습니다.',
+  ATH2000: 'The registered mobile number of the account you have logged in with does not match the mobile phone number you are currently using.' + 
+            'Mobile phone verification is available only when the two numbers are the same.',
+  ATH1221: 'Time has run out',
   ZNGME0098: 'Incorrect information entered. Please try again',
   ZORDE6044: 'Please confirm your business registration number',
-  REMAINED_TIME: '(남은시간 ${value})'
+  REMAINED_TIME: '(Remaining time ${value})'
 };
 
 Tw.POPUP_TITLE = {
@@ -771,7 +772,8 @@ Tw.ALERT_MSG_MYT_JOIN = {
   ALERT_2_A202: { TITLE: '알림', MSG: '선택할 수 있는 날짜가 아닙니다.<br>다른 날짜를 선택해주세요.' },
   ALERT_2_A209: {
     TITLE: 'Notice',
-    MSG: 'You have entered your passcode incorrectly N times.<br>' + 'If you enter your passcode incorrectly more than 5 times, you will have to visit an SK Telecom store to reset your passcode.'
+    MSG: 'You have entered your passcode incorrectly N times.<br>' + 'If you enter your passcode incorrectly more than 5 times,' + 
+          'you will have to visit an SK Telecom store to reset your passcode.'
   },
 
   ALERT_2_V9: '휴대폰 번호가 올바르지 않습니다.',
@@ -875,7 +877,8 @@ Tw.ALERT_MSG_PRODUCT = {
   BPCP: 'BPCP URL이 설정되어 있지 않습니다.',
   FLO_PROMOTION_INFO: {
     TITLE: '프로모션 유의사항 안내',
-    MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>',
+    MSG: '<em class="tx-bold">고객님께서는 올해 FLO에서 T멤버십 할인 혜택을 받으신 적이 있어 FLO 앤 데이터(플러스) [100원 프로모션] 혜택을 받으실 수 없습니다.' + 
+          '</em>\n\n단, 기본요금제 (5GX플래티넘/프라임 요금제, T플랜 맥스/스페셜 요금제) 가입에 따른 무료 및 할인혜택은 제공됩니다.\n\n<em class="tx-bold">가입하시겠습니까?</em>',
     BTN_TEXT: 'T멤버십 할인내역 확인하기'
   }
 };
@@ -996,7 +999,8 @@ Tw.ALERT_MSG_AUTH = {
   ALERT_4_A9: 'The selected line has been registered.',
   ALERT_4_50: 'The selected line has been removed.',
   ALERT_4_51: '선택된 회선의 닉네임이 변경 되었습니다.',
-  ALERT_4_52: 'The line you would like to remove is currently your main line.\nYour main line will be automatically changed to another line when you remove this line.\n\nWould you like to proceed?',
+  ALERT_4_52: 'The line you would like to remove is currently your main line.' + 
+              '\nYour main line will be automatically changed to another line when you remove this line.\n\nWould you like to proceed?',
   ALERT_4_53: 'At least 1 line needs to be registered to use T world.\n\nWould you like to remove the selected line?',
   ALERT_4_54: '선택하신 회선은 수동으로 등록하신 법인명의 회선으로 회선등록 해지 시 목록에서 완전히 삭제되며 다시 사용하시려면 직접 재등록 하셔야 합니다.\n\n회선등록을 해지 하시겠습니까?'
 };

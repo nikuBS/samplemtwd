@@ -6,17 +6,6 @@
 */
 
 Tw.EID_TYPES = {
-    // CO_공통
-    'MWMA_A10_B79-25' : { 'WEB' : 'MWMA_A10_B79-25', 'APP' : 'MWMA_A10_B79-25' },
-    'MWMA_A10_B79-1' : { 'WEB' : 'MWMA_A10_B79-1', 'APP' : 'MWMA_A10_B79-1' },
-    'MWMA_A10_B79-2' : { 'WEB' : 'MWMA_A10_B79-2', 'APP' : 'MWMA_A10_B79-2' },
-    'MWMA_A10_B79-3' : { 'WEB' : 'MWMA_A10_B79-3', 'APP' : 'MWMA_A10_B79-3' },
-    'MWMA_A10_B79-20' : { 'WEB' : 'MWMA_A10_B79-20', 'APP' : 'MWMA_A10_B79-20' },
-    'MWMA_A10_B79-21' : { 'WEB' : 'MWMA_A10_B79-21', 'APP' : 'MWMA_A10_B79-21' },
-    'MWMA_A10_B79-22' : { 'WEB' : 'MWMA_A10_B79-22', 'APP' : 'MWMA_A10_B79-22' },
-    'MWMA_A10_B79-23' : { 'WEB' : 'MWMA_A10_B79-23', 'APP' : 'MWMA_A10_B79-23' },
-    'MWMA_A10_B79-24' : { 'WEB' : 'MWMA_A10_B79-24', 'APP' : 'MWMA_A10_B79-24' },
-
     // MD_나의 데이터 통화
     'MWMA_A10_B81_C1200-1' : { 'WEB' : 'MWMA_A10_B81_C1200-1', 'APP' : 'CMMA_A10_B81_C1200-2' }, // 회선 번호 영역
     'MWMA_A10_B81_C1200-3' : { 'WEB' : 'MWMA_A10_B81_C1200-3', 'APP' : 'CMMA_A10_B81_C1200-4' }, // Select a Mobile Line
@@ -169,6 +158,6 @@ Tw.EID_TYPES = {
                 $(this).data('xt_eid', code[type]);
                 $(this).attr('data-xt_eid', code[type]);
             }
-        })
+        });
     }
-}
+};
