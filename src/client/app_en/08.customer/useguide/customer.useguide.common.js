@@ -12,6 +12,7 @@ Tw.CustomerUseguideCommon = function (rootEl) {
   this._$confirm3 = this.$container.find('#videoConfirm3');
   this._$confirm4 = this.$container.find('#videoConfirm4');
   this._$confirm5 = this.$container.find('#videoConfirm5');
+  this._$confirm6 = this.$container.find('#videoConfirm6');
   this._$popup = this.$container.find('.popup');
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
@@ -26,7 +27,6 @@ Tw.CustomerUseguideCommon = function (rootEl) {
   // this._init();
 };
 
-
 Tw.CustomerUseguideCommon.prototype = {
     _init : function(res) { //핸드폰에 적용 시 수정
   //  _init : function(){ 
@@ -37,11 +37,13 @@ Tw.CustomerUseguideCommon.prototype = {
         this._$confirm3.css('display','block');
         this._$confirm4.css('display','block');
         this._$confirm5.css('display','block');
+        this._$confirm6.css('display','block');
         this._$confirm1.on('click', $.proxy(this._loadpopup1, this));
         this._$confirm2.on('click', $.proxy(this._loadpopup2, this));
         this._$confirm3.on('click', $.proxy(this._loadpopup3, this));
         this._$confirm4.on('click', $.proxy(this._loadpopup4, this));
         this._$confirm5.on('click', $.proxy(this._loadpopup5, this));
+        this._$confirm6.on('click', $.proxy(this._loadpopup6, this));
       }
     },
 
@@ -85,24 +87,20 @@ Tw.CustomerUseguideCommon.prototype = {
     $('.pos-right').on('click', $.proxy(this._confirm, this));
   },
 
+  _loadpopup6: function () {
+    this.crtVideo=6;
+    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
+    $('.popupDiv').html(tplPlanCard({}));
+    $('.pos-left').on('click', $.proxy(this._cancel, this));
+    $('.pos-right').on('click', $.proxy(this._confirm, this));
+  },
+
   _cancel: function () {
     $('.popup').remove();
   },
 
   _confirm: function () {
     $('.popup').remove();
-    // if(this.crtVideo===1){ // 비디오일 때 처리
-    //   this._$video1.attr('allow','autoplay');
-    //   this._$video1.attr('src','https://www.youtube.com/embed/fUMu9LdtVeE?rel=0;amp;autoplay=1;amp;autopause=0');
-    // }
-    // if(this.crtVideo===2){
-    //   this._$video2.attr('allow','autoplay');
-    //   this._$video2.attr('src','https://www.youtube.com/embed/JVu2wc1GBpg?rel=0;amp;autoplay=1;amp;autopause=0');
-    //   }
-    // if(this.crtVideo===3){
-    //   this._$video3.attr('allow','autoplay');
-    //   this._$video3.attr('src','https://www.youtube.com/embed/lHqxkq_WfUk?rel=0;amp;autoplay=1;amp;autopause=0');
-    // }
     var outlinkUrl = '';
     if(this.crtVideo===1){ // 비디오일 때 처리
       outlinkUrl = 'https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo';
@@ -119,11 +117,15 @@ Tw.CustomerUseguideCommon.prototype = {
     if(this.crtVideo===5){
       outlinkUrl = 'https://www.youtube.com/watch?time_continue=1&v=KLvdZnF2FZI&feature=emb_logo';
     }
+    if(this.crtVideo===6){
+      outlinkUrl = 'https://www.youtube.com/watch?v=gYt00x7QsbY&feature=emb_logo';
+    }
     this._$confirm1.remove();
     this._$confirm2.remove();
     this._$confirm3.remove();
     this._$confirm4.remove();
     this._$confirm5.remove();
+    this._$confirm6.remove();
     Tw.CommonHelper.openUrlExternal(outlinkUrl);
   },
 
@@ -134,5 +136,4 @@ Tw.CustomerUseguideCommon.prototype = {
   _onOutLink: function (e) {
     Tw.CommonHelper.openUrlExternal(e.currentTarget.value);
   }
-
 };

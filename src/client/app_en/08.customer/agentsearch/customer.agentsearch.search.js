@@ -30,6 +30,7 @@ Tw.CustomerAgentsearch.prototype = {
   _bindEvents: function () {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
     this.$container.on('click', '.fe-tel', $.proxy(this.goTel, this));
+    this.$container.on('click', '.address', $.proxy(this._goGoogleMap, this)); 
   },
 
   _openEventPop: function (e) {
@@ -84,6 +85,9 @@ Tw.CustomerAgentsearch.prototype = {
     event.preventDefault();
     event.stopPropagation();
     this._historyService.goLoad('tel:'+$(event.currentTarget).data('tel'));
+  },
+  _goGoogleMap: function (event) {
+    Tw.CommonHelper.openUrlExternal('https://www.google.co.kr/maps/place/' + $(event.currentTarget).data('map'));
   }
 };
 
