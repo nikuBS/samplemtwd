@@ -372,7 +372,7 @@ Tw.CustomerPwdComponent.prototype = {
         layer: true
       },
       $.proxy(this._onPopupOpend, this),
-      $.proxy(this._onPwdPopupClosed, this)
-      , 'private');
+      $.proxy(this._onPwdPopupClosed, this),
+            'private');
   }
 };

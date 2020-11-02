@@ -40,8 +40,8 @@ Tw.BiometricsDeregister.prototype = {
    */
   openPopup: function (callback) {
     this._callback = callback;
-    this._popupService.openConfirmButton(Tw.POPUP_CONTENTS.BIO_DEREGISTER, null, $.proxy(this._onConfirmCancelFido, this), $.proxy(this._onCloseCancelFido, this),
-      Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    this._popupService.openConfirmButton(Tw.POPUP_CONTENTS.BIO_DEREGISTER, null, $.proxy(this._onConfirmCancelFido, this),
+     $.proxy(this._onCloseCancelFido, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   /**

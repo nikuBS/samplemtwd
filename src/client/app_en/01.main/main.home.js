@@ -72,7 +72,7 @@ Tw.MainHome = function (rootEl, svcAttCd, emrNotice, menuId, isLogin, actRepYn, 
   }
 
 
-  setTimeout(function(){$(window).scrollTop(0);},100)
+  setTimeout(function(){$(window).scrollTop(0);},100);
 
   this._getProductData(this.$container.find('#plan-ul'));// 홈화면 요금제 목록 표시
   
@@ -453,7 +453,7 @@ Tw.MainHome.prototype = {
    */
   _getBillData: function (element) {
 
-    if(element.length == 0)
+    if(element.length === 0)
       return;
 
     var command = Tw.API_CMD.BFF_04_0008;
@@ -592,7 +592,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _getMicroContentsData: function (element) {
-    if(element.length == 0)
+    if(element.length === 0)
       return;
 
     var microContentsStore = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS));
@@ -730,7 +730,7 @@ Tw.MainHome.prototype = {
           $('.h-person').removeClass('show');
           hideTimer2 = setTimeout(function () {
             $('.h-person .btn-comment').hide();
-          }, 1000)
+          }, 1000);
         }, 3000);
       }, 500);
     }

@@ -419,4 +419,4 @@ Tw.CertificationSkSmsRefund.prototype = {
       }, this));
     }
   }
-}
+};

@@ -150,16 +150,12 @@ Tw.MytJoinCustpassword.prototype = {
     $('#btn-change').prop('disabled',true);
     if ( $target.hasClass('fe-last') ) {
       //확인입력인지 확인하여 처리
-      if(!$target.parent().parent().parent().hasClass("fe-confirm-wrap"))
-      {
+      if(!$target.parent().parent().parent().hasClass('fe-confirm-wrap')) {
         this._moveWrap(1); //확인입력화면 이동
-      }
-      else
-      {
+      } else {
         //저장버튼 활성화
         $('#btn-change').prop('disabled',false);
       }
-
     } else {//다음입력 이동
       var $nextTarget = $target.parent().next();
       $nextTarget.addClass('active');

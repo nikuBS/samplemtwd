@@ -95,10 +95,10 @@ Tw.MyTFareSubMain.prototype = {
       var clsName = event.target.className;
       var index = clsName.replace('chartLink', '');
 
-      this._xtractorService.logClick( this.data.xtEid[index] , "NO" );
+      this._xtractorService.logClick( this.data.xtEid[index] , 'NO' );
       this._historyService.goLoad('/en/myt-fare/billguide/guide?date=' + this._feeChartInfo[index]);
   },
   _onClickedSelBillGuide: function (event) {
       this._historyService.goLoad('/en/myt-fare/billguide/guide');
-  },
-}
+  }
+};
