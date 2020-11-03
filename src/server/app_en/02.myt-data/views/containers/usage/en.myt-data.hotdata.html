@@ -21,7 +21,7 @@
             <%- include('../../../../common_en/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "MWMA_A10_B81_C1200-1", multiple : "MWMA_A10_B81_C1200-1" } }); %>
             
             <%_ if (usageData && usageData.data && usageData.data.length > 0) { _%>
-                <%- include('../../components/usage/en.myt-data.usage.circle-graphbox.html', { type: 'data', color: 'red', typeStr: '데이터', items: usageData.data, usageData: usageData }); _%>
+                <%- include('../../components/usage/en.myt-data.usage.circle-graphbox.html', { type: 'data', color: 'red', typeStr: 'Data', items: usageData.data, usageData: usageData }); _%>
             <%_ } _%>
 
             <%_ if (usageData && usageData.voice && usageData.voice.length > 0) { _%>
