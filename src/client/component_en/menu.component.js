@@ -143,7 +143,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
   _conditionChangeEvtInit: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
-    $layer.on('click', '.fe-outlink', $.proxy(this._onOutLink, this));
+    $layer.on('click', '.fe-outlink', $.proxy(this._onOutLinkWithATag, this));
   },
 
   // 안씀. 조건변경 팝업 닫히면..
@@ -303,6 +303,14 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var url = e.currentTarget.value;
     Tw.CommonHelper.openUrlExternal(url);
   },
+
+  _onOutLinkWithATag: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var url = e.currentTarget.getAttribute('value');
+    Tw.CommonHelper.openUrlExternal(url);
+  }, 
 
   /**
    * @function
