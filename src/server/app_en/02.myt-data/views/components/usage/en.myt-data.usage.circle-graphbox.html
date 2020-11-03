@@ -34,7 +34,7 @@ _%>
 
                 <div class="cont">
                     <dl class="my-data">
-                        <dt>Basic Benefits</dt>
+                        <dt>Included</dt>
                         <dd class="red">
                             <!-- remained 남은량, used 사용량, total 총용량 -->
                             <%_ if( items[i].isUnlimited ) { _%> <!-- 무제한 -->
@@ -54,7 +54,7 @@ _%>
                     </dl>
 
                     <dl class="my-data">
-                        <dt><%= items[i].isUnlimited ? 'Usage Amount' : 'Remaining amount'%></dt>
+                        <dt><%= items[i].isUnlimited ? 'Used Amount' : 'Remaining Amount'%></dt>
                         <dd>
                             <!-- remained 잔여량, used 사용량, total 총용량 -->
                             <%_ if( items[i].isUnlimited ) { _%> <!-- 무제한(사용량 표기) -->
