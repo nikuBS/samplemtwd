@@ -29,6 +29,7 @@ Tw.ChatbotService = function() {
     // 챗봇 발화어 노출 대상군 판단을 위해 호출 필요한 API List (201014)
     this._defaultRequestUrls = [
         { command: Tw.API_CMD.BFF_06_0001, params: {} }                             // 1. 리필쿠폰
+        ,{ command: Tw.API_CMD.BFF_06_0002, params: {} }                             // 1-1. 리필쿠폰 사용이력
         ,{ command: Tw.API_CMD.BFF_05_0058, params: {} }                            // 2. 요금 납부방법 (01:은행자동납부, 02:카드자동납부, G1:은행지로자동납부)
         ,{ command: Tw.API_CMD.BFF_05_0030, params: {} }                            // 3. 미납 내역 조회 (/core-bill/v1/bill-pay/unpaid-bills)
         //,                                                                         // 4. 멤버십혜택은 mbfCardNum 카드번호 유무 체크
@@ -200,6 +201,7 @@ Tw.ChatbotService = function() {
     // 종류별 챗봇 발화어 노출 기준 [S]
     // this._twdAgreeYn = 'N~0';    //사용하지 않아서 주석처리 / 개인정보 이용동의 여부 및 동의일자 (Y~숫자: 동의함~동의일자, N~0: 미동의) 
     this._refilYn = 'N';         // 1. 사용가능 리필쿠폰 있음 (Y: 있음, N: 없음) - refill_coupon
+    this._refilHistYn = 'N'; 
     this._payMthdYn = 'N';       // 2. 자동납부 신청 표시 여부 (Y: 표시, N: 미표시) - pay_mthd
     this._unpaidYn = 'N';        // 3. 미납내역 존재 여부 (Y: 미납 존재, N: 미납 없음) - unpaid_amt
     this._membershipYn = 'N';    // 4. 멤버십 가입 여부 (Y: 가입, N: 미가입) - membership_benefit
@@ -1100,7 +1102,7 @@ Tw.ChatbotService.prototype = {
      * @function
      * @desc 말풍선 노출 대상군 확인
      */
-    _checkTargetGroup: function (refillInfo, billmthInfo, unpaidBillInfo, micropayInfo , dataGiftInfo, pauseInfo) {
+    _checkTargetGroup: function (refillInfo,refillHistInfo, billmthInfo, unpaidBillInfo, micropayInfo , dataGiftInfo, pauseInfo) {
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------', '');
         // 8/25 챗봇 내 개인화 추천서비스에 대한 요건이 삭제되었으므로 개인화 이용정보 수집동의 여부는 조회하지 않도록 처리 [S]
         // /* ******************************************* 
@@ -1141,6 +1143,7 @@ Tw.ChatbotService.prototype = {
         // 8/25 챗봇 내 개인화 추천서비스에 대한 요건이 삭제되었으므로 개인화 이용정보 수집동의 여부는 조회하지 않도록 처리 [E]
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------', '');
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------refillInfo : ', refillInfo);
+        Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------refillHistInfo : ', refillHistInfo);    
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------billmthInfo : ', billmthInfo);
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------dataGiftInfo : ', dataGiftInfo);
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------micropayInfo : ', micropayInfo);
@@ -1164,7 +1167,25 @@ Tw.ChatbotService.prototype = {
             this._refilYn = 'N';
             // Tw.Error(unpaidBillInfo.code, unpaidBillInfo.msg, '2. 미납내역').pop();
         }
+        /* *******************************************
+            1-1. 리필쿠폰 사용내역 여부 체크 
+        ******************************************* */ 
 
+        if(refillHistInfo.code === Tw.API_CODE.CODE_00){
+          var curDt = Tw.DateHelper.getCurrentDateTime('YYYYMM');  
+            var useCnt = 0;
+            for (var i = 0; i < refillHistInfo.result.length; i++) {
+                    if(refillHistInfo.result[i].copnUseDtm.substring(0,6)===curDt){
+                        useCnt += 1;
+                    }
+ 
+                }
+                if ( useCnt === 0 ) {
+                    this._refilHistYn = 'Y';
+                } else {
+                    this._refilHistYn = 'N';
+                }
+            }
         /* *******************************************
             2. 미납내역 관련 말풍선 노출 대상군 여부 체크 
         ******************************************* */
@@ -1351,6 +1372,7 @@ Tw.ChatbotService.prototype = {
 
         }
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._refilYn : ', this._refilYn);
+        Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._refilHistYn : ', this._refilHistYn);
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._payMthdYn : ', this._payMthdYn);
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._unpaidYn : ', this._unpaidYn);
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._membershipYn : ', this._membershipYn);
@@ -1364,7 +1386,7 @@ Tw.ChatbotService.prototype = {
                 if (greetingRangking.length < greetingRangkingSize ){
                     // * 발화어 노출 조건 *
                     if (mlsKeyword === 'refill_coupon'){ // 1. refill_coupon - 사용가능 리필 쿠폰 있음
-                        if (this._refilYn === 'Y'){
+                        if (this._refilYn === 'Y' && this._refilHistYn === 'Y'){
                             greetingRangking.push(mlsKeyword);
                             mlsItemIds = mlsItemIds + '|' + mlsKeyword;
                         }
