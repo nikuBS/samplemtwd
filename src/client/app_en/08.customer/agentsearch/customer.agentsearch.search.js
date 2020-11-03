@@ -87,7 +87,7 @@ Tw.CustomerAgentsearch.prototype = {
     this._historyService.goLoad('tel:'+$(event.currentTarget).data('tel'));
   },
   _goGoogleMap: function (event) {
-    Tw.CommonHelper.openUrlExternal('https://www.google.co.kr/maps/place/' + $(event.currentTarget).data('map'));
+    Tw.CommonHelper.openUrlExternal('https://www.google.co.kr/maps/place/' + $(event.currentTarget).data('map') + '?hl=en');
   }
 };
 
