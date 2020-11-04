@@ -690,7 +690,7 @@ Tw.PopupService.prototype = {
           '#family_P', 
           // '#line_P', 
           '#conditionChange_P', 
-          '#private_P', 
+          // '#private_P', 
           '#faq_P', 
           '#store_info_P'
         ];
