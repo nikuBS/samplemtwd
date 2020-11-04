@@ -16,7 +16,7 @@ import { UrlMetaModel } from '../../../../models/url-meta.model';
  * @desc App 안내화면 초기화를 위한 class
  */
 class CommonShareBridge extends TwViewController {
-  
+
   constructor() {
     super();
   }
@@ -32,9 +32,9 @@ class CommonShareBridge extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const target = req.query.target;
-    const loginType = req.query.loginType;
-    const referer = req.query.referer;
+    const target = req.query.target || '';
+    const loginType = req.query.loginType || '';
+    const referer = req.query.referer || '';
     let ogDesc = pageInfo.seoMetaTagKwdCtt;
     this.redisService.getData(REDIS_KEY.URL_META + target).subscribe((resp) => {
       const urlMeta = new UrlMetaModel(resp.result || {});
@@ -43,7 +43,7 @@ class CommonShareBridge extends TwViewController {
       ogDesc = urlMeta.seoMetaTagTitNm;
       res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType, referer, pageInfo, ogDesc });
     });
-    
+
   }
 }
 export default CommonShareBridge;

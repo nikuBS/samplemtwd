@@ -27,8 +27,8 @@ class CommonCertNiceRefund extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    const mobileco = req.query.niceKind;
-    const authKind = req.query.authKind;
+    const mobileco = req.query.niceKind || '';
+    const authKind = req.query.authKind || '';
     this.apiService.request(API_CMD.BFF_01_0049, {
       mobileco,
       resultUrl: 'https://' + this.loginService.getDns(req) + '/common/cert/result?type=nice&kind=' + authKind

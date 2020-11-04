@@ -29,10 +29,10 @@ class CommonCertNice extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const mobileco = req.query.niceKind;
+    const mobileco = req.query.niceKind || '';
     const authUrl = decodeURIComponent(req.query.authUrl || '');
-    const authKind = req.query.authKind;
-    const prodAuthKey = decodeURIComponent(req.query.prodAuthKey || '') || ''; // 상품인증이 있는 경우
+    const authKind = req.query.authKind || '';
+    const prodAuthKey = decodeURIComponent(req.query.prodAuthKey || ''); // 상품인증이 있는 경우
     this.apiService.request(API_CMD.BFF_01_0024, {
       mobileco,
       authUrl,

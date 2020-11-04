@@ -28,7 +28,7 @@ class CommonCertIpinRefund extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    const authKind = req.query.authKind;
+    const authKind = req.query.authKind || '';
     const params = {
       resultUrl: 'https://' + this.loginService.getDns(req) + '/common/cert/result?type=ipin&kind=' + authKind,
     };
