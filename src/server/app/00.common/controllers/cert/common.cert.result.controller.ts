@@ -28,8 +28,8 @@ class CommonCertResult extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    const certType = req.query.type;
-    const certKind = req.query.kind;
+    const certType = req.query.type || '';
+    const certKind = req.query.kind || '';
 
     this.checkCertKind(req, res, certType, certKind, pageInfo);
   }

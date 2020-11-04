@@ -32,8 +32,8 @@ class CommonShareOldLanding extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    let url = req.query.url;
-    const appUrl = req.query.app_url;
+    let url = req.query.url || '';
+    const appUrl = req.query.app_url || '';
 
     if ( !FormatHelper.isEmpty(url) ) {
       url = decodeURIComponent(url);

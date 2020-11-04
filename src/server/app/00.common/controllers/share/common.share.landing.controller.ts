@@ -28,7 +28,7 @@ class CommonShareLanding extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const url = decodeURIComponent(req.query.url);
+    const url = decodeURIComponent(req.query.url || '');
 
     // Native 호출 시
     if ( url.indexOf('mtworldapp2://tworld?') !== -1 ) {
