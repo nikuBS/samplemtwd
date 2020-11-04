@@ -967,9 +967,16 @@ class ApiService {
 
 
       if ( prodNmInfo.code === API_CODE.CODE_00 ) {
-        Object.assign(svcInfo,  {
-          prodNmEn: prodNmInfo.result.basPricList[0].prodNm || svcInfo.prodNm
-        });          
+        let prodNm = '';
+          if ( prodNmInfo.result.basPricList.length !== 0 ) {
+            prodNm = prodNmInfo.result.basPricList[0].prodNm;
+          } else {
+            prodNm = svcInfo.prodNm;
+          }
+
+          Object.assign(svcInfo,  {
+            prodNmEn: prodNm
+          });
       }
 
 

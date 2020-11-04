@@ -1,0 +1,74 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup nobg wrap step"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>Marketing Info. Consent</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">Contents</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps noborder topborder">
+                <div class="explanation-box">
+                    <p><strong>Consent to Receiving Personalized Marketing Information</strong><br><br>Receive recommendations, benefits including personalized<br>advertisements, and e-commerce updates based on your<br>personal information and mobile usage patterns.</p>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="cont-box pb8">
+                    <p class="con-tit0">Mobile Phone Information</p>
+                    <div class="data-result mt12">
+                        <p class="tit">{{data.showName}}</p>
+                        <p class="data"><em>{{data.showSvcNum}}</em></p>
+                    </div>
+                </div>
+                <!-- .list-comp-input -->
+                <div class="list-comp-input-agree">
+                    <div class="widget">
+                        <div class="widget-box check">
+                            <ul class="select-list" role="group">
+                                <li>
+                                    <div class="checkbox type01 {{#if data.agr203Yn}}checked{{/if}}" role="checkbox" aria-checked="{{data.agr203Yn}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="checkbox" class="fe-check-child" name="checkbox" value="{{data.agr203Yn}}" title="값1" aria-labelledby="aria-comp-checkbox1" {{#if data.agr203Yn}}checked="checked" disabled{{/if}}/><!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                            <p class="layout-text">
+                                                <span class="mtext">I agree to the collection and use of my<br>personal information</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button id="fe-term-personal" class="agree-view"><span class="blind">Details</span></button>
+                                </li>
+                                <li>
+                                    <div class="checkbox type01 {{#if data.agr201Yn}}checked{{/if}}" role="checkbox" aria-checked="{{data.agr201Yn}}"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                        <input type="checkbox" class="fe-check-child" name="checkbox" value="{{data.agr201Yn}}" title="값2" aria-labelledby="aria-comp-checkbox2" {{#if data.agr201Yn}}checked="checked" disabled{{/if}}/><!-- 체크상태일 경우 checked="false" -->
+                                        <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
+                                            <p class="layout-text">
+                                                <span class="mtext">I agree to receiving marketing related<br>information</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button id="fe-term-marketing" class="agree-view"><span class="blind">Details</span></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .list-comp-input -->
+            </div>
+            <!--// .cont-box -->
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button id="fe-bt-complete" disabled="disabled">NEXT</button>
+                </li>
+            </ul>
+        </div>
+        <button class="prev-step tw-popup-closeBtn">CANCEL</button>
+    </div>
+</div>

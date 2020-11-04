@@ -54,7 +54,7 @@ Tw.LineMarketingComponent.prototype = {
    */
   _openMarketingOfferPopup: function (showName, svcNum, agr201Yn, agr203Yn) {
     this._popupService.open({
-      hbs: 'CO_01_05_02_06',
+      hbs: 'CO_01_05_02_06_en',
       layer: true,
       data: {
         showName: showName,
@@ -194,7 +194,7 @@ Tw.LineMarketingComponent.prototype = {
    */
   _openCompleteMarketingPopup: function () {
     this._popupService.open({
-      hbs: 'CO_01_05_02_07',
+      hbs: 'CO_01_05_02_07_en',
       layer: true,
       data: {
         agr201Yn: this._agr201Yn === 'Y',
