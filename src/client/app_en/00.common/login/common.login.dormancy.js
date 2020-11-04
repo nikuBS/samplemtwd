@@ -33,7 +33,8 @@ Tw.CommonLoginDormancy.prototype = {
           } else if ( res.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {  // Need service password
             this._historyService.goLoad('/en/common/member/login/cust-pwd');
           } else {
-            Tw.Popup.openAlert(res.code + ' ' + res.msg);
+            // Tw.Popup.openAlert(res.code + ' ' + res.msg);
+            Tw.Popup.openAlert('Temporary error.<br>Please try again later.');
           }
         }, this))
         .fail(function (err) {
