@@ -7,7 +7,7 @@ FROM ${DOCKER_REGISTRY}/infra/nodejs8-utf8:1.0.1
 
 WORKDIR /home/appadmin
 
-COPY package.json ./
+COPY package*.json ./
 
 # set npm proxy & registry
 RUN npm config set proxy http://devops.sktelecom.com:80
