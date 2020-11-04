@@ -396,9 +396,16 @@ abstract class TwViewController {
         const svcInfo = this.loginService.getSvcInfo(req);
         const allSvc = this.apiService.getAllSvcInfo(req);
         if ( prodNmInfo.code === API_CODE.CODE_00 ) {
+          let prodNm = '';
+          if ( prodNmInfo.result.basPricList.length !== 0 ) {
+            prodNm = prodNmInfo.result.basPricList[0].prodNm;
+          } else {
+            prodNm = svcInfo.prodNm;
+          }
+
           Object.assign(svcInfo,  {
-            prodNmEn: prodNmInfo.result.basPricList[0].prodNm || svcInfo.prodNm
-          });          
+            prodNmEn: prodNm
+          });
         }
         
         let lineCount = 0;
