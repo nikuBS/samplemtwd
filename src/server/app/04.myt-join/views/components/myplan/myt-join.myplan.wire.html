@@ -19,7 +19,7 @@ _%>
 <%_ if (svcInfo.svcAttrCd === 'S2') { _%>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps">
+<div class="cont-box nogaps noborder">
   <div class="banner-area">
     <%# 결합상품 확인하기 터치 시 상품 원장으로 이동(TB끼리 TV플러스 TW00000016) _%>
     <a href="/product/callplan?prod_id=TW00000016"><img src="<%= CDN %>/img/etc/banner_combine_prd.png" alt="결합하고 할인도 받으세요. 결합하고 할인도 받으세요. 결합상품 확인하기"></a>
@@ -41,7 +41,7 @@ _%>
 <div class="cont-box nogaps-btm">
   <h3 class="tit-type7">나의 부가상품</h3>
   <ul class="tod-full-link-list<%- showMoreButton ? ' tod-hidden-list' : null %>" data-id="addition-prods"><!-- 전체열기 : tod-hidden-list 삭제 -->
-    <%_ if (additionsPaid && additionsPaid.length > 0) { _%>
+  <%_ if (additionsPaid && additionsPaid.length > 0) { _%>
     <li>
       <a href="/myt-join/additions#tod-cont1">
         <span class="inner">
@@ -57,8 +57,8 @@ _%>
         <%_ } _%>
       </ul>
     </li>
-    <%_ } _%>
-    <%_ if (additionsFree && additionsFree.length > 0) { _%>
+  <%_ } _%>
+  <%_ if (additionsFree && additionsFree.length > 0) { _%>
     <li>
       <a href="/myt-join/additions#tod-cont2">
         <span class="inner">
@@ -74,7 +74,7 @@ _%>
         <%_ } _%>
       </ul>
     </li>
-    <%_ } _%>
+  <%_ } _%>
   </ul>
   <%_ if (showMoreButton) { _%>
   <div class="btn-more">
@@ -167,8 +167,7 @@ _%>
 </div>
 <!--// .cont-box -->
 
-<%# // TODO: 성능 문제로 배포 연기(요금(이용/청구)는 확정된 후 적용) _%>
-<!-- <hr class="cont-sp type1" aria-hidden="true"/> -->
+<hr class="cont-sp type1" aria-hidden="true"/>
 <%_ } _%>
 <%# 요금 _%>
 <%# // TODO: 성능 문제로 배포 연기(요금(이용/청구)는 확정된 후 적용) _%>
@@ -197,6 +196,8 @@ _%>
   </ul>
 </div>
 <!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
 <%_ } _%>
 <%_ if (tipList) { _%>
 
