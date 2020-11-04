@@ -1,0 +1,45 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup fixed-bottom pt0"> <!-- 2017-10-17 클래스 추가 -->
+    <!-- .container-wrap -->
+    <div class="container-wrap"> <!-- 2017-10-17 클래스 추가 -->
+        <h2 class="blind">내용</h2>
+        <!-- 2017-10-17 마크업 변경 -->
+        <div class="container">
+            <h1 class="complete-title pt60">
+                <img src="{{cdn}}/img/ico/icon-check01.png" alt="" />
+                <span><strong>You have selected<br>the following options</strong></span> <!-- 2017-10-17 text 변경 -->
+            </h1>
+
+            <div class="agreement-info pb20">
+                <dl>
+                    <dt>I agree to the collection and use of<br>My personal information (optional)</dt>
+                    {{#if data.agr203Yn}}
+                    <dd><strong>Agree</strong></dd>
+                    {{else}}
+                    <dd>Disagree</dd>
+                    {{/if}}
+                </dl>
+                <dl>
+                    <dt>I agree to receiving marketing<br>related information. (optional)</dt>
+                    {{#if data.agr201Yn}}
+                    <dd><strong>Agree</strong></dd>
+                    {{else}}
+                    <dd>Disagree</dd>
+                    {{/if}}
+                </dl>
+
+                <span class="agreement-refer">* You may withdraw your consent by calling<br>1504. Do note that you will have to verify your<br>identity.</span>
+            </div>
+        </div>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button class="tw-popup-closeBtn">CLOSE</button>
+                </li>
+            </ul>
+        </div>
+        <!--// 2017-10-17 마크업 변경 -->
+    </div>
+    <!--// .container-wrap -->
+</div>
+<!--// .popup hbs -->
