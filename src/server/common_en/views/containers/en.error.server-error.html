@@ -43,14 +43,15 @@
                         <% if (subMsg){ %>
                         <div class="tx-desc-wrap">
                             <!--2019.02.22 에러문구:텍스트만 있는 경우 -->
-                             <p class="basic-txt"><%-subMsg%></p>
+                             <p class="basic-txt">Temporary error.<br>
+                                Please try again later.</p>
                             <!--2019.02.22 에러문구:텍스트안에 링크가 있는 경우 추가-->
 <!--                            <p class="basic-txt">실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 ‘사용내역/<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>’에서 확인 가능합니다.</p>-->
                         </div>
                         <% } %>
                         <% if(!isPopupCheck) { %>
                         <ul class="bt-slice item-one">
-                            <li><a href="/customer/emailconsult" type="button" class="btn-round2 btn-style3">이메일 상담하기</a></li>
+                            <li><a href="/customer/emailconsult" type="button" class="btn-round2 btn-style3">E-mail</a></li>
                         </ul>
                         <% } %>
                     </div>
@@ -61,7 +62,7 @@
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
                 <li>
-                    <button type="button" class="btn-floating btn-style2 <% if(isPopupCheck) { %> fe-error-popup-close <% } else { %> fe-common-back <% } %>">확인</button>
+                    <button type="button" class="btn-floating btn-style2 <% if(isPopupCheck) { %> fe-error-popup-close <% } else { %> fe-common-back <% } %>">Confirm</button>
                 </li>
             </ul>
         </div>
