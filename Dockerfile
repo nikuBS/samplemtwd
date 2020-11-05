@@ -17,6 +17,7 @@ RUN npm config set registry http://devops.sktelecom.com/myrepo/content/groups/np
 RUN npm config set strict-ssl false
 
 # npm & pm2 install
+RUN npm cache clean --force
 RUN npm --verbose install
 RUN npm --verbose install -g pm2
 RUN npm --verbose install -g gulp
