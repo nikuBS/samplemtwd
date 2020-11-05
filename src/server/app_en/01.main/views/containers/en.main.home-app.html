@@ -124,6 +124,21 @@
                                                 <div class="dot"></div>
                                                 <div class="highlight"></div>
 
+                                                <% if(homeData.usageData.data.shareTotal != 0) { %>
+                                                    <div class="c100 p70" data-percent="<%= homeData.usageData.data.shareRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="blue"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <% } %>
+                                                
                                                 <!-- loop -->
                                                 <div class="c100 p70" data-percent="<%= homeData.usageData.data.myRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
                                                     <div class="red"><!-- red, yellow, green, blue -->
