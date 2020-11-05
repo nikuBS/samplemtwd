@@ -3925,7 +3925,7 @@ body.hidden {
   background-image: url(/img/svg/icon_48px_titlebar_search_white.svg); }
 
 .bg-productdetail .header-wrap .h-tit {
-  color: #fff; }
+  color: transparent; }
 
 .bg-productdetail.scroll .h-belt {
   border-color: #e5e5e5;
