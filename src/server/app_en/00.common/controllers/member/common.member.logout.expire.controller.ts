@@ -30,18 +30,18 @@ class CommonMemberLogoutExpire extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.logger.error(this, '[redirect]', req.query.target);
     const target = req.query.target || '/en/main/home';
     const sessInvalid = req.query.sess_invalid || '';
 
     // Session 뒤바뀜 방어로직 추가(Sensing)
     if (this.loginService.isLogin(req) && !FormatHelper.isEmpty(sessInvalid)) {
       this.processInvalidSession(req, res);
-    } else {
-      this.loginService.sessionGenerate(req, res).subscribe(() => {
-        this.logger.error(this, this.loginService.getSessionId(req));
-        res.render('member/en.common.member.logout.expire.html', { svcInfo, pageInfo, target });
-      });
     }
+    this.loginService.sessionGenerate(req, res).subscribe(() => {
+      this.logger.error(this, this.loginService.getSessionId(req));
+      res.render('member/en.common.member.logout.expire.html', { svcInfo, pageInfo, target });
+    });
   }
 
   /***
