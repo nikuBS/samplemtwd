@@ -28,8 +28,6 @@ _%>
 <%# 나의 혜택/할인: 모바일/PPS만 노출 _%>
 <%_ if (benefits && (benefits.count > 0) && ['M1', 'M2'].includes(svcInfo.svcAttrCd)) { _%>
 
-<hr class="cont-sp type1" aria-hidden="true">
-
 <!-- .cont-box -->
 <div class="cont-box nogaps">
   <ul class="full-link-list type02">
@@ -45,24 +43,24 @@ _%>
   </ul>
 </div>
 <!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
 <%_ } _%>
 <%# 요금제(MP) 페이지로 이동(MS_05_01): 모바일/PPS/T Pocket-Fi만 노출 _%>
 <%_ if (['M1', 'M2', 'M3'].includes(svcInfo.svcAttrCd)) { _%>
 
-<hr class="cont-sp type1" aria-hidden="true">
-
 <!-- .cont-box -->
-<div class="cont-box nogaps">
+<div class="cont-box nogaps noborder">
   <div class="banner-area">
     <a href="/product/mobileplan"><img src="<%= CDN %>/img/etc/banner_change_plan.png" alt="다양한 요금제 확인하고 나에게 맞는 요금제로 변경하세요 요금제 확인하기"></a>
   </div>
 </div>
 <!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
 <%_ } _%>
 <%# 알람 서비스 신청하기: 모바일/PPS만 노출 _%>
 <%_ if (['M1', 'M2'].includes(svcInfo.svcAttrCd)) { _%>
-
-<hr class="cont-sp type1" aria-hidden="true">
 
 <!-- .cont-box -->
 <div class="cont-box nogaps">
@@ -72,6 +70,8 @@ _%>
   </div>
 </div>
 <!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
 <%_ } _%>
 <%# 나의 부가상품 _%>
 <%_
@@ -84,13 +84,11 @@ var showMoreButton = (dcPrograms && dcPrograms.length > 2)
 _%>
 <%_ if ((dcPrograms && dcPrograms.length > 0) || (additionsPaid && additionsPaid.length > 0) || (additionsFree && additionsFree.length > 0)) { _%>
 
-<hr class="cont-sp type1" aria-hidden="true"/>
-
 <!-- .cont-box -->
 <div class="cont-box nogaps-btm">
   <h3 class="tit-type7">나의 부가상품</h3>
   <ul class="tod-full-link-list<%- showMoreButton ? ' tod-hidden-list' : null %>" data-id="addition-prods"><!-- 전체열기 : tod-hidden-list 삭제 -->
-    <%_ if (dcPrograms && dcPrograms.length > 0) { _%>
+  <%_ if (dcPrograms && dcPrograms.length > 0) { _%>
     <li>
       <a href="/myt-join/additions#tod-cont1">
         <span class="inner">
@@ -105,10 +103,8 @@ _%>
         </ul>
       </a>
     </li>
-    <%_ } _%>
-    <%# 모바일/PPS만 표시 _%>
-    <%_ if (['M1', 'M2'].includes(svcInfo.svcAttrCd)) { _%>
-      <%_ if (additionsPaid && additionsPaid.length > 0) { _%>
+  <%_ } _%>
+  <%_ if (additionsPaid && additionsPaid.length > 0) { _%>
     <li>
       <a href="/myt-join/additions#tod-cont2">
         <span class="inner">
@@ -123,8 +119,8 @@ _%>
         </ul>
       </a>
     </li>
-    <%_ } _%>
-    <%_ if (additionsFree && additionsFree.length > 0) { _%>
+  <%_ } _%>
+  <%_ if (additionsFree && additionsFree.length > 0) { _%>
     <li>
       <a href="/myt-join/additions#tod-cont3">
         <span class="inner">
@@ -139,7 +135,6 @@ _%>
         </ul>
       </a>
     </li>
-    <%_ } _%>
   <%_ } _%>
   </ul>
   <%_ if (showMoreButton) { _%>
@@ -149,13 +144,13 @@ _%>
   <%_ } _%>
 </div>
 <!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
 <%_ } _%>
 <%# 나의 로밍 요금제/부가서비스: 모바일만 노출 _%>
 <%_ if (svcInfo.svcAttrCd === 'M1') { _%>
   <%_ const additionsRoaming = additions.roaming; _%>
   <%_ if (additionsRoaming && (additionsRoaming.recentlyJoinsProdNm || additionsRoaming.addRoamingProdCnt > 0)) { _%>
-
-<hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
 <div class="cont-box nogaps">
@@ -171,14 +166,14 @@ _%>
   </ul>
 </div>
 <!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
   <%_ } _%>
 <%_ } _%>
 <%# // TODO: 성능 문제로 배포 연기(요금안내서(선불폰), 약정할인, 이용/청구요금, 사용패턴은 점검 후 적용 예정) _%>
 <%_ if (false) { _%>
   <%_ if (svcInfo.svcAttrCd === 'M2') { _%>
   <%# PPS인 경우 _%>
-
-<hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
 <div class="cont-box nogaps-hoz">
@@ -210,9 +205,9 @@ _%>
   </ul>
 </div>
 <!--// .cont-box -->
-<%_ } else { _%>
 
 <hr class="cont-sp type1" aria-hidden="true"/>
+  <%_ } else { _%>
 
 <!-- .cont-box -->
 <div class="cont-box nogaps-hoz">
@@ -265,6 +260,8 @@ _%>
   </ul>
 </div>
 <!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
   <%_ } _%>
 <%_ } _%>
 <%_ if (tipList) { _%>
