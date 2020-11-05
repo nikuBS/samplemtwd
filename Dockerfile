@@ -5,6 +5,7 @@ FROM ${DOCKER_REGISTRY}/infra/nodejs8-utf8:1.0.1
 # FROM node:11.15
 #FROM node:carbon
 
+
 WORKDIR /home/appadmin
 
 COPY package*.json ./
