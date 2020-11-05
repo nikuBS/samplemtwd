@@ -20,8 +20,12 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                 </div>
                 <% if (title == '') { %>
                 <div class="h-logo"><button data-url="/en/main/home"  class="icon-gnb-home-T"><span class="blind">Go to Home</span></button></div>
-                <% }else { %>
-                <div class="h-tit"><%- title %></div>
+                <% } else { %>
+                    <%_ if ( locals.productPage && locals.productPage === 'Y' ) { _%>
+                        <div class="h-tit t-none"><%- title %></div>
+                    <%_ } else { _%>
+                        <div class="h-tit"><%- title %></div>
+                    <%_ } _%>
                 <% }%>
             </div>
         </div>
