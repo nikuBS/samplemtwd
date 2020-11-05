@@ -163,7 +163,7 @@ abstract class TwViewController {
    * @param path
    */
   private sessionLogin(req, res, next, path) {
-    this._logger.info(this, '[Session Login]');
+    this._logger.error(this, '[Session Login]');
     this.renderPage(req, res, next, path);
   }
 
@@ -176,13 +176,14 @@ abstract class TwViewController {
    */
   private sessionCheck(req, res, next, path) {
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+    this._logger.error(this, '[Session check]', loginCookie);
     if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
-      this._logger.info(this, '[Session expired]');
+      this._logger.error(this, '[Session expired]');
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
       res.redirect('/common/member/logout/expire?target=' + this.getTargetUrl(path, req.query));
     } else {
-      this._logger.info(this, '[Session empty]');
+      this._logger.error(this, '[Session empty]');
       this.renderPage(req, res, next, path);
     }
   }
@@ -194,7 +195,7 @@ abstract class TwViewController {
    */
   private setChannel(req, res): Observable<any> {
     const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
-    this.logger.info(this, '[set cookie]', channel);
+    this.logger.error(this, '[set cookie]', channel);
     return this._loginService.setChannel(req, channel);
   }
 
@@ -212,7 +213,7 @@ abstract class TwViewController {
         const resTime = resp.result.split('~');
         const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
         const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
-        this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
+        this.logger.error(this, '[Person sms startTime // endTime]', startTime, endTime);
         /**
          * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
          * true: 노출, false: 비노출
@@ -250,7 +251,7 @@ abstract class TwViewController {
     this.checkXtCookie(req, res);
 
     this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
-      this.logger.info(this, '[URL META]', path, resp);
+      this.logger.error(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
       urlMeta.isApp = BrowserHelper.isApp(req);
       urlMeta.fullUrl = this.loginService.getProtocol(req) + this.loginService.getDns(req) + this.loginService.getFullPath(req);
@@ -269,10 +270,8 @@ abstract class TwViewController {
             return;
           }
           if ( isLogin ) {
-
-            this.getPersonSmsDisableTimeCheck().subscribe((resp) => {
-
-                svcInfo.personSmsDisableTimeCheck = resp;
+            this.getPersonSmsDisableTimeCheck().subscribe((response) => {
+                svcInfo.personSmsDisableTimeCheck = response;
                 // console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo); - 주석처리
                 urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
                 if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {

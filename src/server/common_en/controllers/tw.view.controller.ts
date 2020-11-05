@@ -80,7 +80,7 @@ abstract class TwViewController {
 
     this.setChannel(req, res).subscribe((resp) => {
       this._apiService.setCurrentReq(req, res);
-      
+
       if ( this.checkLogin(req) ) {
         this.sessionLogin(req, res, next, path);
       } else {
@@ -170,7 +170,7 @@ abstract class TwViewController {
    * @param path
    */
   private sessionLogin(req, res, next, path) {
-    this._logger.info(this, '[Session Login]');
+    this._logger.error(this, '[Session Login]');
     this.renderPage(req, res, next, path);
   }
 
@@ -184,12 +184,12 @@ abstract class TwViewController {
   private sessionCheck(req, res, next, path) {
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
     if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
-      this._logger.info(this, '[Session expired]');
+      this._logger.error(this, '[Session expired]');
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
       CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
       res.redirect('/en/common/member/logout/expire?target=' + this.getTargetUrl(path, req.query));
     } else {
-      this._logger.info(this, '[Session empty]');
+      this._logger.error(this, '[Session empty]');
       this.renderPage(req, res, next, path);
     }
   }
@@ -201,7 +201,7 @@ abstract class TwViewController {
    */
   private setChannel(req, res): Observable<any> {
     const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
-    this.logger.info(this, '[set cookie]', channel);
+    this.logger.error(this, '[set cookie]', channel);
     return this._loginService.setChannel(req, channel);
   }
 
@@ -219,7 +219,7 @@ abstract class TwViewController {
         const resTime = resp.result.split('~');
         const startTime = DateHelper.convDateFormat(resTime[0]).getTime();
         const endTime = DateHelper.convDateFormat(resTime[1]).getTime();
-        this.logger.info(this, '[Person sms startTime // endTime]', startTime, endTime);
+        this.logger.error(this, '[Person sms startTime // endTime]', startTime, endTime);
         /**
          * 버튼 비노출 시점에 포함되지 않으면 버튼 노출
          * true: 노출, false: 비노출
@@ -252,14 +252,14 @@ abstract class TwViewController {
       res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
     }
 
-    // 19.05.28 
+    // 19.05.28
     // APP 을 통한 로그인 시 XTLID, XTLOGINID, XTSVCGR, XTLOGINTYPE 쿠키가 생성되지 않는 (사라지는?) 문제를 해결하기 위해
     // request 에 해당 쿠키가 존재하지 않는 경우 새로 발급하도록 처리
     this.checkXtCookie(req, res);
     // 이준엽임시
     // path = path.replace('/en/','/');
       this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
-      this.logger.info(this, '[EN/URL META]', path, resp);
+      this.logger.error(this, '[EN/URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
       urlMeta.isApp = BrowserHelper.isApp(req);
       urlMeta.fullUrl = this.loginService.getProtocol(req) + this.loginService.getDns(req) + this.loginService.getFullPath(req);
@@ -302,10 +302,10 @@ abstract class TwViewController {
                   //     // 등록된 회선 없음 + 준회원 접근 안되는 화면
                   //     this.errorNoRegister(req, res, next);
                   //   }
-                  // } else 
+                  // } else
                   if ( urlAuth.indexOf(svcGr) !== -1 ) {
                     this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-  
+
                   // 영문임시 관리자 권한 설정후 주석 제거. 2020.10.06 영문 실시간요금 PPS인 경우 controller에서 에러 처리.
                   } else if ( path.indexOf('/myt-fare/bill/hotbill') !== -1 && 'P'.indexOf(svcGr) !== -1  ) {
                     this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
@@ -316,7 +316,7 @@ abstract class TwViewController {
                   }
                 } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
                   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-                    
+
                 } else {
                   // 현재 로그인 방법으론 이용할 수 없음
                   if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
@@ -327,7 +327,7 @@ abstract class TwViewController {
                   }
                 }
             });
-           
+
           } else {
             if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
@@ -407,14 +407,14 @@ abstract class TwViewController {
             prodNmEn: prodNm
           });
         }
-        
+
         let lineCount = 0;
-       if ( LineInfo.code === API_CODE.CODE_00 ) { 
+       if ( LineInfo.code === API_CODE.CODE_00 ) {
           lineCount = ((LineInfo.result) ? LineInfo.result.mCnt : 0);
        }
 
         if (allSvc) {
-          
+
           if (!allSvc.m || FormatHelper.isEmpty(allSvc.m) ) {
               Object.assign(svcInfo,  {
                   mbrChlId: allSvc.mbrChlId,
@@ -423,7 +423,7 @@ abstract class TwViewController {
                   totalSvcCnt: (lineCount + '') || '0',
                   expsSvcCnt: '0',
                   nonSvcCnt: (lineCount + '') || '0'
-              });          
+              });
           } else {
               Object.assign(svcInfo,  {
                 mbrChlId: allSvc.mbrChlId,
@@ -432,26 +432,26 @@ abstract class TwViewController {
                 totalSvcCnt: (allSvc.m.length + lineCount + '') || '0',
                 expsSvcCnt: (allSvc.m.length + '') || '0',
                 nonSvcCnt: (lineCount + '') || '0'
-            });    
+            });
           }
         } else {
             Object.assign(svcInfo,  {
               totalSvcCnt: '0',
               expsSvcCnt: '0',
               nonSvcCnt: (lineCount + '') || '0'
-          });    
-        } 
+          });
+        }
           if (svcInfo.loginType === 'E') {
           caseType = '01'; // 간편로그인
- 
+
           Object.assign(svcInfo,  {
               caseType: caseType,
               totalSvcCnt: '1',
               expsSvcCnt: '1',
               nonSvcCnt: '0'
-          });          
-              
-        } else {  
+          });
+
+        } else {
 
           if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt == '0' ) {
             caseType = '02';
@@ -464,9 +464,9 @@ abstract class TwViewController {
 
           Object.assign(svcInfo,  {
               caseType: caseType
-          });                    
+          });
         }
-        
+
         this.getAuth(req, res, next, path, svcInfo, allSvc, null);
         return;
 
@@ -581,24 +581,24 @@ abstract class TwViewController {
         // XTLID 쿠키 존재 여부 체크 및 미존재시 새로 발급
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLID])) {
           // this.logger.debug(this, '[checkXtCookie] XTLID Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTLID, req.session.svcInfo.xtInfo.XTLID);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTLID, req.session.svcInfo.xtInfo.XTLID);
         // }
 
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTUID])) {
           // this.logger.debug(this, '[checkXtCookie] XTUID Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTUID, req.session.svcInfo.xtInfo.XTUID);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTUID, req.session.svcInfo.xtInfo.XTUID);
         // }
 
         // XTLOGINID 쿠키 존재 여부 체크 및 미존재시 새로 발급
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLOGINID])) {
           // this.logger.debug(this, '[checkXtCookie] XTLOGINID Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTLOGINID, req.session.svcInfo.xtInfo.XTLOGINID);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTLOGINID, req.session.svcInfo.xtInfo.XTLOGINID);
         // }
 
         // XTSVCGR 쿠키 존재 여부 체크 및 미존재시 새로 발급
         // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTSVCGR])) {
           // this.logger.debug(this, '[checkXtCookie] XTSVCGR Cookie does not exist');
-          this.loginService.setCookie(res, COOKIE_KEY.XTSVCGR, req.session.svcInfo.xtInfo.XTSVCGR);            
+          this.loginService.setCookie(res, COOKIE_KEY.XTSVCGR, req.session.svcInfo.xtInfo.XTSVCGR);
         // }
       }
     }

@@ -6,11 +6,11 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import { COOKIE_KEY } from '../../../../types/common.type';
-import RedisService from '../../../../services/redis.service';
 import { API_CODE } from '../../../../types/api-command.type';
+
 /**
  * @desc 공통 - 세션만료 class
  */
@@ -36,12 +36,12 @@ class CommonMemberLogoutExpire extends TwViewController {
     // Session 뒤바뀜 방어로직 추가(Sensing)
     if (this.loginService.isLogin(req) && !FormatHelper.isEmpty(sessInvalid)) {
       this.processInvalidSession(req, res);
+    } else {
+      this.loginService.sessionGenerate(req, res).subscribe(() => {
+        this.logger.error(this, this.loginService.getSessionId(req));
+        res.render('member/common.member.logout.expire.html', { svcInfo, pageInfo, target });
+      });
     }
-
-    this.loginService.sessionGenerate(req, res).subscribe(() => {
-      this.logger.info(this, this.loginService.getSessionId(req));
-      res.render('member/common.member.logout.expire.html', { svcInfo, pageInfo, target });
-    });
   }
 
   /***
@@ -70,7 +70,7 @@ class CommonMemberLogoutExpire extends TwViewController {
           if ( resp.code === API_CODE.CODE_00 ) {
             preSession = resp.result;
           }
-  
+
           this.logger.error(this
             , headerComment
             , 'IP :' + this.loginService.getNodeIp(req)                             // 사용자 IP
