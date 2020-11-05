@@ -10,26 +10,10 @@ Tw.ProductCallplan = function(rootEl) {
     this.$header = this.$container.find('#header');
     this.body = this.$container.find('.bg-productdetail');
     this._uri = window.location.search.split('=')[1];
-    var prodGroup = $('#prodGroup').val();
+    
     // 헤더 요금제 이름 숨기기
-    var bgColor = 'rgb(0,0,0)';
-        if(prodGroup === '5GX Plan' || prodGroup === '5G 0 Teen'){
-            bgColor = 'rgb(205, 14, 44)';
-        }
-        else{
-            bgColor = 'rgb(53, 131, 227)';
-        }
-    this.$hTit.css('color', bgColor);
-    if(skt_landing.util.win_info.get_scrollT()>39) {
-        this.$hTit.css('color','rgb(0,0,0)');
-    }
-    $(window).bind('scroll', $.proxy(function(){
-        if(skt_landing.util.win_info.get_scrollT()>39) {
-            this.$hTit.css('color','rgb(0,0,0)');
-        }else{
-            this.$hTit.css('color',bgColor);
-        }
-    },this));
+    
+    
     this._init();
   };
 
