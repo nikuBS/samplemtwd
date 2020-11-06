@@ -91,7 +91,7 @@ Tw.MainAppUpdate.prototype = {
    * @desc 업데이트 버튼 선택시 Android/iOS 각 마켓으로 이동
    */
   _onUpdate: function (appType) {
-    alert(appType)
+    //alert(appType)
     var url = '';
     if (Tw.BrowserHelper.isAndroid()) {
 
