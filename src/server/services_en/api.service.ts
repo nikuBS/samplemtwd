@@ -36,7 +36,7 @@ class ApiService {
   public setCurrentReq(req, res) {
     this.req = req;
     this.res = res;
-    this.logger.error(this, '[API setCurrentReq]', !!req.session);
+    this.logger.info(this, '[API setCurrentReq]', !!req.session);
   }
 
   /**
@@ -55,9 +55,9 @@ class ApiService {
     const apiUrl = this.getServerUri(command, req);
     const options = this.getOption(command, apiUrl, params, header, pathParams, version, req);
     const startTime = new Date().getTime();
-    this.logger.error(this, '[EN>API_url]', apiUrl);
-    this.logger.error(this, '[EN>API_REQ]', options);
-
+    this.logger.info(this, '[EN>API_url]', apiUrl);
+    this.logger.info(this, '[EN>API_REQ]', options);
+ 
     return Observable.create((observer) => {
       axios(options)
         .then(this.apiCallback.bind(this, observer, command, req, res, options, startTime))
@@ -192,14 +192,14 @@ class ApiService {
     const contentType = resp.headers['content-type'];
 
     let respData = resp.data;
-    this.logger.error(this, '[EN>API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
+    this.logger.info(this, '[EN>API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers, req, res, command).subscribe((data) => {
         if ( contentType.includes('json') ) {
           // client에서 API를 직접 호출하지 않는 경우(server에서 API를 호출하는 경우)
-          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1
-            || req.baseUrl.indexOf('store') !== -1) ) {
+          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 
+            || req.baseUrl.indexOf('store') !== -1) ) {  
             // BFF server session이 변경되었을 경우
             if ( data && data.code === API_CODE.NODE_1005) {
               this.redirectInvalidSession(req, res, data);
@@ -209,7 +209,7 @@ class ApiService {
               // this.logger.error(this, '[API RESP] Need Login', respData.code, respData.msg, this.loginService.getFullPath(req));
               this.printErrorLog('[EN>API RESP] Need Login', req, command, options, resp);
               if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
-                this.logger.error(this, '[Session expired]');
+                this.logger.info(this, '[Session expired]');
                 res.clearCookie(COOKIE_KEY.TWM_LOGIN);
                 CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
                 res.redirect('/en/common/member/logout/expire?target=' + this.loginService.getPath(req));
@@ -261,9 +261,9 @@ class ApiService {
         this.setServerSession(headers, req, res, command).subscribe((resp) => {
           if ( contentType.includes('json') ) {
             // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
-            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1
-              || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
-
+            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 
+              || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+            
               // BFF server session이 변경되었을 경우
               if ( resp && resp.code === API_CODE.NODE_1005) {
                 this.redirectInvalidSession(req, res, resp);
@@ -274,7 +274,7 @@ class ApiService {
                 // this.logger.error(this, '[API RESP] Need Login', error.code, error.msg, this.loginService.getFullPath(req));
                 this.printErrorLog('[EN>API RESP] Need Login', req, command, options, resp);
                 if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
-                  this.logger.error(this, '[EN>Session expired]');
+                  this.logger.info(this, '[EN>Session expired]');
                   res.clearCookie(COOKIE_KEY.TWM_LOGIN);
                   CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
                   res.redirect('/en/common/member/logout/expire?target=' + this.loginService.getPath(req));
@@ -322,10 +322,10 @@ class ApiService {
    * @parem command
    */
   private setServerSession(headers, req, res, command): Observable<any> {
-    this.logger.error(this, 'Headers: ', JSON.stringify(headers));
+    this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
-      this.logger.error(this, '[EN>Set Session Cookie]', serverSession);
+      this.logger.info(this, '[EN>Set Session Cookie]', serverSession);
       if ( !FormatHelper.isEmpty(serverSession)) {
         // 로그인 상태이고, 이전 request의 서버 세션과 response 서버 세션이 다를 경우는 오류 처리 한다.
         if ( req.session.serverSession !== serverSession && this.loginService.isLogin(req)) {
@@ -335,7 +335,7 @@ class ApiService {
           //                   , req.session.svcInfo);
 
           return Observable.of({
-              code : API_CODE.NODE_1005,
+              code : API_CODE.NODE_1005, 
               result : {
                 commandPath : command.path,
                 preServerSession : req.session.serverSession,
@@ -610,7 +610,7 @@ class ApiService {
   public requestLoginTid(token: string, state: string, roamMcc: string): Observable<any> {
     const roamingYn = (roamMcc && roamMcc !== '405') ? 'Y' : 'N';
     const params = {token, state, roamingYn, mCntrCd: roamMcc, globalYn: '3'};
-
+        
     return this.requestLogin(API_CMD.BFF_03_0008, params, LOGIN_TYPE.TID);
 
   }
@@ -861,7 +861,7 @@ class ApiService {
       let referer = '';
 
       if ( !FormatHelper.isEmpty(req.baseUrl)
-          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
+          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
         referer = this.loginService.getReferer(req);
       }
 
@@ -886,11 +886,11 @@ class ApiService {
        * 사용자 정보(사용자ID, 로그인 type, 서비스관리번호, 멤버채널ID, 접속방식)
        * error
        */
-      this.logger.error(this,
+      this.logger.error(this, 
         prefix,
         '\n code :', error.code || '',
         '\n base url :', baseUrl,
-        '\n referer :', referer,
+        '\n referer :', referer, 
         '\n command.path :', FormatHelper.isEmpty(command) ? {} : (command.path || ''),
         '\n options :', options,
         '\n userInfo: ', userInfo,
@@ -906,46 +906,46 @@ class ApiService {
    * @param result
    */
   public getAllSvcInfo(req: any): any {
-    this.logger.error(this, '[getAllSvcInfo]');
+    this.logger.info(this, '[getAllSvcInfo]');
 
     if (!this.loginService.isLogin(req)) {
       return null;
-    }
-
+    }    
+ 
     const allSvc = this.loginService.getAllSvcInfo(req);
     if (!allSvc || FormatHelper.isEmpty(allSvc) ) {
       return null;
     }
-
-
+ 
+      
       return   {
         mbrChlId: allSvc.mbrChlId,
         userId: allSvc.userId,
         xtUserId: allSvc.xtUserId,
         m: allSvc[LINE_NAME['MOBILE']]
-      };
+      };            
 
 
 
-  }
+  }  
   /**
    * 미등록 회선 데이터 요청
    */
   public getLineInfo(req: any): Observable<any> {
-    this.logger.error(this, '[getLineInfo]');
+    this.logger.info(this, '[getLineInfo]');
 
     return this.request(API_CMD.BFF_03_0029, {
        svcCtg: LINE_NAME.MOBILE
      }) ;
 
 
-  }
+  }    
 /**
    * 영문 선택 회선  정보
    * @param result
    */
   public getSvcInfo(req: any): any {
-    this.logger.error(this, '[getSvcInfo]');
+    this.logger.info(this, '[getSvcInfo]');
 
     if (!this.loginService.isLogin(req)) {
       return null;
@@ -981,7 +981,7 @@ class ApiService {
 
 
       let lineCount = 0;
-      if ( LineInfo.code === API_CODE.CODE_00 ) {
+      if ( LineInfo.code === API_CODE.CODE_00 ) { 
         lineCount = ((LineInfo.result) ? LineInfo.result.mCnt : 0);
       }
 
@@ -996,7 +996,7 @@ class ApiService {
                 totalSvcCnt: (lineCount + '') || '0',
                 expsSvcCnt: '0',
                 nonSvcCnt: (lineCount + '') || '0'
-            });
+            });          
         } else {
             Object.assign(svcInfo,  {
               mbrChlId: allSvc.mbrChlId,
@@ -1005,15 +1005,15 @@ class ApiService {
               totalSvcCnt: (allSvc.m.length + lineCount + '') || '0',
               expsSvcCnt: (allSvc.m.length + '') || '0',
               nonSvcCnt: (lineCount + '') || '0'
-          });
+          });    
         }
       } else {
           Object.assign(svcInfo,  {
             totalSvcCnt: '0',
             expsSvcCnt: '0',
             nonSvcCnt: (lineCount + '') || '0'
-        });
-      }
+        });    
+      }           
 
       if (svcInfo.loginType === 'E') {
         caseType = '01'; // 간편로그인
@@ -1023,9 +1023,9 @@ class ApiService {
             totalSvcCnt: '1',
             expsSvcCnt: '1',
             nonSvcCnt: '0'
-        });
-
-      } else {
+        });          
+            
+      } else {  
 
         if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt == '0' ) {
           caseType = '02';
@@ -1038,10 +1038,10 @@ class ApiService {
 
         Object.assign(svcInfo,  {
             caseType: caseType
-        });
+        });                    
       }
       return svcInfo;
-    });
+    });    
   }
 
 
@@ -1050,7 +1050,7 @@ class ApiService {
    * @param req
    */
   public getChildInfo(req: any): any {
-    this.logger.error(this, '[getChildInfo]');
+    this.logger.info(this, '[getChildInfo]');
     return null;
   }
   /**
@@ -1060,30 +1060,30 @@ class ApiService {
    * @param svcInfo
    */
   public setSvcInfo(svcInfo: any): any {
-    const sessSvcInfo = this.loginService.getSvcInfo(this.req);
+    const sessSvcInfo = this.loginService.getSvcInfo(this.req);    
 
     this.request(API_CMD.BFF_05_0224, {})
       .subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-
+            
           const result = resp.result;
           const basePriceObject = result.basPricList[0] || {}; // 가입한 요금제 정보
 
 
           Object.assign(svcInfo,  {
-            prodNmEn: basePriceObject.prodNm
+            prodNmEn: basePriceObject.prodNm 
           });
 
         } else {
           if (FormatHelper.isEmpty(svcInfo.prodNmEn)) {
             svcInfo.prodNmEn = svcInfo.prodNm;
-          }
-
+          }          
+         
         }
 
         Object.assign(sessSvcInfo, {
           prodNmEn: svcInfo.prodNmEn
-        });
+        });        
 
 
         // this.loginService.setSvcInfo(this.req,this.res,sessSvcInfo);
@@ -1093,7 +1093,7 @@ class ApiService {
      });
 
   }
-
+ 
 }
 
 export default ApiService;
