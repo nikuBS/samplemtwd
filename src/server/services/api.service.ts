@@ -200,17 +200,13 @@ class ApiService {
     const contentType = resp.headers['content-type'];
 
     let respData = resp.data;
-    this.logger.error(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
-    this.logger.error(this, '[API CALLBACK TEST]', JSON.stringify(command));
+    this.logger.info(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers, req, res, command).subscribe((data) => {
-        this.logger.error(this, '[API CALLBACK TEST]', JSON.stringify(data));
-
         if ( contentType.includes('json') ) {
           // client에서 API를 직접 호출하지 않는 경우(server에서 API를 호출하는 경우)
-          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 ||
-            req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
+          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
             // BFF server session이 변경되었을 경우
             if ( data && data.code === API_CODE.NODE_1005) {
               this.redirectInvalidSession(req, res, data);
@@ -278,11 +274,9 @@ class ApiService {
       if ( command.server === API_SERVER.BFF ) {
         const contentType = headers['content-type'];
         this.setServerSession(headers, req, res, command).subscribe((resp) => {
-          this.logger.error(this, '[API CALLBACK TEST]', JSON.stringify(resp));
           if ( contentType.includes('json') ) {
             // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
-            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 ||
-              req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
+            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
 
               // BFF server session이 변경되었을 경우
               if ( resp && resp.code === API_CODE.NODE_1005) {
@@ -294,7 +288,7 @@ class ApiService {
                 // this.logger.error(this, '[API RESP] Need Login', error.code, error.msg, this.loginService.getFullPath(req));
                 this.printErrorLog('[API RESP] Need Login', req, command, options, resp);
                 if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
-                  this.logger.error(this, '[Session expired]');
+                  this.logger.info(this, '[Session expired]');
                   res.clearCookie(COOKIE_KEY.TWM_LOGIN);
                   CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
                   res.redirect('/common/member/logout/expire?target=' + this.loginService.getPath(req));
@@ -344,10 +338,10 @@ class ApiService {
    * @parem command
    */
   private setServerSession(headers, req, res, command): Observable<any> {
-    this.logger.error(this, 'Headers: ', JSON.stringify(headers));
+    this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
-      this.logger.error(this, '[Set Session Cookie]', serverSession);
+      this.logger.info(this, '[Set Session Cookie]', serverSession);
       if ( !FormatHelper.isEmpty(serverSession)) {
         // 로그인 상태이고, 이전 request의 서버 세션과 response 서버 세션이 다를 경우는 오류 처리 한다.
         if ( req.session.serverSession !== serverSession && this.loginService.isLogin(req)) {

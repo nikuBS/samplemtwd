@@ -10,7 +10,6 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import { COOKIE_KEY } from '../../../../types/common.type';
 import { API_CODE } from '../../../../types/api-command.type';
-
 /**
  * @desc 공통 - 세션만료 class
  */
