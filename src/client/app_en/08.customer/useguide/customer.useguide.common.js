@@ -13,6 +13,7 @@ Tw.CustomerUseguideCommon = function (rootEl) {
   this._$confirm4 = this.$container.find('#videoConfirm4');
   this._$confirm5 = this.$container.find('#videoConfirm5');
   this._$confirm6 = this.$container.find('#videoConfirm6');
+  this._$confirm7 = this.$container.find('#videoConfirm7');
   this._$popup = this.$container.find('.popup');
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
@@ -38,12 +39,14 @@ Tw.CustomerUseguideCommon.prototype = {
         this._$confirm4.css('display','block');
         this._$confirm5.css('display','block');
         this._$confirm6.css('display','block');
+        this._$confirm7.css('display','block');
         this._$confirm1.on('click', $.proxy(this._loadpopup1, this));
         this._$confirm2.on('click', $.proxy(this._loadpopup2, this));
         this._$confirm3.on('click', $.proxy(this._loadpopup3, this));
         this._$confirm4.on('click', $.proxy(this._loadpopup4, this));
         this._$confirm5.on('click', $.proxy(this._loadpopup5, this));
         this._$confirm6.on('click', $.proxy(this._loadpopup6, this));
+        this._$confirm7.on('click', $.proxy(this._loadpopup7, this));
       }
     },
 
@@ -95,6 +98,14 @@ Tw.CustomerUseguideCommon.prototype = {
     $('.pos-right').on('click', $.proxy(this._confirm, this));
   },
 
+  _loadpopup7: function () {
+    this.crtVideo=7;
+    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
+    $('.popupDiv').html(tplPlanCard({}));
+    $('.pos-left').on('click', $.proxy(this._cancel, this));
+    $('.pos-right').on('click', $.proxy(this._confirm, this));
+  },
+
   _cancel: function () {
     $('.popup').remove();
   },
@@ -120,12 +131,16 @@ Tw.CustomerUseguideCommon.prototype = {
     if(this.crtVideo===6){
       outlinkUrl = 'https://www.youtube.com/watch?v=gYt00x7QsbY&feature=emb_logo';
     }
+    if(this.crtVideo===7){
+      outlinkUrl = 'https://youtu.be/iyCDDPpbpMI';
+    }
     this._$confirm1.remove();
     this._$confirm2.remove();
     this._$confirm3.remove();
     this._$confirm4.remove();
     this._$confirm5.remove();
     this._$confirm6.remove();
+    this._$confirm7.remove();
     Tw.CommonHelper.openUrlExternal(outlinkUrl);
   },
 
