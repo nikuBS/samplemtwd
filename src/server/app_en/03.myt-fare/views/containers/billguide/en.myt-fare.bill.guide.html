@@ -49,7 +49,7 @@
                                         class="btn-round2 btn-style3"   >Select Bill</button>
                             </div>
                         </div>
-                        <p class="msg-type2 mt4">Total of <span class="txt-point">₩<%=data.commDataInfo.discount%></span> discount received</p>
+                        <p class="msg-type2 mt4"><span class="txt-point">₩<%=data.commDataInfo.discount%></span> worth of discounts received</p>
                     </div>
                     <%_ if( data.miriAmt ){ _%>
                     <div class="tod-miri-bill">
@@ -73,9 +73,8 @@
                     <% } %>       
                     <%_ if( data.typeChk == 'A5' && data.lineDtlLst && data.lineDtlLst.length > 0){ _%>
                     <p class="info-charge-data">
-                        The total charged amount for the number <br/>
-                        <strong><%=data.repSvcNum%> </strong> is shown as you have requested<br/>
-                        a combined charged total for more than <strong><%=data.paidAmtMonthSvcCnt%></strong> lines
+                        The total amount billed for <strong><%=data.repSvcNum%> </strong> includes<br/>
+                        combined charges for a total of <strong><%=data.paidAmtMonthSvcCnt%></strong> lines
                     </p>
                     <% } %>
                 </div>
