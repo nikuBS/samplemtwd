@@ -2,7 +2,7 @@ Tw.COMMON_STRING = {
   ALL: 'all',
   AGREE: 'agree',
   DISAGREE: 'disagree',
-  UNLIMIT: 'unlimit',
+  UNLIMIT: 'Unlimited',
   TERM: 'term',
   STANDARD: '기본제공',
   OPEN_NEW_TAB: '새창열림',
