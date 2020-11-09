@@ -1027,11 +1027,11 @@ class ApiService {
             
       } else {  
 
-        if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt == '0' ) {
+        if (svcInfo.expsSvcCnt === '0' && svcInfo.nonSvcCnt === '0' ) {
           caseType = '02';
         } // 회선없음
 
-        if (svcInfo.expsSvcCnt == '0' && svcInfo.nonSvcCnt != '0' ) {
+        if (svcInfo.expsSvcCnt === '0' && svcInfo.nonSvcCnt !== '0' ) {
           caseType = '03';
         } // 회선등록처리 필요
 
