@@ -73,10 +73,10 @@ Tw.ProductMobileplanAddJoin.prototype = {
     this._callConfirmCommonJs();
     Tw.Tooltip.separateMultiInit(this.$container);
 
-    if (this._prodId === 'NA00007017') {
+    if (this._prodId === 'NA00007017') { //V컬러링[NA00007017] 가입 시 특정상품 기가입자 가입안내팝업
       this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.V_COLORING_JOIN_PROD_ID.join('~')] )
         .done($.proxy(this._resIsAdditionUseJoin, this));
-    } else if (this._prodId === 'NA00000282') {
+    } else if (this._prodId === 'NA00000282' || this._prodId === 'NA00001583') { //컬러링[NA00000282],원플러스 컬러링[NA00001583] 가입 시 'NA00007017' 기가입자 가입안내팝업
       this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.COLORING_JOIN_PROD_ID.join('~')] )
         .done($.proxy(this._resIsAdditionUseJoin, this));
     } else {
@@ -93,21 +93,21 @@ Tw.ProductMobileplanAddJoin.prototype = {
    * @param resp - 무선 부가상품 가입여부 API 응답 값
    */
   _resIsAdditionUseJoin: function(resp) {
-    var isAdditionUse = 'N'; // V컬러링 자동선해지 상품 미가입
+    var isAdditionUse = 'N';
 
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // V컬러링 가입 시 자동선해지 상품 체크
       if (this._prodId === 'NA00007017') {
         for ( var i = 0 ; i < Tw.V_COLORING_JOIN_PROD_ID.length; i++ ) {
           if ( resp.result[Tw.V_COLORING_JOIN_PROD_ID[i]] !== 'N') {
-            isAdditionUse = 'Y'; //V컬러링 자동선해지 상품 가입
+            isAdditionUse = 'Y';
             break;
           }
         }
-      } else if (this._prodId === 'NA00000282') {
+      } else if (this._prodId === 'NA00000282' || this._prodId === 'NA00001583') {
         for ( var i = 0 ; i < Tw.COLORING_JOIN_PROD_ID.length; i++ ) {
           if ( resp.result[Tw.COLORING_JOIN_PROD_ID[i]] !== 'N') {
-            isAdditionUse = 'Y'; //V컬러링 자동선해지 상품 가입
+            isAdditionUse = 'Y';
             break;
           }
         }
@@ -132,7 +132,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
     if (this._prodId === 'NA00007017' && isAdditionUse !== 'Y') {
       return ;
-    } else if (this._prodId === 'NA00000282' && isAdditionUse !== 'Y') {
+    } else if ((this._prodId === 'NA00000282' || this._prodId === 'NA00001583') && isAdditionUse !== 'Y') {
       return ;
     } else {
       this._openJoinTermPopup(resp.result);
