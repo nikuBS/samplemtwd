@@ -354,6 +354,8 @@ Tw.ProductMobileplanAddJoin.prototype = {
       && $(e.currentTarget).attr('href').indexOf('#') !== 0) {
       this._confirmExternalUrl(e);
       this._popupService.close();
+    } else if($(e.currentTarget).hasClass('fe-auto-external')) {
+      this._confirmAutoExternalUrl();
     } else {
       this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
     }
