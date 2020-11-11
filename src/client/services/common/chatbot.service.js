@@ -303,7 +303,7 @@ Tw.ChatbotService.prototype = {
 
         console.log('[chatbot.service] [_init] 접속한 페이지 URL : ', urlPath);
         console.log('[chatbot.service] [_init] 현재 일자 : ', this._currentDate);
-        var isAllowedOs = false;
+        //var isAllowedOs = false;원복함 향후 필요
         // if(Tw.BrowserHelper.isIos()){
         //     if (/(iPhone)/i.test(userAgentString)) {
         //         if (/OS [1-12](.*) like Mac OS X/i.test(userAgentString)) {
@@ -315,38 +315,38 @@ Tw.ChatbotService.prototype = {
         //         }
         //       }
         // }
-         if(Tw.BrowserHelper.isAndroid()){
-           // var andVer = Tw.BrowserHelper.getAndroidVersion;
+        //  if(Tw.BrowserHelper.isAndroid()){
+        //    // var andVer = Tw.BrowserHelper.getAndroidVersion;
            
-           if (userAgentString.indexOf("Android") >= 0) { 
-              var androidV = parseFloat(userAgentString.slice(userAgentString.indexOf("Android") + 8)); 
-              console.log("androidV"+androidV)
-              if (androidV < 8){
-                  // andorid version is <=8
-                   isAllowedOs = false;
-                   console.log("isAllowedOs"+isAllowedOs)
-              }else{
-                   // andorid version is >8
-                   isAllowedOs = true;
-                   console.log("isAllowedOs"+isAllowedOs)
-              }
-           } 
+        //    if (userAgentString.indexOf("Android") >= 0) { 
+        //       var androidV = parseFloat(userAgentString.slice(userAgentString.indexOf("Android") + 8)); 
+        //       console.log("androidV"+androidV)
+        //       if (androidV < 8){
+        //           // andorid version is <=8
+        //            isAllowedOs = false;
+        //            console.log("isAllowedOs"+isAllowedOs)
+        //       }else{
+        //            // andorid version is >8
+        //            isAllowedOs = true;
+        //            console.log("isAllowedOs"+isAllowedOs)
+        //       }
+        //    } 
           
 
-        }
-        // var isAllowedDevice = false;
+        // }
+        var isAllowedDevice = false;
 
-        // for (var idx = 0; idx < _this._accessAllowedDevice.length; idx++) {
-        //     var allowed_device = _this._accessAllowedDevice[idx];
+        for (var idx = 0; idx < _this._accessAllowedDevice.length; idx++) {
+            var allowed_device = _this._accessAllowedDevice[idx];
 
-        //     if (_this._deviceModelCode.indexOf(allowed_device) > -1) {
-        //         isAllowedDevice = true;
-        //     }
-        // } // end for
+            if (_this._deviceModelCode.indexOf(allowed_device) > -1) {
+                isAllowedDevice = true;
+            }
+        } // end for
 
         var isAllowed = false;      // urlPath에 따라 챗봇 오픈여부 결정
         var isDefaultPage = false;  // 전체메뉴 > 챗봇 상담하기 를 통한 진입 여부
-        if (isAllowedOs) { // isAllowedDevice가 os로 변경됨
+        if (isAllowedDevice) { // isAllowedOs가 isAllowedDevice로 원복됨
             Tw.Logger.info('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
             console.log('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
 
