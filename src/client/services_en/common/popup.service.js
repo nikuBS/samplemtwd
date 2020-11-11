@@ -227,6 +227,8 @@ Tw.PopupService.prototype = {
     $container.on('click', '.popup-closeBtn', _.debounce($.proxy(this.close, this), 500));
     $container.on('click', '.tw-popup-closeBtn', _.debounce($.proxy(this.close, this), 500));
     $container.on('click', '.tw-popup-confirm', _.debounce($.proxy(this._confirm, this), 500));
+    $container.on('click', '.dataPopup-cancelBtn', _.debounce($.proxy(this.close, this), 500));
+    $container.on('click', '.dataPopup-confirmBtn', _.debounce($.proxy(this.close, this), 500));
   },
 
   /**

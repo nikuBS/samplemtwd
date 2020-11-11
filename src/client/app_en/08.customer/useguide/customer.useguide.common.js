@@ -5,6 +5,7 @@
  */
 Tw.CustomerUseguideCommon = function (rootEl) {
   this.$container = rootEl;
+  this._popupService = Tw.Popup;
   this.crtVideo=1;
 
   this._$confirm1 = this.$container.find('#videoConfirm1');
@@ -50,68 +51,54 @@ Tw.CustomerUseguideCommon.prototype = {
       }
     },
 
-  _loadpopup1: function () {
+  _loadpopup1: function (e) {
     this.crtVideo=1;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _loadpopup2: function () {
+  _loadpopup2: function (e) {
     this.crtVideo=2;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _loadpopup3: function () {
+  _loadpopup3: function (e) {
     this.crtVideo=3;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _loadpopup4: function () {
+  _loadpopup4: function (e) {
     this.crtVideo=4;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _loadpopup5: function () {
+  _loadpopup5: function (e) {
     this.crtVideo=5;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _loadpopup6: function () {
+  _loadpopup6: function (e) {
     this.crtVideo=6;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _loadpopup7: function () {
+  _loadpopup7: function (e) {
     this.crtVideo=7;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _cancel: function () {
-    $('.popup').remove();
+  _loadPopup: function (e) {
+    this._popupService.open({
+      url: '/hbs/' ,
+      hbs: 'popup_a5_en'
+    },
+      $.proxy(this._onOpenPopup, this),
+      null,
+      'prod_info',
+      $(e.currentTarget));
   },
 
   _confirm: function () {
-    $('.popup').remove();
+    
     var outlinkUrl = '';
     if(this.crtVideo===1){ // 비디오일 때 처리
       outlinkUrl = 'https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo';
@@ -144,6 +131,11 @@ Tw.CustomerUseguideCommon.prototype = {
     Tw.CommonHelper.openUrlExternal(outlinkUrl);
   },
 
+  _onOpenPopup: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+    $layer.on('click', '.pos-right', $.proxy(this._confirm, this));
+  },
+
   _bindEvent: function () {
     this.$container.on('click', '.fe-outlink', $.proxy(this._onOutLink, this)); //외부 링크 이동
   },
@@ -152,3 +144,4 @@ Tw.CustomerUseguideCommon.prototype = {
     Tw.CommonHelper.openUrlExternal(e.currentTarget.value);
   }
 };
+
