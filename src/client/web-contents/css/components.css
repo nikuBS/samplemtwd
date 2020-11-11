@@ -36629,9 +36629,3 @@ body.apphome .section-box {
 
 /* 201106 [OP002-11708] [VOC: V20358881447] 나의 부가상품들어가면 맨위 부가서비스글자가 반만 보이는 현상 */
 .tod-sel-top-wrap .link-cont {overflow-x: auto; white-space: nowrap}
-@media (min-width: 321px) and (max-width: 360px) {
-  .tod-sel-top-wrap .link-cont > a {padding-left:0.625rem;padding-right:0.625rem}
-}
-@media screen and (max-width: 320px) {
-  .tod-sel-top-wrap .link-cont > a {padding-left:0.5rem;padding-right:0.5rem;margin-right:0.125rem}
-}
