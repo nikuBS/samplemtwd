@@ -1474,8 +1474,7 @@ Tw.CUSTOMER_EMAIL = {
     CONTENT: '선택한 문의 내역을 삭제할 경우 추가 문의한 내역도 함께 삭제됩니다.'
   },
   RETRY_SERVICE: '사용하시는 서비스에 맞게 항목을 다시 선택해주세요.',
-  RETRY_CATEGORY: '서비스 항목을 선택해주세요.',
-  RETRY_INVALID_LINE: '사용하시는 서비스에 맞게 다시 문의해 주세요.'
+  RETRY_CATEGORY: '서비스 항목을 선택해주세요.'
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
