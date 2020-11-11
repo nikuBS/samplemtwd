@@ -230,9 +230,8 @@ class MyTJoinSubmainController extends TwViewController {
         // 옵션/할인프로그램 개수 추가
         data.myAddProduct.prodTotCnt = data.myAddProduct.addProdTotCnt + (data.myAddProduct.disProdCnt || 0);
       } else {
-        // TODO: 이 부분은 오류가 나지 않도록 보정한 코드인데, 확인 필요 (myAddProduct가 없으면, disProdCnt도 없기 때문)
         // 옵션/할인프로그램 개수 추가
-        data.myAddProduct.prodTotCnt = 0;
+        data.myAddProduct = { prodTotCnt: 0 };
       }
       // 약정할부 노출여부
       if (data.myInstallement && data.myInstallement.disProdNm) {
