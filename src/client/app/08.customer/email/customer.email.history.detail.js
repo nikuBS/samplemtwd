@@ -4,11 +4,13 @@
  * @since 2018.11.05
  */
 
-Tw.CustomerEmailHistoryDetail = function (rootEl) {
+Tw.CustomerEmailHistoryDetail = function (rootEl, chkSvcNumForReply) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
+  // this._chkSvcNumForReply = chkSvcNumForReply === 'Y' ? true : false;
+  this._chkSvcNumForReply = chkSvcNumForReply === 'Y' || false; // psblReplyYn : 문의 했던 내역 회선 번호 일치 여부
 
   this._cachedElement();
   this._bindEvent();
@@ -29,6 +31,13 @@ Tw.CustomerEmailHistoryDetail.prototype = {
   },
 
   _retryInquiry: function (e) {
+
+    // 현재 회선 번호가 문의 할 당시의 회선번호인지 여부에 따라 재문의 불가 팝업 노출 - OP002-11435
+    if (!this._chkSvcNumForReply) {
+      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.RETRY_INVALID_LINE);
+      return;
+    }
+
     var inqclcd = $(e.currentTarget).data('inqclcd');
 
     // service inquiry
