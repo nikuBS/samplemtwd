@@ -25,32 +25,21 @@ Tw.CustomerMain = function (rootEl) {
      }, this)
    );
   // 핸드폰에 적용시 수정
-  // this._init();
+  //this._init();
   this._bindEvent();
 };
 
 Tw.CustomerMain.prototype = {
-    _init : function(res) { //핸드폰에 적용 시 수정
+   _init : function(res) { //핸드폰에 적용 시 수정
    //_init : function(){
          if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-        // if(true){
+     //    if(true){
           $('#videoConfirm').css('display','block');
-          this._$confirm.on('click', $.proxy(this._setConfirm, this));
+          $('#videoConfirm').on('click', $.proxy(this._loadPopup, this));
         }
   },
 
-  _setConfirm: function() {
-    this._loadpopup();
-  },
-
-  _cancel: function () {
-    $('.popup').remove();
-  },
-
-  _confirm: function () {
-    $('.popup').remove();
-   
-    this._$confirm.remove();
+   _confirm: function () {
     Tw.CommonHelper.openUrlExternal('https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo');
   },
 
@@ -68,12 +57,23 @@ Tw.CustomerMain.prototype = {
   _onOutLink: function (e) {
     Tw.CommonHelper.openUrlExternal(e.currentTarget.value);
   },
-  _loadpopup: function () {
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+
+  _loadPopup: function (e) {
+    this._popupService.open({
+      url: '/hbs/' ,
+      hbs: 'popup_a5_en'
+    },
+      $.proxy(this._onOpenPopup, this),
+      null,
+      'prod_info',
+      $(e.currentTarget));
   },
+
+  _onOpenPopup: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+    $layer.on('click', '.pos-right', $.proxy(this._confirm, this));
+  },
+
   goTel: function (event) {
     event.preventDefault();
     event.stopPropagation();

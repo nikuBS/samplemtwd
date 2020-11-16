@@ -19,14 +19,14 @@ Tw.ProductCallplanMiri = function (rootEl) {
         }, this)
     );
   // 핸드폰에 적용시 수정
-  // this._init();
+  //this._init();
 };
 
 Tw.ProductCallplanMiri.prototype = {
      _init : function(res) { //핸드폰에 적용 시 수정
     // _init : function(){
             if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-           // if(true){
+     //       if(true){
               this._$confirm0.css('display','block');
               this._$confirm1.css('display','block');
               this._$confirm0.on('click', $.proxy(this._loadpopup0, this));
@@ -34,28 +34,28 @@ Tw.ProductCallplanMiri.prototype = {
             }
           },
         
-        _loadpopup0: function () {
+        _loadpopup0: function (e) {
           this.crtVideo=0;
-          var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-            $('.popupDiv').html(tplPlanCard({}));
-            $('.pos-left').on('click', $.proxy(this._cancel, this));
-            $('.pos-right').on('click', $.proxy(this._confirm, this));
+          this._loadPopup(e);
           },
 
-        _loadpopup1: function () {
+        _loadpopup1: function (e) {
           this.crtVideo=1;
-          var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-            $('.popupDiv').html(tplPlanCard({}));
-            $('.pos-left').on('click', $.proxy(this._cancel, this));
-            $('.pos-right').on('click', $.proxy(this._confirm, this));
+          this._loadPopup(e);
         },
-      
-        _cancel: function () {
-          $('.popup').remove();
+
+        _loadPopup: function (e) {
+          this._popupService.open({
+            url: '/hbs/' ,
+            hbs: 'popup_a5_en'
+          },
+            $.proxy(this._onOpenPopup, this),
+            null,
+            'prod_info',
+            $(e.currentTarget));
         },
       
         _confirm: function () {
-          $('.popup').remove();
           var outlinkUrl = '';
           if(this.crtVideo === 0){
             outlinkUrl = 'https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo';
@@ -67,6 +67,11 @@ Tw.ProductCallplanMiri.prototype = {
           this._$confirm1.remove();
 
           Tw.CommonHelper.openUrlExternal(outlinkUrl);
+        },
+
+        _onOpenPopup: function ($layer) {
+          Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+          $layer.on('click', '.pos-right', $.proxy(this._confirm, this));
         },
 
         _bindEvent: function () {

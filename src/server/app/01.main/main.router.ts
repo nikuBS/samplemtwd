@@ -13,6 +13,7 @@ import MainMenuSettingsFamilySites from './controllers/menu/settings/main.menu.s
 import MainMenuSettingsOss from './controllers/menu/settings/main.menu.settings.oss.controller';
 import MainStore from './controllers/main.store.controller';
 import MainRecommendProduct from './controllers/recommend/main.recommend.product.controller';
+import Welcome from './controllers/main.welcome.controller';
 
 class MainRouter extends TwRouter {
   constructor() {
@@ -31,6 +32,7 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/menu/settings/oss', controller: MainMenuSettingsOss });
     this.controllers.push({ url: '/menu/refund', controller: MainMenuRefund });
     this.controllers.push({ url: '/recommend/product', controller: MainRecommendProduct });
+    this.controllers.push({ url: '/welcome', controller: Welcome });
 
     // 기획 변경으로 사용하지 않음
     // this.controllers.push({ url: '/menu/settings/privacy', controller: MainMenuSettingsPrivacy });

@@ -1,0 +1,38 @@
+/**
+ * @file main.welcome.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.09.06
+ * @desc 메인 > 홈
+ */
+
+import TwViewController from '../../../common/controllers/tw.view.controller';
+import { NextFunction, Request, Response } from 'express';
+
+/**
+ * @desc 환영페이지 class
+ */
+class Welcome extends TwViewController {
+  constructor() {
+    super();
+  }
+
+  /**
+   * 메인화면-MY 렌더 함수
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
+   * @param {object} svcInfo
+   * @param {object} allSvc
+   * @param {object} childInfo
+   * @param {object} pageInfo
+   * @return {void}
+   */
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    res.render(`main.welcome.html`, {
+      title: '환영페이지',
+      desc: 'T월드 페이지를 환영 합니다.'
+    });
+  }
+}
+
+export default Welcome;

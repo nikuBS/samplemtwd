@@ -36626,3 +36626,6 @@ body.apphome .section-box {
 .tod-miri-info .item .data .data-item{display: block;}
 .tod-miri-info .item-result{border-top: 1px solid #f2f2f2; padding-top: 0.625rem; font-size: 0.875rem; text-align: right;}
 /* //201008 [OP002-10791] 추가 : MIRI 납부금액*/
+
+/* 201106 [OP002-11708] [VOC: V20358881447] 나의 부가상품들어가면 맨위 부가서비스글자가 반만 보이는 현상 */
+.tod-sel-top-wrap .link-cont {overflow-x: auto; white-space: nowrap}

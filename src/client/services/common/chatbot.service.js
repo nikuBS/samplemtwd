@@ -346,7 +346,7 @@ Tw.ChatbotService.prototype = {
 
         var isAllowed = false;      // urlPath에 따라 챗봇 오픈여부 결정
         var isDefaultPage = false;  // 전체메뉴 > 챗봇 상담하기 를 통한 진입 여부
-        if (isAllowedOs) { // isAllowedDevice가 os로 변경됨
+        if (isAllowedOs) { // isAllowedOs가 isAllowedDevice로 원복됨
             Tw.Logger.info('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
             console.log('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
 

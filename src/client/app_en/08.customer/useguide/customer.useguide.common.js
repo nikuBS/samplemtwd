@@ -5,128 +5,81 @@
  */
 Tw.CustomerUseguideCommon = function (rootEl) {
   this.$container = rootEl;
-  this.crtVideo=1;
+  this._popupService = Tw.Popup;
+  this.crtVideo='videoConfirm1';
 
-  this._$confirm1 = this.$container.find('#videoConfirm1');
-  this._$confirm2 = this.$container.find('#videoConfirm2');
-  this._$confirm3 = this.$container.find('#videoConfirm3');
-  this._$confirm4 = this.$container.find('#videoConfirm4');
-  this._$confirm5 = this.$container.find('#videoConfirm5');
-  this._$confirm6 = this.$container.find('#videoConfirm6');
   this._$popup = this.$container.find('.popup');
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
   this._bindEvent(); 
   Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
-     $.proxy(function (res) {
-      this._init(res);
-     }, this)
-   );
+      $.proxy(function (res) {
+       this._init(res);
+      }, this)
+    );
    
   // 핸드폰에 적용시 수정
-  // this._init();
+   //this._init();
 };
 
 Tw.CustomerUseguideCommon.prototype = {
     _init : function(res) { //핸드폰에 적용 시 수정
-  //  _init : function(){ 
+  // _init : function(){ 
        if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
   //    if(true){
-        this._$confirm1.css('display','block');
-        this._$confirm2.css('display','block');
-        this._$confirm3.css('display','block');
-        this._$confirm4.css('display','block');
-        this._$confirm5.css('display','block');
-        this._$confirm6.css('display','block');
-        this._$confirm1.on('click', $.proxy(this._loadpopup1, this));
-        this._$confirm2.on('click', $.proxy(this._loadpopup2, this));
-        this._$confirm3.on('click', $.proxy(this._loadpopup3, this));
-        this._$confirm4.on('click', $.proxy(this._loadpopup4, this));
-        this._$confirm5.on('click', $.proxy(this._loadpopup5, this));
-        this._$confirm6.on('click', $.proxy(this._loadpopup6, this));
+        $('.confirmDiv').css('display','block');
+        $('.confirmDiv').on('click', $.proxy(this._setcrtVideo, this));
       }
     },
-
-  _loadpopup1: function () {
-    this.crtVideo=1;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
+  
+  _setcrtVideo: function(e) {
+    this.crtVideo = $(e.currentTarget).attr('id');
+    $.proxy(this._loadPopup(e),this);
   },
 
-  _loadpopup2: function () {
-    this.crtVideo=2;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
-  },
-
-  _loadpopup3: function () {
-    this.crtVideo=3;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
-  },
-
-  _loadpopup4: function () {
-    this.crtVideo=4;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
-  },
-
-  _loadpopup5: function () {
-    this.crtVideo=5;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
-  },
-
-  _loadpopup6: function () {
-    this.crtVideo=6;
-    var tplPlanCard = Handlebars.compile(Tw.POPUP_A5);
-    $('.popupDiv').html(tplPlanCard({}));
-    $('.pos-left').on('click', $.proxy(this._cancel, this));
-    $('.pos-right').on('click', $.proxy(this._confirm, this));
-  },
-
-  _cancel: function () {
-    $('.popup').remove();
+  _loadPopup: function (e) {
+    this._popupService.open({
+      url: '/hbs/' ,
+      hbs: 'popup_a5_en'
+    },
+      $.proxy(this._onOpenPopup, this),
+      null,
+      'prod_info',
+      $(e.currentTarget));
   },
 
   _confirm: function () {
-    $('.popup').remove();
+    
     var outlinkUrl = '';
-    if(this.crtVideo===1){ // 비디오일 때 처리
+    if(this.crtVideo==='videoConfirm1'){ // 비디오일 때 처리
       outlinkUrl = 'https://www.youtube.com/watch?v=fUMu9LdtVeE&feature=emb_logo';
     }
-    if(this.crtVideo===2){
+    if(this.crtVideo==='videoConfirm2'){
       outlinkUrl = 'https://www.youtube.com/watch?v=JVu2wc1GBpg&feature=emb_logo';
       }
-    if(this.crtVideo===3){
+    if(this.crtVideo==='videoConfirm3'){
       outlinkUrl = 'https://www.youtube.com/watch?v=lHqxkq_WfUk&feature=emb_logo';
     }
-    if(this.crtVideo===4){
+    if(this.crtVideo==='videoConfirm4'){
       outlinkUrl = 'https://www.youtube.com/watch?v=P9_32clrvLk&feature=emb_logo';
     }
-    if(this.crtVideo===5){
+    if(this.crtVideo==='videoConfirm5'){
       outlinkUrl = 'https://www.youtube.com/watch?time_continue=1&v=KLvdZnF2FZI&feature=emb_logo';
     }
-    if(this.crtVideo===6){
+    if(this.crtVideo==='videoConfirm6'){
       outlinkUrl = 'https://www.youtube.com/watch?v=gYt00x7QsbY&feature=emb_logo';
     }
-    this._$confirm1.remove();
-    this._$confirm2.remove();
-    this._$confirm3.remove();
-    this._$confirm4.remove();
-    this._$confirm5.remove();
-    this._$confirm6.remove();
+    if(this.crtVideo==='videoConfirm7'){
+      outlinkUrl = 'https://youtu.be/iyCDDPpbpMI';
+    }
+
+    $('.confirmDiv').remove();
     Tw.CommonHelper.openUrlExternal(outlinkUrl);
+  },
+
+  _onOpenPopup: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+    $layer.on('click', '.pos-right', $.proxy(this._confirm, this));
   },
 
   _bindEvent: function () {
@@ -137,3 +90,4 @@ Tw.CustomerUseguideCommon.prototype = {
     Tw.CommonHelper.openUrlExternal(e.currentTarget.value);
   }
 };
+

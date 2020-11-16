@@ -675,12 +675,12 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    */
   _reqIsAdditionUse: function(joinTermCd, url) {
-    if (this._prodId === 'NA00000282') {
-      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00007017'])
-      .done($.proxy(this._resIsAdditionUse, this, joinTermCd, url));
-    } else if (this._prodId === 'NA00007017') {
-      this._apiService.request(Tw.API_CMD.BFF_05_0040, {}, {}, ['NA00000282'])
-      .done($.proxy(this._resIsAdditionUse, this, joinTermCd, url));
+    if (this._prodId === 'NA00007017') {
+      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.V_COLORING_TERMINATE_PROD_ID.join('~')] )
+        .done($.proxy(this._resIsAdditionUse, this, joinTermCd, url));
+    } else if (this._prodId === 'NA00000282') {
+      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.COLORING_TERMINATE_PROD_ID.join('~')] )
+        .done($.proxy(this._resIsAdditionUse, this, joinTermCd, url));
     } else {
       this._reqTerminateDefense(joinTermCd, url);
     }
@@ -695,7 +695,27 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    */
   _resIsAdditionUse: function(joinTermCd, url, resp) {
-    var isAdditionUse = resp.result.isAdditionUse;
+    var isAdditionUse = 'N';
+
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      // V컬러링 해지 시 자동선해지 상품 체크
+      if (this._prodId === 'NA00007017') {
+        for ( var i = 0 ; i < Tw.V_COLORING_TERMINATE_PROD_ID.length; i++ ) {
+          if ( resp.result[Tw.V_COLORING_TERMINATE_PROD_ID[i]] !== 'N') {
+            isAdditionUse = 'Y';
+            break;
+          }
+        }
+      } else if (this._prodId === 'NA00000282') {
+        for ( var i = 0 ; i < Tw.COLORING_TERMINATE_PROD_ID.length; i++ ) {
+          if ( resp.result[Tw.COLORING_TERMINATE_PROD_ID[i]] !== 'N') {
+            isAdditionUse = 'Y';
+            break;
+          }
+        }
+      }
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
       .done($.proxy(this._resTerminateDefense, this, joinTermCd, url, isAdditionUse));
 
@@ -731,7 +751,7 @@ Tw.ProductCommonCallplan.prototype = {
       return this._procPreCheck(joinTermCd, url);
     }
 
-    if ((this._prodId === 'NA00000282' && isAdditionUse !== 'Y') || (this._prodId === 'NA00007017' && isAdditionUse !== 'Y')) {
+    if ((this._prodId === 'NA00007017' && isAdditionUse !== 'Y') || (this._prodId === 'NA00000282' && isAdditionUse !== 'Y')) {
       return this._procPreCheck(joinTermCd, url);
     }
 

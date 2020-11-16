@@ -1,0 +1,25 @@
+<%#
+* @file main.welcome.html
+* @author Ara Jo (araara.jo@sk.com)
+* @since 2018.01.11
+* HO_03
+%>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<h1><%- title %></h1>
+<h2><%- desc %></h2>
+
+<% include ../components/javascript.component.html %>
+<%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
+<script>
+</script>
+</body>
+<% include ../components/end.component.html %>
