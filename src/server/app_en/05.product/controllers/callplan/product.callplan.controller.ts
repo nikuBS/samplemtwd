@@ -49,6 +49,10 @@ export default class CallPlan extends TwViewController {
             if (prodData.smryHtmlEngCtt === '<p>&nbsp;</p>') {
               prodData.smryHtmlEngCtt = '';
             }
+            
+        for ( const t in contentsData ){
+          console.log("@@@@@@@@@@@" + t , contentsData[t]);
+        }
           
         if ( contentsData != null ) {
           for (let i = 0; i < contentsData.length; i++) {
@@ -61,25 +65,7 @@ export default class CallPlan extends TwViewController {
         }
         prodData.basFeeInfo = ProductHelper.convProductBasfeeInfo(prodData.basFeeEngInfo);
 
-        const groupName = {value: '5GX Plan' };
-        if ( prod === 'NA00006405' || prod === 'NA00006404' || prod === 'NA00006403' || prod === 'NA00006402' ) {
-          groupName.value = '5GX Plan';
-        } else if ( prod === 'NA00006817' ) {
-          groupName.value = '5G 0 Teen';
-        } else if ( prod === 'NA00006539' || prod === 'NA00006538' || prod === 'NA00006537' 
-        || prod === 'NA00006536' || prod === 'NA00006535' || prod === 'NA00006534') {
-          groupName.value = 'T Plan';
-        } else if ( prod === 'NA00006157' || prod === 'NA00006156' || prod === 'NA00006155') {
-          groupName.value = '0 Plan';
-        } else if ( prod === 'NA00005629' || prod === 'NA00005628' || prod === 'NA00005627') {
-          groupName.value = 'Ting On Weekends';
-        } else if ( prod === 'NA00006797' || prod === 'NA00006796' || prod === 'NA00006795' || prod === 'NA00006794' || prod === 'NA00006793') {
-          groupName.value = 'T Plan Senior';
-        } else if ( prod === 'NA00006864' || prod === 'NA00006862') {
-          groupName.value = '5G Tab';
-        }
-
-        res.render('callplan/en.product.callplan.html', {svcInfo, pageInfo, prodData, contentsData, groupName, changing});
+        res.render('callplan/en.product.callplan.html', {svcInfo, pageInfo, prodData, contentsData, changing});
         
     });
      }
@@ -91,7 +77,7 @@ export default class CallPlan extends TwViewController {
       } else if ( env === 'stg' ) { // 스테이징
         return {'changingCDN' : 'https://cdnm-stg.tworld.co.kr'};
       } else { // local, dev
-        return {'changingCDN' : 'https://cdnm-stg.tworld.co.kr'}; // 원래는 cdnm-dev지만 테스트 위해 변경
+        return {'changingCDN' : 'https://cdnm-dev.tworld.co.kr'}; // 원래는 cdnm-dev지만 테스트 위해 변경
       }
     }
 }

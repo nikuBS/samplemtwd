@@ -53,33 +53,40 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="prCont">
                 <% if (contentsData!=undefined){ %>
-                <% for(let i= 0; i < contentsData.length ; i++){ if(contentsData[i].popupUseYn=='N'){%>
-                    <%- contentsData[i].popupDtlCtt %>
-                    <%- contentsData[i].dtlCtt %>
-                <% }}} %>
+                    <% for(let i= 0; i < contentsData.length ; i++){ %>
+                        <% if(contentsData[i].popupUseYn=='N'){%>
+                            <%- contentsData[i].popupDtlCtt %>
+                            <%- contentsData[i].dtlCtt %>
+                        <% } %>
+                    <% } %>
+                <% } %>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="cont-box nogaps">
-                    <ul class="link-long-list">
-                        <li>
-                            <div class="link-long">
-                                <button>
-                                    <%= groupName.value %> Subscription/Cancellation
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">detail</span></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <% if (contentsData!=undefined){ %>
+                    <% for(let c = 0; c < contentsData.length ; c++){ %>
+                        <% if(contentsData[c].popupUseYn=='Y'){ %>
+                    <div class="cont-box nogaps">
+                        <ul class="link-long-list">
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <span id="popupTitle"><%= contentsData[c].titleEngNm %></span>
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">detail</span></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="popupContents" style="display:none"><%- contentsData[c].popupDtlCtt %></div>
+                        <% } %>
+                    <% } %>
+                <% } %>
                 <!-- 팝업 띄우는 링크 -->
-                <div class="popupDiv"></div>
             </div>
         </div>
         <%- include('../../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        <input type="hidden" id="prodGroup" value="<%= groupName.value %>">
-        <input type="hidden" id="prodNm" value="<%= prodData.prodEngNm %>">
     </div>
 </body>
 
