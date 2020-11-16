@@ -70,11 +70,6 @@ class CommonMemberLogoutExpire extends TwViewController {
             preSession = resp.result;
           }
 
-          if (!preSession.includes('undefined')) {
-            const target = req.query.target || '/main/home';
-            res.redirect(target);
-          }
-
           this.logger.error(this
             , headerComment
             , 'IP :' + this.loginService.getNodeIp(req)                             // 사용자 IP
