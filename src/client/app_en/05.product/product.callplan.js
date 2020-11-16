@@ -1,7 +1,7 @@
-Tw.ProductCallplan = function(rootEl) {
+Tw.ProductCallplan = function(rootEl,contents) {
     this.$container = rootEl;
+    this.$ProdContents = contents;
     this._popupService = Tw.Popup;
-
     this.$button = this.$container.find('.nogaps .link-long-list .link-long button');
     this.$popup = this.$container.find('.popup-page');
     this.$closePopup = this.$container.find('.popup-closeBtn');
@@ -22,36 +22,14 @@ Tw.ProductCallplan = function(rootEl) {
         this.$button.on('click', $.proxy(this._popup,this));
     },
     _popup: function(e){
-        var prodNm = '';
-        
-        if( this._uri === 'NA00006405' ||  this._uri === 'NA00006404' || this._uri === 'NA00006403' ) {
-            prodNm = 'MP2_1';
-        } else if( this._uri === 'NA00006402' ){
-            prodNm = 'MP2_2';
-        } else if( this._uri === 'NA00006817' ){
-            prodNm = 'MP2_3';
-        } else if( this._uri === 'NA00006539' || this._uri === 'NA00006538' ){
-            prodNm = 'MP2_4';
-        } else if( this._uri === 'NA00006537' || this._uri === 'NA00006536' || this._uri === 'NA00006535' ){
-            prodNm = 'MP2_5';
-        } else if( this._uri === 'NA00006534' ){
-            prodNm = 'MP2_6';
-        } else if( this._uri === 'NA00006157' ){
-            prodNm = 'MP2_7';
-        } else if( this._uri === 'NA00006156' || this._uri === 'NA00006155' ){
-            prodNm = 'MP2_8';
-        } else if( this._uri === 'NA00005629' || this._uri === 'NA00005628' || this._uri === 'NA00005627' ){
-            prodNm = 'MP2_9';
-        } else if( this._uri === 'NA00006797' || this._uri === 'NA00006796' || this._uri === 'NA00006795' || this._uri === 'NA00006794'){
-            prodNm = 'MP2_10';
-        } else if( this._uri === 'NA00006793' ){
-            prodNm = 'MP2_11';
-        } else if( this._uri === 'NA00006862' || this._uri === 'NA00006864' ){
-            prodNm = 'MP2_12';
-        }
         this._popupService.open({
             url: '/hbs/' ,
-            hbs: prodNm
+            hbs: 'en.product.callplan.detailtemp',
+            data: {
+                'prodContents': this._makePopupContents(),
+                //'DetailTitle': Handlebars.compile($('#popupTitle').html())()
+                'DetailTitle': $('#popupTitle').html()
+            }
           },
             $.proxy(this._onOpenPopup, this),
             null,
@@ -65,5 +43,10 @@ Tw.ProductCallplan = function(rootEl) {
 
     _closePopup: function(){
         $('.popup').remove();
+    },
+
+    _makePopupContents: function(){
+        return $('#popupContents').html();
     }
   };
+
