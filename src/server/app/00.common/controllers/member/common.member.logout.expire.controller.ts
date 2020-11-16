@@ -36,11 +36,14 @@ class CommonMemberLogoutExpire extends TwViewController {
     // Session 뒤바뀜 방어로직 추가(Sensing)
     if (this.loginService.isLogin(req) && !FormatHelper.isEmpty(sessInvalid)) {
       this.processInvalidSession(req, res);
+      res.redirect(target);
+    } else {
+      this.loginService.sessionGenerate(req, res).subscribe(() => {
+        this.logger.error(this, this.loginService.getSessionId(req));
+        res.render('member/common.member.logout.expire.html', { svcInfo, pageInfo, target });
+      });
     }
-    this.loginService.sessionGenerate(req, res).subscribe(() => {
-      this.logger.error(this, this.loginService.getSessionId(req));
-      res.render('member/common.member.logout.expire.html', { svcInfo, pageInfo, target });
-    });
+    
   }
 
   /***
@@ -57,9 +60,6 @@ class CommonMemberLogoutExpire extends TwViewController {
     const device = this.loginService.getDevice(req) || 'web';
     const headerComment = '[Invalid Session(Change Session)] ' + point;
     const curSession = req.session;
-    const target = req.query.target || '/main/home';
-
-    this.logger.error(this, 'target: ' + target);
 
     // Client에서 세션 변경이 감지된 경우
     if (point.indexOf('CLIENT') !== -1) {
