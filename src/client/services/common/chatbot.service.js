@@ -324,17 +324,17 @@ Tw.ChatbotService.prototype = {
               if (androidV < 8){
                   // andorid version is <=8
                    isAllowedOs = false;
-                   console.log("isAllowedOs:androidV < 8"+isAllowedOs)
+                   console.log("isAllowedOs"+isAllowedOs)
               }else{
                    // andorid version is >8
                    isAllowedOs = true;
-                   console.log("isAllowedOs:androidV >8"+isAllowedOs)
+                   console.log("isAllowedOs"+isAllowedOs)
               }
            } 
           
 
         }
-        //var isAllowedDevice = false;
+        // var isAllowedDevice = false;
 
         // for (var idx = 0; idx < _this._accessAllowedDevice.length; idx++) {
         //     var allowed_device = _this._accessAllowedDevice[idx];
@@ -346,7 +346,7 @@ Tw.ChatbotService.prototype = {
 
         var isAllowed = false;      // urlPath에 따라 챗봇 오픈여부 결정
         var isDefaultPage = false;  // 전체메뉴 > 챗봇 상담하기 를 통한 진입 여부
-        if (isAllowedOs) { // isAllowedDevice가 isAllowedOs로 원복됨
+        if (isAllowedOs) { // isAllowedOs가 isAllowedDevice로 원복됨
             Tw.Logger.info('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
             console.log('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
 
@@ -409,8 +409,7 @@ Tw.ChatbotService.prototype = {
             } else {
                 // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');
                 console.log('[chatbot.service] [_init] 챗봇 팝업 노출대상 화면에 진입한 경우', '');            
-                        // 챗봇 서비스 차단 여부 체크
-                        this._checkBlockChatbotService();
+
                 this._apiService.requestArray([
                     { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
                 ])
@@ -428,7 +427,6 @@ Tw.ChatbotService.prototype = {
                     }else{
                         Tw.Logger.info('[chatbot.service] [_init] 회선 정보 있음 : ', '');
                         console.log('[chatbot.service] [_init] 회선 정보 있음 : ', '');
-
                         this._apiService.requestArray([
                             { command: Tw.API_CMD.BFF_05_0220, params: {} },
                             { command: Tw.API_CMD.BFF_05_0231, params: {'channel_ids':[this._mlsChannelId], 'sale_org_id':'V990550000'} }
@@ -535,7 +533,8 @@ Tw.ChatbotService.prototype = {
                                         this._typeA = false;
                                         this._typeB = true;
                                     }
-                                    
+                                    // 챗봇 서비스 차단 여부 체크
+                                    this._checkBlockChatbotService();
                                 }else{
                                     // MLS API 0231 호출 후 오류난 경우(ex. 데이터가 없는 경우 등) , imageType = 'B', textType = 'A', 기본발화어
                                     // imageType
