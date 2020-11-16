@@ -79,7 +79,7 @@ Tw.MyTFareBillPrepayAccount.prototype = {
   _setAvailableAmount: function (res) {
     Tw.CommonHelper.endLoading('.popup-page', 'grey');
     var amount = res.result.tmthChrgPsblAmt;
-    this.$maxAmount.attr('id', amount).text(Tw.FormatHelper.addComma(amount));
+    this.$container.find('.fe-max-amount').attr('id', amount).text(Tw.FormatHelper.addComma(amount));
   },
 
   /**

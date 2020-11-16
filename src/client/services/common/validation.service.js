@@ -151,8 +151,12 @@ Tw.ValidationService.prototype = {
         message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10;
       } else if ($target.data('validLabel') === 'prepay') { // 소액결제,콘텐츠이용료 선결제 시
         var reg = /[0-9]*0$/g;
-        if (!this._validation.checkIsMore(_prepayAmount, 999)) {
-          message = Tw.ALERT_MSG_MYT_FARE.TEN_MIN;
+        // [OP002-11873] 카드결제일때, 최소 결제금액한도 변경. 1000원 -> 10원
+        var prepayType = $target.data('prepay-type'); // 선결제 타입
+        var isCardType = prepayType === 'card';
+        var minValue = isCardType ? 10 : 1000;
+        if (!this._validation.checkIsMore(_prepayAmount, minValue)) {
+          message = isCardType ? Tw.ALERT_MSG_MYT_FARE.TEN_MIN : Tw.ALERT_MSG_MYT_FARE.THOUSAND_MIN;
         } else if (!reg.test(_prepayAmount)) {
           message = Tw.ALERT_MSG_MYT_FARE.TEN_UNIT;
         } else {
