@@ -57,6 +57,9 @@ class CommonMemberLogoutExpire extends TwViewController {
     const device = this.loginService.getDevice(req) || 'web';
     const headerComment = '[Invalid Session(Change Session)] ' + point;
     const curSession = req.session;
+    const target = req.query.target || '/main/home';
+
+    this.logger.error(this, 'target: ' + target);
 
     // Client에서 세션 변경이 감지된 경우
     if (point.indexOf('CLIENT') !== -1) {
@@ -68,11 +71,6 @@ class CommonMemberLogoutExpire extends TwViewController {
           let preSession = 'undefined';
           if ( resp.code === API_CODE.CODE_00 ) {
             preSession = resp.result;
-          }
-
-          if (!preSession.includes('undefined')) {
-            const target = req.query.target || '/main/home';
-            res.redirect(target);
           }
 
           this.logger.error(this
