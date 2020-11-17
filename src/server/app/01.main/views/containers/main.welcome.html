@@ -1,33 +1,10 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<meta name="format-detection" content="telephone=no, address=no, email=no" />
-	<link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.ico" />
-	<link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.png" />
-	<link rel="apple-touch-icon" href="<%= CDN %>/img/common/favicon.png" />
-	<meta name="description" content="페이지설명" />
-	<meta name="keywords" content="서비스키워드" />
-	<meta property="og:title" content="SKT 홈페이지" />
-	<meta property="og:site_name" content="SKT" />
-	<meta property="og:image" content="<%= CDN %>/image/common/skt_facebook.jpg" />
-	<meta property="og:description" content="SKT framework" />
-	<title>SKT</title>
-	<link rel="stylesheet" type="text/css" href="<%= CDN %>/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
-	<link rel="stylesheet" type="text/css" href="<%= CDN %>/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
-	<link rel="stylesheet" type="text/css" href="<%= CDN %>/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-	<link rel="stylesheet" type="text/css" href="<%= CDN %>/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-	<script type="text/javascript" src="<%= CDN %>/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
-	<script type="text/javascript" src="<%= CDN %>/lib/slick.js"></script><!--[C] iscroll API -->
-	<script type="text/javascript" src="<%= CDN %>/js/$vars.js"></script><!--[C] 전역 변수 -->
-	<script type="text/javascript" src="<%= CDN %>/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-</head>
-
-
+<%#
+* @file main.welcome.html
+* @author Tonyspark (jobkim0410@gmail.com)
+* @since 2020.11.17
+* 
+%>
+<%- include('../components/welcome.start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
 	<!-- #skip_navigation -->
 	<div id="skipNav" class="skip_navi">
@@ -246,7 +223,7 @@
 							</div>
 						</div>
 					</div>
-
+					<% include ../components/javascript.component.html %>
 					<script type="text/javascript">
 						$(document).ready(function(){
 							$(".extra-show .more_btn").on("click",function(e){
@@ -270,4 +247,4 @@
 	</div>
 </body>
 
-</html>
+<% include ../components/end.component.html %>
