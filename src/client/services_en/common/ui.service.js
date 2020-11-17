@@ -4,6 +4,8 @@ Tw.UIService = function () {
   this.setReplace();
   this.setBackRefresh();
   this.setInputEvent();
+
+  console.log(document.referrer)
 };
 
 Tw.UIService.prototype = {
@@ -16,8 +18,8 @@ Tw.UIService.prototype = {
     $('.fe-common-back').on('click', function ($event) {
       Tw.Logger.info('[Common Back]');
       if ( Tw.BrowserHelper.isApp() && $($event.currentTarget).parent().data('history') <= 1 &&
-        !(/\/main\/home/.test(location.href) || /\/main\/store/.test(location.href))) {
-        location.replace('/main/home');
+        !(/\/en\/main\/home/.test(location.href) || /\/en\/main\/store/.test(location.href))) {
+        location.replace('/en/main/home');
       } else {
         window.history.back();
       }
