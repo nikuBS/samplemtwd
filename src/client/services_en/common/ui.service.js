@@ -21,7 +21,12 @@ Tw.UIService.prototype = {
         !(/\/en\/main\/home/.test(location.href) || /\/en\/main\/store/.test(location.href))) {
         location.replace('/en/main/home');
       } else {
-        window.history.back();
+        var url = document.referrer;
+        if( url.indexOf('common/member/login/route') != -1 && url != '' ) {
+          window.history.go(-2);
+        } else {
+          window.history.back();
+        }
       }
     });
   },
