@@ -22,6 +22,7 @@ Tw.UIService.prototype = {
         location.replace('/en/main/home');
       } else {
         var url = document.referrer;
+        alert('개발팀에서 확인중입니다. ' + url);
         if( url.indexOf('common/member/login/route') != -1 && url != '' ) {
           window.history.go(-2);
         } else {
