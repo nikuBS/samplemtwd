@@ -643,9 +643,9 @@
 
 .call-plan { width: 100%; height: 3.25rem; line-height: 3.25rem; padding: 0 0.94rem; display: table; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-.call-plan dt { width: 65%; display: table-cell; font-size: 1rem; color: #666; text-align: left; }
+.call-plan dt { width: 45%; display: table-cell; font-size: 1rem; color: #666; text-align: left; }/* 201113 [OP002-11895] 수정_01 */
 
-.call-plan dd { width: 35%; display: table-cell; font-size: 1.06rem; color: #000; font-weight: 500; text-align: right; }
+.call-plan dd { width: 55%; display: table-cell; font-size: 1.06rem; color: #000; font-weight: 500; text-align: right; line-height: 1.2; vertical-align: middle;}/* 201113 [OP002-11895] 수정_02*/
 
 .my-info-tit { height: 3.25rem; line-height: 3.25rem; font-size: 1rem; font-weight: 500; }
 
