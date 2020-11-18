@@ -19,12 +19,12 @@ _%>
       </button>
     </li>
     <%# // TODO: 임시로 메뉴(나의 부가서비스)를 다시 살린다. 정리되면, 지운다. _%>
-    <%_ if (data.myAddProduct.addProdTotCnt) { _%>
+    <%_ if (data.myAddProduct.prodTotCnt) { _%>
     <li>
       <button type="button" data-id="add-prod" title="나의 부가서비스" aria-haspopup="true">
         <span class="inner">
           <span class="tit">나의 부가서비스</span>
-          <span class="text"><%- data.myAddProduct.addProdTotCnt %>개</span>
+          <span class="text"><%- data.myAddProduct.prodTotCnt %>개</span>
         </span>
       </button>
     </li>

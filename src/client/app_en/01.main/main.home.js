@@ -153,6 +153,7 @@ Tw.MainHome.prototype = {
    */
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
+    this.$container.on('click', '.fe-bt-home-slogin', $.proxy(this._onClickSLogin, this));
     this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSignup, this));    
   },
 
@@ -323,6 +324,17 @@ Tw.MainHome.prototype = {
   _onClickLogin: function () {
     this._tidLanding.goLogin();
   },
+
+  /**
+   * @function
+   * @desc 간편로그인 버튼 클릭 처리
+   * @return {void}
+   * @private
+   */
+  _onClickSLogin: function () {
+    this._tidLanding.goSLogin();
+  },
+
    /**
    * @function
    * @desc 회원가입 버튼 클릭 처리

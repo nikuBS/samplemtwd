@@ -28,6 +28,15 @@ class Welcome extends TwViewController {
    * @return {void}
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+
+    if (svcInfo) { // 로그인 
+        const tLink = ['/main/home', '/myt-join/submain', '/myt-data/submain', '/customer'];
+        const myfedd = '/new/my-feed';
+        
+    } else { // 비로그인 
+
+    }
+
     res.render(`main.welcome.html`, {
       title: '환영페이지',
       desc: 'T월드 페이지를 환영 합니다.'

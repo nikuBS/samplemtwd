@@ -3388,7 +3388,7 @@ body.apphome .main-membershop-box {
   min-height: 12.75rem;
   height: auto; }
 
-/* 201016 [OP002-11366] 320 배너 영역 : 예외처리 */ 
+ /* 201016 [OP002-11366] 320 배너 영역 : 예외처리 */ 
  @media screen and (max-width: 320px){
   .main-charge-box.section-swiper-box {
     min-height: auto;
@@ -5438,9 +5438,9 @@ body.apphome .main-membershop-box {
     animation-timing-function:ease-in-out;
     transform-origin:50%;
 }
-.tod-cir_wrap .cir:nth-child(1){-webkit-animation-delay: 0s; animation-delay: 0s}
-.tod-cir_wrap .cir:nth-child(2){-webkit-animation-delay: 0.1s; animation-delay: 0.1s}
-.tod-cir_wrap .cir:nth-child(3){-webkit-animation-delay: 0.2s; animation-delay: 0.2s}
+.tod-cir_wrap .cir:nth-child(1){-webkit-animation-delay: 0s; animation-delay: -0s}
+.tod-cir_wrap .cir:nth-child(2){-webkit-animation-delay: 0.1s; animation-delay: -0.15s}
+.tod-cir_wrap .cir:nth-child(3){-webkit-animation-delay: 0.2s; animation-delay: -0.3s}
 .tod-cir_wrap.stop .cir{-webkit-animation-play-state: paused;animation-play-state: paused}
 
 @keyframes tod-cirmove{
@@ -5574,6 +5574,10 @@ body.apphome .main-membershop-box {
 .main-chart-box .call-message [class^="bt-"].bt-5gx {padding-left:1.31rem;}
 .main-chart-box .call-message [class^="bt-"].bt-5gx .remain {display:inline-block; min-width:7rem; text-align:right; color:#178bce;}
 .main-chart-box .donutchart .donut-chart.data-type .tx-add {position:absolute; top:58%; left:2.625rem; right:2.625rem; font-size:0.75rem;}
+/* 190927 [OP002-4962] 5GX 시간권 잔여량 추가 */
+.member-info-box .call-message .bt-5gx {position:relative; padding-left:1.5rem; display:inline-block; text-align:left; font-size:1rem;}
+.member-info-box .call-message .bt-5gx .remain {padding-left:0.625rem; color:#178bce;}
+.member-info-box .call-message .bt-5gx i.icon-time-34 {position:absolute; top:0; left:0; display:inline-block; width:1.25rem; height:1.25rem; background:url(/img/ico/icon_34px_time.png) no-repeat 0 0; background-size:97% 97%;}
 
 /* 191016 [OP002-4450] eSIM 셀프 개통하기 */
 .tod-main-banner-box{display:table;width:100%;padding:0.75rem 1.25rem}
@@ -5592,7 +5596,6 @@ body.apphome .main-membershop-box {
 .cont-actionsheet .ac-list .type1 .table-cell > span.add .badge.tod-child{background-image:url('/img/common/badge/badge_family_04.svg'); }
 .cont-actionsheet .ac-list .type1.tod-bg{background:#e6f2fb; padding:0.6875rem 0.75rem 0.625rem 1rem; box-sizing:border-box; height:2.75rem}
 .cont-actionsheet .ac-list .type1.tod-bg > button{vertical-align:top}
-.cont-actionsheet .ac-list .type1.tod-bg .table-cell > span.add{white-space:nowrap;}
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico4 {background: url('/img/svg/icon_80px_realtime_data.svg') no-repeat 0 0;background-size: 100% 100%; }
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico5 {background: url('/img/svg/icon_80px_charge.svg') no-repeat 0 0;background-size: 100% 100%; }
 .cont-actionsheet .ac-list .type2 .circle .simbol.ico6 {background: url('/img/svg/icon_80px_realtime_pay.svg') no-repeat 0 0;background-size: 100% 100%; }
@@ -5616,7 +5619,65 @@ body.apphome .main-membershop-box {
 .quick-menu-list.tod-quick-menu-list li .bt.tod-bt-tdirectshop i {width: 5.0313rem !important; height: 1.1563rem !important;}
 
 /* 200518 [OP002-8424] 추가 */
-.dialog-box{ display:flex; -webkit-align-items: center;  align-items: center;}
+.dialog-box{ display:flex; -webkit-align-items: center;  align-items: center; }
 
 /* 200802 추가[OP002-9807] 추가 */
-.tod-icon-msg-red {display:inline-block; width:1.375rem; height:1.375rem; background:url(/img/ico/icon_44_msg.png) no-repeat 0 0; background-size:100% 100%;}
+.tod-icon-msg-red {display:inline-block; width:1.375rem; height:1.375rem; background:url(/img/ico/icon_44_msg.png) no-repeat 0 0; background-size:100% 100%; }
+
+/* 200802 추가[OP002-11900] 모바일웹 상단 타이틀 영역 수정 요청 */
+.header-wrap .h-belt .h-default .h-home-tit.tod-h-home-tit {margin:0 4.5rem}
+
+/* 201112 [OP002-11754] Welcome Page 제작 추가 */
+.welcome-wrap .welcome-header {padding:2.5rem 0 2.1875rem; background:#fff; text-align:center; font-size:2rem; font-weight:700;}
+.welcome-wrap .welcome-header .icon-gnb-home {background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .welcome-header .ti {display:block; padding:1.5625rem 0 0}
+.welcome-wrap .welcome-header .tx {padding:0.7188rem 0 0; font-weight:400; font-size:1.375rem;}
+.welcome-wrap .main-top-group {margin-bottom:0; padding:1.5625rem 0 0.9375rem;}
+.welcome-wrap .quick-menu-list {padding:0; border:none;}
+.welcome-wrap .main-top-group .icon-tworld-80 {width:2.5rem; height:2.5rem; background:url('/img/main/icon_80px_tworld.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .main-top-group .icon-myjoin-80 {width:2.5rem; height:2.5rem; background:url('/img/main/icon_80px_myjoin.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .main-top-group .icon-mydata-80 {width:2.5rem; height:2.5rem; background:url('/img/main/icon_80px_mydata.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .main-top-group .icon-myinfo-80 {width:2.5rem; height:2.5rem; background:url('/img/main/icon_80px_myinfo.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .welcome-box {margin: 1.5rem 1rem 0 1rem;}
+.welcome-wrap .welcome-tit {font-size:1.5625rem; font-weight:500;}
+.welcome-wrap .extra-show .extra-serive {margin:1.5rem 1rem 0 1rem}
+.welcome-wrap .extra-show .btn_wrap {text-align:center; line-height:4.125rem;}
+.welcome-wrap .extra-show .more_btn {border-top: solid 0.125rem #e5e5e5;}
+.welcome-wrap .extra-show.on .more_btn {margin-top:1.25rem;}
+.welcome-wrap .extra-serive .more_btn .bt {position: relative; width:100%; font-size:0.75rem; color:#666; height:4.125rem;}
+.welcome-wrap .extra-serive .more_btn .bt:after {content:''; right:50%;top:50%;margin:-0.2rem 0 0 0;margin-right: -3.7rem;width: 0.3875rem;height: 0.3875rem;border-top: 0.0938rem solid #666666;border-left: 0.0938rem solid #666666; -webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);-ms-transform: rotate(45deg);-o-transform: rotate(45deg);background-color: transparent;position: absolute;}
+.welcome-wrap .extra-show.on .more_btn .bt:after {margin:-0.45rem -3.9rem 0 0; transform: rotate(225deg);}
+.welcome-wrap .extra-show .view_all {font-size:0.875rem;text-decoration:underline;}
+.welcome-wrap .extra-show .extra-serive-list {margin:1.5rem 0 0 0; position:relative;}
+.welcome-wrap .extra-show .extra-serive-list {margin:1.5rem 0 0 0; position:relative;}
+.welcome-wrap .extra-show.on .extra-serive-list li {width:100%;}
+.welcome-wrap .extra-show.on .extra-serive-list li:nth-child(2) {transform: scale(0.98); position: absolute; top:-3px; z-index: -1;}
+.welcome-wrap .extra-show.on .extra-serive-list li:nth-child(3) {transform: scale(0.95); position: absolute; top:9px; z-index: -2;}
+.welcome-wrap .extra-show.on .btn_wrap {display:none;}
+.welcome-wrap .extra-show.on .more_btn {border-top:none;}
+.welcome-wrap .extra-serive-list button {width:100%; text-align:left;}
+.welcome-wrap .extra-serive-list > li .section-box.extra {margin:0.75rem 0 0 0; padding:1.3125rem 1.5rem;}
+.welcome-wrap .extra-serive-list > li:first-child .section-box.extra {margin:0;}
+.welcome-wrap .section-box .extra-cont-box {position:relative; padding:0 0 0 4rem;}
+.welcome-wrap .section-box .extra-cont-box .ti {display:block; overflow:visible; max-height:none; box-sizing:border-box; text-overflow:clip; white-space:normal; word-break:break-word; font-size:0.875rem; font-weight:500;}
+.welcome-wrap .section-box .extra-cont-box .tag {display:block; margin-top:0.25rem; font-size:0.75rem; color: #178bce; }
+.welcome-wrap .section-box .extra-cont-box .tx {display: block; width: 100%; margin-top: 0.31rem; color:#959595; font-size:0.81rem; overflow:hidden; display:-webkit-box; line-height:1.19rem; }
+.welcome-wrap .section-box .icon {position:absolute; left:0; top:50%; margin-top:-1.375rem; width:2.75rem; height:2.75rem; border:1px solid #c1c1c1; border-radius:100%; line-height:3.5625rem; text-align:center; -webkit-box-sizing:border-box; box-sizing:border-box;}
+.welcome-wrap .section-box .icon img {width:1.5625rem;}
+.welcome-wrap .welcome-box.recommended-feed {margin:0;}
+.welcome-wrap .welcome-box.recommended-feed .full-banner {display:block; width:100%;}
+.welcome-wrap .welcome-box.app-introduct {margin:0; padding:2.3438rem 1rem 2.5rem 1rem; background:#fff;}
+.welcome-wrap .welcome-box.app-introduct .section-box {margin:1.5rem 0 0 0; padding:0;}
+.welcome-wrap .welcome-box.app-introduct .heaer-wrap {display: flex; -webkit-justify-content:space-between; justify-content:space-between; margin:1.5625rem 0 0 0; }
+.welcome-wrap .welcome-box.app-introduct .heaer-wrap .head-tit {font-size:0.875rem; position:relative; color:#000; font-weight:500;}
+.welcome-wrap .welcome-box.app-introduct .heaer-wrap .link {display:block; margin-right:0.75rem; position: relative; font-size:0.875rem; color:#666;}
+.welcome-wrap .welcome-box.app-introduct .heaer-wrap .link.link:after{content:''; display:inline-block; width:0.3875rem; height:0.3875rem; border-top:0.0938rem solid #666666; border-left:0.0938rem solid #666666; -webkit-transform:rotate(135deg); -moz-transform:rotate(135deg); -ms-transform:rotate(135deg); -o-transform:rotate(135deg); transform:rotate(135deg); background-color:transparent; position:absolute; top:0.3125rem; left:2.5125rem;}
+.welcome-wrap .welcome-box.app-introduct .quick-menu-list {margin-top:1.25rem;}
+.welcome-wrap .welcome-box.app-introduct .bt i {margin: 0 auto 0.625rem;}
+.welcome-wrap .welcome-box.app-introduct .icon-app-list1 {width:3.7813rem; height:3.7813rem; background:url('/img/main/ico_app_list1.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .welcome-box.app-introduct .icon-app-list2 {width:3.7813rem; height:3.7813rem; background:url('/img/main/ico_app_list2.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .welcome-box.app-introduct .icon-app-list3 {width:3.7813rem; height:3.7813rem; background:url('/img/main/ico_app_list3.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .welcome-box.app-introduct .icon-app-list4 {width:3.7813rem; height:3.7813rem; background:url('/img/main/ico_app_list4.png') no-repeat 0 0; background-size:100% 100%;}
+.welcome-wrap .welcome-box.product-combine {background:#f0f0f0;}
+.welcome-wrap .welcome-box.product-combine .section-box {margin:1.5rem 0 0 0; padding:0;}
+

@@ -50,8 +50,8 @@
                                                     <input id="fe-input-birth" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="Birth Date of Mobile Line Subscriber YYMMDD" value="" title="Birth Date of Mobile Line Subscriber YYMMDD"><!-- 오류일 경우 aria-sms-exp-desc2로 변경 --><!-- 웹접근성 수정 -->
                                                     <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">delete</span></button>
                                                 </span>
-                                                <span id="aria-birth-tx1" class="error-txt none" aria-hidden="true">Please re-confirm and enter your 6 digit date of birth again (i.e. YYMMDD)</span>
-                                                <span id="aria-birth-tx2" class="error-txt none" aria-hidden="true">Please enter your 6 digit date of birth</span>
+                                                <span id="aria-birth-tx1" class="error-txt none" aria-hidden="true">Please enter your 6 digit date of birth (i.e. YYMMDD)</span>
+                                                <span id="aria-birth-tx2" class="error-txt none" aria-hidden="true">Please re-confirm and enter your 6 digit date of birth again (i.e. YYMMDD)</span>
                                             </span>
                                             <span class="inputbox fe-inputbox-gender"><!-- 오류일 경우 class error 추가 -->
                                                 <div class="widget">
@@ -77,19 +77,18 @@
                                             </div>
                                             <span id="fe-inputbox-mdn" class="inputbox bt-add inp-btn "><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                                 <span class="input">
-                                                    <input id="fe-input-mdn" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" type="text" placeholder="" value="" title="Mobile Phone" aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc7, 오류일 경우 aria-sms-exp-desc6로 변경 -->
+                                                    <input id="fe-input-mdn" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" type="text" placeholder="Mobile Phone Number" title="Mobile Phone Number" aria-labelledby="aria-citation-sms" aria-describedby="" a><!-- 정상 발송일 경우 aria-sms-exp-desc7, 오류일 경우 aria-sms-exp-desc6로 변경 -->
                                                 </span>
                                                 <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
-                                                    <button type="button" id="fe-bt-cert"  class="btn-round2 btn-style3 " disabled>SendVerification Number</button>
+                                                    <button type="button" id="fe-bt-cert"  class="btn-round2 btn-style3 " disabled>Send</button>
                                                     <button type="button" id="fe-bt-recert" class="btn-round2 btn-style3 none" >Resend</button>
                                                 </span>
                                             </span>
                                             <span class="tx-box">
-                                                <span id="aria-cert-num2" class="validation-txt">Verification number sent</span><!-- 통과일 경우 class none 삭제 -->
+                                                <span id="aria-cert-num2" class="validation-txt none">Verification number sent</span><!-- 통과일 경우 class none 삭제 -->
                                                 <span id="aria-cert-num3" class="error-txt none" aria-hidden="true">Please try again after 1 minute</span>
                                                 <span id="aria-cert-num4" class="error-txt none" aria-hidden="true">Exceeded number of times verification numbers can be sent within time limit</span>
-                                                <span id="aria-cert-num5" class="error-txt none" aria-hidden="true">Verification number cannot be sent to this mobile number</span>
-                                                
+                                                <span id="aria-cert-num6" class="error-txt none" aria-hidden="true">Verification number cannot be sent to this mobile number</span>                                              
                                             </span>
 
                                         </div>
@@ -98,7 +97,7 @@
                                             <p class="txt">Please enter the verification number received. <input  id="fe-sms-time" class="sms-time" type="text" readonly="readonly" value=""></p> <!--Grand open 접근성 - 아이폰에서 접근 안되어 time부분 input 으로 변경-->
                                             <span id="fe-inputbox-cert"  class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                                 <span class="input">
-                                                    <input id="fe-input-cert" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="Enter Verification Number" title="Enter Verification Number" aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc9, 오류일 경우 aria-sms-exp-desc8로 변경 -->
+                                                    <input id="fe-input-cert" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="Verification No." title="Verification No." aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc9, 오류일 경우 aria-sms-exp-desc8로 변경 -->
                                                     <button href="javascript:void(0)" class="cancel fe-bt-cert-delete" style="display: none;"><span class="blind">delete</span></button>
                                                 </span>
                                                 <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
@@ -106,7 +105,7 @@
                                                 </span>
                                             </span>
                                             <span class="tx-box">
-                                                <span id="aria-cert-num1" class="validation-txt none" aria-hidden="true">Verification number sent</span><!-- 통과일 경우 class none 삭제 -->
+                                                <span id="aria-cert-num1" class="validation-txt none" aria-hidden="true">Time has been extended</span><!-- 통과일 경우 class none 삭제 -->
                                                 <span id="aria-cert-num5" class="error-txt none" aria-hidden="true">Time has run out</span><!-- 오류일 경우 class none 삭제 -->
                                                 <span id="aria-phone-err1" class="error-txt none">Incorrect verification number entered</span>
                                                 <span id="aria-phone-err2" class="error-txt none">Verification number expired</span>
