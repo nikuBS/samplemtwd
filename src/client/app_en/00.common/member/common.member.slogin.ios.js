@@ -390,7 +390,7 @@ Tw.CommonMemberSloginIos.prototype = {
    */
   _successCert: function (reCert, $target, resp) {
     this._clearCertError();
-    this._clearLoginError();
+    //this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
@@ -473,7 +473,7 @@ Tw.CommonMemberSloginIos.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
       clearTimeout(this._addTimer);
     }
-    this._clearCertError();
+    //this._clearCertError();
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
@@ -674,6 +674,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginTime);
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginCnt);
   },
+  
   /**
    * @function
    * @desc 외부 브라우저 랜딩 처리(SSO)
