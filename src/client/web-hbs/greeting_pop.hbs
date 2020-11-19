@@ -16,7 +16,7 @@
                 <div class="list">            
                 {{#each param.[0].greetingKeywordInfos}}
                     <button class="item bpcpItem {{keyword}}">
-                        <span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{text}}</span>
+                        <span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{message}}</span>
                     </button>
                 {{/each}}
                 </div>
@@ -33,13 +33,48 @@
 {{#if param.[0].typeB}}
     <!--  B 타입 -->
     <div class="tod-combot-wrap">
-        <div class="tod-combot-btn">
-			<span class="beta"><span class="blind">beta</span></span>
-			<button type="button" class="item bpcpItem {{param.[0].greetingKeywordInfos.[0].keyword}}">
-                <span class="chat-icon profile1"></span>
-                <span class="chat-txt"><span class="inner">{{param.[0].greetingKeywordInfos.[0].text}}</span></span>
+        <div class="tod-combot-btn {{param.[0].greetingLines}}" {{#if param.[0].color}}data-color="{{param.[0].color}}" data-thema="{{param.[0].theme}}"{{/if}}>
+			<span class="beta"><span class="blind">beta</span></span> 
+			{{#if param.[0].greetingKeywordInfos.[0].linkUrl}}
+                {{#if (eq param.[0].greetingKeywordInfos.[0].keyword "vcoloring")}}
+                    <button type="button" class="item fe-home-external {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&amp;utm_source=tworld&amp;utm_medium=app_menu&amp;utm_campaign=phone&amp;utm_content=store&amp;fSiteCd=1010" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC">
+                {{else}}
+                    <button type="button" class="item bpcpItem1 {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}">
+                {{/if}}
+            {{else}}
+                <button type="button" class="item bpcpItem {{param.[0].greetingKeywordInfos.[0].keyword}}">
+            {{/if}}
+                 <span class="chat-txt"><span class="inner">{{{param.[0].greetingKeywordInfos.[0].message}}}</span></span>
             </button>
             <button type="button" class="btn-close"><img src="{{param.[0].cdn}}/img/common/chatbot/button_close_bg_gray.svg" alt="닫기"></button>
         </div>
     </div>
 {{/if}}
+{{#if param.[0].typeC}}
+        <!--  C 타입 -->
+    <div class="tod-combot-ctype-wrap">
+		<div class="tod-combot-ctype {{param.[0].greetingLines}}" data-color="{{param.[0].color}}"><!-- 개발 참고사항 : ctype 한줄 : class="tod-combot-ctype" / ctype 두줄 :  class="tod-combot-ctype twoline" / color 테마 : data-color="gray", data-color="purple" data-color="white" -->
+			<span class="beta"><span class="blind">beta</span></span>
+			<div class="list-wrap">
+				<ul class="ul-rolling">
+                    {{#each param.[0].greetingKeywordInfos}}
+                        <li>
+                            {{#if linkUrl}}
+                                {{#if (eq keyword "vcoloring")}}
+                                <button class="item fe-home-external"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                {{else}}
+                                <button class="item bpcpItem1"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                {{/if}}
+                            {{else}}
+                               <button class="item bpcpItem"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                            {{/if}}
+                        </li>
+                    {{/each}} 
+				</ul>
+			</div>
+			<!-- x 버튼 -->
+			<button type="button" class="btn-close"><span class="tod-blind">닫기</span></button>
+		</div>
+</div>
+{{/if}}
+ 
