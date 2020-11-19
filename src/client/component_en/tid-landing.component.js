@@ -460,7 +460,6 @@ Tw.TidLandingComponent.prototype = {
 
       if( window.location.hash.indexOf('menu') !== -1 ) {
         setTimeout(function() {
-          alert('개발팀 확인중입니다.')
           this._historyService.goBack();
         }, 100)
       }
