@@ -5624,7 +5624,7 @@ body.apphome .main-membershop-box {
 /* 200802 추가[OP002-9807] 추가 */
 .tod-icon-msg-red {display:inline-block; width:1.375rem; height:1.375rem; background:url(/img/ico/icon_44_msg.png) no-repeat 0 0; background-size:100% 100%; }
 
-/* 200802 추가[OP002-11900] 모바일웹 상단 타이틀 영역 수정 요청 */
+/* 201112 추가[OP002-11900] 모바일웹 상단 타이틀 영역 수정 요청 */
 .header-wrap .h-belt .h-default .h-home-tit.tod-h-home-tit {margin:0 4.5rem}
 
 /* 201112 [OP002-11754] Welcome Page 제작 추가 */
@@ -5664,13 +5664,11 @@ body.apphome .main-membershop-box {
 .welcome-wrap .section-box .extra-cont-box .tx {display: block; width: 100%; margin-top: 0.31rem; color:#959595; font-size:0.81rem; overflow:hidden; display:-webkit-box; line-height:1.19rem; }
 .welcome-wrap .section-box .icon {position:absolute; left:0; top:50%; margin-top:-1.375rem; width:2.75rem; height:2.75rem; border:1px solid #c1c1c1; border-radius:100%; line-height:3.5625rem; text-align:center; -webkit-box-sizing:border-box; box-sizing:border-box;}
 .welcome-wrap .section-box .icon img {width:1.5625rem;}
-.welcome-wrap .welcome-box.recommended-feed {margin:0;}
-.welcome-wrap .welcome-box.recommended-feed .full-banner {display:block; width:100%;}
-.welcome-wrap .welcome-box.app-introduct {margin:0; padding:2.3438rem 1rem 2.5rem 1rem; background:#fff;}
-.welcome-wrap .welcome-box.app-introduct .section-box {margin:1.5rem 0 0 0; padding:0;}
-.welcome-wrap .welcome-box.app-introduct .heaer-wrap {display: flex; -webkit-justify-content:space-between; justify-content:space-between; margin:1.5625rem 0 0 0; }
-.welcome-wrap .welcome-box.app-introduct .heaer-wrap .head-tit {font-size:0.875rem; position:relative; color:#000; font-weight:500;}
-.welcome-wrap .welcome-box.app-introduct .heaer-wrap .link {display:block; margin-right:0.75rem; position: relative; font-size:0.875rem; color:#666;}
+
+.welcome-wrap .welcome-box.app-introduct {margin:0; padding:2.5rem 1rem; background:#fff;}
+.welcome-wrap .welcome-box.app-introduct .heaer-wrap {display: flex; -webkit-justify-content:space-between; justify-content:space-between; position: relative;}
+.welcome-wrap .welcome-box.app-introduct .heaer-wrap .head-tit {font-size:0.875rem; position:relative; color:#000; font-size: 1.5625rem; font-weight: 500;}
+.welcome-wrap .welcome-box.app-introduct .heaer-wrap .link {display:block; margin-right:0.75rem; position: absolute; bottom:0; right:0; font-size:0.875rem; color:#666;}
 .welcome-wrap .welcome-box.app-introduct .heaer-wrap .link.link:after{content:''; display:inline-block; width:0.3875rem; height:0.3875rem; border-top:0.0938rem solid #666666; border-left:0.0938rem solid #666666; -webkit-transform:rotate(135deg); -moz-transform:rotate(135deg); -ms-transform:rotate(135deg); -o-transform:rotate(135deg); transform:rotate(135deg); background-color:transparent; position:absolute; top:0.3125rem; left:2.5125rem;}
 .welcome-wrap .welcome-box.app-introduct .quick-menu-list {margin-top:1.25rem;}
 .welcome-wrap .welcome-box.app-introduct .bt i {margin: 0 auto 0.625rem;}
