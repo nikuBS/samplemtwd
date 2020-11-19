@@ -33,11 +33,6 @@ Tw.CommonMemberLoginRoute.prototype = {
       return;
     }
 
-    if ( window.location.hash.indexOf('menu') !== -1 ) {
-      console.log('[TID] menu close');
-      this._historyService.goBack();
-    }
-
     var token = window.location.hash.replace(/^#/i, '');
     if ( /urlQuery/.test(target) ) {
       target = target.replace(/urlQuery/gi, '&');
@@ -99,6 +94,11 @@ Tw.CommonMemberLoginRoute.prototype = {
   _successLogin: function (target, type, resp) {
     Tw.Logger.info('[Login Resp]', target, type, resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( window.location.hash.indexOf('menu') !== -1 ) {
+        console.log('[TID] menu close');
+        this._historyService.goBack();
+      }
+      
       this._historyService.replaceURL(target);
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
