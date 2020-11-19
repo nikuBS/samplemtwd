@@ -452,7 +452,7 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _successSetSession: function (target) {
-      
+    alert('개발팀에서 확인중입니다.', target, (location.pathname + location.search), window.location.hash.indexOf('menu') !== -1)
     // native에서 해당 값을 cookie에 set 하지 않기 때문에 로그인 완료시 cookie에 값을 설정한다.
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, 'Y');
     
