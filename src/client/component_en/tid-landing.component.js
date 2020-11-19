@@ -452,13 +452,15 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _successSetSession: function (target) {
-    alert('개발팀에서 확인중입니다.', target, (location.pathname + location.search), window.location.hash.indexOf('menu') !== -1)
     // native에서 해당 값을 cookie에 set 하지 않기 때문에 로그인 완료시 cookie에 값을 설정한다.
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, 'Y');
-    
+    var m = window.location.hash.indexOf('menu');
     if ( target === location.pathname + location.search ) {
+      alert('개발팀확인중1 ' + m);
+      this._historyService.goBack();
       this._historyService.reload();
     } else {
+      alert('개발팀확인중2 ' + m);
       this._historyService.replaceURL(target);
     }
   }
