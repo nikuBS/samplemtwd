@@ -118,7 +118,8 @@ Tw.CommonMemberSloginIos.prototype = {
     ATH2013: 'Used verification number',
     ATH2014: 'Invalid verification request',
     ICAS3101: 'Verification number cannot be sent to this mobile number',
-    ICAS3162: 'Verification number cannot be sent to this mobile number'
+    ICAS3162: 'Verification number cannot be sent to this mobile number',
+    DEFAULT_ERROR: 'Invalid verification request'
   },
   /**
    * @function
@@ -458,7 +459,8 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( errorCode === this.SMS_ERROR.ATH1004 || errorCode === this.SMS_ERROR.ATH1005 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else {
-      Tw.Error(errorCode,this.SMS_MSG[errorCode]).pop(null, $target);
+      var errorMsg = this.SMS_MSG[errorCode] || this.SMS_MSG.DEFAULT_ERROR;
+      this._popupService.openAlert(errorMsg, null, null, null, null, $target);
     }
   },
 
@@ -485,7 +487,8 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
     } else {
-      Tw.Error(resp.code, this.SMS_MSG[errorCode]).pop(null, $target);
+      var errorMsg = this.SMS_MSG[resp.code] || this.SMS_MSG.DEFAULT_ERROR;
+      this._popupService.openAlert(errorMsg, null, null, null, null, $target);
     }
   },
 
@@ -563,7 +566,8 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, null, null, null, null, $target);
     } else {
-      Tw.Error(resp.code, this.SMS_MSG[resp.code]).pop(null, $target);
+      var errorMsg = this.SMS_MSG[resp.code] || this.SMS_MSG.DEFAULT_ERROR;
+      this._popupService.openAlert(errorMsg, null, null, null, null, $target);
     }
   },
 
