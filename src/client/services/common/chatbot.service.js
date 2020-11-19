@@ -29,7 +29,7 @@ Tw.ChatbotService = function() {
 
     // 챗봇 팝업 노출대상 화면 리스트 (10/22)
      this._chatbotPopDispPageUrls = {
-        '/main/home' : 'greeting_pop',               // 0. 메인
+       // '/main/home' : 'greeting_pop',               // 0. 메인
         '/myt-data/submain' : 'greeting_pop',        // 1. 나의 데이터/통화
         '/myt-fare/submain'   : 'greeting_pop',      // 2. 나의요금
         '/myt-join/submain'   : 'greeting_pop',      // 3. 나의 가입정보
