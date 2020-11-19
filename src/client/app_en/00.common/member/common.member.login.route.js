@@ -33,6 +33,11 @@ Tw.CommonMemberLoginRoute.prototype = {
       return;
     }
 
+    if ( window.location.hash.indexOf('menu') !== -1 ) {
+      console.log('[TID] menu close');
+      this._historyService.goBack();
+    }
+
     var token = window.location.hash.replace(/^#/i, '');
     if ( /urlQuery/.test(target) ) {
       target = target.replace(/urlQuery/gi, '&');
