@@ -95,6 +95,66 @@ gulp.task('json-chatbot-2', function () {
     .pipe(concat('intro_start.json'))
     .pipe(gulp.dest(dist + 'js'));
 });
+gulp.task('json-chatbot-3', function () {
+  return gulp.src([
+    'src/client/web-contents/js/chatbot_mask_purple.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('chatbot_mask_purple.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+gulp.task('json-chatbot-4', function () {
+  return gulp.src([
+    'src/client/web-contents/js/chatbot_santa_purple.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('chatbot_santa_purple.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+gulp.task('json-chatbot-5', function () {
+  return gulp.src([
+    'src/client/web-contents/js/chatbot_mask_blue.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('chatbot_mask_blue.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+gulp.task('json-chatbot-6', function () {
+  return gulp.src([
+    'src/client/web-contents/js/chatbot_santa_blue.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('chatbot_santa_blue.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+gulp.task('json-chatbot-7', function () {
+  return gulp.src([
+    'src/client/web-contents/js/chatbot_mask_red.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('chatbot_mask_red.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+gulp.task('json-chatbot-8', function () {
+  return gulp.src([
+    'src/client/web-contents/js/chatbot_santa_red.json'
+  ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('chatbot_santa_red.json'))
+    .pipe(gulp.dest(dist + 'js'));
+});
 
 gulp.task('js-vendor-ex', function () {
   return gulp.src([
@@ -801,7 +861,8 @@ gulp.task('en_js-app-client', appNames_en.map(function (app) {
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4', 'json-chatbot-1', 'json-chatbot-2']);
+gulp.task('json', ['json-chatbot-1', 'json-chatbot-2', 'json-chatbot-3', 'json-chatbot-4', 'json-chatbot-5', 'json-chatbot-6', 'json-chatbot-7', 'json-chatbot-8']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4', 'json']);
 
 gulp.task('en_js', ['en_js-util', 'en_js-component', 'en_js-app']);
 gulp.task('en_js-client', ['en_js-util-client', 'en_js-component-client', 'en_js-app-client']);
