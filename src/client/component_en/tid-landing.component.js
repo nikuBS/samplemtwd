@@ -457,6 +457,10 @@ Tw.TidLandingComponent.prototype = {
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, 'Y');
     
     if ( target === location.pathname + location.search ) {
+      if ( window.location.hash.indexOf('menu') !== -1 ) {
+        this._historyService.goBack();
+      }
+
       this._historyService.reload();
     } else {
       this._historyService.replaceURL(target);
