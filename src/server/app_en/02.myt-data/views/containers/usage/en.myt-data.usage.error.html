@@ -50,7 +50,8 @@
 
 <% include ../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
+  $(document).ready(function () { 
+    new Tw.LineComponent($('#contents'), '.fe-bt-line', true, null);
     new Tw.CommonLineComponent($('#contents'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
   });
 </script>
