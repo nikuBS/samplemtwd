@@ -196,9 +196,11 @@ Tw.LineComponent.prototype = {
     }
      if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) { // 10.16 회선이 1개만 있더라도 액션시트가 출력될 수 있도록 변경 요청 (기획)
       this._lineList = this._parseLineList(allSvcResp.result, childSvcResp.result);
-      if ( allSvcResp.result.m.length > 0 ) {
+      if ( this._index > 1 ) {
         this._openListPopup(this._lineList, totNonCnt, $target);
-      } 
+      } else if ( this._index === 1 ){
+        this._historyService.goLoad('/en/common/member/line');
+      }
     } else {
       Tw.Error(allSvcResp.code, allSvcResp.msg).pop();
     }
