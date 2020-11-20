@@ -29,7 +29,7 @@ Tw.ChatbotService = function() {
 
     // 챗봇 팝업 노출대상 화면 리스트 (10/22)
      this._chatbotPopDispPageUrls = {
-       // '/main/home' : 'greeting_pop',               // 0. 메인
+        '/main/home' : 'greeting_pop',               // 0. 메인
         '/myt-data/submain' : 'greeting_pop',        // 1. 나의 데이터/통화
         '/myt-fare/submain'   : 'greeting_pop',      // 2. 나의요금
         '/myt-join/submain'   : 'greeting_pop',      // 3. 나의 가입정보
@@ -47,7 +47,7 @@ Tw.ChatbotService = function() {
         { keyword: 'hotbill', message:'실시간 이용요금 알려줘', type: 'A', linkUrl : ''},  
         { keyword: 'hotbill', message:'실시간 이용 요금이 궁금하세요? <br>이제 챗봇에게 물어보세요!', type: 'B', linkUrl : ''},  
         { keyword: 'hotdata', message:'실시간 잔여량 알려줘', type: 'A', linkUrl : ''},    
-        { keyword: 'hotdata', message:'고객님의 현재 데이터 잔여량을 알고 싶으세요? <br>바로 확인해보세요!', type: 'B', linkUrl : ''},    
+        { keyword: 'hotdata', message:'현재 데이터 잔여량이 궁금하신가요? <br>바로 확인해보세요!', type: 'B', linkUrl : ''},    
         { keyword: 'refill_coupon', message:'리필 쿠폰 선물할래', type: 'A', linkUrl : ''},    
         { keyword: 'refill_coupon', message:'리필 쿠폰 refillCouponCnt장이 남아있어요. <br> 지금 챗봇에서 사용해 보시겠어요?', type: 'B', linkUrl : ''},    
         { keyword: 'pay_mthd', message:'요금납부 변경 문의', type: 'A', linkUrl : ''},    
@@ -61,19 +61,20 @@ Tw.ChatbotService = function() {
         { keyword: 'contents_pay', message:'콘텐츠결제 금액 얼마야?', type: 'A', linkUrl : ''},    
         { keyword: 'contents_pay', message:'이번 달 콘텐츠 이용 금액이 있어요. <br>지금 챗봇에서 확인해보시겠어요?', type: 'B', linkUrl : ''},    
         { keyword: 'data_gift', message:'데이터 선물할래', type: 'A', linkUrl : ''},    
-        { keyword: 'data_gift', message:'T끼리 tCouponCnt회 / 가족 famCouponCnt회 데이터 선물이 가능하십니다. <br>지금 선물해 보시겠어요?', type: 'B', linkUrl : ''},    
+        // { keyword: 'data_gift', message:'T끼리 tCouponCnt회 / 가족 famCouponCnt회 데이터 선물이 가능하십니다. <br>지금 선물해 보시겠어요?', type: 'B', linkUrl : ''},   
+        { keyword: 'data_gift', message:'데이터 선물 예정이신가요?챗봇이 도와드릴게요!', type: 'B', linkUrl : ''},    
         { keyword: 'cancel_pause', message:'일시정지 취소하고 싶어', type: 'A', linkUrl : ''},    
         { keyword: 'cancel_pause', message:'일시정지 pauseDayCnt일째 입니다. <br>지금 바로 일시정지 해제를 도와드릴까요?', type: 'B', linkUrl : ''},
         { keyword: 'vcoloring', message:'V컬러링이 뭐야?', type: 'A', unregYn : 'Y', linkUrl : 'https://www.vcoloring-event.com'},    
         { keyword: 'vcoloring', message:'데이터의 vodRatio%를 동영상시청에 사용하셨네요! <br>V컬러링으로 나의 원픽 동영상을 보여주세요!', type: 'B', unregYn : 'Y', linkUrl : 'https://www.vcoloring-event.com'},
         { keyword: 'vcoloring', message:'V컬러링 설정하러 가기', type: 'A', unregYn : 'N', linkUrl : 'https://tworld.vcoloring.com'},    
         { keyword: 'vcoloring', message:'V컬러링을 사용 중이시네요! <br>V컬러링 앱에서 새로운 동영상을 확인해보세요!', type: 'B', unregYn : 'N', linkUrl : 'https://tworld.vcoloring.com'},
-        { keyword: 'wavve', message:'wavve 재미의 파도를 타다', type: 'A', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00006577'},    
-        { keyword: 'wavve', message:'데이터 vodRatio%를 동영상시청에 사용하셨네요. <br>이제 Wavve에서 데이터 걱정 없이 즐기세요.', type: 'B', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00006577'},
-        { keyword: 'flo', message:'지금 당신의 음악, FLO', type: 'A', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00006520'},    
+        { keyword: 'wavve', message:'영상 콘텐츠는 wavve에서', type: 'A', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00006577'},    
+        { keyword: 'wavve', message:'데이터 vodRatio%를 영상 시청에 쓰는 당신! . <br>Wavve에서 데이터 걱정 없이 영상 시청하세요.', type: 'B', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00006577'},
+        { keyword: 'flo', message:'무제한 음악 스트리밍 FLO', type: 'A', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00006520'},    
         { keyword: 'flo', message:'음악을 즐겨듣는 당신에게 추천드립니다. <br>이젠 FLO 전용 데이터로 음악을 즐겨보세요.', type: 'B', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00006520'},
-        { keyword: 'xbox', message:'SKT 5GX CLOUD GAME', type: 'A', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00007114'},    
-        { keyword: 'xbox', message:'게임을 즐겨하는 당신에게 추천 드립니다. <br>n스마트폰으로 즐기는 클라우드게임 경험해보시겠어요?', type: 'B', linkUrl : 'https://m.tworld.co.kr/product/callplan?prod_id=NA00007114'}
+        { keyword: 'xbox', message:'5GX 클라우드 게임 알아보기', type: 'A', linkUrl : 'https://www.5gxcloudgame.com/main'},    
+        { keyword: 'xbox', message:'지금 5GX 클라우드 게임 신청하면<br> 1개월 100원 이용권 혜택이 찾아갑니다!', type: 'B', linkUrl : 'https://www.5gxcloudgame.com/main'}
     ];
 
     // 챗봇 팝업 타입
@@ -276,12 +277,15 @@ Tw.ChatbotService.prototype = {
         
         var isAllowedOs = false;
         if(Tw.BrowserHelper.isIos()){
+            console.log('[chatbot.service] [_init] 접속한 페이지 URL : ', Tw.BrowserHelper.isIos());
             if (/(iPhone)/i.test(userAgentString)) {
                 if (/OS [1-12](.*) like Mac OS X/i.test(userAgentString)) {
                   // iOS version is <= 12.
+                  console.log('[chatbot.service] iOS version is <= 12: ', Tw.BrowserHelper.isIos());
                   isAllowedOs = false;
                 } else {
                   // iOS version is > 13.
+                  console.log('[chatbot.service] iOS version is > 13: ', Tw.BrowserHelper.isIos());
                   isAllowedOs = true;
                 }
               }
@@ -782,9 +786,9 @@ Tw.ChatbotService.prototype = {
                         }
                     );
                 });
-                _this.$combotCloseC.on('click', function () {
-                    //_this.$combot.hide();
-                    _this.$combotC.removeClass("slideUp");
+                $('.tod-combot-ctype-wrap .btn-close').on('click', function () {
+                    //_this.$combot.hide(); 
+                    $(".tod-combot-ctype-wrap").removeClass("slideUp");
                     clearTimeout(_this._timer);
 				    clearTimeout(_this._rollingTimer);
                     Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
@@ -947,17 +951,28 @@ Tw.ChatbotService.prototype = {
         $('.fe-home-external').on('click', function(e){
             var url = $(e.currentTarget).data('url');
             console.log('url'+url);
-            Tw.CommonHelper.showDataCharge($.proxy(function() {
-                Tw.CommonHelper.openUrlExternal(url);
-              }, this), null);
+            if(!_this.$combot.hasClass('open')){
+                chatbotGubun = 'initial';
+                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', extraParam);
+            }else{
+                Tw.CommonHelper.showDataCharge($.proxy(function() {
+                    Tw.CommonHelper.openUrlExternal(url);
+                  }, this), null);
+            }
+ 
         });
             // 말풍선 (링크) 클릭시 
         $('.bpcpItem1').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] $(.linkItem).on(click)', '');
 
             var url = $(e.currentTarget).data('url'); 
-            
+            if(!_this.$combot.hasClass('open')){
+                chatbotGubun = 'initial';
+                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', extraParam);
+            }else{
                 window.open(url, '_blank');
+            }
+                
                 // Tw.CommonHelper.openUrlExternal('https://app.tworld.co.kr' + url);
            
         });
@@ -1171,7 +1186,7 @@ Tw.ChatbotService.prototype = {
             this._requestApis();
         } else { // 간편로그인일 경우 API 태우지 않고 MLS 랭킹 순서만 맞춰서 _drawchatbot 호출                    
             // BFF_05_0232에서 쓰일 item_id
-            var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType + '|';
+            var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType;
 
             // 실제 발화어 정보 리스트 세팅        
             var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
@@ -1531,7 +1546,7 @@ Tw.ChatbotService.prototype = {
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
 
         // BFF_05_0232에서 쓰일 item_id
-        var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType + '|';
+        var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType;
 
         // 실제 발화어 정보 리스트 세팅        
         var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
@@ -1540,7 +1555,9 @@ Tw.ChatbotService.prototype = {
         // imageType이 B인 경우는 발화어 한개, 그 외의 경우(A타입)는 발화어 4개
         if (this._mlsGreetingImageType === 'B'){
             greetingRangkingSize = 1;
-        }else{
+        } else if (this._mlsGreetingImageType === 'C'){
+            greetingRangkingSize = 3;
+        } else{
             greetingRangkingSize = 4;
 
         }
