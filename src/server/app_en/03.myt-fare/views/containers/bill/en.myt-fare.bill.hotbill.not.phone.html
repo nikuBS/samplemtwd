@@ -45,17 +45,11 @@
                             Korean version of T World
                         </span>
                         <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
-                            <button type="button" class="bt-link-tx underline mt10 fe-mainLine" 
+                            <button id="line-action" type="button" class="bt-link-tx underline mt10" 
                                     data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" 
                                     data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? data.xtEid.notPhone: data.xtEid.notPhone %>" 
                                     data-xt_csid="CS_ID"
                                     data-xt_action="BC">Select a Mobile Line</button>
-
-                            <!-- <button type="button" class="bt-link-tx underline mt10 fe-bt-line" 
-                                    data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" 
-                                    data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? data.xtEid.notPhone: data.xtEid.notPhone %>" 
-                                    data-xt_csid="CS_ID"
-                                    data-xt_action="BC">Select a Mobile Line</button> -->
                         <% } %>
                     </p>
                     <!-- 201006 button 변경 -->
@@ -84,11 +78,8 @@
     $(document).ready(function () {
         var data = '<%- escape(JSON.stringify(data)) %>';
         var $el = $('#fe-wrap');
-        new Tw.MyTFareCommon($el, data);
-
-        $('.fe-mainLine').click(function() {
-            location.href = '/en/common/member/line';
-        })
+        new Tw.MyTFareCommon($el, data, '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+        new Tw.CommonLineComponent($('#contents'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
     });
 </script>
 <% include ../../components/end.component.html _%>

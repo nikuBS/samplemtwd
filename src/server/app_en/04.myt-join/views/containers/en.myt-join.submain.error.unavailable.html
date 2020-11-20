@@ -33,15 +33,14 @@
                             <%- error.contents.replace(/\n/gi, '<br />') %>
                         </span>
                         <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
-                            <button class="bt-link-tx underline mt10 fe-mainLine" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B81_C1198-3">Select a Mobile Line</button>
-                            <!-- <button class="bt-link-tx underline mt10 fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B81_C1198-3">Select a Mobile Line</button> -->
+                            <button id="line-action" class="bt-link-tx underline mt10" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B81_C1198-3">Select a Mobile Line</button>
                         <% } %>
                     </p>
                     
                     <div class="suggest-bt mt30">
                         <ul class="bt-slice">
                             <li>
-                                <button id="gotoMain" class="btn-round1 btn-style1" data-xt_eid="MWMA_A10_B81_C1198-4">Go to Tworld KOR</button>
+                                <button id="goto-main" class="btn-round1 btn-style1" data-xt_eid="MWMA_A10_B81_C1198-4">Go to Tworld KOR</button>
                             </li>
                         </ul>
                     </div>
@@ -52,18 +51,11 @@
         <%- include('../../../../common_en/views/components/footer.component.html', { svcInfo: svcInfo }); %>
     </div>
 </body>
+
 <%- include('../components/javascript.component.html'); %>
 <script>
   $(document).ready(function () {
-    $('#gotoMain').click(function() {
-        location.href = '/main/home';
-    });
-
-    $('.fe-mainLine').click(function() {
-        location.href = '/en/common/member/line';
-    })
-
-    new Tw.LineComponent($('#contents'), '.fe-bt-line', true, null);
+    new Tw.CommonLineComponent($('#contents'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
   });
 </script>
 <% include('../components/end.component.html') %>
