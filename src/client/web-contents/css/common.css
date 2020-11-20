@@ -9824,31 +9824,21 @@ button:focus span {
  	box-sizing: border-box; transition: all .3s linear; text-align: left;
 }
 .tod-ui-chabot2 .tod-ui-chabot2-inner{position: relative; padding-bottom: 3.75rem;}
-
 .tod-ui-chabot2 .title-wrap{text-align: left; width: 100%;}
 .tod-ui-chabot2 .title-wrap .btn-tab{font-size: 1.25rem; width: 100%; box-sizing: border-box; text-align: left;}
 .tod-ui-chabot2 .title-wrap .btn-tab:before{
-	content: ''; 
-	display: block; width: 3.75rem; height: 0.25rem; 
-	background: #ededed; 
-	border-radius: 0.125rem; 
-	margin: 0.5rem auto 0;
-}
+	content: ''; display: block; width: 3.75rem; height: 0.25rem; 
+	background: #ededed; border-radius: 0.125rem; margin: 0.5rem auto 0;}
 
 .tod-ui-chabot2 .title-wrap .tod-chatbot-img{display: inline-block; width: 2.125rem; height: 2.375rem; vertical-align: top; margin-left: 25px; margin-top: 36px;}
 .tod-ui-chabot2 .chatbot-tit{display:inline-block; letter-spacing: -2px; margin-top: 40px; width: 80%; word-break: keep-all;}
 .tod-ui-chabot2 .chatbot-tit:after{
-  content: '';
-  display: inline-block;
+  content: ''; display: inline-block;
+  position: relative; top: -1px;
   background: url(/img/svg/txt-beta.svg) no-repeat 0 0;
-  width: 34px;
-  height: 15px;
-  margin-left: 5px;
-  background-size: 100% 100%;
-  position: relative;
-  top: -1px;
-}
-.tod-ui-chabot2.expanded .chatbot-tit:after{ top: -4px; }
+  width: 34px; height: 15px; margin-left: 5px;
+  background-size: 100% 100%;}
+.tod-ui-chabot2.expanded .chatbot-tit:after{top: -4px; }
 .tod-ui-chabot2 .list-wrap{margin-top: 1.25rem;}
 .tod-ui-chabot2 .list-wrap .list{margin-left: 1.5625rem;}
 .tod-ui-chabot2 .item{
@@ -9859,7 +9849,8 @@ button:focus span {
 .tod-ui-chabot2 .item .txt{font-size: 14px; color: #000;}
 .tod-ui-chabot2 .ico-chatbot{display: inline-block; width: 1.875rem; height: 1.875rem; line-height: 2.5rem; vertical-align: top; margin-top: 0.375rem; margin-right: 0.875rem;}
 
-/* 201012 [OP002-10741] 추가 : keyword(발화어) - class naming change *//* 201109 [OP002-11653] 추가_01 */
+/* keyword(발화어) */
+/* Atype - class naming change */
 .tod-ui-chabot2 .ico-chatbot.initial{background:url('/img/common/chatbot/ico-ai.png') no-repeat 0 0; background-size: 100% 100%;}
 .tod-ui-chabot2 .ico-chatbot.pay_mthd, .tod-ui-chabot2 .ico-chatbot.micro_pay{background:url('/img/common/chatbot/ico-pay.png') no-repeat 0 0; background-size: 100% 100%;}
 .tod-ui-chabot2 .ico-chatbot.data_gift{background:url('/img/common/chatbot/ico-data.png') no-repeat 0 0; background-size: 100% 100%;}
@@ -9877,7 +9868,7 @@ button:focus span {
 .tod-ui-chabot2 .ico-chatbot.flo{ background:url('/img/common/chatbot/ico-flo.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-ui-chabot2 .ico-chatbot.xbox{ background:url('/img/common/chatbot/ico-xbox.svg') no-repeat 0 0; background-size: 100% 100%;}
 
-/* 발화어- .tod-combot-ctype[data-color="purple"] case */
+/* Ctype - .tod-combot-ctype[data-color="purple"] case */
 .tod-combot-ctype[data-color="purple"] .ico-chatbot.initial,
 .tod-combot-ctype[data-color="purple"] .ico-chatbot.pay_mthd, 
 .tod-combot-ctype[data-color="purple"] .ico-chatbot.micro_pay,
@@ -9895,7 +9886,7 @@ button:focus span {
 .tod-combot-ctype[data-color="purple"] .ico-chatbot.flo{background:url('/img/common/chatbot/ico-flo-al.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-combot-ctype[data-color="purple"] .ico-chatbot.xbox{background:url('/img/common/chatbot/ico-xbox-al.svg') no-repeat 0 0; background-size: 100% 100%;}
 
-/* 발화어- .tod-combot-ctype[data-color="gray"] case */
+/* Ctype - .tod-combot-ctype[data-color="gray"] case */
 .tod-combot-ctype[data-color="gray"] .ico-chatbot.initial,
 .tod-combot-ctype[data-color="gray"] .ico-chatbot.pay_mthd, 
 .tod-combot-ctype[data-color="gray"] .ico-chatbot.micro_pay,
@@ -9913,7 +9904,7 @@ button:focus span {
 .tod-combot-ctype[data-color="gray"] .ico-chatbot.flo{ background:url('/img/common/chatbot/ico-flo.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-combot-ctype[data-color="gray"] .ico-chatbot.xbox{ background:url('/img/common/chatbot/ico-xbox.svg') no-repeat 0 0; background-size: 100% 100%;}
 
-/* 발화어- .tod-combot-ctype[data-color="white"] case */
+/* Ctype - .tod-combot-ctype[data-color="white"] case */
 .tod-combot-ctype[data-color="white"] .ico-chatbot.initial,
 .tod-combot-ctype[data-color="white"] .ico-chatbot.pay_mthd, 
 .tod-combot-ctype[data-color="white"] .ico-chatbot.micro_pay,
@@ -9930,7 +9921,7 @@ button:focus span {
 .tod-combot-ctype[data-color="white"] .ico-chatbot.wavve{ background:url('/img/common/chatbot/ico-wavve-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-combot-ctype[data-color="white"] .ico-chatbot.flo{ background:url('/img/common/chatbot/ico-flo-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-combot-ctype[data-color="white"] .ico-chatbot.xbox{ background:url('/img/common/chatbot/ico-xbox-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
-/* //201012 [OP002-10741] 추가 : keyword(발화어) - class naming change */
+/* //keyword(발화어) */
 
 .tod-ui-chabot2 .link-wrap{text-align: right; margin-top: 2.5rem;}
 .tod-ui-chabot2 .link-chatbot-go{position: relative; font-size: 0.875rem; margin-right: 1.875rem; padding-right: 0.9375rem;}
@@ -9957,37 +9948,13 @@ button:focus span {
 .tod-ui-chabot2.expanded .tod-chatbot-img{ display: block; width: 3.5rem; height: 4.3125rem;}
 .tod-ui-chabot2.expanded .chatbot-tit{ font-size: 1.5625rem; letter-spacing: -2px; margin-top: 0; margin-left: 25px; width: 90%;}
 
-.tod-chatbotIntro-img-wrap{
-width:100%; max-width: 360px; height: 20rem; overflow: hidden;
-} 
-.tod-chatbotIntro-img-wrap .img-wrap{
-	position: relative;
-	max-width: 360px;
-	height: 320px;
-}
-
-.tod-chatbotIntro-img-wrap .img-wrap .txt-rolling{
-	position: absolute;
-	left: 40%;
-	top: 39.6%;
-	display: block;
-	width: 74.5px;
-	height: 30px;
-	overflow: hidden;
-}
+.tod-chatbotIntro-img-wrap{width:100%; max-width: 360px; height: 20rem; overflow: hidden;} 
+.tod-chatbotIntro-img-wrap .img-wrap{position: relative; max-width: 360px; height: 320px;}
+.tod-chatbotIntro-img-wrap .img-wrap .txt-rolling{position: absolute; left: 40%; top: 39.6%; display: block; width: 74.5px; height: 30px; overflow: hidden;}
 @media screen and (max-width: 320px) {
-	.tod-chatbotIntro-img-wrap .img-wrap .txt-rolling{ width: 65px;}
-  }
-
-.tod-chatbotIntro-img-wrap .txt-rolling .item{
-	display: block;
-	font-size: 0.75rem;
-	line-height: 1.8125rem;
-	font-weight: 600;
-	color: #fff;
-	width: 100%;
-	text-align: center;
+	.tod-chatbotIntro-img-wrap .img-wrap .txt-rolling{width: 65px;}
 }
+.tod-chatbotIntro-img-wrap .txt-rolling .item{display: block; font-size: 0.75rem; line-height: 1.8125rem; font-weight: 600; color: #fff; width: 100%;text-align: center;}
 .tod-chatbotIntro-img-wrap .img-rolling-end img{width: 100%; max-width: 22.5rem;}
 .tod-chatbotIntro-tit-wrap{}
 .tod-chatbotIntro-tit-wrap .inner{padding: 0 2.8125rem;}
@@ -10001,19 +9968,19 @@ width:100%; max-width: 360px; height: 20rem; overflow: hidden;
 .tod-chatbotIntro-tit-wrap .tod-chatbot-img{width: 3.5rem;height: 4.3125rem; }
 .tod-chatbotIntro-tit-wrap .link-text{position:relative;text-decoration: underline;color: #000; }
 .tod-chatbotIntro-tit-wrap .link-text:after{
-content: ""; display: inline-block; position: absolute; top: 50%; right: 0; 
-width: 0.75rem; height: 0.75rem; transform: translateY(-50%);
-background: url(/img/svg/icon_48px_next.svg) no-repeat 0 0;
-background-size: 100% 100%;
-margin-right: -0.9375rem;
+  content: ""; display: inline-block; position: absolute; top: 50%; right: 0;
+  width: 0.75rem; height: 0.75rem; transform: translateY(-50%);
+  background: url(/img/svg/icon_48px_next.svg) no-repeat 0 0;
+  background-size: 100% 100%;
+  margin-right: -0.9375rem;
 }
 
 .tod-chatbotIntro-btn-wrap{margin: 35px 24px 0;}  
 .btn-chabot-default{
-position: relative; display: block; 
-width: 100%; height: 3.625rem; 
-border-radius: 1.8125rem; line-height: 1; box-sizing: border-box; 
-background: #fff; background-clip: padding-box; border: solid 2px transparent; text-align: center;
+  position: relative; display: block;
+  width: 100%; height: 3.625rem;
+  border-radius: 1.8125rem; line-height: 1; box-sizing: border-box;
+  background: #fff; background-clip: padding-box; border: solid 2px transparent; text-align: center;
 }
 .btn-chabot-default:before {
 	content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: -1; margin: -2px; border-radius: inherit;
@@ -10045,8 +10012,8 @@ background: #fff; background-clip: padding-box; border: solid 2px transparent; t
 .tod-chatbotIntro-copy{ text-align: center; margin: 3.125rem 0 0;}
 .tod-chatbotIntro-copy .txt{ font-size: 0.6875rem; color: #858585;}
 
-/* 201005 [OP002-10741]  추가 : SKT-챗봇 버튼형 */
-.tod-combot-wrap{z-index: 29; position:fixed; bottom:3.75rem; right:1.0625rem;}
+/* Btype - SKT-챗봇 버튼형  */
+.tod-combot-wrap{z-index: 29; position:fixed; bottom:3.75rem; right: 1rem;}
 .tod-combot-btn{
     position: relative;
     border-radius: 0.625rem; box-sizing: border-box; border-bottom-right-radius: 0;
@@ -10055,7 +10022,8 @@ background: #fff; background-clip: padding-box; border: solid 2px transparent; t
     transition:all .8s cubic-bezier(0.72,0,0.28,1);
 } 
 .tod-combot-btn:after{
-    content:''; display: block; width: 0.625rem; height: 0.5625rem;
+    content:''; display: block;
+    width: 0.625rem; height: 0.5625rem;
     position: absolute; right: 0; bottom: -8px;
     opacity:0; transition:opacity 0.8s; transition-delay: .8s;
 }
@@ -10068,24 +10036,26 @@ background: #fff; background-clip: padding-box; border: solid 2px transparent; t
 .tod-combot-btn.open .chat-txt{opacity: 1;} 
 .tod-combot-btn.open .btn-close{width: 1.4375rem; opacity: 1;}
 
-/* btype tod-combot-btn 한줄 - 테마 */
-.tod-combot-btn .chat-icon{
-  opacity: 1;
-  transition: all .8s cubic-bezier(0.72,0,0.28,1);
-  transition-delay: .3s;
-}
-.tod-combot-btn[data-thema="normal"] .chat-icon{position: absolute; top: -0.75rem; right: -0.5rem; width: 13.125rem;height: 5.25rem;}
-.tod-combot-btn[data-thema="normal"] .beta{display: block; position: absolute; top: -0.4375rem; right: 0; z-index: 1; background: url(/img/common/chatbot/badge-beta-txt.svg) no-repeat 0 0; background-size: 100% 100%; width: 0; height: 0.9375rem; opacity:0;}
+/* btype 한줄 테마 normal or santa */
+.tod-combot-btn .chat-icon{opacity: 1; transition: all .8s cubic-bezier(0.72,0,0.28,1); transition-delay: .3s;}
+.tod-combot-btn[data-thema="normal"] .chat-icon{position: absolute; top: -11.36px; right: -2.8px;width: 56px; height: 70px;} /* 201120 */
+.tod-combot-btn[data-thema="normal"] .beta{
+    display: block; position: absolute; top: -9px; right: -0.4px; z-index: 1; 
+    background: url(/img/common/chatbot/badge-beta-txt.svg) no-repeat 0 0; background-size: 100% 100%; 
+    width: 0; height: 17px; opacity:0;}
 .tod-combot-btn[data-thema="normal"] .beta.on{width:2.1875rem; opacity:1;}
-.tod-combot-btn[data-thema="santa"] .chat-icon {position: absolute; top: -1.4375rem; right: -0.9375rem; width: 13.875rem;height: 5.875rem;}
-.tod-combot-btn[data-thema="santa"] .beta{display: block; position: absolute; top: -1.5rem; right: -0.8125rem; z-index: 1; background: url(/img/common/chatbot/badge-beta-santa.svg) no-repeat 0 0; background-size: 100% 100%; width: 0; height: 2.625rem; opacity:0;}
+.tod-combot-btn[data-thema="santa"] .chat-icon {position: absolute;top: -19px;right: -11px;width: 64px;}
+.tod-combot-btn[data-thema="santa"] .beta{
+    display: block; position: absolute; top: -1.5rem; right: -0.8125rem; z-index: 1; 
+    background: url(/img/common/chatbot/badge-beta-santa.svg) no-repeat 0 0; background-size: 100% 100%; 
+    width: 0; height: 2.625rem; opacity:0;}
 .tod-combot-btn[data-thema="santa"] .beta.on{width:3.25rem; opacity:1;} 
 
-/* btype - 두줄 */
-.tod-combot-btn.twoline{display: -webkit-box; display: -ms-flexbox; display: flex; align-items: center; border-radius: 0.875rem; border-bottom-right-radius: 0; max-width: 3.625rem; min-width: 3.625rem; height: 3.625rem; white-space: normal;}
+/* btype 두줄 */
+.tod-combot-btn.twoline{display: -webkit-box; display: -ms-flexbox; display: flex; align-items: center; border-radius: 0.875rem; border-bottom-right-radius: 0; max-width: 58px; min-width: 58px; height: 58px; white-space: normal;}
 .tod-combot-btn.twoline:after{width: 0.8125rem; height: 0.6875rem; position: absolute; right: 0; bottom: -0.625rem; background-color: transparent;}
 .tod-combot-btn.twoline .chat-txt{display: inline-block; text-align: left; word-break: break-all; margin-top: 1px; transition-delay: .5s;}
-.tod-combot-btn.twoline .chat-txt .inner{line-height: 1.2rem;}
+.tod-combot-btn.twoline .chat-txt .inner{display:inline-block; line-height: 1.2rem; margin-right: .6rem;} 
 .tod-combot-btn.twoline .nowrap{white-space: nowrap; }
 .tod-combot-btn.twoline.open{max-width: 19.375rem;}
 @media screen and (max-width: 320px) {
@@ -10093,21 +10063,20 @@ background: #fff; background-clip: padding-box; border: solid 2px transparent; t
   .tod-combot-btn.twoline .chat-txt .inner{font-size: 0.75rem;}
 }
 .tod-combot-btn.twoline .chat-btn{height: 6.125rem;}
-/* btype tod-combot-btn - 테마 */
-.tod-combot-btn.twoline[data-thema="normal"] .chat-icon{position: absolute; right:-0.5625rem; top:-0.8125rem; width: 15.5rem; height: 6.125rem;}
-.tod-combot-btn.twoline[data-thema="normal"] .beta{position: absolute; top: -0.5625rem; right: 0; z-index: 1; width: 0; height: 1.25rem; opacity:0;}
-.tod-combot-btn.twoline[data-thema="normal"] .beta.on{width:2.625rem; opacity:1;}
-.tod-combot-btn.twoline[data-thema="santa"] .chat-icon {position: absolute; top: -1.5rem; right: -1.5rem; width: 17.5rem; height: 6.875rem;}
+/* btype 두줄 테마 normal or santa */
+.tod-combot-btn.twoline[data-thema="normal"] .chat-icon{position: absolute;top: -10px;right: -12px;width: 84px;height: 80px;}
+.tod-combot-btn.twoline[data-thema="normal"] .beta{position: absolute; top: -10px; right: -.4px; z-index: 1; width: 0; height: 21px; opacity:0;}
+.tod-combot-btn.twoline[data-thema="normal"] .beta.on{width:42.4px; opacity:1;}
+.tod-combot-btn.twoline[data-thema="santa"] .chat-icon {position: absolute; top: -21px; right: -13px; width: 76px;}
 .tod-combot-btn.twoline[data-thema="santa"] .beta{display: block; position: absolute; top: -2rem; right: -1rem; z-index: 1; background-size: 100% 100%;width: 0; height: 3.75rem; opacity:0;}
 .tod-combot-btn.twoline[data-thema="santa"] .beta.on{width:3.875rem; opacity:1; }
-/* btype tod-combot-btn - color */
+/* btype - color */
 .tod-combot-btn[data-color="purple"]:after{background: url("/img/common/chatbot/img-arrow-pupple.svg") no-repeat 1px 0; background-size: 100% 100%;}
 .tod-combot-btn[data-color="blue"]:after{background: url("/img/common/chatbot/img-arrow-blue.svg") no-repeat 1px 0; background-size: 100% 100%;}
 .tod-combot-btn[data-color="red"]:after{background: url("/img/common/chatbot/img-arrow-red.svg") no-repeat 1px 0; background-size: 100% 100%;}
 .tod-combot-btn.open[data-color="purple"]{background: linear-gradient(to right, #609aff , #877efc);}
 .tod-combot-btn.open[data-color="blue"]{background: linear-gradient(to right, #48beed, #439af7);}
 .tod-combot-btn.open[data-color="red"]{background: linear-gradient(to right, #ff9062, #ff6372);}
-
 /* ctype */
 .tod-combot-ctype-wrap{z-index: 29; position: fixed; left: 50%; transform: translateX(-49.9%); bottom: -6.25rem; transition : all .5s;}
 .tod-combot-ctype-wrap.slideUp{ bottom: 4rem;}
@@ -10118,7 +10087,6 @@ background: #fff; background-clip: padding-box; border: solid 2px transparent; t
 .tod-combot-ctype .item{display:-webkit-box; display:-ms-flexbox;display:flex; -webkit-align-items: center;align-items: center;  padding: 0.5rem 0.625rem 0.5rem 0.75rem; width: 100%; box-sizing: border-box; text-align: left; white-space: nowrap; -webkit-user-select: none; user-select: none;}
 .tod-combot-ctype .item .txt {display:inline-block; width: 75%; text-align: center; padding: 0 0.625rem; margin-right: 24px; font-weight: bold; font-size: 0.8125rem; color: #000;}
 .tod-combot-ctype .ico-chatbot{display: inline-block; width: 1.875rem; height: 1.875rem; vertical-align: middle;}
-
 /* ctype - 두줄 */
 .tod-combot-ctype.twoline .list-wrap{min-width: 19.625rem; max-width: 20.625rem; height: 3.125rem; border-radius: 1.5625rem; overflow: hidden;}
 .tod-combot-ctype.twoline .item{white-space: normal; word-break: break-all; padding-top: 0.625rem; padding-right: 0.5rem;}
@@ -10127,24 +10095,16 @@ background: #fff; background-clip: padding-box; border: solid 2px transparent; t
 @media screen and (max-width: 320px) {
   .tod-combot-ctype.twoline .list-wrap{min-width: 18.125rem;max-width: 18.125rem; font-weight: normal;}
 }
-/* tod-combot-ctype - color */
+/* ctype - color */
 .tod-combot-ctype[data-color="gray"] .list-wrap{background: #e9ecef;}
 .tod-combot-ctype[data-color="gray"] .btn-close,
-.tod-combot-ctype[data-color="white"] .btn-close{
-  background: url(/img/common/chatbot/btn-close-wh.svg) no-repeat 0 0;
-  width: 0.75rem; height: 0.75rem;
-  background-size: 100%;
-}
+.tod-combot-ctype[data-color="white"] .btn-close{background: url(/img/common/chatbot/btn-close-wh.svg) no-repeat 0 0; width: 0.75rem; height: 0.75rem; background-size: 100%;}
 .tod-combot-ctype[data-color="white"] .list-wrap{background: #fff; border: 1px solid #f1f1f1; box-shadow: 0 1px 0.25rem rgba(0, 0, 0, .5);}
 .tod-combot-ctype[data-color="white"] .ico-chatbot{width: 1.625rem; height: 1.625rem;}
 .tod-combot-ctype.twoline[data-color="white"] .item{padding-right: 0.4rem;} 
 .tod-combot-ctype[data-color="purple"] .list-wrap{background: linear-gradient(to right, #609aff , #877efc);}
 .tod-combot-ctype[data-color="purple"] .txt{color: #fff;}
-.tod-combot-ctype[data-color="purple"] .btn-close{
-  background: url(/img/common/chatbot/btn-close-pp.svg) no-repeat 0 0;
-  width: 0.75rem; height: 0.75rem;
-  background-size: 100%;
-}
+.tod-combot-ctype[data-color="purple"] .btn-close{background: url(/img/common/chatbot/btn-close-pp.svg) no-repeat 0 0; width: 0.75rem; height: 0.75rem; background-size: 100%;}
 /* //201109 [OP002-11653] [UX/PUB] (W-2010-032-01) [컴봇] Greeting 작업 건 수정 */
 
 /* 201027 [OP002-11515] T world 내 글로벌 T 바로가기 영역 적용 */
