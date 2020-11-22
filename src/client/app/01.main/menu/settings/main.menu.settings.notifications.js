@@ -57,7 +57,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
     this.$container.on(
       'click', '#fe-service-terms, #fe-recommend-terms, #fe-tplace-terms', $.proxy(this._onTermsClicked, this));
     this.$container.on('click', '#fe-go-device-noti', $.proxy(this._onDeviceNotiClicked, this));
-    this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
+    // this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
     this.$container.on('click', '#fe-tplace-list', $.proxy(this._onOpenTplaceListClick, this));
   },
 
