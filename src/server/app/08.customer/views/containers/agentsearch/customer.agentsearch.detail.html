@@ -23,13 +23,15 @@
                 <div class="cont-box">
                     <!-- .shop-info -->
                     <div class="shop-info tod-shop-info fe-shop-info">
-                        <%if(detail.shopTypeNm){%>
+                        <%_if(detail.shopTypeNm.length > 0){_%>
                         <!-- .shop-tag -->
                         <div class="shop-tag">
-                            <span class="tag"><%-detail.shopTypeNm%></span>
+                            <%_detail.shopTypeNm.map( shopTypeNm => {_%>
+                            <span class="tag"><%-shopTypeNm%></span>
+                            <%_})_%>
                         </div>
                         <!-- // .shop-tag -->
-                        <%}%>
+                        <%_}_%>
 
                         <!-- .shop-nam -->
                         <div class="shop-name"><%= detail.storeName %></div>
