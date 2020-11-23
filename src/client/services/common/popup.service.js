@@ -499,6 +499,39 @@ Tw.PopupService.prototype = {
   },
 
   /**
+   * @desc open confirm popup
+   * @param  {string} title
+   * @param  {string} contents
+   * @param  {string} btName
+   * @param  {Function} openCallback
+   * @param  {Function} confirmCallback
+   * @param  {Function} closeCallback
+   * @param  {string} hashName
+   * @param  {string} align
+   * @param  {$object} evt
+   * @public
+   */
+  openModalTypeB: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName, align, evt) {
+    var option = {
+      title: title,
+      title_type: 'sub',
+      cont_align: align || 'tl',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-confirm',  // 요금제변경과 취소버튼이 반대로 동작 [OP002-10746]
+        txt: Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-closeBtn', // 요금제변경과 취소버튼이 반대로 동작 [OP002-10746]
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback, hashName);
+    this._open(option, evt);
+  },
+
+  /**
    * @desc open poppup for change line
    * @param  {object} from service info
    * @param  {object} target current line 
