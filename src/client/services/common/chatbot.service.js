@@ -697,10 +697,10 @@ Tw.ChatbotService.prototype = {
         this.$elChabot          = $('.tod-ui-chabot2');
         this.$btnTab            = $('.btn-tab');
         this.$combot = $('.tod-combot-btn');
-        this.$combotC = $('tod-combot-ctype');
+        this.$combotC = $('.tod-combot-ctype');
         this.$combotBeta = $('.tod-combot-btn .beta');
         this.$combotClose = $('.tod-combot-btn .btn-close');
-        this.$chattxt = $('chat-txt');
+        this.$chattxt = $('.chat-txt');
         this.$combotColor = $('.tod-combot-btn').attr("data-color"); //201109 [OP002-11653] 컬러 추가
         this.$combotThema = $('.tod-combot-btn').attr("data-thema"); //201109 [OP002-11653] 테마 추가 
         this.$combotTxt2 = $('.tod-combot-btn.twoline .chat-txt');  //201109  
@@ -945,10 +945,10 @@ Tw.ChatbotService.prototype = {
                         process_id: mlsProcessId,
                         item_id: mlsGreetingImageType + '|' + mlsGreetingTextType + '|' + chatbotGubun
                     }).done(
-                        Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0233', '')
+                        Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0233', '',extraParam)
                     );
             }
-            _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
+               _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
         });
         $('.fe-home-external').on('click', function(e){
             var url = $(e.currentTarget).data('url');
@@ -964,7 +964,7 @@ Tw.ChatbotService.prototype = {
  
         });
             // 말풍선 (링크) 클릭시 
-        $('.bpcpItem1').on('click', function(e){
+        $('.bpcpItemlink').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] $(.linkItem).on(click)', '');
 
             var url = $(e.currentTarget).data('url'); 
