@@ -167,11 +167,11 @@
 
 					<div class="welcome-box product-combine">
 						<p class="welcome-tit">놓칠 수 없는 할인혜택이 가득한<br>결합상품을 만나보세요.</p>
-						<div class="section-box">
-							<div class="main-charge-box benefit section-swiper-box main-banner-img tod-bann-auto">
+						<div class="section-box type01 nogaps">
+							<div class="main-charge-box advice section-swiper-box main-banner-img">
 								<!-- .widget -->
 								<div class="widget">
-									<div class="widget-box slider1">
+									<div class="widget-box" data-slider-auto="true">
 										<div class="slider-box">
 											<ul class="slider" data-location="C">
 												<!-- <li>
@@ -214,6 +214,7 @@
 <% include ../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
+		new Tw.MainWelcome($('.wrap'), '<%= pageInfo.menuId %>');
         $(".extra-show .more_btn").on("click",function(e){
             e.preventDefault();
             if($(".extra-show").hasClass('on')){
@@ -225,7 +226,6 @@
             }
             $(this).parent(".extra-show").toggleClass("on");
         });
-        new Tw.MainWelcome($('.wrap'), '<%= pageInfo.menuId %>');
     })
 </script>
 <% include ../components/end.component.html %>
