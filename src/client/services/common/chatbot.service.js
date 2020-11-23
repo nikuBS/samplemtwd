@@ -42,12 +42,12 @@ Tw.ChatbotService = function() {
     this._greetingKeywords = [
         // { keyword: 'initial', text:'챗봇으로 빠른 상담하기', type: 'A', message : '메뉴 찾기 어려우세요? 제가 도와드릴 수 있어요!'},
         // { keyword: 'initial', text:'챗봇으로 빠른 상담하기', type: 'B', message : '챗봇에게 궁금한 점을 물어보세요.'},  
-        { keyword: 'pay_bill', message:'이번달 요금 얼마 나왔어?', type: 'A', linkUrl : ''},  
+        { keyword: 'pay_bill', message:'이번달 요금 얼마 나왔어?', type: 'A', linkUrl : ''},
         { keyword: 'pay_bill', message:'이번달 요금이 궁금하세요? <br> 이제 챗봇에게 물어보세요!', type: 'B', linkUrl : ''},
         { keyword: 'hotbill', message:'실시간 이용요금 알려줘', type: 'A', linkUrl : ''},  
         { keyword: 'hotbill', message:'실시간 이용 요금이 궁금하세요? <br>이제 챗봇에게 물어보세요!', type: 'B', linkUrl : ''},  
         { keyword: 'hotdata', message:'실시간 잔여량 알려줘', type: 'A', linkUrl : ''},    
-        { keyword: 'hotdata', message:'현재 데이터 잔여량이 궁금하신가요? <br>바로 확인해보세요!', type: 'B', linkUrl : ''},    
+        { keyword: 'hotdata', message:'현재 데이터 잔여량이 궁금하신가요? <br>챗봇에서 확인해보세요!', type: 'B', linkUrl : ''},    
         { keyword: 'refill_coupon', message:'리필 쿠폰 선물할래', type: 'A', linkUrl : ''},    
         { keyword: 'refill_coupon', message:'리필 쿠폰 refillCouponCnt장이 남아있어요. <br> 지금 챗봇에서 사용해 보시겠어요?', type: 'B', linkUrl : ''},    
         { keyword: 'pay_mthd', message:'요금납부 변경 문의', type: 'A', linkUrl : ''},    
@@ -284,10 +284,10 @@ Tw.ChatbotService.prototype = {
                 if( ( agent.indexOf( 'iPhone' ) > -1) && start > -1 ){
                     if(window.Number( agent.substr( start + 3, 3 ).replace( '_', '.' ) )>12){
                      isAllowedOs = true; 
-                     console.log("13이상"+isAllowedOs);
+                     //console.log("13이상"+isAllowedOs);
                 }else{
                      isAllowedOs = false;
-                     console.log("13이하"+isAllowedOs);
+                     //console.log("13이하"+isAllowedOs);
                 }
                     }
             })();
@@ -955,7 +955,7 @@ Tw.ChatbotService.prototype = {
             console.log('url'+url);
             if(!_this.$combot.hasClass('open')){
                 chatbotGubun = 'initial';
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', extraParam);
+                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
                 Tw.CommonHelper.showDataCharge($.proxy(function() {
                     Tw.CommonHelper.openUrlExternal(url);
@@ -970,7 +970,7 @@ Tw.ChatbotService.prototype = {
             var url = $(e.currentTarget).data('url'); 
             if(!_this.$combot.hasClass('open')){
                 chatbotGubun = 'initial';
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', extraParam);
+                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
                 window.open(url, '_blank');
             }
