@@ -955,7 +955,7 @@ Tw.ChatbotService.prototype = {
             console.log('url'+url);
             if(!_this.$combot.hasClass('open')){
                 chatbotGubun = 'initial';
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', extraParam);
+                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
                 Tw.CommonHelper.showDataCharge($.proxy(function() {
                     Tw.CommonHelper.openUrlExternal(url);
@@ -970,7 +970,7 @@ Tw.ChatbotService.prototype = {
             var url = $(e.currentTarget).data('url'); 
             if(!_this.$combot.hasClass('open')){
                 chatbotGubun = 'initial';
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', extraParam);
+                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
                 window.open(url, '_blank');
             }
