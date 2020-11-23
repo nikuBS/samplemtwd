@@ -140,9 +140,8 @@ Tw.MainWelcome.prototype = {
    * @private
    */
   _appendApps: function() {
-    this._sortOrder('storRgstDtm');
+    this._sortOrder('idxExpsSeq');
     var bestApps = this._apps.slice(0,4);
-    console.log(bestApps);
     this.$list.html(this._appsTmpl({ apps: bestApps }));
     this.$news = this.$list.find('.i-new.none');
   },
