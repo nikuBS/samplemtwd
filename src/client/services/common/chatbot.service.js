@@ -957,9 +957,16 @@ Tw.ChatbotService.prototype = {
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
-                Tw.CommonHelper.showDataCharge($.proxy(function() {
-                    Tw.CommonHelper.openUrlExternal(url);
-                  }, this), null);
+                if('https://www.vcoloring-event.com' === url){
+                    Tw.CommonHelper.showDataCharge($.proxy(function() {
+                        Tw.CommonHelper.openUrlExternal(url);
+                      }, this), null);
+                }else if('https://tworld.vcoloring.com' === url){
+                    Tw.CommonHelper.showDataCharge($.proxy(function() {
+                        Tw.CommonHelper.openUrlExternal(url);
+                      }, this), null);
+                }
+                
             }
  
         });

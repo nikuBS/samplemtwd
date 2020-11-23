@@ -37,7 +37,7 @@
 			<span class="beta"><span class="blind">beta</span></span> 
 			{{#if param.[0].greetingKeywordInfos.[0].linkUrl}}
                 {{#if (eq param.[0].greetingKeywordInfos.[0].keyword "vcoloring")}}
-                    <button type="button" class="item fe-home-external {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&amp;utm_source=tworld&amp;utm_medium=app_menu&amp;utm_campaign=phone&amp;utm_content=store&amp;fSiteCd=1010" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC">
+                    <button type="button" class="item fe-home-external {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC">
                 {{else}}
                     <button type="button" class="item bpcpItemlink {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}">
                 {{/if}}
