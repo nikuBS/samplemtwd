@@ -10082,7 +10082,7 @@ button:focus span {
 .tod-combot-ctype-wrap.slideUp{ bottom: 4rem;}
 .tod-combot-ctype{position: relative;}
 .tod-combot-ctype .beta{position: absolute; top: -8px; right: 2px;display: block; width: 2.125rem; height: 0.9375rem; background: url(/img/svg/txt-beta.svg) no-repeat 0 0; background-size: 100% 100%;}
-.tod-combot-ctype .btn-close{position: absolute;  right: 1rem; top: 1rem; background-color: red; display: inline-block;}
+.tod-combot-ctype .btn-close{position: absolute; right: 0.3125rem; top: 0.25rem; display: inline-block;}
 .tod-combot-ctype .list-wrap{max-width: 18.75rem; height: 2.875rem; border-radius: 1.3125rem; overflow: hidden; box-sizing: border-box; }
 .tod-combot-ctype .item{display:-webkit-box; display:-ms-flexbox;display:flex; -webkit-align-items: center;align-items: center;  padding: 0.5rem 0.625rem 0.5rem 0.75rem; width: 100%; box-sizing: border-box; text-align: left; white-space: nowrap; -webkit-user-select: none; user-select: none;}
 .tod-combot-ctype .item .txt {display:inline-block; width: 75%; text-align: center; padding: 0 0.625rem; margin-right: 24px; font-weight: bold; font-size: 0.8125rem; color: #000;}
@@ -10091,20 +10091,31 @@ button:focus span {
 .tod-combot-ctype.twoline .list-wrap{min-width: 19.625rem; max-width: 20.625rem; height: 3.125rem; border-radius: 1.5625rem; overflow: hidden;}
 .tod-combot-ctype.twoline .item{white-space: normal; word-break: break-all; padding-top: 0.625rem; padding-right: 0.5rem;}
 .tod-combot-ctype.twoline .item .txt {font-size: 0.75rem; line-height: 1.3; width: 75%; text-align: left;}
-.tod-combot-ctype.twoline .btn-close{top: 1.125rem;}
+.tod-combot-ctype.twoline .btn-close{top: 0.4375rem;}
 @media screen and (max-width: 320px) {
   .tod-combot-ctype.twoline .list-wrap{min-width: 18.125rem;max-width: 18.125rem; font-weight: normal;}
 }
 /* ctype - color */
+.tod-combot-ctype .btn-close{display: inline-block ; width: 2rem; height: 2.375rem;}
 .tod-combot-ctype[data-color="gray"] .list-wrap{background: #e9ecef;}
-.tod-combot-ctype[data-color="gray"] .btn-close,
-.tod-combot-ctype[data-color="white"] .btn-close{background: url(/img/common/chatbot/btn-close-wh.svg) no-repeat 0 0; width: 0.75rem; height: 0.75rem; background-size: 100%;}
+.tod-combot-ctype[data-color="gray"] .btn-close:after,
+.tod-combot-ctype[data-color="white"] .btn-close:after{
+  content:"";
+  display: inline-block;
+  vertical-align: middle;
+  background: url(/img/common/chatbot/btn-close-wh.svg) no-repeat 0 0; 
+  width: 0.75rem; height: 0.75rem; background-size: 100%;}/*수정*/
 .tod-combot-ctype[data-color="white"] .list-wrap{background: #fff; border: 1px solid #f1f1f1; box-shadow: 0 1px 0.25rem rgba(0, 0, 0, .5);}
 .tod-combot-ctype[data-color="white"] .ico-chatbot{width: 1.625rem; height: 1.625rem;}
 .tod-combot-ctype.twoline[data-color="white"] .item{padding-right: 0.4rem;} 
 .tod-combot-ctype[data-color="purple"] .list-wrap{background: linear-gradient(to right, #609aff , #877efc);}
 .tod-combot-ctype[data-color="purple"] .txt{color: #fff;}
-.tod-combot-ctype[data-color="purple"] .btn-close{background: url(/img/common/chatbot/btn-close-pp.svg) no-repeat 0 0; width: 0.75rem; height: 0.75rem; background-size: 100%;}
+.tod-combot-ctype[data-color="purple"] .btn-close:after{
+  content:"";
+  display: inline-block;
+  vertical-align: middle;
+  background: url(/img/common/chatbot/btn-close-pp.svg) no-repeat 0 0; 
+  width: 0.75rem; height: 0.75rem; background-size: 100%;}/*수정*/
 /* //201109 [OP002-11653] [UX/PUB] (W-2010-032-01) [컴봇] Greeting 작업 건 수정 */
 
 /* 201027 [OP002-11515] T world 내 글로벌 T 바로가기 영역 적용 */
