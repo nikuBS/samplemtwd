@@ -278,17 +278,19 @@ Tw.ChatbotService.prototype = {
         var isAllowedOs = false;
         if(Tw.BrowserHelper.isIos()){
             console.log('[chatbot.service] [_init] 접속한 페이지 URL : ', Tw.BrowserHelper.isIos());
-            if (/(iPhone)/i.test(userAgentString)) {
-                if (/OS [1-12](.*) like Mac OS X/i.test(userAgentString)) {
-                  // iOS version is <= 12.
-                  console.log('[chatbot.service] iOS version is <= 12: ', Tw.BrowserHelper.isIos());
-                  isAllowedOs = false;
-                } else {
-                  // iOS version is > 13.
-                  console.log('[chatbot.service] iOS version is > 13: ', Tw.BrowserHelper.isIos());
-                  isAllowedOs = true;
+            (function () {
+                var agent = userAgentString,
+                start = agent.indexOf( 'OS' );
+                if( ( agent.indexOf( 'iPhone' ) > -1) && start > -1 ){
+                    if(window.Number( agent.substr( start + 3, 3 ).replace( '_', '.' ) )>12){
+                     isAllowedOs = true; 
+                     console.log("13이상"+isAllowedOs);
+                }else{
+                     isAllowedOs = false;
+                     console.log("13이하"+isAllowedOs);
                 }
-              }
+                    }
+            })();
         }
          if(Tw.BrowserHelper.isAndroid()){
            // var andVer = Tw.BrowserHelper.getAndroidVersion;
