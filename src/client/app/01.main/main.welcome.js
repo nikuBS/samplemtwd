@@ -260,4 +260,27 @@ Tw.MainWelcome.prototype = {
       this._apps.sort($.proxy(this._sortDescending, this));
     }
   },
+  /**
+   * @desc 오름차순 소팅
+   * @param {object} a 소팅할 앱 a
+   * @param {object} b 소팅할 앱 b
+   * @private
+   */
+  _sort: function(a, b) {
+    if (a[this._order] < b[this._order]) return -1;
+    if (a[this._order] > b[this._order]) return 1;
+    return 0;
+  },
+
+  /**
+   * @desc 내림차순 소팅
+   * @param {object} a 소팅할 앱 a
+   * @param {object} b 소팅할 앱 b
+   * @private
+   */
+  _sortDescending: function(a, b) {
+    if (a[this._order] > b[this._order]) return -1;
+    if (a[this._order] < b[this._order]) return 1;
+    return 0;
+  },
 };
