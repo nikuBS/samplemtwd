@@ -154,7 +154,7 @@ Tw.MainWelcome.prototype = {
   _getTosAdminProductBanner: function () {
     this._apiService.requestArray([
       { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: this._getBannerCode(Tw.UrlHelper.getLastPath()) } },
-      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
+      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: 'M000422' /*this._menuId */} } // TODO: Welcome 페이지번호로 바꿔서 연동되는거 확인해야 함.
     ]).done($.proxy(this._successTosAdminProductBanner, this))
       .fail($.proxy(this._errorRequest, this));
   },
