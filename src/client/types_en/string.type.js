@@ -1002,7 +1002,7 @@ Tw.ALERT_MSG_AUTH = {
   ALERT_4_52: 'The line you would like to remove is currently your main line.' + 
               '\nYour main line will be automatically changed to another line when you remove this line.\n\nWould you like to proceed?',
   ALERT_4_53: 'At least 1 line needs to be registered to use T world.\n\nWould you like to remove the selected line?',
-  ALERT_4_54: '선택하신 회선은 수동으로 등록하신 법인명의 회선으로 회선등록 해지 시 목록에서 완전히 삭제되며 다시 사용하시려면 직접 재등록 하셔야 합니다.\n\n회선등록을 해지 하시겠습니까?'
+  ALERT_4_54: 'The selected line is a manually registered corporate line. Once this line is removed, the line will need to be re-registered to be viewed on T world.\n\Would you like remove this line?'
 };
 
 Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';
