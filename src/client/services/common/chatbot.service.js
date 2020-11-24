@@ -765,7 +765,9 @@ Tw.ChatbotService.prototype = {
                     //_this.$combot.hide();
                     _this.$combot.removeClass("open");
                     Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
-
+                    _this._timer = setTimeout( function () {
+                        $('.tod-combot-btn.twoline .chat-txt').addClass("nowrap");  //201109 [OP002-11653] 두줄타입 일 경우만  - 글자 사라질때, 넘침 방지
+                    }, 300); 
                     console.log('[chatbot.service] [_bindEvent] $(document).on(scroll)', '닫으면 안열리게 수정');
                     
                 });  
