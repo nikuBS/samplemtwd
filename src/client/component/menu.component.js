@@ -559,17 +559,29 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
     // 무료 문자 점검 Alert
     var nowDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDDHHmmss');
-    if (nowDate >= Tw.MENU_STRING.FREE_SMS_OVERHAUL.start && nowDate <= Tw.MENU_STRING.FREE_SMS_OVERHAUL.end) {
-      this._popupService.openAlert(
-        Tw.MENU_STRING.FREE_SMS_OVERHAUL.msg,
-        '',
-        Tw.BUTTON_LABEL.CONFIRM,
-        null,
-        'menu_free_sms_overhaul'
-      );
-      return;
-    }
-    Tw.CommonHelper.openFreeSms();
+    this._apiService
+      .request(Tw.API_CMD.BFF_01_0069, {property: 'freesms.overhaul.time'})
+          .done($.proxy(function(resTime) {
+            var resTime = resTime.result.split('~');
+            var start_block_datetime = resTime[0];
+            var end_block_datetime = resTime[1];
+            if (nowDate >= start_block_datetime && nowDate <= end_block_datetime) {
+              this._popupService.openAlert(
+                '서비스 점검 중 입니다.</br>점검 작업 중 서비스가 차단되어 이용하실 수 없습니다.<br>▶점검 일시:' + Tw.DateHelper.getFullDateAndTime(start_block_datetime) + '~' + Tw.DateHelper.getFullDateAndTime(end_block_datetime) + '<br>※ 해당 작업은 상황에 따라서 변경 될 수 있습니다.',
+                '',
+                Tw.BUTTON_LABEL.CONFIRM,
+                null,
+                'menu_free_sms_overhaul'
+              );
+              return;
+            } else {
+              Tw.CommonHelper.openFreeSms();
+            }
+          }, this))
+          .fail(function(err) {
+              
+          });
+    
     return false;
   },
 
