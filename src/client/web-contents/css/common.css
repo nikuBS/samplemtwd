@@ -9916,7 +9916,7 @@ button:focus span {
 .tod-combot-ctype[data-color="white"] .ico-chatbot.membership_benefit,
 .tod-combot-ctype[data-color="white"] .ico-chatbot.cancel_pause,
 .tod-combot-ctype[data-color="white"] .ico-chatbot.hotdata,
-.tod-combot-ctype[data-color="purple"] .ico-chatbot.contents_pay{background:url('/img/common/chatbot/ico-chabot-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
+.tod-combot-ctype[data-color="white"] .ico-chatbot.contents_pay{background:url('/img/common/chatbot/ico-chabot-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-combot-ctype[data-color="white"] .ico-chatbot.vcoloring{ background:url('/img/common/chatbot/ico-vcoloring-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-combot-ctype[data-color="white"] .ico-chatbot.wavve{ background:url('/img/common/chatbot/ico-wavve-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
 .tod-combot-ctype[data-color="white"] .ico-chatbot.flo{ background:url('/img/common/chatbot/ico-flo-wh.svg') no-repeat 0 0; background-size: 100% 100%;}
