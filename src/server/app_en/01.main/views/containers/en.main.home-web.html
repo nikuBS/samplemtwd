@@ -181,6 +181,15 @@
                                 <!-- // .widget -->
 
                                 <div class="call-message">
+                                    <% if(homeData.usageData.data.isTplanUse) { %>
+                                    <div class="tod-flydata-wrap">
+                                        <button class="tod-link-flydata">
+                                            <span class="sp-tit"><i class="tod-icon-flydata"></i>T Family Data </span>
+                                            <span class="sp-data"><em><%= homeData.usageData.data.showShareRemained %></em></span>
+                                        </button>
+                                    </div>
+                                    <% } %>
+
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
                                     <button class="bt-call fe-home-internal" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-32"><i class="icon-call-34"><span class="blind">Talktime</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></button>
                                     <% } %>
@@ -444,6 +453,11 @@
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%= (svcInfo && svcInfo.svcAttrCd === "M1")%>', '', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>','<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
     new Tw.CommonLineComponent($('#mainHome'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+
+    $('.tod-link-flydata').on('click', function() {
+        location.href = '/en/myt-data/hotdata';
+    })
+
   });
 </script>
 </body>
