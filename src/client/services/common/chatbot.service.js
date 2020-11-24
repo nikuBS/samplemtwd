@@ -1401,23 +1401,22 @@ Tw.ChatbotService.prototype = {
         /* *******************************************
             2. 미납내역 관련 말풍선 노출 대상군 여부 체크 
         ******************************************* */
-        if ( unpaidBillInfo.code === Tw.API_CODE.CODE_00 ) {
-            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 미납액 : ', unpaidBillInfo.result.unPaidTotSum);
-
-            if ( unpaidBillInfo.result.unPaidTotSum === '0' ) {
+       if ( unpaidBillInfo.code === Tw.API_CODE.CODE_00 ) {
+            var unPaidTotSum = unpaidBillInfo.result.unPaidTotSum;
+            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 미납액 : ', unPaidTotSum);
+            if ( unPaidTotSum === '0' ) {
                 this._unpaidYn = 'N';
             } else {
+                this._unpaidAmt = Tw.FormatHelper.convNumFormat(Number(unPaidTotSum));
                 this._unpaidYn = 'Y';
             }
-
+            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._unpaidAmt : ', this._unpaidAmt);
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 2. 미납내역 관련 말풍선 노출 대상군 여부 : ', this._unpaidYn);
         } else {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 2. 미납금액 조회 API 리턴 에러', unpaidBillInfo.code, unpaidBillInfo.msg);
-
             this._unpaidYn = 'N';
             // Tw.Error(unpaidBillInfo.code, unpaidBillInfo.msg, '2. 미납내역').pop();
         }
-
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] ----------------------------------------------------------', '');
         /* *******************************************
             3. 소액결제 관련 말풍선 노출 대상군 여부 체크 
