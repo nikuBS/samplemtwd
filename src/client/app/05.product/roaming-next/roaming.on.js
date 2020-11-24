@@ -509,14 +509,17 @@ Tw.RoamingModeOn.prototype = {
    */
   _onErrorReceivedBillData: function (resp) {
     Tw.CommonHelper.endLoading('.rm-mod-loading');
+    this.elemBillSmsArea.toggle();  // 조회 중 영역 없애고 실시간 문자 요금 영역 노출
+    this.elemBillSms.text('현재 실시간 사용요금 조회가 불가합니다.'); // API 조회 실패 시 노출되는 내용
     // if ( resp.code === 'ZINVE8106' ) {  // ZINVE8106: BILL_NOT_AVAILABLE
     //   Tw.Error(resp.code, Tw.HOTBILL_ERROR.ZINVE8106).replacePage();
     // } else if ( resp.code === 'ZINVE8888' ) { // ZINVE8888: BIIL_NOT_REQUESTED
     //   Tw.Error(resp.code, Tw.HOTBILL_ERROR.ZINVE8888).replacePage();
     // } else {
       // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
-    this._popupService.openAlert(Tw.ROAMING_ERROR.ON_SMSBILL.MSG, Tw.ROAMING_ERROR.ON_SMSBILL.TITLE, null, $.proxy(this._goBackOnError, this));
+    // this._popupService.openAlert(Tw.ROAMING_ERROR.ON_SMSBILL.MSG, Tw.ROAMING_ERROR.ON_SMSBILL.TITLE, null, $.proxy(this._goBackOnError, this));
     // }
+    // this.elemBillSms.text(smsBill + '원'); // 조회 후 문자 실시간 문자 요금 적용
   },
 
   /**
@@ -524,9 +527,9 @@ Tw.RoamingModeOn.prototype = {
    * @desc Go to the previous page on Error.
    * @private
    */
-  _goBackOnError: function () {
-    this._historyService.goBack();
-  }
+  // _goBackOnError: function () {
+  //   this._historyService.goBack();
+  // }
 
 
 };
