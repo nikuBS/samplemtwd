@@ -93,7 +93,10 @@ Tw.ChatbotService = function() {
 
     this._defaultGreetingKeywords = ['pay_bill', 'hotbill', 'hotdata']; // 기본 발화어
     this._defaultMlsItems = 'hotbill|pay_bill|hotdata';                 // 기본 발화어의 MLS Item_id
-
+    this._defaultColorB = 'purple';   // B타입 기본 컬러
+    this._defaultColorC = 'purple';   // C타입 기본 컬러
+    this._defaultThemeB = 'normal';   // B타입 기본 테마
+    this._defaultThemeC = 'normal';   // C타입 기본 테마
     // MLS API 호출시 사용할 ChannelId
     this._mlsChannelId;
     
@@ -633,10 +636,39 @@ Tw.ChatbotService.prototype = {
                                             this._mlsGreetingTextType = 'A';
                                             // 발화어 배열
                                             this._mlsGreetingRangking = this._defaultGreetingKeywords;
+                                            // BFF_05_0232에서 쓰일 item_id
+                                            var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType + '||' + this._mlsGreetingRangking[0];
+                                            // 발화어 배열 크기 (B타입인 경우 1)
+                                            var greetingRangkingSize = 1;
                                             // processId (0232, 0233 호출하지 않도록 처리하기 위해 'N'으로)
                                             this._mlsProcessId = 'N';
-                                            // 챗봇 팝업 그리기 전 분기
-                                            this._preDrawChatbot();
+                                            Tw.Logger.info('[chatbot.service] [_init] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
+                                            Tw.Logger.info('[chatbot.service] [_init] mlsItemIds : ', mlsItemIds);
+                                            for (var i = 0; i < this._mlsGreetingRangking.length; i++) {
+                                                for (var j = 0; j < this._greetingKeywords.length; j++){
+                                                    var keyword = this._greetingKeywords[j].keyword;
+                                                    var message = this._greetingKeywords[j].message;
+                                                    var type = this._greetingKeywords[j].type
+                                                    if ((this._mlsGreetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
+                                                        Tw.Logger.info('[chatbot.service] [_init] message : ', message);
+                                                        Tw.Logger.info('[chatbot.service] [_init] type : ', type);
+                                                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type};
+                                                        this._greetingKeywordInfos.push(greetingKeywordInfo);
+                                                    }
+                                                }
+                                            }
+                                            Tw.Logger.info('[chatbot.service] [_init] this._greetingKeywordInfos : ', this._greetingKeywordInfos);
+                                            var option = [{
+                                                cdn: Tw.Environment.cdn,
+                                                greetingKeywordInfos : this._greetingKeywordInfos,
+                                                typeA : false,
+                                                typeB : true,
+                                                typeC : false,
+                                                color : this._defaultColorB,
+                                                theme : this._defaultThemeB
+                                            }];
+                                            Tw.Logger.info('[chatbot.service] [_init] option : ', option);
+                                            this._drawChatbotPop(option, mlsItemIds);
                                         }
                                     }         
                                 }, this));
@@ -763,7 +795,7 @@ Tw.ChatbotService.prototype = {
                   }
                     break
                 default:
-                    _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_red.json', false);
+                    _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_purple.json', false);//값이 없을때 넘어오는 기본 값
             }   
 
              //   _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_purple.json', false);
@@ -952,8 +984,8 @@ Tw.ChatbotService.prototype = {
         });
         $('.fe-home-external').on('click', function(e){
             var url = $(e.currentTarget).data('url');
-            console.log('url'+url);
-            if(!_this.$combot.hasClass('open')){
+            console.log('fe-home-externalurl'+url);
+            if(!_this.$combot.hasClass('open') && this._typeB === 'B'){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
@@ -975,7 +1007,8 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_bindEvent] $(.linkItem).on(click)', '');
 
             var url = $(e.currentTarget).data('url'); 
-            if(!_this.$combot.hasClass('open')){
+            console.log('bpcpItemlinkurl'+url);
+            if(!_this.$combot.hasClass('open') && this._typeB === 'B'){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
@@ -1195,7 +1228,7 @@ Tw.ChatbotService.prototype = {
             this._requestApis();
         } else { // 간편로그인일 경우 API 태우지 않고 MLS 랭킹 순서만 맞춰서 _drawchatbot 호출                    
             // BFF_05_0232에서 쓰일 item_id
-            var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType;
+            var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType + '|';
 
             // 실제 발화어 정보 리스트 세팅        
             var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
@@ -1259,7 +1292,9 @@ Tw.ChatbotService.prototype = {
                 greetingKeywordInfos : this._greetingKeywordInfos,
                 typeA : this._typeA,
                 typeB : this._typeB,
-                typeC : this._typeC
+                typeC : this._typeC,
+                color : this._defaultColorB,
+                theme : this._defaultThemeB
             }];
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] option : ', option);
             this._drawChatbotPop(option, mlsItemIds);
@@ -1555,7 +1590,7 @@ Tw.ChatbotService.prototype = {
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
 
         // BFF_05_0232에서 쓰일 item_id
-        var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType;
+        var mlsItemIds = this._mlsGreetingImageType + '|' + this._mlsGreetingTextType + '|';
 
         // 실제 발화어 정보 리스트 세팅        
         var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
