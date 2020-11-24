@@ -475,7 +475,12 @@ Tw.RoamingModeOn.prototype = {
 
 
         Tw.CommonHelper.endLoading('.rm-mod-loading'); // 로딩바 종료
-        $.proxy(this._renderBillGroup(smsBill.invAmt2), this);  // 화면에 그려주기
+        if (smsBill && smsBill.invAmt2) {
+          $.proxy(this._renderBillGroup(smsBill.invAmt2), this);  // 화면에 그려주기
+        } else {
+          $.proxy(this._renderBillGroup(false), this);  // API 리턴값의 비교항목 "로밍서비스이용료" 와 "로밍문자발신요금"가 없을 때 false로 전달
+        }
+        
       // }
     } else {  // resp.code !== '00'이 아닌 경우
       this._onErrorReceivedBillData(resp);
@@ -491,7 +496,8 @@ Tw.RoamingModeOn.prototype = {
   _renderBillGroup: function (smsBill) {
     // 찾은 금액으로 해당 요금 보여주고 영역 노출 시키기
     this.elemBillSmsArea.toggle();  // 조회 중 영역 없애고 실시간 문자 요금 영역 노출
-    this.elemBillSms.text(smsBill + '원'); // 조회 후 문자 실시간 문자 요금 적용
+    // this.elemBillSms.text(smsBill + '원'); // 조회 후 문자 실시간 문자 요금 적용
+    smsBill ? this.elemBillSms.text(smsBill + '원') : this.elemBillSms.text('0원'); // 조회 후 문자 실시간 문자 요금 적용, smsBill이 false이면 0원노출
     // $('.fe-sms-box').html('서버 오류로 조회되지 않습니다.') //
   },
 
