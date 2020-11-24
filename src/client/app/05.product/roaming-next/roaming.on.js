@@ -22,10 +22,14 @@ Tw.RoamingModeOn = function (rootEl, country, currentTariff, usage, loginAvailab
   Tw.CommonHelper.setCookie('ROAMING_MCC', country.mcc);
 
   this.$container = rootEl;
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this.$country = country;
   this.$currentTariff = currentTariff;
   this.$usage = usage;
   this.$loginAvailable = loginAvailable;
+  // this._commonHelper = Tw.CommonHelper;
+  this.cachedElement();
   this.bindEvents();
   this.$menu = new Tw.RoamingMenu(rootEl);
   this.$menu.install();
@@ -40,9 +44,24 @@ Tw.RoamingModeOn = function (rootEl, country, currentTariff, usage, loginAvailab
 
   this.fillBackgroundImage();
   this.setup();
+  if (Tw.FormatHelper.isEmpty(currentTariff) || currentTariff === 'null' || (currentTariff && (currentTariff.group !== 4 || currentTariff.group !== 8))) { // 요금제 그룹 4는 실시간 문자 요금 조회 하지 않음
+    this.initScrollSms(); // T로밍 SMS/MMS 사용 요금 안내의 실시간 문자 요금 조회를 위한 스크롤 이벤트 함수
+  }
+  // $.proxy(this.initScrollSms(), this); // T로밍 SMS/MMS 사용 요금 안내의 실시간 문자 요금 조회를 위한 스크롤 이벤트 함수
 };
 
 Tw.RoamingModeOn.prototype = {
+
+  /**
+   * @function
+   * @desc Cache elements for binding events.
+   * @returns {void}
+   */
+  cachedElement: function () {
+    this.elemBillSmsArea = this.$container.find('.fe-bill-sms-area'); // T로밍 SMS/MMS 사용 요금 안내 카드 영역의 실시간 요금 노출하는 영역과 조회중 노출하는 영역을 함께 쓰는 클래스
+    this.elemBillSms = this.$container.find('#fe-bill-sms'); // 조회 후 문자 실시간 문자 요금 적용할 부분
+  },
+
   /**
    * 이벤트 핸들러
    */
@@ -356,5 +375,152 @@ Tw.RoamingModeOn.prototype = {
       value: 'NO',
       expireTime: due.toDate()
     }));
+  },
+
+  /**
+   * 스크롤 감지하여 BFF API 호출
+   */
+  initScrollSms: function () {
+
+    var scrolling = true; // 스크롤 할때마다 BFF API를 호출하지 않기 위하여
+    $(window).on('scroll', $.proxy(function () {  // 스크롤 이벤트
+
+      if (scrolling && this.checkSmsTag(this.elemBillSmsArea)) { // 
+        // 실시간 SMS 요금 확인을 위한 BFF APi 호출 함수 호출(여러번?)
+        $.proxy(this.requestBillSms(), this);
+        // 로딩바 이미지 시작
+
+        scrolling = false;
+      }
+
+    }, this)); // end of 스크롤 이벤트
+
+
+  },
+
+  /**
+   * @function
+   * @desc Scroll 내린 지점을 계산하여 리턴(SMS 실시간 요금 조회 API 호출을 위하여)
+   * @param elm 실시간 문자 요금 조회 영역
+   * @private
+   */
+  checkSmsTag: function(element) {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height() / 1.2;
+    var elemTop = element.eq(1).offset().top; // fe-bill-sms-area 클래스의 두번째꺼 선택해야만 offset top 값이 정상적으로 나옴
+    return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+},
+
+  /**
+   * @function
+   * @desc 실시간 SMS 요금 조회 요청 (count:0)
+   * @private
+   */
+  requestBillSms: function() {
+    // 로딩바 시작
+    Tw.CommonHelper.startLoading('.rm-mod-loading', true);
+    this._requestCount = 0;
+    var params = { count: this._requestCount++ }; // 최초 요청시 count:0으로 요청, 1:결과확인 (API 문서 참조할 것), gubun 인풋값은 디폴트 당월
+
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0022, params)
+      .done($.proxy(this.getBillSmsResponse, this))
+      .fail($.proxy(this.onErrorReceivedBillData, this));
+
+  },
+
+  /**
+   * @function
+   * @desc 실시간 SMS 요금 조회 결과보기 (count:1 이상), 결과보기용, (대기시간 필요: 전월 5초, 당월 2.5초), 최대 count:4까지 호출 후 결과 없으면 에러코드 리턴됨
+   * @param resp count:0 일때 빈객체
+   * @private
+   */
+  getBillSmsResponse: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      setTimeout($.proxy(function () {
+        var params = { count: this._requestCount++ }; // 최초 요청 후 count:1 이상이 입력 됨(결과보기)
+
+        this._apiService
+          .request(Tw.API_CMD.BFF_05_0022, params)
+          .done($.proxy(this.onReceivedBillData, this))
+          .fail($.proxy(this.onErrorReceivedBillData, this));
+      }, this), 2500);
+
+    } else {
+      this._onErrorReceivedBillData(resp);  // 
+    }
+  },
+
+  /**
+   * @function
+   * @desc 실시간 SMS 요금 조회 최종 결과
+   * @param resp count:1 이상 일때의 실제 결과 데이터 값
+   * @private
+   */
+  onReceivedBillData: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( !resp.result || !resp.result.hotBillInfo || !resp.result.hotBillInfo[0].record1 ) {
+        this.getBillSmsResponse(resp); // 최대 count:4까지 호출 후 결과 없으면 에러코드 리턴됨
+        return;
+      }
+      var billData = resp.result.hotBillInfo[0].record1;
+
+        var smsBill = _.find(billData, function(item) {
+          return (item.billItmSclNm === '로밍서비스이용료') && (item.billItmNm === '로밍문자발신요금') ;
+        });
+
+        // var smsBill = _.find(billData, function(item) {  // 테스트용_실시간 문자 요금을 받아 올 수 없기 때문에
+        //   return (item.billItmSclNm === '부가가치세(세금)*') && (item.billItmNm === '부가세총액*') // 임시로 데이터통화료 로 테스트??
+        // });
+
+
+        Tw.CommonHelper.endLoading('.rm-mod-loading'); // 로딩바 종료
+        $.proxy(this._renderBillGroup(smsBill.invAmt2), this);  // 화면에 그려주기
+      // }
+    } else {  // resp.code !== '00'이 아닌 경우
+      this._onErrorReceivedBillData(resp);
+    }
+  },
+
+  /**
+   * @function
+   * @desc 실시간 SMS 요금 정보를 문자 조회 중 영역에 노출
+   * @param sms sms 요금
+   * @private
+   */
+  _renderBillGroup: function (smsBill) {
+    // 찾은 금액으로 해당 요금 보여주고 영역 노출 시키기
+    this.elemBillSmsArea.toggle();  // 조회 중 영역 없애고 실시간 문자 요금 영역 노출
+    this.elemBillSms.text(smsBill + '원'); // 조회 후 문자 실시간 문자 요금 적용
+    // $('.fe-sms-box').html('서버 오류로 조회되지 않습니다.') //
+  },
+
+  /**
+   * @function
+   * @desc Error callback for API requests(_onErrorReceivedBillData, _onReceivedBillData)
+   * @param resp
+   * @private
+   */
+  _onErrorReceivedBillData: function (resp) {
+    Tw.CommonHelper.endLoading('.rm-mod-loading');
+    // if ( resp.code === 'ZINVE8106' ) {  // ZINVE8106: BILL_NOT_AVAILABLE
+    //   Tw.Error(resp.code, Tw.HOTBILL_ERROR.ZINVE8106).replacePage();
+    // } else if ( resp.code === 'ZINVE8888' ) { // ZINVE8888: BIIL_NOT_REQUESTED
+    //   Tw.Error(resp.code, Tw.HOTBILL_ERROR.ZINVE8888).replacePage();
+    // } else {
+      // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
+    this._popupService.openAlert(Tw.ROAMING_ERROR.ON_SMSBILL.MSG, Tw.ROAMING_ERROR.ON_SMSBILL.TITLE, null, $.proxy(this._goBackOnError, this));
+    // }
+  },
+
+  /**
+   * @function
+   * @desc Go to the previous page on Error.
+   * @private
+   */
+  _goBackOnError: function () {
+    this._historyService.goBack();
   }
+
+
 };
