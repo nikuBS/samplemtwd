@@ -362,6 +362,7 @@ export const API_CMD = {
   BFF_05_0220: { path: '/core-modification/:version/myBaseInfo/eqp-mthd-cd', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0222: { path: '/core-product/v1/services/wireless/additions/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0227: { path: '/core-balance/:version/roaming/mode/baro-traffic-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0228: { path: '/core-balance/v1/troaming-nrtrde', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0230: { path: '/core-modification/:version/total-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // [OP002-11230]
