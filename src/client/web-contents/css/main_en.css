@@ -2130,7 +2130,7 @@ body.apphome .main-membershop-box { z-index: 3; }
 .tod-bann-auto .tod-bann-btn.stop:before { background-image: url("/img/main/tod_ban_stop.png"); }
 
 /* //190603 추가 [OP002-994] 배너 개선 */
-/* 190610 추가 [DV001-21929] 메인 그래프 주석 추가 건 */
+/* 201123 [OP002-12051]:GlobalT 수정 */
 .tod-flydata-wrap { display: block; text-align: center; width: 100%; margin-bottom: 0.625rem; }
 
 .tod-link-flydata { display: inline-block; position: relative; font-size: 1rem; }
@@ -2141,7 +2141,8 @@ body.apphome .main-membershop-box { z-index: 3; }
 
 .tod-link-flydata .sp-data { color: #178bce; font-weight: 700; }
 
-.tod-icon-flydata { display: inline-block; width: 1.06rem; height: 1.06rem; background: url(/img/ico/icon_34px_datalist.png) no-repeat 0 0; background-size: 100% 100%; }
+.tod-icon-flydata { display: inline-block; width: 1.06rem; height: 1.06rem; background: url(/img/en/icon_34px_datalist.png) no-repeat 0 0; background-size: 100% 100%; }
+/* //201123 [OP002-12051]:GlobalT 수정 */
 
 .tod-flydata-wrap.tod-flydata-mWeb { text-align: left; margin-bottom: 0; margin-top: 1.25rem; }
 
