@@ -233,6 +233,7 @@
         </div>
         <%   } %>
         <% } %>
+
         <% if (isAvailable() && isLogin == false) { %>
             <%# 비로그인으로 접근하는 공식 경로가 없으나, 주소창에 직접 써서 들어온 경우에만 노출 %>
         <div class="card anonymous">
@@ -272,7 +273,7 @@
                     <span>음성</span>
                     <strong><%= usage.phone.totalHours %>시간 <%= usage.phone.totalMinutes %>분 <%= usage.phone.totalSeconds %>초 사용</strong>
                 </div>
-            <% if (currentTariff && (currentTariff.group === 6 || currentTariff.group === 13)) { %>
+            <% if (currentTariff && usage.phone.roUseTariffNow && (currentTariff.group === 6 || currentTariff.group === 13)) { %>
                 <p class="fs13 tr rm-tx-color">일 30분 무료</p>
             <% } %>
             <%# 현재 사용 중인 요금제가 있고 요금제 시작일이 있으며 이용 중 일때를 컨트롤러에서 판단 %>
@@ -295,9 +296,9 @@
         </div>
         <div class="card rm-content">
             <h4>T로밍 SMS/MMS 사용 요금 안내</h4>
-            <% if (currentTariff && (currentTariff.group === 4 || currentTariff.group === 8)) { %>
+            <% if (currentTariff && usage.phone.roUseTariffNow &&(currentTariff.group === 4 || currentTariff.group === 8)) { %>
             <p class="fs13 mt8 tod-txColor5">방문국 또는 한국으로의 발신 시 <strong class="tod-txcolor1">SMS/MMS가 기본으로 제공</strong>됩니다.</p>
-            <% } else if (currentTariff && (currentTariff.group === 9 || currentTariff.group === 11)) { %>
+            <% } else if (currentTariff && usage.phone.roUseTariffNow && (currentTariff.group === 9 || currentTariff.group === 11)) { %>
             <p class="fs13 mt8 tod-txColor5">기본전화로 한국으로 SMS 발신 시 <strong class="tod-txcolor1">22원/건</strong>, MMS 발신 시 <strong class="tod-txcolor1">110원/건</strong> 별도 요금이 발생합니다.</p>
             <% } else { %>
             <p class="fs13 mt8 tod-txColor5">기본전화로 한국으로 SMS 발신 시 <strong class="tod-txcolor1"><%= rate.sMoChargeMax %>원/건</strong>, MMS 텍스트 발신 <strong class="tod-txcolor1"><%= rate.mTxtCharge %>원/건</strong>, MMS 멀티미디어 발신 <strong class="tod-txcolor1"><%= rate.mMtmCharge %>원/건</strong>, 별도 요금이 발생합니다.</p>				
@@ -312,7 +313,7 @@
                     <!-- <div class="cont-loading-area fe-loading-bill">
                     </div> -->
                     <span>문자</span>
-                    <% if (currentTariff && (currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8)) { %>
+                    <% if (currentTariff && usage.phone.roUseTariffNow && (currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8)) { %>
                     <strong>기본제공</strong>
                     <% } else { %>
                     <strong>조회 중</strong>
@@ -324,8 +325,8 @@
                 <!-- // 조회 중 -->
             </div>
             <ul class="bul-list type2 fs13 mt10">
-            <!-- 요금제 그룹 1 이거나 요금제 가입을 하지 않은 상태 -->
-            <% if (!currentTariff || (currentTariff && currentTariff.group === 1)) { %>
+            <!-- 요금제 그룹 1 이거나 요금제 가입을 하지 않은 상태 또는 요금제 그룹에 가입 했으면서 이용중 일때-->
+            <% if (!currentTariff || (currentTariff && usage.phone.roUseTariffNow && currentTariff.group === 1)) { %>
 				<li class="tod-txcolor4">이번 달 1일부터 현재까지의 문자 이용 요금 확인이 가능합니다.</li>
 				<li class="tod-txcolor4">문자 이용 요금은 SMS/MMS 이용 요금이 모두 포함된 금액입니다. 실제 청구 금액과 다를 수 있으므로 단순 참고용으로 활용 부탁드립니다.</li>
 				<li class="tod-txcolor4">현지 발신 &amp; 제 3국 발신 SMS의 경우 국제전화사업자가 부과하는 국제 SMS 비용이 추가로 발생합니다.</li>
@@ -333,7 +334,7 @@
 				<li class="tod-txcolor4">이용 요금제별 문자 혜택은 요금제 상세 안내 참조</li>
             <% } %>
 
-            <% if (currentTariff) { %>
+            <% if (currentTariff && usage.phone.roUseTariffNow) { %>
                 <% if (currentTariff.group === 2) { %>
                     <li class="tod-txcolor4">현지 발신 &amp; 제 3국 발신 SMS의 경우 국제전화사업자가 부과하는 국제 SMS 비용이 추가로 발생합니다.</li>
                     <li class="tod-txcolor4">별도 요금 발생 시 발생한 요금은 다음 달 요금안내서 내역에서 확인하실 수 있습니다.</li>

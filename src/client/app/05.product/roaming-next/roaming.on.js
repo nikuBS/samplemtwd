@@ -45,9 +45,10 @@ Tw.RoamingModeOn = function (rootEl, country, currentTariff, usage, loginAvailab
   this.fillBackgroundImage();
   this.setup();
 
-  // 로그인 true && 가입된 요금제 그룹이 없거나 null, 또는 요금제 그룹이 2,4,8일때는 스크롤 이벤트 적용하지 않도록 처리
-  // this.$loginAvailable && ( !(currentTariff && (currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8))), 확인필요
-  if (this.$loginAvailable && (Tw.FormatHelper.isEmpty(currentTariff) || currentTariff === 'null' || (currentTariff && !(currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8)))) {
+  // 로그인 true && 가입된 요금제 그룹이 없거나 null, 요금제 가입 했지만 이용중이 아닐때 실행 또는 요금제 가입 했지만 이용중이면서 그룹이 2,4,8이 아닐때 스크롤 이벤트 처리
+  // if (loginAvailable  && ((currentTariff && usage.phone.roUseTariffNow && !(currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8)))) {
+  if (loginAvailable && (Tw.FormatHelper.isEmpty(currentTariff) || currentTariff === 'null' || currentTariff && !usage.phone.roUseTariffNow || 
+  (currentTariff && usage.phone.roUseTariffNow && !(currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8)))) {
     this.initScrollSms(); // T로밍 SMS/MMS 사용 요금 안내의 실시간 문자 요금 조회를 위한 스크롤 이벤트 함수
   }
   // $.proxy(this.initScrollSms(), this); // T로밍 SMS/MMS 사용 요금 안내의 실시간 문자 요금 조회를 위한 스크롤 이벤트 함수
