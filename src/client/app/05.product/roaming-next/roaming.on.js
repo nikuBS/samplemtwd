@@ -44,7 +44,10 @@ Tw.RoamingModeOn = function (rootEl, country, currentTariff, usage, loginAvailab
 
   this.fillBackgroundImage();
   this.setup();
-  if (Tw.FormatHelper.isEmpty(currentTariff) || currentTariff === 'null' || (currentTariff && (currentTariff.group !== 4 || currentTariff.group !== 8))) { // 요금제 그룹 4는 실시간 문자 요금 조회 하지 않음
+
+  // 로그인 true && 가입된 요금제 그룹이 없거나 null, 또는 요금제 그룹이 2,4,8일때는 스크롤 이벤트 적용하지 않도록 처리
+  // this.$loginAvailable && ( !(currentTariff && (currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8))), 확인필요
+  if (this.$loginAvailable && (Tw.FormatHelper.isEmpty(currentTariff) || currentTariff === 'null' || (currentTariff && !(currentTariff.group === 2 || currentTariff.group === 4 || currentTariff.group === 8)))) {
     this.initScrollSms(); // T로밍 SMS/MMS 사용 요금 안내의 실시간 문자 요금 조회를 위한 스크롤 이벤트 함수
   }
   // $.proxy(this.initScrollSms(), this); // T로밍 SMS/MMS 사용 요금 안내의 실시간 문자 요금 조회를 위한 스크롤 이벤트 함수
@@ -510,7 +513,8 @@ Tw.RoamingModeOn.prototype = {
   _onErrorReceivedBillData: function (resp) {
     Tw.CommonHelper.endLoading('.rm-mod-loading');
     this.elemBillSmsArea.toggle();  // 조회 중 영역 없애고 실시간 문자 요금 영역 노출
-    this.elemBillSms.text('현재 실시간 사용요금 조회가 불가합니다.'); // API 조회 실패 시 노출되는 내용
+    this.elemBillSms.addClass('rm-tx-color fs13').text('현재 실시간 사용요금 조회가 불가합니다.');
+    // this.elemBillSms.text('현재 실시간 사용요금 조회가 불가합니다.'); // API 조회 실패 시 노출되는 내용
     // if ( resp.code === 'ZINVE8106' ) {  // ZINVE8106: BILL_NOT_AVAILABLE
     //   Tw.Error(resp.code, Tw.HOTBILL_ERROR.ZINVE8106).replacePage();
     // } else if ( resp.code === 'ZINVE8888' ) { // ZINVE8888: BIIL_NOT_REQUESTED
