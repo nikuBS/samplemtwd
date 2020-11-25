@@ -325,8 +325,8 @@
                 <!-- // 조회 중 -->
             </div>
             <ul class="bul-list type2 fs13 mt10">
-            <!-- 요금제 그룹 1 이거나 요금제 가입을 하지 않은 상태 또는 요금제 그룹에 가입 했으면서 이용중 일때-->
-            <% if (!currentTariff || (currentTariff && usage.phone.roUseTariffNow && currentTariff.group === 1)) { %>
+            <!-- 요금제 가입 false or 요금제가입 && 이용중이 아닐때 or 요금제 가입 및 이용중 && 요금제 그룹 1 일때-->
+            <% if (!currentTariff || (currentTariff && !usage.phone.roUseTariffNow) ||(currentTariff && usage.phone.roUseTariffNow && currentTariff.group === 1)) { %>
 				<li class="tod-txcolor4">이번 달 1일부터 현재까지의 문자 이용 요금 확인이 가능합니다.</li>
 				<li class="tod-txcolor4">문자 이용 요금은 SMS/MMS 이용 요금이 모두 포함된 금액입니다. 실제 청구 금액과 다를 수 있으므로 단순 참고용으로 활용 부탁드립니다.</li>
 				<li class="tod-txcolor4">현지 발신 &amp; 제 3국 발신 SMS의 경우 국제전화사업자가 부과하는 국제 SMS 비용이 추가로 발생합니다.</li>
@@ -440,7 +440,7 @@
 
 
 
-        <% if (!currentTariff || (currentTariff && currentTariff.group !== 11)) { %> <!-- OP002-11396 [FE][로밍][M] 로밍음성통화 사용량 조회 건 -->
+        <% if (!(currentTariff && usage.phone.roUseTariffNow && currentTariff.group === 11)) { %> <!-- OP002-11396 [FE][로밍][M] 로밍음성통화 사용량 조회 건 -->
         <a href="/product/roaming/info/barocall">
         <div class="card">
             <h3 class="mb10">
