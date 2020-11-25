@@ -534,16 +534,14 @@ export default class RoamingOnController extends RoamingController {
       // splitRoStartTime = (current.startTime).trim().split(':');
     }
 
-
-
-
     // 타회선 조회시 T-SvcMgmtNum 넘겨야함
+    // BFF_05_0228(new) NRTRDE 사용량 조회-샘플 - 로밍 총 통화시간
     return this.apiService.request(API_CMD.BFF_05_0228, !FormatHelper.isEmpty(roStartDate) ? {startDate: roStartDate} : {}).map(resp => {
       const error = RoamingHelper.checkBffError(resp);
       if (error) { return error; }
 
       resp.result.map((phone: { totalDuration: string; korCurTime: string; oneMonthBeforeDate: string; totalHours: any; totalMinutes: any; totalSeconds: any; baseKoCurMonth: any; 
-        baseKoCurDay: any; baseKoCurTime: any; baseOneMonthBeforeMonth: any;  baseOneMonthBeforeDay: any; roStartDate: any; }) => {
+        baseKoCurDay: any; baseKoCurTime: any; baseOneMonthBeforeMonth: any;  baseOneMonthBeforeDay: any; roStartDate: any; roUseTariffNow: any; }) => {
 
         let splitTotalDuration: any = phone.totalDuration.split(':'); // 총 음성 통화 시간 분할
         let splitBaseKoCurTime: any = phone.korCurTime.match(/.{1,2}/g); // ["20", "20", "10", "30", "15"], 한국현재시간
@@ -560,6 +558,7 @@ export default class RoamingOnController extends RoamingController {
         if (!FormatHelper.isEmpty(roStartDate)) {
           phone.roStartDate = roStartDate;
         }
+        phone.roUseTariffNow = (current && current.statusMessage === '이용 중') ? true : false;
         // if (!FormatHelper.isEmpty(splitRoStartDate && splitRoStartTime)) {  // 로밍 요금제 가입 및 시작날짜와 시간이 있는 경우
         //   phone.roStartMonth = splitRoStartDate[2];
         //   phone.roStartDay = splitRoStartDate[3];
