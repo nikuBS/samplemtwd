@@ -1016,7 +1016,9 @@ Tw.ChatbotService.prototype = {
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
-                window.open(url, '_blank');
+               // window.open(url, '_blank');
+                //Tw.CommonHelper.openUrlInApp(url);
+                _this._historyService.goLoad(url);
             }
                 
                 // Tw.CommonHelper.openUrlExternal('https://app.tworld.co.kr' + url);
