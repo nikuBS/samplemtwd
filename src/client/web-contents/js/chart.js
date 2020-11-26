@@ -458,6 +458,74 @@ $.fn.chart2 = function(o){
       })
     }
   }
+  if(d.type == 'bar5'){
+        if(d.data_arry.length === 0) {
+            $(d.target).append($('<div class="warning-box"><div class="warning-inner"><p class="warning-tit">최근 사용량 내역이 없습니다.</p></div></div>'));
+            return;
+        }
+        $(d.target).append($('<div>').addClass('data-belt').append($('<ul>').addClass('data-ul')));
+        for(var i=0; i < d.data_arry.length; i++){
+            throw_arry.push(d.data_arry[i].v);
+        }
+        average(throw_arry, d.unit);
+        if(d.legend){// 범례
+            $(d.target).append($('<div>').addClass('legend'));
+            for(var i=0; i < d.legend.length; i++){
+                $(d.target).find('.legend')
+                    .append(
+                        $('<span>').addClass('category' + i)
+                            .append(
+                                $('<span>').text(d.legend[i])
+                            )
+                    )
+            }
+        }
+
+        for(var i=0; i < d.data_arry.length; i++){
+            $(d.target).find('.data-ul')
+                .append(
+                    $('<li>').addClass('month-item').toggleClass('shortfall', parseInt(style_pattern[i+1], 10) < parseInt(style_pattern[0], 10))
+                        .append(
+                            $('<dl>')
+                                .append($('<dt>')
+                                    .text(d.data_arry[i].t)
+                                )
+                                .append(
+                                    $('<dd>')
+                                        .append(
+                                            $('<span>').addClass('v').css('bottom', style_pattern[i+1]+'%').text(text_pattern[i+1])
+                                        )
+                                        .append(
+                                            $('<span>').addClass('bar').css('height', style_pattern[i+1]+'%').append($('<span class="exceed"></span>'))
+                                        )
+                                )
+                        )
+                )
+        }
+
+        if(d.average){ // 평균
+            d.averageHeight = $(d.target).find('.month-item > dl').height() * (style_pattern[0] / 100);
+            $(d.target).find('.exceed').css('bottom', d.averageHeight);
+            $(d.target).find('.data-belt').append($('<span class="average-line" style="height:' + d.averageHeight + 'px"></span>'));
+            $(d.target).append($('<div class="chart-legend"><ul class="legend-list"><li class="item average"><span class="small-line"><span></span></span>평균 사용량 : ' + text_pattern[0] + '</li></ul></div>'));
+        }
+
+        if($(d.target).find('.data-ul > li').length > 4){
+            $(d.target).addClass('over');
+            $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
+            $(d.target).find('.data-ul').css('width', (25 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+        }
+        if(d.link){
+            $(d.target).find('.data-ul > li:not(".average")').each(function(i){
+                var temp = $(this).find('dt').text();
+                if(d.data_arry[i].class !== undefined){
+                    $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass(d.data_arry[i].class));
+                }else{
+                    $(this).find('dt').empty().append($('<button>').text(temp).attr('type','button').addClass('link' + i));
+                }
+            })
+        }
+    }
 
   if(d.type == 'circle'){ // circle - min 50% ~ max 100%
     for(var i=0; i < d.data_arry.length; i++){
