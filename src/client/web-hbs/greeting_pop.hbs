@@ -34,8 +34,8 @@
     <!--  B 타입 -->
     <div class="tod-combot-wrap">
         <div class="tod-combot-btn {{param.[0].greetingLines}}" {{#if param.[0].color}}data-color="{{param.[0].color}}" data-thema="{{param.[0].theme}}"{{/if}}>
-			<span class="beta"><span class="blind">beta</span></span> 
-			{{#if param.[0].greetingKeywordInfos.[0].linkUrl}}
+            <span class="beta"><span class="blind">beta</span></span> 
+            {{#if param.[0].greetingKeywordInfos.[0].linkUrl}}
                 {{#if (eq param.[0].greetingKeywordInfos.[0].keyword "vcoloring")}}
                     <button type="button" class="item fe-home-external {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC">
                 {{/if}}
@@ -57,10 +57,10 @@
 {{#if param.[0].typeC}}
         <!--  C 타입 -->
     <div class="tod-combot-ctype-wrap">
-		<div class="tod-combot-ctype {{param.[0].greetingLines}}" data-color="{{param.[0].color}}"><!-- 개발 참고사항 : ctype 한줄 : class="tod-combot-ctype" / ctype 두줄 :  class="tod-combot-ctype twoline" / color 테마 : data-color="gray", data-color="purple" data-color="white" -->
-			<span class="beta"><span class="blind">beta</span></span>
-			<div class="list-wrap">
-				<ul class="ul-rolling">
+        <div class="tod-combot-ctype {{param.[0].greetingLines}}" data-color="{{param.[0].color}}"><!-- 개발 참고사항 : ctype 한줄 : class="tod-combot-ctype" / ctype 두줄 :  class="tod-combot-ctype twoline" / color 테마 : data-color="gray", data-color="purple" data-color="white" -->
+            <span class="beta"><span class="blind">beta</span></span>
+            <div class="list-wrap">
+                <ul class="ul-rolling">
                     {{#each param.[0].greetingKeywordInfos}} 
                         <li>
                             {{#if linkUrl}}
@@ -77,11 +77,10 @@
                             {{/if}}
                         </li>
                     {{/each}} 
-				</ul>
-			</div>
-			<!-- x 버튼 -->
-			<button type="button" class="btn-close"><span class="tod-blind">닫기</span></button>
-		</div>
+                </ul>
+            </div>
+            <!-- x 버튼 -->
+            <button type="button" class="btn-close"><span class="tod-blind">닫기</span></button>
+        </div>
 </div>
 {{/if}}
- 

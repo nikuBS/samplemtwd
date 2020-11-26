@@ -65,34 +65,47 @@ Tw.MainWelcome.prototype = {
 
     var apps = resp.result.prodList || [];
 
-    if (Tw.BrowserHelper.isApp()) { // 앱인 경우 설치된 앱리스트 확인(native 요청)
-      this._nativeService.send(
-        Tw.NTV_CMD.IS_INSTALLED,
-        {
-          list: _.map(apps, function(app) {
-            return {
-              appKey: app.prodNm,
-              scheme: app.lnkgAppScmCtt,
-              package: app.lnkgAppPkgNm
-            };
-          })
-        },
-        $.proxy(this._handleConfirmAppInstalled, this, apps)
-      );
-    } else {  // 모바일 웹인 경우
-      this._apps = _.map(apps, function(app) {
-        app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
-        app.idxExpsSeq = Number(app.idxExpsSeq);
+    this._apps = _.map(apps, function(app) {
+      app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
+      app.idxExpsSeq = Number(app.idxExpsSeq);
 
-        return app;
-      });
+      return app;
+    });
 
-      this._appendApps(); // 앱 리스트 랜더링
-      this.$container
-        .find('.etc-page-list')
-        .removeClass('none')
-        .attr('aria-hidden', false);
-    }
+    this._appendApps(); // 앱 리스트 랜더링
+    this.$container
+      .find('.etc-page-list')
+      .removeClass('none')
+      .attr('aria-hidden', false);
+
+    // if (Tw.BrowserHelper.isApp()) { // 앱인 경우 설치된 앱리스트 확인(native 요청)
+    //   this._nativeService.send(
+    //     Tw.NTV_CMD.IS_INSTALLED,
+    //     {
+    //       list: _.map(apps, function(app) {
+    //         return {
+    //           appKey: app.prodNm,
+    //           scheme: app.lnkgAppScmCtt,
+    //           package: app.lnkgAppPkgNm
+    //         };
+    //       })
+    //     },
+    //     $.proxy(this._handleConfirmAppInstalled, this, apps)
+    //   );
+    // } else {  // 모바일 웹인 경우
+    //   this._apps = _.map(apps, function(app) {
+    //     app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
+    //     app.idxExpsSeq = Number(app.idxExpsSeq);
+
+    //     return app;
+    //   });
+
+    //   this._appendApps(); // 앱 리스트 랜더링
+    //   this.$container
+    //     .find('.etc-page-list')
+    //     .removeClass('none')
+    //     .attr('aria-hidden', false);
+    // }
   },
 
   /**
