@@ -240,9 +240,13 @@ Tw.ChatbotService.prototype = {
                 console.log('[chatbot.service] [_init] 단말 모델 정보 : ', _this._deviceModelCode);
             }
         }
-
+        
         // 챗봇 노출 대상 화면 여부 체크
-        var urlPath = location.pathname;
+        var urlPath = location.pathname;        
+        if (this._chatbotPopDispPageUrls[urlPath] === undefined) {    
+            console.log('[chatbot.service] [_init] 접근대상 메뉴가 아닌 경우', '');
+            return;
+        }
         
         // MLS API 호출시 사용할 urlPath별 ChannelId
         switch (urlPath) {
@@ -354,28 +358,29 @@ Tw.ChatbotService.prototype = {
                 Tw.Logger.info('[chatbot.service] [_init] 챗봇 서비스 허용 여부 (isAllowedChatbot) : ', isAllowedChatbot);
 
                 if (isAllowedChatbot) {  // 챗봇 서비스 차단중이 아닐 경우
-                    if (isAllowedOs) { // isAllowedDevice가 os로 변경됨
-                        Tw.Logger.info('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
-                        console.log('[chatbot.service] [_init] 접근 가능 단말인 경우', '');
+                    if (isAllowedOs) { // 접근 가능 OS 버전인 경우
+                        Tw.Logger.info('[chatbot.service] [_init] 접근 가능 OS 버전인 경우', '');
+                        console.log('[chatbot.service] [_init] 접근 가능 OS 버전인 경우', '');
+                        isAllowed = true;
         
-                        if (this._chatbotPopDispPageUrls[urlPath] !== undefined) {    
-                            // 노출 대상 화면인 경우
-                            console.log('[chatbot.service] [_init] 노출 대상 화면인 경우', '');
+                        // if (this._chatbotPopDispPageUrls[urlPath] !== undefined) {    
+                        //     // 노출 대상 화면인 경우
+                        //     console.log('[chatbot.service] [_init] 노출 대상 화면인 경우', '');
         
-                            isAllowed = true;
-                        } else if (urlPath === this._chatbotDefaultPage) {
-                            // 전체 메뉴 > 챗봇 체험하기 접근 시
-                            // 진입화면, 유무선, 발화어, T월드 앱 버전, 개인정보 수집/이용동의
-                            // Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
-                            console.log('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
+                        //     isAllowed = true;
+                        // } else if (urlPath === this._chatbotDefaultPage) {
+                        //     // 전체 메뉴 > 챗봇 체험하기 접근 시
+                        //     // 진입화면, 유무선, 발화어, T월드 앱 버전, 개인정보 수집/이용동의
+                        //     // Tw.Logger.info('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
+                        //     console.log('[chatbot.service] [_init] 전체 메뉴 > 챗봇 체험하기 접근 시', '');
                             
-                            isAllowed = true;
-                            isDefaultPage = true;
-                        } else {
-                            // 대상화면이 아닌 경우
-                            // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
-                            console.log('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
-                        }
+                        //     isAllowed = true;
+                        //     isDefaultPage = true;
+                        // } else {
+                        //     // 대상화면이 아닌 경우
+                        //     // Tw.Logger.info('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
+                        //     console.log('[chatbot.service] [_init] 챗봇 팝업 노출 대상 화면이 아닌 경우', '');
+                        // }
                     }
                 }
                 console.log('[chatbot.service] [_init] isAllowed : ', isAllowed);
