@@ -989,7 +989,7 @@ Tw.ChatbotService.prototype = {
         $('.fe-home-external').on('click', function(e){
             var url = $(e.currentTarget).data('url');
             console.log('fe-home-externalurl'+url);
-            if(!_this.$combot.hasClass('open') && this._typeB === 'B'){
+            if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
@@ -1016,7 +1016,7 @@ Tw.ChatbotService.prototype = {
 
             var url = $(e.currentTarget).data('url'); 
             console.log('bpcpItemlinkurl'+url);
-            if(!_this.$combot.hasClass('open') && this._typeB === 'B'){
+            if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
