@@ -80,6 +80,17 @@ Tw.LineComponent.prototype = {
   },
 
   /**
+   * @desc 회선 변경 레이어 팝업 오픈 요청
+   * @param {*} selectedMgmt 
+   * @param {*} $target 
+   */
+  onClickGlobalLineView: function(selectedMgmt, svcAttrCd, $target) {
+    this._init(selectedMgmt);
+    this._openLineList = true;
+    this._getGlobalLineViewList(svcAttrCd, $target);
+  },
+
+  /**
    * @function
    * @desc 회선번호 클릭시 처리
    * @param $event 이벤트 객체
@@ -153,6 +164,61 @@ Tw.LineComponent.prototype = {
       }}
     ]).done($.proxy(this._successGetLineViewList, this, $target))
       .fail($.proxy(this._failGetLineList, this));
+  },
+
+  /**
+   * @desc 전체 회선 정보 요청
+   * @param {*} svcAttrCd 
+   * @param {*} $target 
+   */
+  _getGlobalLineViewList: function(svcAttrCd, $target) {
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_ALL_SVC, params: {}},
+      // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+      { command: Tw.NODE_CMD.GET_CHILD_INFO, params: {}},
+      { command: Tw.API_CMD.BFF_03_0029, params: {
+        svcCtg: Tw.LINE_NAME.MOBILE
+      }}
+    ]).done($.proxy(this._successGetGlobalLineViewList, this, $target, svcAttrCd))
+      .fail($.proxy(this._failGetLineList, this));
+  },
+
+  /**
+   * @desc 전체 회선 정보 응답 처리
+   * @param {*} $target 
+   * @param {*} allSvcResp 
+   * @param {*} childSvcResp 
+   * @param {*} exposableResp 
+   */
+  _successGetGlobalLineViewList: function ($target, svcAttrCd, allSvcResp, childSvcResp, exposableResp) {
+
+    // childSvcResp = childSvcResp || {};
+    var  totNonCnt = 0;
+    if ( exposableResp.code === Tw.API_CODE.CODE_00 ) {
+      totNonCnt = exposableResp.result.mCnt;
+    }
+
+    if ( allSvcResp.code === Tw.API_CODE.CODE_00 ) {
+      this._lineList = this._parseLineList(allSvcResp.result, childSvcResp.result);
+      
+      // PPS 또는 유선 체크
+      var isPPSOrWire = (svcAttrCd === Tw.SVC_ATTR_E.PPS || ['S1', 'S2', 'S3'].indexOf(svcAttrCd) > -1);
+      if( isPPSOrWire ) {
+        if ( allSvcResp.result.m.length >= 1 ) {
+          this._openListPopup(this._lineList, totNonCnt, $target);
+        } else {
+          this._historyService.goLoad('/en/common/member/line');
+        }
+      } else {
+        if ( allSvcResp.result.m.length > 1 ) {
+          this._openListPopup(this._lineList, totNonCnt, $target);
+        } else{
+          this._historyService.goLoad('/en/common/member/line');
+        }
+      }
+    } else {
+      Tw.Error(allSvcResp.code, allSvcResp.msg).pop();
+    }
   },
 
  /**

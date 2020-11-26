@@ -256,7 +256,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         this._lineComponent = new Tw.LineComponent(null, null, false, this.$gnbBtn);
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해      
-      this._lineComponent.onClickLine(this._svcInfo.svcMgmtNum, $target);
+      // this._lineComponent.onClickLine(this._svcInfo.svcMgmtNum, $target);
+      this._lineComponent.onClickGlobalLineView(this._svcInfo.svcMgmtNum, this._svcInfo.svcAttrCd, $target);
+
     // }
   },
 
