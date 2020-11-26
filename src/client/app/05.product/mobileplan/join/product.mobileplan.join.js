@@ -134,14 +134,45 @@ Tw.ProductMobileplanJoin.prototype = {
    */
   _setConfirmBodyIntoContainer: function(context) {
     var tmpl = Handlebars.compile(context),
-      html = tmpl(this._confirmOptions);
+      html = tmpl(this._confirmOptions),
+      fromProdId = this._confirmOptions.preinfo.frProdInfo.prodId;
 
     this.$container.html(html);
     this._callConfirmCommonJs();
 
     Tw.Tooltip.separateMultiInit(this.$container);
 
+    if (Tw.UNTACT_PROD_ID.indexOf(this._prodId) !== -1 && Tw.UNTACT_PROD_ID.indexOf(fromProdId) === -1) {
+      this._openUntactProdGuide();
+    }
+
     this._premTermYn();
+  },
+
+  /**
+   * @function
+   * @desc 언택트 요금제 변경 시 팝업 프로세스 실행
+   */
+  _openUntactProdGuide: function() {
+    this._popupService.openModalTypeB(
+      null, // 제목
+      '<img src="'+Tw.Environment.cdn+'/img/product/img-banner-change-untact1.png" alt="언택트 요금제는 결합/약정할인 등 각종 할인상품 가입이 불가하니 요금제 변경 시 참고바랍니다." class="vt" style="width:100%">', // 내용
+      '요금제 변경', // 확인버튼 텍스트
+      null, // openCallback
+      $.proxy(this._goBack, this), // closeCallback
+      $.proxy(this._closePop, this), // confirmCallback
+      'change_guide', // hashName
+      null, // align
+      null // event
+    );
+  },
+
+  /**
+   * @function
+   * @desc 언택트 요금제 팝업 취소 시 동작(상품원장으로 이동)
+   */
+  _goBack: function() {
+    this._historyService.goLoad('/product/callplan?prod_id=' + this._prodId);
   },
 
   /**

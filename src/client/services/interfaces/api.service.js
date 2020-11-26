@@ -39,6 +39,7 @@ Tw.ApiService.prototype = {
 
     // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
     if(!Tw.CommonHelper.checkValidSession(location.pathname, command.path, 'CLIENT_API_REQ')) {
+      Tw.CommonHelper.setSessionStorage(Tw.SSTORE_KEY.PRE_TWM, '');
       return;
     } else {
       // var pathVariables = this._getPathVariables(arguments);

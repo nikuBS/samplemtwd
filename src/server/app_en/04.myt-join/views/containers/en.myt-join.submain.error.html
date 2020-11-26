@@ -7,6 +7,12 @@
 
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">Go to Main</a></li>
+        </ul>
+    </div>
+
     <div class="wrap">
         <%- include('../../../../common_en/views/components/header.component.html', { title: 'MY INFORMATION', svcInfo: svcInfo }); %>
         <div id="contents" class="container-wrap">
@@ -29,7 +35,7 @@
                             </span>
 
                             <%_ if ( errorCode === 'LINE_NOT_EXIST' ) { _%>
-                                <button id="gotoLine" class="bt-link-tx underline mt10" data-xt_eid="MWMA_A10_B81_C1198-7">Register Line</button>
+                                <button id="goto-line" class="bt-link-tx underline mt10" data-xt_eid="MWMA_A10_B81_C1198-7">Register Line</button>
                             <%_ } _%>
 
                             <%_ if ( errorCode === 'COMPANY_LINE' ) { _%>
@@ -48,11 +54,8 @@
 <%- include('../components/javascript.component.html'); %>
 <script>
   $(document).ready(function () {
-    $('#gotoLine').click(function() {
-        window.location.href = '/en/common/member/line';
-    });
-
     new Tw.LineComponent($('#contents'), '.fe-bt-line', true, null);
+    new Tw.CommonLineComponent($('#contents'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
   });
 </script>
 <% include('../components/end.component.html'); %>

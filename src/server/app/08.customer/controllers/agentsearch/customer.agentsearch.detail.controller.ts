@@ -79,7 +79,7 @@ interface BranchDetail {
   // talkMapArr?: Array<string>;
   star?: string;
   services?: Array<Services> | any;
-  shopTypeNm?: string; // 매장분류 명
+  shopTypeNm?: Array<string> | any; // 매장분류 명
   storeType: string; // 매장유형 (1: 지점, 2:대리점)
   url?: string; // 상담예약 url
   isReserve?: boolean; // 상담예약 가능여부
@@ -221,18 +221,22 @@ class CustomerAgentsearchDetail extends TwViewController {
       return true;
     };
 
+    // OP002-11979 : 매장타입 노출 수 변경. 기존 1개 -> n개. 따라서 shopTypeNm string -> array 로 타입 변경함.
+    if (!respData.shopTypeNm) {
+      respData.shopTypeNm = new Array<string>();
+    }
     // 매장분류
     // "매장특성구분코드", (04:T Premium Store, 06:T Flagship Store)
     switch (regionInfo.shopTpsCd) {
       case '04' :
-        respData.shopTypeNm = 'T Premium Store';
+        respData.shopTypeNm.push('T Premium Store');
         break;
       case '06' :
-        respData.shopTypeNm = 'T Flagship Store';
+        respData.shopTypeNm.push('T Flagship Store');
         break;
     }
     if (regionInfo.unmanShop === 'Y') {
-      respData.shopTypeNm = '무인매장';
+      respData.shopTypeNm.push('무인매장');
     }
 
     // 매장소개. "#^" 문자를 줄내림 문자로 치환.

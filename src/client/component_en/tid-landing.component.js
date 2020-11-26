@@ -452,12 +452,17 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _successSetSession: function (target) {
-      
     // native에서 해당 값을 cookie에 set 하지 않기 때문에 로그인 완료시 cookie에 값을 설정한다.
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, 'Y');
     
     if ( target === location.pathname + location.search ) {
       this._historyService.reload();
+
+      if( window.location.hash.indexOf('menu') !== -1 ) {
+        setTimeout(function() {
+          this._historyService.goBack();
+        }, 100)
+      }
     } else {
       this._historyService.replaceURL(target);
     }

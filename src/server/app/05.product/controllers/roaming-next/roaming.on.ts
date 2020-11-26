@@ -14,13 +14,13 @@
  * BFF_05_0227: baro 통화 사용량
  */
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { Observable } from 'rxjs/Observable';
-import FormatHelper from '../../../../utils/format.helper';
 import moment from 'moment';
-import RoamingHelper from './roaming.helper';
+import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 import MyTHelper from '../../../../utils/myt.helper';
-import {RoamingController} from './roaming.abstract';
+import { RoamingController } from './roaming.abstract';
+import RoamingHelper from './roaming.helper';
 
 export default class RoamingOnController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -171,6 +171,7 @@ export default class RoamingOnController extends RoamingController {
     };
 
     this.getUsingTariffs().subscribe(usingTariffs => {
+      // BFF_10_0056(나의로밍이용연황)의 리턴값이 없거나 길이가 0인경우 noSubscription은 false가 입력됨, true이면 요금제 가입된 상태
       const noSubscription = !usingTariffs || usingTariffs.length === 0;
       context.noSubscription = noSubscription;
 
@@ -192,11 +193,12 @@ export default class RoamingOnController extends RoamingController {
             allTariffs = [];
           }
           context.availableTariffs = allTariffs.map(t => RoamingHelper.formatTariff(t));
-          // Phone 이용률 카드는 2020. 9. 24 스펙에서 제외 되었으므로 빈 값으로 채움
-          context.usage.phone = {
-            voice: 0,
-            sms: 0,
-          };
+          // Phone 이용률 카드는 2020. 9. 24 스펙에서 제외 되었으므로 빈 값으로 채움 - 기존 1차 이지만 이후 변경됨 (오병소)
+          // context.usage.phone = {
+          //   voice: 0,
+          //   sms: 0,
+          // };
+          context.usage.phone = phoneUsage;
           context.rate = rate;
           context.meta = meta;
           this.renderDeadline(res, template, context);
@@ -400,10 +402,10 @@ export default class RoamingOnController extends RoamingController {
     return this.apiService.request(API_CMD.BFF_10_0199, {mcc: mcc}).map(resp => {
       const error = RoamingHelper.checkBffError(resp);
       if (error) { return error; }
-      // countryCode, countryNm, countryNmEng, tmdiffTms
-      // mblNflagImg, alt
-      // mblRepImg, alt
-      // mblBgImg, alt
+      // countryCode, countryNm, countryNmEng, tmdiffTms(시차)
+      // mblNflagImg(국기이미지), alt
+      // mblRepImg(대표이미지), alt
+      // mblBgImg(배경이미지), alt
       return resp.result;
     });
   }
@@ -516,13 +518,56 @@ export default class RoamingOnController extends RoamingController {
    * @private
    */
   private getPhoneUsage(current: any): Observable<any> {
-    if (current.status === 0) {
-      return Observable.of({});
+    // if (current.status === 0) {
+    //   return Observable.of({});
+    // }
+ 
+    // 현재 가입한 로밍 요금제가 있을 경우 해당 월일 셋팅 및 BFF API 조회를 위하여 날짜를 넘겨줌
+    let roStartDate: any;  // 가입한 로밍 요금제가 있을 경우 BFF API에 YYMMDD로 보내 줘야 함
+    // let splitRoStartDate: any;  // 분할한 로밍 요금제 시작 날짜
+    // let splitRoStartTime: any;  // 분할한 로밍 요금제 시작 시간
+
+    // let curStartDate: any;
+    if(current && current.startDate && current.statusMessage === '이용 중') {  // current.currentTariff에 current를 넣지 않은 상태임
+      roStartDate = current.startDate.format('YYYYMMDD');
+      // splitRoStartDate = roStartDate.match(/.{1,2}/g); /* ["20", "20", "10", "30", "15"] */;
+      // splitRoStartTime = (current.startTime).trim().split(':');
     }
+
     // 타회선 조회시 T-SvcMgmtNum 넘겨야함
-    return this.apiService.request(API_CMD.BFF_05_0001, {}).map(resp => {
+    // BFF_05_0228(new) NRTRDE 사용량 조회-샘플 - 로밍 총 통화시간
+    return this.apiService.request(API_CMD.BFF_05_0228, !FormatHelper.isEmpty(roStartDate) ? {startDate: roStartDate} : {}).map(resp => {
       const error = RoamingHelper.checkBffError(resp);
       if (error) { return error; }
+
+      resp.result.map((phone: { totalDuration: string; korCurTime: string; oneMonthBeforeDate: string; totalHours: any; totalMinutes: any; totalSeconds: any; baseKoCurMonth: any; 
+        baseKoCurDay: any; baseKoCurTime: any; baseOneMonthBeforeMonth: any;  baseOneMonthBeforeDay: any; roStartDate: any; roUseTariffNow: any; }) => {
+
+        let splitTotalDuration: any = phone.totalDuration.split(':'); // 총 음성 통화 시간 분할
+        let splitBaseKoCurTime: any = phone.korCurTime.match(/.{1,2}/g); // ["20", "20", "10", "30", "15"], 한국현재시간
+        let splitOneMonthBeforeDate: any = phone.oneMonthBeforeDate.match(/.{1,2}/g); // ["20", "20", "10", "30", "15"], 현재기준1개월전날짜 - 요금제 미가입 또는 시작시간 없는 요금제에만 사용
+        /* console.log(splitBaseKoTime) */
+        phone.totalHours = splitTotalDuration[0];
+        phone.totalMinutes = splitTotalDuration[1];
+        phone.totalSeconds = splitTotalDuration[2];
+        phone.baseKoCurMonth = splitBaseKoCurTime[2];
+        phone.baseKoCurDay = splitBaseKoCurTime[3];
+        phone.baseKoCurTime = splitBaseKoCurTime[4];
+        phone.baseOneMonthBeforeMonth = splitOneMonthBeforeDate[2];
+        phone.baseOneMonthBeforeDay = splitOneMonthBeforeDate[3];
+        if (!FormatHelper.isEmpty(roStartDate)) {
+          phone.roStartDate = roStartDate;
+        }
+        phone.roUseTariffNow = (current && current.statusMessage === '이용 중') ? true : false;
+        // if (!FormatHelper.isEmpty(splitRoStartDate && splitRoStartTime)) {  // 로밍 요금제 가입 및 시작날짜와 시간이 있는 경우
+        //   phone.roStartMonth = splitRoStartDate[2];
+        //   phone.roStartDay = splitRoStartDate[3];
+        //   phone.roStartTime = splitRoStartTime[0];
+
+        // }
+      })
+
+      
       // dataTopUp
       // ting
       // dataDiscount
@@ -538,7 +583,7 @@ export default class RoamingOnController extends RoamingController {
       // - unit: '140', // 단위코드
       // - rgstDtm
       // - exprDtm
-      return resp.result;
+      return resp.result[0];
     });
   }
 
@@ -620,10 +665,10 @@ export default class RoamingOnController extends RoamingController {
    */
   private getRateByCountry(countryCode: string): Observable<any> {
     // [NOTE] 석연실 매니저에 의하면, 고객 VOC 이슈가 생기지 않게 항상 가장 비싼 요율정보를 BE가 리턴하기로 했다고 한다.
+    // BFF_10_0058의 manageType 인풋값은 로밍 요율만 필요한 경우 입력 안함(요율정보가 모두 같기 때문에 - 석여실 매니저님, 이지민 수석님)
     return this.apiService.request(API_CMD.BFF_10_0058, {
       countryCode: countryCode,
-      manageType: 'W', // 국가별 이용요금 조회에서 기본 요청값이 3G('W')라 여기서도 3G('W')로 요청하였다.
-      showDailyPrice: 'N', // BFF_10_0061 응답의 'rent' 값이 0 보다 클 때는 'Y' 아니면 'N'
+      showDailyPrice: 'N', // BFF_10_0061 응답의 'rent' 값이 0 보다 클 때는 'Y' 아니면 'N', rent가 아니기 때문에 N로 설정
     }).map(resp => {
       const error = RoamingHelper.checkBffError(resp);
       if (error) { return error; }

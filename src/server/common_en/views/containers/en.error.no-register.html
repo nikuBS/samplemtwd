@@ -31,13 +31,13 @@
                         <span class="tx2">
                             If you have an SK Telecom registered number,<br>please register your line by tapping on the<br>“Register Line” button below
                         </span>
-                        <button id="gotoLine" class="bt-link-tx underline mt10">Select a Mobile Line</button>
+                        <button id="line-action" class="bt-link-tx underline mt10">Select a Mobile Line</button>
                     </p>
                     
                     <div class="suggest-bt mt30">
                         <ul class="bt-slice">
                             <li>
-                                <button id="gotoMain" class="btn-round1 btn-style1">Go to Tworld KOR</button>
+                                <button id="goto-main" class="btn-round1 btn-style1">Go to Tworld KOR</button>
                             </li>
                         </ul>
                     </div>
@@ -52,13 +52,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    $('#gotoLine').click(function() {
-        location.href = '/en/common/member/line';
-    });
-
-    $('#gotoMain').click(function() {
-        location.href = '/main/home';
-    });
+    new Tw.CommonLineComponent($('#contents'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
   });
 </script>
 <% include ../components/end.component.html %>

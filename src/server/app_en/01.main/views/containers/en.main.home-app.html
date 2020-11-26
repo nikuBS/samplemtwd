@@ -9,6 +9,12 @@
 
 <body class="apphome">
 
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">Go to Main</a></li>
+    </ul>
+</div>
+
 <div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" >
     <!-- #header -->
     
@@ -37,8 +43,7 @@
                                     Korean version of T World</p>
                                     
                                 <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
-                                <!-- <button class="bt-link-tx underline mt10 fe-mainLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button> -->
-                                <button class="bt-link-tx underline mt10 goRegisterLine" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button>
+                                <button id="line-action" class="bt-link-tx underline mt10" data-xt_eid="MWMA_A10_B79-71">Select a Mobile Line</button>
                                 <%}%>
                                 <div class="suggest-bt">
                                     <ul class="bt-slice">
@@ -90,8 +95,7 @@
 
                             <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
                                 <em class="line">
-                                    <button class="bt ff-tg-light fe-mainLine" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
-                                    <!-- <button class="bt ff-tg-light fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button> -->
+                                    <button id="line-action" class="bt ff-tg-light" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
                                 </em>
                                 <strong class="ti">
                                     <button class="bt fe-home-internal" data-url="/en/myt-join/submain"  data-xt_eid="MWMA_A10_B79-30"><%= svcInfo.prodNmEn %></button>
@@ -107,7 +111,7 @@
                             
                         <% } else { %>
                         <div class="main-chart-box">
-                            <em class="line"><button class="bt ff-tg-light fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%-convertTelFormat(svcInfo.svcNum)%></button></em>
+                            <em class="line"><button id="line-action" class="bt ff-tg-light" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%-convertTelFormat(svcInfo.svcNum)%></button></em>
                             <!-- 2019-02-27 단일회선일경우 언더라인 없음. 다회선일경우에는 'none-underline' 삭제 -->
                             <strong class="ti"><button class="bt fe-home-internal" data-url="/en/myt-join/submain" data-xt_eid="MWMA_A10_B79-30"><%= svcInfo.prodNmEn %></button></strong>                            
                         <% }  %>    
@@ -166,6 +170,15 @@
                                 <!-- // .widget -->
                             
                             <div class="call-message">
+                                <% if(homeData.usageData.data.isTplanUse) { %>
+                                <div class="tod-flydata-wrap">
+                                    <button class="tod-link-flydata">
+                                        <span class="sp-tit"><i class="tod-icon-flydata"></i>T Family Data </span>
+                                        <span class="sp-data"><em><%= homeData.usageData.data.showShareRemained %></em></span>
+                                    </button>
+                                </div>
+                                <% } %>
+                                
                                 <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
                                 <button class="bt-call fe-home-internal" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-32"><i class="icon-call-34"><span class="blind">Talktime</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></button>
                                 <% } %>
@@ -468,12 +481,13 @@
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%= (svcInfo && svcInfo.svcAttrCd === "M1")%>', '', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>','<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+    new Tw.CommonLineComponent($('#mainHome'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
     new Tw.MainAppUpdate();
 
-    $('.goRegisterLine').click(function() {
-        location.href = '/en/common/member/line';
+    $('.tod-link-flydata').on('click', function() {
+        location.href = '/en/myt-data/hotdata';
     })
-
+    
   });
 </script>
 </body>

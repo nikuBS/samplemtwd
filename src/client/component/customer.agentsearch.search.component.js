@@ -149,13 +149,17 @@ Tw.CustomerAgentsearchComponent.prototype = {
 
     // 매장분류
     var setShopType = function (item) {
+      // OP002-11979 : 매장타입 노출 수 변경. 기존 1개 -> n개. 따라서 shopTypeNm string -> array 로 타입 변경함.
+      if (!item.shopTypeNm) {
+        item.shopTypeNm = [];
+      }
       // "매장특성구분코드", (04:T Premium Store, 06:T Flagship Store)
       switch (item.shopTpsCd) {
-        case '04' : item.shopTypeNm = 'T Premium Store'; break;
-        case '06' : item.shopTypeNm = 'T Flagship Store'; break;
+        case '04' : item.shopTypeNm.push('T Premium Store'); break;
+        case '06' : item.shopTypeNm.push('T Flagship Store'); break;
       }
       if (item.unmanShop === 'Y') {
-        item.shopTypeNm = '무인매장';
+        item.shopTypeNm.push('무인매장');
       }
     };
 

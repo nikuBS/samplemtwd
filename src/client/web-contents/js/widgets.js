@@ -512,6 +512,58 @@ skt_landing.widgets = {
     });
   },
   /**
+   * @summary .slider6 클래스에 대한 slick.js 적용 함수
+   * @description
+   * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+   * - slick.init, slick.beforeChange 이벤트 바인딩 되어 있슴
+   * - {@link http://127.0.0.1:5500/html/templete/slider01.html}
+   * @function
+   * @example
+   * skt_landing.widgets.widget_slider6();
+   */
+  widget_slider6: function () {
+    var widget = '.slider6';
+    $(widget).each(function () {
+        var _this = $(this).find('.slider');
+        _this.slick({
+            dots: true,
+            arrows: false,
+            infinite: false,
+            slidesToShow: 1,
+            centerMode: true,
+            centerPadding: '19px',
+            variableWidth: false,
+            focusOnSelect: true,
+            focusOnChange: true,
+            initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
+            responsive: [{
+                settings: {
+                    centerPadding: '15px'
+                }
+            }]
+        });
+    });
+    /*onAfterChange: function(){
+          var currentSlide = $('.regular').slick('slickCurrentSlide');
+        $('.current').text(currentSlide);
+    }*/
+
+    /*$('.slider4').each(function (idx) {
+      var swiper,
+        tagClass = 'slide-number' + idx,
+        _this = $(this).find('.slider-box').addClass(tagClass);
+      _this.next().find('.total').text(_this.find('.swiper-slide').length);
+      swiper = new Swiper('.slider4 .' + tagClass, {
+        onInit: function (params) {
+          _this.next().find('.current').text(params.activeIndex + 1);
+        },
+        onSlideChangeStart: function (params) {
+          _this.next().find('.current').text(params.activeIndex + 1);
+        }
+      });
+    });*/
+},
+  /**
    * @summary .draglist 클래스에 대한 함수
    * @description
    * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
