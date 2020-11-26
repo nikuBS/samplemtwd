@@ -286,7 +286,7 @@ Tw.ChatbotService.prototype = {
                 var agent = userAgentString,
                 start = agent.indexOf( 'OS' );
                 if( ( agent.indexOf( 'iPhone' ) > -1) && start > -1 ){
-                    if(window.Number( agent.substr( start + 3, 3 ).replace( '_', '.' ) )>12){
+                    if(window.Number( agent.substr( start + 3, 3 ).replace( '_', '.' ) )>13){
                      isAllowedOs = true; 
                      //console.log("13이상"+isAllowedOs);
                 }else{
@@ -1001,6 +1001,10 @@ Tw.ChatbotService.prototype = {
                     Tw.CommonHelper.showDataCharge($.proxy(function() {
                         Tw.CommonHelper.openUrlExternal(url);
                       }, this), null);
+                }else if('https://www.5gxcloudgame.com/main' === url){
+                    Tw.CommonHelper.showDataCharge($.proxy(function() {
+                        Tw.CommonHelper.openUrlExternal(url);
+                      }, this), null);
                 }
                 
             }
@@ -1016,7 +1020,9 @@ Tw.ChatbotService.prototype = {
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
-                window.open(url, '_blank');
+               // window.open(url, '_blank');
+                //Tw.CommonHelper.openUrlInApp(url);
+                _this._historyService.goLoad(url);
             }
                 
                 // Tw.CommonHelper.openUrlExternal('https://app.tworld.co.kr' + url);
