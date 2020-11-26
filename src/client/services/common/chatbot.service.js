@@ -1292,7 +1292,12 @@ Tw.ChatbotService.prototype = {
                         Tw.Logger.info('[chatbot.service] [_preDrawChatbot] type : ', type);
                         var greetingKeywordInfo = {keyword : keyword, message : message, type : type};
                         this._greetingKeywordInfos.push(greetingKeywordInfo);
+                        // textType이 'B'인 경우 두줄 디자인으로
+                        if (type === 'B'){
+                            this._greetingLines = 'twoline';
+                        }
                     }
+
                 }
             }
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] this._greetingKeywordInfos : ', this._greetingKeywordInfos);
@@ -1304,7 +1309,8 @@ Tw.ChatbotService.prototype = {
                 typeB : this._typeB,
                 typeC : this._typeC,
                 color : this._defaultColorB,
-                theme : this._defaultThemeB
+                theme : this._defaultThemeB,
+                greetingLines : this._greetingLines
             }];
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] option : ', option);
             this._drawChatbotPop(option, mlsItemIds);
