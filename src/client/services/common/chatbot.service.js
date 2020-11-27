@@ -986,7 +986,7 @@ Tw.ChatbotService.prototype = {
             }
                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
         });
-        $('.fe-home-charge').on('click', function(e){
+        $('.fe-home-charge_open').on('click', function(e){
             var url = $(e.currentTarget).data('url');
             console.log('fe-home-chargeurl'+url);
             if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
