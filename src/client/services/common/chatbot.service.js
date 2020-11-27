@@ -993,14 +993,17 @@ Tw.ChatbotService.prototype = {
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
-                if('https://www.vcoloring-event.com' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
-                }else if('https://tworld.vcoloring.com' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
-                }else if('https://www.5gxcloudgame.com/main' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
-                }
+                // if('https://www.vcoloring-event.com' === url){
+                //     Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
+                // }else if('https://tworld.vcoloring.com' === url){
+                //     Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
+                // }else if('https://www.5gxcloudgame.com/main' === url){
+                //     Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
+                // }
                 
+                if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
+                    _this.openOutLink(e, url)
+                }
             }
  
         });
@@ -1962,5 +1965,37 @@ Tw.ChatbotService.prototype = {
             $('.tod-chatbot-img').toggleClass('on');
             _this._toggleEmoticon();
         }, (((window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296) * (5 - 2)) + 2) * 1000);
-    }
+    },
+
+    openOutLink: function (e,url) {
+        $.proxy(this._loadPopup(e,url),this);
+
+        // if(!res.params.isWifiConnected){
+            // $.proxy(this._loadPopup(e,url),this);
+        // }
+        // else{
+        //     this._confirm(url);
+        // }
+    },
+
+    _loadPopup: function (e,url) {
+        this._popupService.open({
+          url: '/hbs/' ,
+          hbs: 'popup_a5'
+        },
+          $.proxy(this._onOpenPopup, this, url),
+          null,
+          'prod_info',
+          $(e.currentTarget));
+      },
+
+      _onOpenPopup: function (url, $layer) {
+        Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+        $layer.on('click', '.pos-right', $.proxy(this._confirm, this, url));
+       
+      },
+
+      _confirm: function (url) {
+        Tw.CommonHelper.openUrlExternal(url);
+      },
 };
