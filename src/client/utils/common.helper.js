@@ -272,7 +272,7 @@ Tw.CommonHelper = (function () {
   var showDataCharge = function (confirmCallback, closeCallback) {
     // wifi가 아닌 상태에서 회원이면서 무한요금제면... 팝업 면제권
     function wifiCheckPopup(res) {
-      if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
         Tw.Popup.openConfirm(
           Tw.POPUP_CONTENTS.NO_WIFI,
           null,
