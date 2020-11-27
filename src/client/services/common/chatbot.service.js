@@ -1002,7 +1002,12 @@ Tw.ChatbotService.prototype = {
                 // }
                 
                 if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
-                    _this.openOutLink(e, url)
+                    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+                        $.proxy(function (res) {
+                            _this.openOutLink(e, url, res);
+                        }, this)
+                      );    
+                
                 }
             }
  
@@ -1202,7 +1207,7 @@ Tw.ChatbotService.prototype = {
     //                 Tw.Logger.info('[chatbot.service] [_successGetIsolTime] this._greetingKeywordInfos : ', this._greetingKeywordInfos);
 
     //                 var option = [{
-    //                     cdn: Tw.Environment.cdn,
+//                     cdn: Tw.Environment.cdn,
     //                     greetingKeywordInfos : this._greetingKeywordInfos,
     //                     typeA : this._typeA,
     //                     typeB : this._typeB,
@@ -1967,15 +1972,14 @@ Tw.ChatbotService.prototype = {
         }, (((window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296) * (5 - 2)) + 2) * 1000);
     },
 
-    openOutLink: function (e,url) {
-        $.proxy(this._loadPopup(e,url),this);
+    openOutLink: function (e,url,res) {
+        //$.proxy(this._loadPopup(e,url),this);
 
-        // if(!res.params.isWifiConnected){
-            // $.proxy(this._loadPopup(e,url),this);
-        // }
-        // else{
-        //     this._confirm(url);
-        // }
+        if(!res.params.isWifiConnected){
+            $.proxy(this._loadPopup(e,url),this);
+        } else {
+            this._confirm(url);
+        }
     },
 
     _loadPopup: function (e,url) {
