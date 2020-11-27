@@ -986,25 +986,19 @@ Tw.ChatbotService.prototype = {
             }
                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
         });
-        $('.fe-home-external').on('click', function(e){
+        $('.fe-home-charge').on('click', function(e){
             var url = $(e.currentTarget).data('url');
-            console.log('fe-home-externalurl'+url);
+            console.log('fe-home-chargeurl'+url);
             if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
                 if('https://www.vcoloring-event.com' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(function() {
-                        Tw.CommonHelper.openUrlExternal(url);
-                      }, this), null);
+                    Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
                 }else if('https://tworld.vcoloring.com' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(function() {
-                        Tw.CommonHelper.openUrlExternal(url);
-                      }, this), null);
+                    Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
                 }else if('https://www.5gxcloudgame.com/main' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(function() {
-                        Tw.CommonHelper.openUrlExternal(url);
-                      }, this), null);
+                    Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
                 }
                 
             }
