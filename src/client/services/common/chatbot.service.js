@@ -67,11 +67,11 @@ Tw.ChatbotService = function() {
         { keyword: 'vcoloring', message:'V 컬러링 설정하러 가기', type: 'A', unregYn : 'N', linkUrl : 'https://tworld.vcoloring.com'},
         { keyword: 'vcoloring', message:'V 컬러링을 사용 중이시네요! V 컬러링 앱에서 새로운 동영상을 확인해보세요!', type: 'B', unregYn : 'N', linkUrl : 'https://tworld.vcoloring.com'},
         { keyword: 'wavve', message:'영상 콘텐츠는 wavve에서', type: 'A', linkUrl : '/product/callplan?prod_id=NA00006577'},
-        { keyword: 'wavve', message:'데이터 vodRatio%를 영상 시청에 쓰는 당신!<br>Wavve에서 데이터 걱정 없이 영상 시청하세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006577'},
-        { keyword: 'flo', message:'무제한 음악 스트리밍 FLO', type: 'A', linkUrl : '/product/callplan?prod_id=NA00006520'},
-        { keyword: 'flo', message:'음악을 즐겨듣는 당신에게 추천드립니다.<br>이젠 FLO 전용 데이터로 음악을 즐겨보세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006520'},
-        { keyword: 'xbox', message:'5GX 클라우드 게임 알아보기', type: 'A', linkUrl : 'https://www.5gxcloudgame.com/main'},
-        { keyword: 'xbox', message:'지금 5GX 클라우드 게임 신청하면<br>1개월 100원 이용권 혜택이 찾아갑니다!', type: 'B', linkUrl : 'https://www.5gxcloudgame.com/main'}
+        { keyword: 'wavve', message:'데이터 vodRatio%를 영상 시청에 쓰는 당신!<br>Wavve에서 데이터 걱정 없이 영상 시청하세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006577'},
+        { keyword: 'flo', message:'무제한 음악 스트리밍 FLO', type: 'A', linkUrl : '/product/callplan?prod_id=NA00006520'},
+        { keyword: 'flo', message:'음악을 즐겨듣는 당신에게 추천드립니다.<br>이젠 FLO 전용 데이터로 음악을 즐겨보세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006520'},
+        { keyword: 'xbox', message:'5GX 클라우드 게임 알아보기', type: 'A', linkUrl : 'https://www.5gxcloudgame.com/main'},
+        { keyword: 'xbox', message:'지금 5GX 클라우드 게임 신청하면<br>1개월 100원 이용권 혜택이 찾아갑니다!', type: 'B', linkUrl : 'https://www.5gxcloudgame.com/main'}
     ];
 
     // 챗봇 팝업 타입
@@ -986,27 +986,29 @@ Tw.ChatbotService.prototype = {
             }
                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
         });
-        $('.fe-home-external').on('click', function(e){
+        $('.fe-home-charge_open').on('click', function(e){
             var url = $(e.currentTarget).data('url');
-            console.log('fe-home-externalurl'+url);
-            if(!_this.$combot.hasClass('open') && this._typeB === 'B'){
+            console.log('fe-home-chargeurl'+url);
+            if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
-                if('https://www.vcoloring-event.com' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(function() {
-                        Tw.CommonHelper.openUrlExternal(url);
-                      }, this), null);
-                }else if('https://tworld.vcoloring.com' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(function() {
-                        Tw.CommonHelper.openUrlExternal(url);
-                      }, this), null);
-                }else if('https://www.5gxcloudgame.com/main' === url){
-                    Tw.CommonHelper.showDataCharge($.proxy(function() {
-                        Tw.CommonHelper.openUrlExternal(url);
-                      }, this), null);
-                }
+                // if('https://www.vcoloring-event.com' === url){
+                //     Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
+                // }else if('https://tworld.vcoloring.com' === url){
+                //     Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
+                // }else if('https://www.5gxcloudgame.com/main' === url){
+                //     Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
+                // }
                 
+                if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
+                    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+                        $.proxy(function (res) {
+                            _this.openOutLink(e, url, res);
+                        }, this)
+                      );    
+                
+                }
             }
  
         });
@@ -1016,7 +1018,7 @@ Tw.ChatbotService.prototype = {
 
             var url = $(e.currentTarget).data('url'); 
             console.log('bpcpItemlinkurl'+url);
-            if(!_this.$combot.hasClass('open') && this._typeB === 'B'){
+            if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
@@ -1205,7 +1207,7 @@ Tw.ChatbotService.prototype = {
     //                 Tw.Logger.info('[chatbot.service] [_successGetIsolTime] this._greetingKeywordInfos : ', this._greetingKeywordInfos);
 
     //                 var option = [{
-    //                     cdn: Tw.Environment.cdn,
+//                     cdn: Tw.Environment.cdn,
     //                     greetingKeywordInfos : this._greetingKeywordInfos,
     //                     typeA : this._typeA,
     //                     typeB : this._typeB,
@@ -1292,7 +1294,12 @@ Tw.ChatbotService.prototype = {
                         Tw.Logger.info('[chatbot.service] [_preDrawChatbot] type : ', type);
                         var greetingKeywordInfo = {keyword : keyword, message : message, type : type};
                         this._greetingKeywordInfos.push(greetingKeywordInfo);
+                        // textType이 'B'인 경우 두줄 디자인으로
+                        if (type === 'B'){
+                            this._greetingLines = 'twoline';
+                        }
                     }
+
                 }
             }
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] this._greetingKeywordInfos : ', this._greetingKeywordInfos);
@@ -1304,7 +1311,8 @@ Tw.ChatbotService.prototype = {
                 typeB : this._typeB,
                 typeC : this._typeC,
                 color : this._defaultColorB,
-                theme : this._defaultThemeB
+                theme : this._defaultThemeB,
+                greetingLines : this._greetingLines
             }];
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] option : ', option);
             this._drawChatbotPop(option, mlsItemIds);
@@ -1962,5 +1970,36 @@ Tw.ChatbotService.prototype = {
             $('.tod-chatbot-img').toggleClass('on');
             _this._toggleEmoticon();
         }, (((window.crypto.getRandomValues(new Uint32Array(1)) / 4294967296) * (5 - 2)) + 2) * 1000);
-    }
+    },
+
+    openOutLink: function (e,url,res) {
+        //$.proxy(this._loadPopup(e,url),this);
+
+        if(!res.params.isWifiConnected){
+            $.proxy(this._loadPopup(e,url),this);
+        } else {
+            this._confirm(url);
+        }
+    },
+
+    _loadPopup: function (e,url) {
+        this._popupService.open({
+          url: '/hbs/' ,
+          hbs: 'popup_a5'
+        },
+          $.proxy(this._onOpenPopup, this, url),
+          null,
+          'prod_info',
+          $(e.currentTarget));
+      },
+
+      _onOpenPopup: function (url, $layer) {
+        Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+        $layer.on('click', '.pos-right', $.proxy(this._confirm, this, url));
+       
+      },
+
+      _confirm: function (url) {
+        Tw.CommonHelper.openUrlExternal(url);
+      },
 };
