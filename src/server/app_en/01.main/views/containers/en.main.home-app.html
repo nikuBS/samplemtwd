@@ -481,7 +481,7 @@
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%= (svcInfo && svcInfo.svcAttrCd === "M1")%>', '', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>','<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
-    new Tw.CommonLineComponent($('#mainHome'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+    new Tw.CommonLineComponent($('#mainHome'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>', '<%= svcInfo ? svcInfo.svcAttrCd : "" %>');
     new Tw.MainAppUpdate();
 
     $('.tod-link-flydata').on('click', function() {
