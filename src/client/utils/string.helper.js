@@ -102,6 +102,10 @@ Tw.StringHelper = (function () {
     return result;
   };
 
+  var getOnlyNumber = function (val) {
+    return (val || '0').toString().replace(/[^0-9]/g, '');
+  };
+
   return {
     replaceAt: replaceAt,
     masking: masking,
@@ -111,6 +115,7 @@ Tw.StringHelper = (function () {
     phoneStringToDash: phoneStringToDash,
     removeStringToDash: removeStringToDash,
     stringf : stringf,
-    getKorInitialChar : getKorInitialChar
+    getKorInitialChar : getKorInitialChar,
+    getOnlyNumber: getOnlyNumber
   };
 })();

@@ -1,0 +1,59 @@
+<%#
+* MenuName: 나의 요금 > 서브메인 (납부/청구 정보)
+* @file myt-fare.submain.bill-info.html
+* @author 양정규
+* @since 2020.12.23
+%>
+<%_
+    const {paymentInfo, type} = data;
+    // 청구 대표일때만 노출
+    if (paymentInfo && type !== 'UF') {
+_%>
+<section class="cont-card">
+    <div class="section-inner">
+        <div class="head-tit">
+            납부/청구 정보
+            <span class="head-btn-area">
+                <a href="/myt-fare/info/history" class="rect-btn small" data-make-eid="recentPay">최근 납부 내역</a>
+            </span>
+        </div>
+        <div class="card-cont">
+            <ul class="ico-list">
+                <li class="item">
+                    <a href="/myt-fare/bill/option" data-make-eid="payMethod">
+                        <div class="ico-item">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico01.svg" alt=""></i>
+                            <div class="list-txt">
+                                <span class="item-sub-txt">납부 방법</span>
+                                <span class="item-tit"><%= paymentInfo.payMthdNm %></span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="/myt-fare/billsetup" data-make-eid="billType">
+                        <div class="ico-item">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico02.svg" alt=""></i>
+                            <div class="list-txt">
+                                <span class="item-sub-txt">요금안내서 유형</span>
+                                <span class="item-tit"><%= paymentInfo.billTypeNm %></span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="/myt-fare/bill/option/change-address" data-make-eid="contact">
+                        <div class="ico-item">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico03.svg" alt=""></i>
+                            <div class="list-txt">
+                                <span class="item-sub-txt">주소/연락처</span>
+                                <span class="item-tit">조회 / 변경</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<%_}_%>

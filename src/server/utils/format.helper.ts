@@ -434,6 +434,15 @@ class FormatHelper {
     const regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
     return value.replace(regexp, ' ');
   }
+
+  /**
+   * @desc 문자형일때 컴마(,)를 제거하여 숫자형으로 리턴.
+   * @param value
+   */
+  static getInt(value: any): number {
+    value = (value || '0').toString().replace(/[^0-9]/g, '');
+    return parseInt(value, 10);
+  }
 }
 
 export default FormatHelper;

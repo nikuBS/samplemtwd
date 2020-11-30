@@ -1,92 +1,158 @@
 <%#
-* MenuName: 나의 요금 > 서브메인(MF2)_청구/사용요금
+* MenuName: 나의 요금 > 서브메인 (상단 청구요금 영역)
 * @file myt-fare.submain.claim-pay.html
-* @author Kim InHwan (skt.p132150@partner.sk.com)
-* @since 2018.09.27
-* Update: 2018.11.27
+* @author 양정규
+* @since 2020.11.10
 %>
-
-<!-- .cont-box -->
-<div class="cont-box">
-    <div class="user-month-bill">
-        <div class="this-month-bill">
-            <% if (data.isPPS) { %>
-            <div class="exception-case">
-                <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind"></span></i></span>
-                <p class="msg">선불폰을 사용 중입니다.</p>
+<%_if(!data.isBroadBand && (data.claimPay || '0') === '0'){_%>
+<%# 청구 내역 없을때%>
+<% include ../components/submain/myt-fare.submain.non-data.html %>
+<%_ } else {
+    const isRep = data.svcInfo.actRepYn === 'Y'; // 통합청구 대표여부
+    const guide = data.guide || {}, // 요금안내서 정보
+        repSvcNm = ((guide.data || {}).commDataInfo || {}).repSvcNm || ''; // 통합청구 대표번호
+_%>
+<section class="cont-card">
+    <div class="charge-wrap">
+        <div class="charge-cont">
+            <div class="month-charge">
+                <% include ../components/submain/myt-fare.submain.claim-pay.date.html %>
+                <dl class="sel-bill">
+                    <dt class="term">총 납부 금액</dt>
+                    <dd class="charge"><%-data.totalClaim%><span class="unit">원</span></dd>
+                </dl>
+                <%_
+                    const {prepay='0', remainPayment='0', unpaid='0'} = data;
+                    <!--분할 납부한 요금이 있거나, 미납금액이 있는경우-->
+                    if( prepay !== '0' ||  unpaid !== '0'){
+                _%>
+                <ul class="default-list">
+                    <%_if( prepay !== '0') {_%>
+                    <li class="default-item">
+                        <span class="default-tit"><%-data.month%>월 분할 납부한 요금</span>
+                        <span class="default-cost"><%-data.prepay%>원</span>
+                    </li>
+                    <li class="default-item">
+                        <span class="default-tit">남은 요금</span>
+                        <span class="default-cost"><%-data.remainPayment%>원</span>
+                    </li>
+                    <%_} else {_%>
+                    <li class="default-item">
+                        <span class="default-tit"><%-data.month%>월 요금</span>
+                        <span class="default-cost"><%-data.remainPayment%>원</span>
+                    </li>
+                    <%_}_%>
+                    <%_if(unpaid !== '0') {_%>
+                    <li class="default-item strong">
+                        <a href="/myt-fare/unbill">
+                            <span class="default-tit">미납요금</span>
+                            <span class="default-cost"><%-data.unpaid%>원</span>
+                        </a>
+                    </li>
+                    <%_}_%>
+                </ul>
+                <%_}_%>
             </div>
-            <% } else { %>
-                <p class="stit">이번 달
-                    <% if (data.type === 'UF') { %>
-                    이용요금
-                    <% } else { %>
-                    청구요금
-                    <% } %>
-                </p>
-                <% if (data.type === 'UF') { %>
-                <p class="price"><%= data.useAmtTot %>원</p>
-                <p class="term"><%= data.usageFirstDay %> ~ <%= data.usageLastDay %></p>
-                <% } else { %>
-                <p class="price"><%= data.claimPay %>원</p>
-                <p class="term"><%= data.claimFirstDay %> ~ <%= data.claimLastDay %></p>
-                <% } %>
-            <% } %>
+            <p class="payment-msg">
+                <!--통합청구 대표일때-->
+                <%_
+                    if(data.type !== 'UF'){
+                        const {autoPayment} = data,
+                        payText = autoPayment.isPaid ? '납부완료' : '납부될 예정',
+                        payTextEnd = autoPayment.isPaid ? '되었습니다.' : '입니다.',
+                        payType = {
+                            '01': '계좌이체',
+                            '02': '카드 자동납부',
+                            '03': '지로',
+                            '04': '가상계좌'
+                        };
+                _%>
+                <strong class="highlight"><%-`${data.month}월 요금이 ${payText}`%></strong> <%-payTextEnd%>
+                <span class="detail-type"><%-`${autoPayment.payDate} ${payType[autoPayment.payCode]}`%></span>
+                <%_} else if(repSvcNm){_%>
+                <strong class="highlight"><%- repSvcNm%>에 통합청구</strong> 되었습니다.
+                <%_}_%>
+            </p>
+            <!--요금 상세내역 영역-->
+            <%# SK브로드밴드 인 경우%>
+            <%_if(data.isBroadBand){_%>
+            <div class="detail-charge-box">
+                <p class="detail-error-tit">SK브로드밴드 가입회선 이용안내</p>
+                <p class="detail-error-txt">전화 106 또는 SK브로드밴드 웹사이트를<br>이용해 주시기 바랍니다.</p>
+                <div class="btn-area medium">
+                    <a href="http://www.skbroadband.com/Main.do" target="_blank" class="rect-btn" data-make-eid="skbroadband">SK브로드밴드 바로가기</a>
+                </div>
+            </div>
+            <%_} else if(guide.data) {_%>
+            <div class="detail-charge-box">
+                <div class="detail-tit"><a href="/myt-fare/billguide/guide" data-make-eid="detailBill">요금 상세내역</a></div>
+                <ul class="report-list item-no-border fe-charge-list">
+                    <%# 요금 상세내역 리스트 handlebars-template 영역%>
+                    <%# 통합청구대표 가 아닌겨우 "요금할인" 항목추가%>
+                    <%_if(guide.typeChk && guide.typeChk !== 'A5' && data.claimDisAmtAbs !== '0'){_%>
+                    <li class="report-item">
+                        <dl class="report-define d-wrap">
+                            <dt class="report-tit">요금할인</dt>
+                            <dd class="report-cont"><%- data.claimDisAmtAbs%> 원</dd>
+                        </dl>
+                    </li>
+                    <%_}_%>
+                </ul>
+            </div>
+            <%_}_%>
+
+            <%_if(data.miriBalance){_%>
+            <div class="detail-charge-box">
+                <div class="detail-tit"><a href="/myt-fare/info/miri" data-make-eid="miri">미리 납부하신 금액(MIRI)</a></div>
+                <ul class="report-list item-no-border">
+                    <li class="report-item">
+                        <dl class="report-define d-wrap">
+                            <dt class="report-tit">잔액</dt>
+                            <dd class="report-cont"><%- data.miriBalance%>원<!--1,260원--></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <%_}_%>
+
+            <!-- 요금납부 (통합청구 대표) -->
+            <%_ if(data.type !== 'UF' && data.isNotAutoPayment){
+                const classNm = data.unPaidTotSum ? 'btn2' : '';
+            _%>
+            <div class="btn-area <%-classNm%>">
+                <a href="#" class="round-btn fe-payment" data-make-eid="charge">요금납부</a>
+                <a href="/myt-fare/unbill" class="round-btn line <%- classNm ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
+            </div>
+            <%_}_%>
         </div>
-        <% if (data.type === 'UF') { %>
-        <p class="msg-type1 mt42">
-            <% if (data.isBroadBand) { %>
-            SK브로드밴드를 통해 가입하신 서비스일 경우<br />
-            청구요금에 포함되지 않습니다.<br />
-            전화 106 또는 SK브로드밴드 웹사이트를 이용해 주세요.
-            <% } else { %>
-                <% if (!data.isPPS) { %>
-
-                    고객님은 현재 통합청구 이용 중이며<br />
-                    할인금액을 제외한 이용요금으로 조회됩니다.
-                <% } %>
-            <% } %>
-        </p>
-        <% } else { %>
-        <!-- DV001-17926 sb변경으로 삭제
-        <div class="detail-bill">
-            <ul>
-                <li>
-                    <span class="tit">이용요금</span>
-                    <span class="value type2"><%= data.claimUseAmt %>원</span>
-                </li>
-                <li>
-                    <span class="tit">할인요금</span>
-                    <span class="value type2 discount">
-                        <%= data.claimDisAmt === '0'? data.claimDisAmt : '-' + data.claimDisAmt %>원
-                    </span>
-                </li>
-            </ul>
-        </div>
-        -->
-
-        <p class="msg-type2 mt42">총 <span class="txt-point"><%= data.claimDisAmtAbs %>원</span>을 할인 받으셨습니다.</p><!--2019.03.20 추가-->
-
-        <% } %>
     </div>
-    <ul class="bt-slice <%= data.svcInfo.svcAttrCd !== 'M2' &&
-                            data.type !== 'UF' &&
-                            data.isNotAutoPayment ? 'item-two': 'solid' %> mt20 mb4">
-        <% if (data.type === 'UF') { %>
-            <% if (data.svcInfo.svcAttrCd === 'M2') { %>
-                <li><button data-id="used-brkd" type="button" class="btn-round1 btn-style4">사용내역 확인</button></li>
-            <% } else { %>
-                <li><button data-id="used-detail" type="button" class="btn-round1 btn-style4">이용요금 자세히보기</button></li>
-            <% } %>
-        <% } else { %>
-            <% if (data.svcInfo.svcAttrCd === 'M2') { %>
-                <li><button data-id="used-brkd" type="button" class="btn-round1 btn-style4">사용내역 확인</button></li>
-            <% } else { %>
-                <% if (data.isNotAutoPayment) { %>
-                <li><button data-id="bill-pym" type="button" class="btn-round1 btn-style4">요금 납부</button></li>
-                <% } %>
-                <li><button data-id="bill-report" type="button" class="btn-round1 btn-style1">요금안내서</button></li>
-            <% } %>
-        <% } %>
-    </ul>
-</div>
-<!--// .cont-box -->
+</section>
+<%_}_%>
+
+<%# 요금 상세내역/실시간 이용요금 템플릿%>
+<script id="fe-charge" type="text/x-handlebars-template">
+    {{#list}}
+    <li class="report-item">
+        <dl class="report-define d-wrap">
+            <dt class="report-tit">{{title}}<!--휴대폰-->
+                {{#if hasDetail}}
+                <span class="detail-info">{{detail}}<!--010-50**-88**--></span>
+                {{/if}}
+            </dt>
+            <dd class="report-cont">{{value}}원<!--1,260원--></dd>
+        </dl>
+    </li>
+    {{/list}}
+</script>
+
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareSubMainGuide({
+      $element: $('.wrap'),
+      data: {
+        svcInfo: JSON.parse('<%- JSON.stringify(data.svcInfo) %>'),
+        guide: JSON.parse('<%- JSON.stringify(data.guide) %>')
+      }
+    });
+  });
+</script>
