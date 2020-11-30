@@ -63,7 +63,7 @@ class MyTFareSubmainController extends TwViewController {
     if ( test === '500' ) { return res.status(500).render('en.error.page-not-found.html', { svcInfo: null, code: 500 }); }
 
     // 영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if ( svcInfo.svcAttrCd !== '' && ['M1', 'M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
+    if ( svcInfo.svcAttrCd !== '' && ['M1', 'M3', 'M4'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notPhone'  ) {
       res.render( 'submain/en.myt-fare.submain.not.phone.html', { data: defaultData, svcInfo : svcInfo, pageInfo : pageInfo });
       return;
     }
