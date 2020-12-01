@@ -767,7 +767,7 @@ Tw.ChatbotService.prototype = {
         console.log('GREETING_DISABLED:', Tw.CommonHelper.getSessionStorage('GREETING_DISABLED'));
         if(Tw.CommonHelper.getSessionStorage('GREETING_DISABLED') !=='Y') {
             // 3초 후 안내 팝업 슬라이드 업
-            if(this._typeB){
+            if(_this._typeB){
                 _this._timer = setTimeout( function () {
                     _this.$combot.addClass("open");
                 }, 1500); 
@@ -811,7 +811,7 @@ Tw.ChatbotService.prototype = {
             }   
 
              //   _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_purple.json', false);
-            }else if(this._typeC){
+            }else if(_this._typeC){
                 console.log("test");
                 _this._timer = setTimeout(function() {
                     $(".tod-combot-ctype-wrap").addClass('slideUp'); 
@@ -1023,8 +1023,7 @@ Tw.ChatbotService.prototype = {
         });
         $('.fe-home-charge_open').on('click', function(e){
             var url = $(e.currentTarget).data('url');
-            console.log('fe-home-chargeurl'+url);
-            if(!$('.tod-combot-btn').hasClass('open') &&(url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main')){    
+            if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{                
@@ -1033,8 +1032,7 @@ Tw.ChatbotService.prototype = {
                         $.proxy(function (res) {
                             _this.openOutLink(e, url, res);
                         }, this)
-                      );    
-                
+                    );    
                 }
             }
  
