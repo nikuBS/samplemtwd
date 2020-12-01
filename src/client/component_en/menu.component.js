@@ -134,7 +134,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       hbs: hbsName,
       layer: true,
       data: [{ list: listData }],
-      btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
+      btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', 'id': 'familysite-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
     },
     $.proxy(this._conditionChangeEvtInit, this, $target),
     $.proxy(this._conditionChangeEvtClose, this, $target),
@@ -144,6 +144,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   _conditionChangeEvtInit: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', '.fe-outlink', $.proxy(this._onOutLinkWithATag, this));
+    //$layer.on('click', '#familysite-closeBtn', function() { $target.focus(); } );
+    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
   },
 
   // 안씀. 조건변경 팝업 닫히면..
@@ -281,7 +283,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     if ( window.location.hash.indexOf('menu') !== -1 ) {
       this._historyService.goBack();
     }
-    $('.h-menu a').focus();
+    $('.h-menu button').focus();
   },
 
   /**
