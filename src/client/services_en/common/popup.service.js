@@ -694,10 +694,12 @@ Tw.PopupService.prototype = {
           '#conditionChange_P', 
           // '#private_P', 
           '#faq_P', 
-          '#store_info_P'
+          '#store_info_P',
+          '#term_P'
         ];
         if(nonback_hash.indexOf(hash) > -1) {
           this._popupClose();
+          this._historyService.goBack();
         } else {
           this._historyBack = true;
           history.back();

@@ -444,10 +444,10 @@ Tw.CommonHelper = (function () {
     }).done(function (res) {
       if ( res.code === Tw.API_CODE.CODE_00 ) {
         Tw.Popup.open({
-          hbs: 'HO_04_05_01_02_01',
+          hbs: 'HO_04_05_01_02_01_en',
           title: res.result.title,
           content: res.result.content
-        });
+        }, null, null, 'term');
       } else {
         Tw.Error(res.code, res.msg).pop();
       }
