@@ -1024,7 +1024,7 @@ Tw.ChatbotService.prototype = {
         $('.fe-home-charge_open').on('click', function(e){
             var url = $(e.currentTarget).data('url');
             console.log('fe-home-chargeurl'+url);
-            if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
+            if(!$('.tod-combot-btn').hasClass('open') &&(url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main')){    
                 chatbotGubun = 'initial';
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{                
