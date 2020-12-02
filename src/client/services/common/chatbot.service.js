@@ -1442,7 +1442,7 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 소액결제 합계금액 : ', micropayInfo.result.totalSumPrice);
 
             if(micropayInfo.result.totalSumPrice > 0){
-                this._contentsPayYn = 'Y';
+                this._micropayYn = 'Y';
             }
 
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 3. 소액결제 관련 말풍선 노출 대상군 여부 : ', this._micropayYn);
