@@ -1025,9 +1025,30 @@ Tw.ChatbotService.prototype = {
             var url = $(e.currentTarget).data('url');
             if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
                 chatbotGubun = 'initial';
+                // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
+                if ( mlsProcessId !== 'N'){
+                    _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
+                        channel_id: mlsChannelId,
+                        process_id: mlsProcessId,
+                        item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
+                    }).done(
+                        Tw.Logger.info('[chatbot.service] [_bindEvent]  !$(.tod-combot-btn).hasClass(open) && _this._typeB : BFF_05_0233 : ', '',extraParam)
+                    );
+                }
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{                
                 if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
+                    // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
+                    if ( mlsProcessId !== 'N'){
+                        _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
+                            channel_id: mlsChannelId,
+                            process_id: mlsProcessId,
+                            item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
+                        }).done(
+                            Tw.Logger.info('[chatbot.service] [_bindEvent] vcoloring/xbox : BFF_05_0233 : ', '',extraParam)
+                        );
+                    }
+                    // 과금팝업 후 링크로 이동
                     Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
                         $.proxy(function (res) {
                             _this.openOutLink(e, url, res);
@@ -1037,18 +1058,38 @@ Tw.ChatbotService.prototype = {
             }
  
         });
-            // 말풍선 (링크) 클릭시 
+            // 말풍선 (링크) 클릭시 ( wavve, flo - 상품페이지 이동 )
         $('.bpcpItemlink').on('click', function(e){
-            Tw.Logger.info('[chatbot.service] [_bindEvent] $(.linkItem).on(click)', '');
+            Tw.Logger.info('[chatbot.service] [_bindEvent] $(.bpcpItemlink).on(click)', '');
 
             var url = $(e.currentTarget).data('url'); 
             console.log('bpcpItemlinkurl'+url);
-            if(!$('.tod-combot-btn').hasClass('open') && this._typeB === 'B'){
+            if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
                 chatbotGubun = 'initial';
+                // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
+                if ( mlsProcessId !== 'N'){
+                    _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
+                        channel_id: mlsChannelId,
+                        process_id: mlsProcessId,
+                        item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
+                    }).done(
+                        Tw.Logger.info('[chatbot.service] [_bindEvent]  $(.bpcpItemlink).on(click) - !$(.tod-combot-btn).hasClass(open) && _this._typeB : BFF_05_0233 : ', '',extraParam)
+                    );
+                }
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{
                // window.open(url, '_blank');
                 //Tw.CommonHelper.openUrlInApp(url);
+                // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
+                if ( mlsProcessId !== 'N'){
+                    _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
+                        channel_id: mlsChannelId,
+                        process_id: mlsProcessId,
+                        item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
+                    }).done(
+                        Tw.Logger.info('[chatbot.service] [_bindEvent] $(.linkItem).on(click) : BFF_05_0233 : ', '',extraParam)
+                    );
+                }
                 _this._historyService.goLoad(url);
             }
                 
