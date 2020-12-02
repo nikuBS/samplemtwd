@@ -282,16 +282,13 @@ Tw.ChatbotService.prototype = {
         
         var isAllowedOs = false;
         if(Tw.BrowserHelper.isIos()){
-            alert(Tw.BrowserHelper.getIosVersion());
-            var iosVer = Number(Tw.BrowserHelper.getIosVersion().split('.')[0]);
-            alert(iosVer);
+            var iosVer = Number((Tw.BrowserHelper.getIosVersion() + '').split('.')[0]);
             console.log('[chatbot.service] [_init] iosVer : ',iosVer);
-            // if(iosVer >= 13){
-            //     isAllowedOs = true;
-            // } else {
-            //     isAllowedOs = false;
-            // }
-            isAllowedOs = true;
+            if(iosVer >= 14){
+                isAllowedOs = true;
+            } else {
+                isAllowedOs = false;
+            }
             console.log('[chatbot.service] [_init] isAllowedOs :',isAllowedOs);  
         } else if(Tw.BrowserHelper.isAndroid()){
             var andVer = Number(Tw.BrowserHelper.getAndroidVersion().split('.')[0]);
