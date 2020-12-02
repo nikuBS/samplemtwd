@@ -166,31 +166,8 @@ Tw.MainMenuSettings.prototype = {
     //   hbs: 'MA_03_01_02_03_01_01'
     // }, $.proxy(this._onUpdatePopup, this));
 
-    // 무료 문자 점검 Alert
-    var nowDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDDHHmmss');
-    this._apiService
-      .request(Tw.API_CMD.BFF_01_0069, {property: 'menu.cert.time'})
-          .done($.proxy(function(resTime) {
-            var resTime = resTime.result.split('~');
-            var start_block_datetime = resTime[0];
-            var end_block_datetime = resTime[1];
-            if (nowDate >= start_block_datetime && nowDate <= end_block_datetime) {
-              this._popupService.openAlert(
-                '서비스 점검 중 입니다.</br>점검 작업 중 서비스가 차단되어 이용하실 수 없습니다.<br>▶점검 일시:' + Tw.DateHelper.getFullDateAndTime(start_block_datetime) + '~' + Tw.DateHelper.getFullDateAndTime(end_block_datetime) + '<br>※ 해당 작업은 상황에 따라서 변경 될 수 있습니다.',
-                '',
-                Tw.BUTTON_LABEL.CONFIRM,
-                null,
-                'menu_free_sms_overhaul'
-              );
-              return;
-            } else {
-              this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
-                 .done($.proxy(this._lastestVersionPopup, this));
-            }
-          }, this))
-          .fail(function(err) {
-              
-          });
+    this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
+      .done($.proxy(this._lastestVersionPopup, this));
   },
 
   _onWidgetSettingClicked: function () {
