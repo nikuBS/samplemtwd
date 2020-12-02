@@ -54,20 +54,21 @@ Tw.CustomerAgentsearch.prototype = {
       ],
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': 'CLOSE' }
     },
-      $.proxy(this._onOpenPopup, this),
+      $.proxy(this._onOpenPopup, this, $(e.currentTarget)),
       null,
       'store_info',
       $(e.currentTarget));
 
   },
 
-  _onOpenPopup: function ($layer) {
+  _onOpenPopup: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
     if(this._uri===''||this._uri===null||this._uri===undefined){
       $layer.find('input#all').attr('checked', 'checked');
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
+    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
   },
 
   _goLoad: function (event) {
