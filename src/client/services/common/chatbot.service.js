@@ -1441,7 +1441,9 @@ Tw.ChatbotService.prototype = {
         if ( micropayInfo.code === Tw.API_CODE.CODE_00 ) {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 소액결제 합계금액 : ', micropayInfo.result.totalSumPrice);
 
-            if(micropayInfo.result.totalSumPrice > 0){
+            var totalSumPrice = Number(micropayInfo.result.totalSumPrice);
+            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] totalSumPrice : ', totalSumPrice);
+            if(totalSumPrice > 0){
                 this._micropayYn = 'Y';
             }
 
@@ -1542,7 +1544,8 @@ Tw.ChatbotService.prototype = {
         if ( contentsInfo.code === Tw.API_CODE.CODE_00 ) {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] invDtTotalAmtCharge  : ', contentsInfo.result.invDtTotalAmtCharge);
 
-            if(contentsInfo.result.invDtTotalAmtCharge > 0){
+            var invDtTotalAmtCharge = Number(contentsInfo.result.invDtTotalAmtCharge);
+            if(invDtTotalAmtCharge > 0){
                 this._contentsPayYn = 'Y';
             }
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 7. 콘텐츠결제 관련 말풍선 노출 대상군 여부 : ', this._contentsPayYn);
@@ -1560,7 +1563,7 @@ Tw.ChatbotService.prototype = {
             var resultData = userProfileInfo.result.results;
             for (var i = 0; i < resultData.app_use_traffic_category_ratio.length; i++) {
                 if (resultData.app_use_traffic_category_ratio[i].category === '동영상'){                    
-                    this._vodRatio = resultData.app_use_traffic_category_ratio[i].ratio;
+                    this._vodRatio = Number(resultData.app_use_traffic_category_ratio[i].ratio);
                 }
             }
             var appUseTrafficMusicRatioMedianYn = resultData.app_use_traffic_music_ratio_median_yn; // 음악감상 데이터가 소비평균보다 높은지 여부
@@ -1570,7 +1573,8 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 8.0 MLS User Profile 조회 API(BFF_05_0235) appUseTrafficGameMedianYn : ', appUseTrafficGameMedianYn);
             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 8.0 MLS User Profile 조회 API(BFF_05_0235) appUseTrafficMusicRatioMedianYn : ', appUseTrafficMusicRatioMedianYn);
             // /* *******************************************
-            //   8.1 V컬러링, 8.2 wavve 관련 말풍선 노출 대상군 여부 체크
+            //   8.1 V컬러링 
+            //   8.2 wavve 관련 말풍선 노출 대상군 여부 체크
             // ******************************************* */        
             if (this._vodRatio >= 30){
                 this._vColoringYn = 'Y';
