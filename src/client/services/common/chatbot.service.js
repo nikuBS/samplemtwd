@@ -282,39 +282,24 @@ Tw.ChatbotService.prototype = {
         
         var isAllowedOs = false;
         if(Tw.BrowserHelper.isIos()){
-            console.log('[chatbot.service] [_init] 접속한 페이지 URL : ', Tw.BrowserHelper.isIos());
-            (function () {
-                var agent = userAgentString,
-                start = agent.indexOf( 'OS' );
-                if( ( agent.indexOf( 'iPhone' ) > -1) && start > -1 ){
-                    if(window.Number( agent.substr( start + 3, 3 ).replace( '_', '.' ) )>13){
-                     isAllowedOs = true; 
-                     //console.log("13이상"+isAllowedOs);
-                }else{
-                     isAllowedOs = false;
-                     //console.log("13이하"+isAllowedOs);
-                }
-                    }
-            })();
+            var iosVer = Number(Tw.BrowserHelper.getIosVersion().split('.')[0]);
+            console.log('[chatbot.service] [_init] iosVer : ',iosVer);
+            if(iosVer >= 13){
+                isAllowedOs = true;
+            } else {
+                isAllowedOs = false;
+            }
+            console.log('[chatbot.service] [_init] isAllowedOs :',isAllowedOs);  
+        } else if(Tw.BrowserHelper.isAndroid()){
+            var andVer = Number(Tw.BrowserHelper.getAndroidVersion().split('.')[0]);
+            console.log('[chatbot.service] [_init] andVer : ',andVer);
+            if(andVer >= 8){
+                isAllowedOs = true;
+            } else {
+                isAllowedOs = false;
+            }
+            console.log('[chatbot.service] [_init] isAllowedOs :',isAllowedOs);
         }
-         if(Tw.BrowserHelper.isAndroid()){
-           // var andVer = Tw.BrowserHelper.getAndroidVersion;
-           
-           if (userAgentString.indexOf("Android") >= 0) { 
-              var androidV = parseFloat(userAgentString.slice(userAgentString.indexOf("Android") + 8)); 
-              console.log("androidV : "+androidV)
-              if (androidV < 8){
-                  // andorid version is <=8
-                   isAllowedOs = false;
-                   console.log("isAllowedOs : "+isAllowedOs)
-              }else{
-                   // andorid version is >8
-                   isAllowedOs = true;
-                   console.log("isAllowedOs : "+isAllowedOs)
-              }
-           } 
-        }
-
         var isAllowed = false;      // 챗봇 오픈여부 결정
         var isDefaultPage = false;  // 전체메뉴 > 챗봇 상담하기 를 통한 진입 여부 (20.11.16 - 사용 안함)
         // 챗봇 상담하기 (/chatbot/counsel) 로 접근하는 경우 중간의 게이트웨이 페이지가 있기 때문에 
