@@ -34,9 +34,10 @@
                             <label class="tit" for="flab01">선결제 금액</label>
                             <span class="inputbox">
                                 <span class="input">
+                                    <%const amtText = '10원부터 10원단위 선결제 가능합니다. (숫자만 입력)';%>
                                     <input id="flab01" class="fe-prepay-amount required-input-field fe-only-number" type="number"
-                                        inputmode="numeric" min="0" pattern="[0-9]*" maxlength="8" data-valid-label="prepay"
-                                        title="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" placeholder="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" />
+                                        inputmode="numeric" min="0" pattern="[0-9]*" maxlength="8" data-valid-label="prepay" data-prepay-type="card"
+                                        title="<%-amtText%>" placeholder="<%-amtText%>" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                                 <span class="error-txt fe-error-msg" id="id-helper1" aria-hidden="true" style="display:none;">선결제 가능 최대금액을 초과하였습니다.</span>
