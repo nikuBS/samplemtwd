@@ -11,89 +11,120 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import { DATA_UNIT } from '../../../../types/string.type';
 import moment from 'moment';
 import DateHelper from '../../../../utils/date.helper';
 import RoamingHelper from './roaming.helper';
+import ProductHelper from '../../../../utils/product.helper';
 import {RoamingController} from './roaming.abstract';
+import { deflateSync } from 'zlib';
 
 export default class RoamingMyUseController extends RoamingController {
+
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+
+    // 미 로그인하여 이 페이지로 진입 시 바로 로그인 화면으로 리다이렉트 되도록 어드민 설정 되어 있음
+    // 다른 화면(로밍메인, 요금제추천)에서 로밍 이력보기 화면으로 바로 이동하기 위한 셋팅
+    const CATEGORY: {} = {
+      '1': '현재 이용 중인 요금제', '2': '지난 여행 정보'
+    };
+
+    // 로밍이력보기 화면 id 2가 없는 경우 나의 요금제 화면으로 이동하기 위하여 1로 셋팅
+    let categoryNumber = FormatHelper.isEmpty(req.query.useInfo) ? '1' : req.query.useInfo;
+    const categoryName = CATEGORY[categoryNumber];
+
     this.setDeadline(res);
 
-    Observable.combineLatest(
-      this.getMyTariffs(),
-      this.getMyAddons(),
-      // 로밍 실시간 데이터 잔여량
-      this.apiService.request(API_CMD.BFF_05_0201, {}).map(resp => {
-        const error = RoamingHelper.checkBffError(resp);
-        if (error) { return error; }
-        return resp.result;
-      }),
-    ).subscribe(([tariffs, addons, dataUsages]) => {
-      if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [tariffs, addons])) {
-        this.releaseDeadline(res);
-        return;
-      }
+      Observable.combineLatest(
+        this.getMyTariffs(),
+        this.getMyAddons(),
+        // 로밍 실시간 데이터 잔여량
+        this.apiService.request(API_CMD.BFF_05_0201, {}).map(resp => {
+          const error = RoamingHelper.checkBffError(resp);
+          if (error) { return error; }
+          return resp.result;
+        }),
+        this.getHistory()
+      // ).subscribe(([tariffs, addons, dataUsages]) => {
+      ).subscribe(([tariffs, addons, dataUsages, history]) => {
+        // if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [tariffs, addons, history])) {
+        if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [tariffs, addons, history])) {
+          this.releaseDeadline(res);
+          return;
+        }
 
-      // prodId, prodNm, scrbDt (2019.1.23.),
-      // basFeeTxt (39,000),
-      // prodLinkYn, prodSetYn, prodTermYn
-      // linkProdId
-      tariffs = tariffs.roamingProdList;
-      // prodId, prodNm, scrbDt (2018.3.18.)
-      // basFeeTxt 무료,
-      // prodLinkYn, prodSetYn, prodTermYn
-      // linkProdId
-      addons = addons.roamingProdList;
+        // 사용자가 임의로 지난 이력 보기 코드인 2로(/product/roaming/my-use?useInfo=2) 접속해도 히스토리가 없으면 강제로 코드를 1로 셋팅하여 화면오류 방지
+        if ( categoryNumber === '2' && !history) {
+          categoryNumber = '1';
+        }
+        
+        // prodId, prodNm, scrbDt (2019.1.23.),
+        // basFeeTxt (39,000),
+        // prodLinkYn, prodSetYn, prodTermYn
+        // linkProdId
+        tariffs = tariffs.roamingProdList;
+        // prodId, prodNm, scrbDt (2018.3.18.)
+        // basFeeTxt 무료,
+        // prodLinkYn, prodSetYn, prodTermYn
+        // linkProdId
+        addons = addons.roamingProdList;
 
-      const context = {
-        svcInfo,
-        pageInfo,
-        addons, // 부가서비스 목록
-        tariffs: [], // 요금제 목록
-        now: moment(),
-        nowDate: moment().hours(0).minutes(0).seconds(0).milliseconds(0)
-      };
+        const context = {
+          svcInfo,
+          pageInfo,
+          addons, // 부가서비스 목록
+          tariffs: [], // 요금제 목록
+          now: moment(),
+          nowDate: moment().hours(0).minutes(0).seconds(0).milliseconds(0),
+          categoryNumber,
+          categoryName,
+          // historyList: categoryNumber === '2' ? HISTORY_DUMMY_ROAMING.result || false : false
+          historyList: (history && history.result) || false
+        };
 
-      if (tariffs.length > 0) {
-        Observable.combineLatest(tariffs.map(t => {
-          // 이용 중인 모든 요금제에 대하여, BFF_10_0091(기간 조회 API)를 호출한다.
-          // 스펙 상, 이용기간을 표시해야 하고, 이용기간에 따라 '이용 예정', '이용 중', '이용 완료' 표시를 하기 위함이다.
-          return this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [t.prodId]).map(r => {
-            const error = RoamingHelper.checkBffError(r);
-            if (error) { return error; }
-            if (r.result) {
-              return r.result;
+        if (tariffs.length > 0) {
+          Observable.combineLatest(tariffs.map(t => {
+            // 이용 중인 모든 요금제에 대하여, BFF_10_0091(기간 조회 API)를 호출한다.
+            // 스펙 상, 이용기간을 표시해야 하고, 이용기간에 따라 '이용 예정', '이용 중', '이용 완료' 표시를 하기 위함이다.
+            return this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [t.prodId]).map(r => {
+              const error = RoamingHelper.checkBffError(r);
+              if (error) { return error; }
+              if (r.result) {
+                return r.result;
+              }
+              return null;
+            });
+          })).subscribe((ranges) => {
+            if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [ranges])) {
+              this.releaseDeadline(res);
+              return;
             }
-            return null;
-          });
-        })).subscribe((ranges) => {
-          if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo, [ranges])) {
-            this.releaseDeadline(res);
-            return;
-          }
 
-          // BFF_10_0091(기간조회) 응답을 기존 tariffs 객체에 병합.
-          this.mergeRanges(tariffs, ranges, dataUsages);
-          const filtered: any = [];
-          for (const t of tariffs) {
-            // [로밍개선과제] 이용완료 상품 미표시가 SB에 있으나, 혼란 가중되어 살려둠
-            // if (t.endDate && t.endDate.isBefore(context.now)) {
-            //   continue;
-            // }
-            filtered.push(t);
-          }
-          context.tariffs = filtered;
+            // BFF_10_0091(기간조회) 응답을 기존 tariffs 객체에 병합.
+            this.mergeRanges(tariffs, ranges, dataUsages);
+            const filtered: any = [];
+            for (const t of tariffs) {
+              // [로밍개선과제] 이용완료 상품 미표시가 SB에 있으나, 혼란 가중되어 살려둠
+              // if (t.endDate && t.endDate.isBefore(context.now)) {
+              //   continue;
+              // }
+              filtered.push(t);
+            }
+            context.tariffs = filtered;
+            this.renderDeadline(res, 'roaming-next/roaming.myuse.html', context);
+          });
+        } else {
           this.renderDeadline(res, 'roaming-next/roaming.myuse.html', context);
-        });
-      } else {
-        this.renderDeadline(res, 'roaming-next/roaming.myuse.html', context);
-      }
-    });
+        }
+      });
+
+
   }
+
 
   /**
    * 이용하는 요금제 목록에 기간 정보를 병합하고,
@@ -239,6 +270,45 @@ export default class RoamingMyUseController extends RoamingController {
       return this._mapResult(resp);
     });
   }
+
+  /**
+   * 로밍 히스토리 목록
+   * BFF_05_0234
+   *
+   * @private
+   */
+  private getHistory(): Observable<any> {
+    // return this.apiService.request(API_CMD.BFF_05_0234, {}).map((resp) => {
+    // 이지민 수석님 요청으로 API 호출 결과값을 레디스에 등록(공통에서 5분간 등록되도록 처리됨)
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0234, {}).map((resp) => {
+
+      // 에러가 있을 경우 에러 리턴
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+
+      // 로밍 이력이 없을 경우 false 리턴
+      if (FormatHelper.isEmpty(resp.result[0])) {
+        return false;
+      }
+
+      return {
+      ...resp,
+      result: resp.result.map((baroList) => {
+        return {
+          ...baroList,
+          flagImgUrl: baroList.flagImgUrl && ProductHelper.getImageUrlWithCdn(baroList.flagImgUrl).toString(),
+          totalVolumnMb: baroList.totalVolumnMb && FormatHelper.convDataFormatWithUnit(baroList.totalVolumnMb, DATA_UNIT.MB).toString(),
+          // dayVolumnMb: (baroList.dayVolumnMb * 1).toFixed(1),
+          dayVolumnMb: baroList.dayVolumnMb && FormatHelper.convDataFormatWithUnit(baroList.dayVolumnMb, DATA_UNIT.MB).toString(),
+          minUsgDate: baroList.minUsgDate && DateHelper.getShortDate(baroList.minUsgDate).toString(),
+          // effectDate: FormatHelper.conDateFormatWithDash(baroList.effectDate).toString(),
+          maxUsgDate: baroList.maxUsgDate && DateHelper.getShortDate(baroList.maxUsgDate).toString()
+        }
+      })
+    }
+
+    }); // end of api request
+  } // end of getHistory
 
   /**
    * 이용 중인 부가서비스와 요금제 목록 결과를 정규화.

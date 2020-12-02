@@ -53,12 +53,22 @@
                 <% } %>
             </div>
             <div class="past">
+                <!-- 로밍 퍼블 서힘찬님과 상의하여 아래의 a태그로 사용 -->
+                <!-- [OP002-11061] [로밍][M] 로밍 추천요금제에 사용량 연동 건 -->
+                <!-- <p class="description">지난 T로밍 요금제 사용 내역을 기반으로 보여 드립니다.</p>
+                <ul class="bt-slice mt20">
+                    <li class="bt-roaming1">
+                        <button>지난 여행 이력 보기</button>
+                    </li>
+                </ul> -->
+                <!-- // [OP002-11061] [로밍][M] 로밍 추천요금제에 사용량 연동 건 -->
+
                 <%# '지난 여행 이력' 스펙 아웃으로 false를 넣었고, 지난여행이력 주요 진입점 중 하나이다. %>
-                <% if (recentUsed && false) { %>
+                <% if (resultSumDayVolumnMb) { %>
                     <p class="description">
                         지난 T로밍 요금제 사용 내역을 기반으로 보여 드립니다.
                     </p>
-                    <a href="/product/roaming/history">
+                    <a href="/product/roaming/my-use?useInfo=2">
                         <div class="button">
                             지난 여행 이력보기
                         </div>

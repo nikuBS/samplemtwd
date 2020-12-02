@@ -14,13 +14,13 @@
  * @since 2020-09-01
  */
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { Observable } from 'rxjs/Observable';
-import FormatHelper from '../../../../utils/format.helper';
-import {REDIS_KEY} from '../../../../types/redis.type';
 import moment from 'moment';
+import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
+import { REDIS_KEY } from '../../../../types/redis.type';
+import FormatHelper from '../../../../utils/format.helper';
+import { RoamingController } from './roaming.abstract';
 import RoamingHelper from './roaming.helper';
-import {RoamingController} from './roaming.abstract';
 
 export default class RoamingMainController extends RoamingController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -49,9 +49,10 @@ export default class RoamingMainController extends RoamingController {
       this.getBanners(pageInfo),
       this.getFirstRoaming(isLogin),
       this.getTariffGroups(),
-    ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie, groups]) => {
+      this.getHistory()
+    ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie, groups, history]) => {
       if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo,
-        [currentUse, newbie, groups])) {
+        [currentUse, newbie, groups, history])) {
         this.releaseDeadline(res);
         return;
       }
@@ -94,6 +95,11 @@ export default class RoamingMainController extends RoamingController {
          * [{prodGrpId, prodGrpNm, prodGrpDesc, prodGrpBnnrImgUrl},]
          */
         groups,
+                /**
+         * 요BFF_05_0234(new) T로밍 사용내역 조회-샘플 결과값.
+         * true or false, false면 여행 이력 없는 것
+         */
+        history,
       });
     });
   }
@@ -308,4 +314,23 @@ export default class RoamingMainController extends RoamingController {
       return items;
     });
   }
+
+  /**
+   * 로밍 히스토리 목록, 목록이 하나라도 있으면 true 리턴, 지난 여행 이력보기 문구 노출에 활용
+   * BFF_05_0234
+   *
+   * @private
+   */
+  private getHistory(): Observable<any> {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0234, {}).map((resp) => {
+      
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+
+      return FormatHelper.isEmpty(resp.result[0]) ? false : true;
+
+    }); // end of api request
+
+  } // end of getHistory
+
 }

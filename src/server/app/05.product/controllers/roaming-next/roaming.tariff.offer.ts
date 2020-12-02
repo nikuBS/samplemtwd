@@ -13,7 +13,7 @@
  * @since 2020-09-01
  */
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import moment from 'moment';
@@ -41,16 +41,21 @@ export default class RoamingTariffOfferController extends RoamingController {
     // 1000 : moment.diff 리턴값은 milliseconds 단위.
     const night = to.diff(from) / 86400 / 1000;
 
+    let resultSumDayVolumnMb: any;  // 로밍 히스토리 하루 평균 데이터 여부 false 또는 숫자
+    this.getHistory().subscribe( resp => {
+      resultSumDayVolumnMb = resp;
+    });
+
     Observable.combineLatest(
       this.getCountryInfo(countryCode),
-      this.getRecommendedTariff(countryCode, from.format('YYYYMMDD'), to.format('YYYYMMDD')),
+      this.getRecommendedTariff(countryCode, from.format('YYYYMMDD'), to.format('YYYYMMDD'), resultSumDayVolumnMb),
       this.getAvailableTariffs(countryCode),
       this.getRecentUsedTariff(),
       this.getFirstRoaming(),
       this.getTariffsMap(),
     ).subscribe(([country, recommended, allTariffs, recentUsed, newbie, tariffsMap]) => {
       if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo,
-        [country, recommended, allTariffs, newbie, tariffsMap])) {
+        [country, recommended, allTariffs, newbie, tariffsMap, resultSumDayVolumnMb])) {
         this.releaseDeadline(res);
         return;
       }
@@ -106,6 +111,8 @@ export default class RoamingTariffOfferController extends RoamingController {
         newbie,
         // 해당 국가에서 이용 가능한 모든 요금제
         availableTariffs: allTariffs.map(t => RoamingHelper.formatTariff(t)),
+        // false면 로밍 이력 없는 상태, 아니면 로밍 이력 있는 상태
+        resultSumDayVolumnMb
       });
     });
   }
@@ -221,13 +228,15 @@ export default class RoamingTariffOfferController extends RoamingController {
    * @param countryCode 3자리 국가코드
    * @param startDate yyyyMMdd
    * @param endDate yyyyMMdd
+   * @param resultSumDayVolumnMb 로밍사용이력(BFF_05_0234)의 일평균 사용량 또는 false
    * @private
    */
-  private getRecommendedTariff(countryCode: string, startDate: string, endDate: string): Observable<any> {
+  private getRecommendedTariff(countryCode: string, startDate: string, endDate: string, resultSumDayVolumnMb: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0196, {
       countryCode,
       svcStartDt: startDate,
-      svcEndDt: endDate
+      svcEndDt: endDate,
+      dailyAverageUsage: (resultSumDayVolumnMb === false) ? null :  resultSumDayVolumnMb
     }).map(resp => {
       const error = RoamingHelper.checkBffError(resp);
       if (error) { return error; }
@@ -337,4 +346,40 @@ export default class RoamingTariffOfferController extends RoamingController {
       });
     });
   }
+
+  /**
+   * 로밍 히스토리 목록, 목록이 하나라도 있으면 true 리턴, 지난 여행 이력보기 문구 노출에 활용
+   * BFF_05_0234
+   *
+   * @private
+   */
+  private getHistory(): Observable<any> {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0234, {}).map((resp) => {
+      
+      const error = RoamingHelper.checkBffError(resp);
+      if (error) { return error; }
+
+      // 로밍 이력 없으면 false 리턴
+      if (FormatHelper.isEmpty(resp.result[0])) {
+        return false;
+      }
+
+      // let sumDayVolumnMb = 0;
+      // // 로밍 이력 리스트 전체에서 일평균 사용량을 모두 합산
+      // resp.result.map((baroList) => {
+      //   sumDayVolumnMb += parseInt(baroList.dayVolumnMb, 10);
+      // });
+
+
+      let sumDayVolumnMb = resp.result.reduce((sum: number, curr: { dayVolumnMb: string; }) => {
+        return sum + parseInt(curr.dayVolumnMb, 10);
+      }, 0);
+
+
+      return sumDayVolumnMb / resp.result.length;
+
+    }); // end of api request
+
+  } // end of getHistory
+
 }
