@@ -1311,8 +1311,8 @@ Tw.ChatbotService.prototype = {
                 typeA : this._typeA,
                 typeB : this._typeB,
                 typeC : this._typeC,
-                color : this._defaultColorB,
-                theme : this._defaultThemeB,
+                color : this._mlsGreetingColor,
+                theme : this._mlsGreetingTheme, 
                 greetingLines : this._greetingLines
             }];
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] option : ', option);
