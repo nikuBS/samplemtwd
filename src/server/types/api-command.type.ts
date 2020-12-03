@@ -369,6 +369,7 @@ export const API_CMD = {
   BFF_05_0231: { path: '/core-modification/:version/mls/recommend-multiItem', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0232: { path: '/core-modification/:version/mls/conversion-impression', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0233: { path: '/core-modification/:version/mls/conversion-click', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0234: { path: '/core-balance/v1/troaming-callhist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
  // [OP002-11797]
   BFF_05_0235: { path: '/core-modification/v1/mls/UserProfiles', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
@@ -1081,7 +1082,8 @@ export const SESSION_CMD = {
   BFF_10_0187: 'BFF_10_0187',
   BFF_05_0106: 'BFF_05_0106',
   BFF_05_0094: 'BFF_05_0094',
-  BFF_05_0196: 'BFF_05_0196'
+  BFF_05_0196: 'BFF_05_0196',
+  BFF_05_0234: 'BFF_05_0234'
 };
 
 export const API_CODE = {

@@ -785,6 +785,14 @@ Tw.POPUP_TPL = {
       }]
     }
   ],
+  ROAMING_MY_USE: [
+    {
+      list: [
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-location="현재 이용 중인 요금제"', txt: '현재 이용 중인 요금제' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-location="지난 여행 정보"', txt: '지난 여행 정보' }
+      ]
+    }
+  ],
   BENEFIT_JOIN_ADVICE_PRODUCT: [
     {
       'list': [

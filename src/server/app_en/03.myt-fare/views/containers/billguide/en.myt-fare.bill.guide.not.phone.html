@@ -82,7 +82,7 @@
     $(document).ready(function () {
         var data = '<%- JSON.stringify(data) %>';
         new Tw.MyTFareCommon($('#fe-wrap'), data);
-        new Tw.CommonLineComponent($('#contents'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+        new Tw.CommonLineComponent($('#contents'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>', '<%= svcInfo ? svcInfo.svcAttrCd : "" %>');
     });
 </script>
 <% include ../../components/end.component.html %>

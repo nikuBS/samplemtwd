@@ -37,7 +37,7 @@
                     </div>
                     <!--// 메인배너01 -->
                 <% if (svcInfo) { %>
-                    <% if (svcInfo.svcAttrCd && svcInfo.svcAttrCd !== 'M1' && svcInfo.svcAttrCd !== 'M3') { %>
+                    <% if (svcInfo.svcAttrCd && svcInfo.svcAttrCd !== 'M1' && svcInfo.svcAttrCd !== 'M3' && svcInfo.svcAttrCd !== 'M4' ) { %>
                         <div class="section-box nogaps mw">
                             <div class="main-top-group">
                                 <!-- pps/유선회원 선택시 -->
@@ -458,7 +458,7 @@
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%= (svcInfo && svcInfo.svcAttrCd === "M1")%>', '', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>', '<%= svcInfo ? svcInfo.mbrNm : "" %>','<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
-    new Tw.CommonLineComponent($('#mainHome'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>');
+    new Tw.CommonLineComponent($('#mainHome'), '<%= svcInfo ? svcInfo.svcMgmtNum : "" %>', '<%= svcInfo ? svcInfo.svcAttrCd : "" %>');
 
     $('.tod-link-flydata').on('click', function() {
         location.href = '/en/myt-data/hotdata';

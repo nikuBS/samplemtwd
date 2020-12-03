@@ -7,97 +7,47 @@ Tw.CustomerFaq = function (rootEl) {
   this.viewMoreCount=1;
   this.$allContents = this.$container.find('.acco-box');
   this.$allContentsBtn = this.$container.find('.btn-more');
-  this.$firstViewMore = this.$container.find('.first-view-more');
-  this.$secondViewMore = this.$container.find('.second-view-more');
-  this.$thirdViewMore = this.$container.find('.third-view-more');
-  this.$fourthViewMore = this.$container.find('.fourth-view-more');
-  this.$fifthViewMore = this.$container.find('.fifth-view-more');
   this._popupService = Tw.Popup;
   this._uri = window.location.search.split('=')[1];
   this._historyService = new Tw.HistoryService();
+  this.accoBoxNum = $('.acco-box').length;
+  this.countNum = 10;
+  this.checkNum = 0;
   this._init();
 };
 
 Tw.CustomerFaq.prototype = {
-  _init: function () {// 필터 별 분기
-    if(this._uri==='' || this._uri===null || this._uri === 'tworldguide' || this._uri === undefined){
-      this.$allContentsBtn.on('click', $.proxy(this._showContent_all_tworldguide, this));
-    }
-    else if(this._uri === 'appAddOns' || this._uri === 'roaming'){
-      this._showAllcontent();
-    }
-    
-    else if(this._uri === 'subscription'){
-      this._showContent_subscription();
-    }
-    else if(this._uri === 'plans'){
-      this._showContent_plans();
-    }
+  _init: function () {
+    for(var b = 0; b<10; b++){
+      $('.acco-box').eq(b).css('display','list-item');
+    } // 최초 10개 보이기
+    if(this.accoBoxNum <11){
+      this.$allContentsBtn.remove();
+    } // 10개 이하면 더보기 버튼 삭제
     this.$eventSelector = this.$container.find('.bt-select');
     this._bindEvents();
     this._setupscroll();
+    
   },
 
-  _showContent_all_tworldguide: function() { // 필터 별 더보기 버튼 동작
-    if(this.viewMoreCount===1){
-      if(this.$firstViewMore.length){
-        this.$firstViewMore.css('display','list-item');
-      }
-      else {this._showAllcontent();}
+  _showMoreContent: function() {
+    if(this.accoBoxNum - this.countNum > 10){
+      this.checkNum=10;
+    }else{
+      this.checkNum = this.accoBoxNum - this.countNum;
+      this.$allContentsBtn.remove();
     }
-    else if(this.viewMoreCount===2){
-      if(this.$secondViewMore.length){
-        this.$secondViewMore.css('display','list-item');
-      }
-      else {this._showAllcontent();}
+    for(var b = this.countNum ; b < this.countNum + this.checkNum ; b++){
+      $('.acco-box').eq(b).css('display','list-item');
     }
-    else if(this.viewMoreCount===3){
-      if(this.$thirdViewMore.length){
-        this.$thirdViewMore.css('display','list-item');
-      }
-      else {this._showAllcontent();}
-    }
-    else if(this.viewMoreCount===4){
-      if(this.$fourthViewMore.length){
-        this.$fourthViewMore.css('display','list-item');
-      }
-      else {this._showAllcontent();}
-    }
-    else if(this.viewMoreCount===5){
-      if(this.$fifthViewMore.length){
-        this.$fifthViewMore.css('display','list-item');
-      }
-      else {this._showAllcontent();}
-    }
-    else {this._showAllcontent();}
-    this.viewMoreCount++;
-
+    $('.acco-box').eq(this.countNum).children('div.acco-tit').children('button').focus();
+    this.countNum+=10;    
   },
 
-  _showContent_subscription: function() { // 필터 별 더보기 버튼 동작
-    $('.subscription1st').css('display','list-item');
-    this.$allContentsBtn.on('click', $.proxy(this._showAllcontent, this));
-  },
-
-  _showContent_plans: function() { // 필터 별 더보기 버튼 동작
-    $('.plans1st').css('display','list-item');
-    this.$allContentsBtn.on('click', $.proxy(function(){
-      if(this.viewMoreCount===1){
-        $('.plans2nd').css('display','list-item');
-        this.viewMoreCount++;
-      }else{
-        this._showAllcontent();
-      }
-    }, this));
-  },
-  
-  _showAllcontent: function() { // 더보기 버튼 더이상 필요 없을때 제거하고 모두보여줌
-    this.$allContentsBtn.remove();
-    this.$allContents.css('display','list-item');
-  },
 
   _bindEvents: function () {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
+    this.$allContentsBtn.on('click', $.proxy(this._showMoreContent, this));
     
   },
 
@@ -120,19 +70,20 @@ Tw.CustomerFaq.prototype = {
       ],
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': 'CLOSE' }
     },
-      $.proxy(this._onOpenPopup, this),
+      $.proxy(this._onOpenPopup, this, $(e.currentTarget)),
       null,
       'faq',
       $(e.currentTarget));
   },
 
-  _onOpenPopup: function ($layer) {
+  _onOpenPopup: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
     if(this._uri==='' || this._uri===null || this._uri === undefined){
       $layer.find('input#all').attr('checked', 'checked');
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
+    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
   },
 
   _goLoad: function (event) { //url 이동

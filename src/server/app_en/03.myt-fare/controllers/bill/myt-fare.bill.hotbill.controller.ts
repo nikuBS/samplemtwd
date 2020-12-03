@@ -68,7 +68,7 @@ class MyTFareBillHotbill extends TwViewController {
     }
 
     // 영문화 유선회선인경우 회선변경 안내페이지로 이동
-    if (svcInfo.svcAttrCd !== '' && ['M1', 'M3'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notphone'  ) {
+    if (svcInfo.svcAttrCd !== '' && ['M1', 'M3', 'M4'].indexOf(svcInfo.svcAttrCd) === -1 || test === 'notphone'  ) {
       res.render('bill/en.myt-fare.bill.hotbill.not.phone.html' , { data : defaultData, svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
       return;
     }

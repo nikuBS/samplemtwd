@@ -5,9 +5,10 @@
  * Summary: 회선 선택에 관한 공통 자바스크립트
  */
 
-Tw.CommonLineComponent = function (rootEl, svcMgmtNum) {
+Tw.CommonLineComponent = function (rootEl, svcMgmtNum, svcAttrCd) {
     this.$container = rootEl;
     this._svcMgmtNum = svcMgmtNum;
+    this._svcAttrCd = svcAttrCd;
 
     this._historyService = new Tw.HistoryService();
     
@@ -51,8 +52,9 @@ Tw.CommonLineComponent.prototype = {
         if ( !this._lineComponent ) {
             this._lineComponent = new Tw.LineComponent(null, null, false, $target);
         }
-
-        this._lineComponent.onClickLineView(this._svcMgmtNum, $target);
+        
+        this._lineComponent.onClickGlobalLineView(this._svcMgmtNum, this._svcAttrCd ,$target);
+        // this._lineComponent.onClickLineView(this._svcMgmtNum, $target);
     },
 
 };

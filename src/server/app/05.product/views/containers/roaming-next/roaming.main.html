@@ -88,6 +88,13 @@
                     <%= recentUse.nights + 1 %>일
                 </span>
             </div>
+            <p class="fs12 mt10 tod-txcolor4">* 실제 사용 기준이 아닌 요금제 가입 기준입니다.</p><!-- [OP002-11060] [로밍][M] 로밍이력조회 요청 건 -->
+            <!-- baro 로밍 이력이 있는 경우만 노출 -->
+            <% if (history) { %>
+            <div class="link">
+                <a href="/product/roaming/my-use?useInfo=2">지난 여행 때 이용했던 이력보기</a><!-- [OP002-11060] [로밍][M] 로밍이력조회 요청 건 -->
+            </div>
+            <% } %>
             <!--
             <div class="link">
                 <a href="/product/roaming/history">지난 여행 이용 패턴</a>

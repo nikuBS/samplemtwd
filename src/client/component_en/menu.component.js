@@ -134,7 +134,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       hbs: hbsName,
       layer: true,
       data: [{ list: listData }],
-      btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
+      btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', 'id': 'familysite-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
     },
     $.proxy(this._conditionChangeEvtInit, this, $target),
     $.proxy(this._conditionChangeEvtClose, this, $target),
@@ -144,6 +144,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
   _conditionChangeEvtInit: function ($target, $layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', '.fe-outlink', $.proxy(this._onOutLinkWithATag, this));
+    //$layer.on('click', '#familysite-closeBtn', function() { $target.focus(); } );
+    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
   },
 
   // 안씀. 조건변경 팝업 닫히면..
@@ -256,7 +258,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         this._lineComponent = new Tw.LineComponent(null, null, false, this.$gnbBtn);
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해      
-      this._lineComponent.onClickLine(this._svcInfo.svcMgmtNum, $target);
+      // this._lineComponent.onClickLine(this._svcInfo.svcMgmtNum, $target);
+      this._lineComponent.onClickGlobalLineView(this._svcInfo.svcMgmtNum, this._svcInfo.svcAttrCd, $target);
+
     // }
   },
 
@@ -279,7 +283,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     if ( window.location.hash.indexOf('menu') !== -1 ) {
       this._historyService.goBack();
     }
-    $('.h-menu a').focus();
+    $('.h-menu button').focus();
   },
 
   /**
@@ -528,9 +532,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
       switch ( this._memberType ) {
         case 0:
-
-          //M1, M3인경우만 처리해야함
-          if (userInfo.svcAttrCd.indexOf('M1') !== -1 || userInfo.svcAttrCd.indexOf('M3') !== -1) {
+          //M1, M3, M4인경우만 처리해야함
+          if (userInfo.svcAttrCd.indexOf('M1') !== -1 || userInfo.svcAttrCd.indexOf('M3') !== -1 || userInfo.svcAttrCd.indexOf('M4') !== -1 ) {
             var nonSvcCnt = Number(userInfo.nonSvcCnt);
             var expsSvcCnt = Number(userInfo.expsSvcCnt);
             var total = expsSvcCnt + nonSvcCnt;
@@ -597,7 +600,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
 
 
-    if ( isLogin && (userInfo.svcAttrCd.indexOf('M1') !== -1 || userInfo.svcAttrCd.indexOf('M3') !== -1 ) && !this._isPPS) {
+    if ( isLogin && (userInfo.svcAttrCd.indexOf('M1') !== -1 || userInfo.svcAttrCd.indexOf('M3') !== -1 || userInfo.svcAttrCd.indexOf('M4') !== -1 ) && !this._isPPS) {
       $('.fe-menu-realtime').each($.proxy(function (i, elem) {
         var type = elem.getAttribute('data-value');
         switch ( type ) {
