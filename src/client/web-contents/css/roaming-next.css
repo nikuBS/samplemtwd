@@ -3768,10 +3768,13 @@ body.scroll #roamingOn #appbar .appbar {
 .rm-content .rm-anchor.fixed:after{content:'';display:block;position:static;height:3.8125rem;width:100%}
 
 .rm-content .rm-bg-gray{background-color:#f3f4f9}
+.bt-slice>li.bt-roaming1 a,
 .bt-slice>li.bt-roaming1 button{color:#4559fc;border:1px solid #4559fc}
 .bt-slice>li.bt-roaming1 button:disabled{border:1px solid #9e9e9e;color:#9e9e9e}
+.bt-slice>li.bt-roaming1 a.selected,
 .bt-slice>li.bt-roaming1 button.selected{background:#4559fc;color:#fff}
-.bt-slice>li.bt-roaming1 button.disabled {border:1px solid #9e9e9e;color:#9e9e9e;background:#fff;pointer-events:none;cursor:default}
+.bt-slice>li.bt-roaming1 a.disabled,
+.bt-slice>li.bt-roaming1 button.disabled{border:1px solid #9e9e9e;color:#9e9e9e;background:#fff;pointer-events:none;cursor:default}
 .bt-slice>li.bt-roaming2 button{color:#fff;background-color:#4559fc}
 .bt-slice>li.bt-roaming2 button.selected{color:#4559fc;border:1px solid #4559fc}
 .bt-slice>li.bt-roaming2 button.disabled {border:1px solid #9e9e9e;color:#fff;background:#fff;pointer-events:none;cursor:default}
@@ -3917,12 +3920,12 @@ body.scroll #roamingOn #appbar .appbar {
 .rm-content .card-coupon-wrap{padding:2.1875rem 0;background-color:#fff}
 .rm-content .card-coupon-wrap h4{margin-left:1rem}
 .rm-content .card-coupon-box .card-coupon-inner .inner-box{min-width:17.06rem;width:auto;height:17.0625rem;padding:1.75rem 1.25rem;background-color:#f3f4f9}
-.rm-content .card-coupon-box .card-coupon-inner .tit{white-space:nowrap;margin:0;font-size:1.125rem;color:#4559fc;font-weight:400;margin:0}
+.rm-content .card-coupon-box .card-coupon-inner .tit{white-space:nowrap;margin:0;font-size:1.125rem;color:#4559fc;font-weight:500;margin:0}
 .rm-content .card-coupon-box .card-coupon-inner .card{width:auto;height:auto;margin:.94rem 0 0 0}
 .rm-content .card-coupon-box .card-coupon-inner .card img{width:auto;height:auto}
 .rm-content .card-coupon-box .card-coupon-inner .price{color:#000;font-weight:500}
 .rm-content .card-coupon-box .card-coupon-inner .desc{color:#858585}
-.rm-content .way-cont-box .order li{padding-left:4.6875rem}
+.rm-content .way-cont-box .order li{padding-left:4.6875rem;min-height:3.75rem}
 .rm-content .way-cont-box .order li :after{width:3.75rem;height:3.75rem;background:url(/img/product/roam/ico-order01.png) no-repeat 0 0;background-size:100% auto}
 .rm-content .way-cont-box .order li:last-child :after{background-image:url(/img/product/roam/ico-order02.png)}
 .rm-content .way-cont-box .order li strong{font-size:.9375rem;font-weight:500}
@@ -3962,3 +3965,8 @@ body.scroll #roamingOn #appbar .appbar {
 .rm-myuse-history li .data{float:right;text-align:right}
 .rm-myuse-history li .data strong{font-size:.9375rem}
 #roamingMyuse .bt-more button{background:#fff url(/img/product/roam/ico_expand.svg) no-repeat center center;text-indent:-999em;border-top:1px solid #e0e0e0}
+
+/* 나의 T로밍 이용 현황 select box  */
+#roamingMyuse .custom-form input[type=radio]:checked+.r-type1 {
+  background-image: url(/img/product/roam/component_radio_small_on.svg);
+}
