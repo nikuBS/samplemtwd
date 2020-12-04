@@ -80,10 +80,11 @@ Tw.CustomerFaq.prototype = {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
     if(this._uri==='' || this._uri===null || this._uri === undefined){
       $layer.find('input#all').attr('checked', 'checked');
+    } else {
+      $layer.find('input#' + this._uri).attr('checked', 'checked');
     }
-    else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
-    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
+    $layer.on('click', '.tw-popup-closeBtn', function() { $target.find('.bt-select').focus(); } );
   },
 
   _goLoad: function (event) { //url 이동
