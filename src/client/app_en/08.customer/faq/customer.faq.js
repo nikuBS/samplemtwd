@@ -84,10 +84,10 @@ Tw.CustomerFaq.prototype = {
       $layer.find('input#' + this._uri).attr('checked', 'checked');
     }
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
-    $layer.on('click', '.tw-popup-closeBtn', function() { $target.find('.bt-select').focus(); } );
+    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
   },
 
-  _onClosePopup: function () {
+  _onClosePopup: function ($target, $layer) {
     
   },
 
