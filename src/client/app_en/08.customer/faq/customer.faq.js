@@ -71,7 +71,7 @@ Tw.CustomerFaq.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': 'CLOSE' }
     },
       $.proxy(this._onOpenPopup, this, $(e.currentTarget)),
-      null,
+      $.proxy(this._onClosePopup, this, $(e.currentTarget)),
       'faq',
       $(e.currentTarget));
   },
@@ -84,7 +84,11 @@ Tw.CustomerFaq.prototype = {
       $layer.find('input#' + this._uri).attr('checked', 'checked');
     }
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
-    $layer.on('click', '.tw-popup-closeBtn', function() { $target.find('.bt-select').focus(); } );
+    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
+  },
+
+  _onClosePopup: function ($target, $layer) {
+    
   },
 
   _goLoad: function (event) { //url 이동
