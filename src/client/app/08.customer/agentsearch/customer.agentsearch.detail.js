@@ -85,6 +85,14 @@ Tw.CustomerAgentsearchDetail.prototype = {
     }, position)).makeMarker($.extend({
       width: 24
     }, position));
+    // 모바일인 경우만 길찾기 버튼 노출
+    if (Tw.BrowserHelper.isMobile()) {
+      this.$container.find('.fe-directions').removeClass('none');
+      new Tw.CustomerAgentsearchDetailDirections(this.$container, {
+        coord: this._coord,
+        detail: this._detail
+      }); // 길 찾기 앱 실행 스크립트
+    }
   },
 
   _getTshopImg: function () {
