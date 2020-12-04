@@ -30,7 +30,8 @@
 </head>
 <body class="rn">
 <div id="roamingGuide" class="wrap">
-    <div id="appbar" class="gnb-opaque">
+    <!-- 202011 - 웹접근성 수정건 적용 : 현재 운영에서 헤더로 사용하고 있는 #appbar 제거
+        <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
         <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
         </span>
@@ -38,9 +39,12 @@
         <a href="/common/search-main">
         <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
         </a>
-    </div>
+    </div> 
+    -->
+
+    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") 시작 -->
     <!-- #header -->
-    <div id="header" class="header-wrap" style="display: none;">
+    <div id="header" class="header-wrap">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
@@ -54,6 +58,8 @@
         </div>
     </div>
     <!--// #header -->    
+    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") 끝 -->
+
     <div id="contents" class="first">
         <div class="card title">
             <h2>
@@ -74,7 +80,7 @@
             <div class="card">
                 <h2>LTE 자동로밍을 쓰신다면?</h2>
                 <div class="auto-explain">
-                    <img class="icon" src="/img/product/roam/ico_auto_lte.svg">
+                    <img class="icon" src="/img/product/roam/ico_auto_lte.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     <h3>3G 자동로밍보다 훨씬 빠르게</h3>
                     <ul class="description">
                         <li>데이터 로밍 서비스를 이용</li>
@@ -94,11 +100,15 @@
                 </p>
                 <div class="qna">
                     <div class="q">
-                        <span class="title">iOS: 아이폰 6S(iOS9 기준)</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
+                        <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
+                        <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="" >
+                            <span class="title">iOS: 아이폰 6S(iOS9 기준)</span>
+                            <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                        </a>
+                        <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
                     </div>
                     <div class="a">
-                        <img src="/img/product/vi-set-loaming1.png" width="100%">
+                        <img src="/img/product/vi-set-loaming1.png" width="100%" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         <ol>
                             <li>'설정'에서 '셀룰러' 선택</li>
                             <li>셀룰러 데이터 ON</li>
@@ -107,11 +117,15 @@
                         </ol>
                     </div>
                     <div class="q">
-                        <span class="title">안드로이드</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
+                        <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
+                        <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="" >
+                            <span class="title">안드로이드</span>
+                            <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                        </a>
+                        <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
                     </div>
                     <div class="a">
-                        <img src="/img/product/vi-set-loaming2.png" width="100%">
+                        <img src="/img/product/vi-set-loaming2.png" width="100%" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         <ol>
                             <li>환경 설정에서 'T로밍' 선택</li>
                             <li>'데이터 로밍 설정', 'LTE 로밍 사용' 체크</li>
@@ -121,8 +135,12 @@
                 <h3>LTE 로밍 수동 설정</h3>
                 <div class="qna">
                     <div class="q">
-                        <span class="title">일반폰</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
+                        <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
+                        <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="" >
+                            <span class="title">일반폰</span>
+                            <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                        </a>
+                        <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
                     </div>
                     <div class="a pb15">
                         <p>
@@ -131,11 +149,15 @@
                         </p>
                     </div>
                     <div class="q">
-                        <span class="title">스마트폰(iOS)</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
+                        <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
+                        <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="" >
+                            <span class="title">스마트폰(iOS)</span>
+                            <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                        </a>
+                        <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
                     </div>
                     <div class="a" width="100%">
-                        <img src="/img/product/vi-set-loaming3.png" width="100%">
+                        <img src="/img/product/vi-set-loaming3.png" width="100%" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         <ol>
                             <li>'설정'에서 '네트워크 사업자' 선택</li>
                             <li>자동 OFF</li>
@@ -143,11 +165,15 @@
                         </ol>
                     </div>
                     <div class="q">
-                        <span class="title">안드로이드</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
+                        <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
+                        <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="" >
+                            <span class="title">안드로이드</span>
+                            <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                        </a>
+                        <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
                     </div>
                     <div class="a">
-                        <img src="/img/product/vi-set-loaming4.png" width="100%">
+                        <img src="/img/product/vi-set-loaming4.png" width="100%" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         <ol>
                             <li>'설정'에서 'T로밍' 선택</li>
                             <li>로밍 이동통신사 선택</li>
@@ -165,11 +191,28 @@
                 </div>
             </div>
         </div>
+        <!-- 202011 - 웹접근성 수정건 적용 :  aria-pressed 추가 관련 스크립트 퍼블용 추가 시작 (스크립트 위치는 퍼블 확인 위해 임시로 관련 화면 아래에 작업함) -->
+        <script>
+            $(document).ready(function(){
+                function ariaPressedCheck() {
+                var $areaBtn = $('.qna .btn-qna-q');
+                    $areaBtn.on('click', function(e){
+                    var thisBtn= $(this);
+                    var siblingBtn = $(this).parent('.q').siblings('.q').children('.btn-qna-q'); 
+                    e.preventDefault();
+                    $(siblingBtn).attr('aria-pressed', false);
+                    $(thisBtn).attr('aria-pressed', true);
+                    });
+                }
+                ariaPressedCheck();
+            })
+        </script>
+        <!-- //202011 - 웹접근성 수정건 적용 :  aria-pressed 추가 관련 스크립트 퍼블용 추가 끝 -->
         <div id="gsm">
             <div class="card">
                 <h2>3G 자동로밍을 쓰신다면?</h2>
                 <div class="auto-explain">
-                    <img class="icon" src="/img/product/roam/ico_auto_3g.svg">
+                    <img class="icon" src="/img/product/roam/ico_auto_3g.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     <ul class="description">
                         <li>3G 방식 국가에서 음성은 물론 영상 통화까지 이용</li>
                         <li>대부분의 3G 휴대폰으로 이용 가능</li>
@@ -182,7 +225,7 @@
             <div class="card config gsm">
                 <h2>GSM 자동로밍을 쓰신다면?</h2>
                 <div class="auto-explain">
-                    <img class="icon" src="/img/product/roam/ico_auto.svg">
+                    <img class="icon" src="/img/product/roam/ico_auto.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     <ul class="description">
                         <li>GSM 자동로밍할 수 있는 휴대폰 출시!</li>
                         <li>유럽 및 일부 동남아 지역에서는 GSM 방식 사용</li>
@@ -191,7 +234,7 @@
                 <div class="qna">
                     <div class="q">
                         <span class="title">통화방법</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
+                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     </div>
                     <div class="a">
                         <div class="int-call-wrap">
@@ -271,7 +314,7 @@
                 <div class="divider"></div>
                 <div class="phone-link">
                     <span class="text">무료</span>
-                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
+                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                 </div>
             </div>
             </a>
@@ -284,7 +327,7 @@
                 <div class="divider"></div>
                 <div class="phone-link">
                     <span class="text">로밍폰 발신 무료</span>
-                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
+                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                 </div>
             </div>
             </a>

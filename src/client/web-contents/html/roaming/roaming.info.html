@@ -30,6 +30,7 @@
 </head>
 <body class="rn">
 <div id="roamingGuide">
+    <!-- 202011 - 웹접근성 수정건 적용 : 현재 운영에서 헤더로 사용하고 있는 #appbar 제거 
     <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
         <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
@@ -39,15 +40,18 @@
         <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
         </a>
     </div>
+    -->
+
+    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
     <!-- #header -->
-    <div id="header" class="header-wrap" style="display: none;">
+    <div id="header" class="header-wrap">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
                     <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-34" data-xt_csid="NO" data-xt_action="BC"><span class="blind">메뉴열기</span></a>
                 </div>
                 <h1 class="h-tit ">
-                T로밍안내
+                    T로밍안내
                 </h1>
                 <div class="h-serarch">
                     <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
@@ -56,6 +60,8 @@
         </div>
     </div>
     <!--// #header -->
+    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
+    
     <div id="contents" class="first">
         <div class="container">
             <div class="cont-box nogaps noborder">
@@ -66,22 +72,22 @@
                                 <ul class="slider">
 									<li>
 										<button>
-											<img src="/img/product/roam/guide_top_baro.png" alt="">
+											<img src="/img/product/roam/guide_top_baro.png" alt="baro - 데이터 로밍 요금제에 가입하고 해외에서 한국으로 자유롭게 baro 통화하세요."> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
 										</button>
 									</li>
 									<li>
 										<button>
-											<img src="/img/product/roam/guide_top_securet.png" alt="">
+											<img src="/img/product/roam/guide_top_securet.png" alt="자동안심 T로밍 - 과도한 요금이 청구되지 않도록 이용금을 제어해주는 SK테레콤만의 서비스"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
 										</button>
 									</li>
 									<li>
 										<button>
-											<img src="/img/product/roam/guide_top_guam.png" alt="">
+											<img src="/img/product/roam/guide_top_guam.png" alt="괌,사이판 - 괌,사이판으로 여행 갈 때는 SK텔레콤만의 특별한 로밍혜택을 누려보세요"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
 										</button>
 									</li>
 									<li>
 										<button >
-											<img src="/img/product/roam/guide_top_product.png" alt="">
+											<img src="/img/product/roam/guide_top_product.png" alt="로밍 상품 이용안내 - 쉽고 편리하게 이용할 수 있는  SK텔레콤의 새로운 로밍 서비스를 소개합니다."> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
 										</button>
 									</li>                                                             
                                 </ul>
@@ -96,20 +102,20 @@
             <div class="subs">
                 <a href="/product/roaming/info/lte">
                 <div class="sub mr" style="margin-right: 40px;">
-                    <img src="/img/product/roam/guide_auto.svg" width="78" height="78">
+                    <img src="/img/product/roam/guide_auto.svg" width="78" height="78" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     <span>SK텔레콤의</span>
                     <span>자동로밍</span>
                 </div>
                 </a>
                 <a href="/product/roaming/info/data-roaming">
                 <div class="sub mr" style="margin-right: 40px;">
-                    <img src="/img/product/roam/guide_datasms.svg" width="78" height="78">
+                    <img src="/img/product/roam/guide_datasms.svg" width="78" height="78" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     <span>SMS 로밍 /</span>
                     <span>데이터 로밍</span>
                 </div>
                 </a>
                 <div class="sub documents">
-                    <img src="/img/product/roam/guide_docs.svg" width="78" height="78">
+                    <img src="/img/product/roam/guide_docs.svg" width="78" height="78" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     <span>로밍 이용</span>
                     <span>가이드</span>
                 </div>
@@ -142,24 +148,40 @@
                     </span></h3>
                     <ul>
                         <li class="item" data-checklist="state-01-01">
-                        <span class="no">01</span>
-                        T로밍 요금제 가입은 필수
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                            <!-- 202011 - 웹접근성 수정건 적용 : a 태그 추가 시작 -->
+                            <a href="#">
+                                <span class="no">01</span>
+                                T로밍 요금제 가입은 필수
+                                <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                            </a>
+                            <!-- //202011 - 웹접근성 수정건 적용 : a 태그 추가 끝 -->
                         </li>
                         <li class="item" data-checklist="state-01-02">
-                        <span class="no">02</span>
-                        로밍과 현지 유심(USIM)의 차이
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                            <!-- 202011 - 웹접근성 수정건 적용 : a 태그 추가 시작 -->
+                            <a href="#">
+                                <span class="no">02</span>
+                                로밍과 현지 유심(USIM)의 차이
+                                <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                            </a>
+                            <!-- //202011 - 웹접근성 수정건 적용 : a 태그 추가 끝 -->
                         </li>
                         <li class="item" data-checklist="state-01-03">
-                        <span class="no">03</span>
-                        LTE 로밍 설정
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                            <!-- 202011 - 웹접근성 수정건 적용 : a 태그 추가 시작 -->
+                            <a href="#">
+                                <span class="no">03</span>
+                                LTE 로밍 설정
+                                <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                            </a>
+                            <!-- //202011 - 웹접근성 수정건 적용 : a 태그 추가 끝 -->
                         </li>
                         <li class="item" data-checklist="state-01-04">
-                        <span class="no">04</span>
-                        로밍 중 데이터 사용을 원치 않으시면?
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                            <!-- 202011 - 웹접근성 수정건 적용 : a 태그 추가 시작 -->
+                            <a href="#">
+                                <span class="no">04</span>
+                                로밍 중 데이터 사용을 원치 않으시면?
+                                <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                            </a>
+                            <!-- //202011 - 웹접근성 수정건 적용 : a 태그 추가 끝 -->
                         </li>
                     </ul>
                 </div>
@@ -173,22 +195,22 @@
                         <li class="item" data-checklist="state-02-01">
                         <span class="no">01</span>
                         로밍 요금제 가입을 잊었어요
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         </li>
                         <li class="item" data-checklist="state-02-02">
                         <span class="no">02</span>
                         로밍 이용 요금과 안내 문구 확인
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         </li>
                         <li class="item" data-checklist="state-02-03">
                         <span class="no">03</span>
                         통화가 안 된다면?
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         </li>
                         <li class="item" data-checklist="state-02-04">
                         <span class="no">04</span>
                         휴대폰/유심(USIM)을 분실했어요
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         </li>
                     </ul>
                 </div>
@@ -202,12 +224,12 @@
                         <li class="item" data-checklist="state-03-01">
                         <span class="no">01</span>
                         한국에 왔는데 3G/LTE 접속이 안 돼요
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         </li>
                         <li class="item" data-checklist="state-03-02">
                         <span class="no">02</span>
                         곧 여행/출장을 또 가신다면?
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13">
+                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                         </li>
                     </ul>
                 </div>
@@ -218,17 +240,17 @@
             <p>궁금하신 카테고리를 선택해 주세요.</p>
             <div class="tags">
                 <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-                <span class="tag" data-id="01" data-command="showChecklist">#요금</span>
+                <a href="#" class="tag" data-id="01" data-command="showChecklist">#요금</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
                 <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-                <span class="tag" data-id="02" data-command="showChecklist">#데이터 로밍</span>
+                <a href="#" class="tag" data-id="02" data-command="showChecklist">#데이터 로밍</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
                 <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-                <span class="tag" data-id="03" data-command="showChecklist">#전화 연결/통화 품질</span>
+                <a href="#" class="tag" data-id="03" data-command="showChecklist">#전화 연결/통화 품질</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
                 <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-                <span class="tag" data-id="04" data-command="showChecklist">#스마트폰/태블릿 PC</span>
+                <a href="#" class="tag" data-id="04" data-command="showChecklist">#스마트폰/태블릿 PC</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
                 <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-                <span class="tag" data-id="05" data-command="showChecklist">#분실</span>
+                <a href="#" class="tag" data-id="05" data-command="showChecklist">#분실</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
                 <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-                <span class="tag" data-id="06" data-command="showChecklist">#기타</span>
+                <a href="#" class="tag" data-id="06" data-command="showChecklist">#기타</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
             </div>
         </div>
         <div class="card mtb28">
@@ -252,20 +274,20 @@
 					<div class="divider"></div>
 					<div class="phone-link">
 						<span class="text">무료</span>
-						<img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
+                        <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
 					</div>
 				</div>
             </a>
             <div class="cs-divider"></div>
             <a href="tel:+82263439000">
-				<div class="links">
+				<div class="links">s
 					<div class="other-link left">
 						<h3>T로밍 고객센터(해외)</h3>
 					</div>
 					<div class="divider"></div>
 					<div class="phone-link">
 						<span class="text">로밍폰 발신 무료</span>
-						<img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
+						<img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
 					</div>
 				</div>
             </a>

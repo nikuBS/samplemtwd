@@ -30,13 +30,15 @@
 <body class="rn">
 <div id="countriesDialog" class="dialog" style="display: block;">
     <div class="header">
+        <!-- 202011 - 웹접근성 수정건 적용 : 태그 div 에서 button으로 변경 / 태그 위치 상단으로 변경 시작 -->
+        <button class="close" type="button">
+            <img src="/img/product/roam/ico_close.svg" width="20" height="20" alt="닫기"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
+        </button>
+        <!-- //202011 - 웹접근성 수정건 적용 : 태그 div 에서 button으로 변경 / 태그 위치 상단으로 변경 시작 -->
         <h1>서비스 이용 가능 국가</h1>
-        <div class="close">
-            <img src="/img/product/roam/ico_close.svg" width="20" height="20">
-        </div>
     </div>
     <div class="tariffBox">
-        <select name="tariff" class="dropdown">
+        <select name="tariff" class="dropdown" title="상품명"><!-- //202011 - 웹접근성 수정건 적용 : title 추가 -->
             <option value="NA00006226">T괌사이판 국내처럼</option>
             <option value="NA00006229">T괌사이판 5천원</option>
             <option value="NA00006489">baro 3GB</option>
@@ -53,44 +55,65 @@
         <img class="arrow" src="/img/product/roam/ico_dropdown.svg">
     </div>
     <div class="sortBy">
-        <span id="byConsonant" class="by active">가나다</span>
-        <span id="byContinent" class="by">대륙</span>
+        <a href="#" aria-selected="true" role="button" id="byConsonant" class="by active">가나다</a> <!-- //202011 - 웹접근성 수정건 적용 : a태그로 변경 및 aria-selected 추가  -->
+        <a href="#" aria-selected="" role="button" id="byContinent" class="by">대륙</a> <!-- //202011 - 웹접근성 수정건 적용 : a태그로 변경 및 aria-selected 추가  -->
     </div>
+    <!-- 202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 시작 (스크립트 위치는 퍼블 확인 위해 임시로 관련 화면 아래에 작업함) -->
+    <script>
+        $(document).ready(function(){
+            function ariaSelectedCheck() {
+                var $areaBtnWrap = $('.sortBy');
+                $areaBtnWrap.on('click', 'a', function(e){
+                    e.preventDefault();
+                    var thisBtn= $(this);
+                    var siblingBtn = $(this).siblings('a'); 
+                    $areaBtnWrap.find('[aria-selected="true"]').attr('aria-selected', false);
+                    $(thisBtn).attr('aria-selected', true).addClass('active');
+                    if($(thisBtn).hasClass('active')) {
+                        $(siblingBtn).removeClass('active');
+                    }
+                });
+            }
+            ariaSelectedCheck();
+        })
+    </script>
+    <!-- //202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 끝 -->
     <div class="scroller" style="height: 100%;">
         <div class="menu">
             <ul id="groupList">
-                <li id="group-ga" data-code="ga" class="">ㄱ</li>
-                <li id="group-na" data-code="na">ㄴ</li>
-                <li id="group-da" data-code="da" class="">ㄷ</li>
-                <li id="group-ra" data-code="ra">ㄹ</li>
-                <li id="group-ma" data-code="ma" class="active">ㅁ</li>
-                <li id="group-ba" data-code="ba">ㅂ</li>
-                <li id="group-sa" data-code="sa">ㅅ</li>
-                <li id="group-oa" data-code="oa">ㅇ</li>
-                <li id="group-ja" data-code="ja">ㅈ</li>
-                <li id="group-cha" data-code="cha">ㅊ</li>
-                <li id="group-ka" data-code="ka">ㅋ</li>
-                <li id="group-ta" data-code="ta">ㅌ</li>
-                <li id="group-pa" data-code="pa">ㅍ</li>
-                <li id="group-ha" data-code="ha">ㅎ</li>
+                <li id="group-ga" data-code="ga" class=""><button type="button">ㄱ</button></li> <!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-na" data-code="na"><button type="button">ㄴ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-da" data-code="da" class=""><button type="button">ㄷ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-ra" data-code="ra"><button type="button">ㄹ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-ma" data-code="ma" class="active"><button type="button">ㅁ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-ba" data-code="ba"><button type="button">ㅂ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-sa" data-code="sa"><button type="button">ㅅ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-oa" data-code="oa"><button type="button">ㅇ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-ja" data-code="ja"><button type="button">ㅈ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-cha" data-code="cha"><button type="button">ㅊ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-ka" data-code="ka"><button type="button">ㅋ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-ta" data-code="ta"><button type="button">ㅌ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-pa" data-code="pa"><button type="button">ㅍ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li id="group-ha" data-code="ha"><button type="button">ㅎ</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
             </ul>
         </div>
         <div class="content">
+            <h2 class="title-itemList">ㄱ</h2>  <!-- //202011 - 웹접근성 수정건 적용 : 탭 컨텐츠 제목(.title-itemList) 추가 -->
             <ul id="itemList">
-                <li>마케도니아 공화국</li>
-                <li>맨 섬</li>
-                <li>모나코</li>
-                <li>몬테네그로</li>
-                <li>몰타</li>
-                <li>마카오</li>
-                <li>말레이시아</li>
-                <li>몽골</li>
-                <li>미얀마</li>
-                <li>멕시코</li>
-                <li>미국</li>
-                <li>미국령 버진아일랜드</li>
-                <li>마다가스카르</li>
-                <li>모리셔스</li>
+                <li><button type="button" role="link">마케도니아 공화국</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">맨 섬</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">모나코</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">몬테네그로그리스</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">몰타</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">마카오</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">말레이시아</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">몽골</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">미얀마</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">멕시코</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">미국</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">미국령 버진아일랜드</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">마다가스카르</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
+                <li><button type="button" role="link">모리셔스</button></li><!-- //202011 - 웹접근성 수정건 적용 :  button 태그 추가 -->
             </ul>
         </div>
     </div>
