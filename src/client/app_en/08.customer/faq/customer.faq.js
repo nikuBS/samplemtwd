@@ -71,7 +71,7 @@ Tw.CustomerFaq.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': 'CLOSE' }
     },
       $.proxy(this._onOpenPopup, this, $(e.currentTarget)),
-      null,
+      $.proxy(this._onClosePopup, this, $(e.currentTarget)),
       'faq',
       $(e.currentTarget));
   },
@@ -85,6 +85,10 @@ Tw.CustomerFaq.prototype = {
     }
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
     $layer.on('click', '.tw-popup-closeBtn', function() { $target.find('.bt-select').focus(); } );
+  },
+
+  _onClosePopup: function () {
+    
   },
 
   _goLoad: function (event) { //url 이동
