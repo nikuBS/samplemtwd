@@ -46,5 +46,6 @@ Tw.REDIS_BANNER_TYPE = {
 };
 
 Tw.REDIS_KEY = {
-  CHATBOT_DISABLE_TIME: 'chatbot.service.isol.time'
+  CHATBOT_DISABLE_TIME: 'chatbot.service.isol.time',
+  CHATBOT_MAIN_DISABLE_TIME: 'chatbot.main.service.isol.time'
 };
