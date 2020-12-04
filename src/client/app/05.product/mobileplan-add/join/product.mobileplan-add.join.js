@@ -73,49 +73,8 @@ Tw.ProductMobileplanAddJoin.prototype = {
     this._callConfirmCommonJs();
     Tw.Tooltip.separateMultiInit(this.$container);
 
-    if (this._prodId === 'NA00007017') { //V컬러링[NA00007017] 가입 시 특정상품 기가입자 가입안내팝업
-      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.V_COLORING_JOIN_PROD_ID.join('~')] )
-        .done($.proxy(this._resIsAdditionUseJoin, this));
-    } else if (this._prodId === 'NA00000282' || this._prodId === 'NA00001583') { //컬러링[NA00000282],원플러스 컬러링[NA00001583] 가입 시 'NA00007017' 기가입자 가입안내팝업
-      this._apiService.request(Tw.API_CMD.BFF_10_0183, {}, {}, [Tw.COLORING_JOIN_PROD_ID.join('~')] )
-        .done($.proxy(this._resIsAdditionUseJoin, this));
-    } else {
-      var isAdditionUse = 'N';
       this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
-      .done($.proxy(this._isJoinTerm, this, isAdditionUse));
-    }
-  },
-
-  /**
-   * @function
-   * @desc 가입안내 팝업 노출 전 특정상품 가입여부 체크가 필요한 경우
-   * @param isAdditionUse - 특정 상품 가입여부(Y,N)
-   * @param resp - 무선 부가상품 가입여부 API 응답 값
-   */
-  _resIsAdditionUseJoin: function(resp) {
-    var isAdditionUse = 'N';
-
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // V컬러링 가입 시 자동선해지 상품 체크
-      if (this._prodId === 'NA00007017') {
-        for ( var i = 0 ; i < Tw.V_COLORING_JOIN_PROD_ID.length; i++ ) {
-          if ( resp.result[Tw.V_COLORING_JOIN_PROD_ID[i]] !== 'N') {
-            isAdditionUse = 'Y';
-            break;
-          }
-        }
-      } else if (this._prodId === 'NA00000282' || this._prodId === 'NA00001583') {
-        for ( var i = 0 ; i < Tw.COLORING_JOIN_PROD_ID.length; i++ ) {
-          if ( resp.result[Tw.COLORING_JOIN_PROD_ID[i]] !== 'N') {
-            isAdditionUse = 'Y';
-            break;
-          }
-        }
-      }
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'W' },{}, [this._prodId] )
-    .done($.proxy(this._isJoinTerm, this, isAdditionUse));
+      .done($.proxy(this._isJoinTerm, this));
   },
 
   /**
@@ -124,19 +83,12 @@ Tw.ProductMobileplanAddJoin.prototype = {
    * @param resp - API 응답 값
    * @returns {*}
    */
-  _isJoinTerm: function(isAdditionUse, resp) {
+  _isJoinTerm: function(resp) {
 
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       return ;
     }
-
-    if (this._prodId === 'NA00007017' && isAdditionUse !== 'Y') {
-      return ;
-    } else if ((this._prodId === 'NA00000282' || this._prodId === 'NA00001583') && isAdditionUse !== 'Y') {
-      return ;
-    } else {
       this._openJoinTermPopup(resp.result);
-    }
   },
 
   /**
