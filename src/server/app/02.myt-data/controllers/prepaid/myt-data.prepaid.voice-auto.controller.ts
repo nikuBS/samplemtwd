@@ -55,8 +55,17 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
    */
   public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>
     this.getAutoPPSInfo().subscribe((AutoInfo) => {
+      const autoInfo = this.parseAuto(AutoInfo);
+      if (!autoInfo) {
+        return this.error.render(res, {
+          code: AutoInfo.code,
+          msg: AutoInfo.msg,
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
+        });
+      }
       res.render('prepaid/myt-data.prepaid.voice-auto.html', {
-        AutoInfo: this.parseAuto(AutoInfo), // 자동 충전 정보
+        AutoInfo: autoInfo, // 자동 충전 정보
         svcInfo: svcInfo, // 회선 정보 (필수)
         pageInfo: pageInfo, // 페이지 정보 (필수)
         convertAmount: this.convertAmount, // 금액 정보 format
