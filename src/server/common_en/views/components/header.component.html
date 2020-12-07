@@ -19,7 +19,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                     <button type="button"  onclick="location.href='#menu'" class="icon-gnb-menu" role="button" id="fe-bt-gnb" data-xt_eid="MWMA_A10_B79-25" data-xt_csid="NO" data-xt_action="BC"><span class="blind">Open whole menu</span></button>
                 </div>
                 <% if (title == '') { %>
-                <div class="h-logo"><button data-url="/en/main/home"  class="icon-gnb-home-T"><span class="blind">T world</span></button></div>
+                <div class="h-logo"><button data-url="/en/main/home" title="Go to home" class="icon-gnb-home-T"><span class="blind">T world</span></button></div>
                 <% } else { %>
                     <%_ if ( locals.productPage && locals.productPage === 'Y' ) { _%>
                         <div class="h-tit t-none"><%- title %></div>

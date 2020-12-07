@@ -196,10 +196,10 @@
                                     <% } %>
 
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                    <button class="bt-call fe-home-internal" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-32"><i class="icon-call-34"><span class="blind">Talktime</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></button>
+                                    <button class="bt-call fe-home-internal" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-32"><i class="icon-call-34"><span class="blind">remaining talk time</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></button>
                                     <% } %>
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>                                    
-                                    <button class="bt-message fe-home-internal" tabindex="0" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-33"><i class="icon-sms-37"><span class="blind">Texts</span></i> <span class="ff-tg-light"><%= homeData.usageData.sms.showRemainedText %></span></button>
+                                    <button class="bt-message fe-home-internal" tabindex="0" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-33"><i class="icon-sms-37"><span class="blind">remaining text message</span></i> <span class="ff-tg-light"><%= homeData.usageData.sms.showRemainedText %></span></button>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
