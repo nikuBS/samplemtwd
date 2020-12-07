@@ -47,15 +47,16 @@
             <div class="h-belt">
                 <div class="h-default">
                     <div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+                        <button type="button" class="icon-gnb-menu"><span class="blind">Open whole menu</span></button><!-- 201204 웹접근성 수정_01 -->
                     </div>
-                    <div class="h-tit">TITLE</div>
+                    <h1 class="h-tit">TITLE</h1><!-- 201204 웹접근성 수정_01 : h1 변경 --> 
                 </div>
             </div>
         </div>
         <!--// #header -->
         <!-- #common-menu -->
         <div id="common-menu" class="user-type on tod-common-menu"><!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
+            <button class="c-close"><span class="blind">Close whole menu</span></button><!-- 201204 웹접근성 수정_02 : 상단으로 위치 변경 -->
             <div class="section-userinfo">
                 <!-- 로그인전 -->
                 <span class="userinfo">
@@ -142,7 +143,7 @@
                 <!-- footer -->
                 <div class="footer">
                     <ul class="f-menu">
-                        <li><button class="bt">PRIVACY POLICY</button></li>
+                        <li><button class="bt" title="Open new window">PRIVACY POLICY</button></li><!-- 201204 웹접근성 수정_03 -->
                         <li><button class="bt" title="new window">TERMS AND CONDITIONS(KR)</button></li>
                         <li><button class="bt">RESPONSIBILITY LIMIT & LEGAL(KR)</button></li>
                     </ul>
@@ -155,7 +156,7 @@
                         <li class="f-ltd">COPYRIGHT © SK TELECOM CO., LTD. ALL RIGHTS RESERVED</li>
                     </ul>
                     <div class="link-area">
-                        <button class="rang-kor">KOR</button>
+                        <button class="rang-kor" title="Go to korean">KOR</button><!-- 201204 웹접근성 수정_04 -->
                         <!-- 201013 select box markup 변경 -->
                         <div>
                             <button for="select">Family SITE</button>
@@ -180,7 +181,6 @@
                 <!-- //footer -->
             </div>
 
-            <button class="c-close"><span class="blind">close</span></button>
         </div>
         <!-- // #common-menu -->
         <!-- #contents -->
