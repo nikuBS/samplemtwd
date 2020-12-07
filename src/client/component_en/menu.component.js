@@ -122,12 +122,12 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_family';
     var listData = [
-      {'txt' : 'T-world Biz', 'url' : 'http://b2b.tworld.co.kr/cs/main.bc', 'eid':'MWMA_A10_B80_C1199-19'},
-      {'txt' : 'Korean', 'url' : 'https://m.tworld.co.kr/', 'eid':'MWMA_A10_B80_C1199-20'},
-      {'txt' : 'NUGU', 'url' : 'https://www.nugu.co.kr/', 'eid':'MWMA_A10_B80_C1199-21'},
-      {'txt' : 'You can be anything you want when you are 0', 'url' : 'https://www.younghandong.com/', 'eid':'MWMA_A10_B80_C1199-22'},
-      {'txt' : 'Creating the Age of Hyper-Innovation for YOU', 'url' : 'https://www.sktinsight.com/121472', 'eid':'MWMA_A10_B80_C1199-23'},
-      {'txt' : 'ADT Caps', 'url' : 'https://m.adtcaps.co.kr/', 'eid':'MWMA_A10_B80_C1199-24'}
+      {'txt' : 'T-world Biz', 'url' : 'http://b2b.tworld.co.kr/cs/main.bc', 'eid':'MWMA_A10_B80_C1199-19', 'title': 'Open new window'},
+      {'txt' : 'Korean', 'url' : 'https://m.tworld.co.kr/', 'eid':'MWMA_A10_B80_C1199-20', 'title': 'Open new window'},
+      {'txt' : 'NUGU', 'url' : 'https://www.nugu.co.kr/', 'eid':'MWMA_A10_B80_C1199-21', 'title': 'Open new window'},
+      {'txt' : 'You can be anything you want when you are 0', 'url' : 'https://www.younghandong.com/', 'eid':'MWMA_A10_B80_C1199-22', 'title': 'Open new window'},
+      {'txt' : 'Creating the Age of Hyper-Innovation for YOU', 'url' : 'https://www.sktinsight.com/121472', 'eid':'MWMA_A10_B80_C1199-23', 'title': 'Open new window'},
+      {'txt' : 'ADT Caps', 'url' : 'https://m.adtcaps.co.kr/', 'eid':'MWMA_A10_B80_C1199-24', 'title': 'Open new window'}
     ];
 
     this._popupService.open({

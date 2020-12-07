@@ -22,7 +22,6 @@
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
 
             <!-- 메인 배너 -->
@@ -180,10 +179,10 @@
                                 <% } %>
                                 
                                 <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                <button class="bt-call fe-home-internal" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-32"><i class="icon-call-34"><span class="blind">Talktime</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></button>
+                                <button class="bt-call fe-home-internal" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-32"><i class="icon-call-34"><span class="blind">remaining talk time</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></button>
                                 <% } %>
                                 <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>                                    
-                                <button class="bt-message fe-home-internal" tabindex="0" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-33"><i class="icon-sms-37"><span class="blind">Texts</span></i> <span class="ff-tg-light"><%= homeData.usageData.sms.showRemainedText %></span></button>
+                                <button class="bt-message fe-home-internal" tabindex="0" data-url="/en/myt-data/hotdata"  data-xt_eid="MWMA_A10_B79-33"><i class="icon-sms-37"><span class="blind">remaining text message</span></i> <span class="ff-tg-light"><%= homeData.usageData.sms.showRemainedText %></span></button>
                                 <% } %>
                             </div>
                             <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -323,7 +322,7 @@
                                         <ul class="slider">
                                             <li>
                                                 <button onclick='location.href="/en/product/callplan/miri"' data-xt_eid="MWMA_A10_B79-1">
-                                                    <img src="<%= CDN %>/img/en/main/img-main-banner01.png" alt="MIRI. you can pay the fee in advance. view more.">
+                                                    <img src="<%= CDN %>/img/en/main/img-main-banner01.png" alt="MIRI Pre-pay your bills in advance learn more">
                                                 </button>
                                             </li>
                                         </ul>
@@ -369,7 +368,7 @@
                                             <ul class="slider">
                                                 <li>
                                                     <button onclick='location.href="/en/product/callplan/miri"'>
-                                                        <img src="<%= CDN %>/img/en/main/img-main-banner01.png" alt="MIRI. you can pay the fee in advance. view more.">
+                                                        <img src="<%= CDN %>/img/en/main/img-main-banner01.png" alt="MIRI Pre-pay your bills in advance learn more">
                                                     </button>
                                                 </li>
                                             </ul>
