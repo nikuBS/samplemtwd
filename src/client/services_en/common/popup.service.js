@@ -687,23 +687,23 @@ Tw.PopupService.prototype = {
         }
         
         // 아래에 해당되는 액션시트가 뜰 때 history.back() 이 아닌 popupClose로 액션시트를 닫음
-        // var hash = window.location.hash;
-        // var nonback_hash = [
-        //   '#family_P', 
-        //   // '#line_P', 
-        //   '#conditionChange_P', 
-        //   // '#private_P', 
-        //   '#faq_P', 
-        //   '#store_info_P',
-        //   '#term_P'
-        // ];
-        // if(nonback_hash.indexOf(hash) > -1) {
-        //   this._popupClose();
-        //   this._historyService.goBack();
-        // } else {
-        this._historyBack = true;
-        history.back();
-        // }
+        var hash = window.location.hash;
+        var nonback_hash = [
+          '#family_P', 
+          // '#line_P', 
+          '#conditionChange_P', 
+          // '#private_P', 
+          '#faq_P', 
+          '#store_info_P',
+          '#term_P'
+        ];
+        if(nonback_hash.indexOf(hash) > -1) {
+          this._popupClose();
+          this._historyService.goBack();
+        } else {
+          this._historyBack = true;
+          history.back();
+        }
       }
     }
   },

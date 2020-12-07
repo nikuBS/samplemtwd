@@ -88,7 +88,7 @@ Tw.CustomerFaq.prototype = {
   },
 
   _onClosePopup: function ($target, $layer) {
-    
+    $target.focus();
   },
 
   _goLoad: function (event) { //url 이동
