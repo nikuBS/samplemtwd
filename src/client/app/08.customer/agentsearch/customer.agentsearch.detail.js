@@ -117,9 +117,38 @@ Tw.CustomerAgentsearchDetail.prototype = {
     // 나이 와 BFF 위치동의 여부 조회
     this._locationInfoComponent.checkLocationAgreementWithAge(function (resp) {
       options.visible = resp.over14 && resp.locAgree;
-      self._visibleDirections(options);
+      // 14세 이상이면서, BFF의 위치접근권한 허용일때
+      if (options.visible) {
+        self._getCurrentLocation(function (loc){
+          if (loc !== null) {
+            options.currLoc = loc;
+            self._visibleDirections(options);
+          }
+        });
+      }
     });
 
+  },
+
+  /**
+   * @function
+   * @desc 현재위치 조회
+   * @private
+   */
+  _getCurrentLocation: function (callBack) {
+    this._locationInfoComponent.getCurrentLocation( function (res) { // 위치정보 조회 성공
+      callBack(res); // ex. latitude: 37.4038252, longitude: 127.3015055
+    }, function () { // 위치정보 조회 실패
+      /*self._myPosition = {
+        latitude: 37.4038252,
+        longitude: 127.3015055
+      };
+      callBack(self._myPosition);*/
+      // [E]
+
+      callBack(null);
+      // self._popupService.openAlert(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.MSG);
+    });
   },
 
   /**
@@ -137,6 +166,7 @@ Tw.CustomerAgentsearchDetail.prototype = {
 
     this.$container.find('.fe-directions').removeClass('none');
     new Tw.CustomerAgentsearchDetailDirections(this.$container, {
+      currLoc: options.currLoc,
       coord: this._coord,
       detail: this._detail
     }); // 길 찾기 앱 실행 스크립트
