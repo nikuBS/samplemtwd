@@ -35296,8 +35296,8 @@ body.apphome .section-box {
 .sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line{display:block}
 .sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line{background-color:#eef8ff}
 .sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line::after{border-bottom-color:#e2f0f9}
-.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .title{color:#979ea3}
-.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .line{color:#b2b8bc}
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .title{color:#595454} /* 201204 웹접근성 수정 */
+.sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .line{color:#94908f} /* 201204 웹접근성 수정 */
 .sortlist.tod-sortlist-arranged .ui-state-default.tod-add-line .tod-icon.tod-icon-notice02{width:100%;margin-top:1rem;font-size:0.75rem;color:#666}
 
 .tod-icon.tod-icon-dot-gray01{display:none}
