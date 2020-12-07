@@ -139,8 +139,8 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         });
       }
       // if (this._options.isPrepayment) {
-        // TODO: GrandOpen 때 enable 처리
-        data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
+      // TODO: GrandOpen 때 enable 처리
+      data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       // }
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
@@ -287,4 +287,91 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   _responseFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }
+};
+
+Tw.ImmediatelyRecharge = function() {
+  Tw.ImmediatelyRechargeLayer.apply(this, arguments);
+};
+// overriding
+Tw.ImmediatelyRecharge.prototype = Object.create(Tw.ImmediatelyRechargeLayer.prototype);
+Tw.ImmediatelyRecharge.prototype.constructor = Tw.ImmediatelyRecharge;
+Tw.ImmediatelyRecharge.prototype._immediatelyChargeRequest = function() {
+  var apiList = [
+    { command: Tw.API_CMD.BFF_06_0009, params: {} },
+    { command: Tw.API_CMD.BFF_06_0001, params: {} },
+    { command: Tw.API_CMD.BFF_06_0020, params: {} },
+    { command: Tw.API_CMD.BFF_06_0028, params: {} },
+    { command: Tw.API_CMD.BFF_06_0034, params: {} },
+    { command: Tw.API_CMD.BFF_05_0136, params: {} }
+  ];
+  this._apiService.requestArray(apiList)
+    .done($.proxy(function (available, refill, ting, etc, limit, optSvc) {
+      if ( available.code === Tw.API_CODE.CODE_00 ) {
+        var availableFunc = available.result.option.reduce(function (memo, item) {
+          return (memo + item.dataVoiceClCd);
+        }, '');
+
+        if ( availableFunc.indexOf('D') !== -1 && availableFunc.indexOf('V') !== -1 ) {
+          this.immChargeData.available = 'ALL';
+        }
+        if ( availableFunc.indexOf('D') !== -1 ) {
+          this.immChargeData.available = 'DATA';
+        }
+        if ( _.isEmpty(available.result.option) ) {
+          this.immChargeData.available = 'NONE';
+        }
+        else {
+          this.immChargeData.available = 'VOICE';
+        }
+      }
+      else {
+        this.immChargeData.available = null;
+      }
+      if ( refill.code === Tw.API_CODE.CODE_00 ) {
+        this.immChargeData.refill = refill.result;
+      }
+      else {
+        this.immChargeData.refill = null;
+      }
+      if ( ting.code === Tw.API_CODE.CODE_00 ) {
+        this.immChargeData.ting = ting.result;
+      }
+      else if ( ting.code === Tw.API_CODE.ZPAYE0077 ) {
+        // 팅 요금제 선물 차단 상태
+        this.immChargeData.ting = null;
+      }
+      else {
+        this.immChargeData.ting = ting;
+      }
+      if ( etc.code === Tw.API_CODE.CODE_00 ) {
+        this.immChargeData.etc = etc.result;
+      }
+      else {
+        //  RCG0062: 팅/쿠키즈/안심음성 요금제 미사용중인 경우
+        this.immChargeData.etc = null;
+      }
+      if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
+        // optProdList -> disProdList 합쳐짐 (BE 1/14 기준)
+        if ( optSvc.result.disProdList && optSvc.result.disProdList.length > 0 ) {
+          _.filter(optSvc.result.disProdList, $.proxy(function (item) {
+            // 부가서비스
+            if ( !this._isLimited ) {
+              this._isLimited = (this._readOnlyProductIdList.indexOf(item.prodId) > -1);
+            }
+          }, this));
+        }
+      }
+      // 해당요금제에 속해 있는 경우만 노출
+      if ( this._isLimited ) {
+        // API 정상 리턴시에만 충전방법에 데이터한도요금제 항목 노출 (DV001-4362)
+        if ( limit.code === Tw.API_CODE.CODE_00 ) {
+          this.immChargeData.limit = limit.result;
+        }
+        else {
+          this.immChargeData.limit = null;
+        }
+      }
+      // 팝업 오픈이 아닌 객체 전달
+      return this;
+    }, this));
 };
