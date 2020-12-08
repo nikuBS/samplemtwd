@@ -169,28 +169,28 @@ Tw.MainHome.prototype = {
       skt_landing.widgets.widget_slider1();
 
       var $parent = element.parent().parent();
-      element.find('#tab1-tab').css('display', 'block');
-      element.find('#tab2-tab').css('display', 'none');
-      element.find('#tab3-tab').css('display', 'none');
+      element.find('#tab1-tab > div').css('display', 'block');
+      element.find('#tab2-tab > div').css('display', 'none');
+      element.find('#tab3-tab > div').css('display', 'none');
 
       $parent.on('click', '#tab1', $.proxy(function() {
-        element.find('#tab1-tab').css('display', 'block');
-        element.find('#tab2-tab').css('display', 'none');
-        element.find('#tab3-tab').css('display', 'none');
+        element.find('#tab1-tab > div').css('display', 'block');
+        element.find('#tab2-tab > div').css('display', 'none');
+        element.find('#tab3-tab > div').css('display', 'none');
         $parent.find('#tab1').focus();
       }, this));
 
       $parent.on('click', '#tab2', $.proxy(function() {
-        element.find('#tab1-tab').css('display', 'none');
-        element.find('#tab2-tab').css('display', 'block');
-        element.find('#tab3-tab').css('display', 'none');
+        element.find('#tab1-tab > div').css('display', 'none');
+        element.find('#tab2-tab > div').css('display', 'block');
+        element.find('#tab3-tab > div').css('display', 'none');
         $parent.find('#tab2').focus();
       }, this));
 
       $parent.on('click', '#tab3', $.proxy(function() {
-        element.find('#tab1-tab').css('display', 'none');
-        element.find('#tab2-tab').css('display', 'none');
-        element.find('#tab3-tab').css('display', 'block');
+        element.find('#tab1-tab > div').css('display', 'none');
+        element.find('#tab2-tab > div').css('display', 'none');
+        element.find('#tab3-tab > div').css('display', 'block');
         $parent.find('#tab3').focus();
       }, this));
     }
