@@ -271,7 +271,7 @@ Tw.ChatbotMainService.prototype = {
         if(Tw.BrowserHelper.isIos()){
             var iosVer = Number((Tw.BrowserHelper.getIosVersion() + '').split('.')[0]);
             console.log('[chatbotmain.service] [_init] iosVer : ',iosVer);
-            if(iosVer >= 14){
+            if(iosVer >= 13){
                 isAllowedOs = true;
             } else {
                 isAllowedOs = false;
