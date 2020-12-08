@@ -101,13 +101,17 @@ export default class MembershipMy extends TwViewController {
   // 예상등급 조회 가능 날짜 확인
   private getIsExpectRating(): any {
     const curTime = moment();
-    const startTime = moment('2019-12-18 09:00:00.000');
-    const endTime = moment('2019-12-31 24:00:00.000');
+    const startTime = moment('2020-12-17 09:00:00.000');
+    const endTime = moment('2020-12-31 24:00:00.000');
     let isExpectRating = false;
 
-    if (curTime > startTime && curTime < endTime) {
+    if (DateHelper.isBetween(curTime, startTime, endTime)) {
       isExpectRating = true;
     }
+
+    // if (curTime > startTime && curTime < endTime) {
+    //   isExpectRating = true;
+    // }
     return isExpectRating;
   }
 

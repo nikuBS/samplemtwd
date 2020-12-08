@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
 import moment from 'moment';
 import { MEMBERSHIP_GROUP , MEMBERSHIP_TYPE } from '../../../types/bff.type';
+import DateHelper from '../../../utils/date.helper';
 
 export default class MembershipSubmain extends TwViewController {
   constructor() {
@@ -35,7 +36,7 @@ export default class MembershipSubmain extends TwViewController {
           res.render('membership.submain.html',
               { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipData, popBrandData });
         });
-      } else {
+      } else { // 멤버십 등급 준회원, 선불폰, 유선서비스 가입자가 아닌 경우
         Observable.combineLatest(
             // this.getMembershipCheck(svcInfo),
             this.getMembershipData(),
@@ -48,7 +49,7 @@ export default class MembershipSubmain extends TwViewController {
               { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipData, popBrandData, isExpectRating });
         });
       }
-    } else {
+    } else {  // 미로그인인 경우
       Observable.combineLatest(
           this.getPopBrandData()
       ).subscribe(([popBrandData]) => {
@@ -125,13 +126,18 @@ export default class MembershipSubmain extends TwViewController {
   // 예상등급 조회 가능 날짜 확인
   private getIsExpectRating(): any {
     const curTime = moment();
-    const startTime = moment('2019-12-18 09:00:00.000');
-    const endTime = moment('2019-12-31 24:00:00.000');
+    const startTime = moment('2020-12-17 09:00:00.000');
+    const endTime = moment('2020-12-31 24:00:00.000');
+
     let isExpectRating = false;
 
-    if (curTime > startTime && curTime < endTime) {
+    if (DateHelper.isBetween(curTime, startTime, endTime)) {
       isExpectRating = true;
     }
+
+    // if (curTime > startTime && curTime < endTime) {
+    //   isExpectRating = true;
+    // }
     return isExpectRating;
   }
 

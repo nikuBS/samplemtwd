@@ -95,7 +95,7 @@
                                             <%_ if (totalData.showRemained.data) { _%>
                                                 <span class="total">
                                                     <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
-                                                </span><%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
+                                                </span><%= totalData.showTotal.data %><%= totalData.showTotal.unit %>
                                                 <br>남음
                                                 <%_ } else { _%>
                                                 <span class="total"><%- totalData.showRemained %>원</span>> 남음
@@ -425,7 +425,7 @@
                                         <%_ if (totalData.showRemained.data) { _%>
                                         <span class="total">
                                                             <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
-                                                        </span><%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
+                                                        </span><%= totalData.showTotal.data %><%= totalData.showTotal.unit %>
                                         <br>남음
                                         <%_ } else { _%>
                                         <span class="total"><%- totalData.showRemained %>원</span>> 남음
@@ -475,8 +475,8 @@
                                         <%_ } else { _%>
                                         <%_ if (sdata.showRemained.data) { _%>
                                         <span class="total">
-                                                                <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>/
-                                                            </span><%= sdata.showTotal.data %><%= sdata.showTotal.unit %>
+                                            <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>/
+                                        </span><%= sdata.showTotal.data %><%= sdata.showTotal.unit %>
                                         <br>남음
                                         <%_ } else { _%>
                                         <span class="total"><%- sdata.showRemained %>원</span>> 남음
@@ -702,8 +702,8 @@
                                         <%_ } else { _%>
                                         <%_ if (totalData.showRemained.data) { _%>
                                         <span class="total">
-                                                                    <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
-                                                                </span><%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
+                                            <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
+                                        </span><%= totalData.showTotal.data %><%= totalData.showTotal.unit %>
                                         <br>남음
                                         <%_ } else { _%>
                                         <span class="total"><%- totalData.showRemained %>원</span>> 남음

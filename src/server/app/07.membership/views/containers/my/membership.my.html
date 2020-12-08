@@ -37,7 +37,7 @@
                                 <button id="fe-card-change" class="bt-link-tx underline ml6">카드 종류 변경</button></span>
                             <% } %>
                             <% if (isExpectRating) { %> <!--OP002-5730_[M][멤버십[FE]] 2020년 멤버십 등급 안내 적용 isExpectRating이 true이면-->
-                            <button class="ico-noti-bgb fe-rating-external" data-url="http://bit.ly/2sdBZ02" style="vertical-align:text-top;" title="새 창" role="link">2020년 T멤버십 예상 등급 조회 하러 가기</button><!-- 2019-11-29 추가 --><!-- 2019-12-11 수정 -->
+                            <button class="ico-noti-bgb fe-rating-external" data-url="https://bit.ly/2Jhq2iy" style="vertical-align:text-top;" title="새 창" role="link">2021년 T멤버십 예상 등급 조회</button><!-- 2019-11-29 추가 --><!-- 2019-12-11 수정 -->
                             <% } %>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                             <ul>
                                 <li>
                                     <span class="title">등급 적용 연도</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 -->
-                                    <span class="tx-cont"><%= myInfoData.getReqYear %></span>
+                                    <span class="tx-cont"><%= myInfoData.getReqYear %>년</span>
                                 </li>
                                 <li>
                                     <span class="title">등급 산정 기간</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 -->
@@ -57,7 +57,7 @@
                                     <span class="tx-cont"><span class="tx-emp">총 <%= myInfoData.showPayAmtScor %>원</span></span>
                                 </li>
                                 <li>
-                                    <span class="title">T가입 기간</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 --><!-- 2019-12-16 수정 -->
+                                    <span class="title">T멤버십 가입 기간</span><!-- 띄어쓰기 --><!-- 2019-11-29 수정 --><!-- 2019-12-16 수정 -->
                                     <span class="tx-cont"><%= myInfoData.scrbPrd %>개월</span>
                                 </li>
                                 <li>

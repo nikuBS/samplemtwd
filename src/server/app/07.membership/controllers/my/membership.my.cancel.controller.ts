@@ -11,10 +11,28 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 export default class MembershipMyCancel extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+
+    // 웹접근성 대응 : pageInfo의 seoMetaTagTitNm 값이 없어서 redis의 url 메타정보 값을 받아와서 대입, 
+    // ejs의 start.component.html에서 사용 (locals.pageInfo.seoMetaTagTitNm)
+    this.redisService.getData(REDIS_KEY.URL_META + req.originalUrl).subscribe((resp) => {
+      if ( resp.code !== API_CODE.CODE_00 ) {
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
+        });
+      }
+      // const urlMeta = new UrlMetaModel(resp.result || {});
+      // console.log(">>>[TEST] ", urlMeta);
+      // console.log(">>>[TEST] ", urlMeta.seoMetaTagTitNm);
+      pageInfo.seoMetaTagTitNm = resp.result.seoMetaTagTitNm;
+    });
 
     this.apiService.request(API_CMD.BFF_11_0013, {}).subscribe((resp) => {
       let myCardData = {};
