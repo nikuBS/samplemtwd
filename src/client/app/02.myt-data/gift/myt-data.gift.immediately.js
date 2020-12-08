@@ -361,12 +361,12 @@ Tw.MyTDataGiftImmediately.prototype = {
     if (isValidQty) {
       this.$wrap_data_select_list.find('input:not(checked)')
         .parents('li')
-        .attr('aria-checked', !isValidQty)
-        .attr('aria-disabled', isValidQty);
+        .attr('aria-checked', !isValidQty);
+        // .attr('aria-disabled', isValidQty);
       this.$wrap_data_select_list.find('input:checked')
         .parents('li')
-        .attr('aria-checked', isValidQty)
-        .attr('aria-disabled', !isValidQty);
+        .attr('aria-checked', isValidQty);
+        // .attr('aria-disabled', !isValidQty);
     }
     if ( isValidQty && isValidPhone ) {
       this.$btnRequestSendingData.attr('disabled', false);
