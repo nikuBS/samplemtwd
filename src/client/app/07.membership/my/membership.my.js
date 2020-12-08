@@ -57,12 +57,12 @@ Tw.MembershipMy.prototype = {
    */
   _initPeriod: function() {
     var currentYear = this._dateHelper.getCurrentYear();
-    var getPeriod = currentYear +'.1.~' + this._dateHelper.getCurrentDateTime('YYYY.M.');
+    var getPeriod = currentYear +'. 1.~' + this._dateHelper.getCurrentDateTime('YYYY. M.');
     var initEDate = this._dateHelper.getCurrentDateTime('YYYY.M');
 
-    this.$strPeriod.text(getPeriod);
-    this.$inputSdate.text(currentYear + '.1');
-    this.$inputEdate.text(initEDate);
+    this.$strPeriod.text(getPeriod); // html의 이용 내역 부분 날짜 버튼
+    this.$inputSdate.text(currentYear + '.1'); // html의 이용 내역 부분 날짜 버튼 눌렀을때 조회하기 부분의 시작날짜 (띄어쓰기 필요하면 포맷 지정해야 함)
+    this.$inputEdate.text(initEDate); // html의 이용 내역 부분 날짜 버튼 눌렀을때 조회하기 부분의 끝날짜
   },
 
   /**
