@@ -68,11 +68,14 @@ Tw.CustomerAgentsearch.prototype = {
     }
     else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
-    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
+    $layer.on('click', '.tw-popup-closeBtn', function() {
+      setTimeout(
+        function() { $target.focus(); }, 1100
+      );
+    });
   },
 
   _onClosePopup: function ($target, $layer) {
-    $target.focus();
   },
 
   _goLoad: function (event) {
