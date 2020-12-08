@@ -169,21 +169,25 @@ Tw.MainHome.prototype = {
       skt_landing.widgets.widget_slider1();
 
       var $parent = element.parent().parent();
-      $parent.on('click', '#tab1', $.proxy(function($tabElement) {
+      element.find('#tab1-tab').css('display', 'block');
+      element.find('#tab2-tab').css('display', 'none');
+      element.find('#tab3-tab').css('display', 'none');
+
+      $parent.on('click', '#tab1', $.proxy(function() {
         element.find('#tab1-tab').css('display', 'block');
         element.find('#tab2-tab').css('display', 'none');
         element.find('#tab3-tab').css('display', 'none');
         $parent.find('#tab1').focus();
       }, this));
 
-      $parent.on('click', '#tab2', $.proxy(function($tabElement) {
+      $parent.on('click', '#tab2', $.proxy(function() {
         element.find('#tab1-tab').css('display', 'none');
         element.find('#tab2-tab').css('display', 'block');
         element.find('#tab3-tab').css('display', 'none');
         $parent.find('#tab2').focus();
       }, this));
 
-      $parent.on('click', '#tab3', $.proxy(function($tabElement) {
+      $parent.on('click', '#tab3', $.proxy(function() {
         element.find('#tab1-tab').css('display', 'none');
         element.find('#tab2-tab').css('display', 'none');
         element.find('#tab3-tab').css('display', 'block');
