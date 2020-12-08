@@ -17,7 +17,8 @@ import {
   MYT_DATA_CHARGE_TYPE_NAMES,
   MYT_DATA_CHARGE_TYPES,
   MYT_DATA_HISTORY,
-  MYT_DATA_REFILL_TYPES
+  MYT_DATA_REFILL_TYPES,
+  TARGET_ADV_AGENT_LIST
 } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import {
@@ -39,6 +40,7 @@ import {
 import StringHelper from '../../utils/string.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
 import CommonHelper from '../../utils/common.helper';
+import MytDataSubmainAdvController from './myt-data.submain.adv.controller';
 
 // 실시간잔여량 공제항목
 const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -53,6 +55,15 @@ class MytDataSubmainController extends TwViewController {
   private isPPS = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    const userAgent: string = FormatHelper.isEmpty(req) ? '' : (req.headers['user-agent'] || '');
+    const agentTypeChk = TARGET_ADV_AGENT_LIST.find((targetAgent) =>
+      userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
+    if (agentTypeChk) {
+      const advInst = new MytDataSubmainAdvController();
+      advInst.initPage(req, res, next);
+      return false;
+    }
+
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,

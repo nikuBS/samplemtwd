@@ -29,19 +29,23 @@
 </head>
 <body class="rn">
 <div id="roamingRates" class="wrap">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu">
-            <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
-        </span>
-        <h1>국가별 로밍 이용요금 조회</h1>
-        <a href="/common/search-main">
-            <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
-        </a>
-    </div>
+
+
+    <!-- 202011 - 웹접근성 수정건 적용 : appbar 제거     
+        <div id="appbar" class="gnb-opaque">
+            <span class="menu icon-gnb-menu">
+                <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
+            </span>
+            <h1>국가별 로밍 이용요금 조회</h1>
+            <a href="/common/search-main">
+                <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
+            </a>
+        </div> 
+    -->
+
+    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용(display:block) 시작 -->
     <!-- #header -->
-
-    <div id="header" class="header-wrap bg-type" style="display: none;">
-
+    <div id="header" class="header-wrap bg-type">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
@@ -56,7 +60,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <!--// #header -->
 
@@ -65,7 +68,7 @@
         <div class="card">
             <h3 class="phone">
                 <span>휴대폰</span>
-                <img src="/img/product/roam/ico_pin.svg">
+                <img src="/img/product/roam/ico_pin.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
             </h3>
             <h2 class="number" id="svcNum">010-87**-64**</h2>
 
@@ -85,7 +88,7 @@
                 <input type="hidden" name="eqpCd" value="A0BX">
                 <div class="field-container">
                     <input type="text" placeholder="원하는 국가명을 입력해 주세요." id="nation-search" value="독일" class="ui-autocomplete-input" autocomplete="off">
-                    <img src="/img/product/roam/ico_search_a.png" class="search" width="21" height="21" alt="Search">
+                    <button type="button"><img src="/img/product/roam/ico_search_a.png" class="search" width="21" height="21" alt="검색"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 --></button>
                 </div>
             </form>
             <div class="link">
@@ -117,11 +120,11 @@
             </ul>
 
             <div class="attentionHead">
-                <img class="icon" src="/img/product/roam/ico_attention.svg">
+                <img class="icon" src="/img/product/roam/ico_attention.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                 <span class="title">
               로밍 시 국가별 주의 사항
             </span>
-                <img class="toggle" src="/img/product/roam/ico_collapse.svg">
+                <img class="toggle" src="/img/product/roam/ico_collapse.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
             </div>
             <div class="attentionBody" style="display: block;">
                 <ul class="description" id="attentionList"><li>수신요금은 현지 사업자 요금과 국제전화 사업자 요금이 합산된 금액 입니다.</li>

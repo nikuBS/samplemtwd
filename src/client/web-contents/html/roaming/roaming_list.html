@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>T-로밍 - 웹접근성 수정 적용 코딩 리스트</title>
+		<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" />
+		<style>
+			body {
+				background: #fff;
+			}
+			.t-guide-wrap {
+				width: auto;
+				margin: 48px;
+			}
+			.t-guide-tbl {
+				width: 100%;
+				margin-bottom: 16px;
+				color: #212529;
+				border: 1px solid #dee2e6;
+			}
+			.t-guide-tbl th,
+			.t-guide-tbl td {
+				padding: 13px;
+				vertical-align: top;
+				border: 1px solid #dee2e6;
+			}
+			.t-guide-tbl thead th {
+				vertical-align: bottom;
+				background: #f2f2f2;
+			}
+			.t-guide-tbl tbody tr th:first-child {
+				vertical-align: middle;
+			}
+			.t-guide-tit {
+				font-size: 36px;
+				font-weight: bold;
+				margin-bottom: 36px;
+				letter-spacing: -1px;
+			}
+			.t-guide-desc {
+				font-size: 20px;
+				margin-bottom: 14px;
+			}
+			.t-guide-bulit {
+				margin-bottom: 34px;
+			}
+			.t-guide-bulit > li {
+				position: relative;
+				font-size: 20px;
+				padding-left: 20px;
+			}
+			.t-guide-bulit > li:after {
+				content: "";
+				overflow: hidden;
+				position: absolute;
+				top: 13px;
+				left: 0;
+				width: 10px;
+				height: 2px;
+				background: #333;
+			}
+			.t-guide-bulit > li:not(:first-child) {
+				margin-top: 12px;
+			}
+			.guide-file-txt {
+				font-size: 15px;
+			}
+			.guide-file-txt:not(:first-child) {
+				margin-top: 8px;
+			}
+			.guide-detail-txt:not(:first-child) {
+				margin-top: 6px;
+			}
+			.guide-file-txt strong {
+				padding-right: 10px;
+				font-size: 16px;
+				font-weight: normal;
+			}
+			.guide-file-txt--puble {
+				color: #178bce;
+			}
+			a {
+				color: inherit;
+			}
+			.guide-sm-txt {
+				font-size: 16px;
+			}
+			td .spot-txt:first-child {
+				margin-top: 0;
+			}
+			.spot-txt {
+				padding: 4px 0;
+				font-size: 18px;
+				font-weight: bold;
+				margin-top:10px;
+			}
+			.txt-red {
+				color: #f00!important;
+			}
+			.txt-blue {
+				color: rgb(51, 37, 247)!important;
+			}
+			.va-middle {
+				vertical-align: middle!important;
+			}
+			.guide-notice-txt {
+				position: relative;
+				padding-left: 20px;
+			}
+			.tit-notice {
+				display: block;
+				margin-bottom: 10px;
+			}
+			.guide-notice-txt + .guide-notice-txt {
+				margin-top: 10px;
+			}
+			.guide-notice-txt:after {
+				position: absolute;
+				top:3px;
+				left: 0;
+				content: '※ ';
+				font-size: 17px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="t-guide-wrap">
+			<h1 class="t-guide-tit">T-로밍 웹접근성 수정사항 적용 코딩 리스트</h1>
+			<ul class="t-guide-bulit">
+				<li>Tworld_모바일(앱웹)_접근성재인증_샘플링_201016.pptx - 수정 사항 적용</li>
+				<li>해당 ppt 파일 65p ~ 113p 내용 적용 <span class="guide-sm-txt"> (일부 페이지 제외 - 제품 상세 페이지, 타 사 에서 관리하는 페이지 제외)</span></li>
+				<li>2020-12-04 일자로 git에서 받은 /css/common.css, /css/layout.css, /css/components.css, /css/roaming-next.css 파일을 적용하여 css 수정하였고, <br/> 
+					<strong> 수정 css 파일은 <span class="txt-red">/css/roaming-next.css</span>만 수정 하였습니다. </strong> </li>
+				<li>
+					html, script <strong class="txt-blue">수정 주석 키워드</strong> 는  "<strong class="txt-red">202011 - 웹접근성 수정건 적용</strong>" 으로 주석처리 하였습니다. <br/> <strong class="txt-blue">주석 키워드로 검색</strong>	해서 개발 적용 부탁 드립니다.
+				</li>
+				<li>
+					<strong class="txt-red tit-notice">개발팀 확인 요청사항 </strong>
+					<p class="guide-notice-txt"> <strong>레이어 팝업 닫았을 때 <span class="txt-red">포커스가 처음 클릭 했던 버튼</span> 으로 이동해야 하는 이슈</strong> 는 개발팀에서 확인 부탁드립니다. <br/>
+							해당 레이업 팝업 클릭 이벤트를 수정해야 하는 부분이라서 제가 함부로 수정을 할 수가 없어서 이부분은 skip 하였습니다.</p>
+					<p class="guide-notice-txt">
+						<strong class="txt-red">aria-pressed="true / false"</strong> 와 <strong class="txt-red">aria-selected="true /false</strong>  " 을 적용해야 하는 탭메뉴, 아코디언 메뉴 들 <br/>
+						기존 버튼 클릭시 <strong>.active 클래스명도 함께 토글</strong> 이 되어야 되기 때문에 제가 추가한 aria 관련 스크립트가 <strong>기존 클릭 이벤트와 꼬이지 않게 적용 부탁 드립니다.</strong>
+					</p>
+					<p class="guide-notice-txt">
+						<strong>달력</strong> 을 웹접근성에 맞게 수정하기 위해서 현재 운영에서 사용중인 <strong class="txt-red">datepicker.js</strong>를 수정을 하였습니다. <br/>
+						제가 <strong>수정한 곳은 수정 주석처리</strong> 를 하였는대요, 확인 부탁 드립니다.
+					</p>
+				</li>
+				<li>
+					<strong class="txt-blue tit-notice">디자인팀 확인 요청사항 </strong>
+					<p class="guide-notice-txt"> <strong>명도대비</strong> 관련 수정사항은 디자인팀에서 해당 컬러 값을 확인하여 운영팀에서 적용 한다고 전달 받았습니다. </p>
+				</li>
+			</ul>
+			<table class="t-guide-tbl">
+				<colgroup>
+					<col style="width: 320px" />
+					<col style="width: 30%" />
+					<col />
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">해당 페이지</th>
+						<th scope="col">URL</th>
+						<th scope="col">수정 내용</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row" rowspan="2">공통 적용</th>
+						<td>
+							<p class="spot-txt"> Skip 네비 추가 (건너띄기 링크 제공 - ppt:65p ) </p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.main.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.main.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">퍼블리싱은 roaming.main.html 파일에만 적용 하였습니다.</p>
+							<p class="guide-detail-txt txt-red">개발 적용시 모든 페이지에 일괄 적용 부탁 드립니다.</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="spot-txt"> header 안에 전체메뉴 /서치 버튼 의 <br/>포커스 문제 및 이미지 대체텍스트 관련 수정 </p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.main.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.main.html</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.tariffs.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.tariffs.html</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.addons.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.addons.html</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.rates.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.rates.html</strong></a><br/>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.html</strong></a><br/>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.baro.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.baro.html</strong></a><br/>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.center.icn1_1.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn1_1.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn1_3.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn1_3.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn2_1.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_1.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn2_3 .html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_3 .html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn2_3.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_3.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.branch.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_3.html</strong></a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.center.branch.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.branch.html</strong></a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.dataroaming.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.dataroaming.html</strong></a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.guamsaipan.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.guamsaipan.html</strong></a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.lte.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.lte.html</strong></a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.secure.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.secure.html</strong></a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.myuse.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.myuse.html</strong></a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.offer.italy.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.offer.italy.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">
+								현재 운영에 적용된 헤더 &lt;div id="appbar"&gt; ...  &lt;/div&gt;를 <span class="txt-red">마크업 수정</span> 대신 <span class="txt-red">삭제 </span>하고
+								<br/> <strong>이전에 공통</strong> 으로 사용 중인 헤더 <span class="txt-red">&lt; div id="header"&gt;를 다시 살렸습니다.</span> <br/>
+								<strong class="txt-red">바뀐 헤더</strong> 로 <strong class="txt-red">적용</strong> 부탁 드립니다. <br/>
+								혹시 <strong>헤더 변경이 어려운</strong>  상황이면 <strong>현재 적용중인 헤더( &lt;div id="appbar"&gt; ...  &lt;/div&gt; ) 를</strong> 접근성에 맞게 <strong>마크업을 수정 조치</strong> 해 드리겠습니다.
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">T 로밍 메인</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.main.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.main.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 65p (스킵네비 추가) - 적용</p>
+							<p class="guide-detail-txt">ppt - 66p, 67p (헤더 &gt; 전체메뉴 버튼, 서치 버튼) - 포커스, 초점 위치, 크기 적용  👉 <span class="txt-red">  기존 사용하던 header 마크업 사용</span></p>
+							<p class="guide-detail-txt">ppt - 70p, 71p (국가명 input 에 title 추가, 돋보기 이미지 alt="" 로 수정) - 적용  </p>
+							<p class="guide-detail-txt">ppt - 84p(대체 텍스트 필요 없는 이미지에 alt="" 적용)  </p>
+							<p class="guide-detail-txt">ppt - 85p(상단 t-로고 - alt값 수정 / 지도 이미지 삭제-(css로 처리) / 국가별 맞춤 썸네일, 요금제 한눈에 보기 썸네일  alt 값 수정)  </p>
+							<p class="guide-detail-txt">ppt - 86p(국가별 맞춤 요금제 썸네일 alt 수정 / 로밍 요금제 썸네일 alt 수정 )  </p>
+							<p class="spot-txt"><span class="txt-red">퍼블 수정 SKIP : (스크립트 이슈) </span> : ppt - 68p, 69p (레이어 팝업 초점 회귀) </p>
+							<p class="spot-txt"><span class="txt-blue">퍼블 수정 SKIP : (디자인 이슈) - 명도대비 </span> : ppt - 87p - 폰트 컬러 디자인팀에서 정해주면 적용 예정 </p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row" rowspan="2">스케줄(팝업)</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.schedule.case1.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.schedule.case1.html</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.schedule.case2.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.schedule.case2.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 72p (상단 배경 썸네일 대체텍스트 관련) : alt="" 추가 </p>
+							<p class="guide-detail-txt">ppt - 73p (닫기 버튼 대체텍스트 관련) : alt="닫기" 추가 </p>
+							<p class="guide-detail-txt">ppt - 77p (팝업 닫기 버튼 위치 상단으로 이동) </p>
+							<p class="spot-txt">&#8595;&#8595;&#8595; <strong>달력 접근성 관련 수정</strong> &#8595;&#8595;&#8595;</p>
+							<p class="guide-detail-txt">ppt - 74p (테이블 cation 추가, th에 scope="col" 추가) </p>
+							<p class="guide-detail-txt">
+								ppt - 75p (닫기 버튼 , 이전달/다음달 버튼에 button 태그로 변경 ) <br/>
+								ppt - 75p (날짜 영역 - td에 role="button" tabindex="0" 적용) - <span class="txt-red">플러그인이라 태그를 버튼 태그로 변경하기 어려운 상황이라 role 과 tabindex로 조치하였습니다.</span>
+							</p>
+							<p class="guide-detail-txt">ppt - 76p (thead에 들어 있는 불필요한 정보들 제거 - 이전달/다음달 버튼, 월 표시 다른 영역으로 이동 시킴) </p>
+							
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<p class="spot-txt">달력 접근성 관련 스크립트 수정 파일</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.schedule.datepicker.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.schedule.datepicker.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 74p, 75p, 76p 수정내용은 <strong>스크립트를 수정하였습니다.</strong></p>
+							<p class="guide-detail-txt txt-red">roaming.schedule.datepicker.html 안에 <strong> &lt;script&gt;</strong> 안에 소스 확인 부탁드립니다. </p>
+							<p class="guide-detail-txt">스크립트 <strong class="txt-red">수정 주석 키워드</strong> 는 : html 과 동일하게 " <strong class="txt-blue">202011 - 웹접근성 수정건 적용</strong>" 입니다.</p>
+							
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">로밍 가능한 전체 국가(팝업)</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.nations.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.nations.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 78p, 79p (팝업 닫기 버튼 선형화, alt 값 추가) </p>
+							<p class="guide-detail-txt">ppt - 80p (탭 메뉴 컨텐츠의 제목 추가)</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">로밍모드(팝업)</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.menu.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.menu.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 81p(이미지 alt 추가) </p>
+							<p class="guide-detail-txt">ppt - 82p (버튼 태그 적용 안된 태그들 버튼 및 a 태그로 변경) </p>
+							<p class="guide-detail-txt">ppt - 83p (스위치 버튼 aria 적용 및 <strong>마크업 수정</strong> ) </p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">요금제 추천</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.offer.japan.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.offer.japan.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 88p(배경 이미지, 아이콘 이미지에 alt=" " 적용) </p>
+							<p class="guide-detail-txt">ppt - 89p(데이터 서비스 비교 썸네일 대체 텍스트 추가 / 일본 요금제 아이콘 이미지 alt 수정 ) </p>
+							<p class="guide-detail-txt">ppt - 90p (더 보기 버튼에 href 추가) </p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">서비스 이용국가 (팝업)</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming/offer" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming/offer</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.countries.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.countries.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 91p(닫기 버튼, 가나다, 대륙 버튼, 아이템 리스트들의 기존 태그를 button 태그로 변경 / 닫기 이미지 alt 추가) </p>
+							<p class="guide-detail-txt">ppt - 92p(상품 셀렉트 박스에 title 추가) </p>
+							<p class="guide-detail-txt">ppt - 93p(가나다, 대륙 버튼에 aria-selected="true/false" 추가) </p>
+							<p class="guide-detail-txt">ppt - 94p(팝업 닫기 버튼 태그 위치 제목 앞으로 변경) </p>
+							<p class="guide-detail-txt">ppt - 95p(탭 메뉴 컨텐츠의 제목 추가) </p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">T로밍 요금제</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.tariffs.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.tariffs.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 96p(나의 여행 패턴 선택 이미지에 alt 적용, 지구 이미지에 alt="" 적용)</p>
+							<p class="guide-detail-txt">ppt - 97p(아이콘 이미지들에 alt="" 적용)</p>
+							<p class="guide-detail-txt">ppt - 98p(상품 목록에서 가격 영역을 마크업 순서상 하단으로 위치 변경)</p>
+							<p class="guide-detail-txt">ppt - 99p(탭 메뉴 태그(.anchors &gt; .anchor ) div 태그에서 a 태그로 수정)</p>
+							<p class="spot-txt"><span class="txt-red">퍼블 수정 SKIP : (스크립트 이슈) </span> : ppt - 99p(해당 탭메뉴(.anchors &gt; .anchor ) 클릭시 해당 영역으로 포커스 이동)</p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">baro OnePass 300 기본형</th>
+						<td class="va-middle"> 퍼블 파일 없음</td>
+						<td>
+							<p class="spot-txt"><span class="txt-red">퍼블 수정 SKIP : (타 사 관리) </span> : ppt - 100p ~ 105p</p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">T로밍 부가서비스</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.addons.html" target="_blank"><strong>퍼블 파일 : </strong>/html/roaming/roaming.addons.html</a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 106p(① '#인기', '#로밍차단/허용' 등 해시태그 링크 , ② 각 목록의 '해시 태그' 링크 a태그로 변경)</p>
+							<p class="guide-detail-txt">ppt - 107p(부가 서비스 버튼에 aria-selected="true /false" 적용)</p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">baro OnePass Data VIP 카드 &gt; 즉시 충전
+						</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://skt.roamingcoupon.co.kr/order/autoCharge.view" target="_blank"><strong>운영 주소 : </strong>https://skt.roamingcoupon.co.kr/order/autoCharge.view</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.addons.html" target="_blank"><strong>퍼블 파일 : </strong>없음</a>
+							</p>
+						</td>
+						<td>
+							<p class="spot-txt"><span class="txt-red">퍼블 수정 SKIP : (스크립트 이슈) </span> : ppt - 109p(레이어 팝업 초점 회귀) </p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row"> T로밍 &gt; baro Box 임대
+
+						</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming/fi/guide" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming/fi/guide</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.addons.html" target="_blank"><strong>퍼블 파일 : </strong>없음</a>
+							</p>
+						</td>
+						<td>
+							<p class="spot-txt"><span class="txt-red">퍼블 수정 SKIP : 개편 페이지 </span>(개편 페이지는 운영팀에서 적용 예정이라고 전달 받음)  </p>
+						</td>
+					</tr>
+
+					<tr>  
+						<th scope="row">T로밍 &gt; 국가별 로밍 이용요금 조회</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming/do/search-before" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming/do/search-before</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.rates.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.rates.html</strong></a><br/>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap 헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">ppt - 112p(의미 없는 이미지 alt="" 추가)</p>
+							
+						</td>
+					</tr>
+
+					<tr>  
+						<th scope="row">T로밍 &gt; T로밍안내</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming/info/guide" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming/info/guide</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.html</strong></a><br/>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap 헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">ppt - 113p(상단 비쥬얼 이미지 alt 추가, 아이콘 이미지 alt="" 적용 <br/> <span class="txt-red">출국전 필수확인 레이업 파업내 이미지에 alt="" 적용 해야됨 - 해당 .html파일 못찾음</span> </p>
+							<p class="guide-detail-txt">ppt - 114p(로밍시 꼭 알아야할 상황별 포인트 버튼영역 a태그 추가, 필수 점검 리스트 버튼 span태그를 a태그로 수정 <br/> <span class="txt-red">출국전 필수확인 버튼 영역 태그 수정 해야됨 - 해당 .html파일 못찾음</span> </p>
+							<p class="spot-txt"><span class="txt-red">퍼블 수정 SKIP : (스크립트 이슈) </span> : ppt - 115p(출국전 필수 확인 레이어 팝업 초점 회귀) </p>
+						</td>
+					</tr>
+
+					<tr>  
+						<th scope="row">T로밍 &gt; T로밍안내 &gt; baro 통화</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming/info/barocall" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming/info/barocall</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.baro.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.baro.html</strong></a><br/>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 117p(의미 없는 이미지 alt="" 추가)</p>
+							<p class="guide-detail-txt">ppt - 118p(<strong>조회 하기 버튼</strong> 을 <strong>a</strong>태그로 <strong></strong>수정</strong> / <strong>baro Q&amp;A 버튼</strong> 을 <strong>button</strong> 태그로 <strong>수정</strong>  / <strong>Tip 버튼</strong> 을 <strong>button</strong> 태그로 <strong>수정</strong> )</p>
+							<p class="guide-detail-txt">ppt - 119p(baro Q&amp;A 토글 버튼에 aria-pressed="true / false" 적용 ) </p>
+							<div class="guide-detail-txt">
+								<p class="spot-txt">ppt - 120p : <span class="txt-red">스크립트 이슈 SKIP :  </span> : (<span class="txt-red">이용 가능 여부 조회</span> <span class="txt-red">클릭</span>	시 해당 컨텐츠 <span class="txt-red">h2 에 tabindex="-1" 및 포커스 이동</span> ) </p>
+								<p>  버튼 클릭시 해당 내용에 제목으로 포커스 이동 되면서 tabindex="-1" - <span class="txt-red">마크업만 수정해논 상태임(tabindex="-1" 추가만 함)</span> </p>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">T로밍 &gt; T로밍센터 &gt; 인천공항</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming/info/center" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming/info/center</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.center.icn1_1.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn1_1.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn1_3.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn1_3.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn2_1.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_1.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn2_3 .html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_3 .html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.icn2_3.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_3.html</strong></a><br/>
+								<a href="/html/roaming/roaming.center.branch.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.icn2_3.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 121p(인천공항,지점/대리점 버튼영역에 button 태그로 수정)</p>
+							<p class="guide-detail-txt">ppt - 122p(인천공항,지점/대리점 버튼영역에 aria-selected="true /false" 적용)</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">T로밍 &gt; T로밍센터 &gt; 지점/대리점</th>
+						<td>
+							<p class="guide-file-txt">
+								<a href="https://m.tworld.co.kr/product/roaming/info/center" target="_blank"><strong>운영 주소 : </strong>https://m.tworld.co.kr/product/roaming/info/center</a>
+							</p>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.center.branch.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.center.branch.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">ppt - 121p(인천공항,지점/대리점 버튼영역에 button 태그로 수정)</p>
+							<p class="guide-detail-txt">ppt - 122p(인천공항,지점/대리점 버튼영역에 aria-selected="true /false" 적용)</p>
+							<p class="guide-detail-txt">ppt - 123p(의미없는 이미지태그에 alt="" 추가 /  caption 이 필요한 테이블에 caption 추가, 일부 테이블 td를 th로 수정 )</p>
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row" rowspan="10">
+							수정사항 ppt에 없는 페이지들
+						</th>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.baro.popup.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.baro.popup.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt"><strong>헤더 &gt; 닫기 버튼</strong> 태그 <strong class="txt-red">button 태그로 변경</strong> , 닫기 이미지 <strong class="txt-red">alt="닫기" 추가</strong> </p>
+							<p class="guide-detail-txt">상단<strong> 탭메뉴 버튼</strong> <strong class="txt-red">button 태그로 변경</strong>,  <strong class="txt-red">aria-selected="true /false"</strong>  적용</p> 
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.dataroaming.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.dataroaming.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap.bg-type 헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">화살표 이미지 아이콘에 alt="" 적용</p>
+							<p class="guide-detail-txt">baro Q&amp;A 토글 버튼에 a태그 추가 aria-pressed="true / false" 적용</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.feeinfo.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.feeinfo.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">의미 없는 썸네일 이미지, 전화기 아이콘, 화살표 아이콘 alt="" 적용</p>
+							<p class="guide-detail-txt">의미 없는 썸네일 이미지에 alt="" 적용</p>
+							<p class="guide-detail-txt">SKT 추가 혜택 배너 이미지에 alt 추가</p>
+							<p class="guide-detail-txt">아코디언 버튼 a태그 추가 , aria-pressed="true / false" 적용</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.guamsaipan.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.guamsaipan.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap.bg-type 헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">TIP 버튼 들 span 태그에서 button 태그로 수정</p>
+							<p class="guide-detail-txt">전화기 아이콘 이미지에 alt="" 추가</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.guide.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.guide.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">
+								.appbar 안에 <strong>&lt;div class="close"&gt;</strong> 를 <strong class="txt-red">&lt;button type="button" class="close"&gt;</strong> 로 <strong>수정</strong> 및 <br/>
+								<strong>태그 위치 제목 위로 이동 시킴</strong>
+							</p>
+							<p class="guide-detail-txt">
+								<strong>ico_close.svg</strong> 에 <strong class="txt-red">alt="닫기"</strong> 추가
+							</p>
+							<p class="guide-detail-txt">
+								<strong>ico_download.svg</strong> 에 <strong class="txt-red">alt="가이드 다운"</strong> 추가
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.lte.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.lte.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap.bg-type 헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">해당 페이지에 이미지 태그들에 alt="" / alt="대체텍스트" 추가 (수정주석 참고)</p>
+							<p class="guide-detail-txt">설정 방법 <strong>아코디언</strong> 버튼에 <strong class="txt-red">a태그 추가</strong> , <strong class=>aria-pressed="true / false" 적용</strong> </p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.info.secure.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.info.secure.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap.bg-type 헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">해당 페이지에 이미지 태그들에 alt="" / alt="대체텍스트" 추가 (수정주석 참고)</p>
+							<p class="guide-detail-txt"><strong>아코디언</strong> 버튼에 <strong class="txt-red">a태그 추가</strong> , <strong class=>aria-pressed="true / false" 적용</strong></p>
+							<p class="guide-detail-txt">TIP 버튼 들 span 태그에서 button 태그로 수정</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.mode.case1.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.mode.case1.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">
+								.appbar 안에 <strong>&lt;div class="close"&gt;</strong> 를 <strong class="txt-red">&lt;button type="button" class="close"&gt;</strong> 로 <strong>수정</strong>
+							</p>
+							<p class="guide-detail-txt">해당 페이지에 이미지 태그들에 alt="" / alt="대체텍스트" 추가 (수정주석 참고)</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.myuse.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.myuse.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap 헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">해당 페이지에 이미지 태그들에 alt=""  추가 (수정주석 참고)</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p class="guide-file-txt guide-file-txt--puble">
+								<a href="/html/roaming/roaming.offer.italy.html" target="_blank"><strong>퍼블 파일 : /html/roaming/roaming.offer.italy.html</strong></a>
+							</p>
+						</td>
+						<td>
+							<p class="guide-detail-txt">헤더 수정 : .gnb-opaque 사용 안하고 기존 사용하던 .header-wrap헤더 로 사용 관련 css 수정</p>
+							<p class="guide-detail-txt">해당 페이지에 이미지 태그들에 alt=""  추가 (수정주석 참고)</p>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

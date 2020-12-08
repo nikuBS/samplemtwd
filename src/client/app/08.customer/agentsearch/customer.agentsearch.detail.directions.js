@@ -67,7 +67,7 @@ Tw.CustomerAgentsearchDetailDirections = function (rootEl, options) {
     longitude: coord.lon
   };
   this._storeName = options.detail.storeName; // 매장명
-  this._myPosition = {}; // 내 위치정보
+  this._myPosition = options.currLoc; // 내 위치정보
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
@@ -143,7 +143,7 @@ Tw.CustomerAgentsearchDetailDirections.prototype = {
    * @function
    * @desc 현재위치 조회(app/web)
    */
-  _getMyPosition: function (callBack) {
+  /*_getMyPosition: function (callBack) {
     var self = this;
     // 이미 위치조회를 했다면 바로 리턴한다.
     if (!Tw.FormatHelper.isEmpty(self._myPosition)) {
@@ -154,17 +154,17 @@ Tw.CustomerAgentsearchDetailDirections.prototype = {
       self._myPosition = res; // ex. latitude: 37.4038252, longitude: 127.3015055
       callBack(res);
     }, function () { // 위치정보 조회 실패
-      /*self._myPosition = {
+      /!*self._myPosition = {
         latitude: 37.4038252,
         longitude: 127.3015055
       };
-      callBack(self._myPosition);*/
+      callBack(self._myPosition);*!/
       // [E]
 
       callBack(null);
       self._popupService.openAlert(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.MSG);
     });
-  },
+  },*/
 
   /**
    * @function
@@ -335,41 +335,38 @@ Tw.CustomerAgentsearchDetailDirections.prototype = {
    * @private
    */
   _openNaver: function (mapName) {
-    // 현재위치 조회
-    this._getMyPosition(function (position) {
-      if (!position) {
-        return;
-      }
+    if (!this._myPosition) {
+      return;
+    }
 
-      var url = 'route/public',
-        appName = {
-          ios: 'id428872117',
-          android: 'Com.sktelecom.minit',
-          web: location.hostname
-        },
-        appParam = {
-          slat: position.latitude,  // 출발지 위도
-          slng: position.longitude, // 출발지 경도
-          sname: '출발지', // 출발지 명
-          dlat: this._targetPosition.latitude, // 목적지 위도
-          dlng: this._targetPosition.longitude, // 목적지 경도
-          dname: this._storeName, // 목적지 명
-          appname: 'Com.sktelecom.minit'  // 네이버 지도을 호출하는 앱이름(android: applicationId, ios:번들ID, web: 웹페이지 url)
-        },
-        param = {
-          mapName: mapName,
-          appUrl: url,
-          appParam: appParam
-        };
+    var url = 'route/public',
+      appName = {
+        ios: 'id428872117',
+        android: 'Com.sktelecom.minit',
+        web: location.hostname
+      },
+      appParam = {
+        slat: this._myPosition.latitude,  // 출발지 위도
+        slng: this._myPosition.longitude, // 출발지 경도
+        sname: '출발지', // 출발지 명
+        dlat: this._targetPosition.latitude, // 목적지 위도
+        dlng: this._targetPosition.longitude, // 목적지 경도
+        dname: this._storeName, // 목적지 명
+        appname: 'Com.sktelecom.minit'  // 네이버 지도을 호출하는 앱이름(android: applicationId, ios:번들ID, web: 웹페이지 url)
+      },
+      param = {
+        mapName: mapName,
+        appUrl: url,
+        appParam: appParam
+      };
 
-      if (Tw.BrowserHelper.isApp()) {
-        appParam.appname = Tw.BrowserHelper.isIos() ? appName.ios : appName.android;
-      } else {
-        appParam.appname = appName.web;
-      }
+    if (Tw.BrowserHelper.isApp()) {
+      appParam.appname = Tw.BrowserHelper.isIos() ? appName.ios : appName.android;
+    } else {
+      appParam.appname = appName.web;
+    }
 
-      this._executeApp(param);
-    }.bind(this));
+    this._executeApp(param);
   },
 
   /**
@@ -378,22 +375,19 @@ Tw.CustomerAgentsearchDetailDirections.prototype = {
    * @private
    */
   _openKakao: function (mapName) {
-    // 현재위치 조회
-    this._getMyPosition(function (position){
-      if (!position) {
-        return;
-      }
+    if (!this._myPosition) {
+      return;
+    }
 
-      this._executeApp({
-        mapName: mapName,
-        appUrl: 'route',
-        appParam: {
-          sp: position.latitude + ',' + position.longitude, // 출발지 위,경도
-          ep: this._targetPosition.latitude + ',' + this._targetPosition.longitude, // 목적지 위,경도
-          by: 'PUBLICTRANSIT' // 대중교통 길찾기
-        }
-      });
-    }.bind(this));
+    this._executeApp({
+      mapName: mapName,
+      appUrl: 'route',
+      appParam: {
+        sp: this._myPosition.latitude + ',' + this._myPosition.longitude, // 출발지 위,경도
+        ep: this._targetPosition.latitude + ',' + this._targetPosition.longitude, // 목적지 위,경도
+        by: 'PUBLICTRANSIT' // 대중교통 길찾기
+      }
+    });
   },
 
   /**
@@ -401,7 +395,8 @@ Tw.CustomerAgentsearchDetailDirections.prototype = {
    * @desc 구글 지도 앱 실행
    * @private
    */
-  _openGoogle: function (mapName) {
+  // 구글지도 비노출 함
+  /*_openGoogle: function (mapName) {
     // android 만 실행
     if (!Tw.BrowserHelper.isAndroid()) {
       throw new Error('only android!');
@@ -438,7 +433,7 @@ Tw.CustomerAgentsearchDetailDirections.prototype = {
         webUrl: url
       });
     }.bind(this));
-  },
+  },*/
 
   /**
    * @function
@@ -447,22 +442,19 @@ Tw.CustomerAgentsearchDetailDirections.prototype = {
    * @private
    */
   _openApple: function (mapName) {
-    // 현재위치 조회
-    this._getMyPosition(function (position) {
-      if (!position) {
-        return;
-      }
+    if (!this._myPosition) {
+      return;
+    }
 
-      this._executeApp({
-        mapName: mapName,
-        appUrl: 'http://maps.apple.com/',
-        appParam: {
-          saddr: position.latitude + ',' + position.longitude,
-          daddr: this._targetPosition.latitude + ',' + this._targetPosition.longitude,
-          dirflg: 'd' // 길찾기 타입. d:car, w: foot, r: public transit
-        }
-      });
-    }.bind(this));
+    this._executeApp({
+      mapName: mapName,
+      appUrl: 'http://maps.apple.com/',
+      appParam: {
+        saddr: this._myPosition.latitude + ',' + this._myPosition.longitude,
+        daddr: this._targetPosition.latitude + ',' + this._targetPosition.longitude,
+        dirflg: 'd' // 길찾기 타입. d:car, w: foot, r: public transit
+      }
+    });
   }
 
 };

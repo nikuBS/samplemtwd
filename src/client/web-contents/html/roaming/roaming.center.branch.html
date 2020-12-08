@@ -30,17 +30,21 @@
 </head>
 <body class="rn">
 <div id="roamingGuide" class="wrap" style="">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu">
-        <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
-        </span>
-        <h1>T로밍센터</h1>
-        <a href="/common/search-main">
-        <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
-        </a>
-    </div>
+    <!-- 202011 - 웹접근성 수정건 적용 : appbar 제거     
+        <div id="appbar" class="gnb-opaque">
+            <span class="menu icon-gnb-menu">
+            <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
+            </span>
+            <h1>T로밍센터</h1>
+            <a href="/common/search-main">
+            <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
+            </a>
+        </div> 
+    -->
+    
+    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용(display:block) 시작 -->
     <!-- #header -->
-    <div id="header" class="header-wrap" style="display: none;" aria-hidden="false" tabindex="">
+    <div id="header" class="header-wrap" aria-hidden="false" tabindex="">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
@@ -55,16 +59,38 @@
             </div>
         </div>
     </div>
-    <!--// #header -->    
+    <!--// #header -->
+    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용(display:block) 끝 -->
+
     <div id="contents" class="first" style="width: 100%;">
         <div class="center">
             <div class="tabs">
-                <div class="tab airport" data-tabid="airport">
-                    <span>인천공항</span>
-                </div>
-                <div class="tab branch active" data-tabid="branch"><span>지점/대리점</span></div>
+                <a href="#" aria-selected="" role="button" class="tab airport " data-tabid="airport"><span>인천공항</span></a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
+                <a href="#" aria-selected="true" role="button" class="tab branch active" data-tabid="branch"><span>지점/대리점</span></a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
             </div>
         </div>
+
+        <!-- 202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 시작 (스크립트 위치는 퍼블 확인 위해 임시로 관련 화면 아래에 작업함) -->
+        <script>
+            $(document).ready(function(){
+                function ariaSelectedCheck() {
+                var $areaBtnWrap = $('.center .tabs');
+                    $areaBtnWrap.on('click', 'a', function(e){
+                        e.preventDefault();
+                        var thisBtn= $(this);
+                        var siblingBtn = $(this).siblings('a'); 
+                        $areaBtnWrap.find('[aria-selected="true"]').attr('aria-selected', false);
+                        $(thisBtn).attr('aria-selected', true).addClass('active');
+                        if($(thisBtn).hasClass('active')) {
+                            $(siblingBtn).removeClass('active');
+                        }
+                    });
+                }
+                ariaSelectedCheck();
+            })
+        </script>
+        <!-- //202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 끝 -->
+
         <div id="airport" class="tab-body" style="display: none;">
             <div class="card pt15 mt0">
                 <button id="terminal" class="bt-dropdown bigger" title="수령장소 선택" aria-haspopup="true">
@@ -83,28 +109,28 @@
                     <h3>임대 baro Box / 로밍폰 반납</h3>
                     <table class="explain">
                     <tbody>
-                    <tr>
-                        <td class="label">위치</td>
-                        <td>2터미널 1층 3번 출구 옆(입국장 A)</td>
-                    </tr>
-                    <tr>
-                        <td class="label">업무 시간</td>
-                        <td>24시간</td>
-                    </tr>
+                        <tr>
+                            <td class="label">위치</td>
+                            <td>2터미널 1층 3번 출구 옆(입국장 A)</td>
+                        </tr>
+                        <tr>
+                            <td class="label">업무 시간</td>
+                            <td>24시간</td>
+                        </tr>
                     </tbody>
                     </table>
                     <h3>자동로밍</h3>
                     <table class="explain">
-                    <tbody>
-                    <tr>
-                        <td class="label">위치</td>
-                        <td>2터미널 1층 4번 출구 옆(입국장 B)</td>
-                    </tr>
-                    <tr>
-                        <td class="label">업무 시간</td>
-                        <td>오전 6시 ~ 오후 10시</td>
-                    </tr>
-                    </tbody>
+                        <tbody>
+                            <tr>
+                                <td class="label">위치</td>
+                                <td>2터미널 1층 4번 출구 옆(입국장 B)</td>
+                            </tr>
+                            <tr>
+                                <td class="label">업무 시간</td>
+                                <td>오전 6시 ~ 오후 10시</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -113,116 +139,124 @@
             <div class="card mt0">
                 <h2>로밍 업무 별 가능한 지점 안내</h2>
                 <table class="icons">
-                <tbody>
-                <tr>
-                    <td width="33%">
-                        <img src="/img/product/roam/ico_center_auto.svg" width="62">
-                    </td>
-                    <td width="34%">
-                        <img src="/img/product/roam/ico_center_ib.svg" width="62">
-                    </td>
-                    <td width="33%">
-                        <img src="/img/product/roam/ico_center_rent.svg" width="62">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="caption">자동로밍</td>
-                    <td class="caption">IB 렌털 서비스</td>
-                    <td class="caption">로밍폰 임대</td>
-                </tr>
-                </tbody>
+                    <tbody>
+                        <tr>
+                            <td width="33%">
+                                <img src="/img/product/roam/ico_center_auto.svg" width="62" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                            </td>
+                            <td width="34%">
+                                <img src="/img/product/roam/ico_center_ib.svg" width="62" alt=""><!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                            </td>
+                            <td width="33%">
+                                <img src="/img/product/roam/ico_center_rent.svg" width="62" alt=""><!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="caption">자동로밍</td>
+                            <td class="caption">IB 렌털 서비스</td>
+                            <td class="caption">로밍폰 임대</td>
+                        </tr>
+                    </tbody>
                 </table>
                 <table class="explain">
-                <tbody>
-                <tr>
-                    <td class="label">지점</td>
-                    <td>강남, 수원, 보라매, 분당, 신촌, 영등포, 인천 지점</td>
-                </tr>
-                <tr>
-                    <td class="label">업무시간</td>
-                    <td>
-                        오전 9시 ~ 오후 6시<br>
-                        (토, 일, 공휴일 휴무)
-                    </td>
-                </tr>
-                </tbody>
+                    <caption>지점별 업무 시간을 확인 하실 수 있습니다.</caption> <!-- //202011 - 웹접근성 수정건 적용 :  caption 추가 -->
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="label">지점</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>강남, 수원, 보라매, 분당, 신촌, 영등포, 인천 지점</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="label">업무시간</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>
+                                오전 9시 ~ 오후 6시<br>
+                                (토, 일, 공휴일 휴무)
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
                 <table class="explain">
-                <tbody>
-                <tr>
-                    <td class="label">지점</td>
-                    <td>강북, 안양, 일산, 테크노마트 지점</td>
-                </tr>
-                <tr>
-                    <td class="label">업무시간</td>
-                    <td>
-                        오전 9시 ~ 오후 7시<br>
-                        (토, 일, 공휴일 휴무)
-                    </td>
-                </tr>
-                </tbody>
+                    <caption>지점별 업무 시간을 확인 하실 수 있습니다.</caption> <!-- //202011 - 웹접근성 수정건 적용 :  caption 추가 -->
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="label">지점</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>강북, 안양, 일산, 테크노마트 지점</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="label">업무시간</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>
+                                오전 9시 ~ 오후 7시<br>
+                                (토, 일, 공휴일 휴무)
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
+
                 <table class="icons">
-                <tbody>
-                <tr>
-                    <td>
-                        <img src="/img/product/roam/ico_center_auto.svg" width="62">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="caption">자동로밍</td>
-                </tr>
-                </tbody>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="/img/product/roam/ico_center_auto.svg" width="62" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 --> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="caption">자동로밍</td>
+                        </tr>
+                    </tbody>
                 </table>
+
                 <table class="explain">
-                <tbody>
-                <tr>
-                    <td class="label">지점</td>
-                    <td>은평, 부천, 안산 지점</td>
-                </tr>
-                <tr>
-                    <td class="label">업무시간</td>
-                    <td>
-                        오전 10시 ~ 오후 7시<br>
-                        (토, 일, 공휴일 휴무)
-                    </td>
-                </tr>
-                </tbody>
+                    <caption>지점별 업무 시간을 확인 하실 수 있습니다.</caption> <!-- //202011 - 웹접근성 수정건 적용 :  caption 추가 -->
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="label">지점</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>은평, 부천, 안산 지점</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="label">업무시간</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>
+                                오전 10시 ~ 오후 7시<br>
+                                (토, 일, 공휴일 휴무)
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
+
                 <table class="icons">
-                <tbody>
-                <tr>
-                    <td width="33%">
-                        <img src="/img/product/roam/ico_center_auto.svg" width="62">
-                    </td>
-                    <td width="34%">
-                        <img src="/img/product/roam/ico_center_baro.svg" width="62">
-                    </td>
-                    <td width="33%">
-                        <img src="/img/product/roam/ico_center_rent.svg" width="62">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="caption">자동로밍</td>
-                    <td class="caption">baro Box 임대<br><span style="font-size: 0.9em;">(SK텔레콤 황금점)</span></td>
-                    <td class="caption">로밍폰 임대</td>
-                </tr>
-                </tbody>
+                    <tbody>
+                        <tr>
+                            <td width="33%">
+                                <img src="/img/product/roam/ico_center_auto.svg" width="62" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                            </td>
+                            <td width="34%">
+                                <img src="/img/product/roam/ico_center_baro.svg" width="62" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                            </td>
+                            <td width="33%">
+                                <img src="/img/product/roam/ico_center_rent.svg" width="62" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="caption">자동로밍</td>
+                            <td class="caption">baro Box 임대<br><span style="font-size: 0.9em;">(SK텔레콤 황금점)</span></td>
+                            <td class="caption">로밍폰 임대</td>
+                        </tr>
+                    </tbody>
                 </table>
+
                 <table class="explain">
-                <tbody>
-                <tr>
-                    <td class="label">지점</td>
-                    <td>대구 지점</td>
-                </tr>
-                <tr>
-                    <td class="label">업무시간</td>
-                    <td>
-                        오전 9시 ~ 오후 6시<br>
-                        (토, 일, 공휴일 휴무)
-                    </td>
-                </tr>
-                </tbody>
+                    <caption>지점별 업무 시간을 확인 하실 수 있습니다.</caption> <!-- //202011 - 웹접근성 수정건 적용 :  caption 추가 -->
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="label">지점</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>대구 지점</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="label">업무시간</th>  <!-- //202011 - 웹접근성 수정건 적용 : td를 th로 변경 -->
+                            <td>
+                                오전 9시 ~ 오후 6시<br>
+                                (토, 일, 공휴일 휴무)
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
                 <ul class="description">
                     <li>

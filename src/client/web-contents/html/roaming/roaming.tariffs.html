@@ -29,6 +29,8 @@
 </head>
 <body class="rn">
 <div id="roamingTariffs" class="wrap">
+    
+    <!-- 202011 - 웹접근성 수정건 적용 : 현재 운영에서 헤더로 사용하고 있는 #appbar 제거
     <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
             <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
@@ -38,10 +40,11 @@
             <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
         </a>
     </div>
+    -->
+
+    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
     <!-- #header -->
-
-    <div id="header" class="header-wrap" style="display: none;">
-
+    <div id="header" class="header-wrap">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
@@ -56,35 +59,49 @@
                 </div>
             </div>
         </div>
-
     </div>
     <!--// #header -->
+    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
 
     <div id="contents">
         <div class="header">
             <h2>나의 여행 <span class="colorPoint">패턴</span>을 <span class="colorPoint">선택</span>해 보세요!</h2>
             <div class="anchors" style="position: static; left: 0px; right: 0px; top: 50px; height: 94px;">
-                <div class="anchor" id="a-group-G000000979">
-                    <img src="/img/product/roam/tab_01_on.png" width="128">
-                </div>
-                <div class="anchor" id="a-group-T000000078">
-                    <img src="/img/product/roam/tab_02_off.png" width="128">
-                </div>
-                <div class="anchor" id="a-group-T000000081">
-                    <img src="/img/product/roam/tab_03_off.png" width="128">
-                </div>
-                <div class="anchor" id="a-group-T000000079">
-                    <img src="/img/product/roam/tab_04_off.png" width="128">
-                </div>
-                <div class="anchor" id="a-group-T000000094">
-                    <img src="/img/product/roam/tab_05_off.png" width="128">
-                </div>
+                <!-- 202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 시작 -->
+                <a class="anchor" href="#group-G00001" id="a-group-G000000979">
+                    <img src="/img/product/roam/tab_01_on.png" width="128" alt="어디서나 이용 가능"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
+                </a>
+                <!-- //202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 끝 -->
+
+                <!-- 202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 시작 -->
+                <a class="anchor" href="#group-G00002" id="a-group-T000000078">
+                    <img src="/img/product/roam/tab_02_off.png" width="128" alt="짧은 여행, 잦은 출장"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
+                </a>
+                <!-- //202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 끝 -->
+
+                <!-- 202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 시작 -->
+                <a class="anchor" href="#group-G00003" id="a-group-T000000081">
+                    <img src="/img/product/roam/tab_03_off.png" width="128" alt="해외 데이터 무제한"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
+                </a>
+                <!-- //202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 끝 -->
+
+                <!-- 202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 시작 -->
+                <a class="anchor" href="#group-G00004" id="a-group-T000000079">
+                    <img src="/img/product/roam/tab_04_off.png" width="128" alt="괌, 사이판"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
+                </a>
+                <!-- //202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 끝 -->
+
+                <!-- 202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 시작 -->
+                <a class="anchor" href="group-G00005" id="a-group-T000000094">
+                    <img src="/img/product/roam/tab_05_off.png" width="128" alt="장거리 또는 장기 여행"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
+                </a>
+                <!-- //202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 끝 -->
             </div>
         </div>
         <div id="groups">
-            <div class="group" id="group-G000000979">
+            <div class="group" id="group-G00001">
                 <div class="summary">
-                    <img src="/img/product/roam/img_baro01.png">
+                    <img src="/img/product/roam/img_baro01.png" alt=""><!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                     <h2>baro 3/4/7GB</h2>
                     <p>
                         전 세계에서 최대 7일/30일 동안 넉넉한 데이터와 고품질의 baro 통화를 이용하는 요금제
@@ -93,35 +110,35 @@
                 <div class="tariffs">
                     <a href="/product/callplan?prod_id=NA00006489">
                         <div class="tariff">
-                            <span class="price">29,000원/7일</span>
                             <h3>baro 3GB</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>3GB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">29,000원/7일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00006493">
                         <div class="tariff">
-                            <span class="price">39,000원/30일</span>
                             <h3>baro 4GB</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>4GB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">39,000원/30일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00006497">
                         <div class="tariff">
-                            <span class="price">59,000원/30일</span>
                             <h3>baro 7GB</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>7GB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">59,000원/30일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                 </div>
@@ -138,46 +155,46 @@
                 <div class="tariffs">
                     <a href="/product/callplan?prod_id=NA00003196">
                         <div class="tariff">
-                            <span class="price">9,900원/1일</span>
                             <h3>baro OnePass 300 기본형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>매일 300MB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">9,900원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00004088">
                         <div class="tariff">
-                            <span class="price">9,900원/1일</span>
                             <h3>baro OnePass 300 기간형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>매일 300MB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">9,900원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00005049">
                         <div class="tariff">
-                            <span class="price">16,500원/1일</span>
                             <h3>baro OnePass 500 기본형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>매일 500MB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">16,500원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00005047">
                         <div class="tariff">
-                            <span class="price">16,500원/1일</span>
                             <h3>baro OnePass 500 기간형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>매일 500MB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">16,500원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                 </div>
@@ -194,46 +211,46 @@
                 <div class="tariffs">
                     <a href="/product/callplan?prod_id=NA00006486">
                         <div class="tariff">
-                            <span class="price">19,000원/1일</span>
                             <h3>baro OnePass VIP 기본형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>무제한</span>
                             </div>
                             <span class="phone">음성 30분 / 문자 30건 / baro 통화 무제한</span>
+                            <span class="price">19,000원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00006745">
                         <div class="tariff">
-                            <span class="price">17,600원/1일</span>
                             <h3>baro OnePass Data VIP 기간형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>무제한</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">17,600원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00006744">
                         <div class="tariff">
-                            <span class="price">17,600원/1일</span>
                             <h3>baro OnePass Data VIP 기본형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>무제한</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">17,600원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00006487">
                         <div class="tariff">
-                            <span class="price">19,000원/1일</span>
                             <h3>baro OnePass VIP 기간형</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>무제한</span>
                             </div>
                             <span class="phone">음성 30분 / 문자 30건 / baro 통화 무제한</span>
+                            <span class="price">19,000원/1일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                 </div>
@@ -250,24 +267,24 @@
                 <div class="tariffs">
                     <a href="/product/callplan?prod_id=NA00006226">
                         <div class="tariff">
-                            <span class="price">상세참조</span>
                             <h3>T괌사이판 국내처럼</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>상세참조</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">상세참조</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00006229">
                         <div class="tariff">
-                            <span class="price">5,000원/10일</span>
                             <h3>T괌사이판 5천원</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>매일 500MB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">5,000원/10일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                 </div>
@@ -284,35 +301,35 @@
                 <div class="tariffs">
                     <a href="/product/callplan?prod_id=NA00005300">
                         <div class="tariff">
-                            <span class="price">40,000원/30일</span>
                             <h3>T로밍 LongPass 2GB</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>2GB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">40,000원/30일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00005505">
                         <div class="tariff">
-                            <span class="price">50,000원/30일</span>
                             <h3>T로밍 LongPass 3GB</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>3GB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">50,000원/30일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                     <a href="/product/callplan?prod_id=NA00005252">
                         <div class="tariff">
-                            <span class="price">65,000원/30일</span>
                             <h3>T로밍 LongPass 5GB</h3>
                             <div class="data">
-                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage">
+                                <img src="/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"> <!-- //202011 - 웹접근성 수정건 적용 : alt 수정 -->
                                 <span>5GB</span>
                             </div>
                             <span class="phone">baro 통화 무제한</span>
+                            <span class="price">65,000원/30일</span> <!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                         </div>
                     </a>
                 </div>

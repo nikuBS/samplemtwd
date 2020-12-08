@@ -140,7 +140,7 @@ Tw.CommonMemberLine.prototype = {
     this._popupService.open({
       hbs: 'CO_01_05_02_08_en',
       layer: true
-    }, $.proxy(null, this), $.proxy(this._onCloseGuideOppup, this), 'guide', $target);
+    }, $.proxy(this._onOpenGuideOppup, this), $.proxy(this._onCloseGuideOppup, this), 'guide', $target);
   },
 
   /**
@@ -154,6 +154,13 @@ Tw.CommonMemberLine.prototype = {
         this._openGuidePopup();
     }
   },
+
+  _onOpenGuideOppup: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
+    setTimeout(function() {
+      $layer.find('.popup-closeBtn').focus();
+    }, 100);
+  }, 
 
   _onCloseGuideOppup: function () {
     if(Tw.BrowserHelper.isApp()) {

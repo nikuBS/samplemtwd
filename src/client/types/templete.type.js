@@ -238,7 +238,7 @@ Tw.POPUP_TPL = {
         { 'button-attr': 'id="0" data-open-app="tmap"', txt: 'T map' },
         { 'button-attr': 'id="1" data-open-app="naver"', txt: '네이버 지도' },
         { 'button-attr': 'id="2" data-open-app="kakao"', txt: '카카오맵' },
-        { 'button-attr': 'id="3" data-open-app="google"', txt: '구글지도' },
+        /*{ 'button-attr': 'id="3" data-open-app="google"', txt: '구글지도' },*/
         { 'button-attr': 'id="4" data-open-app="apple"', txt: '애플지도' }
       ]
     }
@@ -838,7 +838,16 @@ Tw.MYT_TPL = {
       '        </div>' +
       '        <img class="tod-w100 vt mt18" src="{{CDN}}/img/t_m5g/og_5gx_nodata.png" alt="">' +
       '    </div>' +
-      '</div>'
+      '</div>',
+    NEW_CHILD_WIDGET: '<!-- .widget --><div class="widget"><div class="widget-box slider6"><div class="slider-box">' +
+      '<div class="slider"></div></div></div></div><!-- //.widget -->',
+    NEW_CHILD_LINE_TEMP: '<div class="slider-item"><!-- li -->' +
+      '<a href="#" class="slider-inner">' +
+      '<p class="child-tit">{{eqpMdlNm}}<span class="tel-num">{{svcNum}}</span></p>' +
+      '<ul class="report-list item-no-border small"><li class="report-item"><dl class="report-define d-wrap">' +
+      '<dt class="report-tit">요금제</dt><dd class="report-cont">{{prodNm}}</dd></dl></li>' +
+      '<li class="report-item"><dl class="report-define d-wrap"><dt class="report-tit">잔여데이터</dt>' +
+      '<dd class="report-cont">{{data}}{{unit}}</dd></dl></li></ul></a></div>'
   },
   FARE_SUBMAIN: {
     CHILD_LIME_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
