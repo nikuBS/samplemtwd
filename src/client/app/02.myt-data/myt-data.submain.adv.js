@@ -144,9 +144,9 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _bindEvent: function () {
     // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
-    // if ( this.data.immCharge ) {
-    //   this.$immChargeBtn.on('click', $.proxy(this._onImmChargeDetail, this));
-    // }
+    if ( this.data.immCharge ) {
+      this.$immChargeSection.find('[data-id=data]').on('click', $.proxy(this._onDataPesterDetail, this));
+    }
     if (this.data.present) {
       if (this._isGiftData) {
         // T끼리 데이터 선물하기 영역 - 휴대폰인 경우
