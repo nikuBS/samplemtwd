@@ -40,8 +40,11 @@ Tw.CustomerFaq.prototype = {
     for(var b = this.countNum ; b < this.countNum + this.checkNum ; b++){
       $('.acco-box').eq(b).css('display','list-item');
     }
-    $('.acco-box').eq(this.countNum).children('div.acco-tit').children('button').focus();
-    this.countNum+=10;    
+
+    setTimeout($.proxy(function() {
+      $('.acco-box').eq(this.countNum).children('div.acco-tit').children('button').focus();
+      this.countNum+=10;
+    }, this), 100);
   },
 
 
