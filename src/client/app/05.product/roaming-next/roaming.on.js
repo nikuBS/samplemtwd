@@ -344,7 +344,10 @@ Tw.RoamingModeOn.prototype = {
   showTariff: function (prodId, prodNm, timestamp, timezoneOffset) {
     // 진입팝업 (이용예정) 표시
     var baseDate = moment(timestamp);
-    var localDate = moment(timestamp).add(timezoneOffset, 'hour');
+    if (baseDate.utcOffset() !== 540) { // 한국이 아니면 utcOffset 조정
+      baseDate.add(540 - baseDate.utcOffset(), 'minutes');
+    }
+    var localDate = moment(baseDate).add(timezoneOffset, 'hours');
 
     var id = 'dialogUsage';
     var template = Handlebars.compile($('#tpl-dialog-usage').html());
