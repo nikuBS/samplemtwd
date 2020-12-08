@@ -173,7 +173,7 @@ Tw.MainHome.prototype = {
         element.find('#tab1-tab').css('display', 'block');
         element.find('#tab2-tab').css('display', 'none');
         element.find('#tab3-tab').css('display', 'none');
-        element.find('#tab1-tab').find('button[class="plan-card"]').eq(0).focus();
+        element.find('#tab1-tab').find('button[class="plan-card five-gx"]').eq(0).focus();
       }, this));
 
       $parent.on('click', '#tab2', $.proxy(function() {
