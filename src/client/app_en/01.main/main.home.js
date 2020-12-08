@@ -166,7 +166,7 @@ Tw.MainHome.prototype = {
         list: list
       }));
       
-      skt_landing.widgets.widget_init(); // 이게 핵심
+      skt_landing.widgets.widget_slider1();
     }
   },
 
