@@ -8,38 +8,47 @@ _%>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 <script id="fe-entryTplDate" type="text/x-handlebars-template">
-    <p class="con-txt1">{{resData.dtInfo}} 기준<br>할인 반환금 정보 입니다.</p>
+    <p class="con-txt1">{{dtInfo}} 기준<br>할인 반환금 정보 입니다.</p>
 </script>
 <script id="fe-entryTpl" type="text/x-handlebars-template">
     {{!-- 주석 : 할인반환금 정보  --}}
     <div class="info-list-type1 mt30">
         <h3>할인 반환금 정보</h3>
+        {{#if penaltyInfo.length}}
         <div class="basic-list">
             <ul>
-                {{# each resData.penaltyInfo as |rootItem rootIndex|}}
+                {{#each penaltyInfo}}
                 <li>
-                    <span class="title">{{rootItem.penStrdNm}} ({{rootItem.svcNm}})</span>
-                    <span class="tx-cont">{{rootItem.brchAmt}} 원</span>
+                    <span class="title">{{penStrdNm}} ({{svcNm}})</span>
+                    <span class="tx-cont">{{brchAmt}} 원</span>
                 </li>
                 {{/each}}
             </ul>
         </div>
+        {{else}}
+        <div class="contents-empty mt10">
+            <span class="ico type1"><span class="blind"></span></span>
+            <p class="desc">할인반환금 조회내역이 없습니다.</p>
+        </div>
+        {{/if}}
 
         <h3 class="mt40">사용요금 정보<button id="MS_04_08_tip_05" class="tip-view">TIP</button></h3>
         <div class="basic-list">
             <ul>
+                {{#chargeInfo}}
                 <li>
                     <span class="title">이번 달 사용요금(할인 반환금 포함)</span>
-                    <span class="tx-cont">{{resData.chargeInfo.hbAmt}} 원</span>
+                    <span class="tx-cont">{{hbAmt}} 원</span>
                 </li>
                 <li>
                     <span class="title">미납요금</span>
-                    <span class="tx-cont">{{resData.chargeInfo.colAmt}} 원</span>
+                    <span class="tx-cont">{{colAmt}} 원</span>
                 </li>
                 <li>
                     <span class="title">총 납부금액<br />(이번 달 사용요금 + 미납요금)</span>
-                    <span class="tx-cont"><span class="tx-bold">{{resData.chargeInfo.totAmt}}</span> 원</span>
+                    <span class="tx-cont"><span class="tx-bold">{{totAmt}}</span> 원</span>
                 </li>
+                {{/chargeInfo}}
             </ul>
         </div>
     </div>
@@ -125,15 +134,15 @@ _%>
                         <span class="error-txt" style="display: none;" aria-hidden="true" id="span-err-prod">해지 신청 상품을 선택해 주세요.</span>
                         <!--// .list-comp-input -->
 
-                        <h3 class="form-title pt36">해지 요청일</h3>
+                        <h3 class="form-title pt36"><label for="formInput01">해지 요청일</label></h3>
                         <span class="inputbox">
                             <span class="input">
-                                <input type="date" data-date-format="YYYY-MM-DD" title="해지 요청일 선택" data-target="cancelable-date" />
+                                <input type="date" id="formInput01" data-date-format="YYYY-MM-DD" title="해지 요청일 선택" data-target="cancelable-date" />
                             </span>
                         </span>
                         <span class="error-txt" style="display: none;" aria-hidden="true" id="span-err-date">해지 요청일을 선택해 주세요.</span>
                         <div class="cont-noti mt20">
-                            <span class="type1">신청일 기준 3일 이후부터 최대 30일 안에 신청하실 수 있습니다.(토·일, 공휴일은 해지 신청 불가)</span>
+                            <span class="type1">신청일 기준 2일 이후부터 최대 30일 안에 신청하실 수 있습니다.</span>
                         </div>
 
                         <h3 class="form-title pt36">연락 가능한 연락처</h3>
@@ -193,8 +202,8 @@ _%>
                     </div>
 
                     <ul class="bt-slice mt20">
-                        <li class="bt-blue1">
-                            <button data-target="sale-repayment-info" >조회하기</button>
+                        <li>
+                            <button class="btn-round1 btn-style1" data-target="sale-repayment-info">조회하기</button>
                         </li>
                     </ul>
 
@@ -212,7 +221,6 @@ _%>
 
                     <!-- 출력된 화면 -->
                     <div data-target="outputArea">
-
                     </div>
 
                 </div>

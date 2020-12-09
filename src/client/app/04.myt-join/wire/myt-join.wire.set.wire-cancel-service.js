@@ -51,17 +51,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     // 해지 요청일 min, max 지정
     // NOTE: 시작은, 오늘을 제외한, 3일 후이므로, 4를 더하고, 마지막 선택 가능한 날은 시작로부터 30일 이후이다);
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
-    var sttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 4, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 34, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var sttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     this.$cancelableDate.attr('min', sttDt);
     this.$cancelableDate.attr('max', endDt);
     this.$cancelableDate.attr('value', sttDt);
     this.$cancelableDate.attr('data-date', sttDt);
-    // TODO: 아래 변수의 실제 값 확인
-    this._uncancelableDates = (this.resData.resDataInfo.STR_HOLIDAY || '').split('|').reduce(function (acc, cur) {
-      acc[String(cur)] = true;
-      return acc;
-    }, {});
   },
 
   /**
@@ -84,9 +79,10 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.outputArea = $('[data-target="outputArea"]');
 
     this.$entryTpl = $('#fe-entryTpl');
+    this.$entryNoPenaltyTpl = $('#fe-entry-no-penalty-tpl');
     this.$entryTplDate = $('#fe-entryTplDate');
 
-    // 날짜정보 넣기
+    // 날짜정보 넣기 (왜 이렇게?)
     this._svcHbDetailList({
       dtInfo: Tw.DateHelper.getShortDate(new Date())
     }, this.outputDtArea, this.$entryTplDate);
@@ -273,8 +269,8 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       $('#span-err-date').hide().attr('aria-hidden', true);
     }
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
-    var startDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 4, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 34, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var startDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     Tw.Logger.info('[해지 요청일]', tempDt, startDt, endDt);
 
     //유효성 체크
@@ -496,20 +492,17 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   /**
    * data 화면 출력 hbs script 템플릿 출력
-   * @param resData - 데이터
+   * @param data - 데이터
    * @param $jqTg - 출력될 html area
    * @param $hbTg - hbs 템플릿
    * @private
    */
-  _svcHbDetailList: function (resData, $jqTg, $hbTg) {
+  _svcHbDetailList: function (data, $jqTg, $hbTg) {
     var jqTg = $jqTg; // 뿌려지는 영역
     var hbTg = $hbTg; // 템플릿
     jqTg.empty();
     var source = hbTg.html();
     var template = Handlebars.compile(source);
-    var data = {
-      resData: resData
-    };
     var html = template(data);
     jqTg.append(html);
   },
@@ -520,14 +513,6 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   * @return boolean
    */
   _validateDate: function(checkDate, startDate, endDate) {
-    // 휴일/공휴일 점검
-    if (this._uncancelableDates[checkDate]) {
-      if (Tw.BrowserHelper.isIos()) {
-        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
-      }
-      return startDate;
-    }
-    // NOTE: 아래 조건은 발생할 수 없지만, 대비용으로 남겨놈
     if (moment(checkDate).isBefore(startDate)) {
       if (Tw.BrowserHelper.isIos()) {
         this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
@@ -676,8 +661,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this.cancelFeeInfo = res.result;
 
       if(res.result.penaltyInfo && res.result.penaltyInfo.length <= 0){
-        $('#divEmpty').show().attr('aria-hidden', false);
-        this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
+        // $('#divEmpty').show().attr('aria-hidden', false);
+        // this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
+        this.cancelFeeInfo.penaltyInfo = [];
       }
 
       _.map( this.cancelFeeInfo.penaltyInfo, $.proxy( function( item ){
@@ -701,8 +687,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       Tw.Tooltip.separateInit();
 
     } else if ( res.code === 'ZINVE8888' ) {
-      $('#divEmpty').show().attr('aria-hidden', false);
-      this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
+      // $('#divEmpty').show().attr('aria-hidden', false);
+      // this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
+      this._svcHbDetailList({
+        penaltyInfo: [],
+        chargeInfo: null
+      }, this.outputArea, this.$entryNoPenaltyTpl);
       this.dataModel.dcRefdSearch = true;
     }
  },
