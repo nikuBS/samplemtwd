@@ -59,7 +59,7 @@
                         </div>
                         <ul class="report-list">
                             <li class="report-item">
-                                <a href="/myt-data/giftdata" class="link d-wrap">
+                                <a href="#" class="link d-wrap">
                                     <dl class="report-define">
                                         <dt class="report-tit">선물 가능 횟수 </dt>
                                         <dd class="report-cont">
@@ -83,9 +83,8 @@
                                     </dl>
                                 </a>
                             </li>
-                            <%_ if (data.presentAuto) { _%>
                             <li class="report-item">
-                                <a href="/myt-data/giftdata?auto=true#auto" class="link d-wrap">
+                                <a href="#" class="link d-wrap">
                                     <dl class="report-define">
                                         <dt class="report-tit">자동선물 신청된 결합가족</dt>
                                         <dd class="report-cont">
@@ -94,7 +93,6 @@
                                     </dl>
                                 </a>
                             </li>
-                            <%_ } _%>
                         </ul>
                     </div>
                 </div>
@@ -174,8 +172,7 @@
                     <%_ } _%>
                     <div class="card-cont">
                         <%_ if (data.refill) { _%>
-                        <% var usableCoupon = data.refill[data.pickCouponIndex]; %>
-                        <div class="have-coupon-wrap" data-id="refill-section">
+                        <div class="have-coupon-wrap">
                             <ul class="report-list align-center">
                                 <li class="report-item">
                                     <dl class="report-define d-wrap">
@@ -184,12 +181,9 @@
                                     </dl>
                                 </li>
                             </ul>
-                            <div class="btn-area <%= usableCoupon.isGift? 'btn' : 'btn2' %> short"> <!-- 하나일때는 btn2제거 -->
-                                <div style="display: none;" data-id="usable-coupon" data-value="<%= usableCoupon.copnIsueNum %>::<%= usableCoupon.copnNm%>::<%= usableCoupon.usePsblStaDt %>~<%= usableCoupon.usePsblEndDt %>::<%= usableCoupon.isGift ? 'Y' : 'N' %>"></div>
-                                <a href="#" class="rect-btn" data-id="refill-btn">리필하기</a>
-                                <%_ if (!usableCoupon.isGift) { _%>
-                                <a href="#" class="rect-btn" data-id="gift-btn">선물하기</a>
-                                <%_ } _%>
+                            <div class="btn-area btn2 short"> <!-- 하나일때는 btn2제거 -->
+                                <a href="#" class="rect-btn">리필하기</a>
+                                <a href="#" class="rect-btn">선물하기</a>
                             </div>
                         </div>
                         <%_ } _%>
