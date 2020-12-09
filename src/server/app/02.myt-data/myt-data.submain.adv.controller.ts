@@ -68,8 +68,7 @@ class MytDataSubmainAdvController extends TwViewController {
       otherLines: [],
       isApp: BrowserHelper.isApp(req),
       bpcpServiceId: req.query.bpcpServiceId || '',
-      eParam: req.query.eParam || '',
-      adv: true
+      eParam: req.query.eParam || ''
     };
 
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
