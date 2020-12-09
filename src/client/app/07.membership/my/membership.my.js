@@ -130,8 +130,8 @@ Tw.MembershipMy.prototype = {
    */
   _renderListOne: function(params, res) {
     var list = res;
-    var sDate = this._dateHelper.getShortDateWithFormat(params.startDate, 'YYYY.M.' , 'YYYYMM');
-    var eDate = this._dateHelper.getShortDateWithFormat(params.endDate, 'YYYY.M.' , 'YYYYMM');
+    var sDate = this._dateHelper.getShortDateWithFormat(params.startDate, 'YYYY. M.' , 'YYYYMM');
+    var eDate = this._dateHelper.getShortDateWithFormat(params.endDate, 'YYYY. M.' , 'YYYYMM');
 
     var strPeriod = sDate + ' - ' + eDate;
     this.$strPeriod.text(strPeriod);
