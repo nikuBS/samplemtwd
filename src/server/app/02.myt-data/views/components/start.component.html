@@ -17,38 +17,4 @@
     <meta property="og:description" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
     <title><%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %></title>
     <% include ../components/stylesheet.component.html %>
-    <% var adv = locals.data ? (locals.data.adv? 1 : 0 ) : 0; %>
-    <% var fullUrl = locals.pageInfo ? locals.pageInfo.fullUrl : ''; %>
-    <%_ if (adv === 1) { _%>
-        <!-- TEST -->
-        <link rel="stylesheet" type="text/css" href="<%= CDN %>/css/submain.css" media="all" />
-        <%_
-            var scriptPath = '';
-            if (fullUrl.indexOf('app.tworld') > -1) {
-                scriptPath = '/b201203e155342u664/304bbae058'; // app.tworld 인 경우
-            } else if (fullUrl.indexOf('m.tworld') > -1) {
-                scriptPath = '/b201203e155342u664/9e7dad796e';
-            } else if (fullUrl.indexOf('icp-stg.tworld') > -1 || fullUrl.indexOf('localhost')) {
-                scriptPath = '';
-            } else {
-                // dev 환경
-                scriptPath = '';
-            }
-        _%>
-        <%_ if (scriptPath) { _%>
-            <script defer type="text/javascript">
-              window.addEventListener('load', function(){
-                (function(w, d, a){
-                  w.__beusablerumclient__ = {
-                    load : function(src){
-                      var b = d.createElement('script');
-                      b.src = src; b.defer=true; b.type = 'text/javascript';
-                      d.getElementsByTagName('head')[0].appendChild(b);
-                    }
-                  };w.__beusablerumclient__.load(a);
-                })(window, document, '//sktrum.beusable.net/script/b201203e155342u664/304bbae058');
-              }, false);
-            </script>
-        <%_ } _%>
-    <%_ } _%>
 </head>
