@@ -299,6 +299,11 @@ Tw.CertificationSk.prototype = {
       this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
       return;
     }
+    if ($('#fe-check-keyin').is(':checked') ) {
+      $('#fe-input-mdn').prop('aria-hidden', false);
+    } else {
+      $('#fe-input-mdn').prop('aria-hidden', true);
+    }
 
     this._popupService.open({
       hbs: 'CO_CE_02_02_01_02',

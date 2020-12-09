@@ -372,7 +372,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                     <button class="bt">
                     {{/if}}
                         {{#if isIcon}}
-                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}"></span>
+                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt={{menuNm 아이콘}}></span> <!-- 웹 접근성 위반 조치 -->
                         {{/if}}
                         <span class="ti-info">{{menuNm}}
                             {{#if isRealtime}}

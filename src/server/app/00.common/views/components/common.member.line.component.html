@@ -22,7 +22,7 @@
                                                 <div class="tod-line-info">
                                                     <span class="icon">
                                                         <i class="<%=line.ico%>-48">
-                                                            <span class="blind"><%= line.showName %></span>
+                                                            <span class="blind"><%= line.ico.includes('cellphone') ? '모바일' : line.showName %></span> <!-- 웹 접근성 위배 조치 -->
                                                         </i>
                                                     </span>
                                                     <span class="title fe-show-name"><%= line.showName %></span>

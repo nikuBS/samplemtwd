@@ -160,7 +160,7 @@ Tw.TooltipService.prototype = {
       'btn-close': 'btn-tooltip-close tw-popup-closeBtn',
       'title_type': 'tit-tooltip',
       'cont_align': 'tl font-only-black',
-      'contents': $result.ttipCtt,
+      'contents': $result.ttipCtt, // 웹 접근성 위배 조치
       'tooltip': 'tooltip-pd'
     },
       $.proxy(this._onOpen, this),

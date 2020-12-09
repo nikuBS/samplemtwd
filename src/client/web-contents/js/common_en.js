@@ -297,11 +297,21 @@ skt_landing.util = {
   * skt_landing.util.set_zindex();
   */
 	set_zindex:function(inc){
-		if($(".tw-popup").length > 1){
+		var $popups = $('.tw-popup');
+		if($popups.length > 1){
 			inc = inc ? inc : 100;
-			var prevTarget = $(".tw-popup").last().prev(),
-				currentTarget = $(".tw-popup").last();
-			currentTarget.css("z-index",parseInt(prevTarget.css("z-index"))+inc);
+			/**
+			 * 해결 방안 - 2번 방안으로 처리
+			 * 1. zIndex을 미리 설정 한 경우 설정 된 값을 사용하도록 하고
+			 *    이전 element zIndex 값과 비교하여 작은 경우에만 큰 값을 사용하도록 처리
+			 * 2. 팝업의 zIndex 설정하는 기능으로 팝업 내 zIndex 값을 비교하여
+			 *    이전 팝업보다 zIndex 값을 높게 설정하도록 처리
+			 */
+				// var prevTarget = $('.tw-popup').last().prev(),
+				//     currentTarget = $('.tw-popup').last();
+			var prevTarget = $('.tw-popup').eq($popups.length - 2),
+					currentTarget = $('.tw-popup').eq($popups.length - 1);
+			currentTarget.css('z-index',parseInt(prevTarget.css('z-index'))+inc);
 		}
 	}
 };

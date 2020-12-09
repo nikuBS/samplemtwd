@@ -36,8 +36,8 @@
             <!-- .cont-box -->
             <div class="cont-box bgnone pt0 pb60 mb60 noborder tod-widget-wrap">
                 <!-- .accordion -->
-                <% 
-                    if (lineList.m && lineList.m.length > 0) { 
+                <%
+                    if (lineList.m && lineList.m.length > 0) {
                         const tmpList = lineList.m;
                         const tmpCnt = lineList.mCnt;
                         const tmpTitle = lineList.mTitle;
@@ -45,8 +45,8 @@
                 %>
                 <% include ../../components/common.member.line.component.html %>
                 <% } %>
-                <% 
-                    if (lineList.s && lineList.s.length > 0) { 
+                <%
+                    if (lineList.s && lineList.s.length > 0) {
                         const tmpList = lineList.s;
                         const tmpCnt = lineList.sCnt;
                         const tmpTitle = lineList.sTitle;
@@ -61,30 +61,30 @@
                 </div>
             </div>
         </div>
-        <!-- .popup hbs -->
-        <div class="popup tw-popup" style="display: none;" id="fe-pop-agreement">
-            <div class="popup-info tod-eventpop-type1 sel-line-pop" role="alertdialog" aria-describedby="alertText">
-                <div class="popup-header fe-pop-close">
-                    <button type="button" class="btn-tooltip-close">닫기</button>
-                </div>
-                <!-- Case1 광고성 정보 수신 동의 안내 -->
-                <div class="popup-contents" id="alertText">
-                    <div class="inner-contents">
-                        <i class="ico"></i>
-                        <strong class="text-ti-big">T world에서<br>SK브로드밴드 가입<br>상품을 이용해보세요.</strong>
-                        <span class="need-agree">서비스 이용 동의 필요</span>
-                    </div>
-                </div>
-                <ul class="bt-box bt-slice item-two">
-                    <li class="fe-pop-hide"><button class="btn-floating disagree">다음에 하기</button></li>
-                    <li><button class="btn-floating agree fe-bt-internal" data-url="/common/member/line/skb-svc-agreement">네, 좋아요!</button></li>
-                </ul>
-                <!-- //Case1 광고성 정보 수신 동의 안내 -->
-            </div>
-            <div class="popup-blind"></div>
-        </div>
-        <!--// .popup hbs -->
     </div>
+    <!-- .popup hbs -->
+    <div class="popup tw-popup" style="display: none;" id="fe-pop-agreement" tabindex="0" aria-modal="true" aria-hidden="false" role="dialog">
+        <div class="popup-info tod-eventpop-type1 sel-line-pop" role="alertdialog" aria-describedby="alertText">
+            <div class="popup-header fe-pop-close">
+                <button type="button" class="btn-tooltip-close">닫기</button>
+            </div>
+            <!-- Case1 광고성 정보 수신 동의 안내 -->
+            <div class="popup-contents" id="alertText">
+                <div class="inner-contents">
+                    <i class="ico"></i>
+                    <strong class="text-ti-big">T world에서<br>SK브로드밴드 가입<br>상품을 이용해보세요.</strong>
+                    <span class="need-agree">서비스 이용 동의 필요</span>
+                </div>
+            </div>
+            <ul class="bt-box bt-slice item-two">
+                <li class="fe-pop-hide"><button class="btn-floating disagree">다음에 하기</button></li>
+                <li><button class="btn-floating agree fe-bt-internal" data-url="/common/member/line/skb-svc-agreement">네, 좋아요!</button></li>
+            </ul>
+            <!-- //Case1 광고성 정보 수신 동의 안내 -->
+        </div>
+        <div class="popup-blind"></div>
+    </div>
+    <!--// .popup hbs -->
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
@@ -104,13 +104,13 @@
 
 <script id="fe-line-tmpl" type="text/x-handlebars-template">
     {{#each list}}
-    <li class="fe-line ui-state-default {{#if isRepSvcYn}} tod-t-standard fe-line-standard{{/if}} {{#if isExpsYn}} fe-item-active{{/if}} {{#unless isExpsYn}}tod-add-line fe-item-inactive{{/unless}}>" 
+    <li class="fe-line ui-state-default {{#if isRepSvcYn}} tod-t-standard fe-line-standard{{/if}} {{#if isExpsYn}} fe-item-active{{/if}} {{#unless isExpsYn}}tod-add-line fe-item-inactive{{/unless}}>"
         data-svcmgmtnum="{{ svcMgmtNum }}" data-showname="{{showName}}" data-svcnum="{{svcNum}}" data-svcgr="{{ svcGr }}">
         <div class="state-box">
             <div class="tod-line-info">
                 <span class="icon">
                     <i class="{{ ico }}-48">
-                        <span class="blind">{{ showName }}</span>
+                        <span class="blind">{{ showName }}</span> 
                     </i>
                 </span>
                 <span class="title fe-show-name">{{ showName }}</span>
