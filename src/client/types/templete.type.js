@@ -232,17 +232,6 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  CUSTOMER_AGENTSEARCH_MAPS: [
-    {
-      'list': [
-        { 'button-attr': 'id="0" data-open-app="tmap"', txt: 'T map' },
-        { 'button-attr': 'id="1" data-open-app="naver"', txt: '네이버 지도' },
-        { 'button-attr': 'id="2" data-open-app="kakao"', txt: '카카오맵' },
-        /*{ 'button-attr': 'id="3" data-open-app="google"', txt: '구글지도' },*/
-        { 'button-attr': 'id="4" data-open-app="apple"', txt: '애플지도' }
-      ]
-    }
-  ],
   CUSTOMER_FAQ_SEARCH_CATEGORY: [
     {
       list: [
