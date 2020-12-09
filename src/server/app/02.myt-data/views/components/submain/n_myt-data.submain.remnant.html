@@ -89,7 +89,7 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
                                             <span class="remain">무제한</span>
                                         <%_ } else { _%>
                                             <%_ if (totalData.showRemained.data) { _%>
@@ -430,7 +430,7 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
                                         <span class="remain">무제한</span>
                                         <%_ } else { _%>
                                             <%_ if (totalData.showRemained.data) { _%>
@@ -719,7 +719,7 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
                                         <span class="remain">무제한</span>
                                         <%_ } else { _%>
                                             <%_ if (totalData.showRemained.data) { _%>
