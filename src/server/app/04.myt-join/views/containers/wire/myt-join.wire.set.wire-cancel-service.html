@@ -31,11 +31,11 @@ _%>
             <p class="desc">할인반환금 조회내역이 없습니다.</p>
         </div>
         {{/if}}
+        {{#chargeInfo}}
 
         <h3 class="mt40">사용요금 정보<button id="MS_04_08_tip_05" class="tip-view">TIP</button></h3>
         <div class="basic-list">
             <ul>
-                {{#chargeInfo}}
                 <li>
                     <span class="title">이번 달 사용요금(할인 반환금 포함)</span>
                     <span class="tx-cont">{{hbAmt}} 원</span>
@@ -48,9 +48,9 @@ _%>
                     <span class="title">총 납부금액<br />(이번 달 사용요금 + 미납요금)</span>
                     <span class="tx-cont"><span class="tx-bold">{{totAmt}}</span> 원</span>
                 </li>
-                {{/chargeInfo}}
             </ul>
         </div>
+        {{/chargeInfo}}
     </div>
     {{!-- 주석 : 사용요금 정보  --}}
 </script>
