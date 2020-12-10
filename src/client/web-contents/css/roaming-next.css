@@ -3818,7 +3818,7 @@ body.scroll #roamingOn #appbar .appbar {
 .rm-content .widget-box.step .step-list li.on{width:1.125rem;height:1.125rem;padding:0;background-color:#4559fc;line-height:1.125rem;margin:0;text-indent:0}
 
 /* baro Box */
-.rm-content .rm-box-ct .rm-box-ct-top h3{font-size:1.625rem;font-weight:500}
+.rm-content .rm-box-ct .rm-box-ct-top h3{font-size:1.625rem;font-weight:500;padding-right:4.5rem}
 .rm-content .rm-box-ct .rm-box-ct-top h3 em{color:#4559fc}
 .rm-content .rm-box-ct .rm-box-ct-top{position:relative}
 .rm-content .rm-box-ct .rm-box-ct-top .rm-box-bt-cancel{position:absolute;top:2.1875rem;right:1rem;padding-right:.875rem;color:#505dff}
