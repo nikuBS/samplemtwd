@@ -30,74 +30,69 @@
 <body class="rn">
 <div id="nationsDialog" class="dialog" style="display: block;">
     <div class="header">
-        <!-- 202011 - 웹접근성 수정건 적용 : 태그 div 에서 button으로 변경 / 태그 위치 상단으로 변경 시작 -->
-        <button class="close" type="button">
-            <img src="/img/product/roam/ico_close.svg" width="20" height="20" alt="닫기"> <!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
-        </button>
-        <!-- //202011 - 웹접근성 수정건 적용 : 태그 div 에서 button으로 변경 / 태그 위치 상단으로 변경 시작 -->
         <h1>로밍 가능한 전체 국가</h1>
+        <div class="close">
+            <img src="/img/product/roam/ico_close.svg" width="20" height="20">
+        </div>
     </div>
     <div class="menu">
         <ul>
-            <li id="EUR" class="active">
-                <button id="" type="button">유럽</button>
-            </li>
-            <li><button type="button" id="">아시아</button></li>
-            <li><button type="button" id="">미주</button></li>
-            <li><button type="button" id="">오세아니아</button></li>
-            <li><button type="button" id="">중동</button></li>
-            <li><button type="button" id="">아프리카</button></li>
+            <li id="EUR" class="active">유럽</li>
+            <li id="ASP">아시아</li>
+            <li id="AMC">미주</li>
+            <li id="OCN">오세아니아</li>
+            <li id="MET">중동</li>
+            <li id="AFR">아프리카</li>
         </ul>
     </div>
     <div class="content">
-        <h2 class="title-itemList">유럽</h2>  <!-- //202011 - 웹접근성 수정건 적용 : 탭 컨텐츠 제목(.title-itemList) 추가 -->
-        <ul id="itemList">
-            <li data-country="GRC"><button type="button" role="link">그리스</button></li>
-            <li data-country="NLD"><button type="button" role="link">네덜란드</button></li>
-            <li data-country="NOR"><button type="button" role="link">노르웨이</button></li>
-            <li data-country="DNK"><button type="button" role="link">그덴마크리스</button></li>
-            <li data-country="DEU"><button type="button" role="link">독일</button></li>
-            <li data-country="LVA"><button type="button" role="link">라트비아</button></li>
-            <li data-country="RUS"><button type="button" role="link">러시아</button></li>
-            <li data-country="ROU"><button type="button" role="link">루마니아</button></li>
-            <li data-country="LUX"><button type="button" role="link">룩셈부르크</button></li>
-            <li data-country="LTU"><button type="button" role="link">리투아니아</button></li>
-            <li data-country="LIE"><button type="button" role="link">리히텐슈타인</button></li>
-            <li data-country="MKD"><button type="button" role="link">마케도니아 공화국</button></li>
-            <li data-country="MCO"><button type="button" role="link">모나코</button></li>
-            <li data-country="MNE"><button type="button" role="link">몬테네그로</button></li>
-            <li data-country="MDA"><button type="button" role="link">몰도바</button></li>
-            <li data-country="MLT"><button type="button" role="link">몰타</button></li>
-            <li data-country="VAT"><button type="button" role="link">바티칸 시국</button></li>
-            <li data-country="BEL"><button type="button" role="link">벨기에</button></li>
-            <li data-country="BLR"><button type="button" role="link">벨라루스</button></li>
-            <li data-country="BIH"><button type="button" role="link">보스니아헤르체고비나</button></li>
-            <li data-country="BGR"><button type="button" role="link">불가리아</button></li>
-            <li data-country="SMR"><button type="button" role="link">산마리노</button></li>
-            <li data-country="SRB"><button type="button" role="link">세르비아</button></li>
-            <li data-country="SWE"><button type="button" role="link">스웨덴</button></li>
-            <li data-country="CHE"><button type="button" role="link">스위스</button></li>
-            <li data-country="ESP"><button type="button" role="link">스페인</button></li>
-            <li data-country="SVK"><button type="button" role="link">슬로바키아</button></li>
-            <li data-country="SVN"><button type="button" role="link">슬로베니아</button></li>
-            <li data-country="ISL"><button type="button" role="link">아이슬란드</button></li>
-            <li data-country="IRL"><button type="button" role="link">아일랜드</button></li>
-            <li data-country="AND"><button type="button" role="link">안도라</button></li>
-            <li data-country="ALB"><button type="button" role="link">알바니아</button></li>
-            <li data-country="EST"><button type="button" role="link">에스토니아</button></li>
-            <li data-country="GBR"><button type="button" role="link">영국</button></li>
-            <li data-country="AUT"><button type="button" role="link">오스트리아</button></li>
-            <li data-country="UKR"><button type="button" role="link">우크라이나</button></li>
-            <li data-country="ITA"><button type="button" role="link">이탈리아</button></li>
-            <li data-country="CZE"><button type="button" role="link">체코</button></li>
-            <li data-country="HRV"><button type="button" role="link">크로아티아</button></li>
-            <li data-country="TUR"><button type="button" role="link">터키</button></li>
-            <li data-country="FRO"><button type="button" role="link">페로 제도</button></li>
-            <li data-country="PRT"><button type="button" role="link">포르투갈</button></li>
-            <li data-country="POL"><button type="button" role="link">폴란드</button></li>
-            <li data-country="FRA"><button type="button" role="link">프랑스</button></li>
-            <li data-country="FIN"><button type="button" role="link">핀란드</button></li>
-            <li data-country="HUN"><button type="button" role="link">헝가리</button></li>
+        <ul>
+            <li data-country="GRC">그리스</li>
+            <li data-country="NLD">네덜란드</li>
+            <li data-country="NOR">노르웨이</li>
+            <li data-country="DNK">덴마크</li>
+            <li data-country="DEU">독일</li>
+            <li data-country="LVA">라트비아</li>
+            <li data-country="RUS">러시아</li>
+            <li data-country="ROU">루마니아</li>
+            <li data-country="LUX">룩셈부르크</li>
+            <li data-country="LTU">리투아니아</li>
+            <li data-country="LIE">리히텐슈타인</li>
+            <li data-country="MKD">마케도니아 공화국</li>
+            <li data-country="MCO">모나코</li>
+            <li data-country="MNE">몬테네그로</li>
+            <li data-country="MDA">몰도바</li>
+            <li data-country="MLT">몰타</li>
+            <li data-country="VAT">바티칸 시국</li>
+            <li data-country="BEL">벨기에</li>
+            <li data-country="BLR">벨라루스</li>
+            <li data-country="BIH">보스니아헤르체고비나</li>
+            <li data-country="BGR">불가리아</li>
+            <li data-country="SMR">산마리노</li>
+            <li data-country="SRB">세르비아</li>
+            <li data-country="SWE">스웨덴</li>
+            <li data-country="CHE">스위스</li>
+            <li data-country="ESP">스페인</li>
+            <li data-country="SVK">슬로바키아</li>
+            <li data-country="SVN">슬로베니아</li>
+            <li data-country="ISL">아이슬란드</li>
+            <li data-country="IRL">아일랜드</li>
+            <li data-country="AND">안도라</li>
+            <li data-country="ALB">알바니아</li>
+            <li data-country="EST">에스토니아</li>
+            <li data-country="GBR">영국</li>
+            <li data-country="AUT">오스트리아</li>
+            <li data-country="UKR">우크라이나</li>
+            <li data-country="ITA">이탈리아</li>
+            <li data-country="CZE">체코</li>
+            <li data-country="HRV">크로아티아</li>
+            <li data-country="TUR">터키</li>
+            <li data-country="FRO">페로 제도</li>
+            <li data-country="PRT">포르투갈</li>
+            <li data-country="POL">폴란드</li>
+            <li data-country="FRA">프랑스</li>
+            <li data-country="FIN">핀란드</li>
+            <li data-country="HUN">헝가리</li>
         </ul>
     </div>
 </div>

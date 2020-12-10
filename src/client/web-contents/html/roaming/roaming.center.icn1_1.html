@@ -30,21 +30,17 @@
 </head>
 <body class="rn">
 <div id="roamingGuide" class="wrap" style="">
-    <!-- 202011 - 웹접근성 수정건 적용 : appbar 제거     
-        <div id="appbar" class="gnb-opaque">
-            <span class="menu icon-gnb-menu">
-            <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
-            </span>
-            <h1>T로밍센터</h1>
-            <a href="/common/search-main">
-            <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
-            </a>
-        </div> 
-    -->
-
-    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용(display:block) 시작 -->
+    <div id="appbar" class="gnb-opaque">
+        <span class="menu icon-gnb-menu">
+        <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
+        </span>
+        <h1>T로밍센터</h1>
+        <a href="/common/search-main">
+        <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
+        </a>
+    </div>
     <!-- #header -->
-    <div id="header" class="header-wrap" aria-hidden="false" tabindex="">
+    <div id="header" class="header-wrap" style="display: none;" aria-hidden="false" tabindex="">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
@@ -60,35 +56,15 @@
         </div>
     </div>
     <!--// #header -->
-    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용(display:block) 끝 -->
-
     <div id="contents" class="first" style="width: 100%;">
         <div class="center">
             <div class="tabs">
-                <a href="#" aria-selected="true" role="button" class="tab airport active" data-tabid="airport">><span>인천공항</span></a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
-                <a href="#" aria-selected="" role="button" class="tab branch" data-tabid="branch"><span>지점/대리점</span></a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
+                <div class="tab airport active" data-tabid="airport">
+                    <span>인천공항</span>
+                </div>
+                <div class="tab branch" data-tabid="branch"><span>지점/대리점</span></div>
             </div>
         </div>
-        <!-- 202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 시작 (스크립트 위치는 퍼블 확인 위해 임시로 관련 화면 아래에 작업함) -->
-        <script>
-            $(document).ready(function(){
-                function ariaSelectedCheck() {
-                var $areaBtnWrap = $('.center .tabs');
-                    $areaBtnWrap.on('click', 'a', function(e){
-                        e.preventDefault();
-                        var thisBtn= $(this);
-                        var siblingBtn = $(this).siblings('a'); 
-                        $areaBtnWrap.find('[aria-selected="true"]').attr('aria-selected', false);
-                        $(thisBtn).attr('aria-selected', true).addClass('active');
-                        if($(thisBtn).hasClass('active')) {
-                            $(siblingBtn).removeClass('active');
-                        }
-                    });
-                }
-                ariaSelectedCheck();
-            })
-        </script>
-        <!-- //202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 끝 -->
         <div id="airport" class="tab-body">
             <div class="card pt15 mt0">
                 <button id="terminal" class="bt-dropdown bigger" title="수령장소 선택" aria-haspopup="true">

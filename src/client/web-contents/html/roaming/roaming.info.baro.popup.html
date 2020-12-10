@@ -32,39 +32,19 @@
 <!-- baro 통화 혜택 대상 요금제 팝업 -->
 <div id="baroTariffs" class="dialog guide-dialog" style="display:block">
     <div class="appbar">
-        <!-- 202011 - 웹접근성 수정건 적용 : div 태그를 button 태그로 변경, 태그 위치 상단으로 이동 시작 -->
-        <button type="button" class="close">
-            <img src="/img/product/roam/ico_close.svg" width="20" height="20" alt="닫기"> <!-- //202011 - 웹접근성 수정건 적용 : alt="닫기" 추가 -->
-        </button>
-        <!-- //202011 - 웹접근성 수정건 적용 : div 태그를 button 태그로 변경, 태그 위치 상단으로 이동 꿑 -->
         <h1>baro 통화 혜택 대상 로밍 요금제</h1>
+        <div class="close">
+            <img src="/img/product/roam/ico_close.svg" width="20" height="20">
+        </div>
     </div>
     <div class="tabs">
-        <!-- 202011 - 웹접근성 수정건 적용 : div 태그를 a 태그로 변경,  aria 적용 시작 -->
-        <a href="#" aria-selected="true" role="button" class="tab yes active" data-tabid="yes"><span class="title">baro 통화 혜택<br>대상 요금제</span></a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
-        <a href="#" aria-selected="" role="button" class="tab no" data-tabid="no"><span class="title">baro 통화 혜택<br>비 대상 요금제</span></a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
-        <!-- //202011 - 웹접근성 수정건 적용 : div 태그를 a 태그로 변경,  aria 적용 끝 -->
+        <div class="tab yes active" data-tabid="yes">
+            <span class="title">baro 통화 혜택<br>대상 요금제</span>
+        </div>
+        <div class="tab no" data-tabid="no">
+            <span class="title">baro 통화 혜택<br>비 대상 요금제</span>
+        </div>
     </div>
-    <!-- 202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 시작 (스크립트 위치는 퍼블 확인 위해 임시로 관련 화면 아래에 작업함) -->
-    <script>
-        $(document).ready(function(){
-            function ariaSelectedCheck() {
-                var $areaBtnWrap = $('#baroTariffs .tabs');
-                $areaBtnWrap.on('click', 'a', function(e){
-                    e.preventDefault();
-                    var thisBtn= $(this);
-                    var siblingBtn = $(this).siblings('a'); 
-                    $areaBtnWrap.find('[aria-selected="true"]').attr('aria-selected', false);
-                    $(thisBtn).attr('aria-selected', true).addClass('active');
-                    if($(thisBtn).hasClass('active')) {
-                        $(siblingBtn).removeClass('active');
-                    }
-                });
-            }
-            ariaSelectedCheck();
-        })
-    </script>
-    <!-- //202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 끝 -->
     <div class="background-f6"></div>
     <div class="tariffs">
     <div class="card">

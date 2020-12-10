@@ -28,10 +28,8 @@
 <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
 <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
-
 <body class="rn">
 <div id="roamingGuide" class="wrap">
-    <!-- 202011 - 웹접근성 수정건 적용 : 현재 운영에서 헤더로 사용하고 있는 #appbar 제거
     <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
         <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
@@ -40,18 +38,16 @@
         <a href="/common/search-main">
         <img class="search" src="https://cdnm.tworld.co.kr/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
         </a>
-    </div> -->
-
-    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
+    </div>
     <!-- #header -->
-    <div id="header" class="header-wrap">
+    <div id="header" class="header-wrap" style="display: none;">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
                     <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-34" data-xt_csid="NO" data-xt_action="BC"><span class="blind">메뉴열기</span></a>
                 </div>
                 <h1 class="h-tit ">
-                    baro 통화
+                baro 통화
                 </h1>
                 <div class="h-serarch">
                     <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
@@ -60,13 +56,11 @@
         </div>
     </div>
     <!--// #header -->
-    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
-
     <div id="contents" class="first">
         <div class="card title">
             <h2>
 				해외에서 한국으로<br>
-				자유롭게 <img src="/img/product/roam/img_barocall.png" width="95" alt="">  <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+				자유롭게 <img src="/img/product/roam/img_barocall.png" width="95">
 				<span class="colorPoint">통화</span>
             </h2>
             <p class="description">
@@ -85,7 +79,7 @@
         <div class="card mt10n" id="why">
             <h2>Why baro 통화</h2>
             <div class="why pt10">
-                <img src="/img/product/roam/icon_baro_01.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                <img src="/img/product/roam/icon_baro_01.png">
                 <h3 class="condition">연락이 안 될까 걱정된다면?</h3>
                 <p>
 					국내 휴대폰·집 전화 어디든 <br>
@@ -96,7 +90,7 @@
                 </div>
             </div>
             <div class="why">
-                <img src="/img/product/roam/icon_baro_02.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                <img src="/img/product/roam/icon_baro_02.png">
                 <h3 class="condition">통화료가 많이 나온 적이 있다면?</h3>
                 <p>
 					데이터 로밍 요금제를 통한 <br>
@@ -107,7 +101,7 @@
                 </p>
             </div>
             <div class="why">
-                <img src="/img/product/roam/icon_baro_03.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
+                <img src="/img/product/roam/icon_baro_03.png">
                 <h3 class="condition">느리고 잘 안 들리는 통화가<br>답답했다면?</h3>
                 <p>국내처럼 <span class="colorPoint">빠르고 생생한 품질</span>의 음성통화 가능!</p>
             </div>
@@ -122,26 +116,24 @@
         </div>
         <div class="card" id="available">
             <div class="cont-right">
-                <h2 tabindex="-1">baro 통화 이용 가능 여부가 궁금하신가요?</h2><!-- //202011 - 웹접근성 수정건 적용 : 이용가능 여부조회 버튼 클릭하면 h2에 tabindex="-1" 추가, 포커스 이동 -->
+                <h2>baro 통화 이용 가능 여부가 궁금하신가요?</h2>
                 <p>조회하기 버튼을 클릭하면 baro 통화 이용 가능 여부를 확인하실 수 있습니다!</p>
                 <img src="/img/product/roam/img_baro_boy_01.png">
             </div>
-            <!-- 202011 - 웹접근성 수정건 적용 : div를 a태그로 변경 시작 -->
-            <a href="#"  class="button" data-command="queryBaroAvailable">
+            <div class="button" data-command="queryBaroAvailable">
                 조회하기
-            </a>
-            <!-- //202011 - 웹접근성 수정건 적용 : div를 a태그로 변경 끝 -->
+            </div>
             <div class="available-result case1">
-                <img src="/img/product/roam/ico_baro_ok.svg" width="44" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img src="/img/product/roam/ico_baro_ok.svg" width="44">
                 <h3>baro 통화를 이용하실 수 있습니다!</h3>
                 <p>단, T전화 앱 아이폰 버전 6.1.0 이상/안드로이드폰 버전 7.2.0 이상, iOS는 버전 10.0 이상에서 이용하실 수 있습니다.</p>
             </div>
             <div class="available-result case2">
-                <img src="/img/product/roam/ico_baro_fail.svg" width="44" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img src="/img/product/roam/ico_baro_fail.svg" width="44">
                 <h3>baro 통화 이용을 위해<br>T로밍 고객센터로 문의 부탁드립니다.</h3>
             </div>
             <div class="available-result case3">
-                <img src="/img/product/roam/ico_baro_fail.svg" width="44" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img src="/img/product/roam/ico_baro_fail.svg" width="44">
                 <h3>
 					죄송합니다.<br>
 					baro 통화를 이용하실 수 없습니다!
@@ -151,24 +143,13 @@
         <div class="background-f6"></div>
         <div class="whole-image" id="howto">
             <a href="/product/apps/app?appId=TW50000002">
-                <img src="/img/product/roam/img_baro_blue_01.png" alt=""><!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
-                <!-- 202011 - 웹접근성 수정건 적용 : 대체 텍스트 추가 시작 -->
-                <div class="blind">
-                    <p>baro 이용 방법을 확인하세요!</p> 
-                    <ol>
-                        <li>해외 도착후 휴대전원 켜기</li>
-                        <li>비행기 모드 해제</li>
-                        <li>T전화 앱을 켜고 baro 실행</li>
-                    </ol>
-                    <p>T전화 앱 다운로드 바로가기</p>
-                </div>
-                <!-- //202011 - 웹접근성 수정건 적용 : 대체 텍스트 추가 끝 -->
+				<img src="/img/product/roam/img_baro_blue_01.png">
             </a>
         </div>
         <div class="networks">
             <h2>네트워크 상태에 따라 이렇게 연결돼요!</h2>
-            <img src="/img/product/roam/img_baro_blue_02.png" alt="네트워크 상태가 좋을 경우 baro 통화로 연결"><!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
-            <img src="/img/product/roam/img_baro_blue_03.png" alt="네트워크 상태가 나쁠 경우 일반로밍으로 통화 연결 - wifi나 해외 네트워크가 불안정하면 일반음성 로밍으로 연결됩니다. 이 때 음성 로밍 요금이 청구 됩니다."><!-- //202011 - 웹접근성 수정건 적용 : alt 추가 -->
+            <img src="/img/product/roam/img_baro_blue_02.png">
+            <img src="/img/product/roam/img_baro_blue_03.png">
             <ul>
                 <li>baro UI는 아이폰 버전 6.1.0 이상 / 안드로이드폰 버전 7.2.0 이상에서 확인 가능합니다.</li>
             </ul>
@@ -177,13 +158,9 @@
             <h3 class="baro-qna">baro Q&amp;A</h3>
             <div class="qna">
                 <div class="q">
-                    <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
-                    <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="" >
-                        <span class="mark">Q</span>
-                        <span class="title">baro 통화란?</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
-                    </a>
-                    <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
+                    <span class="mark">Q</span>
+                    <span class="title">baro 통화란?</span>
+                    <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
                 </div>
                 <div class="a">
                     <ul>
@@ -201,13 +178,9 @@
                     </ul>
                 </div>
                 <div class="q">
-                     <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
-                     <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="">
-                        <span class="mark">Q</span>
-                        <span class="title">baro 통화는 어떻게 이용하나요?</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
-                    </a>
-                    <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
+                    <span class="mark">Q</span>
+                    <span class="title">baro 통화는 어떻게 이용하나요?</span>
+                    <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
                 </div>
                 <div class="a">
                     <ul>
@@ -222,13 +195,9 @@
                     </ul>
                 </div>
                 <div class="q">
-                    <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
-                    <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="">
-                        <span class="mark">Q</span>
-                        <span class="title">baro 통화로 한국 외의 국가에도 전화를 걸 수 있나요?</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
-                    </a>
-                    <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
+                    <span class="mark">Q</span>
+                    <span class="title">baro 통화로 한국 외의 국가에도 전화를 걸 수 있나요?</span>
+                    <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
                 </div>
                 <div class="a">
                     <ul>
@@ -240,13 +209,9 @@
                     </ul>
                 </div>
                 <div class="q">
-                    <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
-                    <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="">
-                        <span class="mark">Q</span>
-                        <span class="title">한국에 돌아와 일반 T전화를 사용하려면 어떻게 설정해야 하나요?</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
-                    </a>
-                    <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
+                    <span class="mark">Q</span>
+                    <span class="title">한국에 돌아와 일반 T전화를 사용하려면 어떻게 설정해야 하나요?</span>
+                    <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
                 </div>
                 <div class="a">
                     <ul>
@@ -254,13 +219,9 @@
                     </ul>
                 </div>
                 <div class="q">
-                    <!-- 202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 시작 -->
-                    <a href="#" role="#"  class="btn-qna-q" type="button" aria-pressed="">
-                        <span class="mark">Q</span>
-                        <span class="title">국내에서 모바일 인터넷 전화(mVoIP)가 안 되는 요금제를 이용하고 있어요. 이런 경우 baro 통화를 사용할 수 없나요?</span>
-                        <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 추가 -->
-                    </a>
-                    <!-- //202011 - 웹접근성 수정건 적용 :  a.btn-qna-q 추가 끝 -->
+                    <span class="mark">Q</span>
+                    <span class="title">국내에서 모바일 인터넷 전화(mVoIP)가 안 되는 요금제를 이용하고 있어요. 이런 경우 baro 통화를 사용할 수 없나요?</span>
+                    <img class="arrow" src="/img/product/roam/ico_expand.svg" width="13">
                 </div>
                 <div class="a">
                     <ul>
@@ -276,64 +237,39 @@
                 </div>
             </div>
         </div>
-        <!-- 202011 - 웹접근성 수정건 적용 :  aria-pressed 추가 관련 스크립트 퍼블용 추가 시작 (스크립트 위치는 퍼블 확인 위해 임시로 관련 화면 아래에 작업함) -->
-        <script>
-            $(document).ready(function(){
-                function ariaPressedCheck() {
-                var $areaBtn = $('.qna .btn-qna-q');
-                    $areaBtn.on('click', function(e){
-                    var thisBtn= $(this);
-                    var siblingBtn = $(this).parent('.q').siblings('.q').children('.btn-qna-q'); 
-                    e.preventDefault();
-                    $(siblingBtn).attr('aria-pressed', false);
-                    $(thisBtn).attr('aria-pressed', true);
-                    });
-                }
-                ariaPressedCheck();
-            })
-        </script>
-        <!-- //202011 - 웹접근성 수정건 적용 :  aria-pressed 추가 관련 스크립트 퍼블용 추가 끝 -->
         <div class="card">
             <h2>T로밍 고객센터</h2>
             <a href="tel:0263439000">
-                <div class="links">
-                    <div class="other-link left">
-                        <h3>T로밍 고객센터(국내)</h3>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="phone-link">
-                        <span class="text">무료</span>
-                        <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 적용 -->
-                    </div>
+            <div class="links">
+                <div class="other-link left">
+                    <h3>T로밍 고객센터(국내)</h3>
                 </div>
+                <div class="divider"></div>
+                <div class="phone-link">
+                    <span class="text">무료</span>
+                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
+                </div>
+            </div>
             </a>
             <div class="cs-divider"></div>
             <a href="tel:+82263439000">
-                <div class="links">
-                    <div class="other-link left">
-                        <h3>T로밍 고객센터(해외)</h3>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="phone-link">
-                        <span class="text">로밍폰 발신 무료</span>
-                        <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt=""> <!-- //202011 - 웹접근성 수정건 적용 :  alt="" 적용 -->
-                    </div>
+            <div class="links">
+                <div class="other-link left">
+                    <h3>T로밍 고객센터(해외)</h3>
                 </div>
+                <div class="divider"></div>
+                <div class="phone-link">
+                    <span class="text">로밍폰 발신 무료</span>
+                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
+                </div>
+            </div>
             </a>
         </div>
         <div class="card tips">
             <h2>꼭 확인해 주세요</h2>
-            <h3>서비스 이용 조건 
-                <button type="button" class="tip" data-tip="TC000056">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 : span을 button으로 변경 -->
-            </h3>
-            <h3>
-                요금 청구 및 이용 안내 
-                <button type="button" class="tip" data-tip="TC000057">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 : span을 button으로 변경 -->
-            </h3>
-            <h3>
-                유의 사항
-                <button type="button" class="tip" data-tip="TC000058">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 : span을 button으로 변경 -->
-            </h3> 
+            <h3>서비스 이용 조건 <span class="tip" data-tip="TC000056">TIP</span></h3>
+            <h3>요금 청구 및 이용 안내 <span class="tip" data-tip="TC000057">TIP</span></h3>
+            <h3>유의 사항 <span class="tip" data-tip="TC000058">TIP</span></h3>
         </div>
         <div class="h36"></div>
     </div>

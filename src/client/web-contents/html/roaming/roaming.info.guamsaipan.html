@@ -30,7 +30,6 @@
 </head>
 <body class="rn">
 <div id="roamingGuide" class="wrap">
-    <!-- 202011 - 웹접근성 수정건 적용 : 현재 운영에서 헤더로 사용하고 있는 #appbar 제거
     <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
         <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
@@ -39,11 +38,9 @@
         <a href="/common/search-main">
         <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
         </a>
-    </div> -->
-
-    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
+    </div>
     <!-- #header -->
-    <div id="header" class="header-wrap">
+    <div id="header" class="header-wrap" style="display: none;">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
@@ -57,8 +54,6 @@
         </div>
     </div>
     <!--// #header -->    
-    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
-    
     <div id="contents" class="first">
         <div class="card title">
             <h2>
@@ -86,18 +81,18 @@
                 <li>출국 후 가입해도 동일하게 이용하실 수 있습니다.</li>
             </ul>
             <div class="guam-explain">
-                <img class="icon" src="/img/product/roam/icon_guam_01.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img class="icon" src="/img/product/roam/icon_guam_01.png">
                 <h4>데이터</h4>
                 <p>별도 설정 없이 LTE/3G 데이터 로밍 이용 (요금제 유형별 데이터 이용 안내 참고)</p>
             </div>
             <div class="guam-explain">
-                <img class="icon" src="/img/product/roam/icon_guam_02.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img class="icon" src="/img/product/roam/icon_guam_02.png">
                 <h4>음성</h4>
                 <p>T전화로 baro 통화 이용 시 음성 로밍 무료(단, 제3국 발신 제외)</p>
                 <p class="notice">※ 일반 로밍 음성통화를 이용할 경우 1.98원/초<br>(국내 통화 요금과 같음)</p>
             </div>
             <div class="guam-explain">
-                <img class="icon" src="/img/product/roam/icon_guam_03.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img class="icon" src="/img/product/roam/icon_guam_03.png">
                 <h4>문자메시지</h4>
                 <p>SMS/MMS 기본 제공</p>
             </div>
@@ -140,7 +135,7 @@
                 <li>출국 후 가입해도 동일하게 이용하실 수 있습니다.</li>
             </ul>
             <div class="guam-explain">
-                <img class="icon" src="/img/product/roam/icon_guam_01.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img class="icon" src="/img/product/roam/icon_guam_01.png">
                 <h4>데이터</h4>
                 <p>
 					매일 500MB 기본제공 + 다 쓰면 최대
@@ -148,13 +143,13 @@
                 </p>
             </div>
             <div class="guam-explain">
-                <img class="icon" src="/img/product/roam/icon_guam_02.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img class="icon" src="/img/product/roam/icon_guam_02.png">
                 <h4>음성</h4>
                 <p>T전화로 baro 통화 이용 시 음성 로밍 무료 (단, 제3국 발신 제외)</p>
                 <p class="notice">※ 일반 로밍 음성통화를 이용할 경우 1.98원/초<br>(국내 통화 요금과 같음)</p>
             </div>
             <div class="guam-explain">
-                <img class="icon" src="/img/product/roam/icon_guam_03.png" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                <img class="icon" src="/img/product/roam/icon_guam_03.png">
                 <h4>문자메시지</h4>
                 <p>SMS/MMS 기본 제공</p>
             </div>
@@ -172,7 +167,7 @@
                 <div class="divider"></div>
                 <div class="phone-link">
                     <span class="text">무료</span>
-                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
                 </div>
             </div>
             </a>
@@ -185,23 +180,16 @@
                 <div class="divider"></div>
                 <div class="phone-link">
                     <span class="text">로밍폰 발신 무료</span>
-                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
-                </div>
+                    <img src="/img/product/roam/ico_phone_guide.svg" class="phone" width="22">
                 </div>
             </div>
             </a>
         </div>
         <div class="card tips">
             <h2>꼭 확인해 주세요</h2>
-            <h3>
-                T괌사이판 국내처럼 이용 안내<button type="button" class="tip" data-tip="TC000059">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 :tip 버튼 button태그로 수정 -->
-            </h3>
-            <h3>
-                T괌사이판 5천원 이용 안내 <button class="tip" data-tip="TC000060">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 :tip 버튼 button태그로 수정 -->
-            </h3>
-            <h3>
-                서비스 제공 국가 <button class="tip" data-tip="TC000061">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 :tip 버튼 button태그로 수정 -->
-            </h3>
+            <h3>T괌사이판 국내처럼 이용 안내<span class="tip" data-tip="TC000059">TIP</span></h3>
+            <h3>T괌사이판 5천원 이용 안내 <span class="tip" data-tip="TC000060">TIP</span></h3>
+            <h3>서비스 제공 국가 <span class="tip" data-tip="TC000061">TIP</span></h3>
         </div>
         <div class="h36"></div>
     </div>
@@ -212,6 +200,6 @@
             </ul>
         </div>
     </div>
-</div>
+</div>2020-11-23
 </body>
 </html>
