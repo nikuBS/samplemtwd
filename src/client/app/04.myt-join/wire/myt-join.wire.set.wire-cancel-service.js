@@ -79,7 +79,6 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.outputArea = $('[data-target="outputArea"]');
 
     this.$entryTpl = $('#fe-entryTpl');
-    this.$entryNoPenaltyTpl = $('#fe-entry-no-penalty-tpl');
     this.$entryTplDate = $('#fe-entryTplDate');
 
     // 날짜정보 넣기 (왜 이렇게?)
@@ -692,7 +691,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this._svcHbDetailList({
         penaltyInfo: [],
         chargeInfo: null
-      }, this.outputArea, this.$entryNoPenaltyTpl);
+      }, this.outputArea, this.$entryTpl);
       this.dataModel.dcRefdSearch = true;
     }
  },
