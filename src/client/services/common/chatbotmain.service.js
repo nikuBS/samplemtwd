@@ -591,7 +591,7 @@ Tw.ChatbotMainService.prototype = {
                                             // 발화어 배열
                                             this._mlsGreetingRangking = this._defaultGreetingKeywords;
                                             // BFF_05_0232에서 쓰일 item_id
-                                            var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '||' + this._mlsGreetingRangking[0];
+                                            var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|' + this._mlsGreetingRangking[0];
                                             this._mlsItemIds = mlsItemIds;
                                             // 발화어 배열 크기 (B타입인 경우 1)
                                             var greetingRangkingSize = 1;
@@ -1057,8 +1057,7 @@ Tw.ChatbotMainService.prototype = {
             this._requestApis();
         } else { // 간편로그인일 경우 API 태우지 않고 MLS 랭킹 순서만 맞춰서 _drawchatbot 호출                    
             // BFF_05_0232에서 쓰일 item_id
-            //var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
-            this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
+            this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType;
 
             // 실제 발화어 정보 리스트 세팅        
             var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
@@ -1315,8 +1314,7 @@ Tw.ChatbotMainService.prototype = {
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
 
         // BFF_05_0232에서 쓰일 item_id
-        //var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
-        this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
+        this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType;
 
         // 실제 발화어 정보 리스트 세팅        
         var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
