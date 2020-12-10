@@ -30,7 +30,10 @@
 <body class="rn">
 <div id="scheduleDialog" class="dialog wrap" style="display: block;">
     <div class="header">
-        <img class="banner" width="100%" src="/img/product/roam/admin/schedule_banner.png">
+        <!-- 202011 - 웹접근성 수정건 적용 : 기존 div를 button 로 변경, 태그 위치 변경 시작 -->
+        <button type="button" class="close"> <img src="/img/product/roam/ico_close_w.svg" width="20" height="20" alt="닫기" /><!-- //202011 - 웹접근성 수정건 적용 : alt 수정 --> </button>
+        <!-- //202011 - 웹접근성 수정건 적용 : 기존 div를 button 로 변경 끝 -->
+        <img class="banner" width="100%" src="/img/product/roam/admin/schedule_banner.png" alt="" /><!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
         <div class="summary">
             <h1><span id="target-nation" data-code="CHN">중국</span>, 언제 떠나세요?</h1>
             <div>
@@ -40,12 +43,9 @@
                 </div>
                 <div class="date">
                     <h2>오는 날</h2>
-                    <h3 id="date-arrive">2020. 10. 22.(목)</h3>
+                    <h3 id="date-arrive">-</h3>
                 </div>
             </div>
-        </div>
-        <div class="close">
-            <img src="/img/product/roam/ico_close_w.svg" width="20" height="20" alt="Close">
         </div>
     </div>
     <div id="scheduleContent">
@@ -62,156 +62,185 @@
                 <div class="ranges"></div>
                 <div class="drp-calendar left">
                     <div class="calendar-table">
+                        <!-- 202011 - 웹접근성 수정건 적용 : 월표시, 이전달, 다음달 버튼 영역 별도 분리 (해당 플러그인 스크립트 수정) 시작 -->
+                        <div class="table-condensed-header">
+                            <h3 class="table-condensed-title">2020년 10월</h3>
+                            <div class="table-condensed-header__btns prev available">
+                                <button type="button" title="이전달 이동"><span></span></button>
+                            </div>
+                        </div>
+                        <!-- //202011 - 웹접근성 수정건 적용 : 월표시, 이전달, 다음달 버튼 영역 별도 분리 끝 -->
                         <table class="table-condensed">
+                            <caption>2020년 10월 달력 정보 입니다</caption>  <!-- //202011 - 웹접근성 수정건 적용 : 캡션 추가 (해당 플러그인 스크립트 수정) -->
+
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th colspan="5" class="month">2020년 10월</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>일</th>
-                                <th>월</th>
-                                <th>화</th>
-                                <th>수</th>
-                                <th>목</th>
-                                <th>금</th>
-                                <th>토</th>
-                            </tr>
+                                <!-- 202011 - 웹접근성 수정건 적용 : 월표시, 이전달, 다음달 버튼 영역 삭제 (해당 플러그인 스크립트 수정)
+                                <tr>
+                                    <th></th>
+                                    <th colspan="5" class="month">2020년 10월</th>
+                                    <th></th>
+                                </tr> 
+                                -->
+                                <tr>
+                                    <th scope="col">일</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">월</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) --> 
+                                    <th scope="col">화</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">수</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">목</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">금</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">토</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="weekend off ends off disabled" data-title="r0c0">27</td>
-                                <td class="off ends off disabled" data-title="r0c1">28</td>
-                                <td class="off ends off disabled" data-title="r0c2">29</td>
-                                <td class="off ends off disabled" data-title="r0c3">30</td>
-                                <td class="off disabled" data-title="r0c4">1</td>
-                                <td class="off disabled" data-title="r0c5">2</td>
-                                <td class="weekend off disabled" data-title="r0c6">3</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend off disabled" data-title="r1c0">4</td>
-                                <td class="off disabled" data-title="r1c1">5</td>
-                                <td class="today off disabled" data-title="r1c2">6</td>
-                                <td class="available" data-title="r1c3">7</td>
-                                <td class="available" data-title="r1c4">8</td>
-                                <td class="available" data-title="r1c5">9</td>
-                                <td class="weekend available" data-title="r1c6">10</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend available" data-title="r2c0">11</td>
-                                <td class="active start-date available" data-title="r2c1">12</td>
-                                <td class="in-range available" data-title="r2c2">13</td>
-                                <td class="in-range available" data-title="r2c3">14</td>
-                                <td class="in-range available" data-title="r2c4">15</td>
-                                <td class="in-range available" data-title="r2c5">16</td>
-                                <td class="weekend in-range available" data-title="r2c6">17</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend in-range available" data-title="r3c0">18</td>
-                                <td class="in-range available" data-title="r3c1">19</td>
-                                <td class="in-range available" data-title="r3c2">20</td>
-                                <td class="in-range available" data-title="r3c3">21</td>
-                                <td class="active end-date in-range available" data-title="r3c4">22</td>
-                                <td class="available" data-title="r3c5">23</td>
-                                <td class="weekend available" data-title="r3c6">24</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend available" data-title="r4c0">25</td>
-                                <td class="available" data-title="r4c1">26</td>
-                                <td class="available" data-title="r4c2">27</td>
-                                <td class="available" data-title="r4c3">28</td>
-                                <td class="available" data-title="r4c4">29</td>
-                                <td class="available" data-title="r4c5">30</td>
-                                <td class="weekend available" data-title="r4c6">31</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend off ends available" data-title="r5c0">1</td>
-                                <td class="off ends available" data-title="r5c1">2</td>
-                                <td class="off ends available" data-title="r5c2">3</td>
-                                <td class="off ends available" data-title="r5c3">4</td>
-                                <td class="off ends available" data-title="r5c4">5</td>
-                                <td class="off ends available" data-title="r5c5">6</td>
-                                <td class="weekend off ends available" data-title="r5c6">7</td>
-                            </tr>
+                            <!-- 202011 - 웹접근성 수정건 적용 : td에 role="button" tabindex="0" 추가 (해당 플러그인 스크립트 수정) 시작 -->
+
+                                <tr>
+                                    <td class="weekend off ends off disabled" data-title="r0c0" role="button" tabindex="0">27</td>
+                                    <td class="off ends off disabled" data-title="r0c1" role="button" tabindex="0">28</td>
+                                    <td class="off ends off disabled" data-title="r0c2" role="button" tabindex="0">29</td>
+                                    <td class="off ends off disabled" data-title="r0c3" role="button" tabindex="0">30</td>
+                                    <td class="off disabled" data-title="r0c4" role="button" tabindex="0">1</td>
+                                    <td class="off disabled" data-title="r0c5" role="button" tabindex="0">2</td>
+                                    <td class="weekend off disabled" data-title="r0c6" role="button" tabindex="0">3</td>
+                                </tr>
+                                <tr>
+                                    <td class="weekend off disabled" data-title="r1c0" role="button" tabindex="0">4</td>
+                                    <td class="off disabled" data-title="r1c1" role="button" tabindex="0">5</td>
+                                    <td class="today off disabled" data-title="r1c2" role="button" tabindex="0">6</td>
+                                    <td class="available" data-title="r1c3" role="button" tabindex="0">7</td>
+                                    <td class="available" data-title="r1c4" role="button" tabindex="0">8</td>
+                                    <td class="available" data-title="r1c5" role="button" tabindex="0">9</td>
+                                    <td class="weekend available" data-title="r1c6" role="button" tabindex="0">10</td>
+                                </tr>
+                                <tr>
+                                    <td class="weekend available" data-title="r2c0" role="button" tabindex="0">11</td>
+                                    <td class="active start-date available" data-title="r2c1" role="button" tabindex="0">12</td>
+                                    <td class="in-range available" data-title="r2c2" role="button" tabindex="0">13</td>
+                                    <td class="in-range available" data-title="r2c3" role="button" tabindex="0">14</td>
+                                    <td class="in-range available" data-title="r2c4" role="button" tabindex="0">15</td>
+                                    <td class="in-range available" data-title="r2c5" role="button" tabindex="0">16</td>
+                                    <td class="weekend in-range available" data-title="r2c6" role="button" tabindex="0">17</td>
+                                </tr>
+                                <tr>
+                                    <td class="weekend in-range available" data-title="r3c0">18</td>
+                                    <td class="in-range available" data-title="r3c1" role="button" tabindex="0">19</td>
+                                    <td class="in-range available" data-title="r3c2" role="button" tabindex="0">20</td>
+                                    <td class="in-range available" data-title="r3c3" role="button" tabindex="0">21</td>
+                                    <td class="active end-date in-range available" data-title="r3c4">22</td>
+                                    <td class="available" data-title="r3c5" role="button" tabindex="0">23</td>
+                                    <td class="weekend available" data-title="r3c6" role="button" tabindex="0">24</td>
+                                </tr>
+                                <tr>
+                                    <td class="weekend available" data-title="r4c0" role="button" tabindex="0">25</td>
+                                    <td class="available" data-title="r4c1" role="button" tabindex="0">26</td>
+                                    <td class="available" data-title="r4c2" role="button" tabindex="0">27</td>
+                                    <td class="available" data-title="r4c3" role="button" tabindex="0">28</td>
+                                    <td class="available" data-title="r4c4" role="button" tabindex="0">29</td>
+                                    <td class="available" data-title="r4c5" role="button" tabindex="0">30</td>
+                                    <td class="weekend available" data-title="r4c6"role="button" tabindex="0">31 </td>
+                                </tr>
+                                <tr>
+                                    <td class="weekend off ends available" data-title="r5c0" role="button" tabindex="0">1</td>
+                                    <td class="off ends available" data-title="r5c1" role="button" tabindex="0">2</td>
+                                    <td class="off ends available" data-title="r5c2" role="button" tabindex="0">3</td>
+                                    <td class="off ends available" data-title="r5c3" role="button" tabindex="0">4</td>
+                                    <td class="off ends available" data-title="r5c4" role="button" tabindex="0">5</td>
+                                    <td class="off ends available" data-title="r5c5" role="button" tabindex="0">6</td>
+                                    <td class="weekend off ends available" data-title="r5c6" role="button" tabindex="0">7</td>
+                                </tr>
+                                <!-- //202011 - 웹접근성 수정건 적용 : td에 role="button" tabindex="0" 추가 (해당 플러그인 스크립트 수정) 끝 -->
+
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="drp-calendar right">
                     <div class="calendar-table">
+                        <!-- 202011 - 웹접근성 수정건 적용 : 월표시, 이전달, 다음달 버튼 영역 별도 분리 (해당 플러그인 스크립트 수정) 시작 -->
+                        <div class="table-condensed-header">
+                            <h3 class="table-condensed-title">2020년 11월</h3>
+                            <div class="table-condensed-header__btns next available">
+                                <button type="button" title="다음달 이동"><span></span></button>
+                            </div>
+                        </div>
+                        <!-- //202011 - 웹접근성 수정건 적용 : 월표시, 이전달, 다음달 버튼 영역 별도 분리 끝 -->
                         <table class="table-condensed">
+                            <caption>2020년 11월 달력 정보 입니다</caption>  <!-- //202011 - 웹접근성 수정건 적용 : 캡션 추가 (해당 플러그인 스크립트 수정) -->
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th colspan="5" class="month">2020년 11월</th>
-                                <th class="next available"><span></span></th>
-                            </tr>
-                            <tr>
-                                <th>일</th>
-                                <th>월</th>
-                                <th>화</th>
-                                <th>수</th>
-                                <th>목</th>
-                                <th>금</th>
-                                <th>토</th>
-                            </tr>
+                                <!-- 202011 - 웹접근성 수정건 적용 : 월표시, 이전달, 다음달 버튼 영역 삭제 (해당 플러그인 스크립트 수정)
+                                <tr>
+                                    <th></th>
+                                    <th colspan="5" class="month">2020년 11월</th>
+                                    <th class="next available"><span></span></th>
+                                </tr> 
+                                -->
+                                <tr>
+                                    <th scope="col">일</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">월</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) --> 
+                                    <th scope="col">화</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">수</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">목</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">금</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                    <th scope="col">토</th> <!-- //202011 - 웹접근성 수정건 적용 : scope="col" 추가 (해당 플러그인 스크립트 수정) -->
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="weekend off ends available" data-title="r0c0">25</td>
-                                <td class="off ends available" data-title="r0c1">26</td>
-                                <td class="off ends available" data-title="r0c2">27</td>
-                                <td class="off ends available" data-title="r0c3">28</td>
-                                <td class="off ends available" data-title="r0c4">29</td>
-                                <td class="off ends available" data-title="r0c5">30</td>
-                                <td class="weekend off ends available" data-title="r0c6">31</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend available" data-title="r1c0">1</td>
-                                <td class="available" data-title="r1c1">2</td>
-                                <td class="available" data-title="r1c2">3</td>
-                                <td class="available" data-title="r1c3">4</td>
-                                <td class="available" data-title="r1c4">5</td>
-                                <td class="available" data-title="r1c5">6</td>
-                                <td class="weekend available" data-title="r1c6">7</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend available" data-title="r2c0">8</td>
-                                <td class="available" data-title="r2c1">9</td>
-                                <td class="available" data-title="r2c2">10</td>
-                                <td class="available" data-title="r2c3">11</td>
-                                <td class="available" data-title="r2c4">12</td>
-                                <td class="available" data-title="r2c5">13</td>
-                                <td class="weekend available" data-title="r2c6">14</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend available" data-title="r3c0">15</td>
-                                <td class="available" data-title="r3c1">16</td>
-                                <td class="available" data-title="r3c2">17</td>
-                                <td class="available" data-title="r3c3">18</td>
-                                <td class="available" data-title="r3c4">19</td>
-                                <td class="available" data-title="r3c5">20</td>
-                                <td class="weekend available" data-title="r3c6">21</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend available" data-title="r4c0">22</td>
-                                <td class="available" data-title="r4c1">23</td>
-                                <td class="available" data-title="r4c2">24</td>
-                                <td class="available" data-title="r4c3">25</td>
-                                <td class="available" data-title="r4c4">26</td>
-                                <td class="available" data-title="r4c5">27</td>
-                                <td class="weekend available" data-title="r4c6">28</td>
-                            </tr>
-                            <tr>
-                                <td class="weekend available" data-title="r5c0">29</td>
-                                <td class="available" data-title="r5c1">30</td>
-                                <td class="off ends available" data-title="r5c2">1</td>
-                                <td class="off ends available" data-title="r5c3">2</td>
-                                <td class="off ends available" data-title="r5c4">3</td>
-                                <td class="off ends available" data-title="r5c5">4</td>
-                                <td class="weekend off ends available" data-title="r5c6">5</td>
-                            </tr>
+                                <!-- 202011 - 웹접근성 수정건 적용 : td에 role="button" tabindex="0" 추가 (해당 플러그인 스크립트 수정) 시작 -->
+                                <tr>
+                                    <td class="weekend off ends available" data-title="r0c0" role="button" tabindex="0">25</td> 
+                                    <td class="off ends available" data-title="r0c1" role="button" tabindex="0">26</td> 
+                                    <td class="off ends available" data-title="r0c2" role="button" tabindex="0">27</td> 
+                                    <td class="off ends available" data-title="r0c3" role="button" tabindex="0">28</td> 
+                                    <td class="off ends available" data-title="r0c4" role="button" tabindex="0">29</td> 
+                                    <td class="off ends available" data-title="r0c5" role="button" tabindex="0">30</td> 
+                                    <td class="weekend off ends available" data-title="r0c6" role="button" tabindex="0">31</td> 
+                                </tr>
+                                <tr>
+                                    <td class="weekend available" data-title="r1c0" role="button" tabindex="0">1</td> 
+                                    <td class="available" data-title="r1c1" role="button" tabindex="0">2</td> 
+                                    <td class="available" data-title="r1c2" role="button" tabindex="0">3</td> 
+                                    <td class="available" data-title="r1c3" role="button" tabindex="0">4</td> 
+                                    <td class="available" data-title="r1c4" role="button" tabindex="0">5</td> 
+                                    <td class="available" data-title="r1c5" role="button" tabindex="0">6</td> 
+                                    <td class="weekend available" data-title="r1c6" role="button" tabindex="0">7</td> 
+                                </tr>
+                                <tr>
+                                    <td class="weekend available" data-title="r2c0" role="button" tabindex="0">8</td> 
+                                    <td class="available" data-title="r2c1" role="button" tabindex="0">9</td> 
+                                    <td class="available" data-title="r2c2" role="button" tabindex="0">10</td> 
+                                    <td class="available" data-title="r2c3" role="button" tabindex="0">11</td> 
+                                    <td class="available" data-title="r2c4" role="button" tabindex="0">12</td> 
+                                    <td class="available" data-title="r2c5" role="button" tabindex="0">13</td> 
+                                    <td class="weekend available" data-title="r2c6" role="button" tabindex="0">14</td> 
+                                </tr>
+                                <tr>
+                                    <td class="weekend available" data-title="r3c0" role="button" tabindex="0">15</td> 
+                                    <td class="available" data-title="r3c1" role="button" tabindex="0">16</td> 
+                                    <td class="available" data-title="r3c2" role="button" tabindex="0">17</td> 
+                                    <td class="available" data-title="r3c3" role="button" tabindex="0">18</td> 
+                                    <td class="available" data-title="r3c4" role="button" tabindex="0">19</td> 
+                                    <td class="available" data-title="r3c5" role="button" tabindex="0">20</td> 
+                                    <td class="weekend available" data-title="r3c6" role="button" tabindex="0">21</td> 
+                                </tr>
+                                <tr>
+                                    <td class="weekend available" data-title="r4c0" role="button" tabindex="0">22</td> 
+                                    <td class="available" data-title="r4c1" role="button" tabindex="0">23</td> 
+                                    <td class="available" data-title="r4c2" role="button" tabindex="0">24</td> 
+                                    <td class="available" data-title="r4c3" role="button" tabindex="0">25</td> 
+                                    <td class="available" data-title="r4c4" role="button" tabindex="0">26</td> 
+                                    <td class="available" data-title="r4c5" role="button" tabindex="0">27</td> 
+                                    <td class="weekend available" data-title="r4c6" role="button" tabindex="0">28</td> 
+                                </tr>
+                                <tr>
+                                    <td class="weekend available" data-title="r5c0" role="button" tabindex="0">29</td> 
+                                    <td class="available" data-title="r5c1" role="button" tabindex="0">30</td> 
+                                    <td class="off ends available" data-title="r5c2" role="button" tabindex="0">1</td> 
+                                    <td class="off ends available" data-title="r5c3" role="button" tabindex="0">2</td> 
+                                    <td class="off ends available" data-title="r5c4" role="button" tabindex="0">3</td> 
+                                    <td class="off ends available" data-title="r5c5" role="button" tabindex="0">4</td> 
+                                    <td class="weekend off ends available" data-title="r5c6" role="button" tabindex="0">5</td> 
+                                </tr>
+                                <!-- //202011 - 웹접근성 수정건 적용 : td에 role="button" tabindex="0" 추가 (해당 플러그인 스크립트 수정) 끝 -->
                             </tbody>
                         </table>
                     </div>
