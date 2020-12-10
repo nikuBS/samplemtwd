@@ -7,7 +7,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         <div class="h-belt">
             <div class="h-default">
 
-                <div class="h-tit"><%- title %></div>
+                <h1 class="h-tit"><%- title %></h1>
             </div>
         </div>
     </div>
@@ -16,15 +16,15 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
-                    <button type="button"  onclick="location.href='#menu'" class="icon-gnb-menu" role="button" id="fe-bt-gnb" data-xt_eid="MWMA_A10_B79-25" data-xt_csid="NO" data-xt_action="BC"><span class="blind">Menu open</span></button>
+                    <button type="button"  onclick="location.href='#menu'" class="icon-gnb-menu" role="button" id="fe-bt-gnb" data-xt_eid="MWMA_A10_B79-25" data-xt_csid="NO" data-xt_action="BC"><span class="blind">Open whole menu</span></button>
                 </div>
                 <% if (title == '') { %>
-                <div class="h-logo"><button data-url="/en/main/home"  class="icon-gnb-home-T"><span class="blind">Go to Home</span></button></div>
+                <div class="h-logo"><button data-url="/en/main/home" title="Go to home" class="icon-gnb-home-T"><span class="blind">T world</span></button></div>
                 <% } else { %>
                     <%_ if ( locals.productPage && locals.productPage === 'Y' ) { _%>
                         <div class="h-tit t-none"><%- title %></div>
                     <%_ } else { _%>
-                        <div class="h-tit"><%- title %></div>
+                        <h1 class="h-tit"><%- title %></h1>
                     <%_ } _%>
                 <% }%>
             </div>
@@ -37,6 +37,8 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
 
 
 <div id="common-menu" class="user-type tod-common-menu" aria-hidden="true"><!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
+    <button class="c-close" id="fe-close"><span class="blind">Close whole menu</span></button>
+    
     <div class="section-userinfo fe-menu-section">
         <!-- 로그인전 -->
         <span class="userinfo fe-when-logout none">
@@ -46,7 +48,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
 
         <!-- 회원 -->
         <span class="userinfo  fe-when-login-type0 none">
-            <button class="login under-line fe-userinfo none" id="fe-svc-number" data-xt_eid="MWMA_A10_B80_C1199-2" data-xt_csid="NO" data-xt_action="BC"></button>
+            <button id="fe-svc-number" class="login under-line fe-userinfo none" data-xt_eid="MWMA_A10_B80_C1199-2" data-xt_csid="NO" data-xt_action="BC"></button>
             <span class="login none"></span>
         </span>  
         <!-- 회선등록 -->
@@ -147,7 +149,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         <!-- footer -->
         <div class="footer">
             <ul class="f-menu">
-                <li><button class="bt fe-outlink" title="new window" value="https://www.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=WEB&stplTypCd=02&frgnrClCd=F" data-xt_eid="MWMA_A10_B80_C1199-14" >PRIVACY POLICY</button></li>
+                <li><button class="bt fe-outlink" title="Open new window" value="https://www.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=WEB&stplTypCd=02&frgnrClCd=F" data-xt_eid="MWMA_A10_B80_C1199-14" >PRIVACY POLICY</button></li>
                 <li><button class="bt fe-menu-link" value="/en/main/menu/settings/terms" data-xt_eid="MWMA_A10_B80_C1199-15" data-xt_csid="NO" data-xt_action="BC">TERMS AND CONDITIONS(KR)</button></li>
                 <li><button class="bt fe-menu-link"  value="/en/main/menu/settings/terms?id=68&type=a" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="MWMA_A10_B80_C1199-16">RESPONSIBILITY LIMIT & LEGAL(KR)</button></li>
             </ul>
@@ -161,10 +163,10 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                 <li class="f-ltd">COPYRIGHT © SK TELECOM CO., LTD. ALL RIGHTS RESERVED</li>
             </ul>
             <div class="link-area">
-                <button class="rang-kor fe-menu-link" value="/main/home" data-xt_eid="MWMA_A10_B80_C1199-17">KOR</button>
+                <button class="rang-kor fe-menu-link" value="/main/home" data-xt_eid="MWMA_A10_B80_C1199-17" title="Go to korean">KOR</button>
                 <!-- 201013 select box markup 변경 -->
                 <div>
-                    <button for="select" data-target="familyActionBtn" data-xt_eid="MWMA_A10_B80_C1199-18">Family SITE</button>
+                    <button id="family-line-action" for="select" data-target="familyActionBtn" data-xt_eid="MWMA_A10_B80_C1199-18" aria-haspopup="true" aria-controls="family-line-action" aria-expanded="false">Family SITE</button>
                 </div>
             <!-- //201013 select box markup 변경 -->
             </div>
@@ -185,8 +187,6 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         </div>
         <!-- //footer -->
     </div>
-
-    <button class="c-close" id="fe-close"><span class="blind">close</span></button>
 </div>
 
 

@@ -5548,3 +5548,7 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 /* 200602 [OP002-8504] 챗봇 진입 시 랜딩화면 */
 .tod-chat-img{width:100%}
 .tod-chat-img img{width:100%;}
+
+/* 201204 [OP002-12097] V 컬러링 해지 방어 팝업 구현 요청 */
+.dwg-popup.vc-type-list{background:#632dc6 url(/img/t_dwg/vc_bg_btm.png) no-repeat right bottom;background-size: auto 18rem} 
+.dwg-type-link .tit-txt strong.f-color{color: #5a00ff}

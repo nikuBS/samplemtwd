@@ -40,8 +40,11 @@ Tw.CustomerFaq.prototype = {
     for(var b = this.countNum ; b < this.countNum + this.checkNum ; b++){
       $('.acco-box').eq(b).css('display','list-item');
     }
-    $('.acco-box').eq(this.countNum).children('div.acco-tit').children('button').focus();
-    this.countNum+=10;    
+
+    setTimeout($.proxy(function() {
+      $('.acco-box').eq(this.countNum).children('div.acco-tit').children('button').focus();
+      this.countNum+=10;
+    }, this), 100);
   },
 
 
@@ -71,7 +74,7 @@ Tw.CustomerFaq.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': 'CLOSE' }
     },
       $.proxy(this._onOpenPopup, this, $(e.currentTarget)),
-      null,
+      $.proxy(this._onClosePopup, this, $(e.currentTarget)),
       'faq',
       $(e.currentTarget));
   },
@@ -80,10 +83,19 @@ Tw.CustomerFaq.prototype = {
     Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
     if(this._uri==='' || this._uri===null || this._uri === undefined){
       $layer.find('input#all').attr('checked', 'checked');
+    } else {
+      $layer.find('input#' + this._uri).attr('checked', 'checked');
     }
-    else{$layer.find('input#' + this._uri).attr('checked', 'checked');}
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
-    $layer.on('click', '.tw-popup-closeBtn', function() { $target.focus(); } );
+    $layer.on('click', '.tw-popup-closeBtn', function() {
+      setTimeout(
+        function() { $target.focus(); }, 1100
+      );
+    });
+  },
+
+  _onClosePopup: function ($target, $layer) {
+    $target.focus();
   },
 
   _goLoad: function (event) { //url 이동

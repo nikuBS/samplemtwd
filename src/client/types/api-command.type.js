@@ -248,9 +248,11 @@ Tw.API_CMD = {
   BFF_05_0231: { path: '/core-modification/:version/mls/recommend-multiItem', method: Tw.API_METHOD.POST },
   BFF_05_0232: { path: '/core-modification/:version/mls/conversion-impression', method: Tw.API_METHOD.POST },
   BFF_05_0233: { path: '/core-modification/:version/mls/conversion-click', method: Tw.API_METHOD.POST },
-  BFF_05_0234: { path: '/core-balance/v1/troaming-callhist', method: Tw.API_METHOD.GET },
+  BFF_05_0234: { path: '/core-balance/:version/troaming-callhist', method: Tw.API_METHOD.GET },
   // [OP002-11797]
-  BFF_05_0235: { path: '/core-modification/v1/mls/UserProfiles', method: Tw.API_METHOD.POST },
+  BFF_05_0235: { path: '/core-modification/:version/mls/UserProfiles', method: Tw.API_METHOD.POST },
+  // [OP002-12190]
+  BFF_05_0236: { path: '/core-modification/:version/mls/conversion-dislike', method: Tw.API_METHOD.POST },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
   BFF_06_0002: { path: '/core-recharge/:version/refill-usages', method: Tw.API_METHOD.GET },

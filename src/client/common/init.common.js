@@ -54,6 +54,7 @@ Tw.Init.prototype = {
     Tw.Tracker = Tw.TrackerService.newInstance();
     Tw.Survey = new Tw.SurveyService();
     
+    Tw.ChatbotMain = new Tw.ChatbotMainService();
     Tw.Chatbot = new Tw.ChatbotService();
 
     this._apiService = Tw.Api;

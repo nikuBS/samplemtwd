@@ -54,7 +54,7 @@
                                     <% lineData.data.map((line, index) => { %>
                                     <li class="checkbox type01-big fe-item" role="checkbox" aria-checked="false" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                         <input type="checkbox" class="fe-check-child" name="checkbox" value="" aria-labelledby="aria-comp-checkbox<%= index %>"/><!-- 체크상태일 경우 checked="checked" --><!--웹접근성 수정 -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox{{@index}}"><!--웹접근성 수정 -->
+                                        <div class="comp-list-layout" id="aria-comp-checkbox<%= index %>"><!--웹접근성 수정 -->
                                             <p class="layout-text">
                                                 <span class="mtext"><%= line.showSvcAttrCd %></span>
                                                 <span class="stext">

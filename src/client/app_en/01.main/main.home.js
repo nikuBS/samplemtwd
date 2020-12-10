@@ -166,7 +166,34 @@ Tw.MainHome.prototype = {
         list: list
       }));
       
-      skt_landing.widgets.widget_init(); // 이게 핵심
+      skt_landing.widgets.widget_slider1();
+
+      var $parent = element.parent().parent();
+
+      element.find('#tab1-tab').css('visibility', 'visible');
+      element.find('#tab2-tab').css('visibility', 'hidden');
+      element.find('#tab3-tab').css('visibility', 'hidden');
+
+      $parent.on('click', '#tab1', $.proxy(function() {
+        element.find('#tab1-tab').css('visibility', 'visible');
+        element.find('#tab2-tab').css('visibility', 'hidden');
+        element.find('#tab3-tab').css('visibility', 'hidden');
+        $parent.find('#tab1').focus();
+      }, this));
+
+      $parent.on('click', '#tab2', $.proxy(function() {
+        element.find('#tab1-tab').css('visibility', 'hidden');
+        element.find('#tab2-tab').css('visibility', 'visible');
+        element.find('#tab3-tab').css('visibility', 'hidden');
+        $parent.find('#tab2').focus();
+      }, this));
+
+      $parent.on('click', '#tab3', $.proxy(function() {
+        element.find('#tab1-tab').css('visibility', 'hidden');
+        element.find('#tab2-tab').css('visibility', 'hidden');
+        element.find('#tab3-tab').css('visibility', 'visible');
+        $parent.find('#tab3').focus();
+      }, this));
     }
   },
 

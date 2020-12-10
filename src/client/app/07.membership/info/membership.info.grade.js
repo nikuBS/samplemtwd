@@ -21,7 +21,7 @@ Tw.MembershipInfoGrade.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '[data-popup-id]', $.proxy(this._openPopup,this));
+    this.$container.on('click', '[data-popup-id]', $.proxy(this._openPopup,this)); // html의 data 속성에 들어간 hbs 선택하여 오픈(BE_04_01_L02,BE_04_01_L03 등)
     this.$container.on('click', '[data-external-url]', $.proxy(this._goExternalUrl,this));
     this.$container.on('click', '#fe-req-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));

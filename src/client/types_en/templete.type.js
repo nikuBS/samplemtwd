@@ -1397,9 +1397,9 @@ Tw.HOME_DIRECT_BANNER =
                       'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}">' + 
                         '<span class="inner">' + 
                           '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
-                          '<span class="data">{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
-                          '<span class="sms">{{basOfrCharCntEngCtt}}</span>' + 
-                          '<span class="call">{{basOfrVcallTmsEngCttTrans}}</span>' + 
+                          '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
+                          '<span class="sms"><i class="blind">sms</i>{{basOfrCharCntEngCtt}}</span>' + 
+                          '<span class="call"><i class="blind">call</i>{{basOfrVcallTmsEngCttTrans}}</span>' + 
                         '</span>' + 
                         '<span class="price">₩ <span>{{basFeeInfo}}</span></span>' + 
                       '</button>' + 
@@ -1409,9 +1409,9 @@ Tw.HOME_DIRECT_BANNER =
                       'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}">' + 
                         '<span class="inner">' + 
                         '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
-                        '<span class="data">{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
-                        '<span class="sms">{{basOfrCharCntEngCtt}}</span>' + 
-                        '<span class="call">{{basOfrVcallTmsEngCttTrans}}</span>' + 
+                        '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
+                        '<span class="sms"><i class="blind">sms</i>{{basOfrCharCntEngCtt}}</span>' + 
+                        '<span class="call"><i class="blind">call</i>{{basOfrVcallTmsEngCttTrans}}</span>' + 
                       '</span>' + 
                       '<span class="price">₩ <span>{{basFeeInfo}}</span></span>' + 
                       '</button>' + 

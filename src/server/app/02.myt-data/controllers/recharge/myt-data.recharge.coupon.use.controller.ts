@@ -43,7 +43,7 @@ interface Coupon {
 
 export default class MyTDataRechargeCouponUse extends TwViewController {
   private planType: Map<string, number> = new Map();
-  private fixedProdValue: string = 'NA000';
+  private fixedProdValue: string = 'NA0000';
  /* private planType: Map<string, number> = new Map([
     // ['NA00004098', 0],
     // ['NA00004099', 0],

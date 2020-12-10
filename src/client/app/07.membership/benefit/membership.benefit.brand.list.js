@@ -179,9 +179,13 @@ Tw.MembershipBenefitBrandList.prototype = {
    * @private
    */
   _onOpenArea1Actsht: function($target, $layer){
+    
     if(this._selectedArea1){
       $layer.find('[value="' + this._selectedArea1 + '"]').prop('checked', true);
     }
+
+    // ios에서 액션시트 웹 접근성 오류로 추가
+    Tw.CommonHelper.focusOnActionSheet($layer);
 
     $layer.one('click', 'li.type1', $.proxy(function($target, event){
       var rbt = $(event.currentTarget).find('input[type=radio]');
@@ -226,6 +230,9 @@ Tw.MembershipBenefitBrandList.prototype = {
     if(this._selectedArea2){
       $layer.find('[value="' + this._selectedArea2 + '"]').prop('checked', true);
     }
+
+    // ios에서 액션시트 웹 접근성 오류로 추가
+    Tw.CommonHelper.focusOnActionSheet($layer);
 
     $layer.one('click', 'li.type1', $.proxy(function($target, event){
 

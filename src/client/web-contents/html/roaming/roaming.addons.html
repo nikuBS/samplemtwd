@@ -27,21 +27,24 @@
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
+
 <body class="rn">
 <div id="roamingAddons">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu">
-            <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
-        </span>
-        <h1>T로밍 부가서비스</h1>
-        <a href="/common/search-main">
-            <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
-        </a>
-    </div>
+    <!-- 202011 - 웹접근성 수정건 적용 : appbar 제거 
+        <div id="appbar" class="gnb-opaque">
+            <span class="menu icon-gnb-menu">
+                <img src="/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24">
+            </span>
+            <h1>T로밍 부가서비스</h1>
+            <a href="/common/search-main">
+                <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
+            </a>
+        </div> 
+    -->
+
+    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
     <!-- #header -->
-
-    <div id="header" class="header-wrap" style="display: none;">
-
+    <div id="header" class="header-wrap">
         <div class="h-belt">
             <div class="h-default">
                 <div class="h-menu">
@@ -56,23 +59,37 @@
                 </div>
             </div>
         </div>
-
     </div>
     <!--// #header -->
+    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
 
     <div id="contents">
         <div class="filters">
             <h2>부가서비스 종류</h2>
-
-            <span class="tag active" id="tagF01621">
-                #로밍차단/허용
-            </span>
-
-            <span class="tag" id="tagF01622">
-                #인기
-            </span>
-
+            <a href="#" aria-selected="true" role="button" class="tag active" id="tagF01621"> #로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
+            <a href="#" aria-selected="" role="button" class="tag" id="tagF01622"> #인기</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
         </div>
+
+        <!-- 202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 시작 (스크립트 위치는 퍼블 확인 위해 임시로 관련 화면 아래에 작업함) -->
+        <script>
+            $(document).ready(function(){
+                function ariaSelectedCheck() {
+                var $areaBtnWrap = $('.filters');
+                    $areaBtnWrap.on('click', 'a', function(e){
+                        e.preventDefault();
+                        var thisBtn= $(this);
+                        var siblingBtn = $(this).siblings('a'); 
+                        $areaBtnWrap.find('[aria-selected="true"]').attr('aria-selected', false);
+                        $(thisBtn).attr('aria-selected', true).addClass('active');
+                        if($(thisBtn).hasClass('active')) {
+                            $(siblingBtn).removeClass('active');
+                        }
+                    });
+                }
+                ariaSelectedCheck();
+            })
+        </script>
+        <!-- //202011 - 웹접근성 수정건 적용 :  aria-selected 추가 관련 스크립트 퍼블용 추가 끝 -->
         <div class="items">
             <div class="item">
                 <a href="/product/roaming/terminate?prod_id=NA00006113">
@@ -81,7 +98,7 @@
                 <a href="/product/callplan?prod_id=NA00006113">
                     <h3 class="name">T로밍 음성사용량 안내문자 차단<span class="comment">무료</span></h3>
                 </a>
-                <span class="tag" data-filter="F01621">#로밍차단/허용</span>
+                <a href="#" role="button" class="tag" data-filter="F01621">#로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
                 <p class="description">T로밍 음성 사용량 안내 문자 차단 서비스</p>
             </div>
 
@@ -94,7 +111,7 @@
                 <a href="/product/callplan?prod_id=NA00005139">
                     <h3 class="name">T로밍 음성수발신차단<span class="comment">무료</span></h3>
                 </a>
-                <span class="tag" data-filter="F01621">#로밍차단/허용</span>
+                <a href="#" role="button" data-filter="F01621">#로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
                 <p class="description">해외에서 로밍음성수발신만 차단할 수 있는 서비스</p>
             </div>
 
@@ -107,7 +124,7 @@
                 <a href="/product/callplan?prod_id=TW61000001">
                     <h3 class="name">데이터 로밍 일시허용<span class="comment">무료</span></h3>
                 </a>
-                <span class="tag" data-filter="F01621">#로밍차단/허용</span>
+                <a href="#" role="button" data-filter="F01621">#로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
                 <p class="description">로밍이 불가한 기본요금제 고객도 지정된 기간 동안 데이터 로밍이 가능한 서비스</p>
             </div>
 
@@ -120,7 +137,7 @@
                 <a href="/product/callplan?prod_id=TW61000000">
                     <h3 class="name">로밍일시 허용<span class="comment">무료</span></h3>
                 </a>
-                <span class="tag" data-filter="F01621">#로밍차단/허용</span>
+                <a href="#" role="button" data-filter="F01621">#로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
                 <p class="description">로밍이 불가한 기본 요금제 이용 고객도 로밍을 이용할 수 있도록 하는 무료 서비스</p>
             </div>
 
@@ -133,7 +150,7 @@
                 <a href="/product/callplan?prod_id=NA00003158">
                     <h3 class="name">데이터로밍무조건차단<span class="comment">무료</span></h3>
                 </a>
-                <span class="tag" data-filter="F01621">#로밍차단/허용</span>
+                <a href="#" role="button" data-filter="F01621">#로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
                 <p class="description">데이터로밍 무조건 차단하는 부가서비스</p>
             </div>
 
@@ -146,7 +163,7 @@
                 <a href="/product/callplan?prod_id=TW61000002">
                     <h3 class="name">국제전화사업자 선택<span class="comment">무료</span></h3>
                 </a>
-                <span class="tag" data-filter="F01621">#로밍차단/허용</span>
+                <a href="#" role="button" data-filter="F01621">#로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
                 <p class="description">해외에서 로밍 음성통화 수신을 제공해 주는 국제전화사업자를 선택할 수 있는 서비스</p>
             </div>
 
@@ -159,7 +176,7 @@
                 <a href="/product/callplan?prod_id=TW61000006">
                     <h3 class="name">데이터로밍월상한<span class="comment">무료</span></h3>
                 </a>
-                <span class="tag" data-filter="F01621">#로밍차단/허용</span>
+                <a href="#" role="button" data-filter="F01621">#로밍차단/허용</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
                 <p class="description">데이터로밍통화료 10만원도달시 차단하는 부가서비스</p>
             </div>
         </div>
