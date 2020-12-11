@@ -47,7 +47,7 @@
                 </div>
                 <!-- //스와이프 -->
                 <!-- banner -->
-                <button class="plan-banner" onclick='location.href="/en/product/callplan/miri"' data-xt_eid="MWMA_A10_B82_C1202-1">
+                <button class="plan-banner" onclick='location.href="/en/product/callplan/miri"' data-xt_eid="MWMA_A10_B82_C1202-1" data-xt_csid="NO" data-xt_action="BC">
                     <img src="<%= CDN %>/img/en/img_plan_banner.jpg" alt="MIRI Pre-pay your bills in advance learn more">
                 </button>
                 <!--// banner -->
@@ -66,7 +66,7 @@
                         for (let i = 0; i < Math.min(groups.length, GROUP_MAX_COUNT); i++) {
                             const group = groups[i]; %>
                             <li>
-                                <button role="button" aria-pressed="false" class="representcharge-info" data-xt_eid="<%=group.eidvalue%>">
+                                <button role="button" aria-pressed="false" class="representcharge-info" data-xt_eid="<%=group.eidvalue%>" data-xt_csid="NO" data-xt_action="BC">
                                     <h4 class="title"><%= group.prodGrpEngNm %><% if (group.prodGrpFlagImgUrl) { %><img class="lte" src="<%= group.prodGrpFlagImgUrl %>" alt="<%= group.prodGrpFlagImgAlt %>"><% } %></h4>
                                     <% if (group.prodGrpIconImgUrl) { %> <div class="img-box"><% if (group.prodGrpIconImgUrl) { %><img src="<%= group.prodGrpIconImgUrl %>" alt=""><% } %></div><% } %>
                                     <p class="text"><%= group.prodGrpEngDesc %></p>
@@ -74,7 +74,7 @@
 
                                 <div class="productinfoscroll-box slide-nopd">
                                     <% group.prodList.map(product => { %>
-                                        <button class="plan-card" onclick='location.href="/en/product/callplan?prod_id=<%= product.prodId %>"' data-xt_eid="<%= product.eidvalue %>">
+                                        <button class="plan-card" onclick='location.href="/en/product/callplan?prod_id=<%= product.prodId %>"' data-xt_eid="<%= product.eidvalue %>" data-xt_csid="NO" data-xt_action="BC">
                                             <span>
                                                 <span class="plan-name"><%= product.prodEngNm %></span>
                                                 <span class="fee">₩<span><%= product.basFeeInfo.value %></span></span>

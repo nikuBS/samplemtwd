@@ -615,7 +615,9 @@ Tw.MainHome.prototype = {
         invMonth: invMonth,
         billMonth: billMonth,
         invMonthMMM: invMonthMMM,
-        billMonthMMM: billMonthMMM
+        billMonthMMM: billMonthMMM,
+        viewAllPlansEid: Tw.BrowserHelper.isApp() ? 'CMMA_A10_B79-68' : 'MWMA_A10_B79-34',
+        checkCurrentUsageEid: Tw.BrowserHelper.isApp() ? 'CMMA_A10_B79-74' : 'MWMA_A10_B79-73'
       };
     } else {
       return {
