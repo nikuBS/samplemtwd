@@ -156,8 +156,8 @@ Tw.CommonMemberLine.prototype = {
   },
 
   _onOpenGuideOppup: function ($layer) {
-    Tw.CommonHelper.focusOnActionSheet($layer);
     setTimeout(function() {
+      // Tw.CommonHelper.focusOnActionSheet($layer);
       $layer.find('.popup-closeBtn').focus();
     }, 100);
   }, 
