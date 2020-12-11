@@ -821,7 +821,7 @@ class MyTFareBillGuide extends TwViewController {
   private getAppXtEid(data: any): any {
     const eid = {
       line        : 'CMMA_A10_B81_C1201_D4350-7', // 회선번호
-      selectBill  : 'CMMA_A10_B81_C1201-8',       // select Bill
+      selectBill  : 'CMMA_A10_B81_C1201_D4350-8',       // select Bill
       miri        : 'CMMA_A10_B81_C1201-14',       // 미리
       notPhone    : 'CMMA_A10_B81_C1201_D4350-11',   // notPhone
       gotoKor     : 'CMMA_A10_B81_C1201_D4350-12',     // goKor   
