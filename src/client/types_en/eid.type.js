@@ -103,14 +103,15 @@ Tw.EID_TYPES = {
     'MWMA_A10_B79-27' : { 'WEB' : 'MWMA_A10_B79-27', 'APP' : 'CMMA_A10_B79-39' },
     'MWMA_A10_B79-28' : { 'WEB' : 'MWMA_A10_B79-28', 'APP' : 'CMMA_A10_B79-38' },
     'MWMA_A10_B79-29' : { 'WEB' : 'MWMA_A10_B79-29', 'APP' : 'CMMA_A10_B79-63' },
-    'MWMA_A10_B79-30' : { 'WEB' : 'MWMA_A10_B79-30', 'APP' : 'CMMA_A10_B79-63' },
-    'MWMA_A10_B79-31' : { 'WEB' : 'MWMA_A10_B79-31', 'APP' : 'CMMA_A10_B79-64' },
+    'MWMA_A10_B79-30' : { 'WEB' : 'MWMA_A10_B79-30', 'APP' : 'CMMA_A10_B79-64' },
+    'MWMA_A10_B79-31' : { 'WEB' : 'MWMA_A10_B79-31', 'APP' : 'CMMA_A10_B79-65' },
     'MWMA_A10_B79-32' : { 'WEB' : 'MWMA_A10_B79-32', 'APP' : 'CMMA_A10_B79-66' },
     'MWMA_A10_B79-33' : { 'WEB' : 'MWMA_A10_B79-33', 'APP' : 'CMMA_A10_B79-67' },
     'MWMA_A10_B79-71' : { 'WEB' : 'MWMA_A10_B79-71', 'APP' : 'CMMA_A10_B79-69' },
     'MWMA_A10_B79-72' : { 'WEB' : 'MWMA_A10_B79-72', 'APP' : 'CMMA_A10_B79-70' },
     'MWMA_A10_B79-34' : { 'WEB' : 'MWMA_A10_B79-34', 'APP' : 'CMMA_A10_B79-68' },
     'MWMA_A10_B79-73' : { 'WEB' : 'MWMA_A10_B79-73', 'APP' : 'CMMA_A10_B79-74' },
+    'MWMA_A10_B79-75' : { 'WEB' : 'MWMA_A10_B79-75', 'APP' : 'CMMA_A10_B79-76' },
 
     //홈 노출 요금제
     'MWMA_A10_B79-4' : { 'WEB' : 'MWMA_A10_B79-4', 'APP' : 'CMMA_A10_B79-41' },//5GX Plan
