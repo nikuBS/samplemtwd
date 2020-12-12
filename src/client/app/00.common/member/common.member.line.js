@@ -27,6 +27,7 @@ Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this._changeList = false;
   this.$showNickname = null;
   this.$showMenuBtn = null;
+  this._isCertPopupOpen = false;
 
   this._init();
   this._bindEvent();
@@ -49,7 +50,7 @@ Tw.CommonMemberLine.prototype = {
 
       // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
       if (Tw.FormatHelper.isEmpty(storedData)) {
-        this.$popCert.show();
+        this._openPopup();
       }
       // 그 외 경우 처리
       else {
@@ -61,7 +62,7 @@ Tw.CommonMemberLine.prototype = {
         if (Tw.DateHelper.convDateFormat(storedData.expireTime) < now) { // 만료시간이 지난 데이터 일 경우
           // console.log('만료시점이 지난 경우 (노출)');
           // SK브로드밴드 서비스 이용 동의 팝업 노출
-          this.$popCert.show();
+          this._openPopup();
         } else {
           // console.log('만료시점 이전인 경우 (비노출)');
         }
@@ -70,11 +71,11 @@ Tw.CommonMemberLine.prototype = {
     // 모바일웹
     else {
       if (Tw.CommonHelper.getCookie('hideSkbAgreePop_' + this._userId) !== null) {
-        // console.log('다음에 보기 처리 이력 존재');              
+        // console.log('다음에 보기 처리 이력 존재');
       } else {
         // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
         // SK브로드밴드 서비스 이용 동의 팝업 노출
-        this.$popCert.show();
+        this._openPopup();
       }
     }
 
@@ -145,7 +146,7 @@ Tw.CommonMemberLine.prototype = {
 
   /**
    * @function
-   * @desc 
+   * @desc
    * @param resp
    * @private
    */
@@ -160,6 +161,9 @@ Tw.CommonMemberLine.prototype = {
       this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
     } else {
       Tw.CommonHelper.setCookie(Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, 'Y', 365);
+    }
+    if (this._isCertPopupOpen) {
+      this.$popCert.focus();
     }
   },
 
@@ -247,7 +251,7 @@ Tw.CommonMemberLine.prototype = {
 
     var $menu = $('#fe-manage-menu');
     $menu.detach();
-    
+
     var $btManageLine = $($event.currentTarget);
     var $currentLine = $btManageLine.parents('.fe-line');
     var category = $btManageLine.parents('.fe-item-list').data('category');
@@ -524,7 +528,7 @@ Tw.CommonMemberLine.prototype = {
       this._openEditConfirmPopup(svcNumList, category, checkMsg, successMsg, $target);
 
     // 해지
-    } else {      
+    } else {
       successMsg = Tw.ALERT_MSG_AUTH.ALERT_4_50;
 
       // 기준회선 해지
@@ -779,6 +783,13 @@ Tw.CommonMemberLine.prototype = {
     this._closeMarketingOfferPopup();
   },
 
+  _openPopup: function () {
+    this.$popCert.show();
+    // focus 처리 및 scroll 처리
+    $('body').addClass('noscroll');
+    this.$popCert.focus();
+    this._isCertPopupOpen = true;
+  },
   /**
    * @function
    * @desc SK브로드밴드 서비스 이용 동의 팝업 닫기
@@ -786,6 +797,8 @@ Tw.CommonMemberLine.prototype = {
    */
   _closePopup: function () {
     this.$popCert.hide();
+    $('body').removeClass('noscroll');
+    this._isCertPopupOpen = false;
   },
 
   /**
@@ -799,7 +812,7 @@ Tw.CommonMemberLine.prototype = {
     } else {
       this._setCookie('hideSkbAgreePop', this._userId, 365 * 10);
     }
-    this.$popCert.hide();
+    this._closePopup();
   },
 
   /**
