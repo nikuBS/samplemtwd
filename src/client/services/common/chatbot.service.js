@@ -741,21 +741,21 @@ Tw.ChatbotService.prototype = {
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_purple.json', false);
                   }
-                 break
+                 break;
              case "blue" :
                  if(_this.$combotThema == 'normal'){
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_blue.json', false);
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_blue.json', false);
                   }
-                 break
+                 break;
              case "red" :
                  if(_this.$combotThema == 'normal'){
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_red.json', false);
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_red.json', false);
                   }
-                    break
+                    break;
                 default:
                     _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_purple.json', false);//값이 없을때 넘어오는 기본 값
             }   
@@ -822,47 +822,64 @@ Tw.ChatbotService.prototype = {
                 clearTimeout(_this._timer);
             }, _this));
 
-            //touch event
-            _this.$btnTab.on('touchstart', function(e) {
-                // e.preventDefault();
-                _this._isStartY = e.originalEvent.touches[0].clientY;
-            });
-
-            _this.$btnTab.on('touchmove', function(e) {
-                // e.preventDefault();
-                _this._isLastY = e.originalEvent.touches[0].clientY;
-            });
-
-            _this.$btnTab.on('touchend', function(e) {
-                // e.preventDefault();
-                // click인 경우
-                if (Math.abs(_this._isStartY - _this._isLastY) < 20) {
-                    _this.expanded();
-                // 닫혀 있는데 아래로 내린 경우 - 창 최대화
-                } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY > _this._isLastY ) {
-                    _this.expanded();
-                // 열려 있는데 아래로 내린 경우 - 창 최소화
-                } else if (_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
-                    _this.expanded();
-                // 닫혀 있는데 아래로 내린 경우 - 창 숨김
-                } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
-                    console.log('[chatbot.service] [_bindEvent] A타입 this._mlsChannelId : ', mlsChannelId);
-                    console.log('[chatbot.service] [_bindEvent] A타입 this._mlsProcessId : ', mlsProcessId);
-                    console.log('[chatbot.service] [_bindEvent] A타입 this._mlsItemIds : ', mlsItemIds);
-                    // BFF_05_0236 MLS conversion-tracking API (dislike)
-                    if ( mlsProcessId !== 'N'){
-                        _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
-                            channel_id: mlsChannelId,
-                            process_id: mlsProcessId,
-                            item_id: mlsItemIds
-                        }).done(
-                            Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
-                        );
-                    }
-                    _this.$elChabot.removeClass('slideUp');
-                    Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
+            $(".tod-ui-chabot2 .btn-close").on('click', function() {
+                console.log('[chatbot.service] [_bindEvent] A타입 this._mlsChannelId : ', mlsChannelId);
+                console.log('[chatbot.service] [_bindEvent] A타입 this._mlsProcessId : ', mlsProcessId);
+                console.log('[chatbot.service] [_bindEvent] A타입 this._mlsItemIds : ', mlsItemIds);
+                // BFF_05_0236 MLS conversion-tracking API (dislike)
+                if ( mlsProcessId !== 'N'){
+                    _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
+                        channel_id: mlsChannelId,
+                        process_id: mlsProcessId,
+                        item_id: mlsItemIds
+                    }).done(
+                        Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
+                    );
                 }
+                $elChabot.removeClass("slideUp");
+                Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
             });
+            // //touch event
+            // _this.$btnTab.on('touchstart', function(e) {
+            //     // e.preventDefault();
+            //     _this._isStartY = e.originalEvent.touches[0].clientY;
+            // });
+
+            // _this.$btnTab.on('touchmove', function(e) {
+            //     // e.preventDefault();
+            //     _this._isLastY = e.originalEvent.touches[0].clientY;
+            // });
+
+            // _this.$btnTab.on('touchend', function(e) {
+            //     // e.preventDefault();
+            //     // click인 경우
+            //     if (Math.abs(_this._isStartY - _this._isLastY) < 20) {
+            //         _this.expanded();
+            //     // 닫혀 있는데 아래로 내린 경우 - 창 최대화
+            //     } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY > _this._isLastY ) {
+            //         _this.expanded();
+            //     // 열려 있는데 아래로 내린 경우 - 창 최소화
+            //     } else if (_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
+            //         _this.expanded();
+            //     // 닫혀 있는데 아래로 내린 경우 - 창 숨김
+            //     } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
+            //         console.log('[chatbot.service] [_bindEvent] A타입 this._mlsChannelId : ', mlsChannelId);
+            //         console.log('[chatbot.service] [_bindEvent] A타입 this._mlsProcessId : ', mlsProcessId);
+            //         console.log('[chatbot.service] [_bindEvent] A타입 this._mlsItemIds : ', mlsItemIds);
+            //         // BFF_05_0236 MLS conversion-tracking API (dislike)
+            //         if ( mlsProcessId !== 'N'){
+            //             _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
+            //                 channel_id: mlsChannelId,
+            //                 process_id: mlsProcessId,
+            //                 item_id: mlsItemIds
+            //             }).done(
+            //                 Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
+            //             );
+            //         }
+            //         _this.$elChabot.removeClass('slideUp');
+            //         Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
+            //     }
+            // }); // 1214 접근성 수정, 확장영역 삭제로 주석 처리
 
             setTimeout( function () {
                 _this._animateSvg('.profile2', Tw.Environment.cdn + '/js/chatbot_1.json', false);
