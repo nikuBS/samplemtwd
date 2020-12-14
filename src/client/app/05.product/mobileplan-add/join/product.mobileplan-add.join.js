@@ -356,7 +356,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
     new Tw.XtractorService(this.$container);
 
-    if(Tw.FLO_AND_DATA_PROD_ID.indexOf(this._prodId) !== -1){ //FLO 상품 가입 시 가입안내팝업의 외부링크로 자동연결 [OP002-11213] 
+    if(Tw.AUTO_EXTERNAL_PROD_ID.indexOf(this._prodId) !== -1){ //FLO 상품 가입 시 가입안내팝업의 외부링크로 자동연결 [OP002-11213], [상품]wavve 상품 가입 시 인증링크 변경 관련[OP002-12400]
       this._countNumbers(4, 1);
     }
   },
