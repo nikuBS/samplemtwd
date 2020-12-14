@@ -372,7 +372,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                     <button class="bt">
                     {{/if}}
                         {{#if isIcon}}
-                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt={{menuNm 아이콘}}></span> <!-- 웹 접근성 위반 조치 -->
+                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt="{{menuNm}} 아이콘"></span> <!-- 웹 접근성 위반 조치 -->
                         {{/if}}
                         <span class="ti-info">{{menuNm}}
                             {{#if isRealtime}}
@@ -455,7 +455,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
             {{#each this.children}}
             <li>
                 {{#if isBg}}
-                <div class="bt-depth1" style="background-image:url(<%= CDN %>{{bgimgFilePathNm}});">
+                <div class="bt-depth1" style="background-image:url(<%= CDN %>{{bgimgFilePathNm}})">
                     {{else}}
                     <div class="bt-depth1">
                         {{/if}}
