@@ -388,6 +388,89 @@
 			</div>
 		</div>
 		<!--// #contents -->
+<!-- 201204 웹접근성 수정 : dom 위치 변경 (APP 에서만 노출 ) -->
+		<!--  201109 [OP002-11653]  추가 : SKT-챗봇 C-type -->
+		<!-- 발화어 3개 롤링 -->
+		<!--  Keyword를 발화어 클래스로 사용한다. 
+				ico-chatbot initial // 공통 
+				ico-chatbot pay_mthd : 요금납부 방법
+				ico-chatbot micro_pay :  소액결제 금액 
+				ico-chatbot pay_bill : 이번 달 요금 
+				ico-chatbot data_gift : 데이터선물
+				ico-chatbot refill_coupon : 리필쿠폰
+				ico-chatbot unpaid_amt : 미납 요금
+				ico-chatbot hotbill :  실시간 요금
+				ico-chatbot membership_benefit :  멤버십 혜택
+				ico-chatbot cancel_pause : 휴대폰 일시정지
+				ico-chatbot hotdata : 실시간 잔여량
+				ico-chatbot vcoloring : v컬러링 / V컬러링 (기가입)
+				ico-chatbot wavve :  wavve 앤 데이터
+				ico-chatbot flo :  FLO 앤 데이터
+				ico-chatbot xbox :  게임패스 얼티밋
+				ico-chatbot contents_pay:  컨텐츠 결제 
+		-->
+		<div class="tod-combot-ctype-wrap">
+			<div class="tod-combot-ctype" data-color="purple"><!-- 개발 참고사항 : ctype 한줄 : class="tod-combot-ctype" / ctype 두줄 :  class="tod-combot-ctype twoline" / color 테마 : data-color="gray", data-color="purple" data-color="white" -->
+				<span class="beta"><span class="blind">beta</span></span>
+				<div class="list-wrap">
+					<ul class="ul-rolling">
+						<li>
+							<button class="item"><span class="ico-chatbot pay_mthd"><em class="tod-blind">요금납부 방법</em></span><span class="txt">요금납부 방법	</span></button>
+						</li>
+						<li>
+							<button class="item"><span class="ico-chatbot vcoloring"><em class="tod-blind">V컬러링</em></span><span class="txt">V컬러링이 뭐야?</span></button>
+						</li>
+						<li>
+							<button class="item"><span class="ico-chatbot wavve"><em class="tod-blind">wavve 앤 데이터</em></span><span class="txt">초시대의 동영상이란?</span></button>
+						</li>
+						<li>
+							<button class="item"><span class="ico-chatbot flo"><em class="tod-blind">FLO</em></span><span class="txt">데이터 걱정없는 FLO란?</span></button>
+						</li>
+						<li>
+							<button class="item"><span class="ico-chatbot xbox"><em class="tod-blind">xbox</em></span><span class="txt">모바일로 즐기는 X BOX게임!</span></button>
+						</li>
+						<li>
+							<button class="item"><span class="ico-chatbot cancel_pause"><em class="tod-blind">휴대폰 일시정지</em></span><span class="txt">휴대폰 일시정지 취소하고 싶어
+							</span></button>
+						</li>
+					</ul>
+				</div>
+				<!-- x 버튼 -->
+				<button type="button" class="btn-close"><span class="tod-blind">닫기</span></button>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function () {
+				var timer, rollingTimer;
+	  
+				// 3초후 슬라이드 업
+				timer = setTimeout(function() {
+					$(".tod-combot-ctype-wrap").addClass("slideUp");
+				}, 3000);
+
+				//발화어 롤링 
+				function rolling(){
+					$(".ul-rolling li:first").slideUp(
+						function() { 
+						   $(this).appendTo(".ul-rolling").slideDown();
+						}
+					);
+				}
+				rollingTimer = setTimeout( function() { 
+						setInterval(function(){ rolling()}, 4000);
+					}, 3000);
+				
+				//close
+				$(".tod-combot-ctype-wrap .btn-close").on('click', function () {
+					$(".tod-combot-ctype-wrap").removeClass("slideUp");
+					clearTimeout(timer);
+					clearTimeout(rollingTimer);
+				});
+
+			});
+		</script>
+		<!--  //201109 [OP002-11653]  추가 : SKT-챗봇 C-type -->
+<!-- //201204 웹접근성 수정 : dom 위치 변경 (APP 에서만 노출 ) -->		
 		<!-- #gnb -->
 		<div id="gnb" class="gnb-wrap on">
 			<!-- 상태값에 따라 사용된 아이콘 모양
@@ -481,87 +564,5 @@
 	<!-- //###admin### -->
 	<!-- //191115 [OP002-3913] 추가01 -->
 
-	<!--  201109 [OP002-11653]  추가 : SKT-챗봇 C-type -->
-	<!-- 발화어 3개 롤링 -->
-	<!--  Keyword를 발화어 클래스로 사용한다. 
-			ico-chatbot initial // 공통 
-			ico-chatbot pay_mthd : 요금납부 방법
-			ico-chatbot micro_pay :  소액결제 금액 
-			ico-chatbot pay_bill : 이번 달 요금 
-			ico-chatbot data_gift : 데이터선물
-			ico-chatbot refill_coupon : 리필쿠폰
-			ico-chatbot unpaid_amt : 미납 요금
-			ico-chatbot hotbill :  실시간 요금
-			ico-chatbot membership_benefit :  멤버십 혜택
-			ico-chatbot cancel_pause : 휴대폰 일시정지
-			ico-chatbot hotdata : 실시간 잔여량
-			ico-chatbot vcoloring : v컬러링 / V컬러링 (기가입)
-			ico-chatbot wavve :  wavve 앤 데이터
-			ico-chatbot flo :  FLO 앤 데이터
-			ico-chatbot xbox :  게임패스 얼티밋
-			ico-chatbot contents_pay:  컨텐츠 결제 
-	-->
-	<div class="tod-combot-ctype-wrap">
-		<div class="tod-combot-ctype" data-color="purple"><!-- 개발 참고사항 : ctype 한줄 : class="tod-combot-ctype" / ctype 두줄 :  class="tod-combot-ctype twoline" / color 테마 : data-color="gray", data-color="purple" data-color="white" -->
-			<span class="beta"><span class="blind">beta</span></span>
-			<div class="list-wrap">
-				<ul class="ul-rolling">
-					<li>
-						<button class="item"><span class="ico-chatbot pay_mthd"><em class="tod-blind">요금납부 방법</em></span><span class="txt">요금납부 방법	</span></button>
-					</li>
-					<li>
-						<button class="item"><span class="ico-chatbot vcoloring"><em class="tod-blind">V컬러링</em></span><span class="txt">V컬러링이 뭐야?</span></button>
-					</li>
-					<li>
-						<button class="item"><span class="ico-chatbot wavve"><em class="tod-blind">wavve 앤 데이터</em></span><span class="txt">초시대의 동영상이란?</span></button>
-					</li>
-					<li>
-						<button class="item"><span class="ico-chatbot flo"><em class="tod-blind">FLO</em></span><span class="txt">데이터 걱정없는 FLO란?</span></button>
-					</li>
-					<li>
-						<button class="item"><span class="ico-chatbot xbox"><em class="tod-blind">xbox</em></span><span class="txt">모바일로 즐기는 X BOX게임!</span></button>
-					</li>
-					<li>
-						<button class="item"><span class="ico-chatbot cancel_pause"><em class="tod-blind">휴대폰 일시정지</em></span><span class="txt">휴대폰 일시정지 취소하고 싶어
-						</span></button>
-					</li>
-				</ul>
-			</div>
-			<!-- x 버튼 -->
-			<button type="button" class="btn-close"><span class="tod-blind">닫기</span></button>
-		</div>
-	</div>
-	<script>
-		$(document).ready(function () {
-			var timer, rollingTimer;
-  
-			// 3초후 슬라이드 업
-			timer = setTimeout(function() {
-				$(".tod-combot-ctype-wrap").addClass("slideUp");
-			}, 3000);
-
-			//발화어 롤링 
-			function rolling(){
-				$(".ul-rolling li:first").slideUp(
-					function() { 
-					   $(this).appendTo(".ul-rolling").slideDown();
-					}
-				);
-			}
-			rollingTimer = setTimeout( function() { 
-					setInterval(function(){ rolling()}, 2000);
-				}, 3000);
-			
-			//close
-			$(".tod-combot-ctype-wrap .btn-close").on('click', function () {
-				$(".tod-combot-ctype-wrap").removeClass("slideUp");
-				clearTimeout(timer);
-				clearTimeout(rollingTimer);
-			});
-
-		});
-	</script>
-<!--  //201109 [OP002-11653]  추가 : SKT-챗봇 C-type -->
-	
 </body>
 </html>
