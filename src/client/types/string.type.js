@@ -1352,7 +1352,8 @@ Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
 Tw.MYT_JOIN_WIRE_CANCEL_SERVICE = {
   NO_PHONE: '휴대폰 또는 일반전화를 등록해 주세요.',
   INVALID_PHONE: '전화번호를 올바르게 입력해 주세요.',
-  NO_DC_REFUND: '할인반환내역이 없습니다.'
+  NO_DC_REFUND: '할인반환내역이 없습니다.',
+  NO_PRODUCTS_SELECTED: '해지 신청 상품을 선택 후 이용해 주세요.'
 };
 
 Tw.MYT_JOIN_SUSPEND = {
