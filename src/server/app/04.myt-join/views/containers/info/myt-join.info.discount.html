@@ -133,7 +133,7 @@ _%>
         <!--// #contents -->
         <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
     </div>
-    <% include ../../components/javascript.component.html _%>
+    <%- include('../../components/javascript.component.html') _%>
     <script>
       $(document).ready(function () {
         new Tw.MyTJoinInfoDiscount({

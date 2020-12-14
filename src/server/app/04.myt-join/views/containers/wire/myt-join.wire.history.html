@@ -171,11 +171,11 @@ _%>
             </div>
         </div>
     </script>
-    <% include ../../components/javascript.component.html _%>
+    <%- include('../../components/javascript.component.html') _%>
     <script>
       $(document).ready(function () {
         new Tw.MyTJoinWireHistory($('.wrap'), <%- JSON.stringify(list) %>);
       });
     </script>
 </body>
-<% include ../../components/end.component.html _%>
+<%- include('../../components/end.component.html') _%>

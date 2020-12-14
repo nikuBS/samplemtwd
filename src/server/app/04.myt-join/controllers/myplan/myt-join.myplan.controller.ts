@@ -681,7 +681,7 @@ class MyTJoinMyplan extends TwViewController {
     }
     // 금액, 음성, 문자, 할인상품 값 체크
     const basFeeTxt = FormatHelper.getValidVars(data.feePlanProd.basFeeTxt);
-    const basOfrVcallTmsCtt = FormatHelper.getValidVars(data.feePlanProd.basOfrVcallTsTxt);
+    const basOfrVcallTmsCtt = FormatHelper.getValidVars(data.feePlanProd.basOfrVcallTmsTxt);
     const basOfrCharCntCtt = FormatHelper.getValidVars(data.feePlanProd.basOfrLtrAmtTxt);
     // const disProdList = FormatHelper.getValidVars(data.disProdList, []);
     // 데이터 값 변환
