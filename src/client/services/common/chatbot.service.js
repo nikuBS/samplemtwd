@@ -836,7 +836,7 @@ Tw.ChatbotService.prototype = {
                         Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
                     );
                 }
-                $elChabot.removeClass("slideUp");
+                _this.$elChabot.removeClass("slideUp");
                 Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
             });
             // //touch event
