@@ -31,11 +31,11 @@ _%>
             <p class="desc">할인반환금 조회내역이 없습니다.</p>
         </div>
         {{/if}}
-        {{#chargeInfo}}
 
         <h3 class="mt40">사용요금 정보<button id="MS_04_08_tip_05" class="tip-view">TIP</button></h3>
         <div class="basic-list">
             <ul>
+                {{#chargeInfo}}
                 <li>
                     <span class="title">이번 달 사용요금(할인 반환금 포함)</span>
                     <span class="tx-cont">{{hbAmt}} 원</span>
@@ -48,9 +48,9 @@ _%>
                     <span class="title">총 납부금액<br />(이번 달 사용요금 + 미납요금)</span>
                     <span class="tx-cont"><span class="tx-bold">{{totAmt}}</span> 원</span>
                 </li>
+                {{/chargeInfo}}
             </ul>
         </div>
-        {{/chargeInfo}}
     </div>
     {{!-- 주석 : 사용요금 정보  --}}
 </script>
@@ -142,7 +142,7 @@ _%>
                         </span>
                         <span class="error-txt" style="display: none;" aria-hidden="true" id="span-err-date">해지 요청일을 선택해 주세요.</span>
                         <div class="cont-noti mt20">
-                            <span class="type1">신청일 기준 2일 이후부터 최대 30일 안에 신청하실 수 있습니다.</span>
+                            <span class="type1">신청일 기준 3일 이후부터 최대 30일 안에 신청하실 수 있습니다.(토·일, 공휴일은 해지 신청 불가)</span>
                         </div>
 
                         <h3 class="form-title pt36">연락 가능한 연락처</h3>

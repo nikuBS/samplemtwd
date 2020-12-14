@@ -42,21 +42,43 @@ Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
 };
 
 Tw.MyTJoinWireSetWireCancelService.prototype = {
+  /**
+   * 선택 가능한 날인지 확인하고, 가장 가까운 먼 날을 선택해서 문자열로 반환한다.
+   * @param {String} checkDate
+   * @param {Boolean} [over]
+   * @return {String}
+   * @private
+   */
+  _getCancelableDate: function _getCancelableDate(checkDate, over) {
+    var checkDt = moment(checkDate, 'YYYY-MM-DD');
+    var weekday = checkDt.day();
+    if (weekday === 0 || weekday === 6 || this._uncancelableDates[checkDate]) {
+      // return this._getCancelableDate(this. getShortDateWithFormatAddByUnit(checkDt, 1, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD'));
+      return this._getCancelableDate(checkDt.add(over ? 1 : -1, 'days').format('YYYY-MM-DD'));
+    }
+    return checkDate;
+  },
+
   _init: function () {
     this._cachedElement();
     this._bindEvent();
     this._memberPhoneSet();
     Tw.Logger.info('[dataModel]', this.dataModel);
 
+    // 공휴일(선택할 수 없는 날) 정보
+    this._uncancelableDates = (this.resData.resDataInfo.str_publicholidays || '').split('|').reduce(function (acc, cur) {
+      acc[String(cur)] = true;
+      return acc;
+    }, {});
     // 해지 요청일 min, max 지정
     // NOTE: 시작은, 오늘을 제외한, 3일 후이므로, 4를 더하고, 마지막 선택 가능한 날은 시작로부터 30일 이후이다);
-    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
-    var sttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    this.$cancelableDate.attr('min', sttDt);
-    this.$cancelableDate.attr('max', endDt);
-    this.$cancelableDate.attr('value', sttDt);
-    this.$cancelableDate.attr('data-date', sttDt);
+    this._today = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    this._start = this._getCancelableDate(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._today, 4, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD'));
+    this._end = this._getCancelableDate(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._start, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD'), false);
+    this.$cancelableDate.attr('min', this._start);
+    this.$cancelableDate.attr('max', this._end);
+    this.$cancelableDate.attr('value', this._start);
+    this.$cancelableDate.attr('data-date', this._start);
   },
 
   /**
@@ -100,10 +122,14 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     } else {
       this.$container.on('input', '[data-target="cancelable-date"]', $.proxy(this.cancelableDateEvt, this));
     }
-    this.$cancelableDate.on('change', function () {
-      var dateFormat = this.getAttribute('data-date-format');
-      this.setAttribute('data-date', moment(this.value, 'YYYY-MM-DD').format(dateFormat));
-    }); // .trigger('change');
+    this.$cancelableDate.on('change', $.proxy(function (event) {
+      var $target = $(event.target);
+      // var dateFormat = this.getAttribute('data-date-format');
+      var dateFormat = $target.data('date-format');
+      // this.setAttribute('data-date', moment(this.value, 'YYYY-MM-DD').format(dateFormat));
+      $target.data('data-date', moment($target.val(), 'YYYY-MM-DD').format(dateFormat));
+      this.cancelableDateEvt();
+    }, this)); // .trigger('change');
 
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('blur', '[data-target="input_hp"]', $.proxy(this._showInputPhoneValid, this));
@@ -261,21 +287,26 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   // 해지 요청일
   cancelableDateEvt: function () {
-    var tempDt = this.$cancelableDate.val();
-    if (tempDt.length === 0) {
+    var selectedDt = this.$cancelableDate.val();
+    if (selectedDt.length === 0) {
       $('#span-err-date').show().attr('aria-hidden', false);
     } else {
       $('#span-err-date').hide().attr('aria-hidden', true);
     }
-    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
-    var startDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    Tw.Logger.info('[해지 요청일]', tempDt, startDt, endDt);
 
-    //유효성 체크
-    tempDt = this._validateDate(tempDt, startDt, endDt);
-    this.$cancelableDate.val(tempDt);
-    this.dataModel.termPrefrDy = tempDt;
+    // NOTE: 시작은, 오늘을 제외한, 3일 후이므로, 4를 더하고, 마지막 선택 가능한 날은 시작로부터 30일 이후이다);
+    var today = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    if (this._today !== today) {
+      this._today = today;
+      this._start = this._getCancelableDate(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._today, 4, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD'));
+      this._end = this._getCancelableDate(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._start, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD'), false);
+    }
+    Tw.Logger.info('[해지 요청일]', selectedDt, this._start, this._end);
+
+    // 유효성 체크 (필요없을 듯하나, 아직 확정이 되지 않아 남겨놓음)
+    selectedDt = this._validateDate(selectedDt, this._start, this._end);
+    this.$cancelableDate.val(selectedDt);
+    this.dataModel.termPrefrDy = selectedDt;
 
     this._validateForm();
     Tw.Logger.info('[dataModel]', this.dataModel);
@@ -512,6 +543,28 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   * @return boolean
    */
   _validateDate: function(checkDate, startDate, endDate) {
+    // 휴일 점검
+    var weekday = moment(checkDate, 'YYYY-MM-DD').day();
+    if (weekday === 0 || weekday === 6) {
+      if (Tw.BrowserHelper.isIos()) {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
+      }
+      return startDate;
+    }
+    // 공휴일 점검
+    if (this._uncancelableDates[checkDate]) {
+      if (Tw.BrowserHelper.isIos()) {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
+      }
+      return startDate;
+    }
+    if (this._uncancelableDates[checkDate]) {
+      if (Tw.BrowserHelper.isIos()) {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
+      }
+      return startDate;
+    }
+    // NOTE: 아래 조건은 발생할 수 없지만, 대비용으로 남겨놈
     if (moment(checkDate).isBefore(startDate)) {
       if (Tw.BrowserHelper.isIos()) {
         this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
@@ -606,7 +659,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       return;
     }
     this.dataLoading.show().attr('aria-hidden', false);
-    $('#divEmpty').hide().attr('aria-hidden', true);
+    // NOTE: 새로 함수를 호출했는데, 이전 것이 남아 있는 문제가 있다.
+    this.outputArea.empty();
+    // $('#divEmpty').hide().attr('aria-hidden', true);
     // Tw.CommonHelper.startLoading('.container', 'grey', true);
     Tw.CommonHelper.startLoading(this.dataLoading, 'grey');
     // 스크롤시에 로딩바의 위치가 바뀌므로 조정한다.
