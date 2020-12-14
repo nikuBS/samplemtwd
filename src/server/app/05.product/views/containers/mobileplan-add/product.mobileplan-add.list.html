@@ -48,7 +48,7 @@
                             <!-- <button type="button" class="filter-btn">필터</button> -->
                                 <% const searchOption = additionData.additions.searchOption, filters = searchOption && searchOption.searchFltIds;
                                 if (filters) { %>
-                                    <button type="button" class="filter-btn date-in fe-select-filter" aria-haspopup="true">
+                                    <button type="button" class="filter-btn date-in fe-select-filter" title="조건설정" aria-haspopup="true">
                                         <span class="datebox">
                                         <% for (let i = 0; i < Math.min(2, filters.length); i++) {
                                             if (i > 0) { %>,<% } %>
@@ -62,11 +62,11 @@
                                         <% } %>
                                     </button>
                                 <% } else if (searchOption && searchOption.searchProdTagNm) { %>
-                                    <button type="button" class="filter-btn date-in fe-select-filter" aria-haspopup="true">
+                                    <button type="button" class="filter-btn date-in fe-select-filter" title="조건설정" aria-haspopup="true">
                                         <span class="datebox"><%= searchOption.searchProdTagNm %></span>
                                     </button>
                                 <% } else { %>
-                                    <button type="button" class="filter-btn fe-select-filter" aria-haspopup="true">전체 부가서비스</button>
+                                    <button type="button" class="filter-btn fe-select-filter" title="조건설정" aria-haspopup="true">전체 부가서비스</button>
                                 <% } %>
                             </button>
                         </div>
