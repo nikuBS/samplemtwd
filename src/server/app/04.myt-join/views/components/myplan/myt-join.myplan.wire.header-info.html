@@ -17,10 +17,10 @@
     <span class="sv-spec">
       <%_ if (['S1', 'S3'].includes(svcInfo.svcAttrCd)) { _%>
         <%# 인터넷, 전화 _%>
-      <i class="ico-speed-plan" title="속도"></i>
+      <i class="ico-speed-plan"><span class="tod-blind">속도</span></i>
       <%_ } else /* if (svcInfo.svcAttrCd === 'S2') */ { _%>
         <%# IPTV _%>
-      <i class="ico-chan-plan" title="채널"></i>
+      <i class="ico-chan-plan"><span class="tod-blind">채널</span></i>
       <%_ } _%>
       <%= feePlan.prodBasBenfCtt %>
     </span>

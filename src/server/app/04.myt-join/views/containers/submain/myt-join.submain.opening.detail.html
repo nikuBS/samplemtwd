@@ -1,7 +1,7 @@
 <%#
 * MenuName: 나의 가입정보 > 서브메인 [회선정보] > 개통정보 조회
 * @file myt-join.submain.opening.detail.html(MS_01)
-* @author Kim, Hansoo (skt.p148890@partner.sk.com)
+* @author 김한수 (skt.p148890@partner.sk.com)
 * @since 2019.12.17
 _%>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); _%>
@@ -116,11 +116,11 @@ _%>
         </div>
         <!--// .popup hbs -->
     </div>
-    <% include ../../components/javascript.component.html _%>
+    <%- include('../../components/javascript.component.html') _%>
     <script>
         $(document).ready(function () {
             new Tw.MyTJoinOpeningDetail($('.wrap'));
         });
     </script>
 </body>
-<% include ../../components/end.component.html _%>
+<%- include('../../components/end.component.html') _%>

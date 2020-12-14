@@ -2,10 +2,8 @@
 * @file myt-join.myplancombine.period.html
 * @author 양정규
 * @since 2019.10.10
-%>
-
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-
+_%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); _%>
 <body>
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- .popup hbs -->
@@ -109,6 +107,6 @@
         </div>
         <!--// .popup hbs -->
     </div>
+    <%- include('../../components/javascript.component.html') _%>
 </body>
-<% include ../../components/javascript.component.html %>
-<% include ../../components/end.component.html %>
+<%- include('../../components/end.component.html') _%>
