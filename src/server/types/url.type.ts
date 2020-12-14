@@ -3,7 +3,7 @@ export const URL = {
   '/main/menu/settings': { login: false, id: 'ST_01_01', title: '설정' },
   '/main/menu/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
   '/main/menu/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
-  '/main/menu/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
+  '/main/menu/settings/certificates': { login: false, id: 'ST_01_06', title: '인증 센터' },
   '/main/menu/settings/notification': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
   '/main/menu/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
   '/main/menu/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
