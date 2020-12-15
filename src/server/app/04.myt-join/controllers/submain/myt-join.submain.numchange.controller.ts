@@ -13,8 +13,8 @@ import StringHelper from '../../../../utils/string.helper';
 class MyTJoinPhoneNumChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    // TODO: 완료 페이지는 굳이 서버로 부터 받을 필요가 없다.
-    if ( this._ifCompletePageMove(req, res, pageInfo, 'submain/myt-join.submain.complete.html') ) {
+
+    if ( this._ifCompletePageMove(req, res, 'submain/myt-join.submain.complete.html') ) {
       return ;
     }
 
@@ -73,27 +73,26 @@ class MyTJoinPhoneNumChange extends TwViewController {
    * 완료 화면 이동 (url의 끝이 /complete인 경우)
    * @param req
    * @param res
-   * @param pageInfo
    * @param compView - 완료html
    * @private
    */
-  private _ifCompletePageMove(req: Request, res: Response, pageInfo: any, compView: string) {
+  private _ifCompletePageMove(req: Request, res: Response, compView: string) {
     const compUrl = '/complete';
     const url = req.url.substr(0, req.url.indexOf('?'));
     const q = req.query || {};
-    if (url.lastIndexOf(compUrl) === url.length - compUrl.length) {
+    if ( url.lastIndexOf(compUrl) === url.length - compUrl.length) {
       res.render(compView, {
-        pageInfo,
-        confirmMovPage: q.confirmMovPage || '',
-        mainTxt: q.mainTxt || '',
-        subTxt: q.subTxt || '',
-        linkTxt: q.linkTxt || '',
-        linkPage: q.linkPage || ''
+        confirmMovPage : q.confirmMovPage || '',
+        mainTxt : q.mainTxt || '',
+        subTxt : q.subTxt || '',
+        linkTxt : q.linkTxt || '',
+        linkPage : q.linkPage || ''
       });
       return true;
     }
     return false;
   }
+
 }
 
 export default MyTJoinPhoneNumChange;
