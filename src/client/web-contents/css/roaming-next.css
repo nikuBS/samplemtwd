@@ -3970,3 +3970,6 @@ body.scroll #roamingOn #appbar .appbar {
 #roamingMyuse .custom-form input[type=radio]:checked+.r-type1 {
   background-image: url(/img/product/roam/component_radio_small_on.svg);
 }
+
+/* 로밍모드 수정 */
+#roamingOn{background-size:100% auto !important}
