@@ -156,13 +156,20 @@ Tw.CommonMemberLine.prototype = {
   },
 
   _onOpenGuideOppup: function ($layer) {
-    setTimeout(function() {
-      // Tw.CommonHelper.focusOnActionSheet($layer);
+    setTimeout( function() {
+      $(document).on('keyup', function(event) {
+        if ( (event.shiftKey && event.keyCode === 9) || event.keyCode === 9 ) {
+          if( (!$(event.target).is('div.popup-page.tw-popup.pt0') || !$(event.target).is('button.popup-closeBtn')) ) {
+            $layer.focus();
+          }
+        }
+      })
       $layer.find('.popup-closeBtn').focus();
-    }, 100);
+    }, 100)
   }, 
 
   _onCloseGuideOppup: function () {
+    $(document).off('keyup');
     if(Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
     } else {
