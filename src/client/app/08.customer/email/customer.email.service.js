@@ -215,7 +215,6 @@ Tw.CustomerEmailService.prototype = {
     $target.prop('disabled', true); // 등록하기 버튼 비활성화 (API 중복 호출 방지)
     switch ( serviceCategory ) {
       case 'CELL':
-      case 'CHOCO':
         this._requestCell($target);
         break;
       case 'INTERNET':
@@ -224,9 +223,9 @@ Tw.CustomerEmailService.prototype = {
       case 'DIRECT':
         this._requestDirect($target);
         break;
-      // case 'CHOCO':  // T멤버십 API 변경으로 인하여 더이상 사용하지 않음
-      //   this._requestChocolate($target);
-      //   break;
+      case 'CHOCO':
+        this._requestChocolate($target);
+        break;
       default:
         break;
     }
@@ -300,11 +299,11 @@ Tw.CustomerEmailService.prototype = {
    * @param {element} $target 등록하기 버튼 포커스 관련
    */
   _requestCell: function ($target) {
-    var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum'); // 서비스 관리 번호
-    var $elInputLine = this.$wrap_tpl_service.find('.fe-service-line'); // 회선번호 입력된 곳
-    var elInputlineVal = $elInputLine.is('button') ? $elInputLine.text() : $elInputLine.val(); // text = 마스킹된 전화번호
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0'; // 서비스관리 번호 스트링으로
-    var selSvcNum = !!elInputlineVal ? elInputlineVal.replace(/-/gi, '') : '';  // 마스킹된 전화번호에서 - 제거
+    var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
+    var $elInputLine = this.$wrap_tpl_service.find('.fe-service-line');
+    var elInputlineVal = $elInputLine.is('button') ? $elInputLine.text() : $elInputLine.val();
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
+    var selSvcNum = !!elInputlineVal ? elInputlineVal.replace(/-/gi, '') : '';
 
     var htParams = $.extend(this._makeParams(), {
       selSvcMgmtNum: selSvcMgmtNum, // 선택된 회선정보
@@ -325,7 +324,7 @@ Tw.CustomerEmailService.prototype = {
 
   /**
    * @function
-   * @desc 인터넷 케이스 전송 (품질상담)
+   * @desc 인터넷 케이스 전송
    * @param {element} $target 등록하기 버튼 포커스 관련
    */
   _requestInternet: function ($target) {
@@ -379,19 +378,19 @@ Tw.CustomerEmailService.prototype = {
       .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
-  // /** T 멤버십 API 통합으로 더 이상 사용하지 않음
-  //  * @function
-  //  * @desc 초코렛 케이스 전송
-  //  * @param {element} $target 등록하기 버튼 포커스 관련
-  //  */
-  // _requestChocolate: function ($target) {
-  //   var htParams = $.extend(this._makeParams(), {
-  //     category: this.$service_depth2.data('serviceDepth2') // 2카테고리
-  //   });
+  /**
+   * @function
+   * @desc 초코렛 케이스 전송
+   * @param {element} $target 등록하기 버튼 포커스 관련
+   */
+  _requestChocolate: function ($target) {
+    var htParams = $.extend(this._makeParams(), {
+      category: this.$service_depth2.data('serviceDepth2') // 2카테고리
+    });
 
-  //   this._apiService.request(Tw.API_CMD.BFF_08_0021, htParams, null, null, null, { jsonp : false })
-  //     .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
-  // },
+    this._apiService.request(Tw.API_CMD.BFF_08_0021, htParams, null, null, null, { jsonp : false })
+      .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
+  },
 
   /**
    * @function
