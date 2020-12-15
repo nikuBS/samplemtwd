@@ -14,8 +14,8 @@ import DateHelper from '../../../../utils/date.helper';
 class MyTJoinPhoneNumChgAlarm extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
-    if ( this._ifCompletePageMove(req, res, 'submain/myt-join.submain.complete.html') ) {
+    // TODO: 완료 페이지는 굳이 서버로 부터 받을 필요가 없다.
+    if ( this._ifCompletePageMove(req, res, pageInfo, 'submain/myt-join.submain.complete.html') ) {
       return ;
     }
 
@@ -36,7 +36,7 @@ class MyTJoinPhoneNumChgAlarm extends TwViewController {
         //       'orglSktYn': 'Y'
         //     }
         // };
-        
+
 
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
@@ -71,7 +71,7 @@ class MyTJoinPhoneNumChgAlarm extends TwViewController {
            svcInfo: svcInfo
          });
        });
-      
+
 
   }
 
@@ -79,20 +79,22 @@ class MyTJoinPhoneNumChgAlarm extends TwViewController {
    * 완료 화면 이동 (url의 끝이 /complete인 경우)
    * @param req
    * @param res
+   * @param pageInfo
    * @param compView - 완료html
    * @private
    */
-  private _ifCompletePageMove(req: Request, res: Response, compView: string) {
+  private _ifCompletePageMove(req: Request, res: Response, pageInfo: any, compView: string) {
     const compUrl = '/complete';
     const url = req.url.substr(0, req.url.indexOf('?'));
     const q = req.query || {};
-    if ( url.lastIndexOf(compUrl) === url.length - compUrl.length) {
+    if (url.lastIndexOf(compUrl) === url.length - compUrl.length) {
       res.render(compView, {
-        confirmMovPage : q.confirmMovPage || '',
-        mainTxt : q.mainTxt || '',
-        subTxt : q.subTxt || '',
-        linkTxt : q.linkTxt || '',
-        linkPage : q.linkPage || ''
+        pageInfo,
+        confirmMovPage: q.confirmMovPage || '',
+        mainTxt: q.mainTxt || '',
+        subTxt: q.subTxt || '',
+        linkTxt: q.linkTxt || '',
+        linkPage: q.linkPage || ''
       });
       return true;
     }
