@@ -157,19 +157,14 @@ Tw.CommonMemberLine.prototype = {
 
   _onOpenGuideOppup: function ($layer) {
     setTimeout( function() {
-      $(document).on('keyup', function(event) {
-        if ( (event.shiftKey && event.keyCode === 9) || event.keyCode === 9 ) {
-          if( (!$(event.target).is('div.popup-page.tw-popup.pt0') || !$(event.target).is('button.popup-closeBtn')) ) {
-            $layer.focus();
-          }
-        }
-      })
+      // 웹 접근성 대응
+      $("[tabindex=-1]").css('display', 'none');
       $layer.find('.popup-closeBtn').focus();
     }, 100)
   }, 
 
   _onCloseGuideOppup: function () {
-    $(document).off('keyup');
+    $("[tabindex=-1]").css('display', 'block'); // 웹 접근성 대응
     if(Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
     } else {
