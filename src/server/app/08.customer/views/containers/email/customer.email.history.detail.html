@@ -77,13 +77,15 @@
                     
                 </div>
             </div>
+            <!-- 상위 상담내역이 없는경우 -->
             <% if( inquiryInfo.supInqId === '' ) { %>
             <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             <div class="bt-fixed-area">
-                <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
+                <!-- 상위 상담내역이 없으면서 문의 유형이 서비스 또는 멤버십('C') 또는 통화품질인 경우 및 최초 등록일 이후 30일이 넘지 않으면서, 멤버십 일경우 구서버가 아닌경우 노출 -->
+                <% if (( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'C' || inquiryInfo.inqClCd === 'Q' ) && isDateOver(inquiryInfo.supRgstDt) === false && !(inquiryInfo.mbrServer && inquiryInfo.mbrServer === 'A') ) { %>
                     <ul class="bt-slice item-two full">
                         <li>
-                            <button class="fe-btn_retry_inquiry btn-floating btn-style2" data-inqId="<%-inquiryInfo.inqId%>"
+                            <button class="fe-btn_retry_inquiry btn-floating btn-style2" data-xt_eid="CMMA_A11_B3-123" data-xt_csid="NO" data-xt_action="BC" data-inqId="<%-inquiryInfo.inqId%>"
                                     data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
                             </button>
                         </li>
@@ -93,8 +95,8 @@
                             </button>
                         </li>
                     </ul>
-                <% } else { %>
-                    <% if ( inquiryInfo.inqClCd === 'D' ) { %>
+                    <!-- 상위 상담 내역이 없으면서 문의 유형이 다이렉트 문의 유형이거나 최초 등록일 이후 30일이 넘은 상태이면서 멤버십일 경우 구서버가 아닌경우 노출 -->
+                    <% } else if ( inquiryInfo.inqClCd === 'D' || isDateOver(inquiryInfo.supRgstDt) === true  && !(inquiryInfo.mbrServer && inquiryInfo.mbrServer === 'A') ) { %>
                         <ul class="bt-slice full">
                             <li class="bt-red1">
                                 <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
@@ -103,9 +105,22 @@
                             </li>
                         </ul>
                     <% } %>
-                <% } %>
             </div>
             <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            <% } else { %>
+            <!-- 상위 상담내역이 있는 경우 재문의 조건이 안되면 아무런 버튼을 노출하지 않음 -->
+            <div class="bt-fixed-area">
+                <!-- 상위 상담 내역이 있으면서 문의 유형이 서비스 또는 멤버십('C') 또는 통화품질인 경우 및 최초 등록일 이후 30일이 넘지 않은 상태이면서 멤버십일 경우 구서버가 아닌경우 노출 -->
+                <% if (( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'C' || inquiryInfo.inqClCd === 'Q' ) && isDateOver(inquiryInfo.supRgstDt) === false  && !(inquiryInfo.mbrServer && inquiryInfo.mbrServer === 'A') ) { %>
+                    <ul class="bt-slice full">
+                        <li>
+                            <button class="fe-btn_retry_inquiry btn-floating btn-style2" data-xt_eid="CMMA_A11_B3-123" data-xt_csid="NO" data-xt_action="BC" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
+                            </button>
+                        </li>
+                    </ul>
+                <% }%>
+            </div>
             <% } %>
         <% } %>
         </div>
