@@ -61,7 +61,9 @@
                                         <div class="blind fe-inqid" aria-hidden='true'><%-inquiryInfo.inqId%></div>
                                         <div class="cont-box nogaps-btm">
                                                 <h3 class="tit-type2">
-                                                    <span class="tx-bold fe-category_depth1">휴대폰, 인터넷/집전화/IPTV</span>
+                                                    <!-- <span class="tx-bold fe-category_depth1">휴대폰, 인터넷/집전화/IPTV</span> -->
+                                                    <!-- 기존 하드코딩에서 1depth 문의 유형 제목 노출로 변경 -->
+                                                    <span class="tx-bold fe-category_depth1"><%-inquiryInfo.inq1DepthName%></span>
                                                     <span class="tx-normal">서비스의</span><br>
                                                     <span class="tx-bold fe-category_depth2"><%-inquiryInfo.ofrCtgNm%></span> <span class="tx-normal">대해</span><br>
                                                     <span class="tx-normal">문의합니다.</span>
