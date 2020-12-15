@@ -37,7 +37,8 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     //   });
     // }
 
-    if (this._ifCompletePageMove(req, res, 'submain/myt-join.submain.complete.html')) {
+    // TODO: 완료 페이지는 굳이 서버로 부터 받을 필요가 없다.
+    if (this._ifCompletePageMove(req, res, pageInfo, 'submain/myt-join.submain.complete.html')) {
       return;
     }
 
@@ -125,6 +126,14 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
 
       // thisMain.logger.info(thisMain, '[rendering_page]:', 'wire/myt-join.wire.set.wire-cancel-service.html');
 
+      if (thisMain._resDataInfo.str_publicholidays) {
+        thisMain._resDataInfo.holidays = thisMain._resDataInfo.str_publicholidays.split('|').reduce(function (acc, cur) {
+          acc[String(cur)] = true;
+          return acc;
+        }, {});
+        delete thisMain._resDataInfo.str_publicholidays;
+      }
+
       // 해지 신청
       res.render('wire/myt-join.wire.set.wire-cancel-service.html', {
         svcInfo,
@@ -189,15 +198,17 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
    * 완료 화면 이동 (url의 끝이 /complete인 경우)
    * @param req
    * @param res
+   * @param pageInfo
    * @param compView - 완료html
    * @private
    */
-  private _ifCompletePageMove(req: Request, res: Response, compView: string) {
+  private _ifCompletePageMove(req: Request, res: Response, pageInfo: any, compView: string) {
     const compUrl = '/complete';
     const url = req.url.substr(0, req.url.indexOf('?'));
     const q = req.query || {};
     if (url.lastIndexOf(compUrl) === url.length - compUrl.length) {
       res.render(compView, {
+        pageInfo,
         confirmMovPage: q.confirmMovPage || '',
         mainTxt: q.mainTxt || '',
         subTxt: q.subTxt || '',
