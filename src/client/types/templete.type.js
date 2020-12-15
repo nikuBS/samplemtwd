@@ -1034,13 +1034,14 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
   },
   {
     title: 'T멤버십 구매상품',
-    category: 'CHOCO',
+    // category: 'MEMBERSHIP', // 초콜릿은 더이상 사용하지 않기 때문에 카테고리 이름도 변경하려고 했지만 customer.email.category.js의 BFF_08_0010에서 CHOCO를 사용하고 있어서 그대로 둠
+    category: 'CHOCO', // 초콜릿은 더이상 사용하지 않기 때문에 카테고리 이름도 변경해야 하지만 위의 사유로 그냥 놔둠
     gubun: '1',
     list: [
-      { title: '상품문의', ofrCtgSeq: '010700' },
-      { title: '교환/반품', ofrCtgSeq: '010600' },
-      { title: '취소문의', ofrCtgSeq: '010800' },
-      { title: '이용문의', ofrCtgSeq: '010900' }
+      { title: '상품문의', ofrCtgSeq: '5000351' },
+      { title: '교환/반품', ofrCtgSeq: '5000352' },
+      { title: '취소문의', ofrCtgSeq: '5000353' },
+      { title: '이용문의', ofrCtgSeq: '5000354' }
     ]
   },
   {
