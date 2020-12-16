@@ -18,9 +18,9 @@ Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
   this.dataModel = {
     infoConfirmBol: false,      // 안내사항 확인
     productList: [],            // 해지신청상품 리스트
-    TerminationDtStr: '',       // 해지 요청일
+    termPrefrDy: '',       // 해지 요청일
     hpAndTelTypeStr: 'hp',      // 연락 가능한 연락처 체크 타입
-    phoenNmStr: '',             // 연락 가능한 연락처
+    visitCntcNum: '',             // 연락 가능한 연락처
     memberPhoneBol: false,      // 회원정보 등록된 연락처 체크
     dcRefdSearch:false          // 할인반환금 조회 여부
   };
@@ -118,7 +118,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     // 입력된 내용있는지 체크 후 닫기(안하기로해서 주석처리)
     //if($('input[name=checkbox-conf-info]:checked').length > 0 ||
     //  this.productLi.find('input[type=checkbox]:checked').length > 0 ||
-    //  this.dataModel.TerminationDtStr ||
+    //  this.dataModel.termPrefrDy ||
     //  $('[data-target="input_hp"]').val()) {
     //
     //  this._popupService.openConfirmButton(
@@ -173,7 +173,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       acntNumArr: acntNums.join(';'),
       grpIdArr: grpIds.join(';'),
       termPrefrDy: this._noDash(this.dataModel.termPrefrDy) || '',
-      visitCntcNum: this.dataModel.contactPhone || ''
+      visitCntcNum: this.dataModel.visitCntcNum || ''
     })
         .done($.proxy(this._onCancelWireSuccess, this))
         .fail(function (err) {
@@ -269,7 +269,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     // 유효성 체크
     tempDt = this._dateChkBetween(tempDt, startDt, endDt);
     this.select_Termination_input.val(tempDt);
-    this.dataModel.TerminationDtStr = tempDt;
+    this.dataModel.termPrefrDy = tempDt;
 
     this._formValidateionChk();
     Tw.Logger.info('[dataModel]', this.dataModel);
@@ -281,9 +281,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     var phoneNum = $target.val();
     var tempNum = this._onFormatHpNum($target);
 
-    this.dataModel.phoenNmStr = '';
+    this.dataModel.visitCntcNum = '';
     if (Tw.ValidationHelper.isCellPhone(phoneNum) || Tw.ValidationHelper.isTelephone(phoneNum)) {
-      this.dataModel.phoenNmStr = tempNum;
+      this.dataModel.visitCntcNum = tempNum;
     }
 
     this.uncheckPhoneLi();
@@ -347,7 +347,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
               this.uncheckPhoneLi();
             }, this));
       } else { // 값이 있을 경우
-        this.dataModel.phoenNmStr = this.memberPhoneObj.hp;
+        this.dataModel.visitCntcNum = this.memberPhoneObj.hp;
         this.input_hp.val(this._phoneStrToDash(this.memberPhoneObj.hp));
       }
     } else if (this.dataModel.hpAndTelTypeStr === 'tel') {
@@ -358,7 +358,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
               this.uncheckPhoneLi();
             }, this));
       } else { // 값이 있을 경우
-        this.dataModel.phoenNmStr = this.memberPhoneObj.tel;
+        this.dataModel.visitCntcNum = this.memberPhoneObj.tel;
         this.input_hp.val(this._phoneStrToDash(this.memberPhoneObj.tel));
       }
     }
@@ -380,13 +380,13 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   /*
   * 연락 가능한 연락 타입 체크
   * 타입체크 값이 변경 될때 마다 초기화 될 항목이 있다.
-  * 1. 전화번호 입력 input 초기화 : this.dataModel.phoenNmStr
+  * 1. 전화번호 입력 input 초기화 : this.dataModel.visitCntcNum
   * 2. 회원정보 등록된 연락처 체크 초기화 : this.dataModel.memberPhoneBol
    */
   hpAndTelTypeEvt: function() {
     this.dataModel.hpAndTelTypeStr = this.hpAndTelType.find('input:radio[name=radio1]:checked').val();
 
-    this.dataModel.phoenNmStr = '';
+    this.dataModel.visitCntcNum = '';
     this.input_hp.val('');
 
     this.uncheckPhoneLi();
@@ -546,14 +546,14 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
           }
         }
 
-        if (key === 'TerminationDtStr') { // 해지 요청일
+        if (key === 'termPrefrDy') { // 해지 요청일
           if (Tw.FormatHelper.isEmpty(item)) {
             Tw.Logger.info('[값을 입력하세요.]', key);
             throw new Error('break');
           }
         }
 
-        if (key === 'phoenNmStr') { // 연락 가능한 연락처
+        if (key === 'visitCntcNum') { // 연락 가능한 연락처
           if (!$('[data-target="input_hp"]').val()) {
             Tw.Logger.info('[값을 입력하세요.]', key);
             throw new Error('break');
