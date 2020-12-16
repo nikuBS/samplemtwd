@@ -42,7 +42,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
     <div class="section-userinfo fe-menu-section">
         <!-- 로그인전 -->
         <span class="userinfo fe-when-logout none">
-            <button class="login under-line fe-bt-login" data-xt_eid="MWMA_A10_B80_C1199-1">Please sign in</button>
+            <button class="login under-line fe-bt-login" data-xt_eid="MWMA_A10_B80_C1199-1" data-xt_csid="NO" data-xt_action="BC">Please sign in</button>
         </span>
         <!-- //로그인전 -->
 
@@ -61,7 +61,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         </span>
         <!-- 회선선택 -->
         <span class="userinfo fe-when-login-type3 none">
-            <button class="login under-line fe-userinfo" data-xt_eid="MWMA_A10_B80_C1199-56" >Select Line</button>
+            <button class="login under-line fe-userinfo" data-xt_eid="MWMA_A10_B80_C1199-56" data-xt_csid="NO" data-xt_action="BC">Select Line</button>
         </span>                
     </div>
     <div class="section-cont">
@@ -149,7 +149,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         <!-- footer -->
         <div class="footer">
             <ul class="f-menu">
-                <li><button class="bt fe-outlink" title="Open new window" value="https://www.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=WEB&stplTypCd=02&frgnrClCd=F" data-xt_eid="MWMA_A10_B80_C1199-14" >PRIVACY POLICY</button></li>
+                <li><button class="bt fe-outlink" title="Open new window" value="https://www.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=WEB&stplTypCd=02&frgnrClCd=F" data-xt_eid="MWMA_A10_B80_C1199-14" data-xt_csid="NO" data-xt_action="BC">PRIVACY POLICY</button></li>
                 <li><button class="bt fe-menu-link" value="/en/main/menu/settings/terms" data-xt_eid="MWMA_A10_B80_C1199-15" data-xt_csid="NO" data-xt_action="BC">TERMS AND CONDITIONS(KR)</button></li>
                 <li><button class="bt fe-menu-link"  value="/en/main/menu/settings/terms?id=68&type=a" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="MWMA_A10_B80_C1199-16">RESPONSIBILITY LIMIT & LEGAL(KR)</button></li>
             </ul>
@@ -163,10 +163,10 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                 <li class="f-ltd">COPYRIGHT © SK TELECOM CO., LTD. ALL RIGHTS RESERVED</li>
             </ul>
             <div class="link-area">
-                <button class="rang-kor fe-menu-link" value="/main/home" data-xt_eid="MWMA_A10_B80_C1199-17" title="Go to korean">KOR</button>
+                <button class="rang-kor fe-menu-link" value="/main/home" data-xt_eid="MWMA_A10_B80_C1199-17" title="Go to korean" data-xt_csid="NO" data-xt_action="BC">KOR</button>
                 <!-- 201013 select box markup 변경 -->
                 <div>
-                    <button id="family-line-action" for="select" data-target="familyActionBtn" data-xt_eid="MWMA_A10_B80_C1199-18" aria-haspopup="true" aria-controls="family-line-action" aria-expanded="false">Family SITE</button>
+                    <button id="family-line-action" for="select" data-target="familyActionBtn" data-xt_eid="MWMA_A10_B80_C1199-18" aria-haspopup="true" aria-controls="family-line-action" aria-expanded="false" data-xt_csid="NO" data-xt_action="BC">Family SITE</button>
                 </div>
             <!-- //201013 select box markup 변경 -->
             </div>
@@ -174,13 +174,11 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
             <div class="f-bt">
                 <ul class="tod-f-bt-wrap">
                     <!-- 로그인전 -->
-                    <li class="fe-when-login none"><button class="f-member fe-menu-link" value="/en/common/member/manage" data-xt_eid=""
-                        data-xt_csid="NO" data-xt_action="BC">My Account</button></li>
-                    <li class="fe-when-logout none"><button class="f-register"  id="fe-signup" value="/en/common/tid/signup-foreigner" data-xt_eid="MWMA_A10_B80_C1199-24">Register</button></li>
-                    <li class="fe-when-login"><button class="f-setting fe-menu-link" value="/en/main/menu/settings" data-xt_eid="MWMA_A10_B80_C1199-25">Settings</button></li>
-                    <li class="fe-when-logout none"><button class="f-login fe-bt-login" data-xt_eid="MWMA_A10_B80_C1199-26">Sign in</button></li>
-                    <li class="fe-when-login none"><button class="f-logout fe-bt-logout" data-xt_eid="MWMA_A10_B80_C1199-27" data-xt_csid="NO"
-                        data-xt_action="BC">Sign out</button></li>
+                    <li class="fe-when-login none"><button class="f-member fe-menu-link" value="/en/common/member/manage" data-xt_eid="MWMA_A10_B80_C1199-60" data-xt_csid="NO" data-xt_action="BC">My Account</button></li>
+                    <li class="fe-when-logout none"><button class="f-register"  id="fe-signup" value="/en/common/tid/signup-foreigner" data-xt_eid="MWMA_A10_B80_C1199-24" data-xt_csid="NO" data-xt_action="BC">Register</button></li>
+                    <li class="fe-when-login"><button class="f-setting fe-menu-link" value="/en/main/menu/settings" data-xt_eid="MWMA_A10_B80_C1199-25" data-xt_csid="NO" data-xt_action="BC">Settings</button></li>
+                    <li class="fe-when-logout none"><button class="f-login fe-bt-login" data-xt_eid="MWMA_A10_B80_C1199-26" data-xt_csid="NO" data-xt_action="BC">Sign in</button></li>
+                    <li class="fe-when-login none"><button class="f-logout fe-bt-logout" data-xt_eid="MWMA_A10_B80_C1199-27" data-xt_csid="NO" data-xt_action="BC">Sign out</button></li>
 
                 </ul>
             </div>

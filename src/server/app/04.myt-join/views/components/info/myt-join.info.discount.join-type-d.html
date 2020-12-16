@@ -3,8 +3,7 @@
 * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
 * @since 2018.10.08
 * info : 가입 / 약정위약금2
-%>
-<!-- 약정 위약금2 -->
+_%>
 <div class="cont-box">
 
     <div class="contract-dc-wrap">
@@ -34,29 +33,28 @@
                             <strong class="tit">약정 시작/종료일</strong>
                         </dt>
                         <dd>
-                            <span class="val-type2"><%=commDataInfo.terminalInfo[i].startDt%> ~ <%=commDataInfo.terminalInfo[i].endDt%></span>
+                            <span class="val-type2"><%- commDataInfo.terminalInfo[i].startDt%> ~ <%- commDataInfo.terminalInfo[i].endDt %></span>
                         </dd>
                     </dl>
                 </li>
             </ul>
             <div class="amountdata-num">
                 <div class="date-info">
-                    <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
-                    <p class="data-state"><span class="str"><%=commDataInfo.terminalInfo[i].remDt%></span>일 남음</p>
+                    <p class="data-title" role="text">잔여<span class="tod-blind">(잔여일수)</span></p>
+                    <p class="data-state"><span class="str"><%- commDataInfo.terminalInfo[i].remDt %></span>일 남음</p>
                 </div>
                 <div class="date-info">
-                    <p class="data-title">전체<span class="blind-height0">(전체개월수)</span></p>
+                    <p class="data-title" role="text">전체<span class="tod-blind">(전체개월수)</span></p>
                     <p class="data-state">
-                        <span class="str"><%=commDataInfo.terminalInfo[i].totMt%></span>개월
-                        (<span class="str"><%=commDataInfo.terminalInfo[i].totDt%></span>일)
+                        <span class="str"><%- commDataInfo.terminalInfo[i].totMt %></span>개월
+                        (<span class="str"><%- commDataInfo.terminalInfo[i].totDt %></span>일)
                     </p>
                 </div>
             </div>
             <div class="bar-chart-hoz">
-                <span class="data-bar red" style="width:<%=commDataInfo.terminalInfo[i].perDt%>%"></span>
+                <span class="data-bar red" style="width:<%- commDataInfo.terminalInfo[i].perDt %>%"></span>
             </div>
         </div>
     </div>
 
 </div>
-<!--// 약정 위약금2 -->

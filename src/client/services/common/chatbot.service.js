@@ -594,7 +594,7 @@ Tw.ChatbotService.prototype = {
                                             // 발화어 배열
                                             this._mlsGreetingRangking = this._defaultGreetingKeywords;
                                             // BFF_05_0232에서 쓰일 item_id
-                                            var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '||' + this._mlsGreetingRangking[0];
+                                            var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|' + this._mlsGreetingRangking[0];
                                             this._mlsItemIds = mlsItemIds;
                                             // 발화어 배열 크기 (B타입인 경우 1)
                                             var greetingRangkingSize = 1;
@@ -741,21 +741,21 @@ Tw.ChatbotService.prototype = {
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_purple.json', false);
                   }
-                 break
+                 break;
              case "blue" :
                  if(_this.$combotThema == 'normal'){
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_blue.json', false);
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_blue.json', false);
                   }
-                 break
+                 break;
              case "red" :
                  if(_this.$combotThema == 'normal'){
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_red.json', false);
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_red.json', false);
                   }
-                    break
+                    break;
                 default:
                     _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_purple.json', false);//값이 없을때 넘어오는 기본 값
             }   
@@ -789,15 +789,15 @@ Tw.ChatbotService.prototype = {
                     console.log('[chatbot.service] [_bindEvent] this._mlsItemIds : ', mlsItemIds);
                     console.log('[chatbot.service] [_bindEvent] this._mlsItemIds : ', mlsItemIds);
                     // BFF_05_0236 MLS conversion-tracking API (dislike)
-                    // if ( mlsProcessId !== 'N'){
-                    //     _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
-                    //         channel_id: mlsChannelId,
-                    //         process_id: mlsProcessId,
-                    //         item_id: mlsItemIds
-                    //     }).done(
-                    //         Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
-                    //     );
-                    // }
+                    if ( mlsProcessId !== 'N'){
+                        _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
+                            channel_id: mlsChannelId,
+                            process_id: mlsProcessId,
+                            item_id: mlsItemIds
+                        }).done(
+                            Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
+                        );
+                    }
                     _this.$combot.hide(); 
                     $(".tod-combot-ctype-wrap").removeClass("slideUp");
                     clearTimeout(_this._timer);
@@ -822,47 +822,64 @@ Tw.ChatbotService.prototype = {
                 clearTimeout(_this._timer);
             }, _this));
 
-            //touch event
-            _this.$btnTab.on('touchstart', function(e) {
-                // e.preventDefault();
-                _this._isStartY = e.originalEvent.touches[0].clientY;
-            });
-
-            _this.$btnTab.on('touchmove', function(e) {
-                // e.preventDefault();
-                _this._isLastY = e.originalEvent.touches[0].clientY;
-            });
-
-            _this.$btnTab.on('touchend', function(e) {
-                // e.preventDefault();
-                // click인 경우
-                if (Math.abs(_this._isStartY - _this._isLastY) < 20) {
-                    _this.expanded();
-                // 닫혀 있는데 아래로 내린 경우 - 창 최대화
-                } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY > _this._isLastY ) {
-                    _this.expanded();
-                // 열려 있는데 아래로 내린 경우 - 창 최소화
-                } else if (_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
-                    _this.expanded();
-                // 닫혀 있는데 아래로 내린 경우 - 창 숨김
-                } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
-                    console.log('[chatbot.service] [_bindEvent] A타입 this._mlsChannelId : ', mlsChannelId);
-                    console.log('[chatbot.service] [_bindEvent] A타입 this._mlsProcessId : ', mlsProcessId);
-                    console.log('[chatbot.service] [_bindEvent] A타입 this._mlsItemIds : ', mlsItemIds);
-                    // BFF_05_0236 MLS conversion-tracking API (dislike)
-                    // if ( mlsProcessId !== 'N'){
-                    //     _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
-                    //         channel_id: mlsChannelId,
-                    //         process_id: mlsProcessId,
-                    //         item_id: mlsItemIds
-                    //     }).done(
-                    //         Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
-                    //     );
-                    // }
-                    _this.$elChabot.removeClass('slideUp');
-                    Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
+            $(".tod-ui-chabot2 .btn-close").on('click', function() {
+                console.log('[chatbot.service] [_bindEvent] A타입 this._mlsChannelId : ', mlsChannelId);
+                console.log('[chatbot.service] [_bindEvent] A타입 this._mlsProcessId : ', mlsProcessId);
+                console.log('[chatbot.service] [_bindEvent] A타입 this._mlsItemIds : ', mlsItemIds);
+                // BFF_05_0236 MLS conversion-tracking API (dislike)
+                if ( mlsProcessId !== 'N'){
+                    _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
+                        channel_id: mlsChannelId,
+                        process_id: mlsProcessId,
+                        item_id: mlsItemIds
+                    }).done(
+                        Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
+                    );
                 }
+                _this.$elChabot.removeClass("slideUp");
+                Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
             });
+            // //touch event
+            // _this.$btnTab.on('touchstart', function(e) {
+            //     // e.preventDefault();
+            //     _this._isStartY = e.originalEvent.touches[0].clientY;
+            // });
+
+            // _this.$btnTab.on('touchmove', function(e) {
+            //     // e.preventDefault();
+            //     _this._isLastY = e.originalEvent.touches[0].clientY;
+            // });
+
+            // _this.$btnTab.on('touchend', function(e) {
+            //     // e.preventDefault();
+            //     // click인 경우
+            //     if (Math.abs(_this._isStartY - _this._isLastY) < 20) {
+            //         _this.expanded();
+            //     // 닫혀 있는데 아래로 내린 경우 - 창 최대화
+            //     } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY > _this._isLastY ) {
+            //         _this.expanded();
+            //     // 열려 있는데 아래로 내린 경우 - 창 최소화
+            //     } else if (_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
+            //         _this.expanded();
+            //     // 닫혀 있는데 아래로 내린 경우 - 창 숨김
+            //     } else if (!_this.$elChabot.hasClass('expanded') && _this._isStartY < _this._isLastY ) {
+            //         console.log('[chatbot.service] [_bindEvent] A타입 this._mlsChannelId : ', mlsChannelId);
+            //         console.log('[chatbot.service] [_bindEvent] A타입 this._mlsProcessId : ', mlsProcessId);
+            //         console.log('[chatbot.service] [_bindEvent] A타입 this._mlsItemIds : ', mlsItemIds);
+            //         // BFF_05_0236 MLS conversion-tracking API (dislike)
+            //         if ( mlsProcessId !== 'N'){
+            //             _this._apiService.request(Tw.API_CMD.BFF_05_0236, {
+            //                 channel_id: mlsChannelId,
+            //                 process_id: mlsProcessId,
+            //                 item_id: mlsItemIds
+            //             }).done(
+            //                 Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
+            //             );
+            //         }
+            //         _this.$elChabot.removeClass('slideUp');
+            //         Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
+            //     }
+            // }); // 1214 접근성 수정, 확장영역 삭제로 주석 처리
 
             setTimeout( function () {
                 _this._animateSvg('.profile2', Tw.Environment.cdn + '/js/chatbot_1.json', false);
@@ -1059,8 +1076,7 @@ Tw.ChatbotService.prototype = {
             this._requestApis();
         } else { // 간편로그인일 경우 API 태우지 않고 MLS 랭킹 순서만 맞춰서 _drawchatbot 호출                    
             // BFF_05_0232에서 쓰일 item_id
-            //var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
-            this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
+            this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType;
 
             // 실제 발화어 정보 리스트 세팅        
             var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
@@ -1432,8 +1448,7 @@ Tw.ChatbotService.prototype = {
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
 
         // BFF_05_0232에서 쓰일 item_id
-        //var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
-        this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|';
+        this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType;
 
         // 실제 발화어 정보 리스트 세팅        
         var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열

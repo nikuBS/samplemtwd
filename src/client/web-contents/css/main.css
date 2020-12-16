@@ -5624,8 +5624,9 @@ body.apphome .main-membershop-box {
 /* 200802 추가[OP002-9807] 추가 */
 .tod-icon-msg-red {display:inline-block; width:1.375rem; height:1.375rem; background:url(/img/ico/icon_44_msg.png) no-repeat 0 0; background-size:100% 100%; }
 
-/* 201112 추가[OP002-11900] 모바일웹 상단 타이틀 영역 수정 요청 */
-.header-wrap .h-belt .h-default .h-home-tit.tod-h-home-tit {margin:0 4.5rem}
+/* 201112 [OP002-11900] 모바일웹 상단 타이틀 영역 수정 요청 */
+.header-wrap .h-belt .h-default .h-home-tit.tod-h-home-tit .twrold {font-size:0.8125rem}
+.header-wrap .h-belt .h-default .h-home-tit.tod-h-home-tit .directshop {font-size:0.8125rem}
 
 /* 201112 [OP002-11754] Welcome Page 제작 추가 */
 .welcome-wrap .welcome-header {padding:2.5rem 0 2.1875rem; background:#fff; text-align:center; font-size:2rem; font-weight:700;}

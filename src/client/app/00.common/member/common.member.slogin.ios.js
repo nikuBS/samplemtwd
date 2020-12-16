@@ -576,17 +576,21 @@ Tw.CommonMemberSloginIos.prototype = {
     if ( Tw.FormatHelper.isEmpty(inputName) ) {
       result = false;
       this._showError(this.$inputboxName, this.$inputName, this.$errorName);
+      this.$inputName.focus(); // 웹 접근성 위배 조치
     }
     if ( Tw.FormatHelper.isEmpty(inputBirth) ) {
       result = false;
       this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirth);
+      this.$inputBirth.focus(); // 웹 접근성 위배 조치
     } else if ( inputBirth.length !== Tw.BIRTH_LEN ) {
       result = false;
       this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen);
+      this.$inputBirth.focus(); // 웹 접근성 위배 조치
     }
     if ( this.$inputGender.filter(':checked').length === 0 ) {
       result = false;
       this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender);
+      this.$inputGender.focus(); // 웹 접근성 위배 조치
     }
     return result;
   },

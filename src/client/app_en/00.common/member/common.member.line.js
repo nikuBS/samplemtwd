@@ -156,13 +156,15 @@ Tw.CommonMemberLine.prototype = {
   },
 
   _onOpenGuideOppup: function ($layer) {
-    Tw.CommonHelper.focusOnActionSheet($layer);
-    setTimeout(function() {
+    setTimeout( function() {
+      // 웹 접근성 대응
+      $("[tabindex=-1]").css('display', 'none');
       $layer.find('.popup-closeBtn').focus();
-    }, 100);
+    }, 100)
   }, 
 
   _onCloseGuideOppup: function () {
+    $("[tabindex=-1]").css('display', 'block'); // 웹 접근성 대응
     if(Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
     } else {

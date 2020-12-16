@@ -9818,36 +9818,43 @@ button:focus span {
 /* 201019 chabot case style ( components.css 에서 common.css 이동. ) */
 /* 200727 [OP002-7810] [[UX/PUB](W-2004-021-01) 티월드 챗봇 진입경로 적용 ]- 2차수정 .tod-ui-chabot2 */
 /* 201109 [OP002-11653] [UX/PUB] (W-2010-032-01) [컴봇] Greeting 작업 건 수정 */
+/* 201204 [웹접근성] 수정 [OP002-12223] */
 .tod-ui-chabot2{
-	z-index: 29; position: fixed; left: 0; bottom: -300px; width: 100%; 
- 	background: #fff; border: 1px solid #cecece; border-top-left-radius: 0.625rem; border-top-right-radius: 0.625rem; border-bottom: 0;
- 	box-sizing: border-box; transition: all .3s linear; text-align: left;
+  z-index: 29; position: fixed; left: 0; bottom: -300px; width: 100%; 
+  background: #fff; border: 1px solid #cecece; border-top-left-radius: 0.625rem; border-top-right-radius: 0.625rem; border-bottom: 0;
+  box-sizing: border-box; transition: all .3s linear; text-align: left;
 }
-.tod-ui-chabot2 .tod-ui-chabot2-inner{position: relative; padding-bottom: 3.75rem;}
+.tod-ui-chabot2 .tod-ui-chabot2-inner{position: relative; padding-bottom: 3.625rem;}
 .tod-ui-chabot2 .title-wrap{text-align: left; width: 100%;}
-.tod-ui-chabot2 .title-wrap .btn-tab{font-size: 1.25rem; width: 100%; box-sizing: border-box; text-align: left;}
+.tod-ui-chabot2 .title-wrap .btn-tab{font-size: 0.9375rem; width: 100%; box-sizing: border-box; text-align: left;}
+/*
 .tod-ui-chabot2 .title-wrap .btn-tab:before{
-	content: ''; display: block; width: 3.75rem; height: 0.25rem; 
-	background: #ededed; border-radius: 0.125rem; margin: 0.5rem auto 0;}
-
-.tod-ui-chabot2 .title-wrap .tod-chatbot-img{display: inline-block; width: 2.125rem; height: 2.375rem; vertical-align: top; margin-left: 25px; margin-top: 36px;}
-.tod-ui-chabot2 .chatbot-tit{display:inline-block; letter-spacing: -2px; margin-top: 40px; width: 80%; word-break: keep-all;}
+  content: ''; display: block; width: 3.75rem; height: 0.25rem; 
+  background: #ededed; border-radius: 0.125rem; margin: 0.5rem auto 0;}
+*/
+.tod-ui-chabot2 .title-wrap .tod-chatbot-img{display: inline-block; width: 1.25rem; height: 1.5rem; vertical-align: top; margin-left: 1.5rem; margin-top: 15px;}
+.tod-ui-chabot2 .chatbot-tit{display:inline-block; margin-top: 1rem; width: 80%; word-break: keep-all;}
 .tod-ui-chabot2 .chatbot-tit:after{
   content: ''; display: inline-block;
-  position: relative; top: -1px;
+  position: relative; top: 2px;
   background: url(/img/svg/txt-beta.svg) no-repeat 0 0;
-  width: 34px; height: 15px; margin-left: 5px;
+  width: 2.125rem; height: 0.9375rem; margin-left: 0.3125rem;
   background-size: 100% 100%;}
 .tod-ui-chabot2.expanded .chatbot-tit:after{top: -4px; }
-.tod-ui-chabot2 .list-wrap{margin-top: 1.25rem;}
+.tod-ui-chabot2 .list-wrap{margin-top: 0.75rem;}
 .tod-ui-chabot2 .list-wrap .list{margin-left: 1.5625rem;}
 .tod-ui-chabot2 .item{
-	height: 2.625rem; line-height: 2.625rem; 
-	background-color: #e9ecef; border-radius: 1.3125rem; 
-	padding: 0 1.25rem 0 0.5rem; margin-left: 0.3125rem; font-size: 0;
+  height: 2.375rem; line-height: 2.375rem; 
+  background-color: #e9ecef; border-radius: 1.3125rem; 
+  padding: 0 1.25rem 0 0.5rem; margin-left: 0.3125rem; font-size: 0;
 }
-.tod-ui-chabot2 .item .txt{font-size: 14px; color: #000;}
-.tod-ui-chabot2 .ico-chatbot{display: inline-block; width: 1.875rem; height: 1.875rem; line-height: 2.5rem; vertical-align: top; margin-top: 0.375rem; margin-right: 0.875rem;}
+.tod-ui-chabot2 .item .txt{font-size: 13px; color: #000;}
+.tod-ui-chabot2 .ico-chatbot{display: inline-block; width: 1.625rem; height: 1.625rem; line-height: 2.375rem; vertical-align: top; margin-top: 0.375rem; margin-right: 10px;}
+
+.tod-ui-chabot2 .close-wrap{position: absolute; right: 1.125rem; top: 0.75rem; width: 1.375rem; height: 1.375rem;}
+.tod-ui-chabot2 .btn-close{width: 1.5rem; height: 1.5rem;}
+.tod-ui-chabot2 .btn-close:after{content:'';display: inline-block;  width: 1.25rem; height: 1.25rem; background: url(/img/common/chatbot/btn-close-bk.svg) no-repeat 0 0;background-size: 100% 100%; margin: 0 auto;}
+/* //201204 [웹접근성] 수정 [OP002-12223] */
 
 /* keyword(발화어) */
 /* Atype - class naming change */

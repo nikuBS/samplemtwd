@@ -30,19 +30,19 @@
     <%_ } else { _%>
       <%_ if (feePlanProd.basOfrDataQtyCtt) { _%>
     <span class="sv-spec data">
-      <i class="ico-data-plan" title="데이터"></i><%- feePlanProd.basOfrDataQtyCtt.value.data ? (feePlanProd.basOfrDataQtyCtt.value.data + (feePlanProd.basOfrDataQtyCtt.isNaN ? '' : feePlanProd.basOfrDataQtyCtt.value.unit)) : feePlanProd.basOfrDataQtyCtt.value %>
+      <i class="ico-data-plan"><span class="tod-blind">데이터</span></i><%- feePlanProd.basOfrDataQtyCtt.value.data ? (feePlanProd.basOfrDataQtyCtt.value.data + (feePlanProd.basOfrDataQtyCtt.isNaN ? '' : feePlanProd.basOfrDataQtyCtt.value.unit)) : feePlanProd.basOfrDataQtyCtt.value %>
     </span>
       <%_ } _%>
       <%# T-Pocket-Fi, T-Login 제외 _%>
       <%_ if (['M3', 'M4'].includes(svcInfo.svcAttrCd) === false) { _%>
         <%_ if (feePlanProd.basOfrVcallTmsCtt) { _%>
     <span class="sv-spec">
-      <i class="ico-phone-plan" title="통화"></i><%- feePlanProd.basOfrVcallTmsCtt.value %>
+      <i class="ico-phone-plan"><span class="tod-blind">통화</span></i><%- feePlanProd.basOfrVcallTmsCtt.value %>
     </span>
         <%_ } _%>
         <%_ if (feePlanProd.basOfrCharCntCtt) { _%>
     <span class="sv-spec">
-      <i class="ico-msg-plan" title="문자"></i><%- feePlanProd.basOfrCharCntCtt.value + (feePlanProd.basOfrCharCntCtt.isNaN ? '' : feePlanProd.basOfrCharCntCtt.unit) %>
+      <i class="ico-msg-plan"><span class="tod-blind">문자</span></i><%- feePlanProd.basOfrCharCntCtt.value + (feePlanProd.basOfrCharCntCtt.isNaN ? '' : feePlanProd.basOfrCharCntCtt.unit) %>
     </span>
         <%_ } _%>
       <%_ } _%>

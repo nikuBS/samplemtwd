@@ -1394,7 +1394,7 @@ Tw.HOME_DIRECT_BANNER =
                 '{{#ifEquals odd_even_type "odd"}}' +
                   '<li>' + 
                       '<button class="plan-card{{../tempColor}}" ' + 
-                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}">' + 
+                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}" data-xt_csid="NO" data-xt_action="BC">' + 
                         '<span class="inner">' + 
                           '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
                           '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
@@ -1406,7 +1406,7 @@ Tw.HOME_DIRECT_BANNER =
                 '{{/ifEquals}}' +
                     '{{#ifEquals odd_even_type "even"}}' +
                       '<button class="plan-card right{{../tempColor}}" ' + 
-                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}">' + 
+                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}" data-xt_csid="NO" data-xt_action="BC">' + 
                         '<span class="inner">' + 
                         '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
                         '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
