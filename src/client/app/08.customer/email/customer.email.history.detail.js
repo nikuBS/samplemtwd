@@ -15,6 +15,8 @@ Tw.CustomerEmailHistoryDetail = function (rootEl, chkSvcNumForReply) {
   this._cachedElement();
   this._bindEvent();
   this._init();
+
+  new Tw.XtractorService(this.$container); // 재문의 버튼 클릭 시 통계 코드 적용
 };
 
 Tw.CustomerEmailHistoryDetail.prototype = {
@@ -40,12 +42,12 @@ Tw.CustomerEmailHistoryDetail.prototype = {
 
     var inqclcd = $(e.currentTarget).data('inqclcd');
 
-    // service inquiry
-    if ( inqclcd === 'B' ) {
+    // service or membership('C') inquiry, 모든 data 타입 다 보내서 FE 서버에서 처리, inqid만 따로 보내면 FE 서버에서 스트링으로 타입 변환 해야 오류 발생하지 않음
+    if ( inqclcd === 'B' || inqclcd === 'C' ) {
       this._history.replaceURL('/customer/emailconsult/service-retry?' + $.param($(e.currentTarget).data()));
     }
 
-    // quality inquiry
+    // quality inquiry, 모든 data 타입 다 보내서 FE 서버에서 처리, inqid만 따로 보내면 FE 서버에서 스트링으로 타입 변환 해야 오류 발생하지 않음
     if ( inqclcd === 'Q' ) {
       this._history.replaceURL('/customer/emailconsult/quality-retry?' + $.param($(e.currentTarget).data()));
     }

@@ -35,6 +35,7 @@ Tw.CustomerEmailServiceRetry.prototype = {
   _makeParams: function () {
     var arrPhoneNumber = $('.fe-service_phone').val().split('-');
 
+    // 아래 supInqId 부분은 재문의 또는 재문의의 재문의 일 경우 항상 원문 id를 적용(최초 문의글)
     return {
       supInqId: $('.fe-inqid').text(),
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
