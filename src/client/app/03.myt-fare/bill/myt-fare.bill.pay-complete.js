@@ -87,7 +87,7 @@ Tw.MyTFareBillPayComplete.prototype = {
         title = alertData.AUTO_PAYMENT_COMPLETE.TITLE,
         date = new Date(),
         // 날짜가 4일 이전이면 이번달, 이외에는 다음달.
-        month = date.getDate() < 4 ? Tw.getShortDateWithFormat(date, 'M') : Tw.getShortDateWithFormatAddByUnit(date, 1, 'month', 'M');
+        month = date.getDate() < 4 ? Tw.DateHelper.getShortDateWithFormat(date, 'M') : Tw.DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'month', 'M');
       contents = Tw.StringHelper.stringf(contents, Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT, this._mbrNm, this._accountInfo);
       title = title.replace('{month}', month);
       this._popupService.openAlert(contents, title, null, $.proxy(this._popupCloseCallback, this), null, null);
