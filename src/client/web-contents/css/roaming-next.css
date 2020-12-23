@@ -3934,6 +3934,8 @@ body.scroll #roamingOn #appbar .appbar {
 
 .rm-content .h-tip h5{display:inline-block;font-size:1.0625rem;vertical-align:middle}
 .rm-content .h-tip h4{display:inline-block;vertical-align:middle}
+.rm-content .h-tip .tip-view-btn{overflow:hidden;color:transparent;letter-spacing:-999em}
+.rm-content .h-tip .tip-view-btn .tip-view{letter-spacing:0;vertical-align:top}
 .rm-content h4{font-size:1.3125rem;font-weight:500}
 
 /* 로밍모드 */

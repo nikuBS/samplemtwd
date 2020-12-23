@@ -21,10 +21,11 @@ Tw.ProductRoamingCoupon = function(rootEl, bpcpServiceId) {
 Tw.ProductRoamingCoupon.prototype = {
 
   _bindEvent: function() {
-    this.$container.on('click', '#coupon-buy-btn', $.proxy(this._onViewclicked, this, 'BUY'));
-    this.$container.on('click', '#coupon-register-btn', $.proxy(this._onViewclicked, this, 'REGISTER'));
-    this.$container.on('click', '#coupon-inquire-btn', $.proxy(this._onViewclicked, this, 'INQUIRE'));
-    this.$container.on('click', '.card-coupon-inner', $.proxy(this._onViewclicked, this, 'COUPON'));
+    // 모두 BPCP id를 이용하여 BP 페이지로 이동, BPCP 구매내역 확인하여 로직 처리 불가(BE 이지민 수석님 답변)
+    this.$container.on('click', '#coupon-buy-btn', $.proxy(this._onViewclicked, this, 'BUY')); // 구매하기
+    this.$container.on('click', '#coupon-register-btn', $.proxy(this._onViewclicked, this, 'REGISTER')); // 등록하기
+    this.$container.on('click', '#coupon-inquire-btn', $.proxy(this._onViewclicked, this, 'INQUIRE')); // 구매내역 조회
+    this.$container.on('click', '.card-coupon-inner', $.proxy(this._onViewclicked, this, 'COUPON')); // T로밍 카드 쿠폰 소개
   },
 
   _init: function(){
