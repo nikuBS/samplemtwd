@@ -152,7 +152,7 @@ export default class MobilePlan extends TwViewController {
         return 'MWMA_A10_B82_C1202-20';
       case 'T000000080':
         return 'MWMA_A10_B82_C1202-24';
-      case 'T000000088':
+      case 'T000000087':
         return 'MWMA_A10_B82_C1202-30';
       default:
         return '';     
