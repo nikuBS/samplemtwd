@@ -106,8 +106,10 @@ Tw.CommonMemberLine.prototype = {
    * @desc 메뉴 팝업 닫기
    * @private
    */
-  _closeManageMenu: function () {
-    $('#fe-manage-menu').detach();
+  _closeManageMenu: function ($element) {
+    $('div[id^="fe-manage-menu"]').detach();
+
+    $('.fe-item-list').find('button[id^="fe-manage-menu_"]').attr('aria-expanded', false);
   },
 
 
@@ -254,23 +256,30 @@ Tw.CommonMemberLine.prototype = {
    */
   _openManagePopup: function ($event) {
 
-    var $menu = $('#fe-manage-menu');
+    var $menu = $('div[id^="fe-manage-menu"]');
+    var $menuList = $('.fe-item-list').find('button[id^="fe-manage-menu_"]');
     $menu.detach();
-    
+
     var $btManageLine = $($event.currentTarget);
     var $currentLine = $btManageLine.parents('.fe-line');
     var category = $btManageLine.parents('.fe-item-list').data('category');
     var svcMgmtNum = $currentLine.data('svcmgmtnum');
     // var listLength = $currentLine.data('length');
-    // var index = $btManageLine.data('index');
+    var index = $btManageLine.data('index');
 
     var isMobile = Tw.LINE_NAME.MOBILE === category;
     var isRepSvcYn = $currentLine.hasClass('fe-line-standard');
 
+    $menuList.attr('aria-expanded', false);
+    
     if($menu.length === 0 || $menu.data('svcmgmtnum') !== svcMgmtNum) {
+      $btManageLine.attr('aria-expanded', true);
+
       var $lineTemp = $('#fe-menu-tmpl');
+
       var tplLine = Handlebars.compile($lineTemp.html());
-      $btManageLine.after(tplLine({ svcmgmtnum: svcMgmtNum, isMobile: isMobile, isRepSvcYn: isRepSvcYn }));
+      var id = 'fe-manage-menu_' + index;
+      $btManageLine.after(tplLine({ id: id, svcmgmtnum: svcMgmtNum, isMobile: isMobile, isRepSvcYn: isRepSvcYn }));
       this.$showMenuBtn = $btManageLine;
     }
 
@@ -286,7 +295,7 @@ Tw.CommonMemberLine.prototype = {
    */
   _onCloseNickname: function (nickname) {
     this.$showNickname.html(nickname);
-    $('#fe-manage-menu').detach();
+    $('div[id^="fe-manage-menu"]').detach();
     this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_51);
   },
 
@@ -617,7 +626,7 @@ Tw.CommonMemberLine.prototype = {
       $parent.removeClass('fe-item-active').addClass('fe-item-inactive');
     }
 
-    $('#fe-manage-menu').detach();
+    $('div[id^="fe-manage-menu"]').detach();
   },
 
   /**
