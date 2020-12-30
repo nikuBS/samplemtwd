@@ -107,8 +107,9 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _closeManageMenu: function ($element) {
-    console.log('==>>', $element)
     $('div[id^="fe-manage-menu"]').detach();
+
+    $('.fe-item-list').find('button[id^="fe-manage-menu_"]').attr('aria-expanded', false);
   },
 
 
@@ -266,13 +267,14 @@ Tw.CommonMemberLine.prototype = {
     // var listLength = $currentLine.data('length');
     var index = $btManageLine.data('index');
 
-    $menuList.attr('aria-expanded', false);
-    $btManageLine.attr('aria-expanded', true);
-
     var isMobile = Tw.LINE_NAME.MOBILE === category;
     var isRepSvcYn = $currentLine.hasClass('fe-line-standard');
 
+    $menuList.attr('aria-expanded', false);
+    
     if($menu.length === 0 || $menu.data('svcmgmtnum') !== svcMgmtNum) {
+      $btManageLine.attr('aria-expanded', true);
+
       var $lineTemp = $('#fe-menu-tmpl');
 
       var tplLine = Handlebars.compile($lineTemp.html());
