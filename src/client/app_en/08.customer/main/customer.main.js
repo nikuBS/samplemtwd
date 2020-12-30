@@ -38,9 +38,9 @@ Tw.CustomerMain.prototype = {
    //_init : function(){
          if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
       //   if(true){
-          this.$container.on('click', '.embed-container', $.proxy(this._confirm, this));
-        } else {
           this.$container.on('click', '.embed-container', $.proxy(this._loadPopup, this));
+        } else {
+          this.$container.on('click', '.embed-container', $.proxy(this._confirm, this));
         }
   },
 
