@@ -156,7 +156,8 @@
                                             <ul class="help-list">
                                             <%  for( var j = 0; j < doLikeThis[i].length; j++ ) { %>
                                                 <li>
-                                                    <a data-url="/customer/faq/do-like-this?id=<%= doLikeThis[i][j].icntsId %>" class="bt fe-btn-doLikeThis" data-xt_eid="CMMA_A11_B4-<%= idx %>" data-xt_csid="NO" data-xt_action="BC">
+                                                    <!-- NO1.웹접근성 추가 -->
+                                                    <a role="link" data-url="/customer/faq/do-like-this?id=<%= doLikeThis[i][j].icntsId %>" class="bt fe-btn-doLikeThis" data-xt_eid="CMMA_A11_B4-<%= idx %>" data-xt_csid="NO" data-xt_action="BC"> 
                                                         <span class="ico"><img src="<%= CDN %><%= doLikeThis[i][j].mainExpsImgPathNm %>" alt=""></span>
                                                         <%- doLikeThis[i][j].mainExpsTitNm %>
                                                     </a>

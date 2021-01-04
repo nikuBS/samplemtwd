@@ -110,6 +110,7 @@
             </ul>
             {{#ifCond listData.METATAG.length '!==' 0}}
                 <div class="taglist-wrap">
+                    <span class="tod-blind">TAG</span> <!-- 201204 웹접근성 추가 -->
                     {{#each listData.METATAG}}
                     {{#ifCond this '!==' ''}}
                     <span class="tag-text">#{{{this}}}</span>
@@ -151,6 +152,7 @@
 
             {{#ifCond listData.METATAG.length '!==' 0}}
             <div class="taglist-wrap">
+                <span class="tod-blind">TAG</span> <!-- 201204 웹접근성 추가 -->
                 {{#each listData.METATAG}}
                 {{#ifCond this '!==' ''}}
                 <span class="tag-text">#{{{this}}}</span>
@@ -205,6 +207,7 @@
             {{#each listData.METATAG}}
             {{#ifCond this '!==' ''}}
             <div class="taglist-wrap">
+                <span class="tod-blind">TAG</span> <!-- 201204 웹접근성 추가 -->
                 <span class="tag-text">#{{{this}}}</span>
             </div>
             {{/ifCond}}
