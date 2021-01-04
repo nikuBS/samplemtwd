@@ -31,8 +31,8 @@
                         <div class="widget">
                             <div class="widget-box radio">
                                 <ul class="select-list" role="group">
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio1">
-                                        <input type="radio" name="radio" value="NA00006114" aria-hidden="true">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" title="인피니티 상품 혜택" value="NA00006114" aria-hidden="true" aria-labelledby="aria-comp-radio1">
                                         <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                             <span class="ico ico-travel"></span>
                                             <p class="layout-text">
@@ -41,33 +41,23 @@
                                             </p>
                                         </div>
                                     </li>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio2">
-                                        <input type="radio" name="radio" value="NA00006115" aria-hidden="true">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" title="인피니티 상품 혜택" value="NA00006115" aria-hidden="true" aria-labelledby="aria-comp-radio2">
                                         <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
-                                            <span class="ico ico-movie"></span>
+                                            <span class="ico ico-contents"></span>
                                             <p class="layout-text">
-                                                <span class="mtext">인피니티 영화</span>
-                                                <span class="stext">영화예매권 월 2장 무료</span>
+                                                <span class="mtext">인피니티 콘텐츠</span>
+                                                <span class="stext">FLO 모바일 스트리밍 이용권 + <br> wavve 콘텐츠 팩 월정액 무료</span>
                                             </p>
                                         </div>
                                     </li>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio3">
-                                        <input type="radio" name="radio" value="NA00006116" aria-hidden="true">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" title="인피니티 상품 혜택" value="NA00006116" aria-hidden="true" aria-labelledby="aria-comp-radio3">
                                         <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
                                             <span class="ico ico-watch"></span>
                                             <p class="layout-text">
                                                 <span class="mtext">인피니티 스마트워치</span>
                                                 <span class="stext">스마트워치 요금지원(별도가입 필요)</span>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio4">
-                                        <input type="radio" name="radio" value="NA00006117" aria-hidden="true">
-                                        <div class="comp-list-layout" id="aria-comp-radio4" aria-hidden="true">
-                                            <span class="ico ico-club"></span>
-                                            <p class="layout-text">
-                                                <span class="mtext">인피니티 클럽 할인</span>
-                                                <span class="stext">스마트폰 구입 6개월 후 새로 구입 시 기존 할부금 할인(출고가의 70%까지) 해주는 '인피니티 클럽' 요금지원 (스마트폰 구입 7일 내 별도 가입 필요)</span>
                                             </p>
                                         </div>
                                     </li>
@@ -77,20 +67,19 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
-
-                <div class="myt-note-wrap type3">
-                    <span class="tit r-mark">옵션 중 하나를 선택할 수 있으며, 변경일로부터 30일 안에 다른 옵션으로 변경할 수 없습니다.</span>
-                </div>
+                <div class="cont-box noborder nogaps">
+                    <div class="myt-note-wrap type3">
+                        <span class="tit r-mark">옵션 중 하나를 선택할 수 있으며, 변경일로부터 30일 안에 다른 옵션으로 변경할 수 없습니다.</span>
+                    </div>
+                </div> 
 
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
                         <li>
-                            <button type="button" class="tip-view-btn" id="MP_02_02_03_01_tip_02" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
-                                서비스 이용안내<span class="tip-view">TIP</span>
-                            </button>
+                            <button class="btn-tip" aria-haspopup="true" id="MP_02_02_03_01_tip_02" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">서비스 이용안내<i class="icon-badge-tip"><span class="blind">TIP</span></i></button>
                         </li>
                     </ul>
                 </div>
@@ -100,7 +89,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button class="fe-btn_setup_ok" disabled="disabled">변경 완료</button>
+                        <button class="fe-btn_setup_ok" disabled="disabled">설정 완료</button>
                     </li>
                 </ul>
             </div>
