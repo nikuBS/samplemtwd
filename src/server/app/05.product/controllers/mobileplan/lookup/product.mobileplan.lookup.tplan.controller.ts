@@ -27,7 +27,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
   /* 상품코드별 API 응답 값 내 목록 필드명 분기처리 */
   private readonly _prodIdList = {
     NA00006114: 'infiTravel',
-    NA00006115_OLD: 'infiMovieList',
+    NA00006115: 'infiMovieList',
     NA00006116: 'infiWatchList',
     NA00006117: 'infiClubList'
   };
@@ -51,7 +51,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
         resultList = convTravelInfo.list;
         listTotal = result[this._prodIdList[printProdId]].infiRomList.length + result[this._prodIdList[printProdId]].infiMatinaList.length;
         break;
-      case 'NA00006115_OLD':
+      case 'NA00006115':
         const convMovieInfo: any = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]]);
         resultList = convMovieInfo.list;
         listTotal = convMovieInfo.listTotal;
