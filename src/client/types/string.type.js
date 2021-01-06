@@ -1893,10 +1893,15 @@ Tw.ROAMING_RETURN_CODE = {
     officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)'
   },
   '1430456896': {
-    name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-02-1',
+    name: '인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터', img: 'place-img-02-east',
     // officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
-    officeHour: '<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00'
+    officeHour: '<strong>업무시간</strong> | 24시간'
   },
+  // '1430456896': {
+  //   name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-02-1',
+  //   // officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
+  //   officeHour: '<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00'
+  // },
   'A100110000': {
     name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-01-1',
     // officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간' },

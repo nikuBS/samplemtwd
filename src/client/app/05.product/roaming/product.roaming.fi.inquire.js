@@ -36,20 +36,20 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inputEdate = this.$container.find('#fe-edate');
     this.$inquirePeriod = this.$container.find('#fe-period');
     this.$totalCnt = this.$container.find('#fe-total-cnt');
-    this.$inquire = this.$container.find('#fe-inquire');
+    this.$inquire = this.$container.find('#fe-inquire');  // 조회하기 버튼
     this.$more = this.$container.find('.bt-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
-    this.$certBtn = this.$container.find('#fe-cert');
+    this.$certBtn = this.$container.find('#fe-cert'); // 인증받기 버튼
   },
 
   _bindEvent: function() {
-    this.$inquire.on('click', $.proxy(this._getTfiResponse, this));
-    this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
+    this.$inquire.on('click', $.proxy(this._getTfiResponse, this)); // 조회하기 버튼
+    this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this)); // 예약수정 버튼
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
     this.$container.on('click', '.bt-more', $.proxy(this._onMore, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
-    this.$certBtn.on('click', $.proxy(this._getTfiResponse, this));
+    this.$certBtn.on('click', $.proxy(this._getTfiResponse, this)); // 인증받기 버튼
   },
 
   /**

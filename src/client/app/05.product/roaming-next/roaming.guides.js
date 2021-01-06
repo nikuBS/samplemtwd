@@ -400,7 +400,7 @@ Tw.RoamingGuides.prototype = {
         title: '인천공항 2터미널',
         list: [
           { 'radio-attr': 'name="r2"', 'label-attr': 'id="3"', txt: '인천공항 2터미널 3층' },
-          { 'radio-attr': 'name="r2"', 'label-attr': 'id="4"', txt: '인천공항 2터미널 1층' }
+          { 'radio-attr': 'name="r2"', 'label-attr': 'id="4"', txt: '인천공항 2터미널 동편 입국심사장' }
         ]
       }],
       btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
