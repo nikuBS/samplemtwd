@@ -664,11 +664,18 @@ Tw.POPUP_TPL = {
         },
         {
           'radio-attr': 'id="01" name="r2"',
-          'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-1" value="인천공항 2터미널 1층 로밍센터"' +
+          'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-east" value="인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터"' +
             // ' data-officehour="<strong>업무시간</strong> | 3번 출구 옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00"',
-            ' data-officehour="<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00"',
-          txt: '인천공항 2터미널 1층 로밍센터'
+            ' data-officehour="<strong>업무시간</strong> |  24시간"',
+          txt: '인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터'
         }
+        // {
+        //   'radio-attr': 'id="01" name="r2"',
+        //   'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-1" value="인천공항 2터미널 1층 로밍센터"' +
+        //     // ' data-officehour="<strong>업무시간</strong> | 3번 출구 옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00"',
+        //     ' data-officehour="<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00"',
+        //   txt: '인천공항 2터미널 1층 로밍센터'
+        // }
         // { 'radio-attr': 'id="02" name="r2"',
         //   'label-attr':'id="02" data-center="A100140000" data-img="place-img-03" value="김포공항 1층 로밍센터"' +
         //   ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 23:00"',

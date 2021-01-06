@@ -328,13 +328,17 @@
     </div>
     <div id="center4" class="standby">
         <div class="mapimg-area">
-            <img src="<%= CDN %>/img/product/place-img-02-1.png"
-                 alt="인천공항 2터미널 1층 4번 출구 옆, 3번 출구 옆 T로밍센터 위치" />
+            <img src="<%= CDN %>/img/product/place-img-02-east.png"
+                 alt="인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터" />
         </div>
         <div class="announcement-box">
-            <p class="announcement-bullet type01 tod-txcolor7">
+            <!-- <p class="announcement-bullet type01 tod-txcolor7">
                 <strong>코로나19로 인해 현재 2-3번 카운터 사이 T로밍센터(운영시간 오전 6시 ~ 오후 10시)만 운영되고 있습니다. 이용에 참고하시기 바랍니다.</strong>
-            </p>
+            </p> -->
+            <!-- 201230 수정 [OP002-12495] -->
+            <p class="announcement-bullet type01 tod-txcolor7 tx-bold">귀국 시 입국 수속 전 반드시 반납해 주시기 바랍니다.</p>
+            <p class="announcement-bullet type01 tod-txcolor7 tx-bold">서편 입국장을 이용하시는 고객님은 동편으로 이동 후 SK텔레콤 로밍부스에서 반납해 주시기 바랍니다.</p>
+            <!-- // 201230 수정 [OP002-12495] -->
         </div>
 
         <h3>임대 baro Box / 로밍폰 반납</h3>
@@ -342,7 +346,7 @@
             <tbody>
             <tr>
                 <td class="label">위치</td>
-                <td>2터미널 1층 3번 출구 옆(입국장 A)</td>
+                <td>2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터</td><!-- 201230 수정 [OP002-12495] -->
             </tr>
             <tr>
                 <td class="label">업무 시간</td>
@@ -350,7 +354,7 @@
             </tr>
             </tbody>
         </table>
-        <h3>자동로밍</h3>
+        <!-- <h3>자동로밍</h3>
         <table class="explain">
             <tbody>
             <tr>
@@ -362,7 +366,7 @@
                 <td>오전 6시 ~ 오후 10시</td>
             </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
     </div>
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
