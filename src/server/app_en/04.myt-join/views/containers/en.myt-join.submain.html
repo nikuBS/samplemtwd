@@ -40,15 +40,17 @@
                         <%_ if ( basePriceObject.basOfrDataQtyCtt || basePriceObject.basOfrVcallTmsCtt || basePriceObject.basOfrCharCntCtt ) { _%>
                             <ul class="products-detailinfo02">
                                 <%_ if ( basePriceObject.basOfrDataQtyCtt ) { _%>
-                                    <li class="category-type type01 style2">
-                                        <p class="gb"><i class="blind">data</i><%- basePriceObject.basOfrDataQtyCtt.value.data ? ( basePriceObject.basOfrDataQtyCtt.value.data + (basePriceObject.basOfrDataQtyCtt.isNaN ? '' : basePriceObject.basOfrDataQtyCtt.value.unit)) : basePriceObject.basOfrDataQtyCtt.value %></p>
-                                    </li>
+                                <li class="category-type type01 style2">
+                                    <p class="gb">
+                                        <i class="blind">data</i><%- basePriceObject.basOfrDataQtyCtt.value.data ? ( basePriceObject.basOfrDataQtyCtt.value.data + (basePriceObject.basOfrDataQtyCtt.isNaN ? '' : basePriceObject.basOfrDataQtyCtt.value.unit)) : basePriceObject.basOfrDataQtyCtt.value %>
+                                    </p>
+                                </li>
                                 <%_ } _%>
 
                                 <%_ if ( basePriceObject.basOfrVcallTmsCtt ) { _%>
                                 <li class="category-type type02 style2">
                                     <p class="type">
-                                        <i class="blind">currency</i><%- basePriceObject.basOfrVcallTmsCtt.value %>
+                                        <i class="blind">call</i><%- basePriceObject.basOfrVcallTmsCtt.value %>
                                     </p>
                                 </li>
                                 <%_ } _%>
@@ -56,7 +58,7 @@
                                 <%_ if ( basePriceObject.basOfrCharCntCtt ) { _%>
                                 <li class="category-type type03 style2">
                                     <p class="basic">
-                                        <i class="blind" >text massage</i><%- basePriceObject.basOfrCharCntCtt.value + (basePriceObject.basOfrCharCntCtt.isNaN ? '' : basePriceObject.basOfrCharCntCtt.unit) %>
+                                        <i class="blind" >sms</i><%- basePriceObject.basOfrCharCntCtt.value + (basePriceObject.basOfrCharCntCtt.isNaN ? '' : basePriceObject.basOfrCharCntCtt.unit) %>
                                     </p>
                                 </li>
                                 <%_ } _%>

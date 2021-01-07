@@ -14,16 +14,20 @@ Tw.CustomerMain = function (rootEl) {
   this._popupService = Tw.Popup;
   
   this._historyService = new Tw.HistoryService();
-  this._$confirm = this.$container.find('#videoConfirm');
-
+ 
   this._$popup = this.$container.find('.popup');
   this._$cancelbtn = this.$container.find('.pos-left');
   this._$confirmbtn = this.$container.find('.pos-right');
-  Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
-     $.proxy(function (res) {
-      this._init(res);
-     }, this)
-   );
+  if(Tw.BrowserHelper.isApp()){
+    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+      $.proxy(function (res) {
+        this._init(res);
+      }, this)
+    );
+  } else {
+    this.$container.on('click', '.embed-container', $.proxy(this._confirm, this));
+  }
+
   // 핸드폰에 적용시 수정
   //this._init();
   this._bindEvent();
@@ -33,9 +37,10 @@ Tw.CustomerMain.prototype = {
    _init : function(res) { //핸드폰에 적용 시 수정
    //_init : function(){
          if(!res.params.isWifiConnected){  //핸드폰에 적용시 수정
-     //    if(true){
-          $('#videoConfirm').css('display','block');
-          $('#videoConfirm').on('click', $.proxy(this._loadPopup, this));
+      //   if(true){
+          this.$container.on('click', '.embed-container', $.proxy(this._loadPopup, this));
+        } else {
+          this.$container.on('click', '.embed-container', $.proxy(this._confirm, this));
         }
   },
 

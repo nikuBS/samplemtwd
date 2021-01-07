@@ -3880,6 +3880,10 @@ background-size: 100% 100%; } /* 191220 [OP002-5903] 추가_01  */
   background: url(/img/ico/ico-club.png);
   background-size: 3.75rem; }
 
+.list-comp-input.production-benefit-wrap .select-list > li .comp-list-layout .ico.ico-contents {
+  background: url(/img/ico/ico-contents.png);
+  background-size: 3.75rem; } /* 201224 [OP002-12477] 추가 */
+
 .myt-note-wrap {
   padding: 1.06rem 1rem 0; }
 

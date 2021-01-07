@@ -1,6 +1,6 @@
 <%_ if (svcInfo.loginType === 'T') { _%>
 <div class="tod-line-sel-box">
-    <button type="button" class="line-sel-btn<% if (parseInt(svcInfo.selectableExpsSvcCnt, 10) === 1) { %> side-arr<% } %> fe-bt-line" data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? xtEid.multiple: xtEid.single %>" data-xt_csid="CS_ID" data-xt_action="BC">
+    <button type="button" class="line-sel-btn<% if (parseInt(svcInfo.selectableExpsSvcCnt, 10) === 1) { %> side-arr<% } %> fe-bt-line" data-svcmgmtnum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="<%= (parseInt(svcInfo.selectableExpsSvcCnt, 10) > 1) ? xtEid.multiple: xtEid.single %>" data-xt_csid="NO" data-xt_action="BC">
         <i class="sel-ico">
             <img src="<%= CDN %>/img/myt/<%= svcInfo.ico %>" aria-hidden="true">
         </i>

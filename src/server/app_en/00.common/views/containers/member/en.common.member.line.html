@@ -22,7 +22,7 @@
         <h2 id="contents-area" tabindex="-1"><span class="blind">contents</span></h2>
         <div class="container">
             <div class="ti-caption-gray bgnone">
-                <button type="button" class="tod-icon tod-icon-notice01 fe-bt-guide" data-xt_eid="MWMA_A10_B80_C1199_D4354_E399-1" data-xt_csid="CS_ID" data-xt_action="BC"><span>User guide</span></button>
+                <button type="button" class="tod-icon tod-icon-notice01 fe-bt-guide" data-xt_eid="MWMA_A10_B80_C1199_D4354_E399-1" data-xt_csid="NO" data-xt_action="BC"><span>User guide</span></button>
             </div>
 
             <!-- .cont-box -->
@@ -51,7 +51,8 @@
 </body>
 <% include ../../components/javascript.component.html %>
 <script id="fe-menu-tmpl" type="text/x-handlebars-template">
-    <div class="tod-manage-layer" id="fe-manage-menu" data-svcmgmtnum="{{ svcmgmtnum }}">
+    <!-- <div class="tod-manage-layer" id="fe-manage-menu" data-svcmgmtnum="{{ svcmgmtnum }}"> -->
+    <div class="tod-manage-layer" id="{{ id }}" data-svcmgmtnum="{{ svcmgmtnum }}">
         <ul class="tod-list">
             {{#if isMobile}}
             <li><button type="button" class="fe-change-first" {{#if isRepSvcYn}}disabled{{/if}} >Register as Main Line</button></li>

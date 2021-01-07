@@ -126,7 +126,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     $target.find('button').attr('aria-selected', 'true');
     $target.siblings().find('button').attr('aria-selected', 'false');
 
-    var $targetId = $target.attr('id');
+    var $targetId = $target.find('button').attr('id');
     this._initVariables($targetId);
     this._checkIsAbled();
   },
