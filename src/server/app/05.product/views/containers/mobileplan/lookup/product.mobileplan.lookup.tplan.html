@@ -41,9 +41,12 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                    <div class="announcement-box wrap-gaps-top">
-                        <div class="announcement-txt">최근 50건의 이용내역만 조회하실 수 있습니다.</div>
-                    </div>
+                    <% if ( beforeTDiyGrCd === 'NA00006114' || beforeTDiyGrCd === 'NA00006115_OLD' || beforeTDiyGrCd === 'NA00006115' ) { %>
+                        <div class="announcement-box wrap-gaps-top">
+                            <div class="announcement-txt">최근 50건의 이용내역만 조회하실 수 있습니다.</div>
+                        </div>
+                    <% } %>
+
                     <% if (beforeTDiyGrCd === 'NA00006114') { %>
                     <div class="cont-box nogaps-ver pb0">
                         <!-- .component -->
@@ -106,7 +109,7 @@
                                                 </dl>
                                                 <% } %>
                                             </li>
-                                            <% } else { %>
+                                            <% } else if ( listCase === 'B' ) { %>
                                             <li>
                                                 <p class="date"><%= item.benfStaDtKey %></p>
                                                 <% for ( var k in item.list ) {
@@ -121,6 +124,21 @@
                                                     <dt>지원 종료일</dt>
                                                     <dd><%= item.list[k].benfEndDt %></dd>
                                                     <% } %>
+                                                </dl>
+                                                <% } %>
+                                            </li>
+                                            <% } else { %>
+                                            <li>
+                                                <p class="date"><%= item.issueDtKey %></p>
+
+                                                <% for ( var k in item.list ) {
+                                                multipleClass = k !== '0' ? 'multiple' : '';
+                                                %>
+                                                <dl class="<%= multipleClass %>">
+                                                    <dt>대상</dt> 
+                                                    <dd><%= item.list[k].primProdNm %></dd>
+                                                    <dt>지원 시작일</dt>
+                                                    <dd><%= item.list[k].benfStaDt %></dd>
                                                 </dl>
                                                 <% } %>
                                             </li>

@@ -36,9 +36,10 @@ Tw.ProductMobileplanLookupTplan.prototype = {
   /* 혜택 상품코드 별 목록 필드명 */
   _prodIdList: {
     NA00006114: 'infiTravelList',
-    NA00006115: 'infiMovieList',
+    NA00006115_OLD: 'infiMovieList',
     NA00006116: 'infiWatchList',
-    NA00006117: 'infiClubList'
+    NA00006117: 'infiClubList',
+    NA00006115: 'infiContents' 
   },
 
   /**

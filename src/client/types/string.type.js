@@ -1124,18 +1124,20 @@ Tw.URL_PATH = {
   MEMBERSHIP_CULTURE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/cultureList.do?bannerpoc=2018_164'
 };
 
-Tw.PRODUCT_INFINITY_CATEGORY = {
+Tw. = {
   NA00006114: '여행',
-  NA00006115: '영화',
+  NA00006115_OLD: '영화',
   NA00006116: '스마트워치',
-  NA00006117: '클럽'
+  NA00006117: '클럽',
+  NA00006115: '콘텐츠'
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
   NA00006114: 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
-  NA00006115: '무료영화예매 2회 / 1개월',
+  NA00006115_OLD: '무료영화예매 2회 / 1개월',
   NA00006116: '스마트 워치 월정액 100% 할인',
-  NA00006117: '인피니티 클럽 이용료 100%할인'
+  NA00006117: '인피니티 클럽 이용료 100%할인',
+  NA00006115: ''
 };
 
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
