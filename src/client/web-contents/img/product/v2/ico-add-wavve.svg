@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Slice</title>
+    <defs>
+        <path d="M11.6799347,6.59766171 L13.7425921,10.2646081 C14.1487378,10.986645 13.8926574,11.9012176 13.1706206,12.3073633 C12.9460982,12.4336572 12.6928341,12.5 12.4352288,12.5 L7.85154573,12.5 C7.02311861,12.5 6.35154573,11.8284271 6.35154573,11 C6.35154573,10.6965597 6.44357515,10.4002543 6.61548285,10.1502068 L9.13650852,6.48326033 C9.60583636,5.80060165 10.539706,5.62766284 11.2223646,6.09699068 C11.4111142,6.22675604 11.5676387,6.39802437 11.6799347,6.59766171 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon_wavve">
+            <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+            <g id="icon_02" transform="translate(3.000000, 3.000000)">
+                <circle id="Oval" stroke="#222222" cx="8.75" cy="8.75" r="8.25"></circle>
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Triangle" fill="#F76252" transform="translate(10.000000, 8.500000) rotate(90.000000) translate(-10.000000, -8.500000) " xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

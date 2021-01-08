@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>mask</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="20" height="20"></rect>
+    </defs>
+    <g id="요금제-리스트" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="전체_요금제-리스트-전체" transform="translate(-320.000000, -137.000000)">
+            <g id="@@TAB" transform="translate(20.000000, 124.000000)">
+                <g id="icon_filter-20px" transform="translate(288.000000, 0.000000)">
+                    <g id="mask" transform="translate(22.000000, 23.000000) rotate(90.000000) translate(-22.000000, -23.000000) translate(12.000000, 13.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Rectangle"></g>
+                        <g id="filter" mask="url(#mask-2)">
+                            <g transform="translate(3.300000, 0.100000)">
+                                <g id="bar-01" transform="translate(0.000000, 1.000000)">
+                                    <line x1="2.2" y1="0" x2="2.2" y2="9.48374023" id="Line" stroke="#222222" stroke-width="1.5" stroke-linecap="round"></line>
+                                    <line x1="2.2" y1="14.4" x2="2.2" y2="17.6" id="Line-Copy-2" stroke="#222222" stroke-width="1.5" stroke-linecap="round"></line>
+                                    <circle id="Oval" stroke="#222222" stroke-width="1.5" cx="2.25" cy="12.15" r="2.25"></circle>
+                                </g>
+                                <g id="bar-02" transform="translate(11.300000, 9.600000) scale(1, -1) translate(-11.300000, -9.600000) translate(8.800000, 0.600000)">
+                                    <line x1="2.2" y1="0" x2="2.2" y2="9.9" id="Line-Copy-4" stroke="#222222" stroke-width="1.5" stroke-linecap="round"></line>
+                                    <line x1="2.2" y1="14.4" x2="2.2" y2="17.6" id="Line-Copy-3" stroke="#222222" stroke-width="1.5" stroke-linecap="round"></line>
+                                    <circle id="Oval-Copy" stroke="#222222" stroke-width="1.5" cx="2.25" cy="12.15" r="2.25"></circle>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

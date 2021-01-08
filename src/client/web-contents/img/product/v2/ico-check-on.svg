@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>상품/check/actived</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="NMP_04_Filter_user_Scroll" transform="translate(-48.000000, -389.000000)">
+            <g id="Group-4" transform="translate(0.000000, 248.000000)">
+                <g id="01-1-copy" transform="translate(30.000000, 124.000000)">
+                    <g id="상품/check/actived" transform="translate(17.000000, 16.000000)">
+                        <circle id="Oval" stroke="#F76252" stroke-width="1.5" cx="11.5" cy="11.5" r="8.83333333"></circle>
+                        <path d="M14.9793634,8.85471739 C15.274965,8.55307661 15.7594984,8.54781617 16.0615991,8.84296788 C16.336236,9.11128761 16.3655571,9.53551164 16.1465286,9.83705295 L16.0733665,9.92355627 L10.9970164,15.103616 C10.7274416,15.3786982 10.3009488,15.4071768 9.99893894,15.186622 L9.91235188,15.1129821 L6.93597198,12.1790659 C6.63518972,11.8825748 6.6320774,11.3987603 6.92902042,11.0984359 C7.19896862,10.8254137 7.62396564,10.7980252 7.92498901,11.01806 L8.01129779,11.0914949 L10.4407176,13.4865285 L14.9793634,8.85471739 Z" id="Path-2" fill="#F76252" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

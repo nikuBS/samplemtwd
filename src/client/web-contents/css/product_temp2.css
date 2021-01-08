@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+/*********************** 상품 서브메인 ***********************/
+
+/*
+.pro-cont: 컨텐츠가 있는 큰 뭉치,.product-sec : 큰 단락,  pro-article: 소단락
+
+*/
+.tod-renewalBody .key-visual-area{width:100%; }
+.tod-renewalBody .key-visual-area img{width:100%; height:auto; }
+.tod-renewalBody .pro-cont{padding-top:1.25rem}
+/* 상품 메인 공통 */
+.tod-renewalBody .product-sec .wel-comment{font-size:1.375rem; line-height:1.75rem; letter-spacing:-0.0313rem; color:#000;  }
+.tod-renewalBody .product-sec .wel-comment strong{color:#f76252}
+.tod-renewalBody .product-sec .sec-tit{font-size:1.25rem; line-height:1.6875rem; letter-spacing:-0.0187rem; color:#000; margin-bottom:2.5rem; font-weight:300}
+.tod-renewalBody .product-sec .sec-tit.narrow{margin-bottom:1.875rem}
+.tod-renewalBody .product-sec .minus-space{margin:0 -1.25rem}
+.tod-renewalBody .product-sec{padding:2.5rem 1.25rem 1.875rem; border-bottom:1px solid #d8d8d8; border-top:1px solid #fff; background:transparent; }
+.tod-renewalBody .product-sec:first-child{border-top:none; padding-top:0}
+.tod-renewalBody .product-sec:last-child{border-bottom:none}
+.tod-renewalBody .product-sec.bg{background-color:#f1f1f3}
+.tod-renewalBody .product-sec .pro-article{margin-top:2.5rem}
+.tod-renewalBody .product-sec .pro-article.no-mg{margin-top:0}
+.tod-renewalBody .product-sec .pro-article .article-tit{margin-bottom:0.5625rem; font-size:0.8125rem; letter-spacing:-0.05rem; color:#222 }
+.tod-renewalBody .product-sec .pro-article .article-tit a{display:inline-block; color:inherit; padding-right:0.9375rem; position:relative }
+.tod-renewalBody .product-sec .pro-article .article-tit a:after{content:''; display:inline-block; width:0.625rem; height:0.625rem; background:url('/img/product/v2/pro-arr.svg') no-repeat left top; position:absolute; right:0; top:50%; margin-top:-0.3125rem}
+.tod-renewalBody .product-sec .pro-article .inset-shadow-box{background:#efeff1; padding:20px; box-shadow: inset 1px 1px 3px 0 #c8c9cb, inset -1px -1px 1px 0 #ffffff; border-radius:0.75rem;}
+.tod-renewalBody .product-sec .pro-article .shadow-box{box-shadow:-4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; border-radius:0.75rem; background:#f6f8fa}
+.tod-renewalBody .product-sec .pro-article .item-define{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content:space-between; color:#2b2b2b; letter-spacing:-0.0313rem; padding-bottom:1.25rem; border-bottom:1px solid ; font-size:1rem;}
+.tod-renewalBody .product-sec .pro-article .item-define .strong{font-weight:700}
+.tod-renewalBody .product-sec .more-link-area{margin-top:1.875rem }
+.tod-renewalBody .product-sec .more-link-area .more{display:inline-block; width:100%; font-size:0.75rem; letter-spacing:-0.0375rem; color:#767778; text-align:center;}
+.tod-renewalBody .product-sec .more-link-area .more .more-txt{display:inline-block; border-bottom:1px solid #767778}
+.tod-renewalBody .product-sec .go-service{padding:0 1.25rem}
+.tod-renewalBody .product-sec .go-service .service-item:not(:last-child) {border-bottom:1px solid #e1e3e4}
+.tod-renewalBody .product-sec .go-service .service-item{ width:100%; padding:1.125rem 0 1rem ;  }
+.tod-renewalBody .product-sec .go-service .service-item .item-inner{display: -webkit-box; display:flex; width:100%; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center;}
+.tod-renewalBody .product-sec .go-service .service-item .service-name{display:inline-flex; align-items:center; font-size:0.8125rem;}
+.tod-renewalBody .product-sec .go-service .service-item .service-detail{display:inline-block; padding-right:0.8125rem; position:relative; font-size:0.6875rem; color:#222}
+.tod-renewalBody .product-sec .go-service .service-item .service-detail:after{content:''; display:inline-block; width:0.625rem; height:0.625rem; background:url('/img/product/v2/pro-arr.svg') no-repeat left top; position:absolute; right:0; top:50%; margin-top:-5px; color:#222}
+/* 상품 -버튼 */
+.pro-btn{display:inline-block; height:2rem; line-height:2rem; border-radius:1rem; color:#fff; background:#f76252; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff, inset 3px 2px 4px 0 rgba(255, 169, 160, 0.24), inset -1px -3px 5px 0 #ff7466; font-size:0.75rem}
+
+/*상품 - 슬라이더*/
+.tod-renewalBody .product-sec .slider-wrap{overflow:hidden;}
+.tod-renewalBody .product-sec .slider-wrap .slider-container{width:100%; height:calc(100% + 12px); padding-top:0.75rem; overflow-x:auto; box-sizing:border-box; -webkit-overflow-scrolling: touch }
+.tod-renewalBody .product-sec .slider-wrap .slider-container::-webkit-scrollbar{display:none}
+.tod-renewalBody .product-sec .slider-wrap .slider-container .slider-list{display: -webkit-box; display:flex; width:100%; height:100%; }
+.tod-renewalBody .product-sec .slider-wrap .slider-container .slider-list .slider-item{flex-shrink:0; padding:0 0.3125rem; }
+.tod-renewalBody .product-sec .slider-wrap .slider-container .slider-list .slider-item:first-child{padding-left:1.25rem}
+.tod-renewalBody .product-sec .slider-wrap .slider-container .slider-list .slider-item:last-child{padding-right:1.25rem}
+.tod-renewalBody .product-sec .slider-wrap .slider-container .slider-list .slider-item a{display:block; }
+.tod-renewalBody .product-sec .slider-wrap + .more-link-area{margin-top:0}
+.tod-renewalBody .key-visual-area .section-swiper-box .slider-box .slick-dots{top:1.5625rem; right:1.25rem}
+.tod-renewalBody .key-visual-area .section-swiper-box .slider-box .slick-dots li{width:0.3125rem; height:0.3125rem; margin-left:0.25rem;}
+.tod-renewalBody .key-visual-area .section-swiper-box .slider-box .slick-dots li.slick-active{width:0.875rem; margin-top:0}
+.tod-renewalBody .key-visual-area .section-swiper-box .slider-box .slick-dots li button:before{content:none}
+.tod-renewalBody .key-visual-area .section-swiper-box .slider-box .slick-dots li button{width:0.3125rem; height:0.3125rem; background:#d8d9d9; border:none; border-radius:0.3125rem; transition:all 0.2s}
+.tod-renewalBody .key-visual-area .section-swiper-box .slider-box .slick-dots li.slick-active button{background:#f76252; width:0.875rem; }
+
+/* 로그인 */
+.tod-renewalBody .product-sec .login-msg{font-size:1rem; text-align:center; color:#000; letter-spacing:-0.025rem; padding-top:0.625rem; font-weight:300}
+.tod-renewalBody .product-sec .login-btn-area{margin:1.25rem 0 1.875rem; text-align:center;}
+.tod-renewalBody .product-sec .login-btn-area .login-btn{width:5.625rem; }
+
+/* 현재 사용중인 요금제 */
+.tod-renewalBody .product-sec .pro-article.now-pay-box .item-define{border-bottom:1px solid#d6d7d8}
+.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info{display: -webkit-box; display:flex; padding-top:1.25rem; -webkit-box-pack: justify; justify-content: space-between;}
+.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item{font-size:0.75rem; color:#666; letter-spacing:-0.0187rem; }
+.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item .val{display:inline-block; margin-left:4px; color:#222}
+
+/* 신청하지 않은 무료 부가서비스 */
+.tod-renewalBody .product-sec .pro-article .article-tit{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center}
+.tod-renewalBody .product-sec .pro-article .ico-new{display:inline-block; width:20px; height:20px; border-radius:100%; background:#f76252; box-shadow:2px 2px 4px 0 rgba(247, 98, 82, 0.4); vertical-align:middle; color:#fff; font-size:0.5625rem; text-align:center; line-height:1.25rem; margin-right:0.25rem; }
+.tod-renewalBody .product-sec .go-service.add-service-list .service-item:nth-child(n + 6){display:none}
+.tod-renewalBody .product-sec .go-service.add-service-list .service-item:nth-child(5){border-bottom:none}
+.tod-renewalBody .product-sec .go-service.add-service-list.show .service-item:nth-child(n + 6){display:block}
+.tod-renewalBody .product-sec .go-service.add-service-list.show .service-item:nth-child(5){border-bottom:1px solid #e1e3e4}
+.tod-renewalBody .product-sec .go-service.add-service-list .service-item .ico{display:inline-block; width:1.5rem; height:1.5rem; margin-right:0.375rem;}
+.tod-renewalBody .product-sec .go-service.add-service-list .service-item .ico img{width:100%; height:100%; }
+
+/* 꼭 필요한 요금제 혜택이 있으신가요? */
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider{height:13.125rem; }
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-container{width:100%;  }
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item{width:160px; height:10.625rem;}
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .shadow-box{height:100%; padding:20px; box-sizing:border-box; }
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-txt{font-size:0.9375rem; line-height:1.25rem; color:#222; }
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-txt em{display:block; color:#f76252; }
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-ico{position:absolute; right:1.25rem; bottom:1.25rem; width:3.25rem; height:3.25rem;}
+
+/* 다양한 요금제를 확인해보세요 */
+.tod-renewalBody .product-sec .pro-article.various-plan-box{margin-top:0}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider{height:17.5rem}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-container{width:100%;  }
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item{width:11.25rem; height:15rem;}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item .shadow-box{ height:100%; background-size:cover; background-repeat:no-repeat; background-position:left top;}
+.tod-renewalBody .product-sec .banner-area{margin-top:1.6875rem; overflow:hidden;}
+
+/* 요즘 가장 인기있는 요금제 */
+.tod-renewalBody .product-sec .popular-plan-box{background:#f2f2f2; margin:0 -1.25rem -1.875rem}
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont{padding:0 0 1.875rem 0; position:relative}
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header{height:7.625rem; box-sizing:border-box; position:relative; z-index:1; padding:0 1.25rem}
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .plan-intro-txt{color:#222; font-size:1rem; line-height:1.3125rem; font-weight:300; letter-spacing:-0.04rem; padding-top:2.5rem; }
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .plan-intro-txt strong{font-weight:500}
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .bg-img{display:inline-block; width:100%; max-width:22.5rem; min-width:20rem; position:absolute; right:0; bottom:0 }
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .bg-img img{width:100%; height:auto;}
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-container{margin-top:-10px; padding:0 20px; position:relative; z-index:2}
+
+.tod-renewalBody .product-sec .popular-plan-box .tod-renewal-product-item{background:#f6f8fa}
+/* 요금제별 - 5g */
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont.sk-5g{background:#f2f2f2 url('/img/product/v2/sk5g-bg.png') no-repeat left top; background-size:100% auto; }
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont.sk-5g:before{width:13.25rem; height:7.9375rem; position:absolute; right:0; top:-20px; background:url('/img/product/v2/sk5g-obj.png') no-repeat left top ; background-size:100% auto; mix-blend-mode:darken}
+/* 요금제별 - zem */
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont.sk-zem{background:linear-gradient(to bottom, #dfdbdb, #f2f0f0)}
+.tod-renewalBody .product-sec .popular-plan-box .plan-cont.sk-zem:before{width:180px; height:174px; background:url('/img/product/v2/skzem-obj.png') no-repeat left top; background-size:100%; position:absolute; right:0.3125rem; top:-3.125rem }
+
+/* SKT의 다양한 상품을 만나보세요 */
+.tod-renewalBody .product-sec .variety-product-box .tod-nmp-other-list{padding:1.25rem 0 0 0}
+
+/* 상품 레이어 팝업 */
+.popup.product-popup *{font-family:"Spoqa Han Sans Neo", sans-serif; font-weight:400}
+.popup.product-popup .popup-info{border-radius:1.25rem; padding:1.25rem 1.5rem}
+.popup.product-popup .popup-info .popup-header .popup-title.sub{font-size:0.875rem; color:#222; line-height:1.29; font-weight:400}
+.popup.product-popup .popup-info .bt-bottom{border-top:none; margin-top:2.875rem; padding-top:0; overflow:unset }
+.popup.product-popup .popup-info .bt-bottom li button, 
+.popup.product-popup .popup-info .bt-bottom li a{font-size:0.8125rem; color:#222; font-weight:400; padding:0.5625rem 1.5rem; height:2.25rem} 
+.popup.product-popup .popup-info .bt-bottom li.pos-left{margin:0 0 0 -1.5rem}
+.popup.product-popup .popup-info .bt-bottom li.pos-right{margin:0}
+.popup.product-popup .popup-info .bt-bottom li.pos-right.bt-pro-red button{border-radius:23px; background:#f76252; box-shadow: -1px -1px 2px 0 #ffffff, 2px 5px 10px 0 rgba(247, 98, 82, 0.4); color:#fff}
+
+/* 상품 HBS */
+.popup.product-popup .popup-page{background:#f6f8fa; border-radius:1.875rem 1.875rem 0 0; box-shadow:0 -10px 15px 0 rgba(00, 00, 00, 0.3) }
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet{background:#f6f8fa; padding:3.75rem 1.875rem 2.5rem !important; position:relative; }
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet:before{content:''; display:inline-block; width:36px; height:4px; border-radius:5px; background:#d9d9d9; position:absolute; top:1rem; left:50%; margin-left:-1.125rem;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-tit{font-size:1.125rem; line-height:1.5rem; letter-spacing:-0.025rem; color:#222;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info{margin-top:1.25rem; padding:1.25rem; font-size:0.8125rem; letter-spacing:-0.0313rem; line-height:1.125rem; background:#fff; border-radius:0.75rem }
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info .info-dt{color:#585959}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info .info-dt em{font-weight:500; color:#222; }
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info .info-dd{font-weight:500; margin-top:0.625rem;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info .info-dd strong{color:#f76252; }
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area{margin-top:1.25rem;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn{display:inline-block; width:100%; height:2.875rem; border-radius:1.4375rem; font-size:0.8125rem; letter-spacing:-0.025rem;color:#222; text-align:center; line-height:2.875rem; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background: #f6f8fa; }
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn span{display:inline-block; padding-right:1rem; position:relative; }
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn span:after{content:''; display:inline-block; width:0.625rem; height:0.625rem; position:absolute; right:0; top:50%; margin-top:-0.3125rem; background:url('/img/product/v2/pro-arr.svg') no-repeat left top; }
