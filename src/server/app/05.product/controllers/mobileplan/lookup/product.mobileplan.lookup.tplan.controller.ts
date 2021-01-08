@@ -27,9 +27,10 @@ class ProductMobileplanLookupTplan extends TwViewController {
   /* 상품코드별 API 응답 값 내 목록 필드명 분기처리 */
   private readonly _prodIdList = {
     NA00006114: 'infiTravel',
-    NA00006115: 'infiMovieList',
+    NA00006115_OLD: 'infiMovieList',
     NA00006116: 'infiWatchList',
-    NA00006117: 'infiClubList'
+    NA00006117: 'infiClubList',
+    NA00006115: 'infiContents'
   };
 
   /**
@@ -51,7 +52,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
         resultList = convTravelInfo.list;
         listTotal = result[this._prodIdList[printProdId]].infiRomList.length + result[this._prodIdList[printProdId]].infiMatinaList.length;
         break;
-      case 'NA00006115':
+      case 'NA00006115_OLD':
         const convMovieInfo: any = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]]);
         resultList = convMovieInfo.list;
         listTotal = convMovieInfo.listTotal;
@@ -86,6 +87,12 @@ class ProductMobileplanLookupTplan extends TwViewController {
             benfEndDt: FormatHelper.isEmpty(item.benfEndDt) ? '' : DateHelper.getShortDateWithFormat(item.benfEndDt, 'YYYY.M.D.')
           }));
         });
+        break;
+        case 'NA00006115':
+          listCase = 'C';
+          const convContentsInfo: any = this._convertContentsList(result[this._prodIdList[printProdId]]);
+          resultList = convContentsInfo.list;
+          listTotal = convContentsInfo.listTotal;
         break;
     }
 
@@ -128,6 +135,46 @@ class ProductMobileplanLookupTplan extends TwViewController {
         issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.D.'),
         hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YYYY.M.D.'),
         effDt: FormatHelper.isEmpty(item.effDt) ? '' : DateHelper.getShortDateWithFormat(item.effDt, 'YYYY.M.D.')
+      }));
+    });
+
+    return {
+      list: resultList,
+      listTotal: listTotal
+    };
+  }
+
+  /**
+   * 콘텐츠 목록 변환
+   * @param list - 목록 배열
+   */
+  private _convertContentsList(list: any): any {
+    const resultList: any = {};
+    let listTotal: any = 0;
+
+    list.forEach((item, index) => {
+      if (FormatHelper.isEmpty(item.benfStaDt)) {
+        return true;
+      }
+
+      const issueDtKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.D.'),
+        yearKey = DateHelper.getShortDateWithFormat(item.benfEndDt, 'YYYY');
+
+      if (FormatHelper.isEmpty(resultList[yearKey])) {
+        resultList[yearKey] = {};
+      }
+
+      if (FormatHelper.isEmpty(resultList[yearKey][issueDtKey])) {
+        resultList[yearKey][issueDtKey] = {
+          issueDtKey: issueDtKey,
+          list: []
+        };
+      }
+
+      listTotal++;
+      resultList[yearKey][issueDtKey].list.push(Object.assign(item, {
+        benfStaDt: FormatHelper.isEmpty(item.benfStaDt) ? '-' : DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.D.'),
+        benfEndDt: FormatHelper.isEmpty(item.benfEndDt) ? '-' : DateHelper.getShortDateWithFormat(item.benfEndDt, 'YYYY.M.D.')
       }));
     });
 
@@ -184,7 +231,6 @@ class ProductMobileplanLookupTplan extends TwViewController {
         }
 
         const convertBenefitInfo: any = this._parseBenefitList(data.result, printProdId, tabId);
-
         res.render('mobileplan/lookup/product.mobileplan.lookup.tplan.html', Object.assign(renderCommonInfo, {
           beforeTDiyGrNm: currentGrToken.join(' '),
           beforeTDiyGrNmCategory: grToken[1],
