@@ -62,6 +62,7 @@ import LoggerService_en from './services_en/logger.service';
 import VERSION_en from './config_en/version.config';
 import ErrorService_en from './services_en/error.service';
 
+
 module.exports = require('../../nodejs-exporter');
 
 const manifest = require('./manifest.json');
@@ -92,7 +93,25 @@ class App {
   }
 
   private config() {
+    this.app.use(function(req, res, next) {
 
+      function sanitize(string) {
+        return string.replace('<script>', '&lt;script&gt;');
+      }
+    
+      let queryKeys = Object.keys(req.query);
+      let paramKeys = Object.keys(req.params);
+    
+      queryKeys.forEach(key => {
+        req.query[key] = sanitize(req.query[key])
+      })
+    
+      paramKeys.forEach(key => {
+        req.params[key] = sanitize(req.query[key])
+      })
+      // res.setHeader("Content-Security-Policy", "script-src 'self' 'sha256-/R8iLbj/zzRkKsN1Dh/be9dTImUnl6khUlY3lP0rwTk=' 'unsafe-inline';");
+      next();
+    });
     this.app.set('view engine', 'ejs');
     this.app.engine('html', ejs.renderFile);
     this.app.use(express.json());       // to support JSON-encoded bodies
