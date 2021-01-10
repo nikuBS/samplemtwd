@@ -511,3 +511,29 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
     {{/each}}
 </script>
 <%_ } _%>
+
+
+<script defer type="text/javascript">
+
+    var host = window.location.host;
+    var beusableUrl = '';
+    if (host.includes('app') || host.includes('localhost')) {
+        beusableUrl = "//sktrum.beusable.net/script/b201203e155342u664/304bbae058"
+    } else {
+        beusableUrl = "//sktrum.beusable.net/script/b201203e155342u664/9e7dad796e"
+    }
+    window.addEventListener("load", function() {
+        (function(w, d, a) {
+            w._beusablerumclient_ = {
+                load: function(src) {
+                    var b = d.createElement("script");
+                    b.src = src;
+                    b.defer = true;
+                    b.type = "text/javascript";
+                    d.getElementsByTagName("head")[0].appendChild(b);
+                }
+            };
+            w._beusablerumclient_.load(a);
+        })(window, document, beusableUrl);
+    }, false);
+</script>
