@@ -14,7 +14,7 @@
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li:first-child {padding-left:0}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 1rem; height:1.6875rem; border-radius:1rem; box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
 
-/* 헤더 스크롤 ----- kjm */
+/* 헤더 스크롤 */
 .tod-renewalBody .filter-wrap .container-wrap .widget{padding-top:0;  }
 .tod-renewalBody .filter-wrap .container-wrap.active .page-header { position:relative; z-index:25;  } 
 .tod-renewalBody .filter-wrap .container-wrap.active .page-header .header-title {height:66px; background:#efeff1; position:fixed; left:0; top:0; width:100%; min-height:auto}
@@ -47,7 +47,7 @@
 /* 취소 버튼 */
 .tod-renewalBody .filter-wrap .prev-step {right:1.875rem; width:1.25rem; height:1.25rem;}
 
-/* 하단 요금제 확인 */1.25rem
+/* 하단 요금제 확인 */
 .tod-renewalBody .filter-wrap .confirm-wrap {position: absolute; left:0; bottom:0; z-index: 30;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .c-wrap {bottom:0;}
 .tod-renewalBody .filter-wrap .confirm-wrap .c-wrap {position:fixed; left:0; bottom:-8.375rem; width:100%; background: #fff; -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-transition: bottom 0.5s; transition: bottom 0.5s; }
