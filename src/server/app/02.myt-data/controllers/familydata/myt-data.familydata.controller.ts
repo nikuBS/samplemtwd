@@ -101,12 +101,10 @@ export default class MyTDataFamily extends TwViewController {
       // 탈퇴원 그룹원이 있는 경우 - OP002-6669
       if (dropMbrInfo.isDropMbrList) {
         // 탈퇴한 구성원 총 이용 데이터
-        dropMbrList.filter((dropItem) => dropMbrInfo.usedData += Number(dropItem.used));
-        // 구성원 총 공유 데이터
-        nMbrList.filter((item) => dropMbrInfo.totalShared += Number(item.shared));
-        // 탈퇴 그룹원 총 공유 데이터  ( 총 공유된 데이터 - 포함된 구성원 공유 데이터 합)
-        dropMbrInfo.totalData = usedTotal - dropMbrInfo.totalShared;
-        dropMbrInfo.outputTotal = FormatHelper.convDataFormat(dropMbrInfo.totalData, DATA_UNIT.GB);
+        dropMbrList.find(dropItem => dropMbrInfo.usedData += Number(dropItem.used));
+        // 탈퇴 그룹원 총 공유 데이터  ( 총공유된 데이터 - 포함된 구성원 데이터 합) 온T와 동일
+        dropMbrInfo.totalData = usedTotal - data.totalUsed;
+        dropMbrInfo.outputTotal = FormatHelper.convDataFormat(dropMbrInfo.totalData, DATA_UNIT.MB);
         dropMbrInfo.outputUsed = FormatHelper.convDataFormat(dropMbrInfo.usedData, DATA_UNIT.MB);
       }
 
