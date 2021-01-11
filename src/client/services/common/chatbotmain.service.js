@@ -755,7 +755,7 @@ Tw.ChatbotMainService.prototype = {
                     break;
                 default:
                     _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_purple.json', false);//값이 없을때 넘어오는 기본 값
-            }   
+            }
 
              //   _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_purple.json', false);
             }else if(_this._typeC){
@@ -881,7 +881,9 @@ Tw.ChatbotMainService.prototype = {
             setTimeout( function () {
                 _this._animateSvg('.profile2', Tw.Environment.cdn + '/js/chatbot_1.json', false);
             }, 3200 );
-        }
+        } else {
+            $('.tod-combot-wrap').css('display','none');
+        }// B타입 GREETING_DISABLED ==Y 일때도 투명하게 DIV 남는 현상 버그 픽스
 
         // 말풍선 (링크) 클릭시 
         $('.linkItem').on('click', function(e){
