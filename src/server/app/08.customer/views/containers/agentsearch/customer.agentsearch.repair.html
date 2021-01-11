@@ -39,10 +39,10 @@
                         <!-- // .as-representative-number -->
 
                         <!-- .tod-as-time-list -->
-                        <div class="tod-as-time-list">
+                        <!-- <div class="tod-as-time-list">
                             <div class="tod-inner">
                                 <h3 class="h-title">행복 A/S센터 업무시간</h3>
-                                <ul class="list-as">
+                                <ul class="list-as"> -->
                                     <!-- 삭제
                                     <li>
                                         <div class="sp-tr">
@@ -57,7 +57,7 @@
 <!--                                            <span class="sp-td">(월~금) 10:00 ~ 19:00</span>-->
 <!--                                        </div>-->
 <!--                                    </li>-->
-                                    <li>
+                                    <!-- <li>
                                         <div class="sp-tr">
                                             <span class="sp-th">제주, 광주 A/S센터</span>
                                             <span class="sp-td">(월~금) 10:00 ~ 18:00</span>
@@ -69,35 +69,9 @@
                                     <li>행복 A/S센터에 방문할 때는 신분증을 꼭 가져 오세요.</li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                         <!--// .tod-as-time-list -->
 
-                        <% let regions = ['서울', '경기', '강원', '경상', '전라', '제주']; %>
-                        <% for (let i = 0; i < centres.length; i++) { %>
-                        <% if (centres[i].length === 0) continue; %>
-                        <!-- .ti-caption-gray.bdt -->
-                        <div class="ti-caption-gray bdt">
-                            <h3 class="tit"><%= regions[i] %></h3>
-                        </div>
-                        <!-- // .ti-caption-gray.bdt -->
-                        <!-- .link-long-list -->
-                        <ul class="link-long-list">
-                            <% for (let j = 0; j < centres[i].length; j++) { %>
-                            <% let centre = centres[i][j]; %>
-                            <li>
-                                <div class="link-long">
-                                    <a class="fe-data-charge" href="/customer/agentsearch/repair-detail?code=<%= centre.locCode %>">
-                                        <em><%= centre.locName %></em><%= centre.searchAddr %><br /><%= centre.jibunAddr %>
-                                        <span class="tx-sub">
-                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
-                                        </span>
-                                    </a>
-                                </div>
-                            </li>
-                            <% } %>
-                        </ul>
-                        <!-- // .link-long-list -->
-                        <% } %>
                     </div>
                     <!-- // .as-center -->
                 </div>
@@ -123,23 +97,23 @@
                             <div class="acco-cover">
                                 <div class="acco-style acco-as">
                                     <ul class="acco-list">
-                                        <li class="acco-box"><!-- .on: 열기 -->
-                                            <div class="acco-tit"><button role="button" aria-pressed="false">A/S 대체폰 무료 제공</button></div>
+                                        <!-- <li class="acco-box"> --><!-- .on: 열기 -->
+                                            <!-- <div class="acco-tit"><button role="button" aria-pressed="false">A/S 대체폰 무료 제공</button></div>
                                             <div class="acco-cont">
                                                 <ul class="list-item">
                                                     <li>행복 A/S센터는 모든 제조사의 휴대폰을 수리할 수 있습니다. 직접 A/S를 신청한 경우 수리기간 중 A/S 대체폰을 무료로 사용할 수 있습니다.<br>단, 신청일 내에 수리할 수 있는 경우는 제외.</li>
                                                     <li>A/S 대체폰은 센터별 보유량에 따라 이용이 어려울 수 있습니다.<br>2016. 11. 1.부터 SK텔레콤 지점에서 아이폰 A/S 대체폰 서비스가 중단되었습니다.<br>해당 서비스는 SK텔레콤 행복 A/S센터(1544-0110)에서만 이용하실 수 있습니다.</li>
                                                 </ul>
                                             </div>
-                                        </li>
-                                        <li class="acco-box"><!-- .on: 열기 -->
-                                            <div class="acco-tit"><button role="button" aria-pressed="false">기기 수리 후 수령방법</button></div>
+                                        </li> -->
+                                        <!-- <li class="acco-box"> --><!-- .on: 열기 -->
+                                            <!-- <div class="acco-tit"><button role="button" aria-pressed="false">기기 수리 후 수령방법</button></div>
                                             <div class="acco-cont">
                                                 <ul class="list-item">
                                                     <li>기기 수리가 끝나면 직접 방문하여 받으시거나, 접수한 SK텔레콤 지점/대리점으로 배송됩니다.<br>(단, 접수하신 SK텔레콤 지점이나 대리점으로만 배송 가능.)</li>
                                                 </ul>
                                             </div>
-                                        </li>
+                                        </li> -->
                                         <li class="acco-box"><!-- .on: 열기 -->
                                             <div class="acco-tit"><button role="button" aria-pressed="false">무상 및 유상서비스를 확인하세요.</button></div>
                                             <div class="acco-cont">

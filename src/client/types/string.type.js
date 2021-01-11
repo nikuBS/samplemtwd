@@ -1510,7 +1510,7 @@ Tw.CUSTOMER_AGENT_SEARCH = {
     dvcChange: '기기변경',
     nmChange: '명의변경',
     feeAcceptance: '요금수납',
-    rbpAsYn: '행복A/S',
+    rbpAsYn: 'A/S',
     hanaroCode: '유선/인터넷TV', // SK브로드밴드 -> 유선/인터넷TV
     secuConsulting: 'ADT캡스보안', // 보안상담 -> ADT캡스보안
     appleYn: '애플취급',
