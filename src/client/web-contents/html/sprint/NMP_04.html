@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
 	<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
 	
-    <link rel="stylesheet" type="text/css" href="/css/product_temp.css" media="all" /><!-- [C]상품 리뉴얼 -->
+    <link rel="stylesheet" type="text/css" href="/css/product.css" media="all" /><!-- [C]상품 리뉴얼 -->
 	
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
@@ -34,14 +34,19 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            var $headerH = $(".page-header").height();
+            var $checked = $(".check-box > ul > li > a");
             $(".filter-wrap").scroll(function() {    
                 var scroll = $(".filter-wrap").scrollTop();
-                var headerH = $(".page-header").height();
-                if (scroll >= headerH) {
+                if (scroll > $headerH - 66) {//66 active된 상태에서의 header
                     $(".container-wrap").addClass("active");
+                  
                 } else {
                     $(".container-wrap").removeClass("active");
                 }
+            });
+            $checked.on("click",function(){
+                $(this).parents("li").addClass("on").siblings().removeClass("on");
             });
         });
     </script>
@@ -63,7 +68,7 @@
                 <div class="page-header">
                     <div class="header-title">
                         <p class="h-tit">고객님,<br class="s-hide"> 어떤 요금제를 찾고<br class="s-hide"> 계신가요?</p>
-                        <p class="h-sub s-hide">다중선택가능</p>
+                        <p class="h-sub s-hide">여러 개 선택 가능</p>
                     </div>
                 </div>
 
@@ -90,7 +95,7 @@
                                         </div>
                                         <div class="acco-cont check-box">
                                             <ul>
-                                                <li>
+                                                <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
                                                     <a href="#">
                                                         <span class="txt">일반 성인이 이용해요.</span>
                                                         <span class="limit">나이제한 없음</span>
@@ -124,13 +129,13 @@
                                         </div>
                                         <div class="acco-cont check-box">
                                             <ul>
-                                                <li>
+                                                <li class="on"><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
                                                     <a href="#">
                                                         <span class="txt">데이터를 많이 사용하는 편이에요.</span>
                                                         <span class="limit">8GB ~</span>
                                                     </a>
                                                 </li>
-                                                <li class="on">
+                                                <li>
                                                     <a href="#">
                                                         <span class="txt">가끔 인터넷으로 동영상을 봐요.</span>
                                                         <span class="limit">5~8GB</span>
@@ -160,7 +165,7 @@
                                         </div>
                                         <div class="acco-cont check-box">
                                             <ul>
-                                                <li>
+                                                <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
                                                     <a href="#">
                                                         <span class="txt">6만 원대 이상도 괜찮아요.</span>
                                                     </a>
@@ -186,7 +191,7 @@
                                         </div>
                                         <div class="acco-cont check-box">
                                             <ul>
-                                                <li>
+                                                <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
                                                     <a href="#">
                                                         <span class="txt">SK텔레콤 고객 간 무제한 음성통화를 원해요.</span>
                                                     </a>
