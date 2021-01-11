@@ -56,3 +56,5 @@ nodemon-debug.json
 
 # en
 /src/server/manifest_en.json
+
+*.icloud
