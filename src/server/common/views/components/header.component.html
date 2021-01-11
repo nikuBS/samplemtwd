@@ -511,29 +511,32 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
     {{/each}}
 </script>
 <%_ } _%>
-
-
-<script defer type="text/javascript">
-
-    var host = window.location.host;
-    var beusableUrl = '';
-    if (host.includes('app') || host.includes('localhost')) {
-        beusableUrl = "//sktrum.beusable.net/script/b201203e155342u664/304bbae058"
+<% var fullUrl = locals.pageInfo ? locals.pageInfo.fullUrl : ''; %>
+<%_
+    var scriptPath = '';
+    if (fullUrl.indexOf('app.tworld') > -1) {
+        scriptPath = '/b201203e155342u664/304bbae058'; // app.tworld 인 경우
+    } else if (fullUrl.indexOf('m.tworld') > -1) {
+        scriptPath = '/b201203e155342u664/9e7dad796e';
+    } else if (fullUrl.indexOf('icp-stg.tworld') > -1 || fullUrl.indexOf('localhost')) {
+        scriptPath = '';
     } else {
-        beusableUrl = "//sktrum.beusable.net/script/b201203e155342u664/9e7dad796e"
+        // dev 환경
+        scriptPath = '';
     }
-    window.addEventListener("load", function() {
-        (function(w, d, a) {
-            w._beusablerumclient_ = {
-                load: function(src) {
-                    var b = d.createElement("script");
-                    b.src = src;
-                    b.defer = true;
-                    b.type = "text/javascript";
-                    d.getElementsByTagName("head")[0].appendChild(b);
-                }
-            };
-            w._beusablerumclient_.load(a);
-        })(window, document, beusableUrl);
-    }, false);
-</script>
+_%>
+<%_ if (scriptPath) { _%>
+    <script defer type="text/javascript">
+        window.addEventListener('load', function(){
+        (function(w, d, a){
+            w.__beusablerumclient__ = {
+            load : function(src){
+                var b = d.createElement('script');
+                b.src = src; b.defer=true; b.type = 'text/javascript';
+                d.getElementsByTagName('head')[0].appendChild(b);
+            }
+            };w.__beusablerumclient__.load(a);
+        })(window, document, '//sktrum.beusable.net/script/b201203e155342u664/304bbae058');
+        }, false);
+    </script>
+<%_ } _%>
