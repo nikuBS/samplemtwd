@@ -512,21 +512,20 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
 </script>
 <%_ } _%>
 <% var fullUrl = locals.pageInfo ? locals.pageInfo.fullUrl : ''; %>
-<%_
+<script defer type="text/javascript">
+    var fullUrl = '<%= fullUrl %>';
     var scriptPath = '';
     if (fullUrl.indexOf('app.tworld') > -1) {
         scriptPath = '/b201203e155342u664/304bbae058'; // app.tworld 인 경우
     } else if (fullUrl.indexOf('m.tworld') > -1) {
         scriptPath = '/b201203e155342u664/9e7dad796e';
     } else if (fullUrl.indexOf('icp-stg.tworld') > -1 || fullUrl.indexOf('localhost')) {
-        scriptPath = '';
+        scriptPath = '/b201203e155342u664/9e7dad796e';
     } else {
         // dev 환경
         scriptPath = '';
     }
-_%>
-<%_ if (scriptPath) { _%>
-    <script defer type="text/javascript">
+    if (scriptPath) { 
         window.addEventListener('load', function(){
         (function(w, d, a){
             w.__beusablerumclient__ = {
@@ -536,7 +535,7 @@ _%>
                 d.getElementsByTagName('head')[0].appendChild(b);
             }
             };w.__beusablerumclient__.load(a);
-        })(window, document, '//sktrum.beusable.net/script/b201203e155342u664/304bbae058');
+        })(window, document, '//sktrum.beusable.net/script' + scriptPath); //b201203e155342u664/304bbae058');
         }, false);
-    </script>
-<%_ } _%>
+    }
+</script>
