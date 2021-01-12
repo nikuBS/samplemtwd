@@ -683,6 +683,17 @@
 		</div>
 		<!--// #contents -->
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var location = window.location.href.split('?')[1],
+					sectionIndex;
+
+			if (location.indexOf('section=') >= 0) {
+				sectionIndex = location.split('=')[1];
+				$(window).scrollTop($('section.tod-cont-section').eq(sectionIndex).offset().top - $('.h-belt').height() - $('.rn-prod-inner').height());
+			}
+		});
+	</script>
 </body>
 
 </html>

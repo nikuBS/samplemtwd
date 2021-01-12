@@ -203,14 +203,15 @@ Tw.ProductMobileplanAddJoin.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    // Swing 문자 발송 API 호출 (단말보험 상품(22종) 가입 시 [OP002-9829])
+    // Swing 문자 발송 API 호출 (단말보험 상품(22종) 가입 시 [OP002-9829]), 
+    // 보험 상품인 경우 예약 상품코드를 던지면 본 상품 코드로 BE에서 변환, OP002-12601의 분실안심490(상품코드 NA00007277) 상품도 함께 적용함
     if (Tw.DEVICE_INSURE_PROD_ID.indexOf(this._prodId) !== -1) {
       this._apiService.request(Tw.API_CMD.BFF_10_0181, {
         smsPhrsGrpId: 'SMART'
       }, {}, [this._prodId]);
     }
 
-    // Swing 문자 발송 API 호출 (분실안심990+_예약 가입 시)
+    // Swing 문자 발송 API 호출 (분실안심990+_예약 가입 시) - 예약상품 코드 일때 본 상품 코드로 BFF API 호출
     // TODO: 특정 상품코드에 대한 하드코딩 개선 필요
     if ( this._prodId == 'NA00006811') {
       this._apiService.request(Tw.API_CMD.BFF_10_0181, {
