@@ -5,7 +5,7 @@
     <div class="bannerbox-wrap">
     <!-- bnnrLinkTypCd 배너이미지링크타입 코드(S:자창,B:새창,N:링크없음) -->
     <% if ( prodRedisInfo.banner.T.bnnrLinkTypCd === 'N') { %>
-        <img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">
+        <img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC" data-wavveimg="">
     <% } else if ( prodRedisInfo.banner.T.bnnrLinkTypCd === 'S') { %>
         <a href="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>"><img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC"></a>
     <% } else {%>
