@@ -60,6 +60,7 @@ export const LINE_SVC_ATTR_ICO_FILE_NM = {
   M1: 'sel-ico-mobile.png',
   M2: 'sel-ico-mobile.png',
   M3: 'sel-ico-wifi.png',
+  M4: 'sel-ico-mobile.png', // T-login
   S1: 'sel-ico-internet.png',
   S2: 'sel-ico-tv.png',
   S3: 'sel-ico-tel.png',

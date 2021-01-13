@@ -21,7 +21,7 @@
                                             <div class="state-box">
                                                 <div class="tod-line-info">
                                                     <span class="icon">
-                                                        <i class="<%=line.ico%>-48">
+                                                        <i class="<%=line.ico? line.ico : 'icon-cellphone'%>-48">
                                                             <span class="blind"><%= line.ico && line.ico.includes('cellphone') ? '모바일' : line.showName %></span> <!-- 웹 접근성 위배 조치 -->
                                                         </i>
                                                     </span>
