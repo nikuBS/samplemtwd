@@ -35,6 +35,15 @@
 </head>
 
 <body>
+    <!-- 210107 [OP002-12653] 접근성 수정_01 START -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">Skip to main contents</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <!-- 210107 [OP002-12653] 접근성 수정_01 END -->
     <div class="wrap">
         <!-- #header -->
 		<div id="header" class="header-wrap">
@@ -50,7 +59,7 @@
 		<!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">contents</h2>
+            <h2 id="contents-area" tabindex="-1"><span class="blind">Main contents</span></h2> <!-- 210107 [OP002-12653] 접근성 수정_02 -->
             <div class="container">
                 <hr class="cont-sp type1" aria-hidden="true" />
                 <!-- .cont-box -->
