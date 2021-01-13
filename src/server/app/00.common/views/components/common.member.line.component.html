@@ -3,10 +3,10 @@
     <div class="widget-box accordion">
         <div class="acco-cover on">
             <div class="acco-style tod-round-blue <% if (tmpCnt > showParam.defaultCnt) { %> tod-add-btn <% } %>">
-                <ul class="acco-list fe-line-cover">                                    
+                <ul class="acco-list fe-line-cover">
                     <li class="acco-box on">
                         <div class="acco-tit">
-                            <button role="button" aria-pressed="false"> 
+                            <button role="button" aria-pressed="false">
                                 <h3 class="tit"><%=tmpTitle%><span class="tod-add-text"><span class="num"><%= tmpCnt %></span>개</span></h3>
                             </button>
                         </div>
@@ -16,13 +16,13 @@
                                     <ul id="sortable-enabled" class="connectedSortable enabled ui-sortable fe-item-list" data-category="<%=tmpCategory%>" data-totcount = "<%=tmpCnt%>" data-pageno="1">
                                         <% tmpList.map((line, index) => { %>
                                         <% if(index < showParam.defaultCnt) { %>
-                                        <li class="fe-line ui-state-default <% if(line.repSvcYn === 'Y') { %>tod-t-standard fe-line-standard<% }%> <% if(line.expsYn === 'Y') { %> fe-item-active<% } else {%> tod-add-line fe-item-inactive<% } %>" 
+                                        <li class="fe-line ui-state-default <% if(line.repSvcYn === 'Y') { %>tod-t-standard fe-line-standard<% }%> <% if(line.expsYn === 'Y') { %> fe-item-active<% } else {%> tod-add-line fe-item-inactive<% } %>"
                                             data-svcmgmtnum="<%=line.svcMgmtNum %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>" data-svcgr="<%=line.svcGr %>">
                                             <div class="state-box">
                                                 <div class="tod-line-info">
                                                     <span class="icon">
                                                         <i class="<%=line.ico%>-48">
-                                                            <span class="blind"><%= line.ico.includes('cellphone') ? '모바일' : line.showName %></span> <!-- 웹 접근성 위배 조치 -->
+                                                            <span class="blind"><%= line.ico && line.ico.includes('cellphone') ? '모바일' : line.showName %></span> <!-- 웹 접근성 위배 조치 -->
                                                         </i>
                                                     </span>
                                                     <span class="title fe-show-name"><%= line.showName %></span>
