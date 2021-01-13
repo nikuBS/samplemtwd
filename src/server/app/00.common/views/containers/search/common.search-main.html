@@ -202,6 +202,34 @@
     </li>
 </script>
 <% include ../../components/javascript.component.html %>
+<% var fullUrl = locals.pageInfo ? locals.pageInfo.fullUrl : ''; %>
+<script defer type="text/javascript">
+    var fullUrl = '<%= fullUrl %>';
+    var scriptPath = '';
+    if (fullUrl.indexOf('app.tworld') > -1) {
+        scriptPath = '/b201203e155342u664/304bbae058'; // app.tworld 인 경우
+    } else if (fullUrl.indexOf('m.tworld') > -1) {
+        scriptPath = '/b201203e155342u664/9e7dad796e';
+    } else if (fullUrl.indexOf('icp-stg.tworld') > -1 || fullUrl.indexOf('localhost')) {
+        scriptPath = '/b201203e155342u664/9e7dad796e';
+    } else {
+        // dev 환경
+        scriptPath = '';
+    }
+    if (scriptPath) { 
+        window.addEventListener('load', function(){
+        (function(w, d, a){
+            w.__beusablerumclient__ = {
+            load : function(src){
+                var b = d.createElement('script');
+                b.src = src; b.defer=true; b.type = 'text/javascript';
+                d.getElementsByTagName('head')[0].appendChild(b);
+            }
+            };w.__beusablerumclient__.load(a);
+        })(window, document, '//sktrum.beusable.net/script' + scriptPath); //b201203e155342u664/304bbae058');
+        }, false);
+    }
+</script>
 <script>
     $(document).ready(function () {
 
