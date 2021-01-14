@@ -43,7 +43,7 @@ interface Coupon {
 
 export default class MyTDataRechargeCouponUse extends TwViewController {
   private planType: Map<string, number> = new Map();
-  private fixedProdValue: string = 'NA0000';
+  private fixedProdValue: string = 'NA000';
  /* private planType: Map<string, number> = new Map([
     // ['NA00004098', 0],
     // ['NA00004099', 0],
@@ -93,48 +93,52 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
 
     let no: string, name: string, period: string, tab: string, isGift: boolean;
-    // isGift  - 선물받은 쿠폰 여부
-    const auto = req.query.auto === 'Y';
-    if (auto) {
-      this.getMostSuitableCoupon(res, svcInfo, pageInfo)
-        .subscribe(
-          (coupon: Coupon) => {
-            if (coupon) {
-              no = coupon.copnIsueNum;
-              name = coupon.copnNm;
-              period = coupon.usePsblStaDt + '~' + coupon.usePsblEndDt;
-              tab = 'refill';
-              isGift = coupon.isGift || false;
-              this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
-            } else {
-              this.error.render(res, { code: '', msg: '', pageInfo, svcInfo });
-            }
-          },
-          err => {
-            this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
+    // [OP002-12748] 환경변수로 관리하기 위해 기능 추가
+    this.getRechargeProdCount(res, svcInfo, pageInfo)
+        .subscribe((countInfo) => {
+          const count = countInfo.result? parseInt(countInfo.result, 10) : 0;
+          // isGift  - 선물받은 쿠폰 여부
+          const auto = req.query.auto === 'Y';
+          if (auto) {
+            this.getMostSuitableCoupon(res, svcInfo, pageInfo)
+                .subscribe(
+                    (coupon: Coupon) => {
+                      if (coupon) {
+                        no = coupon.copnIsueNum;
+                        name = coupon.copnNm;
+                        period = coupon.usePsblStaDt + '~' + coupon.usePsblEndDt;
+                        tab = 'refill';
+                        isGift = coupon.isGift || false;
+                        this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto, count);
+                      } else {
+                        this.error.render(res, { code: '', msg: '', pageInfo, svcInfo });
+                      }
+                    },
+                    err => {
+                      this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
+                    }
+                );
+            return;
+          } else {
+            no = req.query.no;
+            name = req.query.name;
+            period = req.query.period;
+            tab = req.query.tab;
+            isGift = req.query.gift === 'Y';
           }
-        );
-      return;
-    } else {
-      no = req.query.no;
-      name = req.query.name;
-      period = req.query.period;
-      tab = req.query.tab;
-      isGift = req.query.gift === 'Y';
-    }
-
-    this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
-
+          this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto, count);
+        })
   }
 
   private renderCouponUse(res: Response, svcInfo: any, pageInfo: any, no: string, name: string,
-                          period: string, tab: string, isGift: boolean, isAuto: boolean) {
+                          period: string, tab: string, isGift: boolean, isAuto: boolean, count: number) {
     Observable.combineLatest(
-      this.getRechargeProdIds(),
+      this.getRechargeProdIds(count),
       this.getCouponUsageOptions(res, svcInfo, pageInfo),
       this.getProductInfo(res, svcInfo, pageInfo, svcInfo.prodId)
     ).subscribe(
       ([splProds, couponUsage, productSummary]) => {
+        console.log('################# splProds', splProds)
         if (splProds) {
           splProds.split(',')
             .map((item) => {
@@ -285,15 +289,46 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       return option;
     });
   }
-  private getRechargeProdIds() {
+
+  /**
+   * 요금제 추가시 환경변수로 관리하기 위해 기능 수정 및 추가
+   */
+  private getRechargeProdCount(res, svcInfo, pageInfo) {
     return this.apiService.request(API_CMD.BFF_01_0069, {
-      property: REDIS_KEY.DATA_RECHARGE_PRODUCTS
-    }).map((response) => {
-      if (!response.result) {
-        return null;
+      property: REDIS_KEY.DATA_RECHARGE_COUNT
+    }).map(resp => {
+      if (resp.code === API_CODE.CODE_00) {
+        return resp;
       }
-      // 'a:1, b:2, c:3' 형태로 전달 받음
-      return response.result.trim();
+      return this.error.render(res, {
+        code: resp.code,
+        msg: resp.msg,
+        pageInfo,
+        svcInfo
+      });
     });
+  }
+
+  private getRechargeProdIds(count) {
+    const reqInfo:any = [];
+    for (let i = 0; i <= count; i++) {
+      const property = i === 0? REDIS_KEY.DATA_RECHARGE_PRODUCTS : REDIS_KEY.DATA_RECHARGE_PRODUCTS + i;
+      reqInfo.push(
+        this.apiService.request(API_CMD.BFF_01_0069, {
+          property
+        })
+      );
+    }
+    return Observable.combineLatest(reqInfo)
+      .map(responseArray => {
+        const result:any = [];
+        responseArray.forEach((response: any) => {
+          // 'a:1, b:2, c:3' 형태로 전달 받음
+          if (response.code === API_CODE.CODE_00) {
+            result.push(response.result ? response.result.trim() : '');
+          }
+        });
+        return result.join(',');
+      });
   }
 }
