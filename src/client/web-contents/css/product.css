@@ -11,9 +11,24 @@
 }
 
 .tod-renewalBody .header-wrap .h-belt {border-color:#f6f8fa; background-color: #f6f8fa;}
+.tod-renewalBody .popup-page {background-color: #f6f8fa;}
+.tod-renewalBody .popup-page .header-wrap {border-color:#f6f8fa;}
+.tod-renewalBody .popup-page .header-wrap .page-header {background-color: #f6f8fa;}
 
+.tod-renewalBody .blind {position: absolute !important; width: 1px; height: 1px; margin: -1px; clip: rect(0,0,0,0); overflow: hidden; color: transparent;}
+
+
+/* ========== 버튼 ========== */
 .tod-nmp-btn32 {display:inline-block; height:2rem; line-height:2rem; padding:0 0.875rem; font-size: 0.75rem; letter-spacing: -1px; border-radius: 16px; color: #222222; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;  background-color: #f6f8fa;}
+.tod-nmp-btn32.arr::after {content:""; display:inline-block; width:10px; height:10px; margin-left:4px; vertical-align: middle; background:url('/img/product/v2/pro-arr.svg') no-repeat 0 0;}
+.tod-nmp-btn32.style2 {color:#f9614d}
 
+.tod-nmp-btn46 {display:inline-block; height:2.875rem; line-height:2.875rem; padding:0 0.875rem; font-size: 0.8125rem; letter-spacing: -1px; border-radius: 23px; color: #222222; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;  background-color: #f6f8fa;}
+.tod-nmp-btn46.arr::after {content:""; display:inline-block; width:10px; height:10px; margin-left:4px; vertical-align: middle; background:url('/img/product/v2/pro-arr.svg') no-repeat 0 0;}
+.tod-nmp-btn46.style2 {color:#f9614d}
+
+.tod-nmp-btn-wrap {display:flex; margin:0 -6px; align-items: center;}
+.tod-nmp-btn-wrap > [class^="tod-nmp-btn"] {flex:1; margin:0 6px}
 
 /* ========== 아이콘 ========== */
 [class^="p-icon16-"] {display:inline-block; width:16px; height:16px; vertical-align:-4px; background:url('/img/product/v2/icons.svg') no-repeat 0 0;}
@@ -53,8 +68,8 @@
 
 /* ========== 요금제 모듈 : 기본형 - .plan-type1 / 혜택강조형 : .plan-type2 / 데이터강조형 : .plan-type3  ========== */
 .tod-nmp-item {position:relative; border-radius: 0.75rem; background-color: #f6f8fa;}
-.tod-nmp-item > .item-link {display:block; padding: 1.25rem 1.25rem 1.5625rem;}
-.tod-nmp-item .rn-tag {margin-bottom:0.125rem}
+.tod-nmp-item > .item-link {display:block; padding: 1.25rem 1.25rem;}
+.tod-nmp-item .rn-tag {margin-bottom:0.5rem}
 .tod-nmp-item .rn-tag::after {content: ""; display:block; clear: both;}
 .tod-nmp-item .rn-tag [class^="i-tag-"] {height:1rem; line-height:1rem; font-weight: 500;}
 .tod-nmp-item .rn-tag .col-left {float:left;}
@@ -62,11 +77,12 @@
 .tod-nmp-item .rn-prod-name {position:relative;}
 .tod-nmp-item .rn-prod-name .p-name {display:block; padding-right:5rem; font-size: 1.125rem; font-weight: 500; letter-spacing: -0.2px; color: #222222;}
 /*.tod-nmp-item .rn-prod-name .p-name::after {content:""; display:inline-block; width:14px; height:14px; margin-left:0.1875rem; background:url('/img/product/v2/icons.svg') no-repeat 0 -300px;} */
-.tod-nmp-item .rn-prod-name .p-price {position:absolute; right:0; bottom:0; font-size:0.875rem; font-weight:bold}
-.tod-nmp-item .rn-prod-info {position:relative; padding:0.375rem 0;}
+.tod-nmp-item .rn-prod-name .p-price {position:absolute; right:0; bottom:0; line-height:1.5625rem; font-size:0.9375rem; font-weight:500}
+.tod-nmp-item .rn-prod-info {position:relative; padding-top:0.5625rem}
 .tod-nmp-item .rn-prod-info .p-etc {display:flex; justify-content: space-between;}
 .tod-nmp-item .rn-prod-info .p-etc > li {font-size: 0.6875rem; letter-spacing: -0.2px; color: #767778;}
-.tod-nmp-item .rn-prod-benefit {position:relative; padding:0.625rem 0 0; border-top:1px solid #d8d8d8}
+.tod-nmp-item .rn-prod-info .p-etc > li > i {vertical-align: -5px;}
+.tod-nmp-item .rn-prod-benefit {position:relative; padding:0.625rem 0 0;}
 .tod-nmp-item .rn-prod-benefit > ul {}
 .tod-nmp-item .rn-prod-benefit li {position:relative; padding-left:20px; font-size: 0.8125rem; color: #767778; word-break: keep-all;}
 .tod-nmp-item .rn-prod-benefit li:nth-child(n+2) {margin-top:0.25rem}
@@ -79,10 +95,10 @@
 .tod-nmp-item .rn-prod-benefit .price > del {font-size: 0.6875rem; letter-spacing: -0.4px; color: #a8a8a8;}
 .tod-nmp-item .rn-prod-benefit .price > em {font-size: 0.6875rem; letter-spacing: -0.4px; color: #fb2626;}
 .tod-nmp-item .rn-prod-benefit .price > .icon-arr {padding:0 0.125rem; font-size: 0.625rem; font-weight:300; color: #a8a8a8;}
-.tod-nmp-item .rn-prod-benefit .p-benefit-choice {margin-top:0.25rem}
-.tod-nmp-item .rn-prod-benefit .p-benefit-choice .title {margin-bottom:0.25rem; font-size: 0.8125rem; color:#222222}
+.tod-nmp-item .rn-prod-benefit .p-benefit-choice {margin-top:0.4375rem}
+.tod-nmp-item .rn-prod-benefit .p-benefit-choice .title {margin-bottom:0.4375rem; font-size: 0.8125rem; color:#222222}
 .tod-nmp-item .rn-prod-benefit .p-benefit-choice .title strong {font-weight:bold}
-.tod-nmp-item .rn-prod-benefit .p-benefit-choice > ul {margin-left:0.8125rem}
+.tod-nmp-item .rn-prod-benefit .p-benefit-choice > ul {}
 .tod-nmp-item .rn-prod-bottom {padding:0 1.25rem 1.25rem;}
 .tod-nmp-item .rn-prod-bottom .rn-btn-right {text-align:right}
 .tod-nmp-item .btn-compare {text-decoration:underline; font-size: 0.75rem; letter-spacing: -0.6px; color: #767778;}
@@ -90,18 +106,21 @@
 
 /* 혜택강조형 */
 .tod-nmp-item.plan-type2 {}
-.tod-nmp-item.plan-type2 .rn-prod-info {margin-top:0.5rem; border-top:1px solid #d8d8d8}
+.tod-nmp-item.plan-type2 .rn-prod-info {position:relative; padding:0.375rem 0; margin-top:0.5rem; border-top:1px solid #d8d8d8; border-bottom:1px solid #d8d8d8}
+.tod-nmp-item.plan-type2 .rn-prod-bottom {margin-top:-0.375rem;}
 
 /* 데이터 강조형 */
-.tod-nmp-item.plan-type3 .rn-prod-name .p-price {bottom:-2.125rem}
-.tod-nmp-item.plan-type3 .rn-prod-info {margin-top:0.5rem; border-top:1px solid #d8d8d8} 
+.tod-nmp-item.plan-type3 .rn-prod-name .p-name {padding-right:0}
+.tod-nmp-item.plan-type3 .rn-prod-name .p-price {font-size:0.875rem; bottom:-2.5rem}
+.tod-nmp-item.plan-type3 .rn-prod-info {margin-top:0.5rem; border-top:1px solid #d8d8d8;} 
 .tod-nmp-item.plan-type3 .rn-prod-info > ul {display:block}
 .tod-nmp-item.plan-type3 .rn-prod-info > ul > li {display:inline-block; margin-right:0.625rem}
-.tod-nmp-item.plan-type3 .rn-prod-info > ul > li:nth-child(1) {display:block; margin-bottom:0.4375rem; font-size: 0.8125rem; font-weight: 500; letter-spacing: -0.5px; color: #f76252;}
+.tod-nmp-item.plan-type3 .rn-prod-info > ul > li:nth-child(1) {display:block; width:50%; margin-bottom:0.4375rem; font-size: 0.8125rem; font-weight: 500; letter-spacing: -0.5px; color: #f76252;}
 .tod-nmp-item.plan-type3 .rn-prod-info > ul > li:nth-child(1) > i {display:none}
 
 /* row list */
-.tod-nmp-row-list {border-radius: 0.75rem; background-color: #f6f8fa;}
+.tod-nmp-row-list {position:relative; border-radius: 0.75rem; background-color: #f6f8fa;}
+.tod-nmp-row-list > ul {}
 .tod-nmp-row-list > ul > li {border-bottom:1px solid #d8d8d8}
 .tod-nmp-row-list > ul > li:nth-child(n+2) {border-top:1px solid #fff}
 .tod-nmp-row-list > ul > li:last-child {border-bottom:0}
@@ -119,8 +138,14 @@
 .tod-nmp-item.prod-lte .p-icon16-dot::before {background-color:#3b8add}
 
   /* band */
-.tod-nmp-item.prod-band .rn-prod-info .p-icon18-data {color:#35aae2;}
+.tod-nmp-item.prod-band .rn-prod-info .p-icon18-data {background-position: -40px -54px;}
+.tod-nmp-item.prod-band .rn-prod-info > ul > li:nth-child(1) {color: #35aae2;}
 .tod-nmp-item.prod-band .p-icon16-dot::before {background-color:#35aae2}
+
+  /* 2nd Device */
+.tod-nmp-item.prod-2nd .rn-prod-info .p-icon18-data {background-position: -40px -72px;}
+.tod-nmp-item.prod-2nd .rn-prod-info > ul > li:nth-child(1) {color: #6236ff;}
+.tod-nmp-item.prod-2nd .p-icon16-dot::before {background-color:#6236ff}
 
   /* two column list - 5G Tab, PPS */
 .tod-nmp-column-list {position:relative}
@@ -163,8 +188,8 @@
 .tod-nmp-fixed-filter .tod-filter-keyword {position:fixed; z-index:25;}
 
 /* 선택된 필터 리스트 */
-.tod-filter-keyword {position:relative; width:100%; height:3.5625rem; line-height: 3.5625rem; box-shadow: inset 1px 1px 3px 0 #c8c9cb, inset -1px -1px 2px 0 #ffffff; background-color: #efeff1;}
-.tod-filter-keyword > ul {display:flex; overflow-y:auto; padding:0 0 0 1.25rem;}
+.tod-filter-keyword {position:relative; width:100%; box-shadow: inset 1px 1px 3px 0 #c8c9cb, inset -1px -1px 2px 0 #ffffff; background-color: #efeff1;}
+.tod-filter-keyword > ul {display:flex; align-items: center; height:3.5625rem; overflow-y:auto; padding:0 0 0 1.25rem;}
 .tod-filter-keyword > ul > li {padding-right:0.375rem;}
 .tod-filter-keyword > ul > li:last-child {padding-right:1.25rem}
 .tod-filter-keyword .f-keyword {display:inline-block; height:1.6875rem; line-height: 1.75rem; padding:0 0.75rem; border-radius: 1.125rem; white-space:nowrap; font-size: 0.75rem; letter-spacing: -0.34px; color: #000000; background-color: #ffffff;}
@@ -184,6 +209,7 @@
 .tod-cont-section .rn-banner-img img {width:100%}
 
 .tod-nmp-title {position: relative; margin-bottom:0.625rem}
+.tod-nmp-title .rn-tag {margin:0.625rem 0 0.5rem}
 .tod-nmp-title .rn-prod-tit {font-size: 1.25rem; font-weight: 300; line-height: 1.25; letter-spacing: -0.8px; color: #222222;}
 .tod-nmp-title .rn-prod-tit strong {font-weight: 500;}
 .tod-nmp-title .rn-hash {margin-top:0.5rem}
@@ -225,10 +251,21 @@
 
 
 
-/* ========== 요금제 비교 하기 ========== */
-.data-graph {display:flex; align-items: center; justify-content: center; width:50px; height:50px; border-radius: 100%; color:#ffffff; background:blue}
+/* ========== 요금제 비교 하기 (temp) ========== */
+.data-graph {display:flex; flex-flow:column nowrap; align-items: center; justify-content: center; width:50px; height:50px; border-radius: 100%; color:#ffffff; background:blue}
 .data-graph.level1 {width:calc(50px * 1); height:calc(50px * 1);}
 .data-graph.level2 {width:calc(50px * 1.5); height:calc(50px * 1.5);}
 .data-graph.level3 {width:calc(50px * 2); height:calc(50px * 2);}
 .data-graph.level4 {width:calc(50px * 2.5); height:calc(50px * 2.5);}
+
+.tod-nmp-comp-header {position:relative; height:7.1875rem}
+.tod-nmp-comp-header .comp-inner {position:fixed; width:100%; z-index: 25;}
+.tod-nmp-comp-header .comp-inner {display:flex}
+.tod-nmp-comp-header .comp-inner > div {flex:1; text-align:center; }
+.tod-nmp-comp-header .comp-inner .tit {font-size:0.6875rem; color:#767778}
+.tod-nmp-comp-header .comp-inner .name {font-size:20px; font-weight:500; color:#222222; letter-spacing: -1.11px;}
+.tod-nmp-comp-header .comp-inner .price {font-size:1rem; font-weight:bold; color:#222222; letter-spacing: -0.11px;}
+.tod-nmp-comp-header .comp-inner .price small {font-size:12color:#222222}
+
+
 

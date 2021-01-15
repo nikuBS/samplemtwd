@@ -17,12 +17,11 @@
 /* 헤더 스크롤 */
 .tod-renewalBody .filter-wrap .container-wrap .widget{padding-top:0;  }
 .tod-renewalBody .filter-wrap .container-wrap.active .page-header { position:relative; z-index:25;  } 
-.tod-renewalBody .filter-wrap .container-wrap.active .page-header .header-title {height:66px; background:#efeff1; position:fixed; left:0; top:0; width:100%; min-height:auto}
+.tod-renewalBody .filter-wrap .container-wrap.active .page-header .header-title {height:56px; background:#efeff1; position:fixed; left:0; top:0; width:100%; min-height:auto; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);}
 .tod-renewalBody .filter-wrap .container-wrap.active .page-header .header-title .h-tit {color:#222; font-size:14px; font-weight:500;}
 .tod-renewalBody .filter-wrap .container-wrap.active .page-header .header-title .s-hide {display:none !important;}
 .tod-renewalBody .filter-wrap .container-wrap.active .page-header .header-title .h-tit {top:1.0625rem;}
-.tod-renewalBody .filter-wrap .container-wrap.active .tod-renewal-product-tab {position:fixed; width:100%; left:0; top:4.125rem; z-index:20; transition:all 0.2s; border-top:none;}
-.tod-renewalBody .filter-wrap .container-wrap.active .rn-prod-inner {box-shadow: inset 1px 1px 3px 0 #c8c9cb, inset -0.0625rem -0.0625rem 0.125rem 0 #ffffff;}
+.tod-renewalBody .filter-wrap .container-wrap.active .tod-renewal-product-tab {display:none; position:fixed; width:100%; left:0; top:4.125rem; z-index:20; transition:all 0.2s; border-top:none;}
 .tod-renewalBody .filter-wrap .container-wrap.active .widget{padding-top:3.5625rem;}
 
 /* 질문 리스트 */
