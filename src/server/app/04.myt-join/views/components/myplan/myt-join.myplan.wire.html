@@ -126,6 +126,24 @@ _%>
 <hr class="cont-sp type1" aria-hidden="true"/>
   <%_ } _%>
 <%_ } _%>
+
+<%# OP002-12175 나의 결합상품 건수 노출%>
+<%_if(combinations && combinations.comProdCnt > 0) {_%>
+<div class="cont-box nogaps">
+  <ul class="full-link-list type02">
+    <li>
+      <a href="/myt-join/combinations">
+        <span class="inner">
+            <span class="tit">나의 결합상품</span>
+            <span class="text tod-txt-point"><%-combinations.comProdCnt%>건</span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+<hr class="cont-sp type1" aria-hidden="true"/>
+<%_}_%>
+
 <%# 무료 할인 혜택 _%>
 <%_ var dcBenefits = additions.dcBenefits; _%>
 <%_ if (dcBenefits && dcBenefits.length > 0) { _%>

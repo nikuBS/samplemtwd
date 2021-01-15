@@ -623,6 +623,7 @@ class MyTJoinMyplan extends TwViewController {
       this._getFeePlan(), // 요금제
       this._getAdditions(svcInfo), // 부가상품
       this._getBenefits(svcInfo), // 혜택/할인
+      this._getCombinations() // 나의 결합 상품 건수
       // TODO: 성능 문제로 배포 연기
       /*
       this._getAgreements(),// 약정할인/기기상환정보
@@ -636,7 +637,7 @@ class MyTJoinMyplan extends TwViewController {
         return this.error.render(res, Object.assign(defaultOptions, apiError));
       }
       // TODO: 성능 문제로 배포 연기
-      const [feePlan, additions, benefits /* , agreements, fee, usagePattern, pps */] = subscriptions;
+      const [feePlan, additions, benefits, combinations /* , agreements, fee, usagePattern, pps */] = subscriptions;
 
       // 컨버팅 결과 값이 없을 시 오류 처리
       if (FormatHelper.isEmpty(feePlan)) {
@@ -658,6 +659,7 @@ class MyTJoinMyplan extends TwViewController {
         feePlan, // 요금제
         additions, // 부가 상품
         benefits, // 혜택/할인 (Mobile/T-Pocket-Fi/T-Login)
+        combinations, // 나의 결합 상품 건수
         // TODO: 성능 문제로 배포 연기
         /*
         agreements, // 약정할인/기기상환정보
@@ -1456,6 +1458,24 @@ class MyTJoinMyplan extends TwViewController {
       });
     }
     return Observable.of(null);
+  }
+
+  // 나의 결합 상품 건수
+  private _getCombinations() {
+    const command = !this._isWireless ? API_CMD.BFF_05_0133 : API_CMD.BFF_05_0161;
+    return this.apiService.request(command, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        if (!this._isWireless) {
+          return {
+            comProdCnt: ((resp.result || {}).combinationMemberList || []).length
+          };
+        }
+
+        return resp.result;
+      }
+      // error
+      return null;
+    });
   }
 }
 

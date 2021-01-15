@@ -29,7 +29,8 @@ _%>
       </button>
     </li>
     <%_ } _%>
-    <%_ if (data.type === 0 && data.isAddProduct && data.myAddProduct.comProdCnt > 0) { _%>
+    <%# 모바일, 인터넷 회선일때 %>
+    <%_ if ([0, 2].indexOf(data.type) > -1 && data.isAddProduct && data.myAddProduct.comProdCnt > 0) { _%>
     <li>
       <button type="button" data-id="com-prod" title="나의 결합상품" aria-haspopup="true">
         <span class="inner">
