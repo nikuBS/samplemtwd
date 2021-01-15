@@ -8,7 +8,7 @@
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
+import {API_CMD, API_CODE, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import {MYT_SUSPEND_STATE_EXCLUDE, NEW_NUMBER_MSG} from '../../types/string.type';
@@ -305,22 +305,27 @@ class MyTJoinSubmainController extends TwViewController {
         }
       }
 
-      if (numSvc) {
-        if (numSvc.code === API_CODE.CODE_00) {
-          data.numberSvc = numSvc;
-          data.isNotChangeNumber = true;
-          if (data.numberSvc.result.extnsPsblYn === 'Y') {
-            data.numberChanged = true;
-          } else {
+      /*
+          번호 변경 이후 28일이내에 "번호변경 안내서비스"를 신청할 수 있는데,
+          28일 이내이면 numChgFlag = 'Y' 로 보내준다. 28일이 지나면 MOD0030 code 리턴
+       */
+      if (numSvc && numSvc.code === API_CODE.CODE_00) {
+        Object.assign(data, {
+          numberSvc: numSvc,
+          isNotChangeNumber: true,
+          numberChanged: false
+        });
+        const {extnsPsblYn, notiEndDt} = numSvc.result;
+        if (extnsPsblYn !== 'Y') {
+          if (!FormatHelper.isEmpty(notiEndDt)) {
             const curDate = new Date();
-            const endDate = DateHelper.convDateFormat(data.numberSvc.result.notiEndDt);
+            const endDate = DateHelper.convDateFormat(notiEndDt);
             const betweenDay = this.daysBetween(curDate, endDate);
             if (betweenDay < 28) {
               // 신청 중에는 연장 및 해지
               data.numberChanged = true;
             } else {
               // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
-              data.numberChanged = false;
               data.isNotChangeNumber = false;
             }
           }
@@ -738,22 +743,18 @@ class MyTJoinSubmainController extends TwViewController {
   // 번호변경 안내 서비스
   _getChangeNumInfoService() {
     return this.apiService.request(API_CMD.BFF_05_0180, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
+      const {code} = resp;
+      if (code === API_CODE.CODE_00) {
         return resp;
-      } else {
-        // error
-        if (resp.code === API_NEW_NUMBER_ERROR.MOD0030) {
-          return {
-            code: API_NEW_NUMBER_ERROR.MOD0030,
-            msg: NEW_NUMBER_MSG.MOD0030
-          };
-        } else if (resp.code === API_NEW_NUMBER_ERROR.MOD0031) {
-          return {
-            code: API_NEW_NUMBER_ERROR.MOD0031,
-            msg: NEW_NUMBER_MSG.MOD0031
-          };
-        }
       }
+      const result = {
+        MOD0030: NEW_NUMBER_MSG.MOD0030,
+        MOD0031: NEW_NUMBER_MSG.MOD0031
+      };
+      return {
+        code,
+        msg: result[code]
+      };
     });
   }
 }

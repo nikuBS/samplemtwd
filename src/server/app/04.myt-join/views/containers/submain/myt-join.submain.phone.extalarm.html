@@ -32,8 +32,13 @@ _%>
                         </div>
                         <div class="cont-noti pt10">
                             <span class="type3">
+                                <%_if(data.oldSvcNum.startsWith('010')){_%>
                                 <span class="tx-bold"><%= data.freeOfrEndDt %>까지 무료</span>로 제공되며,<br />
-                                <span class="tx-bold"><%= data.freeOfrEndNextDt %>부터 월3,300원(부가세포함)이 청구</span>됩니다.
+                                <span class="tx-bold"><%= data.freeOfrEndNextDt %>일 부터 월3,300원(부가세포함)이 청구</span>됩니다.
+                                <%_} else {_%>
+                                <span class="tx-bold"><%= data.freeOfrEndDt %>까지 무료</span>로 제공되며, 다음일부터 6개월 이내<br />
+                                재 신청시에도 1년 단위로 무료기간이 연장됩니다.
+                                <%_}_%>
                             </span>
                         </div>
                     </div>
@@ -96,7 +101,7 @@ _%>
                                                     <input type="radio" name="radio" value="S" title="알림만" aria-labelledby="aria-comp-radio1" <%= (data.notiType === 'S' ? 'checked="checked"' : '') %>">
                                                     <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                                         <p class="layout-text">
-                                                            <span class="mtext">알림만</span>
+                                                            <span class="mtext">문자알림형</span>
                                                             <span class="stext">통화 및 문자 시 번호변경안내를 문자로 발송합니다. 통화 시 ARS 음성안내 제공<br />(2개월 부터는 유선 발신통화에만 해당)</span>
                                                         </p>
                                                     </div>
@@ -105,7 +110,7 @@ _%>
                                                     <input type="radio" name="radio" value="Y" title="알림 후 자동연결" aria-labelledby="aria-comp-radio2" <%= (data.notiType === 'Y' ? 'checked="checked"' : '') %>>
                                                     <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
                                                         <p class="layout-text">
-                                                            <span class="mtext">알림 후 자동연결</span>
+                                                            <span class="mtext">공개형</span>
                                                             <span class="stext">통화 시 ARS 안내 &amp; 문자 시 번호변경안내 를 문자로발송 후 자동으로 변경된 번호로 연결됩니다.</span>
                                                         </p>
                                                     </div>
@@ -114,7 +119,7 @@ _%>
                                                     <input type="radio" name="radio" value="N" title="알림 없는 자동연결" aria-labelledby="aria-comp-radio3" <%= (data.notiType === 'N' ? 'checked="checked"' : '') %>>
                                                     <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
                                                         <p class="layout-text">
-                                                            <span class="mtext">알림 없는 자동연결</span>
+                                                            <span class="mtext">안심형</span>
                                                             <span class="stext">변경사항을 알리지 않고, 바로 변경된 번호로 연결 됩니다.</span>
                                                         </p>
                                                     </div>
