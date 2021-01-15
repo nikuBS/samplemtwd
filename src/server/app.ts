@@ -96,7 +96,10 @@ class App {
     this.app.use(function(req, res, next) {
 
       function sanitize(string) {
-        return string.replace('<script>', '&lt;script&gt;');
+        if (typeof string === 'string' && string.includes('<script>'))
+          return string.replace('<script>', '&lt;script&gt;');
+        else 
+          return string;
       }
     
       let queryKeys = Object.keys(req.query);
