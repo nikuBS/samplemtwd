@@ -31,6 +31,9 @@ Tw.ProductAppsDetail.prototype = {
     this._images = app.images;
     this._appTmpl = Handlebars.compile($('#fe-tmpl-app').html());
 
+    //images alt 값 추가
+    this._imagesAlt = app.imagesAlt
+
     this._handleLoadInfo(this._app);
   },
 
@@ -153,11 +156,19 @@ Tw.ProductAppsDetail.prototype = {
    */
   _handleOpenImgDetail: function(e) {
     var popupIndex = $(e.currentTarget).data('index');
+    
+    var obj=[];
+    for(i=0; i < this._images.length; i++){
+      obj[i] = { imgae : this._images[i], alt : this._imagesAlt[i] }
+    } 
+
     this._popupService.open(
       {
-        hbs: 'TA_02_01',
-        images: this._images,
-        initialslide: popupIndex
+        hbs: 'TA_02_01',        
+        initialslide: popupIndex,
+       // images: this._images,
+       // imagesAlt:  ["11", "22", "33", "44", "55"],
+        itmes: obj        
       },
       undefined,
       undefined,
