@@ -558,18 +558,20 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 나의 가입 부가,결합 상품
   private _getAddtionalProduct() {
-    let command;
-    switch (this.type) {
-      case 2:
-        command = API_CMD.BFF_05_0179;
-        break;
-      case 3:
-        command = API_CMD.BFF_05_0166;
-        break;
-      default:
-        command = API_CMD.BFF_05_0161;
-        break;
+    // 유선과 나머지 회선 구분하여 BFF 호출
+    if (this.type === 2) { // 유선회선일때
+      return Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_05_0179, {}), // 부가상품 갯수 조회
+        this.apiService.request(API_CMD.BFF_05_0133, {}) // 유선 결합상품 조회. BFF 매핑 등록하기
+      ).map( ([addition, combinations]) => {
+        return {
+          additionCount: (addition.result || {}).additionCount || 0, // 부가상품 건수
+          comProdCnt: ((combinations.result || {}).combinationMemberList || []).length
+        };
+      });
     }
+
+    const command = this.type === 3 ? API_CMD.BFF_05_0166 : API_CMD.BFF_05_0161;
     return this.apiService.request(command, {}).map((resp) => {
       // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if (resp.code === API_CODE.CODE_00) {

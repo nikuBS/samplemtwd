@@ -147,6 +147,24 @@ _%>
 
 <hr class="cont-sp type1" aria-hidden="true"/>
 <%_ } _%>
+
+<%# OP002-12175 나의 결합상품 건수 노출%>
+<%_if(combinations && combinations.comProdCnt > 0) {_%>
+<div class="cont-box nogaps">
+  <ul class="full-link-list type02">
+    <li>
+      <a href="/myt-join/combinations">
+        <span class="inner">
+            <span class="tit">나의 결합상품</span>
+            <span class="text tod-txt-point"><%-combinations.comProdCnt%>건</span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+<hr class="cont-sp type1" aria-hidden="true"/>
+<%_}_%>
+
 <%# 나의 로밍 요금제/부가서비스: 모바일만 노출 _%>
 <%_ if (svcInfo.svcAttrCd === 'M1') { _%>
   <%_ const additionsRoaming = additions.roaming; _%>
