@@ -6,16 +6,17 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
-import {MYT_FARE_PAYMENT_HISTORY_TYPE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE } from '../../../../types/string.type';
+import {MYT_FARE_INFO_HISTORY, MYT_FARE_PAYMENT_HISTORY_TYPE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE } from '../../../../types/string.type';
 import {MYT_FARE_PAYMENT_CODE, MYT_FARE_POINT_PAYMENT_STATUS } from '../../../../types/bff.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import CommonHelper from '../../../../utils/common.helper';
 
 /**
- * query로 받을 형태 정의 sortType 카테고리타입 
+ * query로 받을 형태 정의 sortType 카테고리타입
  */
 interface Query {
   sortType: string;
@@ -74,20 +75,20 @@ class MyTFareInfoHistory extends TwViewController {
 
   constructor() {
     super();
-    this.returnErrorInfo = {}; 
+    this.returnErrorInfo = {};
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     const query: Query = {
       sortType: req.query.sortType
-    };    
+    };
 
-    // 각 납부 타입을 sortType param으로 받음 
+    // 각 납부 타입을 sortType param으로 받음
     if (query.sortType === 'payment' || query.sortType === undefined) {
-      // 2019.02.21 전체납부내역 -> 최근납부내역 BFF_07_0030 의 데이터로 수정 노출 결정 
+      // 2019.02.21 전체납부내역 -> 최근납부내역 BFF_07_0030 의 데이터로 수정 노출 결정
       // this.getAllPaymentData(req, res, next, query, svcInfo, pageInfo); // deprecated
-      // 전체납부내역 case 
+      // 전체납부내역 case
       Observable.combineLatest(
           // this.checkHasPersonalBizNumber(),
           this.getAutoWithdrawalAccountInfo(),
@@ -138,7 +139,33 @@ class MyTFareInfoHistory extends TwViewController {
               this.getOverAndRefundPaymentData(),
               this.getMicroPaymentData()
           ).subscribe(histories => {
-            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+            const lineType = CommonHelper.getLineType(svcInfo);
+            // console.log(">>>>>>>>> lineType", lineType, svcInfo.svcGr);
+            // 법인 회선
+            if ( lineType.isCompanyLine ) {
+              // 법인회선 E
+              if (svcInfo.svcGr === 'E') {
+                this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+              } 
+              else {
+                this.errorRenderView(req, res, pageInfo, svcInfo);
+              }
+            } else { // 법인회선이 아닌 경우 
+              // 미성년자 여부 체크 
+              Observable.from(this.isAdult(API_CMD.BFF_05_0080))
+              .subscribe(isAdult => {
+                if (isAdult) {
+                  req.query.isAdult = true;
+                  this.errorRenderView(req, res, pageInfo, svcInfo);
+                } else {
+                  if (svcInfo.svcGr === 'Y' || svcInfo.svcGr === 'A') { // 일반회선 인증A, 인증B
+                    this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+                  } else {
+                    this.errorRenderView(req, res, pageInfo, svcInfo);
+                  }  
+                }
+              });
+            }
           });
           break;
         // 콘텐츠 이용요금 선결제
@@ -149,7 +176,32 @@ class MyTFareInfoHistory extends TwViewController {
               this.getOverAndRefundPaymentData(),
               this.getContentsPaymentData()
           ).subscribe(histories => {
-            this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+            const lineType = CommonHelper.getLineType(svcInfo);           
+            // 법인 회선
+            if ( lineType.isCompanyLine ) {
+              // 법인회선 E
+              if (svcInfo.svcGr === 'E') {
+                this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+              } 
+              else {
+                this.errorRenderView(req, res, pageInfo, svcInfo);
+              }
+            } else { // 법인회선이 아닌 경우 
+              // 미성년자 여부 체크
+              Observable.from(this.isAdult(API_CMD.BFF_05_0066))
+              .subscribe(isAdult => {
+                if (isAdult) {
+                  req.query.isAdult = true;
+                  this.errorRenderView(req, res, pageInfo, svcInfo);
+                } else {
+                  if (svcInfo.svcGr === 'Y' || svcInfo.svcGr === 'A') { // 일반회선 인증A, 인증B
+                    this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+                  } else {
+                    this.errorRenderView(req, res, pageInfo, svcInfo);
+                  }  
+                }
+              }); 
+            }
           });
           break;
         // 포인트 납부예약
@@ -181,17 +233,43 @@ class MyTFareInfoHistory extends TwViewController {
 
   }
 
+  private errorRenderView(req, res, pageInfo, svcInfo) {
+    let error = {
+      title: '',
+      contents: ''
+    };
+    if (req.query.isAdult) { // 미성년자 메세지 
+        error.title = MYT_FARE_INFO_HISTORY.ERROR.NO_ADULT_LINE.title;
+        error.contents = '';
+    } else { // 법인회선 메세지
+      error.title = MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.title;
+      error.contents = MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.contents
+    }
+    const code = req.query.code || '',
+          msg = error.title,
+          subMsg = error.contents,
+          isPopupCheck = false;
+    this.error.render(res, {
+      code: code,
+      msg: msg,
+      subMsg: subMsg,
+      pageInfo: pageInfo,
+      svcInfo: svcInfo,
+      isPopupCheck: isPopupCheck
+    });
+  }
+
   /**
-   * @param req 
-   * @param res 
-   * @param next 
+   * @param req
+   * @param res
+   * @param next
    * @param data {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo}
    * @return {void}
    */
   private renderView(req: Request, res: Response, next: NextFunction, data: any): void {
     const {pageInfo, svcInfo} = data;
 
-    // Error 를 반환했던 API code 가 있었던 경우 
+    // Error 를 반환했던 API code 가 있었던 경우
     if (this.returnErrorInfo.code) {
       return this.error.render(res, {
         code: this.returnErrorInfo.code,
@@ -219,7 +297,7 @@ class MyTFareInfoHistory extends TwViewController {
         refundPaymentCnt: this.paymentData.refundPaymentCnt,
         // isPersonalBiz: this.paymentData.isPersonalBiz, // 사업자 인지. OP002-8562 사용안함
         // personalBizNum: this.paymentData.personalBizNum,
-        listData: this.mergeData(data.listData), // 리스트 
+        listData: this.mergeData(data.listData), // 리스트
         refundURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-refund`,
         refundAccountURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-account`,
         current: (data.query.sortType === 'payment' || data.query.sortType === undefined) ? 'all' : data.query.sortType,
@@ -285,7 +363,7 @@ class MyTFareInfoHistory extends TwViewController {
   } */
 
   /**
-   * @desc 과납내역 조회, 최근납부내역 조회 
+   * @desc 과납내역 조회, 최근납부내역 조회
    * @param {Object} opt : {getPayList: boolean} 최근납부내역 paymentData 에 저장할지 여부
    */
   private getOverAndRefundPaymentData = (opt: {getPayList?: boolean} = {}): Observable<any | null> => {
@@ -304,7 +382,7 @@ class MyTFareInfoHistory extends TwViewController {
         resp.result = {};
       }
 
-      // 
+      //
       this.paymentData.overPaymentCount = parseInt(resp.result.ovrPayCnt || 0, 10); // 과납건수
       this.paymentData.refundPaymentCount = parseInt(resp.result.rfndTotAmt || 0, 10); // 환불받을 총 금액 number
       this.paymentData.refundTotalAmount = FormatHelper.addComma((resp.result.rfndTotAmt || '').toString()); // 환불받을 총 금액 쉼표 붙여서 string
@@ -315,7 +393,7 @@ class MyTFareInfoHistory extends TwViewController {
         this.paymentData.getLastPaymentData = true;
         resp.result.paymentRecord.map(o => {
           o.sortDt = o.opDt; // 날짜 리스트 합칠 때 정렬기준이 됨
-          o.dataDt = DateHelper.getShortDate(o.opDt); // 노출시 날짜 
+          o.dataDt = DateHelper.getShortDate(o.opDt); // 노출시 날짜
           o.listTitle = o.payMthdCdNm; // 납부방법
           o.dataAmt = FormatHelper.addComma(o.payAmt); // 금액
           // 포인트 케이스 15 or BB 로 시작될 경우로 확인
@@ -350,7 +428,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataFullDt = DateHelper.getFullDateAnd24Time(o.opDt + o.payOpTm); // 날짜 시간 모두 표기
         o.dataAmt = FormatHelper.addComma(o.cardAmt); // 금액
         // 리스트에 표기될 부수정보
-        o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.direct + (o.cardProcCd === 'N' ? '' + MYT_FARE_PAYMENT_HISTORY_TYPE.CANCEL_KOR_TITLE : ''); 
+        o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.direct + (o.cardProcCd === 'N' ? '' + MYT_FARE_PAYMENT_HISTORY_TYPE.CANCEL_KOR_TITLE : '');
       });
       return resp.result;
     });
@@ -359,7 +437,7 @@ class MyTFareInfoHistory extends TwViewController {
   /**
    * @desc 자동납부내역 조회
    * @return {Observable}
-   * 
+   *
    */
   private getAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; msg: string | null; result: any }) => {
@@ -387,7 +465,7 @@ class MyTFareInfoHistory extends TwViewController {
   /**
    * @desc 자동납부 통합인출 내역 조회
    * @return {Observable}
-   * 
+   *
    */
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; msg: string | null; result: any }) => {
@@ -402,7 +480,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.sortDt = o.drwDt; // 날짜 , 리스트 합칠 때 정렬기준이 됨
         o.innerIndex = index; // 상세정보 조회시 사용할 값
         o.dataPayMethodCode = MYT_FARE_PAYMENT_TYPE.AUTOALL; // 납부코드
-        o.listTitle = o.bankNm + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE; // 리스트 제목, 통합인출은 은행이 전제임 
+        o.listTitle = o.bankNm + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE; // 리스트 제목, 통합인출은 은행이 전제임
         o.dataAmt = FormatHelper.addComma(o.drwAmt); // 금액
         o.dataDt = DateHelper.getShortDate(o.drwDt); // 표기될 날짜
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.autoAll; // 부수정보
@@ -414,7 +492,7 @@ class MyTFareInfoHistory extends TwViewController {
    /**
    * @desc 소액결제 내역 조회
    * @return {Observable}
-   * 
+   *
    */
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; msg: string | null; result: any }) => {
@@ -442,7 +520,7 @@ class MyTFareInfoHistory extends TwViewController {
   /**
    * @desc 콘텐츠 결제 내역 조회
    * @return {Observable}
-   * 
+   *
    */
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; msg: string | null; result: any }) => {
@@ -470,7 +548,7 @@ class MyTFareInfoHistory extends TwViewController {
   /**
    * @desc 포인트 납부예약(1회 납부예약)
    * @return {Observable}
-   * 
+   *
    */
   private getPointReservePaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; msg: string | null; result: any }) => {
@@ -501,7 +579,7 @@ class MyTFareInfoHistory extends TwViewController {
   /**
    * @desc 포인트 자동납부
    * @return {Observable}
-   * 
+   *
    */
   private getPointAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; msg: string | null; result: any }) => {
@@ -510,7 +588,7 @@ class MyTFareInfoHistory extends TwViewController {
         return null;
       }
       resp.result.usePointList = resp.result;
-      
+
       resp.result.usePointList.map((o, index) => {
         o.sortDt = o.opDt; // 날짜 , 리스트 합칠 때 정렬기준이 됨
         o.innerIndex = index; // 상세정보 조회시 사용할 값
@@ -530,7 +608,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   /**
    * @desc 조회된 데이터 통합
-   * @param {PaymentList} data 
+   * @param {PaymentList} data
    * @return {PaymentList} interface 참조
    */
   private mergeData(data: PaymentList): PaymentList {
@@ -589,7 +667,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   /**
    * @desc 상세보기 있을지 여부 결정
-   * @param {string} o 
+   * @param {string} o
    * @return {boolean}
    */
   private isNoLink(o: string): boolean {
@@ -599,7 +677,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   /**
    * @desc 은행인지 여부
-   * @param {string} o 
+   * @param {string} o
    * @return {boolean}
    */
   private isBank(o: string): boolean {
@@ -609,7 +687,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   /**
    * @desc 카드인지 여부
-   * @param {string} o 
+   * @param {string} o
    * @return {boolean}
    */
   private isCard(o: string): boolean {
@@ -619,7 +697,7 @@ class MyTFareInfoHistory extends TwViewController {
 
   /**
    * @desc 은행이나 카드인지 여부
-   * @param {string} o 
+   * @param {string} o
    * @return {boolean}
    */
   private isBankOrCard(o: string): boolean {
@@ -628,8 +706,8 @@ class MyTFareInfoHistory extends TwViewController {
 
   /**
    * @desc 배열로부터 한글 문구로 (directPay => 자동납부)
-   * @param current 
-   * @return {string} 
+   * @param current
+   * @return {string}
    */
   private getKorStringWithQuery(current: string): any {
     return MYT_FARE_PAYMENT_HISTORY_TYPE[this.getCamelString(current)];
@@ -637,11 +715,11 @@ class MyTFareInfoHistory extends TwViewController {
 
   /**
    * @desc 쿼리로 전달된 값을 카멜타입으로 변경 (ex: direct-pay => directPay)
-   * @param {string} queryString 
+   * @param {string} queryString
    * @return {string}
    */
   private getCamelString(queryString: string): string {
-    // string-string => stringString 
+    // string-string => stringString
     return (queryString.match(/-\w/gi) || []).reduce((prev, cur) => prev.replace(cur, cur.toUpperCase().replace('-', '')), queryString);
   }
 
@@ -673,6 +751,26 @@ class MyTFareInfoHistory extends TwViewController {
       {link: 'MF_08_tip_05', view: 'M000290', title: '납부취소 안내'}
     ];
   }
+
+  /**
+   * @return {Observable}
+   * @desc 소액결제, 콘텐츠결제 미성년자여부 체크 
+   */
+  private isAdult = (apiName): Observable<any | null> => {
+    // BFF_05_0080: 소액결제, BFF_05_0066: 콘텐츠 결제 
+    return this.apiService.request(apiName, {}).map((resp: { code: string; result: any }) => {
+      // console.log(">>>>>>>>>>>> isAdult Code: ", resp.code);
+      if (resp.code === 'BIL0031') {
+        resp.result = true;
+      } else {
+        resp.result = false;
+      }
+      return resp.result;
+    });
+  }
+
+  
+
 }
 
 export default MyTFareInfoHistory;
