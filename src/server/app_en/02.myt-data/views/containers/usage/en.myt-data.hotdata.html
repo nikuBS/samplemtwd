@@ -10,13 +10,14 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#contents">Go to Main</a></li>
+        <li><a href="#contents-area">Skip to main contents</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
 <div id="myt-data-hotdata" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../../common_en/views/components/header.component.html', { title: 'MY DATA / TALK / TEXT', svcInfo: svcInfo }); %>
     <div id="contents" class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">Main contents</span></h2>
         <div class="container">
             <%- include('../../../../common_en/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "MWMA_A10_B81_C1200-1", multiple : "MWMA_A10_B81_C1200-1" } }); %>
             

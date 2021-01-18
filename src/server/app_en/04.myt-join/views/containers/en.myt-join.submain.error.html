@@ -9,13 +9,14 @@
 <body>
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#contents-area">Go to Main</a></li>
+            <li><a href="#contents-area">Skip to main contents</a></li>
         </ul>
     </div>
 
     <div class="wrap">
         <%- include('../../../../common_en/views/components/header.component.html', { title: 'MY INFORMATION', svcInfo: svcInfo }); %>
         <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">Main contents</span></h2>
             <div class="container">
                 
                 <%_ if ( errorCode === 'COMPANY_LINE' ) { _%>
