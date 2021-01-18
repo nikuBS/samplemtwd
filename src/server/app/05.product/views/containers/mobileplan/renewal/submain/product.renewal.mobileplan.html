@@ -1,0 +1,436 @@
+<%#
+* @file product.renewal.mobileplan.html
+* @author Kinam Kim
+* @since 2020.12.17
+%>
+
+<%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
+<body class="tod-renewalBody">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li><!-- 191115 웹접근성 수정_01 -->
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+		<!-- #header -->
+        <%- include('../../../../../../../common/views/components/header.component.html', { title: '요금제', svcInfo: svcInfo }); %>
+
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container">
+                <div class="key-visual-area nogaps">
+                    <div class="section-swiper-box">
+                        <!-- widget -->
+                        <div class="widget">
+                            <div class="widget-box" data-slider-auto="false">
+                                <div class="slider-box">
+                                    <div id="fe-banner-t" class="slider"></div>
+                                </div>
+                            </div>
+                        </div><!-- //widget -->
+                    </div>
+                </div><!-- //key-visual-area -->
+                <div class="pro-cont">
+                    <section class="product-sec">
+                        <p class="wel-comment">고객님의 스타일에 맞는<br><strong>요금제를</strong> 찾아보세요.</p>
+                        
+                        <%_ if ( !svcInfo ) { _%>
+                            <%# 로그인 정보가 없을 때 _%>
+                            <div class="pro-article login-box">
+                                <p class="login-msg">로그인하시고,<br>놓치고 있는 혜택도 확인하세요.</p>
+                                <div class="login-btn-area">
+                                    <a href="#" class="pro-btn login-btn">로그인하기</a>
+                                </div>
+                            </div>
+
+                        <%_ } else { _%>
+                            
+                            <%_ if ( data.isWireless && data.payment ) { _%>
+                                <%# 무선 사용자이면서 상품 정보가 있을 때 _%>
+                                <div class="pro-article now-pay-box">
+                                    <div class="article-tit"><a href="#">현재 사용중인 요금제</a></div>
+                                    <div class="article-cont inset-shadow-box">
+                                        <dl class="item-define">
+                                            <dt><%= data.payment.product.basProductNm %></dt>
+                                            <dd class="strong"><%= data.payment.product.basFeeInfo.value %>원</dd>
+                                        </dl>
+                                        <ul class="detail-info"> 
+                                            <li class="item">데이터
+                                                <%_ if (data.payment.product.basOfrDataQtyCtt.isNaN ) { _%>
+                                                    <span class="val"><%= data.payment.product.basOfrDataQtyCtt.value %></span>    
+                                                <%_ } else { _%>
+                                                    <span class="val"><%= data.payment.product.basOfrDataQtyCtt.value.data %><%= data.payment.product.basOfrDataQtyCtt.value.unit %></span>
+                                                <%_ } _%>
+                                            </li>
+                                            <li class="item">음성
+                                                <span class="val"><%= data.payment.product.basOfrVcallTmsCtt.value %></span>
+                                            </li>
+                                            <li class="item">문자
+                                                <%_ if (data.payment.product.basOfrCharCntCtt.isNaN ) { _%>
+                                                    <span class="val"><%= data.payment.product.basOfrCharCntCtt.value %></span>
+                                                <%_ } else { _%>
+                                                    <span class="val"><%= data.payment.product.basOfrCharCntCtt.value %><%= data.payment.product.basOfrCharCntCtt.unit %></span>
+                                                <%_ } _%>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <%_ } _%>
+
+                            <%_ if (data.isWireless && data.additions ) { _%>
+                                <%_ if ( data.additions.length != 0 ) { _%>
+                                    <%# 무선 사용자이면서 가입할 부가 서비스가 있을 때 _%>
+
+                                    <div class="pro-article free-service">
+                                        <div class="article-tit"><i class="ico-new">N</i>고객님, 아직 신청하지 않은 무료 부가서비스가 있어요</div>
+                                        <div class="article-cont">
+                                            <ul class="go-service add-service-list shadow-box "><!-- show toggle -->
+    
+                                                <%_ for (var i=0, length=data.additions.length; i < length; i += 1) { _%>
+                                                    <li class="service-item">
+                                                        <div class="item-inner">
+                                                            <span class="service-name"><i class="ico"><img src="<%= CDN %><%= data.additions[i].additionIconImg %>" alt=""></i><%= data.additions[i].additionNm %></span>
+                                                            <a href="#"><span class="service-detail">가입하기</span></a>
+                                                        </div>
+                                                    </li>    
+                                                <%_ } _%>
+                                            </ul>
+
+                                            <%_ if ( data.additions.length > 5 ) { _%>
+                                                <div class="more-link-area">
+                                                    <button type="button" class="more"><span class="more-txt">혜택 더보기</span></button>
+                                                </div>
+                                            <%_ } _%>
+                                        </div>
+                                    </div>
+                                <%_ } _%>
+                            <%_ } _%>
+                            
+                        <%_ } _%>
+
+                    </section>
+                    <section class="product-sec bg">
+                        <p class="sec-tit">꼭 필요한<br>요금제 혜택이 있으신가요?</p>
+                        <div class="pro-article benefit-box">
+                            <div class="article-tit">찾으시는 요금제 혜택을 선택해 주세요</div>
+                            <div class="article-cont minus-space">
+                                <div class="slider-wrap benefit-slider">
+                                    <div class="slider-container">
+                                        <ul class="slider-list">
+                                            <li class="slider-item">
+                                                <a href="http://www.naver.com" class="shadow-box">
+                                                    <p class="benefit-txt">데이터<em>완전무제한</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico01.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">가입즉시<em>T멤버십 VIP</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico02.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">무제한 음악<em>스트리밍 무료 이용</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico03.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">실시간 지상파<br>TV VOD<em>스트리밍 무제한</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico04.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">T가족끼리<em>데이터 공유</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico05.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">T가족에게<em>데이터 받기</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico06.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">주말에<em>데이터 집중</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico07.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">분실/파손<em>보험료 할인</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico08.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="#" class="shadow-box">
+                                                    <p class="benefit-txt">데이터 함께쓰기<em>할인</em></p>
+                                                    <i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico09.svg" alt=""></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="more-link-area">
+                                    <a href="#" class="more"><span class="more-txt">전체요금제 보러가기</span></a>
+                                </div>
+                            </div>
+                        </div><!-- //pro-article -->
+                    </section>
+                    <section class="product-sec">
+                        <p class="sec-tit narrow">요즘 가장 인기있는<br>요금제</p>
+                        <div class="popular-plan-box "> 
+                            <div class="plan-cont">
+                                <div class="plan-header">
+                                    <p class="plan-intro-txt">요즘 뜨는 드라마<br><strong>마음껏 즐기기!</strong></p>
+                                    <span class="bg-img">
+                                        <img src="<%= CDN %>/img/product/v2/skzem-obj.png" alt="">
+                                    </span>
+                                </div><!-- //plan-header -->
+                                <div class="plan-container">
+                                    <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+									<div class="tod-nmp-item plan-type2 prod-5g">
+										<a href="#" class="item-link">
+											<div class="rn-tag">
+												<div class="col-left">
+													<span class="i-tag-cr1">5G</span>
+													<span class="i-tag-cr2">LTE</span>
+													<span class="i-tag-cr3">2nd Device</span>
+												</div>
+												<div class="col-right">
+													<span class="i-tag-myplan">사용중</span>
+												</div>
+											</div>
+											<div class="rn-prod-name">
+												<p class="p-name">5GX 플래티넘 5GX 플래티넘 5GX 플래티넘</p>
+												<p class="p-price">125,000원</p>
+											</div>
+											<div class="rn-prod-info">
+												<ul class="p-etc">
+													<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+													<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+													<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+												</ul>
+											</div>
+											<div class="rn-prod-benefit">
+												<ul>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_01.svg" alt=""></i> 
+														<span class="txt">FLO 앤 데이터 무료 </span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_05.svg" alt=""></i> 
+														<span class="txt">wavve 앤 데이터 플러스 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_02.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_03.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_04.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+												</ul>
+											</div>
+										</a>
+										<div class="rn-prod-bottom">
+											<div class="rn-btn-right">
+												<a href="#" class="btn-compare">내 요금제와 비교</a>
+											</div>
+										</div>
+									</div>
+									<!-- //요금제 모듈 : 혜택강조형 -->
+									<!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+									<div class="tod-nmp-item plan-type2 prod-5g">
+										<a href="#" class="item-link">
+											<div class="rn-tag">
+												<div class="col-left">
+													<span class="i-tag-cr1">5G</span>
+													<span class="i-tag-cr2">LTE</span>
+													<span class="i-tag-cr3">2nd Device</span>
+												</div>
+												<div class="col-right">
+													<span class="i-tag-myplan">사용중</span>
+												</div>
+											</div>
+											<div class="rn-prod-name">
+												<p class="p-name">5GX 플래티넘 5GX 플래티넘 5GX 플래티넘</p>
+												<p class="p-price">125,000원</p>
+											</div>
+											<div class="rn-prod-info">
+												<ul class="p-etc">
+													<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+													<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+													<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+												</ul>
+											</div>
+											<div class="rn-prod-benefit">
+												<ul>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_01.svg" alt=""></i> 
+														<span class="txt">FLO 앤 데이터 무료 </span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_05.svg" alt=""></i> 
+														<span class="txt">wavve 앤 데이터 플러스 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_02.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_03.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+													<li>
+														<i class="p-icon"><img src="<%= CDN %>/img/product/v2/icon16_04.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+												</ul>
+											</div>
+										</a>
+										<div class="rn-prod-bottom">
+											<div class="rn-btn-right">
+												<a href="#" class="btn-compare">내 요금제와 비교</a>
+											</div>
+										</div>
+									</div>
+									<!-- //요금제 모듈 : 혜택강조형 -->
+                                </div>
+                            </div>
+                        </div><!-- popular-plan-box  -->
+                    </section>
+                    <section class="product-sec">
+                        <div class="pro-article various-plan-box">
+                            <div class="article-tit">다양한 요금제를 확인해보세요</div>
+                            <div class="article-cont minus-space">
+                                <div class="slider-wrap plan-slider">
+                                    <div class="slider-container">
+                                        <ul class="slider-list">
+                                            <li class="slider-item">
+                                                <a href="/product/mobileplan-add" class="shadow-box" style="background-image:url('<%= CDN %>/img/product/v2/flo-card.png')">
+                                                    <span class="tod-blind">flo 음악과 언제 어디서나 함께하는 요금제</span>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="/product/wireplan" class="shadow-box" style="background-image:url('<%= CDN %>/img/product/v2/wavve-card.png')">
+                                                    <span class="tod-blind">요즘뜨는 드라마 마음껏 즐기기</span>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="/product/combinations" class="shadow-box" style="background-image:url('<%= CDN %>/img/product/v2/flo-card.png')">
+                                                    <span class="tod-blind">flo 음악과 언제 어디서나 함께하는 요금제</span>
+                                                </a>
+                                            </li>
+                                            <li class="slider-item">
+                                                <a href="/product/roaming" class="shadow-box" style="background-image:url('<%= CDN %>/img/product/v2/wavve-card.png')">
+                                                    <span class="tod-blind">요즘뜨는 드라마 마음껏 즐기기</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="more-link-area">
+                                    <a href="#" class="more"><span class="more-txt">테마 전체보기</span></a>
+                                </div>
+                            </div>
+                            <div class="banner-area shadow-box">
+                                <a href="#">
+                                    <img src="<%= CDN %>/img/product/v2/banner-temp.png" alt="요즘 인기 있는 휴대폰 확인해보시겠어요?">
+                                </a>
+                            </div>
+                        </div><!-- //pro-article -->
+                        <div class="pro-article variety-product-box">
+                            <div class="article-tit">SKT의 다양한 상품을 만나보세요</div>
+                            <div class="article-cont">
+                                <div class="tod-nmp-other-list">
+                                    <ul>
+                                        <li><a href="/product/mobileplan-add"><i class="p-icon30-service"></i> <em>부가서비스</em></a></li>
+                                        <li><a href="/product/wireplan"><i class="p-icon30-internet"></i> <em>인터넷/IPTV</em></a></li>
+                                        <li><a href="/product/combinations"><i class="p-icon30-plus"></i> <em>결합상품</em></a></li>
+                                        <li><a href="/product/roaming"><i class="p-icon30-roaming"></i> <em>T로밍</em></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+			</div>
+        </div>
+        <!--// #contents -->
+        <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </div>
+</body>
+
+<% include ../../../../components/javascript.component.html %>
+
+<script>
+    $(document).ready(function () {
+        // new Tw.ProductRenewalSubmain($('.wrap'), '<%= svcInfo ? svcInfo : "" %>', '<%= pageInfo.menuId ? pageInfo.menuId : "" %>');
+        new Tw.ProductRenewalSubmain($('.wrap'), '<%= svcInfo ? svcInfo : "" %>', '<%= pageInfo.menuId ? "M000367" : "" %>');
+    });
+</script>
+
+<% include ../../../../components/end.component.html %>
