@@ -4,14 +4,14 @@
         <!-- #skip_navigation -->
         <div id="skipNav" class="skip_navi">
             <ul>
-                <li><a href="#contents">Go to Main</a></li>
+                <li><a href="#contents-area">Skip to main contents</a></li>
             </ul>
         </div>
         <!--// #skip_navigation -->
         <div class="wrap">
             <%- include('../../../../../common_en/views/components/header.component.html', { title: 'Miri', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
             <div id="contents" class="container-wrap">
-                <h2 class="blind">contents</h2>
+                <h2 id="contents-area" tabindex="-1"><span class="blind">Main contents</span></h2>
                 <div class="container">
                     <!-- 상품타이틀 -->
                     <div class="cont-box nogaps-hoz productdetails-bg" style="background:#4564c2 url(<%=CDN%>/img/en/products/bg_miri.png) right 0.563rem bottom 2.5rem no-repeat; background-size:7.625rem 6.125rem;"><!-- 어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
