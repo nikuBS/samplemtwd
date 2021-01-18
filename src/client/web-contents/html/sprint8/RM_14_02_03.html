@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
@@ -21,18 +20,15 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+	<link rel="stylesheet" type="text/css" href="/css/roaming-next.css" media="all">
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
-    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
-
-
-<body>
+<body class="rm-content">
     <!-- Grand open 접근성 수정 -->
     <!-- #skip_navigation -->
     <!--<div id="skipNav" class="skip_navi">
@@ -44,38 +40,52 @@
     </div>-->
     <!--// #skip_navigation -->
     <!--// Grand open 접근성 수정 -->
-    <div class="wrap">
-        
+    <div class="wrap">        
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
-            <div class="container">
-                
+            <div class="container">                
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <h3 class="complete-title">
-                        <img src="/img/ico/icon-check01.png" alt=""/>
-                        <span>예약 신청이 정상적으로<br /><strong>완료되었습니다.</strong></span>
+                        <img src="/img/product/roam/rm-box-check.png" alt="">
+                        <span><strong>예약 신청이<br>완료되었습니다.</strong></span>
                     </h3>
-                    <p class="complete-error-tx pt32">
-                        <span class="tx2">신청하신 baro Box는 인천공항 2터미널 3층<br />로밍센터 (D-E 카운터)에서 수령하실 수 있습니다.</span>
-                    </p>
-                    <div class="mapimg-area pt40"><img src="/img/product/place-img-02-de.png" alt="인천공항 2터미널 3층 로밍 센터(D-E 카운터)"/></div><!--2019.03.21 이미지교체-->
-                    <div class="basic-text pt20">
-                    	<!-- 190701 삭제 -->
-                        <!--<p class="top-tx-s">baro Box를 사용할 기기의 데이터 사용요금이 발생되는 것을 방지하기 위해, 서비스 이용 전 데이터로밍 차단서비스 가입을 권장합니다.<br />(T로밍 &gt; T로밍 부가서비스 &gt; 데이터로밍무조건차단 가입)</p>-->
-                        <!-- // 190701 삭제 -->
+                    <div class="charge-guide-wrap top-line pt0 mt40">
+                        <ul id="fe-list" class="list-type">
+							<li>
+								<div class="basic-list">
+									<ul>
+										<li>
+											<span class="title gray">방문 국가</span>
+											<span class="tx-cont">핀란드</span>
+										</li>
+										<li>
+											<span class="title gray">임대 기간</span>
+											<span class="tx-cont">2020.11.07 ~ 2020.11.07</span>
+										</li>
+										<li>
+											<span class="title gray">수령 장소</span>
+											<span class="tx-cont">인천공항 1터미널 3층 T로밍센터(F 카운터)</span>
+										</li>										
+									</ul>
+								</div>								
+							</li>
+						</ul>
                     </div>
-                    <ul class="bt-slice mt30">
-                        <li class="bt-white2">
+                    <div class="mapimg-area pt0">
+						<img src="/img/product/place-img-02-de.png" alt="인천공항 2터미널 3층  T로밍센터(D-E 카운터)">
+						<p class="rm-tx-hour"><strong>업무시간</strong> | 9-10 출구 : 오전 6시 ~ 오후 10시</p>
+					</div>
+                    <ul class="bt-slice mt20">
+                        <li class="bt-roaming1">
                             <button>baro Box 예약 리스트 가기</button>
                         </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
-
                 <ul class="bt-slice full">
-                    <li class="bt-red1">
+                    <li class="bt-roaming2">
                         <button>확인</button>
                     </li>
                 </ul>
@@ -84,5 +94,4 @@
         <!--// #contents -->
     </div>
 </body>
-
 </html>
