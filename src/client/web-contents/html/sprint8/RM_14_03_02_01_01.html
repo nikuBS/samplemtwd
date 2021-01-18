@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+	<link rel="stylesheet" type="text/css" href="/css/roaming-next.css" media="all">
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
@@ -27,7 +28,7 @@
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
-<body>
+<body class="rm-content">
     <!-- Grand open 접근성 수정 -->
     <!-- #skip_navigation -->
     <!--<div id="skipNav" class="skip_navi">
@@ -46,7 +47,7 @@
             <div class="header-wrap">
                 <div class="page-header">
                     <div class="header-ti">
-                        <h1>baro Box 예약정보</h1>
+                        <h1>baro Box 예약 정보</h1>
                     </div>
                 </div>
             </div>
@@ -55,23 +56,19 @@
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
-
-                    <div class="ti-caption-gray">
-                        <h3 class="tit">예약정보 입력</h3>
-                        <span class="num tx-red" id="aria-required-01">* 필수</span>
-                    </div>
                     <!-- .cont-box -->
                     <div class="cont-box">
-
+						<p class="tx-red tr fs12">* 필수</p>
+						<h3 class="rm-barobox-tit">예약 정보 입력 <sup class="tx-red fs13">* <span class="blind">필수입력</span></sup></h3>			
                         <ul class="form-data-list">
                             <li>
-                                <span class="tit pt0">방문국가<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></span>
-                                <div class="basic-text border">
-                                    <span class="top-tx-m">사우디아라비아, 남아프리카공화국, 리히텐슈타인, 아랍에미리트, 푸에르토리코<span>
+                                <span class="tit tod-txcolor4">방문국가</span>
+                                <div class="basic-text">
+                                    <span class="fs14 tod-txcolor4">사우디아라비아, 남아프리카공화국, 리히텐슈타인, 아랍에미리트, 푸에르토리코<span>
                                 </div>
                             </li>
                             <li>
-                                <label class="tit" for="flab01">국내 연락번호<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                                <label class="tit" for="flab01">국내 연락 번호 (휴대폰 번호)<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                                 <div class="inputbox">
                                     <span class="input">
                                         <input id="flab01" type="number" value="01012342134" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력">
@@ -93,40 +90,33 @@
                             </li>
                             <li>
                                 <label class="tit" for="flab04">수령 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
-                                <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 2터미널 3층 로밍 센터(D-E 카운터)<span class="ico"></span></button>
-                                <!-- 200519 로밍 센터 운영 중단 관련 수정  [OP002-8458] -->
+                                <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 2터미널 3층 T로밍센터(D-E 카운터)<span class="ico"></span></button>
                                 <div class="mapimg-area pt10">
-                                	<img src="/img/product/place-img-01-f.png" alt="인천공항 1터미널 3층 로밍 센터(F 카운터)"><!-- 200702 수정 [OP002-9346] -->
-                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 06:00 ~ 22:00</p>                                
+                                	<img src="/img/product/place-img-01-f.png" alt="인천공항 1터미널 3층 T로밍 센터(F 카운터)">
+                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 오전 6시 ~ 오후 10시</p>                                
                                 </div>
                                 <div class="mapimg-area pt10">
-                                	<img src="/img/product/place-img-02-de.png" alt="인천공항 2터미널 3층 로밍센터(D-E 카운터)">
-                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 06:00 ~ 22:00</p>                                
+                                	<img src="/img/product/place-img-02-de.png" alt="인천공항 2터미널 3층 T로밍센터(D-E 카운터)">
+                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 오전 6시 ~ 오후 10시</p>                                
                                 </div>                                
-                                <!-- // 200519 로밍 센터 운영 중단 관련 수정  [OP002-8458] -->
                             </li>
                             <li>
                                 <label class="tit" for="flab05">반납 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
-                                <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true">인천공항 1터미널 1층 로밍센터<span class="ico"></span></button>
-                                <!-- 200519 로밍 센터 운영 중단 관련 수정  [OP002-8458] -->
+                                <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true">인천공항 1터미널 1층 T로밍센터<span class="ico"></span></button>
                                 <div class="mapimg-area pt10">
-                                	<img src="/img/product/place-img-01-1.png" alt="인천공항 1터미널 1층 로밍센터">
-                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00</p>                                
+                                	<img src="/img/product/place-img-01-1.png" alt="인천공항 1터미널 1층 T로밍센터">
+                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 9-10 출구 : 오전 6시 ~ 오후 10시</p>                                
                                 </div>
-                                <!-- 201230 수정 [OP002-12495] -->
                                 <div class="mapimg-area pt10">
-                                	<img src="/img/product/place-img-02-east.png" alt="인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터">
-                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 24시간</p>                                
+                                	<img src="/img/product/place-img-02-1.png" alt="인천공항 2터미널 1층 T로밍센터">
+                                	<p class="rm-tx-hour"><strong>업무시간</strong> | 2-3 출구 : 오전 6시 ~ 오후 10시</p>                                
                                 </div>
-                                <!-- // 201230 수정 [OP002-12495] -->
-                                <!-- 200519 로밍 센터 운영 중단 관련 수정  [OP002-8458] -->
                             </li>
-                        </ul>
-                        
+                        </ul>                        
                         <div class="announcement-box mt20">
-                            <p class="announcement-bullet type01">청구기준은 한국시간 기준으로 임대일로부터 반납일까지 입니다.</p><!-- 191213 수정 [OP002-5828] -->
-                            <p class="announcement-bullet type01">대구 SKT 황금점 매장은 매주 일요일 휴무이므로 임대 시작일/반납일자가 일요일인 경우 다른 장소를 선택해주시길 바랍니다.</p>
-                            <p class="announcement-bullet type01">로밍 센터별 근무시간이 상이하므로 사전에 업무시간을 확인하신 후 방문하셔야 합니다. <button class="bt-link-tx underline block">업무시간 상세보기</button></p>
+                            <p class="announcement-bullet type01">요금 청구 기간은 한국 시간 기준으로 임대일로부터 반납일까지입니다.</p>
+                            <p class="announcement-bullet type01">대구 가야대리점 황금점은 매주 일요일이 휴무입니다. 임대 시작/반납 일자가 일요일인 경우 다른 장소를 선택해 주시기 바랍니다.</p>
+                            <p class="announcement-bullet type01">T로밍센터별 업무 및 운영 시간이 다르므로 미리 확인하신 후 방문하셔야 합니다. <button class="bt-link-tx underline block mt0">업무 시간 자세히 보기</button></p>
                         </div>
                     </div>
                     <!--// .cont-box -->
@@ -134,20 +124,19 @@
                     <hr class="cont-sp type1" aria-hidden="true"/>
                 
                     <!-- .cont-box -->
-                    <div class="cont-box nogaps-btm">
+                    <div class="cont-box rm-cont-tooltip">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <!-- Grand open 접근성 수정 -->
                         <ul class="noti-list02">
-                            <li><button aria-haspopup="true" class="tip-view-btn">예약 확인사항<span class="tip-view">TIP</span></button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn">예약 확인 사항<span class="tip-view">TIP</span></button></li>
                         </ul>
                         <!--// Grand open 접근성 수정 -->
                     </div>
                     <!--// .cont-box -->
                 </div>
-                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
-                        <li class="bt-red1">
+                        <li class="bt-roaming2">
                             <button>예약 수정</button>
                         </li>
                     </ul>

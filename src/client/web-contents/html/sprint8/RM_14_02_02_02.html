@@ -29,24 +29,29 @@
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
 <body class="rm-content">
-    <!-- Grand open 접근성 수정 -->  
+    <!-- Grand open 접근성 수정 -->
     <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
-    </div>
+    </div>-->
     <!--// #skip_navigation -->
-    <!--// Grand open 접근성 수정 -->  
+    <!--// Grand open 접근성 수정 -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <div class="popup-page nobg tw-popup fixed-bottom txt-screed">
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
                     <div class="header-ti">
-                        <h1>baro Box 조회/취소</h1>
+                        <h1>baro Box 예약</h1>
                     </div>
+					<div class="header-mask">            
+						<button type="button" class="btn-mask fe-bt-masking"><span class="blind">개인정보 보호모드 마스킹 해제하기</span></button>
+					</div>
                 </div>
             </div>
             <!--// #header -->
@@ -54,16 +59,9 @@
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
-					<hr class="cont-sp type1" aria-hidden="true">
                     <!-- .cont-box -->
-                    <div class="cont-box">
-						<div class="basic-text">
-                            <span class="top-tx fs13">고객님이 예약하신 baro Box 또는 로밍폰 예약 정보를 <span>조회</span>하고 <span>취소</span>하실 수 있습니다.</span>
-						</div>
-					</div>
-					<hr class="cont-sp type1" aria-hidden="true">
-					<!-- .cont-box -->
-                    <div class="cont-box">
+					<hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="cont-box noborder">
                         <div class="charge-guide-wrap">
                             <div class="charge-cont">
                                 <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
@@ -75,37 +73,49 @@
                             </div>
                         </div>
                     </div>
+                    <hr class="cont-sp type1" aria-hidden="true"/>
                     <!--// .cont-box -->
-                    <hr class="cont-sp type1" aria-hidden="true">
+                    <div class="cont-box noborder nogaps">
+						<!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box step">
+                                <h3 class="step-ti"><em>STEP 2</em>임대 기간</h3>
+                                <ul class="step-list">
+                                    <li>1<span class="blind">방문 국가 STEP 1</span></li>
+                                    <li class="on">2<span class="blind">임대 기간 STEP 2</span></li>
+									<li>3<span class="blind">T로밍센터 장소 / 국내 연락 번호 STEP 3</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //.widget -->                       
+                    </div>
                     <!-- .cont-box -->
-					<div id="fe-certbox" class="cont-box rm-box-cert">
-						<h3>휴대폰 인증이 완료되면<br>바로 <span>조회</span>하실 수 있습니다.</h3>
-						<div class="cont-noti pt18">
-							<span class="type3">고객님의 소중한 개인정보 보호를 위해<br> 본인인증 후 서비스를 이용하실 수 있습니다.</span>
-						</div>
-						<ul class="rm-box-cert-proc mt28">
-							<li class="fs12">본인인증</li>
-							<li class="fs12">조회/취소</li>
-						</ul>
-						<ul class="bt-slice mt30">
-							<li class="bt-roaming2">
-								<button id="fe-cert">인증하기</button>
-							</li>
+                    <div class="cont-box noborder">                        
+						<p class="tx-red tr fs12">* 필수</p>
+						<h3 class="rm-barobox-tit">임대 기간 선택 <sup class="tx-red fs13">* <span class="blind">필수입력</span></sup></h3>				
+						<ul class="form-data-list pt20">
+							<li>
+                                <label class="tit block" for="flab02">임대 시작 일자<span class="fs12 rm-fr">※ 2일 후부터 예약하실 수 있습니다.</span></label>
+                                <div class="inputbox date-selcet mt0">
+                                    <span class="date-type full"><input id="flab02" type="date" value="2018-08-29" min="2000-01-01" max="2018-12-31" title="임대시작 일자 선택"></span>
+                                </div>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab03">반납 일자</label>
+                                <div class="inputbox date-selcet mt0">
+                                    <span class="date-type full"><input id="flab03" type="date" value="2018-09-09" min="2000-01-01" max="2018-12-31" title="반납 일자 선택"></span>
+                                </div>
+                            </li>
 						</ul>
 					</div>
                     <!--// .cont-box -->
-                    <hr class="cont-sp type1" aria-hidden="true">                
-                    <!-- .cont-box -->
-                    <div class="cont-box rm-cont-tooltip">
-                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <!-- Grand open 접근성 수정 -->
-                        <ul class="noti-list02">
-                            <li><button id="RM_14_03_01_tip_01" aria-haspopup="true" class="tip-view-btn">조회/취소 확인 사항<span class="tip-view">TIP</span></button></li>
-                        </ul>
-                        <!--// Grand open 접근성 수정 -->
-                    </div>
-                    <!--// .cont-box -->
-
+                </div>
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-roaming2">
+                            <button disabled>다음</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!--// .container-wrap -->
