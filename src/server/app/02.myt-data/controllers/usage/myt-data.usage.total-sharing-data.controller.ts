@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import MyTHelper from '../../../../utils/myt.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_DATA_USAGE_TOTAL_SHARING_DATA } from '../../../../types/string.type';
+import {REDIS_KEY} from '../../../../types/redis.type';
 
 class MyTDataUsageTotalSharingData extends TwViewController {
 
@@ -21,11 +22,17 @@ class MyTDataUsageTotalSharingData extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const getDeductionProdIdsInfo = {
+      res, svcInfo, pageInfo,
+      countProperty: REDIS_KEY.DATA_DEDUCTION_COUNT,
+      targetProperty: REDIS_KEY.DATA_DEDUCTION_PRODUCTS
+    };
     Observable.combineLatest(
+      this.getEnvironmentCountData(getDeductionProdIdsInfo),
       this.reqBalances(),
       this.reqBalanceAddOns()
       // this.getProductGroup() OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
-    ).subscribe(([_balancesResp, balanceAddOnsResp/*, prodList*/]) => {
+    ).subscribe(([_balancesResp, balanceAddOnsResp, deductionIds]) => {
       const balancesResp = JSON.parse(JSON.stringify(_balancesResp));
       const apiError = this.error.apiError([
         balancesResp, balanceAddOnsResp
@@ -35,7 +42,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
         return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
-      const usageData = MyTHelper.parseCellPhoneUsageData(balancesResp.result, svcInfo);
+      const usageData = MyTHelper.parseCellPhoneUsageData(balancesResp.result, svcInfo, deductionIds);
       let defaultData;
 
       if (usageData.hasDefaultData) {

@@ -22,6 +22,7 @@ import {
 } from '../../../../types/bff.type';
 // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
 import CommonHelper from '../../../../utils/common.helper';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 const TEMPLATE = {
   CIRCLE: 'usage/myt-data.hotdata.html',    // 휴대폰
@@ -36,9 +37,11 @@ const TEMPLATE = {
  * @param pageInfo
  * @param usageDataResp
  * @param extraDataResp?
+ * @param deductionProdIds
  * @private
  */
-function _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extraDataResp?: any) {
+function _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any,
+                 extraDataResp?: any, deductionProdIds?: any) {
   const result = usageDataResp.result;
   let template;
   const option = {
@@ -53,7 +56,7 @@ function _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extr
   switch ( svcInfo.svcAttrCd ) {
     // 휴대폰
     case SVC_ATTR_E.MOBILE_PHONE:
-      option['usageData'] = MyTHelper.parseCellPhoneUsageData(result, svcInfo);
+      option['usageData'] = MyTHelper.parseCellPhoneUsageData(result, svcInfo, deductionProdIds);
       if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
         option['balanceAddOns'] = extraDataResp['result'];
       }
@@ -137,8 +140,15 @@ class MyTDataHotdata extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
     CommonHelper.addCurLineInfo(svcInfo);
-    // TODO: request를 1번만 할 것이므로, "Observable.combineLatest"일 필요 없음
-    Observable.combineLatest(this.reqBalances()).subscribe(([respBalances]) => {
+    const getDeductionProdIdsInfo = {
+      res, svcInfo, pageInfo,
+      countProperty: REDIS_KEY.DATA_DEDUCTION_COUNT,
+      targetProperty: REDIS_KEY.DATA_DEDUCTION_PRODUCTS
+    };
+    Observable.combineLatest(
+        this.getEnvironmentCountData(getDeductionProdIdsInfo),
+        this.reqBalances()
+    ).subscribe(([deductionProdIds, respBalances]) => {
       const respUsedData = JSON.parse(JSON.stringify(respBalances));
       if ( respUsedData.code === API_CODE.CODE_00 ) {
         // [OP002-3871] 5GX 항목은 범융 별도 항목으로 추출
@@ -179,17 +189,17 @@ class MyTDataHotdata extends TwViewController {
           if ( reqExtraData ) {
             // TODO: request를 1번만 할 것이므로, "Observable.combineLatest"일 필요 없음
             Observable.combineLatest(reqExtraData).subscribe(([respExtraData]) => {
-              _render(res, svcInfo, pageInfo, respUsedData, respExtraData);
+              _render(res, svcInfo, pageInfo, respUsedData, respExtraData, deductionProdIds);
             }, () => {
-              _render(res, svcInfo, pageInfo, respUsedData);
+              _render(res, svcInfo, pageInfo, respUsedData, null, deductionProdIds);
             });
           } else {
-            _render(res, svcInfo, pageInfo, respUsedData);
+            _render(res, svcInfo, pageInfo, respUsedData, null, deductionProdIds);
           }
         } else {
           // 집전화 정액제 상품을 제외하고 에러처리
           if ( svcInfo.svcAttrCd === 'S3' && S_FLAT_RATE_PROD_ID.indexOf(svcInfo.prodId) > -1 ) {
-            _render(res, svcInfo, pageInfo, respUsedData);
+            _render(res, svcInfo, pageInfo, respUsedData, null, deductionProdIds);
           } else {
             _renderError(res, svcInfo, pageInfo, {
               code: 'BLN0004'

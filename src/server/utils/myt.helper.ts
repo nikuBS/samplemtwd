@@ -118,15 +118,18 @@ class MyTHelper {
    * 사용량 데이터 가공(휴대폰)
    * @param usageData
    * @param svcInfo
+   * @param deductionIds
    * @public
    */
-  static parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
+  static parseCellPhoneUsageData(usageData: any, svcInfo: any, deductionIds: any): any {
     // 범용 데이터 공제항목 (합산 가능한 공제항목)
     // [OP002-4864] 정액 요금제 '원' 단위 위젯 미표기
     // 특정 요금(팅PLUS14/19/24/29) etc로 넘어오는 부분이 gnrlData 바뀌어 넘어오게 되어 예외처리 추가
     const gnrlData = usageData.gnrlData ? usageData.gnrlData.filter(item => item.unit !== UNIT_E.FEE) : [];
     const data5gx = usageData._5gxData || [];   // 5GX 시간권/장소권 공제항목
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
+    const totalShareSkipIds = deductionIds && typeof deductionIds === 'string' ? deductionIds.split(',') : [];
+
     let ordered: Array<any> = [];
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
@@ -152,7 +155,7 @@ class MyTHelper {
 
     // if ( spclData ) {
     // 통합공유데이터
-    tOPlanSharedData = filterBySkipId(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
+    tOPlanSharedData = filterBySkipId(totalShareSkipIds, spclData) || {};
 
     // 통합공유데이터 제외한 데이터 배열 취합
     ordered = ordered.concat(spclData.filter(item => (item.skipId !== tOPlanSharedData.skipId)));
