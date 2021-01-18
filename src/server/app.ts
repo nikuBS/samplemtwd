@@ -66,9 +66,6 @@ import ErrorService_en from './services_en/error.service';
 module.exports = require('../../nodejs-exporter');
 
 const manifest = require('./manifest.json');
-//영문추가
-const manifest_en = require('./manifest_en.json');
-
 
 class App {
   public app: Application = express();
