@@ -133,6 +133,7 @@
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet{background:#f6f8fa; padding:3.75rem 1.875rem 2.5rem !important; position:relative; }
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet:before{content:''; display:inline-block; width:36px; height:4px; border-radius:5px; background:#d9d9d9; position:absolute; top:1rem; left:50%; margin-left:-1.125rem;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-tit{font-size:1.125rem; line-height:1.5rem; letter-spacing:-0.025rem; color:#222;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-tit-s {margin-top:0.25rem; font-size:0.875rem; letter-spacing: -0.4px; color:#585959}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info{margin-top:1.25rem; padding:1.25rem; font-size:0.8125rem; letter-spacing:-0.0313rem; line-height:1.125rem; background:#fff; border-radius:0.75rem }
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info .info-dt{color:#585959}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info .info-dt em{font-weight:500; color:#222; }
@@ -142,3 +143,30 @@
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn{display:inline-block; width:100%; height:2.875rem; border-radius:1.4375rem; font-size:0.8125rem; letter-spacing:-0.025rem;color:#222; text-align:center; line-height:2.875rem; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background: #f6f8fa; }
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn span{display:inline-block; padding-right:1rem; position:relative; }
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn span:after{content:''; display:inline-block; width:0.625rem; height:0.625rem; position:absolute; right:0; top:50%; margin-top:-0.3125rem; background:url('/img/product/v2/pro-arr.svg') no-repeat left top; }
+
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box {margin-top:1rem; padding:1.25rem; font-size:0.6875rem; color:#585959; background: #efeff1; box-shadow: inset -1px -1px 1px 0 #ffffff, inset 1px 1px 3px 0 #c8c9cb; border-radius: 12px;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-tit:nth-of-type(n+2) {margin-top:0.5rem}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-list {margin-top:0.5rem}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-list li {position: relative; padding-left:0.5rem;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-list li:nth-child(n+2) {margin-top:0.5rem;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-list li::before {content:""; display:inline-block; position:absolute; left:0; top:6px; width:3px; height:3px; border-radius: 100%; background-color:#767778}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .tod-nmp-btn-wrap {margin-top:1.25rem}
+
+/* 210118 개인정보 동의 */
+.tod-renewalBody .product-sec .agree-info-box {padding:1.25rem 1.25rem 0.9375rem; border-radius: 12px; box-shadow: -2px -2px 2px 0 #FFFFFF, 4px 7px 10px 0 #DDE0E2, -4px -6px 10px 0 #FFFFFF; background: #F6F8FA;}
+.tod-renewalBody .product-sec .agree-info-box .agr-txt {text-align:center; font-size:0.875rem; font-weight: 300; color:#222222;}
+.tod-renewalBody .product-sec .agree-info-box .agr-area {display:flex; justify-content: space-between; align-items: center; margin-top:1.0625rem; border-top:1px solid #e1e3e4; padding-top:1.25rem; color:#222222}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .agr-left .bt-detail {display:inline-block; font-size:0.75rem; color:#767778; letter-spacing: -0.6px; text-decoration: underline;}
+
+/* 스위치형 커스텀 */
+.tod-renewalBody .product-sec .agree-info-box .agr-area .on-off-list.new li {min-height:auto; padding:0 !important; font-size:0.0625rem}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .on-off-list.new .btn-switch {position:relative; top:0; vertical-align: middle;}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .on-off-list.new .btn-switch.type1 {width:2.25rem;; height:1.25rem}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .on-off-list.new .btn-switch.type1:before {width:2.25rem; height:1.25rem; background-color: #d6d7d8;}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .on-off-list.new .btn-switch.type1 .switch-style:after {top:2px; left:2px; width:16px; height:16px;}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .on-off-list.new .btn-switch .switch-style > span {width:auto; height:auto; line-height:1}
+
+
+
+
+
