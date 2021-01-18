@@ -19,11 +19,11 @@
 
 
 /* ========== 버튼 ========== */
-.tod-nmp-btn32 {display:inline-block; height:2rem; line-height:2rem; padding:0 0.875rem; font-size: 0.75rem; letter-spacing: -1px; border-radius: 16px; color: #222222; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;  background-color: #f6f8fa;}
+.tod-nmp-btn32 {display:inline-block; height:2rem; line-height:2rem; padding:0 0.875rem; text-align:center; font-size: 0.75rem; letter-spacing: -1px; border-radius: 16px; color: #222222; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;  background-color: #f6f8fa;}
 .tod-nmp-btn32.arr::after {content:""; display:inline-block; width:10px; height:10px; margin-left:4px; vertical-align: middle; background:url('/img/product/v2/pro-arr.svg') no-repeat 0 0;}
 .tod-nmp-btn32.style2 {color:#f9614d}
 
-.tod-nmp-btn46 {display:inline-block; height:2.875rem; line-height:2.875rem; padding:0 0.875rem; font-size: 0.8125rem; letter-spacing: -1px; border-radius: 23px; color: #222222; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;  background-color: #f6f8fa;}
+.tod-nmp-btn46 {display:inline-block; height:2.875rem; line-height:2.875rem; padding:0 0.875rem; text-align:center; font-size: 0.8125rem; letter-spacing: -1px; border-radius: 23px; color: #222222; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;  background-color: #f6f8fa;}
 .tod-nmp-btn46.arr::after {content:""; display:inline-block; width:10px; height:10px; margin-left:4px; vertical-align: middle; background:url('/img/product/v2/pro-arr.svg') no-repeat 0 0;}
 .tod-nmp-btn46.style2 {color:#f9614d}
 
@@ -267,5 +267,6 @@
 .tod-nmp-comp-header .comp-inner .price {font-size:1rem; font-weight:bold; color:#222222; letter-spacing: -0.11px;}
 .tod-nmp-comp-header .comp-inner .price small {font-size:12color:#222222}
 
-
-
+/* 210118 동의여부 Toast 팝업 */
+.toast-popup.tod-nmp-toast .toast-layer {border-radius: 30px; background-color:#f6f8fa}
+.toast-popup.tod-nmp-toast .toast-layer .toast-txt {font-size:0.8125rem; line-height:1.125rem; color:#585959}
