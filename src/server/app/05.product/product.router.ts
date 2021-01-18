@@ -7,9 +7,6 @@ import ProductCommonLineChange from './controllers/common/product.common.line-ch
 import ProductApps from './controllers/apps/product.apps.controller';
 import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
 
-import RenewalProduct from './controllers/mobileplan/product.renewal.mobileplan.controller';
-import RenewalProductPlans from './controllers/mobileplan/product.renewal.mobileplan.list.controller';
-
 import Product from './controllers/mobileplan/product.mobileplan.controller';
 import ProductPlans from './controllers/mobileplan/product.mobileplan.list.controller';
 import ProductMobileplanFind from './controllers/mobileplan/product.mobileplan.find.controller';
@@ -138,9 +135,6 @@ import {
 class ProductRouter extends TwRouter {
   constructor() {
     super();
-
-    this.controllers.push({ url: '/renewal/mobileplan', controller: RenewalProduct });
-    this.controllers.push({ url: '/renewal/mobileplan/list', controller: RenewalProductPlans });
 
     this.controllers.push({ url: '/mobileplan', controller: Product });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
