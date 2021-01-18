@@ -207,7 +207,7 @@ Tw.CustomerAgentsearchComponent.prototype = {
       url += Tw.OUTLINK.T_SHOP.RESERVE;
       item.url = Tw.StringHelper.stringf(url, this._svcInfo.userId, this._svcInfo.svcMgmtNum, item.locCode);
     } else if (''+item.agnYn === 'Y') { // 지점이면
-      item.url = decodeURIComponent(Tw.OUTLINK.BRANCH_RERSERVE + item.storeName);
+      item.url = undefined; //decodeURIComponent(Tw.OUTLINK.BRANCH_RERSERVE + item.storeName);
       item.charge = true; // 과금팝업 띄우기
     }
     // 티샵 예약 or 일반 지점 예약 가능 여부
