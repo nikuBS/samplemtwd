@@ -911,7 +911,7 @@ Tw.ProductCommonCallplan.prototype = {
 
     //베너 상세 콘텐츠 팝업 실행
     //ix =0 : 가입/해지,  1:해지 유의사항,  2: 이용 요금 안내
-    var ix = $("[data-banner_Index]").attr('data-banner_Index');
+    var ix = $("[data-banner_Index]").attr('data-banner_Index')-1;
     this._popupService.open({
       hbs: 'MP_02_02_06',
       layer: true,
