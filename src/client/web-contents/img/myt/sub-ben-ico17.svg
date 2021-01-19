@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Slice</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/16/공인인증서" stroke="#000000" transform="translate(2.000000, 2.000000)">
+            <line x1="5.60672157" y1="2.5358" x2="2.40672157" y2="2.5358" id="Stroke-3" stroke-linecap="round"></line>
+            <line x1="4.40702157" y1="4.5358" x2="2.40702157" y2="4.5358" id="Stroke-4" stroke-linecap="round"></line>
+            <g id="Group-13">
+                <path d="M10.3362,4.9274 L10.3362,0.752 C10.3362,0.337 9.9782,3.90798505e-14 9.5362,3.90798505e-14 L1.1362,3.90798505e-14 C0.6942,3.90798505e-14 0.3362,0.337 0.3362,0.752 L0.3362,10.7844 C0.3362,11.1994 0.6942,11.5354 1.1362,11.5354 L6.4732,11.5354" id="Stroke-5"></path>
+                <path d="M11.827,12.5387 L6.846,12.5387 C6.571,12.5387 6.347,12.3147 6.347,12.0407 L6.347,8.0557 C6.347,7.7817 6.571,7.5577 6.846,7.5577 L11.827,7.5577 C12.101,7.5577 12.325,7.7817 12.325,8.0557 L12.325,12.0407 C12.325,12.3147 12.101,12.5387 11.827,12.5387 Z" id="Stroke-7" stroke-linejoin="round"></path>
+                <path d="M7.7171,7.5573 L7.7171,6.2403 C7.7171,5.3173 8.4421,4.5683 9.3361,4.5683 C10.2301,4.5683 10.9551,5.3173 10.9551,6.2403 L10.9551,7.5573" id="Stroke-9"></path>
+                <line x1="9.3362" y1="9.6745" x2="9.3362" y2="10.4225" id="Stroke-11" stroke-linecap="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

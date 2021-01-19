@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Slice</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/16/회원정보">
+            <polygon id="Fill-1" fill="#FFFFFF" points="0 16 16 16 16 0 0 0"></polygon>
+            <path d="M7.99995605,2 C11.3136075,2 14.0004,4.68590455 14.0004,7.99955605 C14.0004,11.3140954 11.3136075,14 7.99995605,14 C4.68630455,14 2.0004,11.3140954 2.0004,7.99955605 C2.0004,4.68590455 4.68630455,2 7.99995605,2 Z" id="Stroke-3" stroke="#000000"></path>
+            <path d="M7.9818,8.3158 C8.9268,8.3158 9.6938,7.5498 9.6938,6.6038 C9.6938,5.6588 8.9268,4.8928 7.9818,4.8928 C7.0368,4.8928 6.2708,5.6588 6.2708,6.6038 C6.2708,7.5498 7.0368,8.3158 7.9818,8.3158 Z" id="Stroke-5" stroke="#000000" stroke-linecap="round"></path>
+            <path d="M10.5497,10.8836 C10.5497,9.4656 9.3997,8.3156 7.9817,8.3156 C6.5647,8.3156 5.4147,9.4656 5.4147,10.8836" id="Stroke-7" stroke="#000000" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>

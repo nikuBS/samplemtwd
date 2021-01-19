@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+	<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+	<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+	
+	<link rel="stylesheet" type="text/css" href="/css/submain.css" media="all" />
+	
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+
+<body class="tod-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+		<!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">나의 가입정보</div> <!-- 201222 [OP002-10282]수정01 -->
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+		<!-- #contents -->
+        <div id="contents" class="container-wrap">
+			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container tod-submain">
+				<div class="tod-line-sel-wrap"> <!-- show 추가 -->
+					<a href="#" class="sel-show-btn" aria-controls="different-line" aria-expanded="false"><!-- aria-expanded는 하위 컨텐츠가 닫혀 있을 경우 false 열려 있을 경우 true -->
+						<div class="sel-show">
+							<div class="line-info">
+								<i class="type-ico"><img src="/img/myt/sel-mobile-ico-white.svg" alt=""></i>
+								<span class="type">휴대폰</span>
+								<span class="type-info">010-50**-13**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-tablet-ico-white.svg" alt=""></i>
+								<span class="type">태블릿</span>
+								<span class="type-info">070-94**-04**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-tv-ico-white.svg" alt=""></i>
+								<span class="type">IPTV</span>
+								<span class="type-info">세종시 ********</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-tel-ico-white.svg" alt=""></i>
+								<span class="type">집전화</span>
+								<span class="type-info">010-50**-13**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-wifi-ico-white.svg" alt=""></i>
+								<span class="type">T Pocket-Fi</span>
+								<span class="type-info">070-94**-04**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-internet-ico-white.svg" alt=""></i>
+								<span class="type">인터넷</span>
+								<span class="type-info">세종시 ********</span>
+							</div>
+							<span class="sel-line-btn"> 
+								<i class="sel-ico"></i><span class="btn-txt">다른 회선 조회</span>
+								<!-- 닫힘 -->
+							</span>
+						</div>
+					</a>
+					<!-- 공통화일 참조 -->
+				</div>
+                <div class="word-bubble-wrap" style="display:none" > 
+					<div class="word-bubble">
+						<div class="word-inner">
+							<p class="word">다른 회선을 조회하실 수 있어요</p>
+							<button type="button" class="close-btn"><span class="tod-blind">닫기</span><span class="cross"></span></button>
+						</div>
+					</div>
+				</div>
+				<!-- 201207 [OP002-10282] 수정01 : 텍스트 수정-->
+                <section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit high">
+							<a href="#" class="link">기본 가입정보</a>
+						</div>
+						<div class="card-cont">
+							<div class="rough-info">
+								<div class="rough-info-inner">
+									<div class="ico-wrap">
+										<span class="ico-figure">
+											<span class="ico">
+												<span class="ico-img"><img src="/img/myt/sel-mobile-ico-black.svg" alt="휴대폰"></span>
+											</span>
+											<span class="ico" style="display:none">
+												<span class="ico-img"><img src="/img/myt/sel-tablet-ico-black.svg" alt="태블릿"></span>
+											</span>
+											<span class="ico" style="display:none">
+												<span class="ico-img"><img src="/img/myt/sel-tel-ico-black.svg" alt="전화"></span>
+											</span>
+											<span class="ico" style="display:none">
+												<span class="ico-img"><img src="/img/myt/sel-tv-ico-black.svg" alt="IP TV"></span>
+											</span>
+											<span class="ico" style="display:none">
+												<span class="ico-img"><img src="/img/myt/sel-wifi-ico-black.svg" alt="wifi"></span>
+											</span>
+										</span>
+										<p class="model">Galaxy S20 Ultra</p>
+									</div>
+									<div class="list-wrap">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">가입상태</dt>
+													<dd class="report-cont">이용 중</dd>
+												</dl>
+											</li>
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">최종 개통 유형</dt>
+													<dd class="report-cont">기기변경</dd>
+												</dl>
+											</li>
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">최종 개통 일자</dt>
+													<dd class="report-cont">****.**.**</dd>
+												</dl>
+											</li>
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">최종 가입점</dt>
+													<dd class="report-cont">****리점 청라점</dd> <!-- 210105 [OP002-10282] 수정01 -->
+												</dl>
+											</li>
+										</ul>
+										<!-- <p class="warning">2007년 3월 1일 이전 가입 고객은 지점/대리점에서 확인 가능합니다.</p> -->
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- //201207 [OP002-10282] 수정01-->
+				<!-- 201207 [OP002-10282] 수정02 : 텍스트 수정-->
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit"><a href="#" class="link">약정할인/기기상환 정보</a></div>
+						<div class="card-cont">
+							<div class="hoz-group-wrap">
+								<div class="small-group-wrap">
+									<p class="card-sub-tit">기기 할부정보</p>
+									<ul class="report-list item-no-border smaller">
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">남은 할부</dt>
+												<dd class="report-cont">10개월</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">남은 할부 금액</dt>
+												<dd class="report-cont">1,564,624원</dd>
+											</dl>
+										</li>
+									</ul>
+								</div> 
+								<div class="small-group-wrap">
+									<p class="card-sub-tit">요금 약정 할인</p>
+									<div class="horizon-bar-wrap small">
+										<div class="horizon-bar">
+											<span class="data" style="width:70%"> 
+												<span class="bar"></span>
+												<span class="bar-bubble">74일 남음</span> <!-- 201201 [OP002-10282] 수정01: bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+											</span>
+										</div>
+										<!-- 210105 [OP002-10282] 수정02 -->
+										<div class="data-date">
+											<span class="start-date">
+												<span class="day-dec">약정시작일</span>
+												2020.7.27.
+											</span>
+											<span class="end-date">
+												<span class="day-dec">약정종료일</span>
+												2021.5.24.
+											</span>
+										</div>
+										<!-- //210105 [OP002-10282] 수정02 -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- //201207 [OP002-10282] 수정02-->
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit"><a href="#" class="link">나의 요금제/부가상품</a></div><!-- 201222 [OP002-10282]수정02 -->
+						<div class="card-cont">
+							<dl class="using-plan">
+								<dt class="plan-tit">표준 요금제</dt>
+								<dd class="plan-info">
+									<ul class="report-list small"> 
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">신청일</dt>
+												<dd class="report-cont">2020.6.5.</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">월정액</dt>
+												<dd class="report-cont">89,000원</dd>
+											</dl>
+										</li>
+									</ul>
+								</dd>
+							</dl>
+							<div class="add-pro-wrap">
+								<ul class="add-pro-list">
+									<li class="add-pro-item">
+										<a href="#">
+											<div class="number"> 
+												8<span class="unit">개</span>
+											</div>
+											<div class="service-name">무료<br>부가서비스</div>
+										</a>
+									</li>
+									<li class="add-pro-item">
+										<a href="#">
+											<div class="number"> 
+												3<span class="unit">개</span>
+											</div>
+											<div class="service-name">유료<br>부가서비스</div>
+										</a>
+									</li>
+									<li class="add-pro-item">
+										<a href="#">
+											<div class="number"> 
+												0<span class="unit">개</span>
+											</div>
+											<div class="service-name">옵션 / 할인<br>프로그램</div>
+										</a>
+									</li>
+									<li class="add-pro-item">
+										<a href="#">
+											<div class="number"> 
+												2<span class="unit">개</span>
+											</div>
+											<div class="service-name">결합상품</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit"><a href="#" class="link">나의 혜택/할인</a></div>
+						<div class="card-cont">
+							<ul class="ico-list">
+								<li class="item">
+									<a href="#">
+										<div class="ico-item">
+											<i class="ico"><img src="/img/myt/submain-ico11.svg" alt=""></i>
+											<div class="list-txt">
+												<span class="item-sub-txt">멤버십 등급</span>
+												<span class="item-tit">VIP</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="item">
+									<a href="#">
+										<div class="ico-item">
+											<i class="ico"><img src="/img/myt/submain-ico12.svg" alt=""></i>
+											<div class="list-txt">
+												<span class="item-sub-txt">연간 누적 혜택</span>
+												<span class="item-tit">-</span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="item">
+									<a href="#">
+										<div class="ico-item">
+											<i class="ico"><img src="/img/myt/submain-ico13.svg" alt=""></i>
+											<div class="list-txt">
+												<span class="item-sub-txt">혜택 / 할인</span>
+												<span class="item-tit">4건</span>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit"><a href="#" class="link">납부/청구 정보</a></div> <!-- 201207 [OP002-10282] 수정04 : 텍스트 수정-->
+						<div class="card-cont">
+							<ul class="report-list">
+								<li class="report-item">
+									<dl class="report-define d-wrap">
+										<dt class="report-tit">8월 청구 요금 <span class="report-sub">2020.7.1. ~ 2020.7.31.</span></dt> <!-- 201207 [OP002-10282] 수정05 : 텍스트 수정-->
+										<dd class="report-cont">80,990원</dd>
+									</dl>
+								</li>
+							</ul>
+							<div class="pay-info-wrap">
+								<ul class="ico-list horizontal">
+									<li class="item">
+										<a href="#">
+											<div class="ico-item">
+												<i class="ico"><img src="/img/myt/submain-ico14.svg" alt=""></i>
+												<div class="list-txt">
+													<span class="item-sub-txt">요금안내서 설정</span>
+													<span class="item-tit">Bill Letter</span>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li class="item">
+										<a href="#">
+											<div class="ico-item">
+												<i class="ico"><img src="/img/myt/submain-ico01.svg" alt=""></i>
+												<div class="list-txt">
+													<span class="item-sub-txt">납부방법</span>
+													<span class="item-tit">카드자동납부</span>
+												</div>
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- 201207 [OP002-10282] 수정06 : 텍스트 수정-->
+				<div class="submain-banner">
+					<a href="#">
+						<p class="banner-comment">
+							<strong>가입상담을 예약하시겠어요?</strong> 	 
+							<span class="bsub-txt">상담사가 직접 연락드립니다.</span>
+						</p>
+						<img src="/img/myt/submain-banner02.png" alt="">
+					</a>
+				</div>
+				<!-- 201207 [OP002-10282] 수정06-->
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit">조회/신청 서비스</div>  <!-- 201211 [OP002-10282] 수정01  -->
+						<div class="card-cont">
+							<div class="acc-list-wrap">
+								<!-- .widget -->
+								<div class="widget ">
+									<div class="widget-box accordion">
+										<div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+											<div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+												<ul class="acco-list pd0">
+													<li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">일시정지</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+														</div>
+														<div class="acco-cont">
+															<p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능하며, Wi-Fi 접속으로도 해제 신청 가능합니다.</p>
+															<div class="btn-area">
+																<a href="#" class="rect-btn">신청하기</a>
+															</div>
+														</div>
+													</li>
+													<li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">고객보호비밀번호 서비스</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+														</div>
+														<div class="acco-cont">
+															<ul class="dot-list">
+																<li class="dot-item">현재 고객보호 비밀번호 서비스를 이용 중입니다.</li>
+															</ul>
+															<div class="btn-area">
+																<a href="#" class="rect-btn">변경하기</a>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--// .widget -->
+							</div>
+							<div class="hash-wrap">
+								<ul class="hash-list normal">
+									<li class="hash-item">
+										<a href="#" class="hash">#010 전환 번호변경</a>
+									</li>
+									<li class="hash-item">
+										<a href="#" class="hash">#번호변경 안내서비스</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+				<div class="submain-color-banner" >
+					<a href="#">
+						<p class="banner-comment"> 
+							예약과 품절 사이 단 1초!
+							<strong>방학 동안<br>0한동 마법사 모집</strong>
+						</p>
+						<span class="like-btn">자세히 보기</span>
+						<img class="banner" src="/img/myt/submain-banner04.png" alt="">
+					</a>
+				</div>
+				<!-- 201201 [OP002-10282] 수정02 -->
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit">다른 메뉴를 찾고 계신가요?</div>
+						<div class="card-cont">
+							<div class="small-ico-list-wrap">
+								<ul class="small-ico-list">
+									<li class="ico-item">
+										<a href="#">
+											<i class="ico"><img src="/img/myt/submain-ico16.svg" alt=""></i>나의 데이터/통화
+										</a>
+									</li>
+									<li class="ico-item">
+										<a href="#">
+											<i class="ico"><img src="/img/myt/sub-ben-ico06.svg" alt=""></i>요금안내서
+										</a>
+									</li>
+									<li class="ico-item">
+										<a href="#">
+											<i class="ico"><img src="/img/myt/sub-ben-ico01.svg" alt=""></i>실시간 잔여량
+										</a>
+									</li>
+									<li class="ico-item">
+										<a href="#">
+											<i class="ico"><img src="/img/myt/sub-ben-ico16.svg" alt=""></i>회원정보
+										</a>
+									</li>
+									<li class="ico-item">
+										<a href="#">
+											<i class="ico"><img src="/img/myt/sub-ben-ico15.svg" alt=""></i>요금제 변경 가능일 알림
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- //201201 [OP002-10282] 수정02 -->
+			</div>
+			<div class="dim"></div>
+        </div>
+        <!--// #contents -->
+	</div>
+	<script>
+		var horizonBar = $('.horizon-bar-wrap .horizon-bar .data'); 
+		(horizonBar.children('.bar').width() < horizonBar.children('.bar-bubble').width()) &&  horizonBar.children('.bar-bubble').addClass('left')
+	</script>
+</body>
+
+
+</html>
