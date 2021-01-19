@@ -175,7 +175,10 @@ _%>
                 <ul class="pg-chk-list02">
                     <%# PPS (선불폰) 인 경우, MS_06_01_tip_03, 그외 무선인 경우, MS_06_01_tip_01 _%>
                     <li><button id="MS_06_01_tip_0<%- svcInfo.svcAttrCd === 'M3' ? 3 : 1 %>" class="btn-tip" aria-haspopup="true">부가서비스 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <%# 포켓파이 회선은 비노출%>
+                    <%_if(svcInfo.svcAttrCd !== 'M3') {_%>
                     <li><button id="TC000117" class="btn-tip" aria-haspopup="true">USIM 기변 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <%_}_%>
                 </ul>
             </div>
             <!--// .cont-box -->
