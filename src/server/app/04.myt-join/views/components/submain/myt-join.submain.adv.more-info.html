@@ -1,0 +1,142 @@
+<%#
+* MenuName: 나의 가입정보 > 서브메인 [회선정보]
+* @file myt-join.submain.adv.more-info.html (MS)
+* @author Kim InHwan (skt.P132150@partner.sk.com)
+* @since 2021.01.21
+_%>
+<!-- 201207 [OP002-10282] 수정01 : 텍스트 수정 -->
+<section class="cont-card">
+  <div class="section-inner">
+    <div class="head-tit high">
+      <a href="#" class="link">기본 가입정보</a>
+    </div>
+    <%_ if (data.type === 2) { _%>
+      <%_ if (data.myInfo) { _%>
+        <div class="card-cont">
+        <div class="rough-info">
+          <div class="rough-info-inner">
+            <div class="ico-wrap">
+              <span class="ico-figure">
+                <span class="ico">
+                    <span class="ico-img"><img src="/img/myt/sel-tv-ico-black.svg" alt="IP TV 인터넷"></span>
+                </span>
+              </span>
+            </div>
+            <div class="list-wrap">
+              <ul class="report-list item-no-border small">
+                <li class="report-item">
+                  <dl class="report-define d-wrap">
+                    <dt class="report-tit">가입 상태</dt>
+                    <dd class="report-cont">이용 중</dd>
+                  </dl>
+                </li>
+                <li class="report-item">
+                  <dl class="report-define d-wrap">
+                    <dt class="report-tit">서비스 약정</dt>
+                    <dd class="report-cont">
+                      <%= data.myInfo.svcAgrmtMth %>
+                      <%- data.myInfo.svcPrdStaDt && data.myInfo.svcPrdEndDt ? (' (' + data.myInfo.svcPrdStaDt + ' ~ ' + data.myInfo.svcPrdEndDt + ')') : '' %>
+                    </dd>
+                  </dl>
+                </li>
+                <li class="report-item">
+                  <dl class="report-define d-wrap">
+                    <dt class="report-tit">세트 구분</dt>
+                    <dd class="report-cont">
+                      <%= data.myInfo.setNm %>(유선상품 <%- data.myInfo.wireProdCnt %>개)
+                    </dd>
+                  </dl>
+                </li>
+                <li class="report-item">
+                  <dl class="report-define d-wrap">
+                    <dt class="report-tit">세트 약정</dt>
+                    <dd class="report-cont">
+                      <%_ if (data.myInfo.setPrdStaDt && data.myInfo.setPrdEndDt) { %>
+                        <%= data.myInfo.setAgrmtMth %>
+                        <div class="join-date">
+                          <%= '(' + data.myInfo.setPrdStaDt + ' ~ ' + data.myInfo.setPrdEndDt + ')' %>
+                        </div>
+                      <%_ } else { _%>
+                        <div> 무약정 </div>
+                      <%_ } _%>
+                    </dd>
+                  </dl>
+                </li>
+                <li class="report-item">
+                  <dl class="report-define d-wrap">
+                    <dt class="report-tit">설치장소</dt>
+                    <dd class="report-cont"><%= data.myInfo.address %></dd>
+                  </dl>
+                </li>
+              </ul>
+              <!-- <p class="warning">2007년 3월 1일 이전 가입 고객은 지점/대리점에서 확인 가능합니다.</p> -->
+            </div>
+          </div>
+          <div class="btn-area btn2 medium">
+            <a href="#" class="round-btn">이용 계약 정보</a>
+            <a href="#" class="round-btn line">신청내역 및 조회</a>
+          </div>
+        </div>
+      </div>
+      <%_ } _%>
+    <%_ } else { _%>
+      <div class="card-cont">
+      <div class="rough-info">
+        <div class="rough-info-inner">
+          <div class="ico-wrap">
+            <span class="ico-figure">
+                <span class="ico">
+                    <span class="ico-img"><img src="/img/myt/sel-mobile-ico-black.svg" alt="휴대폰"></span>
+                </span>
+            </span>
+            <p class="model">Galaxy S20 Ultra</p>
+          </div>
+          <div class="list-wrap">
+            <ul class="report-list item-no-border small">
+              <li class="report-item">
+                <dl class="report-define d-wrap">
+                  <!--
+                     AC: '이용 중',
+                     FB: '직권해지',
+                     PB: '직권해지신청',
+                     SP: '정지',
+                     TG: '일반해지',
+                     X1: 'CIS PB 상태자료 이전'
+                   -->
+                  <dt class="report-tit">가입 상태</dt>
+                  <dd class="report-cont"><%- data.svcInfo.svcStCd === 'AC' ? '이용 중' : '정지' %></dd>
+                </dl>
+              </li>
+              <%_ if (data.myHistory) { _%>
+              <%_ var lastestHistory = data.myHistory[data.myHistory.length - 1]; _%>
+              <li class="report-item">
+                <dl class="report-define d-wrap">
+                  <dt class="report-tit">최종 개통 유형</dt>
+                  <dd class="report-cont"><%= lastestHistory.chgCd %></dd>
+                </dl>
+              </li>
+              <li class="report-item">
+                <dl class="report-define d-wrap">
+                  <dt class="report-tit">최종 개통 일자</dt>
+                  <dd class="report-cont"><%= lastestHistory.chgDt %></dd>
+                </dl>
+              </li>
+              <%_ } _%>
+              <li class="report-item">
+                <dl class="report-define d-wrap">
+                  <dt class="report-tit">최종 가입점</dt>
+                  <dd class="report-cont"><%= data.myJoinInfo.saleOrgNm %></dd><!-- 210105 [OP002-10282] 수정01 -->
+                </dl>
+              </li>
+            </ul>
+            <%_ if (!data.myHistory) { _%>
+            <p class="warning">2007년 3월 1일 이전 가입 고객은 지점/대리점에서 확인 가능합니다.</p>
+            <%_ } _%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%_ } _%>
+  </div>
+</section>
+<!-- //201207 [OP002-10282] 수정01 -->
