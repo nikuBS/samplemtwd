@@ -497,6 +497,60 @@ abstract class TwViewController {
       }
     }
   }
+
+  /**
+   *  동적으로 환경변수설정 값 읽어와서 처리로직
+   *  리필쿠폰 요금제 정보, 통합공유데이터 공제코드 등
+   *  예) data.recharge.count = 2 ==> data.recharge.prodId, data.recharge.prodId1
+   *  @param params
+   *  @return {string} result
+   */
+
+  public getEnvironmentCountData(params: any) {
+    const { res, svcInfo, pageInfo, countProperty, targetProperty } = params;
+    const reqInfo: any = [];
+    return this.apiService.request(API_CMD.BFF_01_0069, {
+      property: countProperty
+    }).switchMap((countResp) => {
+      if (countResp.code !== API_CODE.CODE_00) {
+        return this.error.render(res, {
+          code: countResp.code,
+          msg: countResp.msg,
+          pageInfo,
+          svcInfo
+        });
+      }
+      // return countResp.result? parseInt(countResp.result, 10) : 0;
+      const count = countResp.result? parseInt(countResp.result, 10) : 0;
+      for (let i = 0; i < count; i++) {
+        reqInfo.push(
+            this.apiService.request(API_CMD.BFF_01_0069, {
+              property: i === 0? targetProperty : targetProperty + i
+            })
+        );
+      }
+      // return Observable.defer(reqInfo);
+      return Observable.combineLatest(reqInfo)
+          .map(responseArray => {
+            const result:any = [];
+            responseArray.forEach((response: any) => {
+              if (response.code !== API_CODE.CODE_00) {
+                return this.error.render(res, {
+                  code: response.code,
+                  msg: response.msg,
+                  pageInfo,
+                  svcInfo
+                });
+              }
+              // 'a:1, b:2, c:3' 형태로 전달 받음
+              if (response.code === API_CODE.CODE_00) {
+                result.push(response.result ? response.result.trim() : '');
+              }
+            });
+            return result.join(',');
+          });
+    })
+  }
 }
 
 export default TwViewController;

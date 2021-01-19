@@ -38,7 +38,9 @@ export enum REDIS_KEY {
   WIDGET_BLOCK = 'str.widget_block',
   COUPON_INFINITY_PRODUCTS = 'bool.datainfiniti.yn',
   DATA_RECHARGE_PRODUCTS = 'data.recharge.prodId',
-  DATA_RECHARGE_COUNT = 'data.recharge.count' // 데이터 리필 표기 관련 환경변수 개수
+  DATA_RECHARGE_COUNT = 'data.recharge.count', // 데이터 리필 표기 관련 환경변수 개수
+  DATA_DEDUCTION_PRODUCTS = 'data.deduction.prodId',
+  DATA_DEDUCTION_COUNT = 'data.deduction.count',
 }
 
 export enum REDIS_TOS_KEY {
