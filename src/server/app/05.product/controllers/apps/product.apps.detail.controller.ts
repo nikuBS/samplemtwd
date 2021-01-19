@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import ProductHelper from '../../../../utils/product.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 const BANNER_POSITION = { // admin에서 내려오는 배너 포지션 상수
   T: 'top',
@@ -120,7 +121,7 @@ export default class ProductAppsDetail extends TwViewController {
    */
   private _getProductInfo = appId => {
     return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + appId).map(resp => {
-      if (!resp.result) {
+      if (!resp.result || FormatHelper.isEmpty(resp.result) ) {
         return resp.result;
       }
 
