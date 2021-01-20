@@ -9,15 +9,18 @@
  * @desc 공통 > 회선관리
  * @param rootEl
  * @param defaultCnt
+ * @param totalExposedCnt,
+ * @param svcInfo
  * @constructor
  */
-Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
+Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt, svcInfo) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._nicknamePopup = new Tw.NicknameComponent();
   this._historyService = new Tw.HistoryService();
+  this._svcInfo = svcInfo;
   this._defaultCnt = defaultCnt;
   this._totalExposedCnt = Tw.FormatHelper.isEmpty(totalExposedCnt) ? 0 : Number(totalExposedCnt);
   this.lineMarketingLayer = new Tw.LineMarketingComponent();
@@ -42,11 +45,9 @@ Tw.CommonMemberLine.prototype = {
    */
   _init: function () {
     // this.$popCert = this.$container.find('#fe-pop-agreement');
-    // 가이드 팝업 실행 후 처리 필요
-    this._checkGuidePopup();
     // 모바일App
     if (Tw.BrowserHelper.isApp()) {
-      var storedData = Tw.CommonHelper.getLocalStorage('hideSkbAgreePop_' + this._userId);
+      var storedData = Tw.CommonHelper.getLocalStorage('hideSkbAgreePop_' + this._svcInfo.userId);
 
       // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
       if (Tw.FormatHelper.isEmpty(storedData)) {
@@ -70,7 +71,7 @@ Tw.CommonMemberLine.prototype = {
     }
     // 모바일웹
     else {
-      if (Tw.CommonHelper.getCookie('hideSkbAgreePop_' + this._userId) !== null) {
+      if (Tw.CommonHelper.getCookie('hideSkbAgreePop_' + this._svcInfo.userId) !== null) {
         // console.log('다음에 보기 처리 이력 존재');
       } else {
         // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
@@ -78,6 +79,8 @@ Tw.CommonMemberLine.prototype = {
         this._openPopup();
       }
     }
+    // 가이드 팝업이 가장 마지막에 뜨도록 처리
+    this._checkGuidePopup();
   },
 
   /**
@@ -97,7 +100,7 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickEdit, this));
     this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickEdit, this));
     this.$container.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
-    this.$container.on('click', '#fe-pop-guide .popup-closeBtn', $.proxy(this._onCloseGuideOppup, this));
+    this.$container.on('click', '#fe-pop-guide .popup-closeBtn', $.proxy(this._onCloseGuidePopup, this));
     // this.$container.on('click', '.fe-pop-hide', $.proxy(this._hidePopup, this));
   },
 
@@ -134,7 +137,13 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _openGuidePopup: function ($event) {
-    this.$guidePopup.show();
+    // focus 처리 및 scroll 처리
+    setTimeout($.proxy(function() {
+      $('body').addClass('noscroll');
+      this.$guidePopup.show();
+      this.$guidePopup.focus();
+    }, this), 500);
+    // this.$guidePopup.show();
     // var $target;
     // if(!Tw.FormatHelper.isEmpty($event)) {
     //   $target = $($event.currentTarget);
@@ -157,7 +166,8 @@ Tw.CommonMemberLine.prototype = {
     }
   },
 
-  _onCloseGuideOppup: function () {
+  _onCloseGuidePopup: function () {
+    $('body').removeClass('noscroll');
     if(Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, value: 'Y' });
     } else {
@@ -784,18 +794,18 @@ Tw.CommonMemberLine.prototype = {
 
   _openPopup: function () {
     // this.$popCert.show();
-    // focus 처리 및 scroll 처리
-    $('body').addClass('noscroll');
     // this.$popCert.focus();
     // this._isCertPopupOpen = true;
     this._popupService.open({
       hbs: 'CO_01_05_02_03',
       layer: true
-    }, $.proxy(this._openPopupSuccess, this), $.proxy(this._closePopup, this), 'broadband');
+    }, $.proxy(this._openPopupSuccess, this), null, '');
   },
   _openPopupSuccess: function ($popup) {
+    this.$popCert = $popup;
     $popup.on('click', 'button.agree', $.proxy(this._onClickInternal, this));
     $popup.on('click', 'button.disagree', $.proxy(this._hidePopup, this));
+    $popup.on('click', 'button.btn-tooltip-close', $.proxy(this._closePopup, this));
   },
   /**
    * @function
@@ -805,12 +815,18 @@ Tw.CommonMemberLine.prototype = {
   _closePopup: function () {
     // this.$popCert.hide();
     // this._isCertPopupOpen = false;
-    $('body').removeClass('noscroll');
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._setLocalStorage('hideSkbAgreePop', this._userId, 365 * 10);
-    } else {
-      this._setCookie('hideSkbAgreePop', this._userId, 365 * 10);
+    // $('body').removeClass('noscroll');
+    // if ( Tw.BrowserHelper.isApp() ) {
+    //   this._setLocalStorage('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
+    // } else {
+    //   this._setCookie('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
+    // }
+    if (this.$popCert) {
+      // 초기화
+      this.$popCert.off('click');
+      this.$popCert = null;
     }
+    this._popupService.close();
   },
 
   /**
@@ -820,12 +836,11 @@ Tw.CommonMemberLine.prototype = {
    */
   _hidePopup: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._setLocalStorage('hideSkbAgreePop', this._userId, 365 * 10);
+      this._setLocalStorage('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
     } else {
-      this._setCookie('hideSkbAgreePop', this._userId, 365 * 10);
+      this._setCookie('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
     }
-    // this._closePopup();
-    this._popupService.close();
+    this._closePopup();
   },
 
   /**

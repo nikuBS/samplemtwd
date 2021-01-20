@@ -62,7 +62,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLineSkbSvcAgreement($('.wrap'));
+    new Tw.CommonMemberLineSkbSvcAgreement($('.wrap'), <%- JSON.stringify(svcInfo) %>);
   });
 </script>
 <% include ../../components/end.component.html %>
