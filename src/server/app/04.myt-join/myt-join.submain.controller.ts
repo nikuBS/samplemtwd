@@ -310,12 +310,12 @@ class MyTJoinSubmainController extends TwViewController {
           28일 이내이면 numChgFlag = 'Y' 로 보내준다. 28일이 지나면 MOD0030 code 리턴
        */
       if (numSvc && numSvc.code === API_CODE.CODE_00) {
+        const {extnsPsblYn, notiEndDt} = numSvc.result;
         Object.assign(data, {
           numberSvc: numSvc,
           isNotChangeNumber: true,
-          numberChanged: false
+          numberChanged: extnsPsblYn === 'Y'
         });
-        const {extnsPsblYn, notiEndDt} = numSvc.result;
         if (extnsPsblYn !== 'Y') {
           if (!FormatHelper.isEmpty(notiEndDt)) {
             const curDate = new Date();
