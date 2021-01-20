@@ -27,11 +27,10 @@ Tw.CommonMemberLine = function (rootEl, defaultCnt, totalExposedCnt) {
   this._changeList = false;
   this.$showNickname = null;
   this.$showMenuBtn = null;
-  this._isCertPopupOpen = false;
+  // this._isCertPopupOpen = false;
 
   this._init();
   this._bindEvent();
-  this._checkGuidePopup();
 };
 
 Tw.CommonMemberLine.prototype = {
@@ -42,8 +41,9 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _init: function () {
-    this.$popCert = this.$container.find('#fe-pop-agreement');
-
+    // this.$popCert = this.$container.find('#fe-pop-agreement');
+    // 가이드 팝업 실행 후 처리 필요
+    this._checkGuidePopup();
     // 모바일App
     if (Tw.BrowserHelper.isApp()) {
       var storedData = Tw.CommonHelper.getLocalStorage('hideSkbAgreePop_' + this._userId);
@@ -78,7 +78,6 @@ Tw.CommonMemberLine.prototype = {
         this._openPopup();
       }
     }
-
   },
 
   /**
@@ -98,8 +97,8 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickEdit, this));
     this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickEdit, this));
     this.$container.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
-    this.$container.on('click', '.fe-pop-close', $.proxy(this._closePopup, this));
-    this.$container.on('click', '.fe-pop-hide', $.proxy(this._hidePopup, this));
+    this.$container.on('click', '#fe-pop-guide .popup-closeBtn', $.proxy(this._onCloseGuideOppup, this));
+    // this.$container.on('click', '.fe-pop-hide', $.proxy(this._hidePopup, this));
   },
 
   /**
@@ -113,8 +112,10 @@ Tw.CommonMemberLine.prototype = {
 
 
   _checkGuidePopup: function() {
-    if(Tw.BrowserHelper.isApp()) {
-      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE }, $.proxy(this._onLoadGuideView, this));
+    this.$guidePopup = this.$container.find('#fe-pop-guide');
+    if (Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE },
+          $.proxy(this._onLoadGuideView, this));
     } else {
       // cookie check
       var commonMemberLineGuideb = Tw.CommonHelper.getCookie(Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE);
@@ -133,15 +134,15 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _openGuidePopup: function ($event) {
-    var $target;
-    if(!Tw.FormatHelper.isEmpty($event)) {
-      $target = $($event.currentTarget);
-    }
-
-    this._popupService.open({
-      hbs: 'CO_01_05_02_08',
-      layer: true
-    }, $.proxy(null, this), $.proxy(this._onCloseGuideOppup, this), 'guide', $target);
+    this.$guidePopup.show();
+    // var $target;
+    // if(!Tw.FormatHelper.isEmpty($event)) {
+    //   $target = $($event.currentTarget);
+    // }
+    // this._popupService.open({
+    //   hbs: 'CO_01_05_02_08',
+    //   layer: true
+    // }, $.proxy(null, this), $.proxy(this._onCloseGuideOppup, this), 'guide');
   },
 
   /**
@@ -162,9 +163,7 @@ Tw.CommonMemberLine.prototype = {
     } else {
       Tw.CommonHelper.setCookie(Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, 'Y', 365);
     }
-    if (this._isCertPopupOpen) {
-      this.$popCert.focus();
-    }
+    this.$guidePopup.hide();
   },
 
   /**
@@ -784,11 +783,19 @@ Tw.CommonMemberLine.prototype = {
   },
 
   _openPopup: function () {
-    this.$popCert.show();
+    // this.$popCert.show();
     // focus 처리 및 scroll 처리
     $('body').addClass('noscroll');
-    this.$popCert.focus();
-    this._isCertPopupOpen = true;
+    // this.$popCert.focus();
+    // this._isCertPopupOpen = true;
+    this._popupService.open({
+      hbs: 'CO_01_05_02_03',
+      layer: true
+    }, $.proxy(this._openPopupSuccess, this), $.proxy(this._closePopup, this), 'broadband');
+  },
+  _openPopupSuccess: function ($popup) {
+    $popup.on('click', 'button.agree', $.proxy(this._onClickInternal, this));
+    $popup.on('click', 'button.disagree', $.proxy(this._hidePopup, this));
   },
   /**
    * @function
@@ -796,9 +803,14 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _closePopup: function () {
-    this.$popCert.hide();
+    // this.$popCert.hide();
+    // this._isCertPopupOpen = false;
     $('body').removeClass('noscroll');
-    this._isCertPopupOpen = false;
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._setLocalStorage('hideSkbAgreePop', this._userId, 365 * 10);
+    } else {
+      this._setCookie('hideSkbAgreePop', this._userId, 365 * 10);
+    }
   },
 
   /**
@@ -812,7 +824,8 @@ Tw.CommonMemberLine.prototype = {
     } else {
       this._setCookie('hideSkbAgreePop', this._userId, 365 * 10);
     }
-    this._closePopup();
+    // this._closePopup();
+    this._popupService.close();
   },
 
   /**
