@@ -64,11 +64,11 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
     var $target = $(event.currentTarget),
       maxDate = $target.data('max-date');
     if (Tw.FormatHelper.isEmpty(maxDate)) {
-      maxDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), 'month', 1, 'YYYYMMDD');
+      maxDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), 'month', 12, 'YYYYMMDD');
       $target.data('max-date', maxDate);
     }
     var maxDateFormat = Tw.DateHelper.getEndOfMonth(maxDate.toString(), 'YYYYMMDD');
-    var diff = Tw.DateHelper.getDiffByUnit(maxDateFormat, new Date(), 'month');
+    var diff = Tw.DateHelper.getDiffByUnit(maxDateFormat, new Date(), 'month') || 1;
     var period = [];
     for(var i=1; i<=diff; i++) {
       period.push({ 'option': 'condition', 'attr': 'data-prd="'+ i +'"', value: i + '개월' });
