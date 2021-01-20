@@ -34,8 +34,16 @@ _%>
                         <ul class="form-data-list">
                             <li>
                                 <label class="tit">알림기간<button id="MS_03_01_03_tip_04" class="tip-view" title="알림기간 TIP보기" aria-haspopup="true">TIP</button></label>
-                                <button class="bt-dropdown big" title="알림기간 선택" aria-haspopup="true" id="btn-period">기간선택<span class="ico"></span></button>
+                                <button class="bt-dropdown big" title="알림기간 선택" aria-haspopup="true" id="btn-period" data-max-date="<%-data.freeOfrEndDt%>">기간선택<span class="ico"></span></button>
                                 <input type="hidden" id="input-prd" value="">
+                                <div class="basic-list bg-type mt20">
+                                    <ul>
+                                        <li>
+                                            <span class="title">서비스 기간</span>
+                                            <span class="tx-cont"><%- `${data.sdate} ~ ${data.edate}`%></span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li>
                                 <label class="tit pt40">알림방법</label>
