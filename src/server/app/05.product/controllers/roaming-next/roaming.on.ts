@@ -335,6 +335,13 @@ export default class RoamingOnController extends RoamingController {
       if ([5, 6, 12, 13].indexOf(current.group) >= 0) {
         context.usage.data = {code: '-', msg: '무제한'};
       }
+
+      // OP002-12365 로밍모드 오류개선건의 개시일/종료일 모두 변경 가능해야 되는 요금제 대응
+      context.currentTariff.changeDate = '/product/roaming/setting/roaming-auto'
+      if ([5, 6, 7, 9, 10, 11].indexOf(current.group) >= 0) {
+        context.currentTariff.changeDate = '/product/roaming/setting/roaming-setup';
+      }
+
       if (current.group === 7) {
         // baro OnePass 300 기간형
         // baro OnePass 300 기간형2
