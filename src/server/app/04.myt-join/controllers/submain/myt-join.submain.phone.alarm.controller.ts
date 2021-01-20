@@ -50,6 +50,8 @@ class MyTJoinPhoneNumChgAlarm extends TwViewController {
 
           result['oldSvcNum'] = StringHelper.phoneStringToDash(result['oldSvcNum']);
           result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
+          result.sdate = DateHelper.getShortDate(new Date());
+          result.edate = DateHelper.getShortDate(result.freeOfrEndDt);
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result};
           res.render('submain/myt-join.submain.phone.alarm.html', option);
