@@ -285,7 +285,7 @@ Tw.RoamingModeOn.prototype = {
    * 하단 콜센터 토글 핸들러
    * @param e EventObject
    */
-  toggleInfo: function (e) {
+toggleInfo: function (e) {
     e = e.currentTarget;
     var id = e.parentElement.id;
     var imagePrefix = Tw.Environment.cdn + '/img/product/roam/ico_';
@@ -350,11 +350,20 @@ Tw.RoamingModeOn.prototype = {
     var localDate = moment(baseDate).add(timezoneOffset, 'hours');
 
     var id = 'dialogUsage';
+    // var changeUrl = '/product/roaming/setting/roaming-auto'
+
+    // 개시일/종료일 성정하는 요금제 목록
+    // if (Tw.ROAMING_CHANGE_PROD_ID.indexOf(prodId) !== -1) {
+    //   changeUrl = '/product/roaming/setting/roaming-setup';
+    // }
+    
     var template = Handlebars.compile($('#tpl-dialog-usage').html());
+    // this.$currentTariff.changeDate 은 요금제 설정 변경 url
     document.getElementById('modals').innerHTML += template({
       id: id,
       prodId: prodId,
       prodNm: prodNm,
+      changeDate: this.$currentTariff.changeDate,
       timeLocal: localDate.format('YY.MM.DD HH') + '시',
       timeKorea: baseDate.format('YY.MM.DD HH') + '시'
     });
