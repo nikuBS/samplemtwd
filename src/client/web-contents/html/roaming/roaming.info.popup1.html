@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="/img/common/favicon.ico">
+<link rel="shortcut icon" href="/img/common/favicon.png">
+<link rel="apple-touch-icon" href="/img/common/favicon.png">
+<meta name="description" content="T로밍 < 상품">
+<meta name="keywords" content="T로밍 , 상품">
+<meta property="og:title" content="초시대를 여는 T world">
+<meta property="og:site_name" content="SKT">
+<meta property="og:image" content="/img/dummy/kakao_share.jpg">
+<meta property="og:description" content="로밍안내 < T로밍 < 상품">
+<title>로밍안내 &lt; T로밍 &lt; 상품</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/roaming-next.css" media="all" />
+<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body class="rn">
+<!-- '출국 전 필수 확인' 다이얼로그 -->
+<div id="checklistDialog" class="dialog guide-dialog" style="display: block;">
+    <div class="appbar">
+        <h1>출국 전 필수 확인</h1>
+		<!-- 210121 수정 [OP002-12168] -->
+        <button type="button" class="close">
+            <img src="https://cdnm.tworld.co.kr/img/product/roam/ico_close.svg" width="20" height="20" alt="닫기">
+        </button>
+		<!-- // 210121 수정 [OP002-12168] -->
+    </div>
+    <div class="tabs">
+		<!-- 210121 수정 [OP002-12168] -->
+        <button type="button" class="tab state active" data-tabid="state"><span>상황별</span></button>
+		<button type="button" class="tab tag" data-tabid="tag"><span>카테고리별</span></button>
+		<!-- // 210121 수정 [OP002-12168] -->
+    </div>
+    <div class="background-f6"></div>
+    <div class="checklist">
+        <!-- '출국 전 필수 확인' 다이얼로그 내, 상황별 탭 속 POINT 1, 2, 3 -->
+        <div class="section">
+            출국 전 준비
+            <span class="subtitle">POINT 1</span>
+        </div>
+        <div class="card">
+            <ul>
+                <li>
+					<button type="button" id="state-01-01" class="toggleItem">
+						<span class="no">01</span>
+						<span class="title" style="">T로밍 요금제 가입은 필수</span>
+					</button>
+					<div class="description"></div>
+                </li>
+                <li>
+					<button type="button" id="state-01-02" class="toggleItem">
+						<span class="no">02</span>
+						<span class="title">로밍과 현지 유심(USIM)의 차이</span>
+					</button>
+	                <div class="description"></div>
+                </li>
+                <li>
+					<button type="button" id="state-01-03" class="toggleItem">
+						<span class="no">03</span>
+						<span class="title">LTE 로밍 설정</span>
+					</button>                
+	                <div class="description"></div>
+                </li>
+                <li>
+					<button type="button" id="state-01-04" class="toggleItem">
+						<span class="no">04</span>
+						<span class="title">로밍 중 데이터 사용을 원치 않으시면?</span>
+					</button>                
+	                <div class="description"></div>
+                </li>
+            </ul>	
+        </div>
+        <!-- '출국 전 필수 확인' 다이얼로그 내, 상황별 탭 속 POINT 1, 2, 3 -->
+        <div class="section">
+            현지에서
+            <span class="subtitle">POINT 2</span>
+        </div>
+        <div class="card">
+            <ul>
+                <li>
+					<button type="button" id="state-02-01" class="toggleItem">
+						<span class="no">01</span>
+						<span class="title">로밍 요금제 가입을 잊었어요</span>
+					</button>
+					<div class="description"></div>
+                </li>
+                <li>
+					<button type="button" id="state-02-02" class="toggleItem">
+						<span class="no">02</span>
+						<span class="title">로밍 이용 요금과 안내 문구 확인</span>
+					</button>
+					<div class="description"></div>
+                </li>
+                <li>
+					<button type="button" id="state-02-03" class="toggleItem">
+						<span class="no">03</span>
+						<span class="title">통화가 안 된다면?</span>
+					</button>
+					<div class="description"></div>
+                </li>
+                <li>
+					<button type="button" id="state-02-04" class="toggleItem">
+						<span class="no">04</span>
+						<span class="title">휴대폰/유심(USIM)을 분실했어요</span>
+					</button>
+					<div class="description"></div>
+                </li>
+            </ul>
+        </div>
+        <!-- '출국 전 필수 확인' 다이얼로그 내, 상황별 탭 속 POINT 1, 2, 3 -->
+        <div class="section">
+            귀국 후
+            <span class="subtitle">POINT 3</span>
+        </div>
+        <div class="card">
+            <ul>
+                <li>
+					<button type="button" id="state-03-01" class="toggleItem">
+						<span class="no">01</span>
+						<span class="title">한국에 왔는데 3G/LTE 접속이 안 돼요</span>
+					</button>
+					<div class="description"></div>
+                </li>
+                <li>
+					<button type="button" id="state-03-02" class="toggleItem">
+						<span class="no">02</span>
+						<span class="title">곧 여행/출장을 또 가신다면?</span>
+					</button>
+					<div class="description"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
+<!--
+    '출국 전 필수 확인' 다이얼로그 내, 아코디언 펼쳤을 때 나올 내용들 모음
+-->
+<div class="guide-contents">
+    <!-- 출국 전 준비 > T로밍 요금제 가입은 필수 -->
+    <div class="state-01-01">
+        <ul>
+            <li>
+            baro OnePass 300 기본형 등 내게 맞는 로밍 요금제에 가입하세요.
+            자동 업데이트 앱 등으로 인한 과도한 요금 발생을 방지할 수 있습니다.
+            </li>
+        </ul>
+        <a href="/product/roaming/fee">
+        <div class="button">
+            자세히 보기
+        </div>
+        </a>
+    </div>
+    <!-- 출국 전 준비 > 로밍과 현지 유심(USIM)의 차이 -->
+    <div class="state-01-02">
+        <div class="loaming-visual"><img src="https://cdnm.tworld.co.kr/img/product/rm-vsusim-img1.png" alt="SKT 로밍과 현지 유심(USIM) 차이점. 상세 다음 참조"></div>
+        <div class="blind-height0">
+            <strong>SKT로밍(추천)</strong>
+            <ul>
+                <li>로밍 요금제 가입 시 <strong>내 번호로 자동 로밍</strong> 가능</li>
+                <li>국내 번호로 <strong>전화, 문자 수/발신</strong> 가능</li>
+                <li>외교부 <strong>안전 문자 수신</strong> 가능</li>
+                <li>데이터 <strong>용량 소진 시 충전</strong> 가능</li>
+                <li>로밍 문제 발생 시 <strong>24시간 상담</strong> 가능</li>
+            </ul>
+            <p>vs</p>
+            <strong>현지 유심(USIM)</strong>
+            <ul>
+                <li>현지/선구매 후 <strong>직접 설치</strong>하여 로밍 이용</li>
+                <li>국내 번호로 전화, 문자 <strong>수/발신 불가</strong></li>
+                <li>외교부 문자 <strong>수신 불가</strong></li>
+                <li>데이터 용량 소진 시 <strong>충전 불가</strong>, 유심(USIM) 추가 구매</li>
+                <li>로밍 문제 발생 시 <strong>대처 어려움</strong></li>
+            </ul>
+            <p>현지 유심(USIM)보다 편리한 SKT 로밍을 이용하세요</p>
+            <p>해외 여행시 현지 유심(USIM)보다 안전하고 편리한 로밍 요금제를 가입하세요.</p>
+        </div>
+        <a href="/product/roaming/fee">
+        <div class="button" style="margin-top: 15px;">
+            로밍 상품 자세히 보기
+        </div>
+        </a>
+    </div>
+    <div class="state-01-03">
+        <ul>
+            <li>LTE 로밍 이용 고객님은 로밍 설정 필수</li>
+            <li>
+            기간형 요금제를 이용하셨던 고객님은 데이터 로밍 차단 상태이므로,
+            신규 요금제를 가입하시거나 데이터로밍차단 서비스를 해지해야 로밍 서비스를 이용하실 수 있습니다.
+            </li>
+        </ul>
+    </div>
+    <div class="state-01-04">
+        <ul>
+            <li>로밍 중 데이터 사용을 원하지 않으시면 데이터 로밍 차단 부가서비스에 가입해 주세요.</li>
+        </ul>
+        <a href="/product/callplan?prod_id=NA00003158">
+        <div class="button">
+            자세히 보기
+        </div>
+        </a>
+    </div>
+    <!-- 현지에서 > 로밍 요금제 가입을 잊었어요 -->
+    <div class="state-02-01">
+        <ul>
+            <li>데이터 접속료 무료인 모바일 T로밍 웹사이트(m.troaming.co.kr 또는 T로밍.com)로 접속하거나, 고객센터(+82-2-6343-9000, 해외에서 SKT폰 무료)로 전화해 주세요.</li>
+        </ul>
+    </div>
+    <!-- 현지에서 > 로밍 이용 요금과 안내 문구 확인 -->
+    <div class="state-02-02">
+        <ul>
+            <li>해외 도착 후 국가별 로밍 요금, 데이터 사용 유의사항 등 휴대폰으로 발송되는 안내 문구를 꼭 확인하세요.</li>
+        </ul>
+    </div>
+    <div class="state-02-03">
+        <ul>
+            <li>휴대폰 전원을 껐다 켜주세요.</li>
+            <li>휴대폰 네트워크를 설정해주세요.</li>
+            <li>미 해결 시 T로밍 고객센터로 문의해 주세요.</li>
+        </ul>
+    </div>
+    <div class="state-02-04">
+        <ul>
+            <li>과도한 로밍 이용요금이 발생할 수 있으므로 고객센터로 즉시 신고하세요. T로밍 고객센터(+82-2-6343-9000, SKT폰 무료)</li>
+        </ul>
+    </div>
+    <div class="state-03-01">
+        <ul class="list-dot accordion">
+            <li class="list">
+            첫째, 휴대폰 상태를 확인해 주세요
+            <ul class="inner-group type3">
+                <li class="inner-list">
+                안드로이드
+                <ul class="inner-group type3">
+                    <li class="inner-list">설정 &gt; 무선 및 네트워크 &gt; 데이터 네트워크 설정 '허용' 상태 확인</li>
+                    <li class="inner-list">설정 &gt; 무선 및 네트워크 &gt; 모바일 네트워크 &gt; APN &gt; SK텔레콤 체크 확인(SK텔레콤 로밍은 사용할 수 없음)</li>
+                </ul>
+                </li>
+                <li class="inner-list">
+                아이폰
+                <ul class="inner-group type3">
+                    <!-- 200910 수정 [OP002-10552] -->
+                    <li class="inner-list">설정 &gt; 셀룰러 &gt; 셀룰러 데이터 "ON“ 상태인지 확인</li>
+                    <li class="inner-list">설정 &gt; 셀룰러 &gt; 네트워크 선택  &gt; 자동 "OFF"후 SK Telecom 체크 확인!</li>
+                    <!-- // 200910 수정 [OP002-10552] -->
+                </ul>
+                </li>
+            </ul>
+            </li>
+            <li class="list">둘째, 휴대폰을 껐다 켜 주세요.</li>
+            <li class="list">셋째, T로밍 고객센터 또는 T로밍센터로 문의해 주세요.</li>
+        </ul>
+    </div>
+    <div class="state-03-02">
+        <ul>
+            <li>다음 출국 시 T로밍 서비스를 이용하시려는 고객님은 데이터로밍무조건차단 서비스를 해지해 주세요.</li>
+            <li>해지 방법: T로밍센터 또는 고객센터 이용(주말/공휴일, 114)</li>
+        </ul>
+        <a href="/product/roaming/info/center">
+        <div class="button">
+            T로밍센터 자세히 보기
+        </div>
+        </a>
+    </div>
+    <!-- 요금 > 요금 청구 / 부과 안내 -->
+    <div class="tag-01-01">
+        <ul>
+            <li>T로밍은 별도 가입비, 기본료가 없습니다.</li>
+            <li>이용요금은 서비스를 이용하신 달 기준으로 1개월 후 청구되며, 2~3개월 후까지 이용요금이 청구될 수 있습니다.</li>
+        </ul>
+    </div>
+    <div class="tag-01-02">
+        <ul>
+            <li>로밍 서비스 이용 시 국내요금제(커플, 지정번호 할인 등)에 따른 할인 등은 적용되지 않습니다.</li>
+            <li>부가세는 로밍 이용요금 전체 금액의 10% 입니다.</li>
+            <li>로밍 이용요금은 해외사업자 또는 국제전화 사업자의 정책 변경에 따라 변경될 수 있습니다.</li>
+        </ul>
+    </div>
+    <!-- 데이터 로밍 > 데이터 로밍 기본정보 -->
+    <div class="tag-02-01">
+        <ul>
+            <li>데이터 로밍은 전 세계 패킷(0.5KB)당 0.275원(부가세 포함)으로 단일화되었습니다.</li>
+            <li>
+            T로밍 데이터 안심서비스! 데이터 종량 과금이 하루 상한인 5,000원이 될 경우, baro OnePass 300/500(기본형, 기간형)
+            제휴 사업자에 접속하면 200kbps 속도로 계속 사용, 비제휴 사업자는 데이터가 차단됩니다.
+            </li>
+            <li>
+            전 세계 주요국에서 baro OnePass 300 기본형 요금제를 이용하실 수 있습니다.
+            해당 국가 여행 시 데이터 로밍이 필요할 경우 요금제에 가입하면 안심하고 저렴하게 이용하실 수 있습니다.
+            </li>
+        </ul>
+    </div>
+    <div class="tag-03-01">
+        <ul>
+            <li>15XX, 080 등 번호는 해외에서 연결할 수 없습니다. 단, 접속이 되었을 경우 국제전화 요금이 발생할 수 있으니 주의하세요.</li>
+            <li>해외 로밍 중 음성전화 수신 시 '수신거절' 버튼을 누르는 경우에도 요금이 발생할 수 있으니 주의해 주세요.</li>
+        </ul>
+    </div>
+    <div class="tag-03-02">
+        <ul>
+            <li>현지 이동통신망 사정에 따라 원활한 서비스가 제공되지 않을 수 있습니다.</li>
+            <li>
+            방문하시는 지역의 통신망 사정이나 천재지변 등을 원활한 서비스가 제공되지 않을 경우,
+            T로밍 고객센터(해외 +82-2-6343-9000, 무료 / 02-6343-9000, 무료)로 문의해 주세요.
+            </li>
+        </ul>
+    </div>
+    <div class="tag-04-01">
+        <ul>
+            <li>태블릿 PC도 스마트폰과 동일하게 데이터 로밍 서비스를 이용하실 수 있습니다.</li>
+            <li>태블릿 PC도 안전한 데이터 사용을 위해서는 데이터 요금제를 가입해 주세요.</li>
+            <li>
+            데이터 로밍을 이용하지 않으실 경우 데이터로밍무조건차단서비스에 가입하거나, 휴대폰에서 데이터를 차단해 주세요.<br>
+            데이터 종량 과금이 하루 상한인 5,000원이 될 경우, baro OnePass 300/500(기본형, 기간형)
+            제휴 사업자에 접속하면 200kbps 속도로 계속 사용, 비제휴 사업자는 데이터가 차단됩니다.
+            </li>
+            <li>LTE 스마트폰도 3G 데이터 로밍 서비스를 이용하실 수 있습니다. 태블릿 PC로 3G 데이터 로밍을 이용하실 때도 데이터 로밍 월 상한 서비스가 적용됩니다.</li>
+        </ul>
+    </div>
+    <div class="tag-05-01">
+        <ul>
+            <li>
+            해외에서 휴대폰/유심(USIM) 분실시, 과도한 로밍 요금이 발생할 수 있으므로 고객센터(+82-2-6343-9000)나 T world 홈페이지에서 분실 신고를 하여
+            'T안심로밍' 서비스를 이용하시기 바랍니다.
+            </li>
+            <li>
+            T안심로밍 서비스란 해외에서 휴대전화/유심(USIM)을 분실하거나 도난 당한 경우, 분실 신고만으로 부정 사용 로밍 음성 요금 일부를 감면받으실 수 있는
+            SK텔레콤만의 로밍 고객 보호 서비스입니다.
+            </li>
+        </ul>
+    </div>
+    <div class="tag-06-01">
+        <ul>
+            <li>
+            특정 비행기 또는 선박에서는 별도의 로밍 서비스 신청 없이 자동로밍 서비스를 이용하실 수 있으며,
+            국내 요금제와 관계 없이 별도의 로밍 이용요금이 발생됩니다.
+            </li>
+        </ul>
+        <a href="/product/callplan?prod_id=TW60000002">
+        <div class="button">
+            항공로밍 자세히 보기
+        </div>
+        </a>
+        <a href="/product/callplan?prod_id=TW60000003">
+        <div class="button">
+            T 로밍 크루즈 서비스 자세히 보기
+        </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>
