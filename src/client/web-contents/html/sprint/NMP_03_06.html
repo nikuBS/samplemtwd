@@ -32,6 +32,18 @@
 	<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 
 	<script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+	<script>
+		$(document).ready(function(){
+			var $tabWrap = $(".tod-nmp-tab").find("ul");
+			var tabWidth = $tabWrap.width();
+			var onWidth = $tabWrap.find(".on").width();
+			var onPosi = $tabWrap.find(".on").position();
+			var onTotalPosi = onPosi.left + onWidth 
+			if(onTotalPosi > tabWidth){
+				$tabWrap.scrollLeft(onPosi.left - 20);
+			}
+		});
+	</script>
 </head>
 
 <body class="tod-renewalBody">
@@ -66,12 +78,12 @@
 				<div class="tod-nmp-tab">
 					<div class="rn-prod-inner">
 						<ul>
-							<li><a href="#">5G</a></li>
-							<li><a href="#">LTE</a></li>
-							<li><a href="#">3G</a></li>
-							<li><a href="#">태블릿/2nd Device</a></li>
-							<li><a href="#">선불</a></li>
-							<li class="on"><a href="#">테마</a></li>
+							<li><a href="#n">5G</a></li>
+							<li><a href="#n">LTE</a></li>
+							<li><a href="#n">3G</a></li>
+							<li><a href="#n">태블릿/2nd Device</a></li>
+							<li><a href="#n">선불</a></li>
+							<li class="on"><a href="#n">테마</a></li>
 						</ul>
 						<div class="rn-filter">
 							<button type="button" class="p-btn-filter"><span class="blind">조건 검색</span></button>
@@ -91,21 +103,23 @@
 						<ul>
 							<li>
 								<!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-								<div class="tod-nmp-item plan-type2 prod-lte">
-									<a href="#" class="item-link">
+								<div class="tod-nmp-item plan-type2 prod-5g">
+									<a href="#n" class="item-link">
 										<div class="rn-tag">
 											<div class="col-left">
-												<span class="i-tag-cr2">LTE</span>
+												<span class="i-tag-cr1">5G</span>
 											</div>
-											<div class="col-right"></div>
+											<div class="col-right">
+												<span class="i-tag-myplan">사용중</span>
+											</div>
 										</div>
 										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘 5GX 플래티넘 5GX 플래티넘</p>
+											<p class="p-name">5GX</p>
 											<p class="p-price">125,000원</p>
 										</div>
 										<div class="rn-prod-info">
 											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>무제한</li>
 												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
 												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
 											</ul>
@@ -113,7 +127,7 @@
 										<div class="rn-prod-benefit">
 											<ul>
 												<li>
-													<i class="p-icon16-flo"></i> 
+													<i class="p-icon"><img src="/img/product/v2/icon16_01.svg" alt=""></i> 
 													<span class="txt">FLO 앤 데이터 무료 </span>
 													<span class="price">
 														<del>7,900원</del>
@@ -122,7 +136,7 @@
 													</span>
 												</li>
 												<li>
-													<i class="p-icon16-wavve"></i> 
+													<i class="p-icon"><img src="/img/product/v2/icon16_05.svg" alt=""></i> 
 													<span class="txt">wavve 앤 데이터 플러스 무료</span>
 													<span class="price">
 														<del>7,900원</del>
@@ -130,138 +144,30 @@
 														<em>0원</em>
 													</span>
 												</li>
-												<li>
-													<i class="p-icon16-cover"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-vip"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-share"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">5G 스마트워치 TAB 최대 2회선 무료</span></li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">T멤버십 VIP 승급</span></li>
 											</ul>
-										</div>
-									</a>
-									<div class="rn-prod-bottom">
-										<div class="rn-btn-right">
-											<a href="#" class="btn-compare">내 요금제와 비교</a>
-										</div>
-									</div>
-								</div>
-								<!-- //요금제 모듈 : 혜택강조형 -->
-							</li>
-						</ul>
-					</div>
-					<!-- // 요금제 row list -->
-
-					<!-- 요금제 row list -->
-					<div class="tod-nmp-row-list">
-						<ul>
-							<li>
-								<!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-								<div class="tod-nmp-item plan-type2 prod-lte">
-									<a href="#" class="item-link">
-										<div class="rn-tag">
-											<div class="col-left">
-												<span class="i-tag-cr2">LTE</span>
+											<div class="p-benefit-choice">
+												<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+												<ul>
+													<li>
+														<i class="p-icon"><img src="/img/product/v2/icon16_04.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+												</ul>
 											</div>
-											<div class="col-right"></div>
-										</div>
-										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘 5GX 플래티넘 5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
-										</div>
-										<div class="rn-prod-info">
-											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
-												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
-												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
-											</ul>
-										</div>
-										<div class="rn-prod-benefit">
-											<ul>
-												<li>
-													<i class="p-icon16-flo"></i> 
-													<span class="txt">FLO 앤 데이터 무료 </span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-wavve"></i> 
-													<span class="txt">wavve 앤 데이터 플러스 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-cover"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-vip"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-share"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">5G 스마트워치 TAB 최대 2회선 무료</span></li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">T멤버십 VIP 승급</span></li>
-											</ul>
 										</div>
 									</a>
-									<div class="rn-prod-bottom">
-										<div class="rn-btn-right">
-											<a href="#" class="btn-compare">내 요금제와 비교</a>
-										</div>
-									</div>
 								</div>
 								<!-- //요금제 모듈 : 혜택강조형 -->
 							</li>
 							<li>
 								<!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
 								<div class="tod-nmp-item plan-type2 prod-lte">
-									<a href="#" class="item-link">
+									<a href="#n" class="item-link">
 										<div class="rn-tag">
 											<div class="col-left">
 												<span class="i-tag-cr2">LTE</span>
@@ -269,12 +175,12 @@
 											<div class="col-right"></div>
 										</div>
 										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘 5GX 플래티넘 5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
+											<p class="p-name">T플랜 스페셜</p>
+											<p class="p-price">79,000원</p>
 										</div>
 										<div class="rn-prod-info">
 											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>150GB</li>
 												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
 												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
 											</ul>
@@ -282,7 +188,7 @@
 										<div class="rn-prod-benefit">
 											<ul>
 												<li>
-													<i class="p-icon16-flo"></i> 
+													<i class="p-icon"><img src="/img/product/v2/icon16_01.svg" alt=""></i> 
 													<span class="txt">FLO 앤 데이터 무료 </span>
 													<span class="price">
 														<del>7,900원</del>
@@ -291,7 +197,7 @@
 													</span>
 												</li>
 												<li>
-													<i class="p-icon16-wavve"></i> 
+													<i class="p-icon"><img src="/img/product/v2/icon16_05.svg" alt=""></i> 
 													<span class="txt">wavve 앤 데이터 플러스 무료</span>
 													<span class="price">
 														<del>7,900원</del>
@@ -299,122 +205,26 @@
 														<em>0원</em>
 													</span>
 												</li>
-												<li>
-													<i class="p-icon16-cover"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-vip"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-share"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">5G 스마트워치 TAB 최대 2회선 무료</span></li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">T멤버십 VIP 승급</span></li>
 											</ul>
-										</div>
-									</a>
-									<div class="rn-prod-bottom">
-										<div class="rn-btn-right">
-											<a href="#" class="btn-compare">내 요금제와 비교</a>
-										</div>
-									</div>
-								</div>
-								<!-- //요금제 모듈 : 혜택강조형 -->
-							</li>
-							<li>
-								<!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-								<div class="tod-nmp-item plan-type2 prod-lte">
-									<a href="#" class="item-link">
-										<div class="rn-tag">
-											<div class="col-left">
-												<span class="i-tag-cr2">LTE</span>
+											<div class="p-benefit-choice">
+												<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+												<ul>
+													<li>
+														<i class="p-icon"><img src="/img/product/v2/icon16_04.svg" alt=""></i> 
+														<span class="txt">분실/파손 보험 80 무료</span>
+														<span class="price">
+															<del>7,900원</del>
+															<i class="icon-arr">&rarr;</i> 
+															<em>0원</em>
+														</span>
+													</li>
+												</ul>
 											</div>
-											<div class="col-right"></div>
-										</div>
-										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘 5GX 플래티넘 5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
-										</div>
-										<div class="rn-prod-info">
-											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
-												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
-												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
-											</ul>
-										</div>
-										<div class="rn-prod-benefit">
-											<ul>
-												<li>
-													<i class="p-icon16-flo"></i> 
-													<span class="txt">FLO 앤 데이터 무료 </span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-wavve"></i> 
-													<span class="txt">wavve 앤 데이터 플러스 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-cover"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-vip"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li>
-													<i class="p-icon16-share"></i>
-													<span class="txt">분실/파손 보험 80 무료</span>
-													<span class="price">
-														<del>7,900원</del>
-														<i class="icon-arr">&rarr;</i> 
-														<em>0원</em>
-													</span>
-												</li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">5G 스마트워치 TAB 최대 2회선 무료</span></li>
-												<li><i class="p-icon16-dot"></i> <span class="txt">T멤버십 VIP 승급</span></li>
-											</ul>
 										</div>
 									</a>
 									<div class="rn-prod-bottom">
 										<div class="rn-btn-right">
-											<a href="#" class="btn-compare">내 요금제와 비교</a>
+											<a href="#n" class="btn-compare">내 요금제와 비교</a>
 										</div>
 									</div>
 								</div>
@@ -438,48 +248,17 @@
 						<ul>
 							<li>
 								<!-- 요금제 모듈 : 데이터강조형 - .plan-type3 -->
-								<div class="tod-nmp-item plan-type3 prod-5g">
-									<a href="#" class="item-link">
+								<div class="tod-nmp-item plan-type3 prod-lte">
+									<a href="#n" class="item-link">
 										<div class="rn-tag">
 											<div class="col-left">
-												<span class="i-tag-cr1">5G</span>
+												<span class="i-tag-cr2">LTE</span>
 											</div>
 											<div class="col-right"></div>
 										</div>
 										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
-										</div>
-										<div class="rn-prod-info">
-											<ul class="p-etc">
-												<li>데이터 6GB</li>
-												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
-												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
-											</ul>
-										</div>
-									</a>
-								</div>
-								<!-- //요금제 모듈 : 데이터강조형 -->
-							</li>
-						</ul>
-					</div>
-
-					<!-- 요금제 row list -->
-					<div class="tod-nmp-row-list">
-						<ul>
-							<li>
-								<!-- 요금제 모듈 : 데이터강조형 - .plan-type3 -->
-								<div class="tod-nmp-item plan-type3 prod-5g">
-									<a href="#" class="item-link">
-										<div class="rn-tag">
-											<div class="col-left">
-												<span class="i-tag-cr1">5G</span>
-											</div>
-											<div class="col-right"></div>
-										</div>
-										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
+											<p class="p-name">T플랜 스페셜</p>
+											<p class="p-price">79,000원</p>
 										</div>
 										<div class="rn-prod-info">
 											<ul class="p-etc">
@@ -495,7 +274,7 @@
 							<li>
 								<!-- 요금제 모듈 : 데이터강조형 - .plan-type3 -->
 								<div class="tod-nmp-item plan-type3 prod-5g">
-									<a href="#" class="item-link">
+									<a href="#n" class="item-link">
 										<div class="rn-tag">
 											<div class="col-left">
 												<span class="i-tag-cr1">5G</span>
@@ -520,7 +299,7 @@
 							<li>
 								<!-- 요금제 모듈 : 데이터강조형 - .plan-type3 -->
 								<div class="tod-nmp-item plan-type3 prod-5g">
-									<a href="#" class="item-link">
+									<a href="#n" class="item-link">
 										<div class="rn-tag">
 											<div class="col-left">
 												<span class="i-tag-cr1">5G</span>
@@ -559,52 +338,21 @@
 						<ul>
 							<li>
 								<!-- 요금제 모듈 : 기본형 - .plan-type1 -->
-								<div class="tod-nmp-item plan-type1">
-									<a href="#" class="item-link">
+								<div class="tod-nmp-item plan-type1 prod-band">
+									<a href="#n" class="item-link">
 										<div class="rn-tag">
 											<div class="col-left">
-												<span class="i-tag-cr2">LTE</span>
+												<span class="i-tag-cr4">3G</span>
 											</div>
 											<div class="col-right"></div>
 										</div>
 										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
+											<p class="p-name">Band 데이터 퍼팩트 S</p>
+											<p class="p-price">75,900원</p>
 										</div>
 										<div class="rn-prod-info">
 											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
-												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
-												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
-											</ul>
-										</div>
-									</a>
-								</div>
-								<!-- //요금제 모듈 : 기본형 -->
-							</li>
-						</ul>
-					</div>
-
-					<!-- 요금제 row list -->
-					<div class="tod-nmp-row-list">
-						<ul>
-							<li>
-								<!-- 요금제 모듈 : 기본형 - .plan-type1 -->
-								<div class="tod-nmp-item plan-type1">
-									<a href="#" class="item-link">
-										<div class="rn-tag">
-											<div class="col-left">
-												<span class="i-tag-cr2">LTE</span>
-											</div>
-											<div class="col-right"></div>
-										</div>
-										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
-										</div>
-										<div class="rn-prod-info">
-											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>16GB</li>
 												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
 												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
 											</ul>
@@ -615,46 +363,21 @@
 							</li>
 							<li>
 								<!-- 요금제 모듈 : 기본형 - .plan-type1 -->
-								<div class="tod-nmp-item plan-type1">
-									<a href="#" class="item-link">
+								<div class="tod-nmp-item plan-type1 prod-band">
+									<a href="#n" class="item-link">
 										<div class="rn-tag">
 											<div class="col-left">
-												<span class="i-tag-cr2">LTE</span>
+												<span class="i-tag-cr4">3G</span>
 											</div>
 											<div class="col-right"></div>
 										</div>
 										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
+											<p class="p-name">Band 데이터 6.5G</p>
+											<p class="p-price">56,100원</p>
 										</div>
 										<div class="rn-prod-info">
 											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
-												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
-												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
-											</ul>
-										</div>
-									</a>
-								</div>
-								<!-- //요금제 모듈 : 기본형 -->
-							</li>
-							<li>
-								<!-- 요금제 모듈 : 기본형 - .plan-type1 -->
-								<div class="tod-nmp-item plan-type1">
-									<a href="#" class="item-link">
-										<div class="rn-tag">
-											<div class="col-left">
-												<span class="i-tag-cr2">LTE</span>
-											</div>
-											<div class="col-right"></div>
-										</div>
-										<div class="rn-prod-name">
-											<p class="p-name">5GX 플래티넘</p>
-											<p class="p-price">125,000원</p>
-										</div>
-										<div class="rn-prod-info">
-											<ul class="p-etc">
-												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6GB</li>
+												<li><i class="p-icon18-data"><span class="blind">데이터</span></i>6.5GB</li>
 												<li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
 												<li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
 											</ul>
@@ -672,10 +395,10 @@
 					<div class="tod-nmp-other-list">
 						<p class="p-tit">SKT의 다양한 상품을 만나보세요</p>
 						<ul>
-							<li><a href="#"><i class="p-icon30-service"></i> <em>부가서비스</em></a></li>
-							<li><a href="#"><i class="p-icon30-internet"></i> <em>인터넷/IPTV</em></a></li>
-							<li><a href="#"><i class="p-icon30-plus"></i> <em>결합상품</em></a></li>
-							<li><a href="#"><i class="p-icon30-roaming"></i> <em>T로밍</em></a></li>
+							<li><a href="#n"><i class="p-icon30-service"></i> <em>부가서비스</em></a></li>
+							<li><a href="#n"><i class="p-icon30-internet"></i> <em>인터넷/IPTV</em></a></li>
+							<li><a href="#n"><i class="p-icon30-plus"></i> <em>결합상품</em></a></li>
+							<li><a href="#n"><i class="p-icon30-roaming"></i> <em>T로밍</em></a></li>
 						</ul>
 					</div>
 				</div>
@@ -686,7 +409,7 @@
 	<script type="text/javascript">
 		$(document).ready(function () {
 			var location = window.location.href.split('?')[1],
-					sectionIndex;
+				sectionIndex;
 
 			if (location.indexOf('section=') >= 0) {
 				sectionIndex = location.split('=')[1];

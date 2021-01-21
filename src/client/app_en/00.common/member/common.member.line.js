@@ -257,7 +257,7 @@ Tw.CommonMemberLine.prototype = {
   _openManagePopup: function ($event) {
 
     var $menu = $('div[id^="fe-manage-menu"]');
-    var $menuList = $('.fe-item-list').find('button[id^="fe-manage-menu_"]');
+    var $menuList = $('.fe-item-list').find('button[aria-controls^="fe-manage-menu_"]');
     $menu.detach();
 
     var $btManageLine = $($event.currentTarget);

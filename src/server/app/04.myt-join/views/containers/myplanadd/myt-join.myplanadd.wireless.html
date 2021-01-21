@@ -22,11 +22,11 @@ _%>
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
             <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C62-1", multiple: "CMMA_A3_B13_C62-2" } }); _%>
-            <%_ const dcPrograms = additions.dcPrograms; _%>
-            <%_ const additionsPaid = additions.joined.paids; _%>
-            <%_ const additionsFree = additions.joined.frees; _%>
-            <%_ const additionsRoaming = additions.roaming; _%>
-            <%_ const totalAdditions = dcPrograms.length + additionsPaid.length + additionsFree.length; _%>
+            <%_
+                const {dcPrograms, joined, roaming : additionsRoaming, combinations} = additions;
+                const {paids:additionsPaid, frees:additionsFree} = joined,
+                    totalAdditions = dcPrograms.length + additionsPaid.length + additionsFree.length;
+            _%>
             <div class="tod-sel-top-wrap">
                 <div class="link-cont">
                     <a href="#tod-all" title="선택">전체 <%- totalAdditions %></a>
@@ -108,6 +108,23 @@ _%>
             <hr class="cont-sp type1" aria-hidden="true" />
                 <%_ } _%>
             <%_ } _%>
+
+            <%# OP002-12175 나의 결합상품 건수 노출%>
+            <%_if(combinations && combinations.comProdCnt > 0) {_%>
+            <div class="cont-box nogaps">
+                <ul class="full-link-list type02">
+                    <li>
+                        <a href="/myt-join/combinations">
+                            <span class="inner">
+                                <span class="tit">나의 결합상품</span>
+                                <span class="text tod-txt-point"><%-combinations.comProdCnt%>건</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <%_}_%>
             <%_ if (additionsRoaming && (additionsRoaming.recentlyJoinsProdNm || additionsRoaming.addRoamingProdCnt > 0)) { _%>
 
             <!-- .cont-box -->
@@ -158,6 +175,10 @@ _%>
                 <ul class="pg-chk-list02">
                     <%# PPS (선불폰) 인 경우, MS_06_01_tip_03, 그외 무선인 경우, MS_06_01_tip_01 _%>
                     <li><button id="MS_06_01_tip_0<%- svcInfo.svcAttrCd === 'M3' ? 3 : 1 %>" class="btn-tip" aria-haspopup="true">부가서비스 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <%# 포켓파이 회선은 비노출%>
+                    <%_if(svcInfo.svcAttrCd !== 'M3') {_%>
+                    <li><button id="TC000117" class="btn-tip" aria-haspopup="true">USIM 기변 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <%_}_%>
                 </ul>
             </div>
             <!--// .cont-box -->

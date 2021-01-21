@@ -43,7 +43,7 @@ interface Coupon {
 
 export default class MyTDataRechargeCouponUse extends TwViewController {
   private planType: Map<string, number> = new Map();
-  private fixedProdValue: string = 'NA0000';
+  private fixedProdValue: string = 'NA000';
  /* private planType: Map<string, number> = new Map([
     // ['NA00004098', 0],
     // ['NA00004099', 0],
@@ -93,27 +93,28 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
 
     let no: string, name: string, period: string, tab: string, isGift: boolean;
+
     // isGift  - 선물받은 쿠폰 여부
     const auto = req.query.auto === 'Y';
     if (auto) {
       this.getMostSuitableCoupon(res, svcInfo, pageInfo)
-        .subscribe(
-          (coupon: Coupon) => {
-            if (coupon) {
-              no = coupon.copnIsueNum;
-              name = coupon.copnNm;
-              period = coupon.usePsblStaDt + '~' + coupon.usePsblEndDt;
-              tab = 'refill';
-              isGift = coupon.isGift || false;
-              this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
-            } else {
-              this.error.render(res, { code: '', msg: '', pageInfo, svcInfo });
-            }
-          },
-          err => {
-            this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
-          }
-        );
+          .subscribe(
+              (coupon: Coupon) => {
+                if (coupon) {
+                  no = coupon.copnIsueNum;
+                  name = coupon.copnNm;
+                  period = coupon.usePsblStaDt + '~' + coupon.usePsblEndDt;
+                  tab = 'refill';
+                  isGift = coupon.isGift || false;
+                  this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
+                } else {
+                  this.error.render(res, { code: '', msg: '', pageInfo, svcInfo });
+                }
+              },
+              err => {
+                this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
+              }
+          );
       return;
     } else {
       no = req.query.no;
@@ -122,20 +123,23 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       tab = req.query.tab;
       isGift = req.query.gift === 'Y';
     }
-
     this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
-
   }
 
   private renderCouponUse(res: Response, svcInfo: any, pageInfo: any, no: string, name: string,
                           period: string, tab: string, isGift: boolean, isAuto: boolean) {
+  	const rechargeProdIdsInfo = {
+  		res, svcInfo, pageInfo,
+			countProperty: REDIS_KEY.DATA_RECHARGE_COUNT,
+			targetProperty: REDIS_KEY.DATA_RECHARGE_PRODUCTS
+		}
     Observable.combineLatest(
-      this.getRechargeProdIds(),
+			this.getEnvironmentCountData(rechargeProdIdsInfo),
       this.getCouponUsageOptions(res, svcInfo, pageInfo),
       this.getProductInfo(res, svcInfo, pageInfo, svcInfo.prodId)
     ).subscribe(
       ([splProds, couponUsage, productSummary]) => {
-        if (splProds) {
+        if (splProds && typeof splProds === 'string') {
           splProds.split(',')
             .map((item) => {
               this.planType.set(
@@ -285,15 +289,23 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       return option;
     });
   }
-  private getRechargeProdIds() {
+
+  /**
+   * 요금제 추가시 환경변수로 관리하기 위해 기능 수정 및 추가
+   */
+  private getRechargeProdCount(res, svcInfo, pageInfo) {
     return this.apiService.request(API_CMD.BFF_01_0069, {
-      property: REDIS_KEY.DATA_RECHARGE_PRODUCTS
-    }).map((response) => {
-      if (!response.result) {
-        return null;
+      property: REDIS_KEY.DATA_RECHARGE_COUNT
+    }).map(resp => {
+      if (resp.code === API_CODE.CODE_00) {
+        return resp;
       }
-      // 'a:1, b:2, c:3' 형태로 전달 받음
-      return response.result.trim();
+      return this.error.render(res, {
+        code: resp.code,
+        msg: resp.msg,
+        pageInfo,
+        svcInfo
+      });
     });
   }
 }

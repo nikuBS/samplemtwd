@@ -32,6 +32,18 @@
 	<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 
 	<script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+	<script>
+		$(document).ready(function(){
+			var $tabWrap = $(".tod-nmp-tab").find("ul");
+			var tabWidth = $tabWrap.width();
+			var onWidth = $tabWrap.find(".on").width();
+			var onPosi = $tabWrap.find(".on").position();
+			var onTotalPosi = onPosi.left + onWidth 
+			if(onTotalPosi > tabWidth){
+				$tabWrap.scrollLeft(onPosi.left - 20);
+			}
+		});
+	</script>
 </head>
 
 <body class="tod-renewalBody">
@@ -110,12 +122,30 @@
 						</div>
 						<h3 class="rn-prod-tit">태블릿도 5G 속도로! <br> <strong>5G 태블릿 전용 요금제</strong></h3>
 					</div>
-					<!-- 요금제 row list -->
-					<div class="tod-nmp-row-list">
+					<!-- 요금제 two column list -->
+					<div class="tod-nmp-column-list">
 						<ul>
-							<li></li>
+							<li>
+								<a href="#n" class="prod-box">
+									<p class="p-name">5G Tab 4GB (단독)</p>
+									<div class="p-info">
+										<p class="row1">데이터 4GB</p>
+										<p class="row2">26,000원</p>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#n" class="prod-box">
+									<p class="p-name">5G Tab 4GB (단독)</p>
+									<div class="p-info">
+										<p class="row1">데이터 4GB</p>
+										<p class="row2">26,000원</p>
+									</div>
+								</a>
+							</li>
 						</ul>
 					</div>
+					<!-- //요금제 two column list -->
 				</section>
 				
 				<section class="tod-cont-section">
@@ -126,14 +156,48 @@
 						<div class="rn-tag">
 							<span class="i-tag-cr3">Data함께쓰기</span>
 						</div>
-						<h3 class="rn-prod-tit">데이터 공유로 함계쓰는 <br> <strong>LTE전용 태블릿 요금제</strong></h3>
+						<h3 class="rn-prod-tit">데이터 공유로 함께쓰는 <br> <strong>LTE전용 태블릿 요금제</strong></h3>
 					</div>
-					<!-- 요금제 row list -->
-					<div class="tod-nmp-row-list">
+					<!-- 요금제 two column list -->
+					<div class="tod-nmp-column-list">
 						<ul>
-							<li></li>
+							<li>
+								<a href="#n" class="prod-box">
+									<p class="p-name">LTE Data 함께쓰기 1G</p>
+									<div class="p-info">
+										<p class="row1">데이터 1GB</p>
+										<p class="row2">26,000원</p>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#n" class="prod-box">
+									<p class="p-name">LTE Data 함께쓰기 2.5G</p>
+									<div class="p-info">
+										<p class="row1">데이터 2.5GB</p>
+										<p class="row2">26,000원</p>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#n" class="prod-box">
+									<p class="p-name">LTE Data 함께쓰기 Basic</p>
+									<div class="p-info">
+										<p class="row1">데이터 2.5GB</p>
+										<p class="row2">26,000원</p>
+									</div>
+								</a>
+							</li>
+							<li>
+								<div class="banner-box">
+									<a href="#n" class="img-banner" style="background-image: url(/img/product/v2/banner-img1.jpg);">
+										<div class="blind">5G 부스트파크 특별혜택</div>
+									</a>
+								</div>
+							</li>
 						</ul>
 					</div>
+					<!-- //요금제 two column list -->
 				</section>
 
 				<!-- 다양한 상품 링크 -->

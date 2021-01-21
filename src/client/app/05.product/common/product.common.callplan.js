@@ -137,6 +137,8 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');  // 상세 콘텐츠 보기 버튼
     this.$contentsBtnRoamingAuto = this.$container.find('.fe-btn_roaming_auto');  // 로밍 오토 다이얼 조회 버튼
     this.$contents = this.$container.find('.fe-contents');  // 콘텐츠 영역
+
+    this.$btnWavveBanner = this.$container.find('[data-banner_Index]');  // wavve 베너 이미지
   },
 
   /**
@@ -176,6 +178,10 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
     // 원장 콘텐츠 내 하이퍼링크 인터셉트 (클럽 T 링크 하드코딩 처리를 위함)
     this.$contents.on('click', 'a', $.proxy(this._detectClubT, this));
+
+    //wavVe 요금제 베너
+    this.$btnWavveBanner.on('click', $.proxy(this._openPop, this));
+
     // 로밍오토다이얼 조회 영역 존재시 이벤트 바인딩
     if (this.$contentsBtnRoamingAuto.length > 0) {
       this.$contentsBtnRoamingAuto.on('click', $.proxy(this._procRoamingAuto, this));
@@ -894,6 +900,26 @@ Tw.ProductCommonCallplan.prototype = {
     }, $.proxy(this._focusContentsDetail, this, contentsIndex), null, 'contents_detail', e);
   },
 
+
+  /**
+   * @function
+   * @desc 부가서비스 wave 상세 팝업 열기
+   * @param key - 상세 콘텐츠 인덱스
+   * @param e - 클릭 이벤트
+   */
+  _openPop: function(key, e) {
+
+    //베너 상세 콘텐츠 팝업 실행
+    //ix =0 : 가입/해지,  1:해지 유의사항,  2: 이용 요금 안내
+    var ix = $("[data-banner_Index]").attr('data-banner_Index')-1;
+    this._popupService.open({
+      hbs: 'MP_02_02_06',
+      layer: true,
+      list: this._contentsDetailList
+    }, $.proxy(this._focusContentsDetail, this, ix), null, 'contents_detail', e);
+  },
+
+  
   /**
    * @function
    * @desc 상세 콘텐츠 팝업 열린 후 앵커 이동

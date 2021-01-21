@@ -152,6 +152,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
         svcNum: svcInfo.svcNum,
         custNum: svcInfo.custNum
       }),
+      this.apiService.request(API_CMD.BFF_05_0161, {}), // 나의 결합상품 건수
       (...resps) => {
         const apiError = resps.find(resp => (resp && !!resp.code && resp.code !== '00'));
         if (!FormatHelper.isEmpty(apiError)) {
@@ -160,7 +161,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
             code: apiError.code
           };
         }
-        const [additionProds = {}, smartCallPickProds] = resps.map(resp => resp.result);
+        const [additionProds = {}, smartCallPickProds, combinations] = resps.map(resp => resp.result);
         let joinedPaid = (additionProds.addProdPayList || []).map(convertAdditionData);
         let joinedFree = (additionProds.addProdFreeList || []).map(convertAdditionData);
         // 가입된 로밍 요금제가 있을 경우
@@ -225,6 +226,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           },
           roaming, // 로밍 요금제
           dcPrograms: this._convertWirelessDcPrograms(additionProds.disProdList || []), // 옵션/할인 프로그램
+          combinations // 나의 결합상품 건수
         };
       });
   }
@@ -234,19 +236,26 @@ class MyTJoinMyPlanAdd extends TwViewController {
    * @private
    */
   private _getWireAdditions(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0129, {}).map(resp => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return {
-          joined: {
-            paids: (data.pays || []).map(convertAdditionData), // 가입된 유료 부가서비스
-            frees: (data.frees || []).map(convertAdditionData) // 가입된 무료 부가서비스
-          },
-          reserved: data.reserveds.map(convertAdditionData), // 가입 예약된 부가서비스 목록
-          joinable: data.joinables.map(convertAdditionData).sort(sortAdditionData) // 가입 가능한 부가서비스 목록
-        };
+    return Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0129, {}),
+      this.apiService.request(API_CMD.BFF_05_0133, {}) // 나의 결합상품 건수
+    ).map( (reps) => {
+      const apiError = this.error.apiError(reps);
+      if (!FormatHelper.isEmpty(apiError)) {
+        return apiError;
       }
-      return resp;
+      const [data, combinations] = reps.map( res => res.result);
+      return {
+        joined: {
+          paids: (data.pays || []).map(convertAdditionData), // 가입된 유료 부가서비스
+          frees: (data.frees || []).map(convertAdditionData) // 가입된 무료 부가서비스
+        },
+        reserved: data.reserveds.map(convertAdditionData), // 가입 예약된 부가서비스 목록
+        joinable: data.joinables.map(convertAdditionData).sort(sortAdditionData), // 가입 가능한 부가서비스 목록
+        combinations : {
+          comProdCnt: (combinations.combinationMemberList || []).length // 나의 결합상품 건수
+        }
+      };
     });
   }
 

@@ -8,7 +8,7 @@
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
+import {API_CMD, API_CODE, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import {MYT_SUSPEND_STATE_EXCLUDE, NEW_NUMBER_MSG} from '../../types/string.type';
@@ -305,22 +305,27 @@ class MyTJoinSubmainController extends TwViewController {
         }
       }
 
-      if (numSvc) {
-        if (numSvc.code === API_CODE.CODE_00) {
-          data.numberSvc = numSvc;
-          data.isNotChangeNumber = true;
-          if (data.numberSvc.result.extnsPsblYn === 'Y') {
-            data.numberChanged = true;
-          } else {
+      /*
+          번호 변경 이후 28일이내에 "번호변경 안내서비스"를 신청할 수 있는데,
+          28일 이내이면 numChgFlag = 'Y' 로 보내준다. 28일이 지나면 MOD0030 code 리턴
+       */
+      if (numSvc && numSvc.code === API_CODE.CODE_00) {
+        const {extnsPsblYn, notiEndDt} = numSvc.result;
+        Object.assign(data, {
+          numberSvc: numSvc,
+          isNotChangeNumber: true,
+          numberChanged: extnsPsblYn === 'Y'
+        });
+        if (extnsPsblYn !== 'Y') {
+          if (!FormatHelper.isEmpty(notiEndDt)) {
             const curDate = new Date();
-            const endDate = DateHelper.convDateFormat(data.numberSvc.result.notiEndDt);
+            const endDate = DateHelper.convDateFormat(notiEndDt);
             const betweenDay = this.daysBetween(curDate, endDate);
             if (betweenDay < 28) {
               // 신청 중에는 연장 및 해지
               data.numberChanged = true;
             } else {
               // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
-              data.numberChanged = false;
               data.isNotChangeNumber = false;
             }
           }
@@ -553,18 +558,20 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 나의 가입 부가,결합 상품
   private _getAddtionalProduct() {
-    let command;
-    switch (this.type) {
-      case 2:
-        command = API_CMD.BFF_05_0179;
-        break;
-      case 3:
-        command = API_CMD.BFF_05_0166;
-        break;
-      default:
-        command = API_CMD.BFF_05_0161;
-        break;
+    // 유선과 나머지 회선 구분하여 BFF 호출
+    if (this.type === 2) { // 유선회선일때
+      return Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_05_0179, {}), // 부가상품 갯수 조회
+        this.apiService.request(API_CMD.BFF_05_0133, {}) // 유선 결합상품 조회. BFF 매핑 등록하기
+      ).map( ([addition, combinations]) => {
+        return {
+          additionCount: (addition.result || {}).additionCount || 0, // 부가상품 건수
+          comProdCnt: ((combinations.result || {}).combinationMemberList || []).length
+        };
+      });
     }
+
+    const command = this.type === 3 ? API_CMD.BFF_05_0166 : API_CMD.BFF_05_0161;
     return this.apiService.request(command, {}).map((resp) => {
       // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if (resp.code === API_CODE.CODE_00) {
@@ -738,22 +745,18 @@ class MyTJoinSubmainController extends TwViewController {
   // 번호변경 안내 서비스
   _getChangeNumInfoService() {
     return this.apiService.request(API_CMD.BFF_05_0180, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
+      const {code} = resp;
+      if (code === API_CODE.CODE_00) {
         return resp;
-      } else {
-        // error
-        if (resp.code === API_NEW_NUMBER_ERROR.MOD0030) {
-          return {
-            code: API_NEW_NUMBER_ERROR.MOD0030,
-            msg: NEW_NUMBER_MSG.MOD0030
-          };
-        } else if (resp.code === API_NEW_NUMBER_ERROR.MOD0031) {
-          return {
-            code: API_NEW_NUMBER_ERROR.MOD0031,
-            msg: NEW_NUMBER_MSG.MOD0031
-          };
-        }
       }
+      const result = {
+        MOD0030: NEW_NUMBER_MSG.MOD0030,
+        MOD0031: NEW_NUMBER_MSG.MOD0031
+      };
+      return {
+        code,
+        msg: result[code]
+      };
     });
   }
 }
