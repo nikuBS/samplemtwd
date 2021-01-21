@@ -83,8 +83,13 @@ body.tod-white{background:#fff}
 .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item:last-child{border-bottom:none}
 .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .check-status{display:inline-block; margin-left:auto}
 .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info{display:inline-flex; width:-webkit-calc(100% - 50px); width:calc(100% - 50px); -webkit-box-align: center; align-items:center;}
-.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type-ico{display:inline-block; width:24px; height:24px; margin-right:8px;}
-.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type-ico img{width:100%; height:100%;}
+.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .simbol{display:inline-block; width:24px; height:24px; margin-right:8px; background-size:cover; background-position:left top; background-repeat:no-repeat}
+.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .simbol.ico7{background-image:url('/img/myt/sel-mobile-ico-black.svg');} 
+.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .simbol.ico8{background-image:url('/img/myt/sel-wifi-ico-black.svg');}
+.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .simbol.ico9{background-image:url('/img/myt/sel-tablet-ico-black.svg');}
+.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .simbol.ico10{background-image:url('/img/myt/sel-internet-ico-black.svg');}
+.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .simbol.ico11{background-image:url('/img/myt/sel-tv-ico-black.svg');}
+.tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .simbol.ico12{background-image:url('/img/myt/sel-tel-ico-black.svg');}
 .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type{display:inline-block; margin-right:15px;}
 .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type-info{display:inline-block; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; flex-grow:1; vertical-align:top;} 
 .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type-info .small-link{font-weight:500}
