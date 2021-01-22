@@ -219,7 +219,7 @@
             <% } else { %>
                 <%# 이용 예정 %>
                 <div class="links">
-                    <a href="/product/roaming/setting/roaming-auto?prod_id=<%= currentTariff.prodId %>"
+                    <a href="<%= currentTariff.changeDate %>?prod_id=<%= currentTariff.prodId %>"
                        class="link">기간 확인</a>
                 </div>
             <% } %>
@@ -266,8 +266,27 @@
         <!-- [OP002-11059] [로밍][M] 로밍음성통화 사용량 조회 건 -->
         <div class="card rm-content">
             <h4>T로밍 음성 사용량 안내</h4>
+            
+            <!-- 요금제에 가입 여부 상관 없이 국가 코드가 미국 일때 -->
+            <% if ( country.code === 'USA' ) { %>
+                <p class="fs13 mt8 tod-txcolor4">기본전화로 방문국으로 전화 걸 때 <strong class="tod-txcolor1"><%= rate.vMoChargeMax %>원/초(괌, 사이판-1.98원/초)</strong>, 한국으로 전화 걸 때 <strong class="tod-txcolor1"><%= rate.vIntChargeMax %>원/초(괌,사이판-1.98원/초)</strong>,
+                    수신 시 <strong class="tod-txcolor1"><%= rate.vMtChargeMax %>원/초(괌,사이판-1.98원/초)</strong> 별도 요금이 발생합니다.(SK텔링크 수신 요율 기준)</p>
+                <!-- <p class="fs13 mt8 tod-txcolor4">기본전화로 방문국으로 전화 걸 때 <strong class="tod-txcolor1">1.98원/초</strong>, 한국으로 전화 걸 때 <strong class="tod-txcolor1">1.98원/초</strong>, 
+                    수신 시 <strong class="tod-txcolor1">1.98원/초</strong>(SK텔링크 수신 요율 기준) 별도 요금이 발생합니다.</p>201215 수정 [OP002-12287] -->
+            <% } else if (currentTariff && usage.phone.roUseTariffNow && currentTariff.group === 2 && (country.code === 'CHN' || country.code === 'JPN')) { %>
+            <!-- 요금제에 가입 되어 있고 현재 현재 이용중 이면서 요금제 그룹이 2번이며 국가 코드가 중국이나 일본일때 노출 -->
+            <p class="fs13 mt8 tod-txcolor4">기본전화로 방문국으로 전화 걸 때 <strong class="tod-txcolor1">3.6원/초</strong>, 한국으로 전화 걸 때 <strong class="tod-txcolor1">3.6원/초</strong>, 
+                수신 시 <strong class="tod-txcolor1">3.6원/초</strong>(SK텔링크 수신 요율 기준) 별도 요금이 발생합니다.</p><!-- 201215 수정 [OP002-12287] -->
+            <% } else if (currentTariff && usage.phone.roUseTariffNow && (currentTariff.group === 9 || currentTariff.group === 11) && country.code === 'CHN') { %>
+            <!-- 요금제에 가입 되어 있고 현재 현재 이용중 이면서 요금제 그룹이 9번이나 11번 이면서 국가 코드가 중국 일때 노출 -->
+            <p class="fs13 mt8 tod-txcolor4">기본전화로 방문국으로 전화 걸 때 <strong class="tod-txcolor1">1.8원/초</strong>, 한국으로 전화 걸 때 <strong class="tod-txcolor1">1.8원/초</strong>, 
+                수신 시 <strong class="tod-txcolor1">1.8원/초</strong> 별도 요금이 발생합니다. (China Unicom 망 이용 시)</p><!-- 201215 수정 [OP002-12287] -->
+            <% } else { %>
+            <!-- 요금제 가입 여부와 상관 없이 요율 정보만 있으면 노출 -->
             <p class="fs13 mt8 tod-txcolor4">기본전화로 방문국으로 전화 걸 때 <strong class="tod-txcolor1"><%= rate.vMoChargeMax %>원/초</strong>, 한국으로 전화 걸 때 <strong class="tod-txcolor1"><%= rate.vIntChargeMax %>원/초</strong>,
                  수신 시 <strong class="tod-txcolor1"><%= rate.vMtChargeMax %>원/초</strong>(SK텔링크 수신 요율 기준) 별도 요금이 발생합니다.</p>
+            <% } %>
+
             <div class="rm-mod-info1 mt20">
                 <div class="info-h info-voice">
                     <span>음성</span>
@@ -562,7 +581,8 @@
             <p class="note">이용하실 수 있습니다.</p>
             <div class="divider"></div>
             <div class="buttons">
-                <a href="/product/roaming/setting/roaming-auto?prod_id={{ prodId }}">변경하기</a>
+                <!-- <a href="/product/roaming/setting/roaming-auto?prod_id={{ prodId }}">변경하기</a> -->
+                <a href="{{ changeDate }}?prod_id={{ prodId }}">변경하기</a>
             </div>
         </div>
     </div>

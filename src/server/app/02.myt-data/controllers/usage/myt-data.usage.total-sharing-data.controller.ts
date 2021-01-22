@@ -28,10 +28,10 @@ class MyTDataUsageTotalSharingData extends TwViewController {
       targetProperty: REDIS_KEY.DATA_DEDUCTION_PRODUCTS
     };
     Observable.combineLatest(
-      this.getEnvironmentCountData(getDeductionProdIdsInfo),
       this.reqBalances(),
-      this.reqBalanceAddOns()
-      // this.getProductGroup() OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
+      this.reqBalanceAddOns(),
+      this.getEnvironmentCountData(getDeductionProdIdsInfo)
+    // this.getProductGroup() OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
     ).subscribe(([_balancesResp, balanceAddOnsResp, deductionIds]) => {
       const balancesResp = JSON.parse(JSON.stringify(_balancesResp));
       const apiError = this.error.apiError([

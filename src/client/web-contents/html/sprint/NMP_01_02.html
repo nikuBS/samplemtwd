@@ -62,7 +62,7 @@
         </div>
         <!--// #contents -->
         <div class="popup product-popup" role="dialog" aria-hidden="false">
-            <div class="popup-page layer actionsheet has-floating " style="bottom: 0px; height: 506px;">
+            <div class="popup-page layer actionsheet has-floating" style="bottom: 0px;">
                 <!-- actionsheet, has-floating, has-header // -->
                 <!-- .container-wrap -->
                 <div class="container-wrap">
@@ -99,34 +99,60 @@
                     </div>
                 </div>
                 <!--// .container-wrap -->
+
+                <!-- 210120 팝업닫기 버튼 -->
+                <div class="popup-close-area">
+                    <button type="button" class="rn-prev-step"><span class="tod-blind">닫기</span></button>
+                </div>
             </div>
             <div class="popup-blind"></div>
         </div>
     </div>
     <script>
-        const page = document.querySelector('.popup-page');
-        let startP = 0; 
-        let moveD = 0; 
-        page.addEventListener('touchstart', (e)=>{
+        var page = document.querySelector('.popup-page'),
+            button = document.querySelector('.rn-prev-step'),
+            startP = 0,
+            moveD = 0,
+            goalY = 0;
+
+        button.addEventListener('touchstart', function (e) {
             startP = e.touches[0].clientY;
-        })
-        page.addEventListener('touchmove', (e)=>{
-            moveD = startP - e.touches[0].clientY; 
-            if(moveD < 0){
-                page.style.transform = `translateY(${-1 * moveD}px)`; 
+        });
+
+        button.addEventListener('touchmove', function (e) {
+            moveD = startP - e.touches[0].clientY;
+            if (moveD < 0) {
+                page.style.transform = 'translateY(' + -1 * moveD + 'px)';
                 page.style.transition = 'unset';
             }
-        })
-        page.addEventListener('touchend', (e)=>{
-            let goalY = (Math.abs(moveD) > page.clientHeight/5)? page.clientHeight : 0; 
-            page.style.transform = `translateY(${goalY}px)`; 
-            page.style.boxShadow = 'none'; 
-            page.style.transition = 'transform 0.2s'; 
-            startP = 0; 
-            moveD = 0; 
-        })
+        });
 
-        
+        button.addEventListener('touchend', function () {
+            goalY = (Math.abs(moveD) > page.clientHeight/5 && moveD < 0) ? page.clientHeight : 0; // 조건 추가
+
+            page.style.transform = 'translateY(' + goalY +'px)';
+            page.style.boxShadow = 'none';
+            page.style.transition = 'transform 0.2s';
+            startP = 0;
+            moveD = 0;
+        });
+
+        button.addEventListener('click', function () {
+            goalY = page.clientHeight;
+
+            page.style.transform = 'translateY(' + goalY + 'px)';
+            page.style.boxShadow = 'none';
+            page.style.transition = 'transform 0.2s';
+            startP = 0;
+            moveD = 0;
+        });
+
+        // Transition ended 추가
+        page.addEventListener('transitionend', function () {
+            if (goalY > 0) {
+                console.log('Transition ended');
+            }
+        });
     </script>
 
 </body>
