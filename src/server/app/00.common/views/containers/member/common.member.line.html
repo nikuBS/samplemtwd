@@ -63,26 +63,16 @@
         </div>
     </div>
     <!-- .popup hbs -->
-    <div class="popup tw-popup" style="display: none;" id="fe-pop-agreement" tabindex="0" aria-modal="true" aria-hidden="false" role="dialog">
-        <div class="popup-info tod-eventpop-type1 sel-line-pop" role="alertdialog" aria-describedby="alertText">
-            <div class="popup-header fe-pop-close">
-                <button type="button" class="btn-tooltip-close">닫기</button>
-            </div>
-            <!-- Case1 광고성 정보 수신 동의 안내 -->
-            <div class="popup-contents" id="alertText">
-                <div class="inner-contents">
-                    <i class="ico"></i>
-                    <strong class="text-ti-big">T world에서<br>SK브로드밴드 가입<br>상품을 이용해보세요.</strong>
-                    <span class="need-agree">서비스 이용 동의 필요</span>
+    <div class="popup-page tw-popup pt0" id="fe-pop-guide" style="display:none; background-color:#262626; z-index: 150;">
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="img-wrap" style="position:relative">
+                    <img src="<%= CDN %>/img/myt/img-coachmark-linemanagement.png" alt="회선관리 메뉴 이용안내 - 순서편집 : 등록된 회선의 순서를 변경 할 수 있어요. - 회선관리 메뉴 : 기준회선 등록, 닉네임 설정, 회선 삭제 등 다양한 회선관리 기능을 선택 할 수 있어요. -회선 등록 : 아직 등록하지 않은 회선은 사용등록 후 관리해 보세요." style="width:100%;height:auto;vertical-align:top">
+                    <button class="popup-closeBtn" style="position:absolute;top:86.2%;right:38.6%;bottom:8.2%;left:38.6%;width:22.7%;height:5.7%;background-image:none;"><span class="blind">팝업 페이지 닫기</span></button>
                 </div>
             </div>
-            <ul class="bt-box bt-slice item-two">
-                <li class="fe-pop-hide"><button class="btn-floating disagree">다음에 하기</button></li>
-                <li><button class="btn-floating agree fe-bt-internal" data-url="/common/member/line/skb-svc-agreement">네, 좋아요!</button></li>
-            </ul>
-            <!-- //Case1 광고성 정보 수신 동의 안내 -->
         </div>
-        <div class="popup-blind"></div>
     </div>
     <!--// .popup hbs -->
     <!--// #contents -->
@@ -110,7 +100,7 @@
             <div class="tod-line-info">
                 <span class="icon">
                     <i class="{{ ico }}-48">
-                        <span class="blind">{{ showName }}</span> 
+                        <span class="blind">{{ showName }}</span>
                     </i>
                 </span>
                 <span class="title fe-show-name">{{ showName }}</span>
@@ -132,7 +122,8 @@
 </script>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLine($('#commonLine'), '<%= showParam.defaultCnt %>', '<%= showParam.totalExposedCnt %>');
+    new Tw.CommonMemberLine($('#commonLine'), '<%= showParam.defaultCnt %>', '<%= showParam.totalExposedCnt %>',
+        <%- JSON.stringify(svcInfo) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

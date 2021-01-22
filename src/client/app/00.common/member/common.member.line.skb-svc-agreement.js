@@ -8,11 +8,12 @@
  * @class
  * @desc 공통 > 회선관리
  * @param rootEl
- * @param defaultCnt
+ * @param svcInfo
  * @constructor
  */
-Tw.CommonMemberLineSkbSvcAgreement = function (rootEl) {
+Tw.CommonMemberLineSkbSvcAgreement = function (rootEl, svcInfo) {
   this.$container = rootEl;
+  this._svcInfo = svcInfo;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._tooltipService = Tw.Tooltip;
@@ -211,9 +212,9 @@ Tw.CommonMemberLineSkbSvcAgreement.prototype = {
    */
   _hidePopup: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._setLocalStorage('hideSkbAgreePop', this._userId, 365 * 10);
+      this._setLocalStorage('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
     } else {
-      this._setCookie('hideSkbAgreePop', this._userId, 365 * 10);
+      this._setCookie('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
     }
   },
 
