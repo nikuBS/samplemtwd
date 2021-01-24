@@ -155,6 +155,7 @@ class MyTFareInfoHistory extends TwViewController {
               Observable.from(this.isAdult(API_CMD.BFF_05_0080))
               .subscribe(isAdult => {
                 if (isAdult) {
+                  req.query.isAdult = true;
                   this.errorRenderView(req, res, pageInfo, svcInfo);
                 } else {
                   if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
@@ -190,6 +191,7 @@ class MyTFareInfoHistory extends TwViewController {
               Observable.from(this.isAdult(API_CMD.BFF_05_0066))
               .subscribe(isAdult => {
                 if (isAdult) {
+                  req.query.isAdult = true;
                   this.errorRenderView(req, res, pageInfo, svcInfo);
                 } else {
                   if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
