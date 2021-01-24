@@ -140,6 +140,7 @@ class MyTFareInfoHistory extends TwViewController {
               this.getMicroPaymentData()
           ).subscribe(histories => {
             const lineType = CommonHelper.getLineType(svcInfo);
+            // console.log(">>>>>>>>> lineType", lineType, svcInfo.svcGr);
             // 법인 회선
             if ( lineType.isCompanyLine ) {
               // 법인회선 E
@@ -153,8 +154,8 @@ class MyTFareInfoHistory extends TwViewController {
               // 미성년자 여부 체크 
               Observable.from(this.isAdult(API_CMD.BFF_05_0080))
               .subscribe(isAdult => {
-                isAdult = true;
                 if (isAdult) {
+                  req.query.isAdult = true;
                   this.errorRenderView(req, res, pageInfo, svcInfo);
                 } else {
                   if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
@@ -190,6 +191,7 @@ class MyTFareInfoHistory extends TwViewController {
               Observable.from(this.isAdult(API_CMD.BFF_05_0066))
               .subscribe(isAdult => {
                 if (isAdult) {
+                  req.query.isAdult = true;
                   this.errorRenderView(req, res, pageInfo, svcInfo);
                 } else {
                   if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
