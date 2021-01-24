@@ -142,15 +142,29 @@ class MyTFareInfoHistory extends TwViewController {
             const lineType = CommonHelper.getLineType(svcInfo);
             // 법인 회선
             if ( lineType.isCompanyLine ) {
+              // 법인회선 E
               if (svcInfo.svcGr === 'E') {
                 this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
-              } else {
+              } 
+              else {
                 this.errorRenderView(req, res, pageInfo, svcInfo);
               }
-            } else {
-              this.errorRenderView(req, res, pageInfo, svcInfo);
+            } else { // 법인회선이 아닌 경우 
+              // 미성년자 여부 체크 
+              Observable.from(this.isAdult(API_CMD.BFF_05_0080))
+              .subscribe(isAdult => {
+                isAdult = true;
+                if (isAdult) {
+                  this.errorRenderView(req, res, pageInfo, svcInfo);
+                } else {
+                  if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
+                    this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+                  } else {
+                    this.errorRenderView(req, res, pageInfo, svcInfo);
+                  }  
+                }
+              });
             }
-
           });
           break;
         // 콘텐츠 이용요금 선결제
@@ -164,16 +178,28 @@ class MyTFareInfoHistory extends TwViewController {
             const lineType = CommonHelper.getLineType(svcInfo);           
             // 법인 회선
             if ( lineType.isCompanyLine ) {
+              // 법인회선 E
               if (svcInfo.svcGr === 'E') {
                 this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
-              } else {
+              } 
+              else {
                 this.errorRenderView(req, res, pageInfo, svcInfo);
               }
-
-            } else {
-              this.errorRenderView(req, res, pageInfo, svcInfo);
+            } else { // 법인회선이 아닌 경우 
+              // 미성년자 여부 체크
+              Observable.from(this.isAdult(API_CMD.BFF_05_0066))
+              .subscribe(isAdult => {
+                if (isAdult) {
+                  this.errorRenderView(req, res, pageInfo, svcInfo);
+                } else {
+                  if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
+                    this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+                  } else {
+                    this.errorRenderView(req, res, pageInfo, svcInfo);
+                  }  
+                }
+              }); 
             }
-
           });
           break;
         // 포인트 납부예약
@@ -206,14 +232,21 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private errorRenderView(req, res, pageInfo, svcInfo) {
-    const error = {
-      title: MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.title,
-      contents: MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.contents
+    let error = {
+      title: '',
+      contents: ''
     };
+    if (req.query.isAdult) { // 미성년자 메세지 
+        error.title = MYT_FARE_INFO_HISTORY.ERROR.NO_ADULT_LINE.title;
+        error.contents = '';
+    } else { // 법인회선 메세지
+      error.title = MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.title;
+      error.contents = MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.contents
+    }
     const code = req.query.code || '',
-    msg = error.title,
-    subMsg = error.contents,
-    isPopupCheck = false;
+          msg = error.title,
+          subMsg = error.contents,
+          isPopupCheck = false;
     this.error.render(res, {
       code: code,
       msg: msg,
@@ -716,6 +749,26 @@ class MyTFareInfoHistory extends TwViewController {
       {link: 'MF_08_tip_05', view: 'M000290', title: '납부취소 안내'}
     ];
   }
+
+  /**
+   * @return {Observable}
+   * @desc 소액결제, 콘텐츠결제 미성년자여부 체크 
+   */
+  private isAdult = (apiName): Observable<any | null> => {
+    // BFF_05_0080: 소액결제, BFF_05_0066: 콘텐츠 결제 
+    return this.apiService.request(apiName, {}).map((resp: { code: string; result: any }) => {
+      // console.log(">>>>>>>>>>>> isAdult Code: ", resp.code);
+      if (resp.code === 'BIL0031') {
+        resp.result = true;
+      } else {
+        resp.result = false;
+      }
+      return resp.result;
+    });
+  }
+
+  
+
 }
 
 export default MyTFareInfoHistory;
