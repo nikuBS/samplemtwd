@@ -220,7 +220,7 @@
 .tod-nmp-prod-group .gr-tit {margin-bottom:0.625rem; font-size: 0.875rem; font-weight:300; letter-spacing: -0.4px; color: #000000;}
 .tod-nmp-prod-group .gr-tit strong {font-weight:500;}
 .tod-nmp-prod-group + .tod-nmp-prod-group {padding-top:1.875rem; margin-top:1.875rem}
-.tod-nmp-prod-group + .tod-nmp-prod-group::before {position:absolute; top:-1px; content:''; display:block; width:100%; height:2px; object-fit: contain; border-top:1px solid #; border-radius: 1px; box-shadow: inset 1px 1px 1px 0 rgba(186, 186, 189, 0.5); background-color: #efeff1;}
+.tod-nmp-prod-group + .tod-nmp-prod-group::before {position:absolute; top:-1px; content:''; display:block; width:100%; height:2px; object-fit: contain; border-radius: 1px; box-shadow: inset 1px 1px 1px 0 rgba(186, 186, 189, 0.5); background-color: #efeff1;}
   
 /* 테마 */
 .tod-cont-section.tod-nmp-theme {overflow:hidden;}
@@ -272,7 +272,7 @@
 .tod-nmp-comp-header .comp-inner .tit {font-size:0.6875rem; color:#767778}
 .tod-nmp-comp-header .comp-inner .name {font-size:20px; font-weight:500; color:#222222; letter-spacing: -1.11px;}
 .tod-nmp-comp-header .comp-inner .price {font-size:1rem; font-weight:bold; color:#222222; letter-spacing: -0.11px;}
-.tod-nmp-comp-header .comp-inner .price small {font-size:12color:#222222}
+.tod-nmp-comp-header .comp-inner .price small {font-size:0.75rem; color:#222222}
 
 /* 210118 동의여부 Toast 팝업 */
 .toast-popup.tod-nmp-toast .toast-layer {border-radius: 30px; background-color:#f6f8fa}
