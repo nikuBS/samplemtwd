@@ -158,7 +158,7 @@ class MyTFareInfoHistory extends TwViewController {
                   req.query.isAdult = true;
                   this.errorRenderView(req, res, pageInfo, svcInfo);
                 } else {
-                  if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
+                  if (svcInfo.svcGr === 'Y' || svcInfo.svcGr === 'A') { // 일반회선 인증A, 인증B
                     this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
                   } else {
                     this.errorRenderView(req, res, pageInfo, svcInfo);
@@ -194,7 +194,7 @@ class MyTFareInfoHistory extends TwViewController {
                   req.query.isAdult = true;
                   this.errorRenderView(req, res, pageInfo, svcInfo);
                 } else {
-                  if (svcInfo.svcGr === 'Y') { // 일반회선 인증A, 인증B
+                  if (svcInfo.svcGr === 'Y' || svcInfo.svcGr === 'A') { // 일반회선 인증A, 인증B
                     this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
                   } else {
                     this.errorRenderView(req, res, pageInfo, svcInfo);
