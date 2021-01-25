@@ -204,7 +204,7 @@
 
 
 /* 요금제별 section */
-.tod-cont-section {position:relative; padding:1.875rem 1.25rem 1.6875rem; border-top:1px solid #fff; border-bottom:1px solid #dbdbdb;background-image: linear-gradient(to bottom, #dbdbdb 8%, #f1f1f3);}
+.tod-cont-section {position:relative; padding:1.875rem 1.25rem; border-top:1px solid #fff; border-bottom:1px solid #dbdbdb;background-image: linear-gradient(to bottom, #dbdbdb 8%, #f1f1f3);}
 .tod-cont-section .rn-banner-img {position:absolute; top:0; left:0; z-index:0; width:100%}
 .tod-cont-section .rn-banner-img img {width:100%}
 
@@ -214,6 +214,13 @@
 .tod-nmp-title .rn-prod-tit strong {font-weight: 500;}
 .tod-nmp-title .rn-hash {margin-top:0.5rem}
 .tod-nmp-title .rn-hash > .p-hash {display:inline-block; margin-right:0.75rem; font-size: 0.75rem; font-weight: 500; letter-spacing: -1.2px; color: #486ce9;}
+
+/* 210125 시리즈외 타이틀 있는 버전 */
+.tod-nmp-prod-group {position:relative}
+.tod-nmp-prod-group .gr-tit {margin-bottom:0.625rem; font-size: 0.875rem; font-weight:300; letter-spacing: -0.4px; color: #000000;}
+.tod-nmp-prod-group .gr-tit strong {font-weight:500;}
+.tod-nmp-prod-group + .tod-nmp-prod-group {padding-top:1.875rem; margin-top:1.875rem}
+.tod-nmp-prod-group + .tod-nmp-prod-group::before {position:absolute; top:-1px; content:''; display:block; width:100%; height:2px; object-fit: contain; border-top:1px solid #; border-radius: 1px; box-shadow: inset 1px 1px 1px 0 rgba(186, 186, 189, 0.5); background-color: #efeff1;}
   
 /* 테마 */
 .tod-cont-section.tod-nmp-theme {overflow:hidden;}
