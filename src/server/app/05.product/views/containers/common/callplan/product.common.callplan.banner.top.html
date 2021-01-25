@@ -9,7 +9,19 @@
     <% } else if ( prodRedisInfo.banner.T.bnnrLinkTypCd === 'S') { %>
        <!--  <a href="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>"><img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC"></a> -->
        
-       <img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC" data-banner_Index="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>">
+            <!-- 
+                bnnrImgUrl : S  자창 인데, 1,2,3 일경우 신규 팝업실행
+                그외, 아닐 경우 기존 로직 타게됨....
+            -->
+            <% if ( prodRedisInfo.banner.T.bnnrLinkUrl === '1' || prodRedisInfo.banner.T.bnnrLinkUrl === '2' || prodRedisInfo.banner.T.bnnrLinkUrl === '3')   { %>
+                <img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC" data-banner_Index="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>">            
+            <%
+                } else   
+                    {
+            %>             
+                <a href="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>" class="fe-banner_link"><img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC"></a>
+            <% } %>
+
 
     <% } else {%>
         <a href="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>" class="fe-banner_link"><img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC"></a>
