@@ -123,6 +123,18 @@
             <% } %>
             <!-- //연관 검색어 -->
 
+            <% if (arrKeywordSize > 1) { %>
+            <!-- 검색 결과 없음 -->
+            <div class="cont-box nogaps-hoz">
+                <div class="tod-search-feedback noresult">
+                    <strong class="text-ti"><span class="tod-txcolor6">‘<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>’</span>에 대한 검색 결과가 없습니다.</strong>
+                    <p class="text">아래는 <span class="tod-txcolor6">‘<%= arrKeyword[0] %>’</span> 또는 <span class="tod-txcolor6">‘<%= arrKeyword[1] %>’</span>(으)로 검색한 결과로, 총 <strong><%= searchTotalCount %></strong> 입니다.</p>
+                </div>
+
+            </div>
+            <!-- //검색 결과 없음 -->
+            <% } %>
+
             <!-- 200710 [OP002-8565] o2o 고도화 관련 작업 : 추가 -->
             <div id="fe-shop-info-area">
                 <hr class="cont-sp type1" aria-hidden="true">
