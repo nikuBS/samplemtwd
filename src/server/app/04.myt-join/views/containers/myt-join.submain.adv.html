@@ -23,156 +23,29 @@ _%>
                 <!-- 기본가입정보 : start -->
                 <%- include('../components/submain/myt-join.submain.adv.more-info.html', data) _%>
                 <!-- 기본가입정보 : end -->
+                <% if (data.type !== 2) { %>
                 <!-- 약정할인/기기상환, 무약정플랜 :start -->
                 <%- include('../components/submain/myt-join.submain.adv.dis-info.html', data) _%>
                 <!-- 약정할인/기기상환, 무약정플랜 :end -->
-                <section class="cont-card">
-                    <div class="section-inner">
-                        <div class="head-tit"><a href="#" class="link">나의 요금제/부가상품</a></div> <!-- 201222 [OP002-10282]수정02 -->
-                        <div class="card-cont">
-                            <dl class="using-plan">
-                                <dt class="plan-tit">0플랜 미디엄</dt>
-                                <dd class="plan-info">
-                                    <ul class="report-list small">
-                                        <li class="report-item">
-                                            <dl class="report-define d-wrap">
-                                                <dt class="report-tit">신청일</dt>
-                                                <dd class="report-cont">2020.6.5.</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="report-item">
-                                            <dl class="report-define d-wrap">
-                                                <dt class="report-tit">월정액</dt>
-                                                <dd class="report-cont">89,000원</dd>
-                                            </dl>
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-                            <div class="add-pro-wrap">
-                                <ul class="add-pro-list">
-                                    <li class="add-pro-item">
-                                        <a href="#">
-                                            <div class="number">
-                                                8<span class="unit">개</span>
-                                            </div>
-                                            <div class="service-name">무료<br>부가서비스</div>
-                                        </a>
-                                    </li>
-                                    <li class="add-pro-item">
-                                        <a href="#">
-                                            <div class="number">
-                                                3<span class="unit">개</span>
-                                            </div>
-                                            <div class="service-name">유료<br>부가서비스</div>
-                                        </a>
-                                    </li>
-                                    <li class="add-pro-item">
-                                        <a href="#">
-                                            <div class="number">
-                                                0<span class="unit">개</span>
-                                            </div>
-                                            <div class="service-name">옵션 / 할인<br>프로그램</div>
-                                        </a>
-                                    </li>
-                                    <li class="add-pro-item">
-                                        <a href="#">
-                                            <div class="number">
-                                                2<span class="unit">개</span>
-                                            </div>
-                                            <div class="service-name">결합상품</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="cont-card">
-                    <div class="section-inner">
-                        <div class="head-tit"><a href="#" class="link">나의 혜택/할인</a></div>
-                        <div class="card-cont">
-                            <ul class="ico-list">
-                                <li class="item">
-                                    <a href="#">
-                                        <div class="ico-item">
-                                            <i class="ico"><img src="/img/myt/submain-ico11.svg" alt=""></i>
-                                            <div class="list-txt">
-                                                <span class="item-sub-txt">멤버십 등급</span>
-                                                <span class="item-tit">VIP</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="item">
-                                    <a href="#">
-                                        <div class="ico-item">
-                                            <i class="ico"><img src="/img/myt/submain-ico12.svg" alt=""></i>
-                                            <div class="list-txt">
-                                                <span class="item-sub-txt">연간 누적 혜택</span>
-                                                <span class="item-tit">4,000원</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="item">
-                                    <a href="#">
-                                        <div class="ico-item">
-                                            <i class="ico"><img src="/img/myt/submain-ico13.svg" alt=""></i>
-                                            <div class="list-txt">
-                                                <span class="item-sub-txt">혜택 / 할인</span>
-                                                <span class="item-tit">4건</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-                <section class="cont-card">
-                    <div class="section-inner">
-                        <div class="head-tit"><a href="#" class="link">납부/청구 정보</a></div> <!-- 201207 [OP002-10282] 수정06 : 텍스트 수정-->
-                        <div class="card-cont">
-                            <ul class="report-list">
-                                <li class="report-item">
-                                    <dl class="report-define d-wrap">
-                                        <dt class="report-tit">8월 청구 요금 <span class="report-sub">2020.7.1. ~ 2020.7.31.</span></dt> <!-- 201207 [OP002-10282] 수정07 : 텍스트 수정-->
-                                        <dd class="report-cont">80,990원</dd>
-                                    </dl>
-                                </li>
-                            </ul>
-                            <div class="pay-info-wrap">
-                                <ul class="ico-list horizontal">
-                                    <li class="item">
-                                        <a href="#">
-                                            <div class="ico-item">
-                                                <i class="ico"><img src="/img/myt/submain-ico14.svg" alt=""></i>
-                                                <div class="list-txt">
-                                                    <span class="item-sub-txt">요금안내서 설정</span>
-                                                    <span class="item-tit">Bill Letter</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item">
-                                        <a href="#">
-                                            <div class="ico-item">
-                                                <i class="ico"><img src="/img/myt/submain-ico01.svg" alt=""></i>
-                                                <div class="list-txt">
-                                                    <span class="item-sub-txt">납부방법</span>
-                                                    <span class="item-tit">카드자동납부</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <% } %>
+                <%_ if (data.isAddProduct) { _%>
+                <!-- 나의 요금제 및 부가상품 정보 : start -->
+                <%- include('../components/submain/myt-join.submain.adv.addition-info.html', data) _%>
+                <!-- 나의 요금제 및 부가상품 정보 : end -->
+                <%_ } _%>
+                <% if (data.type !== 1 && data.type !== 2) { %>
+                <!-- 혜택/할인 (PPS, 유선제외) :start -->
+                <%- include('../components/submain/myt-join.submain.adv.benefit-info.html', data) _%>
+                <!-- 혜택/할인 :end -->
+                <% } %>
+                <!-- 납부/청구 :start -->
+                <%_ if (data.paidBillInfo) { _%>
+                <%- include('../components/submain/myt-join.submain.adv.paid-info.html', data) _%>
+                <%_ } _%>
+                <!-- 납부/청구 :end -->
+                <!-- 가입배너 :start -->
                 <div class="submain-banner">
-                    <a href="#">
+                    <a href="/product/wireplan/join/reservation?type_cd=cellphone">
                         <!-- 201207 [OP002-10282] 수정08 : 텍스트 수정-->
                         <p class="banner-comment">
                             <strong>가입상담을 예약하시겠어요?</strong>
@@ -182,122 +55,15 @@ _%>
                         <img src="/img/myt/submain-banner02.png" alt="">
                     </a>
                 </div>
-                <!-- 201201 [OP002-10282] 수정02 -->
-                <section class="cont-card">
-                    <div class="section-inner">
-                        <div class="head-tit high">자녀의 회선을 확인해 보세요.</div> <!-- 201207 [OP002-10282] 수정09 : 텍스트 수정-->
-                        <div class="card-cont">
-                            <ul class="children-list">
-                                <li class="child">
-                                    <dl class="child-info">
-                                        <dt class="name">자녀휴대폰자녀휴대폰자녀휴대폰</dt>
-                                        <dd class="tel">010-34**-56**</dd>
-                                    </dl>
-                                    <div class="child-btn-area">
-                                        <a href="#">실시간 잔여량</a>
-                                        <a href="#">이용요금</a>
-                                        <a href="#">실시간 이용요금</a>
-                                    </div>
-                                </li>
-                                <li class="child">
-                                    <dl class="child-info">
-                                        <dt class="name">Galaxy S20 Ultra 5G SM-G988</dt>
-                                        <dd class="tel">010-34**-56**</dd>
-                                    </dl>
-                                    <div class="child-btn-area">
-                                        <a href="#">실시간 잔여량</a>
-                                        <a href="#">이용요금</a>
-                                        <a href="#">실시간 이용요금</a>
-                                    </div>
-                                </li>
-                                <li class="child">
-                                    <dl class="child-info">
-                                        <dt class="name">자녀휴대폰</dt>
-                                        <dd class="tel">010-34**-56**</dd>
-                                    </dl>
-                                    <div class="child-btn-area">
-                                        <a href="#">실시간 잔여량</a>
-                                        <a href="#">이용요금</a>
-                                        <a href="#">실시간 이용요금</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-                <!-- //201201 [OP002-10282] 수정02 -->
-                <section class="cont-card">
-                    <div class="section-inner">
-                        <div class="head-tit">조회/신청 서비스</div>  <!-- 201211 [OP002-10282] 수정01  -->
-                        <div class="card-cont">
-                            <div class="acc-list-wrap">
-                                <!-- .widget -->
-                                <div class="widget ">
-                                    <div class="widget-box accordion">
-                                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
-                                            <div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
-                                                <ul class="acco-list pd0">
-                                                    <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
-                                                        <div class="acco-tit">
-                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">일시정지</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
-                                                        </div>
-                                                        <div class="acco-cont">
-                                                            <p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능하며, Wi-Fi 접속으로도 해제 신청 가능합니다.</p>
-                                                            <div class="btn-area">
-                                                                <a href="#" class="rect-btn">변경하기</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="acco-box acc-item">
-                                                        <div class="acco-tit">
-                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">정지현황</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
-                                                        </div>
-                                                        <div class="acco-cont">
-                                                            <ul class="dot-list">
-                                                                <li class="dot-item">일시정지 이용중 <span class="small-txt">2019.6.1. – 2019.7.31.</span>
-                                                                    <p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능하며, Wi-Fi 접속으로도 해제 신청 가능합니다.</p>
-                                                                </li>
-                                                            </ul>
-
-                                                            <div class="btn-area">
-                                                                <a href="#" class="rect-btn">상세보기</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="acco-box acc-item">
-                                                        <div class="acco-tit">
-                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">고객보호비밀번호 서비스</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
-                                                        </div>
-                                                        <div class="acco-cont">
-
-                                                            <ul class="dot-list">
-                                                                <li class="dot-item">현재 고객보호 비밀번호 서비스를 이용 중입니다.</li>
-                                                            </ul>
-                                                            <div class="btn-area">
-                                                                <a href="#" class="rect-btn">조회하기</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--// .widget -->
-                            </div>
-                            <div class="hash-wrap">
-                                <ul class="hash-list normal">
-                                    <li class="hash-item">
-                                        <a href="#" class="hash">#010 전환 번호변경</a>
-                                    </li>
-                                    <li class="hash-item">
-                                        <a href="#" class="hash">#번호변경 안내서비스</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <!-- 가입배너 :start -->
+                <!-- 자녀회선 :start -->
+                <%_ if(data.childLine) { _%>
+                <%- include('../components/submain/myt-join.submain.adv.child-line.html', data) _%>
+                <%_ } _%>
+                <!-- 자녀회선 :end -->
+                <!-- 조회/신청 서비스 : start -->
+                <%- include('../components/submain/myt-join.submain.adv.service.html', data) _%>
+                <!-- 조회/신청 서비스 : end -->
                 <div class="submain-color-banner" >
                     <a href="#">
                         <p class="banner-comment">
@@ -305,7 +71,7 @@ _%>
                             <strong>방학 동안<br>0한동 마법사 모집</strong>
                         </p>
                         <span class="like-btn">자세히 보기</span>
-                        <img class="banner" src="/img/myt/submain-banner04.png" alt="">
+                        <img class="banner" src="<%= CDN %>/img/myt/submain-banner04.png" alt="">
                     </a>
                 </div>
                 <!-- 201201 [OP002-10282] 수정03 -->
@@ -317,37 +83,37 @@ _%>
                                 <ul class="small-ico-list">
                                     <li class="ico-item">
                                         <a href="#">
-                                            <i class="ico"><img src="/img/myt/submain-ico16.svg" alt=""></i>나의 데이터/통화
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico16.svg" alt=""></i>나의 데이터/통화
                                         </a>
                                     </li>
                                     <li class="ico-item">
                                         <a href="#">
-                                            <i class="ico"><img src="/img/myt/sub-ben-ico06.svg" alt=""></i>요금안내서
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>요금안내서
                                         </a>
                                     </li>
                                     <li class="ico-item">
                                         <a href="#">
-                                            <i class="ico"><img src="/img/myt/sub-ben-ico01.svg" alt=""></i>실시간 잔여량
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico01.svg" alt=""></i>실시간 잔여량
                                         </a>
                                     </li>
                                     <li class="ico-item">
                                         <a href="#">
-                                            <i class="ico"><img src="/img/myt/sub-ben-ico17.svg" alt=""></i>인증 센터 <!-- 201211 [OP002-10282] 수정02  -->
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico17.svg" alt=""></i>인증 센터 <!-- 201211 [OP002-10282] 수정02  -->
                                         </a>
                                     </li>
                                     <li class="ico-item">
                                         <a href="#">
-                                            <i class="ico"><img src="/img/myt/sub-ben-ico16.svg" alt=""></i>회원정보
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico16.svg" alt=""></i>회원정보
                                         </a>
                                     </li>
                                     <li class="ico-item">
                                         <a href="#">
-                                            <i class="ico"><img src="/img/myt/sub-ben-ico15.svg" alt=""></i>요금제 변경 가능일 알림
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico15.svg" alt=""></i>요금제 변경 가능일 알림
                                         </a>
                                     </li>
                                     <li class="ico-item">
                                         <a href="#">
-                                            <i class="ico"><img src="/img/myt/sub-ben-ico06.svg" alt=""></i>휴대폰 결제/콘텐츠 이용료
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>휴대폰 결제/콘텐츠 이용료
                                         </a>
                                     </li>
                                 </ul>

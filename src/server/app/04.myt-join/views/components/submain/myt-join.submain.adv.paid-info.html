@@ -1,0 +1,61 @@
+<%#
+* MenuName: 나의 가입정보 > 서브메인 [회선정보]
+* @file myt-join.submain.adv.benefit-info.html (MS)
+* @author Kim InHwan (skt.P132150@partner.sk.com)
+* @since 2021.01.21
+_%>
+
+<section class="cont-card">
+  <div class="section-inner">
+    <div class="head-tit"><a href="#" class="link">납부/청구 정보</a></div> <!-- 201207 [OP002-10282] 수정06 : 텍스트 수정-->
+    <div class="card-cont">
+      <ul class="report-list">
+        <li class="report-item">
+          <dl class="report-define d-wrap">
+            <%_ if (data.type === 1) { _%>
+            <dt class="report-tit">사용 가능한 잔액</dt>
+            <dd class="report-cont"><%= data.paidBillInfo.amount %>원</dd>
+            <%_ } else { _%>
+            <dt class="report-tit">
+              <%= data.paidBillInfo.showMonth %>
+              <%= data.paidBillInfo.isUsageBill ? ' 이용 요금' : ' 총 납부 금액' %>
+              <span class="report-sub">
+                <%= data.paidBillInfo.startDate %> ~ <%= data.paidBillInfo.endDate %>
+              </span>
+            </dt> <!-- 201207 [OP002-10282] 수정07 : 텍스트 수정-->
+            <dd class="report-cont"><%= data.paidBillInfo.amount %>원</dd>
+            <%_ } _%>
+          </dl>
+        </li>
+      </ul>
+      <%_ if (data.type !== 1) { _%>
+      <div class="pay-info-wrap">
+        <ul class="ico-list horizontal">
+          <li class="item">
+            <a href="#">
+              <div class="ico-item">
+                <i class="ico"><img src="/img/myt/submain-ico14.svg" alt=""></i>
+                <div class="list-txt">
+                  <span class="item-sub-txt">요금안내서 설정</span>
+                  <span class="item-tit"><%= data.paymentInfo.billTypeNm %></span>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="item">
+            <a href="#">
+              <div class="ico-item">
+                <i class="ico"><img src="/img/myt/submain-ico01.svg" alt=""></i>
+                <div class="list-txt">
+                  <span class="item-sub-txt">납부방법</span>
+                  <span class="item-tit">카드자동납부</span>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <%_ } _%>
+    </div>
+  </div>
+</section>

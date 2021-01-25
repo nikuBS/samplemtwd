@@ -44,7 +44,8 @@ _%>
       </a>
     </div>
   <%_ } _%>
-<%_ } else { _%>
+<%_ } _%>
+<%_ if (data.myDeviceInstallment || data.myDiscountInfo) { _%>
 <!-- 201207 [OP002-10282] 수정04 : 텍스트 수정 -->
 <section class="cont-card">
   <div class="section-inner">
@@ -72,7 +73,7 @@ _%>
         <%_ } _%>
         <%_ if (data.myDiscountInfo) { _%>
         <div class="small-group-wrap">
-          <p class="card-sub-tit">요금 약정 할인</p>
+          <p class="card-sub-tit"><%= data.myDiscountInfo.name %></p>
           <div class="horizon-bar-wrap small">
             <div class="horizon-bar">
               <span class="data" style="width:<%= data.myDiscountInfo.graphPercent %>%">

@@ -44,6 +44,10 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+  }
+
+  _setData(req, res, next, svcInfo, allSvc, child, pageInfo) {
     this.__setType(svcInfo);
     const data: any = {
       svcInfo: svcInfo, // Object.assign({}, svcInfo),
@@ -74,7 +78,14 @@ class MyTJoinSubmainController extends TwViewController {
     if (['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) === -1) {
       data.svcInfo.svcNum = StringHelper.phoneStringToDash(data.svcInfo.svcNum);
     }
-    this.__requestApiAfterRender(res, data)
+    return data;
+  }
+
+  _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
+    // 상위클래스에서 하위 클래스에 메서드를 호출 하는 경우 컴파일 오류가 발생하여 하위 클래스에서
+    // 상위 클래스로 호출 하는 방식으로 처리하기 위해 함수로 분리하여 처리
+    const data = this._setData(req, res, next, svcInfo, allSvc, child, pageInfo);
+    this.__requestApiAfterRender(res, data);
   }
 
   __requestApiAfterRender(res, data) {
@@ -226,7 +237,7 @@ class MyTJoinSubmainController extends TwViewController {
         data.myInfo = myif;
         break;
     }
-    data.myHistory = myhs; // 개통/변경 이력
+    data.myHistory = myhs.length ? myhs : null; // 개통/변경 이력
     data.myAddProduct = myap; // 나의 부가,결합상품
     data.myContractPlan = mycpp; // 무약정플랜
     data.myInstallement = myinsp; // 약정,할부 정보
@@ -234,7 +245,7 @@ class MyTJoinSubmainController extends TwViewController {
     data.myLongPausedState = mylps; // 장기일시정지
 
     // 부가, 결합상품 노출여부
-    if (data.myAddProduct && Object.keys(data.myAddProduct).length > 0) {
+    if (!FormatHelper.isEmpty(data.myAddProduct)) {
       data.isAddProduct = true;
       switch (this.type) {
         case 2:
@@ -372,6 +383,7 @@ class MyTJoinSubmainController extends TwViewController {
           }
         }
       }
+
     }
     // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
     // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
@@ -524,6 +536,9 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 일시정지/해제
   _getPausedState() {
+    if (this.type === 2) {
+      return Observable.of(null);
+    }
     return this.apiService.request(API_CMD.BFF_05_0149, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
@@ -535,6 +550,9 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 장기 일시정지
   _getLongPausedState() {
+    if (this.type === 2) {
+      return Observable.of(null);
+    }
     return this.apiService.request(API_CMD.BFF_05_0194, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
@@ -551,18 +569,26 @@ class MyTJoinSubmainController extends TwViewController {
       return Observable.combineLatest(
         this.apiService.request(API_CMD.BFF_05_0179, {}), // 부가상품 갯수 조회
         this.apiService.request(API_CMD.BFF_05_0133, {}) // 유선 결합상품 조회. BFF 매핑 등록하기
-      ).map( ([addition, combinations]) => {
+      ).map( ([additionResp, combinationsResp]) => {
+        const addition = additionResp.code === API_CODE.CODE_00 ? additionResp.result : null;
+        const combinations = combinationsResp.code === API_CODE.CODE_00 ? combinationsResp.result : null;
+        const comProdCnt = combinations.combinationMemberCnt ?
+            parseInt(combinations.combinationMemberCnt || 0, 10) : combinations.combinationMemberList ?
+                combinations.combinationMemberList.length : 0
         return {
-          additionCount: (addition.result || {}).additionCount || 0, // 부가상품 건수
-          comProdCnt: ((combinations.result || {}).combinationMemberList || []).length
+          feePlanProd: addition.feePlanProd || null,
+          addProdPayCnt: parseInt(addition.payAdditionCount || 0, 10), // 유료 부가상품
+          addProdPayFreeCnt: parseInt(addition.freeAdditionCount || 0, 10), // 무료 부가상품
+          additionCount: parseInt(addition.additionCount || 0, 10), // 총 부가상품 건수
+          comProdCnt // 결합상품
         };
       });
     }
 
     const command = this.type === 3 ? API_CMD.BFF_05_0166 : API_CMD.BFF_05_0161;
     return this.apiService.request(command, {}).map((resp) => {
-      // TODO: 서버 API response와 명세서 내용이 일치하지 않는 문제로 완료 후 작업 예정
       if (resp.code === API_CODE.CODE_00) {
+        // feePlanProd -> 가입요금제정보
         return resp.result;
       }
       // error
@@ -621,56 +647,12 @@ class MyTJoinSubmainController extends TwViewController {
         });
   }
 
-  /**
-   * @desc 무선 부가서비스 상품 조회
-   * @private
-   */
-  /*
-  private _wirelessAdditionProduct(svcInfo: any): Observable<any> {
-    const { svcAttrCd } = svcInfo;
-    if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) === -1) { // 무선이 아닌 경우 (유선 및 기타)
-      return Observable.of(0);
-    }
-    return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return (data.addProdList || []).length;
-      }
-      return 0;
-    });
-  }
-  */
-
-  /**
-   * 스마트콜 Pick 상품 조회
-   * @param svcInfo
-   * @private
-   */
-  /*
-  private _smartCallPickProduct(svcInfo: any): Observable<any> {
-    /!*
-    // NOTE: 무선인 경우, 성능 개선을 위해... 확인 후 적용하자
-    const { svcAttrCd } = svcInfo;
-    if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) === -1) { // 무선이 아닌 경우 (유선 및 기타)
-      return Observable.of([]);
-    }
-    *!/
-    return this.apiService.request(API_CMD.BFF_10_0185, {}, {
-      svcMgmtNum: svcInfo.svcMgmtNum,
-      svcNum: svcInfo.svcNum,
-      custNum: svcInfo.custNum
-    }).map(resp => {
-      if (resp.code === API_CODE.CODE_00) {
-        const data = resp.result;
-        return (data.listSmartPick || []).length;
-      }
-      return 0;
-    });
-  }
-  */
-
   // 나의 가입정보_약정할부 정보
   _getInstallmentInfo() {
+    if (this.type === 2) {
+      // 무선인 경우에만 처리
+      return Observable.of(null);
+    }
     // [DV001-14401] 성능개선으로 API 주소 변경함 (버전 변경됨 v1 -> v2)
     return this.apiService.request(API_CMD.BFF_05_0155, {}, null, [], API_VERSION.V2).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
@@ -691,47 +673,11 @@ class MyTJoinSubmainController extends TwViewController {
       return null;
     });
   }
-
-  // B끼리 무료통화 조회
-  _getWireFreeCall(number) {
-    const numbers = number.split('-');
-    const params = {
-      tel01: numbers[0],
-      tel02: numbers[1],
-      tel03: numbers[2]
-    };
-    /*
-    const params1 = number.split('-').reduce((acc, cur, idx) => {
-      acc[`tel0${idx}`] = cur;
-      return acc;
-    }, {});
-    */
-    // dummy 전화번호 값으로 요청 하여 freeCallYn 값 체크
-    return this.apiService.request(API_CMD.BFF_05_0160, params).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        if (resp.result && resp.freeCallYn === 'Y' && resp.noChargeYn === 'Y') {
-          return 'Y';
-        }
-      }
-      // error
-      return null;
-    });
-  }
-
-  // 010 번호 변경 가능 여부 확인
-  _getOldNumberInfo() {
-    return this.apiService.request(API_CMD.BFF_05_0186, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
-      } else {
-        // error
-        return null;
-      }
-    });
-  }
-
   // 번호변경 안내 서비스
   _getChangeNumInfoService() {
+    if (this.type === 2) {
+      return Observable.of(null);
+    }
     return this.apiService.request(API_CMD.BFF_05_0180, {}).map((resp) => {
       const {code} = resp;
       if (code === API_CODE.CODE_00) {

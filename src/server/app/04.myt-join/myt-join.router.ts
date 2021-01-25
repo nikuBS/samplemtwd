@@ -1,5 +1,4 @@
 import TwRouter from '../../common/route/tw.router';
-// import MyTJoinSubmainAdvController from './myt-join.submain.controller';
 import MyTJoinSubmainAdvController from './myt-join.submain.adv.controller';
 import MyTJoinMyplan from './controllers/myplan/myt-join.myplan.controller';
 import MyTJoinMyPlanAdd from './controllers/myplanadd/myt-join.myplanadd.controller';

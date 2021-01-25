@@ -5,16 +5,14 @@
  *
  */
 
-import CommonHelper from '../../utils/common.helper';
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import MyTJoinSubmainController from './myt-join.submain.controller';
-import {API_CMD, API_CODE, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
-import {Observable} from "rxjs/Observable";
-import {MYT_JOIN_SUBMAIN_TITLE} from "../../types/title.type";
-import FormatHelper from "../../utils/format.helper";
-import DateHelper from "../../utils/date.helper";
-import {MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE} from "../../types/bff.type";
-import {MYT_SUSPEND_STATE_EXCLUDE} from "../../types/string.type";
+import { API_CMD, API_CODE, API_VERSION, SESSION_CMD } from '../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../utils/format.helper';
+import DateHelper from '../../utils/date.helper';
+import { MEMBERSHIP_GROUP } from '../../types/bff.type';
+import StringHelper from '../../utils/string.helper';
 
 class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
@@ -23,18 +21,42 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 	}
 
 	render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-		super.render(req, res, next, svcInfo, allSvc, child, pageInfo);
+		if (pageInfo.advancement) {
+			// local 테스트틀 하기 위해 추가
+			if ((process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
+					|| process.env.NODE_ENV === 'local') {
+				this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+				return false;
+			}
+		} else {
+			// 기존 가입정보 화면
+			super._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+		}
 	}
 
-	__requestApiAfterRender(res, data) {
+	_render(req, res, next, svcInfo, allSvc, child, pageInfo) {
+		const data = this._setData(req, res, next, svcInfo, allSvc, child, pageInfo);
+		data.childLine = this.type === 0 && child && child.length ? ((items) => {
+			return items.map((item) => {
+				return {
+					nickNm: item.childEqpMdNm || item.eqpMdlNm, // item.mdlName 서버데이터 확인후 변경
+					svcNum: StringHelper.phoneStringToDash(item.svcNum),
+					svcMgmtNum: item.svcMgmtNum
+				}
+			});
+		})(child) : null;
+		this._requestApiAfterRender(res, data);
+	}
+
+	_requestApiAfterRender(res, data) {
 		const requestApiList = this._requestApiList(data.svcInfo);
 		Observable.combineLatest(
 				requestApiList
-		).subscribe(([myline, myif, myhs, myap, mycpp, myinsp,
-									 myps, mylps, numSvc, wlap, myjinfo, prodDisInfo, benefitInfo, billInfo]) => {
+		).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, numSvc, wlap,
+									 myjinfo, prodDisInfo, benefitInfo, billInfo, membership, payment]) => {
 			const responses = [myline, myif, myhs, myap, mycpp, myinsp,
 				myps, mylps, numSvc, wlap];
-			const newResponses = [myjinfo, prodDisInfo, benefitInfo, billInfo];
+			const newResponses = [myjinfo, prodDisInfo, benefitInfo, billInfo, membership, payment];
 			this.__parsingRequestData({
 				res, responses, data
 			});
@@ -50,7 +72,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
 	__newParsingRequestData(parsingInfo) {
 		const {res, responses, data} = parsingInfo;
-		const [myjinfo, mydisinfo, benefitInfo, billInfo] = responses;
+		const [myjinfo, mydisinfo, benefitInfo, billInfo, membership, payment] = responses;
 		// 가입개통정보
 		data.myJoinInfo = myjinfo;
 		// 약정 및 단말 상환 정보
@@ -58,8 +80,42 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 			data.myDeviceInstallment = mydisinfo.deviceIntallment;
 			data.myDiscountInfo = mydisinfo.prodDisInfo;
 		}
+		// 나의 요금제 및 부가상품
+		if (data.isAddProduct) {
+			// 요금제 정보
+			if (data.myAddProduct.feePlanProd) {
+				Object.keys(data.myAddProduct.feePlanProd).forEach(key => {
+					const value = data.myAddProduct.feePlanProd[key];
+					if (key === 'svcScrbDt') {
+						data.myAddProduct.feePlanProd[key] =
+								DateHelper.getShortDateWithFormat(value || new Date(), 'YYYY.M.D.');
+					}
+					if (key === 'basFeeTxt') {
+						data.myAddProduct.feePlanProd[key] = FormatHelper.addComma(value || 0);
+					}
+				});
+			}
+		}
+		// 나의 혜택 할인 및 멤버십 정보
+		data.membership = membership;
+		if (benefitInfo) {
+			data.benefitCount = benefitInfo.count;
+		}
+		// 납부/청구
+		if (billInfo) {
+			data.paidBillInfo = {
+				amount: FormatHelper.addComma(billInfo.amt),
+				showMonth: DateHelper.getAddDays(billInfo.invDt, 1, 'M월'),
+				startDate: DateHelper.getShortFirstDate(billInfo.invDt),
+				endDate: DateHelper.getShortLastDate(billInfo.invDt),
+				isBroadBand: data.svcInfo.actCoClCd === 'B',
+				isUsageBill: !(data.svcInfo.actRepYn === 'Y')
+			};
+		}
 
-		console.log('####################+==>> ', responses);
+		if (payment) {
+			data.paymentInfo = payment;
+		}
 	}
 
 	_requestApiList(svcInfo) {
@@ -77,7 +133,9 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 			this._getMyMobileJoinInfo(svcInfo),
 			this._getProductDiscountInfo(),
 			this._getBenefitInfo(),
-			this._getBillInfo(svcInfo)
+			this._getBillInfo(svcInfo),
+			this._getMembershipInfo(),
+			this._getPaymentInfo()
 		];
 	}
 
@@ -86,6 +144,9 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 	 * @param svcInfo
 	 */
 	_getMyMobileJoinInfo(svcInfo) {
+		if (this.type === 2) {
+			return Observable.of(null);
+		}
 		return this.apiService.request(API_CMD.BFF_05_0216, {
 			svcNum: svcInfo.svcNum
 		}).map(resp => resp.code === API_CODE.CODE_00 ? resp.result : null);
@@ -95,6 +156,9 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 	 * 약정할인 및 단말분할상환정보 V2
 	 */
 	_getProductDiscountInfo() {
+		if (this.type === 2) {
+			return Observable.of(null);
+		}
 		return this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2)
 				.map(resp => {
 					if (resp.code === API_CODE.CODE_00) {
@@ -178,7 +242,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 									endDate,
 									remainDate,
 									graphPercent
-								}
+								};
 							}
 						});
 						// 단말상환정보
@@ -198,9 +262,9 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 							}));
 						}
 						return {
-							deviceIntallment: deviceIntallment.length? deviceIntallment[0] : null,
-							prodDisInfo: prodDisInfo.length? prodDisInfo[0] : null
-						}
+							deviceIntallment: deviceIntallment.length ? deviceIntallment[0] : null,
+							prodDisInfo: prodDisInfo.length ? prodDisInfo[0] : null
+						};
 					}
 					return null;
 				});
@@ -211,53 +275,56 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 	 * API 에러 발생 시 별도의 에러 처리 없이 처리
 	 */
 	_getBenefitInfo() {
-		let benefitDiscount = 0;
-		return this.apiService.requestStore(SESSION_CMD.BFF_05_0106, {}) // 요금할인 (bill-discounts)
-				.switchMap((discountResp) => {
-					if (discountResp.code === API_CODE.CODE_00) {
-						// 요금할인
-						benefitDiscount += discountResp.result.priceAgrmtList.length;
-						// 클럽
-						benefitDiscount += discountResp.result.clubYN ? 1 : 0;
-						// 척척
-						benefitDiscount += discountResp.result.chucchuc ? 1 : 0;
-						// T끼리플러스
-						benefitDiscount += discountResp.result.tplus ? 1 : 0;
-						// 요금할인- 복지고객
-						benefitDiscount += (discountResp.result.wlfCustDcList && discountResp.result.wlfCustDcList.length > 0) ?
-								discountResp.result.wlfCustDcList.length : 0;
-						// 특화 혜택
-						benefitDiscount += discountResp.result.thigh5 ? 1 : 0;
-						benefitDiscount += discountResp.result.kdbthigh5 ? 1 : 0;
-						// 데이터 선물
-						benefitDiscount += (discountResp.result.dataGiftYN) ? 1 : 0;
-					}
-					return this.apiService.requestStore(SESSION_CMD.BFF_05_0094, {}); // 결합할인 (combination-discounts)
-				})
-				.switchMap((combinationResp) => {
-					// 결합할인
-					if (combinationResp.code === API_CODE.CODE_00) {
-						if (combinationResp.result.prodNm.trim().length > 0) {
-							benefitDiscount += Number(combinationResp.result.etcCnt) + 1;
-						}
-					}
-					return this.apiService.requestStore(SESSION_CMD.BFF_05_0196, {}); // 장기가입혜택 (loyalty-benefits)
-				}).map((loyalty) => {
-					if (loyalty.code === API_CODE.CODE_00) {
-						// 장기가입 요금
-						benefitDiscount += (loyalty.result.dcList && loyalty.result.dcList.length > 0) ?
-								loyalty.result.dcList.length : 0;
-						// 쿠폰
-						benefitDiscount += (loyalty.result.benfList && loyalty.result.benfList.length > 0) ? 1 : 0;
-					}
-					return {
-						code: API_CODE.CODE_00,
-						msg: 'success',
-						result: {
-							count: benefitDiscount
-						}
-					};
-				});
+		if (this.type === 2) {
+			return Observable.of(null);
+		}
+		return Observable.combineLatest(
+				this.apiService.requestStore(SESSION_CMD.BFF_05_0106, {}),
+				this.apiService.requestStore(SESSION_CMD.BFF_05_0094, {}),
+				this.apiService.requestStore(SESSION_CMD.BFF_05_0196, {})
+		).map(([discountResp, combinationResp, loyalty]) => {
+			let benefitDiscount = 0;
+			if (discountResp.code === API_CODE.CODE_00) {
+				// 요금할인
+				benefitDiscount += discountResp.result.priceAgrmtList.length;
+				// 클럽
+				benefitDiscount += discountResp.result.clubYN ? 1 : 0;
+				// 척척
+				benefitDiscount += discountResp.result.chucchuc ? 1 : 0;
+				// T끼리플러스
+				benefitDiscount += discountResp.result.tplus ? 1 : 0;
+				// 요금할인- 복지고객
+				benefitDiscount += (discountResp.result.wlfCustDcList && discountResp.result.wlfCustDcList.length > 0) ?
+						discountResp.result.wlfCustDcList.length : 0;
+				// 특화 혜택
+				benefitDiscount += discountResp.result.thigh5 ? 1 : 0;
+				benefitDiscount += discountResp.result.kdbthigh5 ? 1 : 0;
+				// 데이터 선물
+				benefitDiscount += (discountResp.result.dataGiftYN) ? 1 : 0;
+			} else {
+				this.logger.error(this, JSON.stringify(discountResp));
+			}
+			// 결합할인
+			if (combinationResp.code === API_CODE.CODE_00) {
+				if (combinationResp.result.prodNm.trim().length > 0) {
+					benefitDiscount += Number(combinationResp.result.etcCnt) + 1;
+				}
+			} else {
+				this.logger.error(this, JSON.stringify(combinationResp));
+			}
+			if (loyalty.code === API_CODE.CODE_00) {
+				// 장기가입 요금
+				benefitDiscount += (loyalty.result.dcList && loyalty.result.dcList.length > 0) ?
+						loyalty.result.dcList.length : 0;
+				// 쿠폰
+				benefitDiscount += (loyalty.result.benfList && loyalty.result.benfList.length > 0) ? 1 : 0;
+			} else {
+				this.logger.error(this, JSON.stringify(loyalty));
+			}
+			return {
+				count: benefitDiscount
+			};
+		});
 	}
 
 	/**
@@ -275,6 +342,39 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 	 */
 	_getMembershipInfo() {
 		return this.apiService.request(API_CMD.BFF_11_0001, {})
+				.map(resp => {
+					if (resp.code === API_CODE.CODE_00) {
+						return {
+							grade: MEMBERSHIP_GROUP[resp.result.mbrGrCd].toUpperCase(),
+							point: FormatHelper.addComma(resp.result.mbrUsepowerdAmt || '0'),
+							used: 0 // 가입한 경우
+						};
+					}
+					if (resp.code === 'MBR0008') {
+						return {
+							grade: '간편로그인 조회불가',
+							point: '-',
+							used: 2 // 간편로그인으로 조회 불가
+						};
+					}
+					// 미 소지 케이스에 대해 정의가 없어 간편로그인 및 정상 조회 외 케이스는 가입하기로 노출
+					// if (resp.code === 'MBR0001' || resp.code === 'MBR0001') {}
+					return {
+						grade: '가입하기',
+						point: '-',
+						used: 1 // 미 가입한 경우 (미소지)
+					};
+				});
+	}
+
+	/**
+	 * 납부/청구 정보 조회
+	 */
+	_getPaymentInfo() {
+		if (this.type === 1) {
+			return Observable.of(null);
+		}
+		return this.apiService.request(API_CMD.BFF_05_0058, {})
 				.map(resp => resp.code === API_CODE.CODE_00 ? resp.result : null);
 	}
 }
