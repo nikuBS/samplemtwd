@@ -357,7 +357,7 @@ Tw.ProductCommonCallplan.prototype = {
 
   /**
    * @function
-   * @desc 설정 버튼 클릭 시
+   * @desc 설정 버튼 클릭 시 (설정 버튼 클릭 시 바로 이동)
    * @returns {*|void|void|*}
    */
   _procSetting: function() {
@@ -370,10 +370,15 @@ Tw.ProductCommonCallplan.prototype = {
       this._openSettingPop();
     } else {
       // 설정 버튼 주소값에 BPCP 포함되어 있을 경우
+      // NA00007017(v컬러링) 이거나 NA00000282(컬러링)인 경우 과금펍업 그러나 v컬러링인 경우 v컬러링플러스와 구분하기 위하여 eParam(Tw.OUTLINK.PRODUCT_RING.VCOLOR) 값을 적용
       if (this._bpcpService.isBpcp(this._settingBtnList[0].url)) {
-        if (this._prodId === 'NA00007017' && Tw.BrowserHelper.isApp()) {
-          return Tw.CommonHelper.showDataCharge($.proxy(function() {this._bpcpService.open(this._settingBtnList[0].url)}, this), null);
-        } else {
+        if (this._prodId === 'NA00007017' && Tw.BrowserHelper.isApp()) {  // v컬러링 이면서 앱인경우 과금팝업 노출 + eParam
+          return Tw.CommonHelper.showDataCharge($.proxy(function() {this._bpcpService.open(this._settingBtnList[0].url, null, Tw.OUTLINK.PRODUCT_RING.VCOLOR)}, this), null);
+        } else if (this._prodId === 'NA00007017') { // v컬러링 이면서 앱이 아닌경우 과금팝업 없이 바로 이동 + eParam
+            return this._bpcpService.open(this._settingBtnList[0].url, null, Tw.OUTLINK.PRODUCT_RING.VCOLOR);
+        } else if (this._prodId === 'NA00000282' && Tw.BrowserHelper.isApp()) { // 컬러링인 경우도 앱인경우 과금 팝업 노출 요청함 - 기획(리세리님), eParam 없음
+            return Tw.CommonHelper.showDataCharge($.proxy(function() {this._bpcpService.open(this._settingBtnList[0].url)}, this), null);
+        } else { // 컬러링 또는 다른 요금제 이면서 BPCP이면 과금 팝업 없이 이동
           return this._bpcpService.open(this._settingBtnList[0].url);
         }
       // 설정 버튼 클릭시 아웃링크 일 경우 (과금팝업노출)
@@ -1024,12 +1029,38 @@ Tw.ProductCommonCallplan.prototype = {
 
   /**
    * @function
-   * @desc 설정 페이지 이동
+   * @desc 설정 페이지 이동 (설정 버튼 클릭 시 두개 이상의 목록이 있는 액션시트에서 이동)
    */
   _goSetting: function() {
     if (Tw.FormatHelper.isEmpty(this._settingGoUrl)) {
       return;
     }
+
+		 // V컬러링 패키지 상품인 경우 BPCP 호출 시 eparam이 추가로 포함 되어야 함 (http://devops.sktelecom.com/mytask/browse/OP002-12372 댓글 참조)
+     // 설정 버튼 주소값에 BPCP 포함되어 있을 경우
+     // 기존 BPCP는 거의 과금이 없었는데, 7017만 과금이라서 그렇게 했다...그러나 과금 팝업은 컬러링 종류(컬러링, v컬러링, v컬러링플러스 모두 과금팝업 적용해야 함 - 리세리 기획자)
+     if (this._bpcpService.isBpcp(this._settingGoUrl)) {
+       // v컬러링 플러스 상품이면서 v컬러링 설정인 경우 eParam 추가 (Tw.OUTLINK.PRODUCT_RING.VCOLOR_PLUS)
+      if (this._prodId === 'NA00007246' && (this._settingGoUrl.indexOf('0000135003') !== -1) && Tw.BrowserHelper.isApp()) { // v컬러링 플러스(NA00007246)의 v컬러링(bpcp id : 0000135003) && 앱인경우
+        return Tw.CommonHelper.showDataCharge($.proxy(function() {this._bpcpService.open(this._settingGoUrl, null, Tw.OUTLINK.PRODUCT_RING.VCOLOR_PLUS)}, this), null);
+      } else if (this._prodId === 'NA00007246' && (this._settingGoUrl.indexOf('0000135003') !== -1)) { // v컬러링 플러스(NA00007246)의 v컬러링(bpcp id : 0000135003) && 앱이 아닌경우
+        return this._bpcpService.open(this._settingGoUrl, null, Tw.OUTLINK.PRODUCT_RING.VCOLOR_PLUS);
+      } else if (this._prodId === 'NA00007246' && (this._settingGoUrl.indexOf('0000079003') !== -1) && Tw.BrowserHelper.isApp()) { // v컬러링 플러스 이면서 컬러링인 경우 && 앱인경우 과금 팝업
+        return Tw.CommonHelper.showDataCharge($.proxy(function() {this._bpcpService.open(this._settingGoUrl)}, this), null);
+      } else {  // 컬러링 또는 다른 요금제 이면서 BPCP이면 과금 팝업 없이 이동
+        return this._bpcpService.open(this._settingGoUrl);
+      }
+    // 설정 버튼 클릭시 아웃링크 일 경우 (과금팝업노출)
+    // 어드민에 입력 할때 BEU는 기획에서 물어보면 정확하게 알수 있음
+    } else if (this._settingGoUrl.indexOf('BEU:') !== -1) {
+      return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, this._settingGoUrl.replace('BEU:', '')));
+    // 설정 버튼 클릭시 아웃링크 일 경우 (과금팝업노출없이 실행)
+    // NEU는 기획에게 물어보면 알수 있음
+    } else if (this._settingGoUrl.indexOf('NEU:') !== -1) {
+      return this._openExternalUrl(this._settingGoUrl.replace('NEU:', ''));
+    }
+    // 설정 페이지 이동
+    // this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
 
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
