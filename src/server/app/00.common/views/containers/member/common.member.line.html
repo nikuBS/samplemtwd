@@ -63,6 +63,30 @@
         </div>
     </div>
     <!-- .popup hbs -->
+    <div class="popup tw-popup" id="fe-pop-broadband" style="display:none; z-index: 130;">
+        <div class="popup-info tod-eventpop-type1 sel-line-pop" role="alertdialog" aria-describedby="alertText">
+            <div class="popup-header">
+                <button type="button" class="btn-tooltip-close">닫기</button>
+            </div>
+            <!-- Case1 광고성 정보 수신 동의 안내 -->
+            <div class="popup-contents" id="alertText">
+                <div class="inner-contents">
+                    <i class="ico"></i>
+                    <strong class="text-ti-big">T world에서<br>SK브로드밴드 가입<br>상품을 이용해보세요.</strong>
+                    <span class="need-agree">서비스 이용 동의 필요</span>
+                </div>
+            </div>
+            <ul class="bt-box bt-slice item-two">
+                <li><button class="btn-floating disagree">다음에 하기</button></li>
+                <li><button class="btn-floating agree" data-url="/common/member/line/skb-svc-agreement">네, 좋아요!</button></li>
+            </ul>
+            <!-- //Case1 광고성 정보 수신 동의 안내 -->
+        </div>
+        <div class="popup-blind"></div>
+    </div>
+    <!--// .popup hbs -->
+
+    <!-- .popup hbs -->
     <div class="popup-page tw-popup pt0" id="fe-pop-guide" style="display:none; background-color:#262626; z-index: 150;">
         <!-- .container-wrap -->
         <div class="container-wrap">
