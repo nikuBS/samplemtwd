@@ -3,10 +3,10 @@
     <div class="widget-box accordion">
         <div class="acco-cover on">
             <div class="acco-style tod-round-blue <% if (tmpCnt > showParam.defaultCnt) { %> tod-add-btn <% } %>">
-                <ul class="acco-list fe-line-cover">                                    
+                <ul class="acco-list fe-line-cover">
                     <li class="acco-box on">
                         <div class="acco-tit">
-                            <button role="button" aria-pressed="true"> 
+                            <button role="button" aria-pressed="true">
                                 <h3 class="tit"><%=tmpTitle%><span class="tod-add-text"><span class="num"><%= tmpCnt %></span>개</span></h3>
                             </button>
                         </div>
@@ -16,7 +16,7 @@
                                     <ul id="sortable-enabled_<%=tmpCategory%>" class="connectedSortable enabled ui-sortable fe-item-list" data-category="<%=tmpCategory%>" data-pageno="1">
                                         <% tmpList.map((line, index) => { %>
                                         <% if(index < showParam.defaultCnt) { %>
-                                        <li class="fe-line ui-state-default <% if(index >= 20) { %>none<% } %>"" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>" data-svcmgmtnum="<%=line.svcMgmtNum %>" data-length="<%=tmpList.length%>">
+                                        <li class="fe-line ui-state-default <% if(index >= 20) { %>none<% } %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>" data-svcmgmtnum="<%=line.svcMgmtNum %>" data-length="<%=tmpList.length%>">
                                             <div class="state-box">
                                                 <div class="tod-line-info">
                                                     <span class="icon">
@@ -28,8 +28,12 @@
                                                     <span class="line"><%= line.showDetail %></span>
                                                 </div>
                                                 <div class="state-bt">
-                                                    <button class="bt-sort up" <%= index === 0 ? 'disabled=disabled' : '' %> ></button><span class="blind">해당 회선 위로 <%= index %></span></button> <!-- 웹 접근성 위배 조치 -->
-                                                    <button class="bt-sort down" <%= index === tmpList.length-1 ? 'disabled=disabled' : '' %> ></button><span class="blind">해당 회선 아래로</span></button> <!-- 웹 접근성 위배 조치 -->
+                                                    <button class="bt-sort up" <%= index === 0 ? 'disabled=disabled' : '' %> >
+                                                        <span class="blind">해당 회선 위로</span><!-- 웹 접근성 위배 조치 -->
+                                                    </button>
+                                                    <button class="bt-sort down" <%= index === tmpList.length-1 ? 'disabled=disabled' : '' %> >
+                                                        <span class="blind">해당 회선 아래로</span>
+                                                    </button> <!-- 웹 접근성 위배 조치 -->
                                                 </div>
                                                 <span class="ico-move ui-sortable-handle"><span class="blind">목록 이동</span><span class="ico"></span></span>
                                             </div>

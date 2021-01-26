@@ -36,13 +36,41 @@ Tw.CommonMemberLineEdit.prototype = {
     _.map($itemLists, $.proxy(function (item) {
 
       var selector = '#' + $(item).attr('id');
-      skt_landing.dev.sortableInit(selector, {
-        axis: 'y',
-        scrollSensitivity: 100,
-        scrollSpeed: 30,
-        forceScroll: true
-      });
+      this._initSortable(selector);
     }, this));
+  },
+  /**
+   * 회선 이동 추가 기능
+   * UI Event Attach
+   */
+  _initSortable: function (selector) {
+    skt_landing.dev.sortableInit(selector, {
+      axis: 'y',
+      scrollSensitivity: 100,
+      scrollSpeed: 30,
+      forceScroll: true
+    });
+    var $target = $(selector).length === 1 ? $(selector) : $( "#sortable-enabled" );
+    $target.parent().on('click', '.connectedSortable .bt-sort', function(event) {
+      console.log('sortBUtton Click');
+      var $parentTarget = $(event.currentTarget).parents('.connectedSortable.enabled');
+      if ($parentTarget.length > 0) {
+        var buttonList = $parentTarget.find('.state-bt');
+        $parentTarget.find('.state-bt').each(function(index, item) {
+          var $item = $(item);
+          if (index === 0) {
+            $item.find('.up').attr('disabled', 'disabled');
+            $item.find('.down').removeAttr('disabled');
+          } else if (index === buttonList.length -1) {
+            $item.find('.up').removeAttr('disabled');
+            $item.find('.down').attr('disabled', 'disabled');
+          } else {
+            $item.find('.up').removeAttr('disabled');
+            $item.find('.down').removeAttr('disabled');
+          }
+        });
+      }
+    });
   },
 
   /**

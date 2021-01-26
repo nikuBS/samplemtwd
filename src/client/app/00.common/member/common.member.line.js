@@ -44,7 +44,7 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _init: function () {
-    // this.$popCert = this.$container.find('#fe-pop-agreement');
+    this.$popBroadBand = this.$container.find('#fe-pop-broadband');
     // 모바일App
     if (Tw.BrowserHelper.isApp()) {
       var storedData = Tw.CommonHelper.getLocalStorage('hideSkbAgreePop_' + this._svcInfo.userId);
@@ -102,6 +102,10 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
     this.$container.on('click', '#fe-pop-guide .popup-closeBtn', $.proxy(this._onCloseGuidePopup, this));
     // this.$container.on('click', '.fe-pop-hide', $.proxy(this._hidePopup, this));
+    // broadband popup
+    this.$container.on('click', '#fe-pop-broadband button.agree', $.proxy(this._onClickInternal, this));
+    this.$container.on('click', '#fe-pop-broadband button.disagree', $.proxy(this._hidePopup, this));
+    this.$container.on('click', '#fe-pop-broadband button.btn-tooltip-close', $.proxy(this._hidePopup, this));
   },
 
   /**
@@ -793,19 +797,8 @@ Tw.CommonMemberLine.prototype = {
   },
 
   _openPopup: function () {
-    // this.$popCert.show();
-    // this.$popCert.focus();
+    this.$popBroadBand.show();
     // this._isCertPopupOpen = true;
-    this._popupService.open({
-      hbs: 'CO_01_05_02_03',
-      layer: true
-    }, $.proxy(this._openPopupSuccess, this), null, '');
-  },
-  _openPopupSuccess: function ($popup) {
-    this.$popCert = $popup;
-    $popup.on('click', 'button.agree', $.proxy(this._onClickInternal, this));
-    $popup.on('click', 'button.disagree', $.proxy(this._hidePopup, this));
-    $popup.on('click', 'button.btn-tooltip-close', $.proxy(this._closePopup, this));
   },
   /**
    * @function
@@ -813,7 +806,7 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _closePopup: function () {
-    // this.$popCert.hide();
+    this.$popBroadBand.hide();
     // this._isCertPopupOpen = false;
     // $('body').removeClass('noscroll');
     // if ( Tw.BrowserHelper.isApp() ) {
@@ -821,12 +814,7 @@ Tw.CommonMemberLine.prototype = {
     // } else {
     //   this._setCookie('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
     // }
-    if (this.$popCert) {
-      // 초기화
-      this.$popCert.off('click');
-      this.$popCert = null;
-    }
-    this._popupService.close();
+    // this._popupService.close();
   },
 
   /**
