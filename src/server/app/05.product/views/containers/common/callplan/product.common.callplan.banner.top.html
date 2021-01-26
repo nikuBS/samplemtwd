@@ -13,7 +13,7 @@
                 bnnrImgUrl : S  자창 인데, 1,2,3 일경우 신규 팝업실행
                 그외, 아닐 경우 기존 로직 타게됨....
             -->
-            <% if ( prodRedisInfo.banner.T.bnnrLinkUrl === '1' || prodRedisInfo.banner.T.bnnrLinkUrl === '2' || prodRedisInfo.banner.T.bnnrLinkUrl === '3')   { %>
+            <% if ( prodRedisInfo.banner.T.bnnrLinkUrl === '1' || prodRedisInfo.banner.T.bnnrLinkUrl === '2' || prodRedisInfo.banner.T.bnnrLinkUrl === '3' || prodRedisInfo.banner.T.bnnrLinkUrl === '4' || prodRedisInfo.banner.T.bnnrLinkUrl === '5' || prodRedisInfo.banner.T.bnnrLinkUrl === '6' || prodRedisInfo.banner.T.bnnrLinkUrl === '7' || prodRedisInfo.banner.T.bnnrLinkUrl === '8' || prodRedisInfo.banner.T.bnnrLinkUrl === '9' || prodRedisInfo.banner.T.bnnrLinkUrl === '10')   { %>
                 <img src="<%= CDN %><%= prodRedisInfo.banner.T.bnnrImgUrl %>" alt="<%= prodRedisInfo.banner.T.bnnrImgAltVal %>" data-xt_eid="<%= prodRedisInfo.banner.T.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC" data-banner_Index="<%= prodRedisInfo.banner.T.bnnrLinkUrl %>">            
             <%
                 } else   
