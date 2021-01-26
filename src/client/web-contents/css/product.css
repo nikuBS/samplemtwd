@@ -83,7 +83,6 @@
 .tod-nmp-item .rn-prod-info .p-etc > li {font-size: 0.6875rem; letter-spacing: -0.2px; color: #767778;}
 .tod-nmp-item .rn-prod-info .p-etc > li > i {vertical-align: -5px;}
 .tod-nmp-item .rn-prod-benefit {position:relative; padding:0.625rem 0 0;}
-.tod-nmp-item .rn-prod-benefit > ul {}
 .tod-nmp-item .rn-prod-benefit li {position:relative; padding-left:20px; font-size: 0.8125rem; color: #767778; word-break: keep-all;}
 .tod-nmp-item .rn-prod-benefit li:nth-child(n+2) {margin-top:0.25rem}
 .tod-nmp-item .rn-prod-benefit li > i {position:absolute;left:0;top:0; line-height:1}
@@ -98,20 +97,18 @@
 .tod-nmp-item .rn-prod-benefit .p-benefit-choice {margin-top:0.4375rem}
 .tod-nmp-item .rn-prod-benefit .p-benefit-choice .title {margin-bottom:0.4375rem; font-size: 0.8125rem; color:#222222}
 .tod-nmp-item .rn-prod-benefit .p-benefit-choice .title strong {font-weight:bold}
-.tod-nmp-item .rn-prod-benefit .p-benefit-choice > ul {}
 .tod-nmp-item .rn-prod-bottom {padding:0 1.25rem 1.25rem;}
 .tod-nmp-item .rn-prod-bottom .rn-btn-right {text-align:right}
 .tod-nmp-item .btn-compare {text-decoration:underline; font-size: 0.75rem; letter-spacing: -0.6px; color: #767778;}
 .tod-nmp-item + .tod-nmp-item {margin-top:1.25rem}
 
 /* 혜택강조형 */
-.tod-nmp-item.plan-type2 {}
 .tod-nmp-item.plan-type2 .rn-prod-info {position:relative; padding:0.375rem 0; margin-top:0.5rem; border-top:1px solid #d8d8d8; border-bottom:1px solid #d8d8d8}
 .tod-nmp-item.plan-type2 .rn-prod-bottom {margin-top:-0.375rem;}
 
 /* 데이터 강조형 */
-.tod-nmp-item.plan-type3 .rn-prod-name .p-name {padding-right:0}
-.tod-nmp-item.plan-type3 .rn-prod-name .p-price {font-size:0.875rem; bottom:-2.5rem}
+/*.tod-nmp-item.plan-type3 .rn-prod-name .p-name {padding-right:0}
+.tod-nmp-item.plan-type3 .rn-prod-name .p-price {font-size:0.875rem; bottom:-2.5rem} */
 .tod-nmp-item.plan-type3 .rn-prod-info {margin-top:0.5rem; border-top:1px solid #d8d8d8;} 
 .tod-nmp-item.plan-type3 .rn-prod-info > ul {display:block}
 .tod-nmp-item.plan-type3 .rn-prod-info > ul > li {display:inline-block; margin-right:0.625rem}
@@ -120,7 +117,6 @@
 
 /* row list */
 .tod-nmp-row-list {position:relative; border-radius: 0.75rem; background-color: #f6f8fa;}
-.tod-nmp-row-list > ul {}
 .tod-nmp-row-list > ul > li {border-bottom:1px solid #d8d8d8}
 .tod-nmp-row-list > ul > li:nth-child(n+2) {border-top:1px solid #fff}
 .tod-nmp-row-list > ul > li:last-child {border-bottom:0}
@@ -170,7 +166,6 @@
 }
 
 /* ========== 전체 요금제 리스트 ========== */
-.tod-nmp-top-wrap {}
 
 /* 탭 */
 .tod-nmp-tab {position:relative;min-height:6.1875rem;background-color: #f6f8fa;}
@@ -256,6 +251,10 @@
 .tod-nmp-other-list > ul > li em {display:block; margin-top:1.125rem; opacity: 0.6; font-size: 0.75rem; letter-spacing: -0.63px; color: #222222;}
 .tod-cont-other-list {padding:2.5rem 0 3.125rem;} /* 전체 요금제에 사용된 section */
 
+/* 210118 동의여부 Toast 팝업 */
+.toast-popup.tod-nmp-toast .toast-layer {border-radius: 30px; background-color:#f6f8fa}
+.toast-popup.tod-nmp-toast .toast-layer .toast-txt {font-size:0.8125rem; line-height:1.125rem; color:#585959}
+
 
 
 /* ========== 요금제 비교 하기 (temp) ========== */
@@ -274,6 +273,3 @@
 .tod-nmp-comp-header .comp-inner .price {font-size:1rem; font-weight:bold; color:#222222; letter-spacing: -0.11px;}
 .tod-nmp-comp-header .comp-inner .price small {font-size:0.75rem; color:#222222}
 
-/* 210118 동의여부 Toast 팝업 */
-.toast-popup.tod-nmp-toast .toast-layer {border-radius: 30px; background-color:#f6f8fa}
-.toast-popup.tod-nmp-toast .toast-layer .toast-txt {font-size:0.8125rem; line-height:1.125rem; color:#585959}
