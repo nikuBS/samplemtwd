@@ -1597,17 +1597,3 @@ export const WIDGET_REMAINS_CODE = {
   DATA_SUM: 'DATA_SUM'
 };
 
-export const MYT_FARE_INFO_HISTORY = {
-  ERROR: {
-    DEFAULT_TITLE: '',
-    DEFAULT_CONTENT: '',
-    COMPANY_LINE: { // 법인 회선 진입 시
-      title: '선택된 회선으로</br>이용할 수 없는 메뉴입니다.',
-      contents: '선택하신 회선은</br>서비스 이용을 할 수 없는 회선입니다.</br>다른 회선을 선택해주세요.'
-    },
-    NO_ADULT_LINE: {
-      title: '미성년자명의 휴대폰 고객은</br>사용이 제한된 메뉴입니다.',
-      contents: ''
-    }
-  }
-}
