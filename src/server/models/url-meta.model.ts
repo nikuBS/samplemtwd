@@ -31,7 +31,7 @@ export class UrlMetaModel implements IUrlMeta {
   masking: boolean = false;
   isApp: boolean = false;
   fullUrl: string = '';
-  advancement: any = {};
+  advancement: any = null;
   constructor(object) {
     this.menuId = object.menuId || this.menuId;
     this.menuNm = object.menuNm || this.menuNm;
