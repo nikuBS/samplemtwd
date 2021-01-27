@@ -1,0 +1,679 @@
+<%#
+* @file myt-data.submain.html
+* @author Kim InHwan (skt.p132150@partner.sk.com)
+* @since 2018.09.17
+* Update: 2018.11.26
+%>
+<%- include('../components/start.component.html', { pageInfo: data.pageInfo, adv: 1 }); %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 데이터/통화', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap" data-id="wrapper">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container tod-submain" data-id="submain-container">
+            <!-- OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
+            <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22"} }); _%>
+
+            <%- include('../components/submain/myt-data.submain.adv.remnant.html', data) _%>
+
+            <%_ if (data.svcInfo.svcAttrCd === 'M1') { _%>
+            <!-- T끼리 데이터 선물하기 영역 -->
+            <%_ if (data.present) { _%>
+            <section class="cont-card" data-id="gift-section">
+                <div class="section-inner">
+                    <div class="head-tit">
+                        T끼리 데이터 선물
+                    </div>
+                    <div class="card-cont">
+                        <div class="data-status-wrap">
+                            <ul class="report-list align-center">
+                                <li class="report-item">
+                                    <dl class="report-define d-wrap">
+                                        <dt class="report-tit">선물 가능 데이터</dt>
+                                        <!-- 조회 중 -->
+                                        <dd class="report-cont large" data-id="gift-loading">
+                                            <span class="loading-txt">조회중</span>
+                                        </dd>
+                                        <dd class="report-cont" data-id="gift-text" style="display: none;">
+                                            <!-- 데이터가 0 인 경우나 500 MB 이하 인 경우 em 추가 -->
+                                            <span class="large"></span>
+                                            <button type="button" class="re-check-btn" style="display: none;">
+                                                <span class="tod-blind">조회하기</span>
+                                            </button>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                            <div class="small-warning-box" style="display: none;">
+                                <span class="warning-txt"></span>
+                            </div>
+                        </div>
+                        <ul class="report-list">
+                            <li class="report-item">
+                                <a href="#" class="link d-wrap">
+                                    <dl class="report-define">
+                                        <dt class="report-tit">선물 가능 횟수 </dt>
+                                        <dd class="report-cont">
+                                            T끼리
+                                            <%_ if (Number(data.presentInfo.dataGiftCnt) === 0) { _%>
+                                            <em class="em">0회</em>
+                                            <%_ } else {_%>
+                                            <%= data.presentInfo.dataGiftCnt %>회
+                                            <%_ } _%>
+                                            <%_ if (data.presentInfo.goodFamilyMemberYn === 'Y') { _%>
+                                            / 가족무제한
+                                            <%_ } else if (data.presentInfo.familyMemberYn === 'Y') { _%>
+                                            / 가족끼리
+                                            <%_ if (Number(data.presentInfo.familyDataGiftCnt) === 0) { _%>
+                                            <em class="em">0회</em>
+                                            <%_ } else { _%>
+                                            <%= data.presentInfo.familyDataGiftCnt %>회
+                                            <%_ } _%>
+                                            <%_ } _%>
+                                        </dd><!-- 0회일 경우 <em class="em">0회</em> -->
+                                    </dl>
+                                </a>
+                            </li>
+                            <li class="report-item">
+                                <a href="#" class="link d-wrap">
+                                    <dl class="report-define">
+                                        <dt class="report-tit">자동선물 신청된 결합가족</dt>
+                                        <dd class="report-cont">
+                                            <%= data.presentAuto.length %>회선
+                                        </dd>
+                                    </dl>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <%_ } _%>
+            <%_ } else if (data.svcInfo.svcAttrCd === 'M2') { _%>
+            <!-- 선불폰 충전하기 -->
+            <section class="cont-card" data-id="pps-section">
+                <div class="section-inner">
+                    <div class="head-tit">
+                        선불폰 충전
+                    </div>
+                    <div class="card-cont">
+                        <div class="charging-wrap">
+                            <ul class="large-ico-list">
+                                <li class="ico-item">
+                                    <div class="ico-inner">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/coupon04.svg" alt=""></i>
+                                        <div class="ico-txt">
+                                            <span class="ico-tit">음성 충전</span>
+                                            <span class="ico-sub-txt">금액별 음성통화 충전하기</span>
+                                        </div>
+                                        <div class="charging-btn-area">
+                                            <a href="#" class="rect-btn smaller">1회 충전</a>
+                                            <a href="#" class="rect-btn smaller">
+                                                <%_ if (data.ppsAutoVoice) { _%>
+                                                자동 충전 변경/해지
+                                                <%_ } else { _%>
+                                                자동 충전
+                                                <%_ } _%>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="ico-item">
+                                    <div class="ico-inner">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/coupon01.svg" alt=""></i>
+                                        <div class="ico-txt">
+                                            <span class="ico-tit">데이터 충전</span>
+                                            <span class="ico-sub-txt">사용기간별 데이터량 충전하기</span>
+                                        </div>
+                                        <div class="charging-btn-area">
+                                            <a href="#" class="rect-btn smaller">1회 충전</a>
+                                            <a href="#" class="rect-btn smaller">
+                                                <%_ if (data.ppsAutoData) { _%>
+                                                자동 충전 변경/해지
+                                                <%_ } else { _%>
+                                                자동 충전
+                                                <%_ } _%>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="short-link-wrap minus-mg">
+                            <ul class="short-link-list">
+                                <%_ if (data.breakdownList && data.breakdownList.length > 0) { _%>
+                                <li class="link-item"><a href="/myt-data/recharge/prepaid/history">충전 내역</a></li>
+                                <%_ } _%>
+                                <li class="link-item"><a href="/myt-data/recharge/prepaid/alarm" data-id="present">음성 1회 자동 알람 서비스</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <%_ } _%>
+
+            <%_ if (data.svcInfo.svcAttrCd === 'M1') { _%>
+            <%_ if (data.refill || data.isPrepayment) { _%>
+            <section class="cont-card">
+                <div class="section-inner">
+                    <%_ if (data.refill) { _%>
+                    <div class="head-tit">
+                        <a href="/myt-data/recharge/coupon?from=submain" class="link">리필쿠폰</a>
+                    </div>
+                    <%_ } _%>
+                    <div class="card-cont">
+                        <%_ if (data.refill) { _%>
+                        <div class="have-coupon-wrap">
+                            <ul class="report-list align-center">
+                                <li class="report-item">
+                                    <dl class="report-define d-wrap">
+                                        <dt class="report-tit">보유쿠폰 수</dt>
+                                        <dd class="report-cont"><span class="medium"><%= data.refill.length %>장</span></dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                            <div class="btn-area btn2 short"> <!-- 하나일때는 btn2제거 -->
+                                <a href="#" class="rect-btn">리필하기</a>
+                                <a href="#" class="rect-btn">선물하기</a>
+                            </div>
+                        </div>
+                        <%_ } _%>
+                        <%_ if (data.isPrepayment) { _%>
+                        <div class="gift-coupon-wrap" data-id="prepay-container">
+                            <div class="head-tit">선물 쿠폰 구매/충전</div>
+                            <div class="free-scroll-wrap minus-mg">
+                                <div class="free-scroll-container">
+                                    <ul class="coupon-list">
+                                        <li class="coupon-item">
+                                            <a href="#" class="coupon-link" data-type="data">
+                                                <p class="c-tit">T 데이터</p>
+                                                <p class="c-cont">
+                                                    국내 데이터 통화<br>선불 쿠폰
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="coupon-item">
+                                            <a href="#" class="coupon-link" data-type="sdata">
+                                                <p class="c-tit">T 단기데이터</p>
+                                                <p class="c-cont">
+                                                    표시된 기간,<br>용량만큼 바로<br>충전
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="coupon-item">
+                                            <a href="#" class="coupon-link" data-type="coupon">
+                                                <p class="c-tit">T 쿠폰</p>
+                                                <p class="c-cont">
+                                                    음성, 문자, 영상<br>데이터통화<br>선불쿠폰
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="coupon-item">
+                                            <a href="#" class="coupon-link" data-type="jeju">
+                                                <p class="c-tit">제주도 프리</p>
+                                                <p class="c-cont">
+                                                    제주도에서<br>원하는 기간 동안<br>데이터 프리
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <%_ } _%>
+                    </div>
+                </div>
+            </section>
+            <%_ } _%>
+            <% } else if (data.svcInfo.svcAttrCd === 'M2') { _%>
+            <!--
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            &lt;!&ndash; .cont-box &ndash;&gt;
+            <div class="cont-box nogaps-hoz">
+                <ul class="full-link-list type1">
+                    <li>
+                        <button data-id="present">
+                            <span class="inner">
+                                <span class="tit">음성1회 자동알람 서비스</span>
+                                <span class="text"><strong>설정하기</strong></span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            -->
+            <!-- //.cont-box -->
+            <%_ } _%>
+
+            <!-- 충전/선물 내역 -->
+            <!--            <%_ if (data.breakdownList && data.breakdownList.length > 0) { _%>-->
+            <!--            <hr class="cont-sp type1" aria-hidden="true" />-->
+
+            <!--            &lt;!&ndash; .cont-box &ndash;&gt;-->
+            <!--            <div class="cont-box pb0" data-id="bd-container">-->
+            <!--                &lt;!&ndash; 2019.02.20 패딩 간격 수정 pb20 -> pb14 &ndash;&gt;-->
+            <!--                <div class="ti-caption-type01 pb14">-->
+            <!--                    <h2 class="tit">-->
+            <!--                        <%_ if (data.svcInfo.svcAttrCd === 'M2') { _%>-->
+            <!--                        충전 내역-->
+            <!--                        <%_ } else { _%>-->
+            <!--                        최근 충전·선물 내역-->
+            <!--                        <%_ } _%>-->
+            <!--                    </h2>-->
+            <!--                    <% var bkListUrl = '/myt-data/history'; %>-->
+            <!--                    <%_ if (data.svcInfo.svcAttrCd === 'M2') { _%>-->
+            <!--                    <% bkListUrl = '/myt-data/recharge/prepaid/history'; %>-->
+            <!--                    <%_ } _%>-->
+            <!--                    <span class="r-btn"><a href="<%= bkListUrl %>" class="more">더보기</a></span>-->
+            <!--                </div>-->
+            <!--                <div class="list-comp-history type01">-->
+            <!--                    <ul class="comp-box">-->
+            <!--                        <%_ if (data.svcInfo.svcAttrCd === 'M2') { _%>-->
+            <!--                        <%- include('../components/submain/myt-data.submain.breakdown-pps.html', { data: data.breakdownList }); %>-->
+            <!--                        <%_ } else { _%>-->
+            <!--                        <%- include('../components/submain/myt-data.submain.breakdown.html', { data: data.breakdownList }); %>-->
+            <!--                        <%_ } _%>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--// .cont-box -->
+            <!--            <%_ } _%>-->
+
+            <!-- 사용량 -->
+            <%_ if (data.) { _%>
+            <%- include('../components/submain/myt-data.submain.adv.recent-usages.html', data) _%>
+            <%_ } _%>
+
+            <%_ if (data.svcInfo.svcAttrCd !== 'M2' || data.isWireLess) { _%>
+            <section class="cont-card" data-id="immCharge">
+                <div class="section-inner">
+                    <div class="head-tit">조회/신청 서비스</div>
+                    <div class="card-cont">
+                        <div class="short-link-wrap minus-mg">
+                            <ul class="short-link-list">
+                                <li class="link-item" data-id="history"><a href="#">충전/선물 내역</a></li>
+                                <li class="link-item" data-id="ting"><a href="#">팅 요금제 충전 선물</a></li>
+                                <li class="link-item" data-id="data"><a href="#">데이터 조르기</a></li>
+                            </ul>
+                        </div>
+                        <div class="hash-wrap" data-id="etc-wrap">
+                            <ul class="hash-list normal">
+                                <li class="hash-item" data-id="etc">
+                                    <a href="#" class="hash">#팅/쿠키즈/안심 음성요금 충전</a>
+                                </li>
+                                <li class="hash-item" data-id="limit">
+                                    <a href="#" class="hash">#데이터 한도 요금 충전</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <%_ } _%>
+
+            <%_ if (data.isBenefit) { _%>
+            <div class="submain-banner">
+                <a href="#" data-id="benefit">
+                    <p class="banner-comment">
+                        <span class="bsub-txt">Tworld의 다양하고<br>풍성한 혜택을 받아보세요</span>
+                        <strong>데이터 충전소</strong>
+                    </p>
+                    <img src="<%= CDN %>/img/myt/submain-banner07.png" alt="">
+                </a>
+            </div>
+            <!-- <hr class="cont-sp type1" aria-hidden="true" />
+
+             <div class="cont-box nogaps">
+                 <ul class="btn-link-list line-type01">
+                     <%_ if (data.isPrepayment) { _%>
+                     <li class="last-line" data-id="pester"><button>데이터 조르기</button></li>
+                     <li class="last-line" data-id="benefit"><button>데이터 혜택</button></li>
+                     <%_ } else { _%>
+                     <li class="last-line full" data-id="pester"><button>데이터 조르기</button></li>
+                     <%_ } _%>
+                 </ul>
+             </div>-->
+            <%_ } _%>
+
+            <%_ if (data.svcInfo.svcAttrCd === 'M1') { _%>
+
+            <div class="submain-swipe-banner submain-swipe" data-id="banners">
+                <div class="main-slide-banner slide-pagingtype pg-rtop">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box">
+                            <div class="slider-box">
+                                <ul class="slider" data-id="banner-list" data-location="M"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <%_ } _%>
+
+            <%_ if (data.otherLines.length > 0) { _%>
+            <%_ var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); _%>
+            <section class="cont-card" data-id="other-lines">
+                <div class="section-inner">
+                    <div class="head-tit">
+                        자녀 요금제/잔여량
+                    </div>
+                    <div class="card-cont minus-mg">
+                        <div class="child-swiper-box submain-swipe">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <%_ } _%>
+
+            <%_
+            const eid = data.xtEid;
+            if (data.isWireLess) {
+            _%>
+            <!--무선인 경우-->
+            <section class="cont-card">
+                <div class="section-inner">
+                    <div class="head-tit high">다른 메뉴를 찾고 계신가요?</div>
+                    <div class="card-cont" data-id="other-pages">
+                        <%_ if (data.svcInfo.svcAttrCd !== 'M2') { _%>
+                        <div class="faq-ico-wrap">
+                            <ul class="ico-list small">
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico15.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의<br>가입정보</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/myplan" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico05.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의 요금제<br>/부가상품</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의 요금</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/benefit/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico13.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">혜택/할인</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="small-ico-list-wrap">
+                            <ul class="small-ico-list">
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain/opening-detail" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico07.svg" alt=""></i>개통정보 조회
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/bill/hotbill" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico01.svg" alt=""></i>실시간 이용요금
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/myplancombine/infodiscount" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico08.svg" alt=""></i>약정할인/기기상환 정보
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/billguide/guide" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>요금 안내서
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/bill/small" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico04.svg" alt=""></i>소액결제
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/bill/contents" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico05.svg" alt=""></i>콘텐츠 이용요금
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <%_ } else { _%>
+                        <!-- 선불폰인 경우 -->
+                        <div class="faq-ico-wrap">
+                            <ul class="ico-list small">
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의 요금</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico15.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의<br>가입정보</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/benefit/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico13.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">혜택/할인</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/product/mobileplan" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico05.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">요금제</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="small-ico-list-wrap">
+                            <ul class="small-ico-list">
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/myplan" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico05.svg" alt=""></i>나의 요금제/부가상품
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/billguide/guide" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>요금 안내서
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/product/roaming/my-use" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico09.svg" alt=""></i>나의 T로밍 이용현황
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <%_ } _%>
+                    </div>
+                </div>
+            </section>
+            <%_ } else { _%>
+            <!--유선인 경우-->
+            <section class="cont-card">
+                <div class="section-inner">
+                    <div class="head-tit high">다른 메뉴를 찾고 계신가요?</div>
+                    <div class="card-cont">
+                        <div class="faq-ico-wrap">
+                            <ul class="ico-list small">
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의 요금</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico15.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의<br>가입정보</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/myplan" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico05.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의 요금제<br>/부가상품</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/benefit/submain" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <div class="ico-item">
+                                            <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico13.svg" alt=""></i>
+                                            <div class="list-txt">
+                                                <span class="item-tit">나의<br>혜택/할인</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="small-ico-list-wrap">
+                            <ul class="small-ico-list">
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain/wire" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico10.svg" alt=""></i>신청내역
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/product/wireplan" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico01.svg" alt=""></i>인터넷전화/IPTV
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/combinations" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico07.svg" alt=""></i>나의 결합상품
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-fare/info/history" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico02.svg" alt=""></i>요금납부내역 조회
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain/wire/gifts" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico11.svg" alt=""></i>사은품 조회
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain/wire/discountrefund" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico12.svg" alt=""></i>할인 반환금 조회
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/myt-join/submain/wire/wirestopgo" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico13.svg" alt=""></i>일시 정지/해제
+                                    </a>
+                                </li>
+                                <li class="ico-item">
+                                    <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
+                                    <a href="#" data-href="/product/wireplan/service-area" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
+                                        <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico14.svg" alt=""></i>서비스 가능지역 조회
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <%_ } _%>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+</div>
+<% include ../components/javascript.component.html %>
+<script>
+  var data = '<%- JSON.stringify(data) %>';
+  $(document).ready(function () {
+    new Tw.MyTDataSubMainAdv({
+      $element: $('[data-id=submain-container]'),
+      data: JSON.parse(data)
+    });
+  });
+</script>
+<% include ../components/end.component.html %>

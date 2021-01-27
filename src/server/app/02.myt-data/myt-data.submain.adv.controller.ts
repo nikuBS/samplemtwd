@@ -17,8 +17,7 @@ import {
   MYT_DATA_CHARGE_TYPE_NAMES,
   MYT_DATA_CHARGE_TYPES,
   MYT_DATA_HISTORY,
-  MYT_DATA_REFILL_TYPES,
-  TARGET_ADV_AGENT_LIST
+  MYT_DATA_REFILL_TYPES
 } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import {
@@ -40,12 +39,11 @@ import {
 import StringHelper from '../../utils/string.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
 import CommonHelper from '../../utils/common.helper';
-import MytDataSubmainAdvController from './myt-data.submain.adv.controller';
 
 // 실시간잔여량 공제항목
 const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
-class MytDataSubmainController extends TwViewController {
+class MytDataSubmainAdvController extends TwViewController {
   constructor() {
     super();
   }
@@ -55,27 +53,19 @@ class MytDataSubmainController extends TwViewController {
   private isPPS = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    const userAgent: string = FormatHelper.isEmpty(req) ? '' : (req.headers['user-agent'] || '');
-    const agentTypeChk = TARGET_ADV_AGENT_LIST.find((targetAgent) =>
-      userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
-    if (agentTypeChk) {
-      const advInst = new MytDataSubmainAdvController();
-      advInst.initPage(req, res, next);
-      return false;
-    }
-
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       isBenefit: false,
-      immCharge: true,
+      immCharge: false,
       present: false,
       isPrepayment: false,
       isDataInfo: false,
       ppsAlarm: false,
       ppsInfo: false,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
+      // otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
+      otherLines: [],
       isApp: BrowserHelper.isApp(req),
       bpcpServiceId: req.query.bpcpServiceId || '',
       eParam: req.query.eParam || ''
@@ -88,10 +78,13 @@ class MytDataSubmainController extends TwViewController {
     Observable.combineLatest(
       this._getRemnantData(data.svcInfo),
       this._getDataPresent(),
+      this._getDataPresentAutoList(),
       this._getRefillCoupon(),
-      this._reqRefillGiftHistory()
+      this._reqRefillGiftHistory(),
+      this._getPPSAuto(),
+      this._getPPSDataAuto()
       // this._getProductGroup() : OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
-    ).subscribe(([remnant, present, refill, refillGiftHistory/*, prodList*/ ]) => {
+    ).subscribe(([remnant, present, presentAuto, refill, refillGiftHistory, ppsvoice, ppsdata /*, prodList*/ ]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -143,7 +136,8 @@ class MytDataSubmainController extends TwViewController {
       if ( child && child.length > 0 ) {
         const convertedChildLines = this.convertChildLines(child);
         if ( convertedChildLines && convertedChildLines.length > 0 ) {
-          data.otherLines = convertedChildLines.concat(data.otherLines);
+          // data.otherLines = convertedChildLines.concat(data.otherLines);
+          data.otherLines = convertedChildLines;
         }
         // data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
@@ -172,12 +166,28 @@ class MytDataSubmainController extends TwViewController {
         // TODO: GrandOpen 때 enable 처리
         data.isPrepayment = true;
         // }
+        data.immCharge = true;
       }
 
-      // T끼리 데이터선물버튼 영역
-      if ( data.svcInfo.svcAttrCd === 'M2' || present ) {
-        // PPS 인 경우에 자동알람서비스 우
+      // T끼리 데이터선물 영역
+      if ( present ) {
         data.present = true;
+        data.presentInfo = present;
+      }
+      if ( presentAuto ) {
+        // BFF URL 어드민 등록
+        data.presentAuto = presentAuto;
+      }
+
+      if ( this.isPPS ) {
+        // PPS 인 경우에 자동알람서비스
+        data.present = true;
+        if ( ppsvoice ) {
+          data.ppsAutoVoice = ppsvoice;
+        }
+        if ( ppsdata ) {
+          data.ppsAutoData = ppsdata;
+        }
       }
 
       // 리필쿠폰
@@ -192,15 +202,18 @@ class MytDataSubmainController extends TwViewController {
 
       // 다른 페이지를 찾고 계신가요 통계코드 추가
       this.getXtEid(data);
-      const reqBkdArr: Array<any> = [];
 
+      // this._render(res, data);
       // 충전,선물 이력 건수 조회 후 이력이 있는 경우에만 해당 이력 API 호출(성능 개선건 반영)[DV001-13474]
       // PPS인 경우 데이터한도요금제 충전내역, 팅/쿠키즈/안심음성 충전내역만 조회
+
+      const reqBkdArr: Array<any> = [];
       if ( this.isPPS ) {
         reqBkdArr.push(this._getDataChargeBreakdown());
         reqBkdArr.push(this._getEtcChargeBreakdown());
       } else {
         if ( !refillGiftHistory ) {
+          console.log('######## data->>>>>', data);
           return this._render(res, data);
         }
         // 리필쿠폰 수혜, 제공 건수
@@ -222,7 +235,7 @@ class MytDataSubmainController extends TwViewController {
           reqBkdArr.push(this._getEtcChargeBreakdown());
         }
         // 데이터한도요금제 충전내역 건수
-        if ( refillGiftHistory.lmtChrgCnt && parseInt(refillGiftHistory.lmtChrgCnt, 10) > 0 ) {
+        if ( refillGiftHistory.lmtChrgCnt && parseInt(refillGiftHistory.lmtChrgCbreakdownListnt, 10) > 0 ) {
           reqBkdArr.push(this._getDataChargeBreakdown());
         }
         // 팅요금 보낸선물내역, 받은선물내역 건수
@@ -235,7 +248,6 @@ class MytDataSubmainController extends TwViewController {
       if ( reqBkdArr.length <= 0 ) {
         return this._render(res, data);
       }
-
       // 최근 충전 및 선물 내역
       Observable.combineLatest(reqBkdArr).subscribe(histories => {
         // 충전/선불내역 페이지와 동일한 순서(myt-data.history.controller.ts)
@@ -425,6 +437,8 @@ class MytDataSubmainController extends TwViewController {
     const total = tmoatotal + etctotal;
     const totalRemained = tmoaremained + etcremained;
     result.showTotal = this.convFormat(total.toString(), UNIT_E.DATA);
+    result.showTmoaTotal = this.convFormat(tmoatotal.toString(), UNIT_E.DATA);
+    result.showEtcTotal = this.convFormat(etctotal.toString(), UNIT_E.DATA);
     result.showRemained = this.convFormat(totalRemained.toString(), UNIT_E.DATA);
     result.showTmoaRemained = this.convFormat(tmoaremained.toString(), UNIT_E.DATA);
     result.showEtcmoaRemained = this.convFormat(etcremained.toString(), UNIT_E.DATA);
@@ -498,6 +512,9 @@ class MytDataSubmainController extends TwViewController {
       const item5gx = data5gx.find(item => (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1));
       this.convShowData(item5gx);
       data._5gxTicket = item5gx;
+      Object.assign(data, {
+        _5gxTicket: item5gx
+      });
       if ( PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item5gx.skipId) < 3 ) {
         // 시간권
         data._5gxTicket.timeTicket = true;
@@ -656,6 +673,52 @@ class MytDataSubmainController extends TwViewController {
           }
           return acc;
         }, []);
+        /* 5gx ticket test mock data
+        const data5gx = [
+          // 1. 시간권
+          {
+            'prodId': 'NA00006731', // 'NA00006732', 'NA00006733'
+            'prodNm': 'Data 시간권 8시간',
+            'skipId': 'DD4J3',
+            'skipNm': '시간권 데이터',
+            'unlimit': '0',
+            'total': '9000',
+            'used': '0',
+            'remained': '7200',
+            'unit': '240',
+            'rgstDtm': '',
+            'exprDtm': ''
+          },
+          // 2. 장소권 (부스트 파크 옵션)
+          /!* {
+            'prodId': 'NA00006734', // 'NA00006735', 'NA00006736'
+            'prodNm': 'BoostPark 데이터통화 10GB',
+            'skipId': 'DXXXX',
+            'skipNm': 'BoostPark 장소권',
+            'unlimit': '0',
+            'total': '9437184',
+            'used': '0',
+            'remained': '9437184',
+            'unit': '140',
+            'rgstDtm': '',d
+            'exprDtm': ''
+          },
+          // 설정 ON: "사용중",  설정 OFF(안오면): "남은 시간 표시"
+          {
+            'prodId': 'DSGK1',
+            'prodNm': '시간권 데이터',
+            'skipId': 'DSGK1',
+            'skipNm': '시간권 데이터',
+            'unlimit': '0',
+            'total': '9000',
+            'used': '0',
+            'remained': '7200',
+            'unit': '240',
+            'rgstDtm': '',
+            'exprDtm': ''
+          } *!/
+        ];
+        */
         if ( data5gx.length > 0 ) {
           // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
           const gnrlData = resp.result.gnrlData;
@@ -736,6 +799,18 @@ class MytDataSubmainController extends TwViewController {
   _getDataPresent() {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 || resp.code === 'GFT0003' || resp.code === 'GFT0004' ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+  }
+
+  // T끼리 자동선물 내역
+  _getDataPresentAutoList() {
+    return this.apiService.request(API_CMD.BFF_06_0006, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
         // error
@@ -911,7 +986,7 @@ class MytDataSubmainController extends TwViewController {
       toDt: this.toDt
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        return FormatHelper.isEmpty(resp.result) ? null : resp.result;
       } else {
         // error
         return null;
@@ -919,11 +994,51 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+  /**
+   * pps voice
+   * @param svcInfo
+   * @private
+   */
+  _getPPSAuto(): Observable<any> {
+    if (!this.isPPS) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_06_0055, {})
+      .map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return FormatHelper.isEmpty(resp.result) ? null : resp.result;
+        } else {
+          // error
+          return null;
+        }
+      });
+  }
+
+  /**
+   * pps data
+   * @param svcInfo
+   * @private
+   */
+  _getPPSDataAuto(): Observable<any> {
+    if (!this.isPPS) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_06_0060, {})
+      .map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return FormatHelper.isEmpty(resp.result) ? null : resp.result;
+        } else {
+          // error
+          return null;
+        }
+      });
+  }
+
   _render(res, data) {
     // 음성충전알람서비스 신청 내역 - 13차
     if ( this.isPPS ) {
       // DV001-13280 - 음성자동충전, 자동알림 신청과 관계없이 버튼 노출
-      res.render('myt-data.submain.html', { data });
+      res.render('myt-data.submain.adv.html', { data });
     } else {
       /**
        * T가족모아 관련 내용 - 공유데이터(실시간잔여량에 조회된 데이터)
@@ -948,11 +1063,11 @@ class MytDataSubmainController extends TwViewController {
               data.isTmoaProdId = false;
             }
           }
-          res.render('myt-data.submain.html', { data });
+          res.render('myt-data.submain.adv.html', { data });
         });
       } else {
         // 가입이 가능한 경우에만
-        res.render('myt-data.submain.html', { data });
+        res.render('myt-data.submain.adv.html', { data });
       }
     }
   }
@@ -993,5 +1108,5 @@ class MytDataSubmainController extends TwViewController {
   }
 }
 
-export default MytDataSubmainController;
+export default MytDataSubmainAdvController;
 

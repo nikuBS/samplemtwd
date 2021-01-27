@@ -810,7 +810,20 @@ Tw.MYT_TPL = {
       '        </div>' +
       '        <img class="tod-w100 vt mt18" src="{{CDN}}/img/t_m5g/og_5gx_nodata.png" alt="">' +
       '    </div>' +
-      '</div>'
+      '</div>',
+    NEW_CHILD_LINE_TEMP: '<div class="slick-slide {{#if first}}slick-current slick-center{{/if}}" ' +
+      'data-slick-index="{{index}}" aria-hidden="false" tabindex="{{#if first}} 0 {{else}} -1 {{/if}}" ' +
+      'role="tabpanel" id="slick-slide{{index}}" style="width: 328px;">' +
+      '<div><div class="slider-item" style="width: 100%; display: inline-block;"><!-- li -->' +
+      '<a href="#" class="slider-inner" tabindex="-1">' +
+      '<p class="child-tit">{{eqpMdlNm}}<span class="tel-num">{{svcNum}}</span></p>' +
+      '<ul class="report-list item-no-border small"><li class="report-item"><dl class="report-define d-wrap">' +
+      '<dt class="report-tit">요금제</dt><dd class="report-cont">{{prodNm}}</dd></dl></li>' +
+      '<li class="report-item"><dl class="report-define d-wrap"><dt class="report-tit">잔여데이터</dt>' +
+      '<dd class="report-cont">{{data}}{{unit}}</dd></dl></li></ul></a></div></div></div>',
+    NEW_CHILD_LINE_DOT_TEMP: ' <li class="{{#if first}}slick-active{{/if}}" role="presentation">' +
+      '<button type="button" role="tab" id="slick-slide-control{{index}}" aria-controls="slick-slide{{index}}"' +
+      'aria-label="{{index}} of {{length}}" aria-selected="true">{{index}}</button></li>'
   },
   FARE_SUBMAIN: {
     CHILD_LIME_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
@@ -1383,49 +1396,49 @@ Tw.HOME_DIRECT_BANNER =
   '</li>' +
   '{{/each}}';
 
-  Tw.HOME_PLAN_TMPL = 
+  Tw.HOME_PLAN_TMPL =
   '{{#each list}}' +
-    '<li role="tabpanel" id="tab{{tab_index}}-tab" aria-labelledby="tab{{tab_index}}" aria-selected="{{ariaSelected}}">' + 
+    '<li role="tabpanel" id="tab{{tab_index}}-tab" aria-labelledby="tab{{tab_index}}" aria-selected="{{ariaSelected}}">' +
       '<div class="widget">' +
-        '<div class="widget-box slider1" data-slider-auto="false">' + 
-            '<div class="slider-box">' + 
-              '<ul class="slider">' + 
+        '<div class="widget-box slider1" data-slider-auto="false">' +
+            '<div class="slider-box">' +
+              '<ul class="slider">' +
               '{{#each prodList}}' +
                 '{{#ifEquals odd_even_type "odd"}}' +
-                  '<li>' + 
-                      '<button class="plan-card{{../tempColor}}" ' + 
-                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}" data-xt_csid="NO" data-xt_action="BC">' + 
-                        '<span class="inner">' + 
-                          '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
-                          '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
-                          '<span class="sms"><i class="blind">sms</i>{{basOfrCharCntEngCtt}}</span>' + 
-                          '<span class="call"><i class="blind">call</i>{{basOfrVcallTmsEngCttTrans}}</span>' + 
-                        '</span>' + 
-                        '<span class="price">₩ <span>{{basFeeInfo}}</span></span>' + 
-                      '</button>' + 
+                  '<li>' +
+                      '<button class="plan-card{{../tempColor}}" ' +
+                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}" data-xt_csid="NO" data-xt_action="BC">' +
+                        '<span class="inner">' +
+                          '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' +
+                          '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' +
+                          '<span class="sms"><i class="blind">sms</i>{{basOfrCharCntEngCtt}}</span>' +
+                          '<span class="call"><i class="blind">call</i>{{basOfrVcallTmsEngCttTrans}}</span>' +
+                        '</span>' +
+                        '<span class="price">₩ <span>{{basFeeInfo}}</span></span>' +
+                      '</button>' +
                 '{{/ifEquals}}' +
                     '{{#ifEquals odd_even_type "even"}}' +
-                      '<button class="plan-card right{{../tempColor}}" ' + 
-                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}" data-xt_csid="NO" data-xt_action="BC">' + 
-                        '<span class="inner">' + 
-                        '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' + 
-                        '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' + 
-                        '<span class="sms"><i class="blind">sms</i>{{basOfrCharCntEngCtt}}</span>' + 
-                        '<span class="call"><i class="blind">call</i>{{basOfrVcallTmsEngCttTrans}}</span>' + 
-                      '</span>' + 
-                      '<span class="price">₩ <span>{{basFeeInfo}}</span></span>' + 
-                      '</button>' + 
-                  '</li>' + 
-                  '{{/ifEquals}}' + 
-                '{{/each}}' + 
+                      '<button class="plan-card right{{../tempColor}}" ' +
+                      'onclick="location.href=\'/en/product/callplan?prod_id={{prodId}}\'" data-xt_eid="{{eidvalue}}" data-xt_csid="NO" data-xt_action="BC">' +
+                        '<span class="inner">' +
+                        '<span class="plan-name">{{../prodGrpEngNm}}<strong>{{prodEngNm}}</strong></span>' +
+                        '<span class="data"><i class="blind">data</i>{{basOfrGbDataQtyEngCtt}}{{#ifunEquals basOfrGbDataQtyEngCtt "Unlimited"}}GB{{/ifunEquals}}</span>' +
+                        '<span class="sms"><i class="blind">sms</i>{{basOfrCharCntEngCtt}}</span>' +
+                        '<span class="call"><i class="blind">call</i>{{basOfrVcallTmsEngCttTrans}}</span>' +
+                      '</span>' +
+                      '<span class="price">₩ <span>{{basFeeInfo}}</span></span>' +
+                      '</button>' +
+                  '</li>' +
+                  '{{/ifEquals}}' +
+                '{{/each}}' +
                 '{{#ifEquals lastContents 1}}' +
                   '</li>' +
                 '{{/ifEquals}}' +
-              '</ul>' + 
-          '</div>' + 
-    '</div>' + 
-    '</div>' + 
-    '</li>' + 
+              '</ul>' +
+          '</div>' +
+    '</div>' +
+    '</div>' +
+    '</li>' +
   '{{/each}}';
 
   Tw.POPUP_A5 =
@@ -1449,4 +1462,3 @@ Tw.HOME_DIRECT_BANNER =
     ' </div>'+
       '<div class="popup-blind"></div>'+
   '</div>';
-  
