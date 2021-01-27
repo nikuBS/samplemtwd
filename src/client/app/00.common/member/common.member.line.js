@@ -44,11 +44,13 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _init: function () {
-    this.$popBroadBand = this.$container.find('#fe-pop-broadband');
+    // [OP002-12787] 접근성 이슈로 인해 popupService 사용 불가로 show/hide 처리하도록 변경
+    // 팝업 노출 순서: 두가지 팝업 모두 노출 시 (브로드밴드 팝업 -> 가이드 팝업)
+    this.$guidePopup = $('body').find('#fe-pop-guide');
+    this.$popBroadBand = $('body').find('#fe-pop-broadband');
     // 모바일App
     if (Tw.BrowserHelper.isApp()) {
       var storedData = Tw.CommonHelper.getLocalStorage('hideSkbAgreePop_' + this._svcInfo.userId);
-
       // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
       if (Tw.FormatHelper.isEmpty(storedData)) {
         this._openPopup();
@@ -56,10 +58,8 @@ Tw.CommonMemberLine.prototype = {
       // 그 외 경우 처리
       else {
         storedData = JSON.parse(storedData);
-
         var now = new Date();
         now = Tw.DateHelper.convDateFormat(now);
-
         if (Tw.DateHelper.convDateFormat(storedData.expireTime) < now) { // 만료시간이 지난 데이터 일 경우
           // console.log('만료시점이 지난 경우 (노출)');
           // SK브로드밴드 서비스 이용 동의 팝업 노출
@@ -79,8 +79,6 @@ Tw.CommonMemberLine.prototype = {
         this._openPopup();
       }
     }
-    // 가이드 팝업이 가장 마지막에 뜨도록 처리
-    this._checkGuidePopup();
   },
 
   /**
@@ -100,12 +98,12 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickEdit, this));
     this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickEdit, this));
     this.$container.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
-    this.$container.on('click', '#fe-pop-guide .popup-closeBtn', $.proxy(this._onCloseGuidePopup, this));
+    this.$guidePopup.on('click', '.popup-closeBtn', $.proxy(this._onCloseGuidePopup, this));
     // this.$container.on('click', '.fe-pop-hide', $.proxy(this._hidePopup, this));
     // broadband popup
-    this.$container.on('click', '#fe-pop-broadband button.agree', $.proxy(this._onClickInternal, this));
-    this.$container.on('click', '#fe-pop-broadband button.disagree', $.proxy(this._hidePopup, this));
-    this.$container.on('click', '#fe-pop-broadband button.btn-tooltip-close', $.proxy(this._hidePopup, this));
+    this.$popBroadBand.on('click', 'button.agree', $.proxy(this._onClickInternal, this));
+    this.$popBroadBand.on('click', 'button.disagree', $.proxy(this._hidePopup, this));
+    this.$popBroadBand.on('click', 'button.btn-tooltip-close', $.proxy(this._hidePopup, this));
   },
 
   /**
@@ -119,7 +117,6 @@ Tw.CommonMemberLine.prototype = {
 
 
   _checkGuidePopup: function() {
-    this.$guidePopup = this.$container.find('#fe-pop-guide');
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE },
           $.proxy(this._onLoadGuideView, this));
@@ -142,20 +139,12 @@ Tw.CommonMemberLine.prototype = {
    */
   _openGuidePopup: function ($event) {
     // focus 처리 및 scroll 처리
+    $('body').addClass('noscroll');
+    this.$guidePopup.show();
+    this.$guidePopup.attr('tabindex', 0);
     setTimeout($.proxy(function() {
-      $('body').addClass('noscroll');
-      this.$guidePopup.show();
       this.$guidePopup.focus();
-    }, this), 500);
-    // this.$guidePopup.show();
-    // var $target;
-    // if(!Tw.FormatHelper.isEmpty($event)) {
-    //   $target = $($event.currentTarget);
-    // }
-    // this._popupService.open({
-    //   hbs: 'CO_01_05_02_08',
-    //   layer: true
-    // }, $.proxy(null, this), $.proxy(this._onCloseGuideOppup, this), 'guide');
+    }, this), 0);
   },
 
   /**
@@ -177,6 +166,7 @@ Tw.CommonMemberLine.prototype = {
     } else {
       Tw.CommonHelper.setCookie(Tw.NTV_STORAGE.COMMON_MEMBER_LINE_GUIDE, 'Y', 365);
     }
+    this.$guidePopup.removeAttr('tabindex');
     this.$guidePopup.hide();
   },
 
@@ -702,13 +692,6 @@ Tw.CommonMemberLine.prototype = {
   _checkRepSvc: function (svcNumList, msg, $target) {
     this._popupService.openAlert(msg, null, null, $.proxy(this._onCloseChangeRepSvc, this, svcNumList, $target), null, $target);
 
-    /*
-    if ( result.repSvcChgYn === 'Y' ) {
-      this._popupService.openAlert(msg, null, null, $.proxy(this._onCloseChangeRepSvc, this, svcNumList, $target), null, $target);
-    } else {
-      this._checkMarketingOffer(svcNumList, $target);
-    }
-    */
   },
 
   /**
@@ -797,8 +780,12 @@ Tw.CommonMemberLine.prototype = {
   },
 
   _openPopup: function () {
+    $('body').addClass('noscroll');
+    this.$popBroadBand.attr('tabindex', 0);
     this.$popBroadBand.show();
-    // this._isCertPopupOpen = true;
+    setTimeout($.proxy(function() {
+      this.$popBroadBand.focus();
+    }, this), 0);
   },
   /**
    * @function
@@ -806,15 +793,10 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _closePopup: function () {
+    $('body').removeClass('noscroll');
+    this.$popBroadBand.removeAttr('tabindex');
     this.$popBroadBand.hide();
-    // this._isCertPopupOpen = false;
-    // $('body').removeClass('noscroll');
-    // if ( Tw.BrowserHelper.isApp() ) {
-    //   this._setLocalStorage('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
-    // } else {
-    //   this._setCookie('hideSkbAgreePop', this._svcInfo.userId, 365 * 10);
-    // }
-    // this._popupService.close();
+    this._checkGuidePopup();
   },
 
   /**
