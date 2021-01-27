@@ -64,8 +64,8 @@
 .tod-renewalBody .product-sec .login-btn-area .login-btn{width:5.625rem; }
 
 /* 현재 사용중인 요금제 */
-.tod-renewalBody .product-sec .pro-article.now-pay-box .item-define{border-bottom:1px solid#d6d7d8}
-.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info{display: -webkit-box; display:flex; padding-top:1.25rem; -webkit-box-pack: justify; justify-content: space-between;}
+.tod-renewalBody .product-sec .pro-article.now-pay-box .item-define {border:0; padding-bottom:0;}
+.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info{display: -webkit-box; display:flex; padding-top:1.25rem; margin-top:1.25rem; border-top:1px solid #d6d7d8; -webkit-box-pack: justify; justify-content: space-between;}
 .tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item{font-size:0.75rem; color:#666; letter-spacing:-0.0187rem; }
 .tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item .val{display:inline-block; margin-left:4px; color:#222}
 
