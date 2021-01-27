@@ -41,6 +41,7 @@ export enum REDIS_KEY {
   DATA_RECHARGE_COUNT = 'data.recharge.count', // 데이터 리필 표기 관련 환경변수 개수
   DATA_DEDUCTION_PRODUCTS = 'data.deduction.prodId',
   DATA_DEDUCTION_COUNT = 'data.deduction.count',
+  ADVANCEMENT_PAGE_VISIBLE = 'advancement.page.visible'
 }
 
 export enum REDIS_TOS_KEY {
