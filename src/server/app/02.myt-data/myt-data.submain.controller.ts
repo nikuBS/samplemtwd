@@ -55,13 +55,13 @@ class MytDataSubmainController extends TwViewController {
   private isPPS = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    const userAgent: string = FormatHelper.isEmpty(req) ? '' : (req.headers['user-agent'] || '');
-    const agentTypeChk = TARGET_ADV_AGENT_LIST.find((targetAgent) =>
-      userAgent.toLowerCase().includes(targetAgent.toLowerCase()));
-    if (agentTypeChk) {
-      const advInst = new MytDataSubmainAdvController();
-      advInst.initPage(req, res, next);
-      return false;
+    if (pageInfo.advancement) {
+      // local 테스트틀 하기 위해 추가
+      if (process.env.NODE_ENV === pageInfo.advancement.env || process.env.NODE_ENV === 'local') {
+        const advInst = new MytDataSubmainAdvController();
+        advInst.initPage(req, res, next);
+        return false;
+      }
     }
 
     const data: any = {

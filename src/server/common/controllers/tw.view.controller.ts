@@ -200,6 +200,7 @@ abstract class TwViewController {
 
   /**
    * redis에서 개인화 문자 진입 아이콘 노출 여부 체크
+   * @protected
    * @return {Observable}
    */
   protected getPersonSmsDisableTimeCheck(): Observable<any> {
@@ -225,6 +226,34 @@ abstract class TwViewController {
   }
 
   /**
+   * 특정 페이지 관리를 위해 설정 값
+   * @param menuId
+   * @protected
+   */
+  protected getAdvancementPageVisibleCheck(menuId): Observable<any> {
+    return this._apiService.request(API_CMD.BFF_01_0069, {
+      property: REDIS_KEY.ADVANCEMENT_PAGE_VISIBLE
+    }).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        if (FormatHelper.isEmpty(resp.result)) {
+          return null;
+        }
+        const selectItem = resp.result.split(',').filter(item => menuId === item.split(':')[0]);
+        if (FormatHelper.isEmpty(selectItem)) {
+          return null;
+        }
+        return {
+          env: selectItem[0].split(':')[1],
+          visible: selectItem[0].split(':')[2]
+        };
+      } else {
+        return null;
+      }
+    });
+  }
+
+
+  /**
    * 화면 권한 처리
    * @param req
    * @param res
@@ -233,8 +262,9 @@ abstract class TwViewController {
    * @param svcInfo
    * @param allSvc
    * @param childInfo
+   * @param pageInfo?
    */
-  private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
+  private getAuth(req, res, next, path, svcInfo, allSvc, childInfo, pageInfo?) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this.loginService.setCookie(res, COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType(req));
     this.loginService.setNoticeType(req, '').subscribe();
@@ -254,7 +284,6 @@ abstract class TwViewController {
       const urlMeta = new UrlMetaModel(resp.result || {});
       urlMeta.isApp = BrowserHelper.isApp(req);
       urlMeta.fullUrl = this.loginService.getProtocol(req) + this.loginService.getDns(req) + this.loginService.getFullPath(req);
-
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         const loginType = urlMeta.auth.accessTypes;
 
@@ -269,45 +298,47 @@ abstract class TwViewController {
             return;
           }
           if ( isLogin ) {
-
-            this.getPersonSmsDisableTimeCheck().subscribe((resp) => {
-
-                svcInfo.personSmsDisableTimeCheck = resp;
-                // console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo); - 주석처리
-                urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
-                if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
-                  const urlAuth = urlMeta.auth.grades;
-                  const svcGr = svcInfo.svcGr;
-                  // admin 정보 입력 오류 (접근권한이 입력되지 않음)
-                  if ( urlAuth === '' ) {
-                    res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-                    return;
-                  }
-                  if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
-                    if ( urlAuth.indexOf('N') !== -1 ) {
-                      // 준회원 접근 가능한 화면
-                      this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-                    } else {
-                      // 등록된 회선 없음 + 준회원 접근 안되는 화면
-                      this.errorNoRegister(req, res, next);
-                    }
-                  } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+            Observable.combineLatest(
+                this.getPersonSmsDisableTimeCheck(),
+                this.getAdvancementPageVisibleCheck(urlMeta.menuId)
+            ).subscribe(([personResp, advancementResp]) => {
+              svcInfo.personSmsDisableTimeCheck = personResp;
+              urlMeta.advancement = advancementResp;
+              // console.log(">>[TEST] tw.View.Controller.svcInfo ", svcInfo); - 주석처리
+              urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
+              if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
+                const urlAuth = urlMeta.auth.grades;
+                const svcGr = svcInfo.svcGr;
+                // admin 정보 입력 오류 (접근권한이 입력되지 않음)
+                if ( urlAuth === '' ) {
+                  res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+                  return;
+                }
+                if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
+                  if ( urlAuth.indexOf('N') !== -1 ) {
+                    // 준회원 접근 가능한 화면
                     this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
                   } else {
-                    // 접근권한 없음
-                    this.errorAuth(req, res, next);
+                    // 등록된 회선 없음 + 준회원 접근 안되는 화면
+                    this.errorNoRegister(req, res, next);
                   }
-                } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+                } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
                   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
                 } else {
-                  // 현재 로그인 방법으론 이용할 수 없음
-                  if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-                    res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
-                  } else {
-                    // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-                    this.errorAuth(req, res, next);
-                  }
+                  // 접근권한 없음
+                  this.errorAuth(req, res, next);
                 }
+              } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+              } else {
+                // 현재 로그인 방법으론 이용할 수 없음
+                if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+                  res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
+                } else {
+                  // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+                  this.errorAuth(req, res, next);
+                }
+              }
             });
 
           } else {
@@ -549,7 +580,7 @@ abstract class TwViewController {
             });
             return result.join(',');
           });
-    })
+    });
   }
 }
 
