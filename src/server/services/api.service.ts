@@ -237,7 +237,7 @@ class ApiService {
                 }
               }
             }
-          // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
+            // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
           } else if ( data && data.code === API_CODE.NODE_1005) {
             respData = {code: API_CODE.NODE_1005, result: data.result};
           }
@@ -309,7 +309,7 @@ class ApiService {
                   }
                 }
               }
-            // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
+              // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
             } else if ( resp && resp.code === API_CODE.NODE_1005) {
               error = {code: API_CODE.NODE_1005, result: resp.result};
             }
@@ -351,16 +351,16 @@ class ApiService {
           //                   , req.session.svcInfo);
 
           return Observable.of({
-              code : API_CODE.NODE_1005,
-              result : {
-                commandPath : command.path,
-                preServerSession : req.session.serverSession,
-                curServerSession : serverSession,
-                url : this.loginService.getPath(req),
-                point : 'SERVER_API_RES',
-                target : this.loginService.getPath(req)
-              }
-            });
+            code : API_CODE.NODE_1005,
+            result : {
+              commandPath : command.path,
+              preServerSession : req.session.serverSession,
+              curServerSession : serverSession,
+              url : this.loginService.getPath(req),
+              point : 'SERVER_API_RES',
+              target : this.loginService.getPath(req)
+            }
+          });
         }
         return this.loginService.setServerSession(req, res, serverSession);
       } else {
@@ -382,7 +382,7 @@ class ApiService {
     return '';
   }
 
-   /**
+  /**
    * 로그인 요청
    * @param command
    * @param params
@@ -874,12 +874,12 @@ class ApiService {
   private redirectInvalidSession(req, res, resp) {
 
     const params = 'sess_invalid=Y'
-                + '&pre_server_se=' + resp.result.preServerSession
-                + '&cur_server_se=' + resp.result.curServerSession
-                + '&url=' + resp.result.url
-                + '&command_path=' + resp.result.commandPath
-                + '&point=' + resp.result.point
-                + '&target=' + resp.result.target;
+      + '&pre_server_se=' + resp.result.preServerSession
+      + '&cur_server_se=' + resp.result.curServerSession
+      + '&url=' + resp.result.url
+      + '&command_path=' + resp.result.commandPath
+      + '&point=' + resp.result.point
+      + '&target=' + resp.result.target;
 
     res.redirect('/common/member/logout/expire?' + params);
   }
@@ -894,7 +894,7 @@ class ApiService {
       let referer = '';
 
       if ( !FormatHelper.isEmpty(req.baseUrl)
-          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
+        && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
         referer = this.loginService.getReferer(req);
       }
 

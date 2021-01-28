@@ -6,7 +6,9 @@
  * Summay: 통합청구(대표,일반), 개별청구 공통 JS
  */
 Tw.MyTFareBillGuideCommon = function (rootEl, resData) {
-  this.resData = JSON.parse(window.unescape(resData));
+  this.resData = resData;
+  // this.resData = JSON.parse(window.unescape(resData));
+
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -21,9 +23,10 @@ Tw.MyTFareBillGuideCommon = function (rootEl, resData) {
 };
 
 Tw.MyTFareBillGuideCommon.prototype = {
+
   _init: function () {
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
 
   /**

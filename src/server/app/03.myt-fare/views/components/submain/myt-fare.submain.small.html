@@ -1,0 +1,88 @@
+<%#
+* MenuName: 나의 요금 > 서브메인 (소액결제 영역)
+* @file myt-fare.submain.small.html
+* @author 양정규
+* @since 2020.11.17
+%>
+<%_
+    const {small} = data;
+    if(small){
+_%>
+<%_if(!small.isNotAgree){_%>
+<section class="cont-card">
+    <div class="section-inner">
+        <div class="head-tit">
+            휴대폰 결제/콘텐츠 이용요금
+        </div>
+        <div class="card-cont">
+            <ul class="report-list">
+                <%_if(small.isAdult){_%>
+                <li class="report-item">
+                    <a href="/myt-fare/bill/small" class="link d-wrap" data-make-eid="mobileCharge">
+                        <dl class="report-define">
+                            <dt class="report-tit">휴대폰 결제 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
+                            <dd class="report-cont"><%-small.smallTotal%>원</dd>
+                        </dl>
+                    </a>
+                </li>
+                <%_}_%>
+                <li class="report-item">
+                    <a href="/myt-fare/bill/contents" class="link d-wrap" data-make-eid="contentsBill">
+                        <dl class="report-define">
+                            <dt class="report-tit">콘텐츠 이용요금 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
+                            <dd class="report-cont"><%-small.contentsTotal%>원</dd>
+                        </dl>
+                    </a>
+                </li>
+            </ul>
+            <div class="hash-wrap mt30">
+                <ul class="hash-list">
+                    <li class="hash-item">
+                        <button class="hash" data-change-limit="small" data-make-eid="mobileChangeLimit">#휴대폰 결제 한도변경</button>
+                    </li>
+                    <li class="hash-item">
+                        <button class="hash" data-change-limit="contents" data-make-eid="contentsChangeLimit">#콘텐츠 한도변경</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<%_} else {_%> <%# 소액결제/콘텐츠 이용료 불가시 노출%>
+<section class="cont-card">
+    <div class="section-inner">
+        <div class="head-tit">
+            휴대폰 결제/콘텐츠 이용료
+        </div>
+        <div class="card-cont">
+            <p class="refer-tit">무료가입후 소액결제, 콘텐츠 이용료를 이용해 주세요.</p>
+            <ul class="refer-list">
+                <li class="refer">※ 휴대폰 결제 : 상품&amp;콘텐츠을 휴대폰으로 결제가능</li>
+                <li class="refer">※ 콘텐츠 이용료 : 구글플레이,앱스토어등에서 구매하신 이용요금</li>
+                <%_if(!small.isAdult){_%> <%# 미성년자일때만 노출%>
+                <li class="refer">※ 미성년자는 고객센터(114)를 통해 휴대폰 결제 이용동의 서비스 가입 가능합니다.</li>
+                <%_}_%>
+            </ul>
+            <%_if(small.isAdult){_%> <%# 성인일때만 노출%>
+            <div class="btn-area mb0">
+                <a href="/product/callplan?prod_id=NA00004184" class="rect-btn" data-make-eid="agreeJoin">무료 가입하기</a>
+            </div>
+            <%_}_%>
+        </div>
+    </div>
+</section>
+<%_}_%>
+
+<%# 소액결제/콘텐츠 이용요금 템플릿%>
+<script id="fe-history" type="text/x-handlebars-template">
+</script>
+
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareSubMainSmall({
+      $element: $('.wrap'),
+      data: JSON.parse('<%- JSON.stringify(data) %>')
+    });
+  });
+</script>
+<%_}_%>

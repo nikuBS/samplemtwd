@@ -8,6 +8,7 @@
 Tw.MyTFareBillGuideIndividual = function () {
   // ES5 Inheritance
   Tw.MyTFareBillGuideCommon.apply(this, arguments);
+  // this._init();
 };
 
 // ES5 Inheritance

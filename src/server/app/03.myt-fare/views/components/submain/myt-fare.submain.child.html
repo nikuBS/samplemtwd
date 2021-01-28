@@ -1,0 +1,51 @@
+<%#
+* MenuName: 나의 요금 > 서브메인 (자녀회선 영역)
+* @file myt-fare.submain.child.html
+* @author 양정규
+* @since 2020.12.23
+%>
+<%_
+    const childInfo = (data.guide || {}).childInfo || [],
+        claimDt = data.claimDt;
+    // 자녀회선 있을때만 노출
+    if (childInfo.length > 0) {
+_%>
+<section class="cont-card fe-child-area">
+    <div class="section-inner">
+        <div class="head-tit">자녀의 회선을 확인해 보세요</div>
+        <div class="card-cont minus-mg">
+            <div class="child-swiper-box submain-swipe">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box slider6">
+                        <div class="slider-box">
+                            <div class="slider fe-child-list"><!-- ul -->
+                                <%_childInfo.map( item => {_%>
+                                <div class="slider-item"><!-- li -->
+                                    <a href="<%-`/myt-fare/billguide/child?line=${item.svcMgmtNum}&date=${claimDt}`%>" class="slider-inner" data-make-eid="child">
+                                        <dl class="child-info">
+                                            <dt class="name">자녀휴대폰</dt>
+                                            <dd class="tel"><%-item.svcNum%></dd>
+                                        </dl>
+                                        <ul class="report-list item-no-border">
+                                            <li class="report-item">
+                                                <dl class="report-define d-wrap">
+                                                    <dt class="report-tit">이용요금</dt>
+                                                    <dd class="report-cont"><%-item.useAmtTot%>원</dd>
+                                                </dl>
+                                            </li>
+                                        </ul>
+                                    </a>
+                                </div>
+                                <%_})_%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //.widget -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<%_}_%>

@@ -467,7 +467,16 @@ class DateHelper {
     start = this.convDateFormat(start);
     end = this.convDateFormat(end);
     return moment(target).isBetween(start, end, undefined, '[]');
-  };
+  }
+
+  /**
+   * @desc 이전날짜인지 여부
+   * @param {date|string} sDate 시작일자
+   * @param {date|string} eDate 종료일자
+   */
+  static isBefore(sDate, eDate): boolean {
+    return moment(sDate).isBefore(eDate);
+  }
 }
 
 export default DateHelper;

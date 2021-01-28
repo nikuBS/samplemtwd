@@ -39,6 +39,7 @@ export class MytFareInfoMiriService {
     this._selSvcMgmtNum = line || svcInfo.svcMgmtNum;
     this.apiService = new ApiService();
     this.apiService.setCurrentReq(req, res);
+    this.apiService.setTimeout(3000);
   }
 
   /**

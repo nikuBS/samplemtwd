@@ -26,6 +26,14 @@ Tw.FormatHelper = (function () {
     return false;
   };
 
+  /**
+   * @desc 배열이 비어있는지 확인
+   * @param array
+   */
+  var isEmptyArray = function (array) {
+    return !Array.isArray(array) || !array.length;
+  };
+
   
   /**
    * @desc whether value is object or not 
@@ -603,6 +611,7 @@ Tw.FormatHelper = (function () {
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
+    isEmptyArray: isEmptyArray,
     isObject: isObject,
     isArray: isArray,
     isString: isString,
