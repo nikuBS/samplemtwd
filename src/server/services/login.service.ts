@@ -32,14 +32,23 @@ class LoginService {
   public sessionGenerate(req, res): Observable<any> {
     return Observable.create((observer) => {
       req.session.regenerate((error) => {
+        // 무한 루프오류 수정
+        try {
+          res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+          CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+          this.clearXtCookie(res);
 
-        res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-        CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
-        this.clearXtCookie(res);
-
-        this.logger.info(this, '[Session Generate]', error);
-        observer.next();
-        observer.complete();
+          this.logger.info(this, '[Session Generate]', error);
+          observer.next();
+          observer.complete();
+        } catch(e) {
+          this.logger.warn(this, '[Session Generate]', e)
+          observer.next({
+            status: 404,
+              msg: '[Session Generate] ' + e
+          });
+          observer.complete();
+        }
       });
     });
   }
@@ -157,7 +166,7 @@ class LoginService {
     if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
       return;
     }
-    
+
 
     const currentXtInfo = req.session.svcInfo.xtInfo || {},
       xtInfo: any = {};
@@ -176,9 +185,9 @@ class LoginService {
       res.cookie(COOKIE_KEY.XTUID, xtInfo.XTUID);
     }
 
-    // 간편로그인인 경우 XTLOGINID 에 서비스관리번호를 SET 해준다. 
+    // 간편로그인인 경우 XTLOGINID 에 서비스관리번호를 SET 해준다.
     // (간편로그인시 svcInfo.userId 가 null)
-    if ( !FormatHelper.isEmpty(req.session.svcInfo.loginType) && req.session.svcInfo.loginType === 'S') { 
+    if ( !FormatHelper.isEmpty(req.session.svcInfo.loginType) && req.session.svcInfo.loginType === 'S') {
       if ( FormatHelper.isEmpty(currentXtInfo.XTLOGINID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
         xtInfo.XTLOGINID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
         res.cookie(COOKIE_KEY.XTLOGINID, xtInfo.XTLOGINID);
@@ -188,7 +197,7 @@ class LoginService {
         xtInfo.XTLOGINID = CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
         res.cookie(COOKIE_KEY.XTLOGINID, xtInfo.XTLOGINID);
       }
-    }    
+    }
 
     if ( FormatHelper.isEmpty(currentXtInfo.XTSVCGR) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
       xtInfo.XTSVCGR = svcInfo.svcGr;
@@ -672,8 +681,8 @@ class LoginService {
       let referer = '';
 
       if ( !FormatHelper.isEmpty(req.baseUrl)
-          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 
-              || req.baseUrl.indexOf('store') !== -1 || req.baseUrl.indexOf('api') !== -1) ) {  
+          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1
+              || req.baseUrl.indexOf('store') !== -1 || req.baseUrl.indexOf('api') !== -1) ) {
         referer = this.getReferer(req);
       }
 
@@ -691,12 +700,12 @@ class LoginService {
        * 접속 방식
        * error
        */
-      this.logger.error(context, 
+      this.logger.error(context,
         prefix,
-        '\n code :', error.code || '', 
-        '\n base url :', baseUrl, 
-        '\n referer :', referer, 
-        '\n params :', params, 
+        '\n code :', error.code || '',
+        '\n base url :', baseUrl,
+        '\n referer :', referer,
+        '\n params :', params,
         '\n device: ', device,
         '\n error: ', error
       );
