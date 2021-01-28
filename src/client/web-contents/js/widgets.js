@@ -82,10 +82,10 @@ skt_landing.widgets = {
         return;
       }
       var tube_box = $(this).find('.tube-list'),
-        tube_list = tube_box.find('> li');
+          tube_list = tube_box.find('> li');
       var listClass = ['one', 'two', 'three', 'four', 'five'],
-        classValue = null,
-        classNum = 0;
+          classValue = null,
+          classNum = 0;
       for (var i = 0, leng = listClass.length; i < leng; ++i) {
         if (tube_box.attr('class').indexOf(listClass[i]) > 0) {
           classValue = listClass[i];
@@ -137,7 +137,7 @@ skt_landing.widgets = {
 
     function setRadioState(target) {
       var target = $(target),
-        label = target.closest('li').not('.disabled');
+          label = target.closest('li').not('.disabled');
 
       if (target.closest('li').hasClass('disabled')) return;
       if (target.closest('li').attr('role') === undefined) {
@@ -171,7 +171,7 @@ skt_landing.widgets = {
         return;
       }
       var bt = $(this).find('.cancel'),
-        field = bt.prev();
+          field = bt.prev();
       if (field.val() == '' || field.attr('readonly')) {
         bt.hide();
       } else {
@@ -258,11 +258,11 @@ skt_landing.widgets = {
         return;
       }
       var box = $(this).closest('.radiobox'),
-        attrRole = box.attr('role');	// 190626 - 라디오 버튼 기능 개선
+          attrRole = box.attr('role');	// 190626 - 라디오 버튼 기능 개선
       if ($(this).closest('.radio-slide').length > 0) {
         var radioSlide = $(this).closest('.radio-slide'),
-          radioItems = radioSlide.find('.radiobox'),
-          itemsW = 0;
+            radioItems = radioSlide.find('.radiobox'),
+            itemsW = 0;
         for (var i = 0, leng = radioItems.length; i < leng; ++i) {
           itemsW += radioItems.eq(i).outerWidth(true);
         }
@@ -318,7 +318,7 @@ skt_landing.widgets = {
         return;
       }
       var box = $(this).closest('.checkbox'),
-        attrRole = box.attr('role');	// 190626 - 체크박스 기능 개선
+          attrRole = box.attr('role');	// 190626 - 체크박스 기능 개선
       // 190626 - 체크박스 기능 개선 START
       if (attrRole === 'checkbox') {
         $(this).is(':checked') ? box.addClass('checked').attr('aria-checked', true) : box.removeClass('checked').attr('aria-checked', false);
@@ -386,8 +386,8 @@ skt_landing.widgets = {
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: false,
-        focusOnSelect: true,
         initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
+        focusOnSelect: true,
         focusOnChange: true
       })
     });
@@ -425,16 +425,16 @@ skt_landing.widgets = {
       });
       _this.on('init', function () {
         var totalBox = $(this).closest(widget).find('.page-total'),
-          slick = _this.prop('slick');
+            slick = _this.prop('slick');
         totalBox.find('.current').text(slick.currentSlide + 1);
         totalBox.find('.total').text(slick.slideCount);
       })
-        .trigger('init')
-        .on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-          var totalBox = $(this).closest(widget).find('.page-total');
-          totalBox.find('.current').text(nextSlide + 1);
-          totalBox.find('.total').text(slick.slideCount);
-        });
+          .trigger('init')
+          .on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+            var totalBox = $(this).closest(widget).find('.page-total');
+            totalBox.find('.current').text(nextSlide + 1);
+            totalBox.find('.total').text(slick.slideCount);
+          });
     });
     /*onAfterChange: function(){
           var currentSlide = $('.regular').slick('slickCurrentSlide');
@@ -488,7 +488,7 @@ skt_landing.widgets = {
       });
       _this.on('init', function () {
         var totalBox = $(this).closest(widget).find('.page-total'),
-          slick = _this.prop('slick');
+            slick = _this.prop('slick');
         totalBox.find('.current').text(slick.currentSlide + 1);
         totalBox.find('.total').text(slick.slideCount);
         /*if($(this).find('.bt-select-arrow')){
@@ -503,66 +503,13 @@ skt_landing.widgets = {
         //});
         //$(this).replaceWith($('<ul>').append($(this).contents()));
       })
-        .trigger('init')
-        .on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-          var totalBox = $(this).closest(widget).find('.page-total');
-          totalBox.find('.current').text(nextSlide + 1);
-          totalBox.find('.total').text(slick.slideCount);
-        });
+          .trigger('init')
+          .on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+            var totalBox = $(this).closest(widget).find('.page-total');
+            totalBox.find('.current').text(nextSlide + 1);
+            totalBox.find('.total').text(slick.slideCount);
+          });
     });
-  },
-
-  /**
-   * @summary .slider6 클래스에 대한 slick.js 적용 함수
-   * @description
-   * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
-   * - slick.init, slick.beforeChange 이벤트 바인딩 되어 있슴
-   * - {@link http://127.0.0.1:5500/html/templete/slider01.html}
-   * @function
-   * @example
-   * skt_landing.widgets.widget_slider6();
-   */
-  widget_slider6: function () {
-    var widget = '.slider6';
-    $(widget).each(function () {
-      var _this = $(this).find('.slider');
-      _this.slick({
-        dots: true,
-        arrows: false,
-        infinite: false,
-        slidesToShow: 1,
-        centerMode: true,
-        centerPadding: '19px',
-        variableWidth: false,
-        focusOnSelect: true,
-        focusOnChange: true,
-        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
-        responsive: [{
-          settings: {
-            centerPadding: '15px'
-          }
-        }]
-      });
-    });
-    /*onAfterChange: function(){
-          var currentSlide = $('.regular').slick('slickCurrentSlide');
-        $('.current').text(currentSlide);
-    }*/
-
-    /*$('.slider4').each(function (idx) {
-      var swiper,
-        tagClass = 'slide-number' + idx,
-        _this = $(this).find('.slider-box').addClass(tagClass);
-      _this.next().find('.total').text(_this.find('.swiper-slide').length);
-      swiper = new Swiper('.slider4 .' + tagClass, {
-        onInit: function (params) {
-          _this.next().find('.current').text(params.activeIndex + 1);
-        },
-        onSlideChangeStart: function (params) {
-          _this.next().find('.current').text(params.activeIndex + 1);
-        }
-      });
-    });*/
   },
   /**
    * @summary .slider6 클래스에 대한 slick.js 적용 함수
@@ -634,16 +581,16 @@ skt_landing.widgets = {
 
     function init(ta) {
       var posY = 0,
-        gap = 0,
-        container = ta,
-        item_length = container.find('.drag-list li').length,
-        pos_arr = [],
-        target = null,
-        set_list = [];
+          gap = 0,
+          container = ta,
+          item_length = container.find('.drag-list li').length,
+          pos_arr = [],
+          target = null,
+          set_list = [];
       container.find('.drag-list li')
-        .on('touchstart', fn_dragstart)
-        .on('touchmove', fn_dragmove)
-        .on('touchend', fn_dragend);
+          .on('touchstart', fn_dragstart)
+          .on('touchmove', fn_dragmove)
+          .on('touchend', fn_dragend);
       pos_arr = get_list_posY(container);
       container.find('.drag-list li').each(function (idx) {
         set_list.push(idx);
@@ -715,7 +662,7 @@ skt_landing.widgets = {
 
       function fn_btdel() {
         var self_container = $(this).closest('li'),
-          container = $(this).closest('.drag-list').next();
+            container = $(this).closest('.drag-list').next();
         $(this).find('span').text('보존');
         $(this).closest('li').off('touchstart touchend touchmove').appendTo(container);
         self_container.find('.toggle-bt').off('click').on('click', fn_btlive);
@@ -724,13 +671,13 @@ skt_landing.widgets = {
 
       function fn_btlive() {
         var self_container = $(this).closest('li'),
-          container = $(this).closest('.dimmed-list').prev();
+            container = $(this).closest('.dimmed-list').prev();
         $(this).find('span').text('삭제');
         $(this).closest('li')
-          .on('touchstart', fn_dragstart)
-          .on('touchmove', fn_dragmove)
-          .on('touchend', fn_dragend)
-          .appendTo(container);
+            .on('touchstart', fn_dragstart)
+            .on('touchmove', fn_dragmove)
+            .on('touchend', fn_dragend)
+            .appendTo(container);
         self_container.find('.up-bt').on('click', fn_btup);
         self_container.find('.down-bt').on('click', fn_btdown);
         self_container.find('.toggle-bt').off('click').on('click', fn_btdel);
@@ -782,7 +729,7 @@ skt_landing.widgets = {
         return;
       }
       var file = $(this).find('.file'),
-        vfile = $(this).find('.fileview');
+          vfile = $(this).find('.fileview');
       if (vfile) {
         file.on('change', function () {
           // 191217 [OP002-5134] START
@@ -905,9 +852,7 @@ skt_landing.widgets = {
           autoplay: true,
           autoplaySpeed: 4000,
           dots: true,
-          arrows: false,
-          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
-          prevArrow: '<button class="slick-prev" aria-label="이전" type="button">이전</button>',
+          arrows: true,
           infinite: true,
           speed: 300,
           // useTransform : false,
@@ -918,6 +863,7 @@ skt_landing.widgets = {
           centerMode: false,
           focusOnSelect: false,
           touchMove: true,
+          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           customPaging: function (slider, i) {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
@@ -935,8 +881,6 @@ skt_landing.widgets = {
         _this.slick({
           dots: true,
           arrows: true,
-          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
-          prevArrow: '<button class="slick-prev" aria-label="이전" type="button">이전</button>',
           infinite: false,
           speed: 300,
           // useTransform : false,
@@ -947,6 +891,7 @@ skt_landing.widgets = {
           centerMode: false,
           focusOnSelect: false,
           touchMove: true,
+          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           customPaging: function (slider, i) {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
@@ -1007,8 +952,8 @@ skt_landing.widgets = {
         swipe: false,
         vertical: true,
         verticalSwiping: true,
-        autoplay: true,
         initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
+        autoplay: true,
         autoplaySpeed: 5000
       });
 
@@ -1043,9 +988,9 @@ skt_landing.widgets = {
     var widget = ta ? $(ta).find('.slider7') : $('.slider7');
     $(widget).each(function () {
       var $parent = $(this).closest('.section-box'),
-        $card = $parent.find('.tod-mls-card'),
-        actionTop = $parent.offset().top - ($parent.height() / 1.2),
-        time = 2000;
+          $card = $parent.find('.tod-mls-card'),
+          actionTop = $parent.offset().top - ($parent.height() / 1.2),
+          time = 2000;
 
       $(window).on('scroll', function () {
         if ($(this).scrollTop() > actionTop && $parent.data('action') === undefined) {
@@ -1156,9 +1101,9 @@ skt_landing.widgets = {
         return;
       }
       var _this = $(this),
-        box = _this.find('> .acco-style > .acco-box'),
-        list = box.find('> .acco-list'),
-        btn = list.find('> .acco-title button');
+          box = _this.find('> .acco-style > .acco-box'),
+          list = box.find('> .acco-list'),
+          btn = list.find('> .acco-title button');
       for (var i = 0, leng = list.length; i < leng; ++i) {
         setState(btn.eq(i), list.eq(i).hasClass('on'));
       }
@@ -1217,8 +1162,8 @@ skt_landing.widgets = {
 
     function checkSwitch(target, state) {
       var target = $(target),
-        state = typeof state == 'boolean' ? state : target.closest('.btn-switch').hasClass('on'),
-        roleType = target.closest('.switch-style').attr('role');
+          state = typeof state == 'boolean' ? state : target.closest('.btn-switch').hasClass('on'),
+          roleType = target.closest('.switch-style').attr('role');
 
       if (target.attr('disabled')) {
         roleType && target.closest('.switch-style').attr('aria-disabled', true);
@@ -1303,14 +1248,15 @@ skt_landing.widgets = {
         var _this = $(this);
         var toggler = _this.closest('.toggle').find('.toggler');
         // 200213 2020웹접근성 수정 START
-        if (toggler.is(':hidden')) {
-          toggler.slideDown().find('ul > li > button, a').eq(0).focus();
-          _this.attr('aria-pressed', 'true').addClass('open').find('span.tod-blind').html('닫기');
-        } else {
-          toggler.slideUp();
-          _this.attr('aria-pressed', 'false').removeClass('open').find('span.tod-blind').html('더보기');
-        }
-        // 200213 2020웹접근성 수정 END
+		if (toggler.is(':hidden')) {
+			toggler.slideDown().find('ul > li > button, a').eq(0).focus();
+			_this.attr('aria-pressed', 'true').addClass('open').find('span.tod-blind').html('닫기');
+		} else {
+			toggler.slideUp();
+			_this.attr('aria-pressed', 'false').removeClass('open').find('span.tod-blind').html('더보기');
+		}
+		// 200213 2020웹접근성 수정 END
+
       })
     })
   },
@@ -1328,8 +1274,8 @@ skt_landing.widgets = {
     var tabArr = ta ? $(ta).find('.tabs .tab-area') : $('.tabs .tab-area');
     tabArr.each(function () {
       var _this = $(this),
-        tabList = _this.find('.tab-linker'),
-        tabCont = _this.find('.tab-contents');
+          tabList = _this.find('.tab-linker'),
+          tabCont = _this.find('.tab-contents');
 
       if ($(this).data('event') === undefined) {
         $(this).data('event', 'bind')
@@ -1432,7 +1378,6 @@ skt_landing.widgets = {
             $(_list).addClass('openlist-wrap');
             $(_btn).addClass('openbtn');
             $(_btn).attr('aria-pressed', 'true');
-            _ul.find('li button, li a').eq(0).focus(); // 191205 [OP002-5227] 추가
           }
         });
       }
@@ -1457,9 +1402,9 @@ skt_landing.widgets = {
         return;
       }
       var belt = $(this).find('.horizontal-list'),
-        slide = $(this).find('.horizontal-slide'),
-        items = belt.find('> li:visible'),
-        itemsW = 0;
+          slide = $(this).find('.horizontal-slide'),
+          items = belt.find('> li'),
+          itemsW = 0;
       for (var i = 0; items.length > i; ++i) {
         itemsW += Math.ceil(items.eq(i).outerWidth(true));
       }
@@ -1492,19 +1437,19 @@ skt_landing.widgets = {
         return;
       }
       var time = 500,
-        now = 0,
-        interval = 10,
-        max = 100,
-        loop = 100,
-        reverceTic = 1,
-        _this = this;
+          now = 0,
+          interval = 10,
+          max = 100,
+          loop = 100,
+          reverceTic = 1,
+          _this = this;
       $(_this).find('.donut-chart .c100').each(function () {
         $(this)
-          // .data('reverce', false)
-          .data('now', 0)
-          // .data('unit', (max - $(this).data('percent') + loop) / (time / interval)) // reverse operation
-          .data('unit', ($(this).data('percent')) / (time / interval))
-          .data('reverse', 0)
+        // .data('reverce', false)
+            .data('now', 0)
+            // .data('unit', (max - $(this).data('percent') + loop) / (time / interval)) // reverse operation
+            .data('unit', ($(this).data('percent')) / (time / interval))
+            .data('reverse', 0)
       })
       var t = setInterval(function () {
         $(_this).find('.donut-chart .c100').each(function () {
@@ -1591,8 +1536,8 @@ skt_landing.widgets = {
 
     $(widget).each(function () {
       var $this = $(this),
-        chartOption = {},
-        chartType = $this.data('type');
+          chartOption = {},
+          chartType = $this.data('type');
 
       if ($this.data('event') === 'bind') return;
 
