@@ -10,9 +10,9 @@
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner {width:100%; box-sizing:border-box; background-color: #efeff1;}
 .tod-renewalBody .filter-wrap .container-wrap .tod-renewal-product-tab {border-top:solid 1px #fff;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul {display:flex; overflow:scroll; padding:0.9375rem 0 0.9375rem 1.875rem;}
-.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li {padding:0 0.625rem;}
-.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li:first-child {padding-left:0}
-.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 1rem; height:1.6875rem; border-radius:1rem; box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li {padding-right:0.625rem;}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 0.75rem; height:1.6875rem; border-radius:1rem; box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li:last-child {padding-right:1.875rem}
 
 /* 헤더 스크롤 */
 .tod-renewalBody .filter-wrap .container-wrap .widget{padding-top:0;  }
@@ -54,6 +54,9 @@
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .reset {color:#262626; font-size:0.75rem;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .reset:before {content:""; display:inline-block; vertical-align:middle; width:1rem; height:1rem; background:url('/img/product/v2/icon-reset.svg') no-repeat;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .confrim {padding:0.6875rem 0 0.625rem; width:9rem; height:2.4375rem; border-radius:1.4375rem; box-shadow:-0.25rem -0.375rem 0.625rem 0 #ffffff, 0.25rem 0.4375rem 0.625rem 0 rgba(247, 98, 82, 0.33), -0.125rem -0.125rem 0.125rem 0 #ffffff; background:#f76252; color:#fff; font-weight:500;}
+
+.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap .tod-filter-keyword > ul {padding-left:1.875rem}
+.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap .tod-filter-keyword > ul > li:last-child {padding-right:1.875rem}
 
 
 /* 210113 아코디언 수정 */

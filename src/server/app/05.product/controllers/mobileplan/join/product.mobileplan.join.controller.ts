@@ -53,33 +53,48 @@ class ProductMobileplanJoin extends TwViewController {
         title: PRODUCT_TYPE_NM.JOIN
       };
 
-    Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
-      this.apiService.request(API_CMD.BFF_10_0008, {}, {}, [prodId]),
-      this.apiService.request(API_CMD.BFF_10_0009, {}),
-      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
-      this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
-    ).subscribe(([preCheckInfo, joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo]) => {
-      const apiError = this.error.apiError([preCheckInfo, joinTermInfo, prodRedisInfo]);
-
-      if (!FormatHelper.isEmpty(apiError)) {
-        return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: apiError.code,
-          msg: apiError.msg,
-          isBackCheck: true
+      Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
+        this.apiService.request(API_CMD.BFF_10_0008, {}, {}, [prodId]),
+        this.apiService.request(API_CMD.BFF_10_0009, {}),
+        this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
+        this._getMobilePlanCompareInfo(svcInfoProdId, prodId),
+        this.apiService.request(API_CMD.BFF_10_0001, {prodExpsTypCd: 'P'}, {}, [prodId])
+      ).subscribe(([preCheckInfo, joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo, basicInfo]) => {
+        const apiError = this.error.apiError([preCheckInfo, joinTermInfo, prodRedisInfo, basicInfo]);
+        
+        let is5G = false;
+        let prod5Gs = [];
+        if ( basicInfo.result && basicInfo.result.prodFilterFlagList ) {
+          prod5Gs = basicInfo.result.prodFilterFlagList.filter(function(item){
+            return item.prodFltNm === "5G"?true:false
+          });
+        }
+  
+        if ( prod5Gs.length > 0 ) {
+          is5G = true;
+        }
+  
+        if (!FormatHelper.isEmpty(apiError)) {
+          return this.error.render(res, Object.assign(renderCommonInfo, {
+            code: apiError.code,
+            msg: apiError.msg,
+            isBackCheck: true
+          }));
+        }
+        
+        res.render('mobileplan/join/product.mobileplan.join.html', Object.assign(renderCommonInfo, {
+          prodId: prodId,
+          mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
+          isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
+          joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
+            sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? '' : prodRedisInfo.result.summary.sktProdBenfCtt
+          },{
+            is5G: is5G ? true : false
+          })
         }));
-      }
-
-      res.render('mobileplan/join/product.mobileplan.join.html', Object.assign(renderCommonInfo, {
-        prodId: prodId,
-        mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
-        isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
-        joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
-          sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? '' : prodRedisInfo.result.summary.sktProdBenfCtt
-        })
-      }));
-    });
+      });
+    }
   }
-}
 
 export default ProductMobileplanJoin;

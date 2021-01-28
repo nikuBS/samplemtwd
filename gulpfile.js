@@ -204,7 +204,7 @@ gulp.task('js-component', function () {
 gulp.task('en_js-component', function () {
   return gulp.src([
     'src/client/component_en/**/*.js',
-    'src/client/common_en/**/*.js' 
+    'src/client/common_en/**/*.js'
     ])
     // .pipe(plumber())
     .pipe(sort())
@@ -674,7 +674,7 @@ gulp.task('en_css-main', function () {
     'src/client/web-contents/css/common_en.css',
     'src/client/web-contents/css/layout_en.css',
     'src/client/web-contents/css/widgets_en.css',
-    'src/client/web-contents/css/components_en.css',    
+    'src/client/web-contents/css/components_en.css',
     'src/client/web-contents/css/style_en.css',
     'src/client/web-contents/css/main_en.css'])
   // .pipe(base64({
@@ -758,6 +758,11 @@ gulp.task('css-idpt', function() {
     .pipe(gulp.dest('.'));
 });
 
+gulp.task('myt-adv-css', function () {
+  return gulp.src('src/client/web-contents/css/submain.css')
+    .pipe(gulp.dest(dist + 'css'));
+});
+
 gulp.task('img', function () {
   return gulp.src('src/client/web-contents/img/**/*')
     .pipe(gulp.dest(dist + 'img'));
@@ -809,7 +814,7 @@ gulp.task('post-clean', function () {
 
 gulp.task('post-clean_en', function () {
   return gulp.src(dist + 'tmp_en').pipe(clean());
-  
+
  });
 
 gulp.task('watch', function () {
@@ -862,7 +867,7 @@ gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
 gulp.task('json', ['json-chatbot-1', 'json-chatbot-2', 'json-chatbot-3', 'json-chatbot-4', 'json-chatbot-5', 'json-chatbot-6', 'json-chatbot-7', 'json-chatbot-8']);
-gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4', 'json']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'myt-adv-css', 'img', 'hbs', 'font', 'mp4', 'json']);
 
 gulp.task('en_js', ['en_js-util', 'en_js-component', 'en_js-app']);
 gulp.task('en_js-client', ['en_js-util-client', 'en_js-component-client', 'en_js-app-client']);
@@ -887,7 +892,7 @@ gulp.task('default', shell.task([
 gulp.task('build', shell.task([
   'gulp pre-clean --ver=' + version,
   'gulp task --ver=' + version,
-  'gulp en_task --ver=' + version,  
+  'gulp en_task --ver=' + version,
   'gulp hbs-front --ver=' + version,
   'gulp manifest --ver=' + version,
   'gulp manifest_en --ver=' + version,

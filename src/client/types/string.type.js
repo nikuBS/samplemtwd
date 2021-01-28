@@ -151,7 +151,8 @@ Tw.CHART_TYPE = {
   BAR: 'bar',
   BAR_1: 'bar1',
   BAR_2: 'bar2',
-  BAR_4: 'bar4'
+  BAR_4: 'bar4',
+  BAR_5: 'bar5'
 };
 
 Tw.CHART_UNIT = {

@@ -1593,6 +1593,27 @@ export const TARGET_AGENT_LIST = [
   // 'iPhone8_4'   // 아이폰 SE 2020 (3차)
   'iPhone12_8'   // 아이폰 SE 2020 (3차)
 ];
+// '나의 데이터/통화' UI 고도화 진입 user agent list
+export const TARGET_ADV_AGENT_LIST = [
+  // 'SM-G970N',   // 갤럭시S10E (1차)
+  // 'SM-G975N',   // 갤럭시S10+ (1차)
+  // 'SM-G973N',   // 갤럭시S10 (1차)
+  // 'SM-G977N',   // 갤럭시S10 5G (1차)
+  // 'SM-N971N',   // 갤럭시노트10 5G (1차)
+  // 'SM-N976N',   // 갤럭시노트10 플러스 5G (1차),
+  // 'SM-F907N',   // 갤럭시폴드 5G
+  // 'SM-F700N',   // 갤럭시Z플립? Z 플립 5G?
+  'LM-V500N',   // V50 (1차)
+  // 'LM-V510N',   // V50S (1차)
+  // 'SM-G781N',   // 갤럭시 s20 FE (1차)
+  // 'LM-G900N',   // 벨렛(1차) ???
+  // 'iPhone12_1',   // 아이폰11  (3차)
+  // 'iPhone11_2',   // 아이폰XS  (3차)
+  // // iphone 11 pro
+  // 'iPhone12_5',   // 아이폰11PRO MAX (3차)
+  // 'iPhone11_6',   // 아이폰XS MAX (3차) 
+  // 'iPhone11_8',   // 아이폰XR  (3차)
+];
 export const WIDGET_REMAINS_CODE = {
   DATA_SUM: 'DATA_SUM'
 };
