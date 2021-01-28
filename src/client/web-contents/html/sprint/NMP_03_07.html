@@ -35,11 +35,27 @@
 
 	<script type="text/javascript">
 		//스크롤시 헤더 숨김 및 tab 고정
+		var isScroll = true, isAppend = 0; // ajax 여러번 호출을 방지하기 위한 플래그 변수
 		$(document).scroll(function(){
 			if($(this).scrollTop() > 51 ){
 				$(".tod-nmp-top-wrap").addClass("tod-nmp-scroll-fixed");
 			} else {
 				$(".tod-nmp-top-wrap").removeClass("tod-nmp-scroll-fixed");
+			}
+
+			// 210128 - 무한 스크롤링 샘플
+			if(($(window).height() + $(document).scrollTop()) >= ($(document).height() - ($(window).height() * 2))) {
+				if (isScroll && isAppend < 50) {
+					isScroll = false;
+					$.ajax({
+						url: "/html/sprint/NMP_03_07_SAMPLE.html",
+						context: document.body
+					}).done(function(html) {
+						$('section.tod-cont-section.tod-nmp-search').append(html);
+						isScroll = true;
+						isAppend = isAppend + 1; // 데이터 없는 경우 샘플
+					});
+				}
 			}
 		});
 	</script>
