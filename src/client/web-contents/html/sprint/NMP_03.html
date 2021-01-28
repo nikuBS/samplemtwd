@@ -39,6 +39,15 @@
 				$(this).parents(".rn-notice").hide();
 			});
 		});
+
+		//스크롤시 헤더 숨김 및 tab 고정
+		$(document).scroll(function(){
+			if($(this).scrollTop() > 51 ){
+				$(".tod-nmp-top-wrap").addClass("tod-nmp-scroll-fixed");
+			} else {
+				$(".tod-nmp-top-wrap").removeClass("tod-nmp-scroll-fixed");
+			}
+		});
 	</script>
 </head>
 
@@ -52,7 +61,7 @@
 	<!--// #skip_navigation -->
 	<div class="wrap">
 		<!-- #header -->
-		<div id="header" class="header-wrap">
+		<div id="header" class="header-wrap top-nmp-scroll-hidden"><!-- 210128 스크롤시 숨김 .top-nmp-scroll-hidden -->
 			<div class="h-belt">
 				<div class="h-default">
 					<div class="h-menu">
@@ -83,7 +92,7 @@
 								<li><a href="#n">테마</a></li>
 							</ul>
 							<!-- 필터 선택 유도 툴팁 -->
-							<div class="rn-notice">
+							<div class="rn-notice" style="display:none">
 								<div class="tod-nmp-noti-box">
 									<p class="nb-txt">필터를 이용하여 원하시는 요금제를 찾아보세요</p>
 									<button type="button" class="btn-nb-close"><span class="blind">닫기</span></button>
@@ -97,7 +106,7 @@
 					</div>
 
 					<!-- 필터 조건값 노출 영역 -->
-					<div class="tod-nmp-fixed-filter" style="display:none">
+					<div class="tod-nmp-fixed-filter" style="display:block">
 						<div class="tod-filter-keyword">
 							<ul>
 								<li><span class="f-keyword">#데이터 무제한 사용하기 <button type="button" class="f-del"><span class="blind">삭제</span></button></span></li>

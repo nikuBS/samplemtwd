@@ -43,6 +43,15 @@
 				$tabWrap.scrollLeft(onPosi.left - 20);
 			}
 		});
+
+		//스크롤시 헤더 숨김 및 tab 고정
+		$(document).scroll(function(){
+			if($(this).scrollTop() > 51 ){
+				$(".tod-nmp-top-wrap").addClass("tod-nmp-scroll-fixed");
+			} else {
+				$(".tod-nmp-top-wrap").removeClass("tod-nmp-scroll-fixed");
+			}
+		});
 	</script>
 </head>
 
@@ -56,7 +65,7 @@
 	<!--// #skip_navigation -->
 	<div class="wrap">
 		<!-- #header -->
-		<div id="header" class="header-wrap">
+		<div id="header" class="header-wrap top-nmp-scroll-hidden"><!-- 210128 스크롤시 숨김 .top-nmp-scroll-hidden -->
 			<div class="h-belt">
 				<div class="h-default">
 					<div class="h-menu">
@@ -75,21 +84,43 @@
 		<div id="contents" class="container-wrap">
 			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
 			<div class="container">
-				<div class="tod-nmp-tab">
-					<div class="rn-prod-inner">
-						<ul>
-							<li><a href="#n">5G</a></li>
-							<li><a href="#n">LTE</a></li>
-							<li><a href="#n">3G</a></li>
-							<li><a href="#n">태블릿/2nd Device</a></li>
-							<li><a href="#n">선불</a></li>
-							<li class="on"><a href="#n">테마</a></li>
-						</ul>
-						<div class="rn-filter">
-							<button type="button" class="p-btn-filter"><span class="blind">조건 검색</span></button>
+				<div class="tod-nmp-top-wrap">
+					<div class="tod-nmp-tab">
+						<div class="rn-prod-inner">
+							<ul>
+								<li><a href="#n">5G</a></li>
+								<li><a href="#n">LTE</a></li>
+								<li><a href="#n">3G</a></li>
+								<li><a href="#n">태블릿/2nd Device</a></li>
+								<li><a href="#n">선불</a></li>
+								<li class="on"><a href="#n">테마</a></li>
+							</ul>
+							<!-- 필터 선택 유도 툴팁 -->
+							<div class="rn-notice" style="display:none">
+								<div class="tod-nmp-noti-box">
+									<p class="nb-txt">필터를 이용하여 원하시는 요금제를 찾아보세요</p>
+									<button type="button" class="btn-nb-close"><span class="blind">닫기</span></button>
+								</div>
+							</div>
+							<!-- 필터 버튼 -->
+							<div class="rn-filter">
+								<button type="button" class="p-btn-filter"><span class="blind">조건 검색</span></button>
+							</div>
+						</div>
+					</div>
+
+					<!-- 필터 조건값 노출 영역 -->
+					<div class="tod-nmp-fixed-filter" style="display:none">
+						<div class="tod-filter-keyword">
+							<ul>
+								<li><span class="f-keyword">#데이터 무제한 사용하기 <button type="button" class="f-del"><span class="blind">삭제</span></button></span></li>
+								<li><span class="f-keyword">#데이터 무제한 사용하기 <button type="button" class="f-del"><span class="blind">삭제</span></button></span></li>
+								<li><span class="f-keyword">#데이터 무제한 사용하기 <button type="button" class="f-del"><span class="blind">삭제</span></button></span></li>
+							</ul>
 						</div>
 					</div>
 				</div>
+
 				<!-- 테마 1 -->
 				<section class="tod-cont-section tod-nmp-theme">
 					<div class="rn-banner-img">
