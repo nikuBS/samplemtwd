@@ -184,7 +184,8 @@ Tw.TOAST_TEXT = {
   QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.',
   FIDO_USE: '생체인증을 사용합니다.',
   FIDO_NOT_USE: '생체인증을 사용하지 않습니다.',
-  RCV_AGREE: '수신동의가 완료되었습니다.'
+  RCV_AGREE: '수신동의가 완료되었습니다.',
+  PI_CANCEL: '개인정보 수집/이용에 미동의 하셨습니다.'
 };
 
 Tw.PERIOD_UNIT = {
