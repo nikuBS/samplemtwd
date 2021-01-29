@@ -24,19 +24,13 @@ Tw.ProductRenewalList.prototype = {
     _init: function() {
       var _this = this;
       this.themeParam = this._getParameter('theme');
-      this._checkTheme();
       this._listTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE);
       this.curFilter = this._checkFilter();
       this.curMobileFilter = this._checkMobilefilter();
       this._loadNotice();
-      $(window).scroll(function() {
-        if(_this._hasNext == 'true') {
-          if (Math.round( $(window).scrollTop()) == $(document).height() - $(window).height()) {
-            setTimeout($.proxy(_this._handleLoadMore, _this),500);
-          }
-        }
-      });
-
+      this._scrollFocus();
+      this._setInfinityScroll();
+      this._checkTheme();
     },
 
     _bindEvent: function() {
@@ -45,6 +39,29 @@ Tw.ProductRenewalList.prototype = {
       $('#themeSelectBtn').click($.proxy(this._goToTheme, this));
       $('.f-del-list').click($.proxy(this._goDeleteFilter, this));
       //$('.more-link-area > button').click($.proxy(this._handleLoadMore, this));
+    },
+
+    _scrollFocus: function() {
+      if(this.curMobileFilter[0] !== undefined || this.themeParam !== '') { // 탭 제목 보이도록 상단 스크롤 이동
+        var $tabWrap = $(".tod-nmp-tab").find("ul");
+        var tabWidth = $tabWrap.width();
+        var onWidth = $tabWrap.find(".on").width();
+        var onPosi = $tabWrap.find(".on").position();
+        console.log(onPosi);
+        var onTotalPosi = onPosi.left + onWidth;
+        if(onTotalPosi > tabWidth){
+          $tabWrap.scrollLeft(onPosi.left - 20);
+        }
+      }
+  
+      //스크롤시 헤더 숨김 및 tab 고정
+      $(document).scroll(function(){
+        if($(this).scrollTop() > 51 ){
+          $(".tod-nmp-top-wrap").addClass("tod-nmp-scroll-fixed");
+        } else {
+          $(".tod-nmp-top-wrap").removeClass("tod-nmp-scroll-fixed");
+        }
+      });
     },
 
     _loadNotice: function() { // Notice 최초 전체 진입 화면에서만 출력
@@ -59,7 +76,7 @@ Tw.ProductRenewalList.prototype = {
 
     _checkTheme: function() { // 테마요금제 진입 시 선택한 테마로 이동
       if(this.themeParam !== '' && this.themeParam !== 'all') { 
-        $(window).scrollTop($('[data-theme="' + this.themeParam + '"]').offset().top);
+        $(window).scrollTop($('[data-theme="' + this.themeParam + '"]').offset().top - $('.rn-prod-inner').height());
       }
     },
 
@@ -450,6 +467,7 @@ Tw.ProductRenewalList.prototype = {
       if(!resp.result.hasNext) {
         this._hasNext = 'false';
       }
+      this.isScroll = true;
       
       // var hasNone = this.$moreBtn.hasClass('none');
       // if (this._leftCount > 0) {
@@ -506,6 +524,19 @@ Tw.ProductRenewalList.prototype = {
 
     _isEmptyAmount: function(value) {
       return !value || value === '' || value === '-';
+    },
+
+    _setInfinityScroll: function() {
+      var _this = this
+      this.isScroll = true;
+      $(document).scroll(function() {
+        if(($(window).height() + $(document).scrollTop()) >= ($(document).height() - ($(window).height() * 2))) {
+          if (_this.isScroll && _this._hasNext == 'true') {
+            _this.isScroll = false;
+            setTimeout($.proxy(_this._handleLoadMore, _this) ,300);
+          }
+        }
+      });
     }
 
 };
