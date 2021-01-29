@@ -59,7 +59,7 @@ Tw.ProductRenewalList.prototype = {
 
     _checkTheme: function() { // 테마요금제 진입 시 선택한 테마로 이동
       if(this.themeParam !== '' && this.themeParam !== 'all') { 
-        $(window).scrollTop($('[data-theme="' + this.themeParam + '"]').offset().top - $('.h-belt').height() - $('.rn-prod-inner').height());
+        $(window).scrollTop($('[data-theme="' + this.themeParam + '"]').offset().top);
       }
     },
 
