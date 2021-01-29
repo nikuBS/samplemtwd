@@ -91,9 +91,10 @@
 /* 다양한 요금제를 확인해보세요 */
 .tod-renewalBody .product-sec .pro-article.various-plan-box{margin-top:0}
 .tod-renewalBody .product-sec .slider-wrap.plan-slider{height:17.5rem}
-.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-container{width:100%;  }
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-container{width:100%;}
 .tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item{width:11.25rem; height:15rem;}
-.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item .shadow-box{ height:100%; background-size:cover; background-repeat:no-repeat; background-position:left top;}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item .shadow-box{position:relative; height:100%; background-size:cover; background-repeat:no-repeat; background-position:left top;}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item .i-txt {position:absolute; bottom:0; width:100%; box-sizing: border-box; padding:1.25rem; font-size: 16px; line-height: 1.25; font-weight: 300; letter-spacing: -0.4px; color:#ffffff}
 .tod-renewalBody .product-sec .banner-area{/*margin-top:1.6875rem;*/ overflow:hidden;}
 
 /* 요즘 가장 인기있는 요금제 */
