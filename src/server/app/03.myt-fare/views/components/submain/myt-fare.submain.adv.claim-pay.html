@@ -88,15 +88,6 @@ _%>
                 <div class="detail-tit"><a href="/myt-fare/billguide/guide" data-make-eid="detailBill">요금 상세내역</a></div>
                 <ul class="report-list item-no-border fe-charge-list">
                     <%# 요금 상세내역 리스트 handlebars-template 영역%>
-                    <%# 통합청구대표 가 아닌겨우 "요금할인" 항목추가%>
-                    <%_if(guide.typeChk && guide.typeChk !== 'A5' && data.claimDisAmtAbs !== '0'){_%>
-                    <li class="report-item">
-                        <dl class="report-define d-wrap">
-                            <dt class="report-tit">요금할인</dt>
-                            <dd class="report-cont"><%- data.claimDisAmtAbs%> 원</dd>
-                        </dl>
-                    </li>
-                    <%_}_%>
                 </ul>
             </div>
             <%_}_%>
