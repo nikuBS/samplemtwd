@@ -58,6 +58,7 @@ interface CommDataInfo {
 export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
   constructor(req: Request, res: Response, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
     super(req, res, svcInfo, allSvc, childInfo, pageInfo);
+    this.init(req, svcInfo, allSvc, childInfo, pageInfo);
   }
 
   // 쿼리스트링
@@ -440,12 +441,14 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
     const {reqQuery, svcInfo} = this.info;
     // 청구요금 조회 : 대표청구 여부(svcInfo.actRepYn) Y인 경우
     const BFF_ID = svcInfo.actRepYn === 'Y' ? API_CMD.BFF_05_0036 : API_CMD.BFF_05_0047;
-    return this.apiService.request(BFF_ID, {
-      invDt: reqQuery.date,
-      selSvcMgmtNum: reqQuery.line
-    }, null, [], API_VERSION.V2).map( resp => {
+    const param = {
+      invDt: reqQuery.date
+    };
+    if (reqQuery.line) {
+      param['selSvcMgmtNum'] = reqQuery.line;
+    }
+    return this.apiService.request(BFF_ID, param, null, [], API_VERSION.V2).map( resp => {
       if (resp.code !== API_CODE.CODE_00) {
-        // this.fail(res, resp);
         return resp;
       }
       return this.parseCharge(resp);
