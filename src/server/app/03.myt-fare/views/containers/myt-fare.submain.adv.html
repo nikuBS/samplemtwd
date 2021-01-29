@@ -41,7 +41,6 @@ _%>
                 <%_}_%>
                 <%- include('../components/submain/myt-fare.submain.small.html') _%> <%# 휴대폰결제(구 소액결제)/콘텐츠 이용료 영역%>
                 <%- include('../components/submain/myt-fare.submain.bill-info.html') _%> <%# 납부/청구정보 영역%>
-                <%- include('../components/submain/myt-fare.submain.child.html') _%> <%# 자녀회선 영역%>
                 <%_if(data.isShowAffiliateCard){_%>
                 <div class="submain-banner">
                     <a href="/myt-fare/bill/option" data-make-eid="bank">
@@ -52,6 +51,7 @@ _%>
                     </a>
                 </div>
                 <%_}_%>
+                <%- include('../components/submain/myt-fare.submain.child.html') _%> <%# 자녀회선 영역%>
                 <%# 상용배포 시 숨길예정%>
                 <div class="submain-banner">
                     <a href="/product/wireplan/join/reservation?type_cd=cellphone" data-make-eid="counsel">
@@ -67,7 +67,8 @@ _%>
                 <%- include('../components/submain/myt-fare.submain.lookup.html') _%> <%# 조회/신청 서비스 영역%>
 
                 <!--TOS admin 배너-->
-                <div class="cont-box nogaps noborder" data-id="banners" data-make-eid="tos">
+                <div class="submain-swipe-banner submain-swipe" data-id="banners" data-make-eid="tos">
+<!--                <div class="cont-box nogaps noborder" data-id="banners" data-make-eid="tos">-->
                     <div class="main-slide-banner slide-pagingtype pg-rtop">
                         <!-- .widget -->
                         <div class="widget">

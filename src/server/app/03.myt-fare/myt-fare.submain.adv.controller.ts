@@ -321,7 +321,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       if (item.invDt === date) {
         data.claimPay = item.invAmt || '0';
         haveClaim = true;
-        data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
+        // data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
       }
 
       /*
@@ -349,7 +349,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
        */
       // 청구금액
       // 당월 납부해야할 금액
-      let remainPayment = data.claimPay;
+      let remainPayment = this.getInt(data.claimPay);
       // 미납금액: 조회월의 이전 미납금액들의 sum
       let unpaid = 0;
       ((data.nonpayment || {}).unPaidAmtMonthInfoList || []).map( unpay => {
