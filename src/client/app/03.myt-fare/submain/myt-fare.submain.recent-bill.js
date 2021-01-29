@@ -96,7 +96,7 @@ Tw.MyTFareSubMainRecentBill.prototype = {
       var claim = item.claim, discount = item.discount;
       item.month = self._recentChartDate(item.date);
       item.claimH = claim ? (claim / max) * 100 : 0;
-      item.dcH = discount ? (discount / max) * 100 : 0;
+      item.dcH = claim > discount ? (discount ? (discount / max) * 100 : 0) : 0;
       item.claim = Tw.FormatHelper.addComma(claim);
       item.discount = claim > discount ? Tw.FormatHelper.addComma(discount) : 0;
       claimTotal.sum += self._getIntNumber(claim);
@@ -109,8 +109,8 @@ Tw.MyTFareSubMainRecentBill.prototype = {
     var claimAvg = claimTotal.cnt ? parseInt(claimTotal.sum / claimTotal.cnt, 10) : 0,
       dcAvg = dcTotal.cnt ? parseInt(dcTotal.sum / dcTotal.cnt, 10) : 0;
 
-    this._render(this._chartList, this._chartTempl, {list:calData});
-    this._render(this._contents, this._legendTempl, {
+    this._render(this._chartList, this._chartTempl, {list:calData}); // 그래프 렌더링
+    this._render(this._contents, this._legendTempl, { // 그래프 및에 범례
       claimAvg : Tw.FormatHelper.addComma(claimAvg),
       dcAvg : Tw.FormatHelper.addComma(dcAvg)
     });
@@ -120,6 +120,12 @@ Tw.MyTFareSubMainRecentBill.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 할인영역 표시
+   * @param discounts
+   * @private
+   */
   _averageArea: function (discounts) {
     if(this.data.type === 'UF') {
       return;

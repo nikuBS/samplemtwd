@@ -18,9 +18,8 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
 
   public getHistory(): Observable<any> {
     const {reqQuery, svcInfo} = this.info;
-    // skbroadband, 법인 C, D 는 비노출 은 조회 못함.
-    // 회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R
-    if (svcInfo.actCoClCd === 'B' || ['R', 'D'].indexOf(svcInfo.svcGr) > -1) {
+    // skbroadband 는 비노출(조회 못함)
+    if (svcInfo.actCoClCd === 'B') {
       return Observable.of(null);
     }
 
@@ -40,7 +39,8 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
           isNotAgree: contents.code === API_ADD_SVC_ERROR.BIL0030, // 휴대폰 결제 이용동의여부
           smallTotal: smallResult.totalSumPrice || '0', // 총 사용금액
           contentsTotal: contentsResult.invDtTotalAmtCharge || '0', // 총 사용금액
-          isAdult: (contentsLimit.result || {}).isAdult === 'Y' // 성인여부
+          isAdult: (contentsLimit.result || {}).isAdult === 'Y', // 성인여부
+          isBubinCD: ['R', 'D'].indexOf(svcInfo.svcGr) > -1 // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
         };
 
       // 휴대폰 결제 이용동의여부 "미동의" 인 경우 성인여부를 확인하기 위해 나이를 조회한다.
