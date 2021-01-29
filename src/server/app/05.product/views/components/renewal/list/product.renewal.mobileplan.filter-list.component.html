@@ -1,0 +1,30 @@
+<% if(filterList.filterList !== '' || quickFilterData.filterExist == 'Y') { %>
+    <% if(hideFilter !== 'Y'){ %>
+        <div class="tod-nmp-fixed-filter">
+            <div class="tod-filter-keyword">
+                <ul>
+                    <% let checkSeries = ''; %>
+                    <% if(plans.searchOption.searchFltIds) { %>
+                        <% for(let i = 0; i < plans.searchOption.searchFltIds.length; i++) { %>
+                            <% checkSeries = plans.searchOption.searchFltIds[i].prodFltId; %>
+                            <% if(checkSeries !== 'F01713' && checkSeries !== 'F01121' && checkSeries !== 'F01122' && checkSeries !== 'F01124' && checkSeries !== 'F01125') { %>
+                                <li><span class="f-keyword"><%= plans.searchOption.searchFltIds[i].prodFltNm %><button type="button" class="f-del f-del-list" data-filterid = "<%= checkSeries %>">
+                                    <span class="blind">삭제</span></button></span></li>
+                            <% } %>
+                        <% } %>
+                    <% } %>
+                    <% if(quickFilterData.filterExist=='Y') { %>
+                        <li><span class="f-keyword"><%= quickFilterData.filterName %><button type="button" class="f-del f-del-list" data-filterid = "" data-quickfilterid = "<%= quickFilterData.filterCode %>">
+                            <span class="blind">삭제</span></button></span></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    <% } %>
+    <% if(hideTotalNum !== 'Y') { %>
+</div>
+    <div class="tod-nmp-search-top">
+        <p class="sh-total">총 <em><%= plans.productCount %></em>개</p>
+        <p class="sh-reset"><button type="button" class="p-btn-reset resetBtn">초기화</button></p>
+    <% } %>
+<% } %>

@@ -1,0 +1,38 @@
+<%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% let hasNext = 'false' %>
+<!-- // 최대로 내려서 요금제 더 불러오기 기능 사용 안함 -->
+
+<body class="tod-renewalBody">
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <div>
+        <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+            <%- include('../../../../../../../common/views/components/header.component.html', { title: '전체요금제', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
+            <div id="contents" class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <div class="tod-nmp-top-wrap">
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList, quickFilterData: quickFilterData}); %>
+                        <!-- 필터 조건값 노출 영역 -->
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: 'Y', quickFilterData: quickFilterData}); %>
+                    </div>
+                    
+                    <section class="tod-nmp-search-nodata">
+                        <p class="nd-txt">조건에 맞는 <br> 검색 결과가 없습니다.</p>
+                        <div class="nd-btn-area">
+                            <a class="tod-nmp-btn32 sm-style1 resetBtn"><i class="p-icon16-reset"></i>초기화</a>
+                        </div>
+                    </section>
+                    <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../../../../components/javascript.component.html', {}); %>
+<%- include('../../../../components/renewal/list/product.renewal.mobileplan.list-script.component.html', {hasNext:hasNext}); %>
+<%- include('../../../../components/end.component.html', {}); %>
+

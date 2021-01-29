@@ -1,0 +1,643 @@
+<%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% let hasNext = 'false' %>
+<!-- // 최대로 내려서 요금제 더 불러오기 기능 사용 안함 -->
+
+<body class="tod-renewalBody">
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <div>
+        <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+            <%- include('../../../../../../../common/views/components/header.component.html', { title: '전체요금제', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
+            <div id="contents" class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <div class="tod-nmp-top-wrap">
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList, quickFilterData: quickFilterData}); %>
+                        <!-- 필터 조건값 노출 영역 -->
+                        
+                    </div>
+                    
+                    전체 리스트 - 요금제 series 얻어오는 api 필요(현재 하드코딩)
+                    <% for(let k = 0; k < networkInfoFilter.length ; k++) { %>
+                        <% if (networkInfoFilter[k]=='5G') { %>    
+                            <section class="tod-cont-section">
+                                <div class="rn-banner-img">
+                                    <img src="<%=CDN%>/img/product/v2/bg-img1.png" alt="">
+                                </div>
+                                <div class="tod-nmp-title">
+                                    <div class="rn-tag">
+                                        <span class="i-tag-cr1">5GX</span>
+                                    </div>
+                                    <h3 class="rn-prod-tit">데이터도 콘텐츠도 <br> <strong>더 자유롭게!</strong></h3>
+                                </div>
+                                
+                                <div class="tod-nmp-row-list">
+                                    <ul>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type2 prod-5g">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-tag">
+                                                        <div class="col-left">
+                                                            <span class="i-tag-cr5">대학생/군인</span>
+                                                        </div>
+                                                        <div class="col-right">
+                                                            <span class="i-tag-myplan">사용중</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">5GX플래티넘</p>
+                                                        <p class="p-price">125,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>무제한</li>
+                                                            <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+                                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="rn-prod-benefit">
+                                                        <ul>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_01.svg" alt=""></i> 
+                                                                <span class="txt">FLO 앤 데이터 무료 </span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_05.svg" alt=""></i> 
+                                                                <span class="txt">wavve 앤 데이터 플러스 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_02.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_03.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type2 prod-5g">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-tag"></div>
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">5GX프라임</p>
+                                                        <p class="p-price">89,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>150GB</li>
+                                                            <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+                                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="rn-prod-benefit">
+                                                        <ul>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_01.svg" alt=""></i> 
+                                                                <span class="txt">FLO 앤 데이터 무료 </span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_05.svg" alt=""></i> 
+                                                                <span class="txt">wavve 앤 데이터 플러스 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_02.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_03.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="p-benefit-choice">
+                                                            <p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+                                                            <ul>
+                                                                <li>
+                                                                    <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_05.svg" alt=""></i> 
+                                                                    <span class="txt">Wavve 앤 데이터 무료</span>
+                                                                    <span class="price">
+                                                                        <del>7,900원</del>
+                                                                        <i class="icon-arr">&rarr;</i> 
+                                                                        <em>0원</em>
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <div class="rn-prod-bottom">
+                                                    <div class="rn-btn-right">
+                                                        <a class="btn-compare" data-prod-id="NA00006801">내 요금제와 비교</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+                            <!-- //5GX 플랜 -->
+                            <% } else if (networkInfoFilter[k]=='LTE') { %>
+                            <!-- LTE -->
+                            <section class="tod-cont-section">
+                                <div class="rn-banner-img">
+                                    <img src="<%=CDN%>/img/product/v2/bg-img3.png" alt="">
+                                </div>
+                                <div class="tod-nmp-title">
+                                    <div class="rn-tag">
+                                        <span class="i-tag-cr2">LTE</span>
+                                    </div>
+                                    <h3 class="rn-prod-tit">막강한 데이터&amp;콘텐츠 혜택 <br> <strong>LTE 라이프의 완성!</strong></h3>
+                                </div>
+                                <!-- 요금제 row list -->
+                                <div class="tod-nmp-row-list">
+                                    <ul>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type2 prod-lte">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-tag">
+                                                        <div class="col-left"></div>
+                                                        <div class="col-right"></div>
+                                                    </div>
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">T플랜 맥스</p>
+                                                        <p class="p-price">100,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>무제한</li>
+                                                            <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+                                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="rn-prod-benefit">
+                                                        <ul>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_01.svg" alt=""></i> 
+                                                                <span class="txt">FLO 앤 데이터 무료 </span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_05.svg" alt=""></i> 
+                                                                <span class="txt">wavve 앤 데이터 플러스 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_02.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_03.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
+                                                <div class="rn-prod-bottom">
+                                                    <div class="rn-btn-right">
+                                                        <a class="btn-compare" data-prod-id="NA00006802">내 요금제와 비교</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type2 prod-lte">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-tag">
+                                                        <div class="col-left"></div>
+                                                        <div class="col-right">
+                                                            <!-- <span class="i-tag-myplan">사용중</span> -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">T플랜 스페셜</p>
+                                                        <p class="p-price">79,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>150GB</li>
+                                                            <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+                                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="rn-prod-benefit">
+                                                        <ul>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_01.svg" alt=""></i> 
+                                                                <span class="txt">FLO 앤 데이터 무료 </span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_05.svg" alt=""></i> 
+                                                                <span class="txt">wavve 앤 데이터 플러스 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_02.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_03.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
+                                                                <span class="txt">분실/파손 보험 80 무료</span>
+                                                                <span class="price">
+                                                                    <del>7,900원</del>
+                                                                    <i class="icon-arr">&rarr;</i> 
+                                                                    <em>0원</em>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
+                                                <div class="rn-prod-bottom">
+                                                    <div class="rn-btn-right">
+                                                        <a class="btn-compare" data-prod-id="NA00006803">내 요금제와 비교</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- // 요금제 row list -->
+                            </section>
+                            <!-- //LTE -->
+                            <% } else if (networkInfoFilter[k]=='3G') { %>
+                            <!-- 3G -->
+                            <section class="tod-cont-section">
+                                <div class="rn-banner-img">
+                                    <img src="<%=CDN%>/img/product/v2/bg-img9.png" alt="">
+                                </div>
+                                <div class="tod-nmp-title">
+                                    <div class="rn-tag">
+                                        <span class="i-tag-cr4">band데이터</span>
+                                    </div>
+                                    <h3 class="rn-prod-tit">초과 이용 걱정없이 <br> <strong>충분한 통화와 데이터</strong></h3>
+                                </div>
+                                <!-- 요금제 row list 형 -->
+                                <div class="tod-nmp-row-list">
+                                    <ul>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type2 prod-band">
+                                                <a href="#n" class="item-link">
+                                                    <!-- <div class="rn-tag">
+                                                        <div class="col-left">
+                                                            <span class="i-tag-cr1">5G</span>
+                                                        </div>
+                                                        <div class="col-right"></div>
+                                                    </div> -->
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">Band 데이터 퍼팩트 S</p>
+                                                        <p class="p-price">75,900원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>16GB</li>
+                                                            <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+                                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="rn-prod-benefit">
+                                                        <ul>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
+                                                                <span class="txt">T멤버십 VIP 승급</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
+                                                <div class="rn-prod-bottom">
+                                                    <div class="rn-btn-right">
+                                                        <a class="btn-compare" data-prod-id="NA00006804">내 요금제와 비교</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type2 prod-band">
+                                                <a href="#n" class="item-link">
+                                                    <!-- <div class="rn-tag">
+                                                        <div class="col-left">
+                                                            <span class="i-tag-cr1">5G</span>
+                                                        </div>
+                                                        <div class="col-right"></div>
+                                                    </div> -->
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">Band 데이터 퍼팩트 S</p>
+                                                        <p class="p-price">75,900원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>16GB</li>
+                                                            <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
+                                                            <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="rn-prod-benefit">
+                                                        <ul>
+                                                            <li>
+                                                                <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
+                                                                <span class="txt">T멤버십 VIP 승급</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
+                                                <div class="rn-prod-bottom">
+                                                    <div class="rn-btn-right">
+                                                        <a class="btn-compare" data-prod-id="NA00006805">내 요금제와 비교</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+                    <!-- //3G-->
+                        <% } %>
+                    <% } %>
+    
+                    <!-- 태블릿/2nd Device -->
+                    <section class="tod-cont-section">
+                        <div class="rn-banner-img">
+                            <img src="<%=CDN%>/img/product/v2/bg-img2.png" alt="">
+                        </div>
+                        <div class="tod-nmp-title">
+                            <div class="rn-tag">
+                                <span class="i-tag-cr3">5G Tab</span>
+                            </div>
+                            <h3 class="rn-prod-tit">태블릿도 5G 속도로! <br> <strong>5G 태블릿 전용 요금제</strong></h3>
+                        </div>
+                        <!-- 요금제 row list -->
+                        <div class="tod-nmp-row-list">
+                            <ul>
+                                <li>
+                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                    <div class="tod-nmp-item plan-type1 prod-2nd">
+                                        <a href="#n" class="item-link">
+                                            <div class="rn-prod-name">
+                                                <p class="p-name">5G Tab 4GB (단독)</p>
+                                                <p class="p-price">26,000원</p>
+                                            </div>
+                                            <div class="rn-prod-info">
+                                                <ul class="p-etc">
+                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>4GB</li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- //요금제 모듈 : 일반형 -->
+                                </li>
+                                <li>
+                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                    <div class="tod-nmp-item plan-type1 prod-2nd">
+                                        <a href="#n" class="item-link">
+                                            <div class="rn-prod-name">
+                                                <p class="p-name">5G Tab 4GB (공유)</p>
+                                                <p class="p-price">26,000원</p>
+                                            </div>
+                                            <div class="rn-prod-info">
+                                                <ul class="p-etc">
+                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>4GB</li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- //요금제 모듈 : 일반형 -->
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //요금제 row list -->
+                    </section>
+                    
+                    <section class="tod-cont-section">
+                        <div class="rn-banner-img">
+                            <img src="<%=CDN%>/img/product/v2/bg-img13.png" alt="">
+                        </div>
+                        <div class="tod-nmp-title">
+                            <div class="rn-tag">
+                                <span class="i-tag-cr3">Data함께쓰기</span>
+                            </div>
+                            <h3 class="rn-prod-tit">데이터 공유로 함께쓰는 <br> <strong>LTE전용 태블릿 요금제</strong></h3>
+                        </div>
+                        <!-- 요금제 row list -->
+                        <div class="tod-nmp-row-list">
+                            <ul>
+                                <li>
+                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                    <div class="tod-nmp-item plan-type1 prod-2nd">
+                                        <a href="#n" class="item-link">
+                                            <div class="rn-prod-name">
+                                                <p class="p-name">LTE Data 함께쓰기 1G</p>
+                                                <p class="p-price">26,000원</p>
+                                            </div>
+                                            <div class="rn-prod-info">
+                                                <ul class="p-etc">
+                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>1GB</li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- //요금제 모듈 : 일반형 -->
+                                </li>
+                                <li>
+                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                    <div class="tod-nmp-item plan-type1 prod-2nd">
+                                        <a href="#n" class="item-link">
+                                            <div class="rn-prod-name">
+                                                <p class="p-name">LTE Data 함께쓰기 2.5G</p>
+                                                <p class="p-price">26,000원</p>
+                                            </div>
+                                            <div class="rn-prod-info">
+                                                <ul class="p-etc">
+                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>2.5GB</li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- //요금제 모듈 : 일반형 -->
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //요금제 row list -->
+                    </section>
+                    <!-- //태블릿/2nd Device -->
+    
+                    <!-- 선불 -->
+                    <section class="tod-cont-section">
+                        <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                        <div class="tod-nmp-item plan-type1 prod-2nd">
+                            <a href="#n" class="item-link">
+                                <div class="rn-prod-name">
+                                    <p class="p-name">PPS스마트폰 프리미엄</p>
+                                    <p class="p-price">상세참조</p>
+                                </div>
+                                <div class="rn-prod-info">
+                                    <ul class="p-etc">
+                                        <li><i class="p-icon18-data"><span class="blind">데이터</span></i>상제참조</li>
+                                        <li><i class="p-icon18-phone"><span class="blind">통화</span></i>상제참조</li>
+                                        <li><i class="p-icon18-sms"><span class="blind">문자</span></i>상제참조</li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- //요금제 모듈 : 일반형 -->
+                        <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                        <div class="tod-nmp-item plan-type1 prod-2nd">
+                            <a href="#n" class="item-link">
+                                <div class="rn-prod-name">
+                                    <p class="p-name">PPS스마트폰 프리미엄</p>
+                                    <p class="p-price">상세참조</p>
+                                </div>
+                                <div class="rn-prod-info">
+                                    <ul class="p-etc">
+                                        <li><i class="p-icon18-data"><span class="blind">데이터</span></i>상제참조</li>
+                                        <li><i class="p-icon18-phone"><span class="blind">통화</span></i>상제참조</li>
+                                        <li><i class="p-icon18-sms"><span class="blind">문자</span></i>상제참조</li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- //요금제 모듈 : 일반형 -->
+                    </section>
+                    <!-- //선불 -->
+                
+                    <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../../../../components/javascript.component.html', {}); %>
+<%- include('../../../../components/renewal/list/product.renewal.mobileplan.list-script.component.html', {hasNext:hasNext}); %>
+<%- include('../../../../components/end.component.html', {}); %>
+
