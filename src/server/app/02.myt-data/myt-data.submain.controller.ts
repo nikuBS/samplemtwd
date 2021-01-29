@@ -57,7 +57,8 @@ class MytDataSubmainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     if (pageInfo.advancement) {
       // local 테스트틀 하기 위해 추가
-      if (process.env.NODE_ENV === pageInfo.advancement.env || process.env.NODE_ENV === 'local') {
+      if ((process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
+        || process.env.NODE_ENV === 'local') {
         const advInst = new MytDataSubmainAdvController();
         advInst.initPage(req, res, next);
         return false;
