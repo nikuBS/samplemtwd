@@ -29,10 +29,11 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const {advancement} = pageInfo;
-    if (advancement) {
+    if (pageInfo.advancement) {
+      const {env, visible} = pageInfo.advancement,
+        {NODE_ENV} = process.env;
       // local 테스트틀 하기 위해 추가
-      if ([advancement.env, 'local'].indexOf(process.env.NODE_ENV) > -1) {
+      if ((NODE_ENV === env && visible) || NODE_ENV === 'local') {
         new MyTFareSubmainAdvController().initPage(req, res, next);
         return false;
       }
