@@ -31,7 +31,7 @@
                                     <% for(let m = 0; m < thisPlan.filters.length; m++){ %>
                                         <% if(mobileList[k].code == thisPlan.filters[m].prodFltId){ %>
                                         <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                                            <div class="tod-nmp-item plan-type1 <%= mobileList[k].class %>">
+                                            <div class="tod-nmp-item plan-type1 <%= mobileList[k].seriesClass %>">
                                                 <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
                                             </div>
                                             <% mobileCount++; %>

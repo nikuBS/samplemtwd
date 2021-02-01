@@ -22,7 +22,6 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext) {
 
 Tw.ProductRenewalList.prototype = {
     _init: function() {
-      var _this = this;
       this.themeParam = this._getParameter('theme');
       this._listTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE);
       this.curFilter = this._checkFilter();
@@ -127,7 +126,7 @@ Tw.ProductRenewalList.prototype = {
       this._popupService.open({
           url: '/hbs/',
           hbs: 'renewal.product.initial.confirm',
-          layer: true,
+          layer: true
         },
         $.proxy(this._onOpenquickinitialPopup, this, $target),
         $.proxy(this._onClosequickinitailPopup, this, $target),
@@ -437,7 +436,7 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _handleResetFilters: function($layer) { //선택 초기화 버튼 선택 시
+    _handleResetFilters: function() { //선택 초기화 버튼 선택 시
       $('#selectFilter').empty();
       $('.check-box > ul > li').removeClass('on');
     },
@@ -463,7 +462,7 @@ Tw.ProductRenewalList.prototype = {
   
       var items = _.map(resp.result.products, $.proxy(this._mapProperData, this));
       $('.tod-cont-section').data('lastproduct',items[items.length - 1].prodId);
-      $('.' + this._series.class).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.class }));
+      $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass }));
       if(!resp.result.hasNext) {
         this._hasNext = 'false';
       }

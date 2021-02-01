@@ -41,7 +41,7 @@ export default class RenewProductPlans extends TwViewController {
           prepay : '',
           theme : '',
           noSeries : false,
-          class : '',
+          seriesClass : '',
         };
         const filterList = {
           filterList : ''
@@ -52,23 +52,23 @@ export default class RenewProductPlans extends TwViewController {
           switch(seriesCode) { // 상단 탭 하이라이트 적용
             case 'F01713':
               series.fiveGx = ' class=on';
-              series.class = 'prod-5g';
+              series.seriesClass = 'prod-5g';
               break;
             case 'F01121':
               series.lte = ' class=on';
-              series.class = 'prod-lte';
+              series.seriesClass = 'prod-lte';
               break;
             case 'F01122':
               series.threeG = ' class=on';
-              series.class = 'prod-band';
+              series.seriesClass = 'prod-band';
               break;
             case 'F01124':
               series.secondDevice = ' class=on';
-              series.class = 'prod-2nd';
+              series.seriesClass = 'prod-2nd';
               break;
             case 'F01125':
               series.prepay = ' class=on';
-              series.class = 'prod-2nd';
+              series.seriesClass = 'prod-2nd';
               break;
             default:
               series.noSeries = true;
@@ -147,11 +147,11 @@ export default class RenewProductPlans extends TwViewController {
             } else if(series.prepay === ' class=on' && filterList.filterList === '' && quickFilterData.filterExist !== 'Y') { // 선불 탭 선택 노 필터
               res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html' , { svcInfo, params, pageInfo, series, filterList, plans, quickFilterData } );
             } else if(series.noSeries && quickFilterData.filterExist !== 'Y') { // 탭 선택 없이 필터 적용
-              const mobileList = [{name: '5G',code: 'F01713',exist: 'N',url:'/product/renewal/mobileplan/list?filters=F01713', class: 'prod-5g'}, // 요금제 더보기용 url 입력 / 색상을 위한 클래스 추가
-                {name: 'LTE',code: 'F01121',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01121', class: 'prod-lte'},
-                {name: '3G',code: 'F01122',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01122', class: 'prod-band'},
-                {name: '태블릿/2nd Device',code: 'F01124',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01124', class: 'prod-2nd'},
-                {name: '선불',code: 'F01125',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01125', class: 'prod-2nd'}];
+              const mobileList = [{name: '5G',code: 'F01713',exist: 'N',url:'/product/renewal/mobileplan/list?filters=F01713', seriesClass: 'prod-5g'}, // 요금제 더보기용 url 입력 / 색상을 위한 클래스 추가
+                {name: 'LTE',code: 'F01121',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01121', seriesClass: 'prod-lte'},
+                {name: '3G',code: 'F01122',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01122', seriesClass: 'prod-band'},
+                {name: '태블릿/2nd Device',code: 'F01124',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01124', seriesClass: 'prod-2nd'},
+                {name: '선불',code: 'F01125',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01125', seriesClass: 'prod-2nd'}];
               if(plans.hasNext){ //탭 선택 없이 필터 적용 시 100건을 넘어가면 API추가 호출 후 기존 상품 목록에 더해서 화면으로 가져감
                 params.searchLastProdId = plans.products[99].prodId;
                 this._getPlans(params).subscribe(addplans => {

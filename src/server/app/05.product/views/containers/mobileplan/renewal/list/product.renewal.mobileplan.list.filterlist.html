@@ -27,7 +27,7 @@
                             <% for(let i = 0; i < plans.productCount && i < 20; i++ ) { %>
                                 <% let thisPlan = plans.products[i]; %>
                                 <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                                <div class="tod-nmp-item plan-type3 <%= series.class %>">
+                                <div class="tod-nmp-item plan-type3 <%= series.seriesClass %>">
                                     <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
                                 </div>
                                     <!-- //요금제 모듈 : 일반형 -->
