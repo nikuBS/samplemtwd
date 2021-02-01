@@ -359,14 +359,15 @@ export default class MyTFareSubmainAdvController extends TwViewController {
           remainPayment = unPaidAmt;
         }
         // 선택월보다 이전 미납액들의 총 합계
-        if (DateHelper.isBefore(unpay.unPaidInvDt, date)) {
+        if (DateHelper.getDiffByUnit(unpay.unPaidInvDt, date, 'days') < 1) {
+        // if (DateHelper.isBefore(unpay.unPaidInvDt, date)) {
           unpaid += unPaidAmt;
         }
       });
       // 부분 납부한 금액: 청구금액 - 납부해야하는 금액
       const prepay = this.getInt(data.claimPay) - this.getInt(remainPayment);
       Object.assign(data, {
-        totalClaim: this.addComma(remainPayment + unpaid),
+        totalClaim: this.addComma(remainPayment + unpaid + prepay),
         prepay: this.addComma(prepay),
         remainPayment: this.addComma(remainPayment),
         unpaid: this.addComma(unpaid)
