@@ -7,7 +7,7 @@ _%>
 
 <section class="cont-card">
   <div class="section-inner">
-    <div class="head-tit"><a href="#" class="link">납부/청구 정보</a></div> <!-- 201207 [OP002-10282] 수정06 : 텍스트 수정-->
+    <div class="head-tit"><a href="#" data-id="paidinfo" class="link">납부/청구 정보</a></div> <!-- 201207 [OP002-10282] 수정06 : 텍스트 수정-->
     <div class="card-cont">
       <ul class="report-list">
         <li class="report-item">
@@ -32,9 +32,9 @@ _%>
       <div class="pay-info-wrap">
         <ul class="ico-list horizontal">
           <li class="item">
-            <a href="#">
+            <a href="#" data-id="billtype">
               <div class="ico-item">
-                <i class="ico"><img src="/img/myt/submain-ico14.svg" alt=""></i>
+                <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
                 <div class="list-txt">
                   <span class="item-sub-txt">요금안내서 설정</span>
                   <span class="item-tit"><%= data.paymentInfo.billTypeNm %></span>
@@ -43,12 +43,12 @@ _%>
             </a>
           </li>
           <li class="item">
-            <a href="#">
+            <a href="#" data-id="paymthd">
               <div class="ico-item">
-                <i class="ico"><img src="/img/myt/submain-ico01.svg" alt=""></i>
+                <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico01.svg" alt=""></i>
                 <div class="list-txt">
                   <span class="item-sub-txt">납부방법</span>
-                  <span class="item-tit">카드자동납부</span>
+                  <span class="item-tit"><%= data.paymentInfo.payMthdNm %></span>
                 </div>
               </div>
             </a>

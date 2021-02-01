@@ -8,12 +8,12 @@ _%>
   <%_ if ( data.myContractPlan.muPointYn === 'Y' ) { _%>
     <section class="cont-card">
       <div class="section-inner">
-        <div class="head-tit"><a href="#" class="link">무약정 플랜 포인트</a></div>
+        <div class="head-tit"><a href="#" data-id="contract-plan" class="link">무약정 플랜 포인트</a></div>
         <div class="card-cont">
           <ul class="ico-list">
             <li class="item">
               <div class="ico-item">
-                <i class="ico"><img src="/img/myt/submain-ico12.svg" alt=""></i>
+                <i class="ico"><img src="<=% CDN %>/img/myt/submain-ico12.svg" alt=""></i>
                 <div class="list-txt">
                   <span class="item-sub-txt">잔여 포인트</span>
                   <span class="item-tit"><%- data.myContractPlan.point %>P</span>
@@ -22,7 +22,7 @@ _%>
             </li>
             <li class="item">
               <div class="ico-item">
-                <i class="ico"><img src="/img/myt/submain-ico12.svg" alt=""></i>
+                <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico12.svg" alt=""></i>
                 <div class="list-txt">
                   <span class="item-sub-txt">총 적립</span>
                   <span class="item-tit"><%- data.myContractPlan.count %>건</span>
@@ -35,12 +35,12 @@ _%>
     </section>
   <%_ } else { _%>
     <div class="submain-banner">
-      <a href="/product/callplan?prod_id=NA00005923">
+      <a href="#" data-id="contract-plan">
         <p class="banner-comment">
           <span class="bsub-txt">매달 포인트 적립 받아 요금 납부 할인 혜택</span><!-- 201207 [OP002-10282] 수정03 : 텍스트 수정 -->
           <strong>무약정 플랜 포인트</strong>
         </p>
-        <img src="/img/myt/submain-banner05.png" alt="">
+        <img src="<%= CDN %>/img/myt/submain-banner05.png" alt="">
       </a>
     </div>
   <%_ } _%>
@@ -49,7 +49,7 @@ _%>
 <!-- 201207 [OP002-10282] 수정04 : 텍스트 수정 -->
 <section class="cont-card">
   <div class="section-inner">
-    <div class="head-tit"><a href="#" class="link">약정할인/기기상환 정보</a></div>
+    <div class="head-tit"><a href="#" data-id="installement" class="link">약정할인/기기상환 정보</a></div>
     <div class="card-cont">
       <div class="hoz-group-wrap">
         <%_ if (data.myDeviceInstallment) { _%>

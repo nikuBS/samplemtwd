@@ -8,8 +8,9 @@ _%>
 <section class="cont-card">
   <div class="section-inner">
     <div class="head-tit high">
-      <a href="#" class="link">기본 가입정보</a>
+      <a href="#" data-id="br-opening-detail" class="link">기본 가입정보</a>
     </div>
+    <% var icon = 'ico7'; %>
     <%_ if (data.type === 2) { _%>
       <%_ if (data.myInfo) { _%>
         <div class="card-cont">
@@ -18,7 +19,18 @@ _%>
             <div class="ico-wrap">
               <span class="ico-figure">
                 <span class="ico">
-                    <span class="ico-img"><img src="/img/myt/sel-tv-ico-black.svg" alt="IP TV 인터넷"></span>
+                  <%_
+                  if (data.svcInfo.svcAttrCd === 'S1') {
+                    icon = 'ico10';
+                  } else  if (data.svcInfo.svcAttrCd === 'S2') {
+                    icon = 'ico11';
+                  } else if (data.svcInfo.svcAttrCd === 'S3') {
+                    icon = 'ico12';
+                  }
+                  _%>
+                  <span class="symbol <%= icon %>">
+                    <span class="tod-blind"><%= data.svcInfo.eqpMdlNm %></span>
+                  </span>
                 </span>
               </span>
             </div>
@@ -86,10 +98,17 @@ _%>
           <div class="ico-wrap">
             <span class="ico-figure">
                 <span class="ico">
-                    <span class="ico-img"><img src="/img/myt/sel-mobile-ico-black.svg" alt="휴대폰"></span>
+                  <%_
+                  if (data.svcInfo.svcAttrCd === 'M3') {
+                    icon = 'ico8';
+                  }
+                  _%>
+                  <span class="symbol <%= icon %>">
+                    <span class="tod-blind">휴대폰</span>
+                  </span>
                 </span>
             </span>
-            <p class="model">Galaxy S20 Ultra</p>
+            <p class="model"><%= data.svcInfo.eqpMdlNm %></p>
           </div>
           <div class="list-wrap">
             <ul class="report-list item-no-border small">

@@ -6,23 +6,30 @@
 _%>
 <section class="cont-card">
   <div class="section-inner">
-    <div class="head-tit"><a href="#" class="link">나의 요금제/부가상품</a></div> <!-- 201222 [OP002-10282]수정02 -->
+    <div class="head-tit">
+      <a href="#" data-id="my-plan" class="link">나의 요금제/부가상품</a>
+    </div> <!-- 201222 [OP002-10282]수정02 -->
     <div class="card-cont">
-      <%_ if (data.myAddProduct.feePlanProd) { _%>
+      <%_
+      if (data.myAddProduct.feePlanProd) {
+      const name = data.myAddProduct.feePlanProd.prodNm || data.myAddProduct.feePlanProd.feeProdNm;
+      const date = data.myAddProduct.feePlanProd.scrbDt || data.myAddProduct.feePlanProd.svcScrbDt;
+      const amount = data.myAddProduct.feePlanProd.basFeeTxt || data.myAddProduct.feePlanProd.basFeeAmt;
+      _%>
       <dl class="using-plan">
-        <dt class="plan-tit"><%= data.myAddProduct.feePlanProd.prodNm %></dt>
+        <dt class="plan-tit"><%= name %></dt>
         <dd class="plan-info">
           <ul class="report-list small">
             <li class="report-item">
               <dl class="report-define d-wrap">
                 <dt class="report-tit">신청일</dt>
-                <dd class="report-cont"><%= data.myAddProduct.feePlanProd.scrbDt %></dd>
+                <dd class="report-cont"><%= date %></dd>
               </dl>
             </li>
             <li class="report-item">
               <dl class="report-define d-wrap">
                 <dt class="report-tit">월정액</dt>
-                <dd class="report-cont"><%= data.myAddProduct.feePlanProd.basFeeTxt %>원</dd>
+                <dd class="report-cont"><%= amount %>원</dd>
               </dl>
             </li>
           </ul>
@@ -33,7 +40,7 @@ _%>
         <ul class="add-pro-list">
           <%_ if (data.myAddProduct.addProdPayFreeCnt) { _%>
           <li class="add-pro-item">
-            <a href="#">
+            <a href="#" data-id="add-prod">
               <div class="number">
                 <%= data.myAddProduct.addProdPayFreeCnt %><span class="unit">개</span>
               </div>
@@ -43,7 +50,7 @@ _%>
           <%_ } _%>
           <%_ if (data.myAddProduct.addProdPayCnt) { _%>
           <li class="add-pro-item">
-            <a href="#">
+            <a href="#" data-id="add-prod">
               <div class="number">
                 <%= data.myAddProduct.addProdPayCnt %><span class="unit">개</span>
               </div>
@@ -53,7 +60,7 @@ _%>
           <%_ } _%>
           <%_ if (data.myAddProduct.disProdCnt) { _%>
           <li class="add-pro-item">
-            <a href="#">
+            <a href="#" data-id="add-prod">
               <div class="number">
                 <%= data.myAddProduct.disProdCnt %><span class="unit">개</span>
               </div>
@@ -63,7 +70,7 @@ _%>
           <%_ } _%>
           <%_ if (data.myAddProduct.comProdCnt) { _%>
           <li class="add-pro-item">
-            <a href="#">
+            <a href="#" data-id="com-prod">
               <div class="number">
                 <%= data.myAddProduct.comProdCnt %><span class="unit">개</span>
               </div>
