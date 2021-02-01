@@ -26,7 +26,7 @@ export default abstract class MytFareSubmainCommonService {
   constructor(req: Request, res: Response, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
     this._apiService = new ApiService();
     this._apiService.setCurrentReq(req, res);
-    this._apiService.setTimeout(3000);
+    this._apiService.setTimeout(7000);
     this._logger = new LoggerService();
     this._error = new ErrorService();
     this.info = {

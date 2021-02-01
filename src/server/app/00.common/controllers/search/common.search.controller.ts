@@ -222,6 +222,8 @@ class CommonSearch extends TwViewController {
               }
             });
           } else {
+            let keywords: string = searchResult.result.query;
+            let arrKeyword = keywords.split(' ');
             res.render('search/common.search.html', {
               pageInfo: pageInfo,
               searchInfo : searchResult.result,
@@ -231,11 +233,16 @@ class CommonSearch extends TwViewController {
               step : step,
               from : from,
               sort : requestObject.sort,
-              nowUrl : req.originalUrl
+              nowUrl : req.originalUrl,
+              searchTotalCount: searchResult.result.totalcount,
+              arrKeyword: arrKeyword,
+              arrKeywordSize: arrKeyword.length || 0
             });
           }
 
         } else {
+          let keywords: string = searchResult.result.query;
+          let arrKeyword = keywords.split(' ');
           res.render('search/common.search.html', {
             pageInfo: pageInfo,
             searchInfo : searchResult.result,
@@ -245,7 +252,10 @@ class CommonSearch extends TwViewController {
             step : step,
             from : from,
             sort : requestObject.sort,
-            nowUrl : req.originalUrl
+            nowUrl : req.originalUrl,
+            searchTotalCount: searchResult.result.totalcount,
+            arrKeyword: arrKeyword,
+            arrKeywordSize: arrKeyword.length || 0
           });
         }
       }
@@ -291,7 +301,6 @@ class CommonSearch extends TwViewController {
       this.apiService.request( searchApi , requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
     ).subscribe(([ searchResult, relatedKeyword ]) => {
-
       if ( searchResult.code !== 0 || relatedKeyword.code !== 0 ) {
         return this.error.render(res, {
           svcInfo: svcInfo,

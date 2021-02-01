@@ -1,11 +1,12 @@
 /**
  * MenuName: 나의 요금 > 서브메인(MF2)
- * @file myt-fare-submain.v1.js
- * @author 양정규
- * @since 2020.12.31
- * Summary: 나의요금 서브메인 고도화 js
+ * @file myt-fare-submain.js
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.09.28
+ * Summary: 최근 청구/사용/미납요금 조회, 및 각 상세화면으로 이동 등
  * Description:
  *   청구,사용요금 조회 - data.type이 UF인 경우 사용요금 조회 아닌 경우 청구요금 조회
+ *   소액결제, 컨텐츠이용내역(성능개선 사항으로 미조회->버튼 무조건 노출)
  *   세금계산서,기부금내역 조회
  *   실시간 요금 조회 (매월 1일 미조회)
  */
@@ -17,111 +18,279 @@ Tw.MyTFareSubMain = function (params) {
   this._historyService = new Tw.HistoryService(this.$container);
   this.data = params.data;
   this._menuId = this.data.pageInfo.menuId;
-  this._init();
+  this._rendered();
+  this._bindEvent();
+  this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
   new Tw.XtractorService(this.$container);
 };
 
 Tw.MyTFareSubMain.prototype = {
 
-  _init: function () {
-    this._makeEid();
-    this._cachedElement();
-    this._bindEvent();
+  loadingView: function (value, selector) {
+    if ( !selector ) {
+      selector = '[data-id="wrapper"]';
+    }
+    if ( value ) {
+      Tw.CommonHelper.startLoading(selector, 'white', false);
+    }
+    else {
+      Tw.CommonHelper.endLoading(selector);
+    }
+  },
+
+  _rendered: function () {
+    if ( this.data.type === 'UF' ) {
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+      }
+      else {
+        // 사용요금자세히보기
+        this.$usedDetail = this.$container.find('button[data-id=used-detail]');
+      }
+    }
+    else {
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+      }
+      else {
+        // 요금안내서버튼
+        this.$billReport = this.$container.find('button[data-id=bill-report]');
+        if ( this.data.isNotAutoPayment ) {
+          // 요금납부버튼
+          this.$billPym = this.$container.find('button[data-id=bill-pym]');
+        }
+      }
+    }
+    // 실시간요금버튼
+    if ( this.data.isNotFirstDate ) {
+      this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
+    }
+    if ( this.data.unPaidTotSum ) {
+      // 미납요금버튼
+      this.$nonPayment = this.$container.find('button[data-id=non-payment]');
+    }
+    if ( this.data.paymentInfo ) {
+      // 청구요금화면인 경우
+      if ( this.data.type !== 'UF' ) {
+        // 요금안내서설정버튼
+        this.$billType = this.$container.find('button[data-id=bill-type]');
+      }
+      // 납부방법버튼
+      this.$payMthd = this.$container.find('button[data-id=pay-mthd]');
+      // 청구지 주소/연락처 버튼
+      this.$changeAddress = this.$container.find('button[data-id=change-address]');
+    }
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isMicroPrepay ) {
+      // 소액결제
+      this.$microBill = this.$container.find('button[data-id=micro-bill]');
+    // }
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isContentPrepay ) {
+      // 콘텐츠 이용료
+      this.$contentBill = this.$container.find('button[data-id=content-bill]');
+    // }
+    if ( this.data.totalPayment && this.data.totalPayment.length > 0 ) {
+      // 최근납부내역상세
+      this.$paymentDetail = this.$container.find('button[data-id=payment-detail]');
+    }
+    // 최근요금내역
+    this.$billChart = this.$container.find('[data-id=bill-chart]');
+    if ( this.data.otherLines.length > 0 ) {
+      // 다른회선 요금 조회
+      this._genLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
+    }
+    // [OP002-3317] template 처리 함수
+    var countChildLines = (this.data.childLineInfo && this.data.childLineInfo.length) || 0; // _.size(this.data.childLineInfo)
+    if (countChildLines > 0) {
+      this._genChildLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.CHILD_LIME_TEMP);
+    }
+    // [OP002-3317] 다른 회선(자녀포함)이 총 20개 이상인 경우, "더 보기" 버튼 노출
+    if (countChildLines + this.data.otherLines.length) {
+      this.$otherLines = this.$container.find('[data-id=other-line]');
+      if (countChildLines + this.data.otherLines.length > 20) {
+        this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
+      }
+    }
+    // 세금계산서
+    // if ( this.data.taxInvoice ) {
+    this.$taxInv = this.$container.find('[data-id=taxinv]');
+    // }
+    // 기부금/후원금
+    // if ( this.data.contribution ) {
+    this.$contribution = this.$container.find('[data-id=contbt]');
+    // }
+    this.$otherPages = this.$container.find('[data-id=other-pages]');
+    // 타겟배너 신청버튼
+    this.$apply = this.$container.find('[data-id=apply]');
+  },
+
+  _bindEvent: function () {
+    if ( this.data.type === 'UF' ) {
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
+      else {
+        // 사용요금자세히보기
+        this.$usedDetail.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
+    }
+    else {
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
+      else {
+        // 요금안내서버튼
+        this.$billReport.on('click', $.proxy(this._onClickedSelBillGuide, this));
+        if ( this.data.isNotAutoPayment ) {
+          // 요금납부버튼
+          this.$billPym.on('click', $.proxy(this._onClickedBillPym, this));
+        }
+      }
+    }
+    // 실시간요금버튼
+    if ( this.data.isNotFirstDate ) {
+      this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
+    }
+    if ( this.data.unPaidTotSum ) {
+      // 미납요금버튼
+      this.$nonPayment.on('click', $.proxy(this._onClickedNonPayment, this));
+    }
+    if ( this.data.paymentInfo ) {
+      // 청구요금화면인 경우
+      if ( this.data.type !== 'UF' ) {
+        // 요금안내서설정버튼
+        this.$billType.on('click', $.proxy(this._onClickedSetBillReport, this));
+      }
+      // 납부방법버튼
+      this.$payMthd.on('click', $.proxy(this._onClickedPayMthd, this));
+      this.$changeAddress.on('click', $.proxy(this._onClickedChangeAddress, this));
+    }
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isMicroPrepay ) {
+      // 소액결제
+      this.$microBill.on('click', $.proxy(this._onClickedMicroBill, this));
+    // }
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isContentPrepay ) {
+      // 콘텐츠 이용료
+      this.$contentBill.on('click', $.proxy(this._onClickedContentBill, this));
+    // }
+    if ( this.data.totalPayment && this.data.totalPayment.length > 0 ) {
+      // 최근납부내역상세
+      this.$paymentDetail.on('click', $.proxy(this._onClickedPaymentDetail, this));
+    }
+    // [OP002-3317] 다른 회선(자녀포함) 조회
+    if ((this.data.childLineInfo && this.data.childLineInfo.length > 0) || this.data.otherLines.length > 0) {
+      this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
+      if (this.$otherLinesMoreBtn) { // if ( this.data.otherLines.length > 20 ) {
+        this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
+      }
+    }
+    // 세금계산서
+    // if ( this.data.taxInvoice ) {
+    this.$taxInv.on('click', $.proxy(this._onClickedTaxInvoice, this));
+    // }
+    // 기부금/후원금
+    // if ( this.data.contribution ) {
+    this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
+    // }
+    this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
+    // 타겟배너 (요금납부 화면으로 이동)
+    this.$apply.on('click', $.proxy(this._onClickedPayMthd, this));
+    this.$container.on('click', '[data-url]', $.proxy(this._goLoad, this));
+  },
+
+  // lazyloading 처리
+  _initScroll: function () {
+    this._checkScroll();
+    $(window).scroll($.proxy(function () {
+      this._checkScroll();
+    }, this));
+  },
+
+  _checkScroll: function () {
+    if ( !this._isRequestTax && this._elementScrolled(this.$taxInv.parent()) ) {
+      this._requestTaxContribute();
+    }
+  },
+
+  _elementScrolled: function (element) {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+    var elemTop = element.offset().top;
+    return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+  },
+
+  // chart create
+  _initPatternChart: function (data) {
+    this.$billChart.chart2({
+      target: '.chart4', //클래스명 String
+      type: (this.data.type === 'UF') ? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
+      average: true, // 평균
+      average_place: 'right',
+      legend: (this.data.type === 'UF') ? Tw.FARE_CHART_LEGEND.USAGE : Tw.FARE_CHART_LEGEND.DEFAULT, // 범례
+      link: true,
+      unit: Tw.CHART_UNIT.WON, // 표기
+      data_arry: data //데이터 obj,
+    });
+    // chart 생성 후 event bind 처리
+    this.$billChart.on('click', '.chart4 button', $.proxy(this._onClickedBillReport, this));
+  },
+
+  // 다른회선내역 리스트
+  _initOtherLineList: function (lines) {
+    // [OP002-3317] 회선 정보 화면 구성
+    var countLines = Math.min(lines.length, 20);
+    if (countLines > 0) {
+      var $ul = this.$container.find('ul.my-line-info');
+      var htmls = '';
+      var line;
+      // TODO: 여기에서는 왜? 20개 이상이 출력될 수 있도록 되어 있는지 확인 필요
+      for (var index = 0; index < countLines; index += 1) {
+        line = lines[index];
+        // 회선 형태(자녀 or 기타)에 따라 template rendering
+        htmls += (line.child ? this._genChildLineTemplate : this._genLineTemplate)(line);
+      }
+      $ul.html(htmls);
+    }
+    // FIXME: 성능개선으로 실시간요금 조회하지 않도록 수정
+    // setTimeout($.proxy(this._realTimeBillRequest, this), 300);
+  },
+
+  _initialize: function () {
+    this._requestCount = -1;
+    this._resTimerID = null;
+    this._svcMgmtNumList = [];
+    this._feeChartInfo = [];
     this._getTosAdminMytFareBanner();
+    this._initScroll();
+    /**
+     * /청구요금인 경우
+     * 1. 최근요금내역
+     * 2. 다른회선요금조회
+     * 3. 실시간 요금조회
+     * 사용요금인 경우
+     * 1. 사용요금내역
+     * 2. 실시간 요금조회
+     **/
+    if ( this.data.type === 'UF' ) {
+      // 성능개선사항으로 api가 합처짐
+      // this._usageFeeRequest();
+      this._responseUsageFee({result: this.data.usage, code: Tw.API_CODE.CODE_00});
+    }
+    else {
+      // 성능개선사항으로 api가 합처짐
+      // this._claimPaymentRequest();
+      this._responseClaimPayment({result: this.data.claim, code: Tw.API_CODE.CODE_00});
+    }
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
     this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
-  },
-
-  /**
-   * @function
-   * @desc 통계코드 data attr 생성
-   * @private
-   */
-  _makeEid: function () {
-
-    var eid = {};
-    var setEid = function (key, stgEId, prdEid) {
-      var preCode = 'CMMA_A3_B12-';
-      eid[key] = preCode + (Tw.Environment.environment === 'prd' ? prdEid : stgEId);
-    };
-
-    setEid('month', '28', ''); // 당월 선택
-    setEid('detailBill', '29', ''); // 요금 상세 내역
-    setEid('skbroadband', '30', ''); // SK 브로드밴드
-    setEid('miri', '31', ''); // 미리 납부하신 금액 MIRI
-
-    var miriEid = {
-      stg: '32',
-      prd: ''
-    };
-    // 미납요금 있을때
-    if (this.data.unPaidTotSum) {
-      miriEid.stg = '33';
-      miriEid.prd = '';
-    }
-    setEid('charge', miriEid.stg, miriEid.prd); // 요금 납부
-    setEid('unPaid', '34', ''); // 미납요금 납부
-    setEid('realtime', '35', ''); // 실시간 이용요금 납부
-    setEid('mobileCharge', '36', ''); // 휴대폰 결제
-    setEid('contentsBill', '37', ''); // 콘텐츠 이용료
-    setEid('mobileChangeLimit', '38', ''); // 휴대폰 결제 한도변경
-    setEid('contentsChangeLimit', '39', ''); // 콘텐츠 한도변경
-    setEid('agreeJoin', '40', ''); // 휴대폰 결제 이용동의 상품가입
-    setEid('recentPay', '42', ''); // 최근 납부내역(납부/청구정보 영역에서 사용)
-    setEid('payMethod', '41', ''); // 납부방법
-    setEid('billType', '43', ''); // 요금 안내서 유형
-    setEid('contact', '44', ''); // 주소/연락처
-    setEid('child', '45', ''); // 자녀회선 정보
-    setEid('bank', '46', ''); // 은행자동납부 배너
-    setEid('counsel', '47', ''); // 가입상담 예약 배너
-    setEid('recentBillTip', '48', ''); // 최근 청구요금 내역 tip
-    setEid('benefit', '49', ''); // 나의 혜택/할인
-    setEid('membership', '50', ''); // 멤버십 등급
-    setEid('annualBenefit', '51', ''); // 연간 누적 혜택
-    setEid('benefitDiscount', '52', ''); // 혜택 할인
-    setEid('pause', '53', ''); // 일시정지/해제
-    setEid('password', '54', ''); // 고객보호 비밀번호 서비스
-    setEid('pattern', '55', ''); // 데이터/음성/문자 월 사용패턴
-    setEid('tax', '56', ''); // 세금계산서 재발행
-    setEid('donation', '57', ''); // 기부금/후원금 납부내역
-    setEid('recentPay2', '58', ''); // 최근납부내역2 (조회/신청 서비스 영역에서 사용)
-    setEid('tos', '59', ''); // TOS배너
-    setEid('data', '60', ''); // 나의 데이터통화
-    setEid('join', '61', ''); // 나의 가입정보
-    setEid('fare', '62', ''); // 나의 요금제/부가상품
-    setEid('combination', '63', ''); // 나의 결합상품
-    setEid('paymentHistory', '64', ''); // 요금납부내역 조회
-    setEid('realtimeRemain', '65', ''); // 실시간 잔여량
-    setEid('contract', '66', ''); // 약정할인/기기상환 정보
-    setEid('ppsHistory', '67', ''); // 내역조회
-
-    $.each($('[data-make-eid]'), function (idx, item){
-      var $item = $(item);
-      var eidCd = eid[$item.data('make-eid')];
-      if (eidCd) {
-        $item.attr('data-xt_eid', eidCd)
-          .attr('data-xt_csid', 'NO')
-          .attr('data-xt_action', 'BC');
-        $item.removeAttr('data-make-eid');
-      }
-    });
-  },
-
-  /**
-   * element cache
-   * @private
-   */
-  _cachedElement: function () {
-
-  },
-
-  /**
-   * even bind
-   * @private
-   */
-  _bindEvent: function () {
-    this.$container.on('click', '[data-url]', $.proxy(this._goLoad, this));
   },
 
   /**
@@ -200,9 +369,418 @@ Tw.MyTFareSubMain.prototype = {
     new Tw.XtractorService(this.$container);
   },
 
+  // 배너 check
+  _checkBanner: function (result) {
+    return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
+  },
 
-  _goLoad: function (event) {
-    this._historyService.goLoad($(event.currentTarget).data('url'));
+  // 배너 ui 처리
+  _successDrawBanner: function () {
+    this.$bannerList = this.$container.find('[data-id=banner-list]');
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    }
+  },
+
+  // 사용요금내역조회-1
+  /*_usageFeeRequest: function () {
+    this._apiService.request(Tw.API_CMD.BFF_05_0021, {})
+      .done($.proxy(this._responseUsageFee, this))
+      .fail($.proxy(this._errorRequest, this));
+  },*/
+
+  // 사용요금내역조회-2
+  _responseUsageFee: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.usedAmtList.length > 0 ) {
+        var items = resp.result.usedAmtList;
+        var length = items.length > 6 ? 6 : items.length;
+        var chart_data = [];
+        for ( var idx = length - 1; idx > -1; idx-- ) {
+          var item = items[idx];
+          var date = item.invDt; // this.getLastDate(item.invDt);
+          var amtStr = item.invAmt.replace(/,/g, '');
+          // var absDeduckStr = item.deduckInvAmt.replace(',', '');
+          // --------------------
+          var amt = parseInt(amtStr, 10);
+          // var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
+          chart_data.push({
+            't': this._recentChartDate(date), // 날짜
+            'v': amt // 사용금액
+            // 'v2': absDeduck // 할인금액
+          });
+          this._feeChartInfo.push(date);
+        }
+        this._initPatternChart(chart_data);
+      }
+      else {
+        this.$billChart.hide();
+        this.$container.find('[data-id=bill-chart-empty]').hide();
+      }
+    }
+    else {
+      this.$billChart.hide();
+      this.$container.find('[data-id=bill-chart-empty]').hide();
+    }
+    this._responseOtherLineBills();
+    // setTimeout($.proxy(this._otherLineBills, this), 300);
+    // setTimeout($.proxy(this._realTimeBillRequest, this), 300);
+  },
+
+  // 최근청구요금내역조회-1
+  /*_claimPaymentRequest: function () {
+    this._apiService.request(Tw.API_CMD.BFF_05_0020, {})
+      .done($.proxy(this._responseClaimPayment, this))
+      .fail($.proxy(this._errorRequest, this));
+  },*/
+
+  // 최근청구요금내역조회-2
+  _responseClaimPayment: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.billInvAmtList.length > 0 ) {
+        var items = resp.result.billInvAmtList;
+        var length = items.length > 6 ? 6 : items.length;
+        var chart_data = [];
+        for ( var idx = length - 1; idx > -1; idx-- ) {
+          var item = items[idx];
+          var date = item.invDt; // this.getLastDate(item.invDt);
+          var amtStr = item.invAmt.replace(/,/g, '');
+          var absDeduckStr = item.dcAmt.replace(/,/g, '');
+          // --------------------
+          var amt = parseInt(amtStr, 10);
+          var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
+          chart_data.push({
+            't': this._recentChartDate(date), // 날짜
+            'v': amt, // 사용금액
+            'v2': absDeduck // 할인금액
+          });
+          this._feeChartInfo.push(date);
+        }
+        this._initPatternChart(chart_data);
+      }
+      else {
+        this.$billChart.hide();
+        this.$container.find('[data-id=bill-chart-empty]').hide();
+      }
+    }
+    else {
+      this.$billChart.hide();
+      this.$container.find('[data-id=bill-chart-empty]').hide();
+    }
+    setTimeout($.proxy(this._otherLineBills, this), 300);
+  },
+
+  // 다른회선청구요금 조회-1
+  _otherLineBills: function () {
+    this._responseOtherLineBills();
+  },
+
+  // 다른회선청구요금 조회-2
+  _responseOtherLineBills: function () {
+    var combineList = [];
+    var individualList = [];
+    var index;
+    var lengthLines;
+    var lines;
+    var line;
+    var data;
+
+    // [OP002-3317] 자녀 요금조회 개선 ("나의 요금"의 "다른 회선 목록" 최상단에 노출)
+    if (this.data.childLineInfo) {
+      lines = this.data.childLineInfo;
+      lengthLines = lines.length;
+      for (index = 0; index < lengthLines; index += 1) {
+        line = lines[index];
+        data = _.extend({
+          child: true,
+          // NOTE: 자녀 회선은 아래 정보가 필요없음
+          // combine: false,
+          // repSvc: false,
+          amt: ''
+        }, line);
+        if (data.svcNum.indexOf('-') === -1) {
+          data.svcNum = this._phoneStrToDash(data.svcNum);
+        }
+        // "this._initOtherLineList" 호출 시점에 combineList가 무조건 앞에 오기 때문에, combineList로 추가
+        combineList.push(data);
+      }
+    }
+
+    // 기타 회선에 대한 처리
+    lines = this.data.otherLines;
+    lengthLines = lines.length;
+    for (index = 0; index < lengthLines; index += 1) {
+      // if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
+      // line = arguments[idx].result;
+      // var amt = parseInt(line.useAmtTot || 0, 10);
+      line = lines[index];
+      // 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없음 -> 통합청구 icon 미노출로 결정
+      // var isCombine = (line.paidAmtMonthSvcCnt > 1); // 통합청구여부
+      // "isCombine"은 항상 false 이기 때문에, 주석 처리한다. (20190820)
+      // var isCombine = false;
+      data = _.extend({
+        // "isCombine"은 항상 false 이기 때문에, 주석 처리한다. (20190820)
+        combine: false, // isCombine,
+        repSvc: line.actRepYn === 'Y', // 대표청구여부
+        amt: '',
+        svcType: this.__selectSvcType(line.svcAttrCd),
+        isAddr: ['S1', 'S2'].indexOf(line.svcAttrCd) > -1
+      }, line);
+      /*
+      // "isCombine"은 항상 false 이기 때문에, 주석 처리한다. (20190820)
+      if (isCombine) {
+        combinList.push(data);
+      }
+      else {
+      */
+        individualList.push(data);
+        /*
+      }
+      */
+      // }
+    }
+    // this._svcMgmtNumList = [];
+    // 통합청구리스트, 개별청구리스트
+    // [OP002-3317] 다른 회선(자녀포함) 조회를 위해 전체 목록을 저장
+    this._linesTotal = combineList.concat(individualList);
+    this._initOtherLineList(this._linesTotal);
+  },
+
+  /**
+   * [OP002-3317] 자녀회선 이용내역 조회에 대한 전화번호 formatter
+   * @private
+   */
+  _phoneStrToDash: function (str) {
+    return String(str).replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
+  },
+
+  /**
+   * 세금계산서, 기부금내역 조회
+   * @private
+   */
+  _requestTaxContribute: function () {
+    this._isRequestTax = true;
+
+    // 두 api 조회를 확인하기 위한 변수
+    this._isResponsedTax = false;
+    this._isResponsedCont = false;
+
+    // 세금계산서 재발행 조회
+    this._apiService.request(Tw.SESSION_CMD.BFF_07_0017, {})
+      .done($.proxy(this._responseTax, this))
+      .fail($.proxy(this._errorRequest, this));
+    // 기부금 내역 조회
+    this._apiService.request(Tw.API_CMD.BFF_05_0038, {})
+      .done($.proxy(this._responseContribute, this))
+      .fail($.proxy(this._errorRequest, this));
+  },
+
+  /**
+   * 세금계산서 조회결과 처리
+   * @param tax - 조회결과
+   * @private
+   */
+  _responseTax: function (tax) {
+    if ( tax.code === Tw.API_CODE.CODE_00 ) {
+      this.data.taxInvoice = tax.result;
+    }
+    //if ( tax.code === 'BIL0018' ) {}
+    // 사업자 번호를 조회할 수 없는 상황
+    this._isResponsedTax = true;
+    this._responseTaxContribute();
+  },
+
+  /**
+   * 기부금 조회결과 처리
+   * @param cont - 조회결과
+   * @private
+   */
+  _responseContribute: function (cont) {
+    if ( cont.code === Tw.API_CODE.CODE_00 ) {
+      if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
+        this.data.contribution = cont.result;
+      }
+    }
+    this._isResponsedCont = true;
+    this._responseTaxContribute();
+  },
+
+  /**
+   * 세금계산서, 기부금내역 조회 결과 후 ur 처리
+   * @private
+   */
+  _responseTaxContribute: function () {
+    // 동시에 조회하기 때문에 두 result 모두 받은 후 하단 로직으로..
+    if(!this._isResponsedTax || !this._isResponsedCont){
+      return;
+    }
+    var twoPiece = this.data.taxInvoice && this.data.contribution;
+    if ( !twoPiece ) {
+      if ( !this.data.taxInvoice && !this.data.contribution ) {
+        this.$container.find('[data-id="tc-container-empty"]').show();
+        this.$container.find('[data-id="tc-container"]').hide();
+      }
+      else if ( this.data.taxInvoice ) {
+        this.$taxInv.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$taxInv.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.TAX_TEMP);
+        this.$contribution.hide();
+      }
+      else if ( this.data.contribution ) {
+        this.$contribution.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$contribution.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.CONTB_TEMP);
+        this.$taxInv.hide();
+      }
+    }
+  },
+
+  // 최근사용요금 월표시 (당해년 제외 년월로 표시)
+  _recentChartDate: function (date) {
+    var curYear = new Date().getFullYear();
+    var nextMonth = Tw.DateHelper.AddMonth(date);
+    var inputYear = Tw.DateHelper.convDateFormat(nextMonth).getFullYear();
+    return Tw.DateHelper.getShortKoreanAfterMonth(date, (curYear !== inputYear));
+  },
+
+  // 요금안내서 이동(main)
+  _onClickedSelBillGuide: function (/*event*/) {
+    // 1. 통합청구, 2. 개별청구, 3. 보안솔루션
+    // 선불폰, 사용요금
+    this._historyService.goLoad('/myt-fare/billguide/guide');
+  },
+
+  // 요금납부 이동
+  _onClickedBillPym: function (event) {
+    new Tw.MyTFareBill(this.$container, this.data.svcInfo.svcAttrCd, $(event.currentTarget));
+  },
+
+  // 실시간요금 이동
+  _onClickedRealTimePay: function (/*event*/) {
+    this._historyService.goLoad('/myt-fare/bill/hotbill');
+  },
+
+  // 미납요금버튼
+  _onClickedNonPayment: function (/*event*/) {
+    this._historyService.goLoad('/myt-fare/unbill');
+  },
+
+  // 요금안내서 설정 이동
+  _onClickedSetBillReport: function (/*event*/) {
+    this._historyService.goLoad('/myt-fare/billsetup');
+  },
+
+  // 납부방법 이동
+  _onClickedPayMthd: function (/*event*/) {
+    if ( this.data.type !== 'UF' ) {
+      this._historyService.goLoad('/myt-fare/bill/option');
+    }
+  },
+
+  // 소액결제 이동
+  _onClickedMicroBill: function (/*event*/) {
+    this._openAdditionalService('M');
+  },
+
+  // 콘텐츠이용료 이동
+  _onClickedContentBill: function (/*event*/) {
+    this._openAdditionalService('C');
+  },
+
+  // 최근납부내역 이동
+  _onClickedPaymentDetail: function (/*event*/) {
+    this._historyService.goLoad('/myt-fare/info/history');
+  },
+
+  // 다른회선조회
+  _onClickedOtherLine: function (event) {
+    // 통합, 개별이면서 대표인 경우만 동작
+    var $target = $(event.target).parents('[data-svc-mgmt-num]'),
+      mgmtNum = $target.attr('data-svc-mgmt-num');
+    if (mgmtNum) {
+      // [OP002-3317] 자녀 요금조회
+      if ($target.attr('data-target') === 'childBillInfo') {
+        this._historyService.goLoad('/myt-fare/billguide/child?line=' + mgmtNum);
+      } else {
+        this.changeLineMgmtNum = mgmtNum;
+        this.changeLineMdn = $target.attr('data-num');
+
+        // 기준회선변경
+        // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
+        // [OP002-3317] 합해진 회선에서 찾아도 되지만, 자녀가 아닌지 알고 있기 때문에, "otherLines"에서 검색
+        var target = _.find(/* this._linesTotal */ this.data.otherLines, { svcMgmtNum: mgmtNum });
+        this._popupService.openSwitchLine(this.data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
+            $.proxy(this._onChangeLineConfirmed, this), null, 'change_line');
+      }
+    }
+  },
+
+  // 다른 회선 더보기
+  _onOtherLinesMore: function () {
+    var indexLast = this.$otherLines.find('li').length;
+    // [OP002-3317]
+    var countTotal = Math.min(this._linesTotal.length - indexLast, 20);
+    // var totalCount = (this.data.childLineInfo && this.data.childLineInfo.length || 0) + this.data.otherLines.length - index;
+    if ( countTotal === 0 ) {
+      this.$otherLinesMoreBtn.hide();
+      return;
+    }
+    for (var index = 0; index < countTotal; index += 1) {
+      var line = this._linesTotal[indexLast + index];
+      var result = (line.child ? this._genChildLineTemplate : this._genLineTemplate)(line);
+      this.$container.find('ul.my-line-info').append(result);
+    }
+  },
+
+  // 세금계산서 이동
+  _onClickedTaxInvoice: function (/*event*/) {
+    if ( this.data.taxInvoice ) {
+      // SB 상 납부내역상세로 진입하도록 정의되어있음
+      this._historyService.goLoad('/myt-fare/info/history');
+    }
+  },
+
+  // 기부금/후원금
+  _onClickedContribution: function (/*event*/) {
+    if ( this.data.contribution ) {
+      this._historyService.goLoad('/myt-fare/billguide/donation');
+    }
+  },
+
+  // 요금안내서 이동(chart)
+  _onClickedBillReport: function (event) {
+    var clsName = event.target.className;
+    var index = clsName.replace('link', '');
+    this._historyService.goLoad('/myt-fare/billguide/guide?date=' + this._feeChartInfo[index]);
+  },
+
+  // 청구지 주소/연락처 변경으로 이동
+  _onClickedChangeAddress: function () {
+    this._historyService.goLoad('/myt-fare/bill/option/change-address');
+  },
+
+  /*_onErrorReceivedBillData: function (resp) {
+    this.__resetTimer();
+    this._errorRequest(resp);
+  },*/
+
+  // 다른 회선 팝업에서 변경하기 눌렀을 경우
+  _onChangeLineConfirmed: function () {
+    var lineService = new Tw.LineComponent();
+    lineService.changeLine(this.changeLineMgmtNum, this.changeLineMdn, $.proxy(this._onChangeSessionSuccess, this));
+  },
+
+  // 회선 변경 후 처리
+  _onChangeSessionSuccess: function (resp) {
+
+    if(resp.code === Tw.CALLBACK_CODE.SUCCESS){
+      if ( Tw.BrowserHelper.isApp() ) {
+        Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }
+      setTimeout($.proxy(function () {
+        // ios에서 reload하니까 앱이 멈춰버리는 현상이 있어서 url 이동으로 변경(DV001-17774)
+        // this._historyService.reload();
+        this._historyService.goLoad('/myt-fare/submain');
+      }, this), 500);
+    }
   },
 
   _errorRequest: function (resp) {
@@ -213,5 +791,124 @@ Tw.MyTFareSubMain.prototype = {
       };
     }
     Tw.Error(resp.code, resp.msg).pop();
+  },
+
+  /*__resetTimer: function () {
+    clearTimeout(this._resTimerID);
+    this._requestCount = -1;
+    this._resTimerID = null;
+  },*/
+
+  __selectSvcType: function (attrCd) {
+    var clsNm = 'cellphone';
+    if ( attrCd.indexOf('S') > -1 ) {
+      if ( attrCd === 'S1' ) {
+        clsNm = 'internet';
+      } else {
+        clsNm = 'pc';
+      }
+    }
+    else if ( ['M3', 'M4'].indexOf(attrCd) > -1 ) {
+      clsNm = 'tablet';
+    }
+    return clsNm;
+  },
+
+  /*__selectOtherLine: function (number) {
+    var select = _.find(this.data.otherLines, function (item) {
+      if ( item.svcMgmtNum === number ) {
+        return item;
+      }
+    });
+    return select;
+  },*/
+
+  /**
+   * 소액결제, 컨텐츠 이용료 화면으로 이동
+   * 원래는 node에서 내혁 조회후 error type에 해당하는 메세지를 팝업했지만 성능개선항목으로
+   * 소액결제, 컨텐츠 이용료 버튼을 무조건 노출로 변경 -> type이용안하고 무조건 해당 화면으로 이동
+   * @param type
+   * @private
+   */
+  _openAdditionalService: function (type) {
+    var code, url;
+    if ( type === 'M' ) {
+      // code = this.data.microPay.code;
+      url = '/myt-fare/bill/small';
+    }
+    else {
+      // code = this.data.contentPay.code;
+      url = '/myt-fare/bill/contents';
+    }
+    var title = '', content = '', more = '';
+    switch ( code ) {
+      case Tw.API_ADD_SVC_ERROR.BIL0030:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030;
+        content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030_C;
+        more = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.MORE;
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0035:
+      case Tw.API_ADD_SVC_ERROR.BIL0033:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
+        content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033_C;
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0034:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0034;
+        content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0034_C;
+        break;
+    }
+    if ( !_.isEmpty(title) ) {
+      var option = {
+        ico: 'type2',
+        title: title,
+        contents: content,
+        bt: [{
+          style_class: 'bt-blue1',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }]
+      };
+      if ( !_.isEmpty(more) ) {
+        _.extend(option, {
+          ico: 'type1',
+          link_list: [{
+            link: 'link-customer',
+            txt: more
+          }]
+        });
+      }
+      this._popupService.openModalTypeA(title, content, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._openedLayerPopup, this),
+        null, null, 'GR_02');
+      // this._popupService.open(option, $.proxy(this._openedLayerPopup, this), null, 'GR_02');
+    }
+    else {
+      this._historyService.goLoad(url);
+    }
+  },
+
+  _openedLayerPopup: function ($container) {
+    var $moreBtn = $container.find('.link-list button');
+    var $closeBtn = $container.find('.bt-blue1 button');
+    if ( $moreBtn.length > 0 ) {
+      $moreBtn.on('click', $.proxy(function () {
+        this._popupService.close();
+        this._historyService.goLoad('/product/callplan?prod_id=NA00004184');
+      }, this));
+    }
+    $closeBtn.on('click', $.proxy(function () {
+      this._popupService.close();
+    }, this));
+  },
+
+  _onOtherPages: function (event) {
+    var $target = $(event.target);
+    var href = $target.attr('data-href');
+    if(!href) {
+      return;
+    }
+    this._historyService.goLoad(href);
+  },
+
+  _goLoad: function (event) {
+    this._historyService.goLoad($(event.currentTarget).data('url'));
   }
 };
