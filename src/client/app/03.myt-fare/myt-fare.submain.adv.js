@@ -200,6 +200,14 @@ Tw.MyTFareSubMainAdv.prototype = {
     new Tw.XtractorService(this.$container);
   },
 
+  // 배너 ui 처리
+  _successDrawBanner: function () {
+    var $bannerList = this.$container.find('[data-id=banner-list]');
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.resetHeight($bannerList[0]);
+    }
+  },
+
 
   _goLoad: function (event) {
     this._historyService.goLoad($(event.currentTarget).data('url'));
