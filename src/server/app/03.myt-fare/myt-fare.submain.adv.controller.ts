@@ -148,10 +148,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       data.isBroadBand = true;
     }
     // 1일~4일 에는 요금조회가 안됨
-    if (new Date().getDate() < 5) {
+    /*if (new Date().getDate() < 5) {
       data.isNotClaimData = true;
       return Observable.of(data);
-    }
+    }*/
 
     return this._requestClaim(data);
   }
