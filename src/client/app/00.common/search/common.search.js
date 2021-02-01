@@ -80,6 +80,8 @@ Tw.CommonSearch.prototype = {
     this._platForm = Tw.BrowserHelper.isApp() ? 'app' : 'web';
 
     // 검색결과 데이터
+    Tw.Logger.info('[common.search] [_nextInit] 검색 결과 collection sort 정보 : ', this._searchInfo.collectionSort);
+    this._reqOptions.collectionPriority = this._searchInfo.collectionSort;
     this._searchInfo.search = this._setRank(this._searchInfo.search);
 
     this._bpcpService.setData(this.$container, this._nowUrl);

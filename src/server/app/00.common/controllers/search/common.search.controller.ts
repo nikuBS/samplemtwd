@@ -301,7 +301,6 @@ class CommonSearch extends TwViewController {
       this.apiService.request( searchApi , requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
     ).subscribe(([ searchResult, relatedKeyword ]) => {
-
       if ( searchResult.code !== 0 || relatedKeyword.code !== 0 ) {
         return this.error.render(res, {
           svcInfo: svcInfo,
