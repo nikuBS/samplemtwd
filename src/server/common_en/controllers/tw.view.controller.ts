@@ -403,24 +403,8 @@ abstract class TwViewController {
             prodNm = svcInfo.prodNm;
           }
 
-          Object.assign(svcInfo, { 
-            prodNmEn: prodNm,
-            prodNmInfoCode: prodNmInfo.code
-          });
-        } else if ( prodNmInfo.code === API_CODE.BFF_0006 ) {
-          let fromDate = prodNmInfo.result.fromDtm || '';
-          let toDate = prodNmInfo.result.toDtm || '';
-          
-          if( fromDate && toDate ) {
-            fromDate = DateHelper.getShortDateAnd24Time(fromDate) || '';
-            toDate = DateHelper.getShortDateAnd24Time(toDate) || '';
-          }
-
-          Object.assign(svcInfo, {
-            prodNmEn: '',
-            prodNmInfoCode: prodNmInfo.code,
-            prodNmInfoFrom: fromDate,
-            prodNmInfoTo: toDate,
+          Object.assign(svcInfo,  {
+            prodNmEn: prodNm
           });
         }
         
