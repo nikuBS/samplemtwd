@@ -68,9 +68,9 @@
                 </div>
             </div>
 
-            <%_ if(baseFreePriceList.length !== 0) { _%>
+            <%_ if(baseFreePriceList.length !== 0 || baseDataPriceList.length !== 0) { _%>
                 <div class="cont-box noborder">
-                    <h3 class="my-info-tit">Free Add-on Services</h3>
+                    <h3 class="my-info-tit">Options / Discounts</h3>
                     <%_ for (var i = 0, length = baseFreePriceList.length; i < length; i += 1) { _%>
                     <div class="info-wrap">
                         <dl class="my-info-data">
@@ -91,31 +91,26 @@
                         </dl>
                     </div>
                     <%_ } _%>
-                </div>
-            <%_ } _%>
-            
-            <%_ if(baseDataPriceList.length !== 0) { _%>
-                <div class="cont-box noborder">
-                    <h3 class="my-info-tit">Paid Add-on Services</h3>
+
                     <%_ for (var i = 0, length = baseDataPriceList.length; i < length; i += 1) { _%>
-                    <div class="info-wrap">
-                        <dl class="my-info-data">
-                            <dt>Service</dt>
-                            <dd><%- baseDataPriceList[i].prodNm %></dd>
-                        </dl>
-                        <dl class="my-info-data">
-                            <dt>Monthly Fee</dt>
-                            <%_ if( !baseDataPriceList[i].basFeeInfo.isNaN ) { _%>
-                                <dd>₩<%- baseDataPriceList[i].basFeeInfo.value %></dd>
-                            <%_ } else { _%>
-                                <dd><%- baseDataPriceList[i].basFeeInfo.value %></dd>
-                            <%_ } _%>
-                        </dl>
-                        <dl class="my-info-data">
-                            <dt>Date of Application</dt>
-                            <dd><%- baseDataPriceList[i].basDateInfo %></dd>
-                        </dl>
-                    </div>
+                        <div class="info-wrap">
+                            <dl class="my-info-data">
+                                <dt>Service</dt>
+                                <dd><%- baseDataPriceList[i].prodNm %></dd>
+                            </dl>
+                            <dl class="my-info-data">
+                                <dt>Monthly Fee</dt>
+                                <%_ if( !baseDataPriceList[i].basFeeInfo.isNaN ) { _%>
+                                    <dd>₩<%- baseDataPriceList[i].basFeeInfo.value %></dd>
+                                <%_ } else { _%>
+                                    <dd><%- baseDataPriceList[i].basFeeInfo.value %></dd>
+                                <%_ } _%>
+                            </dl>
+                            <dl class="my-info-data">
+                                <dt>Date of Application</dt>
+                                <dd><%- baseDataPriceList[i].basDateInfo %></dd>
+                            </dl>
+                        </div>
                     <%_ } _%>
                 </div>
             <%_ } _%>
