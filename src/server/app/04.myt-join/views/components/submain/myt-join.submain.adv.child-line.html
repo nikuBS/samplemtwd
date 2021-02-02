@@ -1,0 +1,32 @@
+<%#
+* MenuName: 나의 가입정보 > 서브메인 [회선정보]
+* @file myt-join.submain.adv.other-line.html (MS)
+* @author Kim InHwan (skt.P132150@partner.sk.com)
+* @since 2021.01.28
+_%>
+<!-- 201201 [OP002-10282] 수정02 -->
+<section class="cont-card">
+    <div class="section-inner">
+        <div class="head-tit high">자녀의 회선을 확인해 보세요.</div> <!-- 201207 [OP002-10282] 수정09 : 텍스트 수정-->
+        <div class="card-cont">
+            <ul class="children-list">
+                <%_ data.childLine.forEach((item) => {
+                    const { nickNm, svcNum, svcMgmtNum } = item;
+                _%>
+                    <li class="child">
+                        <dl class="child-info">
+                            <dt class="name"><%= nickNm %></dt>
+                            <dd class="tel"><%= svcNum %></dd>
+                        </dl>
+                        <div class="child-btn-area">
+                            <a href="/myt-data/submain/child-hotdata?childSvcMgmtNum=<%= svcMgmtNum %>">실시간 잔여량</a>
+                            <a href="/myt-fare/billguide/child?line=<%= svcMgmtNum %>">이용요금</a>
+                            <a href="/myt-fare/bill/hotbill/child?child=<%= svcMgmtNum %>">실시간 이용요금</a>
+                        </div>
+                    </li>
+                <%_ }); _%>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- //201201 [OP002-10282] 수정02 -->
