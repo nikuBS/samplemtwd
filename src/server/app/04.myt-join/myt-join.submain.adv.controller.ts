@@ -28,10 +28,9 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
         return false;
       }
-    } else {
-      // 기존 가입정보 화면
-      super._render(req, res, next, svcInfo, allSvc, child, pageInfo);
     }
+    // 기존 가입정보 화면
+    super._render(req, res, next, svcInfo, allSvc, child, pageInfo);
   }
 
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
