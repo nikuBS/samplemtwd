@@ -47,6 +47,7 @@ Tw.CustomerHelpline.prototype = {
     this.$btnType.on('click', $.proxy(this._openSelectTypePopup, this));
     this.$btnArea.on('click', $.proxy(this._openSelectAreaPopup, this));
     this.$btnTime.on('click', $.proxy(this._openSelectTimePopup, this));
+    this.$phoneTypeRadio.on('change', $.proxy(this._handleChangePhoneTypeRadio, this));
   },
 
   /**
@@ -63,6 +64,7 @@ Tw.CustomerHelpline.prototype = {
     this.$cellphone = this.$container.find('#fe-cellphone');
     this.$telephone = this.$container.find('#fe-telephone');
     this.$cancel = this.$container.find('#fe-cancel');
+    this.$phoneTypeRadio = this.$container.find('.radiobox input[name=radio1]');
   },
 
   /**
@@ -110,6 +112,19 @@ Tw.CustomerHelpline.prototype = {
       this.$phoneInput.attr('type', 'text');
       this.$phoneInput.removeAttr('pattern');
       this.$phoneInput.val(Tw.FormatHelper.getDashedPhoneNumber(this.$phoneInput.val()));
+    }
+  },
+
+  /**
+   * @desc 휴대번호, 일반전화 선택 변경시
+   * @private
+   */
+  _handleChangePhoneTypeRadio: function() { 
+    var isCP = this.$phoneTypeRadio[0].checked;
+    if (isCP) {
+      this.$phoneInput.attr("title","휴대폰 번호");
+    } else {
+      this.$phoneInput.attr("title","전화번호");
     }
   },
 

@@ -385,7 +385,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
         $('.center-cont02', $container).css('display', 'block');
       }
     });
-  
+    
     /**
      * 아코디언 형식 리스트 사용
      */
@@ -396,9 +396,11 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
+        $(this).attr('aria-pressed',"true");
       } else {
         $(this).removeClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideUp();
+        $(this).attr('aria-pressed',"false");
       }
     });
   
@@ -408,6 +410,11 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
+        if ($(this).hasClass('open')){
+          $(this).attr('aria-pressed', 'true');
+        } else {
+            $(this).attr('aria-pressed', 'false');
+        }
       });
     });
   },
