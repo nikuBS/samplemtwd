@@ -89,8 +89,8 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
-                                            <span class="total">무제한</span>>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
+                                            <span class="total">무제한</span>
                                         <%_ } else { _%>
                                             <%_ if (totalData.showRemained.data) { _%>
                                                 <span class="total">
@@ -289,9 +289,9 @@
                                     </li>
                                     <li class="link-item">
                                         <a href="/myt-data/familydata/share" class="data-amount">
-                                            총 <%= totalData.showTmoaTotal.data %><%= totalData.showTmoaTotal.unit %> 중
+                                            총 <%= data.family.showTotal.data %><%= data.family.showTotal.unit %> 중
                                             <strong>
-                                                <%= totalData.showTmoaRemained.data %><%= totalData.showTmoaRemained.unit %>남음
+                                                <%= data.family.showRemained.data %><%= data.family.showRemained.unit %>남음
                                             </strong>
                                         </a>
                                     </li>
@@ -419,7 +419,7 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
                                         <span class="total">무제한</span>>
                                         <%_ } else { _%>
                                         <%_ if (totalData.showRemained.data) { _%>
@@ -697,13 +697,14 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
                                         <span class="total">무제한</span>>
                                         <%_ } else { _%>
                                         <%_ if (totalData.showRemained.data) { _%>
                                         <span class="total">
-                                                                    <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
-                                                                </span><%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
+                                            <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
+                                        </span>
+                                            <%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
                                         <br>남음
                                         <%_ } else { _%>
                                         <span class="total"><%- totalData.showRemained %>원</span>> 남음
