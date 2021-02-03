@@ -181,10 +181,12 @@
                                     </dl>
                                 </li>
                             </ul>
+                            <% if (!data.isEasyLogin) { %>
                             <div class="btn-area btn2 short"> <!-- 하나일때는 btn2제거 -->
                                 <a href="#" class="rect-btn">리필하기</a>
                                 <a href="#" class="rect-btn">선물하기</a>
                             </div>
+                            <% } %>
                         </div>
                         <%_ } _%>
                         <%_ if (data.isPrepayment) { _%>
@@ -289,38 +291,6 @@
             <!--// .cont-box -->
             <!--            <%_ } _%>-->
 
-            <!-- 사용량 -->
-            <%_ if (data.isWireLess) { _%>
-            <%- include('../components/submain/myt-data.submain.adv.recent-usages.html', data) _%>
-            <%_ } _%>
-
-            <%_ if (data.svcInfo.svcAttrCd !== 'M2' || data.isWireLess) { _%>
-            <section class="cont-card" data-id="immCharge">
-                <div class="section-inner">
-                    <div class="head-tit">조회/신청 서비스</div>
-                    <div class="card-cont">
-                        <div class="short-link-wrap minus-mg">
-                            <ul class="short-link-list">
-                                <li class="link-item" data-id="history"><a href="#">충전/선물 내역</a></li>
-                                <li class="link-item" data-id="ting"><a href="#">팅 요금제 충전 선물</a></li>
-                                <li class="link-item" data-id="data"><a href="#">데이터 조르기</a></li>
-                            </ul>
-                        </div>
-                        <div class="hash-wrap" data-id="etc-wrap">
-                            <ul class="hash-list normal">
-                                <li class="hash-item" data-id="etc">
-                                    <a href="#" class="hash">#팅/쿠키즈/안심 음성요금 충전</a>
-                                </li>
-                                <li class="hash-item" data-id="limit">
-                                    <a href="#" class="hash">#데이터 한도 요금 충전</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <%_ } _%>
-
             <%_ if (data.isBenefit) { _%>
             <div class="submain-banner">
                 <a href="#" data-id="benefit">
@@ -345,8 +315,43 @@
              </div>-->
             <%_ } _%>
 
-            <%_ if (data.svcInfo.svcAttrCd === 'M1') { _%>
+            <!-- 사용량 -->
+            <%_ if (data.isWireLess) { _%>
+            <%- include('../components/submain/myt-data.submain.adv.recent-usages.html', data) _%>
+            <%_ } _%>
 
+            <%_ if (data.svcInfo.svcAttrCd !== 'M2' || data.isWireLess) { _%>
+            <section class="cont-card" data-id="immCharge">
+                <div class="section-inner">
+                    <div class="head-tit">조회/신청 서비스</div>
+                    <div class="card-cont">
+                        <div class="short-link-wrap minus-mg">
+                            <ul class="short-link-list">
+                                <li class="link-item" data-id="history"><a href="#">충전/선물 내역</a></li>
+                                <% if (!data.isEasyLogin) { %>
+                                <li class="link-item" data-id="ting"><a href="#">팅 요금제 충전 선물</a></li>
+                                <% } %>
+                                <li class="link-item" data-id="data"><a href="#">데이터 조르기</a></li>
+                            </ul>
+                        </div>
+                        <% if (!data.isEasyLogin) { %>
+                        <div class="hash-wrap" data-id="etc-wrap">
+                            <ul class="hash-list normal">
+                                <li class="hash-item" data-id="etc">
+                                    <a href="#" class="hash">#팅/쿠키즈/안심 음성요금 충전</a>
+                                </li>
+                                <li class="hash-item" data-id="limit">
+                                    <a href="#" class="hash">#데이터 한도 요금 충전</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </section>
+            <%_ } _%>
+
+            <%_ if (data.svcInfo.svcAttrCd === 'M1') { _%>
             <div class="submain-swipe-banner submain-swipe" data-id="banners">
                 <div class="main-slide-banner slide-pagingtype pg-rtop">
                     <!-- .widget -->
@@ -461,6 +466,7 @@
                                         <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>요금 안내서
                                     </a>
                                 </li>
+                                <% if (!data.isEasyLogin) { %>
                                 <li class="ico-item">
                                     <!--sample attr: data-xt_eid=<%= eid.hotdata %>-->
                                     <a href="#" data-href="/myt-fare/bill/small" data-xt_eid="" data-xt_csid="NO" data-xt_action="BC">
@@ -473,6 +479,7 @@
                                         <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico05.svg" alt=""></i>콘텐츠 이용요금
                                     </a>
                                 </li>
+                                <% } %>
                             </ul>
                         </div>
                         <%_ } else { _%>
