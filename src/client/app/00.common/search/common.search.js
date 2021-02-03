@@ -234,6 +234,8 @@ Tw.CommonSearch.prototype = {
     }, 0);
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
 
+    // TEST 
+    Tw.Logger.info('[common.search] [_nextInit] searchInfo: ', this._searchInfo);
     totalCnt = this._searchInfo.totalcount;
     this.$container.find('.fe-total-count').each(function (a, b) {
       var $target = $(b);
