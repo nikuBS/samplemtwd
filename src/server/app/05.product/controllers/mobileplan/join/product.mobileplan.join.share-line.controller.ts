@@ -31,7 +31,8 @@ class ProductMobileplanJoinShareLine extends TwViewController {
     NA00005057: 'MP_02_02_03_11_tip_02',
     NA00005058: 'MP_02_02_03_11_tip_03',
     NA00005059: 'MP_02_02_03_11_tip_04',
-    NA00005060: 'MP_02_02_03_11_tip_05'
+    NA00005060: 'MP_02_02_03_11_tip_05',
+    NA00006862: 'TC000118'
   };
 
   /**

@@ -35,6 +35,12 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
     NA00006548: 'TC000044'
   };
 
+  /* 상품별 툴팁 분기처리 - 꼭 확인해 주세요 (화면 하단 영역) */
+  private readonly _tipIdsBottom = {
+    NA00006547: 'TC000118',
+    NA00006548: 'TC000118'
+  };
+
   /**
    * 요금제 비교하기 Redis 정보 호출
    * @param svcInfoProdId - 사용자 세션 상품코드 (현재 요금제)
@@ -95,6 +101,7 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
         isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
         isApp: BrowserHelper.isApp(req),
         tipId: this._tipIds[prodId],
+        toolTipBottom: FormatHelper.isEmpty(this._tipIdsBottom[prodId]) ? null : this._tipIdsBottom[prodId],
         mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
         joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
           sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? '' : prodRedisInfo.result.summary.sktProdBenfCtt

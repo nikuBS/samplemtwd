@@ -58,13 +58,15 @@
                 <% if (toolTip) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
-                        <li><button type="button" class="tip-view-btn" id="<%= toolTip %>" page-id="<%= pageInfo.menuId %>" aria-haspopup="true"><span class="tip-view">TIP</span></button></li>
+                <!-- 꼭 확인해주세요! -->
+                <!-- 210129 [OP002-13007] 추가_01 , 툴팁 관련 퍼블에서 반영한 소스로 수정-->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip" id="<%= toolTip %>" page-id="<%=pageInfo.menuId %>" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></li>
                     </ul>
                 </div>
+                    <!-- //210129 [OP002-13007] 추가_01 -->
                 <!--// .cont-box -->
                 <% } %>
 
