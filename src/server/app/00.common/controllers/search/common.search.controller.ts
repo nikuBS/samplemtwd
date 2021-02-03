@@ -224,6 +224,10 @@ class CommonSearch extends TwViewController {
           } else {
             let keywords: string = searchResult.result.query;
             let arrKeyword = keywords.split(' ');
+            let arrKeywordSize: number = 0;
+            if ('Y' === searchResult.result.orSearch) {
+              arrKeywordSize = arrKeyword.length || 0;
+            }
             res.render('search/common.search.html', {
               pageInfo: pageInfo,
               searchInfo : searchResult.result,
@@ -236,13 +240,17 @@ class CommonSearch extends TwViewController {
               nowUrl : req.originalUrl,
               searchTotalCount: searchResult.result.totalcount,
               arrKeyword: arrKeyword,
-              arrKeywordSize: arrKeyword.length || 0
+              arrKeywordSize: arrKeywordSize
             });
           }
 
         } else {
           let keywords: string = searchResult.result.query;
           let arrKeyword = keywords.split(' ');
+          let arrKeywordSize: number = 0;
+            if ('Y' === searchResult.result.orSearch) {
+              arrKeywordSize = arrKeyword.length || 0;
+            }
           res.render('search/common.search.html', {
             pageInfo: pageInfo,
             searchInfo : searchResult.result,
@@ -255,7 +263,7 @@ class CommonSearch extends TwViewController {
             nowUrl : req.originalUrl,
             searchTotalCount: searchResult.result.totalcount,
             arrKeyword: arrKeyword,
-            arrKeywordSize: arrKeyword.length || 0
+            arrKeywordSize: arrKeywordSize
           });
         }
       }
