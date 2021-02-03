@@ -51,8 +51,7 @@ gulp.task('server', function () {
         res.setHeader('Access-Control-Allow-Headers', '*');
         next();
       }
-    }))
-    .pipe(gulp.task('watch'));
+    }));
 });
 
 gulp.task('js-vendor', function () {
@@ -914,7 +913,7 @@ gulp.task('ko-build', shell.task([
   'gulp ko-run --ver=' + version
 ]));
 
-gulp.task('ko-run', ['server']);
+gulp.task('ko-run', ['server', 'ko-watch']);
 
 gulp.task('ko-watch', function () {
   livereload.listen();
