@@ -55,7 +55,7 @@ class MytDataSubmainAdvController extends TwViewController {
   private isEasyLogin = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    this.apiService.setTimeout(5000);
+    this.apiService.setTimeout(3000);
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
