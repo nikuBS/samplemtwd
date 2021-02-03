@@ -164,7 +164,7 @@ Tw.CommonSearch.prototype = {
           $(categoryStr).text(contentsCnt);
         }
 
-        totalCnt += contentsCnt;
+        // totalCnt += contentsCnt;
       }
 
       this._showShortcutList(this._arrangeData(this._searchInfo.search[i][keyName].data, keyName), keyName, this._cdn, 'init');
@@ -232,6 +232,7 @@ Tw.CommonSearch.prototype = {
     }, 0);
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
 
+    totalCnt = this._searchInfo.totalcount;
     this.$container.find('.fe-total-count').each(function (a, b) {
       var $target = $(b);
       $target.text(totalCnt);
