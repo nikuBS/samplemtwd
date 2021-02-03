@@ -17,7 +17,8 @@ import {
   MYT_DATA_CHARGE_TYPE_NAMES,
   MYT_DATA_CHARGE_TYPES,
   MYT_DATA_HISTORY,
-  MYT_DATA_REFILL_TYPES
+  MYT_DATA_REFILL_TYPES,
+  MYT_DATA_RECHARGE_COUPON
 } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import {
@@ -54,6 +55,7 @@ class MytDataSubmainAdvController extends TwViewController {
   private isEasyLogin = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    this.apiService.setTimeout(5000);
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
@@ -197,7 +199,8 @@ class MytDataSubmainAdvController extends TwViewController {
       // 리필쿠폰
       if ( refill && refill.length > 0 ) {
         // 간편로그인인 경우에 리필하기, 선물하기 버튼 비노출 처리
-        data.refill = refill;
+        data.pickCouponIndex = this.pickCouponIndex(refill);
+        data.refill = this.convertCoupon(refill);
       }
 
       // 무선 여부 확인
@@ -1115,6 +1118,47 @@ class MytDataSubmainAdvController extends TwViewController {
     }
 
     data.xtEid = eid;
+  }
+  private convertCoupon(data) {
+    return data.map((item) => {
+      item.usePsblStaDt = DateHelper.getShortDate(item.usePsblStaDt);
+      item.usePsblEndDt = DateHelper.getShortDate(item.usePsblEndDt);
+      item.isGift = item.copnOperStCd === 'A20';  // A20: 선물, A10: 장기가입, A14: 10년주기
+      item.copnNm = MYT_DATA_RECHARGE_COUPON[item.copnOperStCd];
+      return item;
+    });
+  }
+  /**
+   * 만료일자가 빠른 쿠폰 인덱스
+   * @param data
+   */
+  private pickCouponIndex(data) {
+    if (data.length === 0) {
+      return null;
+    }
+
+    let coupons = data.filter((coupon) => {  // 1순위 선물받은쿠폰 있는지 확인
+      return coupon.copnOperStCd === 'A20';
+    });
+
+    if (coupons.length === 0) { // 2순위 장기가입 쿠폰 있는지 확인
+      coupons = data.filter((coupon) => {
+        return coupon.copnOperStCd === 'A10';
+      });
+    }
+
+    if (coupons.length === 0) {
+      coupons = data;
+    }
+
+    // 만료일자가 가장 빠른 쿠폰 선택
+    let pick = 0;
+    for (let i = 1; i < coupons.length; i += 1) {
+      if (coupons[i].usePsblEndDt < coupons[pick].usePsblEndDt) {
+        pick = i;
+      }
+    }
+    return pick;
   }
 }
 

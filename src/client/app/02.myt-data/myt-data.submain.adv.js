@@ -109,7 +109,9 @@ Tw.MyTDataSubMainAdv.prototype = {
     }
     this.$prepayContainer = this.$container.find('[data-id=prepay-container]');
     if (this.data.refill) {
-      this.$refillBtn = this.$container.find('[data-id=refill]');
+      // this.$refillBtn = this.$container.find('[data-id=refill]');
+      this.$refillSection = this.$container.find('[data-id=refill-section]');
+      this.$refillBtnArea = this.$refillSection.find('.btn-area.short');
     }
     if (this.data.isBenefit) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
@@ -159,7 +161,8 @@ Tw.MyTDataSubMainAdv.prototype = {
       this.$familymoaBanner.on('click', $.proxy(this._onFamilyMoaDetail, this));
     }
     if (this.data.refill) {
-      this.$refillBtn.on('click', $.proxy(this._onRefillDetail, this));
+      // this.$refillBtn.on('click', $.proxy(this._onRefillDetail, this));
+      this.$refillBtnArea.on('click', $.proxy(this._onRefillDetail, this));
     }
     if (this.data.isBenefit) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
@@ -1069,9 +1072,22 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @function
    * @desc 리필쿠폰
    */
-  _onRefillDetail: function () {
-    this._historyService.goLoad('/myt-data/recharge/coupon?from=submain');
-    return false;
+  _onRefillDetail: function (evt) {
+    // this._historyService.goLoad('/myt-data/recharge/coupon?from=submain');
+    evt.preventDefault();
+    var $target = $(evt.target);
+    if ($target.data('id') === 'refill-btn' || $target.data('id') === 'gift-btn') {
+      var $data = $target.siblings('[data-id=usable-coupon]');
+      var no = $data.data('value').split('::')[0];
+      var name = $data.data('value').split('::')[1];
+      var period = $data.data('value').split('::')[2];
+      var gift = $data.data('value').split('::')[3];
+      var tab = $target.data('id') === 'refill-btn' ? 'refill' : 'gift';
+      this._historyService.goLoad(
+        '/myt-data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' +
+        name + '&period=' + period + '&gift=' + gift
+      );
+    }
   },
 
   // 충전/선물내역 상세
