@@ -50,7 +50,7 @@ enum DEVICE_MAJOR_CODES {
   'W' = 'W', // 3G
   'L' = 'L', // LTE
   'F' = 'F', // 5G
-  'E' = 'E', // 태블릿/ETC (Custom)
+  'E' = 'E', // 태블릿/2nd Device (Custom)
   'P' = 'P', // PPS (Custom)
 }
 
@@ -59,6 +59,13 @@ enum DEVICE_MINOR_CODES {
   '0102001' = 'E', // Voice or Data 가능한 tablet (태블릿/ETC 범주)
   '0202001' = 'E', // Voice 불가능한 Tablet (태블릿/ETC 범주)
   '0102000' = 'E', // 회선형 Device (태블릿/ETC 범주)
+
+  '0102002' = 'E', // Smart Watch (회선형 스마트 워치류)
+  '0102003' = 'E', // Kids폰 (회선형 스마트 워치류(주니어 seg. 상품)_쿠키즈 요금제 가입 가능 단말)
+  '0102005' = 'E', // Modem (WiFi AP 기능 없으나, 물리적 연결을 통해 통신 연결해주는 Device)
+  '0102006' = 'E', // 기타 장치 (위치 측위기반 Device)
+  '0102009' = 'E', // 기타
+  '0102010' = 'E', // Router (포켓파이 Roter류)
 }
 
 
@@ -313,7 +320,7 @@ export default class RenewProduct extends TwViewController {
 
           // 로그인 여부 및 기타정보를 먼저 체크한 뒤 코드값이 없으면(로그인 되어있는 상태) 네트워크 정보를 API를 통해서 얻어온 후 다음 pipe로 데이터를 넘겨줌
           if ( FormatHelper.isEmpty(deviceCode) ) {
-            return this.getDeviceCode();
+            return this.getDeviceCode( svcInfo );
           }
           
           return deviceCode;
@@ -359,9 +366,12 @@ export default class RenewProduct extends TwViewController {
      * 
      * 통신망 정보: BFF_05_0220 (http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=112658142)
      */
-    private getDeviceCode(): Observable<any> {
+    private getDeviceCode( svcInfo: any ): Observable<any> {
       return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
         if (resp.code === API_CODE.CODE_00) {
+
+          console.log(svcInfo.prodId + ' / ' + resp.result.eqpMthdCd + ': ' + resp.result.beqpSclEqpClSysCd);
+                    
 
           // 단말기 분류 체계코드를 검사
           if ( Object.keys(DEVICE_MINOR_CODES).indexOf( resp.result.beqpSclEqpClSysCd ) > -1 ) {
