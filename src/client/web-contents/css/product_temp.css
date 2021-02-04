@@ -2,14 +2,14 @@
 
 .tod-renewalBody .filter-wrap {padding-top:0;}
 .tod-renewalBody .filter-wrap .wrap {height:100%; padding-bottom:9rem;}
-.tod-renewalBody .filter-wrap .container-wrap {margin-bottom:9rem; margin-top:0}
+.tod-renewalBody .filter-wrap .container-wrap {margin-bottom:7.75rem; margin-top:0}
 .tod-renewalBody .filter-wrap .container-wrap .page-header {padding:0; height:10.625rem; transform:none; border-bottom:solid 0.0625rem #d8d8d8;} 
 .tod-renewalBody .filter-wrap .container-wrap .page-header .header-title {height:10.625rem; background:#efeff1 url('/img/product/v2/img-user-plan.svg') no-repeat right 1.875rem bottom 1.5625rem; position:relative}
 .tod-renewalBody .filter-wrap .container-wrap .page-header .header-title .h-tit {position:absolute; top:2.75rem; left:1.875rem; font-size:1.25rem; font-weight:300;} 
 .tod-renewalBody .filter-wrap .container-wrap .page-header .header-title .h-sub {position:absolute; bottom:1rem; left:1.875rem; color:#818283; font-size:0.6875rem;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner {width:100%; box-sizing:border-box; background-color: #efeff1;}
 .tod-renewalBody .filter-wrap .container-wrap .tod-renewal-product-tab {border-top:solid 1px #fff;}
-.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul {display:flex; overflow:scroll; padding:0.9375rem 0 0.9375rem 1.875rem;}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul {display: -webkit-box; display:flex;overflow:scroll; padding:0.9375rem 0 0.9375rem 1.875rem;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li {padding-right:0.625rem;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 0.75rem; height:1.6875rem; border-radius:1rem; box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li:last-child {padding-right:1.875rem}
@@ -27,15 +27,15 @@
 /* 질문 리스트 */
 .tod-renewalBody .filter-wrap .plan-list > li {position:relative; background:#f6f8fa; border-top:solid 1px #fff;}
 .tod-renewalBody .filter-wrap .plan-list > li:first-child {border-top:solid 1px #d8d8d8;} 
-.tod-renewalBody .filter-wrap .plan-list > li .list-box {display:block; padding:2.25rem 1.875rem; width:100%; position:relative; color:#6b6969; font-size:1.125rem; text-align:left; border-bottom:solid 1px #d8d8d8;}
+.tod-renewalBody .filter-wrap .plan-list > li .list-box {display:block; padding:1.875rem 1.875rem; width:100%; position:relative; color:#6b6969; font-size:1.125rem; text-align:left; border-bottom:solid 1px #d8d8d8;}
 .tod-renewalBody .filter-wrap .plan-list > li .list-box:after {content:""; display:inline-block; width:0.875rem; height:0.875rem; margin-left:0.1875rem; margin-top:-0.4375rem; position:absolute; top:50%; right:1.875rem; background:url('/img/product/v2/icons.svg') no-repeat 0 -300px;  -webkit-transform:rotate(90deg); transform:rotate(90deg);}
 .tod-renewalBody .filter-wrap .plan-list > li span.point {color:#f76252;}
 .tod-renewalBody .filter-wrap .plan-list > li .check-box {height:0; overflow:hidden; padding:0; visibility:hidden;}
-.tod-renewalBody .filter-wrap .plan-list > li.on .check-box {height:auto; overflow: auto; visibility: visible; padding:1.875rem; background:#efeff1; border-top:solid 1px #fff; border-bottom:solid 1px #d8d8d8; }
+.tod-renewalBody .filter-wrap .plan-list > li.on .check-box {height:auto; overflow: auto; visibility: visible; padding:1.875rem !important; background:#efeff1; border-top:solid 1px #fff; border-bottom:solid 1px #d8d8d8; }
 .tod-renewalBody .filter-wrap .plan-list > li .check-box li { margin-top:1rem;}
 .tod-renewalBody .filter-wrap .plan-list > li .check-box li:first-child {margin-top:0;}
 .tod-renewalBody .filter-wrap .plan-list > li .check-box li .state {margin-top:0.625rem; font-size:0.6875rem; color:#767778; text-align:right;}
-.tod-renewalBody .filter-wrap .plan-list > li .check-box li a {display:flex; align-items:center; position:relative; padding:1.0625rem; font-size:0.875rem; font-weight:500; line-height:1.25rem; letter-spacing: -0.025rem; border-radius:0.75rem; box-shadow: -0.25rem -0.375rem 0.625rem 0 #ffffff, 0.25rem 0.4375rem 0.625rem 0 #dde0e2, -0.125rem -0.125rem 0.125rem 0 #ffffff;}
+.tod-renewalBody .filter-wrap .plan-list > li .check-box li a {display: -webkit-box; display:flex;align-items:center; position:relative; padding:1.0625rem; font-size:0.875rem; font-weight:500; line-height:1.25rem; letter-spacing: -0.025rem; border-radius:0.75rem; box-shadow: -0.25rem -0.375rem 0.625rem 0 #ffffff, 0.25rem 0.4375rem 0.625rem 0 #dde0e2, -0.125rem -0.125rem 0.125rem 0 #ffffff;}
 .tod-renewalBody .filter-wrap .plan-list > li .check-box li a:before {content:""; display:inline-block; margin-top:-0.25rem; vertical-align:middle; width:1.25rem; height:1.25rem; background:url('/img/product/v2/ico-check-off.svg') no-repeat;}
 .tod-renewalBody .filter-wrap .plan-list > li .check-box li.on a:before {background:url('/img/product/v2/ico-check-on.svg') no-repeat;}
 .tod-renewalBody .filter-wrap .plan-list > li .check-box li a .txt {display: block; padding-left:0.3125rem; padding-right:0.9375rem; width: calc(100% - 5rem);}
@@ -50,7 +50,7 @@
 .tod-renewalBody .filter-wrap .confirm-wrap {position: absolute; left:0; bottom:0; z-index: 30;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .c-wrap {bottom:0;}
 .tod-renewalBody .filter-wrap .confirm-wrap .c-wrap {position:fixed; left:0; bottom:-8.375rem; width:100%; background: #fff; -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-transition: bottom 0.5s; transition: bottom 0.5s; }
-.tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap {display:flex; -webkit-justify-content:space-between; justify-content:space-between; padding:1.1875rem 1.875rem 1.9375rem; overflow:hidden;}
+.tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap {display: -webkit-box; display:flex;-webkit-justify-content:space-between; justify-content:space-between; padding:0.9375rem 1.875rem; overflow:hidden;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .reset {color:#262626; font-size:0.75rem;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .reset:before {content:""; display:inline-block; vertical-align:middle; width:1rem; height:1rem; background:url('/img/product/v2/icon-reset.svg') no-repeat;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .confrim {padding:0.6875rem 0 0.625rem; width:9rem; height:2.4375rem; border-radius:1.4375rem; box-shadow:-0.25rem -0.375rem 0.625rem 0 #ffffff, 0.25rem 0.4375rem 0.625rem 0 rgba(247, 98, 82, 0.33), -0.125rem -0.125rem 0.125rem 0 #ffffff; background:#f76252; color:#fff; font-weight:500;}

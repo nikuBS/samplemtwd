@@ -10129,7 +10129,7 @@ button:focus span {
   /* main */
 .tod-i-global {display:inline-block; width:1.5rem; height:1.5rem; vertical-align:middle; background: url(/img/common/icon_global.png) no-repeat 0 0; background-size: 100% 100%}
 .tod-global-link {position:relative; margin:1.25rem 0 -0.3125rem 0; padding:0.9375rem 1.25rem 0 1.25rem; border-top:1px solid #f2f2f2}
-.tod-global-link .tod-gb-box {position:relative; display:flex;align-items: center;}
+.tod-global-link .tod-gb-box {position:relative; display: -webkit-box; display:flex; -webkit-box-align: center; align-items: center;}
 .tod-global-link .tod-gb-box::after {position:absolute; right:0; top:50%; transform: translateY(-50%); display: inline-block; content: "";width: 0.41rem; height: 0.69rem;background: url(/img/ico/icon-link-arrow.png) no-repeat right center;background-size: 6.5px 11px; margin: 0 0 0.19rem 0.5rem;color: #000 !important}
 .tod-global-link .tod-gb-box .tod-txt {margin-left:0.625rem; font-size:0.9375rem;color:#000;line-height:1.06rem}
 .tod-global-link .tod-gb-box .i_beta {position:absolute; width:1.4375rem; height:0.6875rem; margin:-1.25rem 0 0 0.875rem}
@@ -10143,9 +10143,9 @@ button:focus span {
 
 /* 210125 [OP002-12898] [PUB](W-2011-032-01) [TOS] 텍스트 배너 기능 추가 */
 .tod-tos-text-banner {position:relative; z-index:25; background-color:#f8f8f8}
-.tod-tos-text-banner .tb-link {display:flex; align-items: center; height:3.4375rem; padding-left:0.9375rem; margin-right:3.25rem; box-sizing: border-box;}
+.tod-tos-text-banner .tb-link {display: -webkit-box; display:flex; -webkit-box-align: center; align-items: center; height:3.4375rem; padding-left:0.9375rem; padding-right:3.25rem; box-sizing: border-box;}
 .tod-tos-text-banner .tb-icon {display:block; width:37px; height:37px}
 .tod-tos-text-banner .tb-icon img {width:37px; height:37px; vertical-align:middle}
 .tod-tos-text-banner .tb-text {margin-left:0.625rem; color:#333333; font-size:0.875rem; letter-spacing: -0.5px;}
-.tod-tos-text-banner .tb-close {position:absolute; top:0; bottom:0; right:0; width:3.25rem; background: url(/img/svg/icon_32px_exit.svg) no-repeat 50% 50% / 13px 13px;}
+.tod-tos-text-banner .tb-close {position:absolute; top:0; bottom:0; right:0; width:3.25rem; background: url(/img/svg/icon_32px_exit.svg) no-repeat 50% 50%; background-size: 13px 13px;}
 #common-menu.tod-common-menu.scroll .tod-tos-text-banner {box-shadow:0 0.0625rem 0.625rem rgba(0,0,0,0.3)}

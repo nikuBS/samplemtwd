@@ -1,6 +1,7 @@
 import { DATA_UNIT } from '../types/string.type';
 import { VOICE_UNIT } from '../types/bff.type';
 import StringHelper from './string.helper';
+import DateHelper from './date.helper';
 
 class FormatHelper {
   /**
@@ -443,6 +444,23 @@ class FormatHelper {
     value = (value || '0').toString().replace(/[^0-9]/g, '');
     return parseInt(value, 10);
   }
+
+  /**
+   * date 마스킹 여부 확인 후 YYYY.MM.DD 형식으로 변경후 리턴
+   * @param value
+   */
+  static replaceDateMasking(value: string): string {
+    const MASK_CODE = '*';
+    if (value && value.indexOf(MASK_CODE) > -1) {
+      // ****.**.**
+      return value
+        .replace(/\B((?=([*]{2})(?![*])))/g, '.')
+        .replace(/\B((?=([.*]{5})(?![.*])))/g, '.');
+    } else {
+      return DateHelper.getShortDate(value);
+    }
+  }
 }
+
 
 export default FormatHelper;
