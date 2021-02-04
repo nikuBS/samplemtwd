@@ -34,6 +34,9 @@ import {
 import DateHelper from '../../../utils/date.helper';
 import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
+import { catchError, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import BannerHelper from '../../../utils/banner.helper';
 
 /**
  * @desc 메인화면-MY 초기화를 위한 class
@@ -75,6 +78,8 @@ class MainHome extends TwViewController {
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
 
+    // 텍스트 배너 삽입
+    const bannerHelper = new BannerHelper();
     if (svcInfo) {
       if (svcInfo.svcAttrCd === SVC_ATTR_E.MOBILE_PHONE) {
         // 모바일 - 휴대폰 회선
@@ -85,8 +90,9 @@ class MainHome extends TwViewController {
           this.getRecommendProds(req, svcInfo.prodId),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
           this.getProductGroup(),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData]) => {
+          this.getPersonData(svcInfo, req),
+          this.getBannerText(req, bannerHelper)
+        ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown, prodList, personData, bannerResult]) => {
           // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
           if (usageData.data) {
             usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
@@ -104,7 +110,8 @@ class MainHome extends TwViewController {
             pageInfo,
             noticeType: svcInfo.noticeType,
             recommendProdsData,
-            isAdRcvAgreeBannerShown
+            isAdRcvAgreeBannerShown,
+            banner: bannerResult.result
           });
         });
       } else if (['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) !== -1) {
@@ -113,8 +120,9 @@ class MainHome extends TwViewController {
           this.getBillData(svcInfo),
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData]) => {
+          this.getPersonData(svcInfo, req),
+          this.getBannerText(req, bannerHelper)
+        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown, personData, bannerResult]) => {
           homeData.billData = billData;
           svcInfo.personTimeChk = personData.personDisableTimeCheck;            // 아이콘 비노출 시간 체크
           svcInfo.personLineTypeChk = personData.personDisableLineTypeCheck;    // 아이콘 비노출 서비스 타입 체크
@@ -126,7 +134,8 @@ class MainHome extends TwViewController {
             pageInfo,
             noticeType: svcInfo.noticeType,
             recommendProdsData,
-            isAdRcvAgreeBannerShown
+            isAdRcvAgreeBannerShown,
+            banner: bannerResult.result
           });
         });
       } else {
@@ -136,8 +145,9 @@ class MainHome extends TwViewController {
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType),
           this.getProductGroup(),
-          this.getPersonData(svcInfo, req)
-        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData]) => {
+          this.getPersonData(svcInfo, req),
+          this.getBannerText(req, bannerHelper)
+        ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown, prodList, personData, bannerResult]) => {
           // [OP002-6858]T world T가족모아데이터 가입 프로모션 종료에 따른 영향으로 상품조회 후 처리하기로 변경
           if (usageData.data) {
             usageData.data['isTplanProd'] = prodList && prodList.findIndex(item => item.prodId === svcInfo.prodId) > -1;
@@ -153,7 +163,8 @@ class MainHome extends TwViewController {
             pageInfo,
             noticeType: svcInfo.noticeType,
             recommendProdsData,
-            isAdRcvAgreeBannerShown
+            isAdRcvAgreeBannerShown,
+            banner: bannerResult.result
           });
         });
       }
@@ -166,8 +177,9 @@ class MainHome extends TwViewController {
       // [feature/OP002-8022] 미 로그인 시 해더 아이콘 노출/비노출에 필요한 redis 데이터 요청
       Observable.combineLatest(
         this.getRedisData(noticeCode, ''),
-        this.getPersonDataNoLogin(req)
-      ).subscribe(([redisData, personDataNoLogin]) => {
+        this.getPersonDataNoLogin(req),
+        this.getBannerText(req, bannerHelper)
+      ).subscribe(([redisData, personDataNoLogin, bannerResult]) => {
         personDataNoLoginMap.personTimeChk = personDataNoLogin.personDisableTimeCheck; // 아이콘 비노출 시간 체크
         personDataNoLoginMap.personAgentTypeChk = personDataNoLogin.personDisableAgentTypeCkeck; // 아이콘 비노출 에이전트 타입 체크
         res.render(`main.home-${flag}.html`, {
@@ -177,7 +189,8 @@ class MainHome extends TwViewController {
           pageInfo,
           noticeType: '',
           recommendProdsData,
-          personDataNoLoginMap
+          personDataNoLoginMap,
+          banner: bannerResult.result
         });
       });
     }
@@ -250,6 +263,21 @@ class MainHome extends TwViewController {
         // }
         return resp.result;
       });
+  }
+
+  /**
+   * Toss 텍스트 배너 
+   * @param req 
+   * @param res 
+   * @param next 
+   * @param svcInfo 
+   * @param allSvc 
+   * @param childInfo 
+   * @param pageInfo 
+   */
+  getBannerText(req, bannerHelper): Observable<any> {
+    bannerHelper.getTextBannerTos(req).subscribe(r => console.log(">>>>>>>>>>>>>>>>>>>>>>>> ", r))
+    return bannerHelper.getTextBannerTos(req);
   }
 
   /**
