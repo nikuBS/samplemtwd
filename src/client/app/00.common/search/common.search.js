@@ -80,6 +80,8 @@ Tw.CommonSearch.prototype = {
     this._platForm = Tw.BrowserHelper.isApp() ? 'app' : 'web';
 
     // 검색결과 데이터
+    Tw.Logger.info('[common.search] [_nextInit] 검색 결과 collection sort 정보 : ', this._searchInfo.collectionSort);
+    this._reqOptions.collectionPriority = this._searchInfo.collectionSort;
     this._searchInfo.search = this._setRank(this._searchInfo.search);
 
     this._bpcpService.setData(this.$container, this._nowUrl);
@@ -164,7 +166,7 @@ Tw.CommonSearch.prototype = {
           $(categoryStr).text(contentsCnt);
         }
 
-        totalCnt += contentsCnt;
+        // totalCnt += contentsCnt;
       }
 
       this._showShortcutList(this._arrangeData(this._searchInfo.search[i][keyName].data, keyName), keyName, this._cdn, 'init');
@@ -232,6 +234,9 @@ Tw.CommonSearch.prototype = {
     }, 0);
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
 
+    // TEST 
+    Tw.Logger.info('[common.search] [_nextInit] searchInfo: ', this._searchInfo);
+    totalCnt = this._searchInfo.totalcount;
     this.$container.find('.fe-total-count').each(function (a, b) {
       var $target = $(b);
       $target.text(totalCnt);

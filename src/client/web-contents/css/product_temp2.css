@@ -12,30 +12,30 @@
 /* 상품 메인 공통 */
 .tod-renewalBody .product-sec .wel-comment{font-size:1.375rem; line-height:1.75rem; letter-spacing:-0.0313rem; color:#000;  }
 .tod-renewalBody .product-sec .wel-comment strong{color:#f76252}
-.tod-renewalBody .product-sec .sec-tit{font-size:1.25rem; line-height:1.6875rem; letter-spacing:-0.0187rem; color:#000; margin-bottom:2.5rem; font-weight:300}
-.tod-renewalBody .product-sec .sec-tit.narrow{margin-bottom:1.875rem}
+.tod-renewalBody .product-sec .sec-tit{font-size:1.25rem; line-height:1.6875rem; letter-spacing:-0.0187rem; color:#000; margin-bottom:1.1875rem; font-weight:300}
+.tod-renewalBody .product-sec .sec-tit.narrow{display:none; margin-bottom:0.625rem}
 .tod-renewalBody .product-sec .minus-space{margin:0 -1.25rem}
-.tod-renewalBody .product-sec{padding:2.5rem 1.25rem 1.875rem; border-bottom:1px solid #d8d8d8; border-top:1px solid #fff; background:transparent; }
+.tod-renewalBody .product-sec{padding:1.9375rem 1.25rem 1.25rem; border-bottom:1px solid #d8d8d8; border-top:1px solid #fff; background:transparent; }
 .tod-renewalBody .product-sec:first-child{border-top:none; padding-top:0}
 .tod-renewalBody .product-sec:last-child{border-bottom:none}
 .tod-renewalBody .product-sec.bg{background-color:#f1f1f3}
-.tod-renewalBody .product-sec .pro-article{margin-top:2.5rem}
+.tod-renewalBody .product-sec .pro-article{margin-top:31px}
 .tod-renewalBody .product-sec .pro-article.no-mg{margin-top:0}
-.tod-renewalBody .product-sec .pro-article .article-tit{margin-bottom:0.5625rem; font-size:0.8125rem; letter-spacing:-0.05rem; color:#222 }
+.tod-renewalBody .product-sec .pro-article .article-tit{margin-bottom:0.8125rem; font-size:0.875rem; letter-spacing:-0.05rem; color:#222 }
 .tod-renewalBody .product-sec .pro-article .article-tit a{display:inline-block; color:inherit; padding-right:0.9375rem; position:relative }
 .tod-renewalBody .product-sec .pro-article .article-tit a:after{content:''; display:inline-block; width:0.625rem; height:0.625rem; background:url('/img/product/v2/pro-arr.svg') no-repeat left top; position:absolute; right:0; top:50%; margin-top:-0.3125rem}
-.tod-renewalBody .product-sec .pro-article .inset-shadow-box{background:#efeff1; padding:20px; box-shadow: inset 1px 1px 3px 0 #c8c9cb, inset -1px -1px 1px 0 #ffffff; border-radius:0.75rem;}
+.tod-renewalBody .product-sec .pro-article .inset-shadow-box{background:#efeff1; padding:0.9375rem 1.25rem; box-shadow: inset 1px 1px 3px 0 #c8c9cb, inset -1px -1px 1px 0 #ffffff; border-radius:0.75rem;}
 .tod-renewalBody .product-sec .pro-article .shadow-box{box-shadow:-4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; border-radius:0.75rem; background:#f6f8fa}
 .tod-renewalBody .product-sec .pro-article .item-define{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content:space-between; color:#2b2b2b; letter-spacing:-0.0313rem; padding-bottom:1.25rem; border-bottom:1px solid ; font-size:1rem;}
 .tod-renewalBody .product-sec .pro-article .item-define .strong{font-weight:700}
-.tod-renewalBody .product-sec .more-link-area{margin-top:1.875rem }
+.tod-renewalBody .product-sec .more-link-area{margin-top:1.25rem }
 .tod-renewalBody .product-sec .more-link-area .more{display:inline-block; width:100%; font-size:0.75rem; letter-spacing:-0.0375rem; color:#767778; text-align:center;}
-.tod-renewalBody .product-sec .more-link-area .more .more-txt{display:inline-block; border-bottom:1px solid #767778}
+.tod-renewalBody .product-sec .more-link-area .more .more-txt{display:inline-block; margin-bottom:0.1875rem; border-bottom:1px solid #767778}
 .tod-renewalBody .product-sec .go-service{padding:0 1.25rem}
 .tod-renewalBody .product-sec .go-service .service-item:not(:last-child) {border-bottom:1px solid #e1e3e4}
 .tod-renewalBody .product-sec .go-service .service-item{ width:100%; padding:1.125rem 0 1rem ;  }
 .tod-renewalBody .product-sec .go-service .service-item .item-inner{display: -webkit-box; display:flex; width:100%; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center;}
-.tod-renewalBody .product-sec .go-service .service-item .service-name{display:inline-flex; align-items:center; font-size:0.8125rem;}
+.tod-renewalBody .product-sec .go-service .service-item .service-name{display:inline-flex; align-items:center; font-size:14px;}
 .tod-renewalBody .product-sec .go-service .service-item .service-detail{display:inline-block; padding-right:0.8125rem; position:relative; font-size:0.6875rem; color:#222}
 .tod-renewalBody .product-sec .go-service .service-item .service-detail:after{content:''; display:inline-block; width:0.625rem; height:0.625rem; background:url('/img/product/v2/pro-arr.svg') no-repeat left top; position:absolute; right:0; top:50%; margin-top:-5px; color:#222}
 /* 상품 -버튼 */
@@ -43,7 +43,7 @@
 
 /*상품 - 슬라이더*/
 .tod-renewalBody .product-sec .slider-wrap{overflow:hidden;}
-.tod-renewalBody .product-sec .slider-wrap .slider-container{width:100%; height:calc(100% + 12px); padding-top:0.75rem; overflow-x:auto; box-sizing:border-box; -webkit-overflow-scrolling: touch }
+.tod-renewalBody .product-sec .slider-wrap .slider-container{width:100%; height:calc(100% + 12px); padding:0.75rem 0 1.25rem; overflow-x:auto; box-sizing:border-box; -webkit-overflow-scrolling: touch }
 .tod-renewalBody .product-sec .slider-wrap .slider-container::-webkit-scrollbar{display:none}
 .tod-renewalBody .product-sec .slider-wrap .slider-container .slider-list{display: -webkit-box; display:flex; width:100%; height:100%; }
 .tod-renewalBody .product-sec .slider-wrap .slider-container .slider-list .slider-item{flex-shrink:0; padding:0 0.3125rem; }
@@ -65,12 +65,12 @@
 
 /* 현재 사용중인 요금제 */
 .tod-renewalBody .product-sec .pro-article.now-pay-box .item-define {border:0; padding-bottom:0;}
-.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info{display: -webkit-box; display:flex; padding-top:1.25rem; margin-top:1.25rem; border-top:1px solid #d6d7d8; -webkit-box-pack: justify; justify-content: space-between;}
+.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info{display: -webkit-box; display:flex; padding-top:0.9375rem; margin-top:0.9375rem; border-top:1px solid #d6d7d8; -webkit-box-pack: justify; justify-content: space-between;}
 .tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item{font-size:0.75rem; color:#666; letter-spacing:-0.0187rem; }
-.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item .val{display:inline-block; margin-left:4px; color:#222}
+.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item i {vertical-align:-5px;}
+.tod-renewalBody .product-sec .pro-article.now-pay-box .detail-info .item .val{display:inline-block; color:#222; vertical-align: middle;}
 
 /* 신청하지 않은 무료 부가서비스 */
-.tod-renewalBody .product-sec .pro-article .article-tit{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center}
 .tod-renewalBody .product-sec .pro-article .ico-new{display:inline-block; width:20px; height:20px; border-radius:100%; background:#f76252; box-shadow:2px 2px 4px 0 rgba(247, 98, 82, 0.4); vertical-align:middle; color:#fff; font-size:0.5625rem; text-align:center; line-height:1.25rem; margin-right:0.25rem; }
 .tod-renewalBody .product-sec .go-service.add-service-list .service-item:nth-child(n + 6){display:none}
 .tod-renewalBody .product-sec .go-service.add-service-list .service-item:nth-child(5){border-bottom:none}
@@ -79,34 +79,32 @@
 .tod-renewalBody .product-sec .go-service.add-service-list .service-item .ico{display:inline-block; width:1.5rem; height:1.5rem; margin-right:0.375rem;}
 .tod-renewalBody .product-sec .go-service.add-service-list .service-item .ico img{width:100%; height:100%; }
 
+/* 찾으시는 요금제 혜택 */
+.tod-renewalBody .product-sec .pro-article.benefit-box {margin-top:0}
+.tod-renewalBody .product-sec .pro-article.benefit-box .article-tit {margin-bottom:0.1875rem}
+
 /* 꼭 필요한 요금제 혜택이 있으신가요? */
-.tod-renewalBody .product-sec .slider-wrap.benefit-slider{height:13.125rem; }
 .tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-container{width:100%;  }
-.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item{width:160px; height:10.625rem;}
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item{width:160px; height:157px;}
 .tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .shadow-box{height:100%; padding:20px; box-sizing:border-box; }
-.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-txt{font-size:0.9375rem; line-height:1.25rem; color:#222; }
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-txt{font-size:1.0625rem; line-height:1.25rem; color:#222; }
 .tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-txt em{display:block; color:#f76252; }
-.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-ico{position:absolute; right:1.25rem; bottom:1.25rem; width:3.25rem; height:3.25rem;}
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-ico {position:absolute; right:0.75rem; bottom:0.75rem; width:3.75rem; height:3.75rem;}
+.tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-item .benefit-ico img {width:100%}
 
 /* 다양한 요금제를 확인해보세요 */
 .tod-renewalBody .product-sec .pro-article.various-plan-box{margin-top:0}
-.tod-renewalBody .product-sec .slider-wrap.plan-slider{height:17.5rem}
-.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-container{width:100%;  }
+.tod-renewalBody .product-sec .pro-article.various-plan-box .article-tit {margin-bottom:1px}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-container{width:100%;}
 .tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item{width:11.25rem; height:15rem;}
-.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item .shadow-box{ height:100%; background-size:cover; background-repeat:no-repeat; background-position:left top;}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item .shadow-box{position:relative; height:100%; background-size:cover; background-repeat:no-repeat; background-position:left top;}
+.tod-renewalBody .product-sec .slider-wrap.plan-slider .slider-item .i-txt {position:absolute; bottom:0; width:100%; box-sizing: border-box; padding:1.25rem; font-size: 16px; line-height: 1.25; font-weight: 300; letter-spacing: -0.4px; color:#ffffff}
 .tod-renewalBody .product-sec .banner-area{/*margin-top:1.6875rem;*/ overflow:hidden;}
 
 /* 요즘 가장 인기있는 요금제 */
-.tod-renewalBody .product-sec .popular-plan-box{background:#f2f2f2; margin:0 -1.25rem -1.875rem}
+.tod-renewalBody .product-sec .tod-cont-section {margin:-2rem -1.25rem -1.3125rem}
 .tod-renewalBody .product-sec .popular-plan-box .plan-cont{padding:0 0 1.875rem 0; position:relative}
-.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header{height:7.625rem; box-sizing:border-box; position:relative; z-index:1; padding:0 1.25rem}
-.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .plan-intro-txt{color:#222; font-size:1rem; line-height:1.3125rem; font-weight:300; letter-spacing:-0.04rem; padding-top:2.5rem; }
-.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .plan-intro-txt strong{font-weight:500}
-.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .bg-img{display:inline-block; width:100%; max-width:22.5rem; min-width:20rem; position:absolute; right:0; bottom:0 }
-.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-header .bg-img img{width:100%; height:auto;}
-.tod-renewalBody .product-sec .popular-plan-box .plan-cont .plan-container{margin-top:-10px; padding:0 20px; position:relative; z-index:2}
 
-.tod-renewalBody .product-sec .popular-plan-box .tod-renewal-product-item{background:#f6f8fa}
 /* 요금제별 - 5g */
 .tod-renewalBody .product-sec .popular-plan-box .plan-cont.sk-5g{background:#f2f2f2 url('/img/product/v2/sk5g-bg.png') no-repeat left top; background-size:100% auto; }
 .tod-renewalBody .product-sec .popular-plan-box .plan-cont.sk-5g:before{width:13.25rem; height:7.9375rem; position:absolute; right:0; top:-20px; background:url('/img/product/v2/sk5g-obj.png') no-repeat left top ; background-size:100% auto; mix-blend-mode:darken}
@@ -134,7 +132,7 @@
 .popup.product-popup .popup-page .container-wrap .container {background-color:transparent}
 .popup.product-popup .popup-page .container-wrap .container .cont-box {background-color: transparent;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet {padding:0 !important; border-radius: 30px 30px 0 0; background:#f6f8fa;}
-.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .inner {overflow-y:auto; max-height:60vh; padding:3.75rem 1.875rem 2.5rem !important;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .inner {overflow-y:auto; max-height:60vh; padding:3.125rem 1.875rem 2.5rem !important;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-tit{font-size:1.125rem; line-height:1.5rem; letter-spacing:-0.025rem; color:#222;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-tit-s {margin-top:0.25rem; font-size:0.875rem; letter-spacing: -0.4px; color:#585959}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .detail-info{margin-top:1.25rem; padding:1.25rem; font-size:0.8125rem; letter-spacing:-0.0313rem; line-height:1.125rem; background:#fff; border-radius:0.75rem }
@@ -147,7 +145,7 @@
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn span{display:inline-block; padding-right:1rem; position:relative; }
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-btn-area .pro-a-btn span:after{content:''; display:inline-block; width:0.625rem; height:0.625rem; position:absolute; right:0; top:50%; margin-top:-0.3125rem; background:url('/img/product/v2/pro-arr.svg') no-repeat left top; }
 
-.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box {overflow-y:auto; height:150px; margin-top:1rem; padding:1.25rem; font-size:0.6875rem; color:#585959; background: #efeff1; box-shadow: inset -1px -1px 1px 0 #ffffff, inset 1px 1px 3px 0 #c8c9cb; border-radius: 12px;}
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box {overflow-y:auto; height:140px; margin-top:1rem; padding:1.25rem; font-size:0.6875rem; color:#585959; background: #efeff1; box-shadow: inset -1px -1px 1px 0 #ffffff, inset 1px 1px 3px 0 #c8c9cb; border-radius: 12px;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-tit {font-weight: 500;}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-tit:nth-of-type(n+2) {margin-top:0.5rem}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-list {margin-top:0.5rem}
@@ -156,16 +154,19 @@
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .terms-box .tm-list li::before {content:""; display:inline-block; position:absolute; left:0; top:6px; width:3px; height:3px; border-radius: 100%; background-color:#767778}
 .popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .tod-nmp-btn-wrap {margin-top:1.25rem}
 
+.popup.product-popup .popup-page .container-wrap .container .cont-actionsheet .a-tit.warning-txt {padding-top: 2.25rem; text-align:center; background: url(/img/product/v2/icon-error.svg) no-repeat 50% 0;}
+
 .popup.product-popup .popup-page .popup-close-area {position:absolute; top:0; width:100%; border-radius: 1.875rem 1.875rem 0 0; background-color:#f6f8fa}
 .popup.product-popup .popup-page .popup-close-area .rn-prev-step {width:100%; height:2.25rem;}
 .popup.product-popup .popup-page .popup-close-area .rn-prev-step:before{content:''; display:inline-block; width:36px; height:4px; border-radius:5px; background:#d9d9d9; position:absolute; top:1rem; left:50%; margin-left:-1.125rem;}
 
 
 /* 210118 개인정보 동의 */
-.tod-renewalBody .product-sec .agree-info-box {padding:1.25rem 1.25rem 0.9375rem; border-radius: 12px; box-shadow: -2px -2px 2px 0 #FFFFFF, 4px 7px 10px 0 #DDE0E2, -4px -6px 10px 0 #FFFFFF; background: #F6F8FA;}
-.tod-renewalBody .product-sec .agree-info-box .agr-txt {text-align:center; font-size:0.875rem; font-weight: 300; color:#222222;}
-.tod-renewalBody .product-sec .agree-info-box .agr-area {display:flex; justify-content: space-between; align-items: center; margin-top:1.0625rem; border-top:1px solid #e1e3e4; padding-top:1.25rem; color:#222222}
-.tod-renewalBody .product-sec .agree-info-box .agr-area .agr-left .bt-detail {display:inline-block; font-size:0.75rem; color:#767778; letter-spacing: -0.6px; text-decoration: underline;}
+.tod-renewalBody .product-sec .agree-info-box {padding:1.5625rem 1.25rem 1.3125rem; border-radius: 12px; box-shadow: -2px -2px 2px 0 #FFFFFF, 4px 7px 10px 0 #DDE0E2, -4px -6px 10px 0 #FFFFFF; background: #F6F8FA;}
+.tod-renewalBody .product-sec .agree-info-box .agr-txt {text-align:center; font-size:0.875rem; color:#222222;}
+.tod-renewalBody .product-sec .agree-info-box .agr-area {display:flex; justify-content: space-between; align-items: center; margin-top:0.9375rem; border-top:1px solid #e1e3e4; padding-top:1.0625rem; color:#222222}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .agr-left .a-txt {font-size:0.6875rem}
+.tod-renewalBody .product-sec .agree-info-box .agr-area .agr-left .bt-detail {display:inline-block; font-size:0.6875rem; color:#767778; letter-spacing: -0.6px; text-decoration: underline;}
 
 /* 스위치형 커스텀 */
 .tod-renewalBody .product-sec .agree-info-box .agr-area .on-off-list.new li {min-height:auto; padding:0 !important; font-size:0.0625rem}

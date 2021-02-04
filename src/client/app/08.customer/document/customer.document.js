@@ -304,6 +304,10 @@ Tw.CustomerDocument.prototype = {
     }
     this._setChangeEvent($target.find('.select-list'));
     this._openList($target);
+    this.$selector.find(".acco-title button").attr("aria-pressed",false);
+    $target.find("button").attr("aria-pressed",true);
+    //$target.find(".radiobox input:first").focus();
+    $target.find("div.acco-title").focus(); 
   },
   /**
    * @function

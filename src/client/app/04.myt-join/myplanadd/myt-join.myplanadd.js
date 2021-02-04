@@ -137,14 +137,22 @@ Tw.MyTJoinMyPlanAdd.prototype = {
   _handleClickLink: function(e) {
     var $target = $(e.currentTarget);
     var link = $target.data('url');
+    var prodId = $target.data('prod-id');
 
     if (this._bpcpService.isBpcp(link)) {
-      return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, null);
+      var vColoringParam = (prodId === 'NA00007017' || prodId === 'NA00007246') && link.indexOf('0000135003') !== -1 ?
+          'productid=' + prodId : null
+      if (vColoringParam) {
+        // 과금팝업 노출
+        return Tw.CommonHelper.showDataCharge($.proxy(function() {
+            this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, vColoringParam);
+        }, this))
+      }
+      return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, vColoringParam);
     }
     if (link.indexOf('http') !== -1) {
       Tw.CommonHelper.openUrlExternal(link);
     } else {
-      var prodId = $target.data('prod-id');
       window.location.href = link + (prodId ? '?prod_id=' + prodId : '');
     }
   }

@@ -125,10 +125,12 @@
                             <% if (result.totalCount > 20) { %>
                             <div class="paging-wrap top-line type1">
                                 <div class="paging">
+                                    <% let disabledAttr = false; %>
+                                    <% disabledAttr = page === 1?"aria-hidden=true":""; %>
                                     <% if (lastPage > 3) { %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-first" data-page="1" class="first <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">처음 페이지로 이동</span></a>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-first" data-page="1" class="first <%= page === 1 ? 'disabled' : '' %>" <%= disabledAttr %>><span class="pg-blind">처음 페이지로 이동</span></a>
                                     <% } %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-prev" data-page="<%= page - 1 %>" class="prev <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">이전 페이지로 이동</span></a>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-prev" data-page="<%= page - 1 %>" class="prev <%= page === 1 ? 'disabled' : '' %>" <%= disabledAttr %>><span class="pg-blind">이전 페이지로 이동</span></a>
                                     <% const start = page - (page % 3 === 0 ? 2 : page % 3 - 1) %>
                                     <% const end = start + 2 >= lastPage ? lastPage : start + 2; %>
                                     <% for (let i = start; i <= end; i += 1) { %>
@@ -138,9 +140,10 @@
                                     <a href="javascript:void(0)" role="button" class="fe-go-page"><%= i %></a>
                                     <% } %>
                                     <% } %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-next" data-page="<%= page + 1 %>" class="next <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                                    <% disabledAttr = page === lastPage?"aria-hidden=true":""; %>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-next" data-page="<%= page + 1 %>" class="next <%= page === lastPage ? 'disabled' : '' %>" <%= disabledAttr %>><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
                                     <% if (lastPage > 3) { %>
-                                    <a href="javascript:void(0)" role="button" id="fe-go-last" data-page="<%= lastPage %>" class="last <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">마지막 페이지로 이동</span></a>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-last" data-page="<%= lastPage %>" class="last <%= page === lastPage ? 'disabled' : '' %>" <%= disabledAttr %>><span class="pg-blind">마지막 페이지로 이동</span></a>
                                     <% } %>
                                 </div>
                             </div>

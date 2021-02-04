@@ -244,7 +244,7 @@ abstract class TwViewController {
         }
         return {
           env: selectItem[0].split(':')[1],
-          visible: selectItem[0].split(':')[2]
+          visible: parseInt(selectItem[0].split(':')[2], 10) === 1
         };
       } else {
         return null;

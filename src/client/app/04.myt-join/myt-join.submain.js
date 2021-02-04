@@ -357,7 +357,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedContractPlan: function () {
     var url = '/myt-join/myplancombine/noagreement';
-    if ( this._data.myContractPlan.muPointYn === 'N' ) {
+    if ( !this._data.myContractPlan.muPointYn || this._data.myContractPlan.muPointYn === 'N' ) {
       url = '/product/callplan?prod_id=NA00005923';
     }
     this._historyService.goLoad(url);
@@ -680,7 +680,11 @@ Tw.MyTJoinSubMain.prototype = {
    * @desc 공인인증센터
    */
   _onOpenCertifyPopup: function () {
-    Tw.Native.send(Tw.NTV_CMD.GO_CERT, {});
+    if (Tw.BrowserHelper.isApp()) {
+      Tw.Native.send(Tw.NTV_CMD.GO_CERT, {});
+    } else {
+      this._popupService.openAlert('앱 에서만 사용가능');
+    }
   },
   /**
    * @function
@@ -738,4 +742,51 @@ Tw.MyTJoinSubMain.prototype = {
     delete this._dlgOpenDetail;
   }
   */
+};
+
+Tw.MytJoinAdvSubMain = function () {
+  Tw.MyTJoinSubMain.apply(this, arguments);
+};
+
+// overriding
+Tw.MytJoinAdvSubMain.prototype = Object.create(Tw.MyTJoinSubMain.prototype);
+Tw.MytJoinAdvSubMain.prototype.constructor = Tw.MytJoinAdvSubMain;
+Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
+  Tw.MyTJoinSubMain.prototype._bindEvent.call(this, function () {
+    if (this._data.type !== 1 && this._data.type !== 2) {
+      this.$container.find('[data-id=mybenefit]').on('click', $.proxy(function() {
+        this._historyService.goLoad('/benefit/my');
+      }, this));
+      this.$container.find('[data-id=membership]').on('click', $.proxy(function() {
+        switch (this._data.membership.used) {
+          case 1:
+            // 가입하기
+            this._historyService.goLoad('/membership/submain');
+            break;
+          default:
+            // used => 0 or 2 간편로그인, 가입된 상태
+            this._historyService.goLoad('/membership/my');
+            break;
+        }
+      }, this));
+      this.$container.find('[data-id=benefitsub]').on('click', $.proxy(function() {
+        if (this._data.benefitCount && parseInt(this._data.benefitCount, 10) > 0) {
+          this._historyService.goLoad('/benefit/my');
+        } else {
+          this._historyService.goLoad('/benefit/submain');
+        }
+      }, this));
+    }
+    if (this._data.paidBillInfo) {
+      this.$container.find('[data-id=paidinfo]').on('click', $.proxy(function() {
+        this._historyService.goLoad('/myt-fare/submain');
+      }, this));
+      this.$container.find('[data-id=billtype]').on('click', $.proxy(function() {
+        this._historyService.goLoad('/myt-fare/billsetup');
+      }, this));
+      this.$container.find('[data-id=paymthd]').on('click', $.proxy(function() {
+        this._historyService.goLoad('/myt-fare/bill/option');
+      }, this));
+    }
+  });
 };

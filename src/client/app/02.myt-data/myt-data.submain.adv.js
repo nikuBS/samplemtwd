@@ -109,12 +109,14 @@ Tw.MyTDataSubMainAdv.prototype = {
     }
     this.$prepayContainer = this.$container.find('[data-id=prepay-container]');
     if (this.data.refill) {
-      this.$refillBtn = this.$container.find('[data-id=refill]');
+      // this.$refillBtn = this.$container.find('[data-id=refill]');
+      this.$refillSection = this.$container.find('[data-id=refill-section]');
+      this.$refillBtnArea = this.$refillSection.find('.btn-area.short');
     }
     if (this.data.isBenefit) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
     }
-    this.$dataPesterBtn = this.$container.find('[data-id=pester]');
+    // this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     // if ( this.data.recentUsage ) {
     this.$recentUsage = this.$container.find('[data-id=recent_usage]');
     // }
@@ -142,9 +144,9 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _bindEvent: function () {
     // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
-    // if ( this.data.immCharge ) {
-    //   this.$immChargeBtn.on('click', $.proxy(this._onImmChargeDetail, this));
-    // }
+    if ( this.data.immCharge ) {
+      this.$immChargeSection.on('click', 'li', $.proxy(this._onImmChargeDetail, this));
+    }
     if (this.data.present) {
       if (this._isGiftData) {
         // T끼리 데이터 선물하기 영역 - 휴대폰인 경우
@@ -159,12 +161,13 @@ Tw.MyTDataSubMainAdv.prototype = {
       this.$familymoaBanner.on('click', $.proxy(this._onFamilyMoaDetail, this));
     }
     if (this.data.refill) {
-      this.$refillBtn.on('click', $.proxy(this._onRefillDetail, this));
+      // this.$refillBtn.on('click', $.proxy(this._onRefillDetail, this));
+      this.$refillBtnArea.on('click', $.proxy(this._onRefillDetail, this));
     }
     if (this.data.isBenefit) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
     }
-    this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
+    // this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
 
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail.on('click', $.proxy(this._onBreakdownListDetail, this));
@@ -175,7 +178,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
       }
     }
-    this.$otherPages.find('button').on('click', $.proxy(this._onOtherPages, this));
+    this.$otherPages.find('a').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'li', $.proxy(this._onPrepayCoupon, this));
 
     // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 Start
@@ -948,21 +951,24 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @function
    * @desc 즉시충전 상세보기
    */
-  _onImmChargeDetail: function () {
-    switch ( this.data.svcInfo.svcAttrCd ) {
-      case 'M2':
-        // PPS
-        new Tw.PPSRechargeLayer(this.$container);
+  _onImmChargeDetail: function (event) {
+    event.preventDefault();
+    var $target = $(event.currentTarget);
+    switch ( $target.data('id') ) {
+      case 'history':
+        this._historyService.goLoad('/myt-data/history');
         break;
-      case 'M3':
-      case 'M4':
-        // PocketFi, Tlogin
-        this._historyService.goLoad('/myt-data/hotdata');
+      case 'ting':
+        this._historyService.goLoad('/myt-data/recharge/ting');
         break;
-      default:
-        new Tw.ImmediatelyRechargeLayer(this.$container, {
-          pathUrl: '/myt-data/submain'
-        });
+      case 'data':
+        this._onDataPesterDetail($target);
+        break;
+      case 'etc-wrap':
+        this._historyService.goLoad('/myt-data/giftdata');
+        break;
+      case 'limit':
+        this._historyService.goLoad('/myt-data/giftdata');
         break;
     }
   },
@@ -985,6 +991,7 @@ Tw.MyTDataSubMainAdv.prototype = {
     } else {
       this._historyService.goLoad('/myt-data/giftdata');
     }
+    return false;
   },
   /**
    * @function
@@ -993,6 +1000,7 @@ Tw.MyTDataSubMainAdv.prototype = {
   _onFamilyMoaDetail: function () {
     // 공유 버튼
     this._historyService.goLoad('/myt-data/familydata/share');
+    return false;
   },
   /**
    * @function
@@ -1000,13 +1008,14 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _onDataBenefitDetail: function () {
     this._bpcpService.open(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
+    return false;
   },
   /**
    * @function
    * @desc 데이터 조르기
    * @param {Object} e
    */
-  _onDataPesterDetail: function (e) {
+  _onDataPesterDetail: function ($target) {
     if (Tw.BrowserHelper.isApp()) {
       //  2_A17 Alert 호출
       this._popupService.openModalTypeA(
@@ -1018,24 +1027,25 @@ Tw.MyTDataSubMainAdv.prototype = {
         null,
         null,
         null,
-        this.$dataPesterBtn.find('button')
+        $target
       );
     } else {
-      this._goAppInfo(e);
+      this._goAppInfo($target);
     }
+    return false;
   },
   /**
    * @function
    * @desc 서비스 이용안내 팝업
    * @param {Object} e
    */
-  _goAppInfo: function (e) {
+  _goAppInfo: function ($target) {
     var isAndroid = Tw.BrowserHelper.isAndroid();
     this._popupService.open({
       'hbs': 'open_app_info',
       'isAndroid': isAndroid,
       'cdn': Tw.Environment.cdn
-    }, $.proxy(this._onOpenTworld, this), null, null, $(e.currentTarget));
+    }, $.proxy(this._onOpenTworld, this), null, null, $target);
   },
   /**
    * @function
@@ -1044,6 +1054,7 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _onOpenTworld: function ($layer) {
     new Tw.CommonShareAppInstallInfo($layer);
+    return false;
   },
   /**
    * @function
@@ -1061,8 +1072,22 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @function
    * @desc 리필쿠폰
    */
-  _onRefillDetail: function () {
-    this._historyService.goLoad('/myt-data/recharge/coupon?from=submain');
+  _onRefillDetail: function (evt) {
+    // this._historyService.goLoad('/myt-data/recharge/coupon?from=submain');
+    evt.preventDefault();
+    var $target = $(evt.target);
+    if ($target.data('id') === 'refill-btn' || $target.data('id') === 'gift-btn') {
+      var $data = $target.siblings('[data-id=usable-coupon]');
+      var no = $data.data('value').split('::')[0];
+      var name = $data.data('value').split('::')[1];
+      var period = $data.data('value').split('::')[2];
+      var gift = $data.data('value').split('::')[3];
+      var tab = $target.data('id') === 'refill-btn' ? 'refill' : 'gift';
+      this._historyService.goLoad(
+        '/myt-data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' +
+        name + '&period=' + period + '&gift=' + gift
+      );
+    }
   },
 
   // 충전/선물내역 상세
@@ -1084,6 +1109,7 @@ Tw.MyTDataSubMainAdv.prototype = {
       if (isChild) {
         // 자녀회선
         this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
+        return false;
       } else {
         this.changeLineMgmtNum = mgmtNum;
         this.changeLineMdn = number;
@@ -1148,7 +1174,9 @@ Tw.MyTDataSubMainAdv.prototype = {
   _onOtherPages: function (event) {
     var $target = $(event.currentTarget);
     var href = $target.attr('data-href');
+    console.log('########################href ==> ', href);
     this._historyService.goLoad(href);
+    return false;
   },
   /**
    * @function
@@ -1177,6 +1205,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         break;
     }
     this._bpcpService.open(url);
+    return false;
   },
   /**
    * @function

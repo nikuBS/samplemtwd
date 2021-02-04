@@ -1,5 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
-import MyTJoinSubmainController from './myt-join.submain.controller';
+import MyTJoinSubmainAdvController from './myt-join.submain.adv.controller';
 import MyTJoinMyplan from './controllers/myplan/myt-join.myplan.controller';
 import MyTJoinMyPlanAdd from './controllers/myplanadd/myt-join.myplanadd.controller';
 import MyTJoinMyPlanAddTHigh5 from './controllers/myplanadd/myt-join.myplanadd.thigh5.controller';
@@ -47,7 +47,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/info/discount/month', controller: MyTJoinInfoDiscountMonth });
 
     // new url
-    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainController });
+    this.controllers.push({ url: '/submain', controller: MyTJoinSubmainAdvController });
     this.controllers.push({ url: '/custpassword', controller: MyTJoinCustpassword });
     this.controllers.push({ url: '/myplancombine/infodiscount', controller: MytJoinInfoDiscount });
     this.controllers.push({ url: '/myplancombine/infodiscount/month', controller: MyTJoinInfoDiscountMonth });

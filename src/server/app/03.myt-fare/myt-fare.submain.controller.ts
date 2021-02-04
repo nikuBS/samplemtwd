@@ -18,6 +18,7 @@ import StringHelper from '../../utils/string.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
 import CommonHelper from '../../utils/common.helper';
 import {MytFareInfoMiriService} from './services/info/myt-fare.info.miri.service';
+import MyTFareSubmainAdvController from './myt-fare.submain.adv.controller';
 
 class MyTFareSubmainController extends TwViewController {
 
@@ -28,6 +29,15 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if (pageInfo.advancement) {
+      const {env, visible} = pageInfo.advancement,
+        {NODE_ENV} = process.env;
+      // local 테스트틀 하기 위해 추가
+      if ((NODE_ENV === env && visible) || NODE_ENV === 'local') {
+        new MyTFareSubmainAdvController().initPage(req, res, next);
+        return false;
+      }
+    }
     // this._miriService = new MytFareInfoMiriService(svcInfo.svcMgmtNum, req, res);
     this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
     this._datas = {
@@ -194,7 +204,7 @@ class MyTFareSubmainController extends TwViewController {
       if ( totalPayment ) {
         data.totalPayment = totalPayment.paymentRecord.slice(0, 3).map(o => {
           return Object.assign(o, {
-              isPoint : (o.payMthdCd === '15' || o.payMthdCd.indexOf('BB') >= 0)
+            isPoint : (o.payMthdCd === '15' || o.payMthdCd.indexOf('BB') >= 0)
           });
         });
       }

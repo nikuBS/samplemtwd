@@ -1,0 +1,83 @@
+<%#
+* MenuName: 나의 요금 > 서브메인 (다른메뉴 찾기 영역)
+* @file myt-fare.submain.other-menu.html
+* @author 양정규
+* @since 2020.12.31
+%>
+<section class="cont-card">
+    <div class="section-inner">
+        <div class="head-tit high">다른 메뉴를 찾고 계신가요?</div>
+        <div class="card-cont">
+            <div class="faq-ico-wrap">
+                <ul class="ico-list small">
+                    <li class="item">
+                        <a href="/myt-data/submain" data-make-eid="data">
+                            <div class="ico-item">
+                                <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico16.svg" alt=""></i>
+                                <div class="list-txt">
+                                    <span class="item-tit">나의<br>데이터/통화</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="/myt-join/submain" data-make-eid="join">
+                            <div class="ico-item">
+                                <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico15.svg" alt=""></i>
+                                <div class="list-txt">
+                                    <span class="item-tit">나의<br>가입정보</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="/myt-join/myplan" data-make-eid="fare">
+                            <div class="ico-item">
+                                <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico05.svg" alt=""></i>
+                                <div class="list-txt">
+                                    <span class="item-tit">나의 요금제<br>/부가상품</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="/myt-join/combinations" data-make-eid="combination">
+                            <div class="ico-item">
+                                <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico07.svg" alt=""></i>
+                                <div class="list-txt">
+                                    <span class="item-tit">나의 <br>결합상품</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <%_
+                const {svcAttrCd} = data.svcInfo;
+                if( !data.isPPS ){ // 휴대폰, 유선인 경우만 노출
+            _%>
+            <div class="small-ico-list-wrap">
+                <ul class="small-ico-list">
+                    <li class="ico-item">
+                        <a href="/myt-fare/info/history" data-make-eid="paymentHistory">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico07.svg" alt=""></i>요금납부내역 조회
+                        </a>
+                    </li>
+                    <%_if( svcAttrCd.indexOf('S') === -1){ // 휴대폰, TLogin, Tpocket FI 경우만 노출_%>
+                    <li class="ico-item">
+                        <a href="/myt-fare/bill/hotbill" data-make-eid="realtimeRemain">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico01.svg" alt=""></i>실시간 이용요금
+                        </a>
+                    </li>
+                    <li class="ico-item">
+                        <a href="/myt-join/myplancombine/infodiscount" data-make-eid="contract">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico08.svg" alt=""></i>약정할인/기기상환 정보
+                        </a>
+                    </li>
+                    <%_}_%>
+                </ul>
+            </div>
+            <%_}_%>
+        </div>
+    </div>
+</section>

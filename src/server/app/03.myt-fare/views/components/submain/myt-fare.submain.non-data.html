@@ -1,0 +1,32 @@
+<%#
+* MenuName: 나의 요금 > 서브메인 > 내역조회 불가
+* @file myt-fare.submain.non-data.html
+* @author 양정규
+* @since 2020.12.10
+%>
+<%_
+    const latestDates = data.latestDates || [],
+        {isNewMember=false, isNotClaimData=false} = data;
+_%>
+<section class="cont-card">
+    <div class="charge-wrap">
+        <div class="charge-cont">
+            <% include ../components/submain/myt-fare.submain.claim-pay.date.html %>
+            <div class="warning-box">
+                <div class="warning-inner">
+                    <%_
+                        let warningMsg = "이번 달에 사용하신<br>이용요금이 없습니다.";
+                        warningMsg = latestDates.length < 1 && !isNewMember ? "최근 6개월 내 청구된<br>해당 월 요금조회가 가능합니다." : warningMsg;
+                        warningMsg = isNotClaimData ? "매월 5일경 부터<br>해당 월 요금조회가 가능합니다." : warningMsg;
+                    _%>
+                    <p class="warning-tit"><%-warningMsg%></p>
+                    <%_if(isNotClaimData){_%>
+                    <div class="btn-area">
+                        <a href="/myt-fare/bill/hotbill" class="rect-btn">실시간 이용요금 조회하기</a>
+                    </div>
+                    <%_}_%>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

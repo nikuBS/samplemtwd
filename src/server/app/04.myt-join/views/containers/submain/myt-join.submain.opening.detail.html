@@ -58,6 +58,17 @@ _%>
                         </div>
                         <div class="basic-list bg-type">
                             <ul>
+                                <% if (myInfo && myInfo.apprAmt) { %>
+                                <li>
+                                    <span class="title">가입비</span>
+                                    <span class="tx-cont">
+                                        <%= myInfo.apprAmt %>원
+                                        <% if (myInfo.invBamt !== '0') { %>
+                                            (<%= myInfo.invBamt %>원 미청구)
+                                        <% } %>
+                                    </span>
+                                </li>
+                                <% } %>
                                 <%_ if (detail.saleOrgNm) { _%>
                                 <%# 판매점인 경우 _%>
                                 <li>

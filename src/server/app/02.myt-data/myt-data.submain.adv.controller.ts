@@ -17,7 +17,8 @@ import {
   MYT_DATA_CHARGE_TYPE_NAMES,
   MYT_DATA_CHARGE_TYPES,
   MYT_DATA_HISTORY,
-  MYT_DATA_REFILL_TYPES
+  MYT_DATA_REFILL_TYPES,
+  MYT_DATA_RECHARGE_COUPON
 } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import {
@@ -51,8 +52,10 @@ class MytDataSubmainAdvController extends TwViewController {
   private fromDt = DateHelper.getPastYearShortDate();
   private toDt = DateHelper.getCurrentShortDate();
   private isPPS = false;
+  private isEasyLogin = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    this.apiService.setTimeout(3000);
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
@@ -67,6 +70,7 @@ class MytDataSubmainAdvController extends TwViewController {
       // otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       otherLines: [],
       isApp: BrowserHelper.isApp(req),
+      isEasyLogin: svcInfo.loginType === LOGIN_TYPE.EASY,
       bpcpServiceId: req.query.bpcpServiceId || '',
       eParam: req.query.eParam || ''
     };
@@ -74,6 +78,7 @@ class MytDataSubmainAdvController extends TwViewController {
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
     CommonHelper.addCurLineInfo(data.svcInfo);
 
+    this.isEasyLogin = data.svcInfo.loginType === LOGIN_TYPE.EASY;
     this.isPPS = data.svcInfo.svcAttrCd === 'M2';
     Observable.combineLatest(
       this._getRemnantData(data.svcInfo),
@@ -133,7 +138,8 @@ class MytDataSubmainAdvController extends TwViewController {
       }
 
       // 자녀 회선 추가 수정 [DV001-15520]
-      if ( child && child.length > 0 ) {
+      // 간편로그인 경우 자녀회선 영역 미노출
+      if ( !data.isEasyLogin && child && child.length > 0 ) {
         const convertedChildLines = this.convertChildLines(child);
         if ( convertedChildLines && convertedChildLines.length > 0 ) {
           // data.otherLines = convertedChildLines.concat(data.otherLines);
@@ -169,7 +175,7 @@ class MytDataSubmainAdvController extends TwViewController {
         data.immCharge = true;
       }
 
-      // T끼리 데이터선물 영역
+      // T끼리 데이터선물 영역 (간편로그인 경우 영역 비노출)
       if ( present ) {
         data.present = true;
         data.presentInfo = present;
@@ -192,7 +198,9 @@ class MytDataSubmainAdvController extends TwViewController {
 
       // 리필쿠폰
       if ( refill && refill.length > 0 ) {
-        data.refill = refill;
+        // 간편로그인인 경우에 리필하기, 선물하기 버튼 비노출 처리
+        data.pickCouponIndex = this.pickCouponIndex(refill);
+        data.refill = this.convertCoupon(refill);
       }
 
       // 무선 여부 확인
@@ -213,7 +221,6 @@ class MytDataSubmainAdvController extends TwViewController {
         reqBkdArr.push(this._getEtcChargeBreakdown());
       } else {
         if ( !refillGiftHistory ) {
-          console.log('######## data->>>>>', data);
           return this._render(res, data);
         }
         // 리필쿠폰 수혜, 제공 건수
@@ -797,6 +804,9 @@ class MytDataSubmainAdvController extends TwViewController {
 
   // T끼리 데이터 선물 버튼
   _getDataPresent() {
+    if (this.isEasyLogin) {
+      return Observable.of(null);
+    }
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 || resp.code === 'GFT0003' || resp.code === 'GFT0004' ) {
         return resp.result;
@@ -809,6 +819,9 @@ class MytDataSubmainAdvController extends TwViewController {
 
   // T끼리 자동선물 내역
   _getDataPresentAutoList() {
+    if (this.isEasyLogin) {
+      return Observable.of(null);
+    }
     return this.apiService.request(API_CMD.BFF_06_0006, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
@@ -1105,6 +1118,47 @@ class MytDataSubmainAdvController extends TwViewController {
     }
 
     data.xtEid = eid;
+  }
+  private convertCoupon(data) {
+    return data.map((item) => {
+      item.usePsblStaDt = DateHelper.getShortDate(item.usePsblStaDt);
+      item.usePsblEndDt = DateHelper.getShortDate(item.usePsblEndDt);
+      item.isGift = item.copnOperStCd === 'A20';  // A20: 선물, A10: 장기가입, A14: 10년주기
+      item.copnNm = MYT_DATA_RECHARGE_COUPON[item.copnOperStCd];
+      return item;
+    });
+  }
+  /**
+   * 만료일자가 빠른 쿠폰 인덱스
+   * @param data
+   */
+  private pickCouponIndex(data) {
+    if (data.length === 0) {
+      return null;
+    }
+
+    let coupons = data.filter((coupon) => {  // 1순위 선물받은쿠폰 있는지 확인
+      return coupon.copnOperStCd === 'A20';
+    });
+
+    if (coupons.length === 0) { // 2순위 장기가입 쿠폰 있는지 확인
+      coupons = data.filter((coupon) => {
+        return coupon.copnOperStCd === 'A10';
+      });
+    }
+
+    if (coupons.length === 0) {
+      coupons = data;
+    }
+
+    // 만료일자가 가장 빠른 쿠폰 선택
+    let pick = 0;
+    for (let i = 1; i < coupons.length; i += 1) {
+      if (coupons[i].usePsblEndDt < coupons[pick].usePsblEndDt) {
+        pick = i;
+      }
+    }
+    return pick;
   }
 }
 

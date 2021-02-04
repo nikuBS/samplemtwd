@@ -224,12 +224,19 @@ Tw.CustomerPraise.prototype = {
         data: [{ list: list }]
       },
       $.proxy(this._handleOpenSelectArea, this),
-      undefined,
+      $.proxy(this._handleCloseSelectArea, this),
       undefined,
       this.$area
     );
   },
-
+  /**
+   * @desc 지역 변경 팝업 이벤트 Close 바인딩
+   * @private
+   */
+  _handleCloseSelectArea: function($layer) {
+    this.$area.find('button').attr("tabindex",-1);
+    this.$area.find('button').focus();
+  },
   /**
    * @desc 지역 변경 팝업 이벤트 바인딩
    * @private

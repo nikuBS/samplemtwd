@@ -22,6 +22,8 @@ import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types/title.type';
 // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
 import CommonHelper from '../../../../utils/common.helper';
 import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
+import MyTFareSubmainAdvController from '../../myt-fare.submain.adv.controller';
+import MyTFareBillGuideAdv from './myt-fare.bill.guide.adv.controllers';
 
 class MyTFareBillGuide extends TwViewController {
   private _miriService!: MytFareInfoMiriService;
@@ -101,6 +103,15 @@ class MyTFareBillGuide extends TwViewController {
   private _typeChk: any = null; // 화면구분
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if (pageInfo.advancement) {
+      const {env, visible} = pageInfo.advancement,
+        {NODE_ENV} = process.env;
+      // local 테스트틀 하기 위해 추가
+      if ((NODE_ENV === env && visible) || NODE_ENV === 'local') {
+        new MyTFareBillGuideAdv().initPage(req, res, next);
+        return false;
+      }
+    }
     const thisMain = this;
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
@@ -163,7 +174,7 @@ class MyTFareBillGuide extends TwViewController {
       }, null, [], API_VERSION.V2), 'p1'));
       // reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'));  // 성능개선으로 미호출
     } else {
-    // 사용요금 조회 : 대표청구 여부(svcInfo.actRepYn) N인 경우
+      // 사용요금 조회 : 대표청구 여부(svcInfo.actRepYn) N인 경우
       reqArr.push((this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
         invDt: this.reqQuery.date,
         selSvcMgmtNum: this.reqQuery.line
@@ -238,7 +249,7 @@ class MyTFareBillGuide extends TwViewController {
         // 총 요금, 할인요금
         thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt.replace(/,/g, ''));
         thisMain._commDataInfo.discount =
-            FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt.replace(/,/g, '')))));
+          FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt.replace(/,/g, '')))));
 
         // 청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
         thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
@@ -284,7 +295,7 @@ class MyTFareBillGuide extends TwViewController {
 
             thisMain.logger.info(thisMain, '[ 개별청구회선 ]', daySvcList.svcList.length);
             thisMain._typeChk = 'A4';
-          // 통합청구 회선
+            // 통합청구 회선
           } else {
 
             // 조회시 대표청구회선이거나 || 세션이 대표청구회선이면서 조회회선을 조회했을 경우
@@ -553,10 +564,10 @@ class MyTFareBillGuide extends TwViewController {
       item.label = item.name.substring(item.name.indexOf('(') + 1, item.name.indexOf(')') );
 
       if (item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M1 ||
-          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M2 ||
-          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M3 ||
-          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M4 ||
-          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.S3 ) {
+        item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M2 ||
+        item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M3 ||
+        item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M4 ||
+        item.svcType === MYT_JOIN_WIRE_SVCATTRCD.S3 ) {
 
         item.label = thisMain.phoneStrToDash(svcItem ? svcItem.svcNum : item.label);
 

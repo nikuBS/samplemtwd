@@ -26,6 +26,7 @@ Tw.MyTFareSubMain = function (params) {
 };
 
 Tw.MyTFareSubMain.prototype = {
+
   loadingView: function (value, selector) {
     if ( !selector ) {
       selector = '[data-id="wrapper"]';
@@ -267,7 +268,6 @@ Tw.MyTFareSubMain.prototype = {
     this._resTimerID = null;
     this._svcMgmtNumList = [];
     this._feeChartInfo = [];
-    //this._initBanners();
     this._getTosAdminMytFareBanner();
     this._initScroll();
     /**
@@ -289,7 +289,6 @@ Tw.MyTFareSubMain.prototype = {
       // this._claimPaymentRequest();
       this._responseClaimPayment({result: this.data.claim, code: Tw.API_CODE.CODE_00});
     }
-
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
     this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
@@ -384,11 +383,11 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   // 사용요금내역조회-1
-  _usageFeeRequest: function () {
+  /*_usageFeeRequest: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0021, {})
       .done($.proxy(this._responseUsageFee, this))
       .fail($.proxy(this._errorRequest, this));
-  },
+  },*/
 
   // 사용요금내역조회-2
   _responseUsageFee: function (resp) {
@@ -429,11 +428,11 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   // 최근청구요금내역조회-1
-  _claimPaymentRequest: function () {
+  /*_claimPaymentRequest: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0020, {})
       .done($.proxy(this._responseClaimPayment, this))
       .fail($.proxy(this._errorRequest, this));
-  },
+  },*/
 
   // 최근청구요금내역조회-2
   _responseClaimPayment: function (resp) {
@@ -473,27 +472,6 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른회선청구요금 조회-1
   _otherLineBills: function () {
-    // 성능 개선 항목으로 요금조회 하지 않고 화면 표시하도록 수
-    // var otherLineLength = this.data.otherLines.length;
-    // if ( otherLineLength > 0 ) {
-    //   var requestCommand = [];
-    //   for ( var idx = 0; idx < otherLineLength; idx++ ) {
-    //     this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
-    //     requestCommand.push({
-    //       command: this.data.otherLines[idx].actRepYn === 'N' ? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
-    //       // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
-    //       headers: {
-    //         'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
-    //       }
-    //     });
-    //   }
-    //   this._apiService.requestArray(requestCommand)
-    //     .done($.proxy(this._responseOtherLineBills, this))
-    //     .fail($.proxy(this._errorRequest, this));
-    // }
-    // else {
-    //   this._responseOtherLineBills();
-    // }
     this._responseOtherLineBills();
   },
 
@@ -576,49 +554,6 @@ Tw.MyTFareSubMain.prototype = {
     return String(str).replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   },
 
-  // 실시간 사용요금 요청-1
-  _realTimeBillRequest: function () {
-    // 매월 1일은 비노출, 휴대폰, T-PocketFi 인 경우에만 노출
-    if ( this.data.isRealTime && this.data.isNotFirstDate ) {
-      this.loadingView(true, 'button[data-id=realtime-pay]');
-      this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
-    }
-  },
-
-  // 실시간 사용요금 요청-2
-  _getBillResponse: function () {
-    this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, { count: ++this._requestCount })
-      .done($.proxy(this._onReceivedBillData, this))
-      .fail($.proxy(this._onErrorReceivedBillData, this));
-  },
-
-  // 실시간 사용요금 요청-3
-  _onReceivedBillData: function (resp) {
-    this.loadingView(false, 'button[data-id=realtime-pay]');
-    if ( resp.result && resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( _.isEmpty(resp.result) ) {
-        this._realTimeBillRequest();
-      }
-      else {
-        if ( this._resTimerID ) {
-          this.__resetTimer();
-        }
-        // 당월 기준으로 실시간 요금 노출
-        var realtimeBillInfo = resp.result.hotBillInfo[0];
-        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2 + Tw.CHART_UNIT.WON);
-      }
-    }
-    else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {
-      // 요청을 하지 않은 경우
-      this._requestCount = -1;
-      this._realTimeBillRequest();
-    }
-    else {
-      this._onErrorReceivedBillData(resp);
-    }
-  },
-
   /**
    * 세금계산서, 기부금내역 조회
    * @private
@@ -638,14 +573,6 @@ Tw.MyTFareSubMain.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0038, {})
       .done($.proxy(this._responseContribute, this))
       .fail($.proxy(this._errorRequest, this));
-
-
-    // 세금계산서 재발행을 위한 내역조회 캐싱처리를 위해 request 분기(성능개선 대상)
-    /*this._apiService.requestArray([
-      { command: Tw.API_CMD.BFF_07_0017 },
-      { command: Tw.API_CMD.BFF_05_0038 }
-    ]).done($.proxy(this._responseTaxContribute, this))
-      .fail($.proxy(this._errorRequest, this));*/
   },
 
   /**
@@ -705,40 +632,6 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
   },
-
-
-  /* // 세금계산서 재발행을 위한 내역조회 캐싱처리를 위해 request 분기(성능개선 대상)
-  _responseTaxContribute: function (tax, cont) {
-    if ( cont.code === Tw.API_CODE.CODE_00 ) {
-      if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
-        this.data.contribution = cont.result;
-      }
-    }
-
-    if ( tax.code === Tw.API_CODE.CODE_00 ) {
-      this.data.taxInvoice = tax.result;
-    }
-    //if ( tax.code === 'BIL0018' ) {}
-    // 사업자 번호를 조회할 수 없는 상황
-
-    var twoPiece = this.data.taxInvoice && this.data.contribution;
-    if ( !twoPiece ) {
-      if ( !this.data.taxInvoice && !this.data.contribution ) {
-        this.$container.find('[data-id="tc-container-empty"]').hide();
-        this.$container.find('[data-id="tc-container"]').hide();
-      }
-      else if ( this.data.taxInvoice ) {
-        this.$taxInv.parent().removeClass('btn-link-list').addClass('full-link-list');
-        this.$taxInv.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.TAX_TEMP);
-        this.$contribution.hide();
-      }
-      else if ( this.data.contribution ) {
-        this.$contribution.parent().removeClass('btn-link-list').addClass('full-link-list');
-        this.$contribution.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.CONTB_TEMP);
-        this.$taxInv.hide();
-      }
-    }
-  },*/
 
   // 최근사용요금 월표시 (당해년 제외 년월로 표시)
   _recentChartDate: function (date) {
@@ -831,21 +724,7 @@ Tw.MyTFareSubMain.prototype = {
       return;
     }
     for (var index = 0; index < countTotal; index += 1) {
-      var line = this._linesTotal[indexLast + index]; // this.data.otherLines[indexLast + index];
-      // 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없음 -> 통합청구여부 icon 출력안하기로 결정됨
-      // var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
-      /*
-      var isCombine = false;
-      var repSvc = (item.actRepYn === 'Y'); // 대표청구여부
-      data = _.extend({
-        combine: isCombine,
-        repSvc: repSvc,
-        amt: '',
-        svcType: this.__selectSvcType(item.svcAttrCd),
-        isAddr: (['S1', 'S2'].indexOf(item.svcAttrCd) > -1)
-      }, item);
-      var result = this._genLineTemplate(data);
-      */
+      var line = this._linesTotal[indexLast + index];
       var result = (line.child ? this._genChildLineTemplate : this._genLineTemplate)(line);
       this.$container.find('ul.my-line-info').append(result);
     }
@@ -878,10 +757,10 @@ Tw.MyTFareSubMain.prototype = {
     this._historyService.goLoad('/myt-fare/bill/option/change-address');
   },
 
-  _onErrorReceivedBillData: function (resp) {
+  /*_onErrorReceivedBillData: function (resp) {
     this.__resetTimer();
     this._errorRequest(resp);
-  },
+  },*/
 
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
@@ -914,11 +793,11 @@ Tw.MyTFareSubMain.prototype = {
     Tw.Error(resp.code, resp.msg).pop();
   },
 
-  __resetTimer: function () {
+  /*__resetTimer: function () {
     clearTimeout(this._resTimerID);
     this._requestCount = -1;
     this._resTimerID = null;
-  },
+  },*/
 
   __selectSvcType: function (attrCd) {
     var clsNm = 'cellphone';
@@ -935,14 +814,14 @@ Tw.MyTFareSubMain.prototype = {
     return clsNm;
   },
 
-  __selectOtherLine: function (number) {
+  /*__selectOtherLine: function (number) {
     var select = _.find(this.data.otherLines, function (item) {
       if ( item.svcMgmtNum === number ) {
         return item;
       }
     });
     return select;
-  },
+  },*/
 
   /**
    * 소액결제, 컨텐츠 이용료 화면으로 이동

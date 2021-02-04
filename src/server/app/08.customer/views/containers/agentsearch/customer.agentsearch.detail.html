@@ -211,12 +211,12 @@
 <script type="text/template" id="tpl_contact_item">
     {{#if isReserve}}
     <div class="tod-o2o-btns col2">
-        <a class="btn btn-phone fe-tel" data-tel="{{tel}}">전화걸기</a>
+        <a class="btn btn-phone fe-tel" data-tel="{{tel}}" href="tel:{{tel}}">전화걸기</a>
         <a href="#" class="btn btn-booking fe-booking" data-booking-url="{{url}}" data-charge="{{charge}}">상담 예약</a>
     </div>
     {{else}}
     <div class="tod-o2o-btns col1">
-        <a class="btn btn-phone fe-tel" data-tel="{{tel}}">전화걸기</a>
+        <a class="btn btn-phone fe-tel" data-tel="{{tel}}" href="tel:{{tel}}">전화걸기</a>
     </div>
     {{/if}}
 </script>
