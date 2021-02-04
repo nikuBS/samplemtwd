@@ -89,16 +89,24 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
-                                            <span class="total">무제한</span>>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
+                                        <span class="remain">무제한</span>
                                         <%_ } else { _%>
                                             <%_ if (totalData.showRemained.data) { _%>
-                                                <span class="total">
-                                                    <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
-                                                </span><%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
-                                                <br>남음
+                                            <span class="total">
+                                                <%_ if (totalData.etcRemainedRatio > 0) { _%>
+                                                <%= totalData.showEtcTotal.data %><%= totalData.showEtcTotal.unit %>
                                                 <%_ } else { _%>
-                                                <span class="total"><%- totalData.showRemained %>원</span>> 남음
+                                                <%= totalData.showTotal.data %><%= totalData.showTotal.unit %>
+                                                <%_ } _%>
+                                            </span>
+                                            <% var blue = totalData.etcRemainedRatio > 0 ? '' : 'blue' %>
+                                            <span class="remain <%= blue %>">
+                                                <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>
+                                                <br>남음
+                                            </span>
+                                            <%_ } else { _%>
+                                            <span class="remain"><%- totalData.showRemained %>원</span> 남음
                                             <%_ } _%>
                                         <%_ } _%>
                                     </p>
@@ -192,15 +200,18 @@
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
                                         <%_ if (sdata.isUnlimit) { _%>
-                                        <span class="total">무제한</span>>
+                                        <span class="remain">무제한</span>
                                         <%_ } else { _%>
                                             <%_ if (sdata.showRemained.data) { _%>
                                             <span class="total">
-                                                        <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>/
-                                                    </span><%= sdata.showTotal.data %><%= sdata.showTotal.unit %>
-                                            <br>남음
+                                                    <%= sdata.showTotal.data %><%= sdata.showTotal.unit %>
+                                                </span>
+                                            <span class="remain">
+                                                    <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>
+                                                    <br>남음
+                                                </span>
                                             <%_ } else { _%>
-                                            <span class="total"><%- sdata.showRemained %>원</span>> 남음
+                                            <span class="remain"><%- sdata.showRemained %>원</span> 남음
                                             <%_ } _%>
                                         <%_ } _%>
                                     </p>
@@ -289,9 +300,9 @@
                                     </li>
                                     <li class="link-item">
                                         <a href="/myt-data/familydata/share" class="data-amount">
-                                            총 <%= totalData.showTmoaTotal.data %><%= totalData.showTmoaTotal.unit %> 중
+                                            총 <%= data.family.showTotal.data %><%= data.family.showTotal.unit %> 중
                                             <strong>
-                                                <%= totalData.showTmoaRemained.data %><%= totalData.showTmoaRemained.unit %>남음
+                                                <%= data.family.showRemained.data %><%= data.family.showRemained.unit %>남음
                                             </strong>
                                         </a>
                                     </li>
@@ -419,17 +430,25 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
-                                        <span class="total">무제한</span>>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
+                                        <span class="remain">무제한</span>
                                         <%_ } else { _%>
-                                        <%_ if (totalData.showRemained.data) { _%>
-                                        <span class="total">
-                                                            <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
-                                                        </span><%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
-                                        <br>남음
-                                        <%_ } else { _%>
-                                        <span class="total"><%- totalData.showRemained %>원</span>> 남음
-                                        <%_ } _%>
+                                            <%_ if (totalData.showRemained.data) { _%>
+                                            <span class="total">
+                                                    <%_ if (totalData.etcRemainedRatio > 0) { _%>
+                                                    <%= totalData.showEtcTotal.data %><%= totalData.showEtcTotal.unit %>
+                                                    <%_ } else { _%>
+                                                    <%= totalData.showTotal.data %><%= totalData.showTotal.unit %>
+                                                    <%_ } _%>
+                                                </span>
+                                            <% var blue = totalData.etcRemainedRatio > 0 ? '' : 'blue' %>
+                                            <span class="remain <%= blue %>">
+                                                    <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>
+                                                    <br>남음
+                                                </span>
+                                            <%_ } else { _%>
+                                            <span class="remain"><%- totalData.showRemained %>원</span> 남음
+                                            <%_ } _%>
                                         <%_ } _%>
                                     </p>
                                     <!-- loop  -->
@@ -471,16 +490,19 @@
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
                                         <%_ if (sdata.isUnlimit) { _%>
-                                        <span class="total">무제한</span>>
+                                        <span class="remain">무제한</span>
                                         <%_ } else { _%>
-                                        <%_ if (sdata.showRemained.data) { _%>
-                                        <span class="total">
-                                                                <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>/
-                                                            </span><%= sdata.showTotal.data %><%= sdata.showTotal.unit %>
-                                        <br>남음
-                                        <%_ } else { _%>
-                                        <span class="total"><%- sdata.showRemained %>원</span>> 남음
-                                        <%_ } _%>
+                                            <%_ if (sdata.showRemained.data) { _%>
+                                            <span class="total">
+                                                <%= sdata.showTotal.data %><%= sdata.showTotal.unit %>
+                                            </span>
+                                            <span class="remain">
+                                                <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>
+                                                <br>남음
+                                            </span>
+                                            <%_ } else { _%>
+                                            <span class="remain"><%- sdata.showRemained %>원</span> 남음
+                                            <%_ } _%>
                                         <%_ } _%>
                                     </p>
                                     <!-- loop totalRemainedRatio 총 남은 데이터 양, etcRemainedRatio 공유데이터 제외한 남은양 -->
@@ -697,17 +719,25 @@
                                 <div class="donut-chart-area">
                                     <p class="left">
                                         <!-- 총 데이터 중 공유한 데이터 제외 한 남은데이터 / 사용한 데이터 -->
-                                        <%_ if (totalData.isUnlimit) { _%>
-                                        <span class="total">무제한</span>>
+                                        <%_ if (data.remnantData.totalLimit) { _%>
+                                            <span class="remain">무제한</span>
                                         <%_ } else { _%>
-                                        <%_ if (totalData.showRemained.data) { _%>
-                                        <span class="total">
-                                                                    <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>/
-                                                                </span><%= totalData.showEtcmoaRemained.data %><%= totalData.showEtcmoaRemained.unit %>
-                                        <br>남음
-                                        <%_ } else { _%>
-                                        <span class="total"><%- totalData.showRemained %>원</span>> 남음
-                                        <%_ } _%>
+                                            <%_ if (totalData.showRemained.data) { _%>
+                                            <span class="total">
+                                                    <%_ if (totalData.etcRemainedRatio > 0) { _%>
+                                                    <%= totalData.showEtcTotal.data %><%= totalData.showEtcTotal.unit %>
+                                                    <%_ } else { _%>
+                                                    <%= totalData.showTotal.data %><%= totalData.showTotal.unit %>
+                                                    <%_ } _%>
+                                                </span>
+                                            <% var blue = totalData.etcRemainedRatio > 0 ? '' : 'blue'; %>
+                                            <span class="remain <%= blue %>">
+                                                    <%= totalData.showRemained.data %><%= totalData.showRemained.unit %>
+                                                    <br>남음
+                                                </span>
+                                            <%_ } else { _%>
+                                            <span class="remain"><%- totalData.showRemained %>원</span> 남음
+                                            <%_ } _%>
                                         <%_ } _%>
                                     </p>
                                     <!-- loop  -->

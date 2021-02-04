@@ -1,0 +1,220 @@
+<%#
+* MenuName: 나의 가입정보 > 서브메인 [회선정보]
+* @file myt-join.submain.adv.service.html (MS)
+* @author Kim InHwan (skt.P132150@partner.sk.com)
+* @since 2021.01.281
+_%>
+
+<section class="cont-card">
+    <div class="section-inner">
+        <div class="head-tit">조회/신청 서비스</div>  <!-- 201211 [OP002-10282] 수정01  -->
+        <div class="card-cont">
+            <div class="acc-list-wrap">
+                <!-- .widget -->
+                <div class="widget ">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+                                <ul class="acco-list pd0">
+                                    <%_
+                                    var defaultPausedState = !!(data.myPausedState && data.myPausedState.svcStCd);
+                                    var isLongPausedFinish = !(data.myLongPausedState && data.myLongPausedState.stateReleased);
+                                    var isPaused = ((data.myPausedState && data.myPausedState.svcStCd !== 'AC') &&
+                                    !(data.myPausedState.armyDt || data.myPausedState.armyExtDt) && data.myPausedState.reservedYn !== 'Y');
+                                    _%>
+                                    <%_ if(defaultPausedState) { _%>
+                                        <%_ if (isPaused || isLongPausedFinish) { _%>
+                                        <!-- 일시정지 신청 가능한 상태 -->
+                                        <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">일시정지</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능하며, Wi-Fi 접속으로도 해제 신청 가능합니다.</p>
+                                                <div class="btn-area">
+                                                    <a href="#" data-id="pause_c" class="rect-btn">신청하기</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <%_ } else { _%>
+                                        <li class="acco-box acc-item">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">정지현황</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="dot-list">
+                                                    <li class="dot-item">
+                                            <%_ if (data.myPausedState.svcStCd === 'AC') {
+                                                    if (data.myLongPausedState && data.myLongPausedState.state) {
+                                                        var longStateCd = data.myLongPausedState.opStateCd;
+                                                        if (data.myPausedState.armyDt || data.myPausedState.armyExtDt) {
+                                            _%>
+                                                            장기일시정지 해제 중
+                                            <%_
+                                                        } else {
+                                                            if (!isLongPausedFinish) {
+                                            _%>
+                                                            장기일시정지 <%- longStateCd ? data.myLongPausedState.opState : '중' %>
+                                            <%_
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (data.myPausedState.armyDt || data.myPausedState.armyExtDt) {
+                                            _%>
+                                                            장기일시정지 해제 중
+                                            <%_
+                                                        } else if (data.myPausedState.reservedYn === 'Y') {
+                                            _%>
+                                                            일시정지 예약중 <span class="small-txt"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span>
+                                            <%_
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (data.myLongPausedState && data.myLongPausedState.state) {
+                                                        var longStateCd = data.myLongPausedState.opStateCd;
+                                            _%>
+                                                        장기일시정지 <%- longStateCd ? data.myLongPausedState.opState : '중' %>
+
+                                            <%_
+                                                        if (['21', '22', '27'].indexOf(data.myPausedState.svcChgRsnCd) === -1) {
+                                            _%>
+                                                        일지정지 이용 중 <span class="small-txt"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate %></span>
+                                            <%_
+                                                        }
+                                            _%>
+                                            <%_
+                                                    } else {
+                                            _%>
+                                                        일시정지 이용 중 <span class="small-txt"><%- data.myPausedState.sDate %>~<%- data.myPausedState.eDate || '' %></span>
+                                            <%_
+                                                    }
+                                                }
+                                            _%>
+                                                        <p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능하며, Wi-Fi 접속으로도 해제 신청 가능합니다.</p>
+                                                    </li>
+                                                </ul>
+                                                <div class="btn-area">
+                                                    <a href="#" data-id="pause_c" class="rect-btn">상세보기</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <%_ } _%>
+                                    <%_ } _%>
+                                    <%_ if (data.myWirePauseState) { _%>
+                                    <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">일시정지/해제</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                        </div>
+                                        <div class="acco-cont">
+                                            <p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능하며, Wi-Fi 접속으로도 해제 신청 가능합니다.</p>
+                                            <div class="btn-area" data-id="wire-pause">
+                                                <a href="#" class="rect-btn">
+                                                    <%= data.myWirePauseState.svc_st_cd === 'SP'? '해제하기':'신청하기'; %>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <%_ } _%>
+                                    <%_ if(data.isPwdSt) { _%>
+                                    <li class="acco-box acc-item">
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">고객보호비밀번호 서비스</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="dot-list">
+                                                <li class="dot-item">현재 고객보호 비밀번호 서비스를 이용 중입니다.</li>
+                                            </ul>
+                                            <div class="btn-area">
+                                                <a href="#" data-id="change-pwd" class="rect-btn">변경하기</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <%_ } _%>
+                                    <%_ if (data.type === 2) { _%>
+                                        <% if(data.smsInfo) { %>
+                                        <li class="acco-box acc-item">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">망 작업 알림 받기</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <p class="warning">인터넷 및 전화품질 향상을 위해 고객님의 거주지역에서 망작업이 진행될 경우 휴대폰 메시지로 알려드리는 서비스 입니다.</p>
+                                                <div class="btn-area">
+                                                    <a href="#" data-id="work-notify" class="rect-btn">
+                                                        <%= data.smsInfo.cntcNum? '변경하기' : '신청하기' %>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <% } %>
+                                        <% if (data.isWireFree) { %>
+                                        <li class="acco-box acc-item">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">B끼리 무료통화 대상자 조회</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <p class="warning">T_B끼리 통화무제한에 가입하신 고객만 B끼리 무료통화 대상자 조회가 가능합니다.</p>
+                                                <div class="btn-area" data-id="B-target-inq">
+                                                    <a href="#" class="rect-btn">신청하기</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <% } %>
+                                    <%_ } _%>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <%_
+            if (data.type === 0) {
+                if (data.isOldNumber || data.isNotChangeNumber) {
+            _%>
+                <div class="hash-wrap">
+                    <ul class="hash-list normal">
+                        <%_ if (data.isOldNumber) { _%>
+                        <li class="hash-item" data-id="old_number">
+                            <a href="#" class="hash">#010 전환 번호변경</a>
+                        </li>
+                        <%_ } _%>
+                        <%_ if (data.isNotChangeNumber) { _%>
+                        <li class="hash-item" data-id="change_number">
+                            <a href="#" class="hash">#번호변경 안내서비스</a>
+                        </li>
+                        <%_ } _%>
+                    </ul>
+                </div>
+            <%_
+                }
+            }
+            _%>
+            <%_ if (data.type === 2) { _%>
+            <div class="hash-wrap">
+                <ul class="hash-list normal">
+                    <li class="hash-item" data-id="svc-cancel">
+                        <a href="#" class="hash">#서비스 해지</a>
+                    </li>
+                    <li class="hash-item" data-id="addr-chg">
+                        <a href="#" class="hash">#설치장소 변경</a>
+                    </li>
+                    <li class="hash-item" data-id="prod-chg">
+                        <a href="#" class="hash">#상품 변경</a>
+                    </li>
+                    <li class="hash-item" data-id="inst-chg">
+                        <a href="#" class="hash">#약정기간 변경</a>
+                    </li>
+                    <li class="hash-item" data-id="transfer-fee">
+                        <a href="#" class="hash">#명의변경 신청 방법</a>
+                    </li>
+                    <% if (data.svcInfo.svcAttrCd === 'S3') { %>
+                    <li class="hash-item" id="fe-wire-num-change">
+                        <a href="#" class="hash">#전화 번호변경</a> <!-- 201222 [OP002-10282]추가01 -->
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+            <%_ } _%>
+        </div>
+    </div>
+</section>

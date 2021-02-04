@@ -242,9 +242,13 @@ Tw.CustomerSvcInfoSite.prototype = {
       e.preventDefault();
       $('.idpt-accordian > li > a', $container).removeClass('open');
       $('.idpt-accordian-cont', $container).slideUp();
+      $(this).parent().parent().find("a").attr("aria-pressed","false");
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
+        $(this).attr('aria-pressed',"true");
+      } else {
+        $(this).attr('aria-pressed',"false");
       }
     });
   
@@ -254,6 +258,11 @@ Tw.CustomerSvcInfoSite.prototype = {
     $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
+        if ($(this).hasClass('open')){
+          $(this).attr('aria-pressed', 'true');
+        } else {
+            $(this).attr('aria-pressed', 'false');
+        }        
       });
     });
   }

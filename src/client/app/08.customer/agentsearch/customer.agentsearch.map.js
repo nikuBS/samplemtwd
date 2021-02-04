@@ -75,6 +75,7 @@ Tw.CustomerAgentsearchMap.prototype = {
     this.$loading = this.$container.find('.fe-loading');  // 로딩
     this.$mapListArea = this.$container.find('.fe-map-list-area');  // 지도+리스트
     this.$normalList = this.$container.find('.fe-normal-list-area');  // 리스트
+    this.$mapArea = this.$container.find('#fe-map-area');  // 지도
     this.$toggleButton = this.$container.find('.fe-toggle-button');  // 리스트 보기/지도 보기 토글버튼
     this.$listArea = this.$container.find('.fe-list-area');  // 리스트 바인딩 될 영역
     this.$noShop = this.$container.find('.fe-no-shop');  // 반경 거리 이내에 매장 없을 때 보이는 영역
@@ -141,12 +142,17 @@ Tw.CustomerAgentsearchMap.prototype = {
    */
   _toggleList: function (showList) {
     var $button = this.$toggleButton.find('button');
-
+    
     if (showList) {
+      this.$mapArea.attr("aria-hidden","true");
+      this.$mapArea.addClass('none');
+      this.$listArea.find(".tod-o2o-item:first").focus();
       $button.removeClass('btn-display-list').addClass('btn-display-map');
       this._setListOpen();
       $button.text($button.data('map'));
     } else {
+      this.$mapArea.attr("aria-hidden","false");
+      this.$mapArea.removeClass();
       $button.removeClass('btn-display-map').addClass('btn-display-list');
       this._setListClose();
       $button.text($button.data('list'));

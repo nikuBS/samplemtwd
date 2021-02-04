@@ -1,0 +1,102 @@
+<%#
+* MenuName: 나의 요금 > 서브메인
+* @file myt-fare.submain.adv.html
+* @author 양정규
+* @since 2020.10.21
+* Summay: 나의요금 서브메인 화면
+_%>
+<%- include('../components/start.component.html', { pageInfo: data.pageInfo }); _%>
+<%- include('../components/javascript.component.html') %>
+<body class="tod-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
+        <!-- #header -->
+        <%- include('../../../common/views/components/header.component.html', { title: '나의 요금', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); _%>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap" data-id="wrapper">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container tod-submain">
+                <%# OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 _%>
+                <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B12-29", multiple : "CMMA_A3_B12-28"} }); _%>
+                <%# // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 _%>
+                <%_if(data.isPPS){_%>
+                <%- include('../components/submain/myt-fare.submain.pps.html', data) _%>
+                <%_} else {_%>
+                <%- include('../components/submain/myt-fare.submain.adv.claim-pay.html') _%>
+                <%_if(data.isNotFirstDate && data.isRealTime) {_%>
+                <section class="cont-card">
+                    <div class="section-inner">
+                        <div class="head-tit mb0">
+                            <a href="/myt-fare/bill/hotbill" class="link" data-make-eid="realtime">실시간 이용요금</a>
+                        </div>
+                    </div>
+                </section>
+                <%_}_%>
+                <%- include('../components/submain/myt-fare.submain.small.html') _%> <%# 휴대폰결제(구 소액결제)/콘텐츠 이용료 영역%>
+                <%- include('../components/submain/myt-fare.submain.bill-info.html') _%> <%# 납부/청구정보 영역%>
+                <%_if(data.isShowAffiliateCard){_%>
+                <div class="submain-banner">
+                    <a href="/myt-fare/bill/option" data-make-eid="bank">
+                        <p class="banner-comment">
+                            <strong><span class="normal">납부 방법을 변경하고</span><br>혜택을 받아 보세요!</strong>
+                        </p>
+                        <img src="<%-CDN%>/img/myt/submain-banner06.png" alt="">
+                    </a>
+                </div>
+                <%_}_%>
+                <%- include('../components/submain/myt-fare.submain.child.html') _%> <%# 자녀회선 영역%>
+                <%# 상용배포 시 숨길예정%>
+                <div class="submain-banner">
+                    <a href="/product/wireplan/join/reservation?type_cd=cellphone" data-make-eid="counsel">
+                        <p class="banner-comment">
+                            <strong>가입 상담을 예약 하시겠어요?</strong>
+                            <span class="bsub-txt">상담사가 직접 연락드립니다.</span>
+                        </p>
+                        <img src="<%-CDN%>/img/myt/submain-banner02.png" alt="">
+                    </a>
+                </div>
+                <%- include('../components/submain/myt-fare.submain.recent-bill.html') _%> <%# 최근 청구(이용) 영역%>
+                <%- include('../components/submain/myt-fare.submain.my-benefit.html') _%> <%# 나의혜택/할인 영역%>
+                <%- include('../components/submain/myt-fare.submain.lookup.html') _%> <%# 조회/신청 서비스 영역%>
+
+                <!--TOS admin 배너-->
+                <div class="submain-swipe-banner submain-swipe" data-id="banners" data-make-eid="tos">
+                    <div class="main-slide-banner slide-pagingtype pg-rtop">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box">
+                                <div class="slider-box">
+                                    <ul class="slider" data-id="banner-list" data-location="M"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <%- include('../components/submain/myt-fare.submain.other-menu.html') _%> <%# 다른메뉴를 찾고있나요 영역%>
+
+                <%_}_%>
+
+            </div>
+            <div class="dim"></div>
+        </div>
+        <!--// #contents -->
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+    </div>
+</body>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareSubMainAdv({
+      $element: $('.wrap'),
+      data: JSON.parse('<%- JSON.stringify(data) %>')
+    });
+  });
+</script>
+<%- include('../components/end.component.html') %>

@@ -10140,3 +10140,12 @@ button:focus span {
 #common-menu.tod-common-menu .footer .tod-f-gb-area .tod-f-gb-link a em {font-size:0.6875rem; color:#bb0024}
 #common-menu.tod-common-menu .footer .tod-f-gb-area .tod-f-gb-link .i_beta {width:1.4375rem; height:0.6875rem; vertical-align:middle}
 
+
+/* 210125 [OP002-12898] [PUB](W-2011-032-01) [TOS] 텍스트 배너 기능 추가 */
+.tod-tos-text-banner {position:relative; z-index:25; background-color:#f8f8f8}
+.tod-tos-text-banner .tb-link {display:flex; align-items: center; height:3.4375rem; padding-left:0.9375rem; margin-right:3.25rem; box-sizing: border-box;}
+.tod-tos-text-banner .tb-icon {display:block; width:37px; height:37px}
+.tod-tos-text-banner .tb-icon img {width:37px; height:37px; vertical-align:middle}
+.tod-tos-text-banner .tb-text {margin-left:0.625rem; color:#333333; font-size:0.875rem; letter-spacing: -0.5px;}
+.tod-tos-text-banner .tb-close {position:absolute; top:0; bottom:0; right:0; width:3.25rem; background: url(/img/svg/icon_32px_exit.svg) no-repeat 50% 50% / 13px 13px;}
+#common-menu.tod-common-menu.scroll .tod-tos-text-banner {box-shadow:0 0.0625rem 0.625rem rgba(0,0,0,0.3)}
