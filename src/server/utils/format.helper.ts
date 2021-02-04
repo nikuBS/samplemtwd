@@ -451,7 +451,6 @@ class FormatHelper {
    */
   static replaceDateMasking(value: string): string {
     const MASK_CODE = '*';
-    console.log('#################### value', value);
     if (value && value.indexOf(MASK_CODE) > -1) {
       // ****.**.**
       return value
