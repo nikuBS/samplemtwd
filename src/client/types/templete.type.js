@@ -849,10 +849,9 @@ Tw.MYT_TPL = {
     NEW_CHILD_WIDGET: '<!-- .widget --><div class="widget"><div class="widget-box slider6"><div class="slider-box">' +
       '<div class="slider"></div></div></div></div><!-- //.widget -->',
     NEW_CHILD_LINE_TEMP: '<div class="slider-item"><!-- li -->' +
-      '<a href="#" class="slider-inner">' +
-      '<p class="child-tit">{{eqpMdlNm}}<span class="tel-num">{{svcNum}}</span></p>' +
-      '<ul class="report-list item-no-border small"><li class="report-item"><dl class="report-define d-wrap">' +
-      '<dt class="report-tit">요금제</dt><dd class="report-cont">{{prodNm}}</dd></dl></li>' +
+      '<a href="/myt-data/submain/child-hotdata?childSvcMgmtNum={{svcMgmtNum}}" class="slider-inner">' +
+      '<p class="child-tit">{{nickNm}}<span class="tel-num">{{svcNum}}</span></p>' +
+      '<ul class="report-list item-no-border small"><li class="report-item"><dl class="report-define d-wrap"></dl></li>' +
       '<li class="report-item"><dl class="report-define d-wrap"><dt class="report-tit">잔여데이터</dt>' +
       '<dd class="report-cont">{{data}}{{unit}}</dd></dl></li></ul></a></div>'
   },
