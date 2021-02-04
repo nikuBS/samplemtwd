@@ -115,44 +115,46 @@
                     </div>
                     <div class="card-cont">
                         <div class="charging-wrap">
-                            <ul class="large-ico-list">
-                                <li class="ico-item">
-                                    <div class="ico-inner">
-                                        <i class="ico"><img src="<%= CDN %>/img/myt/coupon04.svg" alt=""></i>
-                                        <div class="ico-txt">
-                                            <span class="ico-tit">음성 충전</span>
-                                            <span class="ico-sub-txt">금액별 음성통화 충전하기</span>
-                                        </div>
-                                        <div class="charging-btn-area">
-                                            <a href="/myt-data/recharge/prepaid/voice" class="rect-btn smaller">1회 충전</a>
-                                            <a href="/myt-data/recharge/prepaid/voice-auto" class="rect-btn smaller">
-                                                <%_ if (data.ppsAutoVoice) { _%>
-                                                자동 충전 변경/해지
-                                                <%_ } else { _%>
-                                                자동 충전
-                                                <%_ } _%>
-                                            </a>
-                                        </div>
-                                    </div>
+                            <ul class="pps-charge-list">
+                                <li class="pps-item">
+                                    <dl class="charge">
+                                        <dt>
+                                            음성 충전
+                                            <span class="sub-desc">금액별 음성통화 충전하기</span>
+                                        </dt>
+                                        <dd>
+                                            <div class="btn-area short btn2">
+                                                <a href="/myt-data/recharge/prepaid/voice" class="rect-btn">1회 충전</a>
+                                                <a href="/myt-data/recharge/prepaid/voice-auto" class="rect-btn">
+                                                    <%_ if (data.ppsAutoVoice) { _%>
+                                                    자동 충전 변경/해지
+                                                    <%_ } else { _%>
+                                                    자동 충전
+                                                    <%_ } _%>
+                                                </a>
+                                            </div>
+                                        </dd>
+                                    </dl>
                                 </li>
-                                <li class="ico-item">
-                                    <div class="ico-inner">
-                                        <i class="ico"><img src="<%= CDN %>/img/myt/coupon01.svg" alt=""></i>
-                                        <div class="ico-txt">
-                                            <span class="ico-tit">데이터 충전</span>
-                                            <span class="ico-sub-txt">사용기간별 데이터량 충전하기</span>
-                                        </div>
-                                        <div class="charging-btn-area">
-                                            <a href="/myt-data/recharge/prepaid/data" class="rect-btn smaller">1회 충전</a>
-                                            <a href="/myt-data/recharge/prepaid/data-auto" class="rect-btn smaller">
-                                                <%_ if (data.ppsAutoData) { _%>
-                                                자동 충전 변경/해지
-                                                <%_ } else { _%>
-                                                자동 충전
-                                                <%_ } _%>
-                                            </a>
-                                        </div>
-                                    </div>
+                                <li class="pps-item">
+                                    <dl class="charge">
+                                        <dt>
+                                            데이터 충전
+                                            <span class="sub-desc">사용기간별 데이터량 충전하기</span>
+                                        </dt>
+                                        <dd>
+                                            <div class="btn-area short btn2">
+                                                <a href="/myt-data/recharge/prepaid/data" class="rect-btn">1회 충전</a>
+                                                <a href="/myt-data/recharge/prepaid/data-auto" class="rect-btn">
+                                                    <%_ if (data.ppsAutoData) { _%>
+                                                    자동 충전 변경/해지
+                                                    <%_ } else { _%>
+                                                    자동 충전
+                                                    <%_ } _%>
+                                                </a>
+                                            </div>
+                                        </dd>
+                                    </dl>
                                 </li>
                             </ul>
                         </div>
