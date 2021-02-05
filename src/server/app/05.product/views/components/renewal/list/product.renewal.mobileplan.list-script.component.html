@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function() {
-        new Tw.ProductRenewalList( $('.wrap'), JSON.parse('<%- JSON.stringify(params) %>'), JSON.parse('<%- JSON.stringify(svcInfo) %>'), JSON.parse('<%- JSON.stringify(series) %>'), '<%= hasNext %>' );
-        new Tw.ProductCompare( $('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>') );
+        new Tw.ProductRenewalList( $('.wrap'), JSON.parse('<%- JSON.stringify(params) %>'), JSON.parse('<%- JSON.stringify(svcInfo) %>'), JSON.parse('<%- JSON.stringify(series) %>'), '<%= hasNext %>', '<%= networkInfoFilter[0] %>' );
+        new Tw.ProductCompare( $('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'), '<%= networkInfoFilter[0] %>');
     })
 </script>

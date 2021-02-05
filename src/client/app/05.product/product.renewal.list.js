@@ -1,12 +1,11 @@
-
-
-Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext) {
+Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, networkInfo) {
     this.$container = rootEl;
     this._params = params; //  검색 필터용 params
     this._params.searchLastProdId = ''; // 탭 없는 랜딩페이지 시 추가된 searchLastProdId 초기화
     this._svcInfo = svcInfo;
     this._series = series;
     this._hasNext = hasNext;
+    this._networkInfo = networkInfo;
 
   
     this.CODE = 'F01100';
@@ -42,11 +41,10 @@ Tw.ProductRenewalList.prototype = {
 
     _scrollFocus: function() {
       if(this.curMobileFilter[0] !== undefined || this.themeParam !== '') { // 탭 제목 보이도록 상단 스크롤 이동
-        var $tabWrap = $(".tod-nmp-tab").find("ul");
+        var $tabWrap = $('.tod-nmp-tab').find('ul');
         var tabWidth = $tabWrap.width();
-        var onWidth = $tabWrap.find(".on").width();
-        var onPosi = $tabWrap.find(".on").position();
-        console.log(onPosi);
+        var onWidth = $tabWrap.find('.on').width();
+        var onPosi = $tabWrap.find('.on').position();
         var onTotalPosi = onPosi.left + onWidth;
         if(onTotalPosi > tabWidth){
           $tabWrap.scrollLeft(onPosi.left - 20);
@@ -56,9 +54,9 @@ Tw.ProductRenewalList.prototype = {
       //스크롤시 헤더 숨김 및 tab 고정
       $(document).scroll(function(){
         if($(this).scrollTop() > 51 ){
-          $(".tod-nmp-top-wrap").addClass("tod-nmp-scroll-fixed");
+          $('.tod-nmp-top-wrap').addClass('tod-nmp-scroll-fixed');
         } else {
-          $(".tod-nmp-top-wrap").removeClass("tod-nmp-scroll-fixed");
+          $('.tod-nmp-top-wrap').removeClass('tod-nmp-scroll-fixed');
         }
       });
     },
@@ -151,7 +149,7 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _onClosequickinitailPopup: function($target) {
+    _onClosequickinitailPopup: function() {
 
     },
 
@@ -323,7 +321,7 @@ Tw.ProductRenewalList.prototype = {
       );
     },
 
-    _handleOpenSelectFilterPopup: function($layer) { //필터 팝업 열릴 시 콜백 함수
+    _handleOpenSelectFilterPopup: function() { //필터 팝업 열릴 시 콜백 함수
 
       // console.log('1###')
       // console.log(location.hash);
@@ -346,34 +344,34 @@ Tw.ProductRenewalList.prototype = {
       $('.reset').click($.proxy(this._handleResetFilters, this));
       $('.confrim').click($.proxy(this._confirmFilter, this));
       // $layer.find('.link').click(_.debounce($.proxy(this._openSelectTagPopup, this, $layer), 300));
-      var $headerH = $(".page-header").height();
-      var $checked = $(".check-box > ul > li > a");
+      var $headerH = $('.page-header').height();
+      var $checked = $('.check-box > ul > li > a');
       $(".filter-wrap").scroll(function() {    
           var scroll = $(".filter-wrap").scrollTop();
           if (scroll > $headerH - 66) {//66 active된 상태에서의 header
-            $(".container-wrap").addClass("active");
+            $('.container-wrap').addClass('active');
           } else {
-            $(".container-wrap").removeClass("active");
+            $('.container-wrap').removeClass('active');
           }
       });
       if(this.curFilter) { // 현재 적용된 필터 항목 하단에 표시
         for(var a=0 ; a < this.curFilter.length ; a++){
           $('[data-filter="' + this.curFilter[a] + '"]').parent("li").addClass('on');
-          $('#selectFilter').append('<li data-filtersummary="' + this.curFilter[a]
-              + '"><span class="f-keyword">'+ $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') 
-              + '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+          $('#selectFilter').append('<li data-filtersummary="' + this.curFilter[a] +
+               '"><span class="f-keyword">'+ $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') +
+               '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
         }
       }
 
       $checked.on("click", function() { // 항목 선택 시 하단에 선택한 필터 항목 표시
-        if($(this).parent("li").hasClass("on")) {
-          $(this).parent("li").removeClass("on");
+        if($(this).parent('li').hasClass('on')) {
+          $(this).parent('li').removeClass('on');
           $('[data-filtersummary="' + $(this).data('filter') + '"]').remove();
         } else {
-          $(this).parent("li").addClass("on");
-          $('#selectFilter').append('<li data-filtersummary="' + $(this).data('filter') 
-            + '"><span class="f-keyword">'+ $(this).data('filtername') 
-            + '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+          $(this).parent('li').addClass('on');
+          $('#selectFilter').append('<li data-filtersummary="' + $(this).data('filter') +
+             '"><span class="f-keyword">'+ $(this).data('filtername') +
+             '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
           setTimeout(function() {
             $('.f-del-filter').click($.proxy(_this._deleteSelectFilter, this));
           },500);
@@ -482,16 +480,16 @@ Tw.ProductRenewalList.prototype = {
       if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
         item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt)+'원';
       } 
-  
+      var data = '';
       if (!this._isEmptyAmount(item.basOfrDataQtyCtt)) {
-        var data = Number(item.basOfrDataQtyCtt);
+        data = Number(item.basOfrDataQtyCtt);
         if (isNaN(data)) {
           item.basOfrDataQtyCtt = item.basOfrDataQtyCtt;
         } else {
           item.basOfrDataQtyCtt = data + Tw.DATA_UNIT.GB;
         }
       } else if (!this._isEmptyAmount(item.basOfrMbDataQtyCtt)) {
-        var data = Number(item.basOfrMbDataQtyCtt);
+        data = Number(item.basOfrMbDataQtyCtt);
         
         if (isNaN(data)) {
           item.basOfrDataQtyCtt = item.basOfrMbDataQtyCtt;
@@ -515,9 +513,13 @@ Tw.ProductRenewalList.prototype = {
           item.filters[i].fltTagWelfare = 'Y';
         } else if(prodFltId == 'F01162') {
           item.filters[i].fltTagKid = 'Y';
-        } 
+        }
+        if((this._networkInfo == '5G' && prodFltId == 'F01713') || (this._networkInfo == 'LTE' && prodFltId == 'F01121')) {
+          if(this._svcInfo.prodId != item.prodId) {
+            item.compareBtn = true;
+          }
+        }
       }
-      
       return item;
     },
 
@@ -526,7 +528,7 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _setInfinityScroll: function() {
-      var _this = this
+      var _this = this;
       this.isScroll = true;
       $(document).scroll(function() {
         if(($(window).height() + $(document).scrollTop()) >= ($(document).height() - ($(window).height() * 2))) {

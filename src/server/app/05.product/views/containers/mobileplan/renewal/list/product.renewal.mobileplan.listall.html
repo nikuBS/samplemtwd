@@ -19,7 +19,6 @@
                         <!-- 필터 조건값 노출 영역 -->
                         
                     </div>
-                    
                     전체 리스트 - 요금제 series 얻어오는 api 필요(현재 하드코딩)
                     <% for(let k = 0; k < networkInfoFilter.length ; k++) { %>
                         <% if (networkInfoFilter[k]=='5G') { %>    
@@ -475,162 +474,162 @@
                                 </div>
                             </section>
                     <!-- //3G-->
-                        <% } %>
-                    <% } %>
-    
+                        <% } else if (networkInfoFilter[k]=='2nd') { %>
                     <!-- 태블릿/2nd Device -->
-                    <section class="tod-cont-section">
-                        <div class="rn-banner-img">
-                            <img src="<%=CDN%>/img/product/v2/bg-img2.png" alt="">
-                        </div>
-                        <div class="tod-nmp-title">
-                            <div class="rn-tag">
-                                <span class="i-tag-cr3">5G Tab</span>
-                            </div>
-                            <h3 class="rn-prod-tit">태블릿도 5G 속도로! <br> <strong>5G 태블릿 전용 요금제</strong></h3>
-                        </div>
-                        <!-- 요금제 row list -->
-                        <div class="tod-nmp-row-list">
-                            <ul>
-                                <li>
-                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                                    <div class="tod-nmp-item plan-type1 prod-2nd">
-                                        <a href="#n" class="item-link">
-                                            <div class="rn-prod-name">
-                                                <p class="p-name">5G Tab 4GB (단독)</p>
-                                                <p class="p-price">26,000원</p>
-                                            </div>
-                                            <div class="rn-prod-info">
-                                                <ul class="p-etc">
-                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>4GB</li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
-                                            </div>
-                                        </a>
+                            <section class="tod-cont-section">
+                                <div class="rn-banner-img">
+                                    <img src="<%=CDN%>/img/product/v2/bg-img2.png" alt="">
+                                </div>
+                                <div class="tod-nmp-title">
+                                    <div class="rn-tag">
+                                        <span class="i-tag-cr3">5G Tab</span>
                                     </div>
-                                    <!-- //요금제 모듈 : 일반형 -->
-                                </li>
-                                <li>
-                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                                    <div class="tod-nmp-item plan-type1 prod-2nd">
-                                        <a href="#n" class="item-link">
-                                            <div class="rn-prod-name">
-                                                <p class="p-name">5G Tab 4GB (공유)</p>
-                                                <p class="p-price">26,000원</p>
+                                    <h3 class="rn-prod-tit">태블릿도 5G 속도로! <br> <strong>5G 태블릿 전용 요금제</strong></h3>
+                                </div>
+                                <!-- 요금제 row list -->
+                                <div class="tod-nmp-row-list">
+                                    <ul>
+                                        <li>
+                                            <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                            <div class="tod-nmp-item plan-type1 prod-2nd">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">5G Tab 4GB (단독)</p>
+                                                        <p class="p-price">26,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>4GB</li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <div class="rn-prod-info">
-                                                <ul class="p-etc">
-                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>4GB</li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
+                                            <!-- //요금제 모듈 : 일반형 -->
+                                        </li>
+                                        <li>
+                                            <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                            <div class="tod-nmp-item plan-type1 prod-2nd">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">5G Tab 4GB (공유)</p>
+                                                        <p class="p-price">26,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>4GB</li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
+                                            <!-- //요금제 모듈 : 일반형 -->
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- //요금제 row list -->
+                            </section>
+                            
+                            <section class="tod-cont-section">
+                                <div class="rn-banner-img">
+                                    <img src="<%=CDN%>/img/product/v2/bg-img13.png" alt="">
+                                </div>
+                                <div class="tod-nmp-title">
+                                    <div class="rn-tag">
+                                        <span class="i-tag-cr3">Data함께쓰기</span>
                                     </div>
-                                    <!-- //요금제 모듈 : 일반형 -->
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- //요금제 row list -->
-                    </section>
-                    
-                    <section class="tod-cont-section">
-                        <div class="rn-banner-img">
-                            <img src="<%=CDN%>/img/product/v2/bg-img13.png" alt="">
-                        </div>
-                        <div class="tod-nmp-title">
-                            <div class="rn-tag">
-                                <span class="i-tag-cr3">Data함께쓰기</span>
-                            </div>
-                            <h3 class="rn-prod-tit">데이터 공유로 함께쓰는 <br> <strong>LTE전용 태블릿 요금제</strong></h3>
-                        </div>
-                        <!-- 요금제 row list -->
-                        <div class="tod-nmp-row-list">
-                            <ul>
-                                <li>
-                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                                    <div class="tod-nmp-item plan-type1 prod-2nd">
-                                        <a href="#n" class="item-link">
-                                            <div class="rn-prod-name">
-                                                <p class="p-name">LTE Data 함께쓰기 1G</p>
-                                                <p class="p-price">26,000원</p>
+                                    <h3 class="rn-prod-tit">데이터 공유로 함께쓰는 <br> <strong>LTE전용 태블릿 요금제</strong></h3>
+                                </div>
+                                <!-- 요금제 row list -->
+                                <div class="tod-nmp-row-list">
+                                    <ul>
+                                        <li>
+                                            <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                            <div class="tod-nmp-item plan-type1 prod-2nd">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">LTE Data 함께쓰기 1G</p>
+                                                        <p class="p-price">26,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>1GB</li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <div class="rn-prod-info">
-                                                <ul class="p-etc">
-                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>1GB</li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
+                                            <!-- //요금제 모듈 : 일반형 -->
+                                        </li>
+                                        <li>
+                                            <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                            <div class="tod-nmp-item plan-type1 prod-2nd">
+                                                <a href="#n" class="item-link">
+                                                    <div class="rn-prod-name">
+                                                        <p class="p-name">LTE Data 함께쓰기 2.5G</p>
+                                                        <p class="p-price">26,000원</p>
+                                                    </div>
+                                                    <div class="rn-prod-info">
+                                                        <ul class="p-etc">
+                                                            <li><i class="p-icon18-data"><span class="blind">데이터</span></i>2.5GB</li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <!-- //요금제 모듈 : 일반형 -->
-                                </li>
-                                <li>
-                                    <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                                    <div class="tod-nmp-item plan-type1 prod-2nd">
-                                        <a href="#n" class="item-link">
-                                            <div class="rn-prod-name">
-                                                <p class="p-name">LTE Data 함께쓰기 2.5G</p>
-                                                <p class="p-price">26,000원</p>
-                                            </div>
-                                            <div class="rn-prod-info">
-                                                <ul class="p-etc">
-                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>2.5GB</li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- //요금제 모듈 : 일반형 -->
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- //요금제 row list -->
-                    </section>
+                                            <!-- //요금제 모듈 : 일반형 -->
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- //요금제 row list -->
+                            </section>
+                        <% } else if (networkInfoFilter[k]=='PPS') { %>
                     <!-- //태블릿/2nd Device -->
     
                     <!-- 선불 -->
-                    <section class="tod-cont-section">
-                        <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                        <div class="tod-nmp-item plan-type1 prod-2nd">
-                            <a href="#n" class="item-link">
-                                <div class="rn-prod-name">
-                                    <p class="p-name">PPS스마트폰 프리미엄</p>
-                                    <p class="p-price">상세참조</p>
+                            <section class="tod-cont-section">
+                                <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                <div class="tod-nmp-item plan-type1 prod-2nd">
+                                    <a href="#n" class="item-link">
+                                        <div class="rn-prod-name">
+                                            <p class="p-name">PPS스마트폰 프리미엄</p>
+                                            <p class="p-price">상세참조</p>
+                                        </div>
+                                        <div class="rn-prod-info">
+                                            <ul class="p-etc">
+                                                <li><i class="p-icon18-data"><span class="blind">데이터</span></i>상제참조</li>
+                                                <li><i class="p-icon18-phone"><span class="blind">통화</span></i>상제참조</li>
+                                                <li><i class="p-icon18-sms"><span class="blind">문자</span></i>상제참조</li>
+                                            </ul>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="rn-prod-info">
-                                    <ul class="p-etc">
-                                        <li><i class="p-icon18-data"><span class="blind">데이터</span></i>상제참조</li>
-                                        <li><i class="p-icon18-phone"><span class="blind">통화</span></i>상제참조</li>
-                                        <li><i class="p-icon18-sms"><span class="blind">문자</span></i>상제참조</li>
-                                    </ul>
+                                <!-- //요금제 모듈 : 일반형 -->
+                                <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                                <div class="tod-nmp-item plan-type1 prod-2nd">
+                                    <a href="#n" class="item-link">
+                                        <div class="rn-prod-name">
+                                            <p class="p-name">PPS스마트폰 프리미엄</p>
+                                            <p class="p-price">상세참조</p>
+                                        </div>
+                                        <div class="rn-prod-info">
+                                            <ul class="p-etc">
+                                                <li><i class="p-icon18-data"><span class="blind">데이터</span></i>상제참조</li>
+                                                <li><i class="p-icon18-phone"><span class="blind">통화</span></i>상제참조</li>
+                                                <li><i class="p-icon18-sms"><span class="blind">문자</span></i>상제참조</li>
+                                            </ul>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <!-- //요금제 모듈 : 일반형 -->
-                        <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                        <div class="tod-nmp-item plan-type1 prod-2nd">
-                            <a href="#n" class="item-link">
-                                <div class="rn-prod-name">
-                                    <p class="p-name">PPS스마트폰 프리미엄</p>
-                                    <p class="p-price">상세참조</p>
-                                </div>
-                                <div class="rn-prod-info">
-                                    <ul class="p-etc">
-                                        <li><i class="p-icon18-data"><span class="blind">데이터</span></i>상제참조</li>
-                                        <li><i class="p-icon18-phone"><span class="blind">통화</span></i>상제참조</li>
-                                        <li><i class="p-icon18-sms"><span class="blind">문자</span></i>상제참조</li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- //요금제 모듈 : 일반형 -->
-                    </section>
+                                <!-- //요금제 모듈 : 일반형 -->
+                            </section>
+                        <% } %>
+                    <% } %>
                     <!-- //선불 -->
-                
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
                 </div>
             </div>

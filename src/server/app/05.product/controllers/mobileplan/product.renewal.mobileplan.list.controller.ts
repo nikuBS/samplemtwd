@@ -15,6 +15,19 @@ import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { PRODUCT_CODE, _5GX_PROD_ID } from '../../../../types/bff.type';
 
+// 단말기 분류 체계 코드
+enum DEVICE_MINOR_CODES {
+  '0102001' = 'E', // Voice or Data 가능한 tablet (태블릿/ETC 범주)
+  '0202001' = 'E', // Voice 불가능한 Tablet (태블릿/ETC 범주)
+  '0102000' = 'E', // 회선형 Device (태블릿/ETC 범주)
+
+  '0102002' = 'E', // Smart Watch (회선형 스마트 워치류)
+  '0102003' = 'E', // Kids폰 (회선형 스마트 워치류(주니어 seg. 상품)_쿠키즈 요금제 가입 가능 단말)
+  '0102005' = 'E', // Modem (WiFi AP 기능 없으나, 물리적 연결을 통해 통신 연결해주는 Device)
+  '0102006' = 'E', // 기타 장치 (위치 측위기반 Device)
+  '0102009' = 'E', // 기타
+  '0102010' = 'E', // Router (포켓파이 Roter류)
+}
 
 /**
  * @class
@@ -106,21 +119,23 @@ export default class RenewProductPlans extends TwViewController {
         }
         if (req.query.theme) {
           series.theme = ' class=on';
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, quickFilterData });
+          const networkInfoFilter = ['5G', 'LTE', '3G', '2nd', 'PPS'];
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
         } else if(filterList.filterList === '' && series.prepay !== ' class=on' && quickFilterData.filterExist !== 'Y') {
           Observable.combineLatest(
             this.getNetworkInfoFilter(svcInfo) // 나의 회선의 통신망 정보 조회
           ).subscribe(([
             networkInfoFilter // 통신망 정보 결과 값
             ]) => {
+              
               if(series.fiveGx == ' class=on'){
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, quickFilterData });
+                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
               } else if(series.lte == ' class=on') {
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, quickFilterData });
+                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
               } else if(series.threeG == ' class=on') {
-                  res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g copy.html', { svcInfo, params, pageInfo, series, filterList, quickFilterData });
+                  res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g copy.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
               } else if(series.secondDevice == ' class=on'){
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, quickFilterData });
+                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
               } else {
                 res.render('mobileplan/renewal/list/product.renewal.mobileplan.listall.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
               }
@@ -129,10 +144,13 @@ export default class RenewProductPlans extends TwViewController {
           if(series.noSeries) {
             params.searchCount = 100;
           }
-          this._getPlans(params).subscribe(plans => {
-
-            // TODO: resp.code 꼭 넣기
-
+          Observable.combineLatest(
+            this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
+            this._getPlans(params)
+          ).subscribe(([
+            networkInfoFilter, // 통신망 정보 결과 값
+            plans
+            ]) => {
             if (plans.code) {
               this.error.render(res, {
                 code: plans.code,
@@ -143,9 +161,9 @@ export default class RenewProductPlans extends TwViewController {
             }
             
             if(plans.productCount === 0) { // 요금제 항목 없음
-              res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, quickFilterData } );
+              res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, quickFilterData } );
             } else if(series.prepay === ' class=on' && filterList.filterList === '' && quickFilterData.filterExist !== 'Y') { // 선불 탭 선택 노 필터
-              res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html' , { svcInfo, params, pageInfo, series, filterList, plans, quickFilterData } );
+              res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, quickFilterData } );
             } else if(series.noSeries && quickFilterData.filterExist !== 'Y') { // 탭 선택 없이 필터 적용
               const mobileList = [{name: '5G',code: 'F01713',exist: 'N',url:'/product/renewal/mobileplan/list?filters=F01713', seriesClass: 'prod-5g'}, // 요금제 더보기용 url 입력 / 색상을 위한 클래스 추가
                 {name: 'LTE',code: 'F01121',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01121', seriesClass: 'prod-lte'},
@@ -177,7 +195,7 @@ export default class RenewProductPlans extends TwViewController {
                       }
                     }
                   }
-                  res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, quickFilterData } );
+                  res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, quickFilterData } );
                 });
                 
               } else {
@@ -191,13 +209,13 @@ export default class RenewProductPlans extends TwViewController {
                   }
                 }
               
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, quickFilterData } );
+                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, quickFilterData } );
               }
             } else { // 탭 선택 후 필터 적용
               if(quickFilterCode){ // 임시 적용 코드
                 plans.hasNext = false;
               }
-              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, quickFilterData} );
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, quickFilterData} );
             }
           });
         }
@@ -267,33 +285,43 @@ export default class RenewProductPlans extends TwViewController {
 
     private getNetworkInfoFilter ( svcInfo: any ): Observable<any> {
       if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.
-        return Observable.of(['5G', 'LTE', '3G']);
+        return Observable.of(['5G', 'LTE', '3G', '2nd', 'PPS']);
+      }
+
+      if ( svcInfo.svcGr === 'P' ) { // 선택한 회선이 선불폰(PPS) 라면 P
+        return Observable.of(['PPS', '5G', 'LTE', '3G', '2nd']);
       }
       
       return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
         if (resp.code === API_CODE.CODE_00) {
+          if ( Object.keys(DEVICE_MINOR_CODES).indexOf( resp.result.beqpSclEqpClSysCd ) > -1 ) {
+            return this.matchSvcCode(DEVICE_MINOR_CODES[resp.result.beqpSclEqpClSysCd]);
+          }
           return this.matchSvcCode(resp.result.eqpMthdCd);
         }
-        
-        return ['5G', 'LTE', '3G'];
+        return ['5G', 'LTE', '3G', '2nd', 'PPS'];
       });
     }
 
     private matchSvcCode (code) { // 전체요금제 최초 랜딩 시 요금제 시리즈 래더링 순서
+      
       switch(code) {
         case 'A' : //2G (3G로 표현)
-          return ['3G', '5G', 'LTE'];
+          return ['3G', '5G', 'LTE', '2nd', 'PPS'];
         case 'D' : //2G (3G로 표현)
-          return ['3G', '5G', 'LTE'];
+          return ['3G', '5G', 'LTE', '2nd', 'PPS'];
         case 'W' : //3G
-          return ['3G', '5G', 'LTE'];
+          return ['3G', '5G', 'LTE', '2nd', 'PPS'];
         case 'L' : //LTE
-          return ['LTE', '5G', '3G'];
+          return ['LTE', '5G', '3G', '2nd', 'PPS'];
         case 'F' : //5G
-          return ['5G', 'LTE', '3G'];
+          return ['5G', 'LTE', '3G', '2nd', 'PPS'];
+        case 'E' : //2nd Device
+          return ['2nd', '5G', 'LTE', '3G', 'PPS'];
+        case 'P' : //PPS
+          return ['PPS', '5G', 'LTE', '3G', '2nd'];
         default :
-          return ['5G', 'LTE', '3G'];
+          return ['5G', 'LTE', '3G', '2nd', 'PPS'];
     }
-
   }
 }

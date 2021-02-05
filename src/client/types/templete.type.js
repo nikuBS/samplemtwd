@@ -1451,50 +1451,58 @@ Tw.RENEWAL_PRODUCT_SUBMAIN_TOP_BANNER =
 
 Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
 '{{#each items}}' +
-'<div class="tod-nmp-item plan-type3 {{../seriesClass}} ">' +
-    '<a href="/product/callplan?prod_id={{prodId}}" class="item-link">' +
-        '<div class="rn-tag">' +
-            '<div class="col-left">' +
-                '{{#each filters}}' +
-                    '{{#if fltTagSenior}}' +
-                        '<span class="i-tag-cr5">시니어</span>' +
-                    '{{/if}}' +
-                    '{{#if fltTagWelfare}}' +
-                        '<span class="i-tag-cr5">복지</span>' +
-                    '{{/if}}' +
-                    '{{#if fltTagKid}}' +
-                        '<span class="i-tag-cr5">어린이/청소년</span>' +
-                    '{{/if}}' +
-                '{{/each}}' +
+  '<div class="tod-nmp-item plan-type3 {{../seriesClass}} ">' +
+      '<a href="/product/callplan?prod_id={{prodId}}" class="item-link">' +
+          '<div class="rn-tag">' +
+              '<div class="col-left">' +
+                  '{{#each filters}}' +
+                      '{{#if fltTagSenior}}' +
+                          '<span class="i-tag-cr5">시니어</span>' +
+                      '{{/if}}' +
+                      '{{#if fltTagWelfare}}' +
+                          '<span class="i-tag-cr5">복지</span>' +
+                      '{{/if}}' +
+                      '{{#if fltTagKid}}' +
+                          '<span class="i-tag-cr5">어린이/청소년</span>' +
+                      '{{/if}}' +
+                  '{{/each}}' +
+              '</div>' +
+              '<div class="col-right">' +
+                  '{{#if usingProduct}}' +
+                          '<span class="i-tag-myplan">사용중</span>' +
+                  '{{/if}}' +
+              '</div>' +
+          '</div>' +
+          '<div class="rn-prod-name">' +
+              '<p class="p-name">{{prodNm}}</p>' +
+              '<p class="p-price">' +
+                '{{basFeeAmt}}' +
+              '</p>' +
+          '</div>' +
+          '<div class="rn-prod-info">' +
+              '<ul class="p-etc">' +
+                  '{{#if basOfrDataQtyCtt}}' +
+                      '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
+                              '{{basOfrDataQtyCtt}}' +
+                      '</li>' +
+                  '{{/if}}' +
+                  '{{#if basOfrVcallTmsCtt}}' +
+                      '<li><i class="p-icon18-phone"><span class="blind">통화</span></i>{{basOfrVcallTmsCtt}}</li>' +
+                  '{{/if}}' +
+                  '{{#if basOfrCharCntCtt}}' +
+                      '<li><i class="p-icon18-sms"><span class="blind">문자</span></i>' +
+                              '{{basOfrCharCntCtt}}' +
+                      '</li>' +
+                  '{{/if}}' +
+              '</ul>' +
+          '</div>' +
+      '</a>' +
+      '{{#if compareBtn}}' +
+        '<div class="rn-prod-bottom">' +
+            '<div class="rn-btn-right">' +
+                '<a class="btn-compare" data-prod-id="{{prodId}}">내 요금제와 비교</a>' +
             '</div>' +
-            '<div class="col-right">' +
-                '{{#if usingProduct}}' +
-                        '<span class="i-tag-myplan">사용중</span>' +
-                '{{/if}}' +
-            '</div>' +
         '</div>' +
-        '<div class="rn-prod-name">' +
-            '<p class="p-name">{{prodNm}}</p>' +
-            '<p class="p-price">' +
-                    '{{basFeeAmt}}' +
-        '</div>' +
-        '<div class="rn-prod-info">' +
-            '<ul class="p-etc">' +
-                '{{#if basOfrDataQtyCtt}}' +
-                    '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
-                            '{{basOfrDataQtyCtt}}' +
-                    '</li>' +
-                '{{/if}}' +
-                '{{#if basOfrVcallTmsCtt}}' +
-                    '<li><i class="p-icon18-phone"><span class="blind">통화</span></i>{{basOfrVcallTmsCtt}}</li>' +
-                '{{/if}}' +
-                '{{#if basOfrCharCntCtt}}' +
-                    '<li><i class="p-icon18-sms"><span class="blind">문자</span></i>' +
-                            '{{basOfrCharCntCtt}}' +
-                    '</li>' +
-                '{{/if}}' +
-            '</ul>' +
-        '</div>' +
-    '</a>' +
-'</div>' +
+      '{{/if}}' +
+  '</div>' +
 '{{/each}}';
