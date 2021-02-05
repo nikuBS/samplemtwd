@@ -81,7 +81,7 @@
 
 /* 찾으시는 요금제 혜택 */
 .tod-renewalBody .product-sec .pro-article.benefit-box {margin-top:0}
-.tod-renewalBody .product-sec .pro-article.benefit-box .article-tit {margin-bottom:0.1875rem}
+.tod-renewalBody .product-sec .pro-article.benefit-box .article-tit {margin-bottom:0.1875rem; font-weight: 300;}
 
 /* 꼭 필요한 요금제 혜택이 있으신가요? */
 .tod-renewalBody .product-sec .slider-wrap.benefit-slider .slider-container{width:100%;  }
