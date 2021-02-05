@@ -11,7 +11,7 @@
 .tod-renewalBody .filter-wrap .container-wrap .tod-renewal-product-tab {border-top:solid 1px #fff;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul {display: -webkit-box; display:flex;overflow:scroll; padding:0.9375rem 0 0.9375rem 1.875rem;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li {padding-right:0.625rem;}
-.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 0.75rem; height:1.6875rem; border-radius:1rem; box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 0.75rem; height:1.6875rem; border-radius:1rem; /*box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; */ background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li:last-child {padding-right:1.875rem}
 
 /* 헤더 스크롤 */
