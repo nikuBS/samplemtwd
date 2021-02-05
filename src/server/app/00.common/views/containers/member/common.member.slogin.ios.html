@@ -137,29 +137,6 @@
 
             </div>
             <div class="bt-fixed-area">
-                <!-- 210125 [OP002-12898] [TOS] 텍스트 배너 -->
-                <%_ if (banner.code !== '01') { %>
-                <div class="tod-tos-text-banner">
-                    <a href="#n" class="tb-link">
-                        <i class="tb-icon">
-                            <%_ if (banner.bannerType === '0023') { %>
-                                <img src="<%= CDN %>/img/common/icon74-05.png" alt="혜택">
-                            <%_ } else if (banner.bannerType === '0024') { %>
-                                <img src="<%= CDN %>/img/common/icon74-04.png" alt="알림">
-                            <%_ } else if (banner.bannerType === '0025') { %>    
-                                <img src="<%= CDN %>/img/common/icon74-03.png" alt="이벤트">
-                            <%_ } else if (banner.bannerType === '0026') { %>
-                                <img src="<%= CDN %>/img/common/icon74-02.png" alt="안내">
-                            <%_ } else if (banner.bannerType === '0027') { %>
-                                <img src="<%= CDN %>/img/common/icon74-01.png" alt="맞춤서비스">
-                            <%_ } %>
-                        </i>
-                        <p class="tb-text"><%= banner.imgList[0].imgAltCtt %></p>
-                    </a>
-                    <button type="button" class="tb-close"><span class="tod-blind">닫기</span></button>
-                </div>
-                <%_ } %>
-                <!-- 210125 [OP002-12898] [TOS] 텍스트 배너 -->
                 <ul class="bt-slice full">
                     <li class="bt-red1">
                         <button id="fe-bt-login" disabled>간편 로그인</button>
