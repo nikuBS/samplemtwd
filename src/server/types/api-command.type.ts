@@ -1090,7 +1090,6 @@ export const SESSION_CMD = {
 
 export const API_CODE = {
   CODE_00: '00', // success
-  CODE_01: '01', // 해당 값이 없습니다.
   BFF_0003: 'BFF0003', // 로그인 필요
   BFF_0004: 'BFF0004', // 접근 권한 필요
   BFF_0006: 'BFF0006', // BFF API 차단
