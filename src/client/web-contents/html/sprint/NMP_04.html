@@ -37,9 +37,9 @@
         $(document).ready(function() {
             var $headerH = $(".page-header").height();
             var $checked = $(".check-box > ul > li > a");
-            $(".filter-wrap").scroll(function() {    
+            $(".filter-wrap").scroll(function() {
                 var scroll = $(".filter-wrap").scrollTop();
-                if (scroll > $headerH - 66) {//66 active된 상태에서의 header
+                if (scroll > $headerH - 50 ) { // 210201 - 헤더 높이값 수정
                     $(".container-wrap").addClass("active");
                   
                 } else {
@@ -50,6 +50,26 @@
                 e.preventDefault();
                 $(this).attr('aria-checked', !$(this).parent("li").hasClass('on')).parent("li").toggleClass('on'); // 210113 - checkbox 형태로 변경 및 접근성 관련 추가
             });
+            // 210201 - 아코디언 클릭시 스크롤 추가 START
+            var $element = $('button.list-box').closest('li'),
+                offsetTop = [],
+                index = 0;
+            // 엘리먼트 높이값 계산 - document가 스크롤되는 것이 아닌 filter-wrap이 스크롤(offset top이 유동적으로 변경됨)이 되어 높이값을 초기에 계산한다.
+            setTimeout(function () {
+                $element.each(function (index, element) {
+                    offsetTop[index] = $(element).offset().top - $('.tod-renewal-product-tab').outerHeight();
+                });
+            }, 200);
+            // 버튼 클릭시 스크롤 이동
+            $('button.list-box').on('click', function () {
+                if ($(this).attr('aria-pressed') === 'false') {
+                    index = $element.index($(this).closest('li'));
+                    setTimeout(function () {
+                        $(".filter-wrap").scrollTop(offsetTop[index]);
+                    }, 200);
+                }
+            });
+            // 210201 - 아코디언 클릭시 스크롤 추가 END
         });
     </script>
 </head>

@@ -127,17 +127,16 @@ _%>
                 </dl>
               </li>
               <%_ if (data.myHistory) { _%>
-              <%_ var lastestHistory = data.myHistory[data.myHistory.length - 1]; _%>
               <li class="report-item">
                 <dl class="report-define d-wrap">
                   <dt class="report-tit">최종 개통 유형</dt>
-                  <dd class="report-cont"><%= lastestHistory.chgCd %></dd>
+                  <dd class="report-cont"><%= data.myLastestHistory.type %></dd>
                 </dl>
               </li>
               <li class="report-item">
                 <dl class="report-define d-wrap">
                   <dt class="report-tit">최종 개통 일자</dt>
-                  <dd class="report-cont"><%= lastestHistory.chgDt %></dd>
+                  <dd class="report-cont"><%= data.myLastestHistory.date %></dd>
                 </dl>
               </li>
               <%_ } _%>

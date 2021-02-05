@@ -35,15 +35,18 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
     const data = this._setData(req, res, next, svcInfo, allSvc, child, pageInfo);
-    data.childLine = this.type === 0 && child && child.length ? ((items) => {
-      return items.map((item) => {
-        return {
-          nickNm: item.childEqpMdNm || item.eqpMdlNm, // item.mdlName 서버데이터 확인후 변경
-          svcNum: StringHelper.phoneStringToDash(item.svcNum),
-          svcMgmtNum: item.svcMgmtNum
-        }
-      });
-    })(child) : null;
+    // 간편로그인 경우 미노출 처리 필요
+    if (svcInfo.loginType !== 'S') {
+      data.childLine = this.type === 0 && child && child.length ? ((items) => {
+        return items.map((item) => {
+          return {
+            nickNm: item.childEqpMdNm || item.eqpMdlNm, // item.mdlName 서버데이터 확인후 변경
+            svcNum: StringHelper.phoneStringToDash(item.svcNum),
+            svcMgmtNum: item.svcMgmtNum
+          }
+        });
+      })(child) : null;
+    }
     this._requestApiAfterRender(res, data);
   }
 
@@ -74,6 +77,13 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     const [myjinfo, mydisinfo, benefitInfo, billInfo, membership, sms, wirepause, payment] = responses;
     // 가입개통정보
     data.myJoinInfo = myjinfo;
+    // 개통/변경이력 마지막 정보
+    if (data.myHistory && data.myHistory.length) {
+      data.myLastestHistory = {
+        type: data.myHistory[data.myHistory.length - 1].chgCd,
+        date: FormatHelper.replaceDateMasking(data.myHistory[data.myHistory.length - 1].chgDt)
+      };
+    }
     // 약정 및 단말 상환 정보
     if ( mydisinfo ) {
       data.myDeviceInstallment = mydisinfo.deviceIntallment;
@@ -93,6 +103,13 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
             data.myAddProduct.feePlanProd[key] = FormatHelper.addComma(value || 0);
           }
         });
+        // 유형별로 서비스 노출 항목 구분 필요
+        if (this.type === 2) {
+          data.myAddProduct.inVisibleDisProd = true;
+        } else if (this.type === 3 || this.type === 1) {
+          data.myAddProduct.inVisibleDisProd = true;
+          data.myAddProduct.inVisibleComProd = true;
+        }
       }
     }
     // 나의 혜택 할인 및 멤버십 정보
@@ -161,7 +178,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       svcNum: svcInfo.svcNum
     }).map(resp => resp.code === API_CODE.CODE_00 ? resp.result : null);
   }
-
+1
   /**
    * 약정할인 및 단말분할상환정보 V2
    */
@@ -474,8 +491,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       ];
       if (!isApp) {
         // 모바일 웹인 경우 인증센터 항목 가리고 요금제 변경 위치 변경
-        const moveTempItem = tempList[5];
-        tempList[3] = moveTempItem;
+        tempList[3] = tempList[5];
         tempList.splice(5, 1);
       }
 
