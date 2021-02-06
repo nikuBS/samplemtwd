@@ -168,6 +168,20 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this._nativeService.setGNB(this);
     var template = $('#fe-tpl-menu'); // 각각의 메뉴 추가를 위한 handlebar template
     this._menuTpl = Handlebars.compile(template.html());
+    var bannerTextComponent = $('#tosTextBanner'); 
+    var self = this;
+    var bannerTextDraw = function() {
+      self._apiService.request(Tw.NODE_CMD.GET_TOSS_BANNER_TEXT, {}) // redis text banner find
+        .then(function (res) {
+          console.log(">>>>>>>>>>>>>>> ", res);
+          if (res.code === Tw.API_CODE.CODE_00) {
+            bannerTextComponent.html('');
+            bannerTextComponent.html(res.result);
+          }
+          
+        });
+    }
+    bannerTextDraw();
 
     // Cache elements
     this.$closeBtn = this.$container.find('#fe-close');
