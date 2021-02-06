@@ -23,6 +23,7 @@ import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
 import CryptoHelper from '../../utils/crypto.helper';
 import { SSO_SERVICE_LIST } from '../../types/config.type';
+import BannerHelper from '../../utils/banner.helper';
 
 const os = require('os');
 
@@ -114,7 +115,10 @@ class ApiRouter {
     GET_SESSION_INFO: { path: '/common/session/info', method: API_METHOD.GET, target: this.getSessionInfo },
 
     // 위젯 잔여량 조회
-    GET_WIDGET_REMAINS: { path: '/widget/remains', method: API_METHOD.GET, target: this.getWidgetRemains }
+    GET_WIDGET_REMAINS: { path: '/widget/remains', method: API_METHOD.GET, target: this.getWidgetRemains },
+
+    // Toss Banner Text 
+    GET_TOSS_BANNER_TEXT: { path: '/banner/tosstext', method: API_METHOD.GET, target: this.getBannerTossText },
   };
 
   /**
@@ -1940,6 +1944,45 @@ class ApiRouter {
         balancesResponse.result = responseRemains;
         return res.json(balancesResponse);
       });
+    });
+  }
+
+  private getBannerTossText(req: Request, res: Response, next: NextFunction) {
+    const bannerResult = new BannerHelper().getTextBannerTos(req);
+    bannerResult.subscribe(resp => {
+
+        console.log('resp => ', resp.result);
+        let bannerType = '';
+        let imgAltCtt = '';
+        if (resp.code === API_CODE.CODE_00) {
+          imgAltCtt = resp.result.imgList[0].imgAltCtt;
+          if (resp.result.bannerType === '0023') {
+              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-05.png" alt="혜택">`
+          } else if (resp.result.bannerType === '0024') {
+              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-04.png" alt="알림">`
+          } else if (resp.result.bannerType === '0025') {
+              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-03.png" alt="이벤트">`
+          } else if (resp.result.bannerType === '0026') {
+              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-02.png" alt="안내">`
+          } else if (resp.result.bannerType === '0027') {
+              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-01.png" alt="맞춤서비스">`
+          }
+        }
+        const bannerHtml = `
+            <a href="#n" class="tb-link">
+            <i class="tb-icon">
+                ${bannerType}
+            </i>
+            <p class="tb-text">${imgAltCtt}</p>
+            </a>
+            <button type="button" class="tb-close"><span class="tod-blind">닫기</span></button>
+        `;
+
+        res.json({
+            code: resp.code,
+            msg: resp.msg,
+            result: bannerHtml
+        })
     });
   }
 }
