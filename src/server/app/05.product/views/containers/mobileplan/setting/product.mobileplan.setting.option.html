@@ -31,15 +31,17 @@
                         <div class="widget">
                             <div class="widget-box radio">
                                 <ul class="select-list" role="group">
+                                    <% if (['NA00006862', 'NA00006863'].indexOf(prodId) === -1) { %>
                                     <li class="radiobox type01-big" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio1">
                                         <input type="radio" name="radio" value="NA00005061" aria-hidden="true">
                                         <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                             <p class="layout-text">
                                                 <span class="mtext">데이터 프리 동영상</span>
-                                                <span class="stext">콘텐츠 전용 데이터(wavve) 매일 2GB 제공 후 속도 제어</span>
+                                                <span class="stext">콘텐츠 전용 데이터(wavve) 매일 1GB 제공 후 속도 제어</span>
                                             </p>
                                         </div>
                                     </li>
+                                    <% } %>
                                     <% if (['NA00005058', 'NA00005059', 'NA00005060'].indexOf(prodId) === -1) { %>
                                     <li class="radiobox type01-big" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio2">
                                         <input type="radio" name="radio" value="NA00005131" aria-hidden="true">
