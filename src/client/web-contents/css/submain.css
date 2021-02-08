@@ -19,7 +19,7 @@ body.tod-white{background:#fff}
 .tod-submain .cont-card .card-cont.no-pd{padding:0}
 .tod-submain .down-arr{position:relative}
 .tod-submain .down-arr:after{content:''; display:inline-block; width:0.8125rem; height:0.5rem; background-image:url('/img/myt/arrow.svg'); background-repeat:no-repeat; background-position:0 -13px; position:absolute; right:0; top:50%; margin-top:-0.375rem}
-.tod-submain .tip{display:inline-block; width:1.8125rem; height:1rem; background:url('/img/myt/tip.svg') no-repeat left top; background-size:100%; margin-left:5px; vertical-align:top; text-indent:-9999px}
+.tod-submain .tip{display:inline-block; width:1.8125rem; height:1rem; background:url('/img/myt/tip.svg') no-repeat left top; background-size:100%; margin-left:5px; vertical-align:top; text-indent:-9999px; position:relative; z-index:1}
 .tod-submain .onlyview.tip{line-height:1.0625rem;}
 .tod-submain .warning{font-size:0.6875rem; color:#666; line-height:1.45; padding-left:0.9375rem; position:relative;}
 .tod-submain .warning:before{content:''; display:inline-block; width:0.75rem; height:0.75rem; background:url('/img/myt/caution.svg') no-repeat left top; position:absolute; left:0; top:1px }
@@ -114,6 +114,7 @@ body.tod-white{background:#fff}
 /* 카드 타이틀 */
 .tod-submain .section-inner{margin:0 1.5rem}
 .tod-submain .section-inner .head-tit{font-size:1.125rem; margin-bottom:2rem; position:relative; color:#000; font-weight:500 }
+.tod-submain .section-inner .head-tit .sub-txt{display:inline-block; font-size:13px; color:#82888f; font-weight:400; margin-left:3px}
 .tod-submain .section-inner .head-tit.low{margin-bottom:1.25rem}
 .tod-submain .section-inner .head-tit.low2{margin-bottom:0.75rem}
 .tod-submain .section-inner .head-tit.high{margin-bottom:2rem}
@@ -153,6 +154,8 @@ body.tod-white{background:#fff}
 }
 .tod-submain .report-list .report-item .report-define .report-cont .large{display:inline-block; font-size:2rem; font-weight:800; letter-spacing:-1px}
 .tod-submain .report-list .report-item .report-define .report-cont .medium{display:inline-block; font-size:1.5rem; font-weight:800;}
+.tod-submain .report-list .report-item .report-define .report-cont.basics13-larger{font-size:15px; font-weight:500}
+
 .tod-submain .report-list .report-item .link .report-define{position:relative; padding-right:0.75rem; }
 .tod-submain .report-list .report-item .link .report-define:after{content:''; display:inline-block; width:0.5rem; height:0.8125rem; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
 .tod-submain .report-list .report-item .detail-info{display:inline-block; padding-left:0.625rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; -webkit-box-flex: 1; flex-grow:1; flex-basis:0; max-width:calc(100% - 5.9375rem); vertical-align:top; }
@@ -583,6 +586,7 @@ body.tod-white{background:#fff}
 
 /* 카드 밖 layout .section-inner > section-group > section-cont  */
 .tod-submain .section-group{padding:2rem 0 1.875rem; border-bottom:2px solid #f4f4f4 }
+.tod-submain > .section-inner:nth-last-of-type(1) .section-group{border-bottom:none}
 .tod-submain .cont-card + .section-inner{margin-top:-0.625rem}
 .tod-submain .section-inner .section-group .acc-list-wrap .acc-item .acc-tit {padding-left:0 !important; padding-right:0 !important}
 .tod-submain .section-inner .section-group .acc-list-wrap .acc-item .acc-tit.down-arr:after{right:0.4375rem}
@@ -610,24 +614,44 @@ body.tod-white{background:#fff}
 .popup .popup-info.tod-eventpop-type1.phone-payment .popup-contents .inner-contents .ico{background-image:url('/img/myt/payment-pop-ico.png'); background-size:100%; width:3.625rem; height:3.5625rem; margin-top:-3.125rem}
 
 /***************************************************************  약정할인/기기상환 정보 ***************************************************************/
-.tod-submain .group-head-tit{color:#333; font-size:0.9375rem; margin-bottom:1rem; }
-.tod-submain .group-head-tit .link{display:block; padding-right:0.625rem; color:inherit; font-size:inherit; position:relative;}
-.tod-submain .section-inner .group-head-tit .link:after{content:''; display:inline-block; width:0.5rem; height:0.8125rem; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
-.tod-submain .gray-box{background:#f9f9f9; border-radius:0.375rem; padding:1rem}
-.tod-submain .horizon-bar-wrap.contract-graph{margin-top:1.5rem; padding-top:1.875rem;}
-.tod-submain .horizon-bar-wrap.contract-graph .data-date .day{display:block;}
-.tod-submain .horizon-bar-wrap.contract-graph .horizon-bar .data .bar-bubble{height:1.375rem; line-height:1.375rem; top:-1.875rem}
-.tod-submain .horizon-bar-wrap.contract-graph .data-date{padding-top:0.5rem}
-.tod-submain .horizon-bar-wrap.contract-graph [class *= '-date']{color:#666}
-.tod-submain .horizon-bar-wrap.contract-graph [class *= '-date'] .day{color:#333; padding-bottom:2px}
-.tod-submain .box-group .btn-area + .warning{margin-top:1rem}
-.tod-submain .vertical-report-list{ display: -webkit-box; display:flex}
-.tod-submain .vertical-report-list .v-report-item {width:50%; flex-shrink:0; flex-grow:1;}
-.tod-submain .vertical-report-list .v-report-item:last-child{border-left:1px dashed #e0e0e0}
-.tod-submain .vertical-report-list .v-report-item .v-report-define .v-report-tit{ display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; -webkit-box-pack: center; justify-content:center; font-size:0.6875rem; color:#82888f; text-align:center; line-height:0.875rem; min-height:2rem; padding-top:0.25rem; }
-.tod-submain .vertical-report-list .v-report-item .v-report-define .v-report-cont{font-size:1rem; color:#000; text-align:center; padding-top:0.5rem; }
-.tod-submain .gray-box .contract-tit{font-size:0.8125rem; padding:0.5rem 0 1rem; border-bottom:0.0625rem solid #e4e4e4; margin-bottom:1rem}
-.tod-submain .gray-box .total-box{margin-bottom:0.5rem}
-.tod-submain .gray-box .total-box .report-list .report-item .report-define .report-tit{color:#333; font-weight:500}
-.tod-submain .gray-box .added-box{margin-top:1rem; padding-top:1rem; border-top:1px dotted #cecece}
+.tod-submain .section-inner .small-head-tit{font-size:13px; line-height:13px; color:#333; letter-spacing:-0.3px; margin-bottom:8px;}
+.tod-submain .section-inner .box-group-head-tit{color:#333; font-size:18px; font-weight:500; margin-bottom:24px; }
+.tod-submain .section-inner .box-group-head-tit .link{display:block; padding-right:10px; color:inherit; font-size:inherit; position:relative; font-weight:inherit}
+.tod-submain .section-inner .box-group-head-tit .link:after{content:''; display:inline-block; width:8px; height:13px; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
+.tod-submain .section-inner .box-group-cont .detail-info-link{display:block; text-align:right; font-size:12px; color:#4dadf7; text-decoration:underline; margin-top:10px;}
+.tod-submain .section-inner .box-group-cont .detail-agree-btn{font-size:inherit; font-weight:inherit; line-height:inherit; padding-right:18px; position:relative}
+.tod-submain .section-inner .box-group-cont .detail-agree-btn:after{content:''; display:inline-block; width:15px; height:15px; background:red; position:absolute; right:0; top:0}
 
+.tod-submain .section-inner .box-group-cont .gray-box{background:#f9f9f9; border-radius:6px; padding:16px ; margin-top:24px}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph{padding-top:30px; margin-top:24px}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph + .warning{margin-top:16px}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .data-date .day{display:block;}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .horizon-bar .data .bar-bubble{height:22px; line-height:22px; top:-30px}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .data-date{padding-top:8px}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph [class *= '-date']{color:#666}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph [class *= '-date'] .day-dec{display:block; padding-top:0.125rem}
+.tod-submain .section-inner .box-group-cont .box-group .btn-area + .warning{margin-top:16px}
+.tod-submain .section-inner .box-group-cont .gray-box + .gray-box{margin-top:16px}
+.tod-submain .section-inner .box-group-cont .claim-box .contract-summary{font-size:15px; padding-bottom:12px; border-bottom:1px solid #e4e4e4; margin-bottom:19px; text-align:center; line-height:20px; color:#333; letter-spacing:-0.4px }
+.tod-submain .section-inner .box-group-cont .claim-box .contract-summary strong{display:inline-block; font-weight:600; position:relative; }
+.tod-submain .section-inner .box-group-cont .claim-box .contract-summary strong:after{content:''; display:inline-block; width:100%; height:8px; background:#f65252; opacity:0.3; position:absolute; left:0; bottom:0; z-index:0}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list{}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item:not(:last-child){padding-bottom:15px}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item:not(:first-child){padding-top:15px; border-top:1px dotted #cecece; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .total-price{display:flex; font-size:13px; color:#333; text-align:left; overflow:hidden; line-height:22px; align-items:center; justify-content:space-between}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .total-price .price{line-height:22px; font-weight:500}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list{}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item{padding-left:12px; position:relative;}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub a{display:block; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub .detail-article{display:inline-block; padding-right:15px; position:relative; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub .detail-article:after{content:''; display:inline-block; width:12px; height:12px; background:red; position:absolute; right:0; top:0}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box{background:#fff; padding:16px; border-radius:6px; margin:8px 0 0 -12px }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table{font-size:12px;}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table th{color:#000}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table .item{text-align:left;}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table .price{text-align:left;}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table td{color:#82888f; line-height:22px; }
+
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .detail-price{display:flex; align-items:center; justify-content:space-between; font-size:13px; color:#82888f; line-height:22px; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .price{float:right; line-height:22px; font-weight:500 }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item:before{content:''; display:inline-block; width:4px; height:4px; border-radius:100%; background:#82888f; position:absolute; top:8px; left:4px;}
