@@ -32,7 +32,7 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _bindEvent: function() {
-      $('.p-btn-filter').click(_.debounce($.proxy(this._handleClickChangeFilters, this), 30));
+      $('.filterBtn').click(_.debounce($.proxy(this._handleClickChangeFilters, this), 30));
       $('.resetBtn').click(_.debounce($.proxy(this._initialFilter, this), 30));
       $('#themeSelectBtn').click($.proxy(this._goToTheme, this));
       $('.f-del-list').click($.proxy(this._goDeleteFilter, this));
@@ -515,8 +515,10 @@ Tw.ProductRenewalList.prototype = {
           item.filters[i].fltTagKid = 'Y';
         }
         if((this._networkInfo == '5G' && prodFltId == 'F01713') || (this._networkInfo == 'LTE' && prodFltId == 'F01121')) {
-          if(this._svcInfo.prodId != item.prodId) {
-            item.compareBtn = true;
+          if(this._svcInfo){
+            if(this._svcInfo.prodId != item.prodId) {
+              item.compareBtn = true;
+            }
           }
         }
       }

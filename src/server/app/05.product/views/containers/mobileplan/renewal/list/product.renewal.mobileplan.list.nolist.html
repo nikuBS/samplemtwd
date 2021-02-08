@@ -17,13 +17,13 @@
                     <div class="tod-nmp-top-wrap">
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList, quickFilterData: quickFilterData}); %>
                         <!-- 필터 조건값 노출 영역 -->
-                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: 'Y', quickFilterData: quickFilterData}); %>
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: '', quickFilterData: quickFilterData}); %>
                     </div>
                     
                     <section class="tod-nmp-search-nodata">
-                        <p class="nd-txt">조건에 맞는 <br> 검색 결과가 없습니다.</p>
+                        <p class="nd-txt">조건에 맞는 검색 결과가 없습니다.<br> 조건을 다시 검색 하시겠습니까?</p>
                         <div class="nd-btn-area">
-                            <a class="tod-nmp-btn32 sm-style1 resetBtn"><i class="p-icon16-reset"></i>초기화</a>
+                            <a class="tod-nmp-btn32 sm-style1 filterBtn">확인</a>
                         </div>
                     </section>
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>

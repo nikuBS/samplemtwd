@@ -33,6 +33,10 @@ Tw.ProductCompare.prototype = {
       this.$container.on('click','.btn-compare',$.proxy(this._comparePlan, this));
     },
 
+   /**
+   * @desc 통신망 정보 parsing
+   * @return {string}
+   */
     _parseNetworkInfo: function(networkInfo) {
       switch(networkInfo) {
         case 'F01713' :
@@ -280,6 +284,11 @@ Tw.ProductCompare.prototype = {
       }
     },
 
+   /**
+   * @desc graph 관련 데이터 생성
+   * @return {object} 
+   */
+
     _setGraphData: function() {
       if(this._networkInfo === '5G') {
         return { is5GX : true, graphClass : 'grap2' };
@@ -425,10 +434,16 @@ Tw.ProductCompare.prototype = {
     }, this));
   },
 
+  /**
+   * @desc 손실 혜택
+   * @return {object} (임시) 
+   */
+
   _getLostBenefits: function() {
     return {
       prodNm: this.compareData.comparePlan.prodNm,
-      lostBenefits: [{benefit: 'T 멤버십 VIP 기본제공'},
+      lostBenefits: [
+        {benefit: 'T 멤버십 VIP 기본제공'},
         {benefit: '분실파손80 보험 100% 할인'},
         {benefit: '5G 스마트워치 TAB할인 2회선 무료'},
         {benefit: 'wavve 앤 데이터 플러스'}
