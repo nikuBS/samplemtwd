@@ -213,18 +213,18 @@
 												<span class="bar-bubble">74일 남음</span> <!-- 201201 [OP002-10282] 수정01: bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
 											</span>
 										</div>
-										<!-- 210105 [OP002-10282] 수정02 -->
+										<!-- 210208 [OP002-10282] 수정02  -->
 										<div class="data-date">
 											<span class="start-date">
-												<span class="day-dec">약정시작일</span>
 												2020.7.27.
+												<span class="day-dec">시작일</span>
 											</span>
 											<span class="end-date">
-												<span class="day-dec">약정종료일</span>
 												2021.5.24.
+												<span class="day-dec">종료일</span>
 											</span>
 										</div>
-										<!-- //210105 [OP002-10282] 수정02 -->
+										<!-- //210208 [OP002-10282] 수정02 -->
 									</div>
 								</div>
 							</div>
@@ -355,7 +355,7 @@
 											<div class="ico-item">
 												<i class="ico"><img src="/img/myt/submain-ico14.svg" alt=""></i>
 												<div class="list-txt">
-													<span class="item-sub-txt">요금안내서 설정</span>
+													<span class="item-sub-txt">요금안내서 유형</span> <!-- 210208 [OP002-10282] 수정03  -->
 													<span class="item-tit">Bill Letter</span>
 												</div>
 											</div>
@@ -443,16 +443,37 @@
 						</div>
 					</div>
 				</section>
-				<div class="submain-color-banner" >
-					<a href="#">
-						<p class="banner-comment"> 
-							예약과 품절 사이 단 1초!
-							<strong>방학 동안<br>0한동 마법사 모집</strong>
-						</p>
-						<span class="like-btn">자세히 보기</span>
-						<img class="banner" src="/img/myt/submain-banner04.png" alt="">
-					</a>
+				<!-- 210201 [OP002-10282] 수정 -->
+				<div class="submain-swipe-banner submain-swipe">
+					<div class="main-slide-banner slide-pagingtype pg-rtop">
+						<!-- .widget -->
+						<div class="widget">
+							<div class="widget-box slider1">
+								<div class="slider-box">
+									<div class="slider">
+										<div class="slider-li">
+											<button>
+												<img src="/img/dummy/dummy-banner01.jpg" alt="">
+											</button>
+										</div>
+										<div class="slider-li">
+											<button>
+												<img src="/img/dummy/dummy-banner01.jpg" alt="">
+											</button>
+										</div>
+										<div class="slider-li">
+											<button>
+												<img src="/img/dummy/dummy-banner01.jpg" alt="">
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .widget -->
+					</div>
 				</div>
+				<!-- //210201 [OP002-10282] 수정 -->
 				<!-- 201201 [OP002-10282] 수정02 -->
 				<section class="cont-card">
 					<div class="section-inner">
@@ -497,8 +518,12 @@
         <!--// #contents -->
 	</div>
 	<script>
+		/* 210208 [OP002-10282] 수정01 */
 		var horizonBar = $('.horizon-bar-wrap .horizon-bar .data'); 
-		(horizonBar.children('.bar').width() < horizonBar.children('.bar-bubble').width()) &&  horizonBar.children('.bar-bubble').addClass('left')
+		var barBubble = horizonBar.children('.bar-bubble'); 
+		$(window).on('resize load', function(){
+			(horizonBar.children('.bar').width() < barBubble.outerWidth())? barBubble.addClass('left') : barBubble.removeClass('left')
+		})
 	</script>
 </body>
 
