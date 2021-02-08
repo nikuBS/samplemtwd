@@ -28,18 +28,18 @@ class CommonMemberSloginAos extends TwViewController {
   }
 
   /**
-   * Toss 텍스트 배너 
-   * @param req 
-   * @param res 
-   * @param next 
-   * @param svcInfo 
-   * @param allSvc 
-   * @param childInfo 
-   * @param pageInfo 
+   * Toss 텍스트 배너
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
    */
   getBannerText(): any {
-    // 1. redis read 
-    const bannerTextTestJsonData = 
+    // 1. redis read
+    const bannerTextTestJsonData =
     {
       summary: {
         "imgList": null,
@@ -85,7 +85,6 @@ class CommonMemberSloginAos extends TwViewController {
     const target = req.query.target !== 'undefined' ? decodeURIComponent(req.query.target) : '';
     const bannerResult = new BannerHelper().getTextBannerTos(req);
     bannerResult.subscribe(resp => {
-      console.log('resp => ', resp);
       if ( FormatHelper.isEmpty(mdnQuery) ) {
         res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn: null, target, banner: resp.result });
         // res.redirect('/common/member/slogin/fail');

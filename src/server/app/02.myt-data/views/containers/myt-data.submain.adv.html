@@ -342,11 +342,13 @@
                     <div class="card-cont">
                         <div class="short-link-wrap minus-mg">
                             <ul class="short-link-list">
-                                <li class="link-item" data-id="history"><a href="">충전/선물 내역</a></li>
+                                <li class="link-item" data-id="history"><a href="">최근 충전/선물 내역</a></li>
                                 <% if (!data.isEasyLogin) { %>
                                 <li class="link-item" data-id="ting"><a href="">팅 요금제 충전 선물</a></li>
                                 <% } %>
+                                <% if (data.isApp) { %>
                                 <li class="link-item" data-id="data"><a href="">데이터 조르기</a></li>
+                                <% } %>
                             </ul>
                         </div>
                         <% if (!data.isEasyLogin) { %>
