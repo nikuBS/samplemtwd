@@ -29,17 +29,6 @@
                                 <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
                                 <div class="tod-nmp-item plan-type3 <%= series.seriesClass %>">
                                     <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
-                                    <% if ((networkInfoFilter[0] == '5G' && series.seriesClass == 'prod-5g') || (networkInfoFilter[0] == 'LTE' && series.seriesClass == 'prod-lte')) { %>
-                                        <% if (svcInfo) { %>
-                                            <% if (svcInfo.prodId != thisPlan.prodId) { %>
-                                                <div class="rn-prod-bottom">
-                                                    <div class="rn-btn-right">
-                                                        <a class="btn-compare" data-prod-id="<%= thisPlan.prodId %>">내 요금제와 비교</a>
-                                                    </div>
-                                                </div>
-                                            <% } %>
-                                        <% } %>
-                                    <% } %>
                                 </div>
                                     <!-- //요금제 모듈 : 일반형 -->
                             <% } %>

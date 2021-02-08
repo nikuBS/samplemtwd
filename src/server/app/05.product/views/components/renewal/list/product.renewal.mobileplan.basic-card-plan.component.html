@@ -67,4 +67,14 @@
         </ul>
     </div>
 </a>
-        
+<% if ((networkInfoFilter[0] == '5G' && series.seriesClass == 'prod-5g') || (networkInfoFilter[0] == 'LTE' && series.seriesClass == 'prod-lte')) { %>
+    <% if (svcInfo) { %>
+        <% if (svcInfo.prodId != thisPlan.prodId) { %>
+            <div class="rn-prod-bottom">
+                <div class="rn-btn-right">
+                    <a class="btn-compare" data-prod-id="<%= thisPlan.prodId %>">내 요금제와 비교</a>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+<% } %>
