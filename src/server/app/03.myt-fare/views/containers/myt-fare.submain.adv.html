@@ -26,7 +26,7 @@ _%>
                 <%# OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 _%>
                 <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B12-29", multiple : "CMMA_A3_B12-28"} }); _%>
                 <%# // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 _%>
-                <%_if(data.isPPS){_%>
+                <%_if(data.isPPS && data.guide){_%>
                 <%- include('../components/submain/myt-fare.submain.pps.html', data) _%>
                 <%_} else {_%>
                 <%- include('../components/submain/myt-fare.submain.adv.claim-pay.html') _%>
