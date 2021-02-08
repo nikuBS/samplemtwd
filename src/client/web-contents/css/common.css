@@ -10149,3 +10149,17 @@ button:focus span {
 .tod-tos-text-banner .tb-text {margin-left:0.625rem; color:#333333; font-size:0.875rem; letter-spacing: -0.5px;}
 .tod-tos-text-banner .tb-close {position:absolute; top:0; bottom:0; right:0; width:3.25rem; background: url(/img/svg/icon_32px_exit.svg) no-repeat 50% 50%; background-size: 13px 13px;}
 #common-menu.tod-common-menu.scroll .tod-tos-text-banner {box-shadow:0 0.0625rem 0.625rem rgba(0,0,0,0.3)}
+
+/* 210201 [OP002-12960] 바로가기 Foldable(아코디언) UI 기능 추가*/
+.tod-renew.tod-srhtype1 {margin: 0 -1rem;}
+.tod-renew.tod-srhtype1 li{border-bottom: 0;}
+.tod-renew.tod-srhtype1 .normal-box{position: relative;}
+.tod-renew.tod-srhtype1 .normal-box:after {content: ""; position: absolute; bottom: 0; left: 1rem;  right: 1rem; border-bottom: 1px solid #f2f2f2;}
+.tod-renew.tod-srhtype1 .normal-box:last-child:after{border-bottom: 0;}
+.tod-renew.tod-srhtype1 .normal-box  > button{padding-left: 1rem; padding-right: 1rem;}
+.tod-renew.tod-srhtype1 .num{ padding: 0 0.125rem; color: #858585; }
+.tod-renew.tod-srhtype1 .sub-list {margin: 0.625rem 0;}
+.tod-renew.tod-srhtype1 .sub-list > li > button,
+.tod-renew.tod-srhtype1 .sub-list > li > a{padding: 0.4375rem 0;}
+.tod-renew.tod-srhtype1 .sub-list > li .main-category{font-size: 0.875rem;}
+.tod-renew.tod-srhtype1 .acco-list .acco-box.on > .acco-tit + .acco-cont{padding-top: 0 !important; padding-bottom: 0 !important;}
