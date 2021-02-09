@@ -19,6 +19,8 @@ Tw.MyTFareBillOption = function (rootEl) {
   this._historyService = new Tw.HistoryService(rootEl);
 
   this._init();
+  // 배너 관련 통계 이벤트(xtractor)
+  new Tw.XtractorService(this.$container);
 };
 
 Tw.MyTFareBillOption.prototype = {
