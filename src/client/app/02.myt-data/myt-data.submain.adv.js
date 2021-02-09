@@ -65,19 +65,6 @@ Tw.MyTDataSubMainAdv = function (params) {
 
 Tw.MyTDataSubMainAdv.prototype = {
   _OTHER_LINE_MAX_COUNT: 20, // 다른 회선 최대 노출 카운트,
-  unlimitProdIds: [
-    'NA00005957', // T플랜 라지
-    'NA00005958', // T플랜 패밀리
-    'NA00005959', // T플랜 인피니티
-    'NA00006537', // T플랜 에센스
-    'NA00006538', // T플랜 스페셜
-    'NA00006539', // T플랜 맥스
-    'NA00006157', // 0플랜 라지
-    'NA00006401', // 0플랜 슈퍼히어로
-    'NA00006403', // 5GX 스탠다드
-    'NA00006404', // 5GX 프라임
-    'NA00006405'  // 5GX 플래티넘
-  ],
   /**
    * @function
    * @desc 초기값 설정
@@ -224,12 +211,6 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _initialize: function () {
     this._svcMgmtNumList = [];
-    if (this._isGiftData) {
-      // 선물하기가 가능한경우
-      if (this._isUnlimitProd()) {
-        this.limitedGiftUsageQty = 0; // 무제한 요금제에서 잔여량 부족시 화면 접근 시 자동 애러 처리 됨. (기획 도예원 확인)
-      }
-    }
     this._initScroll();
     //this._initBanners();
     this._getTosAdminMytDataBanner();
@@ -357,7 +338,7 @@ Tw.MyTDataSubMainAdv.prototype = {
 
     if (this._isGiftData && !this._isRequestGiftData && this._elementScrolled(this.$giftSection)) {
       // T끼리 선물하기 영역 lazy loading 추가
-      this._getGiftData();
+      this._getLteProdIds();
     }
   },
   /**
@@ -1149,11 +1130,36 @@ Tw.MyTDataSubMainAdv.prototype = {
   },
 
   /**
+   * 선물하기 500mb 이상 체크 미대상 요금제 조회
+   */
+  _getLteProdIds: function() {
+    this._isRequestGiftData = true;
+    this._apiService.request(Tw.API_CMD.BFF_01_0069, {
+      property: 'str.ltegift.prodid'
+    }).done($.proxy(function(resp) {
+      if (resp.code === Tw.API_CODE.CODE_00) {
+        // 'a/b/c' 형태로 전달
+        this.unlimitProdIds = resp.result.split('/');
+      } else {
+        Tw.Logger.info('[API ERROR] getLteProdIds => ', resp);
+        this.unlimitProdIds = [];
+      }
+      this._getGiftData();
+    }, this));
+  },
+
+  /**
    * 선물하기 잔여데이터 조회
    * @private
    */
   _getGiftData: function () {
-    this._isRequestGiftData = true;
+    if (this._isGiftData) {
+      // 선물하기가 가능한경우
+      if (this._isUnlimitProd()) {
+        // 500mb 기본 제공량 데이터로 처리 할지 안할지 처리
+        this.limitedGiftUsageQty = 0;
+      }
+    }
     setTimeout(function () {
       this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this._giftReqCnt })
         .done($.proxy(this._onSuccessGiftDataInfo, this));

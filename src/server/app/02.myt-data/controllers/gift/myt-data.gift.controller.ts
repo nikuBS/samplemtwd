@@ -26,50 +26,58 @@ class MyTDataGift extends TwViewController {
       isApp: BrowserHelper.isApp(req),
       convertTDataSet: this.convertTDataSet,
       convertTelNumber: this.convertTelNumber,
-      pageInfo: pageInfo
+      pageInfo: pageInfo,
+      lteProdIds: []
     };
-
-    switch ( page ) {
-      case 'sms':
-        res.render('gift/myt-data.gift.sms.html', responseData);
-        break;
-      case 'auto-complete':
-        const response = Object.assign({
-          params: ParamsHelper.getQueryParams(req.url),
-          convertMaskTelNumber: this.convertMaskTelNumber
-        }, responseData);
-
-        res.render('gift/myt-data.gift.auto-complete.html', response);
-        break;
-      case 'available':
-        res.render('gift/myt-data.gift.available.html', responseData);
-        break;
-      case 'complete':
-        Observable.combineLatest(
-          this.getSenderInfo()
-        ).subscribe(([senderInfo]) => {
-          const respComplete = Object.assign({
-            senderInfo: senderInfo,
-            params: ParamsHelper.getQueryParams(req.url)
+    this.apiService.request(API_CMD.BFF_01_0069, {
+      property: 'str.ltegift.prodid'
+    }).subscribe((response) => {
+      if (response.code === API_CODE.CODE_00) {
+        responseData.lteProdIds = response.result.split('/');
+      }
+      switch ( page ) {
+        case 'sms':
+          res.render('gift/myt-data.gift.sms.html', responseData);
+          break;
+        case 'auto-complete':
+          const response = Object.assign({
+            params: ParamsHelper.getQueryParams(req.url),
+            convertMaskTelNumber: this.convertMaskTelNumber
           }, responseData);
 
-          res.render('gift/myt-data.gift.complete.html', respComplete);
-        });
-        break;
-      default:
-        // OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 Start
-        Observable.combineLatest(
-          this.getGiftAutoList(),
-          this.getSenderInfo()
-        ).subscribe(([autoList, senderInfo]) => {
-          const respDefault = Object.assign(
-            { autoList: autoList,
-                     senderInfo: senderInfo
-                   }, responseData);
-        // OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 End
-          res.render('gift/myt-data.gift.html', respDefault);
-        });
-    }
+          res.render('gift/myt-data.gift.auto-complete.html', response);
+          break;
+        case 'available':
+          res.render('gift/myt-data.gift.available.html', responseData);
+          break;
+        case 'complete':
+          Observable.combineLatest(
+            this.getSenderInfo()
+          ).subscribe(([senderInfo]) => {
+            const respComplete = Object.assign({
+              senderInfo: senderInfo,
+              params: ParamsHelper.getQueryParams(req.url)
+            }, responseData);
+
+            res.render('gift/myt-data.gift.complete.html', respComplete);
+          });
+          break;
+        default:
+          // OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 Start
+          Observable.combineLatest(
+            this.getGiftAutoList(),
+            this.getSenderInfo()
+          ).subscribe(([autoList, senderInfo]) => {
+            const respDefault = Object.assign(
+              {
+                autoList: autoList,
+                senderInfo: senderInfo
+              }, responseData);
+            // OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 End
+            res.render('gift/myt-data.gift.html', respDefault);
+          });
+      }
+    });
   }
 
   private getSenderInfo() {

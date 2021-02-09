@@ -5,12 +5,13 @@
  * @since 2018.10.08
  */
 
-Tw.MyTDataGift = function (rootEl, svcInfo) {
+Tw.MyTDataGift = function (rootEl, svcInfo, lteProdIds) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._svcInfo = JSON.parse(svcInfo);
+  this.unlimitProdIds = JSON.parse(lteProdIds);
 
   this._cachedElement();
   this._bindEvent();
@@ -19,19 +20,6 @@ Tw.MyTDataGift = function (rootEl, svcInfo) {
 
 Tw.MyTDataGift.prototype = {
   limitedGiftUsageQty: 500, // 기본 잔여 데이터 500MB
-  unlimitProdIds: [
-    'NA00005957', // T플랜 라지
-    'NA00005958', // T플랜 패밀리
-    'NA00005959', // T플랜 인피니티
-    'NA00006537', // T플랜 에센스
-    'NA00006538', // T플랜 스페셜
-    'NA00006539', // T플랜 맥스
-    'NA00006157', // 0플랜 라지
-    'NA00006401', // 0플랜 슈퍼히어로
-    'NA00006403', // 5GX 스탠다드
-    'NA00006404', // 5GX 프라임
-    'NA00006405'  // 5GX 플래티넘
-  ],
   /**
    * @function
    * @desc 바로 선물 / 자동 선물 화면 분기
