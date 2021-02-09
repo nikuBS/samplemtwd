@@ -335,7 +335,7 @@
             <%- include('../components/submain/myt-data.submain.adv.recent-usages.html', data) _%>
             <%_ } _%>
 
-            <%_ if (data.svcInfo.svcAttrCd !== 'M2' || data.isWireLess) { _%>
+            <%_ if (data.isWireLess && data.svcInfo.svcAttrCd !== 'M2') { _%>
             <section class="cont-card" data-id="immCharge">
                 <div class="section-inner">
                     <div class="head-tit">조회/신청 서비스</div>
