@@ -770,7 +770,7 @@ Tw.POPUP_TPL = {
     }
   ],
    // OP002-11408 [로밍][M] baro Box 개선 건 barobox 상품리스트 OP002-11941 start
-   ROAMING_FI_PRODUCT = [
+  ROAMING_FI_PRODUCT: [
     {
       'list': [
         {
