@@ -4,7 +4,7 @@
 * @author 양정규
 * @since 2020.12.15
 %>
-<%_if((data.latestDates || []).length){_%>
+<%_if(!data.isBillError && (data.latestDates || []).length){_%>
 <div class="month-charge">
     <div class="charge-tit">
         <button type="button" class="sel-month-btn down-arr fe-months" aria-haspopup="true"
