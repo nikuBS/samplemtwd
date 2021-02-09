@@ -4,6 +4,7 @@
 * @author 양정규
 * @since 2020.12.31
 %>
+<%_const {svcAttrCd} = data.svcInfo;_%>
 <section class="cont-card">
     <div class="section-inner">
         <div class="head-tit high">다른 메뉴를 찾고 계신가요?</div>
@@ -40,6 +41,8 @@
                             </div>
                         </a>
                     </li>
+                    <%# PPS, 포켓파이, T로그인 이 아닌경우만 노출%>
+                    <%_if(!data.isPPS && !(['M3', 'M4'].indexOf(svcAttrCd) > -1 )){_%>
                     <li class="item">
                         <a href="/myt-join/combinations" data-make-eid="combination">
                             <div class="ico-item">
@@ -50,10 +53,10 @@
                             </div>
                         </a>
                     </li>
+                    <%_}_%>
                 </ul>
             </div>
             <%_
-                const {svcAttrCd} = data.svcInfo;
                 if( !data.isPPS ){ // 휴대폰, 유선인 경우만 노출
             _%>
             <div class="small-ico-list-wrap">

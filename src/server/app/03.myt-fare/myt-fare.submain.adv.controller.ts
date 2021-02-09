@@ -60,7 +60,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       childInfo,
       pageInfo
     };
-    this.apiService.setTimeout(5000); // 타임아웃 3초 설정
+    this.apiService.setTimeout(5000); // 타임아웃 5초 설정
     this._miriService = new MytFareInfoMiriService(req, res, svcInfo);
     this._mytFareSubmainGuideService = new MytFareSubmainGuideService(req, res, svcInfo, allSvc, childInfo, pageInfo);
     this._smallService = new MytFareSubmainSmallService(req, res, svcInfo);
@@ -82,6 +82,18 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
     CommonHelper.addCurLineInfo(data.svcInfo);
+
+    // 상태값 참조 : http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=53477532
+    // 10: 신청/60: 초기화 -> 비밀번호 설정 유도
+    // 20: 사용중/21:신청+등록완료 -> 회선 변경 시 비번 입력 필요, 비밀번호 변경 가능
+    // 30: 변경
+    // 70: 비밀번호 잠김 -> 지점에서만 초기화 가능
+    // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
+    // 비밀번호 사용중 및 등록완료인 상태에서만 노출
+    const {pwdStCd, svcAttrCd} = svcInfo;
+    if (svcAttrCd.indexOf('S') > -1 && ['20', '21', '30'].indexOf(pwdStCd) > -1) {
+      data.isPwdSt = true;
+    }
 
     try {
       this.getRquests(data, res).subscribe( resp => {
@@ -116,7 +128,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       Object.assign(data, {
         guide,
         small,
-        benefit
+        benefit,
+        isBillError: true
+        // isBillError: (submain.code || !guide)
       });
 
       return data;
@@ -148,10 +162,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       data.isBroadBand = true;
     }
     // 1일~4일 에는 요금조회가 안됨
-    /*if (new Date().getDate() < 5) {
+    if (new Date().getDate() < 5) {
       data.isNotClaimData = true;
       return Observable.of(data);
-    }*/
+    }
 
     return this._requestClaim(data);
   }
@@ -217,14 +231,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
             data.unPaidTotSum = unPaidTotSum !== '0' ? FormatHelper.addComma(unPaidTotSum) : null;
           }
 
-          // 최근납부내역. 안쓸거 같음
-          /*if ( totalPayment ) {
-            data.totalPayment = totalPayment.paymentRecord.slice(0, 3).map(o => {
-              return Object.assign(o, {
-                isPoint : (o.payMthdCd === '15' || o.payMthdCd.indexOf('BB') >= 0)
-              });
-            });
-          }*/
           // 자동납부 정보
           if (autoPayment) {
             data.autoPayment = autoPayment;
@@ -234,13 +240,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
           if ( ['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1 ) {
             svcInfo.nickNm = SVC_ATTR_NAME[svcInfo.svcAttrCd];
           }
-          /*const claim = data.claim;
-          // 청구요금
-          if ( !FormatHelper.isEmpty(claim.invDt) ) {
-            data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
-          } else {
-            data.isRealTime = false;
-          }*/
         } else { // 대표 청구가 아닐때
           const [usage] = responses;
           const {info} = usage;
@@ -254,11 +253,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
           }
           // 사용요금
           data.usage = usage;
-          /*if ( usage ) {
-            data.usage = usage;
-          } else {
-            data.isRealTime = false;
-          }*/
           // PocketFi or T Login 인 경우 이용요금자세히버튼 노출
           if ( ['M3', 'M4'].indexOf(data.svcInfo.svcAttrCd) > -1 ) {
             data.isNotAutoPayment = false;
@@ -312,15 +306,15 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const claim = isRep ? data.claim : data.usage;
     const latestDates = new Array<string>();  // 최근 청구월(최대 6개월이며, 내역이 2개만 있다면 2개만 생성됨)
     const amtList = (isRep ? claim.billInvAmtList : claim.usedAmtList) || [];
-    // const sDate = DateHelper.getPast6MonthsShortDate();
-    const eDate = DateHelper.getEndOfMonSubtractDate(new Date(), '1', 'YYYYMMDD');
+    const toDate = new Date();
+    const eDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
     const sDate = DateHelper.getEndOfMonSubtractDate(eDate, '5', 'YYYYMMDD');
-    let haveClaim = false; // 선택월 청구데이터 있는지 여부
+    // let haveClaim = false; // 선택월 청구데이터 있는지 여부
     amtList.map( item => {
       // 선택월의 청구금액
       if (item.invDt === date) {
         data.claimPay = item.invAmt || '0';
-        haveClaim = true;
+        // haveClaim = true;
         // data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
       }
 
@@ -334,8 +328,13 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         latestDates.push(item.invDt);
       }
     });
+    // 청구 월 리스트에 '이번달' 넣기
+    const prevLastDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
+    if (latestDates.length > 0 && !latestDates.some( month => month === prevLastDate)) {
+      latestDates.splice(0, 0, prevLastDate);
+    }
     data.latestDates = latestDates;
-    data.isRealTime = !haveClaim ? false : data.isRealTime;
+    // data.isRealTime = !haveClaim ? false : data.isRealTime;
 
     // 최근 6개월 청구내역이 없는경우, 당월 가입자인지 확인한다.
     this.checkNewMember(data).subscribe( resp => {
