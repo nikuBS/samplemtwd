@@ -33,7 +33,7 @@ enum ADDITION_TYPE {
 }
 
 // 단말기 방식 코드 (상품 리스트 필터값을 전달할 때 사용) 
-enum QUICK_FILTER_CODES {
+enum DEVICE_FILTER_CODES {
   'A' = 'F01122', // 2G (2G는 3G를 표현)
   'D' = 'F01122', // 2G (2G는 3G를 표현)
   'W' = 'F01122', // 3G
@@ -44,7 +44,7 @@ enum QUICK_FILTER_CODES {
 }
 
 // 단말기 방식 코드
-enum DEVICE_MAJOR_CODES {
+enum DEVICE_CODES {
   'A' = 'W', // 2G (2G는 3G를 표현)
   'D' = 'W', // 2G (2G는 3G를 표현)
   'W' = 'W', // 3G
@@ -55,7 +55,7 @@ enum DEVICE_MAJOR_CODES {
 }
 
 // 단말기 분류 체계 코드
-enum DEVICE_MINOR_CODES {
+enum DEVICE_SUB_CODES {
   '0102001' = 'E', // Voice or Data 가능한 tablet (태블릿/ETC 범주)
   '0202001' = 'E', // Voice 불가능한 Tablet (태블릿/ETC 범주)
   '0102000' = 'E', // 회선형 Device (태블릿/ETC 범주)
@@ -66,6 +66,23 @@ enum DEVICE_MINOR_CODES {
   '0102006' = 'E', // 기타 장치 (위치 측위기반 Device)
   '0102009' = 'E', // 기타
   '0102010' = 'E', // Router (포켓파이 Roter류)
+}
+
+// 단말기 코드 명
+enum DEVICE_CODE_NAME {
+  'W' = '3G',
+  'L' = 'LTE', 
+  'F' = '5G', 
+  'E' = '2ndDevice', 
+  'P' = 'PPS'
+}
+
+// 필터 스타일 코드
+enum FILTER_STYLE_CODES {
+  'F01122' = 'i-tag-cr4', // 3G (3G는 Band 임)
+  'F01121' = 'i-tag-cr2', // LTE
+  'F01713' = 'i-tag-cr1', // 5G
+  'F01124' = 'i-tag-cr3', // 2ndDevice 
 }
 
 
@@ -164,28 +181,74 @@ export default class RenewProduct extends TwViewController {
     }
 
     render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-      Observable.combineLatest(
-        this.getMyPayment(svcInfo) // 사용중인 요금제 조회
-        , this.isPiAgree(svcInfo) // 개인정보 동의 조회
-        , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
-        , this.getSortSection() // 섹션 순서 데이터를 조회
-        , this.getThemeData(svcInfo) // 테마(리스트, 배너) 데이터를 조회
-        , this.getQuickFilter(svcInfo) // 퀵필터 데이터를 조회
-      ).subscribe(([
-        payment // 사용중인 요금제 데이터 결과 값
-        , isPiAgree // 개인정보 동의 여부
-        , additions // 사용중인 부가서비스 결과 값
-        , sortSection // 섹션 순서 데이터 결과 값
-        , themeData // 테마 데이터 조회
-        , quickFilter // 퀵 필터 데이터 조회
-      ]) => {
-        const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
-        const data = {
-          payment, isPiAgree, additions, isWireless, sortSection, themeData, quickFilter
-        }
+      
+        Observable.combineLatest(this.getLine(svcInfo)).subscribe((line) => {
+          line = line[0];
 
-        res.render('mobileplan/renewal/submain/product.renewal.mobileplan.html', { svcInfo, pageInfo, data });
-      });
+          Observable.combineLatest(
+            this.getMyPayment(svcInfo) // 사용중인 요금제 조회
+            , this.isPiAgree(svcInfo) // 개인정보 동의 조회
+            , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
+            , this.getSortSection(line) // 섹션 순서 데이터를 조회
+            , this.getThemeListData(line, svcInfo) // 리스트 형 테마 데이터를 조회
+            , this.getThemeBannerData(line, svcInfo) // 배너 형 데이터를 조회
+            , this.getQuickFilter(line, svcInfo) // 퀵필터 데이터를 조회
+          ).subscribe(([
+            payment // 사용중인 요금제 데이터 결과 값
+            , isPiAgree // 개인정보 동의 여부
+            , additions // 사용중인 부가서비스 결과 값
+            , sortSection // 섹션 순서 데이터 결과 값
+            , themeListData // 테마 리스트 데이터 조회
+            , themeBannerData // 테마 배너 데이터 조회
+            , quickFilter // 퀵 필터 데이터 조회
+          ]) => {
+            const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
+            const data = {
+              line, payment, isPiAgree, additions, isWireless, sortSection, themeListData, themeBannerData, quickFilter
+            }
+            
+            console.log("#####");
+            console.log(data.themeListData);
+            console.log("#####");
+
+            res.render('mobileplan/renewal/submain/product.renewal.mobileplan.html', { svcInfo, pageInfo, data });
+          });
+        });
+    }
+
+    /**
+     * 나의 회선 데이터 조회
+     * @param svcInfo 
+     */
+    private getLine( svcInfo: any): Observable<any> {
+      return Observable.of(this.getDeviceInitCode(svcInfo))
+        .pipe(flatMap(p => {
+          const deviceCode: any = p;
+
+          // 로그인 여부 및 기타정보를 먼저 체크한 뒤 코드값이 없으면(로그인 되어있는 상태) 네트워크 정보를 API를 통해서 얻어온 후 다음 pipe로 데이터를 넘겨줌
+          if ( FormatHelper.isEmpty(deviceCode) ) {
+            return this.getDeviceCode( svcInfo );
+          }
+          
+          return deviceCode;
+        }))
+        .pipe(flatMap(p => {
+          const deviceCode: any = p;
+          const filterCode = (Object.keys(DEVICE_FILTER_CODES).indexOf( deviceCode ) > -1) ? DEVICE_FILTER_CODES[deviceCode] : null;
+
+          // 이 전 파이프에서 deviceCode값 또는 filterCode값이 없으면 기본값을 넘긴다.
+          if ( FormatHelper.isEmpty(deviceCode) || !filterCode ) {
+            return Observable.of({
+              deviceCode: DEVICE_CODES.F,
+              quickFilterCode: DEVICE_FILTER_CODES.F,
+            });
+          } 
+
+          return Observable.of({
+            deviceCode: deviceCode,
+            quickFilterCode: filterCode,
+          });
+        }));
     }
 
     /**
@@ -280,27 +343,172 @@ export default class RenewProduct extends TwViewController {
 
     /**
      * 메인 화면의 섹션영역 (<section>)의 데이터를 정렬하기 위해서 먼저 환경변수 redis에서 순서 정보를 얻어옴
+     * 
+     * @param line 
      */
-    private getSortSection(): Observable<any> {
+    private getSortSection(line): Observable<any> {
+      let redisKey = '';
+      switch ( line.deviceCode ) {
+        case DEVICE_CODES.W: // 통신망이 3G
+          redisKey = REDIS_KEY.PRODUCT_SORT_SECTION_3G;
+          break;
+        case DEVICE_CODES.L: // 통신망이 LTE
+        redisKey = REDIS_KEY.PRODUCT_SORT_SECTION_LTE;
+          break;
+        case DEVICE_CODES.F: // 통신망이 5G
+          redisKey = REDIS_KEY.PRODUCT_SORT_SECTION_5G;
+          break;
+        case DEVICE_CODES.E: // 통신망이 Tablet/2nd Device
+          redisKey = REDIS_KEY.PRODUCT_SORT_SECTION_2ND_DEVICE;
+          break;
+        default: // 그 이외의 장치들은 모두 5G
+          redisKey = REDIS_KEY.PRODUCT_SORT_SECTION_5G;
+          break;
+      }
 
-      // TODO: 현재는 REDIS_KEY.PRODUCT_SORT_SECTION 이 값이 없으므로 임시로 만듬^^
-      return Observable.of(DEFAULT_SORT_SECTION);
-
-
-      return this.apiService.request(API_CMD.BFF_01_0069, { property: REDIS_KEY.PRODUCT_SORT_SECTION }).map(resp => {
+      return this.apiService.request(API_CMD.BFF_01_0069, { property: redisKey }).map(resp => {
         if (resp.code === API_CODE.CODE_00) {
           return resp.result || DEFAULT_SORT_SECTION;
         }
 
-        return null;
+        return DEFAULT_SORT_SECTION;
       });
     }
 
     /**
-     * 테마 데이터 (테마 리스트, 테마 배너) 데이터를 조회 
+     * 리스트 형 테마 데이터 데이터를 조회 
      * @param svcInfo 
      */
-    private getThemeData( svcInfo: any ): Observable<any> {
+    private getThemeListData( line, svcInfo: any ): Observable<any> {
+      let data = {
+        "code": "00",
+        "msg": "success",
+        "result": {
+          "expsTitNm": "이런 요금제는 어떠세요?!!!?!",
+          "networkType": "LTE",
+          "prodSmryExpType": "1", // 상품요약노출유형코드(1:기본형, 2:데이터강조형, 3:혜택강조형)
+          "mblBgImgUrl": "/img/product/v2/bg-theme1.jpg",
+          "mblBgImgNm": "test_bt_changepw222222222222222.gif",
+          
+          "prodList": [
+            {
+              "prodId": "NA00004891",
+              "prodNm": "ZEM플랜 스마트",
+              "basFeeInfo": "19800",
+              "basOfrVcallTmsCtt": "SKT 지정회선 무제한",
+              "basOfrCharCntCtt": "기본제공",
+              "basOfrDataQtyCtt": "",
+              "basOfrGbDataQtyCtt": "",
+              "basOfrMbDataQtyCtt": "500",
+              "prodSmryDesc": "만 12세 이하 어린이가 이용할 수 있는 스마트폰 요금제",
+              "prodFltList": [
+                {
+                  "prodFltId": "F01122",
+                  "prodFltNm": "3G"
+                },
+                {
+                  "prodFltId": "F01162",
+                  "prodFltNm": "청소년/어린이"
+                }
+              ],
+              "bnfProdList": []
+            },
+            {
+              "prodId": "NA00005889",
+              "prodNm": "ZEM플랜 라이트",
+              "basFeeInfo": "15400",
+              "basOfrVcallTmsCtt": "50",
+              "basOfrCharCntCtt": "기본제공",
+              "basOfrDataQtyCtt": "",
+              "basOfrGbDataQtyCtt": "",
+              "basOfrMbDataQtyCtt": "300",
+              "prodSmryDesc": "어린이용 미니폰 서비스를 이용할 수 있는 전용 요금제",
+              "prodFltList": [
+                {
+                  "prodFltId": "F01121",
+                  "prodFltNm": "LTE"
+                },
+                {
+                  "prodFltId": "F01162",
+                  "prodFltNm": "청소년/어린이"
+                },
+                {
+                  "prodFltId": "asdasd",
+                  "prodFltNm": "군인"
+                }
+              ],
+              "bnfProdList": []
+            },
+            {
+              "prodId": "NA00006539",
+              "prodNm": "T플랜 맥스",
+              "basFeeInfo": "100000",
+              "basOfrVcallTmsCtt": "집전화·이동전화 무제한",
+              "basOfrCharCntCtt": "기본제공",
+              "basOfrDataQtyCtt": "",
+              "basOfrGbDataQtyCtt": "무제한",
+              "basOfrMbDataQtyCtt": "",
+              "prodSmryDesc": "데이터 맘껏쓰고 나눠쓰는 T플랜",
+              "prodFltList": [
+                {
+                  "prodFltId": "F01713",
+                  "prodFltNm": "5G"
+                }
+              ],
+              "bnfProdList": []
+            },
+            {
+              "prodId": "NA00005366",
+              "prodNm": "소리누리 3.6G",
+              "basFeeInfo": "42350",
+              "basOfrVcallTmsCtt": "SKT 고객간 무제한",
+              "basOfrCharCntCtt": "50",
+              "basOfrDataQtyCtt": "",
+              "basOfrGbDataQtyCtt": "3.6",
+              "basOfrMbDataQtyCtt": "",
+              "prodSmryDesc": "시각장애 고객을 위한 음성혜택이 강화된 무약정 요금제",
+              "prodFltList": [
+                {
+                  "prodFltId": "F01124",
+                  "prodFltNm": "2nd Device"
+                },
+                {
+                  "prodFltId": "F01164",
+                  "prodFltNm": "복지"
+                }
+              ],
+              "bnfProdList": []
+            }
+          ]
+        }
+      };
+
+      
+
+      return this.apiService.request(API_CMD.BFF_10_0204, { 'networkName' : this.getThemeNetworkName(line) }).map((resp) => {
+        if (resp.code === API_CODE.CODE_00) {
+          // TODO. API 개발 시 밑에 있는 내용을 이쪽으로 변경해야함!!
+        }
+
+        return Object.assign({
+            'expsTitNm' : data.result.expsTitNm,
+            'networkType' : data.result.networkType,
+            'prodSmryExpType' : data.result.prodSmryExpType,
+            'mblBgImgUrl' : this.getCDN().CDN + data.result.mblBgImgUrl,
+            'mblBgImgNm' : data.result.mblBgImgNm,
+          }, {
+            'prodList': this.convertThemePayment(data)
+          })
+      });
+    }
+
+
+    /**
+     * 배너 형 테마 데이터 데이터를 조회 
+     * @param svcInfo 
+     */
+    private getThemeBannerData( line, svcInfo: any ): Observable<any> {
+
       return Observable.of(null);
     }
     
@@ -313,35 +521,11 @@ export default class RenewProduct extends TwViewController {
      * 
      * @param svcInfo 
      */
-    private getQuickFilter( svcInfo: any ): Observable<any> {
-      return Observable.of(this.getDeviceInitCode(svcInfo))
-        .pipe(flatMap(p => {
-          const deviceCode: any = p;
+    private getQuickFilter( line, svcInfo: any ): Observable<any> {
 
-          // 로그인 여부 및 기타정보를 먼저 체크한 뒤 코드값이 없으면(로그인 되어있는 상태) 네트워크 정보를 API를 통해서 얻어온 후 다음 pipe로 데이터를 넘겨줌
-          if ( FormatHelper.isEmpty(deviceCode) ) {
-            return this.getDeviceCode( svcInfo );
-          }
-          
-          return deviceCode;
-        }))
-        .pipe(flatMap(p => {
-          const deviceCode: any = p;
-          const filterCode = (Object.keys(QUICK_FILTER_CODES).indexOf( deviceCode ) > -1) ? QUICK_FILTER_CODES[deviceCode] : null;
-
-          // 이 전 파이프에서 deviceCode값 또는 filterCode값이 없으면 빈 object를 넘긴다.
-          if ( FormatHelper.isEmpty(deviceCode) || !filterCode ) {
-            return Observable.of({});
-          } 
-
-          // TODO: 이전 파이프에서 넘긴 코드값을 바탕으로 퀵필터 API 호출
-          return Observable.of({
-            deviceCode: deviceCode,
-            quickFilterCode: filterCode,
-            quickFilterData: this.getQuickFilterData(deviceCode)
-          });
-        }));
+      return Observable.of(null);
     }
+    
 
     /**
      * 기초 데이터 코드를 먼저 구함.
@@ -351,11 +535,11 @@ export default class RenewProduct extends TwViewController {
      */
     private getDeviceInitCode( svcInfo: any ): any {
       if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 5G 
-        return DEVICE_MAJOR_CODES.F;
+        return DEVICE_CODES.F;
       }
 
       if ( svcInfo.svcGr === 'P' ) { // 선택한 회선이 선불폰(PPS) 라면 P
-        return DEVICE_MAJOR_CODES.P;
+        return DEVICE_CODES.P;
       }
 
       return null;
@@ -369,38 +553,22 @@ export default class RenewProduct extends TwViewController {
     private getDeviceCode( svcInfo: any ): Observable<any> {
       return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
         if (resp.code === API_CODE.CODE_00) {
-
-          console.log(svcInfo.prodId + ' / ' + resp.result.eqpMthdCd + ': ' + resp.result.beqpSclEqpClSysCd);
-                    
+          let code = '';
 
           // 단말기 분류 체계코드를 검사
-          if ( Object.keys(DEVICE_MINOR_CODES).indexOf( resp.result.beqpSclEqpClSysCd ) > -1 ) {
-            return DEVICE_MINOR_CODES[resp.result.beqpSclEqpClSysCd];
+          if ( Object.keys(DEVICE_SUB_CODES).indexOf( resp.result.beqpSclEqpClSysCd ) > -1 ) {
+            code = DEVICE_SUB_CODES[resp.result.beqpSclEqpClSysCd];
           }
 
           // 단말기 방식 코드 검사
-          if ( Object.keys(DEVICE_MAJOR_CODES).indexOf( resp.result.eqpMthdCd ) > -1 ) {
-            return DEVICE_MAJOR_CODES[resp.result.eqpMthdCd];
+          if ( Object.keys(DEVICE_CODES).indexOf( resp.result.eqpMthdCd ) > -1 ) {
+            code = DEVICE_CODES[resp.result.eqpMthdCd];
           }
         }
         
-        return null;
+        return DEVICE_CODES.E; // 코드에 해당되는 데이터가 없으면 E로 세팅
       });
     } 
-
-    /**
-     * BFF를 이용하여 퀵 필터 데이터를 얻음
-     * 
-     * 퀵필터 정보: BE에서 개발중..! 
-     * @param code 
-     */
-    private getQuickFilterData( networkCode: any ): Observable<any> {
-      return Observable.of([{
-
-      }]
-      );
-    }
-
 
     /**
      * 무선 데이터에 해당되는 데이터에 대해 의미있는 값으로 변환
@@ -419,7 +587,7 @@ export default class RenewProduct extends TwViewController {
       const basDataGbTxt = FormatHelper.getValidVars(data.feePlanProd.basDataGbTxt);
       const basDataMbTxt = FormatHelper.getValidVars(data.feePlanProd.basDataMbTxt);
       const basDataTxt = this.convertBasDataTxt(basDataGbTxt, basDataMbTxt);
-
+      
       // 상품 스펙 공통 헬퍼 사용하여 컨버팅
       const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
@@ -492,6 +660,62 @@ export default class RenewProduct extends TwViewController {
     };
 
     /**
+     * 네트워크 정보를 파싱
+     * @param prodFltList 
+     */
+    private convertBasNetwork(prodFltList): any {
+      return prodFltList.reduce((arr, item) => {
+        arr.push(Object.assign(item, {
+          'style': FILTER_STYLE_CODES[item.prodFltId] || 'i-tag-cr5' // 필터 스타일에 맞는 class를 지정해주며, 필터스타일에 포함되지 않는 스타일들은 모두 i-tag-cr5 으로 설정
+        }));
+        return arr;
+      }, []);
+    }
+
+    /**
+     * 부가서비스 정보를 파싱
+     * @param bnfProdList 
+     */
+    private convertAdditionalList(bnfProdList): any {
+      return bnfProdList.reduce((arr, item) => {
+
+      }, []);
+    }
+
+    /**
+     * 테마 요금제에 해당되는 데이터에 대해 의미있는 값으로 변환
+     * @param data 
+     */
+    private convertThemePayment(data): any {
+      return data.result.prodList.reduce((arr, item) => {
+        const basFeeTxt = FormatHelper.getValidVars(item.basFeeInfo); // 이용요금
+        const basOfrVcallTmsCtt = FormatHelper.getValidVars(item.basOfrVcallTmsCtt); // 음성 제공량
+        const basOfrCharCntCtt = FormatHelper.getValidVars(item.basOfrCharCntCtt); // 문자 제공량
+
+        const basDataGbTxt = FormatHelper.getValidVars(item.basOfrGbDataQtyCtt); // 데이터 제공량 (GB)
+        const basDataMbTxt = FormatHelper.getValidVars(item.basOfrMbDataQtyCtt); // 데이터 제공량 (MB)
+        const basDataTxt = this.convertBasDataTxt(basDataGbTxt, basDataMbTxt); // GB, MB 컨버터
+
+        const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱
+        const basAdditionalList = this.convertAdditionalList(item.bnfProdList) || []; // 부가 서비스 정보를 파싱
+        
+        // 상품 스펙 공통 헬퍼 사용하여 컨버팅
+        const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
+
+        arr.push({
+          basProductNm: item.prodNm, // 상품명
+          basProductUrl: '/product/callplan?prod_id=' + item.prodId || '#', // 상품 URL (상품 URL이 없다면 #을 리턴)
+          basFeeInfo: spec.basFeeInfo,  // 금액
+          basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
+          basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
+          basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
+          basNetworkList: basNetworkList // 네트워크 타입
+        });
+        return arr;
+      }, []);
+    }
+
+    /**
      * 요금제 중 가장 비싼 요금제를 리스트 상 상단으로 올리는 함수
      * @param list 
      */
@@ -510,6 +734,28 @@ export default class RenewProduct extends TwViewController {
     }
 
     /**
+     * 테마에 필요한 네트워크 명을 얻음
+     * @param line 
+     */
+    private getThemeNetworkName( line ) {
+      switch( line.deviceCode ) {
+          case DEVICE_CODES.F:
+          case DEVICE_CODES.P:
+            return DEVICE_CODE_NAME.F; // 5G 또는 PPS 라면 파라미터명을 '5G'으로 보냄
+
+          case DEVICE_CODES.L:
+          case DEVICE_CODES.W:
+            return DEVICE_CODE_NAME.L; // LTE 또는 2G 또는 3G라면 파라미터명을 'LTE'으로 보냄
+          
+          case DEVICE_CODES.E:
+            return DEVICE_CODE_NAME.E; // Tablet 또는 2ndDevice라면 파라미터명을 '2ndDevice'으로 보냄
+          
+          default:   
+            return DEVICE_CODE_NAME.F; // 값이 없다면 '5G'으로 보냄
+      }
+    }
+
+    /**
      * Admin 에서 등록한 이미지에 대한 CDN 정보
      * @param 
      */
@@ -519,8 +765,10 @@ export default class RenewProduct extends TwViewController {
         return { CDN: 'https://cdnm.tworld.co.kr' };
       } else if ( env === 'stg' ) { // 스테이징
         return { CDN: 'https://cdnm-stg.tworld.co.kr' };
-      } else { // local, dev
+      } else if ( env === 'dev') { // dev
         return { CDN: 'https://cdnm-dev.tworld.co.kr' };
+      } else { // local
+        return { CDN: 'http://localhost:3001' };
       }
     }
 

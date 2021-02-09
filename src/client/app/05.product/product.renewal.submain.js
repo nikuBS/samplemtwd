@@ -4,12 +4,13 @@
  * @since 2020. 12. 18
  */
 
-Tw.ProductRenewalSubmain = function(rootEl, sectionSort, menuId) {
+Tw.ProductRenewalSubmain = function(rootEl, sectionSort, menuId, line) {
   
   // 전체 레이어 선택 및 생성자 파라미터값 세팅
   this.$container = rootEl;
   this._sectionSort = sectionSort;
   this._menuId = menuId;
+  this._line = line;
 
   // 공통 모듈 선언
   this._popupService = Tw.Popup;
@@ -24,8 +25,12 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, menuId) {
   this._additionType = '';
   this._additionAction = '';
 
-  this._getTosAdminProductBanner(); // TOS Banner 조회
   this._sortingSection(); // 섹션 데이터를 재 배치
+
+  this._getTopBanner(); // TOP Banner 조회
+  // this._getBannerTheme(); // 배너형 테마 조회
+  // this._getQuickFilter(); // 퀵 필터 조회
+
   this._bindEvent(); // 이벤트 핸들링 바인딩
 };
 
@@ -57,16 +62,157 @@ Tw.ProductRenewalSubmain.prototype = {
   },
 
   /**
-   * @function
-   * @desc 토스 배너 로딩
+   * @desc 상단 배너 로딩 (REDIS)
    */
-  _getTosAdminProductBanner: function() {
+  _getTopBanner: function() {
     this._apiService.requestArray([
       { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: this._getBannerCode(Tw.UrlHelper.getLastPath()) } },
       { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
     ]).done($.proxy(this._successTosAdminProductBanner, this))
       .fail($.proxy(this._errorRequest, this));
   }, 
+
+  /**
+   * @desc 토스 배너 처리
+   * @param resp
+   * @private
+   */
+  _successTosAdminProductBanner: function (banner, admBanner) {
+    // console.log(admBanner);
+    var result = [
+      { target: 'T', banner: banner },
+      { target: 'C' }
+    ];
+
+    result.forEach(function(row) {
+      if( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
+        if( !row.banner.result.summary ) {
+          row.banner.result.summary = { target: row.target };
+        }
+        row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
+        row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
+      } else {
+        row.banner = { 
+          result: {
+            summary : { 
+              target: row.target 
+            }, 
+            imgList : [] 
+          } 
+        };
+      }
+
+      if( admBanner.code === Tw.API_CODE.CODE_00 ){
+        console.log(row.banner);
+        row.banner.result.imgList = row.banner.result.imgList.concat( 
+          admBanner.result.banners.filter(function(admbnr) {
+            return admbnr.bnnrLocCd === row.target;
+          }).map( function(admbnr) {
+            admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
+            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+            console.log('####', admbnr);
+            return admbnr;
+          })
+        );
+      }
+    });
+
+    this._drawTosAdminProductBanner(result);
+  },
+
+  /**
+   * @desc 토스 배너 렌더링
+   * @param banners
+   * @private
+   */
+  _drawTosAdminProductBanner: function (banners) {
+    banners.forEach($.proxy(function (bnr) {
+      console.log('@@@@', bnr);
+      if (bnr.banner.result.bltnYn === 'N') {
+        this.$container.find('#fe-banner-t').parents('div.nogaps').addClass('none');
+      }
+
+      if (!Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0) {
+        new Tw.BannerProductService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp);
+        // new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+      } 
+    }, this));
+    
+    new Tw.XtractorService(this.$container);
+
+  },
+
+  /**
+   * @desc TOS 배너 노출 여부 확인
+   * @param {object} tosBanner 서버 응답
+   * @private
+   */
+  _checkTosBanner: function(tosBanner) {
+    return tosBanner.code === Tw.API_CODE.CODE_00 && (tosBanner.result.bltnYn === 'N' || tosBanner.result.tosLnkgYn === 'Y');
+  },
+
+
+
+
+
+
+
+
+
+   /**
+   * @desc 배너형 테마 조회 (REDIS)
+   */
+  _getBannerTheme: function() {
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.BANNER_ADMIN, params: { menuId: this._menuId } },
+    ]).done($.proxy(this._successBannerTheme, this))
+      .fail($.proxy(this._errorRequest, this));
+  }, 
+
+  _successBannerTheme: function(banner) {
+    if( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
+
+    }
+  },
+
+
+
+  /**
+   * @desc 퀵 필터 조회 (REDIS)
+   */
+  _getQuickFilter: function() {
+    
+    // var html = 
+    //   '<li class="slider-item">' + 
+    //     '<a href="/product/renewal/mobileplan/list?filters=F01122&code=A001" class="shadow-box">' + 
+    //       '<p class="benefit-txt">데이터<em>완전무제한 (테스트 3G)</em></p>' + 
+    //       '<i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico01.svg" alt=""></i>' + 
+    //     '</a>' + 
+    //   '</li>';
+    
+    // var $quickFilter = this.$container.find('section[data-sort="QUICK_FILTER"]');
+    // var $sliderList = $quickFilter.find('.slider-list');
+
+    // $sliderList.append(html);
+    // $sliderList.append(html);
+    // $sliderList.append(html);
+    // $sliderList.append(html);
+
+  }, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    * @desc 섹션 데이터(퀵필터, 테마 리스트, 테마 배너)데이터를 정렬 
@@ -97,83 +243,6 @@ Tw.ProductRenewalSubmain.prototype = {
 
     // data-sort를 가진 section 객체의 none을 삭제.
     $sections.removeClass('none');
-  },
-
-  /**
-   * @function
-   * @desc 토스 배너 처리
-   * @param resp
-   * @private
-   */
-  _successTosAdminProductBanner: function (banner, admBanner) {
-    var result = [
-      { target: 'T', banner: banner },
-      { target: 'C' }
-    ];
-
-    result.forEach(function(row) {
-      if( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
-        if( !row.banner.result.summary ) {
-          row.banner.result.summary = { target: row.target };
-        }
-        row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
-        row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
-      } else {
-        row.banner = { 
-          result: {
-            summary : { 
-              target: row.target 
-            }, 
-            imgList : [] 
-          } 
-        };
-      }
-
-      if( admBanner.code === Tw.API_CODE.CODE_00 ){
-        row.banner.result.imgList = row.banner.result.imgList.concat( 
-          admBanner.result.banners.filter(function(admbnr) {
-            return admbnr.bnnrLocCd === row.target;
-          }).map( function(admbnr) {
-            admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
-            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-            return admbnr;
-          })
-        );
-      }
-    });
-
-    this._drawTosAdminProductBanner(result);
-  },
-
-  /**
-   * @function
-   * @desc 토스 배너 렌더링
-   * @param banners
-   * @private
-   */
-  _drawTosAdminProductBanner: function (banners) {
-    banners.forEach($.proxy(function (bnr) {
-      if (bnr.banner.result.bltnYn === 'N') {
-        this.$container.find('#fe-banner-t').parents('div.nogaps').addClass('none');
-      }
-
-      if (!Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0) {
-        new Tw.BannerProductService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp);
-        // new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
-      } 
-    }, this));
-    
-    new Tw.XtractorService(this.$container);
-
-  },
-
-  /**
-   * @desc TOS 배너 노출 여부 확인
-   * @param {object} tosBanner 서버 응답
-   * @private
-   */
-  _checkTosBanner: function(tosBanner) {
-    return tosBanner.code === Tw.API_CODE.CODE_00 && (tosBanner.result.bltnYn === 'N' || tosBanner.result.tosLnkgYn === 'Y');
   },
 
   /**
@@ -221,7 +290,6 @@ Tw.ProductRenewalSubmain.prototype = {
   },
 
   /**
-   * @function
    * @desc AD 광고 open callback
    * @private
    */
@@ -235,7 +303,6 @@ Tw.ProductRenewalSubmain.prototype = {
   },
 
   /**
-   * @function
    * @desc AD 광고 중 동의 버튼 이벤트
    * @private
    */
@@ -260,7 +327,6 @@ Tw.ProductRenewalSubmain.prototype = {
   },
 
   /**
-   * @function
    * @desc AD 광고 중 동의안함 버튼 이벤트
    * @private
    */
