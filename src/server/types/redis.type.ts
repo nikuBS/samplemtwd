@@ -43,7 +43,11 @@ export enum REDIS_KEY {
   DATA_DEDUCTION_COUNT = 'data.deduction.count',
   ADVANCEMENT_PAGE_VISIBLE = 'advancement.page.visible',
 
-  PRODUCT_SORT_SECTION = '' // 상품 리뉴얼 ( 상품 메인화면의 섹션 순서가 세팅되어있는 환경 변수 )
+  // 상품 리뉴얼 ( 상품 메인화면의 섹션 순서가 세팅되어있는 환경 변수 )
+  PRODUCT_SORT_SECTION_3G = 'comm.theme.order.3g', // 네트워크 상태가 3G 일 때
+  PRODUCT_SORT_SECTION_LTE = 'comm.theme.order.lte', // 네트워크 상태가 LTE 일 때
+  PRODUCT_SORT_SECTION_5G = 'comm.theme.order.5g', // 네트워크 상태가 5G 일 때 
+  PRODUCT_SORT_SECTION_2ND_DEVICE = 'comm.theme.order.2nd', // 네트워크 상태가 2nd Device일 때
 }
 
 export enum REDIS_TOS_KEY {
