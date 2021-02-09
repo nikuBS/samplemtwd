@@ -1967,13 +1967,13 @@ class ApiRouter {
           }
         }
         const bannerHtml = `
+          <div class="tos_inner">
             <a href="#n" class="tb-link">
-            <i class="tb-icon">
-                ${bannerType}
-            </i>
-            <p class="tb-text">${imgAltCtt}</p>
+              <i class="tb-icon">${bannerType}</i>
+              <p class="tb-text">${imgAltCtt}</p>
             </a>
             <button type="button" class="tb-close"><span class="tod-blind">닫기</span></button>
+          </div>
         `;
 
         res.json({
