@@ -34,9 +34,6 @@ import {
 import DateHelper from '../../../utils/date.helper';
 import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
-import { catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import BannerHelper from '../../../utils/banner.helper';
 
 /**
  * @desc 메인화면-MY 초기화를 위한 class

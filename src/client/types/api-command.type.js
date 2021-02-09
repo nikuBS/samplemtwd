@@ -656,7 +656,6 @@ Tw.NODE_CMD = {
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: Tw.API_METHOD.GET },
-  GET_TOSS_BANNER_TEXT: { path: '/banner/tosstext', method: Tw.API_METHOD.GET },
 
     /*임시 API TOS배너확인후 삭제*/
     GET_BANNER_TOS_LNKG_INFO: { path: '/banner/bannerTosLnkgInfo', method: Tw.API_METHOD.GET },
