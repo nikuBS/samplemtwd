@@ -85,8 +85,8 @@ _%>
             </div>
           </div>
           <div class="btn-area btn2 medium">
-            <a href="#" class="round-btn">이용 계약 정보</a>
-            <a href="#" class="round-btn line">신청내역 및 조회</a>
+            <a href="#" data-id="until-info" class="round-btn">이용 계약 정보</a>
+            <a href="#" data-id="wire-inq" class="round-btn line">신청내역 및 조회</a>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ _%>
                      X1: 'CIS PB 상태자료 이전'
                    -->
                   <dt class="report-tit">가입 상태</dt>
-                  <dd class="report-cont"><%- data.svcInfo.svcStCd === 'AC' ? '이용 중' : '정지' %></dd>
+                  <dd class="report-cont"><%- data.svcInfo.svcStCd === 'AC' ? '이용 중' : '정지 중' %></dd>
                 </dl>
               </li>
               <%_ if (data.myHistory) {

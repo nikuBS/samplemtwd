@@ -67,7 +67,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         res, responses: newResponses, data
       });
       // 다른 페이지를 찾고 계신가요 통계코드 추가
-      data.xtdTemp = this.getXtEidTemp(data.isApp);
+      data.xtdTemp = this.getXtEidTemp(data);
       res.render('myt-join.submain.adv.html', { data });
     });
   }
@@ -95,11 +95,11 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       if ( data.myAddProduct.feePlanProd ) {
         Object.keys(data.myAddProduct.feePlanProd).forEach(key => {
           const value = data.myAddProduct.feePlanProd[key];
-          if ( key === 'svcScrbDt' ) {
+          if ( key === 'svcScrbDt' || key === 'scrbDt') {
             data.myAddProduct.feePlanProd[key] =
               DateHelper.getShortDateWithFormat(value || new Date(), 'YYYY.M.D.');
           }
-          if ( key === 'basFeeTxt' ) {
+          if ( key === 'basFeeTxt' || key === 'basFeeAmt' ) {
             data.myAddProduct.feePlanProd[key] = FormatHelper.addComma(value || 0);
           }
         });
@@ -425,10 +425,10 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
   /**
    * 다른메뉴 템플릿
    */
-  getXtEidTemp(isApp) {
+  getXtEidTemp(data) {
     // event로 별도 처리 되는 경우 url 내 data-id 속성으로 하여 별도로 관리 필요
     if ( this.type === 2 ) {
-      return [
+      const tempList = [
         {
           name: '나의 데이터/통화', url: '/myt-data/submain',
           xt_eid: 'CMMA_A3_B13-56', icon: 'sub-ben-ico16.svg'
@@ -454,10 +454,15 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico16.svg'
         },
         {
-          name: '내게 맞는 결합상품', url: '/product/mobileplan',
+          name: '내게 맞는 결합상품 찾기', url: '/product/wireplan',
           xt_eid: 'CMMA_A3_B13-79', icon: 'submain-ico07.svg'
         }
       ];
+      if (data.svcInfo.svcAttrCd !== 'S1' || data.svcInfo.svcAttrCd !== 'S3') {
+        // 인터넷/전화 외 회선 인 경우에는 나의 데이터/통화 항목 미노출
+        tempList.splice(0, 1);
+      }
+      return tempList;
     } else {
       const tempList = [
         {
@@ -489,7 +494,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-62', icon: 'sub-ben-ico06.svg'
         }
       ];
-      if (!isApp) {
+      if (!data.isApp) {
         // 모바일 웹인 경우 인증센터 항목 가리고 요금제 변경 위치 변경
         tempList[3] = tempList[5];
         tempList.splice(5, 1);
