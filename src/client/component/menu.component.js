@@ -173,15 +173,27 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     var bannerTextDraw = function() {
       self._apiService.request(Tw.NODE_CMD.GET_TOSS_BANNER_TEXT, {}) // redis text banner find
         .then(function (res) {
-          console.log(">>>>>>>>>>>>>>> ", res);
+          // console.log('bannerText result => ', res);
           if (res.code === Tw.API_CODE.CODE_00) {
             bannerTextComponent.html('');
             bannerTextComponent.html(res.result);
+            bannerTextComponent.find('.tos_inner').on('click', 'button', function(e) {
+              // close 1 day 
+              Tw.CommonHelper.setCookie('bannerYn', 'Y', 1);
+              bannerTextComponent.html('');
+            });
           }
           
         });
     }
-    bannerTextDraw();
+    // console.log('bannerYn checked', Tw.CommonHelper.getCookie('bannerYn'));
+    var bannerYn = Tw.CommonHelper.getCookie('bannerYn') || '';
+    if (bannerYn === '') {
+      // console.log('bannerTextDraw called');
+      bannerTextDraw();
+    } else {
+      bannerTextComponent.html('');
+    }
 
     // Cache elements
     this.$closeBtn = this.$container.find('#fe-close');
