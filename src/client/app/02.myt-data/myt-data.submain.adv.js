@@ -1144,6 +1144,13 @@ Tw.MyTDataSubMainAdv.prototype = {
         Tw.Logger.info('[API ERROR] getLteProdIds => ', resp);
         this.unlimitProdIds = [];
       }
+      if (this._isGiftData) {
+        // 선물하기가 가능한경우
+        if (this._isUnlimitProd()) {
+          // 500mb 기본 제공량 데이터로 처리 할지 안할지 처리
+          this._giftLimitedGiftUsageQty = 0;
+        }
+      }
       this._getGiftData();
     }, this));
   },
@@ -1153,13 +1160,6 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @private
    */
   _getGiftData: function () {
-    if (this._isGiftData) {
-      // 선물하기가 가능한경우
-      if (this._isUnlimitProd()) {
-        // 500mb 기본 제공량 데이터로 처리 할지 안할지 처리
-        this._giftLimitedGiftUsageQty = 0;
-      }
-    }
     setTimeout(function () {
       this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this._giftReqCnt })
         .done($.proxy(this._onSuccessGiftDataInfo, this));
