@@ -28,6 +28,7 @@ Tw.ProductRoamingFiInquire.prototype = {
     this._getInitPeriod();
     $('#fe-listbox').hide();
     $('#fe-after-tip').hide();
+
   },
 
   _cachedElement: function() {
@@ -36,20 +37,20 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inputEdate = this.$container.find('#fe-edate');
     this.$inquirePeriod = this.$container.find('#fe-period');
     this.$totalCnt = this.$container.find('#fe-total-cnt');
-    this.$inquire = this.$container.find('#fe-inquire');  // 조회하기 버튼
+    this.$inquire = this.$container.find('#fe-inquire');
     this.$more = this.$container.find('.bt-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
-    this.$certBtn = this.$container.find('#fe-cert'); // 인증받기 버튼
+    this.$certBtn = this.$container.find('#fe-cert');
   },
 
   _bindEvent: function() {
-    this.$inquire.on('click', $.proxy(this._getTfiResponse, this)); // 조회하기 버튼
-    this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this)); // 예약수정 버튼
+    this.$inquire.on('click', $.proxy(this._getTfiResponse, this));
+    this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
     this.$container.on('click', '.bt-more', $.proxy(this._onMore, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
-    this.$certBtn.on('click', $.proxy(this._getTfiResponse, this)); // 인증받기 버튼
+    this.$certBtn.on('click', $.proxy(this._getTfiResponse, this));
   },
 
   /**
@@ -61,11 +62,10 @@ Tw.ProductRoamingFiInquire.prototype = {
     //최초 날짜 설정
     var startDate = moment().format('YYYY[-]MM[-]DD');
     var endDate = moment().add(6, 'month').format('YYYY[-]MM[-]DD');
-    var getPeriod = this._dateHelper.getShortDateWithFormat(startDate, 'YYYY.M.DD' , 'YYYY-MM-DD') + ' - ' +
-      this._dateHelper.getShortDateWithFormat(endDate, 'YYYY.M.DD' , 'YYYY-MM-DD');
+    var getPeriod = this._dateHelper.getShortDateWithFormat(startDate, 'YYYY.M.' , 'YYYY-MM-DD') + ' - ' +
+      this._dateHelper.getShortDateWithFormat(endDate, 'YYYY.M.' , 'YYYY-MM-DD');
     var minDate = moment().subtract(2, 'years').format('YYYY[-]MM[-]DD');
     var maxDate = moment().add(2, 'years').format('YYYY[-]MM[-]DD');
-
     this.$inputSdate.val(startDate);
     this.$inputSdate.attr('min',minDate);
     this.$inputSdate.attr('max',maxDate);
@@ -176,17 +176,44 @@ Tw.ProductRoamingFiInquire.prototype = {
         res[x].show_rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id].name;
       }
 
-      res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
+    //res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
+      res[x].rsv_rcv_dtm = moment(this._dateHelper.convDateFormat(res[x].rsv_rcv_dtm)).format('YYYY.M.DD.');
       if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){ // 예약 시작 당일에 예약 취소/수정 버튼 비활성화
         res[x].dateDifference = this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8));
       }
-      res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.M.DD');
-      res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_end_dtm, 'YYYY.M.DD');
+      var stadt = res[x].rental_schd_sta_dtm.substr(0,8);
+      res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.M.DD.');
+      res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_end_dtm, 'YYYY.M.DD.');
       res[x].show_rental_st_nm = Tw.ROAMING_RESERVATION_STATE[res[x].rental_st_cd];
 
       if(res[x].rental_st_cd === '17') { // 예약취소 상태에서 버튼 비활성화
         res[x].dateDifference = '';
       }
+
+      var nowDate = moment().format('YYYYMMDD');
+      var _dday = this._dateHelper.getDiffByUnit(stadt,nowDate,'day');
+      
+      if(_dday > 0){
+        res[x].dday =_dday;
+      }else{
+        res[x].dday ='00';
+      }
+
+      res[x].isStatus17 = false;
+      res[x].isStatus16 = false;
+      res[x].isStatus12 = false;
+      res[x].isStatus11 = false;
+
+      if(res[x].rental_st_cd === '17') { // 17 : 예약 취소
+        res[x].isStatus17 = true;
+      }else if(res[x].rental_st_cd === '16') {  //16 : 미수령
+        res[x].isStatus16 = true;
+      }else if(res[x].rental_st_cd === '12') {  //12 : 예약 완료
+        res[x].isStatus12 = true;
+      }else if(res[x].rental_st_cd === '11') {  //11 : 예약 대기 중
+        res[x].isStatus11 = true;
+      }
+
     }
 
     return res;
@@ -211,8 +238,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
 
     var total = res.iTotal + Tw.HISTORY_UNIT;
-    var getPeriod = this._dateHelper.getShortDateWithFormat(res.rentfrom, 'YYYY.M.DD' , 'YYYY-MM-DD') + ' - ' +
-      this._dateHelper.getShortDateWithFormat(res.rentto, 'YYYY.M.DD' , 'YYYY-MM-DD');
+    var getPeriod = this._dateHelper.getShortDateWithFormat(res.rentfrom, 'YYYY.MM.' , 'YYYY-MM-DD') + ' - ' +
+      this._dateHelper.getShortDateWithFormat(res.rentto, 'YYYY.MM.' , 'YYYY-MM-DD');
 
     this.$inquirePeriod.text(getPeriod);
     this.$totalCnt.text(total);
