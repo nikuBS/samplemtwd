@@ -1157,7 +1157,7 @@ Tw.MyTDataSubMainAdv.prototype = {
       // 선물하기가 가능한경우
       if (this._isUnlimitProd()) {
         // 500mb 기본 제공량 데이터로 처리 할지 안할지 처리
-        this.limitedGiftUsageQty = 0;
+        this._giftLimitedGiftUsageQty = 0;
       }
     }
     setTimeout(function () {
