@@ -657,25 +657,23 @@ Tw.POPUP_TPL = {
       'list': [
         {
           'radio-attr': 'id="00" name="r2"',
-          'label-attr': 'id="00" data-center="A100110000" data-img="place-img-01-1" value="인천공항 1터미널 1층 로밍센터"' +
+          'label-attr': 'id="00" data-center="A100110000" data-img="place-img-01-1" value="인천공항 1터미널 1층 T로밍센터"' + // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
             // ' data-officehour="<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간"',
-            ' data-officehour="<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00"',
-          txt: '인천공항 1터미널 1층 로밍센터'
+//            ' data-officehour="<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00"',        
+          ' data-officehour="<strong>업무시간</strong> | 9-10 출구 : 오전 6시 ~ 오후 10시"', // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
+          txt: '인천공항 1터미널 1층 T로밍센터'  // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
         },
         {
           'radio-attr': 'id="01" name="r2"',
-          'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-east" value="인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터"' +
+ //         'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-1" value="인천공항 2터미널 1층 로밍센터"' +
+          'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-east" value="인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 T로밍센터"' + // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
+          
             // ' data-officehour="<strong>업무시간</strong> | 3번 출구 옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00"',
-            ' data-officehour="<strong>업무시간</strong> |  24시간"',
-          txt: '인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터'
+//            ' data-officehour="<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00"',
+            ' data-officehour="<strong>업무시간</strong> | 24시간"',   // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
+          //txt: '인천공항 2터미널 1층 로밍센터'
+          txt: '인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 T로밍센터'   // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
         }
-        // {
-        //   'radio-attr': 'id="01" name="r2"',
-        //   'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-1" value="인천공항 2터미널 1층 로밍센터"' +
-        //     // ' data-officehour="<strong>업무시간</strong> | 3번 출구 옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00"',
-        //     ' data-officehour="<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00"',
-        //   txt: '인천공항 2터미널 1층 로밍센터'
-        // }
         // { 'radio-attr': 'id="02" name="r2"',
         //   'label-attr':'id="02" data-center="A100140000" data-img="place-img-03" value="김포공항 1층 로밍센터"' +
         //   ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 23:00"',
@@ -714,10 +712,11 @@ Tw.POPUP_TPL = {
         {
           'radio-attr': 'name="r2"',
           'label-attr': 'id="06" data-center="A100110000" data-booth="1000004045"' +
-            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 로밍센터(F 카운터)"' +
+            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 T로밍센터(F 카운터)"' + // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
             // ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>"',
-            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
-          txt: '인천공항 1터미널 3층 로밍센터(F 카운터)'
+//            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
+            ' data-officehour="<strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br>"',   // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
+          txt: '인천공항 1터미널 3층 T로밍센터(F 카운터)'  // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
         },
         // { 'radio-attr': 'name="r2"',
         //   'label-attr':'id="07" data-center="A100110000" data-booth="1000004047"' +
@@ -728,10 +727,11 @@ Tw.POPUP_TPL = {
         {
           'radio-attr': 'name="r2"',
           'label-attr': 'id="08" data-center="1430456896" data-booth="1430456957"' +
-            ' data-img="place-img-02-de" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"' +
+            ' data-img="place-img-02-de" value="인천공항 2터미널 3층 T로밍센터(D-E 카운터)"' + // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
             // ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>"',
-            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
-          txt: '인천공항 2터미널 3층 로밍센터(D-E 카운터)'
+//            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
+            ' data-officehour="<strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br>"', // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
+          txt: '인천공항 2터미널 3층 T로밍센터(D-E 카운터)'  // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
         }
         // { 'radio-attr': 'name="r2"',
         //   'label-attr':'id="09" data-center="A100140000" data-booth="1000004055"' +
@@ -769,6 +769,35 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+   // OP002-11408 [로밍][M] baro Box 개선 건 barobox 상품리스트 OP002-11941 start
+  ROAMING_FI_PRODUCT: [
+    {
+      'list': [
+        {
+          'radio-attr': 'id="00" name="r2"',
+          'label-attr': 'id="00" baroboxProdTypeCd="global" value="baro Box 글로벌 기간형"',
+          txt: 'baro Box 글로벌 기간형'
+        },
+        {
+          'radio-attr': 'id="01" name="r2"',
+          'label-attr': 'id="01" baroboxProdTypeCd="japan" value="baro Box 일본"',
+          txt: 'baro Box 일본'
+        },
+        {
+          'radio-attr': 'id="02" name="r2"',
+          'label-attr': 'id="02" baroboxProdTypeCd="usa" value="baro Box 미국,캐나다"',
+          txt: 'baro Box 미국,캐나다'
+        },
+        {
+          'radio-attr': 'id="03" name="r2"',
+          'label-attr': 'id="03" baroboxProdTypeCd="asia" value="baro Box 아시아"',
+          txt: 'baro Box 아시아'
+        }
+
+      ]
+    }
+  ],
+  // OP002-11408 [로밍][M] baro Box 개선 건 barobox 상품리스트 OP002-11941 end
   ROAMING_INFO_CENTER: [
     {
       data: [{

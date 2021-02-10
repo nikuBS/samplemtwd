@@ -5,17 +5,39 @@
 */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { ROAMING_RECEIVE_CENTER } from '../../../../types/string.type';
+import DateHelper from '../../../../utils_en/date.helper';
+import FormatHelper from '../../../../utils/Format.helper';
+import moment from 'moment';
 // import { Observable } from 'rxjs/Observable';
 
 export default class ProductRoamingFiReservationComplete extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    const selectIdx = req.query.selectIdx;
-    const centerName = ROAMING_RECEIVE_CENTER[selectIdx];
 
-    let centerImg = '';
+    const boothCd   = req.query.boothCd;
+    // const rentfrom  = FormatHelper.conDateFormatWithDash(req.query.rentfrom);
+    // const rentto    = FormatHelper.conDateFormatWithDash(req.query.rentto);
+    console.log(req.query.rentfrom);
+    console.log(req.query.rentto);
+    const rentfrom  = moment(DateHelper.convDateFormat(req.query.rentfrom)).format('YYYY. M. DD.');
+    const rentto    = moment(DateHelper.convDateFormat(req.query.rentto)).format('YYYY. M. DD.');
+    
+    const countryArr= req.query.countryArr;
 
+ //   const centerInfo  = ROAMING_RECEIVE_CODE[boothCd];
+
+    const data = {
+      rentInfo:{
+        countryArr:countryArr
+        ,rentfrom :rentfrom
+        ,rentto   :rentto
+        ,boothCd  :boothCd
+      }
+     // ,centerInfo:centerInfo
+    };
+
+//    console.log('centerInfo ==>'+centerInfo);
+/*
     switch (selectIdx) {
       case '0':
         // 인천공항 1터미널 3층 로밍센터(F 카운터)
@@ -60,7 +82,7 @@ export default class ProductRoamingFiReservationComplete extends TwViewControlle
       centerName,
       centerImg
     };
-
+*/
     res.render('roaming/product.roaming.fi.reservation-complete.html',
       { svcInfo : svcInfo , pageInfo : pageInfo, data : data });
   }
