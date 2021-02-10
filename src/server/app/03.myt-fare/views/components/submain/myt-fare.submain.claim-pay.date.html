@@ -4,16 +4,20 @@
 * @author 양정규
 * @since 2020.12.15
 %>
-<%_if(!data.isBillError && (data.latestDates || []).length){_%>
+<%_
+<!--    data.latestDates = ['20210131'];-->
+    const {latestDates=[], claimDt, claimFirstDay, claimLastDay, month, isBillError} = data;
+    if(!isBillError && latestDates.length){
+_%>
 <div class="month-charge">
     <div class="charge-tit">
         <button type="button" class="sel-month-btn down-arr fe-months" aria-haspopup="true"
-                data-months="<%-data.latestDates%>"
-                data-value="<%-data.claimDt%>"
-                data-make-eid="month">
-            <%-data.month%>월
+                data-months="<%-latestDates%>"
+                data-value="<%-claimDt%>"
+                data-make-eid="month" <%- latestDates.length < 2 ? 'disabled' : ''%>>
+            <%-month%>월
         </button>
-        <span class="period"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%><!--2020.7.1. ~ 2020.7.31.--></span>
+        <span class="period"><%-`${claimFirstDay} ~ ${claimLastDay}`%><!--2020.7.1. ~ 2020.7.31.--></span>
     </div>
 </div>
 <%_}_%>

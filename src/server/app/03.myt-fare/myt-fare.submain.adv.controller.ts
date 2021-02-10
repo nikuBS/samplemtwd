@@ -97,6 +97,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     try {
       this.getRquests(data, res).subscribe( resp => {
+        if (resp.code && resp.code !== API_CODE.CODE_00) {
+          return this.errorRender(res, resp);
+        }
         res.render('myt-fare.submain.adv.html', { data: resp });
       });
 
@@ -122,15 +125,19 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     ).map( (responses) => {
       const [submain, guide, ...other] = responses;
       if (submain.code && submain.code !== API_CODE.CODE_00) {
-        return this.errorRender(res, submain);
+        return submain;
+        // return this.errorRender(res, submain);
       }
-      const [small, benefit] = other || {};
+      const error = (other || []).find(item => item.code && item.code !== API_CODE.CODE_00);
+      if (!FormatHelper.isEmpty(error)) {
+        return error;
+        // return this.errorRender(res, error);
+      }
+      const [small, benefit] = other || [{}, {}];
       Object.assign(data, {
         guide,
         small,
-        benefit,
-        isBillError: true
-        // isBillError: (submain.code || !guide)
+        benefit
       });
 
       return data;
@@ -173,7 +180,8 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   private getBillCharge(svcInfo, res): Observable<any> {
     return this._mytFareSubmainGuideService.getBillCharge(svcInfo, res).switchMap( resp => {
       if (resp.code && resp.code !== API_CODE.CODE_00) {
-        return Observable.of(null);
+        return Observable.of(resp);
+        // return Observable.of(null);
       }
 
       return this._childService.getChildBillInfo().map( childInfo => {
