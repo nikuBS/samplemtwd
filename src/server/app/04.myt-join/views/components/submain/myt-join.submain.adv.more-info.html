@@ -8,7 +8,11 @@ _%>
 <section class="cont-card">
   <div class="section-inner">
     <div class="head-tit high">
+      <% if (data.type !== 2) { %>
       <a href="#" data-id="br-opening-detail" class="link">기본 가입정보</a>
+      <% } else { %>
+      기본 가입정보
+      <% } %>
     </div>
     <% var icon = 'ico7'; %>
     <%_ if (data.type === 2) { _%>
