@@ -46,8 +46,37 @@ Tw.RoamingGuideIndex.prototype = {
     // '출국 전 필수 확인' 다이얼로그, 탭 전환 핸들러
     $(document).on('click', '#checklistDialog .tabs .tab', $.proxy(this._handleSelectTab, this));
     // 카테고리 선택 핸들러
-    $(document).on('click', 'span.tag', $.proxy(this._handleTag, this));
+    $(document).on('click', 'button.tag,a.tag', $.proxy(this._handleTag, this));
+    //웹접근성 팝업 닫기 이전 포커스
+    $(document).on('click', '#checklistDialog .close #dialog_close', $.proxy(this._dialog_close, this));
+    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
+    this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
+
+  //웹접근성 
+  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
+  _closeGnb: function() {
+    setTimeout(function () {
+      $("span.icon-gnb-menu").focus();
+    },300);  
+ },
+    //웹접근성 팝업창 닫기 이전 포커스
+    //e.substring(0,3) :tag #해시테그 , 그 외 출국전 ...분기처리
+  _dialog_close: function(e) {
+
+    var itemId = e.currentTarget.getAttribute('data-tabid');
+
+    if(itemId.substring(0,3)==='tag') {  //#해시테그
+      setTimeout(function(){
+        $('.tags a[data-id="'+ itemId.substring(4,6) +'"]').focus();
+      },500);
+    }else{  //출국전 안내 
+      setTimeout(function(){
+        $('li[data-checklist='+ itemId +']').focus();
+      },500);
+    }
+  },
+
   /**
    * '출국 전 필수 확인' 다이얼로그 띄우는 핸들러.
    * showChecklist 함수를 호출한다.
@@ -92,6 +121,11 @@ Tw.RoamingGuideIndex.prototype = {
   _handleSelectTab: function(e) {
     var tabId = e.currentTarget.getAttribute('data-tabid');
     this.selectTab(tabId);
+
+    $('#checklistDialog .tabs').find('button').each(function(index,item){  //텝 웹접근성 aria 반전
+      st =  $(this).hasClass('active') ? 'true' :'false';
+      $(this).attr('aria-selected',st);    
+     });
   },
   /**
    * 필수 점검 리스트 '카테고리' 핸들러
@@ -153,12 +187,13 @@ Tw.RoamingGuideIndex.prototype = {
     $('.card .tags').html(list);
 
     // 최상단 배너 데이터 준비
+    //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 alt추가...
     if ($('#fe-banner-t').length) {
       var banners = [
-        {bnnrFilePathNm: '/img/product/roam/guide_top_baro.png', imgLinkUrl: '/product/roaming/info/barocall', bnnrExpsSeq: '1'},
-        {bnnrFilePathNm: '/img/product/roam/guide_top_securet.png', imgLinkUrl: '/product/roaming/info/secure-troaming', bnnrExpsSeq: '2'},
-        {bnnrFilePathNm: '/img/product/roam/guide_top_guam.png', imgLinkUrl: '/product/roaming/info/guamsaipan', bnnrExpsSeq: '3'},
-        {bnnrFilePathNm: '/img/product/roam/guide_top_product.png', imgLinkUrl: '/product/roaming/fee-info', bnnrExpsSeq: '4'}
+        {bnnrFilePathNm: '/img/product/roam/guide_top_baro.png', imgLinkUrl: '/product/roaming/info/barocall', bnnrExpsSeq: '1', bnnrImgAltCtt : 'baro - 데이터 로밍 요금제에 가입하고 해외에서 한국으로 자유롭게 baro 통화하세요.'}, 
+        {bnnrFilePathNm: '/img/product/roam/guide_top_securet.png', imgLinkUrl: '/product/roaming/info/secure-troaming', bnnrExpsSeq: '2', bnnrImgAltCtt : '자동안심 T로밍 - 과도한 요금이 청구되지 않도록 이용금을 제어해주는 SK테레콤만의 서비스'},
+        {bnnrFilePathNm: '/img/product/roam/guide_top_guam.png', imgLinkUrl: '/product/roaming/info/guamsaipan', bnnrExpsSeq: '3', bnnrImgAltCtt : '괌,사이판 - 괌,사이판으로 여행 갈 때는 SK텔레콤만의 특별한 로밍혜택을 누려보세요'},
+        {bnnrFilePathNm: '/img/product/roam/guide_top_product.png', imgLinkUrl: '/product/roaming/fee-info', bnnrExpsSeq: '4', bnnrImgAltCtt : '로밍 상품 이용안내 - 쉽고 편리하게 이용할 수 있는  SK텔레콤의 새로운 로밍 서비스를 소개합니다.'}
       ];
       for (i=0; i<banners.length; i++) {
         var b = banners[i];
@@ -289,6 +324,16 @@ Tw.RoamingGuideIndex.prototype = {
       this.selectTab('tag');
       this.filterTag(itemId);
     }
+
+    //웹접근성 닫기 버튼에 이전 포커스 id 값 넣어줌
+    $('#checklistDialog .close #dialog_close').attr('data-tabId',itemId);
+    // 웹접근성 수정건 적용  :출국전 안내사항 팝업, title 포커스
+    setTimeout(function(){
+      $('#'+itemId).find('.title').focus();
+     // $('#'+itemId).find('.title').text('test');
+    },500);
+    
+
     $('#checklistDialog').css('display', 'block');
   },
   /**
@@ -296,7 +341,7 @@ Tw.RoamingGuideIndex.prototype = {
    * @param tagId 카테고리(태그) 아이디
    */
   filterTag: function (tagId) {
-    var activeId = $('.tags .active').attr('id');
+     var activeId = $('.tags .active').attr('id');
     if (activeId === 'chip-' + tagId) {
       $('.tags .tag').removeClass('active');
       $('.checklist .tag-panel').css('display', 'block');
@@ -324,6 +369,11 @@ Tw.RoamingGuideIndex.prototype = {
     $(descId).html(content);
 
     var imagePrefix = Tw.Environment.cdn + '/img/product/roam/ico_';
+
+    //웹접근성 aria toogle
+    $('#' + itemId).attr('aria-pressed')=='true' ? $('#' + itemId).attr('aria-pressed','false') : $('#' + itemId).attr('aria-pressed','true'); 
+
+
     $(descId).toggle(200, 'swing', function () {
       var info = $(descId)[0];
       var hidden = info.style.display === 'none';

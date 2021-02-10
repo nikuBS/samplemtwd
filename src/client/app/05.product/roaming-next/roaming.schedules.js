@@ -42,14 +42,28 @@ Tw.RoamingSchedules.prototype = {
     $('#scheduleDialog .header .close').on('click', $.proxy(this.closeScheduleDialog, this));
     // 전체 국가 보기 다이얼로그 닫기 버튼
     $('#nationsDialog .header .close').on('click', $.proxy(this._closeDialog, this));
+    //여행할 나라 국가 클릭시 index 값 저장(웹접근성)
+    $('#pc1, #pc2, #pc3, #pc4, #pc5, #pc6').on('click', $.proxy(this._clickfix, this)); 
   },
+  /*
+   * 국가별 6개 선택시, 달력 레이어 값(웹접근성)
+   *data-ix 에 클릭한 국가 index 담아둠,
+   */
+  _clickfix: function(e) {
+     var fix =e.currentTarget.getAttribute('fix')
+     $('[data-ix]').attr('data-ix',fix);
+  },
+
   /**
    * 전체 국가 보기 다이얼로그 닫기
    * @private
    */
   _closeDialog: function() {
     this.$closeCallback();
-    $(document).scrollTop(this._baseLastScrollTop);
+    //웹접근성
+    $("[data-ix]").attr('data-ix','');  //index 값 초기화,
+    $(".fe-show-nations").focus();  //전체국가 보기 닫기 , 웹접근성 추가
+   // $(document).scrollTop(this._baseLastScrollTop);
   },
   /**
    * 일정 선택 다이얼로그 오픈
@@ -66,7 +80,6 @@ Tw.RoamingSchedules.prototype = {
     $(baseDiv).css('display', 'none');
     $(baseDiv).removeClass('wrap');
     $('#scheduleDialog').addClass('wrap');
-
     $('#date-depart').html('-');
     $('#date-arrive').html('-');
     if (!topBannerUrl) {
@@ -92,6 +105,10 @@ Tw.RoamingSchedules.prototype = {
       // 가는 날은 오늘로부터 60일 이내이고, 오는 날은 가는 날로부터 30일이라, 최대 90일까지만 선택 가능
       maxDate: moment().add(90, 'days').format('YYYY-MM-DD')
     }, $.proxy(this._handleDatePick, this));
+
+    //웹접그성 달력 오픈시 focus 지정
+    $('#scheduleDialog .summary h1').focus();
+
     $(document).on('click', 'th.next,th.prev', function() {
       $('#calendarGuide').css('display', 'none');
     });
@@ -144,10 +161,54 @@ Tw.RoamingSchedules.prototype = {
    * 일정선택 다이얼로그 닫기
    */
   closeScheduleDialog: function () {
+
     $('#scheduleDialog').removeClass('wrap');
     this.$closeCallback();
-    $(document).scrollTop(this._baseLastScrollTop);
+    //$(document).scrollTop(this._baseLastScrollTop);
+
+    //1~6개 국가 index 값.
+    var fix = $('[data-ix]').attr('data-ix'); 
+
+    switch(fix){
+      case "1":
+       obj ='#pc1 .pn';       
+       break;
+
+      case "2":
+        obj ='#pc2 .pn';       
+        break;
+
+      case "3":
+        obj ='#pc3 .pn';        
+        break;
+
+      case "4":
+        obj ='#pc4 .pn';       
+        break;
+
+      case "5":
+        obj ='#pc5 .pn';       
+        break;
+
+      case "6":
+        obj ='#pc6 .pn';       
+        break;
+
+      case "7":
+        obj ='.fe-show-nations';       //전체국가
+        break;
+
+      default:
+        obj ='#btn_search2';  //국가검색 돋보기 아이콘
+    }
+
+    $("[data-ix]").attr('data-ix','');  //index 값 초기화,
+
+    setTimeout(function(){
+      $(obj).focus();   
+     },200);   
   },
+
   /**
    * 가는 날 선택 시 표시될 작은 말풍선 레이어 표시
    *
@@ -352,6 +413,10 @@ Tw.RoamingSchedules.prototype = {
     };
     for (var i = 0; i<selectedNations.length; i++) {
       var nation = selectedNations[i];
+
+      if(i==0){
+        $('#nationsDialog .content h2').text(nation.commCdValNm);
+      }
       /**
        * <li>
        *   <button role="link" title="캐나다" data-country="CAN">캐나다</button>
@@ -399,5 +464,8 @@ Tw.RoamingSchedules.prototype = {
     this.onClickNationGroup(document.getElementById('EUR'));
     $(this.$baseDiv).css('display', 'none');
     $('#nationsDialog').css('display', 'block');
+
+    //전체국가보기 달력 닫기 할 경우 이전 포커스(웹접근성)
+    $('[data-ix]').attr('data-ix','7');
   }
 };
