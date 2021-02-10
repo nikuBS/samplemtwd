@@ -1,8 +1,18 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+
 <div id="roamingGuide">
     <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu">
+        <span class="menu icon-gnb-menu" tabindex="-1">
             <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
         </span>
         <h1>T로밍안내</h1>
@@ -12,6 +22,7 @@
     </div>
     <%- include('../components/header.component.html', { title: 'T로밍안내', svcInfo: svcInfo }) %>
     <div id="contents" class="first">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
     <div class="container">
         <div class="cont-box nogaps noborder">
             <div class="main-slide-banner slide-pagingtype">
@@ -31,20 +42,20 @@
         <div class="subs">
             <a href="/product/roaming/info/lte">
             <div class="sub mr">
-                <img src="<%= CDN %>/img/product/roam/guide_auto.svg" width="78" height="78" />
+                <img src="<%= CDN %>/img/product/roam/guide_auto.svg" width="78" height="78" alt="">
                 <span>SK텔레콤의</span>
                 <span>자동로밍</span>
             </div>
             </a>
             <a href="/product/roaming/info/data-roaming">
             <div class="sub mr">
-                <img src="<%= CDN %>/img/product/roam/guide_datasms.svg" width="78" height="78" />
+                <img src="<%= CDN %>/img/product/roam/guide_datasms.svg" width="78" height="78" alt="">
                 <span>SMS 로밍 /</span>
                 <span>데이터 로밍</span>
             </div>
             </a>
             <div class="sub documents">
-                <img src="<%= CDN %>/img/product/roam/guide_docs.svg" width="78" height="78" />
+                <img src="<%= CDN %>/img/product/roam/guide_docs.svg" width="78" height="78" alt="">
                 <span>로밍 이용</span>
                 <span>가이드</span>
             </div>
@@ -102,10 +113,12 @@
         </h3>
         <ul>
         {{#each items}}
-            <li class="item" data-checklist="state-{{ id }}">
-                <span class="no">{{ no }}</span>
-                {{ title }}
-                <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13">
+            <li class="item" data-checklist="state-{{ id }}" tabindex="-1">
+                <a href="#">
+                    <span class="no">{{ no }}</span>
+                    {{ title }}
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" alt="">   <!-- 202011 - 웹접근성 수정건 적용 : a 태그 추가 시작 -->
+                </a>
             </li>
         {{/each}}
         </ul>
@@ -113,17 +126,18 @@
 </script>
 <script type="text/x-handlebars-template" id="tpl-state-panel">
     <!-- '출국 전 필수 확인' 다이얼로그 내, 상황별 탭 속 POINT 1, 2, 3 -->
-    <div class="section">
+    <div class="section" >
         {{ title }}
         <span class="subtitle">{{ subtitle }}</span>
     </div>
     <div class="card">
         <ul>
         {{#each items}}
-            <li id="state-{{ id }}" class="toggleItem">
-                <span class="no">{{ no }}</span>
-                <span class="title">{{ title }}</span>
-                <img class="arrow" src="<%= CDN %>/img/product/roam/ico_expand.svg" width="13">
+            <li id="state-{{ id }}" class="toggleItem" aria-pressed="false">
+                <button type="button" id="state-01-01" >
+                    <span class="no">{{ no }}</span>
+                    <span class="title" tabindex="-1">{{ title }}</span>
+                </button>
                 <div class="description"></div>
             </li>
         {{/each}}
@@ -133,8 +147,8 @@
 <script type="text/x-handlebars-template" id="tpl-tags">
     <!-- '출국 전 필수 확인' 다이얼로그 내, 카테고리별 탭, 해시태그 모음 -->
     <div class="tags">
-        {{#each items}}
-            <span class="tag" id="chip-tag-{{ id }}" data-id="{{ id }}" data-command="filterTag">#{{ name }}</span>
+        {{#each items}}          
+           <button type="button" class="tag" id="chip-tag-{{ id }}" data-id="{{ id }}" data-command="filterTag">#{{ name }}</button>       
         {{/each}}
     </div>
 </script>
@@ -149,7 +163,7 @@
             {{#each items}}
                 <li id="tag-{{ id }}" class="toggleItem">
                     <span class="title">{{ title }}</span>
-                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_expand.svg" width="13">
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_expand.svg" width="13" alt="">
                     <div class="description"></div>
                 </li>
             {{/each}}
@@ -159,7 +173,7 @@
 </script>
 <script type="text/x-handlebars-template" id="tpl-tag-card">
     <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-    <span class="tag" data-id="{{ id }}" data-command="showChecklist">#{{ name }}</span>
+    <a href="#" class="tag" data-id="{{ id }}" data-command="showChecklist" tabindex="-1">#{{ name }}</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
 </script>
 
 <!-- '출국 전 필수 확인' 다이얼로그 -->
@@ -167,12 +181,14 @@
     <div class="appbar">
         <h1>출국 전 필수 확인</h1>
         <div class="close">
-            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" alt="닫기" id="dialog_close" data-tabId=""/>
         </div>
     </div>
-    <div class="tabs">
-        <div class="tab state active" data-tabid="state"><span>상황별</span>
-        </div><div class="tab tag" data-tabid="tag"><span>카테고리별</span></div>
+    <div class="tabs"> 
+       <!-- 210121 수정 [OP002-12168] -->
+       <button type="button" class="tab state" data-tabid="state" aria-selected="true"><span>상황별</span></button>
+       <button type="button" class="tab tag active" data-tabid="tag" aria-selected="false"><span>카테고리별</span></button>
+       <!-- // 210121 수정 [OP002-12168] -->
     </div>
     <div class="background-f6"></div>
     <div class="checklist">
@@ -185,7 +201,7 @@
     <div class="appbar">
         <h1>로밍 이용 가이드</h1>
         <div class="close">
-            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
+            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" alt="닫기" />
         </div>
     </div>
     <div class="background-f6"></div>
@@ -203,21 +219,21 @@
             <h3>스마트폰</h3>
             <p>로밍 요금제 가이드</p>
             <a href="#">
-                <img src="<%= CDN %>/img/product/roam/ico_download.svg" />
+                <img src="<%= CDN %>/img/product/roam/ico_download.svg" alt="가이드 다운" />
             </a>
         </div>
         <div class="document" id="downloadPartner">
             <h3>스마트폰</h3>
             <p>제휴 사업자 가이드</p>
             <a href="#">
-                <img src="<%= CDN %>/img/product/roam/ico_download.svg" />
+                <img src="<%= CDN %>/img/product/roam/ico_download.svg" alt="가이드 다운" />
             </a>
         </div>
         <div class="document" id="downloadRental">
             <h3>임대 로밍</h3>
             <p>자동 로밍 가이드</p>
             <a href="#">
-                <img src="<%= CDN %>/img/product/roam/ico_download.svg" />
+                <img src="<%= CDN %>/img/product/roam/ico_download.svg" alt="가이드 다운" />
             </a>
         </div>
     </div>
