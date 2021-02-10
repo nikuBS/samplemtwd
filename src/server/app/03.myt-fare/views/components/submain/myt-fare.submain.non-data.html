@@ -6,7 +6,7 @@
 %>
 <%_
     const latestDates = data.latestDates || [],
-        {isNewMember=false, isNotClaimData=false, isBillError} = data;
+        {isNewMember=false, isNotClaimData=false} = data;
 _%>
 <section class="cont-card">
     <div class="charge-wrap">
@@ -18,13 +18,8 @@ _%>
                         let warningMsg = "이번 달에 사용하신<br>이용요금이 없습니다.";
                         warningMsg = latestDates.length < 1 && !isNewMember ? "최근 6개월 내 청구된<br>해당 월 요금조회가 가능합니다." : warningMsg;
                         warningMsg = isNotClaimData ? "매월 5일경 부터<br>해당 월 요금조회가 가능합니다." : warningMsg;
-                        warningMsg = isBillError ? "서비스 점검 중입니다." : warningMsg;
                     _%>
                     <p class="warning-tit"><%-warningMsg%></p>
-                    <%_if(isBillError){_%>
-                    <p class="warning-sub-tit">잠시 후 다시 이용해 주세요.</p>
-                    <p class="warning-sub-txt">YYYY.MM.DD HH:MM ~ YYYY.MM.DD HH:MM</p>
-                    <%_}_%>
                     <%_if(isNotClaimData){_%>
                     <div class="btn-area">
                         <a href="/myt-fare/bill/hotbill" class="rect-btn">실시간 이용요금 조회하기</a>
