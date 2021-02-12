@@ -177,10 +177,14 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           if (res.code === Tw.API_CODE.CODE_00) {
             bannerTextComponent.html('');
             bannerTextComponent.html(res.result);
+            $("#common-menu").addClass('use-tos-banner');
+            // 닫기 버튼 
             bannerTextComponent.find('.tos_inner').on('click', 'button', function(e) {
+              $("#common-menu").removeClass('use-tos-banner');
               // close 1 day 
               Tw.CommonHelper.setCookie('bannerYn', 'Y', 1);
               bannerTextComponent.html('');
+
             });
           }
           

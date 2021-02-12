@@ -1948,6 +1948,14 @@ class ApiRouter {
   }
 
   private getBannerTossText(req: Request, res: Response, next: NextFunction) {
+
+    const loginService = new LoginService();
+    const svcInfo = loginService.getSvcInfo(req) || {};
+    let loginYn = false;
+    if (!FormatHelper.isEmpty(svcInfo)) { // 정회원유무 
+      loginYn = true;
+    }
+
     const bannerResult = new BannerHelper().getTextBannerTos(req);
     bannerResult.subscribe(resp => {
         let bannerType = '';
@@ -1977,7 +1985,7 @@ class ApiRouter {
         `;
 
         res.json({
-            code: resp.code,
+            code: loginYn === false ? API_CODE.CODE_01 : resp.code,
             msg: resp.msg,
             result: bannerHtml
         })
