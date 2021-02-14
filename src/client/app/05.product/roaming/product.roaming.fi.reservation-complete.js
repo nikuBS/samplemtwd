@@ -3,6 +3,7 @@
  * @desc T로밍 > baro Box 예약 완료 페이지
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.11.16
+ * 2021.02 바로박스 개선 OP002-11941 JongGu Kim(jmsk80@softworks.co.kr)
  */
 
 Tw.ProductRoamingFiReservationComplete = function(rootEl,resData,cdn) {
