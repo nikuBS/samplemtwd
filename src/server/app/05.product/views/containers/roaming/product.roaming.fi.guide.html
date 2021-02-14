@@ -2,6 +2,7 @@
 * @file product.roaming.fi.guide.html
 * @author Seungkyu Kim (ksk4788@pineone.com)
 * @since 2018.11.06
+* 2021.02 바로박스 개선 JongGu Kim(jmsk80@softworks.co.kr)
 * ID: RM_14_01
 %>
 
@@ -258,48 +259,7 @@
 <script>
   $(document).ready(function () {
     new Tw.ProductRoamingFiGuide($('.wrap'));
-	//$('#roamingIntercept').data('checkCachedMcc', checkInterceptMenu);
-
+	$('#roamingIntercept').data('checkCachedMcc', checkInterceptMenu);
   });
-  $(function(){
-
-	var o = $('.rm-anchor');
-	var ah = o.height();
-	var hd = 52;
-	var v = o.offset().top - hd;
-	var ai = o.find('li');
-	var iscroll = 1;			
-	$(window).scroll(function(){
-		var st = $(window).scrollTop();
-		if( st > v ) {
-			o.addClass('fixed');
-		} else o.removeClass('fixed');
-		if(iscroll){
-			for(i=0;i < ai.length;i++){
-				var a = ai.eq(i).find('a');						
-				var ao = $(a.attr('href')).offset().top - hd - ah - 1;		
-				if(ao < st){							
-					rmAnchor(a);
-				}
-			}
-		}
-	});
-	o.find('a[href^="#"]').bind('click',function(e){				
-		e.preventDefault();
-		iscroll = 0;
-		var ctOffset = $($.attr(this, 'href')).offset().top;
-		var t = ctOffset - hd - ah;
-		$('html, body').stop().animate({scrollTop:t}, 200, function(){ iscroll = 1 });
-		rmAnchor(this);
-	});
-});
-function rmAnchor(o){
-	console.log("	function rmAnchor ....");
-
-	var el = $(o).parent('li');
-	el.find('a').attr('aria-selected', 'true');
-	el.siblings().find('a').attr('aria-selected', 'false')
-}
 </script>
-<!--<script src="/js/product.roaming.fi.guide.js"></script>-->
 <% include ../../components/end.component.html %>
