@@ -439,7 +439,12 @@ class ApiService {
           // this.loginService.clearXtCookie(this.res);
           return Observable.combineLatest(
             this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
-            this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
+            this.loginService.setAllSvcInfo(this.req, this.res, resp.result),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          );
         } else {
           // return Observable.combineLatest(
           //   this.loginService.setSvcInfo(this.req, this.res, null),
@@ -447,7 +452,20 @@ class ApiService {
           throw resp;
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap(([select, all, ageResp]) => {
+        if (ageResp) {
+          const curSvcInfo = {
+            age: ''
+          };
+          if (ageResp.code === API_CODE.CODE_00) {
+            curSvcInfo.age = ageResp.result.age? ageResp.result.age : '';
+          }
+          return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+        } else {
+          throw [select, all];
+        }
+      })
+      .switchMap(() => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           // return this.loginService.setChildInfo(this.req, this.res, resp.result);
@@ -512,13 +530,32 @@ class ApiService {
           Object.assign(curSvcInfo, resp.result);
 
           // this.loginService.clearXtCookie(this.res);
-          return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          )
         } else {
           // return this.loginService.setSvcInfo(this.req, this.res, null);
           throw resp;
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap(([resp, ageResp]) => {
+        if (ageResp) {
+          const curSvcInfo = {
+            age: ''
+          };
+          if (ageResp.code === API_CODE.CODE_00) {
+            curSvcInfo.age = ageResp.result.age? ageResp.result.age : '';
+          }
+          return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap(() => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setAllSvcInfo(this.req, this.res, resp.result);
@@ -695,13 +732,34 @@ class ApiService {
         } else {
           throw resp;
         }
-      }).switchMap((resp) => {
+      })
+      .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(this.req, this.res, resp.result);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(this.req, this.res, resp.result),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          );
         } else {
           throw resp;
         }
-      }).map(() => {
+      })
+      .switchMap(([selectResp, ageResp]) => {
+        if (ageResp) {
+          const curSvcInfo = {
+            age: ''
+          };
+          if (ageResp.code === API_CODE.CODE_00) {
+            curSvcInfo.age = ageResp.result.age? ageResp.result.age : '';
+          }
+          return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+        } else {
+          throw selectResp;
+        }
+      })
+      .map(() => {
         return { code: API_CODE.CODE_00, result: result };
       });
   }
@@ -784,7 +842,13 @@ class ApiService {
     return this.request(API_CMD.BFF_01_0005, {})
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(this.req, this.res, resp.result);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(this.req, this.res, resp.result),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          );
         } else if ( resp.code === 'BFF0030' ) {
           const svcInfo = this.loginService.getSvcInfo(this.req);
           return this.loginService.setSvcInfo(this.req, this.res, new SvcInfoModel({
@@ -798,6 +862,19 @@ class ApiService {
           }));
         } else {
           throw resp;
+        }
+      })
+      .switchMap(([selectResp, ageResp]) => {
+        if (ageResp) {
+          const curSvcInfo = {
+            age: ''
+          };
+          if (ageResp.code === API_CODE.CODE_00) {
+            curSvcInfo.age = ageResp.result.age? ageResp.result.age : '';
+          }
+          return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+        } else {
+          throw selectResp;
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
