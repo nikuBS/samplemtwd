@@ -53,7 +53,7 @@
         </div>
         <!--// #header -->
         <!-- #common-menu -->
-        <div id="common-menu" class="on user-type tod-common-menu"><!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 --> 
+        <div id="common-menu" class="on user-type tod-common-menu use-tos-banner"><!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 --><!-- 210125 [OP002-12898] [TOS] 텍스트 배너 use-tos-banner 추가 -->
             <div class="section-userinfo">
                 <!-- 로그인전 -->
                 <span class="userinfo" style="display:none">
@@ -97,20 +97,23 @@
             </div>
 
             <!-- 210125 [OP002-12898] [TOS] 텍스트 배너 -->
+            <!-- 210208 위치 및 .tos_inner 추가 -->
             <div class="tod-tos-text-banner">
-                <a href="#n" class="tb-link">
-                    <i class="tb-icon">
-                        <img src="/img/common/icon74-01.png" alt="맞춤서비스">
-                        <!--
-                            <img src="/img/common/icon74-02.png" alt="안내">
-                            <img src="/img/common/icon74-03.png" alt="이벤트">
-                            <img src="/img/common/icon74-04.png" alt="알림">
-                            <img src="/img/common/icon74-05.png" alt="혜택">
-                        -->
-                    </i>
-                    <p class="tb-text">IBK기업은행 계좌로 자동이체 신청하고 최대 2만원 혜택 받으세요!</p>
-                </a>
-                <button type="button" class="tb-close"><span class="tod-blind">닫기</span></button>
+                <div class="tos_inner">
+                    <a href="#n" class="tb-link">
+                        <i class="tb-icon">
+                            <img src="/img/common/icon74-01.png" alt="맞춤서비스">
+                            <!--
+                                <img src="/img/common/icon74-02.png" alt="안내">
+                                <img src="/img/common/icon74-03.png" alt="이벤트">
+                                <img src="/img/common/icon74-04.png" alt="알림">
+                                <img src="/img/common/icon74-05.png" alt="혜택">
+                            -->
+                        </i>
+                        <p class="tb-text">IBK기업은행 계좌로 자동이체 신청하고 최대 2만원 혜택 받으세요!</p>
+                    </a>
+                    <button type="button" class="tb-close"><span class="tod-blind">닫기</span></button>
+                </div>
             </div>
             <!-- //210125 [OP002-12898] [TOS] 텍스트 배너 -->
 
