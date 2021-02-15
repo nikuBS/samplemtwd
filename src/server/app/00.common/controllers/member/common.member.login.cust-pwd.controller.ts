@@ -26,7 +26,7 @@ class CommonMemberLoginCustPwd extends TwViewController {
 
     const isGlobal = req.cookies[COOKIE_KEY.GLOBAL_ENGLISH] || false
     if ( isGlobal ) {
-      const target = req.query.target || '/en/main/home';
+      const target = '/en/main/home';
       res.render('member/en.common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
     } else {
       const target = req.query.target || '/main/home';
