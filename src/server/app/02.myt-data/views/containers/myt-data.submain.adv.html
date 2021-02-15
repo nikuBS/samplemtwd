@@ -106,7 +106,10 @@
                 </div>
             </section>
             <%_ } _%>
-            <%_ } else if (data.svcInfo.svcAttrCd === 'M2') { _%>
+            <%_
+            } else if (data.svcInfo.svcAttrCd === 'M2') {
+                if (data.ppsAutoVoice || data.ppsAutoData) {
+            _%>
             <!-- 선불폰 충전하기 -->
             <section class="cont-card" data-id="pps-section">
                 <div class="section-inner">
@@ -116,6 +119,7 @@
                     <div class="card-cont">
                         <div class="charging-wrap">
                             <ul class="pps-charge-list">
+                                <%_ if (data.ppsAutoVoice) { _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -126,7 +130,7 @@
                                             <div class="btn-area short btn2">
                                                 <a href="/myt-data/recharge/prepaid/voice" class="rect-btn">1회 충전</a>
                                                 <a href="/myt-data/recharge/prepaid/voice-auto" class="rect-btn">
-                                                    <%_ if (data.ppsAutoVoice) { _%>
+                                                    <%_ if (data.ppsAutoVoice.amtCd) { _%>
                                                     자동 충전 변경/해지
                                                     <%_ } else { _%>
                                                     자동 충전
@@ -136,6 +140,9 @@
                                         </dd>
                                     </dl>
                                 </li>
+                                <%_ }
+                                if (data.ppsAutoData) {
+                                _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -146,7 +153,7 @@
                                             <div class="btn-area short btn2">
                                                 <a href="/myt-data/recharge/prepaid/data" class="rect-btn">1회 충전</a>
                                                 <a href="/myt-data/recharge/prepaid/data-auto" class="rect-btn">
-                                                    <%_ if (data.ppsAutoData) { _%>
+                                                    <%_ if (data.ppsAutoData.amtCd) { _%>
                                                     자동 충전 변경/해지
                                                     <%_ } else { _%>
                                                     자동 충전
@@ -156,6 +163,7 @@
                                         </dd>
                                     </dl>
                                 </li>
+                                <%_ } %>
                             </ul>
                         </div>
                         <div class="short-link-wrap minus-mg">
@@ -169,22 +177,29 @@
                     </div>
                 </div>
             </section>
-            <%_ } _%>
+            <%_
+                }
+            }
+            _%>
 
             <%_
             if (data.svcInfo.svcAttrCd === 'M1') {
-                if (data.refill || data.isPrepayment) {
+                if ((data.refill && data.refill.length)|| data.isPrepayment) {
             _%>
             <section class="cont-card">
                 <div class="section-inner">
-                    <%_ if (data.refill) { _%>
+                    <%_ if (data.refill.length) { _%>
                     <div class="head-tit">
                         <a href="/myt-data/recharge/coupon?from=submain" class="link">리필쿠폰</a>
                     </div>
                     <%_ } _%>
                     <div class="card-cont">
-                        <%_ if (data.refill) { _%>
-                        <% var usableCoupon = data.refill[data.pickCouponIndex]; %>
+                        <%_ if (data.refill.length) { _%>
+                        <%_
+                        var usableCoupon = data.refill[data.pickCouponIndex];
+                        var btnSet = ((data.refillAvailable === 'NONE' && !usableCoupon.isGift) ||
+                        (data.refillAvailable !== 'NONE' && usableCoupon.isGift)) ? 'btn' : 'btn2';
+                        _%>
                         <div class="have-coupon-wrap" data-id="refill-section">
                             <ul class="report-list align-center">
                                 <li class="report-item">
@@ -195,13 +210,16 @@
                                 </li>
                             </ul>
                             <% if (!data.isEasyLogin) { %>
-                            <div class="btn-area <%= usableCoupon.isGift? 'btn' : 'btn2' %> short"> <!-- 하나일때는 btn2제거 -->
+                            <div class="btn-area <%= btnSet %> short"> <!-- 하나일때는 btn2제거 -->
                                 <div style="display: none;" data-id="usable-coupon"
-                                     data-value="<%= usableCoupon.copnIsueNum %>::<%= usableCoupon.copnNm%>::<%= usableCoupon.usePsblStaDt %>~<%= usableCoupon.usePsblEndDt %>::<%= usableCoupon.isGift ? 'Y' : 'N' %>"></div>
+                                     data-value="<%= usableCoupon.copnIsueNum %>::<%= usableCoupon.copnNm%>::<%= usableCoupon.usePsblStaDt %>~<%= usableCoupon.usePsblEndDt %>::<%= usableCoupon.isGift ? 'Y' : 'N' %>">
+                                </div>
+                                <% if (data.refillAvailable !== 'NONE') { %>
                                 <a href="#" class="rect-btn" data-id="refill-btn">리필하기</a>
-                                <%_ if (!usableCoupon.isGift) { _%>
+                                <% } %>
+                                <% if (!usableCoupon.isGift) { %>
                                 <a href="#" class="rect-btn" data-id="gift-btn">선물하기</a>
-                                <%_ } _%>
+                                <% } %>
                             </div>
                             <% } %>
                         </div>

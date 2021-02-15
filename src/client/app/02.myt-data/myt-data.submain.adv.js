@@ -806,7 +806,9 @@ Tw.MyTDataSubMainAdv.prototype = {
         var lineTemp = this.$childLineTempleate(list[i]);
         childSwipeContainer.find('.slider').append(lineTemp);
       }
-      skt_landing.widgets.widget_slider6();
+      skt_landing.widgets.widget_slider6(null, {
+        dots: list.length > 1
+      });
     }
   },
 
