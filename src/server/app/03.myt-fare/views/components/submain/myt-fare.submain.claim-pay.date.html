@@ -6,8 +6,8 @@
 %>
 <%_
 <!--    data.latestDates = ['20210131'];-->
-    const {latestDates=[], claimDt, claimFirstDay, claimLastDay, month, isBillError} = data;
-    if(!isBillError && latestDates.length){
+    const {latestDates=[], claimDt, claimFirstDay, claimLastDay, month, billError} = data;
+    if(!billError && latestDates.length){
 _%>
 <div class="month-charge">
     <div class="charge-tit">
