@@ -27,7 +27,7 @@ skt_landing.widgets = {
     });
     for (var com_name in widget_list) {
       try {
-        widget_list[com_name](widget_ta);
+        widget_list[com_name].apply(widget_ta, {}); // 210215 C&C 요청으로 함수에 옵션값 추가
       }
       catch (err) {
         console.log('error : ' + com_name); // .widget > .widget-box 구조를 절대적 .widget-box에는 정해진 clsss명만 올수있음
@@ -375,21 +375,23 @@ skt_landing.widgets = {
    * @function
    * @example
    * skt_landing.widgets.widget_slider3();
+   * 210215 C&C 요청으로 함수에 옵션값로 함수 변경
    */
-  widget_slider3: function () {
+  widget_slider3: function (ta, options) {
     var widget = '.slider3';
     $(widget).each(function () {
       var _this = $(this).find('.slider');
-      _this.slick({
+      var defaultOptions = Object.assign({
         arrows: true,
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: false,
-        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         focusOnSelect: true,
+        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         focusOnChange: true
-      })
+      }, options || {});
+      _this.slick(defaultOptions);
     });
   },
 
@@ -402,12 +404,13 @@ skt_landing.widgets = {
    * @function
    * @example
    * skt_landing.widgets.widget_slider4();
+   * 210215 C&C 요청으로 함수에 옵션값로 함수 변경
    */
-  widget_slider4: function () {
+  widget_slider4: function (ta, options) {
     var widget = '.slider4';
     $(widget).each(function () {
       var _this = $(this).find('.slider');
-      _this.slick({
+      var defaultOptions = Object.assign({
         dots: false,
         arrows: false,
         infinite: false,
@@ -422,7 +425,8 @@ skt_landing.widgets = {
             centerPadding: 0
           }
         }]
-      });
+      }, options || {});
+      _this.slick(defaultOptions);
       _this.on('init', function () {
         var totalBox = $(this).closest(widget).find('.page-total'),
             slick = _this.prop('slick');
@@ -465,12 +469,13 @@ skt_landing.widgets = {
    * @function
    * @example
    * skt_landing.widgets.widget_slider5();
+   * 210215 C&C 요청으로 함수에 옵션값 추가로 함수 변경
    */
-  widget_slider5: function () {
+  widget_slider5: function (ta, options) {
     var widget = '.slider5';
     $(widget).each(function () {
       var _this = $(this).find('.slider');
-      _this.slick({
+      var defaultOptions = Object.assign({
         dots: false,
         arrows: false,
         infinite: false,
@@ -485,7 +490,8 @@ skt_landing.widgets = {
             centerPadding: 0
           }
         }]
-      });
+      }, options || {});
+      _this.slick(defaultOptions);
       _this.on('init', function () {
         var totalBox = $(this).closest(widget).find('.page-total'),
             slick = _this.prop('slick');
@@ -520,28 +526,29 @@ skt_landing.widgets = {
    * @function
    * @example
    * skt_landing.widgets.widget_slider6();
+   * 210215 C&C 요청으로 함수에 옵션값 추가로 함수 변경
    */
-  widget_slider6: function () {
+  widget_slider6: function (ta, options) {
     var widget = '.slider6';
     $(widget).each(function () {
         var _this = $(this).find('.slider');
-        _this.slick({
-            dots: true,
-            arrows: false,
-            infinite: false,
-            slidesToShow: 1,
-            centerMode: true,
-            centerPadding: '19px',
-            variableWidth: false,
-            focusOnSelect: true,
-            focusOnChange: true,
-            initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
-            responsive: [{
-                settings: {
-                    centerPadding: '15px'
-                }
-            }]
-        });
+      var defaultOptions = Object.assign({
+        dots: true,
+        arrows: false,
+        infinite: false,
+        slidesToShow: 1,
+        centerMode: true,
+        centerPadding: '19px',
+        variableWidth: false,
+        focusOnSelect: true,
+        focusOnChange: true,
+        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
+        responsive: [{
+          settings:
+              { centerPadding: '15px' }
+        }]
+      }, options || {});
+      _this.slick(defaultOptions);
     });
     /*onAfterChange: function(){
           var currentSlide = $('.regular').slick('slickCurrentSlide');
@@ -830,8 +837,9 @@ skt_landing.widgets = {
    * @param {Object} ta - selector
    * @example
    * skt_landing.widgets.widget_slider1();
+   * 210215 C&C 요청으로 함수에 옵션값 추가로 함수 변경
    */
-  widget_slider1: function (ta) {
+  widget_slider1: function (ta, options) {
     var widget = ta ? $(ta).find('.slider1') : $('.slider1');
     $(widget).each(function () {
       if ($(this).data('event') == undefined) {
@@ -848,11 +856,12 @@ skt_landing.widgets = {
       var _this = $(this).find('.slider');
       if ($(this).data('slider-auto')) {    //@DV001-16538 // 190610_수정 : Slide Auto 기능 클래스에서 attr로 변경
         $(this).addClass('slider1-auto'); // 190610_추가
-        _this.slick({
+        var defaultOptions = Object.assign({
           autoplay: true,
           autoplaySpeed: 4000,
           dots: true,
-          arrows: true,
+          arrows: false,
+          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           infinite: true,
           speed: 300,
           // useTransform : false,
@@ -863,11 +872,11 @@ skt_landing.widgets = {
           centerMode: false,
           focusOnSelect: false,
           touchMove: true,
-          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           customPaging: function (slider, i) {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
-        });
+        }, options || {});
+        _this.slick(defaultOptions);
 
         // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 START
         _this.after($('<button type="button" class="tod-bann-btn stop"><span class="blind">일시정지</span></button>'));
@@ -878,9 +887,10 @@ skt_landing.widgets = {
         });
         // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 END
       } else {
-        _this.slick({
+        var defaultOptions = Object.assign({
           dots: true,
           arrows: true,
+          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           infinite: false,
           speed: 300,
           // useTransform : false,
@@ -891,11 +901,11 @@ skt_landing.widgets = {
           centerMode: false,
           focusOnSelect: false,
           touchMove: true,
-          initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
           customPaging: function (slider, i) {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
-        });
+        }, options || {});
+        _this.slick(defaultOptions);
       }
       if (_this.find('.slick-slide').length == 1) {
         _this.addClass('slick-dotted-none');
@@ -927,8 +937,9 @@ skt_landing.widgets = {
    * @param {Object} ta - selector
    * @example
    * skt_landing.widgets.widget_slider2();
+   * 210215 C&C 요청으로 함수에 옵션값 추가로 함수 변경
    */
-  widget_slider2: function (ta) {
+  widget_slider2: function (ta, options) {
     var widget = ta ? $(ta).find('.slider2') : $('.slider2');
     $(widget).each(function () {
       if ($(this).data('event') == undefined) {
@@ -940,7 +951,7 @@ skt_landing.widgets = {
         $(this).find('.slider').slick('destroy');
       }
       var _this = $(this).find('.slider');
-      _this.slick({
+      var defaultOptions = Object.assign({
         dots: false,
         arrows: false,
         infinite: true,
@@ -952,10 +963,11 @@ skt_landing.widgets = {
         swipe: false,
         vertical: true,
         verticalSwiping: true,
-        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         autoplay: true,
+        initialSlide: _this.data('initialslide')||0, // 191230 SKT 요청으로 추가
         autoplaySpeed: 5000
-      });
+      }, options || {});
+      _this.slick(defaultOptions);
 
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
@@ -983,8 +995,9 @@ skt_landing.widgets = {
    * @param {Object} ta - selector
    * @example
    * skt_landing.widgets.widget_slider7();
+   * 210215 C&C 요청으로 함수에 옵션값 추가로 함수 변경
    */
-  widget_slider7: function (ta) {
+  widget_slider7: function (ta, options) {
     var widget = ta ? $(ta).find('.slider7') : $('.slider7');
     $(widget).each(function () {
       var $parent = $(this).closest('.section-box'),
@@ -996,13 +1009,14 @@ skt_landing.widgets = {
         if ($(this).scrollTop() > actionTop && $parent.data('action') === undefined) {
           $parent.data('action', true);
           $card.eq(1).show();
-          $('.tod-mls-slider.slider').slick({
+          var defaultOptions = Object.assign({
             dots: true,
             infinite: true,
             speed: 300,
             slidesToShow: 1,
             adaptiveHeight: true
-          });
+          }, options || {});
+          $('.tod-mls-slider.slider').slick(defaultOptions);
           $card.eq(1).hide();
 
           $card.eq(0).fadeOut(time);
