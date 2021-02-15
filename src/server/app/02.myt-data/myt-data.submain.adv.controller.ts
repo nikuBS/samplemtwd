@@ -72,7 +72,8 @@ class MytDataSubmainAdvController extends TwViewController {
       isApp: BrowserHelper.isApp(req),
       isEasyLogin: svcInfo.loginType === LOGIN_TYPE.EASY,
       bpcpServiceId: req.query.bpcpServiceId || '',
-      eParam: req.query.eParam || ''
+      eParam: req.query.eParam || '',
+      isAdult: (svcInfo.age && parseInt(svcInfo.age, 10) > 14)
     };
 
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
@@ -89,7 +90,7 @@ class MytDataSubmainAdvController extends TwViewController {
       this._getPPSAuto(),
       this._getPPSDataAuto()
       // this._getProductGroup() : OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
-    ).subscribe(([remnant, present, presentAuto, refill, refillGiftHistory, ppsvoice, ppsdata /*, prodList*/ ]) => {
+    ).subscribe(([remnant, present, presentAuto, refill, refillGiftHistory, ppsvoice, ppsdata /*, prodList*/]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -139,39 +140,23 @@ class MytDataSubmainAdvController extends TwViewController {
 
       // 자녀 회선 추가 수정 [DV001-15520]
       // 간편로그인 경우 자녀회선 영역 미노출
-      if ( !data.isEasyLogin && child && child.length > 0 ) {
-        const convertedChildLines = this.convertChildLines(child);
-        if ( convertedChildLines && convertedChildLines.length > 0 ) {
-          // data.otherLines = convertedChildLines.concat(data.otherLines);
-          data.otherLines = convertedChildLines;
+      // 고도화 210215: M1 인 경우에만 자녀회선 노출
+      if (data.svcInfo.svcAttrCd === 'M1') {
+        if ( !data.isEasyLogin && child && child.length > 0 ) {
+          const convertedChildLines = this.convertChildLines(child);
+          if ( convertedChildLines && convertedChildLines.length > 0 ) {
+            // data.otherLines = convertedChildLines.concat(data.otherLines);
+            data.otherLines = convertedChildLines;
+          }
+          // data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
         }
-        // data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
-
-      // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경
-      if ( data.svcInfo.svcAttrCd === 'M2' || data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
-        data.otherLines = [];
-      }
-
-      // SP9 즉시충전버튼 무조건 노출로 변경
-      /*
-      if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /!* 기본 DATA 제공량이 없는 경우*!/ ) {
-        // 비노출 조건 T-pocketFi or T-Login 인 경우와 기본제공량이 없는경우
-        // 즉시충전버튼 영역
-        data.immCharge = false;
-      }
-      */
 
       // 데이터혜택/활용하기 영역
-      if ( data.svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
-        // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
+      if ( data.svcInfo.svcAttrCd === 'M1' || data.svcInfo.svcAttrCd === 'M4' ) {
+        // 휴대폰,  T-Login  경우 노출 (고도화)
         data.isBenefit = true;
-        // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차) - 11차에서 hidden 처리(190121)
-
-        // if (String(process.env.NODE_ENV) !== 'prd') {
-        // TODO: GrandOpen 때 enable 처리
         data.isPrepayment = true;
-        // }
         data.immCharge = true;
       }
 
@@ -804,7 +789,7 @@ class MytDataSubmainAdvController extends TwViewController {
 
   // T끼리 데이터 선물 버튼
   _getDataPresent() {
-    if (this.isEasyLogin) {
+    if ( this.isEasyLogin ) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
@@ -819,7 +804,7 @@ class MytDataSubmainAdvController extends TwViewController {
 
   // T끼리 자동선물 내역
   _getDataPresentAutoList() {
-    if (this.isEasyLogin) {
+    if ( this.isEasyLogin ) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_06_0006, {}).map((resp) => {
@@ -981,17 +966,19 @@ class MytDataSubmainAdvController extends TwViewController {
       }
     });
   }
+
   // 관련상품그룹 조회
   _getProductGroup() {
     return this.apiService.request(API_CMD.BFF_10_0188, {}, {}, ['NA6031_PRC_PLN', 1])
-      .map( resp => {
-        if (resp.code === API_CODE.CODE_00) {
+      .map(resp => {
+        if ( resp.code === API_CODE.CODE_00 ) {
           return resp.result.prodList;
         } else {
           return null;
         }
       });
   }
+
   // 충전 선물 이력 건수 조회
   _reqRefillGiftHistory(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0077, {
@@ -1013,7 +1000,7 @@ class MytDataSubmainAdvController extends TwViewController {
    * @private
    */
   _getPPSAuto(): Observable<any> {
-    if (!this.isPPS) {
+    if ( !this.isPPS ) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_06_0055, {})
@@ -1033,7 +1020,7 @@ class MytDataSubmainAdvController extends TwViewController {
    * @private
    */
   _getPPSDataAuto(): Observable<any> {
-    if (!this.isPPS) {
+    if ( !this.isPPS ) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_06_0060, {})
@@ -1119,6 +1106,7 @@ class MytDataSubmainAdvController extends TwViewController {
 
     data.xtEid = eid;
   }
+
   private convertCoupon(data) {
     return data.map((item) => {
       item.usePsblStaDt = DateHelper.getShortDate(item.usePsblStaDt);
@@ -1128,12 +1116,13 @@ class MytDataSubmainAdvController extends TwViewController {
       return item;
     });
   }
+
   /**
    * 만료일자가 빠른 쿠폰 인덱스
    * @param data
    */
   private pickCouponIndex(data) {
-    if (data.length === 0) {
+    if ( data.length === 0 ) {
       return null;
     }
 
@@ -1141,20 +1130,20 @@ class MytDataSubmainAdvController extends TwViewController {
       return coupon.copnOperStCd === 'A20';
     });
 
-    if (coupons.length === 0) { // 2순위 장기가입 쿠폰 있는지 확인
+    if ( coupons.length === 0 ) { // 2순위 장기가입 쿠폰 있는지 확인
       coupons = data.filter((coupon) => {
         return coupon.copnOperStCd === 'A10';
       });
     }
 
-    if (coupons.length === 0) {
+    if ( coupons.length === 0 ) {
       coupons = data;
     }
 
     // 만료일자가 가장 빠른 쿠폰 선택
     let pick = 0;
-    for (let i = 1; i < coupons.length; i += 1) {
-      if (coupons[i].usePsblEndDt < coupons[pick].usePsblEndDt) {
+    for ( let i = 1; i < coupons.length; i += 1 ) {
+      if ( coupons[i].usePsblEndDt < coupons[pick].usePsblEndDt ) {
         pick = i;
       }
     }

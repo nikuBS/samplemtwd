@@ -659,7 +659,7 @@ Tw.POPUP_TPL = {
           'radio-attr': 'id="00" name="r2"',
           'label-attr': 'id="00" data-center="A100110000" data-img="place-img-01-1" value="인천공항 1터미널 1층 T로밍센터"' + // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
             // ' data-officehour="<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간"',
-//            ' data-officehour="<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00"',        
+//            ' data-officehour="<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00"',
           ' data-officehour="<strong>업무시간</strong> | 9-10 출구 : 오전 6시 ~ 오후 10시"', // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
           txt: '인천공항 1터미널 1층 T로밍센터'  // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
         },
@@ -667,7 +667,7 @@ Tw.POPUP_TPL = {
           'radio-attr': 'id="01" name="r2"',
  //         'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-1" value="인천공항 2터미널 1층 로밍센터"' +
           'label-attr': 'id="01" data-center="1430456896" data-img="place-img-02-east" value="인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 T로밍센터"' + // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
-          
+
             // ' data-officehour="<strong>업무시간</strong> | 3번 출구 옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00"',
 //            ' data-officehour="<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00"',
             ' data-officehour="<strong>업무시간</strong> | 24시간"',   // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
@@ -879,7 +879,7 @@ Tw.MYT_TPL = {
       '<div class="slider"></div></div></div></div><!-- //.widget -->',
     NEW_CHILD_LINE_TEMP: '<div class="slider-item"><!-- li -->' +
       '<a href="/myt-data/submain/child-hotdata?childSvcMgmtNum={{svcMgmtNum}}" class="slider-inner">' +
-      '<p class="child-tit">{{nickNm}}<span class="tel-num">{{svcNum}}</span></p>' +
+      '<dl class="child-info"><dt class="name">{{nickNm}}</dt><dd class="tel">{{svcNum}}</dd></dl>' +
       '<ul class="report-list item-no-border small"><li class="report-item"><dl class="report-define d-wrap"></dl></li>' +
       '<li class="report-item"><dl class="report-define d-wrap"><dt class="report-tit">잔여데이터</dt>' +
       '<dd class="report-cont">{{data}}{{unit}}</dd></dl></li></ul></a></div>'
