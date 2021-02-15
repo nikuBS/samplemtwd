@@ -226,10 +226,10 @@ Tw.MyTJoinSubMain.prototype = {
 
       if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0 ) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList,
-          bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+          bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this),
+          $.proxy(this._errorDrawBanner, this));
       } else {
-        this.$container.find('[data-id=banners-empty]').hide();
-        this.$container.find('[data-id=banners]').hide();
+        this._errorDrawBanner();
       }
     }, this));
 
@@ -255,6 +255,18 @@ Tw.MyTJoinSubMain.prototype = {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    }
+  },
+
+  /**
+   * banner가 없는 경우
+   * @param bannerList
+   * @private
+   */
+  _errorDrawBanner: function(bannerList) {
+    if (!bannerList || (bannerList && bannerList.length === 0)) {
+      this.$container.find('[data-id=banners-empty]').hide();
+      this.$container.find('[data-id=banners]').hide();
     }
   },
 

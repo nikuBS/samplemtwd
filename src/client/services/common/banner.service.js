@@ -14,8 +14,9 @@
  * @param {function} callback excutable code after load banners
  */
 
-Tw.BannerService = function (rootEl, type, banners, target, priority, callback) {
+Tw.BannerService = function (rootEl, type, banners, target, priority, callback, errorCallback) {
   this.$container = rootEl;
+  this.errorCallback = errorCallback;
   if ( !banners || banners.length <= 0 ) {
     if ( target ) {
       this.$container.find('ul.slider[data-location=' + target + ']').parents('div.nogaps').addClass('none');
@@ -48,6 +49,14 @@ Tw.BannerService.prototype = {
     this._banners = this._getProperBanners(type, banners, priority);
 
     this._renderBanners(type, target, callback);
+    // 기존 기능에 영향도 없이 배너항목이 없는 경우에 처리를 위해 errorCallback 추가.
+    try {
+      if (this.errorCallback) {
+        this.errorCallback(this._banners);
+      }
+    } catch (e) {
+      Tw.logger.warn('[banner.service.js] ::: errorCallback failed');
+    }
   },
 
   /**
