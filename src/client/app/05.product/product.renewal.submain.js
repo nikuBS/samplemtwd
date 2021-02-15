@@ -10,7 +10,7 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, menuId, line) {
   this.$container = rootEl;
   this._sectionSort = sectionSort;
   this._menuId = menuId;
-  this._line = line;
+  this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'};
 
   // 공통 모듈 선언
   this._popupService = Tw.Popup;
@@ -27,8 +27,8 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, menuId, line) {
 
   this._sortingSection(); // 섹션 데이터를 재 배치
 
-  this._getTopBanner(); // TOP Banner 조회
-  // this._getBannerTheme(); // 배너형 테마 조회
+  // this._getTopBanner(); // TOP Banner 조회
+  this._getBannerTheme(); // 배너형 테마 조회
   // this._getQuickFilter(); // 퀵 필터 조회
 
   this._bindEvent(); // 이벤트 핸들링 바인딩
@@ -164,15 +164,88 @@ Tw.ProductRenewalSubmain.prototype = {
    */
   _getBannerTheme: function() {
     this._apiService.requestArray([
-      { command: Tw.NODE_CMD.BANNER_ADMIN, params: { menuId: this._menuId } },
+      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } },
     ]).done($.proxy(this._successBannerTheme, this))
       .fail($.proxy(this._errorRequest, this));
   }, 
 
-  _successBannerTheme: function(banner) {
-    if( row.banner && row.banner.code === Tw.API_CODE.CODE_00 ) {
+  /**
+   * redis에서 값을 가지고 왔을 때
+   * @param {*} redisData 
+   */
+  _successBannerTheme: function(redisData) {
+    if( redisData.code === Tw.API_CODE.CODE_00 ) {
+      var parseList = this._parseRedisData(redisData.result);
+      var _super = this;
 
+      if ( parseList.length === 0 ) {
+        return;
+      }
+
+      var $quickFilter = this.$container.find('section[data-sort="QUICK_FILTER"]');
+      var $sliderList = $quickFilter.find('.slider-list');
+      _.map(parseList, $.proxy(function(item) {
+        var html = item.bnnrHtmlCtt;
+        if ( html ) { 
+          html = html.replace('<p>', '').replace('</p>', '').replace('<br>', ''); // admin 페이지에서 배너를 등록하면 <p> 및 <br> 태그가 생기는 현상이 발생해서 replace로 삭제한다.
+          $sliderList.append(html);
+        }
+      }, this));
+
+      // 등록된 quick-item에 대한 이벤트 바인딩을 한다.
+      $(document).on('click', '.quick-item', function(event) {
+        var dataOption = $(this).data('option');
+        var dataLink = $(this).data('link');
+
+        if ( dataOption || dataLink ) {
+          switch ( dataOption ) {
+            case 'O': // 외부링크 이동 시 
+              Tw.CommonHelper.openUrlExternal(dataLink);
+              break;
+            case 'I': // 앱 내 이동 시
+              window.location.href = dataLink;
+              break;
+            case 'Q': // 테마 리스트로 이동 시
+              var themeTabCode = _super._line.quickFilterCode; // 테마 리스트 탭에 대한 ID
+              var themeFilterCode = dataLink; // 테마 리스트에서 출력되어야할 필터 코드 값
+
+              var url = '/'; // TODO: 윤수씨한테 URL 이랑 parameter 물어보기 ㅠㅠ;
+              window.location.href = url;
+              break;
+          }
+        }
+      });
     }
+  },
+
+  /**
+   * MASS Banner Redis 값을 parsing
+   * @param {*} redisData 
+   */
+  _parseRedisData: function(redisData) {
+    var NETWORK_TAG_TYPES = {
+      'W' : 'TAG0000202', // 3G
+      'L' : 'TAG0000201', // LTE
+      'F' : 'TAG0000200', // 5G
+      'E' : 'TAG0000203', // 2nd Device
+      'P' : 'TAG0000204', // PPS
+    }
+    
+    var networkTagType = NETWORK_TAG_TYPES[this._line.deviceCode];
+    return _.reduce(redisData.banners, function(arr, item) {
+      if ( item.bnnrLocCd === 'Q' ) {
+        var filter = _.filter(item.tagMappInfo, function(mapping) {
+          if ( mapping.tagId === networkTagType ) {
+            return item;
+          }
+        }) || [];
+        
+        // if ( filter.length > 0) {
+          arr.push(item);
+        // }
+      }
+      return arr;
+    }, []);
   },
 
 
