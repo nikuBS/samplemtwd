@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import { COOKIE_KEY } from '../../../../types_en/common.type';
 
 class CommonMemberLoginCustPwd extends TwViewController {
   constructor() {
@@ -22,8 +23,16 @@ class CommonMemberLoginCustPwd extends TwViewController {
    * @param  {any} pageInfo - 페이지 정보
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    const target = req.query.target || '/main/home';
-    res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
+
+    const isGlobal = req.cookies[COOKIE_KEY.GLOBAL_ENGLISH] || false
+    if ( isGlobal ) {
+      const target = req.query.target || '/en/main/home';
+      res.render('member/en.common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
+    } else {
+      const target = req.query.target || '/main/home';
+      res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
+    }
+
   }
 }
 
