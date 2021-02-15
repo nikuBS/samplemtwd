@@ -416,7 +416,7 @@ body.tod-white{background:#fff}
 }
 
 /* 이용 중인 요금제/부가상품 */
-.tod-submain .using-plan{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; -webkit-box-pack: justify; justify-content:space-between; padding:1rem; border-radius:0.375rem; background:#f9f9f9;}
+.tod-submain .using-plan{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; -webkit-box-pack: justify; justify-content:space-between; padding:1rem; border-radius:0.375rem; background:#f9f9f9; word-break:break-word; line-height:20px}
 .tod-submain .using-plan .plan-tit {font-size:1.125rem; color:#000; font-weight:600; text-align:center; width:60%; padding-right:0.875rem;}
 .tod-submain .using-plan .plan-info{width:40%; flex-shrink:0; -webkit-box-flex: 0; flex-grow:0}
 .tod-submain .using-plan .plan-info .report-list.small .report-item > .d-wrap{padding:0.5rem 0}
