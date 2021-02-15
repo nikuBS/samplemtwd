@@ -97,9 +97,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     try {
       this.getRquests(data, res).subscribe( resp => {
-        if (resp.code && resp.code !== API_CODE.CODE_00) {
-          return this.errorRender(res, resp);
-        }
         res.render('myt-fare.submain.adv.html', { data: resp });
       });
 
@@ -124,15 +121,13 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       reqs
     ).map( (responses) => {
       const [submain, guide, ...other] = responses;
-      if (submain.code && submain.code !== API_CODE.CODE_00) {
-        return submain;
-        // return this.errorRender(res, submain);
+      const error = submain.code ? submain : guide.code ? guide : null;
+      if (error) {
+        data.billError = {
+          ...error
+        };
       }
-      const error = (other || []).find(item => item.code && item.code !== API_CODE.CODE_00);
-      if (!FormatHelper.isEmpty(error)) {
-        return error;
-        // return this.errorRender(res, error);
-      }
+
       const [small, benefit] = other || [{}, {}];
       Object.assign(data, {
         guide,
@@ -232,7 +227,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
         // 대표청구일 때
         if (isRep) {
-          const [nonpayment, /*totalPayment, */autoPayment] = responses;
+          const [nonpayment, autoPayment] = responses;
           if ( nonpayment ) {
             const unPaidTotSum = nonpayment.unPaidTotSum || '0';
             data.nonpayment = nonpayment;

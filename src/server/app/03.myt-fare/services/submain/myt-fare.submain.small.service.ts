@@ -34,10 +34,6 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
       this.apiService.request( API_CMD.BFF_05_0064 , params),  // 콘텐츠 이용료
       this.apiService.request( API_CMD.BFF_05_0066 , {})  // 콘텐츠 이용료 한도조회(미성년자 여부 판단하기 위해 사용)
     ).switchMap( ([small, contents, contentsLimit]) => {
-      const error = this.error.apiError([small, contents, contentsLimit]);
-      if (!FormatHelper.isEmpty(error)) {
-        return Observable.of(error);
-      }
       const smallResult = small.result || {},
         contentsResult = contents.result || {},
         result: any = {
