@@ -33,7 +33,7 @@ export interface ISvcInfo {
   personLineTypeChk: boolean;   // 개인화 진입 아이콘 서비스 타입에 따른 비활성화 체크
   personAgentTypeChk: boolean;  // 개인화 진입 아이콘 에이전트 타입에 따른 비활성화 체크
 
-  age: string; // 만 나이정보 (미성년자 구분)
+  age: number; // 만 나이정보 (미성년자 구분)
 }
 
 export class SvcInfoModel implements ISvcInfo {
@@ -74,7 +74,7 @@ export class SvcInfoModel implements ISvcInfo {
   personLineTypeChk: boolean = true;
   personAgentTypeChk: boolean = true;
 
-  age: string = '';
+  age: number = 0;
 
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;

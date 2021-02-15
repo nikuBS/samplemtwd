@@ -73,7 +73,7 @@ class MytDataSubmainAdvController extends TwViewController {
       isEasyLogin: svcInfo.loginType === LOGIN_TYPE.EASY,
       bpcpServiceId: req.query.bpcpServiceId || '',
       eParam: req.query.eParam || '',
-      isAdult: (svcInfo.age && parseInt(svcInfo.age, 10) > 14)
+      isAdult: (svcInfo.age && svcInfo.age > 20)
     };
 
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
