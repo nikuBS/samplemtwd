@@ -32,6 +32,8 @@ export interface ISvcInfo {
   personTimeChk: boolean;       // 개인화 진입 아이콘 시간에 따른 비활성화 체크
   personLineTypeChk: boolean;   // 개인화 진입 아이콘 서비스 타입에 따른 비활성화 체크
   personAgentTypeChk: boolean;  // 개인화 진입 아이콘 에이전트 타입에 따른 비활성화 체크
+
+  age: number; // 만 나이정보 (미성년자 구분)
 }
 
 export class SvcInfoModel implements ISvcInfo {
@@ -72,6 +74,8 @@ export class SvcInfoModel implements ISvcInfo {
   personLineTypeChk: boolean = true;
   personAgentTypeChk: boolean = true;
 
+  age: number = 0;
+
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
     this.xtSvcMgmtNum = object.xtSvcMgmtNum || this.xtSvcMgmtNum;
@@ -106,5 +110,6 @@ export class SvcInfoModel implements ISvcInfo {
     this.personTimeChk = object.personTimeChk || this.personTimeChk;
     this.personLineTypeChk = object.personLineTypeChk || this.personLineTypeChk;
     this.personAgentTypeChk = object.personAgentTypeChk || this.personAgentTypeChk;
+    this.age = object.age || this.age;
   }
 }

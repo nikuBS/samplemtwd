@@ -28,7 +28,10 @@ _%>
           </dl>
         </li>
       </ul>
-      <%_ if (data.type !== 1) { _%>
+      <%_
+      if (data.type !== 1) {
+        if (data.paymentInfo) {
+      _%>
       <div class="pay-info-wrap">
         <ul class="ico-list horizontal">
           <li class="item">
@@ -55,7 +58,10 @@ _%>
           </li>
         </ul>
       </div>
-      <%_ } _%>
+      <%_
+        }
+      }
+      _%>
     </div>
   </div>
 </section>

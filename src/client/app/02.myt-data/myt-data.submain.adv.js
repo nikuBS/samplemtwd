@@ -323,8 +323,10 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _checkScroll: function () {
     // 무선 회선인 경우에만 최근 사용량 그래프 노출 [OP002-4379]
-    if (this.$recentUsage.length > 0 && !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage)) {
-      this._requestRecentUsage();
+    if (this.data.isWireLess) {
+      if (this.$recentUsage.length > 0 && !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage)) {
+        this._requestRecentUsage();
+      }
     }
 
     if (this.data.otherLines.length > 0 && !this._isRequestOtherLinesInfo && this._elementScrolled(this.$otherLines)) {
@@ -785,7 +787,6 @@ Tw.MyTDataSubMainAdv.prototype = {
       }
     }
     this._svcMgmtNumList = [];
-    console.log('###########', list);
     this._initOtherLineList(list);
   },
   /**
@@ -825,7 +826,6 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @desc 즉시충전 상세보기
    */
   _onImmChargeDetail: function (event) {
-    event.preventDefault();
     var $target = $(event.currentTarget);
     switch ( $target.data('id') ) {
       case 'history':
@@ -838,12 +838,14 @@ Tw.MyTDataSubMainAdv.prototype = {
         this._onDataPesterDetail($target);
         break;
       case 'etc-wrap':
-        this._historyService.goLoad('/myt-data/giftdata');
-        break;
       case 'limit':
         this._historyService.goLoad('/myt-data/giftdata');
         break;
+      case 'etc' :
+        this._historyService.goLoad('/myt-data/recharge/cookiz');
+        break;
     }
+    event.preventDefault();
   },
 
   /**
@@ -1047,7 +1049,7 @@ Tw.MyTDataSubMainAdv.prototype = {
   _onOtherPages: function (event) {
     var $target = $(event.currentTarget);
     var href = $target.attr('data-href');
-    console.log('########################href ==> ', href);
+
     this._historyService.goLoad(href);
     return false;
   },
