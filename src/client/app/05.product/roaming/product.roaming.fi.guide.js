@@ -3,6 +3,7 @@
  * @desc T로밍 > baro Box 임대
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.11.07
+ * 2021.02 바로박스 개선 OP002-11941 JongGu Kim(jmsk80@softworks.co.kr)
  */
 
 Tw.ProductRoamingFiGuide = function(rootEl) {
@@ -12,6 +13,7 @@ Tw.ProductRoamingFiGuide = function(rootEl) {
   this._apiService = Tw.Api;
   this._cachedElement();
   this._bindEvent();
+  this._initView();
 };
 
 Tw.ProductRoamingFiGuide.prototype = {
@@ -201,4 +203,42 @@ Tw.ProductRoamingFiGuide.prototype = {
       $("#areaAsia").show();
     }
   },
+  _initView: function(){
+    var _this = this;
+    var o = $('.rm-anchor');
+    var ah = o.height();
+    var hd = 52;
+    var v = o.offset().top - hd;
+    var ai = o.find('li');
+    var iscroll = 1;			
+    $(window).scroll(function(){
+  
+      var st = $(window).scrollTop();
+      if( st > v ) {
+        o.addClass('fixed');
+      } else o.removeClass('fixed');
+      if(iscroll){
+        for(i=0;i < ai.length;i++){
+          var a = ai.eq(i).find('a');						
+          var ao = $(a.attr('href')).offset().top - hd - ah - 1;		
+          if(ao < st){							
+            _this._rmAnchor(a);
+          }
+        }
+      }
+    });
+    o.find('a[href^="#"]').bind('click',function(e){				
+      e.preventDefault();
+      iscroll = 0;
+      var ctOffset = $($.attr(this, 'href')).offset().top;
+      var t = ctOffset - hd - ah;
+      $('html, body').stop().animate({scrollTop:t}, 200, function(){ iscroll = 1 });
+      _this._rmAnchor(this);
+    });
+  },
+  _rmAnchor: function(o){
+		var el = $(o).parent('li');
+		el.find('a').attr('aria-selected', 'true');
+		el.siblings().find('a').attr('aria-selected', 'false')
+	}
 };

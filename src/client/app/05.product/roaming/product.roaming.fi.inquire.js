@@ -3,6 +3,7 @@
  * @desc T로밍 > baro Box 조회/취소
  * @author 김승규 (ksk4788@pineone.com)
  * @since 2018.11.27
+ * 2021.02 바로박스 개선 OP002-11941 JongGu Kim(jmsk80@softworks.co.kr)
  */
 Tw.ProductRoamingFiInquire = function (rootEl, countryCode) {
   this.$container = rootEl;

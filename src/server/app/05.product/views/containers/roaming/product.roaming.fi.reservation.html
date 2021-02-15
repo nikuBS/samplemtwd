@@ -1,6 +1,6 @@
 <%#
 * @file product.roaming.reservation.html
-* @author JongGu Kim (jmsk80@softworks.co.kr)
+* @author JongGu Kim (P165332)
 * @since 2021.01.28
 * ID: RM_14_02_01(sprint)
 %>
@@ -342,10 +342,6 @@
   $(document).ready(function () {
     var data = '<%- escape(JSON.stringify(data)) %>';
     new Tw.ProductRoamingFiReservation($('.wrap'), data);
-
   });
 </script>
-<!--<script src="/js/product.roaming.fi.reservation.js"></script>-->
 <% include ../../components/end.component.html %>
-
-
