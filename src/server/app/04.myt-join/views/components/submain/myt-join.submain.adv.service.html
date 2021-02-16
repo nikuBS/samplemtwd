@@ -9,6 +9,15 @@ _%>
     <div class="section-inner">
         <div class="head-tit">조회/신청 서비스</div>  <!-- 201211 [OP002-10282] 수정01  -->
         <div class="card-cont">
+            <%_ if (data.myWirePauseState) { _%>
+            <div class="short-link-wrap minus-mg">
+                <ul class="short-link-list">
+                    <li class="link-item">
+                        <a href="#" data-id="wire-pause">일시정지/해제</a>
+                    </li>
+                </ul>
+            </div>
+            <%_ } _%>
             <div class="acc-list-wrap">
                 <!-- .widget -->
                 <div class="widget ">
@@ -17,13 +26,15 @@ _%>
                             <div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
                                 <ul class="acco-list pd0">
                                     <%_
+                                    // 정지상태 여부
                                     var defaultPausedState = !!(data.myPausedState && data.myPausedState.svcStCd);
-                                    var isLongPausedFinish = !(data.myLongPausedState && data.myLongPausedState.stateReleased);
-                                    var isPaused = ((data.myPausedState && data.myPausedState.svcStCd !== 'AC') &&
-                                    !(data.myPausedState.armyDt || data.myPausedState.armyExtDt) && data.myPausedState.reservedYn !== 'Y');
                                     _%>
-                                    <%_ if(defaultPausedState) { _%>
-                                        <%_ if (isPaused || isLongPausedFinish) { _%>
+                                    <%_ if(defaultPausedState) {
+                                        // 일시정지 신청 가능 유무
+                                        var isJoinPause = (data.myPausedState.svcStCd === 'AC') && ((data.myPausedState && data.myPausedState.reservedYn !== 'Y') ||
+                                        (data.myLongPausedState && data.myLongPausedState.opStateCd === 'C' && data.myLongPausedState.stateReleased));
+                                    _%>
+                                        <%_ if (isJoinPause) { _%>
                                         <!-- 일시정지 신청 가능한 상태 -->
                                         <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
                                             <div class="acco-tit">
@@ -52,11 +63,9 @@ _%>
                                                             장기일시정지 해제 중
                                             <%_
                                                         } else {
-                                                            if (!isLongPausedFinish) {
                                             _%>
                                                             장기일시정지 <%- longStateCd ? data.myLongPausedState.opState : '중' %>
                                             <%_
-                                                            }
                                                         }
                                                     } else {
                                                         if (data.myPausedState.armyDt || data.myPausedState.armyExtDt) {
@@ -99,21 +108,6 @@ _%>
                                             </div>
                                         </li>
                                         <%_ } _%>
-                                    <%_ } _%>
-                                    <%_ if (data.myWirePauseState) { _%>
-                                    <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
-                                        <div class="acco-tit">
-                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">일시정지/해제</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
-                                        </div>
-                                        <div class="acco-cont">
-                                            <p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능합니다.</p>
-                                            <div class="btn-area" data-id="wire-pause">
-                                                <a href="#" class="rect-btn">
-                                                    <%= data.myWirePauseState.svc_st_cd === 'SP'? '해제하기':'신청하기'; %>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
                                     <%_ } _%>
                                     <%_ if(data.isPwdSt) { _%>
                                     <li class="acco-box acc-item">

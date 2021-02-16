@@ -604,8 +604,7 @@ Tw.MyTJoinSubMain.prototype = {
    * @param {Object} event
    */
   _onMovedWireOtherSvc: function (event) {
-    var $target = $(event.target);
-    switch ( $target.attr('data-id') ) {
+    switch ( $(event.currentTarget).attr('data-id') ) {
       case 'addr-chg':
         this._historyService.goLoad('/myt-join/submain/wire/modifyaddress');
         break;
