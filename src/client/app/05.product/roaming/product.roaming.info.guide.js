@@ -81,7 +81,7 @@ Tw.ProductRoamingGuide.prototype = {
     if(type === 'smart') {  // 스마트폰 로밍 요금제 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_GUIDE,'');
     } else if(type === 'smart-partner'){    // 스마트폰 제휴 사업자 가이드
-      Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_PARTNER_GUIDE,'');  
+      Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_PARTNER_GUIDE,'');
     } else if(type === 'phone'){    // 일반폰 자동로밍 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.PHONE_GUIDE,'');
     } else {    // 임대로밍 자동로밍 가이드

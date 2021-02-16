@@ -28,7 +28,7 @@ Tw.RoamingAddons.prototype = {
    */
   fillItems: function () {
     // `activeIds` 에 선택된 필터 아이디들을 준비한다.
-    var activeTags = this.$container.find('.filters a.active');
+    var activeTags = this.$container.find('.filters span.active');
     var activeIds = [];
     var i;
     for (i = 0; i < activeTags.length; i++) {
@@ -59,17 +59,7 @@ Tw.RoamingAddons.prototype = {
     }
     // 부가서비스 항목내의 태그 클릭시 필터 선택 효과를 낸다.
     this.$container.find('.item .tag').on('click', $.proxy(this._showFilter, this));
-    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
-    this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
-
-  //웹접근성 
-  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
-  _closeGnb: function() {
-    setTimeout(function () {
-      $("span.icon-gnb-menu").focus();
-    },300);  
- },
   /**
    * 화면 내에서 필터(태그)를 선택한 경우.
    *
