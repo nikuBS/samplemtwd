@@ -4,7 +4,7 @@
  * @since 2020. 12. 18
  */
 
-Tw.ProductRenewalSubmain = function(rootEl, sectionSort, menuId, line) {
+Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, menuId) {
   
   // 전체 레이어 선택 및 생성자 파라미터값 세팅
   this.$container = rootEl;
@@ -25,12 +25,10 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, menuId, line) {
   this._additionType = '';
   this._additionAction = '';
 
+  
+  this._getRedisBanner(); // 퀵 필터, 테마 배너, 프로모션 배너 조회
   this._sortingSection(); // 섹션 데이터를 재 배치
-
-  // this._getTopBanner(); // TOP Banner 조회
-  this._getBannerTheme(); // 배너형 테마 조회
-  // this._getQuickFilter(); // 퀵 필터 조회
-
+  
   this._bindEvent(); // 이벤트 핸들링 바인딩
 };
 
@@ -127,7 +125,6 @@ Tw.ProductRenewalSubmain.prototype = {
    */
   _drawTosAdminProductBanner: function (banners) {
     banners.forEach($.proxy(function (bnr) {
-      console.log('@@@@', bnr);
       if (bnr.banner.result.bltnYn === 'N') {
         this.$container.find('#fe-banner-t').parents('div.nogaps').addClass('none');
       }
@@ -153,76 +150,140 @@ Tw.ProductRenewalSubmain.prototype = {
 
 
 
+ 
 
 
 
 
 
 
-   /**
-   * @desc 배너형 테마 조회 (REDIS)
+
+
+
+
+
+
+
+
+
+  /**
+   * @desc Redis Banner 데이터 조회
    */
-  _getBannerTheme: function() {
+  _getRedisBanner: function() {    
     this._apiService.requestArray([
       { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } },
-    ]).done($.proxy(this._successBannerTheme, this))
-      .fail($.proxy(this._errorRequest, this));
+    ]).done($.proxy(this._successRedis, this))
+      .fail($.proxy(this._errorRedis, this));
   }, 
 
   /**
    * redis에서 값을 가지고 왔을 때
    * @param {*} redisData 
    */
-  _successBannerTheme: function(redisData) {
-    if( redisData.code === Tw.API_CODE.CODE_00 ) {
-      var parseList = this._parseRedisData(redisData.result);
-      var _super = this;
+  _successRedis: function(redisData) {
+    if( redisData.code === Tw.API_CODE.CODE_00 ) {  
+      // console.log("###########");
+      // console.log(redisData.result);
+      // console.log("###########");
 
-      if ( parseList.length === 0 ) {
-        return;
-      }
+      var quickFilterParseList = this._parseQuickFilterRedisData(redisData.result);
+      var themeBannerParseList = this._parseBannerThemeRedisData(redisData.result);
+      var promotionParseList = this._parsePromotionRedisData(redisData.result);
+      
+      this._drawQuickFilterBanner(quickFilterParseList, this); // 퀵 필터 데이터를 draw
+      this._drawThemeBanner(themeBannerParseList, this); // 배너형 테마를 draw
+      this._drawPromotionBanner(promotionParseList, this); // 프로모션 배너를 draw
 
-      var $quickFilter = this.$container.find('section[data-sort="QUICK_FILTER"]');
-      var $sliderList = $quickFilter.find('.slider-list');
-      _.map(parseList, $.proxy(function(item) {
-        var html = item.bnnrHtmlCtt;
-        if ( html ) { 
-          html = html.replace('<p>', '').replace('</p>', '').replace('<br>', ''); // admin 페이지에서 배너를 등록하면 <p> 및 <br> 태그가 생기는 현상이 발생해서 replace로 삭제한다.
-          $sliderList.append(html);
-        }
-      }, this));
-
-      // 등록된 quick-item에 대한 이벤트 바인딩을 한다.
-      $(document).on('click', '.quick-item', function(event) {
-        var dataOption = $(this).data('option');
-        var dataLink = $(this).data('link');
-
-        if ( dataOption || dataLink ) {
-          switch ( dataOption ) {
-            case 'O': // 외부링크 이동 시 
-              Tw.CommonHelper.openUrlExternal(dataLink);
-              break;
-            case 'I': // 앱 내 이동 시
-              window.location.href = dataLink;
-              break;
-            case 'Q': // 테마 리스트로 이동 시
-              var themeTabCode = _super._line.quickFilterCode; // 테마 리스트 탭에 대한 ID
-              var themeFilterCode = dataLink; // 테마 리스트에서 출력되어야할 필터 코드 값
-
-              var url = '/product/renewal/mobileplan/list?code=' + themeFilterCode + '&filters=' + themeTabCode; // TODO: 윤수씨한테 URL 이랑 parameter 물어보기 ㅠㅠ;
-              window.location.href = url;
-              break;
-          }
-        }
-      });
+    } else { // redis 결과 값 코드가 '00'(정상 처리)가 아니라면 모든 filter의 html 객체를 삭제.
+      this._clearAllFilters();
     }
+
+    
+  },
+
+
+  /**
+   * 퀵 필터 배너를 랜딩하기 위한 함수
+   * @param {*} quickFilterParseList parsing 된 퀵 필터 데이터
+   * @param {*} _this this 객체
+   */
+  _drawQuickFilterBanner: function(quickFilterParseList, _this) {
+    if ( quickFilterParseList.length === 0 ) {
+      this._clearAllFilters(); // quick filter 결과값이 없으면 quick filter section을 삭제한다.
+      return;
+    } 
+
+    var $quickFilter = this.$container.find('section[data-sort="QUICK_FILTER"]');
+    var $sliderList = $quickFilter.find('.slider-list');
+    _.map(quickFilterParseList, $.proxy(function(item) {
+      var html = item.bnnrHtmlCtt;
+      if ( html ) { 
+        html = html.replace('<p>', '').replace('</p>', '').replace('<br>', ''); // admin 페이지에서 배너를 등록하면 <p> 및 <br> 태그가 생기는 현상이 발생해서 replace로 삭제한다.
+        $sliderList.append(html);
+      }
+    }, this));
+
+    // 등록된 quick-item에 대한 이벤트 바인딩을 한다.
+    $(document).on('click', '.quick-item', function(event) {
+      var dataOption = $(this).data('option');
+      var dataLink = $(this).data('link');
+
+      if ( dataOption || dataLink ) {
+        switch ( dataOption ) {
+          case 'O': // 외부링크 이동 시 
+            Tw.CommonHelper.openUrlExternal(dataLink);
+            break;
+          case 'I': // 앱 내 이동 시
+            window.location.href = dataLink;
+            break;
+          case 'Q': // 테마 리스트로 이동 시
+            var themeTabCode = _super._line.quickFilterCode; // 테마 리스트 탭에 대한 ID
+            var themeFilterCode = dataLink; // 테마 리스트에서 출력되어야할 필터 코드 값
+
+            var url = '/product/renewal/mobileplan/list?code=' + themeFilterCode + '&filters=' + themeTabCode;
+            window.location.href = url;
+            break;
+        }
+      }
+    });
+    
+  }, 
+
+  /**
+   * 테마형 배너를 랜딩하기 위한 함수
+   * @param {*} bannerThemeParseList 
+   * @param {*} _this 
+   */
+  _drawThemeBanner: function(bannerThemeParseList, _this) {
+
   },
 
   /**
-   * MASS Banner Redis 값을 parsing
+   * 프로모션 배너를 랜딩하기 위한 함수
+   * @param {*} promotionsParseList 
+   * @param {*} _this 
+   */
+  _drawPromotionBanner: function(promotionsParseList, _this) {
+
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /**
+   * 퀵 필터 Redis 값을 parsing
    * @param {*} redisData 
    */
-  _parseRedisData: function(redisData) {
+  _parseQuickFilterRedisData: function(redisData) {
     var NETWORK_TAG_TYPES = {
       'W' : 'TAG0000202', // 3G
       'L' : 'TAG0000201', // LTE
@@ -233,45 +294,101 @@ Tw.ProductRenewalSubmain.prototype = {
     
     var networkTagType = NETWORK_TAG_TYPES[this._line.deviceCode];
     return _.reduce(redisData.banners, function(arr, item) {
-      if ( item.bnnrLocCd === 'Q' ) {
+      if ( item.bnnrLocCd === 'Q' ) { // 퀵 필터 (Q)
         var filter = _.filter(item.tagMappInfo, function(mapping) {
           if ( mapping.tagId === networkTagType ) {
             return item;
           }
         }) || [];
         
-        // if ( filter.length > 0) {
+        if ( filter.length > 0) {
           arr.push(item);
-        // }
+        }
       }
       return arr;
     }, []);
   },
 
 
+  /**
+   * 테마 배너 Redis 값을 parsing
+   * @param {*} redisData 
+   */
+  _parseBannerThemeRedisData: function(redisData) {
+    this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
+      .done($.proxy(function (res) {
+        var AGE_SCOPE = {
+          'TAG0000206' : {'from' : 0, 'to': 12}, // 12세 이하 (0~12)
+          'TAG0000207' : {'from' : 0, 'to': 18}, // 18세 이하 (0~18)
+          'TAG0000208' : {'from' : 0, 'to': 24}, // 24세 이하 (0~24)
+          'TAG0000209' : {'from' : 25, 'to': 39}, // 25세 이상 39세 이하 (25~39) - 특이 케이스
+          'TAG0000210' : {'from' : 40, 'to': 64}, // 40세 이상 64세 이하 (40~64) - 특이 케이스
+          'TAG0000211' : {'from' : 65, 'to': 999}, // 65세 이상 (65~999)
+        }
+
+        var age = -1;
+        if (res.code === Tw.API_CODE.CODE_00) {
+          age = res.result.age;
+        }
+
+        return _.reduce(redisData.banners, function(arr, item) {
+          if ( item.bnnrLocCd === 'H' ) { // 테마형 배너 (H)
+            var tagMappingList = _.reduce(item.tagMappInfo, function(tagArr, tagItem) {
+              if ( Object.keys(AGE_SCOPE).index(tagItem.tagId) > 0 ) {
+                console.log('1 ===>> ', AGE_SCOPE[tagItem.tagId]);
+                tagArr.push(tagItem);
+              }
+              return tagArr;
+            }, []);
+
+
+            console.log("age =====>>> ", age);
+            console.log("HH =====>>> ", item);
+          
+          }
+          return arr;
+        }, []);
+
+      }, this))
+      .fail(function (error) {
+        Tw.Logger.info(error.code, error.msg);
+    });
+  },
 
   /**
-   * @desc 퀵 필터 조회 (REDIS)
+   * 프로모션 Redis 값을 parsing
+   * @param {*} redisData 
    */
-  _getQuickFilter: function() {
-    
-    // var html = 
-    //   '<li class="slider-item">' + 
-    //     '<a href="/product/renewal/mobileplan/list?filters=F01122&code=A001" class="shadow-box">' + 
-    //       '<p class="benefit-txt">데이터<em>완전무제한 (테스트 3G)</em></p>' + 
-    //       '<i class="benefit-ico"><img src="<%= CDN %>/img/product/v2/pro-ben-ico01.svg" alt=""></i>' + 
-    //     '</a>' + 
-    //   '</li>';
-    
-    // var $quickFilter = this.$container.find('section[data-sort="QUICK_FILTER"]');
-    // var $sliderList = $quickFilter.find('.slider-list');
+  _parsePromotionRedisData: function(redisData) {
+    return _.reduce(redisData.banners, function(arr, item) {
+      if ( item.bnnrLocCd === 'B' ) { // 프로모션 (B)
+        console.log("BB =====>>> ", item);
+      }
+      return arr;
+    }, []);
+  },
 
-    // $sliderList.append(html);
-    // $sliderList.append(html);
-    // $sliderList.append(html);
-    // $sliderList.append(html);
 
+  /**
+   * 퀵 필터 데이터 조회 실패 시
+   * @param {*} error 
+   */
+  _errorRedis: function(error) {
+    this._clearAllFilters();
+  },
+
+  /**
+   * 모든 배너 (퀵필터, 테마형 배너, 프로모션) 데이터 html 객체를 삭제
+   */
+  _clearAllFilters: function() {
+    this.$container.find('section[data-sort="QUICK_FILTER"]').addClass('none');
+    this.$container.find('section[data-sort="THEME_BANNER"]').addClass('none');
+    this.$container.find('section[data-sort="PROMOTIONS_THEME"]').addClass('none');
   }, 
+
+
+
+  
 
 
 
