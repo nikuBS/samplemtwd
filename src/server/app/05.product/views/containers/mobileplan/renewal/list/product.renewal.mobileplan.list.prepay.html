@@ -23,8 +23,8 @@
                         <!-- 요금제 two column list -->
                         <div class="tod-nmp-column-list">
                             <ul>
-                                <% for(let i=0; i < plans.separateProductList.length; i++ ) { %>
-                                    <% let thisPlan = plans.separateProductList[i]; %>
+                                <% for(let i=0; i < plans.productCount; i++ ) { %>
+                                    <% let thisPlan = plans.products[i]; %>
                                     <li>
                                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo}); %>
                                     </li>

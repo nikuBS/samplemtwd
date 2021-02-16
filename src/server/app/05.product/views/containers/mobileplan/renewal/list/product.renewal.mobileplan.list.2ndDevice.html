@@ -18,49 +18,95 @@
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList, quickFilterData: quickFilterData}); %>
                         <!-- 필터 조건값 노출 영역 -->
                     </div>
-                    <% for( let i = 0; i < plans.groupProdList.length; i++ ) { %>
-                        <% let thisSeries = plans.groupProdList[i]; %>
-                        <section class="tod-cont-section">
-                            <div class="rn-banner-img">
-                                <img src="<%= CDN %><%= thisSeries.prodGrpBackgroundImgUrl %>" alt="<%= thisSeries.prodGrpBackgroundImgAlt %>">
+                   
+                    2nd Device list - 요금제 series 얻어오는 api 필요 ( 현재 하드코딩)
+                    <section class="tod-cont-section">
+                        <div class="rn-banner-img">
+                            <img src="<%=CDN%>/img/product/v2/bg-img2.png" alt="">
+                        </div>
+                        <div class="tod-nmp-title">
+                            <div class="rn-tag">
+                                <span class="i-tag-cr3">5G Tab</span>
                             </div>
-                            <div class="tod-nmp-title">
-                                <div class="rn-tag">
-                                    <span class="i-tag-cr3"><%= thisSeries.prodGrpNm %></span>
-                                </div>
-                                <h3 class="rn-prod-tit"><%= thisSeries.prodGrpDesc %></h3>
+                            <h3 class="rn-prod-tit">태블릿도 5G 속도로! <br> <strong>5G 태블릿 전용 요금제</strong></h3>
+                        </div>
+                        <!-- 요금제 two column list -->
+                        <div class="tod-nmp-column-list">
+                            <ul>
+                                <li>
+                                    <a href="#n" class="prod-box">
+                                        <p class="p-name">5G Tab 4GB (단독)</p>
+                                        <div class="p-info">
+                                            <p class="row1">데이터 4GB</p>
+                                            <p class="row2">26,000원</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#n" class="prod-box">
+                                        <p class="p-name">5G Tab 4GB (단독)</p>
+                                        <div class="p-info">
+                                            <p class="row1">데이터 4GB</p>
+                                            <p class="row2">26,000원</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //요금제 two column list -->
+                    </section>
+                    
+                    <section class="tod-cont-section">
+                        <div class="rn-banner-img">
+                            <img src="<%=CDN%>/img/product/v2/bg-img13.png" alt="">
+                        </div>
+                        <div class="tod-nmp-title">
+                            <div class="rn-tag">
+                                <span class="i-tag-cr3">Data함께쓰기</span>
                             </div>
-                            <!-- 요금제 two column list -->
-                            <div class="tod-nmp-column-list">
-                                <ul>
-                                    <% for(let j = 0; j < thisSeries.prodList.length; j++) { %>
-                                        <% let thisPlan = thisSeries.prodList[j]; %>
-                                        <li>
-                                            <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo}); %>
-                                        </li>
-                                    <% } %>
-                                </ul>
-                            </div>
-                            <!-- //요금제 two column list -->
-                        </section>
-                    <% } %>
-                    <% if(plans.separateProductList) { %>
-                        <% for( let i = 0; i < plans.separateProductList.length; i++ ) { %>
-                            let thisPlan = separateProductList[i];
-                            <section class="tod-cont-section">
-                                <div class="tod-nmp-prod-group">
-                                    <h3 class="gr-tit"><%= thisPlan.prodSmryDesc %></h3>
-                                    <!-- 요금제 two column list -->
-                                    <div class="tod-nmp-column-list">
-                                        <ul>
-                                            <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo}); %>
-                                        </ul>
+                            <h3 class="rn-prod-tit">데이터 공유로 함께쓰는 <br> <strong>LTE전용 태블릿 요금제</strong></h3>
+                        </div>
+                        <!-- 요금제 two column list -->
+                        <div class="tod-nmp-column-list">
+                            <ul>
+                                <li>
+                                    <a href="#n" class="prod-box">
+                                        <p class="p-name">LTE Data 함께쓰기 1G</p>
+                                        <div class="p-info">
+                                            <p class="row1">데이터 1GB</p>
+                                            <p class="row2">26,000원</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#n" class="prod-box">
+                                        <p class="p-name">LTE Data 함께쓰기 2.5G</p>
+                                        <div class="p-info">
+                                            <p class="row1">데이터 2.5GB</p>
+                                            <p class="row2">26,000원</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#n" class="prod-box">
+                                        <p class="p-name">LTE Data 함께쓰기 Basic</p>
+                                        <div class="p-info">
+                                            <p class="row1">데이터 2.5GB</p>
+                                            <p class="row2">26,000원</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="banner-box">
+                                        <a href="#n" class="img-banner" style="background-image: url('<%= CDN %>/img/product/v2/banner-img1.jpg');">
+                                            <div class="blind">5G 부스트파크 특별혜택</div>
+                                        </a>
                                     </div>
-                                    <!-- //요금제 two column list -->
-                                </div>
-                            </section>
-                        <% } %>
-                    <% } %>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //요금제 two column list -->
+                    </section>
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
                 </div>
             </div>
