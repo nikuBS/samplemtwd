@@ -4046,4 +4046,4 @@ body.rn #roamingTariffOffer .decoration .banner{bottom:auto;top:0;}
 
 body.rn #roamingMain #header .h-belt{background:0;border:0}
 body.rn.fly #roamingMain #header .h-belt{background-color:#fff;border-bottom:1px solid #e5e5e5}
-button:focus,a:focus{outline:2px solid #000 !important}
+body.rn #roamingGuide a.button{display:block}
