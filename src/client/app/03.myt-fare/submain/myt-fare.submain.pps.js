@@ -36,14 +36,14 @@ Tw.MyTFareSubmainPps.prototype = {
    * @private
    */
   _bindEvent: function () {
-    this.$container.on('click', '.fe-imm-charge', $.proxy(this._onImmChargeDetail, this)); // 선불폰 충전 버튼
+    // this.$container.on('click', '.fe-imm-charge', $.proxy(this._onImmChargeDetail, this)); // 선불폰 충전 버튼
   },
 
   /**
    * @function
    * @desc 즉시충전 상세보기
    */
-  _onImmChargeDetail: function () {
+  /*_onImmChargeDetail: function () {
     switch ( this.resData.svcInfo.svcAttrCd ) {
       case 'M2':
         // PPS
@@ -60,7 +60,7 @@ Tw.MyTFareSubmainPps.prototype = {
         });
         break;
     }
-  },
+  },*/
 
   /**
    * 사용내역 조회
