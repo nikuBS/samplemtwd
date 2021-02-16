@@ -3816,6 +3816,8 @@ body.scroll #roamingOn #appbar .appbar {
 .rm-content .widget-box.step .step-list li{float:none;display:inline-block}
 .rm-content .widget-box.step .step-list li{border:0;font-size:.75rem;width:.5rem;height:.5rem;margin-left:.2rem;background-color:#c8d0ff;vertical-align:middle;text-indent:-999rem}
 .rm-content .widget-box.step .step-list li.on{width:1.125rem;height:1.125rem;padding:0;background-color:#4559fc;line-height:1.125rem;margin:0;text-indent:0}
+.rm-content.fixedStep .step-wrap{height:60px}
+.rm-content.fixedStep .widget-box.step{position:fixed;top:53px;left:0;right:0;z-index:50}
 
 /* baro Box */
 .rm-content .rm-box-ct .rm-box-ct-top h3{font-size:1.625rem;font-weight:500;padding-right:4.5rem}
@@ -4041,3 +4043,7 @@ body.rn #roamingTariffs .tariff .price{float:none;position:absolute;top:0;right:
 /* #roamingTariffOffer */
 body.rn #roamingTariffOffer .decoration{height: 0;padding-top: 47%;}
 body.rn #roamingTariffOffer .decoration .banner{bottom:auto;top:0;}
+
+body.rn #roamingMain #header .h-belt{background:0;border:0}
+body.rn.fly #roamingMain #header .h-belt{background-color:#fff;border-bottom:1px solid #e5e5e5}
+button:focus,a:focus{outline:2px solid #000 !important}
