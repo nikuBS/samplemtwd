@@ -1,0 +1,118 @@
+<%#
+* @file myt-join.info.discount.device.adv.html
+* @author Kim In Hwan
+_%>
+
+<div class="box-group">
+    <div class="box-group-head-tit"><%= repaymentItem.titNm %></div>
+    <div class="box-group-cont">
+        <div class="gray-box">
+            <ul class="report-list item-no-border small">
+                <li class="report-item">
+                    <dl class="report-define d-wrap">
+                        <dt class="report-tit">할부 시작일</dt>
+                        <dd class="report-cont"><%= repaymentItem.startDt %></dd>
+                    </dl>
+                </li>
+                <li class="report-item">
+                    <dl class="report-define d-wrap">
+                        <dt class="report-tit">할부 기간</dt>
+                        <dd class="report-cont">
+                            <button type="button" class="detail-agree-btn">
+                                <%= repaymentItem.totMt %>개월
+                            </button>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="horizon-bar-wrap contract-graph">
+            <div class="horizon-bar">
+                <span class="data" style="width:<%- repaymentItem.perMt %>%">
+                    <span class="bar"></span>
+                    <span class="bar-bubble"><%- repaymentItem.remDt %>일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+                </span>
+            </div>
+            <div class="data-date">
+                <span class="start-date">
+                    <%= repaymentItem.startDt %>
+                    <span class="day-dec">시작일</span>
+                </span>
+                <span class="end-date">
+                    <%= repaymentItem.endDt %>
+                    <span class="day-dec">종료일</span>
+                </span>
+            </div>
+        </div>
+        <div class="gray-box claim-box">
+            <p class="contract-summary">
+                남은 할부 청구 금액은<br><strong><%= repaymentItem.agreeClaimPay %>원</strong> 입니다.
+            </p>
+            <ul class="claim-list">
+                <li class="claim-item">
+                    <dl class="total-price">
+                        <dt class="total-article">총 할부 청구 금액</dt>
+                        <dd class="price"><%= repaymentItem.totSubsidy %>원</dd>
+                    </dl>
+                    <ul class="detail-list">
+                        <li class="detail-item have-sub"> <!-- open toggle -->
+                            <a href="#" role="button" aria-pressed="false">
+                                <dl class="detail-price">
+                                    <dt class="detail-article">중도 납부 금액</dt>
+                                    <dd class="price"><%= repaymentItem.allotPayAmt %>원</dd>
+                                </dl>
+                            </a>
+                            <div class="sub-box">
+                                <table class="month-table">
+                                    <caption>중도납부일을 월별 구분해 설명합니다.</caption>
+                                    <colgroup>
+                                        <col style="width:50%">
+                                        <col style="width:50%">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="item">중도 납부일</th>
+                                        <th scope="col" class="price">납부 금액</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="item"><%= repaymentItem.lastAllotPayOpTm %></td>
+                                        <td class="price"><%= repaymentItem.allotPayAmt %>원</td>
+                                    </tr>
+                                    <!-- 데이터가 두개 이상 들어오는 케이스 확인 후 조치
+                                    <tr>
+                                        <td class="item">2018.07.23.</td>
+                                        <td class="price">8,000원</td>
+                                    </tr>
+                                    -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="claim-item">
+                    <dl class="total-price">
+                        <dt class="total-article">월 할부 청구 금액</dt>
+                        <dd class="price"><%= repaymentItem.mthTotAmt %>원</dd>
+                    </dl>
+                    <ul class="detail-list">
+                        <li class="detail-item">
+                            <dl class="detail-price">
+                                <dt class="detail-article">할부원금</dt>
+                                <dd class="price"><%= repaymentItem.mthPrnAmt %>원</dd>
+                            </dl>
+                        </li>
+                        <li class="detail-item">
+                            <dl class="detail-price">
+                                <dt class="detail-article">할부 수수료</dt>
+                                <dd class="price"><%= repaymentItem.mthIntAmt %>원</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div><!-- group-cont -->
+</div>
