@@ -1,26 +1,51 @@
 <a href="/product/callplan?prod_id=<%=thisPlan.prodId%>" class="item-link">
     <div class="rn-tag">
         <div class="col-left">
-            <% for(let n=0; n< thisPlan.filters.length; n++) { %>
-                <% if(isTheme == 'Y') { %>
-                    <% if(thisPlan.filters[n].prodFltId == 'F01713'){ %>
-                        <span class="i-tag-cr1">5G</span>
-                    <% } else if(thisPlan.filters[n].prodFltId == 'F01121') {%>
-                        <span class="i-tag-cr2">LTE</span>
-                    <% } else if(thisPlan.filters[n].prodFltId == 'F01122') {%>
-                        <span class="i-tag-cr3">3G</span>
-                    <% } else if(thisPlan.filters[n].prodFltId == 'F01124') {%>
-                        <span class="i-tag-cr4">2nd Device</span>
-                    <% } else if(thisPlan.filters[n].prodFltId == 'F01125') {%>
-                        <span class="i-tag-cr4">선불</span>
+            <% if(thisPlan.filters) { %>
+                <% for(let n=0; n< thisPlan.filters.length; n++) { %>
+                    <% if(isTheme == 'Y') { %>
+                        <% if(thisPlan.filters[n].prodFltId == 'F01713'){ %>
+                            <span class="i-tag-cr1">5G</span>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01121') {%>
+                            <span class="i-tag-cr2">LTE</span>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01122') {%>
+                            <span class="i-tag-cr3">3G</span>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01124') {%>
+                            <span class="i-tag-cr4">2nd Device</span>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01125') {%>
+                            <span class="i-tag-cr4">선불</span>
+                        <% } %>
+                    <% } %>
+                    <% if(thisPlan.filters[n].prodFltId == 'F01163'){ %>
+                        <span class="i-tag-cr5">시니어</span>
+                    <% } else if(thisPlan.filters[n].prodFltId == 'F01164') { %>
+                        <span class="i-tag-cr5">복지</span>
+                    <% } else if(thisPlan.filters[n].prodFltId == 'F01162') { %>
+                        <span class="i-tag-cr5">어린이/청소년</span>
                     <% } %>
                 <% } %>
-                <% if(thisPlan.filters[n].prodFltId == 'F01163'){ %>
-                    <span class="i-tag-cr5">시니어</span>
-                <% } else if(thisPlan.filters[n].prodFltId == 'F01164') { %>
-                    <span class="i-tag-cr5">복지</span>
-                <% } else if(thisPlan.filters[n].prodFltId == 'F01162') { %>
-                    <span class="i-tag-cr5">어린이/청소년</span>
+            <% } else if(thisPlan.prodFltList) { %>
+                <% for(let n=0; n< thisPlan.prodFltList.length; n++) { %>
+                    <% if(isTheme == 'Y') { %>
+                        <% if(thisPlan.prodFltList[n].prodFltId == 'F01713'){ %>
+                            <span class="i-tag-cr1">5G</span>
+                        <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01121') {%>
+                            <span class="i-tag-cr2">LTE</span>
+                        <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01122') {%>
+                            <span class="i-tag-cr3">3G</span>
+                        <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01124') {%>
+                            <span class="i-tag-cr4">2nd Device</span>
+                        <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01125') {%>
+                            <span class="i-tag-cr4">선불</span>
+                        <% } %>
+                    <% } %>
+                    <% if(thisPlan.prodFltList[n].prodFltId == 'F01163'){ %>
+                        <span class="i-tag-cr5">시니어</span>
+                    <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01164') { %>
+                        <span class="i-tag-cr5">복지</span>
+                    <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01162') { %>
+                        <span class="i-tag-cr5">어린이/청소년</span>
+                    <% } %>
                 <% } %>
             <% } %>
         </div>
@@ -39,12 +64,14 @@
                 <%= thisPlan.basFeeAmt.value %>원
             <% } else { %>
                 <%= thisPlan.basFeeAmt.value %>
-            <% } %>    
+            <% } %>
     </div>
+
     <div class="rn-prod-info">
         <ul class="p-etc">
             <% if(thisPlan.basOfrDataQtyCtt){ %>
-                <li><i class="p-icon18-data"><span class="blind">데이터</span></i> 
+                <li>
+                    <i class="p-icon18-data"><span class="blind">데이터</span></i> 
                     <% if(typeof(thisPlan.basOfrDataQtyCtt.value)=='string') { %>
                         <%= thisPlan.basOfrDataQtyCtt.value %>
                     <% } else { %>
@@ -53,10 +80,12 @@
                 </li>
             <% } %>
             <% if(thisPlan.basOfrVcallTmsCtt){ %>
-                <li><i class="p-icon18-phone"><span class="blind">통화</span></i><%= thisPlan.basOfrVcallTmsCtt.value %></li>
+                <li>
+                    <i class="p-icon18-phone"><span class="blind">통화</span></i><%= thisPlan.basOfrVcallTmsCtt.value %></li>
             <% } %>
             <% if(thisPlan.basOfrCharCntCtt){ %>
-                <li><i class="p-icon18-sms"><span class="blind">문자</span></i>
+                <li>
+                    <i class="p-icon18-sms"><span class="blind">문자</span></i>
                     <% if(thisPlan.basOfrCharCntCtt.value !== '기본제공' && thisPlan.basOfrCharCntCtt.value !== '상세참조' && thisPlan.basOfrCharCntCtt.value !== '제공안함') { %>
                         <%= thisPlan.basOfrCharCntCtt.value %><%= thisPlan.basOfrCharCntCtt.unit %>
                     <% } else { %>
@@ -67,7 +96,7 @@
         </ul>
     </div>
 </a>
-<% if ((networkInfoFilter[0] == '5G' && series.seriesClass == 'prod-5g') || (networkInfoFilter[0] == 'LTE' && series.seriesClass == 'prod-lte')) { %>
+<% if (compareYN) { %>
     <% if (svcInfo) { %>
         <% if (svcInfo.prodId != thisPlan.prodId) { %>
             <div class="rn-prod-bottom">

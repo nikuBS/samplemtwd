@@ -243,7 +243,10 @@ Tw.ProductRenewalList.prototype = {
         this._popupQuickFilter($target);
       } else {
         if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
-          this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.CODE }).done($.proxy(this._handleLoadFilters, this, $target));
+          this._apiService.requestArray([
+            { command: Tw.API_CMD.BFF_10_0032, params: { idxCtgCd: this.CODE }},
+            { command: Tw.API_CMD.BFF_10_0033, params: { filterId: 'F01170' }}
+          ]).done($.proxy(this._handleLoadFilters, this, $target));
           
         } else {
           this._openSelectFiltersPopup($target);
@@ -251,68 +254,29 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _handleLoadFilters: function($target, resp) { // API로 받아온 데이터로 필터 열음 ( 현재 안씀 )
-      if (resp.code !== Tw.API_CODE.CODE_00) {
-        Tw.Error(resp.code, resp.msg).pop();
+    _handleLoadFilters: function($target, filterResp, quickFilterResp) { // API로 받아온 데이터로 필터 열음 ( 현재 안씀 )
+      if (filterResp.code !== Tw.API_CODE.CODE_00) {
+        Tw.Error(filterResp.code, filterResp.msg).pop();
         return;
       }
+      if (quickFilterResp.code !== Tw.API_CODE.CODE_00) {
+        Tw.Error(quickFilterResp.code, quickFilterResp.msg).pop();
+        return;
+      }
+
   
-      this._filters = resp.result;
+      this._filters = filterResp.result;
+      this._filters.quickFilters = quickFilterResp.result.filters;
       console.log(this._filters.filters[0]);
       this._openSelectFiltersPopup($target);
     },
 
     _openSelectFiltersPopup: function($target) { // 필터 팝업 띄움
-      // var currentFilters = this._params.searchFltIds,
-      //   currentTag = this._params.searchTagId;
-      // this._hasSelectedTag = !!currentTag;
-  
-      // var filters = _.chain(this._filters.filters)
-      //   .map(function(filter) {
-      //     return {
-      //       prodFltId: filter.prodFltId,
-      //       prodFltNm: filter.prodFltNm,
-      //       subFilters:
-      //         currentFilters && currentFilters.length > 0 ? 
-      //           _.map(filter.subFilters, function(subFilter) {
-      //             if (currentFilters.indexOf(subFilter.prodFltId) >= 0) {
-      //               return $.extend({ checked: true }, subFilter);
-      //             }
-      //             return subFilter;
-      //           }) : 
-      //           filter.subFilters
-      //     };
-      //   }).filter(function(filter){ //안되면 필터 제거하고 hbs에서 처리
-      //     return filter.prodFltId !== 'F01120';
-      //   }).value();
-      var filtersData = { data : '',
-        fee : '',
-        call : '',
-        target : ''};
-      var _this = this;
-      for(var i in _this._filters.filters) {
-        switch (_this._filters.filters[i].prodFltId) {
-          case 'F01130' :
-            filtersData.data = _this._filters.filters[i].subFilters;
-            break;
-          case 'F01140' :
-            filtersData.fee = _this._filters.filters[i].subFilters;
-            break;
-          case 'F01150' :
-            filtersData.call = _this._filters.filters[i].subFilters;
-            break;
-          case 'F01160' :
-            filtersData.target = _this._filters.filters[i].subFilters;
-            break;
-          default :
-            break;
-        }
-      }
   
       this._popupService.open({
           hbs: 'renewal.mobileplan.list.filter.hardcording',
           layer: true,
-          data: filtersData
+          data: this._filters
         },
         $.proxy(this._handleOpenSelectFilterPopup, this),
         $.proxy(this._handleCloseSelectFilterPopup, this),
@@ -322,11 +286,6 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _handleOpenSelectFilterPopup: function() { //필터 팝업 열릴 시 콜백 함수
-
-      // console.log('1###')
-      // console.log(location.hash);
-      // console.log(this._popupService._prevHashList);
-      // console.log('1###')
 
       var _this = this;
       var MobileFilterForQuick = (this.curMobileFilter[0] == '') || (this.curMobileFilter[0] == undefined) ? 'F01713' : this.curMobileFilter[0];
@@ -463,6 +422,7 @@ Tw.ProductRenewalList.prototype = {
       $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass }));
       if(!resp.result.hasNext) {
         this._hasNext = 'false';
+        $('.tod-nmp-loading').css('display','none');
       }
       this.isScroll = true;
       

@@ -11,9 +11,9 @@
         <div class="tod-renewal-product-tab">
             <div class="rn-prod-inner">
                 <ul>
-                    <li><a class="quickFilterBtn" data-code="A001">#데이터 완전무제한</a></li>
-                    <li><a class="quickFilterBtn" data-code="A002">#가입 즉시 T멤버십 VIP</a></li>
-                    <li><a class="quickFilterBtn" data-code="A003">#무제한 음악 스트리밍 무료 이용</a></li>
+                    {{#each data.quickFilters}}
+                        <li><a class="quickFilterBtn" data-code="{{prodFltId}}">#{{prodFltNm}}</a></li>
+                    {{/each}}
                 </ul>
             </div>
         </div>
@@ -22,83 +22,27 @@
                 <div class="acco-cover toggle">
                     <div class="acco-style">
                         <ul class="acco-list plan-list">
-                            <li class="acco-box">
-                                <div class="acco-tit">
-                                    <button class="list-box" aria-pressed="false">
-                                        <span class="point">어떤 분</span>이 요금제를<br>이용하실 예정인가요?
-                                    </button>
-                                </div>
-                                <div class="acco-cont check-box">
-                                    <ul>
-                                        {{#each data.target}}
-                                        <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
-                                            <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
-                                                <span class="txt">{{prodFltDesc}}</span>
-                                                <span class="limit">{{prodFltNm}}</span>
-                                            </a>
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="acco-box">
-                                <div class="acco-tit">
-                                    <button class="list-box" aria-pressed="false">
-                                        평소에 <span class="point">데이터</span>를<br>어느 정도 사용하시나요?
-                                    </button>
-                                </div>
-                                <div class="acco-cont check-box">
-                                    <ul>
-                                        {{#each data.data}}
-                                        <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
-                                            <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
-                                                <span class="txt">{{prodFltDesc}}</span>
-                                                <span class="limit">{{prodFltNm}}</span>
-                                            </a>
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="acco-box">
-                                <div class="acco-tit">
-                                    <button class="list-box" aria-pressed="false">
-                                        <span class="point">월 기본요금</span>은 얼마가<br> 적당하다고 생각하시나요?
-
-                                    </button>
-                                </div>
-                                <div class="acco-cont check-box">
-                                    <ul>
-                                        {{#each data.fee}}
-                                        <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
-                                            <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
-                                                <span class="txt">{{prodFltDesc}}</span>
-                                                <span class="limit">{{prodFltNm}}</span>
-                                            </a>
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="acco-box">
-                                <div class="acco-tit">
-                                    <button class="list-box" aria-pressed="false">
-                                        <span class="point">음성통화</span> 무제한 이용을<br>원하시나요?
-                                    </button>
-                                </div>
-                                <div class="acco-cont check-box">
-                                    <ul>
-                                        {{#each data.call}}
-                                        <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
-                                            <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
-                                                <span class="txt">{{prodFltDesc}}</span>
-                                                <span class="limit">{{prodFltNm}}</span>
-                                            </a>
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </li>
+                            {{#each data.filters}}  
+                                <li class="acco-box">
+                                    <div class="acco-tit">
+                                        <button class="list-box" aria-pressed="false">
+                                           {{{prodFltDesc}}}
+                                        </button>
+                                    </div>
+                                    <div class="acco-cont check-box">
+                                        <ul>
+                                            {{#each subFilters}}
+                                                <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
+                                                    <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
+                                                        <span class="txt">{{prodFltDesc}}</span>
+                                                        <span class="limit">{{prodFltNm}}</span>
+                                                    </a>
+                                                </li>
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+                                </li>
+                            {{/each}}
                         </ul>
                     </div>
                 </div>

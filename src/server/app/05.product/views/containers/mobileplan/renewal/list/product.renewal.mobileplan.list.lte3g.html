@@ -18,173 +18,51 @@
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList, quickFilterData: quickFilterData}); %>
                         <!-- 필터 조건값 노출 영역 -->
                     </div>
-                   
-                    lte 3g list - 요금제 series 얻어오는 api 필요 (현재 하드코딩)
-                    <section class="tod-cont-section">
-                        <div class="rn-banner-img">
-                            <img src="<%=CDN%>/img/product/v2/bg-img3.png" alt="">
-                        </div>
-                        <div class="tod-nmp-title">
-                            <div class="rn-tag">
-                                <span class="i-tag-cr2">LTE</span>
+                    <% for( let i = 0; i < plans.groupProdList.length; i++ ) { %>
+                        <% let thisSeries = plans.groupProdList[i]; %>
+                        <section class="tod-cont-section">
+                            <div class="rn-banner-img">
+                                <img src="<%= CDN %><%= thisSeries.prodGrpBackgroundImgUrl %>" alt="<%= thisSeries.prodGrpBackgroundImgAlt %>">
                             </div>
-                            <h3 class="rn-prod-tit">막강한 데이터&amp;콘텐츠 혜택 <br> <strong>LTE 라이프의 완성!</strong></h3>
-                        </div>
-                        <!-- 요금제 row list -->
-                        <div class="tod-nmp-row-list">
-                            <ul>
-                                <li>
-                                    <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-                                    <div class="tod-nmp-item plan-type2 prod-lte">
-                                        <a href="#n" class="item-link">
-                                            <div class="rn-tag">
-                                                <div class="col-left"></div>
-                                                <div class="col-right">
-                                                    <span class="i-tag-myplan">사용중</span>
-                                                </div>
+                            <div class="tod-nmp-title">
+                                <div class="rn-tag">
+                                    <% if(series.seriesClass == 'prod-lte') { %>
+                                        <span class="i-tag-cr2"><%= thisSeries.prodGrpNm %></span>
+                                    <% } else { %>
+                                        <span class="i-tag-cr3"><%= thisSeries.prodGrpNm %></span>
+                                    <% } %>
+                                </div>
+                                <h3 class="rn-prod-tit"><%= thisSeries.prodGrpDesc %></h3>
+                            </div>
+                            <!-- 요금제 row list -->
+                            <div class="tod-nmp-row-list">
+                                <ul>
+                                    <% for(let j = 0; j < thisSeries.prodList.length; j++) { %>
+                                        <% let thisPlan = thisSeries.prodList[j]; %>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <%= thisPlan.tabCode %>">
+                                                <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
                                             </div>
-                                            <div class="rn-prod-name">
-                                                <p class="p-name">T플랜 맥스</p>
-                                                <p class="p-price">100,000원</p>
-                                            </div>
-                                            <div class="rn-prod-info">
-                                                <ul class="p-etc">
-                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>무제한</li>
-                                                    <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
-                                                    <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
-                                                </ul>
-                                            </div>
-                                            <div class="rn-prod-benefit">
-                                                <ul>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_01.svg" alt=""></i> 
-                                                        <span class="txt">FLO 앤 데이터 무료 </span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_05.svg" alt=""></i> 
-                                                        <span class="txt">wavve 앤 데이터 플러스 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_02.svg" alt=""></i> 
-                                                        <span class="txt">분실/파손 보험 80 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_03.svg" alt=""></i> 
-                                                        <span class="txt">분실/파손 보험 80 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
-                                                        <span class="txt">분실/파손 보험 80 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- //요금제 모듈 : 혜택강조형 -->
-                                </li>
-                                <li>
-                                    <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-                                    <div class="tod-nmp-item plan-type2 prod-lte">
-                                        <a href="#n" class="item-link">
-                                            <div class="rn-tag">
-                                                <div class="col-left"></div>
-                                                <div class="col-right">
-                                                    <!-- <span class="i-tag-myplan">사용중</span> -->
-                                                </div>
-                                            </div>
-                                            <div class="rn-prod-name">
-                                                <p class="p-name">T플랜 스페셜</p>
-                                                <p class="p-price">79,000원</p>
-                                            </div>
-                                            <div class="rn-prod-info">
-                                                <ul class="p-etc">
-                                                    <li><i class="p-icon18-data"><span class="blind">데이터</span></i>150GB</li>
-                                                    <li><i class="p-icon18-phone"><span class="blind">통화</span></i>집전화 &middot; 이동전화 무제한</li>
-                                                    <li><i class="p-icon18-sms"><span class="blind">문자</span></i>기본제공 </li>
-                                                </ul>
-                                            </div>
-                                            <div class="rn-prod-benefit">
-                                                <ul>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_01.svg" alt=""></i> 
-                                                        <span class="txt">FLO 앤 데이터 무료 </span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_05.svg" alt=""></i> 
-                                                        <span class="txt">wavve 앤 데이터 플러스 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_02.svg" alt=""></i> 
-                                                        <span class="txt">분실/파손 보험 80 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_03.svg" alt=""></i> 
-                                                        <span class="txt">분실/파손 보험 80 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <i class="p-icon"><img src="<%=CDN%>/img/product/v2/icon16_04.svg" alt=""></i> 
-                                                        <span class="txt">분실/파손 보험 80 무료</span>
-                                                        <span class="price">
-                                                            <del>7,900원</del>
-                                                            <i class="icon-arr">&rarr;</i> 
-                                                            <em>0원</em>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- //요금제 모듈 : 혜택강조형 -->
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- // 요금제 row list -->
-                    </section>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                            <!-- // 요금제 row list -->
+                        </section>
+                    <% } %>
+                    <% if(plans.separateProductList) { %>
+                        <% for( let i = 0; i < plans.separateProductList.length; i++ ) { %>
+                            let thisPlan = separateProductList[i];
+                            <section class="tod-cont-section">
+                                <h3 class="gr-tit"><%= thisPlan.prodSmryDesc %></h3>
+                                <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <%= thisPlan.tabCode %>">
+                                    <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
+                                </div>
+                            </section>
+                        <% } %>
+                    <% } %>
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
                 </div>
             </div>
