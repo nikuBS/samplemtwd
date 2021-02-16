@@ -86,11 +86,12 @@ class MytDataSubmainAdvController extends TwViewController {
       this._getDataPresent(),
       this._getDataPresentAutoList(),
       this._getRefillCoupon(),
+      this._getRefillAvailability(),
       this._reqRefillGiftHistory(),
       this._getPPSAuto(),
       this._getPPSDataAuto()
       // this._getProductGroup() : OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
-    ).subscribe(([remnant, present, presentAuto, refill, refillGiftHistory, ppsvoice, ppsdata /*, prodList*/]) => {
+    ).subscribe(([remnant, present, presentAuto, refill, refillAvailable, refillGiftHistory, ppsvoice, ppsdata /*, prodList*/]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -141,7 +142,7 @@ class MytDataSubmainAdvController extends TwViewController {
       // 자녀 회선 추가 수정 [DV001-15520]
       // 간편로그인 경우 자녀회선 영역 미노출
       // 고도화 210215: M1 인 경우에만 자녀회선 노출
-      if (data.svcInfo.svcAttrCd === 'M1') {
+      if ( data.svcInfo.svcAttrCd === 'M1' ) {
         if ( !data.isEasyLogin && child && child.length > 0 ) {
           const convertedChildLines = this.convertChildLines(child);
           if ( convertedChildLines && convertedChildLines.length > 0 ) {
@@ -186,6 +187,10 @@ class MytDataSubmainAdvController extends TwViewController {
         // 간편로그인인 경우에 리필하기, 선물하기 버튼 비노출 처리
         data.pickCouponIndex = this.pickCouponIndex(refill);
         data.refill = this.convertCoupon(refill);
+        console.log(data.refill[data.pickCouponIndex]);
+        if (refillAvailable) {
+          data.refillAvailable = refillAvailable;
+        }
       }
 
       // 무선 여부 확인
@@ -782,6 +787,31 @@ class MytDataSubmainAdvController extends TwViewController {
         return resp.result;
       } else {
         // error
+        return null;
+      }
+    });
+  }
+
+  // 리필 쿠폰 사용 옵션 처리
+  _getRefillAvailability(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_06_0009, {}).map(resp => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        if ( FormatHelper.isEmpty(resp.result.option) ) { // 쿠폰 사용 불가능
+          return 'NONE';
+        }
+
+        const available: string = resp.result.option.reduce((memo, item) => {
+          return (memo + item.dataVoiceClCd);
+        }, '');
+
+        if ( available.includes('D') && available.includes('V') ) {
+          return 'ALL';
+        }
+        if ( available.includes('D') ) {
+          return 'DATA';
+        }
+        return 'VOICE';
+      } else {
         return null;
       }
     });
