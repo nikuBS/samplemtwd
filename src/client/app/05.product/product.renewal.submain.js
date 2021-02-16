@@ -209,7 +209,7 @@ Tw.ProductRenewalSubmain.prototype = {
               var themeTabCode = _super._line.quickFilterCode; // 테마 리스트 탭에 대한 ID
               var themeFilterCode = dataLink; // 테마 리스트에서 출력되어야할 필터 코드 값
 
-              var url = '/'; // TODO: 윤수씨한테 URL 이랑 parameter 물어보기 ㅠㅠ;
+              var url = '/product/renewal/mobileplan/list?code=' + themeFilterCode + '&filters=' + themeTabCode; // TODO: 윤수씨한테 URL 이랑 parameter 물어보기 ㅠㅠ;
               window.location.href = url;
               break;
           }
@@ -641,5 +641,16 @@ Tw.ProductRenewalSubmain.prototype = {
       });
     }, 500)
   },
+
+  /**
+   * URL + paramter을 조합
+   * @param {*} url 
+   * @param  {any} params 
+   */
+  _combinationUrl: function(url, params) {
+    return Object.keys(params).forEach(function(key, index) {
+      url = url + (index === 0 ? '?' : '&') + key; // TODO: 조금있다가 작업
+    })
+  }
 
 };
