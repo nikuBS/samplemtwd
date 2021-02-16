@@ -1,5 +1,5 @@
 /**
- * @file roaming.guides.jsㄹ
+ * @file roaming.guides.js
  * @desc T로밍 > T로밍안내 서브 페이지들 공용 클래스
  *       이용안내 페이지들에서 반복하여 사용되는 JS 함수들이 모여있다.
  *
@@ -50,12 +50,9 @@ Tw.RoamingGuides.prototype = {
     });
     // T로밍센터 탭 전환
     $(document).on('click', '.center .tabs .tab', function(e) {
-      e.preventDefault();
       var tabId = e.currentTarget.getAttribute('data-tabid');
       $('.tabs .tab').removeClass('active');
-      $('.tabs .tab').attr('aria-selected', false);
-      $('.tabs .tab.' + tabId).attr('aria-selected', true).addClass('active');
-
+      $('.tabs .tab.' + tabId).addClass('active');
       $('.tab-body').hide();
       $('#' + tabId).show();
     });
@@ -63,24 +60,8 @@ Tw.RoamingGuides.prototype = {
     this.$container.find('.tips .tip').on('click', $.proxy(this._handleTip, this));
     // T로밍센터, 터미널 선택 ActionSheet
     this.$container.find('#terminal').on('click', $.proxy(this.openTerminalActionSheet, this));
-    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
-    this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
-
-  //웹접근성 
-  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
-  _closeGnb: function() {
-    setTimeout(function () {
-      $("span.icon-gnb-menu").focus();
-    },300);  
- },
-
   _handleQna: function(e) {
-
-    //웹접근성 baro q&a
-    str_aria = ( $(e.currentTarget).find('a').attr('aria-pressed') =='false') ? 'true' : 'false';
-    $(e.currentTarget).find('a').attr('aria-pressed',str_aria);
-
     this.toggleQna(e.currentTarget);
   },
   _handleLink: function(e) {
@@ -164,15 +145,6 @@ Tw.RoamingGuides.prototype = {
     }, 180, function () {
       proxy.scrollMonitor = true;
     });
-
-    //웹접근성 바로통화, 이용 가능 여부 조회, 이용방법 안내 띠메뉴 이영 가능 여부 조회 focus
-    if($(target).attr('href') == '#howto'){    // 이용방법안내만  image 라.....
-      obj_id = $(target).attr("href");
-      $(obj_id +' img').focus();
-    } else{ //바로통화 / 이용가능여부조회
-      obj_id = $(target).attr("href");
-      $(obj_id +' h2').focus();
-    }
   },
   /**
    * 해당 페이지에 앵커탭이 있는지 검사하고, 앵커탭 존재시 각 앵커의 좌표와 높이를 계산하고
@@ -303,8 +275,7 @@ Tw.RoamingGuides.prototype = {
   /**
    * baro 통화 이용 가능 여부 조회
    */
-  queryBaroAvailable: function(e) {
-    e.preventDefault();
+  queryBaroAvailable: function() {
     Tw.Api.request(Tw.NODE_CMD.GET_SVC_INFO, {}).done($.proxy(this.processSvcInfo, this));
   },
   /**

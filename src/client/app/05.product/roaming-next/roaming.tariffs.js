@@ -48,29 +48,7 @@ Tw.RoamingTariffs.prototype = {
     this.$container.find('.field-container .search').on('click', $.proxy(this.$schedule.searchNation, this.$schedule));
     // 국가 검색 form onSubmit
     this.$container.find('.search-form').on('submit', $.proxy(this.$schedule.searchNation, this.$schedule));
-    //T로밍 요금제, 스크롤 베너 웹접근성 포커스
-    this.$container.find('#contents [data-img]').on('click', this._tabfocus);
-    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
-    $('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
-
-  //웹접근성 
-  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
-  _closeGnb: function() {
-    setTimeout(function () {
-      $("span.icon-gnb-menu").focus();
-    },300);  
- },
-
-  /**
-   * 상단 슬라이딩 베너 클릭시 웹접근성 포커스
-   * @private
-   */
-  _tabfocus: function(e) {  
-    var ix = $(this).index('[data-img]');
-             $('#groups').find('.group .summary h2').eq(ix).focus();  
-  },
-
   /**
    * '전체 국기 보기' 링크 핸들러
    * @private

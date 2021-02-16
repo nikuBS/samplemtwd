@@ -15,10 +15,7 @@
         <h3 class="name">{{ prodNm }}<span class="comment">{{ basFeeAmt.value }}</span></h3>
         </a>
         {{#each filters}}
-
-        <!-- <span class="tag" data-filter="{{ prodFltId }}">#{{ prodFltNm }}</span> -->
-        <a href="#" role="button" class="tag" data-filter="{{ prodFltId }}">#{{ prodFltNm }}</a> <!-- //202011 - 웹접근성 수정건 적용 : a 태그로 변경 -->
-        
+        <span class="tag" data-filter="{{ prodFltId }}">#{{ prodFltNm }}</span>
         {{/each}}
         <p class="description">{{ prodSmryDesc }}</p>
     </div>
