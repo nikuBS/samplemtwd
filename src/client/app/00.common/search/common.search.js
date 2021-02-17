@@ -36,7 +36,7 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
     collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.bundle-07.troaming-08' +
       '.tapp-09.direct-10.tmembership-11.event-12.sale-13.as_outlet-14.question-15.notice-16.prevent-17.manner-18' +
       '.serviceInfo-19.siteInfo-20.lastevent-21.banner-22',
-    sortCd: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+    sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
   this._autoCompleteRegExObj = {
@@ -271,6 +271,15 @@ Tw.CommonSearch.prototype = {
       e.preventDefault();
       $(window).scrollTop(0);
     }, this));
+    this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
+        var $target = $(e.currentTarget).parent(); // 바로 상위 
+        $target.toggleClass('on');
+        if ($target .hasClass('on')) {
+          $target.find('button').attr('aria-pressed', true);
+        } else {
+          $target .find('button').attr('aria-pressed', false);
+        }
+    }, this))
 
     this.$container.on('click', '.fe-category', $.proxy(this._selectCategory, this));    // 카테고리 클릭시 이벤트 바인딩
     // this.$container.on('click','#fe-more-rate',function(e){
@@ -517,6 +526,7 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _showShortcutList: function (data, dataKey, cdn, gubun) {
+    // console.log("data => ", data, dataKey, cdn, gubun);
     // 지난이벤트 컬렉션이 추가되었지만 티월드 노출 요건이 없으므로 예외처리함.
     if ( dataKey !== 'lastevent' ) {
 
@@ -535,18 +545,49 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
-
-      _.each(data, $.proxy(function (listData/*, index */) {
-        if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
-          var removeLength = data.length - 1;
-          if ( removeLength <= 0 ) {
-            $('.' + dataKey).addClass('none');
-          } else {
-            $('.' + dataKey + ' .num').text(removeLength);
+      _.each(data, $.proxy(function (listData, index) {
+        // console.log(">>> listData: ", listData);
+        // 바로가기는 최대 3건만 노출
+        if (dataKey === 'shortcut') {
+          if (index > 2) {
+            return;
           }
-          return;
+          if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
+            var removeLength = data.length - 1;
+            if ( removeLength <= 0 ) {
+              $('.' + dataKey).addClass('none');
+            } else {
+              $('.' + dataKey + ' .num').text(removeLength);
+            }
+            return;
+          }
+          if (listData.DEPTH_CHILD !== undefined) {
+            console.log(">>>>> data: ", data);
+            listData.DEPTH_CHILD.push({
+              CLICK_CNT: listData.CLICK_CNT,
+              DEPTH_LOC: "2",
+              DEPTH_PATH: listData.DEPTH_PATH,
+              DOCID: listData.DOCID,
+              MENU_NM: listData.MENU_NM,
+              MENU_URL: listData.MENU_URL,
+              USE_YN: listData.USE_YN       
+            })
+          }
+          // console.log(">>> listData: ", listData);
+          $list.append(templateData({ listData: listData, CDN: cdn }));
+        } else {
+          if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
+            var removeLength = data.length - 1;
+            if ( removeLength <= 0 ) {
+              $('.' + dataKey).addClass('none');
+            } else {
+              $('.' + dataKey + ' .num').text(removeLength);
+            }
+            return;
+          }
+          $list.append(templateData({ listData: listData, CDN: cdn }));
         }
-        $list.append(templateData({ listData: listData, CDN: cdn }));
+        
       }, this));
     }
   },
@@ -596,18 +637,18 @@ Tw.CommonSearch.prototype = {
     var requestUrl = '/common/search?keyword=';
     requestUrl += encodeURIComponent(keyword);
     requestUrl += '&step=' + (Number(this._step) + 1);
-    var sort = '&sort=shortcut-A';
-    sort += '.rate-A';
-    sort += '.service-A';
-    sort += '.tv_internet-A';
-    sort += '.troaming-A';
+    var sort = '&sort=shortcut-C';
+    sort += '.rate-C';
+    sort += '.service-C';
+    sort += '.tv_internet-C';
+    sort += '.troaming-C';
     sort += '.direct-D';
     requestUrl += sort;
 
-    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-    Tw.CommonHelper.setCookie('search_sort::service', 'A');
-    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+    Tw.CommonHelper.setCookie('search_sort::rate', 'C');
+    Tw.CommonHelper.setCookie('search_sort::service', 'C');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
     Tw.CommonHelper.setCookie('search_sort::direct', 'D');
 
     // Tw.Logger.info('[common.search] [_doSearch]', '"doSearch" Cookie 셋팅');
@@ -645,12 +686,12 @@ Tw.CommonSearch.prototype = {
     requestUrl += '&step=' + (Number(this._step) + 1);
 
     var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
-    var sort = 'shortcut-A';
-    sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
-    sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
-    sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
-    sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
-    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
+    var sort = 'shortcut-C';
+    sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
+    sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
+    sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
+    sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
+    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
     requestUrl += '&sort=' + sort;
 
     // Tw.Logger.info('[common.search] [_doResultSearch]', '"doSearch" Cookie 셋팅');
@@ -894,7 +935,7 @@ Tw.CommonSearch.prototype = {
 
     var tempBtnStr = '.fe-btn-sort-' + selectedCollection;
 
-    // sort=shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D
+    // sort=shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D
     // function getParam(sname) {
     //   var linkUrl = location.search;
     //   var params = linkUrl.substr(linkUrl.indexOf('?') + 1);
@@ -933,10 +974,10 @@ Tw.CommonSearch.prototype = {
       {
         list: [
           {
-            txt: Tw.SEARCH_FILTER_STR.ADMIN,  // 추천순
-            'radio-attr': (sortCdStr === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
+            txt: Tw.SEARCH_FILTER_STR.CLICK,  // 클릭순
+            'radio-attr': (sortCdStr === 'C') ? 'class="focus-elem" sort="C" checked' : 'class="focus-elem" sort="C"',
             'label-attr': ' ',
-            sort: 'A'
+            sort: 'C'
           },
           {
             txt: Tw.SEARCH_FILTER_STR.NEW,  // 최신순
