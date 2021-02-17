@@ -4,13 +4,15 @@
  * @since 2020. 12. 18
  */
 
-Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, menuId) {
+Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuId) {
   
   // 전체 레이어 선택 및 생성자 파라미터값 세팅
   this.$container = rootEl;
   this._sectionSort = sectionSort;
   this._menuId = menuId;
   this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'};
+  this._myAge = myAge;
+  this._cdn = cdn;
 
   console.log('-------------------');
   console.log('소팅방법: ', sectionSort);
@@ -296,62 +298,56 @@ Tw.ProductRenewalSubmain.prototype = {
    * @param {*} redisData 
    */
   _parseBannerThemeRedisData: function(redisData) {
-    this._apiService.request(Tw.API_CMD.BFF_08_0080, {}) // 만 나이를 구하는 API 호출
-      .always($.proxy(function(res) {
-        var age = 0;
-        if (res.code === Tw.API_CODE.CODE_00) { 
-           age = res.result.age;
-        } 
+    var age = this._myAge;
 
-        // 코드값에 유연하게 대응하기 위해 from~to를 지정하여 관리한다.
-        // 12세 이하, 24세 이하로 설정되있고 회선을 보유한 사용자의 만 나이가 54세라면 리턴되는 항목은 없고
-        // 회선을 보유한 사용자의 만 나이가 22세라면 리턴되는 항목이 존재하게 됨
-        var AGE_SCOPE = {
-          'TAG0000205' : {'from' : 0, 'to': 999}, // 연령 디폴트 (모든 사용자에게 출력됨) 
-          'TAG0000206' : {'from' : 0, 'to': 12}, // 12세 이하 (0~12)
-          'TAG0000207' : {'from' : 13, 'to': 18}, // 18세 이하 (13~18)
-          'TAG0000208' : {'from' : 18, 'to': 24}, // 24세 이하 (19~24)
-          'TAG0000209' : {'from' : 25, 'to': 39}, // 25세 이상 39세 이하 (25~39) - 특이 케이스
-          'TAG0000210' : {'from' : 40, 'to': 64}, // 40세 이상 64세 이하 (40~64) - 특이 케이스
-          'TAG0000211' : {'from' : 65, 'to': 999}, // 65세 이상 (65~999)
-        }
+    // 코드값에 유연하게 대응하기 위해 from~to를 지정하여 관리한다.
+    // 12세 이하, 24세 이하로 설정되있고 회선을 보유한 사용자의 만 나이가 54세라면 리턴되는 항목은 없고
+    // 회선을 보유한 사용자의 만 나이가 22세라면 리턴되는 항목이 존재하게 됨
+    var AGE_SCOPE = {
+      'TAG0000205' : {'from' : 0, 'to': 999}, // 연령 디폴트 (모든 사용자에게 출력됨) 
+      'TAG0000206' : {'from' : 0, 'to': 12}, // 12세 이하 (0~12)
+      'TAG0000207' : {'from' : 13, 'to': 18}, // 18세 이하 (13~18)
+      'TAG0000208' : {'from' : 18, 'to': 24}, // 24세 이하 (19~24)
+      'TAG0000209' : {'from' : 25, 'to': 39}, // 25세 이상 39세 이하 (25~39) - 특이 케이스
+      'TAG0000210' : {'from' : 40, 'to': 64}, // 40세 이상 64세 이하 (40~64) - 특이 케이스
+      'TAG0000211' : {'from' : 65, 'to': 999}, // 65세 이상 (65~999)
+    }
 
-        var themeBannerParseList = _.reduce(redisData.banners, function(arr, item) {
-          if ( item.bnnrLocCd === 'H' ) { // 테마형 배너 (H)
-            var list = _.reduce(item.tagMappInfo, function(scopeArr, tagItem) {
-              if ( Object.keys(AGE_SCOPE).indexOf(tagItem.tagId) > -1 ) { // AGE_SCOPE의 KEY에 해당되는 tagId가 존재하면?
-                scopeArr.push(AGE_SCOPE[tagItem.tagId]);
-              }
-
-              return scopeArr;
-            }, []);
-
-            if ( list.length !== 0 ) {
-              var compare = _.filter(list, function(scope) {
-                if ( age >= scope.from && age <= scope.to ) { // scope의 범위에 속하는지 체크 
-                  return true;
-                }
-              })
-
-              if ( compare.length !== 0 ) {
-                arr.push(Object.assign(item, { // 추가적인 정보를 assign 함.
-                  scopeTarget: Number(age),
-                  scope: list
-                }));
-              }              
-              return arr;
-            }
+    var themeBannerParseList = _.reduce(redisData.banners, function(arr, item) {
+      if ( item.bnnrLocCd === 'H' ) { // 테마형 배너 (H)
+        var list = _.reduce(item.tagMappInfo, function(scopeArr, tagItem) {
+          if ( Object.keys(AGE_SCOPE).indexOf(tagItem.tagId) > -1 ) { // AGE_SCOPE의 KEY에 해당되는 tagId가 존재하면?
+            scopeArr.push(AGE_SCOPE[tagItem.tagId]);
           }
-          return arr;
+
+          return scopeArr;
         }, []);
 
-        console.log("=====");
-        console.log('저의 만 나이는 ' + age + '세 입니다..');
-        console.log('배너형 테마에 보여지는 항목은 이거입니다. ', themeBannerParseList);
-        console.log("=====");
+        if ( list.length !== 0 ) {
+          var compare = _.filter(list, function(scope) {
+            if ( age >= scope.from && age <= scope.to ) { // scope의 범위에 속하는지 체크 
+              return true;
+            }
+          })
 
-        this._drawThemeBanner(themeBannerParseList, this); // 배너형 테마를 draw
-      }, this));
+          if ( compare.length !== 0 ) {
+            arr.push(Object.assign(item, { // 추가적인 정보를 assign 함.
+              scopeTarget: Number(age),
+              scope: list
+            }));
+          }              
+          return arr;
+        }
+      }
+      return arr;
+    }, []);
+
+    console.log("=====");
+    console.log('저의 만 나이는 ' + age + '세 입니다..');
+    console.log('배너형 테마에 보여지는 항목은 이거입니다. ', themeBannerParseList);
+    console.log("=====");
+
+    this._drawThemeBanner(themeBannerParseList, this); // 배너형 테마를 draw
   },
 
 
@@ -380,7 +376,7 @@ Tw.ProductRenewalSubmain.prototype = {
 
     var themeBannerHandle = Handlebars.compile(Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER);
     var html = themeBannerHandle({
-      CDN: Tw.Environment.cdn, // template.type.js의 파일 내용을 꼭 변경해야함!
+      cdn_url: _this._cdn,
       banners: themeBannerParseList
     });
 
@@ -415,20 +411,60 @@ Tw.ProductRenewalSubmain.prototype = {
   _parsePromotionRedisData: function(redisData) {
     var promotionParseList = _.reduce(redisData.banners, function(arr, item) {
       if ( item.bnnrLocCd === 'B' ) { // 프로모션 (B)
-        console.log("BB =====>>> ", item);
+        arr.push(item);
       }
       return arr;
     }, []);
 
-    this._drawPromotionBanner(promotionParseList, this); // 프로모션 배너를 draw
+    // MASS배너 중 프로모션이 등록된 항목이 1개 이상이라면 그 중 우선순위(bnnrExpsSeq)가 낮은순에 대한 데이터 1개를 가지고 온다.
+    // *대전제* 프로모션은 1개의 항목만 출력한다.
+    if ( promotionParseList.length > 1 ) {
+      promotionParseList = _.sortBy(promotionParseList, 'bnnrExpsSeq').slice(0, 1); // 역순이 필요하면 reverse() function을 사용한다.
+    }
+
+    var promotionParseItem = promotionParseList[0] || null;
+    this._drawPromotionBanner(promotionParseItem, this); // 프로모션 배너를 draw
   },
 
   /**
-   * 프로모션 배너를 랜딩하기 위한 함수
-   * @param {*} promotionsParseList 
+   * 프로모션 배너를 랜딩하기 위한 함수 (프로모션 항목은 최대 1개만 출력됨)
+   * @param {*} promotionParseItem 
    * @param {*} _this 
    */
-  _drawPromotionBanner: function(promotionsParseList, _this) {
+  _drawPromotionBanner: function(promotionParseItem, _this) {
+    if ( !promotionParseItem ) {
+      this.$container.find('section[data-sort="PROMOTION_THEME"]').addClass('none'); // 테마형 배너가 없으면 결과값이 없으면 테마형 배너의 section을 none한다.
+      return;
+    } 
+
+    console.log("=====");
+    console.log('프로모션에 보여지는 항목은 이거입니다. ', promotionParseItem);
+    console.log("=====");
+
+    var $promotion = this.$container.find('section[data-sort="PROMOTION_THEME"]');
+    var promotionHandle = Handlebars.compile(Tw.RENEWAL_PRODUCT_SUBMAIN_PROMOTION_BANNER);
+    var html = promotionHandle({
+      cdn_url: _this._cdn,
+      promotion: promotionParseItem
+    });
+
+    $promotion.append(html);
+
+    $(document).on('click', '.promotions-item', function(event) {
+      var dataOption = $(this).data('option');
+      var dataLink = $(this).data('link');
+
+      if ( dataOption || dataLink ) {
+        switch ( dataOption ) {
+          case 'B': // 외부링크 이동 시 
+            Tw.CommonHelper.openUrlExternal(dataLink);
+            break;
+          case 'S': // 앱 내 이동 시
+            window.location.href = dataLink;
+            break;
+        }
+      }
+    });
 
   },
 
@@ -453,7 +489,7 @@ Tw.ProductRenewalSubmain.prototype = {
   _clearAllFilters: function() {
     this.$container.find('section[data-sort="QUICK_FILTER"]').addClass('none');
     this.$container.find('section[data-sort="THEME_BANNER"]').addClass('none');
-    this.$container.find('section[data-sort="PROMOTIONS_THEME"]').addClass('none');
+    this.$container.find('section[data-sort="PROMOTION_THEME"]').addClass('none');
   }, 
 
 
@@ -828,16 +864,5 @@ Tw.ProductRenewalSubmain.prototype = {
       });
     }, 500)
   },
-
-  /**
-   * URL + paramter을 조합
-   * @param {*} url 
-   * @param  {any} params 
-   */
-  _combinationUrl: function(url, params) {
-    return Object.keys(params).forEach(function(key, index) {
-      url = url + (index === 0 ? '?' : '&') + key; // TODO: 조금있다가 작업
-    })
-  }
 
 };

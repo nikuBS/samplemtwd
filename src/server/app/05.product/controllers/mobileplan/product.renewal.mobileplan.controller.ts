@@ -175,20 +175,18 @@ export default class RenewProduct extends TwViewController {
             , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
             , this.getSortSection(line) // 섹션 순서 데이터를 조회
             , this.getThemeListData(line, svcInfo) // 리스트 형 테마 데이터를 조회
-            , this.getThemeBannerData(line, svcInfo) // 배너 형 데이터를 조회
-            , this.getQuickFilter(line, svcInfo) // 퀵필터 데이터를 조회
+            , this.getMyAge(svcInfo) // 나의 나이를 리턴받음
           ).subscribe(([
             payment // 사용중인 요금제 데이터 결과 값
             , isPiAgree // 개인정보 동의 여부
             , additions // 사용중인 부가서비스 결과 값
             , sortSection // 섹션 순서 데이터 결과 값
             , themeListData // 테마 리스트 데이터 조회
-            , themeBannerData // 테마 배너 데이터 조회
-            , quickFilter // 퀵 필터 데이터 조회
+            , myAge
           ]) => {
             const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
             const data = {
-              line, payment, isPiAgree, additions, isWireless, sortSection, themeListData, themeBannerData, quickFilter
+              line, payment, isPiAgree, additions, isWireless, sortSection, themeListData, myAge, cdn: this.getCDN()
             }
             
             console.log("#####");
@@ -478,7 +476,7 @@ export default class RenewProduct extends TwViewController {
             'expsTitNm' : data.result.expsTitNm,
             'networkType' : data.result.networkType,
             'prodSmryExpType' : data.result.prodSmryExpType,
-            'mblBgImgUrl' : this.getCDN().CDN + data.result.mblBgImgUrl,
+            'mblBgImgUrl' : this.getCDN() + data.result.mblBgImgUrl,
             'mblBgImgNm' : data.result.mblBgImgNm,
           }, {
             'prodList': this.convertThemePayment(data)
@@ -486,29 +484,25 @@ export default class RenewProduct extends TwViewController {
       });
     }
 
-
     /**
-     * 배너 형 테마 데이터 데이터를 조회 
+     * 로그인 된 사용자의 만 나이를 리턴 받음.
+     * 
+     * 로그인이 되어있지않다면 만 나이를 0세로 리턴받음. 0세로 리턴받는 이유는 모든 테마를 보여야하는 항목들이 있기때문에 그것을 보여주기 위해서
      * @param svcInfo 
      */
-    private getThemeBannerData( line, svcInfo: any ): Observable<any> {
+    private getMyAge ( svcInfo ): Observable<any> {
+      if ( FormatHelper.isEmpty(svcInfo) ) { // 로그인이 되어있지 않다면 만 나이는 0세로 세팅
+        return Observable.of(0);
+      }
 
-      return Observable.of(null);
-    }
-    
-    /**
-     * 퀵 필터 데이터를 조회
-     * 
-     * 현재 나의 단말기 정보를 얻어온 뒤 회선 정보에 해당되는 퀵 필터 데이터를 조회.
-     * 먼저 비 로그인 상태거나 회선이 없으면 기본값으로 5G에 해당되는 퀵 필터 데이터를 조회하고
-     * 회선이 있으면 해당 회선 네트워크 정보(3G, LTE, 5G, Tablet/2nd Device, PPS)를 얻어온 뒤 데이터를 조회하는 형식으로 개발
-     * 
-     * @param svcInfo 
-     */
-    private getQuickFilter( line, svcInfo: any ): Observable<any> {
+      return this.apiService.request(API_CMD.BFF_08_0080, {}).map((resp) => {
+        if (resp.code === API_CODE.CODE_00) {
+          return resp.result.age; // 만 나이를 리턴
+        }
 
-      return Observable.of(null);
-    }
+        return 0;
+      });
+    } 
     
 
     /**
@@ -745,13 +739,14 @@ export default class RenewProduct extends TwViewController {
     private getCDN() {
       const env = String(process.env.NODE_ENV);
       if ( env === 'prd' ) { // 운영
-        return { CDN: 'https://cdnm.tworld.co.kr' };
+        return 'https://cdnm.tworld.co.kr';
       } else if ( env === 'stg' ) { // 스테이징
-        return { CDN: 'https://cdnm-stg.tworld.co.kr' };
+        return 'https://cdnm-stg.tworld.co.kr';
       } else if ( env === 'dev') { // dev
-        return { CDN: 'https://cdnm-dev.tworld.co.kr' };
+        return 'https://cdnm-dev.tworld.co.kr';
       } else { // local
-        return { CDN: 'http://localhost:3001' };
+        return 'https://cdnm-dev.tworld.co.kr';
+        // return 'http://localhost:3001';
       }
     }
 

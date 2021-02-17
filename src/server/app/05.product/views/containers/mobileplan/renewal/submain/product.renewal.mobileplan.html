@@ -491,14 +491,17 @@
                     </section>
 					
 					<%# 프로모션 %>
-                    <section class="product-sec none" data-sort="PROMOTIONS_THEME">
-						<div class="pro-article various-plan-box">
+                    <section class="product-sec none" data-sort="PROMOTION_THEME">
+						<!-- <div class="pro-article various-plan-box">
 							<div class="banner-area shadow-box">
 								<a href="#none">
 									<img src="<%= CDN %>/img/product/v2/banner-temp.png" alt="요즘 인기 있는 휴대폰 확인해보시겠어요?">
 								</a>
 							</div>
-						</div><!-- //pro-article -->
+						</div> -->
+					</section>
+
+					<section class="product-sec">
 						<div class="pro-article variety-product-box">
 							<div class="article-tit">SKT의 다양한 상품을 만나보세요</div>
 							<div class="article-cont">
@@ -526,7 +529,7 @@
 <script>
     $(document).ready(function () {
 		// new Tw.ProductRenewalSubmain($('.wrap'), '<%= svcInfo ? svcInfo : "" %>', '<%= pageInfo.menuId ? pageInfo.menuId : "" %>');
-		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= pageInfo.menuId ? "M000367" : "" %>');
+		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', '<%= pageInfo.menuId ? "M000367" : "" %>');
 		new Tw.ProductCompare($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
     });
 </script>
