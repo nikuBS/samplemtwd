@@ -388,18 +388,18 @@ Tw.CommonSearchMain.prototype = {
     }
 
     // var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
-    //shortcut-C.rate-C.service-C.tv_internet-C.troaming-C
-    var sort = 'shortcut-C';
-    sort += '.rate-C';
-    sort += '.service-C';
-    sort += '.tv_internet-C';
-    sort += '.troaming-C';
+    //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
+    var sort = 'shortcut-A';
+    sort += '.rate-A';
+    sort += '.service-A';
+    sort += '.tv_internet-A';
+    sort += '.troaming-A';
     sort += '.direct-D';
 
-    Tw.CommonHelper.setCookie('search_sort::rate', 'C');
-    Tw.CommonHelper.setCookie('search_sort::service', 'C');
-    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
-    Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
+    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+    Tw.CommonHelper.setCookie('search_sort::service', 'A');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
     Tw.CommonHelper.setCookie('search_sort::direct', 'D');
 
     setTimeout($.proxy(function () {

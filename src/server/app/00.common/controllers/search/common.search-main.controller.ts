@@ -52,7 +52,7 @@ class CommonSearchMain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';
     const step = req.query.step || 1;
-    const sort = req.query.sort || 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D';
+    const sort = req.query.sort || 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D';
     Observable.combineLatest(
       this.apiService.request(API_CMD.POPULAR_KEYWORD, { range: 'D' }, {}),
       this.apiService.request(API_CMD.BFF_08_0068, { mblOsTypCd: nowOsType }, {}),
