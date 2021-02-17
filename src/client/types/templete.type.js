@@ -1540,9 +1540,18 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
 Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER =
 '{{#each banners}}' +
   '<li class="slider-item">' +
-    '<a class="shadow-box theme-item" style="background-image:url(https://cdnm-dev.tworld.co.kr/{{bnnrFilePathNm}})" title="{{titleNm}}" alt="{{bnnrImgAltCtt}}" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}"> ' +
-      '<span class="tod-blind">{{titleNm}}</span>' + 
-      '<p class="i-txt">음악과 언제 어디서나 함께하는 요금제</p>' + 
+    '<a class="shadow-box theme-item" style="background-image:url({{../cdn_url}}/{{bnnrFilePathNm}})" title="{{bnnrImgAltCtt}}" alt="{{bnnrImgAltCtt}}" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}"> ' +
+      '<span class="tod-blind">{{bnnrImgAltCtt}}</span>' + 
+      '<p class="i-txt">{{anchTagInfo}}</p>' + 
     '</a>' + 
   '</li>' + 
 '{{/each}}';
+
+Tw.RENEWAL_PRODUCT_SUBMAIN_PROMOTION_BANNER = 
+'<div class="pro-article various-plan-box">' + 
+  '<div class="banner-area shadow-box">' + 
+    '<a class="promotions-item" data-option="{{promotion.linkTypCd}}" data-link="{{promotion.imgLinkUrl}}">' + 
+      '<img src="{{cdn_url}}/{{promotion.bnnrFilePathNm}}" title="{{promotion.bnnrImgAltCtt}}" alt="{{promotion.bnnrImgAltCtt}}">' + 
+    '</a>' + 
+  '</div>' + 
+'</div>';
