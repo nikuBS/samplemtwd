@@ -417,14 +417,10 @@ Tw.RoamingRates.prototype = {
       $('#dataCharge').html('-');
     }
 
-    if (_result.pMoChargeMin) {
-      $('#voiceChargeOut').html(_result.pMoChargeMin + '원');
+    if (_result.vIntChargeMin) {
+      $('#voiceChargeOut').html(_result.vIntChargeMin + '원');
     } else {
-      if (_result.vIntChargeMin) {
-        $('#voiceChargeOut').html(_result.vIntChargeMin + '원');
-      } else {
         $('#voiceChargeOut').html('-');
-      }
     }
 
     if (_result.vMoChargeMin) {

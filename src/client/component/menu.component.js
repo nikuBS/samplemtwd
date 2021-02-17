@@ -168,6 +168,40 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this._nativeService.setGNB(this);
     var template = $('#fe-tpl-menu'); // 각각의 메뉴 추가를 위한 handlebar template
     this._menuTpl = Handlebars.compile(template.html());
+    var bannerTextComponent = $('#tosTextBanner'); 
+    bannerTextComponent.hide();
+    var self = this;
+    var bannerTextDraw = function() {
+      self._apiService.request(Tw.NODE_CMD.GET_TOSS_BANNER_TEXT, {}) // redis text banner find
+        .then(function (res) {
+          // console.log('bannerText result => ', res);
+          if (res.code === Tw.API_CODE.CODE_00) {
+            bannerTextComponent.show();
+            bannerTextComponent.html('');
+            bannerTextComponent.html(res.result);
+            $("#common-menu").addClass('use-tos-banner');
+            // 닫기 버튼 
+            bannerTextComponent.find('.tos_inner').on('click', 'button', function(e) {
+              bannerTextComponent.hide();
+              $("#common-menu").removeClass('use-tos-banner');
+              // close 1 day 
+              Tw.CommonHelper.setCookie('bannerYn', 'Y', 1);
+              bannerTextComponent.html('');
+
+            });
+          }
+          
+        });
+    }
+    // console.log('bannerYn checked', Tw.CommonHelper.getCookie('bannerYn'));
+    var bannerYn = Tw.CommonHelper.getCookie('bannerYn') || '';
+    if (bannerYn === '') {
+      // console.log('bannerTextDraw called');
+      bannerTextDraw();
+    } else {
+      bannerTextComponent.hide();
+      bannerTextComponent.html('');
+    }
 
     // Cache elements
     this.$closeBtn = this.$container.find('#fe-close');

@@ -606,8 +606,8 @@ Tw.API_CMD = {
   STACK_SEARCH_USER_CLICK: { path: '/search/tworld/log/save', method: Tw.API_METHOD.GET },
   // SEARCH_APP: { path: '/search/tworld/mobile-app', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
   // SEARCH_WEB: { path: '/search/tworld/mobile-web', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_APP: { path: '/search/tworld/mobile-app3', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_WEB: { path: '/search/tworld/mobile-web3', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_APP: { path: '/search/tworld/mobile-app4', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB: { path: '/search/tworld/mobile-web4', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -656,6 +656,7 @@ Tw.NODE_CMD = {
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: Tw.API_METHOD.GET },
+  GET_TOSS_BANNER_TEXT: { path: '/banner/tosstext', method: Tw.API_METHOD.GET },
 
     /*임시 API TOS배너확인후 삭제*/
     GET_BANNER_TOS_LNKG_INFO: { path: '/banner/bannerTosLnkgInfo', method: Tw.API_METHOD.GET },

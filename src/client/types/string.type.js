@@ -324,7 +324,7 @@ Tw.MYT_DATA_PATTERN_TITLE = {
 Tw.MYT_DATA_GIFT = {
   GFT0001: '고객님은 선물하기 불가능한 요금제이시거나, <br>현재 선물하기가 불가능한 상태입니다.',
   GFT0003: '선물하시는 고객님의 선물하기 횟수가 초과 되었습니다. (회선당 월2회까지 선물하기 가능)',
-  GFT0004: '선물하시는 고객님의 기본 잔여데이터가 500MB 미만입니다',
+  GFT0004: '잔여데이터가 500MB 미만인 경우 선물하기를 하실 수 없습니다.', // '선물하시는 고객님의 기본 잔여데이터가 500MB 미만입니다',
   GFT0004_2: '고객님의 기본제공량 데이터 부족합니다.',
   GFT0005: '미성년자 고객님은 T끼리 데이터 선물하기 서비스를 이용하실 수 없습니다.',
   GFT0008: '선물하실 번호는 이미 선물 받기 가능 횟수가 초과되었습니다. 선물은 월 2회까지만 받을 수 있습니다.',
@@ -846,10 +846,17 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A80: { TITLE: '고객님의 휴대폰은 로밍오토다이얼 기능이 없습니다.', MSG: '' },
   ALERT_3_A81: { TITLE: '본인 명의의 SK텔레콤 회선만 조회 가능합니다.', MSG: '' },
   ALERT_3_A82: { TITLE: '해당 옵션은 2019년 1월 18일자로 가입 종료되었습니다.', MSG: '' },
-  ALERT_3_A84: { TITLE: '이용 시작일이 이용 종료일 이후로 설정되었습니다.\n이용 시작일을 다시 선택해주세요.', MSG: '' },
+  // OP002-11408 [로밍][M] baro Box 개선 건 alert 메세지 변경 OP002-11941 start
+  //ALERT_3_A84: { TITLE: '이용 시작일이 이용 종료일 이후로 설정되었습니다.\n이용 시작일을 다시 선택해주세요.', MSG: '' },
+  ALERT_3_A84: { TITLE: '종료일/시작일보다 이전으로 설정되었습니다.\n임대 기간을 다시 선택해 주세요.', MSG: '' },
+  // OP002-11408 [로밍][M] baro Box 개선 건 alert 메세지 변경 OP002-11941 end
   ALERT_3_A85: { TITLE: '예약은 2일 후 부터 가능합니다.', MSG: '' },
-  ALERT_3_A87: { TITLE: '예약내역이 존재하지 않습니다.', MSG: '' },
-  ALERT_3_A88: { TITLE: '최대 5개까지 선택 가능', MSG: '' },
+  // OP002-11408 [로밍][M] baro Box 개선 건 alert 메세지 변경 OP002-11941 start
+  // ALERT_3_A87: { TITLE: '예약내역이 존재하지 않습니다.', MSG: '' },
+  // ALERT_3_A88: { TITLE: '최대 5개까지 선택 가능', MSG: '' },
+  ALERT_3_A87: { TITLE: '조회 결과 예약 내역이 없습니다.', MSG: '' },
+  ALERT_3_A88: { TITLE: '방문 국가는 최대 5개까지 선택하실 수 있습니다.', MSG: '' },
+  // OP002-11408 [로밍][M] baro Box 개선 건 alert 메세지 변경 OP002-11941 end
   ALERT_3_A90: { TITLE: '선물받는 번호를 확인해 주세요.', MSG: '' },
   ALERT_3_A91: { TITLE: '결합회선 1회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A92: { TITLE: '결합회선 2회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
@@ -1896,9 +1903,9 @@ Tw.ROAMING_RETURN_CODE = {
     officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)'
   },
   '1430456896': {
-    name: '인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터', img: 'place-img-02-east',
+    name: '인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 T로밍센터', img: 'place-img-02-east',    // OP002-11408 [로밍][M] baro Box 개선 건
     // officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
-    officeHour: '<strong>업무시간</strong> | 24시간'
+    officeHour: '<strong>업무시간</strong> | 24시간'    // OP002-11408 [로밍][M] baro Box 개선 건
   },
   // '1430456896': {
   //   name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-02-1',
@@ -1906,9 +1913,9 @@ Tw.ROAMING_RETURN_CODE = {
   //   officeHour: '<strong>업무시간</strong> | 2-3 출구 : 06:00 ~ 22:00'
   // },
   'A100110000': {
-    name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-01-1',
+    name: '인천공항 1터미널 1층 T로밍센터', img: 'place-img-01-1',    // OP002-11408 [로밍][M] baro Box 개선 건
     // officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간' },
-    officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00'
+    officeHour: '<strong>업무시간</strong> | 9-10 출구 : 오전 6시 ~ 오후 10시'    // OP002-11408 [로밍][M] baro Box 개선 건
   },
   'A100140000': {
     name: '김포공항 1층 로밍센터', img: 'place-img-03',
@@ -1934,9 +1941,10 @@ Tw.ROAMING_RETURN_CODE = {
 
 Tw.ROAMING_RECEIVE_CODE = {
   1000004045: {
-    code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f',
+    code: 'A100110000', name: '인천공항 1터미널 3층 T로밍센터(F 카운터)', img: 'place-img-01-f',    // OP002-11408 [로밍][M] baro Box 개선 건
     // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
-    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+//    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+    officeHour: '<strong>업무시간</strong> | 오전 6시 ~ 오후 10시'   // OP002-11408 [로밍][M] baro Box 개선 건
   },
   1000004047: {
     code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h',
@@ -1968,9 +1976,10 @@ Tw.ROAMING_RECEIVE_CODE = {
     officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30'
   },
   1430456957: {
-    code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de',
+    code: '1430456896', name: '인천공항 2터미널 3층 T로밍센터(D-E 카운터)', img: 'place-img-02-de',   // OP002-11408 [로밍][M] baro Box 개선 건
     // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>' }
-    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+//    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+    officeHour: '<strong>업무시간</strong> | 오전 6시 ~ 오후 10시'    // OP002-11408 [로밍][M] baro Box 개선 건
   }
 };
 

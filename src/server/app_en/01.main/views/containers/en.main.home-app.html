@@ -89,7 +89,7 @@
                                                   
                         <div class="main-top-group">
                         <!-- 모바일 회선_잔여 데이터 -->
-                        <% if (homeData.usageData.code === '00') { %>
+                        <% if (homeData.usageData.code === '00' && svcInfo.prodNmInfoCode === '00') { %>
                         <div class="main-chart-box">
 
                             <% if( Number(svcInfo.nonSvcCnt) != 0 || svcInfo.expsSvcCnt > 0) { %>
@@ -107,7 +107,12 @@
                                     <button class="bt fe-home-internal" data-url="/en/myt-join/submain"  data-xt_eid="MWMA_A10_B79-30" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNmEn %></button>
                                 </strong>
                             <% } %>
-                            
+                        
+                        <% } else if (svcInfo.prodNmInfoCode === 'BFF0006') { %>
+                            <div class="main-chart-box">
+                                <em class="line">
+                                    <button id="line-action" class="bt ff-tg-light" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%-convertTelFormat(svcInfo.svcNum)%></button>
+                                </em>
                         <% } else { %>
                         <div class="main-chart-box">
                             <em class="line"><button id="line-action" class="bt ff-tg-light" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="MWMA_A10_B79-29" data-xt_csid="NO" data-xt_action="BC"><%-convertTelFormat(svcInfo.svcNum)%></button></em>
@@ -115,7 +120,7 @@
                             <strong class="ti"><button class="bt fe-home-internal" data-url="/en/myt-join/submain" data-xt_eid="MWMA_A10_B79-30" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNmEn %></button></strong>                            
                         <% }  %>    
                         
-                            <% if (homeData.usageData.code === '00') { %>
+                            <% if (homeData.usageData.code === '00' && svcInfo.prodNmInfoCode === '00' ) { %>
                             <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
 
                                 <!-- .widget -->
@@ -260,6 +265,24 @@
                                     <button class="bt-message fe-home-internal" data-url="/en/myt-data/hotdata" tabindex="0"><i class="icon-sms-37"><span class="blind">Texts</span></i> <span class="ff-tg-light"><%= homeData.usageData.sms.showRemained %></span> Texts</button>
                                 </div-->                                                                
                             <% } %>
+                            <% } else if (homeData.usageData.code === 'BFF0006') { %>
+                                <div class="error-code">
+                                    <p class="error-title">System Under Maintenance</p>
+                                    <p class="tod-txcolor3 mb10">Please try again later</p>
+
+                                    <% if ( homeData.usageData.fromDate && homeData.usageData.toDate) { %>
+                                        <p><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
+                                    <% } %>
+                                </div> 
+                            <% } else if (svcInfo.prodNmInfoCode === 'BFF0006') { %>
+                                <div class="error-code">
+                                    <p class="error-title">System Under Maintenance</p>
+                                    <p class="tod-txcolor3 mb10">Please try again later</p>
+
+                                    <% if ( svcInfo.prodNmInfoFrom && svcInfo.prodNmInfoTo ) { %>
+                                        <p><%= svcInfo.prodNmInfoFrom %> ~ <%= svcInfo.prodNmInfoTo %></p>
+                                    <% } %>
+                                </div> 
                             <% } else if (homeData.usageData.code === 'BLN0001') { %>
                                 <div class="error-code">
                                     <p class="error-title">Please try again later</p>
@@ -295,11 +318,6 @@
                                     <p class="error-title">Data balance not available</p>
                                     <p>No data balance information available</p>
                                 </div> 
-                            <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0004') { %>
-                                <div class="error-code">
-                                    <p class="error-title">System under maintenance</p>
-                                    <p><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
-                                </div> 
                             <% } else { %>
                                 <div class="error-code">
                                     <p class="error-title">Please try again later</p>
@@ -308,7 +326,6 @@
                             <% } %>
                         </div>
                         <!-- //모바일 회선_잔여 데이터 -->
- 
                     <% } %>
                     <% } %>
                 <% } %>                    

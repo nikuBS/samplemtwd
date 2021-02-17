@@ -3,16 +3,17 @@
 .tod-renewalBody .filter-wrap {padding-top:0;}
 .tod-renewalBody .filter-wrap .wrap {height:100%; padding-bottom:9rem;}
 .tod-renewalBody .filter-wrap .container-wrap {margin-bottom:7.75rem; margin-top:0}
-.tod-renewalBody .filter-wrap .container-wrap .page-header {padding:0; height:10.625rem; transform:none; border-bottom:solid 0.0625rem #d8d8d8;} 
+.tod-renewalBody .filter-wrap .container-wrap .page-header {padding:0; height:10.625rem; transform:none; border-bottom:none;} 
 .tod-renewalBody .filter-wrap .container-wrap .page-header .header-title {height:10.625rem; background:#efeff1 url('/img/product/v2/img-user-plan.svg') no-repeat right 1.875rem bottom 1.5625rem; position:relative}
 .tod-renewalBody .filter-wrap .container-wrap .page-header .header-title .h-tit {position:absolute; top:2.75rem; left:1.875rem; font-size:1.25rem; font-weight:300;} 
 .tod-renewalBody .filter-wrap .container-wrap .page-header .header-title .h-sub {position:absolute; bottom:1rem; left:1.875rem; color:#818283; font-size:0.6875rem;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner {width:100%; box-sizing:border-box; background-color: #efeff1;}
-.tod-renewalBody .filter-wrap .container-wrap .tod-renewal-product-tab {border-top:solid 1px #fff;}
-.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul {display: -webkit-box; display:flex;overflow:scroll; padding:0.9375rem 0 0.9375rem 1.875rem;}
+.tod-renewalBody .filter-wrap .container-wrap .tod-renewal-product-tab {}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul {display: -webkit-box; display:flex; overflow:scroll; padding:0 0 0.9375rem 1.875rem;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li {padding-right:0.625rem;}
-.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 0.75rem; height:1.6875rem; border-radius:1rem; box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li > * {display:block; padding:0 0.75rem; height:1.6875rem; border-radius:1rem; /*box-shadow: -4px -6px 10px 0 #e5e5e5, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff; */ background-color: #f6f8fa; line-height:1.6875rem; color: #3b8add; letter-spacing:-0.0213rem; font-size:0.75rem; white-space: nowrap;}
 .tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li:last-child {padding-right:1.875rem}
+.tod-renewalBody .filter-wrap .container-wrap .rn-prod-inner > ul > li.on > * {color: #ffffff; background-color: #3b8add;}
 
 /* 헤더 스크롤 */
 .tod-renewalBody .filter-wrap .container-wrap .widget{padding-top:0;  }

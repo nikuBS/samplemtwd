@@ -29,7 +29,7 @@ _%>
             <li class="report-item">
               <dl class="report-define d-wrap">
                 <dt class="report-tit">월정액</dt>
-                <dd class="report-cont"><%= amount %>원</dd>
+                <dd class="report-cont"><%= amount %></dd>
               </dl>
             </li>
           </ul>
@@ -38,7 +38,6 @@ _%>
       <%_ } _%>
       <div class="add-pro-wrap">
         <ul class="add-pro-list">
-          <%_ if (data.myAddProduct.addProdPayFreeCnt) { _%>
           <li class="add-pro-item">
             <a href="#" data-id="add-prod">
               <div class="number">
@@ -47,8 +46,6 @@ _%>
               <div class="service-name">무료<br>부가서비스</div>
             </a>
           </li>
-          <%_ } _%>
-          <%_ if (data.myAddProduct.addProdPayCnt) { _%>
           <li class="add-pro-item">
             <a href="#" data-id="add-prod">
               <div class="number">
@@ -57,8 +54,7 @@ _%>
               <div class="service-name">유료<br>부가서비스</div>
             </a>
           </li>
-          <%_ } _%>
-          <%_ if (data.myAddProduct.disProdCnt) { _%>
+          <%_ if (!data.myAddProduct.inVisibleDisProd) { _%>
           <li class="add-pro-item">
             <a href="#" data-id="add-prod">
               <div class="number">
@@ -68,7 +64,7 @@ _%>
             </a>
           </li>
           <%_ } _%>
-          <%_ if (data.myAddProduct.comProdCnt) { _%>
+          <%_ if (!data.myAddProduct.inVisibleComProd) { _%>
           <li class="add-pro-item">
             <a href="#" data-id="com-prod">
               <div class="number">

@@ -63,7 +63,7 @@ _%>
                                     <span class="title">가입비</span>
                                     <span class="tx-cont">
                                         <%= myInfo.apprAmt %>원
-                                        <% if (myInfo.invBamt !== '0') { %>
+                                        <% if (myInfo.invBamt) { %>
                                             (<%= myInfo.invBamt %>원 미청구)
                                         <% } %>
                                     </span>

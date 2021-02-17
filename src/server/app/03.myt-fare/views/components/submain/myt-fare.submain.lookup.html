@@ -4,23 +4,23 @@
 * @author 양정규
 * @since 2020.12.30
 %>
-<%_
-    const benefit = data.benefit || {};
-_%>
+<%_const {svcAttrCd} = data.svcInfo;_%>
 <section class="cont-card fe-lookup-area">
     <div class="section-inner">
         <div class="head-tit">조회/신청 서비스</div>
-        <div class="card-cont fe-contents">
+        <div class="card-cont fe-lookup">
             <div class="short-link-wrap minus-mg">
                 <ul class="short-link-list">
                     <%_if(data.type === 'UF'){_%> <%# 귀속회선인 경우 노출%>
                     <li class="link-item"><a href="/myt-fare/info/history" data-make-eid="recentPay2">최근 납부 내역</a></li>
                     <%_}_%>
                     <li class="link-item"><a href="/myt-join/submain/suspend" data-make-eid="pause">일시정지/해제</a></li>
-                    <%_if(data.svcInfo.loginType !== 'S'){ // 간편 로그인은 비노출 _%>
+                    <%_if(data.isPwdSt){ _%>
                     <li class="link-item"><a href="/myt-join/custpassword" data-make-eid="password">고객보호 비밀번호 서비스</a></li>
                     <%_}_%>
+                    <%_if( svcAttrCd === 'M1' ){ // 휴대폰 회선만 노출 _%>
                     <li class="link-item"><a href="/myt-data/usage-pattern" data-make-eid="pattern">데이터/음성/문자 월 이용 패턴</a></li>
+                    <%_}_%>
                 </ul>
             </div>
             <%# fe-tax-templ 세금계산서, 기부금 템플릿 들어가는곳%>

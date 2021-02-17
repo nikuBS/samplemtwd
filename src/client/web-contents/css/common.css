@@ -10142,10 +10142,29 @@ button:focus span {
 
 
 /* 210125 [OP002-12898] [PUB](W-2011-032-01) [TOS] 텍스트 배너 기능 추가 */
-.tod-tos-text-banner {position:relative; z-index:25; background-color:#f8f8f8}
-.tod-tos-text-banner .tb-link {display: -webkit-box; display:flex; -webkit-box-align: center; align-items: center; height:3.4375rem; padding-left:0.9375rem; padding-right:3.25rem; box-sizing: border-box;}
+.tod-tos-text-banner {position:relative; width:100%; height:3.4375rem; background-color:#f8f8f8}
+.tod-tos-text-banner .tos_inner {background-color:#f8f8f8}
+.tod-tos-text-banner .tb-link {display: -webkit-box; display:flex; -webkit-box-align: center; align-items: center; height:3.4375rem; padding-left:0.9375rem; margin-right:3.25rem; box-sizing: border-box;}
 .tod-tos-text-banner .tb-icon {display:block; width:37px; height:37px}
 .tod-tos-text-banner .tb-icon img {width:37px; height:37px; vertical-align:middle}
 .tod-tos-text-banner .tb-text {margin-left:0.625rem; color:#333333; font-size:0.875rem; letter-spacing: -0.5px;}
 .tod-tos-text-banner .tb-close {position:absolute; top:0; bottom:0; right:0; width:3.25rem; background: url(/img/svg/icon_32px_exit.svg) no-repeat 50% 50%; background-size: 13px 13px;}
-#common-menu.tod-common-menu.scroll .tod-tos-text-banner {box-shadow:0 0.0625rem 0.625rem rgba(0,0,0,0.3)}
+#common-menu.tod-common-menu.user-type.use-tos-banner {padding-top:11.375rem}
+#common-menu.tod-common-menu.user-type.use-tos-banner .tod-tos-text-banner {position:absolute; top:7.9375rem;}
+#common-menu.tod-common-menu.user-type.use-tos-banner.scroll {padding-top:9.9375rem;}
+#common-menu.tod-common-menu.user-type.use-tos-banner.scroll .section-userinfo {box-shadow:none}
+#common-menu.tod-common-menu.user-type.use-tos-banner.scroll .tod-tos-text-banner {top:6.5rem; z-index:1; box-shadow:0 0.0625rem 0.625rem rgba(0,0,0,0.3);}
+
+/* 210201 [OP002-12960] 바로가기 Foldable(아코디언) UI 기능 추가*/
+.tod-renew.tod-srhtype1 {margin: 0 -1rem;}
+.tod-renew.tod-srhtype1 li{border-bottom: 0;}
+.tod-renew.tod-srhtype1 .normal-box{position: relative;}
+.tod-renew.tod-srhtype1 .normal-box:after {content: ""; position: absolute; bottom: 0; left: 1rem;  right: 1rem; border-bottom: 1px solid #f2f2f2;}
+.tod-renew.tod-srhtype1 .normal-box:last-child:after{border-bottom: 0;}
+.tod-renew.tod-srhtype1 .normal-box  > button{padding-left: 1rem; padding-right: 1rem;}
+.tod-renew.tod-srhtype1 .num{ padding: 0 0.125rem; color: #858585; }
+.tod-renew.tod-srhtype1 .sub-list {margin: 0.625rem 0;}
+.tod-renew.tod-srhtype1 .sub-list > li > button,
+.tod-renew.tod-srhtype1 .sub-list > li > a{padding: 0.4375rem 0;}
+.tod-renew.tod-srhtype1 .sub-list > li .main-category{font-size: 0.875rem;}
+.tod-renew.tod-srhtype1 .acco-list .acco-box.on > .acco-tit + .acco-cont{padding-top: 0 !important; padding-bottom: 0 !important;}

@@ -226,10 +226,10 @@ Tw.MyTJoinSubMain.prototype = {
 
       if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0 ) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList,
-          bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+          bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this),
+          $.proxy(this._errorDrawBanner, this));
       } else {
-        this.$container.find('[data-id=banners-empty]').hide();
-        this.$container.find('[data-id=banners]').hide();
+        this._errorDrawBanner();
       }
     }, this));
 
@@ -255,6 +255,18 @@ Tw.MyTJoinSubMain.prototype = {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    }
+  },
+
+  /**
+   * banner가 없는 경우
+   * @param bannerList
+   * @private
+   */
+  _errorDrawBanner: function(bannerList) {
+    if (!bannerList || (bannerList && bannerList.length === 0)) {
+      this.$container.find('[data-id=banners-empty]').hide();
+      this.$container.find('[data-id=banners]').hide();
     }
   },
 
@@ -292,6 +304,7 @@ Tw.MyTJoinSubMain.prototype = {
         break;
     }
     this._historyService.goLoad('/product/wireplan/join/reservation?type_cd=' + type);
+    return false;
   },
 
   /**
@@ -300,6 +313,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMoveOldNum: function () {
     this._historyService.goLoad('/myt-join/submain/numchange');
+    return false;
   },
 
   /**
@@ -314,6 +328,7 @@ Tw.MyTJoinSubMain.prototype = {
       // 신청
       this._historyService.goLoad('/myt-join/submain/phone/alarm');
     }
+    return false;
   },
 
   /**
@@ -322,6 +337,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedMyPlan: function () {
     this._historyService.goLoad('/myt-join/myplan');
+    return false;
   },
   /**
    * @function
@@ -329,6 +345,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedChangePwd: function () {
     this._historyService.goLoad('/myt-join/custpassword');
+    return false;
   },
   /**
    * @function
@@ -342,7 +359,12 @@ Tw.MyTJoinSubMain.prototype = {
    * @desc 결합 상품
    */
   _onMovedComProduct: function () {
-    this._historyService.goLoad('/myt-join/combinations');
+    if (parseInt(this._data.myAddProduct.comProdCnt, 10)) {
+      this._historyService.goLoad('/myt-join/combinations');
+    } else {
+      this._historyService.goLoad('/product/combinations');
+    }
+    return false;
   },
   /**
    * @function
@@ -350,6 +372,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedInstallement: function () {
     this._historyService.goLoad('/myt-join/myplancombine/infodiscount');
+    return false;
   },
   /**
    * @function
@@ -361,6 +384,7 @@ Tw.MyTJoinSubMain.prototype = {
       url = '/product/callplan?prod_id=NA00005923';
     }
     this._historyService.goLoad(url);
+    return false;
   },
   /**
    * @function
@@ -405,6 +429,7 @@ Tw.MyTJoinSubMain.prototype = {
     }
     // 신청하기: "일시정지/해제"로 이동
     this._historyService.goLoad('/myt-join/submain/suspend#temporary');
+    return false;
   },
   /*
   // [OP002-4773] 장기일시정지 재신청 과정 간소화
@@ -563,6 +588,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedWireInquire: function () {
     this._historyService.goLoad('/myt-join/submain/wire');
+    return false;
   },
   /**
    * @function
@@ -570,6 +596,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedBInquire: function () {
     this._historyService.goLoad('/myt-join/submain/wire/freecallcheck');
+    return false;
   },
   /**
    * @function
@@ -577,8 +604,7 @@ Tw.MyTJoinSubMain.prototype = {
    * @param {Object} event
    */
   _onMovedWireOtherSvc: function (event) {
-    var $target = $(event.target);
-    switch ( $target.attr('data-id') ) {
+    switch ( $(event.currentTarget).attr('data-id') ) {
       case 'addr-chg':
         this._historyService.goLoad('/myt-join/submain/wire/modifyaddress');
         break;
@@ -604,6 +630,7 @@ Tw.MyTJoinSubMain.prototype = {
         this._historyService.goLoad('/myt-join/wire/wiredo/sms');
         break;
     }
+    event.preventDefault();
   },
   /**
    * @function
@@ -701,6 +728,7 @@ Tw.MyTJoinSubMain.prototype = {
     } else {
       this._historyService.goLoad('/myt-join/submain/wire/numchange');
     }
+    e.preventDefault();
   },
   /**
    *
@@ -708,6 +736,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onOpeningDetailClicked: function () {
     this._historyService.goLoad('/myt-join/submain/opening-detail');
+    return false;
   }
   /*
   // Popup으로 구현했을 때,
@@ -752,41 +781,58 @@ Tw.MytJoinAdvSubMain = function () {
 Tw.MytJoinAdvSubMain.prototype = Object.create(Tw.MyTJoinSubMain.prototype);
 Tw.MytJoinAdvSubMain.prototype.constructor = Tw.MytJoinAdvSubMain;
 Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
-  Tw.MyTJoinSubMain.prototype._bindEvent.call(this, function () {
-    if (this._data.type !== 1 && this._data.type !== 2) {
-      this.$container.find('[data-id=mybenefit]').on('click', $.proxy(function() {
+  Tw.MyTJoinSubMain.prototype._bindEvent.call(this);
+  if (this._data.type !== 1 && this._data.type !== 2) {
+    this.$container.find('[data-id=mybenefit]').on('click', $.proxy(function() {
+      this._historyService.goLoad('/benefit/my');
+      return false;
+    }, this));
+    this.$container.find('[data-id=membership]').on('click', $.proxy(function() {
+      switch (this._data.membership.used) {
+        case 1:
+          // 가입하기
+          this._historyService.goLoad('/membership/submain');
+          break;
+        default:
+          // used => 0 or 2 간편로그인, 가입된 상태
+          this._historyService.goLoad('/membership/my');
+          break;
+      }
+      return false;
+    }, this));
+    this.$container.find('[data-id=benefitsub]').on('click', $.proxy(function() {
+      if (this._data.benefitCount && parseInt(this._data.benefitCount, 10) > 0) {
         this._historyService.goLoad('/benefit/my');
-      }, this));
-      this.$container.find('[data-id=membership]').on('click', $.proxy(function() {
-        switch (this._data.membership.used) {
-          case 1:
-            // 가입하기
-            this._historyService.goLoad('/membership/submain');
-            break;
-          default:
-            // used => 0 or 2 간편로그인, 가입된 상태
-            this._historyService.goLoad('/membership/my');
-            break;
-        }
-      }, this));
-      this.$container.find('[data-id=benefitsub]').on('click', $.proxy(function() {
-        if (this._data.benefitCount && parseInt(this._data.benefitCount, 10) > 0) {
-          this._historyService.goLoad('/benefit/my');
-        } else {
-          this._historyService.goLoad('/benefit/submain');
-        }
-      }, this));
-    }
-    if (this._data.paidBillInfo) {
-      this.$container.find('[data-id=paidinfo]').on('click', $.proxy(function() {
-        this._historyService.goLoad('/myt-fare/submain');
-      }, this));
-      this.$container.find('[data-id=billtype]').on('click', $.proxy(function() {
-        this._historyService.goLoad('/myt-fare/billsetup');
-      }, this));
-      this.$container.find('[data-id=paymthd]').on('click', $.proxy(function() {
-        this._historyService.goLoad('/myt-fare/bill/option');
-      }, this));
-    }
-  });
+      } else {
+        this._historyService.goLoad('/benefit/submain');
+      }
+      return false;
+    }, this));
+  }
+  if (this._data.paidBillInfo) {
+    this.$container.find('[data-id=paidinfo]').on('click', $.proxy(function() {
+      this._historyService.goLoad('/myt-fare/submain');
+      return false;
+    }, this));
+    this.$container.find('[data-id=billtype]').on('click', $.proxy(function() {
+      this._historyService.goLoad('/myt-fare/billsetup');
+      return false;
+    }, this));
+    this.$container.find('[data-id=paymthd]').on('click', $.proxy(function() {
+      this._historyService.goLoad('/myt-fare/bill/option');
+      return false;
+    }, this));
+  }
+};
+Tw.MytJoinAdvSubMain.prototype._initialize = function() {
+  Tw.MyTJoinSubMain.prototype._initialize.call(this);
+  // 약정할인금액 그래프 깨지는 문제 수정 건
+  var disHorizonBar = $('.horizon-bar-wrap [data-id=my-discount-info]');
+  if (disHorizonBar.length) {
+    $(window).on('resize load', function(){
+      var barBubble = disHorizonBar.children('.bar-bubble');
+      disHorizonBar.children('.bar').width() < barBubble.outerWidth() ?
+        barBubble.addClass('left') : barBubble.removeClass('left');
+    });
+  }
 };
