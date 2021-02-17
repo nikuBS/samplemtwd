@@ -77,7 +77,7 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                  <!-- .cont-card -->
                 <div class="card-cont">
@@ -294,12 +294,12 @@
                                     <li class="link-item">
                                         <a href="#" class="t-share">T가족모아 데이터
                                             <%_ if (data.isTmoaInsProdId && data.isTmoaProdId) { _%>
-                                            <span class="like-btn" data-id="family-moa">공유하기</span>
+                                            <span class="like-btn" data-id="family-moa" data-xt_eid="<%=data.xtEid.familydataShare%>" data-xt_csid="NO" data-xt_action="BC">공유하기</span>
                                             <%_ } _%>
                                         </a>
                                     </li>
                                     <li class="link-item">
-                                        <a href="/myt-data/familydata" class="data-amount">
+                                        <a href="/myt-data/familydata" class="data-amount" data-xt_eid="<%=data.xtEid.familydata%>" data-xt_csid="NO" data-xt_action="BC">
                                             총 <%= data.family.showTotal.data %><%= data.family.showTotal.unit %> 중
                                             <strong>
                                                 <%= data.family.showRemained.data %><%= data.family.showRemained.unit %>남음
@@ -309,7 +309,7 @@
                                 </ul>
                             <%_ } _%>
                             <%_ if (data._5gxTicket) { _%>
-                                <a href="/myt-data/5g-setting" class="data-voucher">
+                                <a href="/myt-data/5g-setting" class="data-voucher" data-xt_eid="<%=data.xtEid.dataTimeSetting%>" data-xt_csid="NO" data-xt_action="BC">
                                     <%# 데이터 시간권 이용자인(부스트파크 옵션 이용자가 아닌) 경우 _%>
                                     <%_ if (data._5gxTicket.timeTicket) { _%>
                                         데이터 시간권 <span class="remain"></span>
@@ -418,7 +418,7 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                 <!-- .cont-card -->
                 <div class="card-cont">
@@ -707,7 +707,7 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                 <!-- .cont-card -->
                 <div class="card-cont">
@@ -852,7 +852,7 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                 <!-- .cont-card -->
                 <div class="card-cont">
