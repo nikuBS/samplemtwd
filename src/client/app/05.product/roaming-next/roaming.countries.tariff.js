@@ -161,6 +161,10 @@ Tw.RoamingCountriesTariff.prototype = {
 
     var proxy = this;
     var clickHandler = function(e) {
+
+    //웹접근성 추가
+    $(".scroller .content .title-itemList").html(e.target.textContent);
+
       // 각 그룹 요소 선택 시, 그룹 내 국가를 채우기 위해 fillItems 호출
       var code = e.target.getAttribute('data-code');
       proxy.fillItems(code);
@@ -177,11 +181,21 @@ Tw.RoamingCountriesTariff.prototype = {
 
       // 그룹 데이터 li 요소 생성
       var li = document.createElement('li');
+
+      //웹접근성 button 추가
+      var button = document.createElement("button");
+      button.innerText = menu.label;
+      button.type='button';
+      button.setAttribute('data-code', menu.code);
+
+      li.appendChild(button);
+
       li.id = 'group-' + menu.code;
-      li.innerText = menu.label;
       li.setAttribute('data-code', menu.code);
       li.onclick = clickHandler;
       groupList.appendChild(li);
+
+      
     }
 
     // 분류 전환 직후이므로, 그룹의 첫번째 요소를 클릭한 효과 구현
@@ -207,7 +221,15 @@ Tw.RoamingCountriesTariff.prototype = {
     var l = this.data[this.currentSortBy][code];
     for (var i = 0; i < l.length; i++) {
       var li = document.createElement('li');
-      li.innerText = l[i].countryNm;
+
+            // //웹접근성 button 추가
+            // var button = document.createElement('button');
+            // button.innerText = l[i].countryNm;
+            // button.type = 'button';
+            // button.role = 'link'; 
+            //li.appendChild(button);
+
+            li.innerText = l[i].countryNm;
       // 서비스 이용가능 국가 목록 다이얼로그의 경우, 국가 클릭 시 아무런 변화가 없으므로 핸들러를 설치하지 않는다.
       ul.appendChild(li);
     }
@@ -217,8 +239,14 @@ Tw.RoamingCountriesTariff.prototype = {
    * @param element EventObject
    */
   sortBy: function (element) {
+
     $('.sortBy .by').removeClass('active');
     $('#' + element.id).addClass('active');
+
+    // //웹좁근성 추가  가나다||대륙 aria.
+    $('.sortBy .by').attr('aria-selected',false);
+    $('#' + element.id).attr('aria-selected',true);
+
     this.currentSortBy = element.id;
     this.fillGroups();
   },
