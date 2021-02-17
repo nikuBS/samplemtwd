@@ -50,6 +50,9 @@ Tw.RoamingMain.prototype = {
     this.$container.find('.field-container .search').on('click', $.proxy(this.$schedule.searchNation, this.$schedule));
     // 국가 검색 창의 onSubmit 핸들러
     this.$container.find('.search-form').on('submit', $.proxy(this._handleSearchSubmit, this));
+    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
+    $('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
+
   },
   /**
    * 국가 검색 창의 onSubmit 핸들러
@@ -58,12 +61,22 @@ Tw.RoamingMain.prototype = {
   _handleSearchSubmit: function() {
     return this.$schedule.searchNation();
   },
+
+  //웹접근성 
+  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
+  _closeGnb: function() {
+    setTimeout(function () {
+      $("span.icon-gnb-menu").focus();
+    },300);  
+ },
   /**
    * '전체 국가 보기' 링크 핸들러
    * @private
    */
   _openNationsDialog: function() {
     this.$schedule.openNationsDialog();
+    //웹접근성 팝업 레이어 포커스
+    $('#nationsDialog h1').focus();
     return false;
   },
   /**
@@ -113,7 +126,7 @@ Tw.RoamingMain.prototype = {
       });
       $('#pc' + (i + 1)).html(cell);
     }
-    this.$container.find('div.pn').on('click', $.proxy(this._handlePopularNation, this));
+    this.$container.find('div.pn,#nations button').on('click', $.proxy(this._handlePopularNation, this));
   },
   /**
    * 인기 여행지 클릭 핸들러
