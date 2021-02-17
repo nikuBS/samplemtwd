@@ -12,6 +12,12 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, menuId) {
   this._menuId = menuId;
   this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'};
 
+  console.log('-------------------');
+  console.log('소팅방법: ', sectionSort);
+  console.log('회선라인: ', line);
+  console.log('W: 3G, L: LTE, F: 5G, E: 2nd device, P: PPS');
+  console.log('-------------------');
+
   // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
@@ -227,6 +233,10 @@ Tw.ProductRenewalSubmain.prototype = {
       return arr;
     }, []);
 
+    console.log("=====");
+    console.log('퀵 필터에 보여지는 항목은 이거입니다. ', quickFilterParseList);
+    console.log("=====");
+
     this._drawQuickFilterBanner(quickFilterParseList, this); // 퀵 필터 데이터를 draw
   },
 
@@ -286,11 +296,10 @@ Tw.ProductRenewalSubmain.prototype = {
    * @param {*} redisData 
    */
   _parseBannerThemeRedisData: function(redisData) {
-
-    this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
+    this._apiService.request(Tw.API_CMD.BFF_08_0080, {}) // 만 나이를 구하는 API 호출
       .always($.proxy(function(res) {
         var age = 0;
-        if (res.code === Tw.API_CODE.CODE_00) {
+        if (res.code === Tw.API_CODE.CODE_00) { 
            age = res.result.age;
         } 
 
@@ -337,8 +346,8 @@ Tw.ProductRenewalSubmain.prototype = {
         }, []);
 
         console.log("=====");
-        console.log(age);
-        console.log(themeBannerParseList);
+        console.log('저의 만 나이는 ' + age + '세 입니다..');
+        console.log('배너형 테마에 보여지는 항목은 이거입니다. ', themeBannerParseList);
         console.log("=====");
 
         this._drawThemeBanner(themeBannerParseList, this); // 배너형 테마를 draw
@@ -357,11 +366,16 @@ Tw.ProductRenewalSubmain.prototype = {
       return;
     } 
 
-    console.log("########");
-    console.log(themeBannerParseList);
-    console.log("########");
-    
+    // 테마 배너의 타이틀은 themeBannerParseList의 노출순서(bnnrExpsSeq)가 1인 객체의 titleNm으로 설정한다. 
+    var themeBannerTitle = _.find(themeBannerParseList, function(item) {
+      var seq = Number(item.bnnrExpsSeq);
+      if ( seq === 1 ) { // bnnrExpsSeq 가 1번인것이 테마형 배너의 타이틀
+        return item;
+      }
+    }).titleNm || '';
+
     var $themeBanner = this.$container.find('section[data-sort="THEME_BANNER"]');
+    var $themeBannerTitle = $themeBanner.find('.article-tit');
     var $sliderList = $themeBanner.find('.slider-list');
 
     var themeBannerHandle = Handlebars.compile(Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER);
@@ -370,6 +384,7 @@ Tw.ProductRenewalSubmain.prototype = {
       banners: themeBannerParseList
     });
 
+    $themeBannerTitle.text(themeBannerTitle);
     $sliderList.append(html);
 
     $(document).on('click', '.theme-item', function(event) {
@@ -383,9 +398,6 @@ Tw.ProductRenewalSubmain.prototype = {
             break;
           case 'S': // 앱 내 이동 시
             window.location.href = dataLink;
-            break;
-          case 'N': // 테마 전체보기로 이동 시
-            window.location.href = '/product/renewal/mobileplan/list?theme=' + dataLink;
             break;
         }
       }

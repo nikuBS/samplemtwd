@@ -54,20 +54,6 @@ enum DEVICE_CODES {
   'P' = 'P', // PPS (Custom)
 }
 
-// 단말기 분류 체계 코드
-enum DEVICE_SUB_CODES {
-  '0102001' = 'E', // Voice or Data 가능한 tablet (태블릿/ETC 범주)
-  '0202001' = 'E', // Voice 불가능한 Tablet (태블릿/ETC 범주)
-  '0102000' = 'E', // 회선형 Device (태블릿/ETC 범주)
-
-  '0102002' = 'E', // Smart Watch (회선형 스마트 워치류)
-  '0102003' = 'E', // Kids폰 (회선형 스마트 워치류(주니어 seg. 상품)_쿠키즈 요금제 가입 가능 단말)
-  '0102005' = 'E', // Modem (WiFi AP 기능 없으나, 물리적 연결을 통해 통신 연결해주는 Device)
-  '0102006' = 'E', // 기타 장치 (위치 측위기반 Device)
-  '0102009' = 'E', // 기타
-  '0102010' = 'E', // Router (포켓파이 Roter류)
-}
-
 // 단말기 코드 명
 enum DEVICE_CODE_NAME {
   'W' = '3G',
@@ -84,8 +70,6 @@ enum FILTER_STYLE_CODES {
   'F01713' = 'i-tag-cr1', // 5G
   'F01124' = 'i-tag-cr3', // 2ndDevice 
 }
-
-
 
  // 손실보전 부가서비스 정보
 const ADDITIONS_LIST = [
@@ -386,7 +370,7 @@ export default class RenewProduct extends TwViewController {
         "result": {
           "expsTitNm": "이런 요금제는 어떠세요?!!!?!",
           "networkType": "LTE",
-          "prodSmryExpType": "1", // 상품요약노출유형코드(1:기본형, 2:데이터강조형, 3:혜택강조형)
+          "prodSmryExpType": "3", // 상품요약노출유형코드(1:기본형, 2:데이터강조형, 3:혜택강조형)
           "mblBgImgUrl": "/img/product/v2/bg-theme1.jpg",
           "mblBgImgNm": "test_bt_changepw222222222222222.gif",
           
@@ -553,16 +537,15 @@ export default class RenewProduct extends TwViewController {
     private getDeviceCode( svcInfo: any ): Observable<any> {
       return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
         if (resp.code === API_CODE.CODE_00) {
-          let code = '';
 
-          // 단말기 분류 체계코드를 검사
-          if ( Object.keys(DEVICE_SUB_CODES).indexOf( resp.result.beqpSclEqpClSysCd ) > -1 ) {
-            code = DEVICE_SUB_CODES[resp.result.beqpSclEqpClSysCd];
+          // 중 분류 코드가 휴대폰이 아닌경우는 모두 'PPS/2nd Device' 장비
+          if ( resp.result.beqpMclEqpClSysCd !== '0101000' ) {
+            return DEVICE_CODES.E;
           }
 
           // 단말기 방식 코드 검사
           if ( Object.keys(DEVICE_CODES).indexOf( resp.result.eqpMthdCd ) > -1 ) {
-            code = DEVICE_CODES[resp.result.eqpMthdCd];
+            return DEVICE_CODES[resp.result.eqpMthdCd];
           }
         }
         
