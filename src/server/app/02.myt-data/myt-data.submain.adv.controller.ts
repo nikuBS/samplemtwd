@@ -55,7 +55,8 @@ class MytDataSubmainAdvController extends TwViewController {
   private isEasyLogin = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    this.apiService.setTimeout(3000);
+    // this.apiService.setTimeout(3000); // PPS 정보 조회(BFF_05_0013) API 사용시 오류가 발생하여 주석 처리 - 김진우/소프트웍스 2021.02.17
+
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
@@ -74,7 +75,8 @@ class MytDataSubmainAdvController extends TwViewController {
       bpcpServiceId: req.query.bpcpServiceId || '',
       eParam: req.query.eParam || '',
       isAdult: (svcInfo.age && svcInfo.age > 19),
-      xtEid: this.getXtEid() // 오퍼통계코드
+      xtEid: this.getXtEid(), // 오퍼통계코드
+      ppsCard: {} // PPS 정보
     };
 
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
@@ -90,9 +92,10 @@ class MytDataSubmainAdvController extends TwViewController {
       this._getRefillAvailability(),
       this._reqRefillGiftHistory(),
       this._getPPSAuto(),
-      this._getPPSDataAuto()
+      this._getPPSDataAuto(),
+      this._getPPSCard()
       // this._getProductGroup() : OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
-    ).subscribe(([remnant, present, presentAuto, refill, refillAvailable, refillGiftHistory, ppsvoice, ppsdata /*, prodList*/]) => {
+    ).subscribe(([remnant, present, presentAuto, refill, refillAvailable, refillGiftHistory, ppsvoice, ppsdata, ppscard /*, prodList*/]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -180,6 +183,9 @@ class MytDataSubmainAdvController extends TwViewController {
         }
         if ( ppsdata ) {
           data.ppsAutoData = ppsdata;
+        }
+        if ( ppscard ) {
+          data.ppsCard = ppscard;
         }
       }
 
@@ -1052,6 +1058,22 @@ class MytDataSubmainAdvController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_06_0060, {})
+      .map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return FormatHelper.isEmpty(resp.result) ? null : resp.result;
+        } else {
+          // error
+          return null;
+        }
+      });
+  }
+
+  // PPS 정보조회
+  _getPPSCard(): Observable<any> {
+    if ( !this.isPPS ) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_05_0013, {})
       .map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return FormatHelper.isEmpty(resp.result) ? null : resp.result;
