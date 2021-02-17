@@ -271,18 +271,6 @@ Tw.CommonSearch.prototype = {
       e.preventDefault();
       $(window).scrollTop(0);
     }, this));
-    this.$container.on('click', '.acco-box', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
-        var $accobox = $('li.acco-box');
-        var $accotit = $('div.acco-tit');
-        $accobox.toggleClass('on');
-        if ($accobox.hasClass('on')) {
-          $accotit.find('button').attr('aria-pressed', true);
-        } else {
-          $accotit.find('button').attr('aria-pressed', false);
-        }
-        
-        
-    }, this))
 
     this.$container.on('click', '.fe-category', $.proxy(this._selectCategory, this));    // 카테고리 클릭시 이벤트 바인딩
     // this.$container.on('click','#fe-more-rate',function(e){
@@ -548,7 +536,6 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.' + dataKey).addClass('none');
       }
 
-      // console.log(">>>>>> data: ", data);
       _.each(data, $.proxy(function (listData/*, index */) {
         if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
           var removeLength = data.length - 1;
