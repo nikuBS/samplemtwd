@@ -74,11 +74,12 @@ Tw.MyTDataSubMainAdv.prototype = {
       // this._historyService.reload();
       this._historyService.goLoad('/myt-data/submain');
     }
+    
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
-    if (this.data.immCharge) {
-      this.$immChargeSection = this.$container.find('[data-id=immCharge]');
+    this.$immChargeSection = this.$container.find('[data-id=immCharge]');
+    if (this.$immChargeSection !== undefined && this.$immChargeSection.length > 0) {
       if (!this.data.breakdownList || this.data.breakdownList.length === 0) {
         this.$immChargeSection.find('[data-id=history]').hide();
       }
@@ -137,7 +138,7 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _bindEvent: function () {
     // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
-    if ( this.data.immCharge ) {
+    if ( this.$immChargeSection !== undefined && this.$immChargeSection.length > 0 ) {
       this.$immChargeSection.on('click', 'li', $.proxy(this._onImmChargeDetail, this));
     }
     if (this.data.present) {
