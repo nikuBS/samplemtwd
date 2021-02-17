@@ -1,8 +1,12 @@
 <div id="roamingMenu" class="dialog">
     <div class="header">
-        <div class="close">
-            <img src="<%= CDN %>/img/product/roam/ico_close_w.svg" />
-        </div>
+
+        <!-- 202011 - 웹접근성 수정건 적용 : div 태그를 button태그로 수정 시작 -->
+        <button type="button" class="close">
+            <img src="<%= CDN %>/img/product/roam/ico_close_w.svg" alt="닫기"> <!-- //202011 - 웹접근성 수정건 적용 : alt 값 추가 -->
+        </button>
+        <!-- //202011 - 웹접근성 수정건 적용 : div 태그를 button태그로 수정 끝 -->
+
         <% if (svcInfo && svcInfo.mbrNm) { %>
         <h2>
             <%= svcInfo.mbrNm %>님, 안녕하세요.
@@ -14,22 +18,41 @@
         <% } %>
         <div class="mode">
             <span>T로밍 모드 이용 중</span>
+
             <div class="switch">
-                <div class="track"></div>
-                <div id="thumb" class="thumb-on"></div>
+                <!-- <div class="track"></div>
+                <div id="thumb" class="thumb-on"></div> -->
+
+                 <!-- 202011 - 웹접근성 수정건 적용 : 접근성 토글 스위치 신규 마크업 시작 -->
+                 <button type="button" class="tloaming-toggle-switch switch-on" role="switch" aria-checked="true" id="loamingSwitch" class="switch">
+                    <span class="tloaming-toggle-switch__circle"></span>
+                </button>
+                <label for="loamingSwitch" class="switch__label">로밍 설정</label>
+                <!-- //202011 - 웹접근성 수정건 적용 : 접근성 토글 스위치 신규 마크업 끝 -->
+
             </div>
             <div class="reset"></div>
         </div>
+
+
+
+        
         <div class="sticky-menu">
-            <div class="menu home">
-                <img src="<%= CDN %>/img/product/roam/ico_menu_01.svg" />
+             <!-- 202011 - 웹접근성 수정건 적용 : div태그를 a태그로변경 시작 -->
+             <a href="#" class="menu home">
+                <img src="<%= CDN %>/img/product/roam/ico_menu_01.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                 <span>T로밍 모드</span>
-            </div>
+            </a>
+            <!-- //202011 - 웹접근성 수정건 적용 : div태그를 a태그로변경 끝 -->
+
             <div class="divider"></div>
-            <div class="menu myuse">
-                <img src="<%= CDN %>/img/product/roam/ico_menu_02.svg" />
+
+            <!-- 202011 - 웹접근성 수정건 적용 : div태그를 a태그로변경 시작 -->
+            <a href="#" class="menu myuse">
+                <img src="<%= CDN %>/img/product/roam/ico_menu_02.svg" alt=""> <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
                 <span>나의 T로밍 이용 현황</span>
-            </div>
+            </a>
+            <!-- //202011 - 웹접근성 수정건 적용 : div태그를 a태그로변경 끝 -->
         </div>
     </div>
     <div class="menus">
@@ -37,37 +60,37 @@
         <ul>
             <li>
                 <a href="/product/roaming">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_03.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_03.svg" alt=""/>
                     <span>T로밍</span>
                 </a>
             </li>
             <li>
                 <a href="/product/roaming/fee">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_04.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_04.svg" alt=""/>
                     <span>T로밍 요금제</span>
                 </a>
             </li>
             <li>
                 <a href="/product/roaming/planadd">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_05.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_05.svg" alt=""/>
                     <span>T로밍 부가서비스</span>
                 </a>
             </li>
             <li>
                 <a href="/product/roaming/coupon">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_06.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_06.svg" alt=""/>
                     <span>T로밍 카드/쿠폰</span>
                 </a>
             </li>
             <li>
                 <a href="/product/roaming/fi/guide">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_07.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_07.svg" alt=""/>
                     <span>baro Box 임대</span>
                 </a>
             </li>
             <li>
                 <a href="/product/roaming/do/search-before">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_08.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_08.svg" alt=""/>
                     <span>국가별 로밍 이용요금 조회</span>
                 </a>
             </li>
@@ -77,13 +100,13 @@
         <ul>
             <li>
                 <a href="/product/roaming/info/guide">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_09.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_09.svg" alt=""/>
                     <span>T로밍 안내</span>
                 </a>
             </li>
             <li>
                 <a href="/product/roaming/info/center">
-                    <img src="<%= CDN %>/img/product/roam/ico_menu_10.svg" />
+                    <img src="<%= CDN %>/img/product/roam/ico_menu_10.svg" alt=""/>
                     <span>T로밍센터</span>
                 </a>
             </li>
@@ -91,20 +114,20 @@
     </div>
     <a href="/product/roaming/info/barocall">
     <div class="banner">
-        <img src="<%= CDN %>/img/product/roam/img_menu_01.png" width="100%" />
+        <img src="<%= CDN %>/img/product/roam/img_menu_01.png" width="100%" alt="자유롭게 통화하세요! 해외에서 한국으로 자유롭게 baro 통화하세요"/>
     </div>
     </a>
     <div class="contacts">
         <a href="tel:+82232100404">
             <div class="contact">
-                <img src="<%= CDN %>/img/product/roam/ico_phone_menu.svg" />
+                <img src="<%= CDN %>/img/product/roam/ico_phone_menu.svg" alt=""/>
                 <span class="name">외교부 영사콜센터</span>
                 <span class="phone">+82-2-3210-0404</span>
             </div>
         </a>
         <a href="tel:+82263439000">
             <div class="contact">
-                <img src="<%= CDN %>/img/product/roam/ico_phone_menu.svg" />
+                <img src="<%= CDN %>/img/product/roam/ico_phone_menu.svg" alt=""/>
                 <span class="name">T로밍 고객센터</span>
                 <span class="phone">+82-2-6343-9000</span>
             </div>
