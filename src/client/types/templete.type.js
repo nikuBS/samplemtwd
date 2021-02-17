@@ -1506,3 +1506,13 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
       '{{/if}}' +
   '</div>' +
 '{{/each}}';
+
+
+Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER =
+'{{#each banners}}' +
+  '<li class="slider-item">' +
+    '<a class="shadow-box theme-item" style="background-image:url(https://cdnm-dev.tworld.co.kr/{{bnnrFilePathNm}})" title="{{titleNm}}" alt="{{bnnrImgAltCtt}}" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}"> ' +
+      '<span class="tod-blind">{{titleNm}}</span>' + 
+    '</a>' + 
+  '</li>' + 
+'{{/each}}';
