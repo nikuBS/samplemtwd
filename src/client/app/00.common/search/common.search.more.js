@@ -51,7 +51,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       cateCd: '',
       ordCol: '',
       coPtnrNm: '',
-      sortCd: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+      sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
         '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
     },
     /**
@@ -136,6 +136,15 @@ $.extend(Tw.CommonSearchMore.prototype,
       this.$categorySlide.addClass('horizontal');
       $('#fe-category-slide').removeData('event');
       skt_landing.widgets.widget_horizontal($('.widget'));
+      this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
+        var $target = $(e.currentTarget).parent(); // 바로 상위 
+        $target.toggleClass('on');
+        if ($target .hasClass('on')) {
+          $target.find('button').attr('aria-pressed', true);
+        } else {
+          $target .find('button').attr('aria-pressed', false);
+        }
+    }, this))
 
 
       this.$container.on('scroll', $.proxy(function () {
@@ -412,11 +421,10 @@ $.extend(Tw.CommonSearchMore.prototype,
         {
           list: [
             {
-              txt: Tw.SEARCH_FILTER_STR.ADMIN,  // 추천순
-              // 'radio-attr': (this._sort === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
-              'radio-attr': (this._paramObj.sort === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
+              txt: Tw.SEARCH_FILTER_STR.CLICK,  // 클릭순
+              'radio-attr': (this._paramObj.sort === 'C') ? 'class="focus-elem" sort="C" checked' : 'class="focus-elem" sort="C"',
               'label-attr': ' ',
-              sort: 'A'
+              sort: 'C'
             },
             {
               txt: Tw.SEARCH_FILTER_STR.NEW,  // 최신순
@@ -696,7 +704,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       // collection=all&
       // researchQuery=pps&
       // researchCd=1&
-      // sort=shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A&userId=junhd0,
+      // sort=shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-A.direct-D.tmembership-A.event-A.sale-A.as_outlet-A.question-A.notice-A.prevent-A.manner-A.serviceInfo-A.siteInfo-A&userId=junhd0,
 
       // 현재 url 에 포함된 정렬기준을 reqOption.sortCd 에 적용해준다.
       Tw.Logger.info('[common.search.more] [_categoryInit] url 에 포함되어 있는 카테고리 : ', this._category);
@@ -724,7 +732,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               query: encodeURIComponent(query),
               collection: 'all',
               researchCd: 1,
-              sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               researchQuery: encodeURIComponent(researchQuery),
               device: 'A'
@@ -734,7 +742,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               query: encodeURIComponent(query),
               collection: 'all',
               researchCd: 1,
-              sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               researchQuery: encodeURIComponent(researchQuery),
               device: 'I'
@@ -745,7 +753,7 @@ $.extend(Tw.CommonSearchMore.prototype,
             query: encodeURIComponent(query),
             collection: 'all',
             researchCd: 1,
-            sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+            sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
               '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
             researchQuery: encodeURIComponent(researchQuery)
           };
@@ -756,7 +764,7 @@ $.extend(Tw.CommonSearchMore.prototype,
             reqOptions = {
               query: encodeURIComponent(query),
               collection: 'all',
-              sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               device: 'A'
             };
@@ -764,7 +772,7 @@ $.extend(Tw.CommonSearchMore.prototype,
             reqOptions = {
               query: encodeURIComponent(query),
               collection: 'all',
-              sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+              sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
                 '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A',
               device: 'I'
             };
@@ -773,7 +781,7 @@ $.extend(Tw.CommonSearchMore.prototype,
           reqOptions = {
             query: encodeURIComponent(query),
             collection: 'all',
-            sort: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+            sort: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
               '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
           };
         }
@@ -918,20 +926,20 @@ $.extend(Tw.CommonSearchMore.prototype,
         (encodeURIComponent(this._accessKeyword)) + '&in_keyword=' : '/common/search?keyword=';
       requestUrl += encodeURIComponent(keyword);
       requestUrl += '&step=' + (Number(this._step) + 1);
-      var sort = '&sort=shortcut-A';
-      sort += '.rate-A';
-      sort += '.service-A';
-      sort += '.tv_internet-A';
-      sort += '.troaming-A';
+      var sort = '&sort=shortcut-C';
+      sort += '.rate-C';
+      sort += '.service-C';
+      sort += '.tv_internet-C';
+      sort += '.troaming-C';
       sort += '.direct-D';
       requestUrl += sort;
       this._addRecentlyKeyword(keyword);
       this._moveUrl(requestUrl);
 
-      Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-      Tw.CommonHelper.setCookie('search_sort::service', 'A');
-      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-      Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+      Tw.CommonHelper.setCookie('search_sort::rate', 'C');
+      Tw.CommonHelper.setCookie('search_sort::service', 'C');
+      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
+      Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
       Tw.CommonHelper.setCookie('search_sort::direct', 'D');
 
     },
@@ -1095,13 +1103,13 @@ $.extend(Tw.CommonSearchMore.prototype,
       var sort = '';
       if ( category === 'all' ) {
         var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
-        //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
-        sort = 'shortcut-A';
-        sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
-        sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
-        sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
-        sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
-        sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
+        //shortcut-C.rate-C.service-C.tv_internet-C.troaming-C
+        sort = 'shortcut-C';
+        sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
+        sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
+        sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
+        sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
+        sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
         linkUrl = replaceQueryParam('sort', sort, linkUrl);
       } else {
         sort = Tw.CommonHelper.getCookie('search_sort::' + category);
@@ -1120,6 +1128,11 @@ $.extend(Tw.CommonSearchMore.prototype,
         // { 'label-attr': 'for=ra0', 'txt': Tw.SEARCH_FILTER_STR.ACCURACY,
         //   'radio-attr':'id="ra0" data-type="R" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.ACCURACY+'" '+
         //   (this._searchInfo.search[0].direct.sort==='R'?'checked':'' )},
+        {
+          'label-attr': 'for=ra4', 'txt': Tw.SEARCH_FILTER_STR.CLICK,
+          'radio-attr': 'id="ra4" data-type="C" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.CLICK + '" ' +
+            (this._searchInfo.search[0].direct.sort === 'C' ? 'checked' : '')
+        },
         {
           'label-attr': 'for=ra1', 'txt': Tw.SEARCH_FILTER_STR.NEW,
           'radio-attr': 'id="ra1" data-type="D" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.NEW + '" ' +
