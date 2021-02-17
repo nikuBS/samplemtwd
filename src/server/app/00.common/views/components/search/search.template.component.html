@@ -53,7 +53,7 @@
         <div class="acco-tit">
             <button href="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" aria-pressed="false" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
                 <span class="main-category">
-                    {{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}} <em class="num">({{sum listData.DEPTH_SIZE}})</em>
+                    {{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}} <em class="num">({{listData.DEPTH_SIZE}})</em>
                 </span>
             </button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
         </div>

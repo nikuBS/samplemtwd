@@ -271,7 +271,7 @@ Tw.CommonSearch.prototype = {
       e.preventDefault();
       $(window).scrollTop(0);
     }, this));
-    this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
+    this.$container.on('click', '.acco-box', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
         var $accobox = $('li.acco-box');
         var $accotit = $('div.acco-tit');
         $accobox.toggleClass('on');
@@ -280,6 +280,8 @@ Tw.CommonSearch.prototype = {
         } else {
           $accotit.find('button').attr('aria-pressed', false);
         }
+        
+        
     }, this))
 
     this.$container.on('click', '.fe-category', $.proxy(this._selectCategory, this));    // 카테고리 클릭시 이벤트 바인딩
@@ -527,7 +529,6 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _showShortcutList: function (data, dataKey, cdn, gubun) {
-    // console.log("data => ", data, dataKey, cdn, gubun);
     // 지난이벤트 컬렉션이 추가되었지만 티월드 노출 요건이 없으므로 예외처리함.
     if ( dataKey !== 'lastevent' ) {
 
@@ -547,36 +548,18 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.' + dataKey).addClass('none');
       }
 
-      _.each(data, $.proxy(function (listData, index) {
-        // 바로가기는 최대 3건만 노출
-        if (dataKey === 'shortcut') {
-          // console.log(dataKey, index);
-          if (index > 2) {
-            return;
+      // console.log(">>>>>> data: ", data);
+      _.each(data, $.proxy(function (listData/*, index */) {
+        if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
+          var removeLength = data.length - 1;
+          if ( removeLength <= 0 ) {
+            $('.' + dataKey).addClass('none');
+          } else {
+            $('.' + dataKey + ' .num').text(removeLength);
           }
-          if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
-            var removeLength = data.length - 1;
-            if ( removeLength <= 0 ) {
-              $('.' + dataKey).addClass('none');
-            } else {
-              $('.' + dataKey + ' .num').text(removeLength);
-            }
-            return;
-          }
-          $list.append(templateData({ listData: listData, CDN: cdn }));
-        } else {
-          if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
-            var removeLength = data.length - 1;
-            if ( removeLength <= 0 ) {
-              $('.' + dataKey).addClass('none');
-            } else {
-              $('.' + dataKey + ' .num').text(removeLength);
-            }
-            return;
-          }
-          $list.append(templateData({ listData: listData, CDN: cdn }));
+          return;
         }
-        
+        $list.append(templateData({ listData: listData, CDN: cdn }));
       }, this));
     }
   },
