@@ -1,17 +1,50 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="roamingMain" class="wrap">
-    <div id="appbar">
-        <span class="menu icon-gnb-menu">
-            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
+
+    <!-- 202011 - 웹접근성 수정건 적용 : 스킵네비 추가 시작 -->
+    <div id="skipnavigation" class="tloaming-skip-nav">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!-- //202011 - 웹접근성 수정건 적용 : 스킵네비 추가 끝 -->
+
+    <!-- <div id="appbar">
+        <span class="menu icon-gnb-menu" tabindex="-1">
+            <a href="javascript:void(0);"><img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴열기" width="24" height="24" /></a>
         </span>
-        <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="로고" width="94" height="24" />
+        <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="T로밍" width="94" height="24" />
         <a href="/common/search-main">
             <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색"/>
         </a>
+    </div> -->
+
+
+    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
+    <!-- #header -->
+    <div id="header" class="header-wrap bg-type">
+        <div class="h-belt">
+            <div class="h-default">
+                <div class="h-menu">
+                    <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-34" data-xt_csid="NO" data-xt_action="BC"><span class="blind">메뉴열기</span></a>
+                </div>
+                <h1 class="h-tit ">
+                    <img class="logo-tloaming" src="/img/product/roam/logo.png" alt="T 로밍" width="94" height="24"> <!-- //202011 - 웹접근성 수정건 적용 : 제목 추가, 이미지 alt 수정 / 클래스명 .logo-tloaming 로 변경-->
+                </h1>
+
+                <div class="h-serarch">
+                    <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
+                </div>
+            </div>
+        </div>
     </div>
-    <img class="background" src="<%= CDN %>/img/product/roam/bg-map.png" alt="배경"/>
+    <!--// #header -->
+    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
+
     <%- include('../components/header.component.html', { title: '', svcInfo: svcInfo }) %>
+
+    
     <div id="contents">
     <div id="content">
         <%# 첫 로밍 고객인 경우 다른 문구 노출 %>
@@ -40,27 +73,28 @@
         </div>
         </a>
         <% } %>
-        <div class="card">
+        <div class="card" data-ix="">
             <h3>국가별 맞춤 로밍 요금제 추천</h3>
             <p class="description">여행할 나라를 선택해 주세요.</p>
             <table id="nations" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td id="pc1"></td>
-                    <td id="pc2"></td>
-                    <td id="pc3"></td>
+                    <td id="pc1" fix="1"></td>
+                    <td id="pc2" fix="2"></td>
+                    <td id="pc3" fix="3"></td>
                 </tr>
                 <tr>
-                    <td id="pc4"></td>
-                    <td id="pc5"></td>
-                    <td id="pc6"></td>
+                    <td id="pc4" fix="4"></td>
+                    <td id="pc5" fix="5"></td>
+                    <td id="pc6" fix="6"></td>
                 </tr>
             </table>
             <p class="description">찾으시는 나라가 없나요?</p>
             <form class="search-form">
                 <div class="field-container">
-                    <input type="text" placeholder="원하는 국가명을 입력해 주세요" id="nation-search" />
-                    <button role="link" title="국가 검색">
-                        <img src="<%= CDN %>/img/product/roam/ico_search_a.png" alt="Search" />
+                    <input type="text" placeholder="원하는 국가명을 입력해 주세요" id="nation-search" title="국가명" />
+                    <!-- <input type="text" placeholder="원하는 국가명을 입력해 주세요" id="nation-search" class="ui-autocomplete-input" autocomplete="off" title="국가명" /> -->
+                    <button role="link" title="국가 검색" id="btn_search2">
+                        <img src="<%= CDN %>/img/product/roam/ico_search_a.png" alt="검색" />
                     </button>
                 </div>
             </form>
@@ -123,10 +157,10 @@
             <h3>로밍 요금제 한눈에 보기</h3>
             <div id="groups">
                 <% for (const group of groups) { %>
-                <a href="/product/roaming/fee#<%= group.prodGrpId %>" role="link" title="<%= group.prodGrpNm %>">
+                <a href="/product/roaming/fee#<%= group.prodGrpId %>">
                     <div class="group">
                         <img src="<%= CDN %><%= group.prodGrpBnnrImgUrl %>"
-                             alt="<%= group.prodGrpNm %>" />
+                             alt="<%= group.prodGrpBnnrImgAlt  %>"/>   <!-- 접근성 수정 : as-is  ==> group.prodGrpBnnrImgAlt /  prodGrpDesc-->
                     </div>
                 </a>
                 <% } %>
@@ -135,16 +169,16 @@
         <div class="card no-padding">
             <a href="/product/roaming/coupon">
                 <div class="menu-link border-bottom">
-                    <img class="icon" src="<%= CDN %>/img/product/roam/ico_coupon.png" width="32" />
+                    <img class="icon" src="<%= CDN %>/img/product/roam/ico_coupon.png" width="32" alt="" />
                     <span>로밍 카드/쿠폰</span>
-                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" alt="" />
                 </div>
             </a>
             <a href="/product/roaming/fi/guide">
                 <div class="menu-link">
-                    <img class="icon" src="<%= CDN %>/img/product/roam/ico_barobox.svg" width="32" />
+                    <img class="icon" src="<%= CDN %>/img/product/roam/ico_barobox.svg" width="32" alt="" />
                     <span>baro Box 대여</span>
-                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" alt="" />
                 </div>
             </a>
         </div>
@@ -152,14 +186,14 @@
     <a href="/product/roaming/info/guide">
         <div class="info-link">
             출국 전 알아 두면 좋은 정보
-            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" alt="" />
         </div>
     </a>
     <a href="/product/roaming/info/guide?reqItem=lost">
         <div class="info-link tail">
             <div class="separator-top"></div>
             로밍 중 휴대폰 분실 안내
-            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" alt="" />
         </div>
     </a>
     <div class="links">
@@ -194,11 +228,12 @@
   });
 </script>
 <script type="text/x-handlebars-template" id="tpl-nation-card">
-    <button tabIndex="-1" title="{{ name }}" role="link">
-        <div class="pn" data-code="{{ code }}" data-name="{{ name }}">
+    <button  title="{{ name }}" role="link" data-code="{{ code }}" data-name="{{ name }}">
+        <div tabIndex="-1" class="pn" data-code="{{ code }}" data-name="{{ name }}">
             <img src="{{ imageUrl }}" alt="{{ imageAlt }}" />
         </div>
     </button>
 </script>
+
 <% include ../../components/roaming-next/calendar.javascript.html %>
 <% include ../../components/end.component.html %>
