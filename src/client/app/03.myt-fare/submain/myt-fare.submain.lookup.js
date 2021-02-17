@@ -24,7 +24,7 @@ Tw.MyTFareSubMainLookup.prototype = {
    * @private
    */
   _cachedElement: function () {
-    this._contents = this.$container.find('.fe-contents'); // 컨텐츠 영역
+    this._contents = this.$container.find('.fe-lookup'); // 컨텐츠 영역
     this._taxTempl = Handlebars.compile( $('#fe-tax-templ').html()); // 세금계산서, 기부금 템플릿
 
   },
@@ -38,14 +38,13 @@ Tw.MyTFareSubMainLookup.prototype = {
 
   // lazyloading 처리
   _initScroll: function () {
-    this._checkScroll();
     $(window).on('scroll', $.proxy(function () {
       this._checkScroll();
     }, this));
   },
 
   _checkScroll: function () {
-    if ( !this._contents.data('finish') && this._elementScrolled(this._contents) ) {
+    if ( !this._contents.data('status') && this._elementScrolled(this._contents) ) {
       this._requestTaxContribute();
     }
   },
@@ -54,7 +53,11 @@ Tw.MyTFareSubMainLookup.prototype = {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
     var elemTop = element.offset().top;
-    return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+    var isOk = ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+    if (isOk) {
+      this._contents.data('status', true);
+    }
+    return isOk;
   },
 
   _requestTaxContribute: function () {
@@ -71,7 +74,7 @@ Tw.MyTFareSubMainLookup.prototype = {
       isShowData: isTax || isContribute,
       isTax: isTax,
       isContribute: isContribute
-    })).data('finish','finish');
+    }));
     new Tw.XtractorService(this.$container);
   },
 

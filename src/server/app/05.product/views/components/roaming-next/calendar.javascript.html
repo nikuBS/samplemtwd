@@ -548,56 +548,36 @@
         //
         // Display the calendar
         //
-        var datePickerTabidx = 0; //202011 - 웹접근성 수정건 적용 : 디폴트 탭 인덱스 0 적용.
+
         var minDate = side == 'left' ? this.minDate : this.startDate;
         var maxDate = this.maxDate;
         var selected = side == 'left' ? this.startDate : this.endDate;
-        var arrow = this.locale.direction == "ltr" ? { left: "chevron-left", right: "chevron-right" } : { left: "chevron-right", right: "chevron-left" };
-        var dateHtml = calendar[1][1].format("YYYY") + "년 " + this.locale.monthNames[calendar[1][1].month()]; // 202011 - 웹접근성 수정건 적용 : 위치 위로 옮김
-          
-        var tbl_summary = (side == "left") ? "가는날 달력 선택" : "오는날 달력 선택";
-          
-          
-          // 202011 - 웹접근성 수정건 적용 : datePickerTableHeader 추가 시작
-          var datePickerTableHeader = '<div class="table-condensed-header">';
-            
-          // 이전달 다음달 버튼, 월 영역 테이블 에서 따로 분리함 
-                    datePickerTableHeader += '<h3 class="table-condensed-title">' + dateHtml + "</h3>";
-                    if ((!minDate || minDate.isBefore(calendar.firstDay)) && (!this.linkedCalendars || side == "left")) {
-                        datePickerTableHeader += '<div class="table-condensed-header__btns prev available"><button type="button" title="이전달 이동"><span></span></button></div>'; 
-                    }
-                
-                    if ((!maxDate || maxDate.isAfter(calendar.lastDay)) && (!this.linkedCalendars || side == "right" || this.singleDatePicker)) {
-                        datePickerTableHeader += '<div class="table-condensed-header__btns next available"><button type="button" title="다음달 이동"><span></span></button></div>'; 
-                    }  
-          datePickerTableHeader +="</div>";  
+        var arrow = this.locale.direction == 'ltr' ? {left: 'chevron-left', right: 'chevron-right'} : {left: 'chevron-right', right: 'chevron-left'};
 
-        
-        var html = '<table class="table-condensed" summary="'+tbl_summary+'"">';
-          html += '<caption>' + dateHtml + " 달력 정보 입니다" + '</caption>'; // 202011 - 웹접근성 수정건 적용 : caption 추가
-          html += "<thead>";
-            
+        var html = '<table class="table-condensed">';
+        html += '<thead>';
+        html += '<tr>';
 
-        // // add empty cell for week number
-        // if (this.showWeekNumbers || this.showISOWeekNumbers)
-        //   html += '<th></th>';
+        // add empty cell for week number
+        if (this.showWeekNumbers || this.showISOWeekNumbers)
+          html += '<th></th>';
 
-        // if ((!minDate || minDate.isBefore(calendar.firstDay)) && (!this.linkedCalendars || side == 'left')) {
-        //   html += '<th class="prev available"><span></span></th>';
-        // } else {
-        //   html += '<th></th>';
-        // }
+        if ((!minDate || minDate.isBefore(calendar.firstDay)) && (!this.linkedCalendars || side == 'left')) {
+          html += '<th class="prev available"><span></span></th>';
+        } else {
+          html += '<th></th>';
+        }
 
-        // var dateHtml = calendar[1][1].format("YYYY") + '년 ' + this.locale.monthNames[calendar[1][1].month()]
+        var dateHtml = calendar[1][1].format("YYYY") + '년 ' + this.locale.monthNames[calendar[1][1].month()]
 
-        // html += '<th colspan="5" class="month">' + dateHtml + '</th>';
-        // if ((!maxDate || maxDate.isAfter(calendar.lastDay)) && (!this.linkedCalendars || side == 'right' || this.singleDatePicker)) {
-        //   html += '<th class="next available"><span></span></th>';
-        // } else {
-        //   html += '<th></th>';
-        // }
-        // html += '</tr>';
+        html += '<th colspan="5" class="month">' + dateHtml + '</th>';
+        if ((!maxDate || maxDate.isAfter(calendar.lastDay)) && (!this.linkedCalendars || side == 'right' || this.singleDatePicker)) {
+          html += '<th class="next available"><span></span></th>';
+        } else {
+          html += '<th></th>';
+        }
 
+        html += '</tr>';
         html += '<tr>';
 
         // add week number label
@@ -605,7 +585,7 @@
           html += '<th class="week">' + this.locale.weekLabel + '</th>';
 
         $.each(this.locale.daysOfWeek, function(index, dayOfWeek) {
-          html += '<th scope="col">' + dayOfWeek + '</th>';
+          html += '<th>' + dayOfWeek + '</th>';
         });
 
         html += '</tr>';
@@ -688,7 +668,7 @@
             if (!disabled)
               cname += 'available';
 
-            html += '<td class="' + cname.replace(/^\s+|\s+$/g, "") + '" data-title="' + "r" + row + "c" + col + '"  role="button" tabindex="'+ datePickerTabidx +'">' + calendar[row][col].date() + "</td>";  // 202011 - 웹접근성 수정건 적용 : role="button" , tabindex 추가
+            html += '<td class="' + cname.replace(/^\s+|\s+$/g, '') + '" data-title="' + 'r' + row + 'c' + col + '">' + calendar[row][col].date() + '</td>';
 
           }
           html += '</tr>';
@@ -698,7 +678,6 @@
         html += '</table>';
 
         this.container.find('.drp-calendar.' + side + ' .calendar-table').html(html);
-        this.container.find(".drp-calendar." + side + " .calendar-table .table-condensed").before(datePickerTableHeader);  // 202011 - 웹접근성 수정건 적용 : .table-condensed-header 추가
       },
 
       updateFormInputs: function() {

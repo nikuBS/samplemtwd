@@ -1,11 +1,8 @@
 <div id="scheduleDialog" class="dialog">
     <div class="header">
-        <!-- 202011 - 웹접근성 수정건 적용 : 기존 div를 a 로 변경 시작 -->
-        <a href="#" role="button" class="close"><img src="<%= CDN %>/img/product/roam/ico_close_w.svg" width="20" height="20" alt="닫기"/> </a>
-        <!-- //202011 - 웹접근성 수정건 적용 : 기존 div를 a 로 변경 끝 -->
-        <img class="banner" width="100%" alt=""/>
+        <img class="banner" width="100%" />
         <div class="summary">
-            <h1 tabindex="-1"><span id="target-nation"></span>, 언제 떠나세요?</h1>
+            <h1><span id="target-nation"></span>, 언제 떠나세요?</h1>
             <div>
                 <div class="date borderRight">
                     <h2>가는 날</h2>
@@ -16,6 +13,9 @@
                     <h3 id="date-arrive">-</h3>
                 </div>
             </div>
+        </div>
+        <div class="close">
+            <img src="<%= CDN %>/img/product/roam/ico_close_w.svg" width="20" height="20" alt="Close"/>
         </div>
     </div>
     <div id="scheduleContent">
@@ -36,11 +36,10 @@
 </div>
 <div id="nationsDialog" class="dialog">
     <div class="header">
-        
-        <button class="close" type="button">
-            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" alt="닫기"/>
+        <h1>로밍 가능한 전체 국가</h1>
+        <button class="close" role="link" title="닫기">
+            <img src="<%= CDN %>/img/product/roam/ico_close.svg" width="20" height="20" />
         </button>
-        <h1 tabindex="-1">로밍 가능한 전체 국가</h1>
     </div>
     <div class="menu">
         <ul>
@@ -53,7 +52,6 @@
         </ul>
     </div>
     <div class="content">
-        <h2 class="title-itemList">유럽</h2>  <!-- //202011 - 웹접근성 수정건 적용 : 탭 컨텐츠 제목(.title-itemList) 추가 / js : onClickNationGroup-->
         <ul>
 
         </ul>
