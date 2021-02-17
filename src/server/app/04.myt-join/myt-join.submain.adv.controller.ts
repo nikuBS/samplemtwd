@@ -313,7 +313,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
               const totDate = DateHelper.getDiffByUnit(item.endDate, item.startDate, 'day') + 1;  // 전체 일수(첫날 포함)
               const ingDate = DateHelper.getDiffByUnit(curDate, item.startDate, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
               const remainDate = totDate - ingDate; // 잔여일수
-              const percentage = 100 - Math.floor((ingDate / totDate) * 100);
+              const percentage = Math.min(100, Math.floor((ingDate / totDate) * 100));
               const graphPercent = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
               return {
                 name: item.name,

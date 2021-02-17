@@ -31,8 +31,11 @@ _%>
                                     _%>
                                     <%_ if(defaultPausedState) {
                                         // 일시정지 신청 가능 유무
-                                        var isJoinPause = (data.myPausedState.svcStCd === 'AC') && ((data.myPausedState && data.myPausedState.reservedYn !== 'Y') ||
-                                        (data.myLongPausedState && data.myLongPausedState.opStateCd === 'C' && data.myLongPausedState.stateReleased));
+                                        var isJoinPause = (data.myPausedState.svcStCd === 'AC') &&
+                                        ((data.myLongPausedState && data.myLongPausedState.state) ?
+                                        // 장기일시정지, 일반일시정지 구분
+                                        (data.myLongPausedState.opStateCd === 'C' && data.myLongPausedState.stateReleased) :
+                                        (data.myPausedState.reservedYn !== 'Y'));
                                     _%>
                                         <%_ if (isJoinPause) { _%>
                                         <!-- 일시정지 신청 가능한 상태 -->
