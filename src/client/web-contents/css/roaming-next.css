@@ -3977,3 +3977,75 @@ body.scroll #roamingOn #appbar .appbar {
 
 /* 로밍모드 수정 */
 #roamingOn{background-size:100% auto !important}
+
+/* 출국 전 필수확인 팝업 접근성 수정 */
+body.rn .guide-dialog .checklist li{padding:0}
+body.rn .guide-dialog .checklist li button{width:100%;padding:20px 0;font-size:15px;font-weight:500;text-align:left;background:url(https://cdnm.tworld.co.kr/img/product/roam/ico_expand.svg) no-repeat right center;background-size:13px auto}
+body.rn .guide-dialog .checklist .description{padding-bottom:20px}
+body.rn .guide-dialog .tabs button{box-sizing:content-box}
+
+/************************************************************************
+202011-웹접근성 수정 사항 적용 
+*************************************************************************/
+/* 스킵 네비게이션 추가 */
+#skipnavigation a ,.tloaming-skip-nav a{position:absolute;left:-3000%;}
+#skipnavigation a:focus, .tloaming-skip-nav a:focus{display:block;left:0;top:0;z-index:10000000000;width:100%;height:36px;line-height:36px;font-size:14px;background:#004880;color:#fff;text-align:center;}
+/* #header */
+.rn .header-wrap,
+.rn .header-wrap .h-belt{min-height:0;}
+.rn .h-tit .logo-tloaming{width:94px;height:24px;margin-top:14px;}
+.rn .icon-gnb-search:focus{outline:1px solid #ccc;}
+/* T로밍 메인 */
+.rn #roamingMain{background:url(/img/product/roam/bg-map.png) no-repeat right 0;background-size:360px 180px;}
+body.rn .card .field-container button.btn-country-srch{position:absolute;top:5px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;}
+.rn button.btn-country-srch:focus{border: 1px solid #000;}
+body.rn .card .field-container .btn-country-srch img{position:static;}
+/* 스케쥴 팝업 */
+body.rn #scheduleDialog .header .summary,
+body.rn #scheduleDialog .header .close{z-index:3;}
+body.rn #scheduleDialog .header .banner{z-index:0;}
+/* 스케쥴 팝업 - datepicker 커스텀 */
+.rn .table-condensed td button{display:block;width:100%;height:100%;color:inherit;}
+.table-condensed td:focus{outline:1px solid #000;}
+.rn .table-condensed-header{position:relative;height:32px;}
+.rn .table-condensed-title{width:auto;color:#4559fc;font-size:15px;font-weight:500;text-align:center;line-height:32px;}
+.rn .table-condensed-header__btns{position:absolute;top:0;}
+.rn .table-condensed-header__btns.prev.available{left:0;}
+.rn .table-condensed-header__btns.next.available{right:0;}
+.rn .table-condensed-header__btns button{width:55px;height:32px;}
+.rn .table-condensed-header__btns button:focus{outline:1px solid #000;}
+/* #nationsDialog, #countriesDialog */
+.rn .title-itemList{overflow: hidden;text-indent:-9999px;width:0;height:0;opacity:0;color:#fff;}
+body.rn #countriesDialog .menu li>button,
+body.rn #countriesDialog .menu li>a{display:inline-block;height:100%;width:100%;line-height:56px;font-size:16px;color:inherit;text-align:left;}
+body.rn #countriesDialog .menu li.active>button,
+body.rn #countriesDialog .menu li.active>a{background-color:white;color:#4559fc;}
+body.rn #countriesDialog .content li>button,
+body.rn #countriesDialog .content li>a{display:inline-block;height:100%;width:100%;line-height:50px;font-size:15px;color:#666;text-align:left;}
+/* T로밍 요금제 */
+body.rn #roamingTariffs .tariff{position:relative;}
+body.rn #roamingTariffs .tariff .price{float:none;position:absolute;top:0;right:0;}
+/* #roamingGuide */
+.rn .q .btn-qna-q{display:block;width:100%;text-align:left;}
+/* 스위치 토글 버튼 */
+.tloaming-toggle-switch .tloaming-toggle-switch__circle{position:relative;cursor:pointer;width:40px;}
+.switch .switch__label{position:absolute;opacity:0;pointer-events:none;}
+.tloaming-toggle-switch .tloaming-toggle-switch__circle::before,
+.tloaming-toggle-switch .tloaming-toggle-switch__circle::after{content:'';display:block;margin:0 3px;transition:all 100ms cubic-bezier(0.4, 0.0, 0.2, 1);background:#bdbdbd;}
+.tloaming-toggle-switch .tloaming-toggle-switch__circle::before{height:14px;width:100%;border-radius:7px;opacity:0.4;background:#fff;}
+.tloaming-toggle-switch .tloaming-toggle-switch__circle::after{position:absolute;top:50%;transform:translate(0, -50%);height:20px;width:20px;border-radius:50%;background-color:#3ee5ff;}
+.tloaming-toggle-switch:focus{outline:#5d9dd5 solid 1px;box-shadow:0 0 8px #5e9ed6;}
+.tloaming-toggle-switch.switch-on .tloaming-toggle-switch__circle::after{transform:translate(100%, -50%);}
+/* #roamingOn */
+@media all and (min-width: 376px)  {
+#roamingOn{background-size:contain!important;background-position-y: -7%!important;}
+}
+/* #roamingTariffOffer */
+body.rn #roamingTariffOffer .decoration{height: 0;padding-top: 47%;}
+body.rn #roamingTariffOffer .decoration .banner{bottom:auto;top:0;}
+
+body.rn #roamingMain #header .h-belt{background:0;border:0}
+body.rn.fly #roamingMain #header .h-belt{background-color:#fff;border-bottom:1px solid #e5e5e5}
+body.rn #roamingGuide a.button{display:block}
+body.rn button:focus,
+body.rn a:focus{outline:1px solid #000 !important}
