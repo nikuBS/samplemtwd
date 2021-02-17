@@ -107,8 +107,7 @@
             </section>
             <%_ } _%>
             <%_
-            } else if (data.svcInfo.svcAttrCd === 'M2') {
-                if (data.ppsAutoVoice || data.ppsAutoData) {
+            } else if (data.svcInfo.svcAttrCd === 'M2' && data.ppsCard) {
             _%>
             <!-- 선불폰 충전하기 -->
             <section class="cont-card" data-id="pps-section">
@@ -119,7 +118,7 @@
                     <div class="card-cont">
                         <div class="charging-wrap">
                             <ul class="pps-charge-list">
-                                <%_ if (data.ppsAutoVoice) { _%>
+                                <%_ if (data.ppsCard && data.ppsCard.dataOnlyYn === 'N') { _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -129,18 +128,17 @@
                                         <dd>
                                             <div class="btn-area short btn2">
                                                 <a href="/myt-data/recharge/prepaid/voice" class="rect-btn" data-xt_eid="<%=data.xtEid.rechargeVoice%>" data-xt_csid="NO" data-xt_action="BC">1회 충전</a>
-                                                <%_ if (data.ppsAutoVoice.amtCd) { _%>
+                                                <%_ if (data.ppsAutoVoice && data.ppsAutoVoice.amtCd) { _%>
                                                     <a href="/myt-data/recharge/prepaid/voice-auto" class="rect-btn" data-xt_eid="<%=data.xtEid.rechargeVoiceAutoRevocation%>" data-xt_csid="NO" data-xt_action="BC">자동 충전 변경/해지</a>
                                                 <%_ } else { _%>
-                                                    <a href="/myt-data/recharge/prepaid/voice-auto" class="rect-btn" data-xt_eid="<%=data.xtEid.rechargeVoiceAuto%>" data-xt_csid="NO" data-xt_action="BC"></a>자동 충전</a>
+                                                    <a href="/myt-data/recharge/prepaid/voice-auto" class="rect-btn" data-xt_eid="<%=data.xtEid.rechargeVoiceAuto%>" data-xt_csid="NO" data-xt_action="BC">자동 충전</a>
                                                 <%_ } _%>
                                             </div>
                                         </dd>
                                     </dl>
                                 </li>
-                                <%_ }
-                                if (data.ppsAutoData) {
-                                _%>
+                                <%_ } _%>
+                                <%_ if (data.ppsCard && (data.ppsCard.dataYn === 'Y' || data.ppsCard.dataOnlyYn === 'Y')) { _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -150,7 +148,7 @@
                                         <dd>
                                             <div class="btn-area short btn2">
                                                 <a href="/myt-data/recharge/prepaid/data" class="rect-btn" data-xt_eid="<%=data.xtEid.rechargeData%>" data-xt_csid="NO" data-xt_action="BC">1회 충전</a>
-                                                <%_ if (data.ppsAutoData.amtCd) { _%>
+                                                <%_ if (data.ppsAutoData && data.ppsAutoData.amtCd) { _%>
                                                     <a href="/myt-data/recharge/prepaid/data-auto" class="rect-btn" data-xt_eid="<%=data.xtEid.rechargeDataAutoRevocation%>" data-xt_csid="NO" data-xt_action="BC">자동 충전 변경/해지</a>
                                                 <%_ } else { _%>
                                                     <a href="/myt-data/recharge/prepaid/data-auto" class="rect-btn" data-xt_eid="<%=data.xtEid.rechargeDataAuto%>" data-xt_csid="NO" data-xt_action="BC">자동 충전</a>
@@ -175,9 +173,7 @@
             </section>
             <%_
                 }
-            }
             _%>
-
             <%_
             if (data.svcInfo.svcAttrCd === 'M1') {
                 if ((data.refill && data.refill.length)|| data.isPrepayment) {
