@@ -36,7 +36,7 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
     collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.bundle-07.troaming-08' +
       '.tapp-09.direct-10.tmembership-11.event-12.sale-13.as_outlet-14.question-15.notice-16.prevent-17.manner-18' +
       '.serviceInfo-19.siteInfo-20.lastevent-21.banner-22',
-    sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+    sortCd: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
   this._autoCompleteRegExObj = {
@@ -609,18 +609,18 @@ Tw.CommonSearch.prototype = {
     var requestUrl = '/common/search?keyword=';
     requestUrl += encodeURIComponent(keyword);
     requestUrl += '&step=' + (Number(this._step) + 1);
-    var sort = '&sort=shortcut-C';
-    sort += '.rate-C';
-    sort += '.service-C';
-    sort += '.tv_internet-C';
-    sort += '.troaming-C';
+    var sort = '&sort=shortcut-A';
+    sort += '.rate-A';
+    sort += '.service-A';
+    sort += '.tv_internet-A';
+    sort += '.troaming-A';
     sort += '.direct-D';
     requestUrl += sort;
 
-    Tw.CommonHelper.setCookie('search_sort::rate', 'C');
-    Tw.CommonHelper.setCookie('search_sort::service', 'C');
-    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
-    Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
+    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
+    Tw.CommonHelper.setCookie('search_sort::service', 'A');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
     Tw.CommonHelper.setCookie('search_sort::direct', 'D');
 
     // Tw.Logger.info('[common.search] [_doSearch]', '"doSearch" Cookie 셋팅');
@@ -658,12 +658,12 @@ Tw.CommonSearch.prototype = {
     requestUrl += '&step=' + (Number(this._step) + 1);
 
     var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
-    var sort = 'shortcut-C';
-    sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
-    sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
-    sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
-    sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
-    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
+    var sort = 'shortcut-A';
+    sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
+    sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
+    sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
+    sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
+    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
     requestUrl += '&sort=' + sort;
 
     // Tw.Logger.info('[common.search] [_doResultSearch]', '"doSearch" Cookie 셋팅');
@@ -907,7 +907,7 @@ Tw.CommonSearch.prototype = {
 
     var tempBtnStr = '.fe-btn-sort-' + selectedCollection;
 
-    // sort=shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D
+    // sort=shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D
     // function getParam(sname) {
     //   var linkUrl = location.search;
     //   var params = linkUrl.substr(linkUrl.indexOf('?') + 1);
@@ -946,10 +946,10 @@ Tw.CommonSearch.prototype = {
       {
         list: [
           {
-            txt: Tw.SEARCH_FILTER_STR.CLICK,  // 클릭순
-            'radio-attr': (sortCdStr === 'C') ? 'class="focus-elem" sort="C" checked' : 'class="focus-elem" sort="C"',
+            txt: Tw.SEARCH_FILTER_STR.ADMIN,  // 추천순
+            'radio-attr': (sortCdStr === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
             'label-attr': ' ',
-            sort: 'C'
+            sort: 'A'
           },
           {
             txt: Tw.SEARCH_FILTER_STR.NEW,  // 최신순
