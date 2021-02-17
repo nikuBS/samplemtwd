@@ -546,11 +546,10 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
-
       _.each(data, $.proxy(function (listData, index) {
+        // console.log(">>> listData: ", listData);
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
-          // console.log(dataKey, index);
           if (index > 2) {
             return;
           }
@@ -563,6 +562,19 @@ Tw.CommonSearch.prototype = {
             }
             return;
           }
+          if (listData.DEPTH_CHILD !== undefined) {
+            console.log(">>>>> data: ", data);
+            listData.DEPTH_CHILD.push({
+              CLICK_CNT: listData.CLICK_CNT,
+              DEPTH_LOC: "2",
+              DEPTH_PATH: listData.DEPTH_PATH,
+              DOCID: listData.DOCID,
+              MENU_NM: listData.MENU_NM,
+              MENU_URL: listData.MENU_URL,
+              USE_YN: listData.USE_YN       
+            })
+          }
+          // console.log(">>> listData: ", listData);
           $list.append(templateData({ listData: listData, CDN: cdn }));
         } else {
           if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
