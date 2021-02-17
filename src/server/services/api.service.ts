@@ -177,7 +177,7 @@ class ApiService {
     version = version || API_VERSION.V1;
     if ( args.length > 0 ) {
       args.map((argument, index) => {
-        path = path.replace(`:args${index}`, argument);
+        path = path.replace(`:args${ index }`, argument);
       });
     }
     path = path.replace(':version', version);
@@ -208,7 +208,7 @@ class ApiService {
           // client에서 API를 직접 호출하지 않는 경우(server에서 API를 호출하는 경우)
           if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
             // BFF server session이 변경되었을 경우
-            if ( data && data.code === API_CODE.NODE_1005) {
+            if ( data && data.code === API_CODE.NODE_1005 ) {
               this.redirectInvalidSession(req, res, data);
             }
             if ( respData.code === API_CODE.BFF_0003 ) {
@@ -229,7 +229,7 @@ class ApiService {
               // this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
               this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
               const path = this.loginService.getFullPath(req);
-              if (path) {
+              if ( path ) {
                 // fix: 정규표현식으로 값 비교시 값이 undefined 인 경우 오류가 발생하여 이후 처리가 불가로 수정
                 if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
                   || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
@@ -238,8 +238,8 @@ class ApiService {
               }
             }
             // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
-          } else if ( data && data.code === API_CODE.NODE_1005) {
-            respData = {code: API_CODE.NODE_1005, result: data.result};
+          } else if ( data && data.code === API_CODE.NODE_1005 ) {
+            respData = { code: API_CODE.NODE_1005, result: data.result };
           }
         }
 
@@ -261,7 +261,7 @@ class ApiService {
    * @param err
    */
   private handleError(observer, command, req, res, options, err) {
-    if (!err.response && err.stack) {
+    if ( !err.response && err.stack ) {
       this.logger.error(this, '[Programming error]', err.stack);
     }
 
@@ -279,7 +279,7 @@ class ApiService {
             if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {
 
               // BFF server session이 변경되었을 경우
-              if ( resp && resp.code === API_CODE.NODE_1005) {
+              if ( resp && resp.code === API_CODE.NODE_1005 ) {
                 this.redirectInvalidSession(req, res, resp);
               }
 
@@ -301,7 +301,7 @@ class ApiService {
                 this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
                 this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
                 const path = this.loginService.getFullPath(req);
-                if (path) {
+                if ( path ) {
                   // fix: 정규표현식으로 값 비교시 값이 undefined 인 경우 오류가 발생하여 이후 처리가 불가로 수정
                   if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path)
                     || /\/product\/roaming\/on/.test(path) || /\/submain/.test(path)) ) {
@@ -310,8 +310,8 @@ class ApiService {
                 }
               }
               // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
-            } else if ( resp && resp.code === API_CODE.NODE_1005) {
-              error = {code: API_CODE.NODE_1005, result: resp.result};
+            } else if ( resp && resp.code === API_CODE.NODE_1005 ) {
+              error = { code: API_CODE.NODE_1005, result: resp.result };
             }
           }
           observer.next(error);
@@ -342,23 +342,23 @@ class ApiService {
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
       this.logger.info(this, '[Set Session Cookie]', serverSession);
-      if ( !FormatHelper.isEmpty(serverSession)) {
+      if ( !FormatHelper.isEmpty(serverSession) ) {
         // 로그인 상태이고, 이전 request의 서버 세션과 response 서버 세션이 다를 경우는 오류 처리 한다.
-        if ( req.session.serverSession !== serverSession && this.loginService.isLogin(req)) {
+        if ( req.session.serverSession !== serverSession && this.loginService.isLogin(req) ) {
           // this.logger.error(this, '[BE Session changed]', command.path, req.originalUrl
           //                   , '[ Before : ' + req.session.serverSession + ' ]'
           //                   , '[ After : ' + serverSession + ' ]'
           //                   , req.session.svcInfo);
 
           return Observable.of({
-            code : API_CODE.NODE_1005,
-            result : {
-              commandPath : command.path,
-              preServerSession : req.session.serverSession,
-              curServerSession : serverSession,
-              url : this.loginService.getPath(req),
-              point : 'SERVER_API_RES',
-              target : this.loginService.getPath(req)
+            code: API_CODE.NODE_1005,
+            result: {
+              commandPath: command.path,
+              preServerSession: req.session.serverSession,
+              curServerSession: serverSession,
+              url: this.loginService.getPath(req),
+              point: 'SERVER_API_RES',
+              target: this.loginService.getPath(req)
             }
           });
         }
@@ -439,7 +439,12 @@ class ApiService {
           // this.loginService.clearXtCookie(this.res);
           return Observable.combineLatest(
             this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
-            this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
+            this.loginService.setAllSvcInfo(this.req, this.res, resp.result),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          );
         } else {
           // return Observable.combineLatest(
           //   this.loginService.setSvcInfo(this.req, this.res, null),
@@ -447,7 +452,18 @@ class ApiService {
           throw resp;
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap(([select, all, ageResp]) => {
+        const curSvcInfo = {
+          age: 0
+        };
+        if ( ageResp ) {
+          if ( ageResp.code === API_CODE.CODE_00 ) {
+            curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
+          }
+        }
+        return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+      })
+      .switchMap(() => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           // return this.loginService.setChildInfo(this.req, this.res, resp.result);
@@ -512,13 +528,30 @@ class ApiService {
           Object.assign(curSvcInfo, resp.result);
 
           // this.loginService.clearXtCookie(this.res);
-          return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          )
         } else {
           // return this.loginService.setSvcInfo(this.req, this.res, null);
           throw resp;
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap(([resp, ageResp]) => {
+        const curSvcInfo = {
+          age: 0
+        };
+        if ( ageResp ) {
+          if ( ageResp.code === API_CODE.CODE_00 ) {
+            curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
+          }
+        }
+        return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+      })
+      .switchMap(() => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setAllSvcInfo(this.req, this.res, resp.result);
@@ -623,9 +656,9 @@ class ApiService {
    * @param params
    */
   private fillRoamingProperties(params: any) {
-    if (this.req) {
+    if ( this.req ) {
       const roamMcc = this.req.cookies['ROAMING_MCC'];
-      if (roamMcc && roamMcc !== '450' && roamMcc.length > 1) {
+      if ( roamMcc && roamMcc !== '450' && roamMcc.length > 1 ) {
         params.roamingYn = 'Y';
         params.mCntrCd = roamMcc;
       } else {
@@ -695,13 +728,32 @@ class ApiService {
         } else {
           throw resp;
         }
-      }).switchMap((resp) => {
+      })
+      .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(this.req, this.res, resp.result);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(this.req, this.res, resp.result),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          );
         } else {
           throw resp;
         }
-      }).map(() => {
+      })
+      .switchMap(([selectResp, ageResp]) => {
+        const curSvcInfo = {
+          age: 0
+        };
+        if ( ageResp ) {
+          if ( ageResp.code === API_CODE.CODE_00 ) {
+            curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
+          }
+        }
+        return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
+      })
+      .map(() => {
         return { code: API_CODE.CODE_00, result: result };
       });
   }
@@ -784,21 +836,41 @@ class ApiService {
     return this.request(API_CMD.BFF_01_0005, {})
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(this.req, this.res, resp.result);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(this.req, this.res, resp.result),
+            this.request(API_CMD.BFF_08_0080, {
+              mbrChlId: resp.result.mbrChlId,
+              svcMgmtNum: resp.result.svcMgmtNum
+            })
+          );
         } else if ( resp.code === 'BFF0030' ) {
           const svcInfo = this.loginService.getSvcInfo(this.req);
-          return this.loginService.setSvcInfo(this.req, this.res, new SvcInfoModel({
-            mbrNm: svcInfo.mbrNm,
-            // noticeType: svcInfo.noticeType,
-            twdAdRcvAgreeYn: svcInfo.twdAdRcvAgreeYn,
-            twdInfoRcvAgreeYn: svcInfo.twdInfoRcvAgreeYn,
-            twdLocUseAgreeYn: svcInfo.twdLocUseAgreeYn,
-            tplaceUseAgreeYn: svcInfo.tplaceUseAgreeYn,
-            loginType: svcInfo.loginType
-          }));
+          // 결과 동일한 구조로 하기 위해 combineLatest 사용
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(this.req, this.res, new SvcInfoModel({
+                mbrNm: svcInfo.mbrNm,
+                // noticeType: svcInfo.noticeType,
+                twdAdRcvAgreeYn: svcInfo.twdAdRcvAgreeYn,
+                twdInfoRcvAgreeYn: svcInfo.twdInfoRcvAgreeYn,
+                twdLocUseAgreeYn: svcInfo.twdLocUseAgreeYn,
+                tplaceUseAgreeYn: svcInfo.tplaceUseAgreeYn,
+                loginType: svcInfo.loginType
+              })
+            ));
         } else {
           throw resp;
         }
+      })
+      .switchMap(([selectResp, ageResp]) => {
+        const curSvcInfo = {
+          age: 0
+        };
+        if (ageResp) {
+          if ( ageResp.code === API_CODE.CODE_00 ) {
+            curSvcInfo.age = ageResp.result.age ? ageResp.result.age : '';
+          }
+        }
+        return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
@@ -900,7 +972,7 @@ class ApiService {
 
       const baseUrl = FormatHelper.isEmpty(referer) ? this.loginService.getFullPath(req) : req.baseUrl;
       const device = BrowserHelper.isApp(req) ? (BrowserHelper.isAndroid(req) ? 'A' : (BrowserHelper.isIos(req) ? 'I' : 'N')) : 'W';
-      const userInfo = {device: device};
+      const userInfo = { device: device };
       Object.assign(userInfo, FormatHelper.isEmpty(svcInfo) ? {} : {
         userId: svcInfo.userId || '',
         loginType: svcInfo.loginType || '',
@@ -929,7 +1001,7 @@ class ApiService {
         '\n userInfo: ', userInfo,
         '\n error: ', error
       );
-    } catch (err) {
+    } catch ( err ) {
       this.logger.error(this, 'Fail to write API error log');
     }
   }

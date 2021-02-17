@@ -14,7 +14,7 @@ _%>
           <dl class="report-define d-wrap">
             <%_ if (data.type === 1) { _%>
             <dt class="report-tit">사용 가능한 잔액</dt>
-            <dd class="report-cont"><%= data.paidBillInfo.amount %>원</dd>
+            <dd class="report-cont"><%= data.paidBillInfo.data %><%= data.paidBillInfo.unit %></dd>
             <%_ } else { _%>
             <dt class="report-tit">
               <%= data.paidBillInfo.showMonth %>
@@ -28,7 +28,10 @@ _%>
           </dl>
         </li>
       </ul>
-      <%_ if (data.type !== 1) { _%>
+      <%_
+      if (data.type !== 1) {
+        if (data.paymentInfo) {
+      _%>
       <div class="pay-info-wrap">
         <ul class="ico-list horizontal">
           <li class="item">
@@ -36,7 +39,7 @@ _%>
               <div class="ico-item">
                 <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
                 <div class="list-txt">
-                  <span class="item-sub-txt">요금안내서 설정</span>
+                  <span class="item-sub-txt">요금안내서 유형</span>
                   <span class="item-tit"><%= data.paymentInfo.billTypeNm %></span>
                 </div>
               </div>
@@ -55,7 +58,10 @@ _%>
           </li>
         </ul>
       </div>
-      <%_ } _%>
+      <%_
+        }
+      }
+      _%>
     </div>
   </div>
 </section>

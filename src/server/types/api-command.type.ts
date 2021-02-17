@@ -21,8 +21,8 @@ export const API_CMD = {
   // search
   // SEARCH_APP: { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   // SEARCH_WEB: { path: '/search/tworld/mobile-web', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
-  SEARCH_APP: { path: '/search/tworld/mobile-app3', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
-  SEARCH_WEB: { path: '/search/tworld/mobile-web3', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_APP: { path: '/search/tworld/mobile-app4', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB: { path: '/search/tworld/mobile-web4', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   RELATED_KEYWORD: { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   POPULAR_KEYWORD: { path: '/search/tworld/popword', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   SEARCH_AUTO_COMPLETE: { path: '/search/tworld/autocomplete', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
@@ -1095,6 +1095,7 @@ export const SESSION_CMD = {
 
 export const API_CODE = {
   CODE_00: '00', // success
+  CODE_01: '01', // 해당 값이 없습니다.
   BFF_0003: 'BFF0003', // 로그인 필요
   BFF_0004: 'BFF0004', // 접근 권한 필요
   BFF_0006: 'BFF0006', // BFF API 차단

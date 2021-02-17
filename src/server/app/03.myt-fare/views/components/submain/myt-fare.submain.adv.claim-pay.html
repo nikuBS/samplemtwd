@@ -4,8 +4,8 @@
 * @author 양정규
 * @since 2020.11.10
 %>
-<%_if(!data.isBroadBand && (data.claimPay || '0') === '0'){_%>
 <%# 청구 내역 없을때%>
+<%_if(!data.isBroadBand && (data.claimPay || '0') === '0'){_%>
 <% include ../components/submain/myt-fare.submain.non-data.html %>
 <%_ } else {
     const isRep = data.svcInfo.actRepYn === 'Y'; // 통합청구 대표여부
@@ -85,7 +85,7 @@ _%>
             </div>
             <%_} else if(guide.data) {_%>
             <div class="detail-charge-box">
-                <div class="detail-tit"><a href="/myt-fare/billguide/guide" data-make-eid="detailBill">요금 상세내역</a></div>
+                <div class="detail-tit"><a href="/myt-fare/billguide/guide" data-make-eid="detailBill">요금 상세 내역</a></div>
                 <ul class="report-list item-no-border fe-charge-list">
                     <%# 요금 상세내역 리스트 handlebars-template 영역%>
                 </ul>
@@ -111,7 +111,7 @@ _%>
                 const classNm = data.unPaidTotSum ? 'btn2' : '';
             _%>
             <div class="btn-area <%-classNm%>">
-                <a href="#" class="round-btn fe-payment" data-make-eid="charge">요금납부</a>
+                <a href="#" class="round-btn fe-payment" data-make-eid="charge">요금 납부</a>
                 <a href="/myt-fare/unbill" class="round-btn line <%- classNm ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
             </div>
             <%_}_%>

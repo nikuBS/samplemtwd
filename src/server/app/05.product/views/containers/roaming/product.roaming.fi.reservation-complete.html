@@ -1,44 +1,68 @@
 <%#
 * @file product.roaming.reservation-complete.html
-* @author Seungkyu Kim (ksk4788@pineone.com)
+* @author JongGu Kim (P165332)
 * @since 2018.11.16
 * ID: RM_14_02_03
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
+<body class="rm-content">
 <div class="wrap">
 
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
-
+        <div class="container">                
             <!-- .cont-box -->
             <div class="cont-box">
                 <h3 class="complete-title">
-                    <img src="<%= CDN %>/img/ico/icon-check01.png" alt=""/>
-                    <span>예약 신청이 정상적으로<br /><strong>완료되었습니다.</strong></span>
+                    <img src="<%= CDN %>/img/product/roam/rm-box-check.png" alt="">
+                    <span><strong>예약 신청이<br>완료되었습니다.</strong></span>
                 </h3>
-                <p class="complete-error-tx pt32">
-                    <span class="tx2">신청하신 baro Box는 <%= data.centerName %>에서 수령하실 수 있습니다.</span>
-                </p>
-                <div class="mapimg-area pt40"><img src="<%= CDN %>/img/product/<%= data.centerImg %>.png" alt="인천공항 1터미널 1층 로밍 센터"/></div>
-                <ul class="bt-slice mt30">
-                    <li class="bt-white2">
+                <div class="charge-guide-wrap top-line pt0 mt40">
+                    <ul id="fe-list" class="list-type">
+                        <li>
+                            <div class="basic-list">
+                                <ul>
+                                    <li>
+                                        <span class="title gray">방문 국가</span>
+                                     <!--   <span class="tx-cont">핀란드</span>-->
+                                        <span class="tx-cont"><%= data.rentInfo.countryArr %></span>
+                                    </li>
+                                    <li>
+                                        <span class="title gray">임대 기간</span>
+                                      <!--  <span class="tx-cont">2020.11.07 ~ 2020.11.07</span>-->
+                                        <span class="tx-cont"><%= data.rentInfo.rentfrom %> ~ <%= data.rentInfo.rentto %></span>
+                                    </li>
+                                    <li>
+                                        <span class="title gray">수령 장소</span>
+                                       <!-- <span class="tx-cont">인천공항 1터미널 3층 T로밍센터(F 카운터)</span>-->
+                                        <span class="tx-cont" id="fe-centerNm"></span>
+                                        
+                                    </li>										
+                                </ul>
+                            </div>								
+                        </li>
+                    </ul>
+                </div>
+                <div class="mapimg-area pt0">
+                    <img id="fe-centerImg" src="" alt=""/>
+                   <!-- <img src="/img/product/place-img-02-de.png" alt="인천공항 2터미널 3층  T로밍센터(D-E 카운터)">-->
+                    <p class="rm-tx-hour" id="fe-officehour"></p>
+                </div>
+                <ul class="bt-slice mt20">
+                    <li class="bt-roaming1">
                         <button id="fe-go-inquire">baro Box 예약 리스트 가기</button>
                     </li>
                 </ul>
             </div>
             <!--// .cont-box -->
-
-            <div class="bt-fixed-area">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button id="fe-ok">확인</button>
-                    </li>
-                </ul>
-            </div>
+            <ul class="bt-slice full">
+                <li class="bt-roaming2">
+                  <!--  <button id="fe-ok">확인</button>-->
+                    <button id="fe-ok" class="popup-closeBtn fe-common-back">확인</button>
+                </li>
+            </ul>
         </div>
     </div>
     <!--// #contents -->
@@ -49,8 +73,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingFiReservationComplete($('.wrap'));
+    var data = '<%- escape(JSON.stringify(data)) %>';
+    new Tw.ProductRoamingFiReservationComplete($('.wrap'),data,'<%=CDN%>');
   });
 </script>
-
 <% include ../../components/end.component.html %>

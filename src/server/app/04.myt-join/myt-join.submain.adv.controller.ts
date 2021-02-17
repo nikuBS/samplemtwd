@@ -35,8 +35,10 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
     const data = this._setData(req, res, next, svcInfo, allSvc, child, pageInfo);
+    // R: 일반법인, E:SWING 기준 법인, D: SKT 법인
+    data.isComLine = svcInfo.svcGr === 'R' || svcInfo.svcGr === 'E' || svcInfo.svcGr === 'D';
     // 간편로그인 경우 미노출 처리 필요
-    if (svcInfo.loginType !== 'S') {
+    if ( svcInfo.loginType !== 'S' ) {
       data.childLine = this.type === 0 && child && child.length ? ((items) => {
         return items.map((item) => {
           return {
@@ -58,7 +60,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
                    myjinfo, prodDisInfo, benefitInfo, billInfo, membership, sms, wirepause, payment]) => {
       const responses = [myline, myif, myhs, myap, mycpp, myinsp,
         myps, mylps, numSvc, wlap];
-      const newResponses = [myjinfo, prodDisInfo, benefitInfo, billInfo, membership,sms, wirepause, payment];
+      const newResponses = [myjinfo, prodDisInfo, benefitInfo, billInfo, membership, sms, wirepause, payment];
       this.__parsingRequestData({
         res, responses, data
       });
@@ -67,7 +69,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         res, responses: newResponses, data
       });
       // 다른 페이지를 찾고 계신가요 통계코드 추가
-      data.xtdTemp = this.getXtEidTemp(data.isApp);
+      data.xtdTemp = this.getXtEidTemp(data);
       res.render('myt-join.submain.adv.html', { data });
     });
   }
@@ -78,7 +80,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     // 가입개통정보
     data.myJoinInfo = myjinfo;
     // 개통/변경이력 마지막 정보
-    if (data.myHistory && data.myHistory.length) {
+    if ( data.myHistory && data.myHistory.length ) {
       data.myLastestHistory = {
         type: data.myHistory[data.myHistory.length - 1].chgCd,
         date: FormatHelper.replaceDateMasking(data.myHistory[data.myHistory.length - 1].chgDt)
@@ -95,19 +97,25 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       if ( data.myAddProduct.feePlanProd ) {
         Object.keys(data.myAddProduct.feePlanProd).forEach(key => {
           const value = data.myAddProduct.feePlanProd[key];
-          if ( key === 'svcScrbDt' ) {
+          if ( key === 'svcScrbDt' || key === 'scrbDt' ) {
             data.myAddProduct.feePlanProd[key] =
               DateHelper.getShortDateWithFormat(value || new Date(), 'YYYY.M.D.');
           }
-          if ( key === 'basFeeTxt' ) {
+          if ( key === 'basFeeTxt' || key === 'basFeeAmt' ) {
             data.myAddProduct.feePlanProd[key] = FormatHelper.addComma(value || 0);
+            // '상세참조' 문구가 넘어오는 case로 인해 구분
+            if ( FormatHelper.isNumber(value) ) {
+              data.myAddProduct.feePlanProd[key] += '원';
+            }
           }
         });
         // 유형별로 서비스 노출 항목 구분 필요
-        if (this.type === 2) {
+        if ( this.type === 2 ) {
           data.myAddProduct.inVisibleDisProd = true;
-        } else if (this.type === 3 || this.type === 1) {
+        } else if ( this.type === 1 ) {
           data.myAddProduct.inVisibleDisProd = true;
+          data.myAddProduct.inVisibleComProd = true;
+        } else if ( this.type === 3 ) {
           data.myAddProduct.inVisibleComProd = true;
         }
       }
@@ -119,25 +127,34 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     }
     // 납부/청구
     if ( billInfo ) {
-      data.paidBillInfo = {
-        amount: FormatHelper.addComma(billInfo.amt),
-        showMonth: DateHelper.getAddDays(billInfo.invDt, 1, 'M월'),
-        startDate: DateHelper.getShortFirstDate(billInfo.invDt),
-        endDate: DateHelper.getShortLastDate(billInfo.invDt),
-        isBroadBand: data.svcInfo.actCoClCd === 'B',
-        isUsageBill: !(data.svcInfo.actRepYn === 'Y')
-      };
+      if ( this.type === 1 ) {
+        // PPS 인 경우
+        data.paidBillInfo = billInfo.dataOnlyYn === 'Y' ?
+          FormatHelper.convDataFormat(billInfo.prodAmt, 'MB') : {
+            data: FormatHelper.addComma(billInfo.prodAmt),
+            unit: '원'
+          };
+      } else {
+        data.paidBillInfo = {
+          amount: FormatHelper.addComma(billInfo.amt),
+          showMonth: DateHelper.getAddDays(billInfo.invDt, 1, 'M월'),
+          startDate: DateHelper.getShortFirstDate(billInfo.invDt),
+          endDate: DateHelper.getShortLastDate(billInfo.invDt),
+          isBroadBand: data.svcInfo.actCoClCd === 'B',
+          isUsageBill: !(data.svcInfo.actRepYn === 'Y')
+        };
+      }
     }
 
     // 망 알림 정보
-    if (sms) {
+    if ( sms ) {
       data.smsInfo = sms;
     }
 
-    if (wirepause) {
+    if ( wirepause ) {
       data.myWirePauseState = wirepause;
     }
-
+    // 납부/청구 유형
     if ( payment ) {
       data.paymentInfo = payment;
     }
@@ -148,7 +165,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       this._getMyLine(),
       this._getMyInfo(),
       this._getMyHistory(),
-      this._getAddtionalProduct(),
+      this._getAddtionalAdvProduct(),
       this._getContractPlanPoint(),
       this._getInstallmentInfo(),
       this._getPausedState(),
@@ -178,7 +195,42 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       svcNum: svcInfo.svcNum
     }).map(resp => resp.code === API_CODE.CODE_00 ? resp.result : null);
   }
-1
+
+  /**
+   * 무선 회선인 경우 기존 05_0161로 요청 (AS-IS 영향도 없도록 처리)
+   */
+  _getAddtionalAdvProduct() {
+    // 유선과 나머지 회선 구분하여 BFF 호출
+    if ( this.type === 2 ) { // 유선회선일때
+      return Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_05_0179, {}), // 부가상품 갯수 조회
+        this.apiService.request(API_CMD.BFF_05_0133, {}) // 유선 결합상품 조회. BFF 매핑 등록하기
+      ).map(([additionResp, combinationsResp]) => {
+        const addition = additionResp.code === API_CODE.CODE_00 ? additionResp.result : null;
+        const combinations = combinationsResp.code === API_CODE.CODE_00 ? combinationsResp.result : null;
+        const comProdCnt = combinations.combinationMemberCnt ?
+          parseInt(combinations.combinationMemberCnt || 0, 10) : combinations.combinationMemberList ?
+            combinations.combinationMemberList.length : 0
+        return {
+          feePlanProd: addition.feePlanProd || null,
+          addProdPayCnt: parseInt(addition.payAdditionCount || 0, 10), // 유료 부가상품
+          addProdPayFreeCnt: parseInt(addition.freeAdditionCount || 0, 10), // 무료 부가상품
+          additionCount: parseInt(addition.additionCount || 0, 10), // 총 부가상품 건수
+          comProdCnt // 결합상품
+        };
+      });
+    }
+
+    return this.apiService.request(API_CMD.BFF_05_0161, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        // feePlanProd -> 가입요금제정보
+        return resp.result;
+      }
+      // error
+      return null;
+    });
+  }
+
   /**
    * 약정할인 및 단말분할상환정보 V2
    */
@@ -350,11 +402,14 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
   }
 
   /**
-   * 요금카드 (청구, 이용)
+   * 요금카드 (청구, 이용), PPS 인 경우 잔액 조회
    * @param svcInfo
    */
   _getBillInfo(svcInfo) {
-    const cmd = svcInfo.actRepYn === 'Y' ? API_CMD.BFF_04_0009 : API_CMD.BFF_04_0008;
+    let cmd = svcInfo.actRepYn === 'Y' ? API_CMD.BFF_04_0009 : API_CMD.BFF_04_0008;
+    if ( this.type === 1 ) {
+      cmd = API_CMD.BFF_05_0013;
+    }
     return this.apiService.request(cmd, {})
       .map(resp => resp.code === API_CODE.CODE_00 ? resp.result : null);
   }
@@ -404,7 +459,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
    * 유선인 경우 SMS 정보 조회
    */
   _getWireSmsInfo() {
-    if (this.type !== 2) {
+    if ( this.type !== 2 ) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_05_0092, {})
@@ -415,20 +470,20 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
    * 유선인 경우에 유선 일시정지 상태
    */
   _getWirePauseStateInfo() {
-    if (this.type !== 2) {
+    if ( this.type !== 2 ) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_05_0169, {})
-      .map(resp => resp.code === API_CODE.CODE_00 || resp.code === 'MOD0031'? resp.result : null);
+      .map(resp => resp.code === API_CODE.CODE_00 || resp.code === 'MOD0031' ? resp.result : null);
   }
 
   /**
    * 다른메뉴 템플릿
    */
-  getXtEidTemp(isApp) {
+  getXtEidTemp(data) {
     // event로 별도 처리 되는 경우 url 내 data-id 속성으로 하여 별도로 관리 필요
     if ( this.type === 2 ) {
-      return [
+      const tempList = [
         {
           name: '나의 데이터/통화', url: '/myt-data/submain',
           xt_eid: 'CMMA_A3_B13-56', icon: 'sub-ben-ico16.svg'
@@ -454,8 +509,28 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico16.svg'
         },
         {
-          name: '내게 맞는 결합상품', url: '/product/mobileplan',
+          name: '내게 맞는 결합상품 찾기', url: '/product/wireplan',
           xt_eid: 'CMMA_A3_B13-79', icon: 'submain-ico07.svg'
+        }
+      ];
+      if ( data.svcInfo.svcAttrCd !== 'S1' || data.svcInfo.svcAttrCd !== 'S3' ) {
+        // 인터넷/전화 외 회선 인 경우에는 나의 데이터/통화 항목 미노출
+        tempList.splice(0, 1);
+      }
+      return tempList;
+    } else if ( this.type === 1 ) {
+      return [
+        {
+          name: '나의 데이터/통화', url: '/myt-data/submain',
+          xt_eid: 'CMMA_A3_B13-56', icon: 'submain-ico16.svg'
+        },
+        {
+          name: '요금안내서', url: '/myt-fare/billguide/guide',
+          xt_eid: 'CMMA_A3_B13-57', icon: 'sub-ben-ico06.svg'
+        },
+        {
+          name: '회원정보', url: '/common/member/manage',
+          xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico16.svg'
         }
       ];
     } else {
@@ -489,10 +564,21 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-62', icon: 'sub-ben-ico06.svg'
         }
       ];
-      if (!isApp) {
+      if ( !data.isApp ) {
         // 모바일 웹인 경우 인증센터 항목 가리고 요금제 변경 위치 변경
         tempList[3] = tempList[5];
         tempList.splice(5, 1);
+      }
+      // 법인 회선 또는 포켓파이, 티로그인 인 경우 콘텐츠 이용 및 인증센터 항목 제거
+      if ( data.isComLine || this.type === 3 ) {
+        tempList.splice(tempList.length - 1, 1);
+        if ( data.isApp ) {
+          tempList.splice(3, 1);
+        } else {
+          const moveIdx = tempList.length - 2;
+          const target = tempList.splice(tempList.length - 1, 1)[0];
+          tempList.splice(moveIdx, 0, target);
+        }
       }
 
       return tempList;
