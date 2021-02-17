@@ -76,7 +76,6 @@ Tw.ProductRenewalSubmain.prototype = {
    * @private
    */
   _successTosAdminProductBanner: function (banner, admBanner) {
-    // console.log(admBanner);
     var result = [
       { target: 'T', banner: banner },
       { target: 'C' }
@@ -100,15 +99,13 @@ Tw.ProductRenewalSubmain.prototype = {
         };
       }
 
-      if( admBanner.code === Tw.API_CODE.CODE_00 ){
-        console.log(row.banner);
+      if( admBanner.code === Tw.API_CODE.CODE_00 ) {
         row.banner.result.imgList = row.banner.result.imgList.concat( 
           admBanner.result.banners.filter(function(admbnr) {
             return admbnr.bnnrLocCd === row.target;
           }).map( function(admbnr) {
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
             admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-            console.log('####', admbnr);
             return admbnr;
           })
         );
@@ -181,19 +178,11 @@ Tw.ProductRenewalSubmain.prototype = {
    * @param {*} redisData 
    */
   _successRedis: function(redisData) {
-    if( redisData.code === Tw.API_CODE.CODE_00 ) {  
-      // console.log("###########");
-      // console.log(redisData.result);
-      // console.log("###########");
-
-      var quickFilterParseList = this._parseQuickFilterRedisData(redisData.result);
-      var themeBannerParseList = this._parseBannerThemeRedisData(redisData.result);
-      var promotionParseList = this._parsePromotionRedisData(redisData.result);
+    if( redisData.code === Tw.API_CODE.CODE_00 ) { 
+      this._parseQuickFilterRedisData(redisData.result);
+      this._parseBannerThemeRedisData(redisData.result);
+      this._parsePromotionRedisData(redisData.result);
       
-      this._drawQuickFilterBanner(quickFilterParseList, this); // 퀵 필터 데이터를 draw
-      this._drawThemeBanner(themeBannerParseList, this); // 배너형 테마를 draw
-      this._drawPromotionBanner(promotionParseList, this); // 프로모션 배너를 draw
-
     } else { // redis 결과 값 코드가 '00'(정상 처리)가 아니라면 모든 filter의 html 객체를 삭제.
       this._clearAllFilters();
     }
@@ -202,6 +191,45 @@ Tw.ProductRenewalSubmain.prototype = {
   },
 
 
+  
+
+  
+
+
+
+
+  /**
+   * 퀵 필터 Redis 값을 parsing
+   * @param {*} redisData 
+   */
+  _parseQuickFilterRedisData: function(redisData) {
+    var NETWORK_TAG_TYPES = {
+      'W' : 'TAG0000202', // 3G
+      'L' : 'TAG0000201', // LTE
+      'F' : 'TAG0000200', // 5G
+      'E' : 'TAG0000203', // 2nd Device
+      'P' : 'TAG0000204', // PPS
+    }
+    
+    var networkTagType = NETWORK_TAG_TYPES[this._line.deviceCode];
+    var quickFilterParseList = _.reduce(redisData.banners, function(arr, item) {
+      if ( item.bnnrLocCd === 'Q' ) { // 퀵 필터 (Q)
+        var filter = _.filter(item.tagMappInfo, function(mapping) {
+          if ( mapping.tagId === networkTagType ) {
+            return item;
+          }
+        }) || [];
+        
+        if ( filter.length > 0) {
+          arr.push(item);
+        }
+      }
+      return arr;
+    }, []);
+
+    this._drawQuickFilterBanner(quickFilterParseList, this); // 퀵 필터 데이터를 draw
+  },
+
   /**
    * 퀵 필터 배너를 랜딩하기 위한 함수
    * @param {*} quickFilterParseList parsing 된 퀵 필터 데이터
@@ -209,7 +237,7 @@ Tw.ProductRenewalSubmain.prototype = {
    */
   _drawQuickFilterBanner: function(quickFilterParseList, _this) {
     if ( quickFilterParseList.length === 0 ) {
-      this._clearAllFilters(); // quick filter 결과값이 없으면 quick filter section을 삭제한다.
+      this.$container.find('section[data-sort="QUICK_FILTER"]').addClass('none'); // quick filter 결과값이 없으면 quick filter section을 none한다.
       return;
     } 
 
@@ -249,13 +277,138 @@ Tw.ProductRenewalSubmain.prototype = {
     
   }, 
 
+
+
+
+
+  /**
+   * 테마 배너 Redis 값을 parsing
+   * @param {*} redisData 
+   */
+  _parseBannerThemeRedisData: function(redisData) {
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
+      .always($.proxy(function(res) {
+        var age = 0;
+        if (res.code === Tw.API_CODE.CODE_00) {
+           age = res.result.age;
+        } 
+
+        // 코드값에 유연하게 대응하기 위해 from~to를 지정하여 관리한다.
+        // 12세 이하, 24세 이하로 설정되있고 회선을 보유한 사용자의 만 나이가 54세라면 리턴되는 항목은 없고
+        // 회선을 보유한 사용자의 만 나이가 22세라면 리턴되는 항목이 존재하게 됨
+        var AGE_SCOPE = {
+          'TAG0000205' : {'from' : 0, 'to': 999}, // 연령 디폴트 (모든 사용자에게 출력됨) 
+          'TAG0000206' : {'from' : 0, 'to': 12}, // 12세 이하 (0~12)
+          'TAG0000207' : {'from' : 13, 'to': 18}, // 18세 이하 (13~18)
+          'TAG0000208' : {'from' : 18, 'to': 24}, // 24세 이하 (19~24)
+          'TAG0000209' : {'from' : 25, 'to': 39}, // 25세 이상 39세 이하 (25~39) - 특이 케이스
+          'TAG0000210' : {'from' : 40, 'to': 64}, // 40세 이상 64세 이하 (40~64) - 특이 케이스
+          'TAG0000211' : {'from' : 65, 'to': 999}, // 65세 이상 (65~999)
+        }
+
+        var themeBannerParseList = _.reduce(redisData.banners, function(arr, item) {
+          if ( item.bnnrLocCd === 'H' ) { // 테마형 배너 (H)
+            var list = _.reduce(item.tagMappInfo, function(scopeArr, tagItem) {
+              if ( Object.keys(AGE_SCOPE).indexOf(tagItem.tagId) > -1 ) { // AGE_SCOPE의 KEY에 해당되는 tagId가 존재하면?
+                scopeArr.push(AGE_SCOPE[tagItem.tagId]);
+              }
+
+              return scopeArr;
+            }, []);
+
+            if ( list.length !== 0 ) {
+              var compare = _.filter(list, function(scope) {
+                if ( age >= scope.from && age <= scope.to ) { // scope의 범위에 속하는지 체크 
+                  return true;
+                }
+              })
+
+              if ( compare.length !== 0 ) {
+                arr.push(Object.assign(item, { // 추가적인 정보를 assign 함.
+                  scopeTarget: Number(age),
+                  scope: list
+                }));
+              }              
+              return arr;
+            }
+          }
+          return arr;
+        }, []);
+
+        console.log("=====");
+        console.log(age);
+        console.log(themeBannerParseList);
+        console.log("=====");
+
+        this._drawThemeBanner(themeBannerParseList, this); // 배너형 테마를 draw
+      }, this));
+  },
+
+
   /**
    * 테마형 배너를 랜딩하기 위한 함수
    * @param {*} bannerThemeParseList 
    * @param {*} _this 
    */
-  _drawThemeBanner: function(bannerThemeParseList, _this) {
+  _drawThemeBanner: function(themeBannerParseList, _this) {
+    if ( themeBannerParseList.length === 0 ) {
+      this.$container.find('section[data-sort="THEME_BANNER"]').addClass('none'); // 테마형 배너가 없으면 결과값이 없으면 테마형 배너의 section을 none한다.
+      return;
+    } 
 
+    console.log("########");
+    console.log(themeBannerParseList);
+    console.log("########");
+    
+    var $themeBanner = this.$container.find('section[data-sort="THEME_BANNER"]');
+    var $sliderList = $themeBanner.find('.slider-list');
+
+    var themeBannerHandle = Handlebars.compile(Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER);
+    var html = themeBannerHandle({
+      CDN: Tw.Environment.cdn, // template.type.js의 파일 내용을 꼭 변경해야함!
+      banners: themeBannerParseList
+    });
+
+    $sliderList.append(html);
+
+    $(document).on('click', '.theme-item', function(event) {
+      var dataOption = $(this).data('option');
+      var dataLink = $(this).data('link');
+
+      if ( dataOption || dataLink ) {
+        switch ( dataOption ) {
+          case 'B': // 외부링크 이동 시 
+            Tw.CommonHelper.openUrlExternal(dataLink);
+            break;
+          case 'S': // 앱 내 이동 시
+            window.location.href = dataLink;
+            break;
+          case 'N': // 테마 전체보기로 이동 시
+            window.location.href = '/product/renewal/mobileplan/list?theme=' + dataLink;
+            break;
+        }
+      }
+    });
+  },
+
+
+
+
+
+  /**
+   * 프로모션 Redis 값을 parsing
+   * @param {*} redisData 
+   */
+  _parsePromotionRedisData: function(redisData) {
+    var promotionParseList = _.reduce(redisData.banners, function(arr, item) {
+      if ( item.bnnrLocCd === 'B' ) { // 프로모션 (B)
+        console.log("BB =====>>> ", item);
+      }
+      return arr;
+    }, []);
+
+    this._drawPromotionBanner(promotionParseList, this); // 프로모션 배너를 draw
   },
 
   /**
@@ -272,101 +425,6 @@ Tw.ProductRenewalSubmain.prototype = {
 
 
 
-
-
-
-
-
-
-
-  /**
-   * 퀵 필터 Redis 값을 parsing
-   * @param {*} redisData 
-   */
-  _parseQuickFilterRedisData: function(redisData) {
-    var NETWORK_TAG_TYPES = {
-      'W' : 'TAG0000202', // 3G
-      'L' : 'TAG0000201', // LTE
-      'F' : 'TAG0000200', // 5G
-      'E' : 'TAG0000203', // 2nd Device
-      'P' : 'TAG0000204', // PPS
-    }
-    
-    var networkTagType = NETWORK_TAG_TYPES[this._line.deviceCode];
-    return _.reduce(redisData.banners, function(arr, item) {
-      if ( item.bnnrLocCd === 'Q' ) { // 퀵 필터 (Q)
-        var filter = _.filter(item.tagMappInfo, function(mapping) {
-          if ( mapping.tagId === networkTagType ) {
-            return item;
-          }
-        }) || [];
-        
-        if ( filter.length > 0) {
-          arr.push(item);
-        }
-      }
-      return arr;
-    }, []);
-  },
-
-
-  /**
-   * 테마 배너 Redis 값을 parsing
-   * @param {*} redisData 
-   */
-  _parseBannerThemeRedisData: function(redisData) {
-    this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
-      .done($.proxy(function (res) {
-        var AGE_SCOPE = {
-          'TAG0000206' : {'from' : 0, 'to': 12}, // 12세 이하 (0~12)
-          'TAG0000207' : {'from' : 0, 'to': 18}, // 18세 이하 (0~18)
-          'TAG0000208' : {'from' : 0, 'to': 24}, // 24세 이하 (0~24)
-          'TAG0000209' : {'from' : 25, 'to': 39}, // 25세 이상 39세 이하 (25~39) - 특이 케이스
-          'TAG0000210' : {'from' : 40, 'to': 64}, // 40세 이상 64세 이하 (40~64) - 특이 케이스
-          'TAG0000211' : {'from' : 65, 'to': 999}, // 65세 이상 (65~999)
-        }
-
-        var age = -1;
-        if (res.code === Tw.API_CODE.CODE_00) {
-          age = res.result.age;
-        }
-
-        return _.reduce(redisData.banners, function(arr, item) {
-          if ( item.bnnrLocCd === 'H' ) { // 테마형 배너 (H)
-            var tagMappingList = _.reduce(item.tagMappInfo, function(tagArr, tagItem) {
-              if ( Object.keys(AGE_SCOPE).index(tagItem.tagId) > 0 ) {
-                console.log('1 ===>> ', AGE_SCOPE[tagItem.tagId]);
-                tagArr.push(tagItem);
-              }
-              return tagArr;
-            }, []);
-
-
-            console.log("age =====>>> ", age);
-            console.log("HH =====>>> ", item);
-          
-          }
-          return arr;
-        }, []);
-
-      }, this))
-      .fail(function (error) {
-        Tw.Logger.info(error.code, error.msg);
-    });
-  },
-
-  /**
-   * 프로모션 Redis 값을 parsing
-   * @param {*} redisData 
-   */
-  _parsePromotionRedisData: function(redisData) {
-    return _.reduce(redisData.banners, function(arr, item) {
-      if ( item.bnnrLocCd === 'B' ) { // 프로모션 (B)
-        console.log("BB =====>>> ", item);
-      }
-      return arr;
-    }, []);
-  },
 
 
   /**
