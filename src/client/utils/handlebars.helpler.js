@@ -63,4 +63,9 @@ Tw.HandlebarHelper = (function () {
     }
     return targetStr;
   });
+
+  Handlebars.registerHelper('sum', function(num) {
+    return (num*1) + 1;
+  });
+
 })();
