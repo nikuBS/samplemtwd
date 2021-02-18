@@ -10,7 +10,7 @@
     // 자녀회선 있을때만 노출
     if (childInfo.length > 0) {
 _%>
-<section class="cont-card fe-child-area">
+<section class="cont-card fe-child-area" data-child-cnt="<%-childInfo.length%>">
     <div class="section-inner">
         <div class="head-tit">자녀의 회선을 확인해 보세요</div>
         <div class="card-cont minus-mg">
@@ -19,12 +19,12 @@ _%>
                 <div class="widget">
                     <div class="widget-box slider6">
                         <div class="slider-box">
-                            <div class="slider fe-child-list"><!-- ul -->
+                            <div class="slider"><!-- ul -->
                                 <%_childInfo.map( item => {_%>
                                 <div class="slider-item"><!-- li -->
                                     <a href="<%-`/myt-fare/billguide/child?line=${item.svcMgmtNum}&date=${claimDt}`%>" class="slider-inner" data-make-eid="child">
                                         <dl class="child-info">
-                                            <dt class="name">자녀휴대폰</dt>
+                                            <dt class="name"><%-item.eqpMdlNm || '휴대폰'%></dt>
                                             <dd class="tel"><%-item.svcNum%></dd>
                                         </dl>
                                         <ul class="report-list item-no-border">
@@ -47,5 +47,11 @@ _%>
         </div>
     </div>
 </section>
+
+<script>
+  skt_landing.widgets.widget_slider6(null, {
+    dots: $('.fe-child-area').data('child-cnt') || 0 > 1
+  });
+</script>
 
 <%_}_%>
