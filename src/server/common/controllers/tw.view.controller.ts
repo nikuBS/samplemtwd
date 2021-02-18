@@ -230,41 +230,22 @@ abstract class TwViewController {
    * @param params
    * @protected
    */
-  protected getAdvancementPageVisibleCheck(params): Observable<any> {
-    const { menuId, host } = params;
+  protected getAdvancementPageVisibleCheck(menuId): Observable<any> {
     return this._apiService.request(API_CMD.BFF_01_0069, {
       property: REDIS_KEY.ADVANCEMENT_PAGE_VISIBLE
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        // 예외 오류 케이스가 발생시 대처
-        try {
-          if (FormatHelper.isEmpty(resp.result)) {
-            return null;
-          }
-          const selectItem = resp.result.split(',').filter(item => menuId === item.split(':')[0]);
-          if (FormatHelper.isEmpty(selectItem)) {
-            return null;
-          }
-          const env = selectItem[0].split(':')[1];
-          const visible = parseInt(selectItem[0].split(':')[2], 10) === 1;
-          this.logger.error(this, 'host::: '+ host +' env:::: '+ env + ' ===> ' + env.includes('-g'));
-          // 상용환경인 경우 green, blue 구분 하기 위한 코드 추가 (green: 'prd-g', blue: 'prd')
-          // green 환경은 기존 NODE_ENV 값에 '-g'을 추가하여 처리
-          if (host.includes('gapp') && env.includes('-g')) {
-            // 무조건 그린환경인 경우
-            return {
-              env: env.replace('-g', ''),
-              visible
-            }
-          }
-          return {
-            env,
-            visible
-          };
-        } catch (e) {
-          this.logger.warn(this, '[getAdvancementPageVisibleCheck] error ::: '+ e);
+        if (FormatHelper.isEmpty(resp.result)) {
           return null;
         }
+        const selectItem = resp.result.split(',').filter(item => menuId === item.split(':')[0]);
+        if (FormatHelper.isEmpty(selectItem)) {
+          return null;
+        }
+        return {
+          env: selectItem[0].split(':')[1],
+          visible: parseInt(selectItem[0].split(':')[2], 10) === 1
+        };
       } else {
         return null;
       }
@@ -319,7 +300,7 @@ abstract class TwViewController {
           if ( isLogin ) {
             Observable.combineLatest(
                 this.getPersonSmsDisableTimeCheck(),
-                this.getAdvancementPageVisibleCheck({ menuId: urlMeta.menuId, host: req.hostname })
+                this.getAdvancementPageVisibleCheck(urlMeta.menuId)
             ).subscribe(([personResp, advancementResp]) => {
               svcInfo.personSmsDisableTimeCheck = personResp;
               urlMeta.advancement = advancementResp;
