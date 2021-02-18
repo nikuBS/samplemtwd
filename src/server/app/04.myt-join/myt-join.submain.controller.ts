@@ -93,12 +93,14 @@ class MyTJoinSubmainController extends TwViewController {
     Observable.combineLatest(
         requestApiList
     ).subscribe((responses) => {
-      this.__parsingRequestData({
+      const _parsing = this.__parsingRequestData({
         res, responses, data
       });
-      // 다른 페이지를 찾고 계신가요 통계코드 추가
-      this.getXtEid(data);
-      res.render('myt-join.submain.html', { data });
+      if (_parsing) {
+        // 다른 페이지를 찾고 계신가요 통계코드 추가
+        this.getXtEid(data);
+        res.render('myt-join.submain.html', { data });
+      }
     });
   }
 
@@ -196,6 +198,7 @@ class MyTJoinSubmainController extends TwViewController {
         return false;
       }
     } else {
+      console.log(myif.info);
       if (myif.info) {
         this.error.render(res, {
           title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
@@ -207,6 +210,7 @@ class MyTJoinSubmainController extends TwViewController {
         return false;
       }
     }
+    console.log('################################');
     data.type = this.type;
     data.isPwdSt = this.isPwdSt;
     // 가입회선정보

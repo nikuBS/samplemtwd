@@ -5,7 +5,7 @@
 * @since 2021.01.281
 _%>
 
-<section class="cont-card">
+<section class="cont-card" data-id="service-area">
     <div class="section-inner">
         <div class="head-tit">조회/신청 서비스</div>  <!-- 201211 [OP002-10282] 수정01  -->
         <div class="card-cont">
@@ -29,7 +29,8 @@ _%>
                                     // 정지상태 여부
                                     var defaultPausedState = !!(data.myPausedState && data.myPausedState.svcStCd);
                                     _%>
-                                    <%_ if(defaultPausedState) {
+                                    <%_ if((data.type === 0 || data.type === 2) && defaultPausedState) {
+                                        // PPS, T-login, T-PocketFi 제외
                                         // 일시정지 신청 가능 유무
                                         var isJoinPause = (data.myPausedState.svcStCd === 'AC') &&
                                         ((data.myLongPausedState && data.myLongPausedState.state) ?
