@@ -158,17 +158,11 @@ class MytDataSubmainAdvController extends TwViewController {
       }
 
       // 데이터혜택/활용하기 영역
-      if ( data.svcInfo.svcAttrCd === 'M1' || data.svcInfo.svcAttrCd === 'M4' ) {
-        // 휴대폰,  T-Login  경우 노출 (고도화)
+      if ( data.svcInfo.svcAttrCd === 'M1' || data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
+        // 휴대폰, T pocket Fi,  T-Login  경우 노출 (고도화)
         data.isBenefit = true;
         data.isPrepayment = true;
         data.immCharge = true;
-      }
-
-      // T-pocket fi 가입자
-      if ( data.svcInfo.svcAttrCd === 'M3' ) {
-        data.isBenefit = true; // 데이터 충전소 배너
-        data.isPrepayment = true; // 선불 쿠폰 구매/충전
       }
 
       // T끼리 데이터선물 영역 (간편로그인 경우 영역 비노출)
