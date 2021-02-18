@@ -342,7 +342,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     // 최근 6개월 청구내역이 없는경우, 당월 가입자인지 확인한다.
     this.checkNewMember(data).subscribe( resp => {
       data = resp;
-      if (!isRep || data.isNewMember) {
+      if (!isRep) {
         return;
       }
       /*
@@ -350,26 +350,32 @@ export default class MyTFareSubmainAdvController extends TwViewController {
           해당월 청구요금, 부분납부한 요금, 잔여납부 금액, 미납
        */
       // 청구금액
+      const claimPay = this.getInt(data.claimPay) || 0;
       // 당월 납부해야할 금액
-      let remainPayment = this.getInt(data.claimPay);
+      // let remainPayment = this.getInt(data.claimPay);
+      let remainPayment = 0;
       // 미납금액: 조회월의 이전 미납금액들의 sum
       let unpaid = 0;
       ((data.nonpayment || {}).unPaidAmtMonthInfoList || []).map( unpay => {
         const unPaidAmt = this.getInt(unpay.unPaidAmt);
-        // 선택월 납부해야할 금액
+        /*
+            # 선택월 납부해야할 금액
+            당월 청구금액 납부일자가 도래하지 않아 아직 납부를 안한경우 또는, 당월 청구금액 중 일부만 납부 후 남은 잔액을
+            미납금액 리스트에 당월 날짜로 포함하여 주고있다.
+         */
         if (unpay.unPaidInvDt === date) {
           remainPayment = unPaidAmt;
         }
         // 선택월보다 이전 미납액들의 총 합계
-        if (DateHelper.getDiffByUnit(unpay.unPaidInvDt, date, 'days') < 1) {
-        // if (DateHelper.isBefore(unpay.unPaidInvDt, date)) {
+        // if (DateHelper.getDiffByUnit(unpay.unPaidInvDt, date, 'days') < 1) {
+        if (DateHelper.isBefore(unpay.unPaidInvDt, date)) {
           unpaid += unPaidAmt;
         }
       });
-      // 부분 납부한 금액: 청구금액 - 납부해야하는 금액
-      const prepay = this.getInt(data.claimPay) - this.getInt(remainPayment);
+      // 부분 납부한 금액: 청구금액 - 선택월 납부해야하는 금액
+      const prepay = this.getInt(claimPay) - this.getInt(remainPayment || claimPay);
       Object.assign(data, {
-        totalClaim: this.addComma(remainPayment + unpaid + prepay),
+        totalClaim: this.addComma((remainPayment || claimPay) + unpaid + prepay),
         prepay: this.addComma(prepay),
         remainPayment: this.addComma(remainPayment),
         unpaid: this.addComma(unpaid)
@@ -392,7 +398,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         isPaid: remainPayment.toString() === '0', // 납부 여부(예정, 완료)
         payCode,
         payDate
-        // payDate: dateOfPayType[payCode] ? DateHelper.getShortDate(dateOfPayType[payCode]) : ''
       };
     });
 
@@ -507,7 +512,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     });
   }
 
-  // 미납요금조회(성능개선항목으로 미조회)
+  // 미납요금조회
   private _getNonPayment() {
     return this.apiService.request(API_CMD.BFF_05_0030, {}).map((resp) => {
       return resp.code !== API_CODE.CODE_00 || resp.result.unPaidTotSum === '0' ? null : resp.result;
@@ -517,7 +522,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   // 납부/청구 정보 조회
   private _getPaymentInfo() {
     return this.apiService.request(API_CMD.BFF_05_0058, {}).map((resp) => {
-      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+      return resp.code === API_CODE.CODE_00 ? resp.result : undefined;
     });
   }
 

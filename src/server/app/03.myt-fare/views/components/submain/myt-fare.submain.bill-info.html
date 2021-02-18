@@ -5,9 +5,9 @@
 * @since 2020.12.23
 %>
 <%_
-    const {paymentInfo, type} = data;
+    const {paymentInfo = {}, type} = data;
     // 청구 대표일때만 노출
-    if (paymentInfo && type !== 'UF') {
+    if (type !== 'UF') {
 _%>
 <section class="cont-card">
     <div class="section-inner">
@@ -25,7 +25,7 @@ _%>
                             <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico01.svg" alt=""></i>
                             <div class="list-txt">
                                 <span class="item-sub-txt">납부 방법</span>
-                                <span class="item-tit"><%= paymentInfo.payMthdNm %></span>
+                                <span class="item-tit"><%- paymentInfo.payMthdNm || '-'%></span>
                             </div>
                         </div>
                     </a>
@@ -36,7 +36,7 @@ _%>
                             <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico02.svg" alt=""></i>
                             <div class="list-txt">
                                 <span class="item-sub-txt">요금안내서 유형</span>
-                                <span class="item-tit"><%= paymentInfo.billTypeNm %></span>
+                                <span class="item-tit"><%- paymentInfo.billTypeNm || '-'%></span>
                             </div>
                         </div>
                     </a>
@@ -47,7 +47,7 @@ _%>
                             <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico03.svg" alt=""></i>
                             <div class="list-txt">
                                 <span class="item-sub-txt">주소/연락처</span>
-                                <span class="item-tit">조회 / 변경</span>
+                                <span class="item-tit">조회/변경</span>
                             </div>
                         </div>
                     </a>
