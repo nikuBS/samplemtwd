@@ -318,7 +318,7 @@ abstract class TwViewController {
           if ( isLogin ) {
             Observable.combineLatest(
                 this.getPersonSmsDisableTimeCheck(),
-                this.getAdvancementPageVisibleCheck(urlMeta.menuId)
+                this.getAdvancementPageVisibleCheck({ menuId: urlMeta.menuId, host: req.hostname })
             ).subscribe(([personResp, advancementResp]) => {
               svcInfo.personSmsDisableTimeCheck = personResp;
               urlMeta.advancement = advancementResp;
