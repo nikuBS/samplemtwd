@@ -22,8 +22,8 @@ import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import { flatMap } from 'rxjs/operators';
 
-// section sort 정보가 없을 때 기본값을 아래로 세팅하기 위해 (기본값: 테마배너, 퀵필터, 테마리스트 순)
-const DEFAULT_SORT_SECTION = 'QUICK_FILTER,THEME_BANNER,THEME_LIST';
+// section sort 정보가 없을 때 기본값을 아래로 세팅하기 위해 (기본값: 테마배너, 테마리스트 순)
+const DEFAULT_SORT_SECTION = 'THEME_LIST,THEME_BANNER';
 
 // 부가서비스 타입
 enum ADDITION_TYPE {
@@ -69,6 +69,13 @@ enum FILTER_STYLE_CODES {
   'F01121' = 'i-tag-cr2', // LTE
   'F01713' = 'i-tag-cr1', // 5G
   'F01124' = 'i-tag-cr3', // 2ndDevice 
+}
+
+// 리스트 형 테마코드
+enum LIST_THEME_CODE {
+  'TAG0000212' = 'TAG0000212', // 기본 형
+  'TAG0000213' = 'TAG0000213', // 데이터 강조형
+  'TAG0000214' = 'TAG0000214', // 혜택 강조형
 }
 
  // 손실보전 부가서비스 정보
@@ -172,21 +179,21 @@ export default class RenewProduct extends TwViewController {
           Observable.combineLatest(
             this.getMyPayment(svcInfo) // 사용중인 요금제 조회
             , this.isPiAgree(svcInfo) // 개인정보 동의 조회
-            , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
+            // , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
             , this.getSortSection(line) // 섹션 순서 데이터를 조회
             , this.getThemeListData(line, svcInfo) // 리스트 형 테마 데이터를 조회
             , this.getMyAge(svcInfo) // 나의 나이를 리턴받음
           ).subscribe(([
             payment // 사용중인 요금제 데이터 결과 값
             , isPiAgree // 개인정보 동의 여부
-            , additions // 사용중인 부가서비스 결과 값
+            // , additions // 사용중인 부가서비스 결과 값
             , sortSection // 섹션 순서 데이터 결과 값
             , themeListData // 테마 리스트 데이터 조회
             , myAge
           ]) => {
             const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
             const data = {
-              line, payment, isPiAgree, additions, isWireless, sortSection, themeListData, myAge, cdn: this.getCDN()
+              line, payment, isPiAgree, isWireless, sortSection, themeListData, myAge, cdn: this.getCDN()
             }
             
             console.log("#####");
@@ -362,125 +369,30 @@ export default class RenewProduct extends TwViewController {
      * @param svcInfo 
      */
     private getThemeListData( line, svcInfo: any ): Observable<any> {
-      let data = {
-        "code": "00",
-        "msg": "success",
-        "result": {
-          "expsTitNm": "이런 요금제는 어떠세요?!!!?!",
-          "networkType": "LTE",
-          "prodSmryExpType": "3", // 상품요약노출유형코드(1:기본형, 2:데이터강조형, 3:혜택강조형)
-          "mblBgImgUrl": "/img/product/v2/bg-theme1.jpg",
-          "mblBgImgNm": "test_bt_changepw222222222222222.gif",
-          
-          "prodList": [
-            {
-              "prodId": "NA00004891",
-              "prodNm": "ZEM플랜 스마트",
-              "basFeeInfo": "19800",
-              "basOfrVcallTmsCtt": "SKT 지정회선 무제한",
-              "basOfrCharCntCtt": "기본제공",
-              "basOfrDataQtyCtt": "",
-              "basOfrGbDataQtyCtt": "",
-              "basOfrMbDataQtyCtt": "500",
-              "prodSmryDesc": "만 12세 이하 어린이가 이용할 수 있는 스마트폰 요금제",
-              "prodFltList": [
-                {
-                  "prodFltId": "F01122",
-                  "prodFltNm": "3G"
-                },
-                {
-                  "prodFltId": "F01162",
-                  "prodFltNm": "청소년/어린이"
-                }
-              ],
-              "bnfProdList": []
-            },
-            {
-              "prodId": "NA00005889",
-              "prodNm": "ZEM플랜 라이트",
-              "basFeeInfo": "15400",
-              "basOfrVcallTmsCtt": "50",
-              "basOfrCharCntCtt": "기본제공",
-              "basOfrDataQtyCtt": "",
-              "basOfrGbDataQtyCtt": "",
-              "basOfrMbDataQtyCtt": "300",
-              "prodSmryDesc": "어린이용 미니폰 서비스를 이용할 수 있는 전용 요금제",
-              "prodFltList": [
-                {
-                  "prodFltId": "F01121",
-                  "prodFltNm": "LTE"
-                },
-                {
-                  "prodFltId": "F01162",
-                  "prodFltNm": "청소년/어린이"
-                },
-                {
-                  "prodFltId": "asdasd",
-                  "prodFltNm": "군인"
-                }
-              ],
-              "bnfProdList": []
-            },
-            {
-              "prodId": "NA00006539",
-              "prodNm": "T플랜 맥스",
-              "basFeeInfo": "100000",
-              "basOfrVcallTmsCtt": "집전화·이동전화 무제한",
-              "basOfrCharCntCtt": "기본제공",
-              "basOfrDataQtyCtt": "",
-              "basOfrGbDataQtyCtt": "무제한",
-              "basOfrMbDataQtyCtt": "",
-              "prodSmryDesc": "데이터 맘껏쓰고 나눠쓰는 T플랜",
-              "prodFltList": [
-                {
-                  "prodFltId": "F01713",
-                  "prodFltNm": "5G"
-                }
-              ],
-              "bnfProdList": []
-            },
-            {
-              "prodId": "NA00005366",
-              "prodNm": "소리누리 3.6G",
-              "basFeeInfo": "42350",
-              "basOfrVcallTmsCtt": "SKT 고객간 무제한",
-              "basOfrCharCntCtt": "50",
-              "basOfrDataQtyCtt": "",
-              "basOfrGbDataQtyCtt": "3.6",
-              "basOfrMbDataQtyCtt": "",
-              "prodSmryDesc": "시각장애 고객을 위한 음성혜택이 강화된 무약정 요금제",
-              "prodFltList": [
-                {
-                  "prodFltId": "F01124",
-                  "prodFltNm": "2nd Device"
-                },
-                {
-                  "prodFltId": "F01164",
-                  "prodFltNm": "복지"
-                }
-              ],
-              "bnfProdList": []
-            }
-          ]
-        }
-      };
-
-      
-
       return this.apiService.request(API_CMD.BFF_10_0204, { 'networkName' : this.getThemeNetworkName(line) }).map((resp) => {
-        if (resp.code === API_CODE.CODE_00) {
-          // TODO. API 개발 시 밑에 있는 내용을 이쪽으로 변경해야함!!
-        }
+        if (resp.code === API_CODE.CODE_00 ) {
+          if ( this.isObjectEmpty(resp.result) ) { // 객체 데이터가 존재하는지 체크
+            return null;
+          }
 
-        return Object.assign({
-            'expsTitNm' : data.result.expsTitNm,
-            'networkType' : data.result.networkType,
-            'prodSmryExpType' : data.result.prodSmryExpType,
-            'mblBgImgUrl' : this.getCDN() + data.result.mblBgImgUrl,
-            'mblBgImgNm' : data.result.mblBgImgNm,
-          }, {
-            'prodList': this.convertThemePayment(data)
-          })
+          let definedfilterCodes: any = Object.keys(LIST_THEME_CODE);
+          let respFilterCodes: any = resp.result.tagInfo.split(',');
+          let themeTypeCode = definedfilterCodes.find(filter => respFilterCodes.includes(filter)) || null; // definedfilterCodes과 respFilterCodes의 교집합 코드값을 얻음.
+          
+          if ( themeTypeCode ) {
+            return Object.assign({
+              'expsTitNm' : resp.result.expsTitNm,
+              'networkType' : resp.result.networkType,
+              'themeTypeCode' : themeTypeCode, // 기본형: TAG0000212, 데이터 강조형: TAG0000213, 혜택 강조형: TAG0000214
+              'mblBgImgUrl' : this.getCDN() + resp.result.mblBgImgUrl,
+              'mblBgImgNm' : resp.result.mblBgImgNm,
+            }, {
+              'prodList': this.convertThemePayment(resp)
+            })
+          }
+          
+          return null;
+        }
       });
     }
 
@@ -641,6 +553,10 @@ export default class RenewProduct extends TwViewController {
      * @param prodFltList 
      */
     private convertBasNetwork(prodFltList): any {
+      if ( !prodFltList ) {
+        return [];
+      }
+
       return prodFltList.reduce((arr, item) => {
         arr.push(Object.assign(item, {
           'style': FILTER_STYLE_CODES[item.prodFltId] || 'i-tag-cr5' // 필터 스타일에 맞는 class를 지정해주며, 필터스타일에 포함되지 않는 스타일들은 모두 i-tag-cr5 으로 설정
@@ -654,8 +570,12 @@ export default class RenewProduct extends TwViewController {
      * @param bnfProdList 
      */
     private convertAdditionalList(bnfProdList): any {
-      return bnfProdList.reduce((arr, item) => {
+      if ( !bnfProdList ) {
+        return [];
+      }
 
+      return bnfProdList.reduce((arr, item) => {
+        return arr;
       }, []);
     }
 
@@ -730,6 +650,14 @@ export default class RenewProduct extends TwViewController {
           default:   
             return DEVICE_CODE_NAME.F; // 값이 없다면 '5G'으로 보냄
       }
+    }
+
+    /**
+     * Object 객체 체크
+     * @param object 
+     */
+    private isObjectEmpty(object): Boolean {
+      return Object.keys(object).length === 0 && object.constructor === Object;
     }
 
     /**
