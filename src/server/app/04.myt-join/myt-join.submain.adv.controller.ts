@@ -73,7 +73,6 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         });
         // 다른 페이지를 찾고 계신가요 통계코드 추가
         data.xtdTemp = this.getXtEidTemp(data);
-        console.log(data.myInfo);
         res.render('myt-join.submain.adv.html', { data });
       }
     });
