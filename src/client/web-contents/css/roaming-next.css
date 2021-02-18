@@ -3921,6 +3921,7 @@ body.scroll #roamingOn #appbar .appbar {
 .rm-content .rm-card-call a{display:inline-block;margin:0 .75rem;padding-top:2.8125rem;font-size:.75rem;background:url(/img/product/roam/rm-card-tel.png) no-repeat center 0;background-size:2.5rem auto}
 .rm-content .card-coupon-wrap{padding:2.1875rem 0;background-color:#fff}
 .rm-content .card-coupon-wrap h4{margin-left:1rem}
+.rm-content .card-coupon-box{overflow:visible !important}
 .rm-content .card-coupon-box .card-coupon-inner .inner-box{min-width:17.06rem;width:auto;height:17.0625rem;padding:1.75rem 1.25rem;background-color:#f3f4f9}
 .rm-content .card-coupon-box .card-coupon-inner .tit{white-space:nowrap;margin:0;font-size:1.125rem;color:#4559fc;font-weight:500;margin:0}
 .rm-content .card-coupon-box .card-coupon-inner .card{width:auto;height:auto;margin:.94rem 0 0 0}
@@ -4019,7 +4020,7 @@ body.rn #scheduleDialog .header .banner{z-index:0;}
 body.rn #countriesDialog .menu li>button,
 body.rn #countriesDialog .menu li>a{display:inline-block;height:100%;width:100%;line-height:56px;font-size:16px;color:inherit;text-align:left;}
 body.rn #countriesDialog .menu li.active>button,
-body.rn #countriesDialog .menu li.active>a{background-color:white;color:#4559fc;}
+body.rn #countriesDialog .menu li.active>a{background-color:white;color:#4559fc;font-weight:bold}
 body.rn #countriesDialog .content li>button,
 body.rn #countriesDialog .content li>a{display:inline-block;height:100%;width:100%;line-height:50px;font-size:15px;color:#666;text-align:left;}
 /* T로밍 요금제 */
@@ -4044,8 +4045,15 @@ body.rn #roamingTariffs .tariff .price{float:none;position:absolute;top:0;right:
 body.rn #roamingTariffOffer .decoration{height: 0;padding-top: 47%;}
 body.rn #roamingTariffOffer .decoration .banner{bottom:auto;top:0;}
 
+/* 접근성 추가 수정 [OP002-12168] */
 body.rn #roamingMain #header .h-belt{background:0;border:0}
 body.rn.fly #roamingMain #header .h-belt{background-color:#fff;border-bottom:1px solid #e5e5e5}
 body.rn #roamingGuide a.button{display:block}
-body.rn button:focus,
-body.rn a:focus{outline:1px solid #000 !important}
+body.rn .card .field-container button{width:21px;height:21px}
+body.rn .tip-view{width:2.125rem;height:1.0625rem;background:#4559fc 0;color:#fff;text-indent:0;border-radius:1rem;font-size:.75rem;line-height:1.2rem}
+body.rn .card .tip-view{position:relative;top:-0.1rem}
+body.rn #roamingRates .card .link button{font-size:.8125rem;color:#4559fc;letter-spacing:-1px;text-decoration:underline}
+body.rn #roamingMain #content .history a{display:block}
+body.rn #scheduleDialog .bottom-button{width:100%}
+body.rn #scheduleDialog .bottom-button:disabled{background-color:#ddd}
+body.rn #nationsDialog .menu li button.active{font-weight:bold}
