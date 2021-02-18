@@ -218,7 +218,7 @@
                         <%_ } _%>
                         <%_ if (data.isPrepayment) { _%>
                         <div class="gift-coupon-wrap" data-id="prepay-container">
-                            <div class="head-tit">선물 쿠폰 구매/충전</div>
+                            <div class="head-tit">선불 쿠폰 구매/충전</div>
                             <div class="free-scroll-wrap minus-mg">
                                 <div class="free-scroll-container">
                                     <ul class="coupon-list">
@@ -264,14 +264,14 @@
             </section>
             <%_
                 }
-            } else if (data.svcInfo.svcAttrCd === 'M4') {
+            } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') {
                 if (data.isPrepayment) {
             _%>
             <section class="cont-card">
                 <div class="section-inner">
                     <div class="card-cont">
                         <div class="gift-coupon-wrap" data-id="prepay-container">
-                            <div class="head-tit">선물 쿠폰 구매/충전</div>
+                            <div class="head-tit">선불 쿠폰 구매/충전</div>
                             <div class="free-scroll-wrap minus-mg">
                                 <div class="free-scroll-container">
                                     <ul class="coupon-list">
@@ -369,7 +369,7 @@
                         </div>
                         <% if (!data.isEasyLogin) { %>
                         <div class="hash-wrap" data-id="etc-wrap">
-                            <ul class="hash-list normal">
+                            <ul class="hash-list normal">                                
                                 <li class="hash-item" data-id="etc">
                                     <a href="" class="hash" data-xt_eid="<%=data.xtEid.elctcEtc%>" data-xt_csid="NO" data-xt_action="BC">#팅/쿠키즈/안심 음성요금 충전</a>
                                 </li>
@@ -595,7 +595,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/benefit/my" data-xt_eid="<%=data.xtEid.mybenefit%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/benefit/submain" data-xt_eid="<%=data.xtEid.mybenefit%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico13.svg" alt=""></i>
                                             <div class="list-txt">
