@@ -55,7 +55,8 @@ class MytDataSubmainAdvController extends TwViewController {
   private isEasyLogin = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    this.apiService.setTimeout(3000);
+    // this.apiService.setTimeout(3000); // PPS 정보 조회(BFF_05_0013) API 사용시 오류가 발생하여 주석 처리 - 김진우/소프트웍스 2021.02.17
+
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
@@ -73,7 +74,9 @@ class MytDataSubmainAdvController extends TwViewController {
       isEasyLogin: svcInfo.loginType === LOGIN_TYPE.EASY,
       bpcpServiceId: req.query.bpcpServiceId || '',
       eParam: req.query.eParam || '',
-      isAdult: (svcInfo.age && svcInfo.age > 20)
+      isAdult: (svcInfo.age && svcInfo.age > 19),
+      xtEid: this.getXtEid(), // 오퍼통계코드
+      ppsCard: {} // PPS 정보
     };
 
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
@@ -89,9 +92,10 @@ class MytDataSubmainAdvController extends TwViewController {
       this._getRefillAvailability(),
       this._reqRefillGiftHistory(),
       this._getPPSAuto(),
-      this._getPPSDataAuto()
+      this._getPPSDataAuto(),
+      this._getPPSCard()
       // this._getProductGroup() : OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
-    ).subscribe(([remnant, present, presentAuto, refill, refillAvailable, refillGiftHistory, ppsvoice, ppsdata /*, prodList*/]) => {
+    ).subscribe(([remnant, present, presentAuto, refill, refillAvailable, refillGiftHistory, ppsvoice, ppsdata, ppscard /*, prodList*/]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -161,6 +165,12 @@ class MytDataSubmainAdvController extends TwViewController {
         data.immCharge = true;
       }
 
+      // T-pocket fi 가입자
+      if ( data.svcInfo.svcAttrCd === 'M3' ) {
+        data.isBenefit = true; // 데이터 충전소 배너
+        data.isPrepayment = true; // 선불 쿠폰 구매/충전
+      }
+
       // T끼리 데이터선물 영역 (간편로그인 경우 영역 비노출)
       if ( present ) {
         data.present = true;
@@ -180,6 +190,9 @@ class MytDataSubmainAdvController extends TwViewController {
         if ( ppsdata ) {
           data.ppsAutoData = ppsdata;
         }
+        if ( ppscard ) {
+          data.ppsCard = ppscard;
+        }
       }
 
       // 리필쿠폰
@@ -197,9 +210,6 @@ class MytDataSubmainAdvController extends TwViewController {
       if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
         data.isWireLess = true;
       }
-
-      // 다른 페이지를 찾고 계신가요 통계코드 추가
-      this.getXtEid(data);
 
       // this._render(res, data);
       // 충전,선물 이력 건수 조회 후 이력이 있는 경우에만 해당 이력 API 호출(성능 개선건 반영)[DV001-13474]
@@ -1064,6 +1074,22 @@ class MytDataSubmainAdvController extends TwViewController {
       });
   }
 
+  // PPS 정보조회
+  _getPPSCard(): Observable<any> {
+    if ( !this.isPPS ) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_05_0013, {})
+      .map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return FormatHelper.isEmpty(resp.result) ? null : resp.result;
+        } else {
+          // error
+          return null;
+        }
+      });
+  }
+
   _render(res, data) {
     // 음성충전알람서비스 신청 내역 - 13차
     if ( this.isPPS ) {
@@ -1103,38 +1129,133 @@ class MytDataSubmainAdvController extends TwViewController {
   }
 
   /**
-   * 다른 페이지를 찾고 계신가요 통계코드 생성
+   * 오퍼통계코드 생성
    * @param data
    */
-  private getXtEid(data: any): any {
-    const eid = {
-      hotdata: 'CMMA_A3_B10-6',    // 실시간 잔여량
-      guide: 'CMMA_A3_B10-7',    // 요금 안내서
-      hotbill: 'CMMA_A3_B10-8',    // 실시간 이용요금
-      additions: 'CMMA_A3_B10-9',    // 나의 부가서비스
-      roaming: 'CMMA_A3_B10-10',   // 나의 T로밍 이용현황
-      benefit: 'CMMA_A3_B10-11',   // 혜택/할인
-      mobileplan: 'CMMA_A3_B10-12'    // 요금제
+  private getXtEid(): Object {
+    // 오퍼통계코드 상용
+    const eid_prd = {
+      hotdata : 'CMMA_A3_B10-31' // 실시간 잔여량
+      , familydata : 'CMMA_A3_B10-32' // 가족모아데이터
+      , familydataShare : 'CMMA_A3_B10-33' // 가족모아데이터 공유하기
+      , dataTimeSetting : 'CMMA_A3_B10-34' // 데이터시간권
+      , giftdata : 'CMMA_A3_B10-35' // T끼리 데이터 선물
+      , giftdataDirect : 'CMMA_A3_B10-36' // 데이터 바로선물
+      , giftdataAuto : 'CMMA_A3_B10-37' // 데이터 자동선물
+      , coupon : 'CMMA_A3_B10-38' // 리필쿠폰
+      , couponRefill : 'CMMA_A3_B10-39' // 리필쿠폰 리필하기
+      , couponGift : 'CMMA_A3_B10-40' // 리필쿠폰 선물하기
+      , tData : 'CMMA_A3_B10-41' // T데이터
+      , sData : 'CMMA_A3_B10-42' // T단기 데이터 
+      , tCoupon : 'CMMA_A3_B10-43' // T쿠폰
+      , jeju : 'CMMA_A3_B10-44' // 제주도 프리
+      , otherLines : 'CMMA_A3_B10-45' // 자녀 실시간 잔여량
+      , benefit : 'CMMA_A3_B10-46' // 데이터 충전소
+      , recentUsageTip : 'CMMA_A3_B10-47' // 최근 사용량 TIP
+      , recentUsageMore : 'CMMA_A3_B10-48' // 최근 사용량 더보기
+      , recentUsageData : 'CMMA_A3_B10-49' // 데이터
+      , recentUsageVoice : 'CMMA_A3_B10-50' // 음성
+      , recentUsageChar : 'CMMA_A3_B10-51' // 문자
+      , elctcHistory : 'CMMA_A3_B10-52' // 최근 충전/선물 내역
+      , elctcTing : 'CMMA_A3_B10-53' // 팅요금제 충전 선물
+      , elctcData : 'CMMA_A3_B10-54' // 데이터 조르기
+      , elctcEtc : 'CMMA_A3_B10-55' // 팅/쿠키즈/안심 음성요금 충전
+      , elctcLimit : 'CMMA_A3_B10-56' // 데이터 한도 요금 충전
+      , tosBanner : 'CMMA_A3_B10-57' // TOS배너
+      , mytJoin : 'CMMA_A3_B10-58' // 나의 가입정보
+      , mytFare : 'CMMA_A3_B10-59' // 나의 요금
+      , myPlan : 'CMMA_A3_B10-60' // 나의 요금제/부가상품
+      , mybenefit : 'CMMA_A3_B10-61' // 나의 혜택/할인
+      , charge : 'CMMA_A3_B10-62' // 요금제
+      , openingDetail : 'CMMA_A3_B10-63' // 개통정보 조회
+      , hotbill : 'CMMA_A3_B10-64' // 실시간 이용요금
+      , infodiscount : 'CMMA_A3_B10-65' // 약정할인/기기상환 정보
+      , billguide : 'CMMA_A3_B10-66' // 요금 안내서
+      , billSmall : 'CMMA_A3_B10-67' // 소액결제
+      , billContents : 'CMMA_A3_B10-68' // 콘텐츠 이용요금
+      , roamingMyUse : 'CMMA_A3_B10-69' // 나의 T로밍 이용현황
+      , mytJoinWire : 'CMMA_A3_B10-70' // 신청내역
+      , wireplan : 'CMMA_A3_B10-71' // 인터넷/전화/IPTV
+      , combinations : 'CMMA_A3_B10-72' // 나의 결합상품
+      , mytFareHistory : 'CMMA_A3_B10-73' // 요금납부내역 조회
+      , mytJoinGifts : 'CMMA_A3_B10-74' // 사은품 조회
+      , mytJoinDiscountrefund : 'CMMA_A3_B10-75' // 할인 반환금 조회
+      , mytJoinWirestopgo : 'CMMA_A3_B10-76' // 일시정지 신청/해제
+      , serviceArea : 'CMMA_A3_B10-77' // 서비스 가능지역 조회
+      , rechargeVoice : 'CMMA_A3_B10-78' // 음성 1회 충전
+      , rechargeVoiceAuto : 'CMMA_A3_B10-79' // 음성 자동 충전
+      , rechargeData : 'CMMA_A3_B10-80' // 데이터 1회 충전
+      , rechargeDataAuto : 'CMMA_A3_B10-81' // 데이터 자동 충전
+      , rechargeVoiceAutoRevocation : 'CMMA_A3_B10-82' // 음성 자동 충전 변경/해지
+      , rechargeDataAutoRevocation : 'CMMA_A3_B10-83' // 데이터 자동 충전 변경/해지
+      , mytDataRechargeHistory : 'CMMA_A3_B10-84' // 충전 내역
+      , mytDataRechargeAlarm : 'CMMA_A3_B10-85' // 음성 1회 자동 알림 서비스
     };
 
-    if ( data.svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
-      Object.assign(eid, {
-        guide: 'CMMA_A3_B10-13',   // 요금 안내서
-        myplan: 'CMMA_A3_B10-14',   // 나의 요금제
-        additions: 'CMMA_A3_B10-15',   // 나의 부가서비스
-        roaming: 'CMMA_A3_B10-16'    // 나의 T로밍 이용현황
-      });
-    } else if ( !data.isWireLess ) {
-      Object.assign(eid, {
-        guide: 'CMMA_A3_B10-17',   // 요금 안내서
-        myplan: 'CMMA_A3_B10-18',   // 나의 요금제
-        combinations: 'CMMA_A3_B10-19',   // 결합상품
-        combiDiscount: 'CMMA_A3_B10-20',   // 결합할인
-        wireplan: 'CMMA_A3_B10-21'    // 인터넷/전화/IPTV
-      });
+    // 오퍼통계코드 스테이징
+    const eid_stg = {
+      hotdata : 'CMMA_A3_B10-22' // 실시간 잔여량
+      , familydata : 'CMMA_A3_B10-23' // 가족모아데이터
+      , familydataShare : 'CMMA_A3_B10-24' // 가족모아데이터 공유하기
+      , dataTimeSetting : 'CMMA_A3_B10-25' // 데이터시간권
+      , giftdata : 'CMMA_A3_B10-26' // T끼리 데이터 선물
+      , giftdataDirect : 'CMMA_A3_B10-27' // 데이터 바로선물
+      , giftdataAuto : 'CMMA_A3_B10-28' // 데이터 자동선물
+      , coupon : 'CMMA_A3_B10-29' // 리필쿠폰
+      , couponRefill : 'CMMA_A3_B10-30' // 리필쿠폰 리필하기
+      , couponGift : 'CMMA_A3_B10-31' // 리필쿠폰 선물하기
+      , tData : 'CMMA_A3_B10-32' // T데이터
+      , sData : 'CMMA_A3_B10-33' // T단기 데이터 
+      , tCoupon : 'CMMA_A3_B10-34' // T쿠폰
+      , jeju : 'CMMA_A3_B10-35' // 제주도 프리
+      , otherLines : 'CMMA_A3_B10-36' // 자녀 실시간 잔여량
+      , benefit : 'CMMA_A3_B10-37' // 데이터 충전소
+      , recentUsageTip : 'CMMA_A3_B10-38' // 최근 사용량 TIP
+      , recentUsageMore : 'CMMA_A3_B10-39' // 최근 사용량 더보기
+      , recentUsageData : 'CMMA_A3_B10-40' // 데이터
+      , recentUsageVoice : 'CMMA_A3_B10-41' // 음성
+      , recentUsageChar : 'CMMA_A3_B10-42' // 문자
+      , elctcHistory : 'CMMA_A3_B10-43' // 최근 충전/선물 내역
+      , elctcTing : 'CMMA_A3_B10-44' // 팅요금제 충전 선물
+      , elctcData : 'CMMA_A3_B10-45' // 데이터 조르기
+      , elctcEtc : 'CMMA_A3_B10-46' // 팅/쿠키즈/안심 음성요금 충전
+      , elctcLimit : 'CMMA_A3_B10-47' // 데이터 한도 요금 충전
+      , tosBanner : 'CMMA_A3_B10-48' // TOS배너
+      , mytJoin : 'CMMA_A3_B10-49' // 나의 가입정보
+      , mytFare : 'CMMA_A3_B10-50' // 나의 요금
+      , myPlan : 'CMMA_A3_B10-51' // 나의 요금제/부가상품
+      , mybenefit : 'CMMA_A3_B10-52' // 나의 혜택/할인
+      , charge : 'CMMA_A3_B10-53' // 요금제
+      , openingDetail : 'CMMA_A3_B10-54' // 개통정보 조회
+      , hotbill : 'CMMA_A3_B10-55' // 실시간 이용요금
+      , infodiscount : 'CMMA_A3_B10-56' // 약정할인/기기상환 정보
+      , billguide : 'CMMA_A3_B10-57' // 요금 안내서
+      , billSmall : 'CMMA_A3_B10-58' // 소액결제
+      , billContents : 'CMMA_A3_B10-59' // 콘텐츠 이용요금
+      , roamingMyUse : 'CMMA_A3_B10-60' // 나의 T로밍 이용현황
+      , mytJoinWire : 'CMMA_A3_B10-61' // 신청내역
+      , wireplan : 'CMMA_A3_B10-62' // 인터넷/전화/IPTV
+      , combinations : 'CMMA_A3_B10-63' // 나의 결합상품
+      , mytFareHistory : 'CMMA_A3_B10-64' // 요금납부내역 조회
+      , mytJoinGifts : 'CMMA_A3_B10-65' // 사은품 조회
+      , mytJoinDiscountrefund : 'CMMA_A3_B10-66' // 할인 반환금 조회
+      , mytJoinWirestopgo : 'CMMA_A3_B10-67' // 일시정지 신청/해제
+      , serviceArea : 'CMMA_A3_B10-68' // 서비스 가능지역 조회
+      , rechargeVoice : 'CMMA_A3_B10-69' // 음성 1회 충전
+      , rechargeVoiceAuto : 'CMMA_A3_B10-70' // 음성 자동 충전
+      , rechargeData : 'CMMA_A3_B10-71' // 데이터 1회 충전
+      , rechargeDataAuto : 'CMMA_A3_B10-72' // 데이터 자동 충전
+      , rechargeVoiceAutoRevocation : 'CMMA_A3_B10-73' // 음성 자동 충전 변경/해지
+      , rechargeDataAutoRevocation : 'CMMA_A3_B10-74' // 데이터 자동 충전 변경/해지
+      , mytDataRechargeHistory : 'CMMA_A3_B10-75' // 충전 내역
+      , mytDataRechargeAlarm : 'CMMA_A3_B10-76' // 음성 1회 자동 알림 서비스
+    };
+    
+    if (process.env.NODE_ENV === 'prd') {
+      return eid_prd;
+    } else {
+      return eid_stg;
     }
-
-    data.xtEid = eid;
   }
 
   private convertCoupon(data) {
