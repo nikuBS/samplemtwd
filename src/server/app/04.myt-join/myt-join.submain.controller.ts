@@ -198,7 +198,6 @@ class MyTJoinSubmainController extends TwViewController {
         return false;
       }
     } else {
-      console.log(myif.info);
       if (myif.info) {
         this.error.render(res, {
           title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
@@ -210,7 +209,6 @@ class MyTJoinSubmainController extends TwViewController {
         return false;
       }
     }
-    console.log('################################');
     data.type = this.type;
     data.isPwdSt = this.isPwdSt;
     // 가입회선정보
