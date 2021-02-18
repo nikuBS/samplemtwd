@@ -10,6 +10,7 @@ import MyTJoinSubmainController from './myt-join.submain.controller';
 import { API_CMD, API_CODE, API_VERSION, SESSION_CMD } from '../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
+import BrowserHelper from '../../utils/browser.helper';
 import DateHelper from '../../utils/date.helper';
 import { MEMBERSHIP_GROUP } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -35,6 +36,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
     const data = this._setData(req, res, next, svcInfo, allSvc, child, pageInfo);
+    data.isIos = BrowserHelper.isIos(req);
     // R: 일반법인, E:SWING 기준 법인, D: SKT 법인
     data.isComLine = svcInfo.svcGr === 'R' || svcInfo.svcGr === 'E' || svcInfo.svcGr === 'D';
     // 간편로그인 경우 미노출 처리 필요
@@ -61,16 +63,19 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       const responses = [myline, myif, myhs, myap, mycpp, myinsp,
         myps, mylps, numSvc, wlap];
       const newResponses = [myjinfo, prodDisInfo, benefitInfo, billInfo, membership, sms, wirepause, payment];
-      this.__parsingRequestData({
+      const _parsing = this.__parsingRequestData({
         res, responses, data
       });
-      // 신규 API 추가로 인하여 구조 변경이 필요하여 함수로 분리 후 처리
-      this.__newParsingRequestData({
-        res, responses: newResponses, data
-      });
-      // 다른 페이지를 찾고 계신가요 통계코드 추가
-      data.xtdTemp = this.getXtEidTemp(data);
-      res.render('myt-join.submain.adv.html', { data });
+      if (_parsing) {
+        // 신규 API 추가로 인하여 구조 변경이 필요하여 함수로 분리 후 처리
+        this.__newParsingRequestData({
+          res, responses: newResponses, data
+        });
+        // 다른 페이지를 찾고 계신가요 통계코드 추가
+        data.xtdTemp = this.getXtEidTemp(data);
+        console.log(data.myInfo);
+        res.render('myt-join.submain.adv.html', { data });
+      }
     });
   }
 
@@ -313,7 +318,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
               const totDate = DateHelper.getDiffByUnit(item.endDate, item.startDate, 'day') + 1;  // 전체 일수(첫날 포함)
               const ingDate = DateHelper.getDiffByUnit(curDate, item.startDate, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
               const remainDate = totDate - ingDate; // 잔여일수
-              const percentage = 100 - Math.floor((ingDate / totDate) * 100);
+              const percentage = Math.min(100, Math.floor((ingDate / totDate) * 100));
               const graphPercent = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
               return {
                 name: item.name,
@@ -513,7 +518,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-79', icon: 'submain-ico07.svg'
         }
       ];
-      if ( data.svcInfo.svcAttrCd !== 'S1' || data.svcInfo.svcAttrCd !== 'S3' ) {
+      if ( data.svcInfo.svcAttrCd === 'S2' ) {
         // 인터넷/전화 외 회선 인 경우에는 나의 데이터/통화 항목 미노출
         tempList.splice(0, 1);
       }
@@ -556,35 +561,38 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico16.svg'
         },
         {
-          name: '요금제 변경 가능일 알림', url: '/myt-join/myplan/alarm',
-          xt_eid: 'CMMA_A3_B13-61', icon: 'sub-ben-ico15.svg'
-        },
-        {
           name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
           xt_eid: 'CMMA_A3_B13-62', icon: 'sub-ben-ico06.svg'
         }
       ];
+      // 요금제 변경 가능일 알림 휴대폰 이나 PPS 인 경우에만 노출 하도록 하기 위해 기능 추가
+      if (data.type === 0 || data.type === 1) {
+        tempList.splice(5, 0,
+          {
+            name: '요금제 변경 가능일 알림', url: '/myt-join/myplan/alarm',
+            xt_eid: 'CMMA_A3_B13-61', icon: 'sub-ben-ico15.svg'
+          });
+      }
       if ( !data.isApp ) {
         // 모바일 웹인 경우 인증센터 항목 가리고 요금제 변경 위치 변경
-        tempList[3] = tempList[5];
-        tempList.splice(5, 1);
+        const certifyIndex = tempList.length === 7 ? 5 : 4;
+        tempList[3] = tempList[certifyIndex];
+        tempList.splice(certifyIndex, 1);
       }
       // 법인 회선 또는 포켓파이, 티로그인 인 경우 콘텐츠 이용 및 인증센터 항목 제거
       if ( data.isComLine || this.type === 3 ) {
         tempList.splice(tempList.length - 1, 1);
         if ( data.isApp ) {
-          tempList.splice(3, 1);
+          tempList.splice(tempList.length === 6 ? 3 : 2, 1);
         } else {
-          const moveIdx = tempList.length - 2;
+          const moveIdx = tempList.length - (tempList.length === 6 ? 2 : 1);
           const target = tempList.splice(tempList.length - 1, 1)[0];
           tempList.splice(moveIdx, 0, target);
         }
       }
-
       return tempList;
     }
   }
 }
-
 
 export default MyTJoinSubmainAdvController;

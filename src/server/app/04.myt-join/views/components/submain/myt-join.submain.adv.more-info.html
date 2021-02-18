@@ -8,7 +8,7 @@ _%>
 <section class="cont-card">
   <div class="section-inner">
     <div class="head-tit high">
-      <% if (data.type !== 2) { %>
+      <% if (data.type === 0 || data.type === 3) { %>
       <a href="#" data-id="br-opening-detail" class="link">기본 가입정보</a>
       <% } else { %>
       기본 가입정보
@@ -73,7 +73,7 @@ _%>
                           <%= '(' + data.myInfo.setPrdStaDt + ' ~ ' + data.myInfo.setPrdEndDt + ')' %>
                         </div>
                       <%_ } else { _%>
-                        <div> 무약정 </div>
+                        무약정
                       <%_ } _%>
                     </dd>
                   </dl>

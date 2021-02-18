@@ -93,12 +93,14 @@ class MyTJoinSubmainController extends TwViewController {
     Observable.combineLatest(
         requestApiList
     ).subscribe((responses) => {
-      this.__parsingRequestData({
+      const _parsing = this.__parsingRequestData({
         res, responses, data
       });
-      // 다른 페이지를 찾고 계신가요 통계코드 추가
-      this.getXtEid(data);
-      res.render('myt-join.submain.html', { data });
+      if (_parsing) {
+        // 다른 페이지를 찾고 계신가요 통계코드 추가
+        this.getXtEid(data);
+        res.render('myt-join.submain.html', { data });
+      }
     });
   }
 
