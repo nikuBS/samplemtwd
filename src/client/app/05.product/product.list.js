@@ -557,7 +557,7 @@ Tw.ProductList.prototype = {
   _showRenewal: function() {
     var html = 
       '<div class="h-person">' +
-        '<button data-url="/product/renewal/mobileplan" type="button" class="icon-gnb-person">' +
+        '<button data-url="/product/renewal/mobileplan" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A4_B15-20" data-xt_csid="NO" data-xt_action="BC">' +
             '<span class="person-btn-wrap">' +
                 '<span class="inner-btn">' +
                     '<span class="tod-blind">새로운 요금제 화면을 만나보세요.</span>' +
