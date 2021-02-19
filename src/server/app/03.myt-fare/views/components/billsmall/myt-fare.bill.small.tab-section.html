@@ -1,0 +1,67 @@
+<section class="section-inner">
+    <!-- .component -->
+    <div class="component">
+        <div class="component-box tabs"><!-- 바닥페이지에서 최상단 탭메뉴일 경우 data-header-noborder="true" 추가 -->
+            <div class="tab-area new01 large">
+                <div class="tab-linker">
+                    <ul role="tablist" style="width: 100%;">
+                        <li id="fe-tab1" role="presentation" aria-selected="<%-usedYn.isAdult%>"><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                            <a href="#" role="tab" aria-selected="<%-usedYn.isAdult%>" aria-controls="cont-tab1-tab" id="cont-tab1" class="<%-!usedYn.isAdult ? 'disabled':undefined%>">휴대폰 결제</a><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                        </li>
+                        <li role="presentation" aria-selected="<%-!usedYn.isAdult%>">
+                            <a href="#" role="tab" aria-selected="<%-!usedYn.isAdult%>" aria-controls="cont-tab2-tab" id="cont-tab2">콘텐츠 이용료</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-contents">
+                    <ul>
+                        <%- include('../../components/billsmall/myt-fare.bill.small.tab-section.contents.html', {title: 'small', data: autoCardInfo.small}); %>
+                        <%- include('../../components/billsmall/myt-fare.bill.small.tab-section.contents.html', {title: 'contents', data: autoCardInfo.contents}); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .component -->
+</section>
+
+<%# 선결제 영역 템플릿%>
+<script id="prepay-area-templ" type="text/x-handlebars-template">
+    <div class="section-group">
+        <div class="head-tit">
+            <a href="#" class="link fe-prepay" data-amt="{{tmthChrgPsblAmt}}" data-unusual-state="<%-unusualYn%>">선결제
+                <span class="right-txt"><!--신청/결제-->
+                    {{#ifCond tmthChrgPsblAmt '!==' '0'}}
+                        결제
+                    {{else}}
+                        신청
+                    {{/ifCond}}
+                </span>
+            </a>
+        </div>
+        <div class="section-cont">
+            {{#ifCond tmthChrgPsblAmt '!==' '0'}}
+            <p class="warning">이번 달 이용 금액을 미리 결제하실 수 있어요.</p>
+            {{/ifCond}}
+            <ul class="report-list with-ico">
+                <li class="report-item">
+                    <dl class="report-define d-wrap">
+                        <dt class="report-tit">
+                            <i class="ico circle"><img src="<%-CDN%>/img/myt/submain-ico17.svg" alt=""></i>
+                            <div class="report-txt">선결제 가능 금액</div>
+                        </dt>
+                        <dd class="report-cont">{{tmthChrgPsblAmt}}원</dd>
+                    </dl>
+                </li>
+            </ul>
+            {{#ifCond title '===' 'small'}}
+                <%_ if (passwordInfo.code === 'BIL0054') { // 부가서비스에 가입하지 않은 사용자의 경우 _%>
+                    <button type="button" class="payment-join-btn" data-url="/product/callplan?prod_id=NA00003909">
+                        <span class="btn-txt"><em>결제 비밀번호</em> 하나로 더 안전하게</span>
+                        <span class="join-txt">가입하기</span>
+                    </button>
+                <% } %>
+            {{/ifCond}}
+        </div>
+    </div>
+</script>
