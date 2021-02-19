@@ -567,16 +567,33 @@ export default class RenewProduct extends TwViewController {
 
     /**
      * 부가서비스 정보를 파싱
-     * @param bnfProdList 
+     * @param benfProdList 
      */
-    private convertAdditionalList(bnfProdList): any {
-      if ( !bnfProdList ) {
+    private convertAdditionalList(benfProdList): any {
+      if ( !benfProdList ) {
         return [];
       }
+      
+      return benfProdList.reduce((obj, item) => { 
+        const benefitCount = item.addBenfCnt; // 추가 혜택 수 
+        const useAmtPrice = this.convProductBenefitInfo(item.useAmt, item.dcAmt); // 이용금액 (원)
+        const benfAmtPrice = this.convProductBenefitInfo(item.benfAmt, item.dcAmt); // 혜택금액 (원)
 
-      return bnfProdList.reduce((arr, item) => {
-        return arr;
-      }, []);
+        const changedItem = Object.assign(item, {
+          benfAmtPrice, useAmtPrice
+        })
+
+        if ( FormatHelper.isEmpty(benefitCount) ) {  // 추가 혜택수가 없다면 기본 혜택임
+          obj.basicBenefitsArr.push(changedItem);
+        } else { // 추가 혜택 
+          obj.additionalBenefitsArr.push(changedItem);
+        }
+        
+        return obj;
+      }, {
+        basicBenefitsArr: [], // 기본혜택에 대한 배열
+        additionalBenefitsArr: [] // 추가혜택에 대한 배열
+      });
     }
 
     /**
@@ -594,7 +611,7 @@ export default class RenewProduct extends TwViewController {
         const basDataTxt = this.convertBasDataTxt(basDataGbTxt, basDataMbTxt); // GB, MB 컨버터
 
         const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱
-        const basAdditionalList = this.convertAdditionalList(item.bnfProdList) || []; // 부가 서비스 정보를 파싱
+        const basAdditionalList = this.convertAdditionalList(item.benfProdList) || []; // 부가 서비스 정보를 파싱
         
         // 상품 스펙 공통 헬퍼 사용하여 컨버팅
         const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
@@ -606,7 +623,8 @@ export default class RenewProduct extends TwViewController {
           basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
           basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
           basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
-          basNetworkList: basNetworkList // 네트워크 타입
+          basNetworkList: basNetworkList, // 네트워크 타입
+          basAdditionalList: basAdditionalList // 기본혜택/추가혜택에 대한 정보
         });
         return arr;
       }, []);
@@ -661,6 +679,22 @@ export default class RenewProduct extends TwViewController {
     }
 
     /**
+     * 이용/혜택 금액에 대한 계산
+     * @param benefitPrice 이용/혜택 금액
+     * @param benefitDiscountPrice 할인 금액
+     */
+    private convProductBenefitInfo(benefitPrice, benefitDiscountPrice): any {
+      const isNaNbenefitPrice = isNaN(Number(benefitPrice)); // 상품 가격
+      const isNanbenefitDiscountPrice = isNaN(Number(benefitDiscountPrice)); // 할인 금액
+
+      return {
+        price: isNaNbenefitPrice ? '' : FormatHelper.addComma(benefitPrice),
+        dcPrice: isNanbenefitDiscountPrice ? '' : FormatHelper.addComma(benefitDiscountPrice),
+        totalPrice: isNaNbenefitPrice && isNanbenefitDiscountPrice ? '' : FormatHelper.addComma(String(Number(benefitPrice) - Number(benefitDiscountPrice)))
+      };
+    }
+
+    /**
      * Admin 에서 등록한 이미지에 대한 CDN 정보
      * @param 
      */
@@ -673,7 +707,7 @@ export default class RenewProduct extends TwViewController {
       } else if ( env === 'dev') { // dev
         return 'https://cdnm-dev.tworld.co.kr';
       } else { // local
-        return 'https://cdnm-dev.tworld.co.kr';
+        return 'http://172.23.69.117:3001'; // TODO: 임시
         // return 'http://localhost:3001';
       }
     }

@@ -15,8 +15,11 @@ Tw.ProductCompare = function(rootEl, svcInfo, networkInfo) {
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
     this._historyService = new Tw.HistoryService();
-  
+
     this._init();
+
+    this._getRedisCompare(); // 비교 대상에 대한 redis 정보를 얻음
+
     this._bindEvent();
   };
 
@@ -449,6 +452,69 @@ Tw.ProductCompare.prototype = {
         {benefit: 'wavve 앤 데이터 플러스'}
       ]
     };
-  }
+  },
+
+
+
+  /**
+   * 비교대상에 대한 Redis 정보를 얻음
+   */
+  _getRedisCompare: function() {
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_BENF_PROD_INFO },
+    ]).done($.proxy(this._successRedis, this))
+      .fail($.proxy(this._errorRedis, this));
+  },
+
+
+  /**
+   * Redis에서 값을 가지고 왔을 때
+   * @param {*} redisData 
+   */
+  _successRedis: function(redisData) {
+    console.log('#####');
+    console.log(redisData);
+    console.log('#####');
+
+    if ( redisData.code === Tw.API_CODE.CODE_00 && redisData ) {
+      // TODOS... 
+    }
+  },
+
+  /**
+   * Redis 정보 Load 에 실패했을 때
+   * @param {*} error 
+   */
+  _errorRedis: function(error) {
+
+  },
+
+
+  /**
+   * 혜택 상품에 대한 데이터를 parsing.
+   * @param {*} redisData 
+   */
+  _parseBenfProdInfo: function(redisData) {
+    /** 
+      http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=129101297
+
+      코드값들..
+      prodBenfCd    => 01(통화), 02(데이터 속도제어), 03(데이터 추가 혜택), 04(추가 혜택), 05(안내문구)
+      prodBenfTitCd => 01(데이터 옵션), 02(데이터 공유), 03(터더링), 04(리필하기), 05(멤버십), 06(영상), 07(영상/음악), 08(음악), 09(보험), 10(함께쓰기) 
+      prodBenfTypCd => 01(기본제공), 02(선택1)
+
+
+      == 1Depth ==
+      prodBenfCd    => 01(통화), 02(데이터 속도제어), 03(데이터 추가 혜택), 04(추가 혜택), 05(안내문구)
+
+      == 2Depth ==
+      prodBenfCd(03) => prodBenfTitCd(01, 02, 03, 04)
+      prodBenfCd(04) => prodBenfTitCd(05, 06, 07, 08, 09, 10)
+
+      == 3Depth ==
+      prodBenfTitCd(05, 06, 07, 08, 09, 10) => prodBenfTypCd(01, 02)
+    */
+
+  } 
 
 };
