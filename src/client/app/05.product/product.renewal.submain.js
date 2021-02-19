@@ -323,8 +323,6 @@ Tw.ProductRenewalSubmain.prototype = {
     }).indexOf('999');
     if ( removeIndex !== -1 ) { // 999번 인덱스에 해당되는 객체는 삭제한다. (999번 item은 출력되면 안되므로...)
       redisData.banners.splice(removeIndex, 1);
-    } else {
-      themeMainTitle = '다양한 요금제를 확인해 보세요'
     }
 
     var themeBannerParseList = _.reduce(redisData.banners, function(arr, item) {

@@ -707,7 +707,8 @@ export default class RenewProduct extends TwViewController {
       } else if ( env === 'dev') { // dev
         return 'https://cdnm-dev.tworld.co.kr';
       } else { // local
-        return 'http://172.23.69.117:3001'; // TODO: 임시
+        return 'https://cdnm-dev.tworld.co.kr';
+        // return 'http://172.23.69.117:3001'; // TODO: 임시
         // return 'http://localhost:3001';
       }
     }
