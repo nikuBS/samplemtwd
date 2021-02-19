@@ -545,8 +545,9 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
+      // console.log(">>> data: ", data);
       _.each(data, $.proxy(function (listData, index) {
-        // console.log(">>> listData: ", listData);
+        
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
           if (index > 2) {
@@ -562,8 +563,7 @@ Tw.CommonSearch.prototype = {
             return;
           }
           if (listData.DEPTH_CHILD !== undefined) {
-            console.log(">>>>> data: ", data);
-            listData.DEPTH_CHILD.push({
+            listData.DEPTH_CHILD.unshift({
               CLICK_CNT: listData.CLICK_CNT,
               DEPTH_LOC: "2",
               DEPTH_PATH: listData.DEPTH_PATH,
@@ -571,9 +571,24 @@ Tw.CommonSearch.prototype = {
               MENU_NM: listData.MENU_NM,
               MENU_URL: listData.MENU_URL,
               USE_YN: listData.USE_YN       
-            })
+            });
+            _.each(listData.DEPTH_CHILD, $.proxy(function (subData, index) {
+              if (subData.DEPTH_CHILD !== undefined) {
+                // console.log(">>>>>>>>>>> subData.DEPTH_CHILD: ", subData.DEPTH_CHILD);
+                subData.DEPTH_CHILD.unshift({
+                  CLICK_CNT: subData.CLICK_CNT,
+                  DEPTH_LOC: "3",
+                  DEPTH_PATH: subData.DEPTH_PATH,
+                  DOCID: subData.DOCID,
+                  MENU_NM: subData.MENU_NM,
+                  MENU_URL: subData.MENU_URL,
+                  USE_YN: subData.USE_YN       
+                })
+              }
+            }));
           }
-          // console.log(">>> listData: ", listData);
+          
+          console.log(">>> listData: ", listData);
           $list.append(templateData({ listData: listData, CDN: cdn }));
         } else {
           if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
