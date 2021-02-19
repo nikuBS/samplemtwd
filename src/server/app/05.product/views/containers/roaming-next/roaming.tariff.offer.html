@@ -13,7 +13,7 @@
     <%- include('../components/header.component.html', { title: '요금제 추천', svcInfo: svcInfo }) %>
     <div id="contents">
     <div class="decoration">
-        <img class="banner" src="<%= country.imageUrl %>" />
+        <img class="banner" src="<%= country.imageUrl %>" alt=""/>
         <p>
             이용하기 좋은 요금제를 <br />
             추천해 드려요!
@@ -34,18 +34,18 @@
                         <h3><%= recommended.prodNm %></h3>
                         <% if (recommended.data) { %>
                         <div class="data">
-                            <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                            <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터" />
                             <span><%= recommended.data %></span>
                         </div>
                         <span class="phone"><%= recommended.phone %></span>
                         <span class="price"><%= recommended.price %></span>
                         <% } %>
-                        <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                        <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" alt=""/>
                     </div>
                 </a>
                 <% if (recommended.neiborRomPsblNatInfo) { %>
                 <div class="others">
-                    <a data-prodId="<%= recommended.prodId %>">더 보기 +</a>
+                    <a data-prodId="<%= recommended.prodId %>" role="link">더 보기 +</a>
                     <p>
                         <span class="colorPoint"><%= recommended.neiborRomPsblNatInfo %></span> 등의 국가에서도<br />이용하실 수 있습니다.
                     </p>
@@ -92,8 +92,8 @@
         <% if (newbie && newbie.isRoamingFirstTime === 'Y') { %>
         <div class="card">
             <h2>다른 해외 데이터 서비스 간 비교</h2>
-            <img class="diff" src="<%= CDN %>/img/product/roam/img_vs_01.png" alt="타서비스 비교" />
-            <img class="diff margin0" src="<%= CDN %>/img/product/roam/img_vs_02.png" alt="타서비스 비교" />
+            <img class="diff" src="<%= CDN %>/img/product/roam/img_vs_01.png" alt="SKT로 로밍 신청만 하면 내폰 그대로 편리하게" />
+            <img class="diff margin0" src="<%= CDN %>/img/product/roam/img_vs_02.png" alt="내 번호 그대로 baro 통화와 함께라면 국내통화가 무료" />
         </div>
         <% } %>
         <% if (availableTariffs && availableTariffs.length > 0) { %>
@@ -115,12 +115,12 @@
                         <div class="tariff">
                             <h3><%= t.prodNm %></h3>
                             <div class="data">
-                                <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                                <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터" />
                                 <span><%= t.data %></span>
                             </div>
                             <span class="price"><%= t.price %>/<%= t.duration %>일</span>
                             <span class="phone"><%= t.phone %></span>
-                            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" />
+                            <img class="arrow" src="<%= CDN %>/img/product/roam/ico_arrow.png" width="13" alt=""/>
                         </div>
                     </div>
                 </a>

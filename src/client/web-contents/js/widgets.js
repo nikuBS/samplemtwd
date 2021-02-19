@@ -27,7 +27,7 @@ skt_landing.widgets = {
     });
     for (var com_name in widget_list) {
       try {
-        widget_list[com_name].apply(widget_ta, {}); // 210215 C&C 요청으로 함수에 옵션값 추가
+        widget_list[com_name](widget_ta);
       }
       catch (err) {
         console.log('error : ' + com_name); // .widget > .widget-box 구조를 절대적 .widget-box에는 정해진 clsss명만 올수있음

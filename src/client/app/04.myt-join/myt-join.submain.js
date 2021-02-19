@@ -780,6 +780,10 @@ Tw.MytJoinAdvSubMain = function () {
 // overriding
 Tw.MytJoinAdvSubMain.prototype = Object.create(Tw.MyTJoinSubMain.prototype);
 Tw.MytJoinAdvSubMain.prototype.constructor = Tw.MytJoinAdvSubMain;
+Tw.MytJoinAdvSubMain.prototype._rendered = function () {
+  Tw.MyTJoinSubMain.prototype._rendered.call(this);
+  this.$serviceArea = this.$container.find('[data-id=service-area]');
+};
 Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
   Tw.MyTJoinSubMain.prototype._bindEvent.call(this);
   if (this._data.type !== 1 && this._data.type !== 2) {
@@ -826,6 +830,11 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
 };
 Tw.MytJoinAdvSubMain.prototype._initialize = function() {
   Tw.MyTJoinSubMain.prototype._initialize.call(this);
+  if (!(this._data.type === 0 || this._data.type === 2) && !this._data.isPwdSt) {
+    // PPS, T-login, T-PocketFi 인 경우에는 고객비밀번호 사용하지 않는 다면 조회 신청 영역 숨김
+    this.$serviceArea.hide();
+  }
+
   // 약정할인금액 그래프 깨지는 문제 수정 건
   var disHorizonBar = $('.horizon-bar-wrap [data-id=my-discount-info]');
   if (disHorizonBar.length) {
