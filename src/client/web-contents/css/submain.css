@@ -21,7 +21,7 @@ body.tod-white{background:#fff}
 .tod-submain .down-arr:after{content:''; display:inline-block; width:0.8125rem; height:0.5rem; background-image:url('/img/myt/arrow.svg'); background-repeat:no-repeat; background-position:0 -13px; position:absolute; right:0; top:50%; margin-top:-0.375rem}
 .tod-submain .tip{display:inline-block; width:1.8125rem; height:1rem; background:url('/img/myt/tip.svg') no-repeat left top; background-size:100%; margin-left:5px; vertical-align:top; text-indent:-9999px; position:relative; z-index:1}
 .tod-submain .onlyview.tip{line-height:1.0625rem;}
-.tod-submain .warning{font-size:0.6875rem; color:#666; line-height:1.45; padding-left:0.9375rem; position:relative;}
+.tod-submain .warning{font-size:0.6875rem !important; color:#82888f !important; line-height:1.45 !important; padding-left:0.9375rem; position:relative;}
 .tod-submain .warning:before{content:''; display:inline-block; width:0.75rem; height:0.75rem; background:url('/img/myt/caution.svg') no-repeat left top; position:absolute; left:0; top:1px }
 .tod-submain .small-wrap + .small-wrap{margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid #f2f2f2}
 
@@ -140,6 +140,8 @@ body.tod-white{background:#fff}
 /* 내역 리스트 */
 .tod-submain .report-list .report-item{overflow:hidden; font-size:0.9375rem;  border-bottom:1px solid #f2f2f2;/*  padding:13px 0 12px */}
 .tod-submain .report-list .report-item > .d-wrap{padding:1rem 0}
+.tod-submain .report-list .report-item:first-child > a.d-wrap{padding-top:1rem !important}
+.tod-submain .report-list .report-item:last-child > a.d-wrap{padding-bottom:1rem !important}
 .tod-submain .report-list .report-item:first-child > .d-wrap{padding-top:0 !important}
 .tod-submain .report-list .report-item:last-child > .d-wrap{padding-bottom:0 !important}
 .tod-submain .report-list .report-item:last-child{border:none;}
@@ -163,6 +165,8 @@ body.tod-white{background:#fff}
 .tod-submain .report-list .report-item .report-define .inner-link:after{content:''; display:inline-block; width:8px; height:13px; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
 .tod-submain .report-list.item-no-border .report-item{border-bottom:none; }
 .tod-submain .report-list.item-no-border .report-item > .d-wrap{padding:8px 0 0.4375rem}
+.tod-submain .report-list.item-no-border .report-item:first-child > a.d-wrap{padding-top:8px !important}
+.tod-submain .report-list.item-no-border .report-item:last-child > a.d-wrap{padding-bottom:8px !important}
 /* 내역 리스트 - 링크 없이 아이콘 추가 */
 .tod-submain .report-list.with-ico .report-item .report-define .report-tit{display:inline-flex}
 .tod-submain .report-list.with-ico .report-item .report-define .report-tit .ico{display:inline-block; width:3rem; height:3rem; margin-right:1rem}
@@ -175,8 +179,12 @@ body.tod-white{background:#fff}
 /* 내역 리스트 - 사이즈 작은것  */
 .tod-submain .report-list.small .report-item{font-size:0.8125rem}
 .tod-submain .report-list.small .report-item > .d-wrap{padding:0.25rem 0}
+.tod-submain .report-list.small .report-item:first-child > a.d-wrap{padding-top:0.25rem !important}
+.tod-submain .report-list.small .report-item:last-child > a.d-wrap{padding:0.25rem !important}
 .tod-submain .report-list.smaller .report-item{font-size:0.75rem}
 .tod-submain .report-list.smaller .report-item > .d-wrap{padding:0.1875rem 0}
+.tod-submain .report-list.smaller .report-item:first-child > a.d-wrap{padding-top:0.1875rem !important}
+.tod-submain .report-list.smaller .report-item:last-child > a.d-wrap{padding-bottom:0.1875rem !important}
 
 /* 단순링크 연결 */
 .tod-submain .short-link-wrap .short-link-list .link-item{border-top:1px solid #f2f2f2; }
@@ -356,7 +364,7 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .detail-charge-box{background:#f9f9f9; border-radius:0.5rem; padding:0 1rem 1.5rem; font-size:0.9375rem; color:#333 ;}
 .tod-submain .charge-cont .detail-charge-box + .detail-charge-box{margin-top:1rem}
 .tod-submain .charge-cont .detail-charge-box .detail-tit{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; width:100%; height:3rem; color:#000; font-size:15px; font-weight:600; border-bottom:1px solid #e4e4e4;}
-.tod-submain .charge-cont .detail-charge-box .detail-tit a{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; width:100%; height:100%; padding-right:0.75rem; position:relative;  font-weight:inherit;    }  
+.tod-submain .charge-cont .detail-charge-box .detail-tit a{display:block; width:100%; height:100%; padding-right:0.75rem; position:relative;  font-weight:inherit; line-height:3.0625rem   }  
 .tod-submain .charge-cont .detail-charge-box .detail-tit a:after{content:''; display:inline-block; width:0.5rem; height:0.8125rem; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:50%; margin-top:-0.375rem}
 .tod-submain .charge-cont .detail-charge-box .report-list {padding-top:1.5rem}
 .tod-submain .charge-cont .default-list{padding:0.625rem 0 1.25rem; border-top:1px dashed #f2f2f2; }
@@ -388,12 +396,15 @@ body.tod-white{background:#fff}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list .report-item .report-define .report-tit{white-space:nowrap}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list .report-cont{word-break:break-all; }
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list.small .report-item > .d-wrap{padding:0.4375rem 0}
+.tod-submain .rough-info .rough-info-inner .list-wrap .report-list.small .report-item:first-child > a.d-wrap{padding-top:0.4375rem !important}
+.tod-submain .rough-info .rough-info-inner .list-wrap .report-list.small .report-item:last-child > a.d-wrap{padding-bottom:0.4375rem !important}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list + .warning{margin-top:1rem;} 
 .tod-submain .rough-info .rough-info-inner .list-wrap .join-date{padding-top:0.1875rem; margin-left:-3.125rem; font-weight:500; letter-spacing:-0.075rem}
 
 /* 약정할인/기기상환 정보 */
 .tod-submain .hoz-group-wrap{display: -webkit-box; display:flex; }
 .tod-submain .hoz-group-wrap .report-list.smaller .report-item > .d-wrap{padding:0.5rem 0 0.4375rem}
+.tod-submain .hoz-group-wrap .report-list.smaller .report-item:first-child > a.d-wrap{padding-top:0.5rem !important}
 .tod-submain .hoz-group-wrap .card-sub-tit{font-size:0.9375rem; color:#333; padding-bottom:1rem;}
 .tod-submain .hoz-group-wrap .small-group-wrap{padding:0 0.6875rem; width:50%; flex-shrink:0; flex-grow:1}
 .tod-submain .hoz-group-wrap .small-group-wrap .day-dec{display:none}
@@ -450,7 +461,7 @@ body.tod-white{background:#fff}
 
 /***************************************************************  나의 데이터 *************************************************************** /
 /* 실시간 잔여량 */
-.tod-submain .chart-area{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; justify-content: space-around;}
+.tod-submain .chart-area{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; justify-content: space-around; overflow:hidden}
 .tod-submain .chart-area .donut-chart-wrap .left{font-size:0.8125rem;}
 .tod-submain .chart-area .donut-chart-wrap .left .total{color:#333; display:block;}
 .tod-submain .chart-area .donut-chart-wrap .left .remain{color:#f65252}
@@ -478,8 +489,7 @@ body.tod-white{background:#fff}
 .tod-submain .chart-area .horizon-bar-wrap .left{font-size:0.75rem; color:#333;}
 .tod-submain .chart-area .horizon-bar-wrap .graph-comment{position:absolute; left:0; top:0; width:100%}
 .tod-submain .chart-area .horizon-bar-wrap .total{text-align:left; position:absolute; left:0; top:0; white-space:nowrap}
-.tod-submain .chart-area .horizon-bar-wrap .left{text-align:left; position:absolute; left:0; bottom:0; font-size:0.6875rem; color:#333}
-/* .tod-submain .chart-area .horizon-bar-wrap .horizon-bar .data .bar{background-color:var(--color)} */
+.tod-submain .chart-area .horizon-bar-wrap .left{text-align:left; position:absolute; left:0; bottom:0; font-size:0.75rem; color:#333}
 .tod-submain .chart-area .horizon-bar-wrap.green .horizon-bar .data .bar{background-color:#00b36e}
 .tod-submain .chart-area .horizon-bar-wrap.yellow .horizon-bar .data .bar{background-color:#ffb119}
 .tod-submain .chart-area .horizon-bar-wrap.gray .horizon-bar .data .bar{background-color: #717171}
@@ -507,7 +517,7 @@ body.tod-white{background:#fff}
 .tod-submain .month-charge + .warning-box{padding-top:0.625rem}
 
 /* T끼리 데이터 선물  */
-.tod-submain .data-status-wrap{margin-bottom:1.75rem}
+.tod-submain .data-status-wrap{margin-bottom:0.75rem}
 .tod-submain .data-status-wrap .unit{display:inline-block; font-size:1.5rem; margin-left:0.1875rem; vertical-align:middle }
 .tod-submain .data-status-wrap .small-warning-box{background:#f9f9f9; border-radius:0.25rem; padding:0.75rem 0.4375rem 0.625rem; text-align:center; margin-top:0.75rem;}
 .tod-submain .data-status-wrap .small-warning-box .warning-txt{display:inline-block; font-size:0.6875rem; color:#868e96; line-height:1.2; text-align:left; position:relative; padding-left:0.9375rem; }
