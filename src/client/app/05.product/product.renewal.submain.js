@@ -313,6 +313,18 @@ Tw.ProductRenewalSubmain.prototype = {
       'TAG0000211' : {'from' : 65, 'to': 999}, // 65세 이상 (65~999)
     }
 
+    var themeMainTitle = '다양한 요금제를 확인해 보세요';
+    var removeIndex = _.map(redisData.banners, function(item) {
+      if ( item.bnnrLocCd === 'H' && item.bnnrExpsSeq === '999' ) { 
+        // 테마형 배너(H) 이면서 순번이 999번인 경우 해당 item의 title은 테마형 배너의 메인 제목인된다.
+        themeMainTitle = item.titleNm;
+        return item.bnnrExpsSeq;
+      }
+    }).indexOf('999');
+    if ( removeIndex !== -1 ) { // 999번 인덱스에 해당되는 객체는 삭제한다. (999번 item은 출력되면 안되므로...)
+      redisData.banners.splice(removeIndex, 1);
+    }
+
     var themeBannerParseList = _.reduce(redisData.banners, function(arr, item) {
       if ( item.bnnrLocCd === 'H' ) { // 테마형 배너 (H)
         var list = _.reduce(item.tagMappInfo, function(scopeArr, tagItem) {
@@ -347,28 +359,20 @@ Tw.ProductRenewalSubmain.prototype = {
     console.log('배너형 테마에 보여지는 항목은 이거입니다. ', themeBannerParseList);
     console.log("=====");
 
-    this._drawThemeBanner(themeBannerParseList, this); // 배너형 테마를 draw
+    this._drawThemeBanner(themeMainTitle, themeBannerParseList, this); // 배너형 테마를 draw
   },
-
 
   /**
    * 테마형 배너를 랜딩하기 위한 함수
+   * @param {*} themeMainTitle 
    * @param {*} bannerThemeParseList 
    * @param {*} _this 
    */
-  _drawThemeBanner: function(themeBannerParseList, _this) {
+  _drawThemeBanner: function(themeMainTitle, themeBannerParseList, _this) {
     if ( themeBannerParseList.length === 0 ) {
       this.$container.find('section[data-sort="THEME_BANNER"]').addClass('none'); // 테마형 배너가 없으면 결과값이 없으면 테마형 배너의 section을 none한다.
       return;
     } 
-
-    // 테마 배너의 타이틀은 themeBannerParseList의 노출순서(bnnrExpsSeq)가 1인 객체의 titleNm으로 설정한다. 
-    var themeBannerTitle = _.find(themeBannerParseList, function(item) {
-      var seq = Number(item.bnnrExpsSeq);
-      if ( seq === 1 ) { // bnnrExpsSeq 가 1번인것이 테마형 배너의 타이틀
-        return item;
-      }
-    }).titleNm || '';
 
     var $themeBanner = this.$container.find('section[data-sort="THEME_BANNER"]');
     var $themeBannerTitle = $themeBanner.find('.article-tit');
@@ -380,7 +384,7 @@ Tw.ProductRenewalSubmain.prototype = {
       banners: themeBannerParseList
     });
 
-    $themeBannerTitle.text(themeBannerTitle);
+    $themeBannerTitle.text(themeMainTitle);
     $sliderList.append(html);
 
     $(document).on('click', '.theme-item', function(event) {
