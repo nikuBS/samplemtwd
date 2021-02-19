@@ -91,7 +91,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
     // 비밀번호 사용중 및 등록완료인 상태에서만 노출
     const {pwdStCd, svcAttrCd} = svcInfo;
-    if (svcAttrCd.indexOf('S') > -1 && ['20', '21', '30'].indexOf(pwdStCd) > -1) {
+    if (svcAttrCd.indexOf('S') === -1 && ['20', '21', '30'].indexOf(pwdStCd) > -1) {
       data.isPwdSt = true;
     }
 
