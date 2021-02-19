@@ -1,428 +1,275 @@
 <%#
 * @file product.roaming.reservation.html
-* @author Seungkyu Kim (ksk4788@pineone.com)
-* @since 2018.11.13
-* ID: RM_14_02_02
+* @author JongGu Kim (P165332)
+* @since 2021.01.28
+* ID: RM_14_02_01(sprint)
 %>
-
-<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
-<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<%- include('../../components/start.component.html', { pageInfo: locals.data.pageInfo }); %>
+<body class="rm-content">
+<div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <!-- .popup hbs -->
-        <div class="popup-page nobg tw-popup fixed-bottom txt-screed h60"><!-- 2019.03.24 수정 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page nobg tw-popup fixed-bottom txt-screed"><!-- 2019.03.24 수정 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
-        <%- include('../components/header.component.html', { title: 'baro Box 예약', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>baro Box 예약</h1>
+                </div>
+                <div class="header-mask">            
+                    <button type="button" class="btn-mask fe-bt-masking"><span class="blind">개인정보 보호모드 마스킹 해제하기</span></button>
+                </div>
+            </div>
+        </div>
+        -->
+        <%- include('../components/header.component.html', { title: 'baro Box 예약', type: 'popup', svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
         <!--// #header -->
-        <!-- .container-wrap -->
-        <div class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
 
+        <!-- .container-wrap -->
+        <div class="container-wrap" data-role="fe-roaming-step-menu" >
+            <h2 class="blind">내용</h2>
+            <div class="container" id="fe-step1box">
                 <!-- .cont-box -->
-                <div class="cont-box">
-                        <div class="charge-guide-wrap">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box noborder">
+                    <div class="charge-guide-wrap">
                         <div class="charge-cont">
                             <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
-                            <span class="tit-tgothic"><%= svcInfo.showSvcNum %></span>
+                            <span class="tit-tgothic"><%= data.svcInfo.showSvcNum %></span>
                             <span class="sub-disc04">
-                                <span class="elem">현 사용기기</span>
-                                <span class="elem"><%= svcInfo.eqpMdlNm %></span>
+                                <span class="elem">현 이용 기기</span>
+                                <span class="elem"><%= data.svcInfo.eqpMdlNm %></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!--// .cont-box -->
+                <div class="cont-box noborder nogaps">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box step">
+                            <h3 class="step-ti"><em>STEP 1</em>방문 국가</h3>
+                            <ul class="step-list">
+                                <li class="on">1<span class="blind">방문 국가 STEP 1</span></li>
+                                <li>2<span class="blind">임대 기간 STEP 2</span></li>
+                                <li>3<span class="blind">T로밍센터 장소 / 국내 연락 번호 STEP 3</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //.widget -->                       
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder">                        
+                    <p class="tx-red tr fs12">* 필수</p>
+                    <h3 class="rm-barobox-tit">선택한 국가 <sup class="tx-red fs13">* <span class="blind">필수입력</span></sup></h3>				
+                    <!-- 국가 미 선택 시 -->
+                    <div class="rm-barobox-null mt10" id="visitListEmpty">
+                        <p class="fs13 tc">선택된 국가가 없습니다.</p>
+                    </div>						
+                    <!-- // 국가 미 선택 시 -->
+                    <!-- 국가 선택 시 -->
+                    <div class="basic-list li-line2 one-line pt10" id="visitList">
+                        <ul>
+                        <!--
+                            <li>
+                                <span class="title">국가명</span>
+                                <span class="tx-cont"><div class="bt-alone"><button class="bt-line-gray1">삭제</button></div></span>
+                            </li>
+                        -->
+                        </ul>
+                    </div>
+                    <!-- // 국가 선택 시 -->
+                    <ul class="bt-slice mt16">
+                        <li class="bt-roaming2">
+                            <button id="flab07">국가 선택 하기</button>
+                        </li>
+                    </ul>
+                    <div class="cont-noti mt10">
+                        <ul class="bullet-type star">
+                            <li>방문 국가는 최대 5개까지 선택할 수 있음</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>                  
+            </div>
+            <div class="bt-fixed-area" id="fe-step1btn">
+                <ul class="bt-slice full">
+                    <li class="bt-roaming2" id="test-layer">
+                        <!--<button disabled>다음</button>-->
+                        <button disabled id="fe-step2">다음</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container" id="fe-step2box">
+                <!-- .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box noborder">
+                    <div class="charge-guide-wrap">
+                        <div class="charge-cont">
+                            <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
+                            <span class="tit-tgothic"><%= data.svcInfo.showSvcNum %></span>
+                            <span class="sub-disc04">
+                                <span class="elem">현 이용 기기</span>
+                                <span class="elem"><%= data.svcInfo.eqpMdlNm %></span>
                             </span>
                         </div>
                     </div>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!--// .cont-box -->
-                <div class="cont-box">
-                    <div class="cont-noti">
-                        <span class="type3 bk">전 세계 주요국에서 저렴하게<br />baro Box로 데이터를 함께 이용하세요.<br />(기기 수령 지점에서 요금제 가입)</span>
+                <div class="cont-box noborder nogaps">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box step">
+                            <h3 class="step-ti"><em>STEP 2</em>임대 기간</h3>
+                            <ul class="step-list">
+                                <li>1<span class="blind">방문 국가 STEP 1</span></li>
+                                <li class="on">2<span class="blind">임대 기간 STEP 2</span></li>
+                                <li>3<span class="blind">T로밍센터 장소 / 국내 연락 번호 STEP 3</span></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="ti-caption-gray">
-                    <h3 class="tit">예약 정보 입력</h3>
-                    <span id="aria-required-01" class="num tx-red">* 필수</span>
+                    <!-- //.widget -->                       
                 </div>
                 <!-- .cont-box -->
-                <div class="cont-box">
-                    <div class="basic-text">
-                        <span class="top-tx-m">baro Box를 수령 받으실 방법과 장소, 시간 등을 입력해주세요</span>
-                    </div>
-                    <div class="cont-noti top-line">
-                        <ul class="bullet-type bk-type">
-                            <li><span class="tx-bold">baro Box 글로벌</span> 이용 가능 국가<br />일 7,000원(부가세 포함)</li><!-- 191213 수정 [OP002-5828] -->
-                        </ul>
-                    </div>
-                    <table class="data-a mt20">
-                        <caption>baro Box 글로벌 이용 가능 국가 일 7,700원/부가세포함 안내입니다.</caption>
-                        <colgroup>
-                            <col style="width:30%;" />
-                            <col style="width:70%;" />
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th class="t-l" scope="col">대륙</th>
-                            <th class="t-l" scope="col">이용 가능 국가</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="t-l" scope="row">아시아</td>
-                            <td class="t-l">
-                                <div class="link-area">
-                                  <button class="bt-link-tx underline">네팔</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">대만</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">라오스</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">마카오</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">말레이시아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">몽골</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">미얀마</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">방글라데시</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">베트남</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">부탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">브루나이</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">스리랑카</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">싱가포르</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">아제르바이젠</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">우즈베키스탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">인도</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">인도네시아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">일본</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">중국</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">카자흐스탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">캄보디아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">키르기즈스탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">태국</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">파키스탄</button><span class="comma">,</span><!-- 200131 추가 [OP002-6571] -->
-                                  <button class="bt-link-tx underline">필리핀</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">홍콩</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="t-l" scope="row">미주</td>
-                            <td class="t-l">
-                                <div class="link-area">
-                                  <button class="bt-link-tx underline">니카라과</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">멕시코</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">미국</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">브라질</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">아르헨티나</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">에콰도르</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">엘살바도르</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">우루과이</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">칠레</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">캐나다</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">코스타리카</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">콜롬비아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">파나마</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">파라과이</button><span class="comma">,</span><!-- 200928 추가 [OP002-10879] -->
-                                  <button class="bt-link-tx underline">페루</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">푸에르토리코</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="t-l" scope="row">오세아니아</td>
-                            <td class="t-l">
-                                <div class="link-area">
-                                    <button class="bt-link-tx underline">괌</button><span class="comma">,</span><!-- 200928 추가 [OP002-10879] -->
-                                    <button class="bt-link-tx underline">뉴질랜드</button><span class="comma">,</span>
-                                    <button class="bt-link-tx underline">사이판</button><span class="comma">,</span><!-- 200928 추가 [OP002-10879] -->
-                                    <button class="bt-link-tx underline">호주</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="t-l" scope="row">유럽</td>
-                            <td class="t-l">
-                                <div class="link-area">
-                                  <button class="bt-link-tx underline">그리스</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">네덜란드</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">노르웨이</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">덴마크</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">독일</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">라트비아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">러시아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">루마니아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">룩셈브르크</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">리투아니아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">리히텐슈타인</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">몬테네그로</button><span class="comma">,</span><!-- 191209 추가 [OP002-5697] -->
-                                  <button class="bt-link-tx underline">보스니아헤르체고비나</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">벨기에</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">불가리아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">산마리노</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">세르비아</button><span class="comma">,</span><!-- 191209 추가 [OP002-5697] -->
-                                  <button class="bt-link-tx underline">스웨덴</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">스위스</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">스페인</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">슬로바키아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">슬로베니아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">아르메니아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">아이슬란드</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">아일랜드</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">에스토니아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">영국</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">오스트리아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">우크라이나</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">이탈리아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">체코</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">크로아티아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">키프로스</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">터키</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">포르투갈</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">폴란드</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">프랑스</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">핀란드</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">헝가리</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="t-l" scope="row">중동</td>
-                            <td class="t-l">
-                                <div class="link-area">
-                                    <button class="bt-link-tx underline">사우디아라비아</button><span class="comma">,</span>
-                                    <button class="bt-link-tx underline">아랍에미리트</button><span class="comma">,</span>
-                                    <button class="bt-link-tx underline">이스라엘</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="t-l" scope="row">아프리카</td>
-                            <td class="t-l">
-                                <div class="link-area">
-                                    <button class="bt-link-tx underline">남아프리카 공화국</button><span class="comma">,</span>
-                                    <button class="bt-link-tx underline">모리셔스</button><span class="comma">,</span>
-                                    <button class="bt-link-tx underline">이집트</button><span class="comma">,</span>
-                                    <button class="bt-link-tx underline">탄자니아</button>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="cont-noti pt28">
-                        <ul class="bullet-type bk-type">
-                            <li><span class="tx-bold">baro Box 일본</span> 이용 가능 국가<br />일 3,000원(부가세 포함)</li><!-- 191213 수정 [OP002-5828] -->
-                        </ul>
-                    </div>
-                    <table class="data-a mt20">
-                        <caption>baro Box 일본 이용 가능 국가 일 3,000원/부가세포함 안내입니다.</caption><!-- 191213 수정 [OP002-5828] -->
-                        <thead>
-                        <tr>
-                            <th class="t-l" scope="col">이용 가능 국가</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="t-l">
-                                <div class="link-area">
-                                    <!-- 191213 수정 [OP002-5828] -->
-                                    <button class="bt-link-tx underline">일본</button>
-                                    <!-- // 191213 수정 [OP002-5828] -->
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- 191213 추가 [OP002-5828] -->
-                    <div class="cont-noti pt28">
-                        <ul class="bullet-type bk-type">
-                            <li><span class="tx-bold">baro Box 미국, 캐나다</span> 이용 가능 국가<br>일 4,000원(부가세 포함)</li>
-                        </ul>
-                    </div>
-                    <table class="data-a mt20">
-                        <caption>baro Box 미국,캐나다 이용 가능 국가 일 4,000원/부가세포함 안내입니다.</caption>
-                        <thead>
-                        <tr>
-                            <th class="t-l" scope="col">이용 가능 국가</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="t-l">
-                                <div class="link-area">
-                                    <button class="bt-link-tx underline">미국</button><span class="comma">,</span>
-                                    <button class="bt-link-tx underline">캐나다</button>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- // 191213 추가 [OP002-5828] -->
-
-                    <div class="cont-noti pt28">
-                        <ul class="bullet-type bk-type">
-                            <li><span class="tx-bold">baro Box 아시아</span> 이용 가능 국가<br />일 4,000원(부가세 포함)</li><!-- 191213 수정 [OP002-5828] -->
-                        </ul>
-                    </div>
-                    <table class="data-a mt20">
-                        <caption>baro Box 아시아 이용 가능 국가 일 4,700원/부가세포함 안내입니다.</caption>
-                        <thead>
-                        <tr>
-                            <th class="t-l" scope="col">이용 가능 국가</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="t-l">
-                                <div class="link-area">
-                                  <button class="bt-link-tx underline">괌</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">뉴질랜드</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">대만</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">라오스</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">마카오</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">말레이시아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">몽골</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">미얀마</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">방글라데시</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">베트남</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">부탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">사이판</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">스리랑카</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">싱가포르</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">아제르바이젠</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">우즈베키스탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">인도</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">인도네시아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">일본</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">중국</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">카자흐스탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">캄보디아</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">키르기즈스탄</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">태국</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">필리핀</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">호주</button><span class="comma">,</span>
-                                  <button class="bt-link-tx underline">홍콩</button>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <h3 class="tx-bold pt30">baro Box 임대 요금 안내</h3>
-                    <!-- 191213 수정 [OP002-5828] -->
-                    <table class="data-a mt10">
-                        <caption>baro Box 임대 요금 안내이며 요금제, 이용요금(부가세포함), 기본제공 baro Box 데이터 안내입니다.</caption>
-                        <colgroup>
-                            <col style="width:35%">
-                            <col style="width:27%">
-                            <col>
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th class="t-l" scope="col">요금제</th>
-                            <th class="t-l" scope="col">이용요금<br>(부가세 포함)</th>
-                            <th class="t-l" scope="col">기본 제공<br>baro Box 데이터</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="t-l">baro Box <br>글로벌</td>
-                            <td class="t-l"><strong>7,000원/일</strong></td>
-                            <td class="t-l" rowspan="4"><strong>1GB/일 + 속도제어</strong><br>(하루에 1GB를 다 쓴 후에는 400kbps 이하의 속도로 계속 이용하실 수 있습니다.
-                        </tr>
-                        <tr>
-                            <td class="t-l">baro Box <br>일본</td>
-                            <td class="t-l"><strong>3,000원/일</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="t-l">baro Box <br>미국, 캐나다</td>
-                            <td class="t-l"><strong>4,000원/일</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="t-l">baro Box <br>아시아</td>
-                            <td class="t-l"><strong>4,000원/일</strong></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- // 191213 수정 [OP002-5828] -->
-
-                    <!-- // 191122 추가 [OP002-5368] -->
-                    <div class="cont-noti pt20">
-                        <ul class="bullet-type star">
-                            <li>기본 제공 baro Box 데이터를 다 쓴 후에는 400Kbps 이하의 속도로 계속 이용하실 수 있습니다.</li>
-                            <li>임대료는 임대기간 동안 임대료가 적용됩니다.</li><!-- 191213 수정 [OP002-5828] -->
-                        </ul>
-                    </div>
-                    <h3 class="tx-bold pt40">baro Box 추가 혜택 안내</h3>
-                    <p class="tx-bold tx-tip">대표 회선에 로밍 데이터 500MB 제공</p><!-- 191213 수정 [OP002-5828] -->
-                    <p class="tx-tip_sub">baro Box 이용 가능 거리에서 벗어났을 때 활용하세요. <br> (데이터 로밍 사용 설정 필요)</p>
-                    <ul class="tx-exp-dot">
+                <div class="cont-box noborder">                        
+                    <p class="tx-red tr fs12">* 필수</p>
+                    <h3 class="rm-barobox-tit">임대 기간 선택 <sup class="tx-red fs13">* <span class="blind">필수입력</span></sup></h3>				
+                    <ul class="form-data-list pt20">
                         <li>
-                            <dl>
-                                <dt>혜택 대상</dt>
-                                <dd>baro Box를 대여할 때 등록한 대표 회선(본인 명의)에 LTE/3G 데이터 제공(SK텔레콤 고객님에게만 제공되는 혜택입니다.)</dd>
-                            </dl>
+                            <label class="tit block" for="flab02">임대 시작 일자<span class="fs12 rm-fr">※ 2일 후부터 예약하실 수 있습니다.</span></label>
+                            <div class="inputbox date-selcet mt0">
+                                <span class="date-type full"><input id="flab02" placeholder="yyyy-mm-dd" type="date" value="<%= data.formatDate.minDate %>" min="<%= data.formatDate.minDate %>" max="<%= data.formatDate.maxDate %>" title="임대시작 일자 선택"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab03">반납 일자</label>
+                            <div class="inputbox date-selcet mt0">
+                                <span class="date-type full"><input id="flab03" type="date" value="<%=data.formatDate.minDate %>" min="<%= data.formatDate.minDate %>" max="<%= data.formatDate.maxDate %>" title="반납 일자 선택"></span>
+                            </div>
                         </li>
                     </ul>
-                    <div class="cont-noti pt20">
-                        <ul class="bullet-type star">
-                            <li>추가 제공 데이터 500MB를 모두 쓰신 경우에는 ‘데이터로밍무조건차단’에 자동으로 가입됩니다. 단, 데이터 로밍이 차단되어도, baro Box는 정상적으로 이용하실 수 있습니다.</li><!-- 191213 수정 [OP002-5828] -->
-                            <li>baro Box 요금제를 이용할 때 다른 로밍 요금제에 가입되어 있다면, 추가 제공 데이터를 받으실 수 없습니다.</li>
-                        </ul>
-                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+            <div class="bt-fixed-area" id="fe-step2btn">
+                <ul class="bt-slice full">
+                    <li class="bt-roaming2">
+                        <button id="fe-step3">다음</button>
+                    </li>
+                </ul>
+            </div>
 
-                    <div class="top-line">
-                        <h3>방문국가</h3>
-                        <div class="cont-noti">
-                            <ul class="bullet-type star">
-                            	<li>방문국가는 최대 5개까지 선택하실 수 있습니다.</li>
+            <div class="container" id="fe-step3box">
+                <!-- .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box noborder">
+                    <div class="charge-guide-wrap">
+                        <div class="charge-cont">
+                            <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
+                            <span class="tit-tgothic"><%= data.svcInfo.showSvcNum %></span>
+                            <span class="sub-disc04">
+                                <span class="elem">현 이용 기기</span>
+                                <span class="elem"><%= data.svcInfo.eqpMdlNm %></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box noborder nogaps">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box step">
+                            <h3 class="step-ti"><em>STEP 3</em>장소 선택 / 국내 연락 번호</h3>
+                            <ul class="step-list">
+                                <li>1<span class="blind">방문 국가 STEP 1</span></li>
+                                <li>2<span class="blind">임대 기간 STEP 2</span></li>
+                                <li class="on">3<span class="blind">T로밍센터 장소 / 국내 연락 번호 STEP 3</span></li>
                             </ul>
                         </div>
-                        <div class="basic-list li-line2 one-line pt10">
-                            <ul id="visitList">
-                                <!-- 국가 리스트 영역 -->
-                            </ul>
-                        </div>
                     </div>
-
-                    <ul class="form-data-list pt28">
+                    <!-- //.widget -->                       
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box noborder">
+                    <p class="tx-red tr fs12">* 필수</p>
+                    <h3 class="rm-barobox-tit">임대 기기 수령/반납 장소 선택 <sup class="tx-red fs13">* <span class="blind">필수입력</span></sup></h3>				
+                    <ul class="form-data-list pt20">
                         <li>
-                            <label class="tit" for="flab01">국내 휴대폰 번호<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 1터미널 3층 T로밍센터(F 카운터)<span class="ico"></span></button>
+                            <!--    <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 1터미널 3층 로밍센터(H 카운터)<span class="ico"></span></button>-->
+                            <div class="mapimg-area pt10">
+                            <img id="fe-receive-img" src="<%= CDN %>/img/product/place-img-01-f.png" alt="인천공항 1터미널 3층 T로밍센터(F 카운터)"/>
+                            <!--   <img id="fe-receive-img" src="<%= CDN %>/img/product/place-img-01-h.png" alt="인천공항 1터미널 3층 로밍 센터(H 카운터)"/>-->
+                            <!--     <p class="rm-tx-hour" id="fe-receive-officehour"><strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령가능</span></p>-->
+                            <p class="rm-tx-hour" id="fe-receive-officehour"><strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br></p>
+                            </div>
+                        <!--
+                            <label class="tit" for="flab04">수령 장소 선택</label>
+                            <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 2터미널 3층 로밍센터(D-E 카운터)<span class="ico"></span></button>
+                            <div class="mapimg-area pt10">
+                                <img id="fe-receive-img" src="<%= CDN %>/img/product/place-img-01-f.png" alt="인천공항 1터미널 3층 T로밍센터(F 카운터)">
+                                <p class="rm-tx-hour"><strong>업무시간</strong> | 오전 6시 ~ 오후 10시</p>                                
+                            </div>
+                            
+                            <div class="mapimg-area pt10">
+                                <img src="<%= CDN %>/img/product/place-img-02-de.png" alt="인천공항 2터미널 3층 T로밍센터(D-E 카운터)">
+                                <p class="rm-tx-hour"><strong>업무시간</strong> | 오전 6시 ~ 오후 10시</p>                                
+                            </div>   
+                        -->               
+                        </li>
+                        <li>
+                            <label class="tit" for="flab05">반납 장소 선택</label>
+                            <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true">인천공항 1터미널 1층 T로밍센터<span class="ico"></span></button>
+                            <div class="mapimg-area pt10">
+                              <img id="fe-return-img" src="<%= CDN %>/img/product/place-img-01-1.png" alt="인천공항 1터미널 1층 T로밍센터"/>
+        <!--                              <p class="rm-tx-hour" id="fe-return-officehour"><strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간</p>-->
+                              <p class="rm-tx-hour" id="fe-return-officehour"><strong>업무시간</strong> | 9-10 출구 : 오전 6시 ~ 오후 10시</p>
+                            </div>
+                            <!--
+                            <div class="mapimg-area pt10">
+                                <img src="<%= CDN %>/img/product/place-img-01-1.png" alt="인천공항 1터미널 1층 T로밍센터">
+                                <p class="rm-tx-hour"><strong>업무시간</strong> | 9-10 출구 : 오전 6시 ~ 오후 10시</p>
+                            </div>
+                            <div class="mapimg-area pt10">
+                                !-- 210121 수정 [OP002-11408] - 로밍센터 수정 반영 [OP002-12495] --
+                                <img id="fe-return-img" src="<%= CDN %>/img/product/place-img-02-east.png" alt="인천공항 2터미널 동편 입국 심사장 내 SK텔레콤 T로밍센터">
+                                <p class="rm-tx-hour"><strong>업무시간</strong> | 24시간</p>
+                                !-- // 210121 수정 [OP002-11408] - 로밍센터 수정 반영 [OP002-12495] --
+                            </div>
+                            -->
+                        </li>
+                    </ul>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box noborder pt36 pb36">
+                    <h3 class="rm-barobox-tit">국내 연락 번호(휴대폰 번호) <sup class="tx-red fs13">* <span class="blind">필수입력</span></sup></h3>
+                    <ul class="form-data-list pt12">
+                        <li>
                             <div class="inputbox">
-                                    <span class="input">
-                                        <input id="flab01" type="tel" placeholder="숫자만 입력" title="국내 연락번호 휴대폰 번호 (숫자만 입력)" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab02">임대 시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
-                            <div class="inputbox date-selcet mt0">
-                                <span class="date-type full"><input id="flab02" type="date" value="<%= formatDate.minDate %>" min="<%= formatDate.minDate %>" max="<%= formatDate.maxDate %>" title="임대시작 일자 선택"></span>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab03">반납 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
-                            <div class="inputbox date-selcet mt0">
-                                <span class="date-type full"><input id="flab03" type="date" value="<%= formatDate.minDate %>" min="<%= formatDate.minDate %>" max="<%= formatDate.maxDate %>" title="반납 일자 선택"></span>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab04">수령 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
-                            <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 1터미널 3층 로밍센터(F 카운터)<span class="ico"></span></button>
-<!--                            <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 1터미널 3층 로밍센터(H 카운터)<span class="ico"></span></button>-->
-                            <div class="mapimg-area pt10">
-                              <img id="fe-receive-img" src="<%= CDN %>/img/product/place-img-01-f.png" alt="인천공항 1터미널 3층 로밍 센터(F 카운터)"/>
-<!--                              <img id="fe-receive-img" src="<%= CDN %>/img/product/place-img-01-h.png" alt="인천공항 1터미널 3층 로밍 센터(H 카운터)"/>-->
-<!--                              <p class="rm-tx-hour" id="fe-receive-officehour"><strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령가능</span></p>-->
-                              <p class="rm-tx-hour" id="fe-receive-officehour"><strong>업무시간</strong> | 06:00 ~ 22:00<br></p>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="tit" for="flab05">반납 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
-                            <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true">인천공항 1터미널 1층 로밍센터<span class="ico"></span></button>
-                            <div class="mapimg-area pt10">
-                              <img id="fe-return-img" src="<%= CDN %>/img/product/place-img-01-1.png" alt="인천공항 1터미널 1층 로밍 센터"/>
-<!--                              <p class="rm-tx-hour" id="fe-return-officehour"><strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간</p>-->
-                              <p class="rm-tx-hour" id="fe-return-officehour"><strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00</p>
+                                <span class="input">
+                                    <input id="flab01" type="tel" placeholder="숫자만 입력" title="국내 연락번호 휴대폰 번호 (숫자만 입력)" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
                             </div>
                         </li>
                     </ul>
-
-                    <h3 class="pt30">약관 동의(필수)</h3>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box noborder pt36 pb36">
+                    <h3 class="rm-barobox-tit">약관 동의(필수) <sup class="tx-red fs13">* <span class="blind">필수입력</span></sup></h3>
                     <div class="agree-chk-wrap">
                         <!-- .list-comp-input -->
                         <div class="list-comp-input-agree gap-type">
@@ -446,45 +293,42 @@
                         </div>
                         <!--// .list-comp-input -->
                     </div>
-
-                    <div class="announcement-box top-line mt0">
-                        <p class="announcement-bullet type01">이용약관 미동의 시 예약 신청이 되지 않습니다.</p>
-                        <p class="announcement-bullet type01">만 18세 이하 고객과 청소년 요금제를 이용하시는 고객은 고객센터로 문의해주시기 바랍니다. 02-6343-9000(무료)</p><!-- 200207 수정 [OP002-6531] -->
-                        <p class="announcement-bullet type01">청구기준은 한국시간 기준으로 임대일로부터 반납일까지 입니다.</span></p><!-- 191213 수정 [OP002-5828] -->
-                        <p class="announcement-bullet type01">대구 SKT 황금점 매장은 매주 일요일 휴무이므로 임대 시작일∙반납일자가 일요일인 경우 다른 장소를 선택해 주세요.</p>
-                        <p class="announcement-bullet type01">로밍센터별 근무시간이 상이하므로 사전에 업무시간을 확인하신 후 방문해 주세요.<button id="goLink" class="bt-link-tx underline block">업무시간 상세보기</button></p>
-                        <p class="announcement-bullet type01 tod-txcolor7"><strong>코로나19로 인해 로밍 센터 부스 운영 현황 확인 후 예약해주시길 바랍니다.</strong><br><br>
-                            ※ 현재 운영 중인 공항 및 부스<br>
-                            인천공항 제1터미널 3층 F 카운터 (운영시간 06시~ 22시)<br>
-                            인천공항 제1터미널 1층 9~10번 사이 (운영시간 06시~22시)<br>
-                            인천공항 제2터미널 3층 D-E 사이 (운영시간 06시~22시)<br>
-                            인천공항 제2터미널 동편 입국 심사장 내 SK텔레콤 로밍센터 (운영시간 24시간)
-                        </p><!-- 201230 수정 [OP002-12495] -->
+                    <div class="announcement-box mt0">
+                        <p class="announcement-bullet type01 tod-txcolor4">이용 약관 미동의 시 예약 신청이 되지 않습니다.</p>
+                        <p class="announcement-bullet type01 tod-txcolor4">T로밍센터별 업무 및 운영 시간이 다르므로 미리 확인하신 후 방문해 주세요. <button id="goLink" class="bt-link-tx underline">업무 시간 자세히 보기</button></p>
+                        <p class="fs13">코로나19로 인해 T로밍센터 부스 운영 현황이 달라질 수 있으니 확인 후 예약해 주시기 바랍니다.</p>
+                        <p class="announcement-bullet type01 tod-txcolor1 mt16">현재 운영 중인 공항 및 부스</p>
+                        <div class="cont-noti">
+                            <ul class="bullet-type dash-type ml10">
+                                <li class="tod-txcolor1">인천공항 제1터미널 3층 F카운터<br>(운영 시간 오전 6시~오후 10시)</li>
+                                <li class="tod-txcolor1 mt0">인천공항 제1터미널 1층 9~10번 사이<br>(운영 시간 오전 6시~오후 10시)</li>
+                                <li class="tod-txcolor1 mt0">인천공항 제2터미널 3층 D-E 사이<br>(운영 시간 오전 6시~오후 10시)</li>
+                                <li class="tod-txcolor1 mt0">인천공항 제2터미널 동편 입국 심사장 내 SK텔레콤 T로밍센터<br>(운영 시간 24시간)</li><!-- 210121 수정 [OP002-11408] - 로밍센터 수정 반영 [OP002-12495] -->
+                            </ul>
+                        </div>
                     </div>
-
                 </div>
-                <!--// .cont-box -->
-
                 <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
+                <div class="cont-box rm-cont-tooltip">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <!-- Grand open 접근성 수정 -->
                     <ul class="noti-list02">
-                        <li><button aria-haspopup="true" id="RM_14_02_01_tip_01" type="button" class="tip-view-btn">예약 확인사항<span class="tip-view">TIP</span></button></li>
+                        <li id="dyna-tooltip-01"><button aria-haspopup="true" id="RM_14_02_01_tip_01" type="button" class="tip-view-btn">예약 확인 사항22<span class="tip-view">TIP</span></button></li>
+                        <li id="dyna-tooltip-02"><button aria-haspopup="true" id="TC000114" class="tip-view-btn">기기 수령 시 유의 사항<span class="tip-view">TIP</span></button></li>
                     </ul>
+                    <!--// Grand open 접근성 수정 -->
                 </div>
                 <!--// .cont-box -->
+        
             </div>
-            <div class="bt-fixed-area">
+            <div class="bt-fixed-area" id="fe-step3btn">
                 <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button id="fe-register" disabled>신청하기</button>
+                    <li class="bt-roaming2">
+                        <button disabled id="fe-register">신청하기</button>
                     </li>
                 </ul>
             </div>
         </div>
-        <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
         <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
@@ -496,10 +340,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingFiReservation($('.wrap'), '<%= formatDate.minDate %>');
+    var data = '<%- escape(JSON.stringify(data)) %>';
+    new Tw.ProductRoamingFiReservation($('.wrap'), data);
   });
 </script>
-
 <% include ../../components/end.component.html %>
-
-

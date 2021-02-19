@@ -17,7 +17,7 @@ RUN npm config set registry http://devops.sktelecom.com/myrepo/content/groups/np
 RUN npm config set strict-ssl false
 
 # npm & pm2 install
-RUN npm install npm -g
+RUN npm install npm@6.14.9 -g
 RUN npm install
 RUN npm install -g pm2
 RUN npm install -g gulp

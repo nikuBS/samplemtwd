@@ -8,7 +8,11 @@ _%>
 <section class="cont-card">
   <div class="section-inner">
     <div class="head-tit high">
+      <% if (data.type === 0 || data.type === 3) { %>
       <a href="#" data-id="br-opening-detail" class="link">기본 가입정보</a>
+      <% } else { %>
+      기본 가입정보
+      <% } %>
     </div>
     <% var icon = 'ico7'; %>
     <%_ if (data.type === 2) { _%>
@@ -69,7 +73,7 @@ _%>
                           <%= '(' + data.myInfo.setPrdStaDt + ' ~ ' + data.myInfo.setPrdEndDt + ')' %>
                         </div>
                       <%_ } else { _%>
-                        <div> 무약정 </div>
+                        무약정
                       <%_ } _%>
                     </dd>
                   </dl>
@@ -85,8 +89,8 @@ _%>
             </div>
           </div>
           <div class="btn-area btn2 medium">
-            <a href="#" class="round-btn">이용 계약 정보</a>
-            <a href="#" class="round-btn line">신청내역 및 조회</a>
+            <a href="#" data-id="until-info" class="round-btn">이용 계약 정보</a>
+            <a href="#" data-id="wire-inq" class="round-btn line">신청내역 및 조회</a>
           </div>
         </div>
       </div>
@@ -123,7 +127,7 @@ _%>
                      X1: 'CIS PB 상태자료 이전'
                    -->
                   <dt class="report-tit">가입 상태</dt>
-                  <dd class="report-cont"><%- data.svcInfo.svcStCd === 'AC' ? '이용 중' : '정지' %></dd>
+                  <dd class="report-cont"><%- data.svcInfo.svcStCd === 'AC' ? '이용 중' : '정지 중' %></dd>
                 </dl>
               </li>
               <%_ if (data.myHistory) {

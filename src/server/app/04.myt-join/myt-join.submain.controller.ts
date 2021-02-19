@@ -93,12 +93,14 @@ class MyTJoinSubmainController extends TwViewController {
     Observable.combineLatest(
         requestApiList
     ).subscribe((responses) => {
-      this.__parsingRequestData({
+      const _parsing = this.__parsingRequestData({
         res, responses, data
       });
-      // 다른 페이지를 찾고 계신가요 통계코드 추가
-      this.getXtEid(data);
-      res.render('myt-join.submain.html', { data });
+      if (_parsing) {
+        // 다른 페이지를 찾고 계신가요 통계코드 추가
+        this.getXtEid(data);
+        res.render('myt-join.submain.html', { data });
+      }
     });
   }
 
@@ -178,7 +180,7 @@ class MyTJoinSubmainController extends TwViewController {
     return comparison;
   }
 
-  __parsingRequestData(parsingInfo) {
+  __parsingRequestData(parsingInfo): boolean {
     const { res, responses, data } = parsingInfo;
     const [ myline, myif, myhs, myap, mycpp, myinsp,
       myps, mylps, numSvc, wlap /* , wilp, smcp */ /* , wirefree, oldnum, banner */] = responses;
@@ -363,7 +365,8 @@ class MyTJoinSubmainController extends TwViewController {
 				28일 이내이면 numChgFlag = 'Y' 로 보내준다. 28일이 지나면 MOD0030 code 리턴
 		 */
     if (numSvc && numSvc.code === API_CODE.CODE_00) {
-      const {extnsPsblYn, notiEndDt} = numSvc.result;Object.assign(data, {
+      const {extnsPsblYn, notiEndDt} = numSvc.result;
+      Object.assign(data, {
         numberSvc: numSvc,
         isNotChangeNumber: true,
         numberChanged: extnsPsblYn === 'Y'
@@ -385,6 +388,7 @@ class MyTJoinSubmainController extends TwViewController {
       }
 
     }
+    return true;
     // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
     // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
     //   if ( !FormatHelper.isEmpty(banner.result) ) {

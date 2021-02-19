@@ -27,7 +27,6 @@ export class MytFareSubmainMyBenefitService extends MytFareSubmainCommonService 
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인 (combination-discounts)
       this.apiService.request(API_CMD.BFF_05_0196, {}), // 장기가입혜택 (loyalty-benefits)
     ).map( ([membership, bill, combination, loyalty]) => {
-
       return this.parseData(membership, bill, combination, loyalty);
     });
   }

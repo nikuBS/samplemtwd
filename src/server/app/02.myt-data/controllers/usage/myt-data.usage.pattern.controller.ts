@@ -119,7 +119,7 @@ class MyTDataUsagePattern extends TwViewController {
         const dataUsages = (respUsageByMonths.result || {});
         // 음성 처리
         if (dataUsages.voice) {
-          dataUsages.voice.map(item => {
+          dataUsages.voice.forEach(item => {
             const pattern = byMonths[item.invMth] || {};
             byMonths[item.invMth] = pattern;
             /*
@@ -149,7 +149,7 @@ class MyTDataUsagePattern extends TwViewController {
         }
         // 문자 처리
         if (dataUsages.sms) {
-          dataUsages.sms.map(item => {
+          dataUsages.sms.forEach(item => {
             const pattern = byMonths[item.invMth] || {};
             byMonths[item.invMth] = pattern;
             /*
@@ -172,7 +172,7 @@ class MyTDataUsagePattern extends TwViewController {
         }
         // 데이터 처리
         if (dataUsages.data) {
-          dataUsages.data.map(item => {
+          dataUsages.data.forEach(item => {
             const pattern = byMonths[item.invMth] || {};
             byMonths[item.invMth] = pattern;
             /*
@@ -213,7 +213,9 @@ class MyTDataUsagePattern extends TwViewController {
           }
           return itemMonth;
         });
-        options.byMonths[indexTabSelected === -1 ? 0 : indexTabSelected].selected = true;
+        if (options.byMonths.length) {
+          options.byMonths[indexTabSelected === -1 ? 0 : indexTabSelected].selected = true;
+        }
       }
       // XXX: 기간에 대한 검증을 해야 하나?
       // responses[1].result.usePeriod[1] ~ responses[1].result.usePeriod[0] // [2]: 시작(1) ~ 끝(0)

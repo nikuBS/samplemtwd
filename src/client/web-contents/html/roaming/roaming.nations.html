@@ -39,14 +39,16 @@
     </div>
     <div class="menu">
         <ul>
-            <li id="EUR" class="active">
-                <button id="" type="button">유럽</button>
+        	<!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
+            <li id="EUR">
+                <button id="" type="button" class="active" aria-selected="true">유럽</button>
             </li>
-            <li><button type="button" id="">아시아</button></li>
-            <li><button type="button" id="">미주</button></li>
-            <li><button type="button" id="">오세아니아</button></li>
-            <li><button type="button" id="">중동</button></li>
-            <li><button type="button" id="">아프리카</button></li>
+            <li><button type="button" id="" aria-selected="false">아시아</button></li>
+            <li><button type="button" id="" aria-selected="false">미주</button></li>
+            <li><button type="button" id="" aria-selected="false">오세아니아</button></li>
+            <li><button type="button" id="" aria-selected="false">중동</button></li>
+            <li><button type="button" id="" aria-selected="false">아프리카</button></li>
+            <!-- // 210217 수정 [OP002-12168] 웹접근성 재인증 -->
         </ul>
     </div>
     <div class="content">

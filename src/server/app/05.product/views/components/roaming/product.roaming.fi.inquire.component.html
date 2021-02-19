@@ -2,12 +2,39 @@
 * @file product.roaming.fi.inquire.component.html
 * @author 김승규 (ksk4788@pineone.com)
 * @since 2018.11.28
+* 11 : 예약 대기 중
+* 12 : 예약 완료
+* 16 : 미수령
+* 17 : 예약 취소
 %>
 <script id="tmplList" type="text/x-handlebars-template">
     {{#each list}}
     <li>
+        <!--
+        <strong class="rm-box-tit-stat stat1">예약 완료</strong>
+        <strong class="rm-box-tit-stat stat2">예약 대기</strong>
+        <strong class="rm-box-tit-stat stat3">미수령</strong>
+        <strong class="rm-box-tit-stat stat4">예약 취소</strong>
+        -->
+        {{#if isStatus17}}
+        <strong class="rm-box-tit-stat stat4">{{show_rental_st_nm}}</strong>
+        {{/if}}
+        {{#if isStatus16}}
+        <strong class="rm-box-tit-stat stat3">{{show_rental_st_nm}}</strong>
+        {{/if}}
+        {{#if isStatus12}}
+        <strong class="rm-box-tit-stat stat1">{{show_rental_st_nm}}</strong>
+        {{/if}}
+        {{#if isStatus11}}
+        <strong class="rm-box-tit-stat stat2">{{show_rental_st_nm}}</strong>
+        {{/if}}
+        
         <div class="basic-list">
             <ul>
+                <li>
+                    <span class="title gray">임대 예정</span>
+                    <span class="tx-cont rm-tx-color">D - {{dday}}</span>
+                </li>
                 <li>
                     <span class="title gray">예약일</span>
                     <span class="tx-cont">{{rsv_rcv_dtm}}</span>
@@ -28,25 +55,22 @@
                     <span class="title gray">반납 장소</span>
                     <span class="tx-cont">{{show_rtn_sale_org_id}}</span>
                 </li>
-                <li>
-                    <span class="title gray">진행 상태</span>
-                    <span class="tx-cont tx-bold">{{show_rental_st_nm}}</span>
-                </li>
             </ul>
         </div>
+
         <ul class="bt-slice item-two mt30">
             {{#if dateDifference}}
-                <li class="bt-white2">
+                <li class="bt-roaming1">
                     <button id="fe-cancel" data-response="{{json this}}">예약 취소</button>
                 </li>
-                <li class="bt-white2">
+                <li class="bt-roaming2">
                     <button id="fe-edit" data-response="{{json this}}">예약 수정</button>
                 </li>
             {{else}}
-                <li class="bt-white2">
+                <li class="bt-roaming1">
                     <button disabled>예약 취소</button>
                 </li>
-                <li class="bt-white2">
+                <li class="bt-roaming2">
                     <button disabled>예약 수정</button>
                 </li>
             {{/if}}
