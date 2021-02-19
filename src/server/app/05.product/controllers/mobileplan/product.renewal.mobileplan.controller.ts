@@ -197,7 +197,7 @@ export default class RenewProduct extends TwViewController {
             }
             
             console.log("#####");
-            console.log(data.themeListData);
+            console.log(data.themeListData.prodList);
             console.log("#####");
 
             res.render('mobileplan/renewal/submain/product.renewal.mobileplan.html', { svcInfo, pageInfo, data });
@@ -611,8 +611,8 @@ export default class RenewProduct extends TwViewController {
         const basDataTxt = this.convertBasDataTxt(basDataGbTxt, basDataMbTxt); // GB, MB 컨버터
 
         const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱
-        const basAdditionalList = this.convertAdditionalList(item.benfProdList) || []; // 부가 서비스 정보를 파싱
-        
+        const basAdditionalObject = this.convertAdditionalList(item.benfProdList) || []; // 부가 서비스 정보를 파싱
+
         // 상품 스펙 공통 헬퍼 사용하여 컨버팅
         const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
@@ -624,8 +624,9 @@ export default class RenewProduct extends TwViewController {
           basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
           basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
           basNetworkList: basNetworkList, // 네트워크 타입
-          basAdditionalList: basAdditionalList // 기본혜택/추가혜택에 대한 정보
+          basAdditionalObject: basAdditionalObject // 기본혜택/추가혜택에 대한 정보
         });
+
         return arr;
       }, []);
     }

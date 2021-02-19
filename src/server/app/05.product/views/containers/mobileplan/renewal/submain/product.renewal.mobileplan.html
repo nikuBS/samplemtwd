@@ -44,7 +44,7 @@
                             <div class="pro-article login-box">
                                 <p class="login-msg">로그인하시고,<br>놓치고 있는 혜택도 확인하세요.</p>
                                 <div class="login-btn-area">
-                                    <a href="#" class="pro-btn login-btn">로그인하기</a>
+                                    <a href="#" class="pro-btn login-btn" data-xt_eid="CMMA_A4_B84-3" data-xt_csid="NO" data-xt_action="BC">로그인하기</a>
                                 </div>
                             </div>
 
@@ -53,7 +53,7 @@
 							<%_ if ( data.isWireless && data.payment ) { _%>
                                 <%# 무선 사용자이면서 상품 정보가 있으면 출력 %>
                                 <div class="pro-article now-pay-box">
-                                    <div class="article-tit"><a href="/myt-join/myplan">현재 사용중인 요금제</a></div>
+                                    <div class="article-tit"><a href="/myt-join/myplan" data-xt_eid="CMMA_A4_B84-2" data-xt_csid="NO" data-xt_action="BC">현재 사용중인 요금제</a></div>
                                     <div class="article-cont inset-shadow-box">
                                         <dl class="item-define">
                                             <dt><%= data.payment.product.basProductNm %></dt>
@@ -109,7 +109,7 @@
 										<div class="agr-area">
 											<div class="agr-left">
 												<p class="a-txt"><label>개인정보 수집이용 동의 (선택)</label></p>
-												<a class="bt-detail">상세보기</a>
+												<a class="bt-detail" data-xt_eid="CMMA_A4_B84-55" data-xt_csid="NO" data-xt_action="BC">상세보기</a>
 											</div>
 											<div class="agr-left">
 												<ul class="on-off-list new">
@@ -120,7 +120,7 @@
 																<span class="btn-switch type1"><!-- 체크 상태일 경우 .on 클래스 추가 -->
 																	<span class="switch-style">
 																		<span class="off-tx">꺼짐</span>
-																		<input class="bt-switch" type="checkbox" id="pro-ch1" title="이번 달 차단"><!-- 체크 상태일 경우 checked -->
+																		<input class="bt-switch" type="checkbox" id="pro-ch1" title="이번 달 차단" data-xt_eid="CMMA_A4_B84-54" data-xt_csid="NO" data-xt_action="BC"><!-- 체크 상태일 경우 checked -->
 																		<span class="on-tx">켜짐</span>
 																	</span>
 																</span>
@@ -144,7 +144,7 @@
                                         <div class="article-cont">
                                             <ul class="go-service add-service-list shadow-box "><!-- show toggle -->
     
-                                                <%_ for (var i=0, length=data.additions.length; i < length; i += 1) { _%>
+                                                <%_ for (let i=0, length=data.additions.length; i < length; i += 1) { _%>
                                                     <li class="service-item">
                                                         <div class="item-inner">
                                                             <span class="service-name"><i class="ico"><img src="<%= CDN %><%= data.additions[i].additionIconImg %>" alt=""></i><%= data.additions[i].additionNm %></span>
@@ -179,21 +179,13 @@
                             <div class="article-cont minus-space">
 								<div class="slider-wrap benefit-slider">
 									<div class="slider-container">
-										<ul class="slider-list">
-											
-<!-- 
-											<li class="slider-item">
-												<a href="http://www.naver.com" class="shadow-box">
-													<p class="benefit-txt">데이터<em>완전무제한</em></p>
-													<i class="benefit-ico"><img src="/img/product/v2/pro-ben-ico01.svg" alt=""></i>
-												</a>
-											</li>
-											  -->
-										</ul>
+										<ul class="slider-list"></ul>
 									</div>
 								</div>
 								<div class="more-link-area">
-									<a href="/product/renewal/mobileplan/list" class="more"><span class="more-txt">전체요금제 보러가기</span></a>
+									<a href="/product/renewal/mobileplan/list" class="more" data-xt_eid="CMMA_A4_B84-25" data-xt_csid="NO" data-xt_action="BC">
+										<span class="more-txt">전체요금제 보러가기</span>
+									</a>
 								</div>
 							</div>
                         </div><!-- //pro-article -->
@@ -217,7 +209,7 @@
 									</div>
 									<div class="tod-nmp-row-list">
 										<ul>
-											<% for ( var i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
+											<% for ( let i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
 												<li>
 													<div class="tod-nmp-item plan-type1 prod-band">
 														<a href="<%= data.themeListData.prodList[i].basProductUrl %>" class="item-link">
@@ -225,7 +217,7 @@
 																<% if ( data.themeListData.prodList[i].basNetworkList.length !== 0 ) { %>
 																	<%# 필터 정보들을 이용하여 3G/LTE/5G/2nd Device 외 태그들을 화면에 표시 %>
 																	<div class="col-left">
-																		<% for ( var j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
 																			<span class="<%= data.themeListData.prodList[i].basNetworkList[j].style %>"><%= data.themeListData.prodList[i].basNetworkList[j].prodFltNm %></span>
 																		<% } %>
 																	</div>
@@ -282,7 +274,7 @@
 									<!-- 요금제 row list -->
 									<div class="tod-nmp-row-list">
 										<ul>
-											<% for ( var i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
+											<% for ( let i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
 												<li>
 													<div class="tod-nmp-item plan-type3 prod-lte">
 														<a href="<%= data.themeListData.prodList[i].basProductUrl %>" class="item-link">
@@ -290,7 +282,7 @@
 																<% if ( data.themeListData.prodList[i].basNetworkList.length !== 0 ) { %>
 																	<%# 필터 정보들을 이용하여 3G/LTE/5G/2nd Device 외 태그들을 화면에 표시 %>
 																	<div class="col-left">
-																		<% for ( var j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
 																			<span class="<%= data.themeListData.prodList[i].basNetworkList[j].style %>"><%= data.themeListData.prodList[i].basNetworkList[j].prodFltNm %></span>
 																		<% } %>
 																	</div>
@@ -348,7 +340,7 @@
 									<!-- 요금제 row list -->
 									<div class="tod-nmp-row-list">
 										<ul>
-											<% for ( var i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
+											<% for ( let i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
 												<li>
 													<div class="tod-nmp-item plan-type2 prod-5g">
 														<a href="<%= data.themeListData.prodList[i].basProductUrl %>" class="item-link">
@@ -356,7 +348,7 @@
 																<% if ( data.themeListData.prodList[i].basNetworkList.length !== 0 ) { %>
 																	<%# 필터 정보들을 이용하여 3G/LTE/5G/2nd Device 외 태그들을 화면에 표시 %>
 																	<div class="col-left">
-																		<% for ( var j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
 																			<span class="<%= data.themeListData.prodList[i].basNetworkList[j].style %>"><%= data.themeListData.prodList[i].basNetworkList[j].prodFltNm %></span>
 																		<% } %>
 																	</div>
@@ -396,59 +388,41 @@
 
 															<div class="rn-prod-benefit">
 																<%# 기본 혜택 %>
-
-																<ul>
-																	<li>
-																		<i class="p-icon16-flo"></i> 
-																		<span class="txt">FLO 앤 데이터 무료 </span>
-																		<span class="price">
-																			<del>7,900원</del>
-																			<i class="icon-arr">&rarr;</i> 
-																			<em>0원</em>
-																		</span>
-																	</li>
-																	<li>
-																		<i class="p-icon16-wavve"></i> 
-																		<span class="txt">wavve 앤 데이터 플러스 무료</span>
-																		<span class="price">
-																			<del>7,900원</del>
-																			<i class="icon-arr">&rarr;</i> 
-																			<em>0원</em>
-																		</span>
-																	</li>
-																	<li>
-																		<i class="p-icon16-cover"></i> 
-																		<span class="txt">분실/파손 보험 80 무료</span>
-																		<span class="price">
-																			<del>7,900원</del>
-																			<i class="icon-arr">&rarr;</i> 
-																			<em>0원</em>
-																		</span>
-																	</li>
-																	<li>
-																		<i class="p-icon16-vip"></i>
-																		<span class="txt">T멤버쉽 VIP</span>
-																	</li>
-																</ul>
-
-																<%# 추가 혜택 %>
-																
-
-
-																<div class="p-benefit-choice">
-																	<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+																<% if ( data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr && data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr.length > 0 ) { %>
 																	<ul>
-																		<li>
-																			<i class="p-icon16-cycle"></i> 
-																			<span class="txt">가족끼리 데이터주고받기</span>
-																			<span class="price">
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr.length; j < jlen; j++ ) { %>
+																			<li>
+																				<i class="p-icon16-flo"></i> 
+																				<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].expsBenfNm %></span>
+																				<span class="price">
 																				<del>7,900원</del>
 																				<i class="icon-arr">&rarr;</i> 
 																				<em>0원</em>
-																			</span>
-																		</li>
+																				</span>
+																			</li>
+																		<% } %>
 																	</ul>
-																</div>
+																<% } %>
+
+																<%# 추가 혜택 %>
+																<% if ( data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr && data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length > 0 ) { %>
+																	<div class="p-benefit-choice">
+																		<p class="title">추가혜택 <strong><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length %>개</strong>를 선택해주세요</p>
+																		<ul>
+																			<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length; j < jlen; j++ ) { %>
+																				<li>
+																					<i class="p-icon16-cycle"></i> 
+																					<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].expsBenfNm %></span>
+																					<span class="price">
+																						<del>7,900원</del>
+																						<i class="icon-arr">&rarr;</i> 
+																						<em>0원</em>
+																					</span>
+																				</li>
+																			<% } %>
+																		</ul>
+																	</div>
+																<% } %>
 															</div>
 														</a>
 													</div>
@@ -491,7 +465,9 @@
 									</div>
 								</div>
 								<div class="more-link-area">
-                                    <a href="/product/renewal/mobileplan/list?theme=all" class="more"><span class="more-txt">테마 전체보기</span></a>
+                                    <a href="/product/renewal/mobileplan/list?theme=all" class="more" data-xt_eid="CMMA_A4_B84-26" data-xt_csid="NO" data-xt_action="BC">
+										<span class="more-txt">테마 전체보기</span>
+									</a>
 								</div>
 							</div>
 						</div><!-- //pro-article -->
@@ -514,10 +490,26 @@
 							<div class="article-cont">
 								<div class="tod-nmp-other-list">
 									<ul>
-										<li><a href="#"><i class="p-icon30-service"></i> <em>부가서비스</em></a></li>
-										<li><a href="#"><i class="p-icon30-internet"></i> <em>인터넷/IPTV</em></a></li>
-										<li><a href="#"><i class="p-icon30-plus"></i> <em>결합상품</em></a></li>
-										<li><a href="#"><i class="p-icon30-roaming"></i> <em>T로밍</em></a></li>
+										<li>
+											<a href="#" data-xt_eid="CMMA_A4_B84-50" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-service"></i> <em>부가서비스</em>
+											</a>
+										</li>
+										<li>
+											<a href="#" data-xt_eid="CMMA_A4_B84-51" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-internet"></i> <em>인터넷/IPTV</em>
+											</a>
+										</li>
+										<li>
+											<a href="#" data-xt_eid="CMMA_A4_B84-52" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-plus"></i> <em>결합상품</em>
+											</a>
+										</li>
+										<li>
+											<a href="#" data-xt_eid="CMMA_A4_B84-53" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-roaming"></i> <em>T로밍</em>
+											</a>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -537,7 +529,7 @@
     $(document).ready(function () {
 		// new Tw.ProductRenewalSubmain($('.wrap'), '<%= svcInfo ? svcInfo : "" %>', '<%= pageInfo.menuId ? pageInfo.menuId : "" %>');
 		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', '<%= pageInfo.menuId ? "M000367" : "" %>');
-		new Tw.ProductCompare($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
+		// new Tw.ProductCompare($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
     });
 </script>
 

@@ -3,9 +3,7 @@
  * @author Kinam Kim
  * @since 2020. 12. 18
  */
-
 Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuId) {
-  
   // 전체 레이어 선택 및 생성자 파라미터값 세팅
   this.$container = rootEl;
   this._sectionSort = sectionSort;
@@ -33,7 +31,7 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuI
   this._additionType = '';
   this._additionAction = '';
 
-  
+  this._getTopBanner(); // 최 상단 배너
   this._getRedisBanner(); // 퀵 필터, 테마 배너, 프로모션 배너 조회
   this._sortingSection(); // 섹션 데이터를 재 배치
   
@@ -259,6 +257,10 @@ Tw.ProductRenewalSubmain.prototype = {
       var html = item.bnnrHtmlCtt;
       if ( html ) { 
         html = html.replace('<p>', '').replace('</p>', '').replace('<br>', ''); // admin 페이지에서 배너를 등록하면 <p> 및 <br> 태그가 생기는 현상이 발생해서 replace로 삭제한다.
+        if ( item.oferStcCd ) { // 트래킹 코드가 존재하면?
+          html = html.replace('{{oferStcCd}}', item.oferStcCd);
+        }
+
         $sliderList.append(html);
       }
     }, this));
