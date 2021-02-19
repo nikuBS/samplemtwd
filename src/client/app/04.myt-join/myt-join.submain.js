@@ -788,7 +788,7 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
   Tw.MyTJoinSubMain.prototype._bindEvent.call(this);
   if (this._data.type !== 1 && this._data.type !== 2) {
     this.$container.find('[data-id=mybenefit]').on('click', $.proxy(function() {
-      this._historyService.goLoad('/benefit/my');
+      this._historyService.goLoad('/benefit/submain');
       return false;
     }, this));
     this.$container.find('[data-id=membership]').on('click', $.proxy(function() {
