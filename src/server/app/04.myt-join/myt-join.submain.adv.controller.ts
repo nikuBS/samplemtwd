@@ -45,7 +45,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       data.childLine = this.type === 0 && child && child.length ? ((items) => {
         return items.map((item) => {
           return {
-            nickNm: item.childEqpMdNm || item.eqpMdlNm, // item.mdlName 서버데이터 확인후 변경
+            // 펜네임 또는 단말기 명 없는 경우 '휴대폰' 으로 노출
+            nickNm: item.eqpMdlNm || '휴대폰',
             svcNum: StringHelper.phoneStringToDash(item.svcNum),
             svcMgmtNum: item.svcMgmtNum
           }
@@ -571,7 +572,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       if ( data.isComLine || this.type === 3 ) {
         tempList.splice(tempList.length - 1, 1);
         if ( data.isApp ) {
-          tempList.splice(tempList.length === 6 ? 3 : 2, 1);
+          tempList.splice(tempList.length === 5 ? 3 : 2, 1);
         } else {
           const moveIdx = tempList.length - (tempList.length === 6 ? 2 : 1);
           const target = tempList.splice(tempList.length - 1, 1)[0];
