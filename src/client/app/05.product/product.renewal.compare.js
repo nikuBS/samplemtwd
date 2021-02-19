@@ -18,7 +18,7 @@ Tw.ProductCompare = function(rootEl, svcInfo, networkInfo) {
 
     this._init();
 
-    this._getRedisCompare(); // 비교 대상에 대한 redis 정보를 얻음
+    // this._getRedisCompare(); // 비교 대상에 대한 redis 정보를 얻음
 
     this._bindEvent();
   };
