@@ -42,6 +42,7 @@ export enum REDIS_KEY {
   DATA_DEDUCTION_PRODUCTS = 'data.deduction.prodId',
   DATA_DEDUCTION_COUNT = 'data.deduction.count',
   ADVANCEMENT_PAGE_VISIBLE = 'advancement.page.visible',
+  BENF_PROD_INFO = 'BenfProdInfo:', // 상품 고도화 ( 혜택 상품관리 Redis )
 
   // 상품 리뉴얼 ( 상품 메인화면의 섹션 순서가 세팅되어있는 환경 변수 )
   PRODUCT_SORT_SECTION_3G = 'comm.theme.order.3g', // 네트워크 상태가 3G 일 때

@@ -85,6 +85,8 @@ class ApiRouter {
     GET_BANNER_TOS: { path: '/banner/tos', method: API_METHOD.GET, target: this.getBannerTos },
     GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: API_METHOD.GET, target: this.getNewBannerTos },
 
+    GET_BENF_PROD_INFO: { path: '/benfProdInfo', method: API_METHOD.GET, target: this.getBenfProdInfo },
+
     /*임시 API TOS배너확인후 삭제*/
     GET_BANNER_TOS_LNKG_INFO: {
       path: '/banner/bannerTosLnkgInfo',
@@ -1990,6 +1992,20 @@ class ApiRouter {
             result: bannerHtml
         })
     });
+  }
+
+  /**
+   * 상품 고도화 (혜택 상품관리 Redis 호출)
+   * @param req 
+   * @param res 
+   * @param next 
+   */
+  private getBenfProdInfo(res: Response) {
+    const hashKey = 'NA00006405';
+    this.redisService.getData(REDIS_KEY.BENF_PROD_INFO + hashKey)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
   }
 }
 
