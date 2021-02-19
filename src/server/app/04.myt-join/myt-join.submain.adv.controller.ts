@@ -49,7 +49,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
             nickNm: item.eqpMdlNm || '휴대폰',
             svcNum: StringHelper.phoneStringToDash(item.svcNum),
             svcMgmtNum: item.svcMgmtNum
-          }
+          };
         });
       })(child) : null;
     }
@@ -68,7 +68,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       const _parsing = this.__parsingRequestData({
         res, responses, data
       });
-      if (_parsing) {
+      if ( _parsing ) {
         // 신규 API 추가로 인하여 구조 변경이 필요하여 함수로 분리 후 처리
         this.__newParsingRequestData({
           res, responses: newResponses, data
@@ -162,7 +162,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       data.myWirePauseState = true;
     }
     // 납부/청구 유형
-    if ( data.myInfo && data.myInfo.coClCd) {
+    if ( data.myInfo && data.myInfo.billTypeCd ) {
       data.paymentInfo = {
         billTypeNm: data.myInfo.billTypeNm,
         payMthdNm: data.myInfo.payMthdNm
@@ -218,7 +218,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         const combinations = combinationsResp.code === API_CODE.CODE_00 ? combinationsResp.result : null;
         const comProdCnt = combinations.combinationMemberCnt ?
           parseInt(combinations.combinationMemberCnt || 0, 10) : combinations.combinationMemberList ?
-            combinations.combinationMemberList.length : 0
+            combinations.combinationMemberList.length : 0;
         return {
           feePlanProd: addition.feePlanProd || null,
           addProdPayCnt: parseInt(addition.payAdditionCount || 0, 10), // 유료 부가상품
@@ -461,6 +461,35 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
   }
 
   /**
+   * 유선(인터넷,IPTV,집전화) 가입정보 (BFF_05_0237로 인해 수정이 필요하여 처리)
+   * @param data
+   * @private
+   */
+  _convertWireInfo(data) {
+    return Object.assign(data, {
+      // 가입자명
+      custNm: data.wireReqrNm,
+      // 서비스 약정
+      svcPrdStaDt: this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt :
+        (data.svcPrdStaDt ? DateHelper.getShortDate(data.svcPrdStaDt) : data.svcPrdStaDt),
+      svcPrdEndDt: this.isMasking(data.setPrdStaDt) ? data.svcPrdEndDt :
+        (data.setPrdStaDt ? DateHelper.getShortDate(data.svcPrdEndDt) : data.svcPrdEndDt),
+      svcAgrmtMth: data.svcAgrmtMth,
+      // 세트 약정
+      setNm: data.setNm,
+      setPrdStaDt: this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt :
+        (data.setPrdStaDt ? DateHelper.getShortDate(data.setPrdStaDt) : data.setPrdStaDt),
+      setPrdEndDt: this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt :
+        (data.setPrdEndDt ? DateHelper.getShortDate(data.setPrdEndDt) : data.setPrdEndDt),
+      setAgrmtMth: data.setAgrmtMth,
+      // 유선상품 수
+      wireProdCnt: data.wireProdCnt,
+      // 설치 주소
+      address: data.fullAddr /*data.basAddr + data.dtlAddr;*/
+    });
+  }
+
+  /**
    * 유선인 경우 SMS 정보 조회
    */
   _getWireSmsInfo() {
@@ -555,7 +584,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         }
       ];
       // 요금제 변경 가능일 알림 휴대폰 이나 PPS 인 경우에만 노출 하도록 하기 위해 기능 추가
-      if (data.type === 0 || data.type === 1) {
+      if ( data.type === 0 || data.type === 1 ) {
         tempList.splice(5, 0,
           {
             name: '요금제 변경 가능일 알림', url: '/myt-join/myplan/alarm',
@@ -572,7 +601,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       if ( data.isComLine || this.type === 3 ) {
         tempList.splice(tempList.length - 1, 1);
         if ( data.isApp ) {
-          tempList.splice(tempList.length === 5 ? 3 : 2, 1);
+          tempList.splice(tempList.length >= 5 ? 3 : 2, 1);
         } else {
           const moveIdx = tempList.length - (tempList.length === 6 ? 2 : 1);
           const target = tempList.splice(tempList.length - 1, 1)[0];
