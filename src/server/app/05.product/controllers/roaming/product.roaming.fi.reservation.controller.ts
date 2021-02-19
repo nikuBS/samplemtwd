@@ -16,24 +16,29 @@ import {NODE_ERROR_MSG} from '../../../../types/string.type';
 
 export default class ProductRoamingFiReservation extends TwViewController {
 
-  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
-      // 14세 미만 체크
-      this.checkIsOverFourteen(res, svcInfo, pageInfo).subscribe((isOverFourteen) => {
-          if (isOverFourteen) {
+        // 14세 미만 체크
+        this.checkIsOverFourteen(res, svcInfo, pageInfo).subscribe((isOverFourteen) => {
+            if (isOverFourteen) {
 
-              const minDate = moment().add(2, 'days').format('YYYY-MM-DD'); // 예약 시작일 default 값 : 현재 날짜 + 2일
-              const maxDate = DateHelper.getEndOfMonSubtractDate(undefined, '-6', 'YYYY-MM-DD'); // 예약 종료일 default 값 : 6개월 후 마지막 일
-              const formatDate = {minDate, maxDate};
+                const minDate = moment().add(2, 'days').format('YYYY-MM-DD'); // 예약 시작일 default 값 : 현재 날짜 + 2일
+                const maxDate = DateHelper.getEndOfMonSubtractDate(undefined, '-6', 'YYYY-MM-DD'); // 예약 종료일 default 값 : 6개월 후 마지막 일
+                const formatDate = {minDate, maxDate};
+                let step = req.query.step;
+                console.log( '#### >>step =>'+step );
+                svcInfo.showSvcNum = FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
 
-              svcInfo.showSvcNum = FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
-
-              res.render('roaming/product.roaming.fi.reservation.html', {svcInfo: svcInfo, pageInfo: pageInfo, formatDate: formatDate});
-          } else {
-          this.showError(res, svcInfo, pageInfo, API_CODE.NODE_1009, NODE_ERROR_MSG[API_CODE.NODE_1009]);
-         }
-    });
-  }
+            //    res.render('roaming/product.roaming.fi.reservation-step1.html', {data:{svcInfo: svcInfo, pageInfo: pageInfo, formatDate: formatDate}});
+            //   res.render('roaming/product.roaming.fi.reservation.org.html', {svcInfo: svcInfo, pageInfo: pageInfo, formatDate: formatDate});
+                res.render('roaming/product.roaming.fi.reservation.html', {data:{svcInfo: svcInfo, pageInfo: pageInfo, formatDate: formatDate}});
+            //    res.render('roaming/product.roaming.fi.reservation.test.html', {data:{svcInfo: svcInfo, pageInfo: pageInfo, formatDate: formatDate}});
+            
+            } else {
+                this.showError(res, svcInfo, pageInfo, API_CODE.NODE_1009, NODE_ERROR_MSG[API_CODE.NODE_1009]);
+            }
+        });
+    }
 
 
 

@@ -27,6 +27,19 @@
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+	<script type="text/javascript">
+		$(function(){
+			var o = $('.widget-box.step');
+			var ah = o.height();
+			var hd = $('.tw-popup .header-wrap').height();
+			var v = o.offset().top - hd;
+			$('.tw-popup .container').scroll(function(){
+				var st = $('.tw-popup .container').scrollTop();				
+				if( st > v ) $('.rm-content').addClass('fixedStep');
+				else $('.rm-content').removeClass('fixedStep');
+			});
+		});
+	</script>
 </head>
 <body class="rm-content">
     <!-- Grand open 접근성 수정 -->
@@ -76,7 +89,7 @@
                     <hr class="cont-sp type1" aria-hidden="true"/>
 					<!--// .cont-box -->
 					<!-- .cont-box -->
-                    <div class="cont-box noborder nogaps">
+                    <div class="cont-box noborder nogaps step-wrap">
 						<!-- .widget -->
                         <div class="widget">
                             <div class="widget-box step">

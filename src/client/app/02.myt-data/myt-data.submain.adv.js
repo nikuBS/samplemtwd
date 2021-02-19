@@ -6,6 +6,7 @@
 
 var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
+
 /**
  * @class
  * @desc MyT > 나의 데이터/통화
@@ -26,7 +27,29 @@ Tw.MyTDataSubMainAdv = function (params) {
   this._svcMgmtNum = this.data.svcInfo.svcMgmtNum;
   this._tidLanding = new Tw.TidLandingComponent();
   if (this.data.immCharge) {
-    this._immRecharge = new Tw.ImmediatelyRecharge(this.$container);
+    this._readOnlyProductIdList = ['NA00000138', 'NA00000719', 'NA00000720', 'NA00001901', 'NA00002244', 'NA00002373',
+      'NA00002494', 'NA00002549', 'NA00002572', 'NA00002573', 'NA00002597', 'NA00002604', 'NA00002605', 'NA00002606',
+      'NA00002865', 'NA00002867', 'NA00002887', 'NA00002974', 'NA00003018', 'NA00003311', 'NA00003312', 'NA00003314',
+      'NA00003315', 'NA00003316', 'NA00003317', 'NA00003318', 'NA00003320', 'NA00003321', 'NA00003322', 'NA00003323',
+      'NA00003324', 'NA00003325', 'NA00003326', 'NA00003327', 'NA00003328', 'NA00003329', 'NA00003362', 'NA00003368',
+      'NA00003369', 'NA00003370', 'NA00003371', 'NA00003420', 'NA00003427', 'NA00003458', 'NA00003696', 'NA00003856',
+      'NA00003857', 'NA00003858', 'NA00003859', 'NA00003860', 'NA00003861', 'NA00003862', 'NA00003863', 'NA00003864',
+      'NA00003865', 'NA00003866', 'NA00003867', 'NA00003868', 'NA00003869', 'NA00003870', 'NA00003871', 'NA00003872',
+      'NA00003873', 'NA00003874', 'NA00003875', 'NA00003886', 'NA00003887', 'NA00003888', 'NA00003889', 'NA00004142',
+      'NA00004143', 'NA00004185', 'NA00004283', 'NA00004284', 'NA00004324', 'NA00004325', 'NA00004341', 'NA00004342',
+      'NA00004410', 'NA00004435', 'NA00004655', 'NA00004725', 'NA00004726', 'NA00004778', 'NA00004779', 'NA00004846',
+      'NA00004951', 'NA00004968', 'NA00004969', 'NA00005000', 'NA00005032', 'NA00005033', 'NA00005037', 'NA00005061',
+      'NA00005062', 'NA00005063', 'NA00005064', 'NA00005065', 'NA00005066', 'NA00005073', 'NA00005084', 'NA00005109',
+      'NA00005173', 'NA00005205', 'NA00005246', 'NA00005306', 'NA00005307', 'NA00005326', 'NA00005330', 'NA00005381',
+      'NA00005382', 'NA00005509', 'NA00005510', 'NA00005511', 'NA00005723', 'NA00005736', 'NA00005806', 'NA00005848',
+      'NA00005849', 'NA00005876', 'NA00005880'];
+    this.immChargeData= {
+      ting: null,
+      etc: null,
+      limit: null,
+      _isLimited: false
+    };
+    this._getImmRechargeData();
   }
   this._menuId = this.data.pageInfo.menuId;
   this._giftReqCnt = 0;
@@ -42,19 +65,6 @@ Tw.MyTDataSubMainAdv = function (params) {
 
 Tw.MyTDataSubMainAdv.prototype = {
   _OTHER_LINE_MAX_COUNT: 20, // 다른 회선 최대 노출 카운트,
-  unlimitProdIds: [
-    'NA00005957', // T플랜 라지
-    'NA00005958', // T플랜 패밀리
-    'NA00005959', // T플랜 인피니티
-    'NA00006537', // T플랜 에센스
-    'NA00006538', // T플랜 스페셜
-    'NA00006539', // T플랜 맥스
-    'NA00006157', // 0플랜 라지
-    'NA00006401', // 0플랜 슈퍼히어로
-    'NA00006403', // 5GX 스탠다드
-    'NA00006404', // 5GX 프라임
-    'NA00006405'  // 5GX 플래티넘
-  ],
   /**
    * @function
    * @desc 초기값 설정
@@ -64,30 +74,14 @@ Tw.MyTDataSubMainAdv.prototype = {
       // this._historyService.reload();
       this._historyService.goLoad('/myt-data/submain');
     }
+    
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
-    if (this.data.immCharge) {
-      this.$immChargeSection = this.$container.find('[data-id=immCharge]');
+    this.$immChargeSection = this.$container.find('[data-id=immCharge]');
+    if (this.$immChargeSection !== undefined && this.$immChargeSection.length > 0) {
       if (!this.data.breakdownList || this.data.breakdownList.length === 0) {
         this.$immChargeSection.find('[data-id=history]').hide();
-      }
-      if (!this._immRecharge.immChargeData.ting) {
-        // 팅 요금제 선물
-        this.$immChargeSection.find('[data-id=ting]').hide();
-      }
-      if (!this._immRecharge.immChargeData.etc && !this._immRecharge.immChargeData.limit) {
-        this.$immChargeSection.find('[data-id=etc-wrap]').hide();
-      } else {
-        if (!this._immRecharge.immChargeData.etc) {
-          // 팅/쿠키즈/안심음성 요금제 사용중인 경우
-          this.$immChargeSection.find('[data-id=etc]').hide();
-        }
-        if (!this._immRecharge.immChargeData.limit) {
-          // 팅/쿠키즈/안심음성 요금제 사용중인 경우
-          this.$immChargeSection.find('[data-id=limit]').hide();
-        }
-
       }
     }
     // T끼리 데이터 선물 버튼
@@ -117,9 +111,9 @@ Tw.MyTDataSubMainAdv.prototype = {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
     }
     // this.$dataPesterBtn = this.$container.find('[data-id=pester]');
-    // if ( this.data.recentUsage ) {
-    this.$recentUsage = this.$container.find('[data-id=recent_usage]');
-    // }
+    if ( this.data.isWireLess ) {
+      this.$recentUsage = this.$container.find('[data-id=recent_usage]');
+    }
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     // }
@@ -144,7 +138,7 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _bindEvent: function () {
     // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
-    if ( this.data.immCharge ) {
+    if ( this.$immChargeSection !== undefined && this.$immChargeSection.length > 0 ) {
       this.$immChargeSection.on('click', 'li', $.proxy(this._onImmChargeDetail, this));
     }
     if (this.data.present) {
@@ -181,11 +175,10 @@ Tw.MyTDataSubMainAdv.prototype = {
     this.$otherPages.find('a').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'li', $.proxy(this._onPrepayCoupon, this));
 
-    // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 Start
-    // TODO: Tab을 switching하는 것은 widget(widgets.js:component_tabs)의 영역이므로, 추후 기준이 정리되면 제거되어야 함
-    this.$container.find('.fe-tab-wrap').on('click', 'li', $.proxy(this._onTabClicked, this));
-    // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 End
-
+    if (this.data.isWireLess) {
+      this.$recentUsage.find('.fe-tab-wrap').on('click', 'li', $.proxy(this._onTabClicked, this));
+      this.$recentUsage.find('.head-tit').on('click', 'a', $.proxy(this._onClickRGraphHeader, this));
+    }
   },
 
   // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 Start
@@ -194,29 +187,24 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @desc  내 최근 데이터 사용량 그래프 tab(data,voice,sms) change
    * @param event
    */
-  // TODO: Tab을 switching하는 것은 widget(widgets.js:component_tabs)의 영역이므로, 추후 기준이 정리되면 제거되어야 함
   _onTabClicked: function (event) {
-    // NOTE: Tab을 switching하는 것은 widget(widgets.js:component_tabs)의 영역이므로, 임의적으로 처리하지 않도록, 통일함
-    /*
-    var $target = $(event.currentTarget);
-
-    if ($target.attr('id') === 'tab1') {
-      this.__selectRecentUsageTab(1);
-    } else if ($target.attr('id') === 'tab2') {
-      this.__selectRecentUsageTab(2);
-    } else {
-      this.__selectRecentUsageTab(3);
-    }
-    */
     // 마우스로 LI를 클릭했을 때만, 발생시키기 위해
     if (event.originalEvent && event.target.tagName === 'LI') {
       var $target = $(event.target);
       if ($target.attr('aria-selected') !== 'true') {
-        $target.children('button').trigger('click');
+        $target.children('a').trigger('click');
       }
     }
+    event.preventDefault();
   },
-  // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 End
+
+  _onClickRGraphHeader: function(event) {
+    var $target = $(event.currentTarget);
+    if ($target.context.tagName.toLowerCase() === 'a') {
+      this._historyService.goLoad('/myt-data/usage-pattern');
+    }
+    event.preventDefault();
+  },
 
   /**
    * @function
@@ -224,12 +212,6 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _initialize: function () {
     this._svcMgmtNumList = [];
-    if (this._isGiftData) {
-      // 선물하기가 가능한경우
-      if (this._isUnlimitProd()) {
-        this.limitedGiftUsageQty = 0; // 무제한 요금제에서 잔여량 부족시 화면 접근 시 자동 애러 처리 됨. (기획 도예원 확인)
-      }
-    }
     this._initScroll();
     //this._initBanners();
     this._getTosAdminMytDataBanner();
@@ -342,8 +324,10 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _checkScroll: function () {
     // 무선 회선인 경우에만 최근 사용량 그래프 노출 [OP002-4379]
-    if (this.$recentUsage.length > 0 && !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage)) {
-      this._requestRecentUsage();
+    if (this.data.isWireLess) {
+      if (this.$recentUsage.length > 0 && !this._isRecentUsageRequested && this._elementScrolled(this.$recentUsage)) {
+        this._requestRecentUsage();
+      }
     }
 
     if (this.data.otherLines.length > 0 && !this._isRequestOtherLinesInfo && this._elementScrolled(this.$otherLines)) {
@@ -357,7 +341,7 @@ Tw.MyTDataSubMainAdv.prototype = {
 
     if (this._isGiftData && !this._isRequestGiftData && this._elementScrolled(this.$giftSection)) {
       // T끼리 선물하기 영역 lazy loading 추가
-      this._getGiftData();
+      this._getLteProdIds();
     }
   },
   /**
@@ -585,91 +569,31 @@ Tw.MyTDataSubMainAdv.prototype = {
   __selectRecentUsageTab: function (id) {
     var $tabs = this.$recentUsage.find('.tab-linker').children('ul');
     var $tabContents = this.$recentUsage.find('.tab-contents').children('ul');
-    $tabs.children('li').attr('aria-selected', false);
+    $tabs.children('li a').attr('aria-selected', false);
     $tabContents.children('li').attr('aria-selected', false);
-    var tabId = '#tab' + id;
+    var tabId = '#graph-tab' + id;
     $tabs.children(tabId).attr('aria-selected', true); // 탭
     $tabContents.children(tabId + '-tab').attr('aria-selected', true); // 탭 내용
-    /*
-    var $currTab = this.$container.find('.fe-tab-wrap'); // 탭
-    $currTab.find('li').attr('aria-selected', false);
-    // $currTab.find('a').attr('aria-selected', false);
-
-    // this.$container.find('.tab-contents div.fe-tab-body').hide(); // 탭 내용 전부 숨기기
-    this.$container.find('.tab-contents li').attr('aria-selected', false); // 탭 내용 > 전부 선택해제
-
-    var $currTabBody =  this.$container.find('#tab'+id).attr('aria-selected', true); // 탭 내용
-    // $currTabBody.find('a').attr('aria-selected', true); // a 링크 선택
-    this.$container.find('#'+$currTabBody.attr('aria-controls')).attr('aria-selected', true).find('div.fe-tab-body').show(); // 선택된 탭 내용 보이기
-    */
   },
-  // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 End
 
-  /**
-   * @function
-   * @desc data,voice,sms 총사용량 체크
-   */
-  __isUsageDataExists: function (data) {
-    return (data || []).reduce(function (acc, cur) {
-      return acc || (Number(cur.totalUsage) > 0);
-    }, false);
-  },
-  /*
-  __isUsageDataExists: function (id) {
-    var isData = false;
-    var idx;
-    var data;
-
-    if (id === '1') {
-      var dataUse = this.data.recentUsage.data;
-      for (idx = dataUse.length - 1; idx >= 0; idx -= 1) {
-        data = parseInt(dataUse[idx].totalUsage, 10);
-      }
-    } else if (id === '2') {
-      var voiceUse = this.data.recentUsage.voice;
-      for (idx = voiceUse.length - 1; idx >= 0; idx -= 1) {
-        data = parseInt(voiceUse[idx].totalUsage, 10);
-      }
-    } else if (id === '3') {
-      var smsUse = this.data.recentUsage.sms;
-      for (idx = smsUse.length - 1; idx >= 0; idx -= 1) {
-        data = parseInt(smsUse[idx].totalUsage, 10);
-      }
-    }
-
-    if (data > 0) {
-      isData = true;
-    }
-
-    return isData;
-  },
-  */
-  // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 Start
   /**
    * @function
    * @desc 차트생성
    */
   _initRecentUsageChart: function () {
     var index;
-    var data;
     var item;
-    var idTabSelect;
-    var charVisibled = 0;
-    var $elem;
+    var idTabSelect = '';
     var usage;
-    var totalUsage;
+    var itemsDataChart = [];
+    var itemsVoiceChart = [];
+    var itemsSMSChart = [];
     // "데이터" 탭
-    if (this.__isUsageDataExists(this.data.recentUsage.data)) {
-      var itemsDataChart = [];
-      idTabSelect = '1';
-      data = this.data.recentUsage.data;
-      totalUsage = 0;
-      // [DVI001-13652] SKT 요청사항 (역순)
-      for ( index = data.length - 1; index >= 0; index -= 1 ) {
-        item = data[index];
+    // [DVI001-13652] SKT 요청사항 (역순)
+    if (this.data.recentUsage.data) {
+      for ( index = this.data.recentUsage.data.length - 1; index >= 0; index -= 1 ) {
+        item = this.data.recentUsage.data[index];
         usage = parseInt(item.totalUsage, 10);
-        totalUsage += usage;
-        // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
         if (usage) {
           itemsDataChart.push({
             t: this._recentChartDate(item.invMth), // 각 항목 타이틀
@@ -677,42 +601,25 @@ Tw.MyTDataSubMainAdv.prototype = {
           });
         }
       }
-      // data
-      if (totalUsage) {
-        charVisibled = 0x001;
-        this.$recentUsage.chart2({
-          type: Tw.CHART_TYPE.BAR_5, //bar
-          target: '.fe-tab-data', //클래스명 String
-          average: true,
-          // [DVI001-13652] SKT 요청사항
-          average_place: '',
-          unit: Tw.CHART_UNIT.GB, //x축 이름
-          data_arry: itemsDataChart // data obj
-        });
-      }
     }
-    $elem = this.$container.find('.fe-tab-data');
-    if ((charVisibled & 0x001) === 0) {
-      $elem.siblings().removeClass('none');
-      $elem.remove();
-      // this.$container.find('.fe-tab-data').remove().siblings().removeClass('none');
-    } else {
-      $elem.siblings().remove();
+    this.$recentUsage.chart2({
+      type: Tw.CHART_TYPE.BAR_5, //bar
+      target: '.fe-tab-data', //클래스명 String
+      average: true,
+      // [DVI001-13652] SKT 요청사항
+      average_place: '',
+      unit: Tw.CHART_UNIT.GB, //x축 이름
+      data_arry: itemsDataChart // data obj
+    });
+    if (itemsDataChart.length > 0) {
+      idTabSelect = '1';
     }
     // "음성" 탭
-    if (this.__isUsageDataExists(this.data.recentUsage.voice)) {
-      var itemsVoiceChart = [];
-      if (!idTabSelect) {
-        idTabSelect = '2';
-      }
-      data = this.data.recentUsage.voice;
-      totalUsage = 0;
-      // [DVI001-13652] SKT 요청사항 (역순)
-      for ( index = data.length - 1; index >= 0; index -= 1 ) {
-        item = data[index];
+    // [DVI001-13652] SKT 요청사항 (역순)
+    if (this.data.recentUsage.voice) {
+      for ( index = this.data.recentUsage.voice.length - 1; index >= 0; index -= 1 ) {
+        item = this.data.recentUsage.voice[index];
         usage = parseInt(item.totalUsage, 10);
-        totalUsage += usage;
-        // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
         if (usage) {
           itemsVoiceChart.push({
             t: this._recentChartDate(item.invMth), // 각 항목 타이틀
@@ -720,42 +627,27 @@ Tw.MyTDataSubMainAdv.prototype = {
           });
         }
       }
-      // voice
-      if (totalUsage) {
-        charVisibled += 0x010;
-        this.$recentUsage.chart2({
-          type: Tw.CHART_TYPE.BAR_5, //bar
-          target: '.fe-tab-voice', //클래스명 String
-          average: true,
-          // [DVI001-13652] SKT 요청사항
-          average_place: '',
-          unit: Tw.CHART_UNIT.TIME, //x축 이름
-          data_arry: itemsVoiceChart // voice obj
-        });
-      }
     }
-    $elem = this.$container.find('.fe-tab-voice');
-    if ((charVisibled & 0x010) === 0) {
-      $elem.siblings().removeClass('none');
-      $elem.remove();
-      // this.$container.find('.fe-tab-voice').remove().siblings().removeClass('none');
-    } else {
-      $elem.siblings().remove();
+    this.$recentUsage.chart2({
+      type: Tw.CHART_TYPE.BAR_5, //bar
+      target: '.fe-tab-voice', //클래스명 String
+      average: true,
+      // [DVI001-13652] SKT 요청사항
+      average_place: '',
+      unit: Tw.CHART_UNIT.TIME, //x축 이름
+      data_arry: itemsVoiceChart // voice obj
+    });
+    if (itemsVoiceChart.length > 0) {
+      if (!idTabSelect) {
+        idTabSelect = '2';
+      }
     }
     // "문자" 탭
-    if (this.__isUsageDataExists(this.data.recentUsage.sms)) {
-      var itemsSMSChart = [];
-      if (!idTabSelect) {
-        idTabSelect = '3';
-      }
-      data = this.data.recentUsage.sms;
-      totalUsage = 0;
-      // [DVI001-13652] SKT 요청사항 (역순)
-      for ( index = data.length - 1; index >= 0; index -= 1 ) {
-        item = data[index];
+    // [DVI001-13652] SKT 요청사항 (역순)
+    if (this.data.recentUsage.sms) {
+      for ( index = this.data.recentUsage.sms.length - 1; index >= 0; index -= 1 ) {
+        item = this.data.recentUsage.sms[index];
         usage = parseInt(item.totalUsage, 10); // 배열 평균값으로 전달
-        totalUsage += usage;
-        // 값이 없을 경우, 표시 안함 (현재 구조상 3개의 정보가 노출되므로, 어색하긴 함)
         if (usage) {
           itemsSMSChart.push({
             t: this._recentChartDate(item.invMth), // 각 항목 타이틀
@@ -763,46 +655,30 @@ Tw.MyTDataSubMainAdv.prototype = {
           });
         }
       }
-      // sms
-      if (totalUsage) {
-        charVisibled += 0x100;
-        this.$recentUsage.chart2({
-          type: Tw.CHART_TYPE.BAR_5, //bar
-          target: '.fe-tab-sms', //클래스명 String
-          average: true,
-          // [DVI001-13652] SKT 요청사항
-          average_place: '',
-          unit: Tw.CHART_UNIT.SMS, //x축 이름
-          data_arry: itemsSMSChart // sms obj
-        });
+    }
+    this.$recentUsage.chart2({
+      type: Tw.CHART_TYPE.BAR_5, //bar
+      target: '.fe-tab-sms', //클래스명 String
+      average: true,
+      // [DVI001-13652] SKT 요청사항
+      average_place: '',
+      unit: Tw.CHART_UNIT.SMS, //x축 이름
+      data_arry: itemsSMSChart // sms obj
+    });
+    if (itemsSMSChart.length > 0) {
+      if (!idTabSelect) {
+        idTabSelect = '3';
       }
     }
-    $elem = this.$container.find('.fe-tab-sms');
-    if ((charVisibled & 0x100) === 0) {
-      $elem.siblings().removeClass('none');
-      $elem.remove();
-      // this.$container.find('.fe-tab-sms').remove().siblings().removeClass('none');
-    } else {
-      $elem.siblings().remove();
-    }
-    // 표시할 것이 없음
-    if (charVisibled === 0) {
-      // NOTE: 사용될 수 없는 DOM 이므로 제거를 해서 개선한다.
-      // this.$recentUsage.remove();
-      // this.$container.find('.cont-sp[data-id=recent_usage]').remove();
-      this.$container.find('[data-id=recent_usage]').remove();
+    // 데이터가 모두 없는 경우 미노출
+    if (itemsDataChart.length === 0 && itemsVoiceChart.length === 0 && itemsSMSChart.length === 0) {
+      this.$recentUsage.remove();
       this._isRecentUsageRequested = true;
-      return;
+      return false;
     }
     // 데이터가 존재하는 첫번째 탭을 활성화
     this.__selectRecentUsageTab(idTabSelect);
-    // 화면에 표시하도록 개선
-    /*
-    this.$recentUsage.removeClass('none');
-    this.$container.find('.cont-sp[data-id=recent_usage]').removeClass('none');
-    */
   },
-  // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 End
   /**
    * @function
    * @desc 다른회선 정보
@@ -912,7 +788,6 @@ Tw.MyTDataSubMainAdv.prototype = {
       }
     }
     this._svcMgmtNumList = [];
-    console.log('###########', list);
     this._initOtherLineList(list);
   },
   /**
@@ -932,7 +807,9 @@ Tw.MyTDataSubMainAdv.prototype = {
         var lineTemp = this.$childLineTempleate(list[i]);
         childSwipeContainer.find('.slider').append(lineTemp);
       }
-      skt_landing.widgets.widget_slider6();
+      skt_landing.widgets.widget_slider6(null, {
+        dots: list.length > 1
+      });
     }
   },
 
@@ -952,7 +829,6 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @desc 즉시충전 상세보기
    */
   _onImmChargeDetail: function (event) {
-    event.preventDefault();
     var $target = $(event.currentTarget);
     switch ( $target.data('id') ) {
       case 'history':
@@ -965,12 +841,14 @@ Tw.MyTDataSubMainAdv.prototype = {
         this._onDataPesterDetail($target);
         break;
       case 'etc-wrap':
-        this._historyService.goLoad('/myt-data/giftdata');
-        break;
       case 'limit':
-        this._historyService.goLoad('/myt-data/giftdata');
+        this._historyService.goLoad('/myt-data/recharge/limit');
+        break;
+      case 'etc' :
+        this._historyService.goLoad('/myt-data/recharge/cookiz');
         break;
     }
+    event.preventDefault();
   },
 
   /**
@@ -1174,7 +1052,7 @@ Tw.MyTDataSubMainAdv.prototype = {
   _onOtherPages: function (event) {
     var $target = $(event.currentTarget);
     var href = $target.attr('data-href');
-    console.log('########################href ==> ', href);
+
     this._historyService.goLoad(href);
     return false;
   },
@@ -1217,14 +1095,8 @@ Tw.MyTDataSubMainAdv.prototype = {
     if (resp.code === Tw.API_CODE.CODE_00) {
       // OP002-794: 집계중기간(매월 1일 ~ 12일경) 지난달 제외한 직전3개월 데이터로 표시함. 항상 노출로 변경
       this.data.recentUsage = resp.result;
-      // XXX: 왜 300ms인지 모르겠음
       setTimeout($.proxy(this._initRecentUsageChart, this), 300);
     }
-    /* XXX: 한번이라도 요청한 경우, 추가적인 요청을 발생시키는 것은 의미가 없음
-    else {
-      this._isRecentUsageRequested = false;
-    }
-    */
   },
 
   /**
@@ -1234,9 +1106,6 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @private
    */
   _errorRequestRecentUsage: function (resp) {
-    // this.$recentUsage.hide();
-    // this.$container.find('[data-id=pattern_empty]').hide();
-    // XXX: 한번이라도 요청한 경우, 추가적인 요청을 발생시키는 것은 의미가 없음
     this.$container.find('[data-id=recent_usage]').remove();
     this._errorRequest(resp);
   },
@@ -1266,11 +1135,36 @@ Tw.MyTDataSubMainAdv.prototype = {
   },
 
   /**
+   * 선물하기 500mb 이상 체크 미대상 요금제 조회
+   */
+  _getLteProdIds: function() {
+    this._isRequestGiftData = true;
+    this._apiService.request(Tw.API_CMD.BFF_01_0069, {
+      property: 'str.ltegift.prodid'
+    }).done($.proxy(function(resp) {
+      if (resp.code === Tw.API_CODE.CODE_00) {
+        // 'a/b/c' 형태로 전달
+        this.unlimitProdIds = resp.result.split('/');
+      } else {
+        Tw.Logger.info('[API ERROR] getLteProdIds => ', resp);
+        this.unlimitProdIds = [];
+      }
+      if (this._isGiftData) {
+        // 선물하기가 가능한경우
+        if (this._isUnlimitProd()) {
+          // 500mb 기본 제공량 데이터로 처리 할지 안할지 처리
+          this._giftLimitedGiftUsageQty = 0;
+        }
+      }
+      this._getGiftData();
+    }, this));
+  },
+
+  /**
    * 선물하기 잔여데이터 조회
    * @private
    */
   _getGiftData: function () {
-    this._isRequestGiftData = true;
     setTimeout(function () {
       this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this._giftReqCnt })
         .done($.proxy(this._onSuccessGiftDataInfo, this));
@@ -1416,5 +1310,73 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _isUnlimitProd: function () {
     return this.unlimitProdIds.indexOf(this.data.svcInfo.prodId) !== -1;
+  },
+
+  _getImmRechargeData: function () {
+    var apiList = [
+      { command: Tw.API_CMD.BFF_06_0020, params: {} },
+      { command: Tw.API_CMD.BFF_06_0028, params: {} },
+      { command: Tw.API_CMD.BFF_06_0034, params: {} },
+      { command: Tw.API_CMD.BFF_05_0136, params: {} }
+    ];
+    this._apiService.requestArray(apiList)
+      .done($.proxy(function (ting, etc, limit, optSvc) {
+        if ( ting.code === Tw.API_CODE.CODE_00 ) {
+          this.immChargeData.ting = ting.result;
+        }
+        else if ( ting.code === Tw.API_CODE.ZPAYE0077 ) {
+          // 팅 요금제 선물 차단 상태
+          this.immChargeData.ting = null;
+        }
+        else {
+          this.immChargeData.ting = ting;
+        }
+        if ( etc.code === Tw.API_CODE.CODE_00 ) {
+          this.immChargeData.etc = etc.result;
+        } else {
+          //  RCG0062: 팅/쿠키즈/안심음성 요금제 미사용중인 경우
+          this.immChargeData.etc = null;
+        }
+        if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
+          // optProdList -> disProdList 합쳐짐 (BE 1/14 기준)
+          if ( optSvc.result.disProdList && optSvc.result.disProdList.length > 0 ) {
+            _.filter(optSvc.result.disProdList, $.proxy(function (item) {
+              // 부가서비스
+              if ( !this.immChargeData._isLimited ) {
+                this.immChargeData._isLimited = (this._readOnlyProductIdList.indexOf(item.prodId) > -1);
+              }
+            }, this));
+          }
+        }
+        // 해당요금제에 속해 있는 경우만 노출
+        if ( this.immChargeData._isLimited ) {
+          // API 정상 리턴시에만 충전방법에 데이터한도요금제 항목 노출 (DV001-4362)
+          if ( limit.code === Tw.API_CODE.CODE_00 ) {
+            this.immChargeData.limit = limit.result;
+          }
+          else {
+            this.immChargeData.limit = null;
+          }
+        }
+        /**
+         * 데이터 셋팅 후 화면 처리
+         */
+        if (!this.immChargeData.ting) {
+          // 팅 요금제 선물
+          this.$immChargeSection.find('[data-id=ting]').hide();
+        }
+        if (!this.immChargeData.etc && !this.immChargeData.limit) {
+          this.$immChargeSection.find('[data-id=etc-wrap]').hide();
+        } else {
+          if (!this.immChargeData.etc) {
+            // 팅/쿠키즈/안심음성 요금제 사용중인 경우
+            this.$immChargeSection.find('[data-id=etc]').hide();
+          }
+          if (!this.immChargeData.limit) {
+            // 팅/쿠키즈/안심음성 요금제 사용중인 경우
+            this.$immChargeSection.find('[data-id=limit]').hide();
+          }
+        }
+      }, this));
   }
 };

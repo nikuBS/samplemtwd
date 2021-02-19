@@ -10,6 +10,7 @@ import {API_ADD_SVC_ERROR, API_CMD} from '../../../../types/api-command.type';
 import {Request, Response} from 'express';
 import DateHelper from '../../../../utils/date.helper';
 import MytFareSubmainCommonService from './myt-fare.submain.common.service';
+import FormatHelper from '../../../../utils/format.helper';
 
 export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
   constructor(req: Request, res: Response, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
@@ -31,25 +32,27 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
     return Observable.combineLatest(
       this.apiService.request( API_CMD.BFF_05_0079 , params), // 소액결제
       this.apiService.request( API_CMD.BFF_05_0064 , params),  // 콘텐츠 이용료
-      this.apiService.request( API_CMD.BFF_05_0066 , {})  // 콘텐츠 이용료 한도조회(미성년자 여부 판단하기 위해 사용)
-    ).switchMap( ([small, contents, contentsLimit]) => {
+      // this.apiService.request( API_CMD.BFF_05_0066 , {})  // 콘텐츠 이용료 한도조회(미성년자 여부 판단하기 위해 사용)
+      this._getIsAdult() // 성인 여부 확인
+    ).switchMap( ([small, contents, /*contentsLimit*/ isAdult]) => {
       const smallResult = small.result || {},
         contentsResult = contents.result || {},
         result: any = {
           isNotAgree: contents.code === API_ADD_SVC_ERROR.BIL0030, // 휴대폰 결제 이용동의여부
           smallTotal: smallResult.totalSumPrice || '0', // 총 사용금액
           contentsTotal: contentsResult.invDtTotalAmtCharge || '0', // 총 사용금액
-          isAdult: (contentsLimit.result || {}).isAdult === 'Y', // 성인여부
+          isAdult: isAdult, // 성인여부
+          // isAdult: (contentsLimit.result || {}).isAdult === 'Y', // 성인여부
           isBubinCD: ['R', 'D'].indexOf(svcInfo.svcGr) > -1 // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
         };
 
       // 휴대폰 결제 이용동의여부 "미동의" 인 경우 성인여부를 확인하기 위해 나이를 조회한다.
-      if (result.isNotAgree) {
+      /*if (true || result.isNotAgree) {
         return this._getIsAdult().map( resp => {
           result.isAdult = resp;
           return result;
         });
-      }
+      }*/
       return Observable.of(result);
     });
   }

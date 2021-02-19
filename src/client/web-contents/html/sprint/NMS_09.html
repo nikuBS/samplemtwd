@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+	<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+	<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+	
+	<link rel="stylesheet" type="text/css" href="/css/submain.css" media="all" />
+	
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+
+<body class="tod-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+		<!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">약정할인/기기상환 정보</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+		<!-- #contents -->
+        <div id="contents" class="container-wrap">
+			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container tod-submain">
+				<div class="tod-line-sel-wrap"> <!-- show 추가 -->
+					<a href="#" class="sel-show-btn" aria-controls="different-line" aria-expanded="false"><!-- aria-expanded는 하위 컨텐츠가 닫혀 있을 경우 false 열려 있을 경우 true -->
+						<div class="sel-show">
+							<div class="line-info">
+								<i class="type-ico"><img src="/img/myt/sel-mobile-ico-white.svg" alt=""></i>
+								<span class="type">휴대폰</span>
+								<span class="type-info">010-50**-13**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-tablet-ico-white.svg" alt=""></i>
+								<span class="type">태블릿</span>
+								<span class="type-info">070-94**-04**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-tv-ico-white.svg" alt=""></i>
+								<span class="type">IPTV</span>
+								<span class="type-info">세종시 ********</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-tel-ico-white.svg" alt=""></i>
+								<span class="type">집전화</span>
+								<span class="type-info">010-50**-13**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-wifi-ico-white.svg" alt=""></i>
+								<span class="type">T Pocket-Fi</span>
+								<span class="type-info">070-94**-04**</span>
+							</div>
+							<div class="line-info" style="display:none">
+								<i class="type-ico"><img src="/img/myt/sel-internet-ico-white.svg" alt=""></i>
+								<span class="type">인터넷</span>
+								<span class="type-info">세종시 ********</span>
+							</div>
+							<span class="sel-line-btn"> 
+								<i class="sel-ico"></i><span class="btn-txt">다른 회선 조회</span>
+								<!-- 닫힘 -->
+							</span>
+						</div>
+					</a>
+					<!-- 공통화일 참조 -->
+				</div>
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">요금약정할인</div>
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">
+									<a href="#" class="link">요금약정할인제도</a>
+								</div>
+								<div class="box-group-cont">
+									<ul class="report-list item-no-border small">
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">지난달까지 할인받은 요금<button type="button" class="tip">TIP</button></dt>
+												<dd class="report-cont basics13-larger">850,000원</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">오늘 해지 시 할인반환금</dt>
+												<dd class="report-cont">850,000원</dd>
+											</dl>
+										</li>
+									</ul>
+									<a href="#" class="detail-info-link">월별 상세 할인 내역 ></a>
+									<div class="gray-box">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">약정 기간</dt>
+													<dd class="report-cont"><button type="button" class="detail-agree-btn">24개월(730일)</button></dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+									<div class="horizon-bar-wrap contract-graph">
+										<div class="horizon-bar">
+											<span class="data" style="width:5%">
+												<span class="bar"></span>
+												<span class="bar-bubble">74일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+											</span>
+										</div>
+										<div class="data-date">
+											<span class="start-date">
+												2020.7.27.
+												<span class="day-dec">시작일</span>
+											</span>
+											<span class="end-date">
+												2021.5.24.
+												<span class="day-dec">종료일</span>
+											</span>
+										</div>
+									</div>
+									<p class="warning">&lt;스페셜약정할인&gt;, &lt;LTE플러스약정할인&gt;이 &lt;요금약정할인&gt;으로 통합되었습니다. 이용에 참고해 주시기 바랍니다.</p>
+								</div><!-- group-cont -->
+							</div>
+							<div class="box-group">
+								<div class="box-group-head-tit">
+									<a href="#" class="link">선택약정할인제도</a>
+								</div>
+								<div class="box-group-cont">
+									<ul class="report-list item-no-border small">
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">지난달까지 할인받은 요금<button type="button" class="tip">TIP</button></dt>
+												<dd class="report-cont basics13-larger">850,000원</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">오늘 해지 시 할인반환금</dt>
+												<dd class="report-cont">850,000원</dd>
+											</dl>
+										</li>
+									</ul>
+									<a href="#" class="detail-info-link">월별 상세 할인 내역 ></a>
+									<div class="gray-box">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">약정 기간</dt>
+													<dd class="report-cont"><button type="button" class="detail-agree-btn">24개월(730일)</button></dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+									<div class="horizon-bar-wrap contract-graph">
+										<div class="horizon-bar">
+											<span class="data" style="width:70%">
+												<span class="bar"></span>
+												<span class="bar-bubble">74일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+											</span>
+										</div>
+										<div class="data-date">
+											<span class="start-date">
+												2020.7.27.
+												<span class="day-dec">시작일</span>
+											</span>
+											<span class="end-date">
+												2021.5.24.
+												<span class="day-dec">종료일</span>
+											</span>
+										</div>
+									</div>
+								</div><!-- group-cont -->
+							</div>
+							<div class="hash-wrap">
+								<ul class="hash-list normal">
+									<li class="hash-item">
+										<a href="#" class="hash">#요금납부내역</a>
+									</li>
+									<li class="hash-item">
+										<a href="#" class="hash">#나의 결합상품</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">기기 약정할인</div>
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">
+									<a href="#" class="link">T지원금약정</a>
+								</div>
+								<div class="box-group-cont">
+									<ul class="report-list item-no-border small">
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">기기 할인 금액</dt>
+												<dd class="report-cont">850,000원</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">오늘 해지 시 할인반환금</dt>
+												<dd class="report-cont">850,000원</dd>
+											</dl>
+										</li>
+									</ul>
+									<div class="gray-box">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">약정 가입 상태</dt>
+													<dd class="report-cont">가입</dd>
+												</dl>
+											</li>
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">약정 기간</dt>
+													<dd class="report-cont"><button type="button" class="detail-agree-btn">24개월(730일)</button></dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+									<div class="horizon-bar-wrap contract-graph">
+										<div class="horizon-bar">
+											<span class="data" style="width:70%">
+												<span class="bar"></span>
+												<span class="bar-bubble">74일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+											</span>
+										</div>
+										<div class="data-date">
+											<span class="start-date">
+												2020.7.27.
+												<span class="day-dec">시작일</span>
+											</span>
+											<span class="end-date">
+												2021.5.24.
+												<span class="day-dec">종료일</span>
+											</span>
+										</div>
+									</div>
+								</div><!-- group-cont -->
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">기기 할부 정보</div>
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">Galaxy Note20 Ultra</div>
+								<div class="box-group-cont">
+									<div class="gray-box">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">할부 시작일</dt>
+													<dd class="report-cont">2018.05.23.</dd>
+												</dl>
+											</li>
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">할부 기간</dt>
+													<dd class="report-cont"><button type="button" class="detail-agree-btn">24개월</button></dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+									<div class="horizon-bar-wrap contract-graph">
+										<div class="horizon-bar">
+											<span class="data" style="width:70%">
+												<span class="bar"></span>
+												<span class="bar-bubble">74일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+											</span>
+										</div>
+										<div class="data-date">
+											<span class="start-date">
+												2020.7.27.
+												<span class="day-dec">시작일</span>
+											</span>
+											<span class="end-date">
+												2021.5.24.
+												<span class="day-dec">종료일</span>
+											</span>
+										</div>
+									</div>
+									<div class="gray-box claim-box">
+										<p class="contract-summary">남은 할부 청구 금액은<br><strong>457,000원</strong> 입니다.</p>
+										<ul class="claim-list">
+											<li class="claim-item">
+												<dl class="total-price">
+													<dt class="total-article">총 할부 청구 금액</dt>
+													<dd class="price">850,000원</dd>
+												</dl>
+												<ul class="detail-list">
+													<li class="detail-item have-sub"> <!-- open toggle -->
+														<a href="#" role="button" aria-pressed="false">
+															<dl class="detail-price">
+																<dt class="detail-article">중도 납부 금액</dt>
+																<dd class="price">20,000원</dd>
+															</dl>
+														</a>
+														<div class="sub-box">
+															<table class="month-table">
+																<caption>중도납부일을 월별 구분해 설명합니다.</caption>
+																<colgroup>
+																	<col style="width:50%">
+																	<col style="width:50%">
+																</colgroup>
+																<thead>
+																	<tr>
+																		<th scope="col" class="item">중도 납부일</th>
+																		<th scope="col" class="price">납부 금액</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td class="item">2018.07.23.</td>
+																		<td class="price">12,000원</td>
+																	</tr>
+																	<tr>
+																		<td class="item">2018.07.23.</td>
+																		<td class="price">8,000원</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</li>
+												</ul>
+											</li>
+											<li class="claim-item">
+												<dl class="total-price">
+													<dt class="total-article">월 할부 청구 금액</dt>
+													<dd class="price">850,000원</dd>
+												</dl>
+												<ul class="detail-list">
+													<li class="detail-item">
+														<dl class="detail-price">
+															<dt class="detail-article">할부원금</dt>
+															<dd class="price">20,000원</dd>
+														</dl>
+													</li>
+													<li class="detail-item">
+														<dl class="detail-price">
+															<dt class="detail-article">할부 수수료</dt>
+															<dd class="price">700원</dd>
+														</dl>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</div>
+								</div><!-- group-cont -->
+							</div>
+							<div class="hash-wrap">
+								<ul class="hash-list normal">
+									<li class="hash-item">
+										<a href="#" class="hash">#요금납부내역</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">기기 구매 정보</div>
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">T렌탈</div>
+								<div class="box-group-cont">
+									<div class="gray-box">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">모델명</dt>
+													<dd class="report-cont">S**************</dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+									<div class="gray-box claim-box">
+										<p class="contract-summary">월 이용요금은 <strong>33,180원</strong> 입니다.</p>
+										<ul class="report-list item-no-border smaller">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">T렌탈 시작일</dt>
+													<dd class="report-cont">2018.9.5.</dd>
+												</dl>
+											</li>
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">T렌탈 반납 가능일</dt>
+													<dd class="report-cont">2020.9.4.</dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+								</div><!-- group-cont -->
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit">종료된 약정<span class="sub-txt">(최근 2년 이내)</span></div>
+						<div class="card-cont">
+							<div class="acc-list-wrap">
+								<!-- .widget -->
+								<div class="widget ">
+									<div class="widget-box accordion">
+										<div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+											<div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+												<ul class="acco-list pd0">
+													<li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">요금약정할인제도</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">총 할인 금액</dt>
+																		<dd class="report-cont">62,496원</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">총 할인받은 횟수</dt>
+																		<dd class="report-cont">13회</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">약정 기간</dt>
+																		<dd class="report-cont">2018.7.7.~2020.7.7</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">중도 종료일</dt>
+																		<dd class="report-cont">2018.7.7.</dd>
+																	</dl>
+																</li>
+															</ul>
+															<div class="btn-area">
+																<a href="#" class="rect-btn">월별 상세 할인 내역 보기</a>
+															</div>
+														</div>
+                                                    </li>
+                                                    <li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">T지원금약정</button>
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">지원 약정 금액</dt>
+																		<dd class="report-cont">62,496원</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">약정 기간</dt>
+																		<dd class="report-cont">2018.7.7.~2020.7.7</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">중도 종료일</dt>
+																		<dd class="report-cont">13회</dd>
+																	</dl>
+																</li>
+															</ul>
+														</div>
+													</li>
+													<li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">기기 할부 정보</button>
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">모델명</dt>
+																		<dd class="report-cont">S**************</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">총 할부 청구 금액</dt>
+																		<dd class="report-cont">850,000원</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">할부 기간</dt>
+																		<dd class="report-cont">2018.7.7.~2020.7.7</dd>
+																	</dl>
+																</li>
+															</ul>
+														</div>
+													</li>
+													<li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">T렌탈</button>
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">모델명</dt>
+																		<dd class="report-cont">S**************</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">T렌탈 시작일</dt>
+																		<dd class="report-cont">2018.7.7</dd>
+																	</dl>
+																</li>
+															</ul>
+														</div>
+                                                    </li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--// .widget -->
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="section-inner">
+					<div class="section-group">
+						<div class="head-tit">자주 하는 질문</div>
+						<div class="section-cont">
+							<div class="acc-list-wrap">
+								<!-- .widget -->
+								<div class="widget">
+									<div class="widget-box accordion">
+										<div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+											<div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+												<ul class="acco-list pd0">
+													<li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">기기 할부 정보 중 “총 할부 청구 금액”이란 무엇인가요?</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+														</div>
+														<div class="acco-cont">
+															<p>- 총 할부 청구 금액은 할부원금과 할부 이자(연 5.9%)를 더한 금액입니다. </p>
+															<p>- 할부 이자는 원리금 균등 상환 방식으로 매달 같은 금액이 청구됩니다.</p>
+														</div>
+													</li>
+													<li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">정지 기간도 요금약정할인제도 이용 기간에 포함되나요?</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+														</div>
+														<div class="acco-cont">
+															<p>- 아니요. 약정할인제도는 특정 요금제를 일정 기간(1년, 2년 등) 이용하는 조건으로 요금을 할인해 드리는 제도입니다. 정지 기간은 약정할인제도 이용 기간에 포함되지 않습니다. </p>
+															<p>- 정지일수에 따라 약정 종료일이 달라질 수 있습니다.</p>
+														</div>
+													</li>
+													<li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">요금약정할인제도의 할인반환금은 언제 청구되나요?</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+														</div>
+														<div class="acco-cont">
+															<p>- 약정 기간(12개월 또는 24개월)이 끝나기 전에 아래와 같은 상황이 발생하면 할인반환금이 청구됩니다.<br>
+																① 약정 대상이 아닌 요금제로 변경<br>
+																② 다른 할인 제도로 변경(예: 요금약정할인 → T끼리 온가족할인)<br>
+																③ 휴대폰 해지<br>
+																④ 약정 기간이 끝나기 전에 약정 해지
+															</p>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--// .widget -->
+							</div>
+							<a href="#" class="other-info-btn"><span>다른 정보를 찾고 계신가요?</span></a>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="dim"></div>
+        </div>
+        <!--// #contents -->
+	</div>
+	<script>
+		$(window).on('resize load', function(){
+			var horizonBarWrap = $('.horizon-bar-wrap')
+			horizonBarWrap.each(function(){
+				var horizonBar = $(this).find('.horizon-bar .data'); 
+				var barBubble = horizonBar.children('.bar-bubble'); 
+				(horizonBar.children('.bar').width() < barBubble.outerWidth())? barBubble.addClass('left') : barBubble.removeClass('left');
+			})
+		});
+
+		$('.have-sub > a').on('click', function(e){
+			e.preventDefault();
+			$(this).parent().toggleClass('open'); 
+			$(this).attr('aria-pressed', $(this).parent().hasClass('open'))
+		});
+	</script>
+</body>
+
+</html>

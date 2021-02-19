@@ -26,6 +26,8 @@ Tw.ProductRoamingCoupon.prototype = {
     this.$container.on('click', '#coupon-register-btn', $.proxy(this._onViewclicked, this, 'REGISTER')); // 등록하기
     this.$container.on('click', '#coupon-inquire-btn', $.proxy(this._onViewclicked, this, 'INQUIRE')); // 구매내역 조회
     this.$container.on('click', '.card-coupon-inner', $.proxy(this._onViewclicked, this, 'COUPON')); // T로밍 카드 쿠폰 소개
+    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
+    this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
 
   _init: function(){
@@ -34,6 +36,14 @@ Tw.ProductRoamingCoupon.prototype = {
       this._initBpcp();
     }
   },
+
+  //웹접근성 
+  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
+  _closeGnb: function() {
+    setTimeout(function () {
+      $("a.icon-gnb-menu").focus();
+    },300);  
+ },
 
   /**
    * @function

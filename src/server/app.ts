@@ -1,7 +1,10 @@
 // for APM
 const os = require('os');
 process.env.WHATAP_NAME = 'NodeAgent-{ip2}-{ip3}-{cluster}';
-const WhatapAgent = require('whatap').NodeAgent;
+if ( process.env.NODE_ENV !== 'local' ) {
+  // dev, stg, prd
+  const WhatapAgent = require('whatap').NodeAgent;
+}
 
 // Node Modules
 import * as path from 'path';
@@ -90,22 +93,20 @@ class App {
   }
 
   private config() {
-    this.app.use(function(req, res, next) {
+    this.app.use(function (req, res, next) {
 
-      function sanitize(string) {
-        if (typeof string === 'string' && string.includes('<script>'))
+      const sanitize = (string) => {
+        if ( typeof string === 'string' && string.includes('<script>') ) {
           return string.replace('<script>', '&lt;script&gt;');
-        else 
+        } else {
           return string;
+        }
       }
-    
-      let queryKeys = Object.keys(req.query);
-      let paramKeys = Object.keys(req.params);
-    
+      const queryKeys = Object.keys(req.query);
+      const paramKeys = Object.keys(req.params);
       queryKeys.forEach(key => {
         req.query[key] = sanitize(req.query[key])
       })
-    
       paramKeys.forEach(key => {
         req.params[key] = sanitize(req.query[key])
       })
@@ -208,8 +209,9 @@ class App {
     //   }
     // });
   }
-   //영문
-   private setClientMap_en() {
+
+  //영문
+  private setClientMap_en() {
     const env = String(process.env.NODE_ENV);
     // const manifestFile = String(process.env.NODE_ENV) === 'local' ? 'manifest.json' : 'manifest.' + VERSION + '.json';
     const manifestFile = String(process.env.NODE_ENV) === 'prd' ? 'manifest_en.' + VERSION + '.json' : 'manifest_en.json';
@@ -267,14 +269,14 @@ class App {
     this.app.use('/chatbot', new AppRouter(ChatbotRouter.instance.controllers).router);
 
     this.app.use('/test', new AppRouter(TestRouter.instance.controllers).router);
-     //영문추가
-     this.app.use('/en/common', new AppRouter_en(CommonRouter_en.instance.controllers).router);
-     this.app.use('/en/main', new AppRouter_en(MainRouter_en.instance.controllers).router);
-     this.app.use('/en/myt-data', new AppRouter_en(MyTDataRouter_en.instance.controllers).router);
-     this.app.use('/en/myt-fare', new AppRouter_en(MyTFareRouter_en.instance.controllers).router);
-     this.app.use('/en/myt-join', new AppRouter_en(MyTJoinRouter_en.instance.controllers).router);
-     this.app.use('/en/product', new AppRouter_en(ProductRouter_en.instance.controllers).router);
-     this.app.use('/en/customer', new AppRouter_en(CustomerRouter_en.instance.controllers).router);    
+    //영문추가
+    this.app.use('/en/common', new AppRouter_en(CommonRouter_en.instance.controllers).router);
+    this.app.use('/en/main', new AppRouter_en(MainRouter_en.instance.controllers).router);
+    this.app.use('/en/myt-data', new AppRouter_en(MyTDataRouter_en.instance.controllers).router);
+    this.app.use('/en/myt-fare', new AppRouter_en(MyTFareRouter_en.instance.controllers).router);
+    this.app.use('/en/myt-join', new AppRouter_en(MyTJoinRouter_en.instance.controllers).router);
+    this.app.use('/en/product', new AppRouter_en(ProductRouter_en.instance.controllers).router);
+    this.app.use('/en/customer', new AppRouter_en(CustomerRouter_en.instance.controllers).router);
   }
 
   private setShortCut() {
@@ -299,15 +301,15 @@ class App {
       path.join(__dirname, 'app/98.chatbot/views/containers'),
 
       path.join(__dirname, 'app/99.test/views/containers'),
-       //영문추가
-       path.join(__dirname, 'app_en/00.common/views/containers'),
-       path.join(__dirname, 'app_en/01.main/views/containers'),
-       path.join(__dirname, 'app_en/02.myt-data/views/containers'),
-       path.join(__dirname, 'app_en/03.myt-fare/views/containers'),
-       path.join(__dirname, 'app_en/04.myt-join/views/containers'),
-       path.join(__dirname, 'app_en/05.product/views/containers'),
-       path.join(__dirname, 'app_en/08.customer/views/containers'),
-       path.join(__dirname, 'common_en/views/containers')
+      //영문추가
+      path.join(__dirname, 'app_en/00.common/views/containers'),
+      path.join(__dirname, 'app_en/01.main/views/containers'),
+      path.join(__dirname, 'app_en/02.myt-data/views/containers'),
+      path.join(__dirname, 'app_en/03.myt-fare/views/containers'),
+      path.join(__dirname, 'app_en/04.myt-join/views/containers'),
+      path.join(__dirname, 'app_en/05.product/views/containers'),
+      path.join(__dirname, 'app_en/08.customer/views/containers'),
+      path.join(__dirname, 'common_en/views/containers')
 
     ]);
   }
@@ -324,7 +326,7 @@ class App {
   }
 
 
-  private handleNotFoundError(req, res, next) { 
+  private handleNotFoundError(req, res, next) {
     const url = req.url;
     if ( req.accepts('html') ) {
       if ( url.indexOf('/en/') !== -1 ) { // 2020.11.02 김기남 url 중에 '/en/'이 포함되어 있다면 영문용 error page 로 렌더링

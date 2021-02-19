@@ -117,7 +117,7 @@ class ApiRouter {
     // 위젯 잔여량 조회
     GET_WIDGET_REMAINS: { path: '/widget/remains', method: API_METHOD.GET, target: this.getWidgetRemains },
 
-    // Toss Banner Text 
+    // Toss Banner Text
     GET_TOSS_BANNER_TEXT: { path: '/banner/tosstext', method: API_METHOD.GET, target: this.getBannerTossText },
   };
 
@@ -1464,7 +1464,7 @@ class ApiRouter {
       let title;
 
       console.log("[TEST] ", resp);
-            
+
       if (resp.code === API_CODE.CODE_00) {
         today = new Date().getTime();
         result = resp.result.split('|');
@@ -1565,7 +1565,7 @@ class ApiRouter {
             if (skipId.length) {
               // dataCode 값이 undefined 이거나 빈 문자열인 경우에 공제데이터 항목을 모두 추가해준다. 위젯과 협의한 내용
               if (!dataCode) {
-                // 20/09/17 협의된 부분 최초 호출시 무제한 요금제 찾아서 무제한 값만 설정한다. 
+                // 20/09/17 협의된 부분 최초 호출시 무제한 요금제 찾아서 무제한 값만 설정한다.
                 if (data.total.indexOf('무제한') > -1 && unlimitYn) {
                   dataCodes.push(data.skipId);
                   if (data.unit === UNIT_E.DATA) {
@@ -1577,9 +1577,9 @@ class ApiRouter {
                     remainedData.sharedRemained = data.remained;
                     remainedData.unit = UNIT_E.DATA;
                   }
-                } else { // 무제한을 못찾으면 기존과 동일하게 합산해서 준다. 
+                } else { // 무제한을 못찾으면 기존과 동일하게 합산해서 준다.
                   if (unlimitYn === true) {
-                    // 이미 무제한이면 하나 찾았으므로 통과한다. 
+                    // 이미 무제한이면 하나 찾았으므로 통과한다.
                     return;
                   }
                   dataCodes.push(data.skipId);
@@ -1609,7 +1609,7 @@ class ApiRouter {
                     remainedData.unit = UNIT_E.DATA;
                   }
                 }
-              } else { // 데이터 코드가 넘어오는 경우 
+              } else { // 데이터 코드가 넘어오는 경우
 
                 if (data.unit === UNIT_E.DATA) {
                   remainedData.isEmpty = false;
@@ -1774,7 +1774,7 @@ class ApiRouter {
         }
         // 잔여 SMS 조회 및 객체(remainedSms) 설정 완료
 
-        // 기존의 myBalance 복제 
+        // 기존의 myBalance 복제
         const originalBalance = Object.assign({}, balancesResponse.result);
 
         // 단위 변경 및 표기 양식 설정
@@ -1948,10 +1948,16 @@ class ApiRouter {
   }
 
   private getBannerTossText(req: Request, res: Response, next: NextFunction) {
+
+    const loginService = new LoginService();
+    const svcInfo = loginService.getSvcInfo(req) || {};
+    let loginYn = false;
+    if (!FormatHelper.isEmpty(svcInfo)) { // 정회원유무 
+      loginYn = true;
+    }
+
     const bannerResult = new BannerHelper().getTextBannerTos(req);
     bannerResult.subscribe(resp => {
-
-        console.log('resp => ', resp.result);
         let bannerType = '';
         let imgAltCtt = '';
         if (resp.code === API_CODE.CODE_00) {
@@ -1969,17 +1975,17 @@ class ApiRouter {
           }
         }
         const bannerHtml = `
+          <div class="tos_inner">
             <a href="#n" class="tb-link">
-            <i class="tb-icon">
-                ${bannerType}
-            </i>
-            <p class="tb-text">${imgAltCtt}</p>
+              <i class="tb-icon">${bannerType}</i>
+              <p class="tb-text">${imgAltCtt}</p>
             </a>
             <button type="button" class="tb-close"><span class="tod-blind">닫기</span></button>
+          </div>
         `;
 
         res.json({
-            code: resp.code,
+            code: loginYn === false ? API_CODE.CODE_01 : resp.code,
             msg: resp.msg,
             result: bannerHtml
         })

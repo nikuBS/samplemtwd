@@ -1,13 +1,14 @@
 <%#
 * @file product.roaming.fi.inquire.html
-* @author Seungkyu Kim (ksk4788@pineone.com)
-* @since 2018.11.14
-* ID: RM_14_03_02_01
+* @author JongGu Kim (P165332)
+* @since 2021.02.01
+* 2021.02 바로박스 개선 JongGu Kim(jmsk80@softworks.co.kr)
+* ID: RM_14_03_01
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/roaming/product.roaming.fi.inquire.component.html %>
-<body>
+<body class="rm-content">
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -18,39 +19,42 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-
+                <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
                 <div class="cont-box">
-
                     <div class="basic-text">
-                            <span class="top-tx">고객님이 예약하신 baro Box 또는 로밍폰 예약정보를 <br />
-                                <span class="tx-bold">조회</span>하고 <span class="tx-bold">취소</span>할 수 있습니다.
-                            <span>
+                        <span class="top-tx fs13">고객님이 예약하신 baro Box 또는 로밍폰 예약 정보를 <span>조회</span>하고 <span>취소</span>하실 수 있습니다.</span>
                     </div>
-
-                    <div class="charge-guide-wrap top-line">
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="charge-guide-wrap">
                         <div class="charge-cont">
-                            <span class="sub-disc01">휴대폰</span>
+                            <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
                             <span class="tit-tgothic"><%= svcInfo.showSvcNum %></span>
                             <span class="sub-disc04">
-                                    <span class="elem">현 사용기기</span>
-                                    <span class="elem"><%= svcInfo.eqpMdlNm %></span>
-                                </span>
+                                <span class="elem">현 이용 기기</span>
+                                <span class="elem"><%= svcInfo.eqpMdlNm %></span>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <!--// .cont-box -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <div id="fe-certbox" class="cont-box">
-                    <h3 class="tx-bold">휴대폰 인증 후 조회가 가능합니다.</h3>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- .cont-box -->
+                <div id="fe-certbox" class="cont-box rm-box-cert">
+                    <h3>휴대폰 인증이 완료되면<br>바로 <span>조회</span>하실 수 있습니다.</h3>
                     <div class="cont-noti pt18">
-                    	<span class="type3">고객님의 소중한 개인정보 보호를 위해<br /><strong>본인인증 후</strong> 서비스를 이용할 수 있습니다.</span>
+                        <span class="type3">고객님의 소중한 개인정보 보호를 위해<br> 본인인증 후 서비스를 이용하실 수 있습니다.</span>
                     </div>
+                    <ul class="rm-box-cert-proc mt28">
+                        <li class="fs12">본인인증</li>
+                        <li class="fs12">조회/취소</li>
+                    </ul>
                     <ul class="bt-slice mt30">
-                        <li class="bt-blue1">
-                            <button id="fe-cert">인증받기</button>
+                        <li class="bt-roaming2">
+                            <button id="fe-cert">인증하기</button>
                         </li>
                     </ul>
                 </div>
@@ -71,15 +75,14 @@
                                         <span class="date-type"><input id="fe-edate" type="date" title="마지막날짜 선택"/></span>
                                     </div>
                                     <ul class="bt-slice pt20">
-                                        <li class="bt-blue1">
-                                            <button id="fe-inquire">조회하기</button>
+                                        <li class="bt-roaming2">
+                                            <button id="fe-inquire">조회</button>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-
                             <div class="announcement-box pt16">
-                            	<p class="announcement-bullet type01">당일 기준 6개월 이후 임대 예정인 예약 건은 달력 날짜를 수동 설정 후 조회해 주세요. (당일 전/후 최대 2년까지 조회 가능)</p>
+                                <p class="announcement-bullet type01 tod-txcolor4">당일 기준 6개월 이후 예약 건은 날짜를 수동 설정 후 조회할 수 있음 (당일 전&middot;후 최대 2년까지 조회 가능)</p>
                             </div>
                         </div>
                     </div>
@@ -95,15 +98,18 @@
                 </div>
                 <!--// .cont-box -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
 
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">                
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
+                <div class="cont-box rm-cont-tooltip">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <!-- Grand open 접근성 수정 -->
                     <ul class="noti-list02">
-                        <li id="fe-before-tip"><button id="RM_14_03_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">조회/취소 확인사항<span class="tip-view">TIP</span></button></li>
-                        <li id="fe-after-tip"><button id="RM_14_03_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">진행 상태 확인 사항<span class="tip-view">TIP</span></button></li>
+                        <li id="fe-before-tip"><button id="RM_14_03_01_tip_01" aria-haspopup="true" class="tip-view-btn">조회/취소 확인 사항<span class="tip-view">TIP</span></button></li>
+                        <li id="fe-after-tip"><button id="RM_14_03_02_01_tip_01"aria-haspopup="true" class="tip-view-btn">진행 상태 확인 사항<span class="tip-view">TIP</span></button></li>                        
                     </ul>
+                    <!--// Grand open 접근성 수정 -->
                 </div>
                 <!--// .cont-box -->
 
@@ -124,5 +130,4 @@
     new Tw.ProductRoamingFiInquire($('.wrap'), '<%- JSON.stringify(countryCode) %>');
   });
 </script>
-
 <% include ../../components/end.component.html %>

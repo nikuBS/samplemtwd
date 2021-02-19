@@ -1,35 +1,34 @@
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="shortcut icon" href="/img/common/favicon.ico">
-    <link rel="shortcut icon" href="/img/common/favicon.png">
-    <link rel="apple-touch-icon" href="/img/common/favicon.png">
-    <meta name="description" content="T로밍 < 상품">
-    <meta name="keywords" content="T로밍 , 상품">
-    <meta property="og:title" content="초시대를 여는 T world">
-    <meta property="og:site_name" content="SKT">
-    <meta property="og:image" content="/img/dummy/kakao_share.jpg">
-    <meta property="og:description" content="T로밍 < 상품">
-    <title>나의 T로밍 이용현황</title>
-    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/css/roaming-next.css" media="all" />
-    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
-    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
-    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
-    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
-    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
-    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="/img/common/favicon.ico">
+<link rel="shortcut icon" href="/img/common/favicon.png">
+<link rel="apple-touch-icon" href="/img/common/favicon.png">
+<meta name="description" content="T로밍 < 상품">
+<meta name="keywords" content="T로밍 , 상품">
+<meta property="og:title" content="초시대를 여는 T world">
+<meta property="og:site_name" content="SKT">
+<meta property="og:image" content="/img/dummy/kakao_share.jpg">
+<meta property="og:description" content="T로밍 < 상품">
+<title>나의 T로밍 이용현황</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/css/roaming-next.css" media="all" />
+<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
 <body class="rn">
 <div id="roamingMyuse">
-
     <!-- 202011 - 웹접근성 수정건 적용 : 현재 운영에서 헤더로 사용하고 있는 #appbar 제거
     <div id="appbar" class="gnb-opaque">
         <span class="menu icon-gnb-menu">
@@ -40,7 +39,6 @@
             <img class="search" src="/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색">
         </a>
     </div> -->
-
     <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
     <!-- #header -->
     <div id="header" class="header-wrap">
@@ -49,10 +47,7 @@
                 <div class="h-menu">
                     <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-34" data-xt_csid="NO" data-xt_action="BC"><span class="blind">메뉴열기</span></a>
                 </div>
-                <h1 class="h-tit ">
-                    나의 T로밍 이용 현황
-                </h1>
-
+                <h1 class="h-tit">나의 T로밍 이용 현황</h1>
                 <div class="h-serarch">
                     <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
                 </div>
@@ -61,64 +56,42 @@
     </div>
     <!--// #header -->
     <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
-    
     <div id="contents" class="mt60">
         <div class="card">
             <h2>
-                로밍 요금제
-                <span class="count">총 <span class="colorPoint" id="countTariff">1</span>건</span>
+				로밍 요금제
+				<span class="count">총 <span class="colorPoint" id="countTariff">1</span>건</span>
             </h2>
-
-
             <div class="item">
                 <a href="/product/callplan?prod_id=NA00006493">
-                    <h3>
-                        baro 4GB
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
-                    </h3>
+					<h3>
+						baro 4GB
+						<img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+					</h3>
                 </a>
                 <div class="row">
-
                     <span class="label colorPoint fontsize15">이용 중</span>
-
                     <span class="value colorPoint bold">5일 남음</span>
-
-
                 </div>
                 <div class="row">
-
                     <span class="label colorGray">가입 기간</span>
                     <span class="value colorGray">
-                        2020. 9. 11.  09:00
-                        -
-                        2020. 10. 11.  09:00
+						2020. 9. 11.  09:00
+						-
+						2020. 10. 11.  09:00
                     </span>
-
                 </div>
-
-
                 <div class="row">
                     <a href="/product/roaming/setting/roaming-auto?prod_id=NA00006493">
-                <span class="value button">
-                    기간 확인
-                </span>
+						<span class="value button">기간 확인</span>
                     </a>
                 </div>
-
                 <div class="row">
                     <a href="/product/roaming/setting/roaming-combine?prod_id=NA00006493">
-                <span class="value button">
-                    가족로밍 가입하기
-                </span>
+                    <span class="value button">가족로밍 가입하기</span>
                     </a>
                 </div>
-
-
-
                 <div class="divider"></div>
-
-
-
                 <div class="row mt6">
                     <span class="label">데이터</span>
                 </div>
@@ -126,33 +99,23 @@
                     <span class="label colorGray">제공량</span>
                     <span class="value bold">4 GB</span>
                 </div>
-
                 <div class="row">
                     <span class="label colorGray">사용량</span>
                     <span class="value bold">30.72 MB</span>
                 </div>
-
-
-
-
-
-
             </div>
-
         </div>
         <div class="card">
             <h2>
-                로밍 부가서비스
-                <span class="count">총 <span class="colorPoint" id="countAddon">1</span>건</span>
+				로밍 부가서비스
+				<span class="count">총 <span class="colorPoint" id="countAddon">1</span>건</span>
             </h2>
-
-
             <div class="item">
                 <a href="/product/callplan?prod_id=NA00006113">
-                    <h3>
-                        T로밍 음성사용량 안내문자 차단
-                        <img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
-                    </h3>
+					<h3>
+						T로밍 음성사용량 안내문자 차단
+						<img class="arrow" src="/img/product/roam/ico_arrow.png" width="13" alt="">  <!-- //202011 - 웹접근성 수정건 적용 : alt="" 추가 -->
+					</h3>
                 </a>
                 <div class="row">
                     <span class="label colorPoint fontsize15">이용 중</span>
@@ -161,59 +124,10 @@
                     <span class="label colorGray">가입일</span>
                     <span class="value colorGray">2020.10.5.</span>
                 </div>
-
             </div>
-
         </div>
     </div>
-    <div id="gnb" class="gnb-wrap on">
-        <!-- 상태값에 따라 사용된 아이콘 모양
-            normal : *-n
-            press : *-p
-            selected normal : *-sn
-            selected press: *-sp
-            <i class="icon-fab-pin-n-80"><span class="blind">pin</span></i>
-            <i class="icon-fab-pin-p-80"><span class="blind">pin press</span></i>
-            <i class="icon-fab-pin-s-80"><span class="blind">pin selected</span></i>
-            <i class="icon-fab-pin-sp-80"><span class="blind">pin selected press</span></i>
-            <i class="icon-fab-bi-n-80"><span class="blind">bi</span></i>
-            <i class="icon-fab-bi-p-80"><span class="blind">bi press</span></i>
-            <i class="icon-fab-lock-n-80"><span class="blind">lock</span></i>
-            <i class="icon-fab-lock-p-80"><span class="blind">lock press</span></i>
-            <i class="icon-fab-lock-s-80"><span class="blind">lock selected</span></i>
-            <i class="icon-fab-lock-sp-80"><span class="blind">lock selected press</span></i>
-        -->
-
-        <!-- 상태값에 따라 사용된 아이콘 모양
-            normal : *-n
-            press : *-p
-            disabled : *-d
-            selected : *-s
-            <i class="icon-gnb-back-d"><span class="blind">back disabled</span></i>
-            <i class="icon-gnb-back-n"><span class="blind">back</span></i>
-            <i class="icon-gnb-back-p"><span class="blind">back press</span></i>
-            <i class="icon-gnb-bi-d"><span class="blind">bi disabled</span></i>
-            <i class="icon-gnb-bi-n"><span class="blind">bi</span></i>
-            <i class="icon-gnb-bi-p"><span class="blind">bi press</span></i>
-            <i class="icon-gnb-internet-d"><span class="blind">internet disabled</span></i>
-            <i class="icon-gnb-internet-n"><span class="blind">internet</span></i>
-            <i class="icon-gnb-internet-p"><span class="blind">internet press</span></i>
-            <i class="icon-gnb-lock-d"><span class="blind">lock disabled</span></i>
-            <i class="icon-gnb-lock-n"><span class="blind">lock</span></i>
-            <i class="icon-gnb-lock-p"><span class="blind">lock press</span></i>
-            <i class="icon-gnb-lock-s"><span class="blind">lock selected</span></i>
-            <i class="icon-gnb-next-d"><span class="blind">next disabled</span></i>
-            <i class="icon-gnb-next-n"><span class="blind">next</span></i>
-            <i class="icon-gnb-next-p"><span class="blind">next press</span></i>
-            <i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i>
-            <i class="icon-gnb-pin-n"><span class="blind">pin</span></i>
-            <i class="icon-gnb-pin-p"><span class="blind">pin press</span></i>
-            <i class="icon-gnb-pin-s"><span class="blind">pin selected</span></i>
-            <i class="icon-gnb-share-d"><span class="blind">share disabled</span></i>
-            <i class="icon-gnb-share-n"><span class="blind">share</span></i>
-            <i class="icon-gnb-share-p"><span class="blind">share press</span></i>
-        -->
-
+    <div id="gnb" class="gnb-wrap on">   
         <div class="q-wrap">
             <ul class="q-list">
                 <li class="none" aria-hidden="true"><button class="fe-bt-quick-add" type="button" data-menuid="M001973"><i class="icon-fab-pin-s-80"><span class="blind">MY 바로가기 삭제</span></i></button></li>

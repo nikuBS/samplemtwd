@@ -38,8 +38,8 @@ class MyTJoinOpeningDetail extends TwViewController {
         pageInfo,
         detail: resDetail.result,
         myInfo: {
-          apprAmt: FormatHelper.addComma(myInfo.result.apprAmt),
-          invBamt: FormatHelper.addComma(myInfo.result.invBamt)
+          apprAmt: parseInt(myInfo.result.apprAmt, 10) ? FormatHelper.addComma(myInfo.result.apprAmt) : null,
+          invBamt: parseInt(myInfo.result.invBamt, 10) ? FormatHelper.addComma(myInfo.result.invBamt) : null
         }
       };
       // NOTE: 2007년 3월 1일 이후에는 자료가 있다. 즉, 자료가 없으면, 2007년 3월 1일 이전 가입자다.

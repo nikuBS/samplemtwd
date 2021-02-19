@@ -38,14 +38,16 @@ class MyTFareBillOption extends TwViewController {
     if (svcInfo.actRepYn === 'Y') {
       Observable.combineLatest(
         this.getPaymentOption(), // 납부방법 조회
-        this.getAddrInfo() // 주소 조회
-      ).subscribe(([paymentOption, addrInfo]) => {
+        this.getAddrInfo(), // 주소 조회
+        this.getAffiliateCard() // 제휴카드 정보조회
+      ).subscribe(([paymentOption, addrInfo, affiliateCard]) => {
         if (paymentOption.code === API_CODE.CODE_00 && addrInfo.code === API_CODE.CODE_00) {
           res.render('bill/myt-fare.bill.option.html', {
             svcInfo: svcInfo, // 회선 정보 (필수)
             pageInfo: pageInfo, // 페이지 정보 (필수)
             paymentOption: this.parseData(paymentOption.result, svcInfo),
-            addrInfo: this.parseInfo(addrInfo.result)
+            addrInfo: this.parseInfo(addrInfo.result),
+            isShowAffiliateCard: affiliateCard ? (affiliateCard.join_card_yn === 'N' && affiliateCard.pay_mthd_cd === '02') : false
           });
         } else {
           this.error.render(res, {
@@ -126,6 +128,16 @@ class MyTFareBillOption extends TwViewController {
       info.phoneNum = StringHelper.phoneStringToDash(info.dispSvcNum); // 휴대폰 번호에 '-' 추가
     }
     return info;
+  }
+
+  /**
+   * @desc 제휴카드 정보조회
+   * @private
+   */
+  private getAffiliateCard() {
+    return this.apiService.request(API_CMD.BFF_07_0102, {}).map((resp) => {
+      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+    });
   }
 }
 
