@@ -347,7 +347,7 @@ body.tod-white{background:#fff}
 /* 청구요금 */
 .tod-submain .charge-cont{padding:0 1.5rem}
 .tod-submain .charge-cont .month-charge .charge-tit{font-size:1.125rem; padding-bottom:1.5625rem; display:-webkit-box; display:flex; -webkit-box-pack:justify ; justify-content: space-between;}
-.tod-submain .charge-cont .month-charge .charge-tit .period{font-size:0.75rem; text-align: right; color: #868e96; padding-top:0.375rem}
+.tod-submain .charge-cont .month-charge .charge-tit .period{font-size:0.75rem; text-align: right; color: #868e96; padding-top:0.375rem; }
 .tod-submain .charge-cont .month-charge .charge-tit .sel-month-btn{font-size:1.125rem; font-weight:700; padding:0 1.25rem 0.375rem 1.625rem; background:url('/img/myt/calendar.svg') no-repeat left -3px; background-size:1.5rem;}
 .tod-submain .charge-cont .month-charge .charge-tit .sel-month-btn:before{content:''; display:inline-block; position:absolute; left:0; bottom:0; height:1px; width:100%; background:#7f7f7f}
 .tod-submain .charge-cont .sel-bill{padding-bottom:1.5rem ; display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content: space-between; align-items:center }
@@ -369,6 +369,7 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .detail-charge-box .report-list {padding-top:1.5rem}
 .tod-submain .charge-cont .default-list{padding:0.625rem 0 1.25rem; border-top:1px dashed #f2f2f2; }
 .tod-submain .charge-cont .default-list .default-item{display: -webkit-box; display:flex; font-size:0.8125rem; font-weight:500; color:#82888f; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; padding-top:0.625rem}
+.tod-submain .charge-cont .default-list .default-item:not(.strong){padding-right:10px}
 .tod-submain .charge-cont .default-list .default-item > a{display: -webkit-box; display:flex; width:100%; font-size:0.8125rem; font-weight:500; color:#82888f; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; padding-right:0.625rem; position:relative;}
 .tod-submain .charge-cont .default-list .default-item > a:after{content:''; display:inline-block; width:0.5rem; height:0.75rem; position:absolute; background:url('/img/myt/arrow.svg') no-repeat left top; right:0; top:0; -webkit-transform:scale(.6); transform:scale(.6)}
 .tod-submain .charge-cont .default-list .default-item.strong span{color:#f65252}
@@ -377,6 +378,11 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .detail-charge-box .report-list .report-item .detail-info{max-width:unset}
 .tod-submain .charge-cont .detail-charge-box .detail-error-tit{font-size:1.125rem; color:#000; text-align:center; padding-top:2rem; font-weight:600}
 .tod-submain .charge-cont .detail-charge-box .detail-error-txt{text-align:center; color:#868e96; margin-top:1.625rem; font-size:0.75rem; line-height:1.6;}
+.tod-submain .charge-cont .detail-charge-box .detail-list .detail-item{padding-left:0.75rem; position:relative;}
+.tod-submain .charge-cont .detail-charge-box .detail-list .detail-item:before{content:''; display:inline-block; width:0.25rem; height:0.25rem; border-radius:100%; background:#82888f; position:absolute; left:0.25rem; top:0.625rem; }
+.tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center;  -webkit-box-pack: justify;justify-content:space-between; font-size:0.9375rem; line-height:1.75rem}
+.tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .detail-article{color:#82888f; font-weight:400; line-height:1.75rem}
+.tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .price{font-weight:500; line-height:1.75rem}
 
 /* pps */
 .tod-submain .report-list.pps .report-item .report-define .report-tit{width:70%; white-space:nowrap; line-height:1.3125rem}
@@ -590,7 +596,9 @@ body.tod-white{background:#fff}
 /* 이용금액 */
 .tod-submain .charge-cont.phone-payment .month-charge .charge-tit .charge-month{display:inline-block; font-size:1.125rem; font-weight:500; }
 .tod-submain .box-group + .box-group{margin-top:1.875rem; padding-top:1.875rem; border-top:1px solid #f4f4f4; }
-.tod-submain .charge-cont.phone-payment .sel-bill.small-sum{padding-bottom:0.625rem;}
+.tod-submain .charge-cont.phone-payment .month-charge .charge-tit .period{padding-right:0}
+
+.tod-submain .charge-cont.phone-payment .sel-bill.small-sum{padding-bottom:0.625rem; padding-right:0}
 .tod-submain .charge-cont.phone-payment .sel-bill.small-sum .term{font-weight:400; color:#82888f; padding-top:0.1875rem  }
 .tod-submain .report-list.small-sum .report-item .report-define .report-tit,
 .tod-submain .report-list.small-sum .report-item .report-define .report-cont{line-height:1.375rem; min-height:1.375rem;}
