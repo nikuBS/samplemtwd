@@ -27,7 +27,6 @@ Tw.CommonSearchMain = function (rootEl,cdn,step) {
 Tw.CommonSearchMain.prototype = {
   /**
    * @function
-   * @member
    * @desc 초기화
    * @returns {void}
    */
@@ -37,7 +36,6 @@ Tw.CommonSearchMain.prototype = {
       fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
       fontClose : new RegExp('</font>','g')
     };
-    this._isDoSearch = false; // 검색 중복처리 방지
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
@@ -60,8 +58,7 @@ Tw.CommonSearchMain.prototype = {
   _keyDownInputEvt: function (event) {
     // enter 키는 keydown 에서 처리
     // which:: https://api.jquery.com/event.which/
-    if ( event.which === 13 && !this._isDoSearch) {
-      this._isDoSearch = true;
+    if ( event.which === 13 ) {
       this._searchByInputValue(event);
       event.preventDefault();
     }
@@ -74,7 +71,7 @@ Tw.CommonSearchMain.prototype = {
    */
   _keyUpInputEvt: function (event) {
     // which:: https://api.jquery.com/event.which/
-    if ( event.which !== 13) {
+    if ( event.which !== 13 ) {
       if ( this._historyService.getHash() === '#input_P' ) {
         if ( this.$inputElement.val().trim().length > 0 ) {
           this._getAutoCompleteKeyword();
@@ -88,7 +85,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 이벤트 바인딩
    * @returns {void}
    */
@@ -163,7 +159,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 변환
    * @param {String} listStr
    * @returns {Object}
@@ -179,7 +174,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 입력창 포커스 이벤트
    * @returns {Object}
    */
@@ -188,7 +182,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 입력창 포커스 이벤트
    * @param {Object} args 이벤트 객체
    * @returns {Object}
@@ -205,7 +198,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어 추가
    * @param {String} keyword  - 검색어
    * @returns {void}
@@ -231,7 +223,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어 가져오기
    * @returns {Object}
    */
@@ -270,7 +261,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색창에 입력한 검색어로 검색 실행하기
    * @returns {void}
    */
@@ -284,7 +274,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어, 검색어 자동완성 등 키워드 클릭하여 검색 실행
    * @param {Object} linkEvt - 이벤트 객체
    * @returns {Object}
@@ -310,7 +299,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 추천검색어로 검색 실행
    * @param {Object} linkEvt - 이벤트 객체
    * @returns {Object}
@@ -324,7 +312,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 더 보기
    */
   _showMorePopularSearchWord : function(){
@@ -335,7 +322,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 더 보기
    */
   _showMoreContent : function(elem) {
@@ -347,7 +333,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 접기
    */
   _hideMorePopularSearchWord : function () {
@@ -360,7 +345,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 접기
    */
   _hideMoreContent : function(elem) {
@@ -372,7 +356,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 어떤 업무를 찾고 계신가요 메뉴 이동
    */
   _goRcmndLink : function (elem) {
@@ -380,7 +363,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 이럴 땐 이렇게 하세요 링크 이동
    */
   _goDoLikeThisLink : function (elem) {
@@ -388,7 +370,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색 페이지로 이동
    * @param {String} searchKeyword -
    * @param $target6
@@ -399,9 +380,6 @@ Tw.CommonSearchMain.prototype = {
     if ( Tw.FormatHelper.isEmpty(searchKeyword) || searchKeyword.trim().length <= 0 ) {
       // this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
       this._popupService.openAlert(null, Tw.ALERT_MSG_SEARCH.KEYWORD_ERR, null, null, 'search_keyword_err', $target);
-      return;
-    }
-    if (!this._isDoSearch) {
       return;
     }
     if ( this._historyService.getHash() === '#input_P' ) {
@@ -427,13 +405,11 @@ Tw.CommonSearchMain.prototype = {
       // Tw.Logger.info('[common.search-main] [_doSearch]', '"doSearch" Cookie 셋팅');
       // Tw.CommonHelper.setCookie('doSearch', 'Y');
       this._addRecentlyKeywordList(searchKeyword);
-      this._isDoSearch = false;
       this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1) + '&sort='+sort);
     },this),100);
   },
   /**
    * @function
-   * @member
    * @desc 검색 취소 (검색 메인 진입시점 이전 페이지로 이동)
    * @returns {void}
    */
@@ -447,7 +423,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색창의 키워드가 포함되어있는 최근검색어 가져오기
    * @param {String} keyword - 키워드
    * @returns {Array}
@@ -476,33 +451,31 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어, 검색어 자동완성 화면 출력
    * @returns {void}
    */
   _openKeywordListBase : function () {
-    if(this._historyService.getHash()==='#input_P'){
-      if(this.$inputElement.val().trim().length>0){
+    if ( this._historyService.getHash() === '#input_P' ) {
+      if ( this.$inputElement.val().trim().length > 0 ) {
         this._getAutoCompleteKeyword();
-      }else{
+      } else {
         this._showRecentKeyworList();
       }
-      return;
+    } else {
+      setTimeout($.proxy(function () {
+        this._popupService.open({
+            hbs: 'search_keyword_list_base',
+            layer: true,
+            data: null
+          },
+          $.proxy(this._bindKeyworListBaseEvent, this),
+          $.proxy(this._keywordListBaseClassCallback, this),
+          'input');
+      }, this));
     }
-    setTimeout($.proxy(function () {
-      this._popupService.open({
-          hbs: 'search_keyword_list_base',
-          layer: true,
-          data : null
-        },
-        $.proxy(this._bindKeyworListBaseEvent,this),
-        $.proxy(this._keywordListBaseClassCallback,this),
-        'input');
-    },this));
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어, 검색어 자동완성 화면 비활성화
    * @returns {void}
    */
@@ -517,7 +490,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색어 자동완성 , 최근검색어 화면 닫기 콜백
    * @returns {void}
    */
@@ -527,7 +499,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어 화면으로 전환
    * @returns {void}
    */
@@ -549,7 +520,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 요청
    * @returns {void}
    */
@@ -573,7 +543,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어와 자동완성 키워드 리스트 병합 , 중복제거
    * @param {Array} recentKeywordList - 키워드
    * @param {Array} autoCompleteList - 키워드
@@ -588,7 +557,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 화면 출력
    * @param {Array} autoCompleteList - 키워드
    * @returns {Array}
@@ -607,7 +575,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 , 최근검색어 화면 이벤트 바인딩
    * @param {Object} layer - 화면 이벤트 객체
    * @returns {void}
@@ -631,7 +598,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 과금팝업 출력
    * @param {Object} evt - 이벤트 객체
    * @returns {void}
@@ -648,7 +614,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc svcInfo 요청
    * @returns {void}
    */
