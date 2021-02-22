@@ -2000,9 +2000,8 @@ class ApiRouter {
    * @param res 
    * @param next 
    */
-  private getBenfProdInfo(res: Response) {
-    const hashKey = 'NA00006405';
-    this.redisService.getData(REDIS_KEY.BENF_PROD_INFO + hashKey)
+  private getBenfProdInfo(req: Request, res: Response) {
+    this.redisService.getData(REDIS_KEY.BENF_PROD_INFO)
       .subscribe((resp) => {
         res.json(resp);
       });

@@ -1719,3 +1719,10 @@ Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER =
     '</a>' + 
   '</li>' + 
 '{{/each}}';
+
+Tw.RENEWAL_PRODUCT_SUBMAIN_PROMOTION_BANNER = 
+  '<div class="banner-area shadow-box">' + 
+    '<a class="promotions-item" data-option="{{promotion.linkTypCd}}" data-link="{{promotion.imgLinkUrl}}" data-xt_eid="{{promotion.oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' + 
+      '<img src="{{cdn_url}}/{{promotion.bnnrFilePathNm}}" title="{{promotion.bnnrImgAltCtt}}" alt="{{promotion.bnnrImgAltCtt}}">' + 
+    '</a>' + 
+  '</div>';
