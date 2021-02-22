@@ -197,7 +197,7 @@ export default class RenewProduct extends TwViewController {
             }
             
             console.log("#####");
-            console.log(data.themeListData.prodList);
+            console.log(data);
             console.log("#####");
 
             res.render('mobileplan/renewal/submain/product.renewal.mobileplan.html', { svcInfo, pageInfo, data });
