@@ -244,7 +244,7 @@ Tw.CommonSearch.prototype = {
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내 "전체" 카테고리 및 검색결과 총 건수 영역에 결과건수 노출 처리 완료');
 
     this.$inputElement = this.$container.find('#keyword');
-    this.$inputElement.on('keydown', $.proxy(this._inputChangeEvent, this));
+    this.$inputElement.on('keyup', $.proxy(this._inputChangeEvent, this));
     this.$inputElement.on('focus', $.proxy(this._inputFocusEvt, this));
     this.$container.on('click', '.icon-gnb-search, .fe-search-link', $.proxy(this._doSearch, this));
     this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
@@ -633,7 +633,6 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _inputChangeEvent: function (args) {
-    args.preventDefault();
     if ( Tw.InputHelper.isEnter(args) ) {
       this.$container.find('.icon-gnb-search').trigger('click');
     } else {
