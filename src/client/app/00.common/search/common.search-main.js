@@ -37,6 +37,7 @@ Tw.CommonSearchMain.prototype = {
       fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
       fontClose : new RegExp('</font>','g')
     };
+    this._isDoSearch = false; // 검색 중복처리 방지
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
@@ -52,23 +53,38 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
+   * @param event keydown
    * @desc 검색창 input 이벤트
    * @returns {void}
    */
-  _keyInputEvt : function (inputEvtObj) {
-    inputEvtObj.preventDefault();
-    if(Tw.InputHelper.isEnter(inputEvtObj)){
-      this._searchByInputValue(inputEvtObj);
-    }else{
-      if(this._historyService.getHash()==='#input_P'){
-        if(this.$inputElement.val().trim().length>0){
+  _keyDownInputEvt: function (event) {
+    // enter 키는 keydown 에서 처리
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which === 13 && !this._isDoSearch) {
+      this._isDoSearch = true;
+      this._searchByInputValue(event);
+      event.preventDefault();
+    }
+  },
+  /**
+   * @function
+   * @param event keyup
+   * @desc 검색창 input 이벤트
+   * @returns {void}
+   */
+  _keyUpInputEvt: function (event) {
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which !== 13) {
+      if ( this._historyService.getHash() === '#input_P' ) {
+        if ( this.$inputElement.val().trim().length > 0 ) {
           this._getAutoCompleteKeyword();
-        }else{
+        } else {
           this._showRecentKeyworList();
         }
       }
     }
+    event.stopPropagation();
+    event.preventDefault();
   },
   /**
    * @function
@@ -79,7 +95,9 @@ Tw.CommonSearchMain.prototype = {
   _bindEvent : function () {
     // this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
-    this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
+    this.$inputElement.on('keydown', $.proxy(this._keyDownInputEvt, this));
+    // key 입력 시 서버 요청 및 DOM 변경을 최소화 하기 위해 마지막에 한번만 요청하기 위해 _.debounce 사용
+    this.$inputElement.on('keyup',_.debounce($.proxy(this._keyUpInputEvt,this), 500));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
     this.$container.on('click','.search-element',$.proxy(this._searchByElement,this));
@@ -259,7 +277,7 @@ Tw.CommonSearchMain.prototype = {
   _searchByInputValue : function ($event) {
     var $target = $($event.currentTarget);
     var searchKeyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
+    if ( Tw.FormatHelper.isEmpty(searchKeyword) || searchKeyword.trim().length <= 0 ) {
       searchKeyword = this.$container.find('#selected_keyword').val();
     }
     this._doSearch(searchKeyword, $target);
@@ -372,18 +390,21 @@ Tw.CommonSearchMain.prototype = {
    * @function
    * @member
    * @desc 검색 페이지로 이동
-   * @param {String} searchKeyword - 키워드
+   * @param {String} searchKeyword -
+   * @param $target6
    * @returns {void}
    */
   _doSearch : function (searchKeyword, $target) {
-    Tw.Logger.info('[common.search-main][_doSearch]', '');
-
-    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
+    Tw.Logger.info('[common.search-main][_doSearch]', $target);
+    if ( Tw.FormatHelper.isEmpty(searchKeyword) || searchKeyword.trim().length <= 0 ) {
       // this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$target);
+      this._popupService.openAlert(null, Tw.ALERT_MSG_SEARCH.KEYWORD_ERR, null, null, 'search_keyword_err', $target);
       return;
     }
-    if(this._historyService.getHash()==='#input_P'){
+    if (!this._isDoSearch) {
+      return;
+    }
+    if ( this._historyService.getHash() === '#input_P' ) {
       this._closeKeywordListBase();
     }
 
@@ -406,6 +427,7 @@ Tw.CommonSearchMain.prototype = {
       // Tw.Logger.info('[common.search-main] [_doSearch]', '"doSearch" Cookie 셋팅');
       // Tw.CommonHelper.setCookie('doSearch', 'Y');
       this._addRecentlyKeywordList(searchKeyword);
+      this._isDoSearch = false;
       this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1) + '&sort='+sort);
     },this),100);
   },
@@ -509,19 +531,19 @@ Tw.CommonSearchMain.prototype = {
    * @desc 최근검색어 화면으로 전환
    * @returns {void}
    */
-  _showRecentKeyworList : function () {
-    if(this._historyService.getHash()==='#input_P'){
+  _showRecentKeyworList: function () {
+    if ( this._historyService.getHash() === '#input_P' ) {
       this.$keywordListBase.find('#recently_keyword_layer').removeClass('none');
-      if(!this.$keywordListBase.find('#auto_complete_layer').hasClass('none')){
+      if ( !this.$keywordListBase.find('#auto_complete_layer').hasClass('none') ) {
         this.$keywordListBase.find('#auto_complete_layer').addClass('none');
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
-      _.each(this._recentlyKeywordListData[this._nowUser],$.proxy(function (data,idx) {
+      _.each(this._recentlyKeywordListData[this._nowUser], $.proxy(function (data, idx) {
         this.$keywordListBase.find('#recently_keyword_list')
           .append(this._recentKeywordTemplate({
-            listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)
+            listData: data, xtractorIndex: idx + 1, index: idx, encodeParam: encodeURIComponent(data.keyword)
           }));
-      },this));
+      }, this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
   },
