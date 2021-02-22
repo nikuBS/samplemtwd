@@ -353,6 +353,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedAddProduct: function () {
     this._historyService.goLoad('/myt-join/additions');
+    return false;
   },
   /**
    * @function
@@ -411,12 +412,12 @@ Tw.MyTJoinSubMain.prototype = {
           // 신청현황: 일시정지 예약중
           this._historyService.goLoad('submain/suspend/status');
         }
-        return;
+        return false;
       }
       if ( stateMyPaused.state ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
-        return;
+        return false;
       }
     }
     if ( stateMyLongPaused && stateMyLongPaused.state ) {
@@ -424,7 +425,7 @@ Tw.MyTJoinSubMain.prototype = {
       if ( stateMyLongPaused.opStateCd !== 'C' || !stateMyLongPaused.stateReleased ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
-        return;
+        return false;
       }
     }
     // 신청하기: "일시정지/해제"로 이동
