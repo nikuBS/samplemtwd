@@ -8,7 +8,8 @@ _%>
   <%_ if ( data.myContractPlan.muPointYn === 'Y' ) { _%>
     <section class="cont-card">
       <div class="section-inner">
-        <div class="head-tit"><a href="#" data-id="contract-plan" class="link">무약정 플랜 포인트</a></div>
+        <div class="head-tit"><a href="#" data-id="contract-plan" class="link"
+        data-xt_eid="<%= data.xtCode.usedContractPlan %>" data-xt_csid="NO" data-xt_action="BC">무약정 플랜 포인트</a></div>
         <div class="card-cont">
           <ul class="ico-list">
             <li class="item">
@@ -35,7 +36,7 @@ _%>
     </section>
   <%_ } else { _%>
     <div class="submain-banner">
-      <a href="#" data-id="contract-plan">
+      <a href="#" data-id="contract-plan" data-xt_eid="<%= data.xtCode.contractPlan %>" data-xt_csid="NO" data-xt_action="BC">
         <p class="banner-comment">
           <span class="bsub-txt">매달 포인트 적립 받아 요금 납부 할인 혜택</span><!-- 201207 [OP002-10282] 수정03 : 텍스트 수정 -->
           <strong>무약정 플랜 포인트</strong>
@@ -49,7 +50,10 @@ _%>
 <!-- 201207 [OP002-10282] 수정04 : 텍스트 수정 -->
 <section class="cont-card">
   <div class="section-inner">
-    <div class="head-tit"><a href="#" data-id="installement" class="link">약정할인/기기상환 정보</a></div>
+    <div class="head-tit">
+      <a href="#" data-id="installement" class="link"
+         data-xt_eid="<%= data.xtCode.disInfo %>" data-xt_csid="NO" data-xt_action="BC">약정할인/기기상환 정보</a>
+    </div>
     <div class="card-cont">
       <div class="hoz-group-wrap">
         <%_ if (data.myDeviceInstallment) { _%>
