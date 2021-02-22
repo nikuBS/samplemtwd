@@ -56,6 +56,11 @@ Tw.MyTFareBillGuideIndividual.prototype = $.extend(Tw.MyTFareBillGuideIndividual
 
       _.map(rootNodes.useBill, function (val) {
         val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
+
+        // 상세요금 아코디언 열림 여부
+        if(res.result.isOpenAccordion) {
+          val.isOpenAccordion = res.result.isOpenAccordion;
+        }
       });
 
       this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
