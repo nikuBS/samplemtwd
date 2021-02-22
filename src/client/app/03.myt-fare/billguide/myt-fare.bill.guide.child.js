@@ -103,6 +103,25 @@ Tw.MyTFareBillGuideChild.prototype = {
       return '';
     });
 
+    // 상세요금 아코디언 열기
+    Handlebars.registerHelper('is_open_accordion', function (item) {
+      console.log('is_open_accordion item', item);
+      if(item.isOpenAccordion && item.isOpenAccordion === 'Y') {
+        return 'on';
+      } else {
+        return '';
+      }
+    });
+
+    // 상세요금 아코디언 버튼 열기
+    Handlebars.registerHelper('is_open_accordion_btn', function (item) {
+      console.log('is_open_accordion_btn item', item);
+      if(item.isOpenAccordion && item.isOpenAccordion === 'Y') {
+        return 'true';
+      } else {
+        return 'false';
+      }
+    });
   },
 
   /**
