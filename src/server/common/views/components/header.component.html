@@ -75,9 +75,18 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
             <div class="h-menu">
                 <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-34" data-xt_csid="NO" data-xt_action="BC" tabindex="-1"><span class="blind">메뉴열기</span></a>
             </div>
-            <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
-                <%- title %>
-            </h1>
+
+            <!-- 로밍 메인일 경우에는 image 노출, 이외에는 text 노출  locals.pageInfo.menuNm.indexOf('로밍') > -1))  ====> menuId 변경 -->
+            <% if (svcInfo && locals.pageInfo && (locals.pageInfo.menuId=='M000439')) { %>                    
+                <h1 class="h-tit">
+                    <img class="logo-tloaming" src="<%= CDN %>/img/product/roam/logo.png" alt="T 로밍" width="94" height="24"> <!-- //202011 - 웹접근성 수정건 적용 : 제목 추가, 이미지 alt 수정 / 클래스명 .logo-tloaming 로 변경-->
+                </h1>
+            <% } else { %>
+                <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
+                    <%- title %>
+                </h1>
+            <% } %>
+
             <% if (locals.home && locals.home !== 'store') {  // 개인화 진입 버튼 메인 홈화면에서만 노출 %>
                 <% if (svcInfo) { %>
                     <% if (svcInfo.personTimeChk && svcInfo.personAgentTypeChk && svcInfo.personLineTypeChk ) { %>

@@ -11,15 +11,7 @@
 
 
 <div id="roamingGuide">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu" tabindex="-1">
-            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
-        </span>
-        <h1>T로밍안내</h1>
-        <a href="/common/search-main">
-            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색" />
-        </a>
-    </div>
+    <!-- //웹접근성 hearder 삭제-->
     <%- include('../components/header.component.html', { title: 'T로밍안내', svcInfo: svcInfo }) %>
     <div id="contents" class="first">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
@@ -162,8 +154,9 @@
             <ul>
             {{#each items}}
                 <li id="tag-{{ id }}" class="toggleItem">
-                    <span class="title">{{ title }}</span>
-                    <img class="arrow" src="<%= CDN %>/img/product/roam/ico_expand.svg" width="13" alt="">
+                    <button type="button" id="state-{{ id }}" class="toggleItem" aria-pressed="false">
+                        <span class="title">{{ title }}</span>
+                    </button>        
                     <div class="description"></div>
                 </li>
             {{/each}}
@@ -173,7 +166,7 @@
 </script>
 <script type="text/x-handlebars-template" id="tpl-tag-card">
     <!-- 필수 점검 리스트 섹션 내, 해시태그들 -->
-    <a href="#" class="tag" data-id="{{ id }}" data-command="showChecklist" tabindex="-1">#{{ name }}</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
+    <a href="#" class="tag" data-id="{{ id }}" data-command="showChecklist" >#{{ name }}</a> <!-- //202011 - 웹접근성 수정건 적용 : span 태그를 a태그로 변경 -->
 </script>
 
 <!-- '출국 전 필수 확인' 다이얼로그 -->

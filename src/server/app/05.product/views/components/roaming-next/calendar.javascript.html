@@ -688,7 +688,7 @@
             if (!disabled)
               cname += 'available';
 
-            html += '<td class="' + cname.replace(/^\s+|\s+$/g, "") + '" data-title="' + "r" + row + "c" + col + '"  role="button" tabindex="'+ datePickerTabidx +'">'+
+            html += '<td class="' + cname.replace(/^\s+|\s+$/g, "") + '" data-title="' + "r" + row + "c" + col + '"'+ datePickerTabidx +'">'+
                     '<button class="available" data-title="' + "r" + row + "c" + col + '">' + calendar[row][col].date() + "</button></td>";  // 202011 - 웹접근성 수정건 적용 : role="button" , tabindex 추가
 
           }
