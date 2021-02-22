@@ -253,6 +253,8 @@ Tw.API_CMD = {
   BFF_05_0235: { path: '/core-modification/:version/mls/UserProfiles', method: Tw.API_METHOD.POST },
   // [OP002-12190]
   BFF_05_0236: { path: '/core-modification/:version/mls/conversion-dislike', method: Tw.API_METHOD.POST },
+  // [OP002-10279 가입정보고도화]
+  BFF_05_0237: { path: '/:version/my-t/my-info-for-submain', method: Tw.API_METHOD.GET },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
   BFF_06_0002: { path: '/core-recharge/:version/refill-usages', method: Tw.API_METHOD.GET },
@@ -460,7 +462,7 @@ Tw.API_CMD = {
   //SEARCH SURVEY
   BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: Tw.API_METHOD.POST },
   BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: Tw.API_METHOD.POST },
-
+  BFF_08_0073: { path: '/core-modification/:version/ifaq/iFaq-detail', method: Tw.API_METHOD.GET},
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },

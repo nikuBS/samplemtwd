@@ -137,15 +137,14 @@ $.extend(Tw.CommonSearchMore.prototype,
       $('#fe-category-slide').removeData('event');
       skt_landing.widgets.widget_horizontal($('.widget'));
       this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
-          var $accobox = $('li.acco-box');
-          var $accotit = $('div.acco-tit');
-          $accobox.toggleClass('on');
-          if ($accobox.hasClass('on')) {
-            $accotit.find('button').attr('aria-pressed', true);
-          } else {
-            $accotit.find('button').attr('aria-pressed', false);
-          }
-      }, this))
+        var $target = $(e.currentTarget).parent(); // 바로 상위 
+        $target.toggleClass('on');
+        if ($target .hasClass('on')) {
+          $target.find('button').attr('aria-pressed', true);
+        } else {
+          $target .find('button').attr('aria-pressed', false);
+        }
+    }, this))
 
 
       this.$container.on('scroll', $.proxy(function () {
