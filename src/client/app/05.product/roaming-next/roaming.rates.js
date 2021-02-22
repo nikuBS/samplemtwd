@@ -57,7 +57,7 @@ Tw.RoamingRates.prototype = {
     // '로밍 시 국가별 주의 사항'
     this.$container.find('.attentionHead').on('click', $.proxy(this.toggleAttention, this));
     // 툴팁 핸들러
-    this.$container.find('.tip').on('click', $.proxy(this._showTip, this));
+    this.$container.find('.tip, .tip-view, .tip-view-btn').on('click', $.proxy(this._showTip, this));   //웹접근성  .tip => tip-view 변경, 혹실몰라 기존클래스 냅뒀음.
 
     // 요금 더보기 핸들러
     this.$container.find('.opener').on('click', $.proxy(this._divOpen, this));

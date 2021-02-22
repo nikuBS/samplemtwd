@@ -18,7 +18,7 @@ Tw.RoamingMenu.prototype = {
    */
   install: function () {
     var container = this.$container;
-    $('#header').hide();
+    //$('#header').hide();   //웹접근성 작업으로 기존 소스 삭제
 
     var roamOff = Tw.CommonHelper.getSessionStorage('ROAMING_OFF');
     var mcc = Tw.CommonHelper.getSessionStorage('ROAMING_MCC');
@@ -29,7 +29,7 @@ Tw.RoamingMenu.prototype = {
      * 로밍모드 메뉴의 경우, 단순히 display: none으로 기존 화면($rootEl)을 숨긴다.
      */
     if (mcc && mcc !== '450' && roamOff !== 'Y') { // 해외여서 로밍모드 메뉴 출력
-      $('#appbar .menu').on('click', function () {
+      $('#appbar .menu, #header').on('click', function () {  //  기존 appbar  => 공통 header 로 변경됨에 따라 #header 추가해줌
         $('#roamingMenu').css('display', 'block');
         container.css('display', 'none');
 
@@ -46,10 +46,10 @@ Tw.RoamingMenu.prototype = {
       $('#common-menu').hide();
     } else {
       // 로밍모드가 아닐 경우, T 월드 기존 버거 메뉴를 열기 위해 _onGnbBtnClicked 호출
-      var menu = new Tw.MenuComponent();
-      $('#appbar .menu').on('click', function () {
-        menu._onGnbBtnClicked();
-      });
+      // var menu = new Tw.MenuComponent();
+      // $('#header').on('click', function () {
+      //   menu._onGnbBtnClicked();
+      // });
     }
   },
   /**

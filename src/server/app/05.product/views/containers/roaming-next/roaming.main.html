@@ -4,47 +4,16 @@
 
     <!-- 202011 - 웹접근성 수정건 적용 : 스킵네비 추가 시작 -->
     <div id="skipnavigation" class="tloaming-skip-nav">
-        <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
-        </ul>
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
     </div>
     <!-- //202011 - 웹접근성 수정건 적용 : 스킵네비 추가 끝 -->
 
-    <!-- <div id="appbar">
-        <span class="menu icon-gnb-menu" tabindex="-1">
-            <a href="javascript:void(0);"><img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴열기" width="24" height="24" /></a>
-        </span>
-        <img class="logo" src="<%= CDN %>/img/product/roam/logo.png" alt="T로밍" width="94" height="24" />
-        <a href="/common/search-main">
-            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색"/>
-        </a>
-    </div> -->
-
-
-    <!-- 202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 시작 (style="display:none 삭제") -->
-    <!-- #header -->
-    <div id="header" class="header-wrap bg-type">
-        <div class="h-belt">
-            <div class="h-default">
-                <div class="h-menu">
-                    <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-34" data-xt_csid="NO" data-xt_action="BC"><span class="blind">메뉴열기</span></a>
-                </div>
-                <h1 class="h-tit ">
-                    <img class="logo-tloaming" src="/img/product/roam/logo.png" alt="T 로밍" width="94" height="24"> <!-- //202011 - 웹접근성 수정건 적용 : 제목 추가, 이미지 alt 수정 / 클래스명 .logo-tloaming 로 변경-->
-                </h1>
-
-                <div class="h-serarch">
-                    <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--// #header -->
-    <!-- //202011 - 웹접근성 수정건 적용 : 기존 사용하던 .header-wrap 재 사용 끝 -->
+    <!-- //웹접근성 hearder 삭제-->
 
     <%- include('../components/header.component.html', { title: '', svcInfo: svcInfo }) %>
 
-    
     <div id="contents">
     <div id="content">
         <%# 첫 로밍 고객인 경우 다른 문구 노출 %>
