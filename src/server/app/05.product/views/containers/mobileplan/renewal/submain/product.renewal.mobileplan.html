@@ -393,12 +393,17 @@
 																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr.length; j < jlen; j++ ) { %>
 																			<li>
 																				<i class="p-icon16-flo"></i> 
-																				<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].expsBenfNm %></span>
-																				<span class="price">
-																				<del>7,900원</del>
-																				<i class="icon-arr">&rarr;</i> 
-																				<em>0원</em>
-																				</span>
+																				<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfNm %></span>
+
+																				<% if ( !data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].useAmtPrice.isNaN && !data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfAmtPrice.isNaN ) { %>
+																					<%# 이용금액과 혜택금액이 있다면? %>
+																					<span class="price">
+																						<del><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfAmtPrice.price%>원</del>
+																						<i class="icon-arr">&rarr;</i> 
+																						<em><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].useAmtPrice.price%>원</em>
+																					</span>
+																				<% } %>
+																				
 																			</li>
 																		<% } %>
 																	</ul>
@@ -413,11 +418,14 @@
 																				<li>
 																					<i class="p-icon16-cycle"></i> 
 																					<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].expsBenfNm %></span>
-																					<span class="price">
-																						<del>7,900원</del>
-																						<i class="icon-arr">&rarr;</i> 
-																						<em>0원</em>
-																					</span>
+
+																					<% if ( !data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].useAmtPrice.isNaN && !data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].benfAmtPrice.isNaN ) { %>
+																						<span class="price">
+																							<del><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].benfAmtPrice.price%>원</del>
+																							<i class="icon-arr">&rarr;</i> 
+																							<em><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].useAmtPrice.price%>원</em>
+																						</span>
+																					<% } %> 
 																				</li>
 																			<% } %>
 																		</ul>
@@ -426,11 +434,13 @@
 															</div>
 														</a>
 
-														<div class="rn-prod-bottom">
-															<div class="rn-btn-right">
-																<a href="#n" class="btn-compare" data-xt_eid="CMMA_A4_B84-26" data-xt_csid="NO" data-xt_action="BC">내 요금제와 비교</a>
+														<% if ( data.isCompareButton ) { %>
+															<div class="rn-prod-bottom">
+																<div class="rn-btn-right">
+																	<a href="#" class="btn-compare" data-xt_eid="CMMA_A4_B84-26" data-xt_csid="NO" data-xt_action="BC">내 요금제와 비교</a>
+																</div>
 															</div>
-														</div>
+														<% } %>
 													</div>
 												</li>
 											<% } %>
@@ -449,25 +459,7 @@
 							<div class="article-cont minus-space">
 								<div class="slider-wrap plan-slider">
 									<div class="slider-container">
-										<ul class="slider-list">
-<!-- 
-											<li class="slider-item">
-												<a href="/product/renewal/mobileplan/list?theme=T001" class="shadow-box" style="background-image:url('<%= CDN %>/img/product/v2/flo-card.png')">
-													<span class="tod-blind">flo 음악과 언제 어디서나 함께하는 요금제</span>
-												</a>
-											</li>
-											<li class="slider-item">
-												<a href="/product/renewal/mobileplan/list?theme=T002" class="shadow-box" style="background-image:url('<%= CDN %>/img/product/v2/wavve-card.png')">
-													<span class="tod-blind">요즘뜨는 드라마 마음껏 즐기기</span>
-												</a>
-											</li>
-											<li class="slider-item">
-												<a href="/product/renewal/mobileplan/list?theme=T003" class="shadow-box" style="background-image:url('<%= CDN %>/img/product/v2/flo-card.png')">
-													<span class="tod-blind">flo 음악과 언제 어디서나 함께하는 요금제</span>
-												</a>
-											</li>
-											 -->
-										</ul>
+										<ul class="slider-list"></ul>
 									</div>
 								</div>
 								<div class="more-link-area">
@@ -480,39 +472,31 @@
                     </section>
 					
 					<%# 프로모션 %>
-                    <section class="product-sec none" data-sort="PROMOTION_THEME">
-						<!-- <div class="pro-article various-plan-box">
-							<div class="banner-area shadow-box">
-								<a href="#none">
-									<img src="<%= CDN %>/img/product/v2/banner-temp.png" alt="요즘 인기 있는 휴대폰 확인해보시겠어요?">
-								</a>
-							</div>
-						</div> -->
-					</section>
-
 					<section class="product-sec">
+						<section class="pro-article various-banner-box none" data-sort="PROMOTION_THEME" style="margin-top: 0px !important;"></section>
+						
 						<div class="pro-article variety-product-box">
 							<div class="article-tit">SKT의 다양한 상품을 만나보세요</div>
 							<div class="article-cont">
 								<div class="tod-nmp-other-list">
 									<ul>
 										<li>
-											<a href="#" data-xt_eid="CMMA_A4_B84-50" data-xt_csid="NO" data-xt_action="BC">
+											<a href="/product/mobileplan-add" data-xt_eid="CMMA_A4_B84-50" data-xt_csid="NO" data-xt_action="BC">
 												<i class="p-icon30-service"></i> <em>부가서비스</em>
 											</a>
 										</li>
 										<li>
-											<a href="#" data-xt_eid="CMMA_A4_B84-51" data-xt_csid="NO" data-xt_action="BC">
+											<a href="/product/wireplan" data-xt_eid="CMMA_A4_B84-51" data-xt_csid="NO" data-xt_action="BC">
 												<i class="p-icon30-internet"></i> <em>인터넷/IPTV</em>
 											</a>
 										</li>
 										<li>
-											<a href="#" data-xt_eid="CMMA_A4_B84-52" data-xt_csid="NO" data-xt_action="BC">
+											<a href="/product/combinations" data-xt_eid="CMMA_A4_B84-52" data-xt_csid="NO" data-xt_action="BC">
 												<i class="p-icon30-plus"></i> <em>결합상품</em>
 											</a>
 										</li>
 										<li>
-											<a href="#" data-xt_eid="CMMA_A4_B84-53" data-xt_csid="NO" data-xt_action="BC">
+											<a href="/product/roaming" data-xt_eid="CMMA_A4_B84-53" data-xt_csid="NO" data-xt_action="BC">
 												<i class="p-icon30-roaming"></i> <em>T로밍</em>
 											</a>
 										</li>

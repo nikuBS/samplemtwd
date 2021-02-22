@@ -181,22 +181,27 @@ export default class RenewProduct extends TwViewController {
             , this.isPiAgree(svcInfo) // 개인정보 동의 조회
             // , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
             , this.getSortSection(line) // 섹션 순서 데이터를 조회
-            , this.getThemeListData(line, svcInfo) // 리스트 형 테마 데이터를 조회
+            , this.getThemeListData(line) // 리스트 형 테마 데이터를 조회
             , this.getMyAge(svcInfo) // 나의 나이를 리턴받음
+
+            , this.isCompareButton(line, svcInfo) // 비교하기 버튼 출력 여부
           ).subscribe(([
             payment // 사용중인 요금제 데이터 결과 값
             , isPiAgree // 개인정보 동의 여부
-            // , additions // 사용중인 부가서비스 결과 값
+            // , additions // 사용중인 부가서비스 결과 값 (사용안함..)
             , sortSection // 섹션 순서 데이터 결과 값
             , themeListData // 테마 리스트 데이터 조회
-            , myAge
+            , myAge // 내 회선에 대한 나의 만 나이
+
+            , isCompareButton // 비교하기 버튼 출력 여부
           ]) => {
             const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
             const data = {
-              line, payment, isPiAgree, isWireless, sortSection, themeListData, myAge, cdn: this.getCDN()
+              line, payment, isPiAgree, isWireless, sortSection, themeListData, myAge, isCompareButton, cdn: this.getCDN()
             }
             
             console.log("#####");
+            console.log(svcInfo);
             console.log(data);
             console.log("#####");
 
@@ -368,7 +373,7 @@ export default class RenewProduct extends TwViewController {
      * 리스트 형 테마 데이터 데이터를 조회 
      * @param svcInfo 
      */
-    private getThemeListData( line, svcInfo: any ): Observable<any> {
+    private getThemeListData( line ): Observable<any> {
       return this.apiService.request(API_CMD.BFF_10_0204, { 'networkName' : this.getThemeNetworkName(line) }).map((resp) => {
         if (resp.code === API_CODE.CODE_00 ) {
           if ( this.isObjectEmpty(resp.result) ) { // 객체 데이터가 존재하는지 체크
@@ -575,17 +580,17 @@ export default class RenewProduct extends TwViewController {
       }
       
       return benfProdList.reduce((obj, item) => { 
-        const benefitCount = item.addBenfCnt; // 추가 혜택 수 
-        const useAmtPrice = this.convProductBenefitInfo(item.useAmt, item.dcAmt); // 이용금액 (원)
-        const benfAmtPrice = this.convProductBenefitInfo(item.benfAmt, item.dcAmt); // 혜택금액 (원)
+        const benfNm = (item.expsBenfNm + ' ' + item.benfDtlCtt); // 부가서비스 상품명
+        const benfAmtPrice = this.convProductBenefitInfo(item.benfAmt); // 혜택원가
+        const useAmtPrice = this.convProductBenefitInfo(item.useAmt); // 이용금액
 
         const changedItem = Object.assign(item, {
-          benfAmtPrice, useAmtPrice
+          benfNm, benfAmtPrice, useAmtPrice
         })
 
-        if ( FormatHelper.isEmpty(benefitCount) ) {  // 추가 혜택수가 없다면 기본 혜택임
+        if ( item.prodBenfTypCd === '01' ) {  // 기본 혜택
           obj.basicBenefitsArr.push(changedItem);
-        } else { // 추가 혜택 
+        } else if ( item.prodBenfTypCd === '02' ) { // 추가 혜택 
           obj.additionalBenefitsArr.push(changedItem);
         }
         
@@ -680,19 +685,112 @@ export default class RenewProduct extends TwViewController {
     }
 
     /**
-     * 이용/혜택 금액에 대한 계산
+     * 이용/혜택 금액 파싱
      * @param benefitPrice 이용/혜택 금액
-     * @param benefitDiscountPrice 할인 금액
      */
-    private convProductBenefitInfo(benefitPrice, benefitDiscountPrice): any {
-      const isNaNbenefitPrice = isNaN(Number(benefitPrice)); // 상품 가격
-      const isNanbenefitDiscountPrice = isNaN(Number(benefitDiscountPrice)); // 할인 금액
+    private convProductBenefitInfo(benefitPrice): any {
+      const isNaNbenefitPrice = isNaN(Number(benefitPrice)) || FormatHelper.isEmpty(benefitPrice) ; // 상품 가격
 
       return {
-        price: isNaNbenefitPrice ? '' : FormatHelper.addComma(benefitPrice),
-        dcPrice: isNanbenefitDiscountPrice ? '' : FormatHelper.addComma(benefitDiscountPrice),
-        totalPrice: isNaNbenefitPrice && isNanbenefitDiscountPrice ? '' : FormatHelper.addComma(String(Number(benefitPrice) - Number(benefitDiscountPrice)))
+        isNaN: isNaNbenefitPrice,
+        price: isNaNbenefitPrice ? '' : FormatHelper.addComma(benefitPrice)
       };
+    }
+
+    /**
+     * 내 요금제와 비교 버튼을 출력할것인지 체크
+     * 
+     * SB 내 요금제와 비교 버튼 노출 프로세스 참고
+     * 
+     * @param svcInfo 
+     */
+    private isCompareButton(line: any, svcInfo: any): Observable<any> {
+      // 로그인이 안되어있다면? 
+      if ( !svcInfo ) { 
+        return Observable.of(false);
+      }
+
+       // 무선회선이 아니라면?
+      if (SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) === -1 ) { 
+        return Observable.of(false);
+      }
+
+      // 현재 회선이 LTE또는 5G가 아니라면?
+      if ( line.deviceCode !== DEVICE_CODES.L && line.deviceCode !== DEVICE_CODES.F ) {
+        return Observable.of(false);
+      }
+      
+      return Observable.combineLatest(
+        this.getExistsMyProductPLM() // 나의 상품에 해당되는 PLM 정보를 얻음
+        , this.getExistsMyProductRedis(svcInfo) // 나의 상품에 해당되는 혜택 정보를 얻음
+      ).map(([isExistsPLMData, isExistsRedisData]) => {
+
+        // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지에 대해 체크한 값
+        if ( isExistsPLMData || isExistsRedisData ) { 
+          return true;
+        }
+
+        return false;
+      })
+    }
+
+    /**
+     * 나의 요금제의 PLM 정보가 있는지 체크 (BFF)
+     */
+    private getExistsMyProductPLM(): Observable<any>{
+      return this.apiService.request(API_CMD.BFF_05_0136, {}).map((resp) => {
+        if (resp.code === API_CODE.CODE_00) {
+          const data = resp.result.feePlanProd;
+
+          const basFeeTxt = this.convertUndefined(FormatHelper.getValidVars(data.basFeeTxt));
+          const basDataGbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataGbTxt));
+          const basDataMbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataMbTxt));
+          const basOfrVcallTmsTxt = this.convertUndefined(FormatHelper.getValidVars(data.basOfrVcallTmsTxt));
+          const basOfrCharCntTxt = this.convertUndefined(FormatHelper.getValidVars(data.basOfrVcallTmsTxt));
+
+          // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지? ( 문자 사용량이 상세참조이고 데이터가 상세참조이고 전화 데이터가 상세참조이고 데이터가 상세 참조라면? )
+          if ( !basFeeTxt && !basDataGbTxt && !basDataMbTxt && !basOfrVcallTmsTxt && !basOfrCharCntTxt ) {  
+            return false;
+          }
+
+          return true;
+        }
+      });
+    }
+
+    /**
+     * 나의 요금제의 어드민 등록 혜택이 있는지 체크 (Redis)
+     * @param svcInfo 
+     */
+    private getExistsMyProductRedis(svcInfo: any): Observable<any>{
+      const prodId = svcInfo.prodId; // 나의 회선에 해당되는 상품 코드
+
+      return this.redisService.getData(REDIS_KEY.BENF_PROD_INFO + prodId).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( resp.result.benfProdInfo && resp.result.benfProdInfo.length > 0 ) {
+            return true;
+          }
+        } 
+        return false;
+      });
+    }
+
+
+    /**
+     * 조건문에 데이터 중에 상세참조에 해당되는 데이터도 체크해야함. 
+     * bff에서 가지고 온 텍스트 값이 '상세참조' 이라면 '상세참조'를 undefined 으로 변경한다.
+     * @param txt 
+     */
+    private convertUndefined(txt) {
+      if ( !txt ) {
+        return undefined;
+      }
+
+      const deep = txt.replace(' ', ''); // '상세 참조' 와 같이 띄어쓰기가 있으면 띄어쓰기를 없애버린다.
+      if ( deep === '상세참조' ) {
+        return undefined;
+      }
+      return txt;
     }
 
     /**

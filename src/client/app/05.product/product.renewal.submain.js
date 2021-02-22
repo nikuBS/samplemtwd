@@ -111,7 +111,9 @@ Tw.ProductRenewalSubmain.prototype = {
             return admbnr.bnnrLocCd === row.target;
           }).map( function(admbnr) {
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
-            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+            if ( admbnr.bnnrImgAltCtt ) {
+              admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+            }
             return admbnr;
           })
         );
