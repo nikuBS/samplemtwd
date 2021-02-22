@@ -25,7 +25,7 @@ Tw.MyTJoinSubMain = function (params) {
   this._bindEvent();
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
-  new Tw.XtractorService(this.$container);
+  this._xtractorService = new Tw.XtractorService(this.$container);
 };
 
 Tw.MyTJoinSubMain.prototype = {
@@ -845,3 +845,11 @@ Tw.MytJoinAdvSubMain.prototype._initialize = function() {
     });
   }
 };
+Tw.MytJoinAdvSubMain.prototype._successDrawBanner = function () {
+  // 동적 생성 배너 오퍼통계코드 적용을 위해 추가
+  Tw.MyTJoinSubMain.prototype._successDrawBanner.call(this)
+  this.$bannerList.on('click', $.proxy(function() {
+    this._xtractorService.logClick(this._data.xtCode.banner, 'NO');
+    return false;
+  }, this));
+}

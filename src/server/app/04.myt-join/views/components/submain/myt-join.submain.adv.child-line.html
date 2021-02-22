@@ -19,9 +19,12 @@ _%>
                             <dd class="tel"><%= svcNum %></dd>
                         </dl>
                         <div class="child-btn-area">
-                            <a href="/myt-data/submain/child-hotdata?childSvcMgmtNum=<%= svcMgmtNum %>">실시간 잔여량</a>
-                            <a href="/myt-fare/billguide/child?line=<%= svcMgmtNum %>">이용요금</a>
-                            <a href="/myt-fare/bill/hotbill/child?child=<%= svcMgmtNum %>">실시간 이용요금</a>
+                            <a href="/myt-data/submain/child-hotdata?childSvcMgmtNum=<%= svcMgmtNum %>"
+                               data-xt_eid="<%= data.xtCode.childHotdata %>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
+                            <a href="/myt-fare/billguide/child?line=<%= svcMgmtNum %>"
+                               data-xt_eid="<%= data.xtCode.childBillGuide %>" data-xt_csid="NO" data-xt_action="BC">이용요금</a>
+                            <a href="/myt-fare/bill/hotbill/child?child=<%= svcMgmtNum %>"
+                               data-xt_eid="<%= data.xtCode.childHotbill %>" data-xt_csid="NO" data-xt_action="BC">실시간 이용요금</a>
                         </div>
                     </li>
                 <%_ }); _%>
