@@ -13,7 +13,10 @@ _%>
             <div class="short-link-wrap minus-mg">
                 <ul class="short-link-list">
                     <li class="link-item">
-                        <a href="#" data-id="wire-pause">일시정지/해제</a>
+                        <a href="#" data-id="wire-pause"
+                           data-xt_eid="<%= data.xtCode.pause %>" data-xt_csid="NO" data-xt_action="BC">
+                            일시정지/해제
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -42,19 +45,22 @@ _%>
                                         <!-- 일시정지 신청 가능한 상태 -->
                                         <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
                                             <div class="acco-tit">
-                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">일시정지</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr"
+                                                        data-xt_eid="<%= data.xtCode.pause %>" data-xt_csid="NO" data-xt_action="BC">일시정지</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
                                             </div>
                                             <div class="acco-cont">
                                                 <p class="warning">일시정지 해제는 온라인 T world 또는 지점/대리점 방문 통해 가능합니다.</p>
                                                 <div class="btn-area">
-                                                    <a href="#" data-id="pause_c" class="rect-btn">신청하기</a>
+                                                    <a href="#" data-id="pause_c" class="rect-btn"
+                                                       data-xt_eid="<%= data.xtCode.addPause %>" data-xt_csid="NO" data-xt_action="BC">신청하기</a>
                                                 </div>
                                             </div>
                                         </li>
                                         <%_ } else { _%>
                                         <li class="acco-box acc-item">
                                             <div class="acco-tit">
-                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">정지현황</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr"
+                                                        data-xt_eid="<%= data.xtCode.pause %>" data-xt_csid="NO" data-xt_action="BC">정지현황</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
                                             </div>
                                             <div class="acco-cont">
                                                 <ul class="dot-list">
@@ -105,7 +111,8 @@ _%>
                                             <%_  } _%>
                                                 </ul>
                                                 <div class="btn-area">
-                                                    <a href="#" data-id="pause_c" class="rect-btn">상세보기</a>
+                                                    <a href="#" data-id="pause_c" class="rect-btn"
+                                                       data-xt_eid="<%= data.xtCode.detailPause %>" data-xt_csid="NO" data-xt_action="BC">상세보기</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -114,14 +121,16 @@ _%>
                                     <%_ if(data.isPwdSt) { _%>
                                     <li class="acco-box acc-item">
                                         <div class="acco-tit">
-                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">고객보호비밀번호 서비스</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            <button role="button" aria-pressed="false" class="acc-tit down-arr"
+                                                    data-xt_eid="<%= data.xtCode.password %>" data-xt_csid="NO" data-xt_action="BC">고객보호비밀번호 서비스</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
                                         </div>
                                         <div class="acco-cont">
                                             <ul class="dot-list">
                                                 <li class="dot-item">현재 고객보호 비밀번호 서비스를 이용 중입니다.</li>
                                             </ul>
                                             <div class="btn-area">
-                                                <a href="#" data-id="change-pwd" class="rect-btn">변경하기</a>
+                                                <a href="#" data-id="change-pwd" class="rect-btn"
+                                                   data-xt_eid="<%= data.xtCode.changePassword %>" data-xt_csid="NO" data-xt_action="BC">변경하기</a>
                                             </div>
                                         </div>
                                     </li>
@@ -130,12 +139,15 @@ _%>
                                         <% if(data.smsInfo) { %>
                                         <li class="acco-box acc-item">
                                             <div class="acco-tit">
-                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">망 작업 알림 받기</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr"
+                                                        data-xt_eid="<%= data.xtCode.workNotify %>" data-xt_csid="NO" data-xt_action="BC">망 작업 알림 받기</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
                                             </div>
                                             <div class="acco-cont">
                                                 <p class="warning">인터넷 및 전화품질 향상을 위해 고객님의 거주지역에서 망작업이 진행될 경우 휴대폰 메시지로 알려드리는 서비스 입니다.</p>
                                                 <div class="btn-area">
-                                                    <a href="#" data-id="work-notify" class="rect-btn">
+                                                    <a href="#" data-id="work-notify" class="rect-btn"
+                                                       data-xt_eid="<%= data.smsInfo.cntcNum? data.xtCode.editWorkNotify : data.xtCode.addWorkNotify %>"
+                                                       data-xt_csid="NO" data-xt_action="BC">
                                                         <%= data.smsInfo.cntcNum? '변경하기' : '신청하기' %>
                                                     </a>
                                                 </div>
@@ -145,12 +157,16 @@ _%>
                                         <% if (data.isWireFree) { %>
                                         <li class="acco-box acc-item">
                                             <div class="acco-tit">
-                                                <button role="button" aria-pressed="false" class="acc-tit down-arr">B끼리 무료통화 대상자 조회</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                <button role="button" aria-pressed="false" class="acc-tit down-arr"
+                                                        data-xt_eid="<%= data.xtCode.bTargetInfo %>" data-xt_csid="NO" data-xt_action="BC">B끼리 무료통화 대상자 조회</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
                                             </div>
                                             <div class="acco-cont">
                                                 <p class="warning">T_B끼리 통화무제한에 가입하신 고객만 B끼리 무료통화 대상자 조회가 가능합니다.</p>
-                                                <div class="btn-area" data-id="B-target-inq">
-                                                    <a href="#" class="rect-btn">신청하기</a>
+                                                <div class="btn-area">
+                                                    <a href="#" data-id="B-target-inq" class="rect-btn"
+                                                       data-xt_eid="<%= data.xtCode.bTargetInfoDetail11111 %>" data-xt_csid="NO" data-xt_action="BC">
+                                                        조회하기
+                                                    </a>
                                                 </div>
                                             </div>
                                         </li>
@@ -170,12 +186,14 @@ _%>
                 <div class="hash-wrap">
                     <ul class="hash-list normal">
                         <%_ if (data.isOldNumber) { _%>
-                        <li class="hash-item" data-id="old_number">
+                        <li class="hash-item" data-id="old_number"
+                            data-xt_eid="<%= data.xtCode.oldNumber %>" data-xt_csid="NO" data-xt_action="BC">
                             <a href="#" class="hash">#010 전환 번호변경</a>
                         </li>
                         <%_ } _%>
                         <%_ if (data.isNotChangeNumber) { _%>
-                        <li class="hash-item" data-id="change_number">
+                        <li class="hash-item" data-id="change_number"
+                            data-xt_eid="<%= data.xtCode.changeNumber %>" data-xt_csid="NO" data-xt_action="BC">
                             <a href="#" class="hash">#번호변경 안내서비스</a>
                         </li>
                         <%_ } _%>
@@ -188,23 +206,29 @@ _%>
             <%_ if (data.type === 2) { _%>
             <div class="hash-wrap">
                 <ul class="hash-list normal">
-                    <li class="hash-item" data-id="svc-cancel">
+                    <li class="hash-item" data-id="svc-cancel"
+                        data-xt_eid="<%= data.xtCode.svcCancel %>" data-xt_csid="NO" data-xt_action="BC">
                         <a href="#" class="hash">#서비스 해지</a>
                     </li>
-                    <li class="hash-item" data-id="addr-chg">
+                    <li class="hash-item" data-id="addr-chg"
+                        data-xt_eid="<%= data.xtCode.addrChg %>" data-xt_csid="NO" data-xt_action="BC">
                         <a href="#" class="hash">#설치장소 변경</a>
                     </li>
-                    <li class="hash-item" data-id="prod-chg">
+                    <li class="hash-item" data-id="prod-chg"
+                        data-xt_eid="<%= data.xtCode.prodChg %>" data-xt_csid="NO" data-xt_action="BC">
                         <a href="#" class="hash">#상품 변경</a>
                     </li>
-                    <li class="hash-item" data-id="inst-chg">
+                    <li class="hash-item" data-id="inst-chg"
+                        data-xt_eid="<%= data.xtCode.instChgㅊ %>" data-xt_csid="NO" data-xt_action="BC">
                         <a href="#" class="hash">#약정기간 변경</a>
                     </li>
-                    <li class="hash-item" data-id="transfer-fee">
+                    <li class="hash-item" data-id="transfer-fee"
+                        data-xt_eid="<%= data.xtCode.transferFee %>" data-xt_csid="NO" data-xt_action="BC">
                         <a href="#" class="hash">#명의변경 신청 방법</a>
                     </li>
                     <% if (data.svcInfo.svcAttrCd === 'S3') { %>
-                    <li class="hash-item" id="fe-wire-num-change">
+                    <li class="hash-item" id="fe-wire-num-change"
+                        data-xt_eid="<%= data.xtCode.wireNumChange %>" data-xt_csid="NO" data-xt_action="BC">
                         <a href="#" class="hash">#전화 번호변경</a> <!-- 201222 [OP002-10282]추가01 -->
                     </li>
                     <% } %>

@@ -7,7 +7,8 @@ _%>
 <section class="cont-card">
   <div class="section-inner">
     <div class="head-tit">
-      <a href="#" data-id="my-plan" class="link">나의 요금제/부가상품</a>
+      <a href="#" data-id="my-plan" class="link"
+         data-xt_eid="<%= data.xtCode.additionInfo %>" data-xt_csid="NO" data-xt_action="BC">나의 요금제/부가상품</a>
     </div> <!-- 201222 [OP002-10282]수정02 -->
     <div class="card-cont">
       <%_
@@ -39,7 +40,8 @@ _%>
       <div class="add-pro-wrap">
         <ul class="add-pro-list">
           <li class="add-pro-item">
-            <a href="#" data-id="add-prod">
+            <a href="#" data-id="add-prod"
+               data-xt_eid="<%= data.xtCode.freeAddition %>" data-xt_csid="NO" data-xt_action="BC">
               <div class="number">
                 <%= data.myAddProduct.addProdPayFreeCnt %><span class="unit">개</span>
               </div>
@@ -47,7 +49,8 @@ _%>
             </a>
           </li>
           <li class="add-pro-item">
-            <a href="#" data-id="add-prod">
+            <a href="#" data-id="add-prod"
+               data-xt_eid="<%= data.xtCode.feeAddition %>" data-xt_csid="NO" data-xt_action="BC">
               <div class="number">
                 <%= data.myAddProduct.addProdPayCnt %><span class="unit">개</span>
               </div>
@@ -56,7 +59,8 @@ _%>
           </li>
           <%_ if (!data.myAddProduct.inVisibleDisProd) { _%>
           <li class="add-pro-item">
-            <a href="#" data-id="add-prod">
+            <a href="#" data-id="add-prod"
+               data-xt_eid="<%= data.xtCode.optAddition %>" data-xt_csid="NO" data-xt_action="BC">
               <div class="number">
                 <%= data.myAddProduct.disProdCnt %><span class="unit">개</span>
               </div>
@@ -66,7 +70,8 @@ _%>
           <%_ } _%>
           <%_ if (!data.myAddProduct.inVisibleComProd) { _%>
           <li class="add-pro-item">
-            <a href="#" data-id="com-prod">
+            <a href="#" data-id="com-prod"
+               data-xt_eid="<%= data.xtCode.comAddition %>" data-xt_csid="NO" data-xt_action="BC">
               <div class="number">
                 <%= data.myAddProduct.comProdCnt %><span class="unit">개</span>
               </div>
