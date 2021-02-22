@@ -244,7 +244,8 @@ Tw.CommonSearch.prototype = {
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내 "전체" 카테고리 및 검색결과 총 건수 영역에 결과건수 노출 처리 완료');
 
     this.$inputElement = this.$container.find('#keyword');
-    this.$inputElement.on('keyup', $.proxy(this._inputChangeEvent, this));
+    this.$inputElement.on('keydown', $.proxy(this._keyDownInputEvt, this));
+    this.$inputElement.on('keyup', _.debounce($.proxy(this._keyUpInputEvt, this), 500));
     this.$inputElement.on('focus', $.proxy(this._inputFocusEvt, this));
     this.$container.on('click', '.icon-gnb-search, .fe-search-link', $.proxy(this._doSearch, this));
     this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
@@ -546,11 +547,11 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
-      
-      // 3뎁스에 데이터를 1뎁스 라인으로 랜더링 하기 위해 자료구조를 다시 만듭니다. 
-      var depth3 = []; // 3뎁스를 1뎁스로 구조로 만드는 변수 
-      var list = data; // 기존의 리스트를 담는 변수 
-      var totalListCnt = 0; // 3뎁스의 리스트 사이즈 개수 총합에 사용할 변수 
+
+      // 3뎁스에 데이터를 1뎁스 라인으로 랜더링 하기 위해 자료구조를 다시 만듭니다.
+      var depth3 = []; // 3뎁스를 1뎁스로 구조로 만드는 변수
+      var list = data; // 기존의 리스트를 담는 변수
+      var totalListCnt = 0; // 3뎁스의 리스트 사이즈 개수 총합에 사용할 변수
       for(var i=0; i<list.length; i++) {
         if (list[i].DEPTH_CHILD !== undefined) {
           for(var j=0; j<list[i].DEPTH_CHILD.length; j++) {
@@ -574,18 +575,18 @@ Tw.CommonSearch.prototype = {
 
       for (var i=0; i<depth3.length; i++) {
         // 부모의 타이틀을 자식뎁스쪽으로 추가 하기 때문에 +1을 해줘야 함.
-        // 예) 부모(4) > 자식(3) 짜리 데이터를 렌더링 한다고 생각하면 아래와 같기 때문에 +1을 해줘야 합니다. 
+        // 예) 부모(4) > 자식(3) 짜리 데이터를 렌더링 한다고 생각하면 아래와 같기 때문에 +1을 해줘야 합니다.
         // 부모(4)
-        //  ㄴ 부모  <<< 추가 
+        //  ㄴ 부모  <<< 추가
         //  ㄴ 자식
         //  ㄴ 자식
         //  ㄴ 자식
         totalListCnt += depth3[i].DEPTH_SIZE+1;
         data.push(depth3[i])
       }
-      
+
       _.each(data, $.proxy(function (listData, index) {
-        
+
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
           if (index > 2) {
@@ -600,7 +601,7 @@ Tw.CommonSearch.prototype = {
             }
             return;
           }
-          // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다. 
+          // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다.
           if (listData.DEPTH_CHILD !== undefined && listData.idx === undefined) {
             // 3뎁스 사이즈를 최상위 부모 뎁스 사이즈에서 빼야 제대로 개수가 맞음.
             listData.DEPTH_SIZE = Number(listData.DEPTH_SIZE - totalListCnt);
@@ -611,7 +612,7 @@ Tw.CommonSearch.prototype = {
               DOCID: listData.DOCID,
               MENU_NM: listData.MENU_NM,
               MENU_URL: listData.MENU_URL,
-              USE_YN: listData.USE_YN       
+              USE_YN: listData.USE_YN
             });
             _.each(listData.DEPTH_CHILD, $.proxy(function (subData, index) {
               if (subData.DEPTH_CHILD !== undefined && subData.idx === undefined) {
@@ -624,7 +625,7 @@ Tw.CommonSearch.prototype = {
                   MENU_URL: subData.MENU_URL,
                   USE_YN: subData.USE_YN
                 })
-                
+
               }
             }));
           }
@@ -671,10 +672,9 @@ Tw.CommonSearch.prototype = {
    * @param {Object} event - 이벤트 객체
    * @returns {void}
    */
-  _inputChangeEvent: function (args) {
-    if ( Tw.InputHelper.isEnter(args) ) {
-      this.$container.find('.icon-gnb-search').trigger('click');
-    } else {
+  _keyUpInputEvt: function (event) {
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which !== 13) {
       if ( this._historyService.getHash() === '#input_P' ) {
         if ( this.$inputElement.val().trim().length > 0 ) {
           this._getAutoCompleteKeyword();
