@@ -8,15 +8,7 @@
 </div>
 <!--// #skip_navigation -->
 <div id="roamingRates" class="wrap">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu" tabindex="-1">
-            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24"/>
-        </span>
-        <h1>국가별 로밍 이용요금 조회</h1>
-        <a href="/common/search-main">
-            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색" />
-        </a>
-    </div>
+    <!-- //웹접근성 hearder 삭제-->
     <%- include('../components/header.component.html', { title: '국가별 로밍 이용요금 조회', svcInfo: svcInfo }) %>
     <div id="contents" class="mt60">
         <h2 id="contents-skipNav" tabindex="-1"><span class="blind">본문시작</span></h2>
@@ -29,13 +21,13 @@
         <h2 class="number" id="svcNum"><%= equipment.number %></h2>
         <% if (equipment.name != null) { %>
         <span class="device">현 이용기기</span>
-        <span class="separator">|</span>
+        <span class="separator" aria-hidden="true">|</span><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
         <span class="device"><%= equipment.name %></span>
         <% } %>
     </div>
     <% } %>
     <div class="card">
-        <h2>출국 국가 검색 <span class="tip" data-tip="RM_03_01_01_01_tip_01">TIP</span></h2>
+        <h2>출국 국가 검색 <button class="tip-view fe-tip" data-tip="RM_03_01_01_01_tip_01" title="추가 혜택 TIP보기" aria-haspopup="true">TIP</button></h2><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
 
         <form id="searchForm" action="/product/roaming/search-result" method="get">
             <input type="hidden" name="code" value="" />
@@ -50,7 +42,7 @@
             </div>
         </form>
         <div class="link">
-            <a class="fe-show-nations">전체 국가 보기</a>
+            <button type="button" type="button" class="fe-show-nations">전체 국가 보기</button>
         </div>
         <ul class="description mt16">
         <% if (!isLogin) { %>
@@ -88,11 +80,11 @@
         </div>
         <h3 class="section">종량 요금 안내</h3>
         <div class="rateHead" id="rateData">
-            <span class="title">데이터<span class="tip" data-tip="RM_04_tip_01">TIP</span></span>
+            <span class="title">데이터<button class="tip-view fe-tip" data-tip="RM_04_tip_01" title="데이터 사용량 예시 TIP보기" aria-haspopup="true">TIP</button></span><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
             <span class="values">
                 <span class="colorPoint" id="dataCharge">-</span>/패킷
             </span>
-            <div class="opener" data-section="rateData">더보기</div>
+            <button type="button" class="opener" data-section="rateData">더보기</button><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
             <div class="rateBody">
                 <ul class="description">
                     <li>데이터 종량 과금이 5,000원 일 상한 도달 시,
@@ -100,7 +92,7 @@
                         데이터가 차단됩니다.</li>
                 </ul>
                 <div class="align-right">
-                    <span class="closer" data-section="rateData">닫기</span>
+                    <button type="button" class="closer" data-section="rateData">닫기</button><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
                 </div>
             </div>
         </div>
@@ -109,7 +101,7 @@
             <span class="values">
                 <span class="colorPoint" id="voiceChargeOut">-</span>/초
             </span>
-            <div class="opener" data-section="rateVoice">더보기</div>
+            <button type="button" class="opener" data-section="rateVoice">더보기</button><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
             <div class="rateBody">
                 <div class="rateBodyRow">
                     <span class="value">
@@ -142,7 +134,7 @@
                     <!-- // 210128 추가 [OP002-12929] -->
                 </ul>
                 <div class="align-right">
-                    <span class="closer" data-section="rateVoice">닫기</span>
+                    <button type="button" class="closer" data-section="rateVoice">닫기</button><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
                 </div>
             </div>
         </div>
@@ -151,7 +143,7 @@
             <span class="values">
                 <span class="colorPoint" id="smsOut">-</span>/건
             </span>
-            <div class="opener" data-section="rateSms">더보기</div>
+            <button type="button" class="opener" data-section="rateSms">더보기</button><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
             <div class="rateBody">
                 <div class="rateBodyRow">
                     <span class="value">
@@ -181,7 +173,7 @@
                     <li>현지 발신 또는 제3국 발신 문자메시지의 경우 국제전화사업자가 부과하는 국제 문자메시지 비용(건당 최대 165원, 부가세 포함)이 추가로 발생합니다.</li>
                 </ul>
                 <div class="align-right">
-                    <span class="closer" data-section="rateSms">닫기</span>
+                    <button type="button" class="closer" data-section="rateSms">닫기</button><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
                 </div>
             </div>
         </div>
@@ -219,11 +211,15 @@
         </div>
     </div>
     <% } %>
-    <div class="card tips">
-        <h2>꼭 확인해 주세요</h2>
-        <h3>이용 관련 안내 <span class="tip" data-tip="RM_03_01_01_01_tip_03">TIP</span></h3>
-        <h3>요금제 관련 안내 <span class="tip" data-tip="RM_03_01_01_01_tip_04">TIP</span></h3>
+    <!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
+    <div class="cont-box rm-cont-tooltip">
+        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+        <ul class="noti-list02">
+        <li><button aria-haspopup="true" data-tip="RM_03_01_01_01_tip_03" class="tip-view-btn">이용 관련 안내<span class="tip-view">TIP</span></button></li>
+        <li><button aria-haspopup="true" data-tip="RM_03_01_01_01_tip_04" class="tip-view-btn">요금제 관련 안내<span class="tip-view">TIP</span></button></li>
+        </ul>
     </div>
+    <!-- // 210217 수정 [OP002-12168] 웹접근성 재인증 -->
     </div>
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
 </div>
