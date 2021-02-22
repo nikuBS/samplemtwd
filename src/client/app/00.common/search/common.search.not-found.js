@@ -51,14 +51,16 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
     this.$container.find('.request_keyword').on('click',$.proxy(this._showClaimPopup,this));
     this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
-    this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
-    this.$container.find('#search_keyword').on('focus',$.proxy(this._inputFocusEvt,this));
+    // this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
+    this.$inputElement = this.$container.find('#search_keyword');
+    this.$inputElement.on('keydown', $.proxy(this._keyDownInputEvt, this));
+    this.$inputElement.on('keyup', _.debounce($.proxy(this._keyUpInputEvt, this), 500));
+    this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     // this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
     this.$container.on('click','.search-element',$.proxy(this._keywordSearch,this));
     this.$container.on('click', '#fe-btn-feedback', $.proxy(this._showClaimPopup, this));
     this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
-    this.$inputElement = this.$container.find('#search_keyword');
     this.$container.on('scroll',$.proxy(function () {
       this.$inputElement.blur();
     },this));
