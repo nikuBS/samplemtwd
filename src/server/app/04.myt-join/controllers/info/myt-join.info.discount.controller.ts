@@ -499,8 +499,11 @@ class MytJoinInfoDiscount extends TwViewController {
     // dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
     dataObj.totDt = DateHelper.getDiffByUnit(endDt, startDt, 'day') + 1;  // 전체 일수(첫날 포함)
     dataObj.curDt = DateHelper.getDiffByUnit(useDt, startDt, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
+    dataObj.curMt = DateHelper.getDiffByUnit(useDt, startDt, 'month'); // 진행 월수(회차표기를 하기 위해)
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
+    const nPerDt = Math.min(Math.floor((dataObj.curDt / dataObj.totDt) * 100));
+    dataObj.nPerDt = nPerDt < 0 ? 0 : nPerDt > 100 ? 100 : nPerDt;
     dataObj.perDt = 100 - Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트(잔여일수에 대한..)
     dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);  // 퍼센트 min:0, max:100
     dataObj.totMt = Math.round(
@@ -531,6 +534,9 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.curMt = dataObj.allotMthCnt - dataObj.invRmn; // 진행 개월
     dataObj.remMt = dataObj.invRmn; // 잔여 개월
 
+    // 고도화 그래프 처리 방법 변경
+    const nPerMt = Math.min(Math.floor((dataObj.curMt / dataObj.totMt) * 100));
+    dataObj.nPerMt = nPerMt < 0 ? 0 : nPerMt > 100 ? 100 : nPerMt;
     dataObj.perMt = 100 - Math.floor((dataObj.curMt / dataObj.totMt) * 100); // 퍼센트
     dataObj.perMt = this.limitMinMax(dataObj.perMt, 0, 100);
   }
