@@ -18,7 +18,7 @@ Tw.ProductCompare = function(rootEl, svcInfo, networkInfo) {
 
     this._init();
 
-    // this._getRedisCompare(); // 비교 대상에 대한 redis 정보를 얻음
+    this._getRedisCompare(svcInfo); // 비교 대상에 대한 redis 정보를 얻음
 
     this._bindEvent();
   };
@@ -459,10 +459,14 @@ Tw.ProductCompare.prototype = {
   /**
    * 비교대상에 대한 Redis 정보를 얻음
    */
-  _getRedisCompare: function() {
-    this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_BENF_PROD_INFO },
-    ]).done($.proxy(this._successRedis, this))
+  _getRedisCompare: function(svcInfo) {
+    var prodId = svcInfo.prodId;
+    if ( !prodId ) {
+      return;
+    }
+
+    this._apiService.request(Tw.NODE_CMD.GET_BENF_PROD_INFO, { prodId : prodId })
+      .done($.proxy(this._successRedis, this))
       .fail($.proxy(this._errorRedis, this));
   },
 
@@ -471,13 +475,12 @@ Tw.ProductCompare.prototype = {
    * Redis에서 값을 가지고 왔을 때
    * @param {*} redisData 
    */
-  _successRedis: function(redisData) {
-    console.log('#####');
-    console.log(redisData);
-    console.log('#####');
-
-    if ( redisData.code === Tw.API_CODE.CODE_00 && redisData ) {
-      // TODOS... 
+  _successRedis: function(res) {
+    if ( res.code === Tw.API_CODE.CODE_00 && res ) {
+      var parse = this._parseBenfProdInfo(res.result);
+      console.log("*****************");
+      console.log(parse);
+      console.log("*****************");
     }
   },
 
@@ -492,29 +495,57 @@ Tw.ProductCompare.prototype = {
 
   /**
    * 혜택 상품에 대한 데이터를 parsing.
+   * 
+   * http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=129101297
+   * 
    * @param {*} redisData 
    */
   _parseBenfProdInfo: function(redisData) {
-    /** 
-      http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=129101297
+    var PACKAGES = { // prodBenfCd, prodBenfTitCd, prodBenfTypCd의 코드값을 용이하게 관리하기 위해서..
+      '01': { // 통화
+        prodBenfTitCds : [''],
+      },
+      '02': { // 데이터 속도제어
+        prodBenfTitCds : [''],
+      },
+      '03': { // 데이터 추가 혜택
+        prodBenfTitCds : ['01', '02', '03', '04'], // 데이터 옵션(01), 공유 가능 데이터 한도(02), 테더링 한도(03), 데이터 리필하기(04)
+      },
+      '04': { // 추가 혜택
+        prodBenfTitCds : ['05', '06', '07', '08', '09', '10'], // 멤버십(05), 영상(06), 영상/음악(07), 음악(08), 보험(09), 함께쓰기(10)
+      },
+      '05': { // 안내문구
+        prodBenfTitCds : [''],
+      },
+    }
 
-      코드값들..
-      prodBenfCd    => 01(통화), 02(데이터 속도제어), 03(데이터 추가 혜택), 04(추가 혜택), 05(안내문구)
-      prodBenfTitCd => 01(데이터 옵션), 02(데이터 공유), 03(터더링), 04(리필하기), 05(멤버십), 06(영상), 07(영상/음악), 08(음악), 09(보험), 10(함께쓰기) 
-      prodBenfTypCd => 01(기본제공), 02(선택1)
+    return _.reduce(redisData.benfProdInfo, function(arr, item) {
+      var prodBenfCd = item.prodBenfCd; // 1 depth 항목
+      var prodBenfTitCd = item.prodBenfTitCd; // 2 depth 항목
 
+      var prodBenfCdArr = PACKAGES[prodBenfCd];
+      var prodBenfTitCdArr = prodBenfCdArr.prodBenfTitCds;
 
-      == 1Depth ==
-      prodBenfCd    => 01(통화), 02(데이터 속도제어), 03(데이터 추가 혜택), 04(추가 혜택), 05(안내문구)
+      // prodBenfTitCds 범위에 속하거나, prodBenfTitCd 값이 없을 때 (prodBenfTitCd값이 없다면 기본적으로 각 데이터셋에 넣어준다.)
+      // 하지만 prodBenfTitCds 범위에 속하지않으면 그 데이터는 건너뛴다.
+      if ( prodBenfTitCdArr.indexOf(prodBenfTitCd) > -1 || !prodBenfTitCd ) {
+        switch ( prodBenfCd ) {
+          case '01': arr.prodBenfCd_01.push(item); break;
+          case '02': arr.prodBenfCd_02.push(item); break;
+          case '03': arr.prodBenfCd_03.push(item); break;
+          case '04': arr.prodBenfCd_04.push(item); break;
+          case '05': arr.prodBenfCd_05.push(item); break;
+        }
+      }
 
-      == 2Depth ==
-      prodBenfCd(03) => prodBenfTitCd(01, 02, 03, 04)
-      prodBenfCd(04) => prodBenfTitCd(05, 06, 07, 08, 09, 10)
-
-      == 3Depth ==
-      prodBenfTitCd(05, 06, 07, 08, 09, 10) => prodBenfTypCd(01, 02)
-    */
-
+      return arr;
+    }, {
+      prodBenfCd_01 : [], // 통화 혜택 데이터 셋
+      prodBenfCd_02 : [], // 데이터 속도제어 데이터 셋
+      prodBenfCd_03 : [], // 데이터 추가 혜택 데이터 셋
+      prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
+      prodBenfCd_05 : [], // 안내문구 데이터 셋
+    })
   } 
 
 };
