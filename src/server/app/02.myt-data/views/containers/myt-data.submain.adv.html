@@ -473,7 +473,7 @@
                                         <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>요금 안내서
                                     </a>
                                 </li>
-                                <% if (!data.isEasyLogin && data.isAdult) { %>
+                                <% if (!data.isEasyLogin && data.isAdult && data.svcInfo.svcAttrCd !== 'M3') { %>
                                 <li class="ico-item">
                                     <a href="" data-href="/myt-fare/bill/small" data-xt_eid="<%=data.xtEid.billSmall%>" data-xt_csid="NO" data-xt_action="BC">
                                         <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico04.svg" alt=""></i>소액결제
