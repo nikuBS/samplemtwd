@@ -17,7 +17,9 @@
                 </p>
                 <dl class="sel-bill">
                     <dt class="term pps"><span class="date"><%-commDataInfo.ppsCurDate%></span><%-commDataInfo.ppsCurTime%><!--09:17--></dt>
-                    <dd class="charge"><%=commDataInfo.ppsProdAmt%><span class="unit"><%-`${isDataType ? 'MB' : '원'}`%></span></dd>
+                    <a href="/myt-fare/billguide/guide">
+                        <dd class="charge"><%=commDataInfo.ppsProdAmt%><span class="unit"><%-`${isDataType ? 'MB' : '원'}`%></span></dd>
+                    </a>
                 </dl>
             </div>
             <div class="detail-charge-box">

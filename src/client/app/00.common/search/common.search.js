@@ -234,7 +234,7 @@ Tw.CommonSearch.prototype = {
     }, 0);
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
 
-    // TEST 
+    // TEST
     Tw.Logger.info('[common.search] [_nextInit] searchInfo: ', this._searchInfo);
     totalCnt = this._searchInfo.totalcount;
     this.$container.find('.fe-total-count').each(function (a, b) {
@@ -251,7 +251,7 @@ Tw.CommonSearch.prototype = {
     Tw.Logger.info('[common.search] [_nextInit]', '검색창 이벤트 바인딩 완료');
 
     this.$inputElementResultSearch = this.$container.find('#resultSearchKeyword');
-    this.$inputElementResultSearch.on('keyup', $.proxy(this._keyInputEvt, this));
+    this.$inputElementResultSearch.on('keyup', _.debounce($.proxy(this._keyInputEvt, this), 500));
     if ( this._searchInfo.query !== this._searchInfo.researchQuery ) {
       var tempstr = this._searchInfo.researchQuery.replace(this._searchInfo.query, '');
       tempstr = tempstr.trim();
@@ -272,7 +272,7 @@ Tw.CommonSearch.prototype = {
       $(window).scrollTop(0);
     }, this));
     this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
-        var $target = $(e.currentTarget).parent(); // 바로 상위 
+        var $target = $(e.currentTarget).parent(); // 바로 상위
         $target.toggleClass('on');
         if ($target .hasClass('on')) {
           $target.find('button').attr('aria-pressed', true);
@@ -414,11 +414,12 @@ Tw.CommonSearch.prototype = {
    * @desc 검색창 input 이벤트
    * @returns {void}
    */
-  _keyInputEvt: function (inputEvtObj) {
-    inputEvtObj.preventDefault();
-
-    if ( Tw.InputHelper.isEnter(inputEvtObj) ) {
-      this._doResultSearch();
+  _keyInputEvt: function (event) {
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which === 13 ) {
+      this._doResultSearch(event);
+      event.preventDefault();
+      event.stopPropagation();
     }
   },
   /**
@@ -547,7 +548,7 @@ Tw.CommonSearch.prototype = {
       }
       // console.log(">>> data: ", data);
       _.each(data, $.proxy(function (listData, index) {
-        
+
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
           if (index > 2) {
@@ -570,7 +571,7 @@ Tw.CommonSearch.prototype = {
               DOCID: listData.DOCID,
               MENU_NM: listData.MENU_NM,
               MENU_URL: listData.MENU_URL,
-              USE_YN: listData.USE_YN       
+              USE_YN: listData.USE_YN
             });
             _.each(listData.DEPTH_CHILD, $.proxy(function (subData, index) {
               if (subData.DEPTH_CHILD !== undefined) {
@@ -582,12 +583,12 @@ Tw.CommonSearch.prototype = {
                   DOCID: subData.DOCID,
                   MENU_NM: subData.MENU_NM,
                   MENU_URL: subData.MENU_URL,
-                  USE_YN: subData.USE_YN       
+                  USE_YN: subData.USE_YN
                 })
               }
             }));
           }
-          
+
           console.log(">>> listData: ", listData);
           $list.append(templateData({ listData: listData, CDN: cdn }));
         } else {
@@ -602,7 +603,7 @@ Tw.CommonSearch.prototype = {
           }
           $list.append(templateData({ listData: listData, CDN: cdn }));
         }
-        
+
       }, this));
     }
   },
@@ -615,10 +616,20 @@ Tw.CommonSearch.prototype = {
   _decodeEscapeChar: function (targetString) {
     return targetString.replace(/\\/gi, '/').replace(/\n/g, '');
   },
+
+  _keyDownInputEvt: function (event) {
+    // enter 키는 keydown 에서 처리
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which === 13) {
+      this._doSearch(event);
+      event.preventDefault();
+    }
+  },
+
   /**
    * @function
    * @desc 검색창 keyup 이벤트
-   * @param {Object} args - 이벤트 객체
+   * @param {Object} event - 이벤트 객체
    * @returns {void}
    */
   _inputChangeEvent: function (args) {
@@ -633,6 +644,8 @@ Tw.CommonSearch.prototype = {
         }
       }
     }
+    event.stopPropagation();
+    event.preventDefault();
   },
   /**
    * @function
