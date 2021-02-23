@@ -2001,7 +2001,8 @@ class ApiRouter {
    * @param next 
    */
   private getBenfProdInfo(req: Request, res: Response) {
-    this.redisService.getData(REDIS_KEY.BENF_PROD_INFO)
+    const prodId = req.query.prodId || '';
+    this.redisService.getData(REDIS_KEY.BENF_PROD_INFO + prodId)
       .subscribe((resp) => {
         res.json(resp);
       });
