@@ -1709,7 +1709,17 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
     
   
 
-
+Tw.RENEWAL_PRODUCT_SUBMAIN_QUICKFILTER = 
+'{{#each banners}}' +
+  '<li class="slider-item">' +
+    '<a class="shadow-box quick-item" title="{{bnnrImgAltCtt}}" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
+      '<p class="benefit-txt">{{{anchTagInfo}}}</p>' +
+      '<i class="benefit-ico">' +
+        '<img src="{{../cdn_url}}/{{bnnrFilePathNm}}" alt="{{bnnrImgAltCtt}}">' +
+      '</i>' +
+    '</a>' +
+  '</li>' +
+'{{/each}}';
 
 Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER =
 '{{#each banners}}' +
