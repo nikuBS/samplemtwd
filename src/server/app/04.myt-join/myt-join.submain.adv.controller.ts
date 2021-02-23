@@ -167,7 +167,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     if ( data.myInfo && data.myInfo.billTypeCd ) {
       data.paymentInfo = {
         billTypeNm: data.myInfo.billTypeNm,
-        payMthdNm: data.myInfo.payMthdNm
+        // 대표청구회선이 아닌 경우에는 "통합청구"로 노출
+        payMthdNm: data.svcInfo.actRepYn !== 'Y'? '통합청구' : data.myInfo.payMthdNm
       };
     }
   }
@@ -636,6 +637,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         pointMbr: 'CMMA_A3_B13-41',
         countMbr: 'CMMA_A3_B13-42',
         paidInfo: 'CMMA_A3_B13-43',
+        paidInfo2: 'CMMA_A3_B13-108',
         billType: 'CMMA_A3_B13-44',
         payMthdType: 'CMMA_A3_B13-45',
         reservation: 'CMMA_A3_B13-46',
@@ -674,6 +676,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         feeAddition: 'CMMA_A3_B13-86',
         comAddition: 'CMMA_A3_B13-87',
         paidInfo: 'CMMA_A3_B13-88',
+        paidInfo2: 'CMMA_A3_B13-107',
         billType: 'CMMA_A3_B13-89',
         payMthdType: 'CMMA_A3_B13-90',
         reservation: 'CMMA_A3_B13-91',
