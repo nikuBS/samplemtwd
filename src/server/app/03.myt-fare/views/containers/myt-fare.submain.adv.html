@@ -41,7 +41,7 @@ _%>
                 <%_}_%>
                 <%- include('../components/submain/myt-fare.submain.small.html') _%> <%# 휴대폰결제(구 소액결제)/콘텐츠 이용료 영역%>
                 <%- include('../components/submain/myt-fare.submain.bill-info.html') _%> <%# 납부/청구정보 영역%>
-                <%_if(data.isShowAffiliateCard){_%>
+                <%_if(data.paymentInfo && data.isShowAffiliateCard){_%>
                 <div class="submain-banner">
                     <a href="/myt-fare/bill/option" data-make-eid="bank">
                         <p class="banner-comment">

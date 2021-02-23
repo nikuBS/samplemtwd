@@ -43,7 +43,7 @@ _%>
                     <%_} else {_%>
                     <li class="default-item">
                         <span class="default-tit"><%-data.month%>월 요금</span>
-                        <span class="default-cost"><%-data.remainPayment%>원</span>
+                        <span class="default-cost"><%-data.claimPay%>원</span>
                     </li>
                     <%_}_%>
                     <%_if(unpaid !== '0') {_%>
@@ -112,14 +112,18 @@ _%>
 
             <!-- 요금납부 (통합청구 대표) -->
             <%_ if(data.type !== 'UF' && data.isNotAutoPayment){
-                const {isPaid, isThisMonth} = data.autoPayment;
-                const classNm = isThisMonth && !isPaid ? 'btn2' : '';
+                const {isThisMonth, isPaid} = data.autoPayment;
+                // 미납버튼 노출 조건:
+                // 1. 당월인경우: 당월 납부예정(납부 전)이라도, 미납요금버튼 미노출이나, 당월보다 이전 미납금액 있으면 노출.
+                // 2. 이전달인 경우: 선택 월 포함 미납금액 있으면 노출
+                const isShowUnpaid = unpaid !== '0' ? true : !isThisMonth && !isPaid ? true : false;
+                const classNm = isThisMonth && isShowUnpaid ? 'btn2' : '';
             _%>
             <div class="btn-area <%-classNm%>">
-                <%_if(isThisMonth){_%>
+                <%_if(isThisMonth){ // 당월 일때만 요금납부 버튼 노출 _%>
                 <a href="#" class="round-btn fe-payment" data-make-eid="charge">요금 납부</a>
                 <%_}_%>
-                <a href="/myt-fare/unbill" class="round-btn line <%- !isPaid ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
+                <a href="/myt-fare/unbill" class="round-btn line <%- isShowUnpaid ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
             </div>
             <%_}_%>
         </div>

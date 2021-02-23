@@ -95,6 +95,9 @@ Tw.MyTFareSubMainAdv.prototype = {
     setEid('realtimeRemain', '65', ''); // 실시간 잔여량
     setEid('contract', '66', ''); // 약정할인/기기상환 정보
     setEid('ppsHistory', '67', ''); // 내역조회
+    setEid('recentBill0', '68', ''); // 최근청구요금내역1
+    setEid('recentBill1', '69', ''); // 최근청구요금내역2
+    setEid('recentBill2', '70', ''); // 최근청구요금내역3
 
     $.each($('[data-make-eid]'), function (idx, item){
       var $item = $(item);

@@ -66,7 +66,7 @@ Tw.MyTFareSubMainRecentBill.prototype = {
       });
       return acc;
     }, []);
-    return claimList;
+    return _.sortBy(claimList, 'date');
   },
 
   _makeChart: function () {
@@ -189,6 +189,35 @@ Tw.MyTFareSubMainRecentBill.prototype = {
   _getIntNumber: function (value) {
     value = Tw.StringHelper.getOnlyNumber(value);
     return parseInt(value, 10);
+  },
+
+  /**
+   * @function
+   * @desc 통계코드 data attr 생성
+   * @private
+   */
+  _makeEid: function () {
+
+    var eid = {};
+    var setEid = function (key, stgEId, prdEid) {
+      var preCode = 'CMMA_A3_B12-';
+      eid[key] = preCode + (Tw.Environment.environment === 'prd' ? prdEid : stgEId);
+    };
+
+    setEid('recentBill0', '68', ''); // 최근청구요금내역1
+    setEid('recentBill1', '69', ''); // 최근청구요금내역2
+    setEid('recentBill2', '70', ''); // 최근청구요금내역3
+
+    $.each(this.$container.find('[data-make-eid]'), function (idx, item){
+      var $item = $(item);
+      var eidCd = eid[$item.data('make-eid')];
+      if (eidCd) {
+        $item.attr('data-xt_eid', eidCd)
+          .attr('data-xt_csid', 'NO')
+          .attr('data-xt_action', 'BC');
+        $item.removeAttr('data-make-eid');
+      }
+    });
   }
 
 };
