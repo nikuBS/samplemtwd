@@ -63,11 +63,12 @@ _%>
                 <%- include('../components/submain/myt-join.submain.adv.child-line.html', data) _%>
                 <%_ } _%>
                 <!-- 자녀회선 :end -->
-                <!-- 조회/신청 서비스 : start -->
+                <%_ if(data.type === 0 || data.type === 2) { _%>
+                <!-- 조회/신청 서비스 : start  무선/유선 -->
                 <%- include('../components/submain/myt-join.submain.adv.service.html', data) _%>
                 <!-- 조회/신청 서비스 : end -->
+                <%_ } _%>
                 <!-- 배너 영역 :start -->
-
                 <div class="submain-swipe-banner submain-swipe" data-id="banners">
                     <div class="main-slide-banner slide-pagingtype pg-rtop">
                         <!-- .widget -->

@@ -7,7 +7,8 @@ _%>
 <%_ if (data.isContractPlan) { _%>
   <%_ if ( data.myContractPlan.muPointYn === 'Y' ) { _%>
     <section class="cont-card">
-      <div class="section-inner">
+      <div class="section-inner" data-id="contract-plan"
+           data-xt_eid="<%= data.xtCode.usedContractPlan %>" data-xt_csid="NO" data-xt_action="BC">
         <div class="head-tit"><a href="#" data-id="contract-plan" class="link"
         data-xt_eid="<%= data.xtCode.usedContractPlan %>" data-xt_csid="NO" data-xt_action="BC">무약정 플랜 포인트</a></div>
         <div class="card-cont">
@@ -51,8 +52,9 @@ _%>
 <section class="cont-card">
   <div class="section-inner">
     <div class="head-tit">
+      <!-- 3/11 약정할인/기기 할부 정보로 변경 -->
       <a href="#" data-id="installement" class="link"
-         data-xt_eid="<%= data.xtCode.disInfo %>" data-xt_csid="NO" data-xt_action="BC">약정할인/기기 할부 정보</a>
+         data-xt_eid="<%= data.xtCode.disInfo %>" data-xt_csid="NO" data-xt_action="BC">약정할인/기기상환 정보</a>
     </div>
     <div class="card-cont">
       <div class="hoz-group-wrap">

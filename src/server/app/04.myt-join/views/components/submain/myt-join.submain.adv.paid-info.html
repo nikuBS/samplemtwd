@@ -22,7 +22,8 @@ _%>
           <%_ } else { _%>
             <dt class="report-tit">
               <%= data.paidBillInfo.showMonth %>
-              <%= data.paidBillInfo.isUsageBill ? ' 이용 요금' : ' 총 납부 금액' %>
+              <%# 3/11 청구 요금 -> 총 납부 금액 으로 변경 예정 %>
+              <%= data.paidBillInfo.isUsageBill ? ' 이용 요금' : ' 청구 요금' %>
               <span class="report-sub">
                 <%= data.paidBillInfo.startDate %> ~ <%= data.paidBillInfo.endDate %>
               </span>

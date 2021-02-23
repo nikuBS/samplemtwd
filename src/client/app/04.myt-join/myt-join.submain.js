@@ -796,11 +796,28 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
       switch (this._data.membership.used) {
         case 1:
           // 가입하기
-          this._historyService.goLoad('/membership/submain');
+          this._historyService.goLoad('/membership/join');
+          break;
+        case 2:
+          // 간편로그인 상태
+          this._historyService.goLoad('/membership/my');
           break;
         default:
-          // used => 0 or 2 간편로그인, 가입된 상태
+          // 가입한 상태
+          this._historyService.goLoad('/membership/submain');
+          break;
+      }
+      return false;
+    }, this));
+    this.$container.find('[data-id=membership-point]').on('click', $.proxy(function() {
+      switch (this._data.membership.used) {
+        case 0:
+          // 가입된 상태
           this._historyService.goLoad('/membership/my');
+          break;
+        default:
+          // used => 1 or 2 가입하기, 간편로그인
+          this._historyService.goLoad('/membership/submain');
           break;
       }
       return false;
