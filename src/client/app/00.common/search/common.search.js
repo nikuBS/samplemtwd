@@ -546,9 +546,46 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
-      // console.log(">>> data: ", data);
-      _.each(data, $.proxy(function (listData, index) {
+      
+      // 3뎁스에 데이터를 1뎁스 라인으로 랜더링 하기 위해 자료구조를 다시 만듭니다. 
+      var depth3 = []; // 3뎁스를 1뎁스로 구조로 만드는 변수 
+      var list = data; // 기존의 리스트를 담는 변수 
+      var totalListCnt = 0; // 3뎁스의 리스트 사이즈 개수 총합에 사용할 변수 
+      for(var i=0; i<list.length; i++) {
+        if (list[i].DEPTH_CHILD !== undefined) {
+          for(var j=0; j<list[i].DEPTH_CHILD.length; j++) {
+            if (list[i].DEPTH_CHILD[j].DEPTH_CHILD !== undefined) {
+              depth3.push({
+                idx: j,
+                DEPTH_PATH: list[i].DEPTH_CHILD[j].DEPTH_PATH,
+                MENU_URL: list[i].DEPTH_CHILD[j].MENU_URL,
+                DEPTH_LOC: list[i].DEPTH_CHILD[j].DEPTH_LOC,
+                MENU_NM: list[i].DEPTH_CHILD[j].MENU_NM,
+                DOCID: list[i].DEPTH_CHILD[j].DOCID,
+                CLICK_CNT: list[i].DEPTH_CHILD[j].CLICK_CNT,
+                DEPTH_SIZE: list[i].DEPTH_CHILD[j].DEPTH_CHILD.length,
+                USE_YN: 'Y',
+                DEPTH_CHILD: list[i].DEPTH_CHILD[j].DEPTH_CHILD
+              });
+            }
+          }
+        }
+      }
 
+      for (var i=0; i<depth3.length; i++) {
+        // 부모의 타이틀을 자식뎁스쪽으로 추가 하기 때문에 +1을 해줘야 함.
+        // 예) 부모(4) > 자식(3) 짜리 데이터를 렌더링 한다고 생각하면 아래와 같기 때문에 +1을 해줘야 합니다. 
+        // 부모(4)
+        //  ㄴ 부모  <<< 추가 
+        //  ㄴ 자식
+        //  ㄴ 자식
+        //  ㄴ 자식
+        totalListCnt += depth3[i].DEPTH_SIZE+1;
+        data.push(depth3[i])
+      }
+      
+      _.each(data, $.proxy(function (listData, index) {
+        
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
           if (index > 2) {
@@ -563,7 +600,10 @@ Tw.CommonSearch.prototype = {
             }
             return;
           }
-          if (listData.DEPTH_CHILD !== undefined) {
+          // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다. 
+          if (listData.DEPTH_CHILD !== undefined && listData.idx === undefined) {
+            // 3뎁스 사이즈를 최상위 부모 뎁스 사이즈에서 빼야 제대로 개수가 맞음.
+            listData.DEPTH_SIZE = Number(listData.DEPTH_SIZE - totalListCnt);
             listData.DEPTH_CHILD.unshift({
               CLICK_CNT: listData.CLICK_CNT,
               DEPTH_LOC: "2",
@@ -571,11 +611,10 @@ Tw.CommonSearch.prototype = {
               DOCID: listData.DOCID,
               MENU_NM: listData.MENU_NM,
               MENU_URL: listData.MENU_URL,
-              USE_YN: listData.USE_YN
+              USE_YN: listData.USE_YN       
             });
             _.each(listData.DEPTH_CHILD, $.proxy(function (subData, index) {
-              if (subData.DEPTH_CHILD !== undefined) {
-                // console.log(">>>>>>>>>>> subData.DEPTH_CHILD: ", subData.DEPTH_CHILD);
+              if (subData.DEPTH_CHILD !== undefined && subData.idx === undefined) {
                 subData.DEPTH_CHILD.unshift({
                   CLICK_CNT: subData.CLICK_CNT,
                   DEPTH_LOC: "3",
@@ -585,11 +624,11 @@ Tw.CommonSearch.prototype = {
                   MENU_URL: subData.MENU_URL,
                   USE_YN: subData.USE_YN
                 })
+                
               }
             }));
           }
-
-          console.log(">>> listData: ", listData);
+          // console.log(">>> listData: ", listData);
           $list.append(templateData({ listData: listData, CDN: cdn }));
         } else {
           if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
