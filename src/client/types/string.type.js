@@ -714,7 +714,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A86: { TITLE: '알림', MSG: 'T포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A87: { TITLE: '레인보우포인트 납부 예약 취소하시겠습니까?', MSG: '' },
   ALERT_2_A88: { TITLE: '알림', MSG: '레인보우 포인트 납부 예약이 취소되었습니다.' },
-  ALERT_2_A89: { TITLE: '알림', MSG: '이번 달 {title} 이용 금액이 있을 경우 선결제를 신청하실 수 있습니다.' },
+  ALERT_2_A89: { TITLE: '알림', MSG: '선결제 가능 금액이 없습니다.' },
   ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소하시겠습니까?', MSG: '' },
   ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기' },
@@ -2296,10 +2296,8 @@ Tw.PRODUCT_JOIN_OCB = {
 
 Tw.MYT_FARE_BILL = {
   ERROR: {
-    UNUSUAL_CUSTOMER: {
-      TITLE: '휴대폰 결제가 차단되어 있습니다.',
-      MSG: '차단을 해제하고 이용하시려면 고객센터 (1599-0590)로 문의해 주세요.'
-    },
+    UNUSUAL_CUSTOMER_MSG: '휴대폰 결제 특이 차단 중인 고객은 해당 메뉴를 이용하실 수 없습니다.',
+    UNUSUAL_CUSTOMER_SUB_MSG: '특이 차단 해제를 원하시는 고객님은 고객센터</br>(tel : 1599-0590)로 문의해 주세요.',
     MINORS_RESTRICTIONS: {
       CODE: 'BIL0031',
       MSG: '미성년자명의 휴대폰 고객은 사용이 제한된 메뉴입니다.'
