@@ -66,18 +66,14 @@
                                             T끼리
                                             <%_ if (Number(data.presentInfo.dataGiftCnt) === 0) { _%>
                                             <em class="em">0회</em>
-                                            <%_ } else {_%>
-                                            <%= data.presentInfo.dataGiftCnt %>회
-                                            <%_ } _%>
-                                            <%_ if (data.presentInfo.goodFamilyMemberYn === 'Y') { _%>
-                                            / 가족무제한
-                                            <%_ } else if (data.presentInfo.familyMemberYn === 'Y') { _%>
-                                            / 가족끼리
-                                            <%_ if (Number(data.presentInfo.familyDataGiftCnt) === 0) { _%>
-                                            <em class="em">0회</em>
-                                            <%_ } else { _%>
-                                            <%= data.presentInfo.familyDataGiftCnt %>회
-                                            <%_ } _%>
+                                            <%_ } else {_%><%= data.presentInfo.dataGiftCnt %>회<%_ } _%>
+                                            <%_ if (data.presentInfo.goodFamilyMemberYn === 'Y') { _%>/가족무제한
+                                            <%_ } else if (data.presentInfo.familyMemberYn === 'Y') { _%>/가족끼리
+                                                <%_ if (Number(data.presentInfo.familyDataGiftCnt) === 0) { _%>
+                                                <em class="em">0회</em>
+                                                <%_ } else { _%>
+                                                <%= data.presentInfo.familyDataGiftCnt %>회
+                                                <%_ } _%>
                                             <%_ } _%>
                                         </dd><!-- 0회일 경우 <em class="em">0회</em> -->
                                     </dl>
@@ -90,7 +86,7 @@
                             <li class="report-item">
                                 <a href="/myt-data/giftdata?auto=true#auto" class="link d-wrap" data-xt_eid="<%=data.xtEid.giftdataAuto%>" data-xt_csid="NO" data-xt_action="BC">
                                     <dl class="report-define">
-                                        <dt class="report-tit">자동선물 신청된 결합가족</dt>
+                                        <dt class="report-tit">자동 선물 신청된 결합가족</dt>
                                         <dd class="report-cont">
                                             <%= data.presentAuto? data.presentAuto.length : '0'%>회선
                                         </dd>
