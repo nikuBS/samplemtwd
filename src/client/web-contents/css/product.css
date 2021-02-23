@@ -40,7 +40,7 @@
 .tod-nmp-btn-wrap > [class^="tod-nmp-btn"] {-webkit-box-flex:1; -webkit-box-pack:justify; flex: 1; margin:0 6px}
 
 /* ========== 아이콘 ========== */
-[class^="p-icon16-"] {display:inline-block; width:16px; height:16px; vertical-align:middle; background:url('/img/product/v2/icons.svg') no-repeat 0 0;}
+[class^="p-icon16-"] {display:inline-block; width:16px; height:16px; vertical-align:middle; background-size: 16px 16px}
 .p-icon16-flo {background:url('/img/product/v2/icon16-flo.png') no-repeat 0 0; background-size: 16px 16px} /* flo */
 .p-icon16-vip {background:url('/img/product/v2/icon16-vip.png') no-repeat 0 0; background-size: 16px 16px} /* vip */
 .p-icon16-wavve {background:url('/img/product/v2/icon16-wavve.png') no-repeat 0 0; background-size: 16px 16px} /* wavve */
@@ -48,11 +48,12 @@
 .p-icon16-cycle {background:url('/img/product/v2/icon16-cycle.png') no-repeat 0 0; background-size: 16px 16px} /* 가족끼리 데이터주고받기 */
 .p-icon16-together {background:url('/img/product/v2/icon16-together.png') no-repeat 0 0; background-size: 16px 16px} /* 함께 쓰기 */
 .p-icon16-2nd {background:url('/img/product/v2/icon16-2nd.png') no-repeat 0 0; background-size: 16px 16px} /* 2nd 디바이스와 함께 쓰기 */
-.p-icon16-check {background:url('/img/product/v2/icon-check.png') no-repeat 50% 50%; background-size: 15px 16px} /* 선택약정 */
-.p-icon16-data {background:url('/img/product/v2/icon-data.png') no-repeat 50% 0; background-size: 12px 13px} /* 데이타 */
-.p-icon16-phone {background:url('/img/product/v2/icon-phone.png') no-repeat 50% 0; background-size: 12px 15px} /* 음성 */
-.p-icon16-sms {background:url('/img/product/v2/icon-sms.png') no-repeat 50% 1px; background-size: 17px 11px} /* 문자 */
-.p-icon16-reset {background:url('/img/product/v2/icon-reset.svg') no-repeat 50% 50%;}
+.p-icon16-check {background:url('/img/product/v2/icon16-check.png') no-repeat 50% 50%; background-size: 16px 16px} /* 선택약정 */
+.p-icon16-data {background:url('/img/product/v2/icon16-data.png') no-repeat 50% 0; background-size: 16px 16px} /* 데이타 */
+.p-icon16-phone {background:url('/img/product/v2/icon16-phone.png') no-repeat 50% 0; background-size: 16px 16px} /* 음성 */
+.p-icon16-sms {background:url('/img/product/v2/icon16-sms.png') no-repeat 50% 0; background-size: 16px 16px} /* 문자 */
+.p-icon16-reset {background:url('/img/product/v2/icon-reset.svg') no-repeat 50% 50%;} /* 초기화 */
+.p-icon16-img > img {width:100%; height:100%; vertical-align:top} /* 이미지형 아이콘 */
 
 .p-icon16-dot {position:relative; background:none}
 .p-icon16-dot::before {content: ""; position:absolute; left:50%; top:50%; transform:translate(-50%, -50%) ; display:inline-block; width:3px; height:3px; border-radius: 100%; background-color:#979393}
@@ -103,8 +104,7 @@
 .tod-nmp-item .rn-prod-benefit {position:relative; padding:0.625rem 0 0;}
 .tod-nmp-item .rn-prod-benefit li {position:relative; padding-left:20px; font-size: 0.8125rem; color: #767778; word-break: keep-all;}
 .tod-nmp-item .rn-prod-benefit li:nth-child(n+2) {margin-top:6px}
-.tod-nmp-item .rn-prod-benefit li > i {position:absolute;left:0;top:0; line-height:1}
-.tod-nmp-item .rn-prod-benefit li > i img {vertical-align: middle;}
+.tod-nmp-item .rn-prod-benefit li > i {position:absolute;left:0;top:1px; line-height:1}
 .tod-nmp-item .rn-prod-benefit li .txt {padding-right:0.25rem; font-size: 0.8125rem; color: #767778;}
 .tod-nmp-item .rn-prod-benefit .price {display:inline-block; font-size: 0.6875rem;}
 .tod-nmp-item .rn-prod-benefit .price::before {content: "("; color: #a8a8a8}
@@ -317,7 +317,8 @@
 
 .tod-nmp-comp-info {border-bottom: 1px solid #ffffff; padding:1.625rem 1.25rem}
 .tod-nmp-comp-info .title {margin-bottom:12px; font-size: 14px; color: #222222; letter-spacing: -0.4px;}
-.tod-nmp-comp-info .title i {vertical-align:-3px}
+.tod-nmp-comp-info .title i {vertical-align:-3px;}
+.tod-nmp-comp-info .title i.p-icon16-img {vertical-align:0}
 .tod-nmp-comp-info .title i:nth-of-type(n+2) {margin-left:6px}
 .tod-nmp-comp-info .rn-comp-box .noti-box {padding:1.0625rem 0.9375rem; text-align:center; border-radius: 12px; line-height: 1.43; font-size:0.875rem; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;}
 .tod-nmp-comp-info .rn-comp-box .noti-box em {color:#f76252}
