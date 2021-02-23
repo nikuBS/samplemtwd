@@ -108,7 +108,7 @@ export default class RenewProductPlans extends TwViewController {
           } else {
             let _gPlans : any = []; 
             let _sPlans : any = [];
-
+            
             
             for(let i = 0; i < plans.groupProdList.length ; i++){
               for(let j = 0; j < plans.groupProdList[i].prodList[0].prodFltList.length ; j++) {
@@ -153,7 +153,8 @@ export default class RenewProductPlans extends TwViewController {
         });   
     } else if (series.noSeries === true) {
       params.searchFltIds =  req.query.filters;
-      params.idxCtgCd = 'F01120';
+      params.idxCtgCd = 'F01100';
+      console.log("@@@@@@@@@",params);
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
         this._getInitPlans(params)
@@ -164,7 +165,7 @@ export default class RenewProductPlans extends TwViewController {
           const mobileList = [{name: '5G', code: 'F01713',exist: 'N',url:'/product/renewal/mobileplan/list?filters=F01713', seriesClass: 'prod-5g'}, // 요금제 더보기용 url 입력 / 색상을 위한 클래스 추가
             {name: 'LTE', code: 'F01121',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01121', seriesClass: 'prod-lte'},
             {name: '3G', code: 'F01122',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01122', seriesClass: 'prod-band'},
-            {name: '태블릿/2nd Device', code: 'F01124',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01124', seriesClass: 'prod-2nd'},
+            {name: '태블릿/2nd device', code: 'F01124',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01124', seriesClass: 'prod-2nd'},
             {name: '선불', code: 'F01125',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01125', seriesClass: 'prod-2nd'}];
           
           for( let k in mobileList ) {
@@ -178,7 +179,7 @@ export default class RenewProductPlans extends TwViewController {
         });
 
     } else {
-      params.idxCtgCd = 'F01120';
+      params.idxCtgCd = 'F01100';
       params.searchFltIds = req.query.filters;
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
@@ -207,14 +208,14 @@ export default class RenewProductPlans extends TwViewController {
 
   private _getInitPlans(params) {
     return this.apiService.request(API_CMD.BFF_10_0205, params).map(resp => {
-    // return  Observable.of(data205).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
           msg: resp.msg
         };
       }
-
+      
+      
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
@@ -256,7 +257,8 @@ export default class RenewProductPlans extends TwViewController {
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
-
+      console.log("@@@@@@@@",resp.result);
+      
       return {
         ...resp.result,
         products: resp.result.products.map(plan => {
@@ -420,6 +422,8 @@ export default class RenewProductPlans extends TwViewController {
           // })
         }
       } else if (resp.result.rcnProductList) {
+        console.log("@@@@@@@@@",resp.result.rcnProductList);
+        
         return {
           ...resp.result,
           // groupProdList: resp.result.groupProdList.map(groupPlan => {
@@ -462,7 +466,7 @@ export default class RenewProductPlans extends TwViewController {
           rcnProductList: resp.result.rcnProductList.map(rcnPlan => {
             return {
               ...rcnPlan,
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
+              prodSmryExpTypeCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpTypeCd)
             }
           })
         }

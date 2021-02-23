@@ -21,6 +21,7 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, netwo
   
     this._bindEvent();
     this._init();
+
   };
 
 Tw.ProductRenewalList.prototype = {
@@ -34,6 +35,7 @@ Tw.ProductRenewalList.prototype = {
       this._scrollFocus();
       this._setInfinityScroll();
       this._checkTheme();
+      console.log(this._checkDefault);
     },
 
     _bindEvent: function() {
@@ -73,6 +75,7 @@ Tw.ProductRenewalList.prototype = {
           $('.rn-notice').css('display','block');
           $('.btn-nb-close').click(function(){$('.rn-notice').css('display','none');});
           this._checkDefault = 'Y';
+          console.log("@@@@@@@왜바껴?",this._checkDefault);
         }
       }
     },
@@ -251,7 +254,7 @@ Tw.ProductRenewalList.prototype = {
         if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
           this._apiService.requestArray([
             { command: Tw.API_CMD.BFF_10_0032, params: { idxCtgCd: this.CODE }},
-            { command: Tw.API_CMD.BFF_10_0033, params: { filterId: 'F01170' }}
+            { command: Tw.API_CMD.BFF_10_0033, pathParams: ['F01170']}
           ]).done($.proxy(this._handleLoadFilters, this, $target));
           
         } else {
@@ -261,8 +264,6 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _handleLoadFilters: function($target, filterResp, quickFilterResp) { // API로 받아온 데이터로 필터 열음 ( 현재 안씀 )
-      console.log("필터",filterResp);
-      console.log("퀵필터",quickFilterResp);
       if (filterResp.code !== Tw.API_CODE.CODE_00) {
         Tw.Error(filterResp.code, filterResp.msg).pop();
         return;
@@ -296,7 +297,7 @@ Tw.ProductRenewalList.prototype = {
     _handleOpenSelectFilterPopup: function() { //필터 팝업 열릴 시 콜백 함수
 
       var _this = this;
-      var MobileFilterForQuick = (this.curMobileFilter[0] == '') || (this.curMobileFilter[0] == undefined) ? 'F01713' : this.curMobileFilter[0];
+      var MobileFilterForQuick = (this.curMobileFilter[0] == '') || (this.curMobileFilter[0] == undefined) ? this._networkInfo[0] : this.curMobileFilter[0];
       if(this._popupService._prevHashList.length == 1){
         $('.prev-step').click(_.debounce($.proxy(_this._popupService.close, this), 500));
       } else {
@@ -307,7 +308,7 @@ Tw.ProductRenewalList.prototype = {
       // $layer.find('.select-list li.checkbox').click(_.debounce($.proxy(this._handleClickFilter, this, $layer), 300));
       // $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
       $('.quickFilterBtn').click(function(e){_this._historyService.replaceURL(
-        '/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + '&code=' + e.currentTarget.dataset.code);});
+        '/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + ',' + e.currentTarget.dataset.code);});
       $('.reset').click($.proxy(this._handleResetFilters, this));
       $('.confrim').click($.proxy(this._confirmFilter, this));
       // $layer.find('.link').click(_.debounce($.proxy(this._openSelectTagPopup, this, $layer), 300));
@@ -365,6 +366,7 @@ Tw.ProductRenewalList.prototype = {
       var selectedFilter = $('#selectFilter').children("li");
 
       this._params.searchFltIds = '';
+      this._params.idxCtgCd = 'F01100';
       for( var a = 0 ; a < selectedFilter.length ; a++) {
         this._params.searchFltIds += $(selectedFilter[a]).data("filtersummary");
         if (a !== selectedFilter.length-1) {
@@ -418,6 +420,7 @@ Tw.ProductRenewalList.prototype = {
     _handleLoadMore: function() {
       var viewMoreParam = this._params;
       viewMoreParam.searchLastProdId = $('.tod-cont-section').data('lastproduct');
+      console.log("파람",viewMoreParam);
       this._apiService.request(Tw.API_CMD.BFF_10_0031, viewMoreParam).done($.proxy(this._handleSuccessLoadingData, this));
     },
 
@@ -464,12 +467,8 @@ Tw.ProductRenewalList.prototype = {
         Tw.Error(resp.code, resp.msg).pop();
         return;
       }
-      console.log(resp.result);
       var groupItems = _.map(resp.result.groupProdList, $.proxy(this._mapProperDataGroup, this));
-      console.log("@@@@@@",groupItems);
-      
       var separateItems = _.map(resp.result.separateProductList, $.proxy(this._mapProperData, this));
-      console.log("######",separateItems);
       switch(this._networkInfo[this._curNetworkCount]) {
         case 'F01713':
           this._seriesClass = '1';
@@ -514,12 +513,9 @@ Tw.ProductRenewalList.prototype = {
         
         this._separateItems = separateItems;
         this._curNetworkCount++;
-        alert("1번 돔");
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[0], separateItems: null, seriesClass: this._seriesClass, cdn: this._cdn}));
       } else {
-        alert("2번 돔");
         this._curNetworkCount++;
-        console.log("@@@@@@@",groupItems);
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: groupItems[0], separateItems: separateItems, seriesClass: this._seriesClass, cdn: this._cdn }));
         if(this._curNetworkCount == 5) {
           this._hasNext = 'false';
@@ -531,7 +527,6 @@ Tw.ProductRenewalList.prototype = {
 
     _drawRemainGroup: function() {
       if(this._remainGroupData == this._curRemainGroupData) {
-        alert("3번 돔");
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[this._curRemainGroupData], separateItems: this._separateItems,  seriesClass: this._seriesClass, cdn: this._cdn }));
         this._remainGroupData = 0;
         this._curRemainGroupData = 0;
@@ -540,7 +535,6 @@ Tw.ProductRenewalList.prototype = {
           $('.tod-nmp-loading').css('display','none');
         }
       } else {
-        alert("4번 돔");
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[this._curRemainGroupData], separateItems: null,  seriesClass: this._seriesClass, cdn: this._cdn }));
         this._curRemainGroupData++;
       }
@@ -695,9 +689,11 @@ Tw.ProductRenewalList.prototype = {
         if(($(window).height() + $(document).scrollTop()) >= ($(document).height() - ($(window).height() * 2))) {
           if (_this.isScroll && _this._hasNext == 'true') {
             _this.isScroll = false;
-            if(this._checkDefault == 'N') {
+            if(_this._checkDefault == 'N') {
+              console.log("N탐");
               setTimeout($.proxy(_this._handleLoadMore, _this) ,300);
             } else {
+              console.log("Y탐");
               setTimeout($.proxy(_this._handleLoadMoreDefault, _this) ,300);
             }
           }
