@@ -7,15 +7,19 @@ _%>
 
 <section class="cont-card">
   <div class="section-inner">
-    <div class="head-tit"><a href="#" data-id="paidinfo" class="link">납부/청구 정보</a></div> <!-- 201207 [OP002-10282] 수정06 : 텍스트 수정-->
+    <div class="head-tit">
+      <a href="#" data-id="paidinfo" class="link"
+         data-xt_eid="<%= data.xtCode.paidInfo %>" data-xt_csid="NO" data-xt_action="BC">납부/청구 정보</a>
+    </div> <!-- 201207 [OP002-10282] 수정06 : 텍스트 수정-->
     <div class="card-cont">
       <ul class="report-list">
         <li class="report-item">
-          <dl class="report-define d-wrap">
-            <%_ if (data.type === 1) { _%>
+          <dl class="report-define d-wrap" data-id="paidinfo"
+              data-xt_eid="<%= data.xtCode.paidInfo2 %>" data-xt_csid="NO" data-xt_action="BC">
+          <%_ if (data.type === 1) { _%>
             <dt class="report-tit">사용 가능한 잔액</dt>
             <dd class="report-cont"><%= data.paidBillInfo.data %><%= data.paidBillInfo.unit %></dd>
-            <%_ } else { _%>
+          <%_ } else { _%>
             <dt class="report-tit">
               <%= data.paidBillInfo.showMonth %>
               <%= data.paidBillInfo.isUsageBill ? ' 이용 요금' : ' 총 납부 금액' %>
@@ -24,7 +28,7 @@ _%>
               </span>
             </dt> <!-- 201207 [OP002-10282] 수정07 : 텍스트 수정-->
             <dd class="report-cont"><%= data.paidBillInfo.amount %>원</dd>
-            <%_ } _%>
+          <%_ } _%>
           </dl>
         </li>
       </ul>
@@ -35,7 +39,8 @@ _%>
       <div class="pay-info-wrap">
         <ul class="ico-list horizontal">
           <li class="item">
-            <a href="#" data-id="billtype">
+            <a href="#" data-id="billtype"
+               data-xt_eid="<%= data.xtCode.billType %>" data-xt_csid="NO" data-xt_action="BC">
               <div class="ico-item">
                 <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
                 <div class="list-txt">
@@ -46,7 +51,8 @@ _%>
             </a>
           </li>
           <li class="item">
-            <a href="#" data-id="paymthd">
+            <a href="#" data-id="paymthd"
+               data-xt_eid="<%= data.xtCode.payMthdType %>" data-xt_csid="NO" data-xt_action="BC">
               <div class="ico-item">
                 <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico01.svg" alt=""></i>
                 <div class="list-txt">

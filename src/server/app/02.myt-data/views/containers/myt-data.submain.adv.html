@@ -66,18 +66,14 @@
                                             T끼리
                                             <%_ if (Number(data.presentInfo.dataGiftCnt) === 0) { _%>
                                             <em class="em">0회</em>
-                                            <%_ } else {_%>
-                                            <%= data.presentInfo.dataGiftCnt %>회
-                                            <%_ } _%>
-                                            <%_ if (data.presentInfo.goodFamilyMemberYn === 'Y') { _%>
-                                            / 가족무제한
-                                            <%_ } else if (data.presentInfo.familyMemberYn === 'Y') { _%>
-                                            / 가족끼리
-                                            <%_ if (Number(data.presentInfo.familyDataGiftCnt) === 0) { _%>
-                                            <em class="em">0회</em>
-                                            <%_ } else { _%>
-                                            <%= data.presentInfo.familyDataGiftCnt %>회
-                                            <%_ } _%>
+                                            <%_ } else {_%><%= data.presentInfo.dataGiftCnt %>회<%_ } _%>
+                                            <%_ if (data.presentInfo.goodFamilyMemberYn === 'Y') { _%>/가족무제한
+                                            <%_ } else if (data.presentInfo.familyMemberYn === 'Y') { _%>/가족끼리
+                                                <%_ if (Number(data.presentInfo.familyDataGiftCnt) === 0) { _%>
+                                                <em class="em">0회</em>
+                                                <%_ } else { _%>
+                                                <%= data.presentInfo.familyDataGiftCnt %>회
+                                                <%_ } _%>
                                             <%_ } _%>
                                         </dd><!-- 0회일 경우 <em class="em">0회</em> -->
                                     </dl>
@@ -90,7 +86,7 @@
                             <li class="report-item">
                                 <a href="/myt-data/giftdata?auto=true#auto" class="link d-wrap" data-xt_eid="<%=data.xtEid.giftdataAuto%>" data-xt_csid="NO" data-xt_action="BC">
                                     <dl class="report-define">
-                                        <dt class="report-tit">자동선물 신청된 결합가족</dt>
+                                        <dt class="report-tit">자동 선물 신청된 결합가족</dt>
                                         <dd class="report-cont">
                                             <%= data.presentAuto? data.presentAuto.length : '0'%>회선
                                         </dd>
@@ -473,7 +469,7 @@
                                         <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>요금 안내서
                                     </a>
                                 </li>
-                                <% if (!data.isEasyLogin && data.isAdult) { %>
+                                <% if (!data.isEasyLogin && data.isAdult && data.svcInfo.svcAttrCd !== 'M3') { %>
                                 <li class="ico-item">
                                     <a href="" data-href="/myt-fare/bill/small" data-xt_eid="<%=data.xtEid.billSmall%>" data-xt_csid="NO" data-xt_action="BC">
                                         <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico04.svg" alt=""></i>소액결제
@@ -492,7 +488,7 @@
                         <div class="faq-ico-wrap">
                             <ul class="ico-list small">
                                 <li class="item">
-                                    <a href="" data-href="/myt-fare/submain" data-xt_eid="<%=data.xtEid.mytFare%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-fare/submain" data-xt_eid="<%=data.xtEid.ppsMytFare%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
                                             <div class="list-txt">
@@ -502,7 +498,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/myt-fare/submain" data-xt_eid="<%=data.xtEid.mytJoin%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-fare/submain" data-xt_eid="<%=data.xtEid.ppsMytJoin%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico15.svg" alt=""></i>
                                             <div class="list-txt">
@@ -512,7 +508,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/myt-join/myplan" data-xt_eid="<%=data.xtEid.myPlan%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-join/myplan" data-xt_eid="<%=data.xtEid.ppsMyPlan%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico05.svg" alt=""></i>
                                             <div class="list-txt">
@@ -522,7 +518,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/product/mobileplan" data-xt_eid="<%=data.xtEid.charge%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/product/mobileplan" data-xt_eid="<%=data.xtEid.ppsCharge%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico05.svg" alt=""></i>
                                             <div class="list-txt">
@@ -536,12 +532,12 @@
                         <div class="small-ico-list-wrap">
                             <ul class="small-ico-list">
                                 <li class="ico-item">
-                                    <a href="" data-href="/benefit/submain" data-xt_eid="<%=data.xtEid.mybenefit%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/benefit/submain" data-xt_eid="<%=data.xtEid.ppsMybenefit%>" data-xt_csid="NO" data-xt_action="BC">
                                         <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico13.svg" alt=""></i>혜택/할인
                                     </a>
                                 </li>
                                 <li class="ico-item">
-                                    <a href="" data-href="/myt-fare/billguide/guide" data-xt_eid="<%=data.xtEid.billguide%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-fare/billguide/guide" data-xt_eid="<%=data.xtEid.ppsBillguide%>" data-xt_csid="NO" data-xt_action="BC">
                                         <i class="ico"><img src="<%= CDN %>/img/myt/sub-ben-ico06.svg" alt=""></i>요금 안내서
                                     </a>
                                 </li>
@@ -565,7 +561,7 @@
                         <div class="faq-ico-wrap">
                             <ul class="ico-list small">
                                 <li class="item">
-                                    <a href="" data-href="/myt-fare/submain" data-xt_eid="<%=data.xtEid.mytFare%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-fare/submain" data-xt_eid="<%=data.xtEid.wireMytFare%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico14.svg" alt=""></i>
                                             <div class="list-txt">
@@ -575,7 +571,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/myt-join/submain" data-xt_eid="<%=data.xtEid.mytJoin%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-join/submain" data-xt_eid="<%=data.xtEid.wireMytJoin%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico15.svg" alt=""></i>
                                             <div class="list-txt">
@@ -585,7 +581,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/myt-join/myplan" data-xt_eid="<%=data.xtEid.myPlan%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-join/myplan" data-xt_eid="<%=data.xtEid.wireMyPlan%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico05.svg" alt=""></i>
                                             <div class="list-txt">
@@ -595,7 +591,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/benefit/submain" data-xt_eid="<%=data.xtEid.mybenefit%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/benefit/submain" data-xt_eid="<%=data.xtEid.wireMybenefit%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico13.svg" alt=""></i>
                                             <div class="list-txt">

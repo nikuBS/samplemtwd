@@ -51,7 +51,8 @@
 <script>
   $(document).ready(function () {
     new Tw.MyTFareSubMainLookup({
-      $element: $('.fe-lookup-area')
+      $element: $('.fe-lookup-area'),
+      data: JSON.parse('<%- JSON.stringify(data) %>')
     });
   });
 </script>

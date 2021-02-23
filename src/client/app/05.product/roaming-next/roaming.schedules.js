@@ -404,6 +404,11 @@ Tw.RoamingSchedules.prototype = {
     var targetList = $('#nationsDialog .content ul');
     targetList.html('');
 
+
+    //웹접근성 aria 추가
+    $('#nationsDialog .menu ul li button').attr('aria-selected',false);
+    $(menu).attr('aria-selected',true);
+
     var onSelectCallback = this.$onSelectCallback;
     var THIS = this;
     var clickHandler = function(e) {

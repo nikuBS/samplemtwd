@@ -25,7 +25,7 @@ Tw.MyTJoinSubMain = function (params) {
   this._bindEvent();
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
-  new Tw.XtractorService(this.$container);
+  this._xtractorService = new Tw.XtractorService(this.$container);
 };
 
 Tw.MyTJoinSubMain.prototype = {
@@ -353,6 +353,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedAddProduct: function () {
     this._historyService.goLoad('/myt-join/additions');
+    return false;
   },
   /**
    * @function
@@ -411,12 +412,12 @@ Tw.MyTJoinSubMain.prototype = {
           // 신청현황: 일시정지 예약중
           this._historyService.goLoad('submain/suspend/status');
         }
-        return;
+        return false;
       }
       if ( stateMyPaused.state ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
-        return;
+        return false;
       }
     }
     if ( stateMyLongPaused && stateMyLongPaused.state ) {
@@ -424,7 +425,7 @@ Tw.MyTJoinSubMain.prototype = {
       if ( stateMyLongPaused.opStateCd !== 'C' || !stateMyLongPaused.stateReleased ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
-        return;
+        return false;
       }
     }
     // 신청하기: "일시정지/해제"로 이동
@@ -845,3 +846,11 @@ Tw.MytJoinAdvSubMain.prototype._initialize = function() {
     });
   }
 };
+Tw.MytJoinAdvSubMain.prototype._successDrawBanner = function () {
+  // 동적 생성 배너 오퍼통계코드 적용을 위해 추가
+  Tw.MyTJoinSubMain.prototype._successDrawBanner.call(this)
+  this.$bannerList.on('click', $.proxy(function() {
+    this._xtractorService.logClick(this._data.xtCode.banner, 'NO');
+    return false;
+  }, this));
+}

@@ -11,6 +11,8 @@
         <div class="card-cont">
             <div class="faq-ico-wrap">
                 <ul class="ico-list small">
+                    <%# IPTV 회선은 비노출%>
+                    <%_if(svcAttrCd !== 'S2'){_%>
                     <li class="item">
                         <a href="/myt-data/submain" data-make-eid="data">
                             <div class="ico-item">
@@ -21,6 +23,7 @@
                             </div>
                         </a>
                     </li>
+                    <%_}_%>
                     <li class="item">
                         <a href="/myt-join/submain" data-make-eid="join">
                             <div class="ico-item">

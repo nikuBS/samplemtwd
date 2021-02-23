@@ -74,7 +74,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           res, responses: newResponses, data
         });
         // 다른 페이지를 찾고 계신가요 통계코드 추가
-        data.xtdTemp = this.getXtEidTemp(data);
+        data.otherMenuListTemp = this.otherMenuList(data);
+        data.xtCode = this.getXtractorCode();
         res.render('myt-join.submain.adv.html', { data });
       }
     });
@@ -87,9 +88,10 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     data.myJoinInfo = myjinfo;
     // 개통/변경이력 마지막 정보
     if ( data.myHistory && data.myHistory.length ) {
+      // list 내 가장 첫번째가 최근항목 - 상용데이터로 확인
       data.myLastestHistory = {
-        type: data.myHistory[data.myHistory.length - 1].chgCd,
-        date: FormatHelper.replaceDateMasking(data.myHistory[data.myHistory.length - 1].chgDt)
+        type: data.myHistory[0].chgCd,
+        date: FormatHelper.replaceDateMasking(data.myHistory[0].chgDt)
       };
     }
     // 약정 및 단말 상환 정보
@@ -165,7 +167,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     if ( data.myInfo && data.myInfo.billTypeCd ) {
       data.paymentInfo = {
         billTypeNm: data.myInfo.billTypeNm,
-        payMthdNm: data.myInfo.payMthdNm
+        // 대표청구회선이 아닌 경우에는 "통합청구"로 노출
+        payMthdNm: data.svcInfo.actRepYn !== 'Y'? '통합청구' : data.myInfo.payMthdNm
       };
     }
   }
@@ -503,37 +506,37 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
   /**
    * 다른메뉴 템플릿
    */
-  getXtEidTemp(data) {
+  otherMenuList(data) {
     // event로 별도 처리 되는 경우 url 내 data-id 속성으로 하여 별도로 관리 필요
     if ( this.type === 2 ) {
       const tempList = [
         {
           name: '나의 데이터/통화', url: '/myt-data/submain',
-          xt_eid: 'CMMA_A3_B13-56', icon: 'sub-ben-ico16.svg'
+          xt_eid: 'CMMA_A3_B13-93', icon: 'sub-ben-ico16.svg'
         },
         {
           name: '요금안내서', url: '/myt-fare/billguide/guide',
-          xt_eid: 'CMMA_A3_B13-57', icon: 'sub-ben-ico06.svg'
+          xt_eid: 'CMMA_A3_B13-94', icon: 'sub-ben-ico06.svg'
         },
         {
           name: '할인 반환금 조회', url: '/myt-join/submain/wire/discountrefund',
-          xt_eid: 'CMMA_A3_B13-76', icon: 'sub-ben-ico18.svg'
+          xt_eid: 'CMMA_A3_B13-79', icon: 'sub-ben-ico18.svg'
         },
         {
           name: '사은품 조회', url: '/myt-join/submain/wire/gifts',
-          xt_eid: 'CMMA_A3_B13-77', icon: 'sub-ben-ico19.svg'
+          xt_eid: 'CMMA_A3_B13-80', icon: 'sub-ben-ico19.svg'
         },
         {
           name: '서비스 가능지역 조회', url: '/product/wireplan/service-area',
-          xt_eid: 'CMMA_A3_B13-78', icon: 'sub-ben-ico14.svg'
+          xt_eid: 'CMMA_A3_B13-81', icon: 'sub-ben-ico14.svg'
         },
         {
           name: '회원정보', url: '/common/member/manage',
-          xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico16.svg'
+          xt_eid: 'CMMA_A3_B13-95', icon: 'sub-ben-ico16.svg'
         },
         {
           name: '내게 맞는 결합상품 찾기', url: '/product/wireplan',
-          xt_eid: 'CMMA_A3_B13-79', icon: 'submain-ico07.svg'
+          xt_eid: 'CMMA_A3_B13-82', icon: 'submain-ico07.svg'
         }
       ];
       if ( data.svcInfo.svcAttrCd === 'S2' ) {
@@ -545,42 +548,43 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       return [
         {
           name: '나의 데이터/통화', url: '/myt-data/submain',
-          xt_eid: 'CMMA_A3_B13-56', icon: 'submain-ico16.svg'
+          xt_eid: 'CMMA_A3_B13-103', icon: 'submain-ico16.svg'
         },
         {
           name: '요금안내서', url: '/myt-fare/billguide/guide',
-          xt_eid: 'CMMA_A3_B13-57', icon: 'sub-ben-ico06.svg'
+          xt_eid: 'CMMA_A3_B13-104', icon: 'sub-ben-ico06.svg'
         },
         {
           name: '회원정보', url: '/common/member/manage',
-          xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico16.svg'
+          xt_eid: 'CMMA_A3_B13-105', icon: 'sub-ben-ico16.svg'
         }
       ];
     } else {
       const tempList = [
         {
           name: '나의 데이터/통화', url: '/myt-data/submain',
-          xt_eid: 'CMMA_A3_B13-56', icon: 'submain-ico16.svg'
+          xt_eid: 'CMMA_A3_B13-58', icon: 'submain-ico16.svg'
         },
         {
           name: '요금안내서', url: '/myt-fare/billguide/guide',
-          xt_eid: 'CMMA_A3_B13-57', icon: 'sub-ben-ico06.svg'
+          xt_eid: 'CMMA_A3_B13-59', icon: 'sub-ben-ico06.svg'
         },
         {
           name: '실시간 잔여량', url: '/myt-data/hotdata',
-          xt_eid: 'CMMA_A3_B13-58', icon: 'sub-ben-ico01.svg'
+          xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico01.svg'
         },
         {
           name: '인증 센터', url: 'certify-popup',
-          xt_eid: 'CMMA_A3_B13-59', event: true, icon: 'sub-ben-ico17.svg'
+          xt_eid: 'CMMA_A3_B13-61', event: true, icon: 'sub-ben-ico17.svg'
         },
         {
           name: '회원정보', url: '/common/member/manage',
-          xt_eid: 'CMMA_A3_B13-60', icon: 'sub-ben-ico16.svg'
+          xt_eid: 'CMMA_A3_B13-62', icon: 'sub-ben-ico16.svg'
         },
         {
-          name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
-          xt_eid: 'CMMA_A3_B13-62', icon: 'sub-ben-ico06.svg'
+          name: '소액결제', url: '/myt-fare/bill/small',
+          // name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
+          xt_eid: 'CMMA_A3_B13-64', icon: 'sub-ben-ico06.svg'
         }
       ];
       // 요금제 변경 가능일 알림 휴대폰 이나 PPS 인 경우에만 노출 하도록 하기 위해 기능 추가
@@ -588,7 +592,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         tempList.splice(5, 0,
           {
             name: '요금제 변경 가능일 알림', url: '/myt-join/myplan/alarm',
-            xt_eid: 'CMMA_A3_B13-61', icon: 'sub-ben-ico15.svg'
+            xt_eid: 'CMMA_A3_B13-63', icon: 'sub-ben-ico15.svg'
           });
       }
       if ( !data.isApp ) {
@@ -609,6 +613,86 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         }
       }
       return tempList;
+    }
+  }
+
+  /**
+   * 오퍼통계코드 (상용기준)
+   */
+  getXtractorCode() {
+    if (this.type === 0) {
+      // 무선
+      return {
+        moreInfo: 'CMMA_A3_B13-30',
+        disInfo: 'CMMA_A3_B13-31',
+        contractPlan: 'CMMA_A3_B13-32',
+        usedContractPlan: 'CMMA_A3_B13-33',
+        additionInfo: 'CMMA_A3_B13-34',
+        freeAddition: 'CMMA_A3_B13-35',
+        feeAddition: 'CMMA_A3_B13-36',
+        optAddition: 'CMMA_A3_B13-37',
+        comAddition: 'CMMA_A3_B13-38',
+        benefitInfo: 'CMMA_A3_B13-39',
+        gradeMbr: 'CMMA_A3_B13-40',
+        pointMbr: 'CMMA_A3_B13-41',
+        countMbr: 'CMMA_A3_B13-42',
+        paidInfo: 'CMMA_A3_B13-43',
+        paidInfo2: 'CMMA_A3_B13-108',
+        billType: 'CMMA_A3_B13-44',
+        payMthdType: 'CMMA_A3_B13-45',
+        reservation: 'CMMA_A3_B13-46',
+        childHotdata:'CMMA_A3_B13-47',
+        childBillGuide: 'CMMA_A3_B13-48',
+        childHotbill: 'CMMA_A3_B13-49',
+        pause: 'CMMA_A3_B13-50',
+        addPause: 'CMMA_A3_B13-51',
+        detailPause: 'CMMA_A3_B13-52',
+        password: 'CMMA_A3_B13-53',
+        changePassword: 'CMMA_A3_B13-54',
+        oldNumber: 'CMMA_A3_B13-55',
+        changeNumber: 'CMMA_A3_B13-56',
+        banner: 'CMMA_A3_B13-57'
+      }
+    } else if (this.type === 1) {
+      // PPS
+      return {
+        additionInfo: 'CMMA_A3_B13-96',
+        freeAddition: 'CMMA_A3_B13-97',
+        feeAddition: 'CMMA_A3_B13-98',
+        paidInfo: 'CMMA_A3_B13-106',
+        paidInfo2: 'CMMA_A3_B13-83',
+        reservation: 'CMMA_A3_B13-99',
+        password: 'CMMA_A3_B13-100',
+        changePassword: 'CMMA_A3_B13-101',
+        banner: 'CMMA_A3_B13-102'
+      }
+    } else {
+      // 유선
+      return {
+        untillInfo: 'CMMA_A3_B13-65',
+        wireInfo: 'CMMA_A3_B13-66',
+        additionInfo: 'CMMA_A3_B13-84',
+        freeAddition: 'CMMA_A3_B13-85',
+        feeAddition: 'CMMA_A3_B13-86',
+        comAddition: 'CMMA_A3_B13-87',
+        paidInfo: 'CMMA_A3_B13-88',
+        paidInfo2: 'CMMA_A3_B13-107',
+        billType: 'CMMA_A3_B13-89',
+        payMthdType: 'CMMA_A3_B13-90',
+        reservation: 'CMMA_A3_B13-91',
+        pause: 'CMMA_A3_B13-67',
+        workNotify: 'CMMA_A3_B13-68',
+        addWorkNotify: 'CMMA_A3_B13-69',
+        editWorkNotify: 'CMMA_A3_B13-70',
+        bTargetInfo: 'CMMA_A3_B13-71',
+        bTargetInfoDetail: 'CMMA_A3_B13-72',
+        svcCancel: 'CMMA_A3_B13-73',
+        addrChg: 'CMMA_A3_B13-74',
+        prodChg: 'CMMA_A3_B13-75',
+        instChg: 'CMMA_A3_B13-76',
+        transferFee: 'CMMA_A3_B13-77',
+        wireNumChange: 'CMMA_A3_B13-78'
+      }
     }
   }
 }

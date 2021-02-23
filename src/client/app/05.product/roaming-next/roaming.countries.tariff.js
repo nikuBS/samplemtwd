@@ -187,15 +187,14 @@ Tw.RoamingCountriesTariff.prototype = {
       button.innerText = menu.label;
       button.type='button';
       button.setAttribute('data-code', menu.code);
+      button.setAttribute('aria-selected', false);
 
       li.appendChild(button);
 
       li.id = 'group-' + menu.code;
       li.setAttribute('data-code', menu.code);
       li.onclick = clickHandler;
-      groupList.appendChild(li);
-
-      
+      groupList.appendChild(li);  
     }
 
     // 분류 전환 직후이므로, 그룹의 첫번째 요소를 클릭한 효과 구현
@@ -213,7 +212,11 @@ Tw.RoamingCountriesTariff.prototype = {
   fillItems: function (code) {
     // this.currentSortBy 기준으로, 화면 우측의 국가명을 채운다.
     $('#groupList li').removeClass('active');
-    $('#group-' + code).addClass('active');
+    $('#group-' + code).addClass('active'); 
+
+    //웹접근성 추가
+    $('#groupList li button').attr('aria-selected',false);
+    $('#group-' + code + ' button').attr('aria-selected',true);
 
     var ul = document.getElementById('itemList');
     ul.innerHTML = '';
@@ -221,15 +224,7 @@ Tw.RoamingCountriesTariff.prototype = {
     var l = this.data[this.currentSortBy][code];
     for (var i = 0; i < l.length; i++) {
       var li = document.createElement('li');
-
-            // //웹접근성 button 추가
-            // var button = document.createElement('button');
-            // button.innerText = l[i].countryNm;
-            // button.type = 'button';
-            // button.role = 'link'; 
-            //li.appendChild(button);
-
-            li.innerText = l[i].countryNm;
+          li.innerText = l[i].countryNm;
       // 서비스 이용가능 국가 목록 다이얼로그의 경우, 국가 클릭 시 아무런 변화가 없으므로 핸들러를 설치하지 않는다.
       ul.appendChild(li);
     }

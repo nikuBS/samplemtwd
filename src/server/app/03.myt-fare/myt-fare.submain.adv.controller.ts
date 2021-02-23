@@ -373,12 +373,13 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         }
       });
       // 부분 납부한 금액: 청구금액 - 선택월 납부해야하는 금액
-      const prepay = this.getInt(claimPay) - this.getInt(remainPayment || claimPay);
+      const prepay = remainPayment > 0 ? this.getInt(claimPay) - remainPayment : 0;
+
       Object.assign(data, {
-        totalClaim: this.addComma((remainPayment || claimPay) + unpaid + prepay),
-        prepay: this.addComma(prepay),
-        remainPayment: this.addComma(remainPayment),
-        unpaid: this.addComma(unpaid)
+        totalClaim: this.addComma(claimPay + unpaid), // 총 납부금액 ( 청구금액 + 미납금액 )
+        prepay: this.addComma(prepay), // 부분납부한 금액
+        remainPayment: this.addComma(remainPayment), // 납부해야할 금액
+        unpaid: this.addComma(unpaid) // 미납금액(선택월의 이전 미납금액의 합계)
       });
 
       const {autoPayment = {}} = data,
@@ -395,9 +396,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       }
       // 납부 정보
       data.autoPayment = {
-        isPaid: remainPayment.toString() === '0', // 납부 여부(예정, 완료)
+        isPaid: remainPayment.toString() === '0', // 선택월 요금 납부 여부(예정(or 미납), 완료)
         payCode,
-        payDate
+        payDate,
+        isThisMonth: eDate === date // 이번달 유무
       };
     });
 

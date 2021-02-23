@@ -9,7 +9,8 @@ _%>
   <div class="section-inner">
     <div class="head-tit high">
       <% if (data.type === 0 || data.type === 3) { %>
-      <a href="#" data-id="br-opening-detail" class="link">기본 가입정보</a>
+      <a href="#" data-id="br-opening-detail" class="link"
+         data-xt_eid="<%= data.xtCode.moreInfo %>" data-xt_csid="NO" data-xt_action="BC">기본 가입 정보</a>
       <% } else { %>
       기본 가입정보
       <% } %>
@@ -89,8 +90,10 @@ _%>
             </div>
           </div>
           <div class="btn-area btn2 medium">
-            <a href="#" data-id="until-info" class="round-btn">이용 계약 정보</a>
-            <a href="#" data-id="wire-inq" class="round-btn line">신청내역 및 조회</a>
+            <a href="#" data-id="until-info" class="round-btn"
+               data-xt_eid="<%= data.xtCode.untillInfo %>" data-xt_csid="NO" data-xt_action="BC">이용 계약 정보</a>
+            <a href="#" data-id="wire-inq" class="round-btn line"
+               data-xt_eid="<%= data.xtCode.wireInfo %>" data-xt_csid="NO" data-xt_action="BC">신청내역 및 조회</a>
           </div>
         </div>
       </div>

@@ -1,12 +1,10 @@
 <%#
 * @file myt-fare.bill.small.html
-* @author 양정규
-* @since 2021.01.06
-* @desc 휴대폰 결제/콘텐츠 이용료
+* @author Jayoon Kong (jayoon.kong@sk.com)
+* @since 2018.10.04
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<% include ../../components/billsmall/myt-fare.bill.small.amount-used.html %>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -15,36 +13,120 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-bill-small" class="wrap" data-menuId="<%= pageInfo.menuId %>" data-code="<%-usedYn.code%>" data-is-adult="<%-usedYn.isAdult%>">
+    <div id="myt-fare-bill-small" class="wrap" data-menuId="<%= pageInfo.menuId %>" data-svc-gr="<%-svcInfo.svcGr%>">
         <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html', { title: '휴대폰 결제/콘텐츠 이용료', svcInfo: svcInfo }); %>
+        <%- include('../../../../../common/views/components/header.component.html', { title: '소액결제', svcInfo: svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-            <div class="container tod-submain">
-                <hr class="cont-sp type1" aria-hidden="true">
-
-                <section class="cont-card">
-                    <div class="charge-wrap">
-                        <div class="charge-cont phone-payment fe-amount-used">
-                            <div class="month-charge">
-                                <div class="charge-tit">
-                                    <%_if(usedYn.code !== 'BIL0030') { // 휴대폰 결제 이용동의 일때 노출_%>
-                                    <span class="charge-month"><%-currentMonth%>월 이용 금액</span>
-                                    <span class="period"><%- `${firstDate}~${toDate}`%></span>
-                                    <%_} else {_%>
-                                    <span class="charge-month">이용 금액</span>
-                                    <%_}_%>
-                                </div>
-                            </div>
-                        </div>
+            <h2 class="fe-name none"><%= svcInfo.mbrNm %></h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="monthly-billing">
+                        <div class="detail"><%= currentMonth %>월 이용금액</div>
+                        <div class="price"><span class="str fe-use-amount"></span>원</div>
+                        <div class="limit">남은 한도<span class="str fe-remain-amount"></span>원</div>
                     </div>
-                </section>
-                <% include ../../components/billsmall/myt-fare.bill.small.tab-section.html %>
-                <% include ../../components/billsmall/myt-fare.bill.small.frequentQuestions.html %>
+
+                    <ul class="bt-slice item-two">
+                        <li class="bt-white2">
+                            <button class="fe-micro-history">이용 내역</button>
+                        </li>
+                        <li class="bt-white2">
+                            <button class="fe-change-limit">한도 변경</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="link-list">
+                        <li>
+                            <dl>
+                                <dt>선결제 가능 금액<button id="MF_06_tip_01" class="tip-view" aria-haspopup="true" title="선결제 가능금액 정보보기">TIP</button></dt>
+                                <dd>
+                                    <button class="link-full fe-prepay" title="선결제 화면 이동" data-unusual-state="<%-unusualYn%>">
+                                        <span class="val"><span class="str fe-prepay-amount"></span>원</span>
+                                    </button>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>자동 선결제<button id="MF_06_tip_02" class="tip-view" aria-haspopup="true" title="자동 선결제 정보보기">TIP</button></dt>
+                                <dd class="fe-auto-wrap none">
+                                    <button class="link-full fe-auto-prepay-change" title="자동선결제 설정 화면 이동" data-unusual-state="<%-unusualYn%>">
+                                        <span class="val">변경 및 해지</span>
+                                    </button>
+                                </dd>
+                                <dd class="fe-non-auto-wrap none">
+                                    <button class="link-full fe-auto-prepay" title="자동선결제 설정 화면 이동" data-unusual-state="<%-unusualYn%>">
+                                        <span class="val">신청</span>
+                                    </button>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="link-list">
+                        <li>
+                            <dl>
+                                <dt>소액결제 이용 설정</dt>
+                                <dd class="on-off-list new">
+                                    <div class="switch-wrap">
+										<span class="widget">
+											<span class="widget-box switch">
+												<span class="btn-switch type1 <% if (usedYn.isUsed) { %> on <% } %>">
+													<span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false">
+														<span class="on-tx fe-tx">사용</span>
+														<input id="<%= usedYn.rtnUseYn %>" class="fe-set-use" type="checkbox" title="소액결제 이용설정" />
+														<span class="off-tx fe-tx">차단</span>
+													</span>
+												</span>
+											</span>
+										</span>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <% if (usedYn.isPassword) { %>
+                    <ul class="link-list">
+                        <li class="last-line-top">
+                            <dl>
+                                <dt>결제 비밀번호</dt>
+                                <% if (passwordInfo.text !== '') { %>
+                                <dd>
+                                    <button class="link-full fe-set-password"
+                                            data-cpin="<%= passwordInfo.result.cpinStCd %>"
+                                            data-code="<%= passwordInfo.code %>"
+                                            data-msg="<%= passwordInfo.msg %>"
+                                            title="결제 비밀번호 설정 화면 이동"
+                                            <% if (passwordInfo.result.bDay) { %>
+                                            data-birth="<%= passwordInfo.result.bDay %>"
+                                            <% } %>>
+                                        <span class="val"><%= passwordInfo.text %></span>
+                                    </button>
+                                </dd>
+                                <% } %>
+                            </dl>
+                        </li>
+                    </ul>
+                    <% } %>
+                </div>
+                <!--// .cont-box -->
             </div>
-            <div class="dim"></div>
         </div>
         <!--// #contents -->
         <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
@@ -53,7 +135,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillPrepayMain($('#myt-fare-bill-small'));
+    new Tw.MyTFareBillPrepayMain($('#myt-fare-bill-small'), 'small');
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -42,7 +42,7 @@ Tw.FormatHelper = (function () {
    * @public
    */
   var isObject = function (value) {
-    return (!!value) && (value.constructor === Object);
+    return (!!value) && (value.varructor === Object);
   };
 
   /**
@@ -52,7 +52,7 @@ Tw.FormatHelper = (function () {
    * @public
    */
   var isArray = function (value) {
-    return (!!value) && (value.constructor === Array);
+    return (!!value) && (value.varructor === Array);
   };
 
   /**

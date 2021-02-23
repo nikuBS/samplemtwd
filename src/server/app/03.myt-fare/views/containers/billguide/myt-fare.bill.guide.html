@@ -45,10 +45,10 @@ _%>
                             {{!-- 주석 : billItmLclNm --}}
                             {{# each list as |largeItem largeIndex|}}
 
-                                <li class="acco-box noborder">
+                                <li class="acco-box noborder {{#is_open_accordion largeItem}}{{/is_open_accordion}}">
 
                                     <div class="acco-tit">
-                                        <button role="button" aria-pressed="false">
+                                        <button role="button" aria-pressed="{{#is_open_accordion_btn largeItem}}{{/is_open_accordion_btn}}">
                                             <div class="in-title">
                                                 <span class="tit">{{largeItem.id}}</span>
                                                 <span class="tx-cont {{#if_dc_red largeItem.id }}{{/if_dc_red}}">{{largeItem.totPrice}} 원</span>

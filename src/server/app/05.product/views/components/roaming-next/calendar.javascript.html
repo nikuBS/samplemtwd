@@ -548,7 +548,7 @@
         //
         // Display the calendar
         //
-        var datePickerTabidx = 0; //202011 - 웹접근성 수정건 적용 : 디폴트 탭 인덱스 0 적용.
+        //var datePickerTabidx = 0; //202011 - 웹접근성 수정건 적용 : 디폴트 탭 인덱스 0 적용.
         var minDate = side == 'left' ? this.minDate : this.startDate;
         var maxDate = this.maxDate;
         var selected = side == 'left' ? this.startDate : this.endDate;
@@ -688,7 +688,7 @@
             if (!disabled)
               cname += 'available';
 
-            html += '<td class="' + cname.replace(/^\s+|\s+$/g, "") + '" data-title="' + "r" + row + "c" + col + '"  role="button" tabindex="'+ datePickerTabidx +'">'+
+            html += '<td class="' + cname.replace(/^\s+|\s+$/g, "") + '" data-title="' + "r" + row + "c" + col +'">'+ 
                     '<button class="available" data-title="' + "r" + row + "c" + col + '">' + calendar[row][col].date() + "</button></td>";  // 202011 - 웹접근성 수정건 적용 : role="button" , tabindex 추가
 
           }

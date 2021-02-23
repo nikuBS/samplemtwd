@@ -1,15 +1,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="roamingTariffs" class="wrap">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu" tabindex="-1">
-            <a href="javascript:void(0);"><img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴열기" width="24" height="24" /></a>
-        </span>
-        <h1>T로밍 요금제</h1>
-        <a href="/common/search-main">
-            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색"/>
-        </a>
-    </div>
+<!-- //웹접근성 hearder 삭제-->
     <%- include('../components/header.component.html', { title: 'T로밍 요금제', svcInfo: svcInfo }) %>
     <div id="contents">
     <div class="header">

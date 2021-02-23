@@ -38,6 +38,7 @@ Tw.ProductRoamingFiGuide.prototype = {
     this.$container.on('click', 'button[id=flab06]', $.proxy(this._openProdTypePop, this)); //국가선택팝업 / 바로박스상품 선택 리스트팝업
 
     this.$popfocus.on('click', $.proxy(this._popfocus, this));
+    this.$container.on('click', '.rm-anchor li a', $.proxy(this._tabClick, this)); //웹접근성  바로박스 텝 클릭   
     //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
     this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
@@ -49,7 +50,13 @@ Tw.ProductRoamingFiGuide.prototype = {
       $("a.icon-gnb-menu").focus();
     },300);  
  },
- 
+  //웹접근성 why바로박스, 요금안내, 이용방법 텝 클릭시
+  _tabClick: function(e) {
+    var st = e.currentTarget.getAttribute('href');
+    setTimeout(function () {
+      $(st +' h4').focus();
+    },300);  
+ },
   /**
    * @function
    * @desc baro Box 예약 페이지 이동

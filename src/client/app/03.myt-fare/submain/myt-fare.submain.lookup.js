@@ -8,7 +8,7 @@ Tw.MyTFareSubMainLookup = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-
+  this.common = new Tw.MyTFareSubMainCommon(params);
   this._init();
 };
 
@@ -26,7 +26,6 @@ Tw.MyTFareSubMainLookup.prototype = {
   _cachedElement: function () {
     this._contents = this.$container.find('.fe-lookup'); // 컨텐츠 영역
     this._taxTempl = Handlebars.compile( $('#fe-tax-templ').html()); // 세금계산서, 기부금 템플릿
-
   },
 
   /**
@@ -75,7 +74,19 @@ Tw.MyTFareSubMainLookup.prototype = {
       isTax: isTax,
       isContribute: isContribute
     }));
-    new Tw.XtractorService(this.$container);
+    this._makeEid();
+    // new Tw.XtractorService(this.$container);
+  },
+
+  /**
+   * @function
+   * @desc 통계코드 data attr 생성
+   * @private
+   */
+  _makeEid: function () {
+    this.common.makeEid()
+      .setEid('tax', '56', '77')  // 세금 계산서
+      .setEid('donation', '57', '78').build(); // 기부금
   },
 
   _error: function (res) {

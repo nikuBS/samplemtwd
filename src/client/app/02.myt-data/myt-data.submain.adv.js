@@ -1366,7 +1366,7 @@ Tw.MyTDataSubMainAdv.prototype = {
           this.$immChargeSection.find('[data-id=ting]').hide();
         }
         if (!this.immChargeData.etc && !this.immChargeData.limit) {
-          this.$immChargeSection.find('[data-id=etc-wrap]').hide();
+          this.$immChargeSection.find('[data-id=etc-wrap]').remove();
         } else {
           if (!this.immChargeData.etc) {
             // 팅/쿠키즈/안심음성 요금제 사용중인 경우

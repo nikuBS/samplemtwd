@@ -19,7 +19,11 @@ _%>
                 <% include ../components/submain/myt-fare.submain.claim-pay.date.html %>
                 <dl class="sel-bill">
                     <dt class="term"><%- data.type !== 'UF' ? '총 납부 금액' : '이용요금' %></dt>
-                    <dd class="charge"><%-data.totalClaim%><span class="unit">원</span></dd>
+                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>">
+                        <dd class="charge">
+                            <%-data.totalClaim%><span class="unit">원</span>
+                        </dd>
+                    </a>
                 </dl>
                 <%_
                     const {prepay='0', remainPayment='0', unpaid='0'} = data;
@@ -39,7 +43,7 @@ _%>
                     <%_} else {_%>
                     <li class="default-item">
                         <span class="default-tit"><%-data.month%>월 요금</span>
-                        <span class="default-cost"><%-data.remainPayment%>원</span>
+                        <span class="default-cost"><%-data.claimPay%>원</span>
                     </li>
                     <%_}_%>
                     <%_if(unpaid !== '0') {_%>
@@ -57,9 +61,9 @@ _%>
                 <!--통합청구 대표일때-->
                 <%_
                     if(data.type !== 'UF'){
-                        const {autoPayment} = data,
-                        payText = autoPayment.isPaid ? '납부완료' : '납부될 예정',
-                        payTextEnd = autoPayment.isPaid ? '되었습니다.' : '입니다.',
+                        const {isPaid, isThisMonth, payDate, payCode} = data.autoPayment;
+                        payText = isPaid ? '납부완료' : isThisMonth ? '납부될 예정' : '미납',
+                        payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.',
                         payType = {
                             '01': '계좌이체',
                             '02': '카드 자동납부',
@@ -68,7 +72,7 @@ _%>
                         };
                 _%>
                 <strong class="highlight"><%-`${data.month}월 요금이 ${payText}`%></strong> <%-payTextEnd%>
-                <span class="detail-type"><%-`${autoPayment.payDate} ${payType[autoPayment.payCode]}`%></span>
+                <span class="detail-type"><%-`${payDate} ${payType[payCode]}`%></span>
                 <%_} else if(repSvcNm){_%>
                 <strong class="highlight"><%- repSvcNm%>에 통합청구</strong> 되었습니다.
                 <%_}_%>
@@ -108,11 +112,18 @@ _%>
 
             <!-- 요금납부 (통합청구 대표) -->
             <%_ if(data.type !== 'UF' && data.isNotAutoPayment){
-                const classNm = data.unPaidTotSum ? 'btn2' : '';
+                const {isThisMonth, isPaid} = data.autoPayment;
+                // 미납버튼 노출 조건:
+                // 1. 당월인경우: 당월 납부예정(납부 전)이라도, 미납요금버튼 미노출이나, 당월보다 이전 미납금액 있으면 노출.
+                // 2. 이전달인 경우: 선택 월 포함 미납금액 있으면 노출
+                const isShowUnpaid = unpaid !== '0' ? true : !isThisMonth && !isPaid ? true : false;
+                const classNm = isThisMonth && isShowUnpaid ? 'btn2' : '';
             _%>
             <div class="btn-area <%-classNm%>">
+                <%_if(isThisMonth){ // 당월 일때만 요금납부 버튼 노출 _%>
                 <a href="#" class="round-btn fe-payment" data-make-eid="charge">요금 납부</a>
-                <a href="/myt-fare/unbill" class="round-btn line <%- classNm ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
+                <%_}_%>
+                <a href="/myt-fare/unbill" class="round-btn line <%- isShowUnpaid ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
             </div>
             <%_}_%>
         </div>
@@ -132,6 +143,16 @@ _%>
             </dt>
             <dd class="report-cont">{{value}}원<!--1,260원--></dd>
         </dl>
+        {{#subList}}
+            <ul class="detail-list">
+                <li class="detail-item">
+                    <dl class="detail-price">
+                        <dt class="detail-article">{{this.title}}<!--요금할인--></dt>
+                        <dd class="price">{{this.value}}<!--20,000-->원</dd>
+                    </dl>
+                </li>
+            </ul>
+        {{/subList}}
     </li>
     {{/list}}
 </script>

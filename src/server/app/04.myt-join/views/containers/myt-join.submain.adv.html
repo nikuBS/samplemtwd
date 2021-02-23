@@ -14,7 +14,7 @@ _%>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%- data.pageInfo.menuId %>">
-        <%- include('../components/header.component.html', { title: '나의 가입정보', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); _%>
+        <%- include('../components/header.component.html', { title: '나의 가입 정보', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); _%>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
@@ -46,7 +46,8 @@ _%>
                 <!-- 납부/청구 :end -->
                 <!-- 가입배너 :start -->
                 <div class="submain-banner">
-                    <a href="/product/wireplan/join/reservation?type_cd=cellphone">
+                    <a href="/product/wireplan/join/reservation?type_cd=cellphone"
+                       data-xt_eid="<%= data.xtCode.reservation %>" data-xt_csid="NO" data-xt_action="BC">
                         <!-- 201207 [OP002-10282] 수정08 : 텍스트 수정-->
                         <p class="banner-comment">
                             <strong>가입상담을 예약하시겠어요?</strong>
@@ -82,14 +83,13 @@ _%>
                 </div>
                 <!-- 배너 영역 :end -->
                 <!-- 201201 [OP002-10282] 수정03 -->
-                <%_ const eid = data.xtEid; _%>
                 <section class="cont-card">
                     <div class="section-inner">
                         <div class="head-tit">다른 메뉴를 찾고 계신가요?</div>
                         <div class="card-cont">
                             <div class="small-ico-list-wrap">
                                 <ul class="small-ico-list">
-                                    <%_ data.xtdTemp.forEach((item) => { _%>
+                                    <%_ data.otherMenuListTemp.forEach((item) => { _%>
                                     <li class="ico-item">
                                         <% if (item.event) { %>
                                         <a href="#" data-id="<%= item.url %>" data-xt_eid="<%= item.xt_eid %>" data-xt_csid="NO" data-xt_action="BC">
