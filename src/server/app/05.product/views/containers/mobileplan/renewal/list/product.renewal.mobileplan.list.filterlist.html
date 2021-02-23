@@ -17,21 +17,16 @@
                     <div class="tod-nmp-top-wrap">
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
                         <!-- 필터 조건값 노출 영역 -->
-                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: '', quickFilterData: quickFilterData}); %>
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: ''}); %>
                     </div>
                     <section class="tod-cont-section" data-lastproduct="<%= plans.products[plans.products.length-1].prodId %>">
-                        <% if(quickFilterData.filterExist == 'Y') { %>
-                            <%- include('../../../../components/renewal/list/product.renewal.mobileplan.quickfilter-hardcoding.component.html', {}); %>
-                        <!-- 요금제 row list 형 -->
-                        <% } else { %>
-                            <% for(let i = 0; i < plans.productCount && i < 20; i++ ) { %>
-                                <% let thisPlan = plans.products[i]; %>
-                                <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
-                                <div class="tod-nmp-item plan-type3 <%= series.seriesClass %>">
-                                    <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
-                                </div>
-                                    <!-- //요금제 모듈 : 일반형 -->
-                            <% } %>
+                        <% for(let i = 0; i < plans.productCount && i < 20; i++ ) { %>
+                            <% let thisPlan = plans.products[i]; %>
+                            <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
+                            <div class="tod-nmp-item plan-type<%=thisPlan.prodSmryExpsTypCd %> <%= series.seriesClass %>">
+                                <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
+                            </div>
+                                <!-- //요금제 모듈 : 일반형 -->
                         <% } %>
                     </section>
                     <div class="tod-nmp-loading <% if(hasNext == 'false') { %>none<% } %>">

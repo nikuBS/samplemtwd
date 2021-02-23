@@ -33,14 +33,14 @@
                                     <% for(let j = 0; j < plans.separateProductList.length; j++) { %>
                                         <% let thisPlan = plans.separateProductList[j]; %>
                                         <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-                                        <li>
-                                            <% if(thisSeries.prodFltId == thisPlan.prodFltId) { %>
-                                                <div class="tod-nmp-item plan-type<%= thisSeries.prodSmryExpsTypCd %> <%= thisPlan.tabCode %>">
+                                        <% if(thisSeries.prodFltId == thisPlan.prodFltId) { %>
+                                            <li>
+                                                <div class="tod-nmp-item plan-type<%= thisSeries.prodSmryExpTypeCd %> <%= thisPlan.tabCode %>">
                                                     <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: 'Y'}); %>
                                                 </div>
-                                            <% } %>
-                                            <!-- //요금제 모듈 : 혜택강조형 -->
-                                        </li>
+                                            </li>
+                                        <% } %>
+                                        <!-- //요금제 모듈 : 혜택강조형 -->
                                     <% } %>
                                 </ul>
                             </div>

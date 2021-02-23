@@ -17,7 +17,7 @@
                     <div class="tod-nmp-top-wrap">
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
                         <!-- 필터 조건값 노출 영역 -->
-                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: '', quickFilterData: quickFilterData}); %>
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: ''}); %>
                     </div>
                     <% for(let k=0; k < mobileList.length; k++){ %>
                         <% if(mobileList[k].exist =='Y'){ %>
