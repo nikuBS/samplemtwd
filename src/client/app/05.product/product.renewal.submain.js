@@ -255,17 +255,14 @@ Tw.ProductRenewalSubmain.prototype = {
 
     var $quickFilter = this.$container.find('section[data-sort="QUICK_FILTER"]');
     var $sliderList = $quickFilter.find('.slider-list');
-    _.map(quickFilterParseList, $.proxy(function(item) {
-      var html = item.bnnrHtmlCtt;
-      if ( html ) { 
-        html = html.replace('<p>', '').replace('</p>', '').replace('<br>', ''); // admin 페이지에서 배너를 등록하면 <p> 및 <br> 태그가 생기는 현상이 발생해서 replace로 삭제한다.
-        if ( item.oferStcCd ) { // 트래킹 코드가 존재하면?
-          html = html.replace('{{oferStcCd}}', item.oferStcCd);
-        }
 
-        $sliderList.append(html);
-      }
-    }, this));
+    var quickFilterHandle = Handlebars.compile(Tw.RENEWAL_PRODUCT_SUBMAIN_QUICKFILTER);
+    var html = quickFilterHandle({
+      cdn_url: _this._cdn,
+      banners: quickFilterParseList
+    });
+
+    $sliderList.append(html);
 
     // 등록된 quick-item에 대한 이벤트 바인딩을 한다.
     $(document).on('click', '.quick-item', function(event) {
@@ -274,13 +271,13 @@ Tw.ProductRenewalSubmain.prototype = {
 
       if ( dataOption || dataLink ) {
         switch ( dataOption ) {
-          case 'O': // 외부링크 이동 시 
+          case 'B': // 외부링크 이동 시 
             Tw.CommonHelper.openUrlExternal(dataLink);
             break;
-          case 'I': // 앱 내 이동 시
+          case 'S': // 앱 내 이동 시
             window.location.href = dataLink;
             break;
-          case 'Q': // 테마 리스트로 이동 시
+          case 'N': // 테마 리스트로 이동 시
             var themeTabCode = _super._line.quickFilterCode; // 테마 리스트 탭에 대한 ID
             var themeFilterCode = dataLink; // 테마 리스트에서 출력되어야할 필터 코드 값
 
@@ -309,11 +306,11 @@ Tw.ProductRenewalSubmain.prototype = {
     // 회선을 보유한 사용자의 만 나이가 22세라면 리턴되는 항목이 존재하게 됨
     var AGE_SCOPE = {
       'TAG0000205' : {'from' : 0, 'to': 999}, // 연령 디폴트 (모든 사용자에게 출력됨) 
-      'TAG0000206' : {'from' : 1, 'to': 12}, // 12세 이하 (0~12)
+      'TAG0000206' : {'from' : 1, 'to': 12}, // 12세 이하 (1~12)
       'TAG0000207' : {'from' : 13, 'to': 18}, // 18세 이하 (13~18)
       'TAG0000208' : {'from' : 18, 'to': 24}, // 24세 이하 (19~24)
-      'TAG0000209' : {'from' : 25, 'to': 39}, // 25세 이상 39세 이하 (25~39) - 특이 케이스
-      'TAG0000210' : {'from' : 40, 'to': 64}, // 40세 이상 64세 이하 (40~64) - 특이 케이스
+      'TAG0000209' : {'from' : 25, 'to': 39}, // 25세 이상 39세 이하 (25~39)
+      'TAG0000210' : {'from' : 40, 'to': 64}, // 40세 이상 64세 이하 (40~64)
       'TAG0000211' : {'from' : 65, 'to': 999}, // 65세 이상 (65~999)
     }
 
