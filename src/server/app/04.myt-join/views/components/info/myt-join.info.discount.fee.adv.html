@@ -22,12 +22,14 @@ _%>
                     <dd class="report-cont basics13-larger"><%= feeItem.salePay.replace('-', '') %>원</dd>
                 </dl>
             </li>
+            <!--
             <li class="report-item">
                 <dl class="report-define d-wrap">
                     <dt class="report-tit">오늘 해지 시 할인반환금</dt>
                     <dd class="report-cont"></dd>
                 </dl>
             </li>
+            -->
         </ul>
         <a href="#" class="detail-info-link" data-target="detailList"
            data-value='<%-JSON.stringify(feeItem.svcAgrmtDcObj) %>'>월별 상세 할인 내역 ></a>
@@ -37,7 +39,8 @@ _%>
                     <dl class="report-define d-wrap">
                         <dt class="report-tit">약정 기간</dt>
                         <dd class="report-cont">
-                            <button type="button" class="detail-agree-btn">
+                            <button type="button" class="detail-agree-btn" data-id="fee"
+                                    data-target="<%= feeItem.prodId %>">
                                 <%= feeItem.totMt %>개월(<%= feeItem.totDt %>일)
                             </button>
                         </dd>
@@ -47,7 +50,7 @@ _%>
         </div>
         <div class="horizon-bar-wrap contract-graph">
             <div class="horizon-bar">
-                <span class="data" style="width:<%- feeItem.perDt %>%">
+                <span class="data" style="width:<%- feeItem.nPerDt %>%">
                     <span class="bar"></span>
                     <span class="bar-bubble"><%= feeItem.remDt %>일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
                 </span>
