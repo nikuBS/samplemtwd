@@ -141,10 +141,11 @@ body.tod-white{background:#fff}
 .tod-submain .report-list .report-item{overflow:hidden; font-size:0.9375rem;  border-bottom:1px solid #f2f2f2;/*  padding:13px 0 12px */}
 .tod-submain .report-list .report-item > .d-wrap{padding:1rem 0}
 .tod-submain .report-list .report-item:first-child > a.d-wrap{padding-top:1rem !important}
-.tod-submain .report-list .report-item:last-child > a.d-wrap{padding-bottom:1rem !important}
+.tod-submain .report-list .report-item:last-child > a.d-wrap{padding-bottom:1rem !important ; }
+.tod-submain .card-cont > .report-list:nth-last-child(-n + 1) .report-item:last-child > a.d-wrap{margin-bottom:-1rem;}
 .tod-submain .report-list .report-item:first-child > .d-wrap{padding-top:0 !important}
 .tod-submain .report-list .report-item:last-child > .d-wrap{padding-bottom:0 !important}
-.tod-submain .report-list .report-item:last-child{border:none;}
+.tod-submain .report-list .report-item:last-child{border:none; overflow:visible}
 .tod-submain .report-list .report-item .link {display:inline-block; width:100%; vertical-align:top}
 .tod-submain .report-list .report-item .report-define{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content: space-between;/*  -webkit-box-align: center; */}
 .tod-submain .report-list.align-center .report-item .report-define{align-items:center}
@@ -157,7 +158,6 @@ body.tod-white{background:#fff}
 .tod-submain .report-list .report-item .report-define .report-cont .large{display:inline-block; font-size:2rem; font-weight:800; letter-spacing:-1px}
 .tod-submain .report-list .report-item .report-define .report-cont .medium{display:inline-block; font-size:1.5rem; font-weight:800;}
 .tod-submain .report-list .report-item .report-define .report-cont.basics13-larger{font-size:15px; font-weight:500}
-
 .tod-submain .report-list .report-item .link .report-define{position:relative; padding-right:0.75rem; }
 .tod-submain .report-list .report-item .link .report-define:after{content:''; display:inline-block; width:0.5rem; height:0.8125rem; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
 .tod-submain .report-list .report-item .detail-info{display:inline-block; padding-left:0.625rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; -webkit-box-flex: 1; flex-grow:1; flex-basis:0; max-width:calc(100% - 5.9375rem); vertical-align:top; }
@@ -383,6 +383,8 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center;  -webkit-box-pack: justify;justify-content:space-between; font-size:0.9375rem; line-height:1.75rem}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .detail-article{color:#82888f; font-weight:400; line-height:1.75rem}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .price{font-weight:500; line-height:1.75rem}
+.tod-submain .charge-cont .guide-txt{margin:16px 0 ;}
+.tod-submain .charge-cont .guide-txt strong{font-weight:500; color:#f65252; letter-spacing: -0.45px; line-height:1.4}
 
 /* pps */
 .tod-submain .report-list.pps .report-item .report-define .report-tit{width:70%; white-space:nowrap; line-height:1.3125rem}
