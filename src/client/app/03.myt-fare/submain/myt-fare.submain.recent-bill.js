@@ -9,7 +9,7 @@ Tw.MyTFareSubMainRecentBill = function (params) {
   this.data = params.data;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-
+  this.common = new Tw.MyTFareSubMainCommon(params);
   this._init();
 };
 
@@ -118,6 +118,7 @@ Tw.MyTFareSubMainRecentBill.prototype = {
     if (claimTotal.sum > 0) {
       this._averageArea(calData);
     }
+    this._makeEid();
   },
 
   /**
@@ -197,27 +198,12 @@ Tw.MyTFareSubMainRecentBill.prototype = {
    * @private
    */
   _makeEid: function () {
-
-    var eid = {};
-    var setEid = function (key, stgEId, prdEid) {
-      var preCode = 'CMMA_A3_B12-';
-      eid[key] = preCode + (Tw.Environment.environment === 'prd' ? prdEid : stgEId);
-    };
-
-    setEid('recentBill0', '68', ''); // 최근청구요금내역1
-    setEid('recentBill1', '69', ''); // 최근청구요금내역2
-    setEid('recentBill2', '70', ''); // 최근청구요금내역3
-
-    $.each(this.$container.find('[data-make-eid]'), function (idx, item){
-      var $item = $(item);
-      var eidCd = eid[$item.data('make-eid')];
-      if (eidCd) {
-        $item.attr('data-xt_eid', eidCd)
-          .attr('data-xt_csid', 'NO')
-          .attr('data-xt_action', 'BC');
-        $item.removeAttr('data-make-eid');
-      }
-    });
+    var builder = this.common.makeEid();
+    var getEidOfLineType = builder.getEidOfLineType;
+    builder.setEid('recentBill0', '68', getEidOfLineType('66', '105')) // 최근 청구요금내역 1
+      .setEid('recentBill1', '69', getEidOfLineType('67', '106')) // 최근 청구요금내역 2
+      .setEid('recentBill2', '70', getEidOfLineType('68', '107')) // 최근 청구요금내역 3
+      .build();
   }
 
 };

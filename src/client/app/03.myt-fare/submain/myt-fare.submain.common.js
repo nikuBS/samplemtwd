@@ -6,6 +6,7 @@
  */
 Tw.MyTFareSubMainCommon = function (params) {
   this.$container = params.$element;
+  this.data = params.data;
 };
 
 Tw.MyTFareSubMainCommon.prototype = {
@@ -14,28 +15,48 @@ Tw.MyTFareSubMainCommon.prototype = {
    * @desc 통계코드 data attr 생성
    * @private
    */
-  _makeEid: function () {
+  makeEid: function () {
+    var self = this,
+      eid = {},
+      svcAttrCd = this.data.svcInfo.svcAttrCd;
+    var isWire = svcAttrCd.indexOf('S') > -1; // 유선회선 여부
 
-    var eid = {};
+    /**
+     * 회선에 따른 오퍼통계 넘버 리턴
+     * @param{string} v1 무선회선일때 오퍼통계 넘버
+     * @param{string} v2 유선회선일때 오퍼통계 넘버
+     * @param{string} v3 PPS 회선일때 오퍼통계 넘버
+     * @return{string} 해당 회선에 맞는 오퍼통계 넘버
+     */
+    var getEidOfLineType = function (v1, v2,v3) {
+      return isWire ? v2 : (v3 && svcAttrCd === 'M2') ? v3 : v1;
+    };
+
     var setEid = function (key, stgEId, prdEid) {
       var preCode = 'CMMA_A3_B12-';
       eid[key] = preCode + (Tw.Environment.environment === 'prd' ? prdEid : stgEId);
+      return this;
     };
 
-    setEid('recentBill0', '68', ''); // 최근청구요금내역1
-    setEid('recentBill1', '69', ''); // 최근청구요금내역2
-    setEid('recentBill2', '70', ''); // 최근청구요금내역3
+    var build = function () {
+      $.each(self.$container.find('[data-make-eid]'), function (idx, item){
+        var $item = $(item);
+        var eidCd = eid[$item.data('make-eid')];
+        if (eidCd) {
+          $item.attr('data-xt_eid', eidCd)
+            .attr('data-xt_csid', 'NO')
+            .attr('data-xt_action', 'BC');
+          $item.removeAttr('data-make-eid');
+        }
+      });
+    };
 
-    $.each(this.$container.find('[data-make-eid]'), function (idx, item){
-      var $item = $(item);
-      var eidCd = eid[$item.data('make-eid')];
-      if (eidCd) {
-        $item.attr('data-xt_eid', eidCd)
-          .attr('data-xt_csid', 'NO')
-          .attr('data-xt_action', 'BC');
-        $item.removeAttr('data-make-eid');
-      }
-    });
+    return {
+      setEid: setEid,
+      getEidOfLineType: getEidOfLineType,
+      build: build
+    };
+
   }
 
 };
