@@ -15,18 +15,18 @@
                 <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
                 <div class="container">
                     <div class="tod-nmp-top-wrap">
-                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList, quickFilterData: quickFilterData}); %>
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
                         <!-- 필터 조건값 노출 영역 -->
-                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: '', quickFilterData: quickFilterData}); %>
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: ''}); %>
                     </div>
                     <section class="tod-cont-section">
                         <!-- 요금제 two column list -->
                         <div class="tod-nmp-column-list">
                             <ul>
-                                <% for(let i=0; i < plans.productCount; i++ ) { %>
-                                    <% let thisPlan = plans.products[i]; %>
+                                <% for(let i=0; i < plans.separateProductList.length; i++ ) { %>
+                                    <% let thisPlan = plans.separateProductList[i]; %>
                                     <li>
-                                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo}); %>
+                                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, PPSYN: 'Y'}); %>
                                     </li>
                                 <% } %>
                             </ul>

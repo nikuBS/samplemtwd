@@ -1,21 +1,12 @@
     <div class="tod-nmp-tab">
         <div class="rn-prod-inner">
             <ul>
-                <% if(quickFilterData.filterExist == 'Y') { %>
-                    <li<%= series.fiveGx %>><a href="/product/renewal/mobileplan/list?filters=F01713&code=<%= quickFilterData.filterCode %>" class="tapSelectButton">5G</a></li>
-                    <li<%= series.lte %>><a href="/product/renewal/mobileplan/list?filters=F01121&code=<%= quickFilterData.filterCode %>" class="tapSelectButton">LTE</a></li>
-                    <li<%= series.threeG %>><a href="/product/renewal/mobileplan/list?filters=F01122&code=<%= quickFilterData.filterCode %>" class="tapSelectButton">3G</a></li>
-                    <li<%= series.secondDevice %>><a href="/product/renewal/mobileplan/list?filters=F01124&code=<%= quickFilterData.filterCode %>" class="tapSelectButton">태블릿/2nd Device</a></li>
-                    <li<%= series.prepay %>><a href="/product/renewal/mobileplan/list?filters=F01125&code=<%= quickFilterData.filterCode %>" class="tapSelectButton">선불</a></li>
-                <% } else { %>
-                    <li<%= series.fiveGx %>><a href="/product/renewal/mobileplan/list?filters=F01713<%= filterList.filterList %>" class="tapSelectButton">5G</a></li>
-                    <li<%= series.lte %>><a href="/product/renewal/mobileplan/list?filters=F01121<%= filterList.filterList %>" class="tapSelectButton">LTE</a></li>
-                    <li<%= series.threeG %>><a href="/product/renewal/mobileplan/list?filters=F01122<%= filterList.filterList %>" class="tapSelectButton">3G</a></li>
-                    <li<%= series.secondDevice %>><a href="/product/renewal/mobileplan/list?filters=F01124<%= filterList.filterList %>" class="tapSelectButton">태블릿/2nd Device</a></li>
-                    <li<%= series.prepay %>><a href="/product/renewal/mobileplan/list?filters=F01125<%= filterList.filterList %>" class="tapSelectButton">선불</a></li>
-                <% } %>
+                <li<%= series.fiveGx %>><a href="/product/renewal/mobileplan/list?filters=F01713<%= filterList.filterList %>" class="tapSelectButton">5G</a></li>
+                <li<%= series.lte %>><a href="/product/renewal/mobileplan/list?filters=F01121<%= filterList.filterList %>" class="tapSelectButton">LTE</a></li>
+                <li<%= series.threeG %>><a href="/product/renewal/mobileplan/list?filters=F01122<%= filterList.filterList %>" class="tapSelectButton">3G</a></li>
+                <li<%= series.secondDevice %>><a href="/product/renewal/mobileplan/list?filters=F01124<%= filterList.filterList %>" class="tapSelectButton">태블릿/2nd Device</a></li>
+                <li<%= series.prepay %>><a href="/product/renewal/mobileplan/list?filters=F01125<%= filterList.filterList %>" class="tapSelectButton">선불</a></li>
                 <li<%= series.theme %>><a id="themeSelectBtn" class="tapSelectButton">테마</a></li>
-                
             </ul>
             <!-- 필터 선택 유도 툴팁 -->
             <div class="rn-notice" style="display:none">

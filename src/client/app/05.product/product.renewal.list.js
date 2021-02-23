@@ -1,4 +1,4 @@
-Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, networkInfo) {
+Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, networkInfo, cdn) {
     this.$container = rootEl;
     this._params = params; //  검색 필터용 params
     this._params.searchLastProdId = ''; // 탭 없는 랜딩페이지 시 추가된 searchLastProdId 초기화
@@ -6,7 +6,11 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, netwo
     this._series = series;
     this._hasNext = hasNext;
     this._networkInfo = networkInfo;
-
+    this._checkDefault = 'N'; //전체리스트 Default 페이지 랜딩 인지 확인
+    this._curNetworkCount = 1; // 전체리스트 Default 페이지 추가 호출 횟수 count
+    this._cdn = cdn;
+    this._remainGroupData = 0;
+    this._curRemainGroupData = 0;
   
     this.CODE = 'F01100';
     this.TYPE = 'plans';
@@ -23,6 +27,7 @@ Tw.ProductRenewalList.prototype = {
     _init: function() {
       this.themeParam = this._getParameter('theme');
       this._listTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE);
+      this._listDefaultTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT);
       this.curFilter = this._checkFilter();
       this.curMobileFilter = this._checkMobilefilter();
       this._loadNotice();
@@ -67,6 +72,7 @@ Tw.ProductRenewalList.prototype = {
         } else {
           $('.rn-notice').css('display','block');
           $('.btn-nb-close').click(function(){$('.rn-notice').css('display','none');});
+          this._checkDefault = 'Y';
         }
       }
     },
@@ -243,7 +249,10 @@ Tw.ProductRenewalList.prototype = {
         this._popupQuickFilter($target);
       } else {
         if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
-          this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.CODE }).done($.proxy(this._handleLoadFilters, this, $target));
+          this._apiService.requestArray([
+            { command: Tw.API_CMD.BFF_10_0032, params: { idxCtgCd: this.CODE }},
+            { command: Tw.API_CMD.BFF_10_0033, params: { filterId: 'F01170' }}
+          ]).done($.proxy(this._handleLoadFilters, this, $target));
           
         } else {
           this._openSelectFiltersPopup($target);
@@ -251,68 +260,31 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _handleLoadFilters: function($target, resp) { // API로 받아온 데이터로 필터 열음 ( 현재 안씀 )
-      if (resp.code !== Tw.API_CODE.CODE_00) {
-        Tw.Error(resp.code, resp.msg).pop();
+    _handleLoadFilters: function($target, filterResp, quickFilterResp) { // API로 받아온 데이터로 필터 열음 ( 현재 안씀 )
+      console.log("필터",filterResp);
+      console.log("퀵필터",quickFilterResp);
+      if (filterResp.code !== Tw.API_CODE.CODE_00) {
+        Tw.Error(filterResp.code, filterResp.msg).pop();
         return;
       }
+      if (quickFilterResp.code !== Tw.API_CODE.CODE_00) {
+        Tw.Error(quickFilterResp.code, quickFilterResp.msg).pop();
+        return;
+      }
+
   
-      this._filters = resp.result;
-      console.log(this._filters.filters[0]);
+      this._filters = filterResp.result;
+      this._filters.quickFilters = quickFilterResp.result.filters;
+      this._filters.filters = _.map(this._filters.filters, $.proxy(this._escapeHtmlEntities, this));
       this._openSelectFiltersPopup($target);
     },
 
     _openSelectFiltersPopup: function($target) { // 필터 팝업 띄움
-      // var currentFilters = this._params.searchFltIds,
-      //   currentTag = this._params.searchTagId;
-      // this._hasSelectedTag = !!currentTag;
-  
-      // var filters = _.chain(this._filters.filters)
-      //   .map(function(filter) {
-      //     return {
-      //       prodFltId: filter.prodFltId,
-      //       prodFltNm: filter.prodFltNm,
-      //       subFilters:
-      //         currentFilters && currentFilters.length > 0 ? 
-      //           _.map(filter.subFilters, function(subFilter) {
-      //             if (currentFilters.indexOf(subFilter.prodFltId) >= 0) {
-      //               return $.extend({ checked: true }, subFilter);
-      //             }
-      //             return subFilter;
-      //           }) : 
-      //           filter.subFilters
-      //     };
-      //   }).filter(function(filter){ //안되면 필터 제거하고 hbs에서 처리
-      //     return filter.prodFltId !== 'F01120';
-      //   }).value();
-      var filtersData = { data : '',
-        fee : '',
-        call : '',
-        target : ''};
-      var _this = this;
-      for(var i in _this._filters.filters) {
-        switch (_this._filters.filters[i].prodFltId) {
-          case 'F01130' :
-            filtersData.data = _this._filters.filters[i].subFilters;
-            break;
-          case 'F01140' :
-            filtersData.fee = _this._filters.filters[i].subFilters;
-            break;
-          case 'F01150' :
-            filtersData.call = _this._filters.filters[i].subFilters;
-            break;
-          case 'F01160' :
-            filtersData.target = _this._filters.filters[i].subFilters;
-            break;
-          default :
-            break;
-        }
-      }
   
       this._popupService.open({
-          hbs: 'renewal.mobileplan.list.filter.hardcording',
+          hbs: 'renewal.mobileplan.list.filter',
           layer: true,
-          data: filtersData
+          data: this._filters
         },
         $.proxy(this._handleOpenSelectFilterPopup, this),
         $.proxy(this._handleCloseSelectFilterPopup, this),
@@ -322,11 +294,6 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _handleOpenSelectFilterPopup: function() { //필터 팝업 열릴 시 콜백 함수
-
-      // console.log('1###')
-      // console.log(location.hash);
-      // console.log(this._popupService._prevHashList);
-      // console.log('1###')
 
       var _this = this;
       var MobileFilterForQuick = (this.curMobileFilter[0] == '') || (this.curMobileFilter[0] == undefined) ? 'F01713' : this.curMobileFilter[0];
@@ -356,10 +323,12 @@ Tw.ProductRenewalList.prototype = {
       });
       if(this.curFilter) { // 현재 적용된 필터 항목 하단에 표시
         for(var a=0 ; a < this.curFilter.length ; a++){
-          $('[data-filter="' + this.curFilter[a] + '"]').parent("li").addClass('on');
-          $('#selectFilter').append('<li data-filtersummary="' + this.curFilter[a] +
-               '"><span class="f-keyword">'+ $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') +
-               '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+          if($('[data-filter="' + this.curFilter[a] + '"]').data('filtername') != undefined) {
+            $('[data-filter="' + this.curFilter[a] + '"]').parent("li").addClass('on');
+            $('#selectFilter').append('<li data-filtersummary="' + this.curFilter[a] +
+                '"><span class="f-keyword">'+ $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') +
+                '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+          }
         }
       }
 
@@ -452,6 +421,19 @@ Tw.ProductRenewalList.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_10_0031, viewMoreParam).done($.proxy(this._handleSuccessLoadingData, this));
     },
 
+    _handleLoadMoreDefault: function() {
+      var viewMoreParam = this._params;
+      
+      viewMoreParam.idxCtgCd = this._networkInfo[this._curNetworkCount];
+      viewMoreParam.opClCd = '02';
+      
+      if(this._remainGroupData != 0 && this._curRemainGroupData != 0) {
+        this._drawRemainGroup();
+      } else {
+        this._apiService.request(Tw.API_CMD.BFF_10_0203, viewMoreParam).done($.proxy(this._handleSuccessLoadingDataDefault, this));
+      }
+    },
+
     _handleSuccessLoadingData: function(resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
         Tw.Error(resp.code, resp.msg).pop();
@@ -463,6 +445,7 @@ Tw.ProductRenewalList.prototype = {
       $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass }));
       if(!resp.result.hasNext) {
         this._hasNext = 'false';
+        $('.tod-nmp-loading').css('display','none');
       }
       this.isScroll = true;
       
@@ -476,10 +459,106 @@ Tw.ProductRenewalList.prototype = {
       // }      
     },
 
+    _handleSuccessLoadingDataDefault: function(resp) {
+      if (resp.code !== Tw.API_CODE.CODE_00) {
+        Tw.Error(resp.code, resp.msg).pop();
+        return;
+      }
+      console.log(resp.result);
+      var groupItems = _.map(resp.result.groupProdList, $.proxy(this._mapProperDataGroup, this));
+      console.log("@@@@@@",groupItems);
+      
+      var separateItems = _.map(resp.result.separateProductList, $.proxy(this._mapProperData, this));
+      console.log("######",separateItems);
+      switch(this._networkInfo[this._curNetworkCount]) {
+        case 'F01713':
+          this._seriesClass = '1';
+          break;
+        case 'F01121':
+          this._seriesClass = '2';
+          break;
+        case 'F01122':
+          this._seriesClass = '4';
+          break;
+        case 'F01124':
+          this._seriesClass = '3';
+          break;
+        case 'F01125':
+          this._seriesClass = '3';
+          break;
+        default :
+          this._seriesClass = '1';
+      }
+      
+      if(groupItems.length>5) {
+        this._remainGroupData = parseInt(groupItems.length / 5);
+        this._curRemainGroupData = 1 ;
+        this._groupData = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+        for(var i = 0; i < this._remainGroupData + 1 ; i++) {
+          if(groupItems[i*5]) {
+            this._groupData[i].push(groupItems[i*5]);
+          }
+          if(groupItems[i*5+1]) {
+            this._groupData[i].push(groupItems[i*5+1]);
+          }
+          if(groupItems[i*5+2]) {
+            this._groupData[i].push(groupItems[i*5+2]);
+          }
+          if(groupItems[i*5+3]) {
+            this._groupData[i].push(groupItems[i*5+3]);
+          }
+          if(groupItems[i*5+4]) {
+            this._groupData[i].push(groupItems[i*5+4]);
+          }
+        }
+        
+        this._separateItems = separateItems;
+        this._curNetworkCount++;
+        alert("1번 돔");
+        $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[0], separateItems: null, seriesClass: this._seriesClass, cdn: this._cdn}));
+      } else {
+        alert("2번 돔");
+        this._curNetworkCount++;
+        console.log("@@@@@@@",groupItems);
+        $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: groupItems[0], separateItems: separateItems, seriesClass: this._seriesClass, cdn: this._cdn }));
+        if(this._curNetworkCount == 5) {
+          this._hasNext = 'false';
+          $('.tod-nmp-loading').css('display','none');
+        }
+      }
+      this.isScroll = true;
+    },
+
+    _drawRemainGroup: function() {
+      if(this._remainGroupData == this._curRemainGroupData) {
+        alert("3번 돔");
+        $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[this._curRemainGroupData], separateItems: this._separateItems,  seriesClass: this._seriesClass, cdn: this._cdn }));
+        this._remainGroupData = 0;
+        this._curRemainGroupData = 0;
+        if(this._curNetworkCount == 5) {
+          this._hasNext = 'false';
+          $('.tod-nmp-loading').css('display','none');
+        }
+      } else {
+        alert("4번 돔");
+        $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[this._curRemainGroupData], separateItems: null,  seriesClass: this._seriesClass, cdn: this._cdn }));
+        this._curRemainGroupData++;
+      }
+      this.isScroll = true;
+    },
+
     _mapProperData: function(item) {
-      if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
-        item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt)+'원';
-      } 
+      if (item.basFeeAmt){
+        if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
+          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt)+'원';
+        }
+      } else {
+        if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
+          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeInfo)+'원';
+        } else {
+          item.basFeeAmt = item.basFeeInfo;
+        }
+      }
       var data = '';
       if (!this._isEmptyAmount(item.basOfrDataQtyCtt)) {
         data = Number(item.basOfrDataQtyCtt);
@@ -487,6 +566,15 @@ Tw.ProductRenewalList.prototype = {
           item.basOfrDataQtyCtt = item.basOfrDataQtyCtt;
         } else {
           item.basOfrDataQtyCtt = data + Tw.DATA_UNIT.GB;
+        }
+      } else if (!this._isEmptyAmount(item.basOfrGbDataQtyCtt)) {
+        data = Number(item.basOfrGbDataQtyCtt);
+        
+        if (isNaN(data)) {
+          item.basOfrDataQtyCtt = item.basOfrGbDataQtyCtt;
+        } else {
+          data = Tw.FormatHelper.convDataFormat(item.basOfrGbDataQtyCtt, Tw.DATA_UNIT.GB);
+          item.basOfrDataQtyCtt = data.data + data.unit;
         }
       } else if (!this._isEmptyAmount(item.basOfrMbDataQtyCtt)) {
         data = Number(item.basOfrMbDataQtyCtt);
@@ -498,31 +586,102 @@ Tw.ProductRenewalList.prototype = {
           item.basOfrDataQtyCtt = data.data + data.unit;
         }
       }
-  
+      if(this._series.noSeries) {
+        item.tabCode = this._getTabCodeSeries(item);
+      } else {
+        item.tabCode = this._series.seriesClass;
+      }
+      item.prodSmryExpsTypCd = this._getProdSmryExpsTypCd(item.prodSmryExpsTypCd);
       item.basOfrVcallTmsCtt = this._isEmptyAmount(item.basOfrVcallTmsCtt) ? null : Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);
       item.basOfrCharCntCtt = this._isEmptyAmount(item.basOfrCharCntCtt) ? null : Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
       if(this._svcInfo) {
         item.usingProduct = (item.prodId == this._svcInfo.prodId) ? 'Y' : null;
       }
-      
-      for(var i = 0; i < item.filters.length; i++) {
-        var prodFltId = item.filters[i].prodFltId;
-        if(prodFltId == 'F01163') {
-          item.filters[i].fltTagSenior = 'Y';
-        } else if(prodFltId == 'F01164') {
-          item.filters[i].fltTagWelfare = 'Y';
-        } else if(prodFltId == 'F01162') {
-          item.filters[i].fltTagKid = 'Y';
-        }
-        if((this._networkInfo == '5G' && prodFltId == 'F01713') || (this._networkInfo == 'LTE' && prodFltId == 'F01121')) {
-          if(this._svcInfo){
-            if(this._svcInfo.prodId != item.prodId) {
-              item.compareBtn = true;
+      if(item.filters){
+        for(var i = 0; i < item.filters.length; i++) {
+          var prodFltId = item.filters[i].prodFltId;
+          if(prodFltId == 'F01163') {
+            item.filters[i].fltTagSenior = 'Y';
+          } else if(prodFltId == 'F01164') {
+            item.filters[i].fltTagWelfare = 'Y';
+          } else if(prodFltId == 'F01162') {
+            item.filters[i].fltTagKid = 'Y';
+          }
+          if((this._networkInfo[0] == 'F01713' && prodFltId == 'F01713') || (this._networkInfo[0] == 'F01121' && prodFltId == 'F01121')) {
+            if(this._svcInfo){
+              if(this._svcInfo.prodId != item.prodId) {
+                item.compareBtn = true;
+              }
             }
           }
         }
+        
+      } else if(item.prodFltList) {
+        for(var i in item.prodFltList) {
+          var prodFltId = item.prodFltList[i].prodFltId;
+          if(prodFltId == 'F01163') {
+            item.prodFltList[i].fltTagSenior = 'Y';
+          } else if(prodFltId == 'F01164') {
+            item.prodFltList[i].fltTagWelfare = 'Y';
+          } else if(prodFltId == 'F01162') {
+            item.prodFltList[i].fltTagKid = 'Y';
+          }
+          if((this._networkInfo[0] == 'F01713' && prodFltId == 'F01713') || (this._networkInfo[0] == 'F01121' && prodFltId == 'F01121')) {
+            if(this._svcInfo){
+              if(this._svcInfo.prodId != item.prodId) {
+                item.compareBtn = true;
+              }
+            }
+          }
+        } 
+      }
+
+      return item;
+    },
+
+    _mapProperDataGroup: function(item) {
+      if(item.prodList){
+        item.prodList = _.map(item.prodList, $.proxy(this._mapProperData, this));
       }
       return item;
+    },
+
+    _getTabCodeSeries: function(item) {
+          if(item.prodFltNm) {
+            switch (item.prodFltNm) {
+              case '5G':
+                return 'prod-5g';
+              case 'LTE':
+                return 'prod-lte';
+              case '3G':
+                return 'prod-band';
+              case '태블릿/2nd device':
+                return 'prod-2nd';
+              case '선불':
+                return 'prod-2nd';
+              default :
+                return 'prod-5g';
+            }
+          }
+      return '';
+    },
+
+    _getProdSmryExpsTypCd: function(value) {
+      switch (value) {
+        case '1':
+          return '1';
+        case '2':
+          return '3';
+        case '3':
+          return '2';
+        case 'TAG0000212' :
+          return '1';
+        case 'TAG0000213' :
+          return '3';
+        case 'TAG0000214' :
+          return '2';
+      }
+      return '';
     },
 
     _isEmptyAmount: function(value) {
@@ -536,10 +695,27 @@ Tw.ProductRenewalList.prototype = {
         if(($(window).height() + $(document).scrollTop()) >= ($(document).height() - ($(window).height() * 2))) {
           if (_this.isScroll && _this._hasNext == 'true') {
             _this.isScroll = false;
-            setTimeout($.proxy(_this._handleLoadMore, _this) ,300);
+            if(this._checkDefault == 'N') {
+              setTimeout($.proxy(_this._handleLoadMore, _this) ,300);
+            } else {
+              setTimeout($.proxy(_this._handleLoadMoreDefault, _this) ,300);
+            }
           }
         }
       });
-    }
+    },
 
+    _escapeHtmlEntities : function(filter) {
+      var str = ''
+      if(filter.prodFltDesc){
+        filter.prodFltDesc = filter.prodFltDesc.replace(/&amp;/g, '&').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/\"/g,' ').replace(/&#034;/g,'\''); 
+        for(var i = 0; i < filter.prodFltDesc.length ; i++){
+          if(filter.prodFltDesc.charCodeAt(i) != 8220 && filter.prodFltDesc.charCodeAt(i) != 8221) {
+            str += filter.prodFltDesc.charAt(i);
+          }
+        }
+        filter.prodFltDesc = str;
+      }
+      return filter;
+    }
 };

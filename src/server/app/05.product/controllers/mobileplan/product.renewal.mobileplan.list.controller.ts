@@ -14,314 +14,644 @@ import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { PRODUCT_CODE, _5GX_PROD_ID } from '../../../../types/bff.type';
-
-// 단말기 분류 체계 코드
-enum DEVICE_MINOR_CODES {
-  '0102001' = 'E', // Voice or Data 가능한 tablet (태블릿/ETC 범주)
-  '0202001' = 'E', // Voice 불가능한 Tablet (태블릿/ETC 범주)
-  '0102000' = 'E', // 회선형 Device (태블릿/ETC 범주)
-
-  '0102002' = 'E', // Smart Watch (회선형 스마트 워치류)
-  '0102003' = 'E', // Kids폰 (회선형 스마트 워치류(주니어 seg. 상품)_쿠키즈 요금제 가입 가능 단말)
-  '0102005' = 'E', // Modem (WiFi AP 기능 없으나, 물리적 연결을 통해 통신 연결해주는 Device)
-  '0102006' = 'E', // 기타 장치 (위치 측위기반 Device)
-  '0102009' = 'E', // 기타
-  '0102010' = 'E', // Router (포켓파이 Roter류)
-}
-
 /**
  * @class
  * @desc 
  */
 export default class RenewProductPlans extends TwViewController {
-    constructor() {
-        super();
-      }
+  constructor() {
+      super();
+  }
 
-      render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-        const params: any = {
-          idxCtgCd: PRODUCT_CODE.MOBILE_PLAN,
-          ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
-          ...(req.query.order ? { searchOrder: req.query.order } : {}),
-          ...(req.query.tag ? { searchTagId: req.query.tag } : {})
-        };
-        const quickFilterCode = req.query.code ? req.query.code : '';
-        const series = { //상단 요금제 분류 선택시 하이라이트를 주기 위해
-          fiveGx :  '',
-          lte : '',
-          threeG : '',
-          secondDevice : '',
-          prepay : '',
-          theme : '',
-          noSeries : false,
-          seriesClass : '',
-        };
-        const filterList = {
-          filterList : ''
-        };
-        if(params.searchFltIds) {
-          const seriesCode: string = this._getSeries(params.searchFltIds);
-        
-          switch(seriesCode) { // 상단 탭 하이라이트 적용
-            case 'F01713':
-              series.fiveGx = ' class=on';
-              series.seriesClass = 'prod-5g';
-              break;
-            case 'F01121':
-              series.lte = ' class=on';
-              series.seriesClass = 'prod-lte';
-              break;
-            case 'F01122':
-              series.threeG = ' class=on';
-              series.seriesClass = 'prod-band';
-              break;
-            case 'F01124':
-              series.secondDevice = ' class=on';
-              series.seriesClass = 'prod-2nd';
-              break;
-            case 'F01125':
-              series.prepay = ' class=on';
-              series.seriesClass = 'prod-2nd';
-              break;
-            default:
-              series.noSeries = true;
-              break;
-          }
-            filterList.filterList = this._getFilterList(params.searchFltIds);
-        } else {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    const params: any = {};
+    const cdn = this._getCDN();
+    const series = { //상단 요금제 분류 선택시 하이라이트를 주기 위해
+      fiveGx :  '',
+      lte : '',
+      threeG : '',
+      secondDevice : '',
+      prepay : '',
+      theme : '',
+      noSeries : false,
+      seriesClass : '',
+    };
+    const filterList = {
+      filterList : ''
+    };
+
+    if(req.query.filters) {
+      const seriesCode: string = this._getSeries(req.query.filters);
+    
+      switch(seriesCode) { // 상단 탭 하이라이트 적용
+        case 'F01713':
+          series.fiveGx = ' class=on';
+          series.seriesClass = 'prod-5g';
+          break;
+        case 'F01121':
+          series.lte = ' class=on';
+          series.seriesClass = 'prod-lte';
+          break;
+        case 'F01122':
+          series.threeG = ' class=on';
+          series.seriesClass = 'prod-band';
+          break;
+        case 'F01124':
+          series.secondDevice = ' class=on';
+          series.seriesClass = 'prod-2nd';
+          break;
+        case 'F01125':
+          series.prepay = ' class=on';
+          series.seriesClass = 'prod-2nd';
+          break;
+        default:
           series.noSeries = true;
+          break;
+      }
+        filterList.filterList = this._getFilterList(req.query.filters);
+        if(filterList.filterList === '') {
+          params.idxCtgCd = seriesCode;
         }
+    } else {
+      series.noSeries = true;
+    }
 
-        let quickFilterData = {
-          filterName : '',
-          filterCode : '',
-          filterExist : ''
-        }
-
-        if(quickFilterCode) {
-          quickFilterData.filterExist = 'Y';
-          switch(quickFilterCode) {
-            case 'A001' :
-              quickFilterData.filterName = '데이터 완전 무제한';
-              quickFilterData.filterCode = 'A001';
-              break;
-            case 'A002' :
-              quickFilterData.filterName = '가입 즉시 T멤버십 VIP';
-              quickFilterData.filterCode = 'A002';
-              break;
-            case 'A003' :
-              quickFilterData.filterName = '무제한 음악 스트리밍 무료 이용';
-              quickFilterData.filterCode = 'A003';
-              break;
-            default :
-             break;
-          }
-        }
-        if (req.query.theme) {
+    if ((req.query.theme || filterList.filterList === '') && !req.query.code) {
+      if(req.query.theme) {
+        params.idxCtgCd = 'F01180';
+        params.opClCd = '01';
+      } else if(this._getSeries(req.query.filters) === '') {
+        params.idxCtgCd = 'F01120';
+        params.opClCd = '01';
+      } else {
+        params.opClCd = '02';
+      }
+      console.log(params);
+      Observable.combineLatest(
+        this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
+        this._getSeriesPlans(params)
+      ).subscribe(([
+        networkInfoFilter, // 통신망 정보 결과 값
+        plans
+        ]) => {         
+          if(req.query.theme) {
           series.theme = ' class=on';
-          const networkInfoFilter = ['5G', 'LTE', '3G', '2nd', 'PPS'];
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
-        } else if(filterList.filterList === '' && series.prepay !== ' class=on' && quickFilterData.filterExist !== 'Y') {
-          Observable.combineLatest(
-            this.getNetworkInfoFilter(svcInfo) // 나의 회선의 통신망 정보 조회
-          ).subscribe(([
-            networkInfoFilter // 통신망 정보 결과 값
-            ]) => {
-              
-              if(series.fiveGx == ' class=on'){
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
-              } else if(series.lte == ' class=on') {
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
-              } else if(series.threeG == ' class=on') {
-                  res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g copy.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
-              } else if(series.secondDevice == ' class=on'){
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
-              } else {
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.listall.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, quickFilterData });
-              }
-          });   
-        } else {
-          if(series.noSeries) {
-            params.searchCount = 100;
-          }
-          Observable.combineLatest(
-            this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
-            this._getPlans(params)
-          ).subscribe(([
-            networkInfoFilter, // 통신망 정보 결과 값
-            plans
-            ]) => {
-            if (plans.code) {
-              this.error.render(res, {
-                code: plans.code,
-                msg: plans.msg,
-                pageInfo: pageInfo,
-                svcInfo: svcInfo
-              });
-            }
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn});
+          } else if (series.fiveGx == ' class=on') {
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
+          } else if(series.lte == ' class=on' || series.threeG == ' class=on') {
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
+          } else if(series.secondDevice == ' class=on') {
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
+          } else if(series.prepay == ' class=on') {
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
+          } else {
+            let _gPlans : any = []; 
+            let _sPlans : any = [];
+
             
-            if(plans.productCount === 0) { // 요금제 항목 없음
-              res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, quickFilterData } );
-            } else if(series.prepay === ' class=on' && filterList.filterList === '' && quickFilterData.filterExist !== 'Y') { // 선불 탭 선택 노 필터
-              res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, quickFilterData } );
-            } else if(series.noSeries && quickFilterData.filterExist !== 'Y') { // 탭 선택 없이 필터 적용
-              const mobileList = [{name: '5G',code: 'F01713',exist: 'N',url:'/product/renewal/mobileplan/list?filters=F01713', seriesClass: 'prod-5g'}, // 요금제 더보기용 url 입력 / 색상을 위한 클래스 추가
-                {name: 'LTE',code: 'F01121',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01121', seriesClass: 'prod-lte'},
-                {name: '3G',code: 'F01122',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01122', seriesClass: 'prod-band'},
-                {name: '태블릿/2nd Device',code: 'F01124',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01124', seriesClass: 'prod-2nd'},
-                {name: '선불',code: 'F01125',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01125', seriesClass: 'prod-2nd'}];
-              if(plans.hasNext){ //탭 선택 없이 필터 적용 시 100건을 넘어가면 API추가 호출 후 기존 상품 목록에 더해서 화면으로 가져감
-                params.searchLastProdId = plans.products[99].prodId;
-                this._getPlans(params).subscribe(addplans => {
-                  if (addplans.code) {
-                    this.error.render(res, {
-                      code: addplans.code,
-                      msg: addplans.msg,
-                      pageInfo: pageInfo,
-                      svcInfo: svcInfo
-                    });
+            for(let i = 0; i < plans.groupProdList.length ; i++){
+              for(let j = 0; j < plans.groupProdList[i].prodList[0].prodFltList.length ; j++) {
+                  if( plans.groupProdList[i].prodList[0].prodFltList[j].prodFltId == networkInfoFilter[0] ) {
+                    _gPlans.push(plans.groupProdList[i]);
                   }
-                  for( let i in addplans.products) {
-                    plans.products[(Number(100) + Number(i))] = addplans.products[i];
-                  }
-                  plans.hasNext = addplans.hasNext;
-                  
-                  for( let k in mobileList ) {
-                    for( let i in plans.products ) {
-                      for(let m in plans.products[i].filters){
-                        if(mobileList[k].code === plans.products[i].filters[m].prodFltId){
-                          mobileList[k].exist = 'Y';
-                        }
-                      }
-                    }
-                  }
-                  res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, quickFilterData } );
-                });
-                
-              } else {
-                for( let k in mobileList ) {
-                  for( let i in plans.products) {
-                    for(let m in plans.products[i].filters){
-                      if(mobileList[k].code === plans.products[i].filters[m].prodFltId){
-                        mobileList[k].exist = 'Y';
-                      }
-                    }
-                  }
-                }
-              
-                res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, quickFilterData } );
               }
-            } else { // 탭 선택 후 필터 적용
-              if(quickFilterCode){ // 임시 적용 코드
-                plans.hasNext = false;
-              }
-              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, quickFilterData} );
             }
+            for(let i = 0; i < plans.separateProductList.length; i++){
+              for(let j = 0; j < plans.separateProductList[i].prodFltList.length; j++){
+                if(plans.separateProductList[i].prodFltList[j].prodFltId == networkInfoFilter[0]) {
+                  _sPlans.push(plans.separateProductList[i]);
+                }
+              }
+            }
+            plans.groupProdList = _gPlans;
+            plans.separateProductList = _sPlans;
+            switch(networkInfoFilter[0]){
+              case 'F01713':
+                plans.series = '1';
+                break;
+              case 'F01121':
+                plans.series = '2';
+                break;
+              case 'F01122':
+                plans.series = '4';
+                break;
+              case 'F01124':
+                plans.series = '3';
+                break;
+              case 'F01125':
+                plans.series = '3';
+                break;
+              default : 
+                plans.series = '1';
+            }
+            console.log(plans.groupProdList[1].prodList);
+            
+            
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.listall.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
+          }
+        });   
+    } else if (series.noSeries === true) {
+      params.searchFltIds =  req.query.filters;
+      params.idxCtgCd = 'F01120';
+      Observable.combineLatest(
+        this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
+        this._getInitPlans(params)
+      ).subscribe(([
+        networkInfoFilter, // 통신망 정보 결과 값
+        plans
+        ]) => {
+          const mobileList = [{name: '5G', code: 'F01713',exist: 'N',url:'/product/renewal/mobileplan/list?filters=F01713', seriesClass: 'prod-5g'}, // 요금제 더보기용 url 입력 / 색상을 위한 클래스 추가
+            {name: 'LTE', code: 'F01121',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01121', seriesClass: 'prod-lte'},
+            {name: '3G', code: 'F01122',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01122', seriesClass: 'prod-band'},
+            {name: '태블릿/2nd Device', code: 'F01124',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01124', seriesClass: 'prod-2nd'},
+            {name: '선불', code: 'F01125',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01125', seriesClass: 'prod-2nd'}];
+          
+          for( let k in mobileList ) {
+            for( let i in plans.products) {
+              if(mobileList[k].name === plans.products[i].prodFltNm){
+                mobileList[k].exist = 'Y';
+              }
+            }
+          }
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn } );
+        });
+
+    } else {
+      params.idxCtgCd = 'F01120';
+      params.searchFltIds = req.query.filters;
+      Observable.combineLatest(
+        this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
+        this._getSeperatePlans(params)
+      ).subscribe(([
+        networkInfoFilter, // 통신망 정보 결과 값
+        plans
+        ]) => {
+        if (plans.code) {
+          this.error.render(res, {
+            code: plans.code,
+            msg: plans.msg,
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
           });
         }
-    }
-
-      private _getPlans(params) {
-        return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
-          if (resp.code !== API_CODE.CODE_00) {
-            return {
-              code: resp.code,
-              msg: resp.msg
-            };
-          }
-    
-          if (FormatHelper.isEmpty(resp.result)) {
-            return resp.result;
-          }
-    
-          return {
-            ...resp.result,
-            products: resp.result.products.map(plan => {
-              return {
-                ...plan,
-                basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
-                basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrDataQtyCtt) ?
-                  this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
-                    null :
-                    ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
-                  ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt, DATA_UNIT.GB),
-                basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
-                  null :
-                  ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
-                basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt)
-              };
-            })
-          };
-        });
-      }
-
-    private _isEmptyAmount(value: string) {
-      return !value || value === '' || value === '-';
-    }
-
-    private _getSeries(searchFltIds): string { // 탭 정보 얻어옴
-      const splitCheck: string[] = searchFltIds.split(',');
-      if(splitCheck.length === 0) {
-        return '';
-      }
-      let splitSeries = splitCheck.filter(split => (split === 'F01713' || split === 'F01121' || split === 'F01122' || split === 'F01124' || split === 'F01125'));
-      if(splitSeries[0]){
-        return splitSeries[0];
-      }
-      
-      return '';
-    }
-
-    private _getFilterList(searchFltIds): string { // 필터 리스트 얻어옴
-      let splitCheck = searchFltIds.split(',');
-      let splitFilter = splitCheck.filter ( splits => !(splits === 'F01713' || splits === 'F01121' || splits === 'F01122' || splits === 'F01124' || splits === 'F01125'));
-      let splitString : string = '';
-      for(let i = 0; i < splitFilter.length; i++) {
-        splitString += ',';
-        splitString += splitFilter[i];
-      }
-      return splitString;
-    }
-
-    private getNetworkInfoFilter ( svcInfo: any ): Observable<any> {
-      if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.
-        return Observable.of(['5G', 'LTE', '3G', '2nd', 'PPS']);
-      }
-
-      if ( svcInfo.svcGr === 'P' ) { // 선택한 회선이 선불폰(PPS) 라면 P
-        return Observable.of(['PPS', '5G', 'LTE', '3G', '2nd']);
-      }
-      
-      return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
-        if (resp.code === API_CODE.CODE_00) {
-          if ( Object.keys(DEVICE_MINOR_CODES).indexOf( resp.result.beqpSclEqpClSysCd ) > -1 ) {
-            return this.matchSvcCode(DEVICE_MINOR_CODES[resp.result.beqpSclEqpClSysCd]);
-          }
-          return this.matchSvcCode(resp.result.eqpMthdCd);
-        }
-        return ['5G', 'LTE', '3G', '2nd', 'PPS'];
+        
+        if(plans.productCount === 0) { // 요금제 항목 없음
+          res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn } );
+        } else if(series.noSeries == false) { // 탭 선택 후 필터 적용
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn } );
+        } 
       });
     }
+  } 
 
-    private matchSvcCode (code) { // 전체요금제 최초 랜딩 시 요금제 시리즈 래더링 순서
+  private _getInitPlans(params) {
+    return this.apiService.request(API_CMD.BFF_10_0205, params).map(resp => {
+    // return  Observable.of(data205).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
+
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
+      return {
+        ...resp.result,
+        products: resp.result.products.map(plan => {
+          return {
+            ...plan,
+            basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
+            basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrDataQtyCtt) ?
+              this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+                null :
+                ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+                ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt, DATA_UNIT.GB),
+            basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+              null :
+              ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+            basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+            tabCode: this._getTabCodeInit(plan),
+            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+            compareYN: this._getCompareYN(this._getTabCodeInit(plan),plan.basFeeAmt,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+            //m24agrmtFeeAmt: this._getM24agrmtFeeAmt(plan.basFeeAmt,plan.m24agrmtDcAmt)
+          };
+        })
+      };
+    });
+  }
+
+  private _getSeperatePlans(params) {
+    return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
+
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+
+      return {
+        ...resp.result,
+        products: resp.result.products.map(plan => {
+          return {
+            ...plan,
+            basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
+            basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrDataQtyCtt) ?
+              this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+                null :
+                ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+                ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt, DATA_UNIT.GB),
+            basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+              null :
+              ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+            basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+            tabCode: this._getTabCodeSeries(plan.filters),
+            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+            compareYN: this._getCompareYN(this._getTabCodeSeries(plan.filters),plan.basFeeAmt,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+          };
+        })
+      };
+    });
+  }
+
+  private _isEmptyAmount(value: any) {
+    return !value || value === '' || value === '-';
+  }
+
+  private _getSeries(searchFltIds): string { // 탭 정보 얻어옴
+    if(!searchFltIds) {
+      return '';
+    }
+    const splitCheck: string[] = searchFltIds.split(',');
+    let splitSeries = splitCheck.filter(split => (split === 'F01713' || split === 'F01121' || split === 'F01122' || split === 'F01124' || split === 'F01125'));
+    if(splitSeries[0]){
+      return splitSeries[0];
+    }
+    
+    return '';
+  }
+
+  private _getFilterList(searchFltIds): string { // 필터 리스트 얻어옴
+    let splitCheck = searchFltIds.split(',');
+    let splitFilter = splitCheck.filter ( splits => !(splits === 'F01713' || splits === 'F01121' || splits === 'F01122' || splits === 'F01124' || splits === 'F01125'));
+    let splitString : string = '';
+    for(let i = 0; i < splitFilter.length; i++) {
+      splitString += ',';
+      splitString += splitFilter[i];
+    }
+    return splitString;
+  }
+
+  private getNetworkInfoFilter ( svcInfo: any ): Observable<any> {
+    if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.
+      return Observable.of(['F01713', 'F01121', 'F01122', 'F01124', 'F01125']);
+    }
+
+    if ( svcInfo.svcGr === 'P' ) { // 선택한 회선이 선불폰(PPS) 라면 P
+      return Observable.of(['F01125', 'F01713', 'F01121', 'F01122', 'F01124']);
+    }
+    
+    return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+
+        if ( resp.result.beqpMclEqpClSysCd !== '0101000' ) {
+          return this.matchSvcCode('E');
+        }
+        return this.matchSvcCode(resp.result.eqpMthdCd);
+      }
+      return ['F01713', 'F01121', 'F01122', 'F01124', 'F01125'];
+    });
+  }
+
+  private matchSvcCode (code) { // 전체요금제 최초 랜딩 시 요금제 시리즈 래더링 순서
+    
+    switch(code) {
+      case 'A' : //2G (3G로 표현)
+        return ['F01122', 'F01713', 'F01121', 'F01124', 'F01125'];
+      case 'D' : //2G (3G로 표현)
+        return ['F01122', 'F01713', 'F01121', 'F01124', 'F01125'];
+      case 'W' : //3G
+        return ['F01122', 'F01713', 'F01121', 'F01124', 'F01125'];
+      case 'L' : //LTE
+        return ['F01121', 'F01713', 'F01122', 'F01124', 'F01125'];
+      case 'F' : //5G
+        return ['F01713', 'F01121', 'F01122', 'F01124', 'F01125'];
+      case 'E' : //2nd Device
+        return ['F01124', 'F01713', 'F01121', 'F01122', 'F01125'];
+      case 'P' : //PPS
+        return ['F01125', 'F01713', 'F01121', 'F01122', 'F01124'];
+      default :
+        return ['F01713', 'F01121', 'F01122', 'F01124', 'F01125'];
+    }
+    return ['F01713', 'F01121', 'F01122', 'F01124', 'F01125'];
+  }
+
+  private _getSeriesPlans(params) {
+    return this.apiService.request(API_CMD.BFF_10_0203, params).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
+      // for(let i in resp.result.groupProdList){
+      //   for(let j in resp.result.groupProdList[i].prodList[0].prodFltList){
+      //     if(resp.result.groupProdList[i].prodList[0].prodFltList[j].prodFltId == 'F01121') {
+      //       console.log(resp.result.groupProdList[i].prodGrpNm,"@@@@",resp.result.groupProdList[i].prodList[0].prodFltList[j]);
+      //     }
+      //   }
+      // }
       
-      switch(code) {
-        case 'A' : //2G (3G로 표현)
-          return ['3G', '5G', 'LTE', '2nd', 'PPS'];
-        case 'D' : //2G (3G로 표현)
-          return ['3G', '5G', 'LTE', '2nd', 'PPS'];
-        case 'W' : //3G
-          return ['3G', '5G', 'LTE', '2nd', 'PPS'];
-        case 'L' : //LTE
-          return ['LTE', '5G', '3G', '2nd', 'PPS'];
-        case 'F' : //5G
-          return ['5G', 'LTE', '3G', '2nd', 'PPS'];
-        case 'E' : //2nd Device
-          return ['2nd', '5G', 'LTE', '3G', 'PPS'];
-        case 'P' : //PPS
-          return ['PPS', '5G', 'LTE', '3G', '2nd'];
-        default :
-          return ['5G', 'LTE', '3G', '2nd', 'PPS'];
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+      if(resp.result.separateProductList && resp.result.groupProdList) {
+        return {
+          ...resp.result,
+          groupProdList: resp.result.groupProdList.map(groupPlan => {
+            return {
+              ...groupPlan,
+              prodList : groupPlan.prodList.map(plan => {
+                return {
+                  ...plan,
+                  basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+                  basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
+                    this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+                      null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+                    ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+                  basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+                    null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+                  basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+                  tabCode: this._getTabCodeSeries(plan.prodFltList),
+                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+                  compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+                };
+              })
+            }
+          }),
+          separateProductList: resp.result.separateProductList.map(separatePlan => {
+            return {
+              ...separatePlan,
+              basFeeAmt: ProductHelper.convProductBasfeeInfo(separatePlan.basFeeInfo),
+              basOfrVcallTmsCtt: this._isEmptyAmount(separatePlan.basOfrVcallTmsCtt) ?
+                null : ProductHelper.convProductBasOfrVcallTmsCtt(separatePlan.basOfrVcallTmsCtt, false),
+              basOfrCharCntCtt: this._isEmptyAmount(separatePlan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(separatePlan.basOfrCharCntCtt),
+              basOfrDataQtyCtt: this._isEmptyAmount(separatePlan.basOfrGbDataQtyCtt) ?
+                this._isEmptyAmount(separatePlan.basOfrMbDataQtyCtt) ?
+                null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
+                ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+              tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+              compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+            }
+          })
+          // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
+          //   return {
+          //     ...rcnPlan,
+          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
+          //   }
+          // })
+        }
+      } else if (resp.result.rcnProductList) {
+        return {
+          ...resp.result,
+          // groupProdList: resp.result.groupProdList.map(groupPlan => {
+          //   return {
+          //     ...groupPlan,
+          //     prodList : groupPlan.prodList.map(plan => {
+          //       return {
+          //         ...plan,
+          //         basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+          //         basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
+          //           this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+          //             null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+          //           ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+          //         basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+          //           null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+          //         basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+          //         tabCode: this._getTabCodeSeries(plan.prodFltList),
+          //         prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+          //         compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+          //       };
+          //     })
+          //   }
+          // }),
+          separateProductList: resp.result.separateProductList.map(separatePlan => {
+            return {
+              ...separatePlan,
+              basFeeAmt: ProductHelper.convProductBasfeeInfo(separatePlan.basFeeInfo),
+              basOfrVcallTmsCtt: this._isEmptyAmount(separatePlan.basOfrVcallTmsCtt) ?
+                null : ProductHelper.convProductBasOfrVcallTmsCtt(separatePlan.basOfrVcallTmsCtt, false),
+              basOfrCharCntCtt: this._isEmptyAmount(separatePlan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(separatePlan.basOfrCharCntCtt),
+              basOfrDataQtyCtt: this._isEmptyAmount(separatePlan.basOfrGbDataQtyCtt) ?
+                this._isEmptyAmount(separatePlan.basOfrMbDataQtyCtt) ?
+                null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
+                ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+              tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+              compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+            }
+          }),
+          rcnProductList: resp.result.rcnProductList.map(rcnPlan => {
+            return {
+              ...rcnPlan,
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
+            }
+          })
+        }
+      } else if (!resp.result.groupProdList) {
+        return {
+          ...resp.result,
+          // groupProdList: resp.result.groupProdList.map(groupPlan => {
+          //   return {
+          //     ...groupPlan,
+          //     prodList : groupPlan.prodList.map(plan => {
+          //       return {
+          //         ...plan,
+          //         basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+          //         basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
+          //           this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+          //             null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+          //           ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+          //         basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+          //           null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+          //         basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+          //         tabCode: this._getTabCodeSeries(plan.prodFltList),
+          //         prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+          //         compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+          //       };
+          //     })
+          //   }
+          // }),
+          separateProductList: resp.result.separateProductList.map(separatePlan => {
+            return {
+              ...separatePlan,
+              basFeeAmt: ProductHelper.convProductBasfeeInfo(separatePlan.basFeeInfo),
+              basOfrVcallTmsCtt: this._isEmptyAmount(separatePlan.basOfrVcallTmsCtt) ?
+                null : ProductHelper.convProductBasOfrVcallTmsCtt(separatePlan.basOfrVcallTmsCtt, false),
+              basOfrCharCntCtt: this._isEmptyAmount(separatePlan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(separatePlan.basOfrCharCntCtt),
+              basOfrDataQtyCtt: this._isEmptyAmount(separatePlan.basOfrGbDataQtyCtt) ?
+                this._isEmptyAmount(separatePlan.basOfrMbDataQtyCtt) ?
+                null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
+                ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+              tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+              compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+            }
+          })
+          // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
+          //   return {
+          //     ...rcnPlan,
+          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
+          //   }
+          // })
+        }
+      } else {
+        return {
+          ...resp.result,
+          groupProdList: resp.result.groupProdList.map(groupPlan => {
+            return {
+              ...groupPlan,
+              prodList : groupPlan.prodList.map(plan => {
+                return {
+                  ...plan,
+                  basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+                  basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
+                    this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+                      null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+                    ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+                  basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+                    null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+                  basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+                  tabCode: this._getTabCodeSeries(plan.prodFltList),
+                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+                  compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+                };
+              })
+            }
+          })
+          // separateProductList: resp.result.separateProductList.map(separatePlan => {
+          //   return {
+          //     ...separatePlan,
+          //     basFeeAmt: ProductHelper.convProductBasfeeInfo(separatePlan.basFeeInfo),
+          //     basOfrVcallTmsCtt: this._isEmptyAmount(separatePlan.basOfrVcallTmsCtt) ?
+          //       null : ProductHelper.convProductBasOfrVcallTmsCtt(separatePlan.basOfrVcallTmsCtt, false),
+          //     basOfrCharCntCtt: this._isEmptyAmount(separatePlan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(separatePlan.basOfrCharCntCtt),
+          //     basOfrDataQtyCtt: this._isEmptyAmount(separatePlan.basOfrDataQtyCtt) ?
+          //       this._isEmptyAmount(separatePlan.basOfrMbDataQtyCtt) ?
+          //       null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
+          //       ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrDataQtyCtt, DATA_UNIT.GB),
+          //     tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
+          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+          //     compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+          //   }
+          // })
+          // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
+          //   return {
+          //     ...rcnPlan,
+          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
+          //   }
+          // })
+        }
+      }
+    })
+  }
+
+  private _getTabCodeSeries(prodFltList) {
+      if(!prodFltList) {
+        return '';
+      }
+      for(let i = 0; i < prodFltList.length; i++){ 
+        if(prodFltList[i].supProdFltId == 'F01120') {
+          switch (prodFltList[i].prodFltId) { 
+            case 'F01713':
+              return 'prod-5g';
+            case 'F01121':
+              return 'prod-lte';
+            case 'F01122':
+              return 'prod-band';
+            case 'F01124':
+              return 'prod-2nd';
+            case 'F01125':
+              return 'prod-2nd';
+            default :
+              return '';
+          }
+        }
+      }
+      return '';
+  }
+
+  private _getTabCodeInit(plan) {
+    switch (plan.prodFltNm) {
+      case '5G':
+        return 'prod-5g';
+      case 'LTE':
+        return 'prod-lte';
+      case '3G':
+        return 'prod-band';
+      case '태블릿/2nd device':
+        return 'prod-2nd';
+      case '선불':
+        return 'prod-2nd';
+    }
+    return '';
+  }
+
+  private _parseProdSmryExpsTypCd(data) {
+    switch (data) {
+      case '1':
+        return '1';
+      case '2':
+        return '3';
+      case '3':
+        return '2';
+      case 'TAG0000212' :
+        return '1';
+      case 'TAG0000213' :
+        return '3';
+      case 'TAG0000214' :
+        return '2';
+    }
+    return '';
+  }
+  
+  private _getM24agrmtFeeAmt(basFeeAmt,m24agrmtDcAmt) {
+    if(isNaN(Number(basFeeAmt))) {
+      return '';
+    }
+    return Number(basFeeAmt) - Number(m24agrmtDcAmt);
+  }
+
+  private _getCompareYN(code, basFeeAmt, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
+    if(code != 'prod-5g' && code != 'prod-lte') {
+      return false;
+    }
+    if(basFeeAmt == '상세 참조' && basOfrDataQtyCtt == '상세 참조' && basOfrVcallTmsCtt == '상세 참조' && basOfrCharCntCtt == '상세 참조') {
+      return true;
+    }
+    return false;
+  }
+
+  private _getCDN() {
+    const env = String(process.env.NODE_ENV);
+    if ( env === 'prd' ) { // 운영
+      return 'https://cdnm.tworld.co.kr';
+    } else if ( env === 'stg' ) { // 스테이징
+      return 'https://cdnm-stg.tworld.co.kr';
+    } else if ( env === 'dev') { // dev
+      return 'https://cdnm-dev.tworld.co.kr';
+    } else { // local
+      return 'https://cdnm-dev.tworld.co.kr';
+      // return 'http://localhost:3001';
     }
   }
 }
+
