@@ -167,7 +167,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     if ( data.myInfo && data.myInfo.billTypeCd ) {
       data.paymentInfo = {
         billTypeNm: data.myInfo.billTypeNm,
-        payMthdNm: data.myInfo.payMthdNm
+        // 대표청구회선이 아닌 경우에는 "통합청구"로 노출
+        payMthdNm: data.svcInfo.actRepYn !== 'Y'? '통합청구' : data.myInfo.payMthdNm
       };
     }
   }
