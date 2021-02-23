@@ -14,6 +14,7 @@ import BrowserHelper from '../../utils/browser.helper';
 import DateHelper from '../../utils/date.helper';
 import { LOGIN_TYPE, MEMBERSHIP_GROUP } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
+import { MYT_FARE_BILL_TYPE } from '../../types/string.type';
 
 class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
@@ -165,6 +166,10 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     }
     // 납부/청구 유형
     if ( data.myInfo && data.myInfo.billTypeCd ) {
+      // 아래 요금안내서 유형 정보가 현재 존재하지 않는 정보로 요금안내서 상세와 동일하게 처리
+      if (['4', '5', '8', 'C'].indexOf(data.myInfo.billTypeCd) > -1 ) {
+        data.myInfo.billTypeNm = MYT_FARE_BILL_TYPE[data.myInfo.billTypeCd];
+      }
       data.paymentInfo = {
         billTypeNm: data.myInfo.billTypeNm,
         // 대표청구회선이 아닌 경우에는 "통합청구"로 노출
