@@ -12,8 +12,6 @@ import DateHelper from '../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
 import {MYT_FARE_MICRO_NAME} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_FARE_INFO_HISTORY } from '../../../../types/string.type';
-import CommonHelper from '../../../../utils/common.helper';
 
 /**
  * @class
@@ -36,34 +34,6 @@ class MyTFareBillSmall extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const lineType = CommonHelper.getLineType(svcInfo);
-    // console.log(">>>>>>>>> lineType: ", lineType, svcInfo.svcGr);
-    // 법인회선인 경우  
-    if ( lineType.isCompanyLine ) {
-      // 법인회선 E
-      if (svcInfo.svcGr === 'E') {
-        this.defaultRender(res, svcInfo, pageInfo);
-      } 
-      else {
-        this.errorRender(req, res, pageInfo, svcInfo);
-      }
-    } else { // 법인회선이 아닌 경우 
-      Observable.from(this.isAdult(API_CMD.BFF_05_0080)).subscribe(isAdult => {
-        if (isAdult) { // 미성년자 법대 동의 
-          req.query.isAdult = true;
-          this.errorRender(req, res, pageInfo, svcInfo);
-        } else { // 미성년자 법대 미동의 
-          if (svcInfo.svcGr === 'Y' || svcInfo.svcGr === 'A') { // 일반회선 인증A, 인증B
-            this.defaultRender(res, svcInfo, pageInfo);
-          } else {
-            this.errorRender(req, res, pageInfo, svcInfo);
-          }  
-        }
-      });
-    }
-  }
-
-  private defaultRender(res: Response, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getHistory(),
       this.getPasswordStatus(),
@@ -275,55 +245,13 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {any}
    */
   private errorRender(res, resp, svcInfo, pageInfo): any {
-
-    let error = {
-      title: '',
-      contents: ''
-    };
-    if (res.query.isAdult) { // 미성년자 메세지 
-        error.title = MYT_FARE_INFO_HISTORY.ERROR.NO_ADULT_LINE.title;
-        error.contents = '';
-    } else { // 법인회선 메세지
-      error.title = MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.title;
-      error.contents = MYT_FARE_INFO_HISTORY.ERROR.COMPANY_LINE.contents
-    }
-    const code = res.query.code || '',
-          msg = error.title,
-          subMsg = error.contents,
-          isPopupCheck = false;
     this.error.render(res, {
-      code: code,
-      msg: msg,
-      subMsg: subMsg,
+      code: resp.code,
+      msg: resp.msg,
       pageInfo: pageInfo,
-      svcInfo: svcInfo,
-      isPopupCheck: isPopupCheck
-    });
-
-    // this.error.render(res, {
-    //   code: resp.code,
-    //   msg: resp.msg,
-    //   pageInfo: pageInfo,
-    //   svcInfo: svcInfo
-    // });
-  }
-  /**
-   * @return {Observable}
-   * @desc 소액결제, 콘텐츠결제 미성년자여부 체크 
-   */
-  private isAdult = (apiName): Observable<any | null> => {
-    // BFF_05_0080: 소액결제, BFF_05_0066: 콘텐츠 결제 
-    return this.apiService.request(apiName, {}).map((resp: { code: string; result: any }) => {
-      // console.log(">>>>>>>>>>>> isAdult Code: ", resp.code);
-      if (resp.code === 'BIL0031') {
-        resp.result = true;
-      } else {
-        resp.result = false;
-      }
-      return resp.result;
+      svcInfo: svcInfo
     });
   }
-
 }
 
 export default MyTFareBillSmall;
