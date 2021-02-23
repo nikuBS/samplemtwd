@@ -1032,7 +1032,7 @@ export const API_CMD = {
   // 상품 고도화 신규 BFF
   BFF_10_0204: { path: '/core-product/:version/submain-list-theme/themeprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
   BFF_10_0203: { path: '/core-product/:version/submain/overall-product', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
-  BFF_10_0205: { path: '', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
+  BFF_10_0205: { path: '/core-product/v1/submain/seperate/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/:version/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
