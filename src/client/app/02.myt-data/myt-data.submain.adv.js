@@ -1220,8 +1220,7 @@ Tw.MyTDataSubMainAdv.prototype = {
             .html(this._giftTextTemp(dataQty.data, dataQty.unit));
         } else {
           // API DATA SUCCESS
-          this.$giftText.find('span.large').addClass('em')
-            .html(this._giftTextTemp(dataQty.data, dataQty.unit));
+          this.$giftText.find('span.large').html(this._giftTextTemp(dataQty.data, dataQty.unit));
         }
       } else {
         this._giftReqCnt = result.reqCnt; // 재시도 횟수
