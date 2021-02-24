@@ -18,7 +18,7 @@ _%>
             <div class="month-charge">
                 <% include ../components/submain/myt-fare.submain.claim-pay.date.html %>
                 <dl class="sel-bill">
-                    <dt class="term"><%- data.type !== 'UF' ? '총 납부 금액' : '이용요금' %></dt>
+                    <dt class="term"><%- data.type !== 'UF' ? '청구요금' : '이용요금' %></dt>
                     <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>">
                         <dd class="charge">
                             <%-data.totalClaim%><span class="unit">원</span>
@@ -61,18 +61,13 @@ _%>
                 <!--통합청구 대표일때-->
                 <%_
                     if(data.type !== 'UF'){
-                        const {isPaid, isThisMonth, payDate, payCode} = data.autoPayment;
+                        const {paymentInfo = {}} = data;
+                        const {isPaid, isThisMonth, payDate} = data.autoPayment;
                         payText = isPaid ? '납부완료' : isThisMonth ? '납부될 예정' : '미납',
-                        payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.',
-                        payType = {
-                            '01': '계좌이체',
-                            '02': '카드 자동납부',
-                            '03': '지로',
-                            '04': '가상계좌'
-                        };
+                        payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.';
                 _%>
                 <strong class="highlight"><%-`${data.month}월 요금이 ${payText}`%></strong> <%-payTextEnd%>
-                <span class="detail-type"><%-`${payDate} ${payType[payCode]}`%></span>
+                <span class="detail-type"><%-`${payDate} ${paymentInfo.payMthdNm}`%></span>
                 <%_} else if(repSvcNm){_%>
                 <strong class="highlight"><%- repSvcNm%>에 통합청구</strong> 되었습니다.
                 <%_}_%>
@@ -94,6 +89,10 @@ _%>
                     <%# 요금 상세내역 리스트 handlebars-template 영역%>
                 </ul>
             </div>
+            <%_}_%>
+
+            <%_if(data.type !== 'UF'){_%>
+            <p class="guide-txt">이번달에 받으신 할인혜택은 <strong><%-data.claimDisAmtAbs || 0%>원</strong> 입니다.</p>
             <%_}_%>
 
             <%_if(data.miriBalance){_%>
@@ -143,16 +142,6 @@ _%>
             </dt>
             <dd class="report-cont">{{value}}원<!--1,260원--></dd>
         </dl>
-        {{#subList}}
-            <ul class="detail-list">
-                <li class="detail-item">
-                    <dl class="detail-price">
-                        <dt class="detail-article">{{this.title}}<!--요금할인--></dt>
-                        <dd class="price">{{this.value}}<!--20,000-->원</dd>
-                    </dl>
-                </li>
-            </ul>
-        {{/subList}}
     </li>
     {{/list}}
 </script>
