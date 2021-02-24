@@ -5,6 +5,7 @@
 * Update: 2018.11.26
 %>
 <%- include('../components/start.component.html', { pageInfo: data.pageInfo, adv: 1 }); %>
+<body class="tod-white">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -365,7 +366,7 @@
                         </div>
                         <% if (!data.isEasyLogin) { %>
                         <div class="hash-wrap" data-id="etc-wrap">
-                            <ul class="hash-list normal">                                
+                            <ul class="hash-list normal">
                                 <li class="hash-item" data-id="etc">
                                     <a href="" class="hash" data-xt_eid="<%=data.xtEid.elctcEtc%>" data-xt_csid="NO" data-xt_action="BC">#팅/쿠키즈/안심 음성요금 충전</a>
                                 </li>
@@ -665,4 +666,5 @@
     });
   });
 </script>
+</body>
 <% include ../components/end.component.html %>
