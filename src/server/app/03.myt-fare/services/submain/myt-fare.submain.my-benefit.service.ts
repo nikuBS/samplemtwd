@@ -75,6 +75,7 @@ export class MytFareSubmainMyBenefitService extends MytFareSubmainCommonService 
       benefitCount += (thigh5 && kdbthigh5) ? 2 : 1;
     }
     const result = {
+      isJoin: !FormatHelper.isEmpty(membershipResult), // 멤버십 가입유무
       mbsGrade: (MEMBERSHIP_GROUP[membershipResult.mbrGrCd] || '가입하기').toUpperCase(), // 멤버십 등급
       showUsedAmount: membershipResult.mbrUsedAmt ? FormatHelper.addComma((+membershipResult.mbrUsedAmt).toString()) : '', // 연간 혜택
       benefitCount // 혜택/할인 건수
