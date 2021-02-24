@@ -90,12 +90,13 @@ $.extend(Tw.CommonSearchMore.prototype,
       this._showShortcutList(this._listData, this._category, this._cdn);
 
       this.$inputElement = this.$container.find('#keyword');
-      this.$inputElement.on('keyup', $.proxy(this._inputChangeEvent, this));
+      this.$inputElement.on('keydown', $.proxy(this._keyDownInputEvt, this));
+      this.$inputElement.on('keyup', _.debounce($.proxy(this._keyUpInputEvt, this), 500));
       this.$inputElement.on('focus', $.proxy(this._inputFocusEvt, this));
       this.$container.on('click', '.icon-gnb-search', $.proxy(this._doSearch, this));
 
       this.$inputElementResultSearch = this.$container.find('#resultSearchKeyword');
-      this.$inputElementResultSearch.on('keyup', $.proxy(this._keyInputEvt, this));
+      this.$inputElementResultSearch.on('keyup', _.debounce($.proxy(this._keyInputEvt, this), 500));
       if ( this._searchInfo.query !== this._searchInfo.researchQuery ) {
         var tempstr = this._searchInfo.researchQuery.replace(this._searchInfo.query, '').trim();
         this.$inputElementResultSearch.attr('value', tempstr);
@@ -137,7 +138,7 @@ $.extend(Tw.CommonSearchMore.prototype,
       $('#fe-category-slide').removeData('event');
       skt_landing.widgets.widget_horizontal($('.widget'));
       this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
-        var $target = $(e.currentTarget).parent(); // 바로 상위 
+        var $target = $(e.currentTarget).parent(); // 바로 상위
         $target.toggleClass('on');
         if ($target .hasClass('on')) {
           $target.find('button').attr('aria-pressed', true);
@@ -341,10 +342,12 @@ $.extend(Tw.CommonSearchMore.prototype,
      * @desc 검색창 input 이벤트
      * @returns {void}
      */
-    _keyInputEvt: function (inputEvtObj) {
-      inputEvtObj.preventDefault();
-      if ( Tw.InputHelper.isEnter(inputEvtObj) ) {
-        this._doResultSearch();
+    _keyInputEvt: function (event) {
+      // which:: https://api.jquery.com/event.which/
+      if ( event.which === 13 ) {
+        this._doResultSearch(event);
+        event.preventDefault();
+        event.stopPropagation();
       }
     },
     /**
