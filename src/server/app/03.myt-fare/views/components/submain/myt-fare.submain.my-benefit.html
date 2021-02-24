@@ -20,7 +20,7 @@ _%>
                         const {isJoin, mbsGrade, showUsedAmount, benefitCount} = benefit;
                         const gradeUrl = isJoin ? '/membership/submain' : '/membership/join';
                         const yearsUrl = showUsedAmount ? '/membership/my' : '/membership/submain';
-                        const benefitUrl = benefitCount !== '0' ? '/benefit/my' : '/benefit/submain';
+                        const benefitUrl = benefitCount ? '/benefit/my' : '/benefit/submain';
                     _%>
                     <a href="<%- gradeUrl%>" data-make-eid="membership">
                         <div class="ico-item">

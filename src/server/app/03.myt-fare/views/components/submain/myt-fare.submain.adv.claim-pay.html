@@ -63,7 +63,7 @@ _%>
                     if(data.type !== 'UF'){
                         const {paymentInfo = {}} = data;
                         const {isPaid, isThisMonth, payDate} = data.autoPayment;
-                        payText = isPaid ? '납부완료' : isThisMonth ? '납부될 예정' : '미납',
+                        payText = isPaid ? '납부' : isThisMonth ? '납부될 예정' : '미납',
                         payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.';
                 _%>
                 <strong class="highlight"><%-`${data.month}월 요금이 ${payText}`%></strong> <%-payTextEnd%>
