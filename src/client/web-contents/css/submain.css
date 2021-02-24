@@ -155,7 +155,7 @@ body.tod-white{background:#fff}
 @media screen and (max-width:320px){
     .tod-submain .report-list .report-item .report-define .report-cont{padding-left:0}
 }
-.tod-submain .report-list .report-item .report-define .report-cont .large{display:inline-block; font-size:2rem; font-weight:800; letter-spacing:-1px}
+.tod-submain .report-list .report-item .report-define .report-cont .large{display:inline-block; font-size:1.5rem; font-weight:800; letter-spacing:-1px}
 .tod-submain .report-list .report-item .report-define .report-cont .medium{display:inline-block; font-size:1.5rem; font-weight:800;}
 .tod-submain .report-list .report-item .report-define .report-cont.basics13-larger{font-size:15px; font-weight:500}
 .tod-submain .report-list .report-item .link .report-define{position:relative; padding-right:0.75rem; }
@@ -383,7 +383,7 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center;  -webkit-box-pack: justify;justify-content:space-between; font-size:0.9375rem; line-height:1.75rem}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .detail-article{color:#82888f; font-weight:400; line-height:1.75rem}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .price{font-weight:500; line-height:1.75rem}
-.tod-submain .charge-cont .guide-txt{margin:16px 0 ;}
+.tod-submain .charge-cont .guide-txt{margin:1.5rem 0 ; font-size:0.9375rem;}
 .tod-submain .charge-cont .guide-txt strong{font-weight:500; color:#f65252; letter-spacing: -0.45px; line-height:1.4}
 
 /* pps */
@@ -444,7 +444,7 @@ body.tod-white{background:#fff}
 .tod-submain .add-pro-wrap .add-pro-list{width:100%; display: -webkit-box; display:flex; -webkit-box-pack: center; justify-content:space-evenly; padding:0 0.625rem}
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item {min-width:25%; flex-basis:25%; flex-shrink:0; -webkit-box-flex: 0; flex-grow:0}
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item > a{display:block}
-.tod-submain .add-pro-wrap .add-pro-list .add-pro-item .number{font-size:1.875rem; font-weight:800; color:#333; text-align:center; }
+.tod-submain .add-pro-wrap .add-pro-list .add-pro-item .number{font-size:1.375rem; font-weight:800; color:#333; text-align:center; }
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item .number .unit{display:inline-block; font-size:0.8125rem; }
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item .service-name{color:#82888f; font-size:0.6875rem; text-align:center; line-height:1.27; padding-top:0.5rem;}
 @media screen and (max-width:320px){
@@ -526,7 +526,7 @@ body.tod-white{background:#fff}
 
 /* T끼리 데이터 선물  */
 .tod-submain .data-status-wrap{margin-bottom:0.75rem}
-.tod-submain .data-status-wrap .unit{display:inline-block; font-size:1.5rem; margin-left:0.1875rem; vertical-align:middle }
+.tod-submain .data-status-wrap .unit{display:inline-block; font-size:1.5rem; margin-left:0.1875rem;}
 .tod-submain .data-status-wrap .small-warning-box{background:#f9f9f9; border-radius:0.25rem; padding:0.75rem 0.4375rem 0.625rem; text-align:center; margin-top:0.75rem;}
 .tod-submain .data-status-wrap .small-warning-box .warning-txt{display:inline-block; font-size:0.6875rem; color:#868e96; line-height:1.2; text-align:left; position:relative; padding-left:0.9375rem; }
 .tod-submain .data-status-wrap .small-warning-box .warning-txt:before{content:''; display:inline-block; width:0.75rem; height:0.75rem; background:url('/img/myt/info-ico.svg') no-repeat left top; position:absolute; left:0; top:0}
