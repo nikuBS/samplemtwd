@@ -149,9 +149,9 @@ body.tod-white{background:#fff}
 .tod-submain .report-list .report-item .link {display:inline-block; width:100%; vertical-align:top}
 .tod-submain .report-list .report-item .report-define{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content: space-between;/*  -webkit-box-align: center; */}
 .tod-submain .report-list.align-center .report-item .report-define{align-items:center}
-.tod-submain .report-list .report-item .report-define .report-tit{color:#82888f; -webkit-box-flex: 1; flex:1; max-width:70%;vertical-align:top;}
+.tod-submain .report-list .report-item .report-define .report-tit{color:#82888f; -webkit-box-flex: 1; flex:1; max-width:70%;vertical-align:top; line-height: 1.1;}
 .tod-submain .report-list .report-item .report-define .report-sub{display:block; font-size:12px; color:#868e96; padding-top:0.3125rem; font-weight:400}
-.tod-submain .report-list .report-item .report-define .report-cont{text-align:right; font-weight:500; color:#000; position:relative; /* padding-left:0.875rem */}
+.tod-submain .report-list .report-item .report-define .report-cont{text-align:right; font-weight:500; color:#000;line-height: 1.1; position:relative; /* padding-left:0.875rem */}
 @media screen and (max-width:320px){
     .tod-submain .report-list .report-item .report-define .report-cont{padding-left:0}
 }
