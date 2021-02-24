@@ -811,13 +811,13 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
     }, this));
     this.$container.find('[data-id=membership-point]').on('click', $.proxy(function() {
       switch (this._data.membership.used) {
-        case 2:
-          // 간편로그인
-          this._historyService.goLoad('/membership/my');
+        case 1:
+          // 미가입
+          this._historyService.goLoad('/membership/submain');
           break;
         default:
-          // used => 1 or 2 가입 및 가입안된 상태
-          this._historyService.goLoad('/membership/submain');
+          // used => 0 or 2 가입한 상태, 간편로그인
+          this._historyService.goLoad('/membership/my');
           break;
       }
       return false;
@@ -841,7 +841,9 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
       return false;
     }, this));
     this.$container.find('[data-id=paymthd]').on('click', $.proxy(function() {
-      this._historyService.goLoad('/myt-fare/bill/option');
+      if (this._data.svcInfo.actRepYn === 'Y') {
+        this._historyService.goLoad('/myt-fare/bill/option');
+      }
       return false;
     }, this));
   }
