@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import BrowserHelper from '../../utils/browser.helper';
 import DateHelper from '../../utils/date.helper';
-import { LOGIN_TYPE, MEMBERSHIP_GROUP } from '../../types/bff.type';
+import { MEMBERSHIP_GROUP } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import { MYT_FARE_BILL_TYPE } from '../../types/string.type';
 
@@ -38,7 +38,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
     const data = this._setData(req, res, next, svcInfo, allSvc, child, pageInfo);
     data.isIos = BrowserHelper.isIos(req);
-    data.isEasyLogin = svcInfo.loginType === LOGIN_TYPE.EASY;
+    data.isEasyLogin = this.isEasyLogin;
     // R: 일반법인, E:SWING 기준 법인, D: SKT 법인
     data.isComLine = svcInfo.svcGr === 'R' || svcInfo.svcGr === 'E' || svcInfo.svcGr === 'D';
     // 간편로그인 경우 미노출 처리 필요
