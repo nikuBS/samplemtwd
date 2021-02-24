@@ -31,7 +31,9 @@ _%>
               <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico12.svg" alt=""></i>
               <div class="list-txt">
                 <span class="item-sub-txt">연간 누적 혜택</span>
-                <span class="item-tit"><%= data.membership.point %>원</span>
+                <span class="item-tit">
+                  <%= data.membership.point %><%= data.membership.used === 0 ? '원':'' %>
+                </span>
               </div>
             </div>
           </a>
