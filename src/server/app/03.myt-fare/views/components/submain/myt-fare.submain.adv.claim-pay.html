@@ -5,7 +5,7 @@
 * @since 2020.11.10
 %>
 <%# 청구 내역 없을때%>
-<%_if(!data.isBroadBand && (data.claimPay || '0') === '0'){_%>
+<%_if(!data.isBroadBand && (data.latestDates.length < 1 || data.isNewMember) ){_%>
 <% include ../components/submain/myt-fare.submain.non-data.html %>
 <%_ } else {
     const isRep = data.svcInfo.actRepYn === 'Y'; // 통합청구 대표여부
@@ -18,8 +18,12 @@ _%>
             <div class="month-charge">
                 <% include ../components/submain/myt-fare.submain.claim-pay.date.html %>
                 <dl class="sel-bill">
-                    <dt class="term">총 납부 금액</dt>
-                    <dd class="charge"><%-data.totalClaim%><span class="unit">원</span></dd>
+                    <dt class="term"><%- data.type !== 'UF' ? '청구요금' : '이용요금' %></dt>
+                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>">
+                        <dd class="charge">
+                            <%-data.totalClaim%><span class="unit">원</span>
+                        </dd>
+                    </a>
                 </dl>
                 <%_
                     const {prepay='0', remainPayment='0', unpaid='0'} = data;
@@ -39,7 +43,7 @@ _%>
                     <%_} else {_%>
                     <li class="default-item">
                         <span class="default-tit"><%-data.month%>월 요금</span>
-                        <span class="default-cost"><%-data.remainPayment%>원</span>
+                        <span class="default-cost"><%-data.claimPay%>원</span>
                     </li>
                     <%_}_%>
                     <%_if(unpaid !== '0') {_%>
@@ -57,18 +61,13 @@ _%>
                 <!--통합청구 대표일때-->
                 <%_
                     if(data.type !== 'UF'){
-                        const {autoPayment} = data,
-                        payText = autoPayment.isPaid ? '납부완료' : '납부될 예정',
-                        payTextEnd = autoPayment.isPaid ? '되었습니다.' : '입니다.',
-                        payType = {
-                            '01': '계좌이체',
-                            '02': '카드 자동납부',
-                            '03': '지로',
-                            '04': '가상계좌'
-                        };
+                        const {paymentInfo = {}} = data;
+                        const {isPaid, isThisMonth, payDate} = data.autoPayment;
+                        payText = isPaid ? '납부' : isThisMonth ? '납부될 예정' : '미납',
+                        payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.';
                 _%>
                 <strong class="highlight"><%-`${data.month}월 요금이 ${payText}`%></strong> <%-payTextEnd%>
-                <span class="detail-type"><%-`${autoPayment.payDate} ${payType[autoPayment.payCode]}`%></span>
+                <span class="detail-type"><%-`${payDate} ${paymentInfo.payMthdNm}`%></span>
                 <%_} else if(repSvcNm){_%>
                 <strong class="highlight"><%- repSvcNm%>에 통합청구</strong> 되었습니다.
                 <%_}_%>
@@ -85,11 +84,15 @@ _%>
             </div>
             <%_} else if(guide.data) {_%>
             <div class="detail-charge-box">
-                <div class="detail-tit"><a href="/myt-fare/billguide/guide" data-make-eid="detailBill">요금 상세 내역</a></div>
+                <div class="detail-tit"><a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>" data-make-eid="detailBill">요금 상세 내역</a></div>
                 <ul class="report-list item-no-border fe-charge-list">
                     <%# 요금 상세내역 리스트 handlebars-template 영역%>
                 </ul>
             </div>
+            <%_}_%>
+
+            <%_if(data.type !== 'UF'){_%>
+            <p class="guide-txt">이번달에 받으신 할인혜택은 <strong><%-data.claimDisAmtAbs || 0%>원</strong> 입니다.</p>
             <%_}_%>
 
             <%_if(data.miriBalance){_%>
@@ -108,13 +111,21 @@ _%>
 
             <!-- 요금납부 (통합청구 대표) -->
             <%_ if(data.type !== 'UF' && data.isNotAutoPayment){
-                const classNm = data.unPaidTotSum ? 'btn2' : '';
+                const {isThisMonth, isPaid} = data.autoPayment;
+                // 미납버튼 노출 조건:
+                // 1. 당월인경우: 당월 납부예정(납부 전)이라도, 미납요금버튼 미노출이나, 당월보다 이전 미납금액 있으면 노출.
+                // 2. 이전달인 경우: 선택 월 포함 미납금액 있으면 노출
+                const isShowUnpaid = unpaid !== '0' ? true : !isThisMonth && !isPaid ? true : false;
+                const classNm = isThisMonth && isShowUnpaid ? 'btn2' : '';
+                if (isThisMonth || isShowUnpaid) {
             _%>
             <div class="btn-area <%-classNm%>">
+                <%_if(isThisMonth){ // 당월 일때만 요금납부 버튼 노출 _%>
                 <a href="#" class="round-btn fe-payment" data-make-eid="charge">요금 납부</a>
-                <a href="/myt-fare/unbill" class="round-btn line <%- classNm ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
+                <%_}_%>
+                <a href="/myt-fare/unbill" class="round-btn line <%- isShowUnpaid ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
             </div>
-            <%_}_%>
+            <%_}}_%>
         </div>
     </div>
 </section>

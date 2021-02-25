@@ -14,12 +14,12 @@
                     <%_if(data.type === 'UF'){_%> <%# 귀속회선인 경우 노출%>
                     <li class="link-item"><a href="/myt-fare/info/history" data-make-eid="recentPay2">최근 납부 내역</a></li>
                     <%_}_%>
-                    <li class="link-item"><a href="/myt-join/submain/suspend" data-make-eid="pause">일시정지/해제</a></li>
+                    <li class="link-item fe-pause"><a href="#" data-make-eid="pause">일시정지/해제</a></li>
                     <%_if(data.isPwdSt){ _%>
                     <li class="link-item"><a href="/myt-join/custpassword" data-make-eid="password">고객보호 비밀번호 서비스</a></li>
                     <%_}_%>
                     <%_if( svcAttrCd === 'M1' ){ // 휴대폰 회선만 노출 _%>
-                    <li class="link-item"><a href="/myt-data/usage-pattern" data-make-eid="pattern">데이터/음성/문자 월 이용 패턴</a></li>
+                    <li class="link-item"><a href="/myt-data/usage-pattern" data-make-eid="pattern">데이터/음성/문자 월 사용패턴</a></li>
                     <%_}_%>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
         <ul class="hash-list">
             {{#if isTax}}
             <li class="hash-item">
-                <a href="/myt-fare/info/history" class="hash" data-make-eid="tax">#세금계산서 재발행</a>
+                <a href="/myt-fare/info/bill-tax" class="hash" data-make-eid="tax">#세금계산서 재발행</a>
             </li>
             {{/if}}
             {{#if isContribute}}
@@ -51,7 +51,8 @@
 <script>
   $(document).ready(function () {
     new Tw.MyTFareSubMainLookup({
-      $element: $('.fe-lookup-area')
+      $element: $('.fe-lookup-area'),
+      data: JSON.parse('<%- JSON.stringify(data) %>')
     });
   });
 </script>

@@ -27,7 +27,6 @@ Tw.CommonSearchMain = function (rootEl,cdn,step) {
 Tw.CommonSearchMain.prototype = {
   /**
    * @function
-   * @member
    * @desc 초기화
    * @returns {void}
    */
@@ -52,34 +51,49 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
+   * @param event keydown
    * @desc 검색창 input 이벤트
    * @returns {void}
    */
-  _keyInputEvt : function (inputEvtObj) {
-    inputEvtObj.preventDefault();
-    if(Tw.InputHelper.isEnter(inputEvtObj)){
-      this._searchByInputValue(inputEvtObj);
-    }else{
-      if(this._historyService.getHash()==='#input_P'){
-        if(this.$inputElement.val().trim().length>0){
-          this._getAutoCompleteKeyword();
-        }else{
-          this._showRecentKeyworList();
-        }
-      }
+  _keyDownInputEvt: function (event) {
+    // enter 키는 keydown 에서 처리
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which === 13 ) {
+      this._searchByInputValue(event);
+      event.preventDefault();
     }
   },
   /**
    * @function
-   * @member
+   * @param event keyup
+   * @desc 검색창 input 이벤트
+   * @returns {void}
+   */
+  _keyUpInputEvt: function (event) {
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which !== 13 ) {
+      if ( this._historyService.getHash() === '#input_P' ) {
+        if ( this.$inputElement.val().trim().length > 0 ) {
+          this._getAutoCompleteKeyword();
+        } else {
+          this._showRecentKeyworList();
+        }
+      }
+    }
+    event.stopPropagation();
+    event.preventDefault();
+  },
+  /**
+   * @function
    * @desc 이벤트 바인딩
    * @returns {void}
    */
   _bindEvent : function () {
     // this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
-    this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
+    this.$inputElement.on('keydown', $.proxy(this._keyDownInputEvt, this));
+    // key 입력 시 서버 요청 및 DOM 변경을 최소화 하기 위해 마지막에 한번만 요청하기 위해 _.debounce 사용
+    this.$inputElement.on('keyup',_.debounce($.proxy(this._keyUpInputEvt,this), 500));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
     this.$container.on('click','.search-element',$.proxy(this._searchByElement,this));
@@ -145,7 +159,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 변환
    * @param {String} listStr
    * @returns {Object}
@@ -161,7 +174,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 입력창 포커스 이벤트
    * @returns {Object}
    */
@@ -170,7 +182,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 입력창 포커스 이벤트
    * @param {Object} args 이벤트 객체
    * @returns {Object}
@@ -187,7 +198,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어 추가
    * @param {String} keyword  - 검색어
    * @returns {void}
@@ -213,7 +223,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어 가져오기
    * @returns {Object}
    */
@@ -252,21 +261,19 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색창에 입력한 검색어로 검색 실행하기
    * @returns {void}
    */
   _searchByInputValue : function ($event) {
     var $target = $($event.currentTarget);
     var searchKeyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
+    if ( Tw.FormatHelper.isEmpty(searchKeyword) || searchKeyword.trim().length <= 0 ) {
       searchKeyword = this.$container.find('#selected_keyword').val();
     }
     this._doSearch(searchKeyword, $target);
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어, 검색어 자동완성 등 키워드 클릭하여 검색 실행
    * @param {Object} linkEvt - 이벤트 객체
    * @returns {Object}
@@ -292,7 +299,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 추천검색어로 검색 실행
    * @param {Object} linkEvt - 이벤트 객체
    * @returns {Object}
@@ -306,7 +312,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 더 보기
    */
   _showMorePopularSearchWord : function(){
@@ -317,7 +322,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 더 보기
    */
   _showMoreContent : function(elem) {
@@ -329,7 +333,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 접기
    */
   _hideMorePopularSearchWord : function () {
@@ -342,7 +345,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 인기 검색어 6위-10위 접기
    */
   _hideMoreContent : function(elem) {
@@ -354,7 +356,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 어떤 업무를 찾고 계신가요 메뉴 이동
    */
   _goRcmndLink : function (elem) {
@@ -362,7 +363,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 이럴 땐 이렇게 하세요 링크 이동
    */
   _goDoLikeThisLink : function (elem) {
@@ -370,36 +370,35 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색 페이지로 이동
-   * @param {String} searchKeyword - 키워드
+   * @param {String} searchKeyword -
+   * @param $target6
    * @returns {void}
    */
   _doSearch : function (searchKeyword, $target) {
-    Tw.Logger.info('[common.search-main][_doSearch]', '');
-
-    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
+    Tw.Logger.info('[common.search-main][_doSearch]', $target);
+    if ( Tw.FormatHelper.isEmpty(searchKeyword) || searchKeyword.trim().length <= 0 ) {
       // this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$target);
+      this._popupService.openAlert(null, Tw.ALERT_MSG_SEARCH.KEYWORD_ERR, null, null, 'search_keyword_err', $target);
       return;
     }
-    if(this._historyService.getHash()==='#input_P'){
+    if ( this._historyService.getHash() === '#input_P' ) {
       this._closeKeywordListBase();
     }
 
     // var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming'];
-    //shortcut-A.rate-A.service-A.tv_internet-A.troaming-A
-    var sort = 'shortcut-A';
-    sort += '.rate-A';
-    sort += '.service-A';
-    sort += '.tv_internet-A';
-    sort += '.troaming-A';
+    //shortcut-C.rate-C.service-C.tv_internet-C.troaming-C
+    var sort = 'shortcut-C';
+    sort += '.rate-C';
+    sort += '.service-C';
+    sort += '.tv_internet-C';
+    sort += '.troaming-C';
     sort += '.direct-D';
 
-    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-    Tw.CommonHelper.setCookie('search_sort::service', 'A');
-    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+    Tw.CommonHelper.setCookie('search_sort::rate', 'C');
+    Tw.CommonHelper.setCookie('search_sort::service', 'C');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
     Tw.CommonHelper.setCookie('search_sort::direct', 'D');
 
     setTimeout($.proxy(function () {
@@ -411,7 +410,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색 취소 (검색 메인 진입시점 이전 페이지로 이동)
    * @returns {void}
    */
@@ -425,7 +423,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색창의 키워드가 포함되어있는 최근검색어 가져오기
    * @param {String} keyword - 키워드
    * @returns {Array}
@@ -454,33 +451,31 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어, 검색어 자동완성 화면 출력
    * @returns {void}
    */
   _openKeywordListBase : function () {
-    if(this._historyService.getHash()==='#input_P'){
-      if(this.$inputElement.val().trim().length>0){
+    if ( this._historyService.getHash() === '#input_P' ) {
+      if ( this.$inputElement.val().trim().length > 0 ) {
         this._getAutoCompleteKeyword();
-      }else{
+      } else {
         this._showRecentKeyworList();
       }
-      return;
+    } else {
+      setTimeout($.proxy(function () {
+        this._popupService.open({
+            hbs: 'search_keyword_list_base',
+            layer: true,
+            data: null
+          },
+          $.proxy(this._bindKeyworListBaseEvent, this),
+          $.proxy(this._keywordListBaseClassCallback, this),
+          'input');
+      }, this));
     }
-    setTimeout($.proxy(function () {
-      this._popupService.open({
-          hbs: 'search_keyword_list_base',
-          layer: true,
-          data : null
-        },
-        $.proxy(this._bindKeyworListBaseEvent,this),
-        $.proxy(this._keywordListBaseClassCallback,this),
-        'input');
-    },this));
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어, 검색어 자동완성 화면 비활성화
    * @returns {void}
    */
@@ -495,7 +490,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 검색어 자동완성 , 최근검색어 화면 닫기 콜백
    * @returns {void}
    */
@@ -505,29 +499,27 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어 화면으로 전환
    * @returns {void}
    */
-  _showRecentKeyworList : function () {
-    if(this._historyService.getHash()==='#input_P'){
+  _showRecentKeyworList: function () {
+    if ( this._historyService.getHash() === '#input_P' ) {
       this.$keywordListBase.find('#recently_keyword_layer').removeClass('none');
-      if(!this.$keywordListBase.find('#auto_complete_layer').hasClass('none')){
+      if ( !this.$keywordListBase.find('#auto_complete_layer').hasClass('none') ) {
         this.$keywordListBase.find('#auto_complete_layer').addClass('none');
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
-      _.each(this._recentlyKeywordListData[this._nowUser],$.proxy(function (data,idx) {
+      _.each(this._recentlyKeywordListData[this._nowUser], $.proxy(function (data, idx) {
         this.$keywordListBase.find('#recently_keyword_list')
           .append(this._recentKeywordTemplate({
-            listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)
+            listData: data, xtractorIndex: idx + 1, index: idx, encodeParam: encodeURIComponent(data.keyword)
           }));
-      },this));
+      }, this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 요청
    * @returns {void}
    */
@@ -551,7 +543,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 최근검색어와 자동완성 키워드 리스트 병합 , 중복제거
    * @param {Array} recentKeywordList - 키워드
    * @param {Array} autoCompleteList - 키워드
@@ -566,7 +557,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 화면 출력
    * @param {Array} autoCompleteList - 키워드
    * @returns {Array}
@@ -585,7 +575,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 키워드 자동완성 , 최근검색어 화면 이벤트 바인딩
    * @param {Object} layer - 화면 이벤트 객체
    * @returns {void}
@@ -609,7 +598,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc 과금팝업 출력
    * @param {Object} evt - 이벤트 객체
    * @returns {void}
@@ -626,7 +614,6 @@ Tw.CommonSearchMain.prototype = {
   },
   /**
    * @function
-   * @member
    * @desc svcInfo 요청
    * @returns {void}
    */

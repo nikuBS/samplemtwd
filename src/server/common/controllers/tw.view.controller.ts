@@ -227,7 +227,7 @@ abstract class TwViewController {
 
   /**
    * 특정 페이지 관리를 위해 설정 값
-   * @param menuId
+   * @param params
    * @protected
    */
   protected getAdvancementPageVisibleCheck(params): Observable<any> {

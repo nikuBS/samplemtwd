@@ -57,13 +57,23 @@ Tw.RoamingRates.prototype = {
     // '로밍 시 국가별 주의 사항'
     this.$container.find('.attentionHead').on('click', $.proxy(this.toggleAttention, this));
     // 툴팁 핸들러
-    this.$container.find('.tip').on('click', $.proxy(this._showTip, this));
+    this.$container.find('.tip, .tip-view, .tip-view-btn').on('click', $.proxy(this._showTip, this));   //웹접근성  .tip => tip-view 변경, 혹실몰라 기존클래스 냅뒀음.
 
     // 요금 더보기 핸들러
     this.$container.find('.opener').on('click', $.proxy(this._divOpen, this));
     // 요금 닫기 핸들러
     this.$container.find('.closer').on('click', $.proxy(this._divClose, this));
+    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
+    this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
+
+  //웹접근성 
+  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
+  _closeGnb: function() {
+    setTimeout(function () {
+      $("span.icon-gnb-menu").focus();
+    },300);  
+ },
   /**
    * 전체 국가 목록 링크 핸들러
    * @returns {boolean}

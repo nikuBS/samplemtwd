@@ -210,6 +210,7 @@ class MyTFareBillGuide extends TwViewController {
             invSvcList: [],
             paidAmtSvcCdList: [],
             paidAmtDetailList: [],
+            isOpenAccordion: ''
           };
 
           Object.assign(thisMain._billpayInfo, resArr[0].result);
@@ -279,9 +280,11 @@ class MyTFareBillGuide extends TwViewController {
 
           thisMain.logger.info(thisMain, '[ 통합청구회선 > 대표 아님!!!! ]', thisMain._billpayInfo.repSvcYn);
           thisMain._typeChk = 'A6';
-
+          
           // 사용요금/청구요금이 존재하는지
           thisMain._billpayInfo.existBill = existBill('usedAmountDetailList');
+          // 상세요금 아코디언 열림 여부
+          thisMain._billpayInfo.isOpenAccordion = 'Y';
 
         } else if ( svcInfo.actRepYn === 'Y' ) {
 
@@ -295,6 +298,8 @@ class MyTFareBillGuide extends TwViewController {
 
             thisMain.logger.info(thisMain, '[ 개별청구회선 ]', daySvcList.svcList.length);
             thisMain._typeChk = 'A4';
+            // 상세요금 아코디언 열림 여부
+            thisMain._billpayInfo.isOpenAccordion = 'Y';
             // 통합청구 회선
           } else {
 

@@ -39,7 +39,7 @@ _%>
     {{#list}}
         <li class="month-item">
             <dl>
-                <dt data-url="/myt-fare/billguide/guide?date={{date}}">{{month}}</dt>
+                <dt data-url="/myt-fare/billguide/guide?date={{date}}" data-make-eid="recentBill{{@index}}">{{month}}</dt>
                 <dd>
                     <span class="tod-blind">청구</span>
                     <span class="v" style="bottom:{{claimH}}%;">{{claim}}원</span>

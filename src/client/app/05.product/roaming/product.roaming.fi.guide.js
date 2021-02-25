@@ -24,6 +24,8 @@ Tw.ProductRoamingFiGuide.prototype = {
     this.$btnProduct = this.$container.find('.product-infolink');
     this.$btnDataPopup = this.$container.find('.data-popup-btn');
     this.$dataPopup = this.$container.find('#data-popup');
+    this.$popfocus = this.$container.find('#pop_focus');  //웹접근성
+    
   },
 
   _bindEvent: function() {
@@ -35,8 +37,26 @@ Tw.ProductRoamingFiGuide.prototype = {
     this.$container.on('click', 'button[id=flab07]', $.proxy(this._clickCountry, this));  //국가선택팝업 표시버튼
     this.$container.on('click', 'button[id=flab06]', $.proxy(this._openProdTypePop, this)); //국가선택팝업 / 바로박스상품 선택 리스트팝업
 
+    this.$popfocus.on('click', $.proxy(this._popfocus, this));
+    this.$container.on('click', '.rm-anchor li a', $.proxy(this._tabClick, this)); //웹접근성  바로박스 텝 클릭   
+    //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
+    this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
 
+  //웹접근성 
+  //로밍 메인에서 gnb 메뉴 닫기 클릭시 햄버거에 focus    
+  _closeGnb: function() {
+    setTimeout(function () {
+      $("a.icon-gnb-menu").focus();
+    },300);  
+ },
+  //웹접근성 why바로박스, 요금안내, 이용방법 텝 클릭시
+  _tabClick: function(e) {
+    var st = e.currentTarget.getAttribute('href');
+    setTimeout(function () {
+      $(st +' h4').focus();
+    },300);  
+ },
   /**
    * @function
    * @desc baro Box 예약 페이지 이동
@@ -74,6 +94,20 @@ Tw.ProductRoamingFiGuide.prototype = {
    */
   _togglePopup: function() {
     this.$dataPopup.toggle();
+
+    setTimeout(function(){  //웹접근성
+      $('#pop_focus').focus();
+    },500)
+
+  },
+
+  /**
+   * @desc  웹접근성 데이터 사용 팝업시  focus
+   */
+  _popfocus: function() {
+    setTimeout(function(){
+      $('#data-popup h1').focus();
+    },500)
   },
 
   _reload: function() {

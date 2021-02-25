@@ -5,8 +5,7 @@
  * @since 2020.11.09
  * Summary: 선불폰 이용내역 조회 및 화면 처리
  */
-Tw.MyTFareSubmainPps = function (rootEl, resData) {
-  this.resData = resData;
+Tw.MyTFareSubmainPps = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -40,29 +39,6 @@ Tw.MyTFareSubmainPps.prototype = {
   },
 
   /**
-   * @function
-   * @desc 즉시충전 상세보기
-   */
-  /*_onImmChargeDetail: function () {
-    switch ( this.resData.svcInfo.svcAttrCd ) {
-      case 'M2':
-        // PPS
-        new Tw.PPSRechargeLayer(this.$container);
-        break;
-      case 'M3':
-      case 'M4':
-        // PocketFi, Tlogin
-        this._historyService.goLoad('/myt-data/hotdata');
-        break;
-      default:
-        new Tw.ImmediatelyRechargeLayer(this.$container, {
-          pathUrl: '/myt-data/submain'
-        });
-        break;
-    }
-  },*/
-
-  /**
    * 사용내역 조회
    * @returns {*}
    * @private
@@ -82,6 +58,9 @@ Tw.MyTFareSubmainPps.prototype = {
    * @private
    */
   _getHistoriesInfoInit: function (res) {
+    if (res.code !== Tw.API_CODE.CODE_00) {
+      return;
+    }
     var dataArr = _.sortBy(res.result, 'usedDt').reverse().slice(0, 2); // 최신순으로 정렬(내림차순)
     this._proData(dataArr); // 데이터 가공
     this._ctrlInit(dataArr); // 데이터 뿌려주기
@@ -111,7 +90,7 @@ Tw.MyTFareSubmainPps.prototype = {
    * @private
    */
   _ctrlInit: function (dataArr) {
-    this.$detailList.append(this.$entryTplList({resData: dataArr}));
+    this.$detailList.removeClass('none').append(this.$entryTplList({resData: dataArr}));
   },
 
   _comComma: function (str) {

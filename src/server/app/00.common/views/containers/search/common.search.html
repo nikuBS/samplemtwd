@@ -38,6 +38,7 @@
         if (code === 'H') return '높은 가격순';
         if (code === 'L') return '낮은 가격순';
         if (code === 'D') return '최신순';
+        if (code === 'C') return '클릭순';
     }
 
     // sortToCodeName(1, sort)[0]
@@ -513,10 +514,16 @@
                     <% } %>
                 </h3>
             </div>
-            <div class="keyword-search-list tod-srhtype1">
-                <ul id="shortcut_list">
-                                        
-                </ul>
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box accordion">
+                    <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                        <div class="acco-style tod-renew keyword-search-list tod-srhtype1">
+                            <ul class="acco-list pd0" id="shortcut_list">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             <% if(searchInfo.search[2].shortcut.count>5){ %>
             <div class="btn-more">

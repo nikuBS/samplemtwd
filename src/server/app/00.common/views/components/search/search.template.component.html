@@ -37,16 +37,43 @@
     </div>
 </script>
 
-
-
 <script type="text/x-handlebars-template" id="shortcut_template">
-    <li>
+    <!-- 1 depth if -->
+    {{#isNaN listData.DEPTH_SIZE }}
+    <li class="normal-box">
         <!-- <button data-url="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}"> -->
         <button href="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
             <!-- <span class="main-category">상품 > <em class="tod-highlight-text">요금제</em></span> -->
-            <span class="main-category">{{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}}</span>
+            <span class="main-category">{{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}} </span>
         </button>
     </li>
+    {{/isNaN}}
+    <!-- 1 depth else -->
+    {{#ifCond listData.DEPTH_SIZE '>' '0' }}
+    <li class="acco-box"><!-- .on : 열기 -->
+        <div class="acco-tit">
+            <button href="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" aria-pressed="false" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
+                <span class="main-category">
+                    {{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}} <em class="num">({{sum listData.DEPTH_SIZE}})</em>
+                </span>
+            </button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+        </div>
+        <div class="acco-cont">
+            <ul class="sub-list">
+                {{#each listData.DEPTH_CHILD}}
+                    <!-- 2 depth if -->
+                    {{#isNaN this.DEPTH_SIZE }}
+                    <li>
+                        <button href="{{this.MENU_URL}}" type="button" class="shortcut-element list-data" data-category="shortcut" data-id="{{this.DOCID}}" data-tit="{{removeTag this.MENU_NM}}">
+                            <span class="main-category">{{{replace this.DEPTH_PATH '\|,MyT' ' > , my T '}}} </span>
+                        </button>
+                    </li>
+                    {{/isNaN}}
+                {{/each}}
+            </ul>
+        </div>
+    </li>
+    {{/ifCond}}
 </script>
 
 <script type="text/x-handlebars-template" id="rate_template">

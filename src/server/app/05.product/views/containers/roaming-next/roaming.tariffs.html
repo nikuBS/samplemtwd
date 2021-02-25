@@ -1,45 +1,39 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="roamingTariffs" class="wrap">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu">
-            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
-        </span>
-        <h1>T로밍 요금제</h1>
-        <a href="/common/search-main">
-            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색"/>
-        </a>
-    </div>
+<!-- //웹접근성 hearder 삭제-->
     <%- include('../components/header.component.html', { title: 'T로밍 요금제', svcInfo: svcInfo }) %>
     <div id="contents">
     <div class="header">
         <h2>나의 여행 <span class="colorPoint">패턴</span>을 <span class="colorPoint">선택</span>해 보세요!</h2>
         <div class="anchors">
-            <div class="anchor">
+             <!-- 202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 시작 -->
+            <div class="anchor" data-img="">
                 <button role="link">
-                    <img src="<%= CDN %>/img/product/roam/tab_01_on.png" width="128" />
+                    <img src="<%= CDN %>/img/product/roam/tab_01_on.png" width="128" alt="어디서나 이용 가능"/>
                 </button>
             </div>
-            <div class="anchor">
+            <div class="anchor" data-img="">
                 <button role="link">
-                    <img src="<%= CDN %>/img/product/roam/tab_02_off.png" width="128" />
+                    <img src="<%= CDN %>/img/product/roam/tab_02_off.png" width="128" alt="짧은 여행 잦은 출장"/>
                 </button>
             </div>
-            <div class="anchor">
+            <div class="anchor" data-img="">
                 <button role="link">
-                    <img src="<%= CDN %>/img/product/roam/tab_03_off.png" width="128" />
+                    <img src="<%= CDN %>/img/product/roam/tab_03_off.png" width="128" alt="해외 데이터 무제한"/>
                 </button>
             </div>
-            <div class="anchor">
+            <div class="anchor" data-img="">
                 <button role="link">
-                    <img src="<%= CDN %>/img/product/roam/tab_04_off.png" width="128" />
+                    <img src="<%= CDN %>/img/product/roam/tab_04_off.png" width="128" alt="괌 사이판"/>
                 </button>
             </div>
-            <div class="anchor">
+            <div class="anchor" data-img="">
                 <button role="link">
-                    <img src="<%= CDN %>/img/product/roam/tab_05_off.png" width="128" />
+                    <img src="<%= CDN %>/img/product/roam/tab_05_off.png" width="128" alt="장거리 또는 장기 여행"/>
                 </button>
             </div>
+            <!-- //202011 - 웹접근성 수정건 적용 : div에서 a 로 태그 수정 끝 -->
         </div>
     </div>
     <div id="groups">
@@ -65,8 +59,8 @@
 <script type="text/x-handlebars-template" id="tpl-tariff-group">
     <div class="group" id="group-{{id}}">
         <div class="summary">
-            <img src="{{ background }}" />
-            <h2>{{ name }}</h2>
+            <img src="{{ background }}" alt=""/>
+            <h2 tabindex="-1">{{ name }}</h2>
             <p>
                 {{{ description }}}
             </p>
@@ -75,13 +69,14 @@
             {{#each items}}
             <a href="/product/callplan?prod_id={{ id }}">
                 <div class="tariff">
-                    <span class="price">{{ price }}</span>
+                    
                     <h3>{{ name }}</h3>
                     <div class="data">
-                        <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="storage" />
+                        <img src="<%= CDN %>/img/product/roam/ico_storage.svg" width="12" height="12" alt="데이터"/>
                         <span>{{ data }}</span>
                     </div>
                     <span class="phone">{{ phone }}</span>
+                    <span class="price">{{ price }}</span><!-- //202011 - 웹접근성 수정건 적용 : .price 태그 하단으로 위치 변경 -->
                 </div>
             </a>
             {{/each}}

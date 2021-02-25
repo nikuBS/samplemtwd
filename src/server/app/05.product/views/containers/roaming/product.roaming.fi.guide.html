@@ -16,6 +16,9 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+
+<!-- //웹접근성 hearder 삭제-->
+
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: 'baro Box 임대', svcInfo: svcInfo }) %>
     <!--// #header -->
@@ -48,7 +51,7 @@
 					</ul>
 				</div>						
 				<div class="cont-box noborder" id="anchor1">
-					<h4 class="mt16">Why baro Box</h4>
+					<h4 class="mt16" tabindex="-1">Why baro Box</h4>
 				</div>
 				<div class="cont-box noborder rm-bg-gray">
 					<div class="mt10"><strong class="tx-medium"><em>SK텔레콤</em> 고객님에게만 제공되는 혜택</strong></div>
@@ -80,7 +83,7 @@
 					</ul>
 				</div>
 				<div class="cont-box" id="anchor2">
-					<h4 class="mt16">baro Box 대여 요금 안내</h4>
+					<h4 class="mt16" tabindex="-1">baro Box 대여 요금 안내</h4>
 					<table class="data-a mt18">
 						<caption>baro Box 대여 요금 안내이며 요금제, 이용요금(부가세 포함) 안내입니다.</caption>
 						<colgroup>
@@ -134,7 +137,7 @@
 					</div>
 				</div>
 				<div class="cont-box" id="anchor3">
-					<h4 class="mt16">baro Box 이용 방법</h4>
+					<h4 class="mt16" tabindex="-1">baro Box 이용 방법</h4>
 					<ol class="rm-box-use mt36">
 						<li>
 							<div class="num">1</div>

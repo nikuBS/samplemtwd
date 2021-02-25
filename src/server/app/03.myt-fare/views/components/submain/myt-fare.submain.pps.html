@@ -5,19 +5,38 @@
 * @since 2020.11.09
 %>
 <%
+    const {billError} = data;
+%>
+<%_if(billError) {_%>
+<section class="cont-card">
+    <div class="charge-wrap">
+        <div class="charge-cont">
+            <div class="warning-box">
+                <div class="warning-inner">
+                    <p class="warning-tit"><%-billError.msg%></p>
+                    <p class="warning-sub-tit">잠시 후 다시 이용해 주세요.</p>
+                    <p class="warning-sub-txt"><%-billError.code%></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%_} else {
     const {commDataInfo, reqQuery, ppsInfo} = data.guide;
     const isDataType = commDataInfo.ppsType === 'A';
-%>
+_%>
 <section class="cont-card">
     <div class="charge-wrap">
         <div class="charge-cont">
             <div class="month-charge">
                 <p class="payment-msg top">
-                    <strong class="highlight"><%-`사용 가능한 ${isDataType ? '데이터양' : '잔액'}`%></strong> 입니다.
+                    <strong class="highlight"><%-`사용 가능한 ${isDataType ? '데이터양' : '금액'}`%></strong> 입니다.
                 </p>
                 <dl class="sel-bill">
                     <dt class="term pps"><span class="date"><%-commDataInfo.ppsCurDate%></span><%-commDataInfo.ppsCurTime%><!--09:17--></dt>
-                    <dd class="charge"><%=commDataInfo.ppsProdAmt%><span class="unit"><%-`${isDataType ? 'MB' : '원'}`%></span></dd>
+                    <a href="/myt-fare/billguide/guide">
+                        <dd class="charge"><%=commDataInfo.ppsProdAmt%><span class="unit"><%-`${isDataType ? 'MB' : '원'}`%></span></dd>
+                    </a>
                 </dl>
             </div>
             <div class="detail-charge-box">
@@ -53,15 +72,13 @@
                     <%_}_%>
                 </ul>
             </div>
-            <!--<div class="btn-area">
-                <button class="round-btn fe-imm-charge">선불폰 충전</button>
-            </div>-->
         </div>
     </div>
 </section>
+<%_}_%>
 
 <section class="cont-card">
-    <div class="section-inner" data-target="detailList">
+    <div class="section-inner none" data-target="detailList">
         <div class="head-tit">
             최근 이용 내역
             <span class="head-btn-area">
@@ -71,6 +88,21 @@
         <%# .fe-entryTplList 들어가는 영역%>
     </div>
 </section>
+
+<!--TOS admin 배너-->
+<div class="submain-swipe-banner submain-swipe" data-id="banners" data-make-eid="ppsTos">
+    <div class="main-slide-banner slide-pagingtype pg-rtop">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box">
+                <div class="slider-box">
+                    <ul class="slider" data-id="banner-list" data-location="M"></ul>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+</div>
 
 <%- include('../components/submain/myt-fare.submain.other-menu.html') _%> <%# 다른메뉴를 찾고있나요 영역%>
 
@@ -111,11 +143,6 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareSubmainPps( $('.wrap'), {
-      reqQuery: JSON.parse('<%-JSON.stringify(reqQuery) %>'),
-      svcInfo: JSON.parse('<%-JSON.stringify(svcInfo) %>'),
-      ppsInfo: JSON.parse('<%-JSON.stringify(ppsInfo) %>'),
-      commDataInfo: JSON.parse('<%-JSON.stringify(commDataInfo) %>')
-    });
+    new Tw.MyTFareSubmainPps( $('.wrap'));
   });
 </script>

@@ -42,7 +42,7 @@ Tw.MyTDataSubMainAdv = function (params) {
       'NA00005062', 'NA00005063', 'NA00005064', 'NA00005065', 'NA00005066', 'NA00005073', 'NA00005084', 'NA00005109',
       'NA00005173', 'NA00005205', 'NA00005246', 'NA00005306', 'NA00005307', 'NA00005326', 'NA00005330', 'NA00005381',
       'NA00005382', 'NA00005509', 'NA00005510', 'NA00005511', 'NA00005723', 'NA00005736', 'NA00005806', 'NA00005848',
-      'NA00005849', 'NA00005876', 'NA00005880']
+      'NA00005849', 'NA00005876', 'NA00005880'];
     this.immChargeData= {
       ting: null,
       etc: null,
@@ -74,11 +74,12 @@ Tw.MyTDataSubMainAdv.prototype = {
       // this._historyService.reload();
       this._historyService.goLoad('/myt-data/submain');
     }
+
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
-    if (this.data.immCharge) {
-      this.$immChargeSection = this.$container.find('[data-id=immCharge]');
+    this.$immChargeSection = this.$container.find('[data-id=immCharge]');
+    if (this.$immChargeSection !== undefined && this.$immChargeSection.length > 0) {
       if (!this.data.breakdownList || this.data.breakdownList.length === 0) {
         this.$immChargeSection.find('[data-id=history]').hide();
       }
@@ -137,7 +138,7 @@ Tw.MyTDataSubMainAdv.prototype = {
    */
   _bindEvent: function () {
     // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
-    if ( this.data.immCharge ) {
+    if ( this.$immChargeSection !== undefined && this.$immChargeSection.length > 0 ) {
       this.$immChargeSection.on('click', 'li', $.proxy(this._onImmChargeDetail, this));
     }
     if (this.data.present) {
@@ -841,7 +842,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         break;
       case 'etc-wrap':
       case 'limit':
-        this._historyService.goLoad('/myt-data/giftdata');
+        this._historyService.goLoad('/myt-data/recharge/limit');
         break;
       case 'etc' :
         this._historyService.goLoad('/myt-data/recharge/cookiz');
@@ -962,7 +963,7 @@ Tw.MyTDataSubMainAdv.prototype = {
       var tab = $target.data('id') === 'refill-btn' ? 'refill' : 'gift';
       this._historyService.goLoad(
         '/myt-data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' +
-        name + '&period=' + period + '&gift=' + gift
+        name + '&period=' + period + '&gift=' + gift + '&external=Y'
       );
     }
   },
@@ -1219,8 +1220,7 @@ Tw.MyTDataSubMainAdv.prototype = {
             .html(this._giftTextTemp(dataQty.data, dataQty.unit));
         } else {
           // API DATA SUCCESS
-          this.$giftText.find('span.large').addClass('em')
-            .html(this._giftTextTemp(dataQty.data, dataQty.unit));
+          this.$giftText.find('span.large').html(this._giftTextTemp(dataQty.data, dataQty.unit));
         }
       } else {
         this._giftReqCnt = result.reqCnt; // 재시도 횟수
@@ -1365,7 +1365,7 @@ Tw.MyTDataSubMainAdv.prototype = {
           this.$immChargeSection.find('[data-id=ting]').hide();
         }
         if (!this.immChargeData.etc && !this.immChargeData.limit) {
-          this.$immChargeSection.find('[data-id=etc-wrap]').hide();
+          this.$immChargeSection.find('[data-id=etc-wrap]').remove();
         } else {
           if (!this.immChargeData.etc) {
             // 팅/쿠키즈/안심음성 요금제 사용중인 경우

@@ -5552,3 +5552,6 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 /* 201204 [OP002-12097] V 컬러링 해지 방어 팝업 구현 요청 */
 .dwg-popup.vc-type-list{background:#632dc6 url(/img/t_dwg/vc_bg_btm.png) no-repeat right bottom;background-size: auto 18rem} 
 .dwg-type-link .tit-txt strong.f-color{color: #5a00ff}
+
+/* 210224 [OP002-13365] V 컬러링 플러스 상품에 대한 해지방어 팝업 작업 */
+.dwg-popup.vc-type-list2{background:#632dc6 url(/img/t_dwg/vc_bg_btm_02.png) no-repeat right bottom;background-size: auto 18rem} 

@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import {MYT_SUSPEND_STATE_EXCLUDE, NEW_NUMBER_MSG} from '../../types/string.type';
 import {MYT_JOIN_SUBMAIN_TITLE} from '../../types/title.type';
-import {MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE, SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP} from '../../types/bff.type';
+import { LOGIN_TYPE, MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE, SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import BrowserHelper from '../../utils/browser.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
@@ -22,6 +22,7 @@ import CommonHelper from '../../utils/common.helper';
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
   private _ptPwdSt: boolean = false;
+  private _isEasyLogin: boolean = false;
 
   get type() {
     return this._svcType;
@@ -39,6 +40,14 @@ class MyTJoinSubmainController extends TwViewController {
     this._ptPwdSt = val;
   }
 
+  get isEasyLogin() {
+    return this._isEasyLogin;
+  }
+
+  set isEasyLogin(value) {
+    this._isEasyLogin = value;
+  }
+
   constructor() {
     super();
   }
@@ -49,6 +58,7 @@ class MyTJoinSubmainController extends TwViewController {
 
   _setData(req, res, next, svcInfo, allSvc, child, pageInfo) {
     this.__setType(svcInfo);
+    this.isEasyLogin = svcInfo.loginType === LOGIN_TYPE.EASY;
     const data: any = {
       svcInfo: svcInfo, // Object.assign({}, svcInfo),
       pageInfo: pageInfo,
@@ -93,12 +103,14 @@ class MyTJoinSubmainController extends TwViewController {
     Observable.combineLatest(
         requestApiList
     ).subscribe((responses) => {
-      this.__parsingRequestData({
+      const _parsing = this.__parsingRequestData({
         res, responses, data
       });
-      // 다른 페이지를 찾고 계신가요 통계코드 추가
-      this.getXtEid(data);
-      res.render('myt-join.submain.html', { data });
+      if (_parsing) {
+        // 다른 페이지를 찾고 계신가요 통계코드 추가
+        this.getXtEid(data);
+        res.render('myt-join.submain.html', { data });
+      }
     });
   }
 
@@ -178,7 +190,7 @@ class MyTJoinSubmainController extends TwViewController {
     return comparison;
   }
 
-  __parsingRequestData(parsingInfo) {
+  __parsingRequestData(parsingInfo): boolean {
     const { res, responses, data } = parsingInfo;
     const [ myline, myif, myhs, myap, mycpp, myinsp,
       myps, mylps, numSvc, wlap /* , wilp, smcp */ /* , wirefree, oldnum, banner */] = responses;
@@ -386,6 +398,7 @@ class MyTJoinSubmainController extends TwViewController {
       }
 
     }
+    return true;
     // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
     // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
     //   if ( !FormatHelper.isEmpty(banner.result) ) {
@@ -537,7 +550,7 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 일시정지/해제
   _getPausedState() {
-    if (this.type === 2) {
+    if (this.isEasyLogin || this.type === 2) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_05_0149, {}).map((resp) => {
@@ -551,7 +564,7 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 장기 일시정지
   _getLongPausedState() {
-    if (this.type === 2) {
+    if (this.isEasyLogin || this.type === 2) {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_05_0194, {}).map((resp) => {

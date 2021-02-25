@@ -51,11 +51,9 @@
                     <div class="h-logo"><button class="icon-gnb-home-T"><span class="blind">홈으로</span></button></div><!-- 200413 현행화 -->
                      <!-- 200413 [OP002-7218] 추가 -->
                      <div class="h-person"> <!-- show클래스 추가 -->
-                        <button class="icon-gnb-person">
+                        <button class="icon-gnb-person" aria-label="개인화 beta -고객님의 My FEED를 확인해보세요"><!-- 210216 [2021 접근성] 수정 -->
                             <span class="person-btn-wrap">
-                                <span class="inner-btn">
-                                    <span class="tod-blind">개인화</span>
-                                </span>
+                                <span class="inner-btn"></span><!-- 210216 [2021 접근성] 수정 -->
                                 <span class="btn-comment"><span class="txt">고객님의 My FEED를 확인해보세요!</span></span> <!-- 새로운 카드가 있어요 -->
                             </span>
                         </button>
@@ -201,8 +199,25 @@
                             -->
                             <!-- //이번 달 청구요금 -->
 
-                            <!-- 2019.03.20 카드 추가 -->
+                            <!-- 210215 [OP002-13113] TDS 퀵메뉴 위치/영역확대 및 로고 변경 요청 -->
+                            <div class="section-box nogaps">
+                                <a href="#n" class="tod-tds-link">
+                                    <span class="tds-ico"><img src="/img/main/app-tds-logo.png" alt="T DIRECT SHOP"></span>
+                                    <span class="tds-txt">휴대폰 살 땐, T다이렉트샵</span>
+                                </a>
+                            </div>
+
                             <div class="section-box nogaps-ver">
+                                <ul class="quick-menu-list type3 tod-quick-menu-list-v2">
+                                    <li><button class="bt" tabindex="0" title="새창"><i class="ico-my-5gx"></i>5GX</button></li>
+                                    <li><button class="bt" tabindex="0" title="새창"><i class="ico-my-zero"></i>0한동</button></li>
+                                    <li><button class="bt" tabindex="0" title="새창"><i class="tod-i-global"></i>English T world</button></li>
+                                </ul>
+                            </div>
+                            <!-- //210215 [OP002-13113] TDS 퀵메뉴 위치/영역확대 및 로고 변경 요청 -->
+
+                            <!-- 2019.03.20 카드 추가 --><!-- 210215 [OP002-13113] 구버전 display none 처리 -->
+                            <div class="section-box nogaps-ver" style="display:none">
                                 <!-- 190712 [OP002-2256] 수정_01 -->
                                 <!-- 191113 웹접근성 수정_01 : title 추가 -->
                                 <ul class="quick-menu-list type3 tod-quick-menu-list">

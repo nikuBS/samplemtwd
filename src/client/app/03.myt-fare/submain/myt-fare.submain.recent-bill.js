@@ -9,7 +9,7 @@ Tw.MyTFareSubMainRecentBill = function (params) {
   this.data = params.data;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-
+  this.common = new Tw.MyTFareSubMainCommon(params);
   this._init();
 };
 
@@ -66,7 +66,7 @@ Tw.MyTFareSubMainRecentBill.prototype = {
       });
       return acc;
     }, []);
-    return claimList;
+    return _.sortBy(claimList, 'date');
   },
 
   _makeChart: function () {
@@ -118,6 +118,7 @@ Tw.MyTFareSubMainRecentBill.prototype = {
     if (claimTotal.sum > 0) {
       this._averageArea(calData);
     }
+    this._makeEid();
   },
 
   /**
@@ -189,6 +190,20 @@ Tw.MyTFareSubMainRecentBill.prototype = {
   _getIntNumber: function (value) {
     value = Tw.StringHelper.getOnlyNumber(value);
     return parseInt(value, 10);
+  },
+
+  /**
+   * @function
+   * @desc 통계코드 data attr 생성
+   * @private
+   */
+  _makeEid: function () {
+    var builder = this.common.makeEid();
+    var getEidOfLineType = builder.getEidOfLineType;
+    builder.setEid('recentBill0', '68', getEidOfLineType('66', '105')) // 최근 청구요금내역 1
+      .setEid('recentBill1', '69', getEidOfLineType('67', '106')) // 최근 청구요금내역 2
+      .setEid('recentBill2', '70', getEidOfLineType('68', '107')) // 최근 청구요금내역 3
+      .build();
   }
 
 };

@@ -77,11 +77,11 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                  <!-- .cont-card -->
                 <div class="card-cont">
-                    <div class="chart-area">
+                    <a href="/myt-data/hotdata" class="chart-area" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">
                     <% var totalData = data.remnantData.total; %>
                     <%_ if (data.isDataShow) { _%>
                         <div class="donut-chart-wrap">
@@ -215,8 +215,7 @@
                                             <%_ } _%>
                                         <%_ } _%>
                                     </p>
-                                    <!-- loop totalRemainedRatio 총 남은 데이터 양, etcRemainedRatio 공유데이터 제외한 남은양 -->
-                                    <div class="c100 p<%= sdata.etcRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="c100 p<%= sdata.remainedRatio %>"><!-- .p+(0~100) // -->
                                         <div class="red"><!-- red, yellow, green, blue, comet // -->
                                             <div class="slice">
                                                 <div class="bar"></div>
@@ -286,30 +285,32 @@
                             </ul>
                         </div>
                     <%_ } _%>
-                    </div>
+                    </a>
                     <%_ if (data.isTmoaData || data._5gxTicket) { _%>
                         <div class="tmoa-comment">
                             <%_ if (data.isTmoaData) { _%>
-                                <ul class="tmoa-link-list">
-                                    <li class="link-item">
-                                        <a href="#" class="t-share">T가족모아 데이터
+                                <a href="/myt-data/familydata" class="tmoa-link-list" data-xt_eid="<%=data.xtEid.familydata%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <span class="link-item">
+                                        <span href="#" class="t-share">T가족모아데이터
                                             <%_ if (data.isTmoaInsProdId && data.isTmoaProdId) { _%>
-                                            <span class="like-btn" data-id="family-moa">공유하기</span>
+                                            <!-- 해당 공유하기 기능은 서비스가 중단되어 제거
+                                            <span class="like-btn" data-id="family-moa" data-xt_eid="<%=data.xtEid.familydataShare%>" data-xt_csid="NO" data-xt_action="BC">공유하기</span>
+                                            -->
                                             <%_ } _%>
-                                        </a>
-                                    </li>
-                                    <li class="link-item">
-                                        <a href="/myt-data/familydata" class="data-amount">
+                                        </span>
+                                    </span>
+                                    <span class="link-item">
+                                        <span class="data-amount" data-xt_eid="<%=data.xtEid.familydata%>" data-xt_csid="NO" data-xt_action="BC">
                                             총 <%= data.family.showTotal.data %><%= data.family.showTotal.unit %> 중
                                             <strong>
                                                 <%= data.family.showRemained.data %><%= data.family.showRemained.unit %>남음
                                             </strong>
-                                        </a>
-                                    </li>
-                                </ul>
+                                        </span>
+                                    </span>
+                                </a>
                             <%_ } _%>
                             <%_ if (data._5gxTicket) { _%>
-                                <a href="/myt-data/5g-setting" class="data-voucher">
+                                <a href="/myt-data/5g-setting" class="data-voucher" data-xt_eid="<%=data.xtEid.dataTimeSetting%>" data-xt_csid="NO" data-xt_action="BC">
                                     <%# 데이터 시간권 이용자인(부스트파크 옵션 이용자가 아닌) 경우 _%>
                                     <%_ if (data._5gxTicket.timeTicket) { _%>
                                         데이터 시간권 <span class="remain"></span>
@@ -418,11 +419,11 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                 <!-- .cont-card -->
                 <div class="card-cont">
-                    <div class="chart-area">
+                    <a href="/myt-data/hotdata" class="chart-area" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">
                         <% var totalData = data.remnantData.total; %>
                         <%_ if (data.isDataShow) { _%>
                         <div class="donut-chart-wrap">
@@ -505,8 +506,7 @@
                                             <%_ } _%>
                                         <%_ } _%>
                                     </p>
-                                    <!-- loop totalRemainedRatio 총 남은 데이터 양, etcRemainedRatio 공유데이터 제외한 남은양 -->
-                                    <div class="c100 p<%= sdata.etcRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="c100 p<%= sdata.remainedRatio %>"><!-- .p+(0~100) // -->
                                         <div class="red"><!-- red, yellow, green, blue, comet // -->
                                             <div class="slice">
                                                 <div class="bar"></div>
@@ -627,7 +627,7 @@
                             </ul>
                         </div>
                         <%_ } _%>
-                    </div>
+                    </a>
                     <!--// .cont-card -->
                 </div>
             </div>
@@ -707,11 +707,11 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                 <!-- .cont-card -->
                 <div class="card-cont">
-                    <div class="chart-area">
+                    <a href="/myt-data/hotdata" class="chart-area" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">
                         <% var totalData = data.remnantData.total; %>
                         <%_ if (data.isDataShow) { _%>
                         <div class="donut-chart-wrap">
@@ -771,7 +771,7 @@
                             </div>
                         </div>
                         <%_ } _%>
-                    </div>
+                    </a>
                 </div>
                 <!--// .cont-card -->
             </div>
@@ -852,11 +852,11 @@
         <section class="cont-card" data-id="remnant-container">
             <div class="section-inner">
                 <div class="head-tit">
-                    <a href="/myt-data/hotdata" class="link">실시간 잔여량</a>
+                    <a href="/myt-data/hotdata" class="link" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">실시간 잔여량</a>
                 </div>
                 <!-- .cont-card -->
                 <div class="card-cont">
-                    <div class="chart-area">
+                    <a href="/myt-data/hotdata" class="chart-area" data-xt_eid="<%=data.xtEid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">
                         <%_ if (data.isVoiceShow || data.isSmsShow) { _%>
                         <div class="bar-chart-wrap">
                             <ul class="bar-chart-list">
@@ -910,7 +910,7 @@
                             </ul>
                         </div>
                         <%_ } _%>
-                    </div>
+                    </a>
                     <!--// .cont-card -->
                 </div>
             </div>

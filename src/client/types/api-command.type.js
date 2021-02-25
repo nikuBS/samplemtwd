@@ -253,6 +253,8 @@ Tw.API_CMD = {
   BFF_05_0235: { path: '/core-modification/:version/mls/UserProfiles', method: Tw.API_METHOD.POST },
   // [OP002-12190]
   BFF_05_0236: { path: '/core-modification/:version/mls/conversion-dislike', method: Tw.API_METHOD.POST },
+  // [OP002-10279 가입정보고도화]
+  BFF_05_0237: { path: '/:version/my-t/my-info-for-submain', method: Tw.API_METHOD.GET },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
   BFF_06_0002: { path: '/core-recharge/:version/refill-usages', method: Tw.API_METHOD.GET },

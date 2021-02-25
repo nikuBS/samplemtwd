@@ -25,7 +25,7 @@ Tw.MyTJoinSubMain = function (params) {
   this._bindEvent();
   this._initialize();
   // 배너 관련 통계 이벤트(xtractor)
-  new Tw.XtractorService(this.$container);
+  this._xtractorService = new Tw.XtractorService(this.$container);
 };
 
 Tw.MyTJoinSubMain.prototype = {
@@ -353,6 +353,7 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onMovedAddProduct: function () {
     this._historyService.goLoad('/myt-join/additions');
+    return false;
   },
   /**
    * @function
@@ -411,12 +412,12 @@ Tw.MyTJoinSubMain.prototype = {
           // 신청현황: 일시정지 예약중
           this._historyService.goLoad('submain/suspend/status');
         }
-        return;
+        return false;
       }
       if ( stateMyPaused.state ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
-        return;
+        return false;
       }
     }
     if ( stateMyLongPaused && stateMyLongPaused.state ) {
@@ -424,7 +425,7 @@ Tw.MyTJoinSubMain.prototype = {
       if ( stateMyLongPaused.opStateCd !== 'C' || !stateMyLongPaused.stateReleased ) {
         // 신청현황: 일시정지 중, 장기일시 중
         this._historyService.goLoad('submain/suspend/status');
-        return;
+        return false;
       }
     }
     // 신청하기: "일시정지/해제"로 이동
@@ -780,21 +781,42 @@ Tw.MytJoinAdvSubMain = function () {
 // overriding
 Tw.MytJoinAdvSubMain.prototype = Object.create(Tw.MyTJoinSubMain.prototype);
 Tw.MytJoinAdvSubMain.prototype.constructor = Tw.MytJoinAdvSubMain;
+Tw.MytJoinAdvSubMain.prototype._rendered = function () {
+  Tw.MyTJoinSubMain.prototype._rendered.call(this);
+  this.$serviceArea = this.$container.find('[data-id=service-area]');
+};
 Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
   Tw.MyTJoinSubMain.prototype._bindEvent.call(this);
   if (this._data.type !== 1 && this._data.type !== 2) {
     this.$container.find('[data-id=mybenefit]').on('click', $.proxy(function() {
-      this._historyService.goLoad('/benefit/my');
+      this._historyService.goLoad('/benefit/submain');
       return false;
     }, this));
     this.$container.find('[data-id=membership]').on('click', $.proxy(function() {
       switch (this._data.membership.used) {
         case 1:
           // 가입하기
+          this._historyService.goLoad('/membership/join');
+          break;
+        case 2:
+          // 간편로그인 상태
+          this._historyService.goLoad('/membership/my');
+          break;
+        default:
+          // 가입한 상태
+          this._historyService.goLoad('/membership/submain');
+          break;
+      }
+      return false;
+    }, this));
+    this.$container.find('[data-id=membership-point]').on('click', $.proxy(function() {
+      switch (this._data.membership.used) {
+        case 1:
+          // 미가입
           this._historyService.goLoad('/membership/submain');
           break;
         default:
-          // used => 0 or 2 간편로그인, 가입된 상태
+          // used => 0 or 2 가입한 상태, 간편로그인
           this._historyService.goLoad('/membership/my');
           break;
       }
@@ -819,13 +841,20 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
       return false;
     }, this));
     this.$container.find('[data-id=paymthd]').on('click', $.proxy(function() {
-      this._historyService.goLoad('/myt-fare/bill/option');
+      if (this._data.svcInfo.actRepYn === 'Y') {
+        this._historyService.goLoad('/myt-fare/bill/option');
+      }
       return false;
     }, this));
   }
 };
 Tw.MytJoinAdvSubMain.prototype._initialize = function() {
   Tw.MyTJoinSubMain.prototype._initialize.call(this);
+  if (!(this._data.type === 0 || this._data.type === 2) && !this._data.isPwdSt) {
+    // PPS, T-login, T-PocketFi 인 경우에는 고객비밀번호 사용하지 않는 다면 조회 신청 영역 숨김
+    this.$serviceArea.hide();
+  }
+
   // 약정할인금액 그래프 깨지는 문제 수정 건
   var disHorizonBar = $('.horizon-bar-wrap [data-id=my-discount-info]');
   if (disHorizonBar.length) {
@@ -836,3 +865,11 @@ Tw.MytJoinAdvSubMain.prototype._initialize = function() {
     });
   }
 };
+Tw.MytJoinAdvSubMain.prototype._successDrawBanner = function () {
+  // 동적 생성 배너 오퍼통계코드 적용을 위해 추가
+  Tw.MyTJoinSubMain.prototype._successDrawBanner.call(this)
+  this.$bannerList.on('click', $.proxy(function() {
+    this._xtractorService.logClick(this._data.xtCode.banner, 'NO');
+    return false;
+  }, this));
+}

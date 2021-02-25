@@ -36,7 +36,7 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
     collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.bundle-07.troaming-08' +
       '.tapp-09.direct-10.tmembership-11.event-12.sale-13.as_outlet-14.question-15.notice-16.prevent-17.manner-18' +
       '.serviceInfo-19.siteInfo-20.lastevent-21.banner-22',
-    sortCd: 'shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+    sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
   this._autoCompleteRegExObj = {
@@ -234,7 +234,7 @@ Tw.CommonSearch.prototype = {
     }, 0);
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내에서 선택된 카테고리를 가장 좌측으로 붙여서 노출해주기 위한 처리 완료');
 
-    // TEST 
+    // TEST
     Tw.Logger.info('[common.search] [_nextInit] searchInfo: ', this._searchInfo);
     totalCnt = this._searchInfo.totalcount;
     this.$container.find('.fe-total-count').each(function (a, b) {
@@ -244,14 +244,15 @@ Tw.CommonSearch.prototype = {
     Tw.Logger.info('[common.search] [_nextInit]', '카테고리 영역 내 "전체" 카테고리 및 검색결과 총 건수 영역에 결과건수 노출 처리 완료');
 
     this.$inputElement = this.$container.find('#keyword');
-    this.$inputElement.on('keyup', $.proxy(this._inputChangeEvent, this));
+    this.$inputElement.on('keydown', $.proxy(this._keyDownInputEvt, this));
+    this.$inputElement.on('keyup', _.debounce($.proxy(this._keyUpInputEvt, this), 500));
     this.$inputElement.on('focus', $.proxy(this._inputFocusEvt, this));
     this.$container.on('click', '.icon-gnb-search, .fe-search-link', $.proxy(this._doSearch, this));
     this.$container.on('touchstart click', '.close-area', $.proxy(this._closeSearch, this));
     Tw.Logger.info('[common.search] [_nextInit]', '검색창 이벤트 바인딩 완료');
 
     this.$inputElementResultSearch = this.$container.find('#resultSearchKeyword');
-    this.$inputElementResultSearch.on('keyup', $.proxy(this._keyInputEvt, this));
+    this.$inputElementResultSearch.on('keyup', _.debounce($.proxy(this._keyInputEvt, this), 500));
     if ( this._searchInfo.query !== this._searchInfo.researchQuery ) {
       var tempstr = this._searchInfo.researchQuery.replace(this._searchInfo.query, '');
       tempstr = tempstr.trim();
@@ -271,6 +272,15 @@ Tw.CommonSearch.prototype = {
       e.preventDefault();
       $(window).scrollTop(0);
     }, this));
+    this.$container.on('click', '.acco-tit', $.proxy(function(e) { // 바로가기 자식 아코디언 열림/닫힘 이벤트 바인딩
+        var $target = $(e.currentTarget).parent(); // 바로 상위
+        $target.toggleClass('on');
+        if ($target .hasClass('on')) {
+          $target.find('button').attr('aria-pressed', true);
+        } else {
+          $target .find('button').attr('aria-pressed', false);
+        }
+    }, this))
 
     this.$container.on('click', '.fe-category', $.proxy(this._selectCategory, this));    // 카테고리 클릭시 이벤트 바인딩
     // this.$container.on('click','#fe-more-rate',function(e){
@@ -405,11 +415,12 @@ Tw.CommonSearch.prototype = {
    * @desc 검색창 input 이벤트
    * @returns {void}
    */
-  _keyInputEvt: function (inputEvtObj) {
-    inputEvtObj.preventDefault();
-
-    if ( Tw.InputHelper.isEnter(inputEvtObj) ) {
-      this._doResultSearch();
+  _keyInputEvt: function (event) {
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which === 13 ) {
+      this._doResultSearch(event);
+      event.preventDefault();
+      event.stopPropagation();
     }
   },
   /**
@@ -517,6 +528,7 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _showShortcutList: function (data, dataKey, cdn, gubun) {
+    // console.log("data => ", data, dataKey, cdn, gubun);
     // 지난이벤트 컬렉션이 추가되었지만 티월드 노출 요건이 없으므로 예외처리함.
     if ( dataKey !== 'lastevent' ) {
 
@@ -536,17 +548,102 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.' + dataKey).addClass('none');
       }
 
-      _.each(data, $.proxy(function (listData/*, index */) {
-        if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
-          var removeLength = data.length - 1;
-          if ( removeLength <= 0 ) {
-            $('.' + dataKey).addClass('none');
-          } else {
-            $('.' + dataKey + ' .num').text(removeLength);
+      // 3뎁스에 데이터를 1뎁스 라인으로 랜더링 하기 위해 자료구조를 다시 만듭니다.
+      var depth3 = []; // 3뎁스를 1뎁스로 구조로 만드는 변수
+      var list = data; // 기존의 리스트를 담는 변수
+      var totalListCnt = 0; // 3뎁스의 리스트 사이즈 개수 총합에 사용할 변수
+      for(var i=0; i<list.length; i++) {
+        if (list[i].DEPTH_CHILD !== undefined) {
+          for(var j=0; j<list[i].DEPTH_CHILD.length; j++) {
+            if (list[i].DEPTH_CHILD[j].DEPTH_CHILD !== undefined) {
+              depth3.push({
+                idx: j,
+                DEPTH_PATH: list[i].DEPTH_CHILD[j].DEPTH_PATH,
+                MENU_URL: list[i].DEPTH_CHILD[j].MENU_URL,
+                DEPTH_LOC: list[i].DEPTH_CHILD[j].DEPTH_LOC,
+                MENU_NM: list[i].DEPTH_CHILD[j].MENU_NM,
+                DOCID: list[i].DEPTH_CHILD[j].DOCID,
+                CLICK_CNT: list[i].DEPTH_CHILD[j].CLICK_CNT,
+                DEPTH_SIZE: list[i].DEPTH_CHILD[j].DEPTH_CHILD.length,
+                USE_YN: 'Y',
+                DEPTH_CHILD: list[i].DEPTH_CHILD[j].DEPTH_CHILD
+              });
+            }
           }
-          return;
         }
-        $list.append(templateData({ listData: listData, CDN: cdn }));
+      }
+
+      for (var i=0; i<depth3.length; i++) {
+        // 부모의 타이틀을 자식뎁스쪽으로 추가 하기 때문에 +1을 해줘야 함.
+        // 예) 부모(4) > 자식(3) 짜리 데이터를 렌더링 한다고 생각하면 아래와 같기 때문에 +1을 해줘야 합니다.
+        // 부모(4)
+        //  ㄴ 부모  <<< 추가
+        //  ㄴ 자식
+        //  ㄴ 자식
+        //  ㄴ 자식
+        totalListCnt += depth3[i].DEPTH_SIZE+1;
+        data.push(depth3[i])
+      }
+
+      _.each(data, $.proxy(function (listData, index) {
+
+        // 바로가기는 최대 3건만 노출
+        if (dataKey === 'shortcut') {
+          if (index > 2) {
+            return;
+          }
+          if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
+            var removeLength = data.length - 1;
+            if ( removeLength <= 0 ) {
+              $('.' + dataKey).addClass('none');
+            } else {
+              $('.' + dataKey + ' .num').text(removeLength);
+            }
+            return;
+          }
+          // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다.
+          if (listData.DEPTH_CHILD !== undefined && listData.idx === undefined) {
+            // 3뎁스 사이즈를 최상위 부모 뎁스 사이즈에서 빼야 제대로 개수가 맞음.
+            listData.DEPTH_SIZE = Number(listData.DEPTH_SIZE - totalListCnt);
+            listData.DEPTH_CHILD.unshift({
+              CLICK_CNT: listData.CLICK_CNT,
+              DEPTH_LOC: "2",
+              DEPTH_PATH: listData.DEPTH_PATH,
+              DOCID: listData.DOCID,
+              MENU_NM: listData.MENU_NM,
+              MENU_URL: listData.MENU_URL,
+              USE_YN: listData.USE_YN
+            });
+            _.each(listData.DEPTH_CHILD, $.proxy(function (subData, index) {
+              if (subData.DEPTH_CHILD !== undefined && subData.idx === undefined) {
+                subData.DEPTH_CHILD.unshift({
+                  CLICK_CNT: subData.CLICK_CNT,
+                  DEPTH_LOC: "3",
+                  DEPTH_PATH: subData.DEPTH_PATH,
+                  DOCID: subData.DOCID,
+                  MENU_NM: subData.MENU_NM,
+                  MENU_URL: subData.MENU_URL,
+                  USE_YN: subData.USE_YN
+                })
+
+              }
+            }));
+          }
+          // console.log(">>> listData: ", listData);
+          $list.append(templateData({ listData: listData, CDN: cdn }));
+        } else {
+          if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
+            var removeLength = data.length - 1;
+            if ( removeLength <= 0 ) {
+              $('.' + dataKey).addClass('none');
+            } else {
+              $('.' + dataKey + ' .num').text(removeLength);
+            }
+            return;
+          }
+          $list.append(templateData({ listData: listData, CDN: cdn }));
+        }
+
       }, this));
     }
   },
@@ -559,16 +656,25 @@ Tw.CommonSearch.prototype = {
   _decodeEscapeChar: function (targetString) {
     return targetString.replace(/\\/gi, '/').replace(/\n/g, '');
   },
+
+  _keyDownInputEvt: function (event) {
+    // enter 키는 keydown 에서 처리
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which === 13) {
+      this._doSearch(event);
+      event.preventDefault();
+    }
+  },
+
   /**
    * @function
    * @desc 검색창 keyup 이벤트
-   * @param {Object} args - 이벤트 객체
+   * @param {Object} event - 이벤트 객체
    * @returns {void}
    */
-  _inputChangeEvent: function (args) {
-    if ( Tw.InputHelper.isEnter(args) ) {
-      this.$container.find('.icon-gnb-search').trigger('click');
-    } else {
+  _keyUpInputEvt: function (event) {
+    // which:: https://api.jquery.com/event.which/
+    if ( event.which !== 13) {
       if ( this._historyService.getHash() === '#input_P' ) {
         if ( this.$inputElement.val().trim().length > 0 ) {
           this._getAutoCompleteKeyword();
@@ -577,6 +683,8 @@ Tw.CommonSearch.prototype = {
         }
       }
     }
+    event.stopPropagation();
+    event.preventDefault();
   },
   /**
    * @function
@@ -596,18 +704,18 @@ Tw.CommonSearch.prototype = {
     var requestUrl = '/common/search?keyword=';
     requestUrl += encodeURIComponent(keyword);
     requestUrl += '&step=' + (Number(this._step) + 1);
-    var sort = '&sort=shortcut-A';
-    sort += '.rate-A';
-    sort += '.service-A';
-    sort += '.tv_internet-A';
-    sort += '.troaming-A';
+    var sort = '&sort=shortcut-C';
+    sort += '.rate-C';
+    sort += '.service-C';
+    sort += '.tv_internet-C';
+    sort += '.troaming-C';
     sort += '.direct-D';
     requestUrl += sort;
 
-    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-    Tw.CommonHelper.setCookie('search_sort::service', 'A');
-    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
+    Tw.CommonHelper.setCookie('search_sort::rate', 'C');
+    Tw.CommonHelper.setCookie('search_sort::service', 'C');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
     Tw.CommonHelper.setCookie('search_sort::direct', 'D');
 
     // Tw.Logger.info('[common.search] [_doSearch]', '"doSearch" Cookie 셋팅');
@@ -645,12 +753,12 @@ Tw.CommonSearch.prototype = {
     requestUrl += '&step=' + (Number(this._step) + 1);
 
     var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
-    var sort = 'shortcut-A';
-    sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'A');
-    sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'A');
-    sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'A');
-    sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'A');
-    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'A');
+    var sort = 'shortcut-C';
+    sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
+    sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
+    sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
+    sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
+    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
     requestUrl += '&sort=' + sort;
 
     // Tw.Logger.info('[common.search] [_doResultSearch]', '"doSearch" Cookie 셋팅');
@@ -894,7 +1002,7 @@ Tw.CommonSearch.prototype = {
 
     var tempBtnStr = '.fe-btn-sort-' + selectedCollection;
 
-    // sort=shortcut-A.rate-A.service-A.tv_internet-A.troaming-A.direct-D
+    // sort=shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.direct-D
     // function getParam(sname) {
     //   var linkUrl = location.search;
     //   var params = linkUrl.substr(linkUrl.indexOf('?') + 1);
@@ -933,10 +1041,10 @@ Tw.CommonSearch.prototype = {
       {
         list: [
           {
-            txt: Tw.SEARCH_FILTER_STR.ADMIN,  // 추천순
-            'radio-attr': (sortCdStr === 'A') ? 'class="focus-elem" sort="A" checked' : 'class="focus-elem" sort="A"',
+            txt: Tw.SEARCH_FILTER_STR.CLICK,  // 클릭순
+            'radio-attr': (sortCdStr === 'C') ? 'class="focus-elem" sort="C" checked' : 'class="focus-elem" sort="C"',
             'label-attr': ' ',
-            sort: 'A'
+            sort: 'C'
           },
           {
             txt: Tw.SEARCH_FILTER_STR.NEW,  // 최신순

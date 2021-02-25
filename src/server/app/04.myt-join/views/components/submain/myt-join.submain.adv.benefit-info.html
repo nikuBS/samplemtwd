@@ -6,11 +6,15 @@
 _%>
 <section class="cont-card">
   <div class="section-inner">
-    <div class="head-tit"><a href="#" data-id="mybenefit" class="link">나의 혜택/할인</a></div>
+    <div class="head-tit">
+      <a href="#" data-id="mybenefit" class="link"
+         data-xt_eid="<%= data.xtCode.benefitInfo %>" data-xt_csid="NO" data-xt_action="BC">나의 혜택/할인</a>
+    </div>
     <div class="card-cont">
       <ul class="ico-list">
         <li class="item">
-          <a href="#" data-id="membership">
+          <a href="#" data-id="membership"
+             data-xt_eid="<%= data.xtCode.gradeMbr %>" data-xt_csid="NO" data-xt_action="BC">
             <div class="ico-item">
               <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico11.svg" alt=""></i>
               <div class="list-txt">
@@ -21,22 +25,26 @@ _%>
           </a>
         </li>
         <li class="item">
-          <a href="#" data-id="membership">
+          <a href="#" data-id="membership-point"
+             data-xt_eid="<%= data.xtCode.pointMbr %>" data-xt_csid="NO" data-xt_action="BC">
             <div class="ico-item">
               <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico12.svg" alt=""></i>
               <div class="list-txt">
                 <span class="item-sub-txt">연간 누적 혜택</span>
-                <span class="item-tit"><%= data.membership.point %>원</span>
+                <span class="item-tit">
+                  <%= data.membership.point %><%= data.membership.used === 0 ? '원':'' %>
+                </span>
               </div>
             </div>
           </a>
         </li>
         <li class="item">
-          <a href="#" data-id="benefitsub">
+          <a href="#" data-id="benefitsub"
+             data-xt_eid="<%= data.xtCode.countMbr %>" data-xt_csid="NO" data-xt_action="BC">
             <div class="ico-item">
               <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico13.svg" alt=""></i>
               <div class="list-txt">
-                <span class="item-sub-txt">혜택 / 할인</span>
+                <span class="item-sub-txt">혜택/할인</span>
                 <span class="item-tit"><%= data.benefitCount %>건</span>
               </div>
             </div>

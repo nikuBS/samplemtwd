@@ -96,6 +96,8 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
 
     // isGift  - 선물받은 쿠폰 여부
     const auto = req.query.auto === 'Y';
+    // 외부에서 해당 페이지 요청 후 "다시 선택" 버튼 클릭 시 쿠폰 선택 화면으로 이동하기 위한 값 추가
+    const external = req.query.external === 'Y';
     if (auto) {
       this.getMostSuitableCoupon(res, svcInfo, pageInfo)
           .subscribe(
@@ -106,7 +108,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
                   period = coupon.usePsblStaDt + '~' + coupon.usePsblEndDt;
                   tab = 'refill';
                   isGift = coupon.isGift || false;
-                  this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
+                  this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto, external);
                 } else {
                   this.error.render(res, { code: '', msg: '', pageInfo, svcInfo });
                 }
@@ -123,11 +125,11 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       tab = req.query.tab;
       isGift = req.query.gift === 'Y';
     }
-    this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
+    this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto, external);
   }
 
   private renderCouponUse(res: Response, svcInfo: any, pageInfo: any, no: string, name: string,
-                          period: string, tab: string, isGift: boolean, isAuto: boolean) {
+                          period: string, tab: string, isGift: boolean, isAuto: boolean, isExternal: boolean) {
   	const rechargeProdIdsInfo = {
   		res, svcInfo, pageInfo,
 			countProperty: REDIS_KEY.DATA_RECHARGE_COUNT,
@@ -152,7 +154,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         if (!FormatHelper.isEmpty(productSummary)) {
           const options = this.purifyCouponOptions(couponUsage, productSummary, svcInfo.prodId);
           res.render('recharge/myt-data.recharge.coupon-use.html', {
-            no, name, period, tab, options, isGift, isAuto, svcInfo, pageInfo
+            no, name, period, tab, options, isGift, isAuto, svcInfo, pageInfo, isExternal
           });
         } else {
           this.error.render(res, { svcInfo, pageInfo });
