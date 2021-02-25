@@ -12,8 +12,9 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import BrowserHelper from '../../utils/browser.helper';
 import DateHelper from '../../utils/date.helper';
-import { LOGIN_TYPE, MEMBERSHIP_GROUP } from '../../types/bff.type';
+import { MEMBERSHIP_GROUP } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
+import { MYT_FARE_BILL_TYPE } from '../../types/string.type';
 
 class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
 
@@ -37,7 +38,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
   _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
     const data = this._setData(req, res, next, svcInfo, allSvc, child, pageInfo);
     data.isIos = BrowserHelper.isIos(req);
-    data.isEasyLogin = svcInfo.loginType === LOGIN_TYPE.EASY;
+    data.isEasyLogin = this.isEasyLogin;
     // R: 일반법인, E:SWING 기준 법인, D: SKT 법인
     data.isComLine = svcInfo.svcGr === 'R' || svcInfo.svcGr === 'E' || svcInfo.svcGr === 'D';
     // 간편로그인 경우 미노출 처리 필요
@@ -165,6 +166,10 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
     }
     // 납부/청구 유형
     if ( data.myInfo && data.myInfo.billTypeCd ) {
+      // 아래 요금안내서 유형 정보가 현재 존재하지 않는 정보로 요금안내서 상세와 동일하게 처리
+      if (['4', '5', '8', 'C'].indexOf(data.myInfo.billTypeCd) > -1 ) {
+        data.myInfo.billTypeNm = MYT_FARE_BILL_TYPE[data.myInfo.billTypeCd];
+      }
       data.paymentInfo = {
         billTypeNm: data.myInfo.billTypeNm,
         // 대표청구회선이 아닌 경우에는 "통합청구"로 노출
@@ -324,7 +329,9 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
               const totDate = DateHelper.getDiffByUnit(item.endDate, item.startDate, 'day') + 1;  // 전체 일수(첫날 포함)
               const ingDate = DateHelper.getDiffByUnit(curDate, item.startDate, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
               const remainDate = totDate - ingDate; // 잔여일수
-              const percentage = Math.min(100, Math.floor((ingDate / totDate) * 100));
+              // 3/11 이후 변경되는 그래프 형식으로 처리
+              // const percentage = Math.min(100, Math.floor((ingDate / totDate) * 100));
+              const percentage = 100 - Math.floor((ingDate / totDate) * 100);
               const graphPercent = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
               return {
                 name: item.name,

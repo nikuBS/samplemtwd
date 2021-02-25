@@ -133,12 +133,10 @@ Tw.MyTFareSubMainGuide.prototype = {
     // 개별 청구
     var detailList = $.extend(true, {}, paidAmtDetailList);
     detailList = this._comTraverse(detailList, 'billItmLclNm', 'invAmt');
-    var self = this;
     detailList = _.map(detailList, function (item){
       return {
         title: item.id,
-        value: item.totPrice,
-        subList: self._getDcCharge.call(self, item)
+        value: item.totPrice
       };
     });
 
@@ -190,38 +188,11 @@ Tw.MyTFareSubMainGuide.prototype = {
     detailList = _.map(detailList, function (item) {
       return {
         title: item.id,
-        value: item.totPrice,
-        subList: self._getDcCharge.call(self, item)
+        value: item.totPrice
       };
     });
     console.info('### [사용요금 조회]', detailList);
     this._renderCharge(detailList);
-  },
-
-  /**
-   * @function
-   * @desc 무선일때. 하위 뎁스의 요금할인 영역 추가
-   *
-   */
-  _getDcCharge: function (item){
-    if (this.data.svcInfo.svcAttrCd.indexOf('S') > -1) {
-      return null;
-    }
-
-    var subItems = this._comTraverse(item.children, 'billItmSclNm', 'invAmt');
-    var dcCharge = _.find(subItems, function (subItem){
-      return subItem.id === '요금할인';
-    });
-
-    var subList = null;
-    if (dcCharge) {
-      subList = [];
-      subList.push({
-        title: dcCharge.id,
-        value: dcCharge.totPrice
-      });
-    }
-    return subList;
   },
 
   /**
@@ -251,7 +222,7 @@ Tw.MyTFareSubMainGuide.prototype = {
         id: val,
         label: tempData[val][0].svcNm,
         svcInfoNm: tempData[val][0].svcInfoNm,
-        children: tempData[val],
+        // children: tempData[val], // 양정규: 필요 없는거 같음
         totPrice: tempSum
       };
     });

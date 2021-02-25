@@ -17,11 +17,12 @@ _%>
             <ul class="ico-list">
                 <li class="item">
                     <%_
-                        const {mbsGrade, showUsedAmount, benefitCount} = benefit;
-                        const mbsUrl = showUsedAmount ? '/membership/my' : '/membership/submain';
-                        const benefitUrl = benefitCount !== '0' ? '/benefit/my' : '/benefit/submain';
+                        const {isJoin, mbsGrade, showUsedAmount, benefitCount} = benefit;
+                        const gradeUrl = isJoin ? '/membership/submain' : '/membership/join';
+                        const yearsUrl = showUsedAmount ? '/membership/my' : '/membership/submain';
+                        const benefitUrl = benefitCount ? '/benefit/my' : '/benefit/submain';
                     _%>
-                    <a href="<%- mbsUrl%>" data-make-eid="membership">
+                    <a href="<%- gradeUrl%>" data-make-eid="membership">
                         <div class="ico-item">
                             <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico11.svg" alt=""></i>
                             <div class="list-txt">
@@ -32,7 +33,7 @@ _%>
                     </a>
                 </li>
                 <li class="item">
-                    <a href="<%- mbsUrl%>" data-make-eid="annualBenefit">
+                    <a href="<%- yearsUrl%>" data-make-eid="annualBenefit">
                         <div class="ico-item">
                             <i class="ico"><img src="<%-CDN%>/img/myt/submain-ico12.svg" alt=""></i>
                             <div class="list-txt">

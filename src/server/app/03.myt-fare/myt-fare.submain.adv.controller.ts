@@ -24,6 +24,7 @@ import {MytFareSubmainSmallService} from './services/submain/myt-fare.submain.sm
 import moment from 'moment';
 import {MytFareSubmainChildService} from './services/submain/myt-fare.submain.child.service';
 import {MytFareSubmainMyBenefitService} from './services/submain/myt-fare.submain.my-benefit.service';
+import {MYT_FARE_BILL_TYPE} from '../../types/string.type';
 
 interface Info {
   req: Request;
@@ -97,6 +98,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     try {
       this.getRquests(data, res).subscribe( resp => {
+        if ( data.billError && data.isPPS) {
+          return this.errorRender(res, data.billError);
+        }
         res.render('myt-fare.submain.adv.html', { data: resp });
       });
 
@@ -206,7 +210,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       // 대표청구일 때
       if (isRep) {
         reqs.push(this._getNonPayment());
-        // reqs.push(this._getTotalPayment());
         reqs.push(this._getAutoPayment());
       } else {
         data.type = 'UF';
@@ -318,7 +321,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       if (item.invDt === date) {
         data.claimPay = item.invAmt || '0';
         // haveClaim = true;
-        // data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
+        data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
       }
 
       /*
@@ -397,7 +400,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       // 납부 정보
       data.autoPayment = {
         isPaid: remainPayment.toString() === '0', // 선택월 요금 납부 여부(예정(or 미납), 완료)
-        payCode,
+        // payCode,
         payDate,
         isThisMonth: eDate === date // 이번달 유무
       };
@@ -524,6 +527,14 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   // 납부/청구 정보 조회
   private _getPaymentInfo() {
     return this.apiService.request(API_CMD.BFF_05_0058, {}).map((resp) => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return undefined;
+      }
+      const {result} = resp;
+      // DV001-10696 기존의 우편요금서 유형코드 4, 5, 8, C를 수신했을 경우에 To-be의 기타(우펀) 유형코드 1과 동일하게 처리해 주기 바랍니다.
+      if (['4', '5', '8', 'C'].indexOf(result.billTypeCd) > -1) {
+        result.billTypeNm = MYT_FARE_BILL_TYPE[result.billTypeCd];
+      }
       return resp.code === API_CODE.CODE_00 ? resp.result : undefined;
     });
   }
