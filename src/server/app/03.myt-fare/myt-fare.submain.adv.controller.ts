@@ -14,7 +14,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import {API_CMD, API_CODE, SESSION_CMD} from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
-import {SVC_ATTR_NAME} from '../../types/bff.type';
+import {MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE, SVC_ATTR_NAME} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
 import CommonHelper from '../../utils/common.helper';
@@ -24,7 +24,7 @@ import {MytFareSubmainSmallService} from './services/submain/myt-fare.submain.sm
 import moment from 'moment';
 import {MytFareSubmainChildService} from './services/submain/myt-fare.submain.child.service';
 import {MytFareSubmainMyBenefitService} from './services/submain/myt-fare.submain.my-benefit.service';
-import {MYT_FARE_BILL_TYPE} from '../../types/string.type';
+import {MYT_FARE_BILL_TYPE, MYT_SUSPEND_STATE_EXCLUDE} from '../../types/string.type';
 
 interface Info {
   req: Request;
@@ -98,9 +98,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     try {
       this.getRquests(data, res).subscribe( resp => {
-        if ( data.billError && data.isPPS) {
+        /*if ( data.billError && data.isPPS) {
           return this.errorRender(res, data.billError);
-        }
+        }*/
         res.render('myt-fare.submain.adv.html', { data: resp });
       });
 
@@ -115,10 +115,12 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const reqs = new Array<Observable<any>>();
     reqs.push(this.getSubmain(data)); // as is 나의요금
     reqs.push(this.getBillCharge(svcInfo, res)); // 요금 안내서
+
     // 회선이 휴대폰 인 경우만
     if (svcInfo.svcAttrCd === 'M1') {
       reqs.push(this._smallService.getHistory()); // 소액결제, 콘텐츠 이용료
       reqs.push(this._benefitService.getBenefit()); // 나의 혜택/할인
+      reqs.push(this.getSearchReq()); // 일시정지/해제, 장기 일시정지
     }
 
     return Observable.combineLatest(
@@ -128,15 +130,18 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       const error = submain.code ? submain : guide.code ? guide : null;
       if (error) {
         data.billError = {
-          ...error
+          // ...error
+          code: error.code,
+          msg: error.msg
         };
       }
 
-      const [small, benefit] = other || [{}, {}];
+      const [small, benefit, pause] = other || [{}, {}, {}];
       Object.assign(data, {
         guide,
         small,
-        benefit
+        benefit,
+        pause
       });
 
       return data;
@@ -179,7 +184,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   private getBillCharge(svcInfo, res): Observable<any> {
     return this._mytFareSubmainGuideService.getBillCharge(svcInfo, res).switchMap( resp => {
       if (resp.code && resp.code !== API_CODE.CODE_00) {
-        return Observable.of(resp);
+        return Observable.of({
+          code: resp.code,
+          msg: resp.msg
+        });
         // return Observable.of(null);
       }
 
@@ -405,7 +413,77 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         isThisMonth: eDate === date // 이번달 유무
       };
     });
+  }
 
+  // 조회/신청 서비스
+  private getSearchReq(): Observable<any> {
+    return Observable.combineLatest(
+      this._getPausedState(),
+      this._getLongPausedState()
+    ).map( ([myPausedState, myLongPausedState]) => {
+      // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
+      if (myPausedState) {
+        if (myPausedState.svcStCd === 'SP') {
+          const fromDt = myPausedState.fromDt, toDt = myPausedState.toDt;
+          myPausedState.sDate = DateHelper.getShortDate(fromDt);
+          myPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
+          myPausedState.state = true;
+          if (myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
+            || myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
+            || myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY) {
+            myLongPausedState = {
+              state: true,
+              opState: myPausedState.svcChgRsnNm.replace(MYT_SUSPEND_STATE_EXCLUDE, ''),
+              fromDt: myPausedState.fromDt,
+              toDt: myPausedState.toDt
+            };
+          }
+        } else if (((myPausedState.armyDt && myPausedState.armyDt !== '')
+          || (myPausedState.armyExtDt && myPausedState.armyExtDt !== ''))) {
+          myLongPausedState = {
+            state: true
+          };
+          myPausedState.armyDt = myPausedState.armyDt || myPausedState.armyExtDt;
+        } else if (myPausedState.reservedYn === 'Y') { // 일시정지 예약자
+          const fromDt = myPausedState.fromDt, toDt = myPausedState.toDt;
+          myPausedState.sDate = DateHelper.getShortDate(fromDt);
+          myPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
+        }
+      }
+
+      if (myLongPausedState) {
+        const fromDt = myLongPausedState.fromDt, toDt = myLongPausedState.toDt;
+        myLongPausedState.sDate = DateHelper.getShortDate(fromDt);
+        myLongPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
+        myLongPausedState.state = true;
+        // 군입대로 인한 장기 일시정지
+        myLongPausedState.isArmy = (MYT_SUSPEND_MILITARY_RECEIVE_CD.indexOf(myLongPausedState.receiveCd) > -1);
+        if (myPausedState.svcStCd === 'AC') {
+          if ((myPausedState.armyDt && myPausedState.armyDt !== '')
+            || (myPausedState.armyExtDt && myPausedState.armyExtDt !== '')) {
+            const days = DateHelper.getDiffByUnit(myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
+            if (days < 0) {
+              myPausedState.state = false;
+              myLongPausedState.state = false;
+              delete myPausedState.armyDt;
+            }
+          }
+          // 장기일시정지 처리완료 상태에서 멈추는 문제 해결 (장기일시정지, 처리완료, 신청일이 오늘 포함 이전이면, 새로 신청가능한 것으로
+          if (myLongPausedState.opStateCd === 'C' && fromDt <= DateHelper.getCurrentShortDate()) {
+            myLongPausedState.stateReleased = true;
+          }
+        }
+
+        // DV001-18322 스윙 문구 고객언어 반영
+        if (myLongPausedState.opState) {
+          myLongPausedState.opState = myLongPausedState.opState.replace(MYT_SUSPEND_STATE_EXCLUDE, '');
+        }
+      }
+      return {
+        myPausedState,
+        myLongPausedState
+      };
+    });
   }
 
   // 이번달 가입자인지 확인
@@ -554,6 +632,36 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     }
     return this.apiService.request(API_CMD.BFF_07_0060, {}).map((resp) => {
       return resp.code === API_CODE.CODE_00 ? resp.result : null;
+    });
+  }
+
+  // 일시정지/해제
+  _getPausedState() {
+    // 유선인 경우
+    if (this.info.svcInfo.svcAttrCd.indexOf('S') > -1) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_05_0149, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        return resp.result;
+      }
+      // error
+      return null;
+    });
+  }
+
+  // 장기 일시정지
+  _getLongPausedState() {
+    // 유선인 경우
+    if (this.info.svcInfo.svcAttrCd.indexOf('S') > -1) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_05_0194, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        return resp.result;
+      }
+      // error
+      return null;
     });
   }
 
