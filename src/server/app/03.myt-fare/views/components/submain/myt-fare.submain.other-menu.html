@@ -64,11 +64,6 @@
             _%>
             <div class="small-ico-list-wrap">
                 <ul class="small-ico-list">
-                    <li class="ico-item">
-                        <a href="/myt-fare/info/history" data-make-eid="paymentHistory">
-                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico07.svg" alt=""></i>요금납부내역 조회
-                        </a>
-                    </li>
                     <%_if( svcAttrCd.indexOf('S') === -1){ // 휴대폰, TLogin, Tpocket FI 경우만 노출_%>
                     <li class="ico-item">
                         <a href="/myt-data/hotdata" data-make-eid="realtimeRemain">
@@ -78,6 +73,27 @@
                     <li class="ico-item">
                         <a href="/myt-join/myplancombine/infodiscount" data-make-eid="contract">
                             <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico08.svg" alt=""></i>약정할인/기기상환 정보
+                        </a>
+                    </li>
+                    <%_} else { // 유선인 경우만 노출 _%>
+                    <li class="ico-item">
+                        <a href="/myt-join/submain/wire/discountrefund" data-make-eid="dcRefund">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico18.svg" alt=""></i>할인 반환금 조회
+                        </a>
+                    </li>
+                    <li class="ico-item">
+                        <a href="/myt-join/submain/wire/gifts" data-make-eid="searchBenefit">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico19.svg" alt=""></i>사은품 조회
+                        </a>
+                    </li>
+                    <li class="ico-item">
+                        <a href="/product/wireplan/service-area" data-make-eid="ableService">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico14.svg" alt=""></i>서비스 가능지역 조회
+                        </a>
+                    </li>
+                    <li class="ico-item">
+                        <a href="/product/wireplan" data-make-eid="myCombineProduct">
+                            <i class="ico"><img src="<%-CDN%>/img/myt/sub-ben-ico07.svg" alt=""></i>내게 맞는 결합상품 찾기
                         </a>
                     </li>
                     <%_}_%>
