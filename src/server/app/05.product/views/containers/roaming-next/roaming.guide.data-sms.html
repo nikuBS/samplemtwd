@@ -1,15 +1,9 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
 <div id="roamingGuide">
-    <div id="appbar" class="gnb-opaque">
-        <span class="menu icon-gnb-menu">
-            <img src="<%= CDN %>/img/product/roam/ico_menu_b.svg" alt="메뉴" width="24" height="24" />
-        </span>
-        <h1>SMS/데이터 로밍</h1>
-        <a href="/common/search-main">
-            <img class="search" src="<%= CDN %>/img/svg/icon_48px_titlebar_search.svg" width="24" height="24" alt="검색" />
-        </a>
-    </div>
+    
+     <!-- 202011 - 웹접근성 수정건 적용 : 스킵네비 추가 시작 -->
+     
     <%- include('../components/header.component.html', { title: 'SMS/데이터 로밍', svcInfo: svcInfo }) %>
     <div id="contents" class="first">
     <div class="card datasms">
