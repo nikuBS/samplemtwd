@@ -551,7 +551,6 @@ Tw.CommonSearch.prototype = {
       // 3뎁스에 데이터를 1뎁스 라인으로 랜더링 하기 위해 자료구조를 다시 만듭니다.
       var depth3 = []; // 3뎁스를 1뎁스로 구조로 만드는 변수
       var list = data; // 기존의 리스트를 담는 변수
-      var totalListCnt = 0; // 3뎁스의 리스트 사이즈 개수 총합에 사용할 변수
       for(var i=0; i<list.length; i++) {
         if (list[i].DEPTH_CHILD !== undefined) {
           for(var j=0; j<list[i].DEPTH_CHILD.length; j++) {
@@ -564,7 +563,7 @@ Tw.CommonSearch.prototype = {
                 MENU_NM: list[i].DEPTH_CHILD[j].MENU_NM,
                 DOCID: list[i].DEPTH_CHILD[j].DOCID,
                 CLICK_CNT: list[i].DEPTH_CHILD[j].CLICK_CNT,
-                DEPTH_SIZE: list[i].DEPTH_CHILD[j].DEPTH_CHILD.length,
+                DEPTH_SIZE: list[i].DEPTH_CHILD[j].DEPTH_CHILD.length+1,
                 USE_YN: 'Y',
                 DEPTH_CHILD: list[i].DEPTH_CHILD[j].DEPTH_CHILD
               });
@@ -581,9 +580,10 @@ Tw.CommonSearch.prototype = {
         //  ㄴ 자식
         //  ㄴ 자식
         //  ㄴ 자식
-        totalListCnt += depth3[i].DEPTH_SIZE+1;
         data.push(depth3[i])
       }
+
+      console.log(">>>>> ", data);
 
       _.each(data, $.proxy(function (listData, index) {
 
@@ -602,9 +602,10 @@ Tw.CommonSearch.prototype = {
             return;
           }
           // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다.
-          if (listData.DEPTH_CHILD !== undefined && listData.idx === undefined) {
+          if (listData.DEPTH_CHILD !== undefined ) {
+
             // 3뎁스 사이즈를 최상위 부모 뎁스 사이즈에서 빼야 제대로 개수가 맞음.
-            listData.DEPTH_SIZE = Number(listData.DEPTH_SIZE - totalListCnt);
+            listData.DEPTH_SIZE = Number(listData.DEPTH_CHILD.length);
             listData.DEPTH_CHILD.unshift({
               CLICK_CNT: listData.CLICK_CNT,
               DEPTH_LOC: "2",
@@ -614,20 +615,6 @@ Tw.CommonSearch.prototype = {
               MENU_URL: listData.MENU_URL,
               USE_YN: listData.USE_YN
             });
-            _.each(listData.DEPTH_CHILD, $.proxy(function (subData, index) {
-              if (subData.DEPTH_CHILD !== undefined && subData.idx === undefined) {
-                subData.DEPTH_CHILD.unshift({
-                  CLICK_CNT: subData.CLICK_CNT,
-                  DEPTH_LOC: "3",
-                  DEPTH_PATH: subData.DEPTH_PATH,
-                  DOCID: subData.DOCID,
-                  MENU_NM: subData.MENU_NM,
-                  MENU_URL: subData.MENU_URL,
-                  USE_YN: subData.USE_YN
-                })
-
-              }
-            }));
           }
           // console.log(">>> listData: ", listData);
           $list.append(templateData({ listData: listData, CDN: cdn }));
