@@ -5,9 +5,26 @@
 * @since 2020.11.09
 %>
 <%
+    const {billError} = data;
+%>
+<%_if(billError) {_%>
+<section class="cont-card">
+    <div class="charge-wrap">
+        <div class="charge-cont">
+            <div class="warning-box">
+                <div class="warning-inner">
+                    <p class="warning-tit"><%-billError.msg%></p>
+                    <p class="warning-sub-tit">잠시 후 다시 이용해 주세요.</p>
+                    <p class="warning-sub-txt"><%-billError.code%></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%_} else {
     const {commDataInfo, reqQuery, ppsInfo} = data.guide;
     const isDataType = commDataInfo.ppsType === 'A';
-%>
+_%>
 <section class="cont-card">
     <div class="charge-wrap">
         <div class="charge-cont">
@@ -58,9 +75,10 @@
         </div>
     </div>
 </section>
+<%_}_%>
 
 <section class="cont-card">
-    <div class="section-inner" data-target="detailList">
+    <div class="section-inner none" data-target="detailList">
         <div class="head-tit">
             최근 이용 내역
             <span class="head-btn-area">
@@ -125,11 +143,6 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareSubmainPps( $('.wrap'), {
-      reqQuery: JSON.parse('<%-JSON.stringify(reqQuery) %>'),
-      svcInfo: JSON.parse('<%-JSON.stringify(svcInfo) %>'),
-      ppsInfo: JSON.parse('<%-JSON.stringify(ppsInfo) %>'),
-      commDataInfo: JSON.parse('<%-JSON.stringify(commDataInfo) %>')
-    });
+    new Tw.MyTFareSubmainPps( $('.wrap'));
   });
 </script>
