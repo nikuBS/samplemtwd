@@ -33,16 +33,11 @@ class MyTFareBillSmall extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     Observable.combineLatest(
       this.getHistory(),
       this.getPasswordStatus(),
       this.getUnusualStatus()
     ).subscribe(([microHistory, passwordStatus, unusualStatus]) => {
-      if (microHistory.code !== API_CODE.CODE_00) {
-        return this.errorRender(res, microHistory, svcInfo, pageInfo);
-      }
-
       res.render('billsmall/myt-fare.bill.small.html', {
         usedYn: this.getHistoryInfo(microHistory),
         passwordInfo: this.getPasswordInfo(passwordStatus),
@@ -153,7 +148,7 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {any}
    */
   private errorRender(res, resp, svcInfo, pageInfo): any {
-    return this.error.render(res, {
+    this.error.render(res, {
       code: resp.code,
       msg: resp.msg,
       pageInfo: pageInfo,

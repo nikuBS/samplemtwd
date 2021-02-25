@@ -280,12 +280,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @desc 이용한도 변경
    */
   _changeLimit: function (e) {
-    // 21/2/23 OP002-12587 법인회선(C,D) 는 한도변경 접근불가.(회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
-    if (['R', 'D'].indexOf(this.$container.data('svc-gr')) > -1) {
-      var templ = Tw.MYT_FARE_BILL.ERROR.NO_AUTH_COMPANY;
-      Tw.Error('', templ.MSG, templ.SUB_MSG).page();
-      return;
-    }
     new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title, $(e.currentTarget));
   },
   /**
