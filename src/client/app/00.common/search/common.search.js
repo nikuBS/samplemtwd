@@ -583,6 +583,8 @@ Tw.CommonSearch.prototype = {
         data.push(depth3[i])
       }
 
+      console.log(">>>>> ", data);
+
       _.each(data, $.proxy(function (listData, index) {
 
         // 바로가기는 최대 3건만 노출
@@ -600,7 +602,8 @@ Tw.CommonSearch.prototype = {
             return;
           }
           // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다.
-          if (listData.DEPTH_CHILD !== undefined && listData.idx === undefined) {
+          if (listData.DEPTH_CHILD !== undefined ) {
+
             // 3뎁스 사이즈를 최상위 부모 뎁스 사이즈에서 빼야 제대로 개수가 맞음.
             listData.DEPTH_SIZE = Number(listData.DEPTH_CHILD.length);
             listData.DEPTH_CHILD.unshift({
