@@ -608,8 +608,8 @@ Tw.API_CMD = {
   STACK_SEARCH_USER_CLICK: { path: '/search/tworld/log/save', method: Tw.API_METHOD.GET },
   // SEARCH_APP: { path: '/search/tworld/mobile-app', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
   // SEARCH_WEB: { path: '/search/tworld/mobile-web', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_APP: { path: '/search/tworld/mobile-app4', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_WEB: { path: '/search/tworld/mobile-web4', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_APP: { path: '/search/tworld/mobile-app5', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB: { path: '/search/tworld/mobile-web5', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
