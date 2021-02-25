@@ -117,6 +117,7 @@ _%>
                 // 2. 이전달인 경우: 선택 월 포함 미납금액 있으면 노출
                 const isShowUnpaid = unpaid !== '0' ? true : !isThisMonth && !isPaid ? true : false;
                 const classNm = isThisMonth && isShowUnpaid ? 'btn2' : '';
+                if (isThisMonth || isShowUnpaid) {
             _%>
             <div class="btn-area <%-classNm%>">
                 <%_if(isThisMonth){ // 당월 일때만 요금납부 버튼 노출 _%>
@@ -124,7 +125,7 @@ _%>
                 <%_}_%>
                 <a href="/myt-fare/unbill" class="round-btn line <%- isShowUnpaid ? '' : 'none'%>" data-make-eid="unPaid">미납 요금 납부</a>
             </div>
-            <%_}_%>
+            <%_}}_%>
         </div>
     </div>
 </section>
