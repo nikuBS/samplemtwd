@@ -1494,6 +1494,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
                       '{{#if fltTagKid}}' +
                           '<span class="i-tag-cr5">어린이/청소년</span>' +
                       '{{/if}}' +
+                      '{{#if fltTagCollege}}' +
+                          '<span class="i-tag-cr5">대학생/군인</span>' +
+                      '{{/if}}' +
                   '{{/each}}' +
               '</div>' +
               '<div class="col-right">' +
@@ -1567,6 +1570,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                   '{{#if fltTagKid}}' +
                                       '<span class="i-tag-cr5">어린이/청소년</span>' +
                                   '{{/if}}' +
+                                  '{{#if fltTagCollege}}' +
+                                      '<span class="i-tag-cr5">대학생/군인</span>' +
+                                  '{{/if}}' +
                               '{{/each}}' +
                             '{{/if}}' +
                             '{{#if prodFltList}}' +
@@ -1579,6 +1585,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                 '{{/if}}' +
                                 '{{#if fltTagKid}}' +
                                     '<span class="i-tag-cr5">어린이/청소년</span>' +
+                                '{{/if}}' +
+                                '{{#if fltTagCollege}}' +
+                                    '<span class="i-tag-cr5">대학생/군인</span>' +
                                 '{{/if}}' +
                               '{{/each}}' +
                             '{{/if}}' +
@@ -1647,6 +1656,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                             '{{#if fltTagKid}}' +
                                 '<span class="i-tag-cr5">어린이/청소년</span>' +
                             '{{/if}}' +
+                            '{{#if fltTagCollege}}' +
+                                '<span class="i-tag-cr5">대학생/군인</span>' +
+                            '{{/if}}' +
                         '{{/each}}' +
                         '{{#if prodFltList}}' +
                           '{{#each prodFltList}}' +
@@ -1658,6 +1670,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                             '{{/if}}' +
                             '{{#if fltTagKid}}' +
                                 '<span class="i-tag-cr5">어린이/청소년</span>' +
+                            '{{/if}}' +
+                            '{{#if fltTagCollege}}' +
+                                '<span class="i-tag-cr5">대학생/군인</span>' +
                             '{{/if}}' +
                           '{{/each}}' +
                         '{{/if}}' +
