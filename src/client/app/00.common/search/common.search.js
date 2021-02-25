@@ -547,45 +547,34 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
-
-      // 3뎁스에 데이터를 1뎁스 라인으로 랜더링 하기 위해 자료구조를 다시 만듭니다.
-      var depth3 = []; // 3뎁스를 1뎁스로 구조로 만드는 변수
-      var list = data; // 기존의 리스트를 담는 변수
-      for(var i=0; i<list.length; i++) {
-        if (list[i].DEPTH_CHILD !== undefined) {
-          for(var j=0; j<list[i].DEPTH_CHILD.length; j++) {
-            if (list[i].DEPTH_CHILD[j].DEPTH_CHILD !== undefined) {
-              depth3.push({
-                idx: j,
-                DEPTH_PATH: list[i].DEPTH_CHILD[j].DEPTH_PATH,
-                MENU_URL: list[i].DEPTH_CHILD[j].MENU_URL,
-                DEPTH_LOC: list[i].DEPTH_CHILD[j].DEPTH_LOC,
-                MENU_NM: list[i].DEPTH_CHILD[j].MENU_NM,
-                DOCID: list[i].DEPTH_CHILD[j].DOCID,
-                CLICK_CNT: list[i].DEPTH_CHILD[j].CLICK_CNT,
-                DEPTH_SIZE: list[i].DEPTH_CHILD[j].DEPTH_CHILD.length+1,
-                USE_YN: 'Y',
-                DEPTH_CHILD: list[i].DEPTH_CHILD[j].DEPTH_CHILD
-              });
-            }
-          }
-        }
-      }
-
-      for (var i=0; i<depth3.length; i++) {
-        // 부모의 타이틀을 자식뎁스쪽으로 추가 하기 때문에 +1을 해줘야 함.
-        // 예) 부모(4) > 자식(3) 짜리 데이터를 렌더링 한다고 생각하면 아래와 같기 때문에 +1을 해줘야 합니다.
-        // 부모(4)
-        //  ㄴ 부모  <<< 추가
-        //  ㄴ 자식
-        //  ㄴ 자식
-        //  ㄴ 자식
-        data.push(depth3[i])
-      }
-
-      console.log(">>>>> ", data);
+      // console.log(">>>>> ", data);
 
       _.each(data, $.proxy(function (listData, index) {
+        
+        var childList = [];
+        listData.MENU_GROUP = listData.MENU_GROUP || '';
+        // console.log(">>>>>>>> MENU_GROUP: ", listData.MENU_GROUP);
+        // 자식이 있는 경우.
+        if ( listData.MENU_GROUP !== '' && listData.MENU_GROUP !== undefined){
+          var docids = listData.DOCID.split("$");
+          var menuNms = listData.MENU_NM.split("$");
+          var useYns = listData.USE_YN.split("$");
+          var menuUrls = listData.MENU_URL.split("$");
+          var depthPaths = listData.DEPTH_PATH.split("$");
+          //var menuGroups = i.MENU_GROUP.split("$");
+          for (var j=0; j<docids.length; j++) {
+            var data = {
+              MENU_GROUP: listData.MENU_GROUP,
+              DOCID: docids[j],
+              MENU_NM: menuNms[j],
+              USE_YN: useYns[j],
+              MENU_URL: menuUrls[j],
+              DEPTH_PATH: depthPaths[j]
+            }
+            childList.push(data);
+          }
+          listData.DEPTH_CHILD = childList;
+        }
 
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
@@ -601,22 +590,6 @@ Tw.CommonSearch.prototype = {
             }
             return;
           }
-          // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다.
-          if (listData.DEPTH_CHILD !== undefined ) {
-
-            // 3뎁스 사이즈를 최상위 부모 뎁스 사이즈에서 빼야 제대로 개수가 맞음.
-            listData.DEPTH_SIZE = Number(listData.DEPTH_CHILD.length);
-            listData.DEPTH_CHILD.unshift({
-              CLICK_CNT: listData.CLICK_CNT,
-              DEPTH_LOC: "2",
-              DEPTH_PATH: listData.DEPTH_PATH,
-              DOCID: listData.DOCID,
-              MENU_NM: listData.MENU_NM,
-              MENU_URL: listData.MENU_URL,
-              USE_YN: listData.USE_YN
-            });
-          }
-          // console.log(">>> listData: ", listData);
           $list.append(templateData({ listData: listData, CDN: cdn }));
         } else {
           if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {
