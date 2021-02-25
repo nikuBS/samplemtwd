@@ -197,6 +197,7 @@ Tw.MyTFareSubMainAdv.prototype = {
 
 
   _goLoad: function (event) {
+    event.preventDefault();
     this._historyService.goLoad($(event.currentTarget).data('url'));
   },
 

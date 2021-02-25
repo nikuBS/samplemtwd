@@ -83,8 +83,8 @@ _%>
                 </div>
             </div>
             <%_} else if(guide.data) {_%>
-            <div class="detail-charge-box">
-                <div class="detail-tit"><a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>" data-make-eid="detailBill">요금 상세 내역</a></div>
+            <div class="detail-charge-box" data-url="/myt-fare/billguide/guide?date=<%-data.claimDt%>" data-make-eid="detailBill">
+                <div class="detail-tit"><a href="#">요금 상세 내역</a></div>
                 <ul class="report-list item-no-border fe-charge-list">
                     <%# 요금 상세내역 리스트 handlebars-template 영역%>
                 </ul>
@@ -96,8 +96,8 @@ _%>
             <%_}_%>
 
             <%_if(data.miriBalance){_%>
-            <div class="detail-charge-box">
-                <div class="detail-tit"><a href="/myt-fare/info/miri" data-make-eid="miri">미리 납부하신 금액(MIRI)</a></div>
+            <div class="detail-charge-box" data-url="/myt-fare/info/miri" data-make-eid="miri">
+                <div class="detail-tit"><a href="#">미리 납부하신 금액(MIRI)</a></div>
                 <ul class="report-list item-no-border">
                     <li class="report-item">
                         <dl class="report-define d-wrap">
