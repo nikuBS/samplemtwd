@@ -19,7 +19,10 @@ _%>
       _%>
       <dl class="using-plan">
         <dt class="plan-tit">
-          <a href="/product/callplan?prod_id=<%= data.myAddProduct.feePlanProd.prodId %>"><%= name %></a>
+          <a href="/product/callplan?prod_id=<%= data.myAddProduct.feePlanProd.prodId %>"
+             data-xt_eid="<%= data.xtCode.product %>" data-xt_csid="NO" data-xt_action="BC">
+            <%= name %>
+          </a>
         </dt>
         <dd class="plan-info">
           <ul class="report-list small">
