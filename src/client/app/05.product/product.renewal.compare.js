@@ -454,8 +454,6 @@ Tw.ProductCompare.prototype = {
     };
   },
 
-
-
   /**
    * 비교대상에 대한 Redis 정보를 얻음
    */
@@ -546,6 +544,18 @@ Tw.ProductCompare.prototype = {
       prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
       prodBenfCd_05 : [], // 안내문구 데이터 셋
     })
-  } 
+  },
+
+
+  /**
+   * 비교하기 / 요금제 변경 트래킹 코드 전달 함수
+   * 
+   * @param {*} basicPid 현재 요금제
+   * @param {*} comparePid 비교대상 요금제
+   * @param {*} type CPR: 요금제 비교, CAG: 요금제 변경
+   */
+  _sendTracking: function(basicPid, comparePid, type) {
+    window.XtractorScript.xtrProdCompare(basicPid, comparePid, type);
+  }
 
 };

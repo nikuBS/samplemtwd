@@ -134,7 +134,8 @@
 									</div>
 								</div>
 							<%_ } _%>
-
+							
+							<!--
                             <%_ if (data.isWireless && data.additions ) { _%>
                                 <%_ if ( data.additions.length != 0 ) { _%>
                                     <%# 무선 사용자이면서 가입할 부가 서비스가 있을 때 %>
@@ -142,7 +143,7 @@
                                     <div class="pro-article free-service">
                                         <div class="article-tit"><i class="ico-new">N</i>고객님, 아직 신청하지 않은 무료 부가서비스가 있어요</div>
                                         <div class="article-cont">
-                                            <ul class="go-service add-service-list shadow-box "><!-- show toggle -->
+                                            <ul class="go-service add-service-list shadow-box ">
     
                                                 <%_ for (let i=0, length=data.additions.length; i < length; i += 1) { _%>
                                                     <li class="service-item">
@@ -166,6 +167,7 @@
                                 <%_ } _%>
                             <%_ } _%>
                         <%_ } _%>
+						-->
                     </section>
 
                     <%# QUICK_FILTER, THEME_LIST, THEME_BANNER 정렬에 필요한 타겟 div %>
@@ -329,7 +331,6 @@
 								</div>
 							<% } else if ( data.themeListData.themeTypeCode === 'TAG0000214' ) { %>
 								<%# 혜택강조형 테마 %>
-								<!-- 혜택 강조형 -->
 								<div class="tod-cont-section tod-nmp-theme">
 									<div class="rn-banner-img">
 										<img src="<%= data.themeListData.mblBgImgUrl %>" alt="">
@@ -392,7 +393,9 @@
 																	<ul>
 																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr.length; j < jlen; j++ ) { %>
 																			<li>
-																				<i class="p-icon16-flo"></i> 
+																				<i class="p-icon16-img">
+																					<img src="<%= data.cdn %><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].rgstImgUrl %>" alt="<%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].rgstImgAlt %>">
+																				</i>
 																				<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfNm %></span>
 
 																				<% if ( !data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].useAmtPrice.isNaN && !data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfAmtPrice.isNaN ) { %>
@@ -416,7 +419,9 @@
 																		<ul>
 																			<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length; j < jlen; j++ ) { %>
 																				<li>
-																					<i class="p-icon16-cycle"></i> 
+																					<i class="p-icon16-img">
+																						<img src="<%= data.cdn %><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].rgstImgUrl %>" alt="<%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].rgstImgAlt %>">
+																					</i>
 																					<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].expsBenfNm %></span>
 
 																					<% if ( !data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].useAmtPrice.isNaN && !data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].benfAmtPrice.isNaN ) { %>
@@ -433,11 +438,15 @@
 																<% } %>
 															</div>
 														</a>
-
-														<% if ( data.isCompareButton ) { %>
+														
+														<% 
+															const prodNetwork = data.themeListData.prodList[i].basNetworkList.find(e => e.prodFltNm).prodFltNm;
+														%>
+														<% if ( data.isCompareButton && (prodNetwork == 'LTE' || prodNetwork == '5G') ) { %>
+															<%# 비교하기 버튼(isCompareButton) 이 true 이면서 비교대상 요금제가 LTE/5G일 때에만 출력 %>
 															<div class="rn-prod-bottom">
 																<div class="rn-btn-right">
-																	<a href="#" class="btn-compare" data-xt_eid="CMMA_A4_B84-26" data-xt_csid="NO" data-xt_action="BC">내 요금제와 비교</a>
+																	<a href="#" class="btn-compare">내 요금제와 비교</a>
 																</div>
 															</div>
 														<% } %>
@@ -519,7 +528,7 @@
     $(document).ready(function () {
 		// new Tw.ProductRenewalSubmain($('.wrap'), '<%= svcInfo ? svcInfo : "" %>', '<%= pageInfo.menuId ? pageInfo.menuId : "" %>');
 		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', '<%= pageInfo.menuId ? "M000367" : "" %>');
-		// new Tw.ProductCompare($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
+		new Tw.ProductCompare($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
     });
 </script>
 

@@ -16,8 +16,9 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuI
   console.log('소팅방법: ', sectionSort);
   console.log('회선라인: ', line);
   console.log('W: 3G, L: LTE, F: 5G, E: 2nd device, P: PPS');
+  console.log('cdn:: ', this._cdn);
   console.log('-------------------');
-
+  
   // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
@@ -234,10 +235,15 @@ Tw.ProductRenewalSubmain.prototype = {
       }
       return arr;
     }, []);
-
+    
+    if ( quickFilterParseList.length > 0 ) { // bnnrExpsSeq 기준으로 정렬
+      quickFilterParseList = _.sortBy(quickFilterParseList, 'bnnrExpsSeq');
+    }
+    
     console.log("=====");
     console.log('퀵 필터에 보여지는 항목은 이거입니다. ', quickFilterParseList);
     console.log("=====");
+
 
     this._drawQuickFilterBanner(quickFilterParseList, this); // 퀵 필터 데이터를 draw
   },
@@ -862,12 +868,11 @@ Tw.ProductRenewalSubmain.prototype = {
   _toast: function (message) {
     setTimeout(function() {
       skt_landing.action.popup.toast({
-        url: 'http://localhost:3001/hbs/',
+        url: Tw.Environment.cdn + '/hbs/',
         hbs: 'toast.hbs',
         text: message,
         second: 2
       });
     }, 500)
   },
-
 };
