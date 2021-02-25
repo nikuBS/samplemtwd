@@ -17,6 +17,7 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuI
   console.log('회선라인: ', line);
   console.log('W: 3G, L: LTE, F: 5G, E: 2nd device, P: PPS');
   console.log('cdn:: ', this._cdn);
+  console.log('env cdn:: ', Tw.Environment.cdn);
   console.log('-------------------');
   
   // 공통 모듈 선언
