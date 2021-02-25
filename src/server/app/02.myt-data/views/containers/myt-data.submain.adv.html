@@ -104,7 +104,7 @@
             </section>
             <%_ } _%>
             <%_
-            } else if (data.svcInfo.svcAttrCd === 'M2' && data.ppsCard) {
+            } else if (data.svcInfo.svcAttrCd === 'M2') {
             _%>
             <!-- 선불폰 충전하기 -->
             <section class="cont-card" data-id="pps-section">
@@ -115,7 +115,6 @@
                     <div class="card-cont">
                         <div class="charging-wrap">
                             <ul class="pps-charge-list">
-                                <%_ if (data.ppsCard && data.ppsCard.dataOnlyYn === 'N') { _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -134,8 +133,6 @@
                                         </dd>
                                     </dl>
                                 </li>
-                                <%_ } _%>
-                                <%_ if (data.ppsCard && (data.ppsCard.dataYn === 'Y' || data.ppsCard.dataOnlyYn === 'Y')) { _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -154,7 +151,6 @@
                                         </dd>
                                     </dl>
                                 </li>
-                                <%_ } %>
                             </ul>
                         </div>
                         <div class="short-link-wrap minus-mg">
@@ -185,7 +181,7 @@
                     <div class="card-cont">
                         <%_ if (data.refill && data.refill.length) { _%>
                         <%_
-                        var usableCoupon = data.refill[data.pickCouponIndex];
+                        var usableCoupon = data.pickCoupon;
                         var btnSet = ((data.refillAvailable === 'NONE' && !usableCoupon.isGift) ||
                         (data.refillAvailable !== 'NONE' && usableCoupon.isGift)) ? 'btn' : 'btn2';
                         _%>

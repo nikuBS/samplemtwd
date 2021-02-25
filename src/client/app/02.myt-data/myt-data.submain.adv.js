@@ -74,7 +74,7 @@ Tw.MyTDataSubMainAdv.prototype = {
       // this._historyService.reload();
       this._historyService.goLoad('/myt-data/submain');
     }
-    
+
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
@@ -963,7 +963,7 @@ Tw.MyTDataSubMainAdv.prototype = {
       var tab = $target.data('id') === 'refill-btn' ? 'refill' : 'gift';
       this._historyService.goLoad(
         '/myt-data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' +
-        name + '&period=' + period + '&gift=' + gift
+        name + '&period=' + period + '&gift=' + gift + '&external=Y'
       );
     }
   },

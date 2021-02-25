@@ -93,9 +93,9 @@ class MytDataSubmainAdvController extends TwViewController {
       this._reqRefillGiftHistory(),
       this._getPPSAuto(),
       this._getPPSDataAuto(),
-      this._getPPSCard()
+      // this._getPPSCard() : PPS 인 경우 무조건 선불폰 충전역역 무조건 노출
       // this._getProductGroup() : OP002-7334 가입안내문구 삭제로 인하여 해당 BFF 사용안함.
-    ).subscribe(([remnant, present, presentAuto, refill, refillAvailable, refillGiftHistory, ppsvoice, ppsdata, ppscard /*, prodList*/]) => {
+    ).subscribe(([remnant, present, presentAuto, refill, refillAvailable, refillGiftHistory, ppsvoice, ppsdata/*, ppscard , prodList*/]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -184,16 +184,16 @@ class MytDataSubmainAdvController extends TwViewController {
         if ( ppsdata ) {
           data.ppsAutoData = ppsdata;
         }
-        if ( ppscard ) {
-          data.ppsCard = ppscard;
-        }
+        // if ( ppscard ) {
+        //   data.ppsCard = ppscard;
+        // }
       }
 
       // 리필쿠폰
       if ( refill && refill.length > 0 ) {
         // 간편로그인인 경우에 리필하기, 선물하기 버튼 비노출 처리
-        data.pickCouponIndex = this.pickCouponIndex(refill);
-        data.refill = this.convertCoupon(refill);
+        data.pickCoupon = this.pickCoupon(refill);
+        data.refill = refill;
         console.log(data.refill[data.pickCouponIndex]);
         if (refillAvailable) {
           data.refillAvailable = refillAvailable;
@@ -1140,7 +1140,7 @@ class MytDataSubmainAdvController extends TwViewController {
       couponRefill: 'CMMA_A3_B10-39', // 리필쿠폰 리필하기
       couponGift: 'CMMA_A3_B10-40', // 리필쿠폰 선물하기
       tData: 'CMMA_A3_B10-41', // T데이터
-      sData: 'CMMA_A3_B10-42', // T단기 데이터 
+      sData: 'CMMA_A3_B10-42', // T단기 데이터
       tCoupon: 'CMMA_A3_B10-43', // T쿠폰
       jeju: 'CMMA_A3_B10-44', // 제주도 프리
       otherLines: 'CMMA_A3_B10-45', // 자녀 실시간 잔여량
@@ -1183,7 +1183,7 @@ class MytDataSubmainAdvController extends TwViewController {
       rechargeVoiceAutoRevocation: 'CMMA_A3_B10-82', // 음성 자동 충전 변경/해지
       rechargeDataAutoRevocation: 'CMMA_A3_B10-83', // 데이터 자동 충전 변경/해지
       mytDataRechargeHistory: 'CMMA_A3_B10-84', // 충전 내역
-      mytDataRechargeAlarm: 'CMMA_A3_B10-85', // 음성 1회 자동 알림 서비스      
+      mytDataRechargeAlarm: 'CMMA_A3_B10-85', // 음성 1회 자동 알림 서비스
       ppsMytFare: 'CMMA_A3_B10-86', // 나의 요금(선불폰)
       ppsMytJoin: 'CMMA_A3_B10-87', // 나의 가입정보(선불폰)
       ppsMyPlan: 'CMMA_A3_B10-88', // 나의 요금제/부가상품(선불폰)
@@ -1209,7 +1209,7 @@ class MytDataSubmainAdvController extends TwViewController {
       couponRefill: 'CMMA_A3_B10-30', // 리필쿠폰 리필하기
       couponGift: 'CMMA_A3_B10-31', // 리필쿠폰 선물하기
       tData: 'CMMA_A3_B10-32', // T데이터
-      sData: 'CMMA_A3_B10-33', // T단기 데이터 
+      sData: 'CMMA_A3_B10-33', // T단기 데이터
       tCoupon: 'CMMA_A3_B10-34', // T쿠폰
       jeju: 'CMMA_A3_B10-35', // 제주도 프리
       otherLines: 'CMMA_A3_B10-36', // 자녀 실시간 잔여량
@@ -1252,7 +1252,7 @@ class MytDataSubmainAdvController extends TwViewController {
       rechargeVoiceAutoRevocation: 'CMMA_A3_B10-73', // 음성 자동 충전 변경/해지
       rechargeDataAutoRevocation: 'CMMA_A3_B10-74', // 데이터 자동 충전 변경/해지
       mytDataRechargeHistory: 'CMMA_A3_B10-75', // 충전 내역
-      mytDataRechargeAlarm: 'CMMA_A3_B10-76', // 음성 1회 자동 알림 서비스      
+      mytDataRechargeAlarm: 'CMMA_A3_B10-76', // 음성 1회 자동 알림 서비스
       ppsMytFare: 'CMMA_A3_B10-77', // 나의 요금(선불폰)
       ppsMytJoin: 'CMMA_A3_B10-78', // 나의 가입정보(선불폰)
       ppsMyPlan: 'CMMA_A3_B10-79', // 나의 요금제/부가상품(선불폰)
@@ -1264,7 +1264,7 @@ class MytDataSubmainAdvController extends TwViewController {
       wireMyPlan: 'CMMA_A3_B10-85', // 나의 요금제/부가상품(유선)
       wireMybenefit: 'CMMA_A3_B10-86' // 나의 혜택/할인(유선)
     };
-    
+
     if (process.env.NODE_ENV === 'prd') {
       return eid_prd;
     } else {
@@ -1272,21 +1272,20 @@ class MytDataSubmainAdvController extends TwViewController {
     }
   }
 
-  private convertCoupon(data) {
-    return data.map((item) => {
-      item.usePsblStaDt = DateHelper.getShortDate(item.usePsblStaDt);
-      item.usePsblEndDt = DateHelper.getShortDate(item.usePsblEndDt);
-      item.isGift = item.copnOperStCd === 'A20';  // A20: 선물, A10: 장기가입, A14: 10년주기
-      item.copnNm = MYT_DATA_RECHARGE_COUPON[item.copnOperStCd];
-      return item;
-    });
+  private convertCoupon(item) {
+    return {
+      usePsblStaDt: DateHelper.getShortDate(item.usePsblStaDt),
+      usePsblEndDt: DateHelper.getShortDate(item.usePsblEndDt),
+      isGift: item.copnOperStCd === 'A20',  // A20: 선물, A10: 장기가입, A14: 10년주기
+      copnNm: MYT_DATA_RECHARGE_COUPON[item.copnOperStCd]
+    };
   }
 
   /**
    * 만료일자가 빠른 쿠폰 인덱스
    * @param data
    */
-  private pickCouponIndex(data) {
+  private pickCoupon(data) {
     if ( data.length === 0 ) {
       return null;
     }
@@ -1312,7 +1311,7 @@ class MytDataSubmainAdvController extends TwViewController {
         pick = i;
       }
     }
-    return pick;
+    return this.convertCoupon(coupons[pick]);
   }
 }
 
