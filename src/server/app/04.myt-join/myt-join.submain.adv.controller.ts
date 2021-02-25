@@ -441,7 +441,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         if ( resp.code === API_CODE.CODE_00 ) {
           return {
             grade: MEMBERSHIP_GROUP[resp.result.mbrGrCd].toUpperCase(),
-            point: FormatHelper.addComma(resp.result.mbrUsepowerdAmt || '0'),
+            point: FormatHelper.addComma(resp.result.mbrUsedAmt || '0'),
             used: 0 // 가입한 경우
           };
         }
@@ -631,6 +631,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       // 무선
       return {
         moreInfo: 'CMMA_A3_B13-30',
+        moreInfo2: 'CMMA_A3_B13-109',
         disInfo: 'CMMA_A3_B13-31',
         contractPlan: 'CMMA_A3_B13-32',
         usedContractPlan: 'CMMA_A3_B13-33',
@@ -658,7 +659,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         changePassword: 'CMMA_A3_B13-54',
         oldNumber: 'CMMA_A3_B13-55',
         changeNumber: 'CMMA_A3_B13-56',
-        banner: 'CMMA_A3_B13-57'
+        banner: 'CMMA_A3_B13-57',
+        product: 'CMMA_A3_B13-110'
       }
     } else if (this.type === 1) {
       // PPS
@@ -671,7 +673,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         reservation: 'CMMA_A3_B13-99',
         password: 'CMMA_A3_B13-100',
         changePassword: 'CMMA_A3_B13-101',
-        banner: 'CMMA_A3_B13-102'
+        banner: 'CMMA_A3_B13-102',
+        product: 'CMMA_A3_B13-112'
       }
     } else {
       // 유선
@@ -698,7 +701,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         prodChg: 'CMMA_A3_B13-75',
         instChg: 'CMMA_A3_B13-76',
         transferFee: 'CMMA_A3_B13-77',
-        wireNumChange: 'CMMA_A3_B13-78'
+        wireNumChange: 'CMMA_A3_B13-78',
+        product: 'CMMA_A3_B13-111'
       }
     }
   }

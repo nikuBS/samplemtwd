@@ -17,6 +17,8 @@ var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU',
 Tw.MyTDataSubMainAdv = function (params) {
   this.$container = params.$element;
   this.data = params.data;
+  this.chartList = []; // data, voice, sms 순서
+  this.initChart = [false, false, false]; // data, voice, sms 순서
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._bpcpService = Tw.Bpcp;
@@ -188,9 +190,14 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @param event
    */
   _onTabClicked: function (event) {
-    // 마우스로 LI를 클릭했을 때만, 발생시키기 위해
-    if (event.originalEvent && event.target.tagName === 'LI') {
-      var $target = $(event.target);
+    var $target = $(event.currentTarget);
+    var index = $target.index();
+    // 탭 클릭 시 차트 그리기도록 변경
+    if (!this.initChart[index]) {
+      this.$recentUsage.chart2(this.chartList[index]);
+      this.initChart[index] = true;
+    }
+    if (event.originalEvent && event.currentTarget.tagName === 'LI') {
       if ($target.attr('aria-selected') !== 'true') {
         $target.children('a').trigger('click');
       }
@@ -602,7 +609,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         }
       }
     }
-    this.$recentUsage.chart2({
+    this.chartList.push({
       type: Tw.CHART_TYPE.BAR_5, //bar
       target: '.fe-tab-data', //클래스명 String
       average: true,
@@ -611,6 +618,15 @@ Tw.MyTDataSubMainAdv.prototype = {
       unit: Tw.CHART_UNIT.GB, //x축 이름
       data_arry: itemsDataChart // data obj
     });
+    // this.$recentUsage.chart2({
+    //   type: Tw.CHART_TYPE.BAR_5, //bar
+    //   target: '.fe-tab-data', //클래스명 String
+    //   average: true,
+    //   // [DVI001-13652] SKT 요청사항
+    //   average_place: '',
+    //   unit: Tw.CHART_UNIT.GB, //x축 이름
+    //   data_arry: itemsDataChart // data obj
+    // });
     if (itemsDataChart.length > 0) {
       idTabSelect = '1';
     }
@@ -628,7 +644,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         }
       }
     }
-    this.$recentUsage.chart2({
+    this.chartList.push({
       type: Tw.CHART_TYPE.BAR_5, //bar
       target: '.fe-tab-voice', //클래스명 String
       average: true,
@@ -637,6 +653,15 @@ Tw.MyTDataSubMainAdv.prototype = {
       unit: Tw.CHART_UNIT.TIME, //x축 이름
       data_arry: itemsVoiceChart // voice obj
     });
+    // this.$recentUsage.chart2({
+    //   type: Tw.CHART_TYPE.BAR_5, //bar
+    //   target: '.fe-tab-voice', //클래스명 String
+    //   average: true,
+    //   // [DVI001-13652] SKT 요청사항
+    //   average_place: '',
+    //   unit: Tw.CHART_UNIT.TIME, //x축 이름
+    //   data_arry: itemsVoiceChart // voice obj
+    // });
     if (itemsVoiceChart.length > 0) {
       if (!idTabSelect) {
         idTabSelect = '2';
@@ -656,7 +681,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         }
       }
     }
-    this.$recentUsage.chart2({
+    this.chartList.push({
       type: Tw.CHART_TYPE.BAR_5, //bar
       target: '.fe-tab-sms', //클래스명 String
       average: true,
@@ -665,6 +690,15 @@ Tw.MyTDataSubMainAdv.prototype = {
       unit: Tw.CHART_UNIT.SMS, //x축 이름
       data_arry: itemsSMSChart // sms obj
     });
+    // this.$recentUsage.chart2({
+    //   type: Tw.CHART_TYPE.BAR_5, //bar
+    //   target: '.fe-tab-sms', //클래스명 String
+    //   average: true,
+    //   // [DVI001-13652] SKT 요청사항
+    //   average_place: '',
+    //   unit: Tw.CHART_UNIT.SMS, //x축 이름
+    //   data_arry: itemsSMSChart // sms obj
+    // });
     if (itemsSMSChart.length > 0) {
       if (!idTabSelect) {
         idTabSelect = '3';
@@ -676,6 +710,8 @@ Tw.MyTDataSubMainAdv.prototype = {
       this._isRecentUsageRequested = true;
       return false;
     }
+    this.$recentUsage.chart2(this.chartList[idTabSelect - 1]);
+    this.initChart[idTabSelect - 1] = true;
     // 데이터가 존재하는 첫번째 탭을 활성화
     this.__selectRecentUsageTab(idTabSelect);
   },
@@ -1211,16 +1247,16 @@ Tw.MyTDataSubMainAdv.prototype = {
         if (Tw.FormatHelper.isEmpty(apiDataQty)) {
           // 조회하기 버튼만 노출
           this.$giftRefreshBtn.show();
-          // this.$giftText.find('span.large').addClass('em')
+          // this.$giftText.find('span.medium').addClass('em')
           //   .html(this._giftTextTemp('0', 'MB'));
         } else if (Number(result.dataRemQty) < this._giftLimitedGiftUsageQty) { // 데이터 잔여량이 기본 잔여 데이터(500mb)보다 작은 경우
           this.$giftWarningBox.show();
           this._unableGiftData(limitErrorCode);
-          this.$giftText.find('span.large').addClass('em')
+          this.$giftText.find('span.medium').addClass('em')
             .html(this._giftTextTemp(dataQty.data, dataQty.unit));
         } else {
           // API DATA SUCCESS
-          this.$giftText.find('span.large').html(this._giftTextTemp(dataQty.data, dataQty.unit));
+          this.$giftText.find('span.medium').html(this._giftTextTemp(dataQty.data, dataQty.unit));
         }
       } else {
         this._giftReqCnt = result.reqCnt; // 재시도 횟수
@@ -1231,7 +1267,7 @@ Tw.MyTDataSubMainAdv.prototype = {
       this.$giftText.show();
       this.$giftRefreshBtn.show();
       this.$giftWarningBox.show();
-      this.$giftText.find('span.large').addClass('em')
+      this.$giftText.find('span.medium').addClass('em')
         .html(this._giftTextTemp('0', 'MB'));
       this._unableGiftData(code);
       // Tw.Error(res.code, res.msg).pop();
@@ -1291,7 +1327,7 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @private
    */
   _onGiftRefresh: function () {
-    this.$giftText.find('span.large').removeClass('em')
+    this.$giftText.find('span.medium').removeClass('em')
       .html('');
     this.$giftWarningBox.find('.warning-txt');
     this.$giftWarningBox.hide();

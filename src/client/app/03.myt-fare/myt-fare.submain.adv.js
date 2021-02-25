@@ -91,6 +91,10 @@ Tw.MyTFareSubMainAdv.prototype = {
       .setEid('contract', '66', '87') // 약정할인/기기상환 정보
       .setEid('ppsHistory', '67', '88') // 내역조회
       .setEid('ppsTos', '', '89') // TOS 배너
+      .setEid('dcRefund', '', '119') // 할인 반환금 조회
+      .setEid('searchBenefit', '', '120') // 사은품 조회
+      .setEid('ableService', '', '121') // 서비스 가능지역 조회
+      .setEid('myCombineProduct', '', '122') // 내게 맞는 결합상품 찾기
       .build(); // 내역조회
 
   },
@@ -179,8 +183,8 @@ Tw.MyTFareSubMainAdv.prototype = {
           $.proxy(this._successDrawBanner, this)
         );
       } else {
-        this.$container.find('[data-id=banners-empty]').hide();
-        this.$container.find('[data-id=banners]').hide();
+        this.$container.find('[data-id=banners-empty]').addClass('none');
+        this.$container.find('[data-id=banners]').addClass('none');
       }
     }, this));
 
@@ -197,6 +201,7 @@ Tw.MyTFareSubMainAdv.prototype = {
 
 
   _goLoad: function (event) {
+    event.preventDefault();
     this._historyService.goLoad($(event.currentTarget).data('url'));
   },
 
