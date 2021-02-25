@@ -353,9 +353,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     // 최근 6개월 청구내역이 없는경우, 당월 가입자인지 확인한다.
     this.checkNewMember(data).subscribe( resp => {
       data = resp;
-      if (!isRep) {
+      /*if (!isRep) {
         return;
-      }
+      }*/
       /*
           대표청구 인 경우
           해당월 청구요금, 부분납부한 요금, 잔여납부 금액, 미납
