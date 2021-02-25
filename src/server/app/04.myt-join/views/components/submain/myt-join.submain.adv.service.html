@@ -49,7 +49,7 @@ _%>
                 </ul>
             </div>
             <%_ } _%>
-            <%_ if ((isJoinPause !== null && !isJoinPause) || data.isPwdSt || (data.type === 2 && (data.smsInfo || data.wireInfo))) { _%>
+            <%_ if ((isJoinPause !== null && !isJoinPause) || data.isPwdSt || (data.type === 2)) { _%>
             <div class="acc-list-wrap">
                 <!-- .widget -->
                 <div class="widget ">
@@ -138,7 +138,6 @@ _%>
                                     </li>
                                     <%_ } _%>
                                     <%_ if (data.type === 2) { _%>
-                                        <% if(data.smsInfo) { %>
                                         <li class="acco-box acc-item">
                                             <div class="acco-tit">
                                                 <button role="button" aria-pressed="false" class="acc-tit down-arr"
@@ -148,14 +147,13 @@ _%>
                                                 <p class="warning">인터넷 및 전화품질 향상을 위해 고객님의 거주지역에서 망작업이 진행될 경우 휴대폰 메시지로 알려드리는 서비스 입니다.</p>
                                                 <div class="btn-area">
                                                     <a href="#" data-id="work-notify" class="rect-btn"
-                                                       data-xt_eid="<%= data.smsInfo.cntcNum? data.xtCode.editWorkNotify : data.xtCode.addWorkNotify %>"
+                                                       data-xt_eid="<%= data.smsInfo && data.smsInfo.cntcNum? data.xtCode.editWorkNotify : data.xtCode.addWorkNotify %>"
                                                        data-xt_csid="NO" data-xt_action="BC">
-                                                        <%= data.smsInfo.cntcNum? '변경하기' : '신청하기' %>
+                                                        <%= data.smsInfo && data.smsInfo.cntcNum? '변경하기' : '신청하기' %>
                                                     </a>
                                                 </div>
                                             </div>
                                         </li>
-                                        <% } %>
                                         <% if (data.isWireFree) { %>
                                         <li class="acco-box acc-item">
                                             <div class="acco-tit">

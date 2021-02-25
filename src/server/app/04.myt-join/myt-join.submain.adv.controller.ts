@@ -164,17 +164,19 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       // 유선인 경우 일시정지/해제 버튼 무조건 노출
       data.myWirePauseState = true;
     }
-    // 납부/청구 유형
-    if ( data.myInfo && data.myInfo.billTypeCd ) {
-      // 아래 요금안내서 유형 정보가 현재 존재하지 않는 정보로 요금안내서 상세와 동일하게 처리
-      if (['4', '5', '8', 'C'].indexOf(data.myInfo.billTypeCd) > -1 ) {
-        data.myInfo.billTypeNm = MYT_FARE_BILL_TYPE[data.myInfo.billTypeCd];
+    // 납부/청구 유형 - 대표청구회선인 경우에만 노출
+    if (data.svcInfo.actRepYn === 'Y') {
+      if ( data.myInfo && data.myInfo.billTypeCd ) {
+        // 아래 요금안내서 유형 정보가 현재 존재하지 않는 정보로 요금안내서 상세와 동일하게 처리
+        if (['4', '5', '8', 'C'].indexOf(data.myInfo.billTypeCd) > -1 ) {
+          data.myInfo.billTypeNm = MYT_FARE_BILL_TYPE[data.myInfo.billTypeCd];
+        }
+        data.paymentInfo = {
+          billTypeNm: data.myInfo.billTypeNm || '-',
+          // 대표청구회선이 아닌 경우에는 "통합청구"로 노출 data.svcInfo.actRepYn !== 'Y'? '통합청구'
+          payMthdNm: data.myInfo.payMthdNm
+        };
       }
-      data.paymentInfo = {
-        billTypeNm: data.myInfo.billTypeNm,
-        // 대표청구회선이 아닌 경우에는 "통합청구"로 노출
-        payMthdNm: data.svcInfo.actRepYn !== 'Y'? '통합청구' : data.myInfo.payMthdNm
-      };
     }
   }
 

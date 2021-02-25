@@ -1273,12 +1273,12 @@ class MytDataSubmainAdvController extends TwViewController {
   }
 
   private convertCoupon(item) {
-    return {
+    return Object.assign(item, {
       usePsblStaDt: DateHelper.getShortDate(item.usePsblStaDt),
       usePsblEndDt: DateHelper.getShortDate(item.usePsblEndDt),
       isGift: item.copnOperStCd === 'A20',  // A20: 선물, A10: 장기가입, A14: 10년주기
       copnNm: MYT_DATA_RECHARGE_COUPON[item.copnOperStCd]
-    };
+    });
   }
 
   /**
