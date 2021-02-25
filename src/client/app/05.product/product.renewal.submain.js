@@ -262,6 +262,7 @@ Tw.ProductRenewalSubmain.prototype = {
 
     var $quickFilter = this.$container.find('section[data-sort="QUICK_FILTER"]');
     var $sliderList = $quickFilter.find('.slider-list');
+    var _super = this;
 
     var quickFilterHandle = Handlebars.compile(Tw.RENEWAL_PRODUCT_SUBMAIN_QUICKFILTER);
     var html = quickFilterHandle({
@@ -288,7 +289,7 @@ Tw.ProductRenewalSubmain.prototype = {
             var themeTabCode = _super._line.quickFilterCode; // 테마 리스트 탭에 대한 ID
             var themeFilterCode = dataLink; // 테마 리스트에서 출력되어야할 필터 코드 값
 
-            var url = '/product/renewal/mobileplan/list?code=' + themeFilterCode + '&filters=' + themeTabCode;
+            var url = '/product/renewal/mobileplan/list?filters=' + themeTabCode + ',' + themeFilterCode;
             window.location.href = url;
             break;
         }

@@ -415,7 +415,7 @@
 																<%# 추가 혜택 %>
 																<% if ( data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr && data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length > 0 ) { %>
 																	<div class="p-benefit-choice">
-																		<p class="title">추가혜택 <strong><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length %>개</strong>를 선택해주세요</p>
+																		<p class="title">추가혜택 <strong><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[0].addBenfCnt %>개</strong>를 선택해주세요</p>
 																		<ul>
 																			<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length; j < jlen; j++ ) { %>
 																				<li>
