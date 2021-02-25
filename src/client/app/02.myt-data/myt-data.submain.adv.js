@@ -1211,16 +1211,16 @@ Tw.MyTDataSubMainAdv.prototype = {
         if (Tw.FormatHelper.isEmpty(apiDataQty)) {
           // 조회하기 버튼만 노출
           this.$giftRefreshBtn.show();
-          // this.$giftText.find('span.large').addClass('em')
+          // this.$giftText.find('span.medium').addClass('em')
           //   .html(this._giftTextTemp('0', 'MB'));
         } else if (Number(result.dataRemQty) < this._giftLimitedGiftUsageQty) { // 데이터 잔여량이 기본 잔여 데이터(500mb)보다 작은 경우
           this.$giftWarningBox.show();
           this._unableGiftData(limitErrorCode);
-          this.$giftText.find('span.large').addClass('em')
+          this.$giftText.find('span.medium').addClass('em')
             .html(this._giftTextTemp(dataQty.data, dataQty.unit));
         } else {
           // API DATA SUCCESS
-          this.$giftText.find('span.large').html(this._giftTextTemp(dataQty.data, dataQty.unit));
+          this.$giftText.find('span.medium').html(this._giftTextTemp(dataQty.data, dataQty.unit));
         }
       } else {
         this._giftReqCnt = result.reqCnt; // 재시도 횟수
@@ -1231,7 +1231,7 @@ Tw.MyTDataSubMainAdv.prototype = {
       this.$giftText.show();
       this.$giftRefreshBtn.show();
       this.$giftWarningBox.show();
-      this.$giftText.find('span.large').addClass('em')
+      this.$giftText.find('span.medium').addClass('em')
         .html(this._giftTextTemp('0', 'MB'));
       this._unableGiftData(code);
       // Tw.Error(res.code, res.msg).pop();
@@ -1291,7 +1291,7 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @private
    */
   _onGiftRefresh: function () {
-    this.$giftText.find('span.large').removeClass('em')
+    this.$giftText.find('span.medium').removeClass('em')
       .html('');
     this.$giftWarningBox.find('.warning-txt');
     this.$giftWarningBox.hide();
