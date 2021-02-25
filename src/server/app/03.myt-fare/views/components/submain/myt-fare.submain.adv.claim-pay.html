@@ -67,7 +67,9 @@ _%>
                         payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.';
                 _%>
                 <strong class="highlight"><%-`${data.month}월 요금이 ${payText}`%></strong> <%-payTextEnd%>
+                <%_if(isThisMonth){_%>
                 <span class="detail-type"><%-`${payDate} ${paymentInfo.payMthdNm}`%></span>
+                <%_}_%>
                 <%_} else if(repSvcNm){_%>
                 <strong class="highlight"><%- repSvcNm%>에 통합청구</strong> 되었습니다.
                 <%_}_%>
