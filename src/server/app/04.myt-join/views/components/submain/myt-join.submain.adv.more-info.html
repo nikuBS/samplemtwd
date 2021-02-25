@@ -99,7 +99,7 @@ _%>
       </div>
       <%_ } _%>
     <%_ } else { _%>
-      <div class="card-cont">
+    <div class="card-cont">
       <div class="rough-info">
         <div class="rough-info-inner">
           <div class="ico-wrap">
@@ -118,6 +118,10 @@ _%>
             <p class="model"><%= data.svcInfo.eqpMdlNm %></p>
           </div>
           <div class="list-wrap">
+            <% if (data.type === 0 || data.type === 3) { %>
+            <a href="#" class="list-wrap-link" data-id="br-opening-detail"
+               data-xt_eid="<%= data.xtCode.moreInfo %>" data-xt_csid="NO" data-xt_action="BC">
+            <% } %>
             <ul class="report-list item-no-border small">
               <li class="report-item">
                 <dl class="report-define d-wrap">
@@ -161,6 +165,9 @@ _%>
             <%_ if (!data.myHistory) { _%>
             <p class="warning">2007년 3월 1일 이전 가입 고객은 지점/대리점에서 확인 가능합니다.</p>
             <%_ } _%>
+            <% if (data.type === 0 || data.type === 3) { %>
+            </a>
+            <% } %>
           </div>
         </div>
       </div>

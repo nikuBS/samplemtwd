@@ -441,7 +441,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         if ( resp.code === API_CODE.CODE_00 ) {
           return {
             grade: MEMBERSHIP_GROUP[resp.result.mbrGrCd].toUpperCase(),
-            point: FormatHelper.addComma(resp.result.mbrUsepowerdAmt || '0'),
+            point: FormatHelper.addComma(resp.result.mbrUsedAmt || '0'),
             used: 0 // 가입한 경우
           };
         }
