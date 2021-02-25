@@ -17,6 +17,8 @@ var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU',
 Tw.MyTDataSubMainAdv = function (params) {
   this.$container = params.$element;
   this.data = params.data;
+  this.chartList = []; // data, voice, sms 순서
+  this.initChart = [false, false, false]; // data, voice, sms 순서
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._bpcpService = Tw.Bpcp;
@@ -188,9 +190,14 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @param event
    */
   _onTabClicked: function (event) {
-    // 마우스로 LI를 클릭했을 때만, 발생시키기 위해
-    if (event.originalEvent && event.target.tagName === 'LI') {
-      var $target = $(event.target);
+    var $target = $(event.currentTarget);
+    var index = $target.index();
+    // 탭 클릭 시 차트 그리기도록 변경
+    if (!this.initChart[index]) {
+      this.$recentUsage.chart2(this.chartList[index]);
+      this.initChart[index] = true;
+    }
+    if (event.originalEvent && event.currentTarget.tagName === 'LI') {
       if ($target.attr('aria-selected') !== 'true') {
         $target.children('a').trigger('click');
       }
@@ -602,7 +609,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         }
       }
     }
-    this.$recentUsage.chart2({
+    this.chartList.push({
       type: Tw.CHART_TYPE.BAR_5, //bar
       target: '.fe-tab-data', //클래스명 String
       average: true,
@@ -611,6 +618,15 @@ Tw.MyTDataSubMainAdv.prototype = {
       unit: Tw.CHART_UNIT.GB, //x축 이름
       data_arry: itemsDataChart // data obj
     });
+    // this.$recentUsage.chart2({
+    //   type: Tw.CHART_TYPE.BAR_5, //bar
+    //   target: '.fe-tab-data', //클래스명 String
+    //   average: true,
+    //   // [DVI001-13652] SKT 요청사항
+    //   average_place: '',
+    //   unit: Tw.CHART_UNIT.GB, //x축 이름
+    //   data_arry: itemsDataChart // data obj
+    // });
     if (itemsDataChart.length > 0) {
       idTabSelect = '1';
     }
@@ -628,7 +644,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         }
       }
     }
-    this.$recentUsage.chart2({
+    this.chartList.push({
       type: Tw.CHART_TYPE.BAR_5, //bar
       target: '.fe-tab-voice', //클래스명 String
       average: true,
@@ -637,6 +653,15 @@ Tw.MyTDataSubMainAdv.prototype = {
       unit: Tw.CHART_UNIT.TIME, //x축 이름
       data_arry: itemsVoiceChart // voice obj
     });
+    // this.$recentUsage.chart2({
+    //   type: Tw.CHART_TYPE.BAR_5, //bar
+    //   target: '.fe-tab-voice', //클래스명 String
+    //   average: true,
+    //   // [DVI001-13652] SKT 요청사항
+    //   average_place: '',
+    //   unit: Tw.CHART_UNIT.TIME, //x축 이름
+    //   data_arry: itemsVoiceChart // voice obj
+    // });
     if (itemsVoiceChart.length > 0) {
       if (!idTabSelect) {
         idTabSelect = '2';
@@ -656,7 +681,7 @@ Tw.MyTDataSubMainAdv.prototype = {
         }
       }
     }
-    this.$recentUsage.chart2({
+    this.chartList.push({
       type: Tw.CHART_TYPE.BAR_5, //bar
       target: '.fe-tab-sms', //클래스명 String
       average: true,
@@ -665,6 +690,15 @@ Tw.MyTDataSubMainAdv.prototype = {
       unit: Tw.CHART_UNIT.SMS, //x축 이름
       data_arry: itemsSMSChart // sms obj
     });
+    // this.$recentUsage.chart2({
+    //   type: Tw.CHART_TYPE.BAR_5, //bar
+    //   target: '.fe-tab-sms', //클래스명 String
+    //   average: true,
+    //   // [DVI001-13652] SKT 요청사항
+    //   average_place: '',
+    //   unit: Tw.CHART_UNIT.SMS, //x축 이름
+    //   data_arry: itemsSMSChart // sms obj
+    // });
     if (itemsSMSChart.length > 0) {
       if (!idTabSelect) {
         idTabSelect = '3';
@@ -676,6 +710,8 @@ Tw.MyTDataSubMainAdv.prototype = {
       this._isRecentUsageRequested = true;
       return false;
     }
+    this.$recentUsage.chart2(this.chartList[idTabSelect - 1]);
+    this.initChart[idTabSelect - 1] = true;
     // 데이터가 존재하는 첫번째 탭을 활성화
     this.__selectRecentUsageTab(idTabSelect);
   },
@@ -1092,6 +1128,82 @@ Tw.MyTDataSubMainAdv.prototype = {
    * @private
    */
   _successRequestRecentUsage: function (resp) {
+    resp = {
+      'code': '00', 'msg': 'success', 'result': {
+        'data': [{
+          'invMth': '202101',
+          'totalUsage': '44114196',
+          'basOfrUsage': '44040642',
+          'basOfrQty': '209715200',
+          'unlmtType': '2'
+        }, {
+          'invMth': '202012',
+          'totalUsage': '51801791',
+          'basOfrUsage': '51722330',
+          'basOfrQty': '209715200',
+          'unlmtType': '2'
+        }, {
+          'invMth': '202011',
+          'totalUsage': '48366982',
+          'basOfrUsage': '48209295',
+          'basOfrQty': '129324374',
+          'unlmtType': '2'
+        }],
+        'voice': [{
+          'invMth': '202101',
+          'totalUsage': '3425',
+          'basOfrUsage': '797',
+          'basOfrQty': '18000',
+          'unlmtType': '2',
+          'inNetCallUsage': '                2628',
+          'outNetCallUsage': '                 797',
+          'videoCallUsage': '                   0'
+        }, {
+          'invMth': '202012',
+          'totalUsage': '6011',
+          'basOfrUsage': '1747',
+          'basOfrQty': '18000',
+          'unlmtType': '2',
+          'inNetCallUsage': '                4264',
+          'outNetCallUsage': '                1747',
+          'videoCallUsage': '                   0'
+        }, {
+          'invMth': '202011',
+          'totalUsage': '5282',
+          'basOfrUsage': '2736',
+          'basOfrQty': '18000',
+          'unlmtType': '2',
+          'inNetCallUsage': '                2546',
+          'outNetCallUsage': '                2736',
+          'videoCallUsage': '                   0'
+        }],
+        'sms': [{
+          'invMth': '202101',
+          'totalUsage': '32',
+          'basOfrUsage': '32',
+          'basOfrQty': '0',
+          'unlmtType': '2',
+          'smsDcAmtQty': '0',
+          'smsDcAmtUsage': '0'
+        }, {
+          'invMth': '202012',
+          'totalUsage': '26',
+          'basOfrUsage': '26',
+          'basOfrQty': '0',
+          'unlmtType': '2',
+          'smsDcAmtQty': '0',
+          'smsDcAmtUsage': '0'
+        }, {
+          'invMth': '202011',
+          'totalUsage': '29',
+          'basOfrUsage': '29',
+          'basOfrQty': '0',
+          'unlmtType': '2',
+          'smsDcAmtQty': '0',
+          'smsDcAmtUsage': '0'
+        }]
+      }, 'loginType': 'T'
+    };
     if (resp.code === Tw.API_CODE.CODE_00) {
       // OP002-794: 집계중기간(매월 1일 ~ 12일경) 지난달 제외한 직전3개월 데이터로 표시함. 항상 노출로 변경
       this.data.recentUsage = resp.result;
