@@ -98,9 +98,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     try {
       this.getRquests(data, res).subscribe( resp => {
-        if ( data.billError && data.isPPS) {
+        /*if ( data.billError && data.isPPS) {
           return this.errorRender(res, data.billError);
-        }
+        }*/
         res.render('myt-fare.submain.adv.html', { data: resp });
       });
 
@@ -115,31 +115,33 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const reqs = new Array<Observable<any>>();
     reqs.push(this.getSubmain(data)); // as is 나의요금
     reqs.push(this.getBillCharge(svcInfo, res)); // 요금 안내서
-    reqs.push(this.getSearchReq()); // 일시정지/해제, 장기 일시정지
 
     // 회선이 휴대폰 인 경우만
     if (svcInfo.svcAttrCd === 'M1') {
       reqs.push(this._smallService.getHistory()); // 소액결제, 콘텐츠 이용료
       reqs.push(this._benefitService.getBenefit()); // 나의 혜택/할인
+      reqs.push(this.getSearchReq()); // 일시정지/해제, 장기 일시정지
     }
 
     return Observable.combineLatest(
       reqs
     ).map( (responses) => {
-      const [submain, guide, pause, ...other] = responses;
+      const [submain, guide, ...other] = responses;
       const error = submain.code ? submain : guide.code ? guide : null;
       if (error) {
         data.billError = {
-          ...error
+          // ...error
+          code: error.code,
+          msg: error.msg
         };
       }
 
-      const [small, benefit] = other || [{}, {}];
+      const [small, benefit, pause] = other || [{}, {}, {}];
       Object.assign(data, {
         guide,
-        pause,
         small,
-        benefit
+        benefit,
+        pause
       });
 
       return data;
@@ -182,7 +184,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   private getBillCharge(svcInfo, res): Observable<any> {
     return this._mytFareSubmainGuideService.getBillCharge(svcInfo, res).switchMap( resp => {
       if (resp.code && resp.code !== API_CODE.CODE_00) {
-        return Observable.of(resp);
+        return Observable.of({
+          code: resp.code,
+          msg: resp.msg
+        });
         // return Observable.of(null);
       }
 
