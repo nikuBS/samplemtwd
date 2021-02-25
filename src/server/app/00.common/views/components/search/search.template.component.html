@@ -62,13 +62,11 @@
             <ul class="sub-list">
                 {{#each listData.DEPTH_CHILD}}
                     <!-- 2 depth if -->
-                    {{#isNaN this.DEPTH_SIZE }}
                     <li>
                         <button href="{{this.MENU_URL}}" type="button" class="shortcut-element list-data" data-category="shortcut" data-id="{{this.DOCID}}" data-tit="{{removeTag this.MENU_NM}}">
                             <span class="main-category">{{{replace this.DEPTH_PATH '\|,MyT' ' > , my T '}}} </span>
                         </button>
                     </li>
-                    {{/isNaN}}
                 {{/each}}
             </ul>
         </div>

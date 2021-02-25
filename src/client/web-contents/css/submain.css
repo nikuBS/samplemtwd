@@ -138,11 +138,13 @@ body.tod-white{background:#fff}
 .tod-submain .rect-btn.smaller{line-height:1.625rem; height:1.625rem; border-radius:0.375rem; font-weight:400; border-color:#adadad; font-size:0.6875rem; border-radius:0.25rem; font-weight:600}
 
 /* 내역 리스트 */
-.tod-submain .report-list .report-item{overflow:hidden; font-size:0.9375rem;  border-bottom:1px solid #f2f2f2;/*  padding:13px 0 12px */}
+.tod-submain .report-list .report-item{overflow:hidden; font-size:0.9375rem;  border-bottom:1px solid #f2f2f2;}
 .tod-submain .report-list .report-item > .d-wrap{padding:1rem 0}
 .tod-submain .report-list .report-item:first-child > a.d-wrap{padding-top:1rem !important}
 .tod-submain .report-list .report-item:last-child > a.d-wrap{padding-bottom:1rem !important ; }
 .tod-submain .card-cont > .report-list:nth-last-child(-n + 1) .report-item:last-child > a.d-wrap{margin-bottom:-1rem;}
+.tod-submain .card-cont > .report-list:first-child .report-item:first-child{overflow:visible}
+.tod-submain .card-cont > .report-list:first-child .report-item:first-child > a.d-wrap{margin-top:-1rem;}
 .tod-submain .report-list .report-item:first-child > .d-wrap{padding-top:0 !important}
 .tod-submain .report-list .report-item:last-child > .d-wrap{padding-bottom:0 !important}
 .tod-submain .report-list .report-item:last-child{border:none; overflow:visible}
@@ -151,7 +153,7 @@ body.tod-white{background:#fff}
 .tod-submain .report-list.align-center .report-item .report-define{align-items:center}
 .tod-submain .report-list .report-item .report-define .report-tit{color:#82888f; -webkit-box-flex: 1; flex:1; max-width:70%;vertical-align:top; line-height: 1.1;}
 .tod-submain .report-list .report-item .report-define .report-sub{display:block; font-size:12px; color:#868e96; padding-top:0.3125rem; font-weight:400}
-.tod-submain .report-list .report-item .report-define .report-cont{text-align:right; font-weight:500; color:#000;line-height: 1.1; position:relative; /* padding-left:0.875rem */}
+.tod-submain .report-list .report-item .report-define .report-cont{text-align:right; font-weight:500; color:#000; line-height: 1.1; position:relative; /* padding-left:0.875rem */}
 @media screen and (max-width:320px){
     .tod-submain .report-list .report-item .report-define .report-cont{padding-left:0}
 }
@@ -196,6 +198,7 @@ body.tod-white{background:#fff}
 .tod-submain .hash-wrap{overflow:hidden;}
 .tod-submain [class *= 'wrap'] + .hash-wrap, 
 .tod-submain .report-list + .hash-wrap{padding-top:1.5rem}
+.tod-submain .report-list + .hash-wrap{margin-top:-1rem}
 .tod-submain .acc-list-wrap + .hash-wrap, 
 .tod-submain .short-link-wrap + .hash-wrap{margin:0 -1.5rem; padding:1.5rem 1.5rem 0; border-top:1px solid #f4f4f4}
 .tod-submain .hash-list{font-size:0; margin:0 -0.1875rem -0.625rem 0 }
@@ -408,6 +411,7 @@ body.tod-white{background:#fff}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list.small .report-item:first-child > a.d-wrap{padding-top:0.4375rem !important}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list.small .report-item:last-child > a.d-wrap{padding-bottom:0.4375rem !important}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list + .warning{margin-top:1rem;} 
+.tod-submain .rough-info .rough-info-inner .list-wrap .list-wrap-link + .warning{margin-top:1rem;} 
 .tod-submain .rough-info .rough-info-inner .list-wrap .join-date{padding-top:0.1875rem; margin-left:-3.125rem; font-weight:500; letter-spacing:-0.075rem}
 
 /* 약정할인/기기상환 정보 */
@@ -437,7 +441,8 @@ body.tod-white{background:#fff}
 
 /* 이용 중인 요금제/부가상품 */
 .tod-submain .using-plan{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; -webkit-box-pack: justify; justify-content:space-between; padding:1rem; border-radius:0.375rem; background:#f9f9f9; word-break:break-word; line-height:20px}
-.tod-submain .using-plan .plan-tit {font-size:1.125rem; color:#000; font-weight:600; text-align:center; width:60%; padding-right:0.875rem;}
+.tod-submain .using-plan .plan-tit{font-size:1.125rem; color:#000; font-weight:600; text-align:center; width:60%; padding-right:0.875rem;}
+.tod-submain .using-plan .plan-tit a{display:inline-block; font-weight:inherit; width:100%; }
 .tod-submain .using-plan .plan-info{width:40%; flex-shrink:0; -webkit-box-flex: 0; flex-grow:0}
 .tod-submain .using-plan .plan-info .report-list.small .report-item > .d-wrap{padding:0.5rem 0}
 .tod-submain .using-plan .plan-info .report-list .report-item{border-color:#e4e4e4}
