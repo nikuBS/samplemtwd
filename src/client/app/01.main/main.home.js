@@ -281,6 +281,7 @@ Tw.MainHome.prototype = {
   _onClickSsoExternal: function ($event) {
     var url = $($event.currentTarget).data('url');
     Tw.CommonHelper.openSsoUrlExternal(url);
+    return false;
   },
 
   /**
