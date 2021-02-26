@@ -130,7 +130,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       const error = submain.code ? submain : guide.code ? guide : null;
       if (error) {
         data.billError = {
-          // ...error
           code: error.code,
           msg: error.msg
         };
@@ -226,7 +225,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       reqs = commonReqs.concat(reqs);
       return Observable.combineLatest(
         reqs
-      ).map((responses) => {
+      ).switchMap((responses) => {
         const [paymentInfo, affiliateCard, miriBalance] = responses.splice(0, commonReqs.length);
         // 납부/청구 정보
         data.paymentInfo = paymentInfo;
@@ -273,9 +272,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
           }
         }
 
-        this.getClaimDate(data);
-
-        return data;
+        return this.getClaimDate(data);
       });
     };
 
@@ -348,10 +345,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       latestDates.splice(0, 0, prevLastDate);
     }
     data.latestDates = latestDates;
-    // data.isRealTime = !haveClaim ? false : data.isRealTime;
 
     // 최근 6개월 청구내역이 없는경우, 당월 가입자인지 확인한다.
-    this.checkNewMember(data).subscribe( resp => {
+    return this.checkNewMember(data).map( resp => {
       data = resp;
       /*if (!isRep) {
         return;
@@ -412,6 +408,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         payDate,
         isThisMonth: eDate === date // 이번달 유무
       };
+      return data;
     });
   }
 
@@ -492,7 +489,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     if (data.latestDates.length !== 0) {
       return Observable.of(data);
     }
-    this._getMyInfo().map( resp => {
+    return this._getMyInfo().map( resp => {
       if (resp === null) {
         return data;
       }
