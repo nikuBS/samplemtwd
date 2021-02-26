@@ -107,7 +107,7 @@ _%>
                     </section>
                     <% } %>
                 <% } %>
-
+                <% if (finishInfoList.length) { %>
                 <section class="cont-card">
                     <div class="section-inner">
                         <div class="head-tit">종료된 약정<span class="sub-txt">(최근 2년 이내)</span></div>
@@ -240,6 +240,7 @@ _%>
                         </div>
                     </div>
                 </section>
+                <% } %>
                 <% if (faqList.length) { %>
                 <section class="section-inner">
                     <div class="section-group">
