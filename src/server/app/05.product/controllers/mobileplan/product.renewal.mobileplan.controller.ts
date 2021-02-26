@@ -71,6 +71,15 @@ enum FILTER_STYLE_CODES {
   'F01124' = 'i-tag-cr3', // 2ndDevice 
 }
 
+// 필터 코드 문구 변경
+enum FILTER_REPLACE_TEXTS {
+  'F01124' = '스마트기기', // 태블릿/스마트기기 => 스마트기기
+  'F01162' = '어린이/청소년', // 만 18세 이하 => 어린이/청소년
+  'F01165' = '대학생/군인', // 만 24세 이하 => 대학생/군인
+  'F01163' = '시니어', // 만 65세 이상 => 시니어
+  'F01161' = '' // '나이제한없음' 텍스트는 화면에 표현하지않음.
+}
+
 // 리스트 형 테마코드
 enum LIST_THEME_CODE {
   'TAG0000212' = 'TAG0000212', // 기본 형
@@ -563,6 +572,9 @@ export default class RenewProduct extends TwViewController {
       }
 
       return prodFltList.reduce((arr, item) => {
+        // 기존에 사용하던 문구를 FILTER_REPLACE_TEXTS에 해당되는 문구로 변경해달라는 요구사항이 있었음.
+        item.prodFltNm = Object.keys(FILTER_REPLACE_TEXTS).indexOf(item.prodFltId) > -1 ? FILTER_REPLACE_TEXTS[item.prodFltId] : item.prodFltNm;
+
         arr.push(Object.assign(item, {
           'style': FILTER_STYLE_CODES[item.prodFltId] || 'i-tag-cr5' // 필터 스타일에 맞는 class를 지정해주며, 필터스타일에 포함되지 않는 스타일들은 모두 i-tag-cr5 으로 설정
         }));
