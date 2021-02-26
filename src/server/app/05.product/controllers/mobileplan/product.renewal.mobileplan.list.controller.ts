@@ -27,11 +27,7 @@ export default class RenewProductPlans extends TwViewController {
     const params: any = {};
     const cdn = this._getCDN();
     const series = { //상단 요금제 분류 선택시 하이라이트를 주기 위해
-      fiveGx :  '',
-      lte : '',
-      threeG : '',
-      secondDevice : '',
-      prepay : '',
+      seriesCode : '',
       theme : '',
       noSeries : false,
       seriesClass : '',
@@ -42,26 +38,21 @@ export default class RenewProductPlans extends TwViewController {
 
     if(req.query.filters) {
       const seriesCode: string = this._getSeries(req.query.filters);
-    
+      series.seriesCode = seriesCode;
       switch(seriesCode) { // 상단 탭 하이라이트 적용
         case 'F01713':
-          series.fiveGx = ' class=on';
           series.seriesClass = 'prod-5g';
           break;
         case 'F01121':
-          series.lte = ' class=on';
           series.seriesClass = 'prod-lte';
           break;
         case 'F01122':
-          series.threeG = ' class=on';
           series.seriesClass = 'prod-band';
           break;
         case 'F01124':
-          series.secondDevice = ' class=on';
           series.seriesClass = 'prod-2nd';
           break;
         case 'F01125':
-          series.prepay = ' class=on';
           series.seriesClass = 'prod-2nd';
           break;
         default:
@@ -77,97 +68,114 @@ export default class RenewProductPlans extends TwViewController {
     }
 
     if ((req.query.theme || filterList.filterList === '') && !req.query.code) {
-      if(req.query.theme) {
-        params.idxCtgCd = 'F01180';
-        params.opClCd = '01';
-      } else if(this._getSeries(req.query.filters) === '') {
-        params.idxCtgCd = 'F01120';
-        params.opClCd = '01';
-      } else {
-        params.opClCd = '02';
-      }
-      console.log(params);
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
-        this._getSeriesPlans(params)
+        this.isCompareButton(svcInfo),
+        this._getTabList()
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
-        plans
-        ]) => {         
-          if(req.query.theme) {
-          series.theme = ' class=on';
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn});
-          } else if (series.fiveGx == ' class=on') {
-            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
-          } else if(series.lte == ' class=on' || series.threeG == ' class=on') {
-            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
-          } else if(series.secondDevice == ' class=on') {
-            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
-          } else if(series.prepay == ' class=on') {
-            res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
-          } else {
-            let _gPlans : any = []; 
-            let _sPlans : any = [];
-            
-            
-            for(let i = 0; i < plans.groupProdList.length ; i++){
-              for(let j = 0; j < plans.groupProdList[i].prodList[0].prodFltList.length ; j++) {
-                  if( plans.groupProdList[i].prodList[0].prodFltList[j].prodFltId == networkInfoFilter[0] ) {
-                    _gPlans.push(plans.groupProdList[i]);
-                  }
+        isCompare,
+        tabList
+        ]) => {
+            if(req.query.theme) {
+              params.idxCtgCd = 'F01180';
+              params.opClCd = '01';
+            } else if(this._getSeries(req.query.filters) === '') {
+              params.idxCtgCd = networkInfoFilter[0];
+              params.opClCd = '02';
+            } else {
+              params.opClCd = '02';
+            }
+          Observable.combineLatest(
+            this._getSeriesPlans(params),
+          ).subscribe(([
+            plans
+          ]) => {
+            if (plans.code) {
+              this.error.render(res, {
+                code: plans.code,
+                msg: plans.msg,
+                pageInfo: pageInfo,
+                svcInfo: svcInfo
+              });
+            }
+            plans.isCompare = isCompare;
+          
+            for(let i in plans.groupProdList) {
+              plans.groupProdList[i].prodList = this._getCompareYN(plans.groupProdList[i].prodList, networkInfoFilter[0], isCompare);
+            }
+            plans.separateProductList = this._getCompareYN(plans.separateProductList, networkInfoFilter[0], isCompare);
+            if(req.query.theme) {
+            series.theme = ' class=on';
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList});
+            } else if (series.seriesCode == 'F01713') {
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+            } else if(series.seriesCode == 'F01121' || series.seriesCode == 'F01122') {
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+            } else if(series.seriesCode == 'F01124') {
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+            } else if(series.seriesCode == 'F01125') {
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+            } else {
+              switch(networkInfoFilter[0]){
+                case 'F01713':
+                  plans.series = '1';
+                  break;
+                case 'F01121':
+                  plans.series = '2';
+                  break;
+                case 'F01122':
+                  plans.series = '4';
+                  break;
+                case 'F01124':
+                  plans.series = '3';
+                  break;
+                case 'F01125':
+                  plans.series = '3';
+                  break;
+                default : 
+                  plans.series = '1';
               }
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.listall.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
             }
-            for(let i = 0; i < plans.separateProductList.length; i++){
-              for(let j = 0; j < plans.separateProductList[i].prodFltList.length; j++){
-                if(plans.separateProductList[i].prodFltList[j].prodFltId == networkInfoFilter[0]) {
-                  _sPlans.push(plans.separateProductList[i]);
-                }
-              }
-            }
-            plans.groupProdList = _gPlans;
-            plans.separateProductList = _sPlans;
-            switch(networkInfoFilter[0]){
-              case 'F01713':
-                plans.series = '1';
-                break;
-              case 'F01121':
-                plans.series = '2';
-                break;
-              case 'F01122':
-                plans.series = '4';
-                break;
-              case 'F01124':
-                plans.series = '3';
-                break;
-              case 'F01125':
-                plans.series = '3';
-                break;
-              default : 
-                plans.series = '1';
-            }
-            console.log(plans.groupProdList[1].prodList);
-            
-            
-            res.render('mobileplan/renewal/list/product.renewal.mobileplan.listall.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn });
-          }
-        });   
+          });
+        });
     } else if (series.noSeries === true) {
       params.searchFltIds =  req.query.filters;
       params.idxCtgCd = 'F01100';
-      console.log("@@@@@@@@@",params);
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
-        this._getInitPlans(params)
+        this._getInitPlans(params),
+        this.isCompareButton(svcInfo),
+        this._getTabList()
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
-        plans
+        plans,
+        isCompare,
+        tabList
         ]) => {
-          const mobileList = [{name: '5G', code: 'F01713',exist: 'N',url:'/product/renewal/mobileplan/list?filters=F01713', seriesClass: 'prod-5g'}, // 요금제 더보기용 url 입력 / 색상을 위한 클래스 추가
-            {name: 'LTE', code: 'F01121',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01121', seriesClass: 'prod-lte'},
-            {name: '3G', code: 'F01122',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01122', seriesClass: 'prod-band'},
-            {name: '태블릿/2nd device', code: 'F01124',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01124', seriesClass: 'prod-2nd'},
-            {name: '선불', code: 'F01125',exist: 'N', url:'/product/renewal/mobileplan/list?filters=F01125', seriesClass: 'prod-2nd'}];
-          
+        
+          if (plans.code) {
+            this.error.render(res, {
+              code: plans.code,
+              msg: plans.msg,
+              pageInfo: pageInfo,
+              svcInfo: svcInfo
+            });
+          }
+          plans.isCompare = isCompare;
+          plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare);
+          let mobileList: any = [];
+          for(let i in tabList.subFilters) {
+            mobileList[i] = 
+              {
+              name: tabList.subFilters[i].prodFltNm,
+              code: tabList.subFilters[i].prodFltId,
+              exist: 'N',
+              url:'/product/renewal/mobileplan/list?filters=' + tabList.subFilters[i].prodFltId
+              };
+          }
+
           for( let k in mobileList ) {
             for( let i in plans.products) {
               if(mobileList[k].name === plans.products[i].prodFltNm){
@@ -175,7 +183,7 @@ export default class RenewProductPlans extends TwViewController {
               }
             }
           }
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn } );
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn, tabList } );
         });
 
     } else {
@@ -183,10 +191,14 @@ export default class RenewProductPlans extends TwViewController {
       params.searchFltIds = req.query.filters;
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
-        this._getSeperatePlans(params)
+        this._getSeperatePlans(params),
+        this.isCompareButton(svcInfo),
+        this._getTabList()
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
-        plans
+        plans,
+        isCompare,
+        tabList
         ]) => {
         if (plans.code) {
           this.error.render(res, {
@@ -196,11 +208,12 @@ export default class RenewProductPlans extends TwViewController {
             svcInfo: svcInfo
           });
         }
-        
+        plans.isCompare = isCompare;
+        plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare);
         if(plans.productCount === 0) { // 요금제 항목 없음
-          res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn } );
+          res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList } );
         } else if(series.noSeries == false) { // 탭 선택 후 필터 적용
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn } );
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList } );
         } 
       });
     }
@@ -236,8 +249,7 @@ export default class RenewProductPlans extends TwViewController {
               ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             tabCode: this._getTabCodeInit(plan),
-            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-            compareYN: this._getCompareYN(this._getTabCodeInit(plan),plan.basFeeAmt,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
             //m24agrmtFeeAmt: this._getM24agrmtFeeAmt(plan.basFeeAmt,plan.m24agrmtDcAmt)
           };
         })
@@ -253,12 +265,12 @@ export default class RenewProductPlans extends TwViewController {
           msg: resp.msg
         };
       }
-
+      for(let i in resp.result.products){
+      console.log(resp.result.products[i]);
+      }
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
-      console.log("@@@@@@@@",resp.result);
-      
       return {
         ...resp.result,
         products: resp.result.products.map(plan => {
@@ -275,8 +287,7 @@ export default class RenewProductPlans extends TwViewController {
               ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             tabCode: this._getTabCodeSeries(plan.filters),
-            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-            compareYN: this._getCompareYN(this._getTabCodeSeries(plan.filters),plan.basFeeAmt,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
           };
         })
       };
@@ -392,8 +403,7 @@ export default class RenewProductPlans extends TwViewController {
                     null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
                   basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
                   tabCode: this._getTabCodeSeries(plan.prodFltList),
-                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-                  compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
                 };
               })
             }
@@ -410,8 +420,7 @@ export default class RenewProductPlans extends TwViewController {
                 null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-              compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
             }
           })
           // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
@@ -422,8 +431,6 @@ export default class RenewProductPlans extends TwViewController {
           // })
         }
       } else if (resp.result.rcnProductList) {
-        console.log("@@@@@@@@@",resp.result.rcnProductList);
-        
         return {
           ...resp.result,
           // groupProdList: resp.result.groupProdList.map(groupPlan => {
@@ -459,8 +466,7 @@ export default class RenewProductPlans extends TwViewController {
                 null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-              compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
             }
           }),
           rcnProductList: resp.result.rcnProductList.map(rcnPlan => {
@@ -488,8 +494,7 @@ export default class RenewProductPlans extends TwViewController {
           //           null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
           //         basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
           //         tabCode: this._getTabCodeSeries(plan.prodFltList),
-          //         prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-          //         compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+          //         prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
           //       };
           //     })
           //   }
@@ -506,8 +511,7 @@ export default class RenewProductPlans extends TwViewController {
                 null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-              compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
             }
           })
           // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
@@ -535,8 +539,7 @@ export default class RenewProductPlans extends TwViewController {
                     null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
                   basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
                   tabCode: this._getTabCodeSeries(plan.prodFltList),
-                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-                  compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
+                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
                 };
               })
             }
@@ -553,8 +556,7 @@ export default class RenewProductPlans extends TwViewController {
           //       null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
           //       ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrDataQtyCtt, DATA_UNIT.GB),
           //     tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-          //     compareYN: this._getCompareYN(this._getTabCodeSeries(separatePlan.prodFltList),separatePlan.basFeeInfo,separatePlan.basOfrDataQtyCtt,separatePlan.basOfrVcallTmsCtt,separatePlan.basOfrCharCntCtt)
+          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
           //   }
           // })
           // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
@@ -634,14 +636,117 @@ export default class RenewProductPlans extends TwViewController {
     return Number(basFeeAmt) - Number(m24agrmtDcAmt);
   }
 
-  private _getCompareYN(code, basFeeAmt, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
-    if(code != 'prod-5g' && code != 'prod-lte') {
-      return false;
+  private isCompareButton(svcInfo: any): Observable<any> {
+    // 로그인이 안되어있다면? 
+    if ( !svcInfo ) { 
+      return Observable.of('N');
     }
-    if(basFeeAmt == '상세 참조' && basOfrDataQtyCtt == '상세 참조' && basOfrVcallTmsCtt == '상세 참조' && basOfrCharCntCtt == '상세 참조') {
-      return true;
+
+     // 무선회선이 아니라면?
+   return Observable.combineLatest(
+      this.getExistsMyProductPLM() // 나의 상품에 해당되는 PLM 정보를 얻음
+      , this.getExistsMyProductRedis(svcInfo) // 나의 상품에 해당되는 혜택 정보를 얻음
+    ).map(([isExistsPLMData, isExistsRedisData]) => {
+
+      // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지에 대해 체크한 값
+      if ( isExistsPLMData || isExistsRedisData ) { 
+        return 'Y';
+      }
+
+      return 'N';
+    })
+  }
+  
+  /**
+     * 나의 요금제의 PLM 정보가 있는지 체크 (BFF)
+     */
+  private getExistsMyProductPLM(): Observable<any>{
+    return this.apiService.request(API_CMD.BFF_05_0136, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        const data = resp.result.feePlanProd;
+
+        const basFeeTxt = this.convertUndefined(FormatHelper.getValidVars(data.basFeeTxt));
+        const basDataGbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataGbTxt));
+        const basDataMbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataMbTxt));
+        const basOfrVcallTmsTxt = this.convertUndefined(FormatHelper.getValidVars(data.basOfrVcallTmsTxt));
+        const basOfrCharCntTxt = this.convertUndefined(FormatHelper.getValidVars(data.basOfrVcallTmsTxt));
+
+        // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지? ( 문자 사용량이 상세참조이고 데이터가 상세참조이고 전화 데이터가 상세참조이고 데이터가 상세 참조라면? )
+        if ( !basFeeTxt && !basDataGbTxt && !basDataMbTxt && !basOfrVcallTmsTxt && !basOfrCharCntTxt ) {  
+          return false;
+        }
+
+        return true;
+      }
+    });
+  }
+
+    /**
+     * 나의 요금제의 어드민 등록 혜택이 있는지 체크 (Redis)
+     * @param svcInfo 
+     */
+    private getExistsMyProductRedis(svcInfo: any): Observable<any> {
+      const prodId = svcInfo.prodId; // 나의 회선에 해당되는 상품 코드
+
+      return this.redisService.getData('BenfProdInfo:' + prodId).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( resp.result.benfProdInfo && resp.result.benfProdInfo.length > 0 ) {
+            return true;
+          }
+        } 
+        return false;
+      });
     }
-    return false;
+
+  private _getCompareYN(prodList, networkInfo, isCompare) {
+    for(var i in prodList){
+      if(((prodList[i].tabcode == 'prod-5g') && (networkInfo == 'F01713')) || ((prodList[i].tabcode == 'prod-lte') && (networkInfo == 'F01121'))){
+        prodList[i].compareYN = true;
+      } else {
+        prodList[i].compareYN = false;
+      }
+      if(isCompare == 'N'){
+        prodList[i].compareYN = false;
+      }
+    }
+    return prodList;
+  }
+   /**
+     * 조건문에 데이터 중에 상세참조에 해당되는 데이터도 체크해야함. 
+     * bff에서 가지고 온 텍스트 값이 '상세참조' 이라면 '상세참조'를 undefined 으로 변경한다.
+     * @param txt 
+     */
+  private convertUndefined(txt) {
+    if ( !txt ) {
+      return undefined;
+    }
+
+    const deep = txt.replace(' ', ''); // '상세 참조' 와 같이 띄어쓰기가 있으면 띄어쓰기를 없애버린다.
+    if ( deep === '상세참조' ) {
+      return undefined;
+    }
+    return txt;
+  }
+
+  private _getTabList() : Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0032, {idxCtgCd:'F01100'}).map( resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      }
+
+      if (FormatHelper.isEmpty(resp.result)) {
+        return resp.result;
+      }
+      for(let i in resp.result.filters) {
+        if (resp.result.filters[i].prodFltId == 'F01120') {
+          return resp.result.filters[i];
+        }
+      }
+      return null;
+    });
   }
 
   private _getCDN() {

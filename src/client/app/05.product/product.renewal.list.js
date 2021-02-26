@@ -1,4 +1,4 @@
-Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, networkInfo, cdn) {
+Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, networkInfo, cdn, isCompare) {
     this.$container = rootEl;
     this._params = params; //  검색 필터용 params
     this._params.searchLastProdId = ''; // 탭 없는 랜딩페이지 시 추가된 searchLastProdId 초기화
@@ -6,11 +6,13 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, netwo
     this._series = series;
     this._hasNext = hasNext;
     this._networkInfo = networkInfo;
+    this._isCompare = isCompare;
     this._checkDefault = 'N'; //전체리스트 Default 페이지 랜딩 인지 확인
     this._curNetworkCount = 1; // 전체리스트 Default 페이지 추가 호출 횟수 count
     this._cdn = cdn;
     this._remainGroupData = 0;
     this._curRemainGroupData = 0;
+    this._deletedQuickFilter = '';
   
     this.CODE = 'F01100';
     this.TYPE = 'plans';
@@ -75,7 +77,6 @@ Tw.ProductRenewalList.prototype = {
           $('.rn-notice').css('display','block');
           $('.btn-nb-close').click(function(){$('.rn-notice').css('display','none');});
           this._checkDefault = 'Y';
-          console.log("@@@@@@@왜바껴?",this._checkDefault);
         }
       }
     },
@@ -89,7 +90,7 @@ Tw.ProductRenewalList.prototype = {
     _goToTheme: function(e) { // 테마요금제 진입 시 컨펌 창 띄움
       this.destinationUrl = '/product/renewal/mobileplan/list?theme=all';
 
-      if((this.curFilter[0] !== undefined && this.curFilter[0] !== '' && this.curFilter[0] !== null) || this._getParameter('code')!=='') {
+      if((this.curFilter[0] !== undefined && this.curFilter[0] !== '' && this.curFilter[0] !== null)) {
         this._loadFilterConfirmPopup(e);
       } else {
         this._historyService.replaceURL(this.destinationUrl);
@@ -129,33 +130,22 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _popupQuickFilter: function($target) {
+    _popupQuickFilter: function() {
       this._popupService.open({
           url: '/hbs/',
           hbs: 'renewal.product.initial.confirm',
+          data: '확인을 누르시면 <br> 선택하신 퀵필터 항목이 초기화 됩니다.',
           layer: true
         },
-        $.proxy(this._onOpenquickinitialPopup, this, $target),
-        $.proxy(this._onClosequickinitailPopup, this, $target),
+        $.proxy(this._onOpenquickinitialPopup, this),
+        $.proxy(this._onClosequickinitailPopup, this),
         'initialQuickFilter',
-        $target);
+        null);
     },
 
-    _onOpenquickinitialPopup: function($target) { 
+    _onOpenquickinitialPopup: function() { 
       $('#initialCancel').click(_.debounce($.proxy(this._popupService.close, this), 30));
-      $('#initialConfirm').click($.proxy(this._initQuickFilter, this, $target));
-    },
-
-    _initQuickFilter: function($target) {
-      if($target.hasClass('resetBtn')){
-        this._historyService.replaceURL('/product/renewal/mobileplan/list?filters='+this.curMobileFilter[0]);
-      } else {
-        if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
-          this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.CODE }).done($.proxy(this._handleLoadFilters, this, $target));
-        } else {
-          this._openSelectFiltersPopup($target);
-        }
-      }
+      $('#initialConfirm').click($.proxy(this._handleResetQuickFilters, this));
     },
 
     _onClosequickinitailPopup: function() {
@@ -209,22 +199,19 @@ Tw.ProductRenewalList.prototype = {
     
 
     _initialFilter: function(e) { // 초기화 버튼 클릭시
-      if(this._getParameter('code') !== ''){
-        this._popupQuickFilter($(e.currentTarget));
-      } else { 
         if(this.curMobileFilter[0] !== undefined && this.curMobileFilter[0] !== '') {
           this.destinationUrl = '/product/renewal/mobileplan/list?filters=' + this.curMobileFilter[0];
         } else {
           this.destinationUrl = '/product/renewal/mobileplan/list';
         }
         this._loadFilterConfirmPopup(e);
-      }
     },
 
     _loadFilterConfirmPopup: function(e){ 
       this._popupService.open({
         url: '/hbs/',
         hbs: 'renewal.product.initial.confirm',
+        data: '확인을 누르시면 <br> 선택하신 필터 항목이 초기화 됩니다.',
         layer: true
         },
         $.proxy(this._onOpeninitialPopup, this, $(e.currentTarget)),
@@ -248,19 +235,16 @@ Tw.ProductRenewalList.prototype = {
 
     _handleClickChangeFilters: function(e) {
       var $target = $(e.currentTarget);
-      if(this._getParameter('code') !== '') {
-        this._popupQuickFilter($target);
+      if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
+        this._apiService.requestArray([
+          { command: Tw.API_CMD.BFF_10_0032, params: { idxCtgCd: this.CODE }},
+          { command: Tw.API_CMD.BFF_10_0033, pathParams: ['F01170']}
+        ]).done($.proxy(this._handleLoadFilters, this, $target));
+        
       } else {
-        if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
-          this._apiService.requestArray([
-            { command: Tw.API_CMD.BFF_10_0032, params: { idxCtgCd: this.CODE }},
-            { command: Tw.API_CMD.BFF_10_0033, pathParams: ['F01170']}
-          ]).done($.proxy(this._handleLoadFilters, this, $target));
-          
-        } else {
-          this._openSelectFiltersPopup($target);
-        }
+        this._openSelectFiltersPopup($target);
       }
+      
     },
 
     _handleLoadFilters: function($target, filterResp, quickFilterResp) { // API로 받아온 데이터로 필터 열음 ( 현재 안씀 )
@@ -298,13 +282,9 @@ Tw.ProductRenewalList.prototype = {
 
       var _this = this;
       var MobileFilterForQuick = (this.curMobileFilter[0] == '') || (this.curMobileFilter[0] == undefined) ? this._networkInfo[0] : this.curMobileFilter[0];
-      if(this._popupService._prevHashList.length == 1){
-        $('.prev-step').click(_.debounce($.proxy(_this._popupService.close, this), 500));
-      } else {
-        $('.prev-step').click(function(){
-          _this._historyService.replaceURL('/product/renewal/mobileplan/list?filters='+_this.curMobileFilter[0]);
-        });
-      }
+      
+      $('.prev-step').click(_.debounce($.proxy(_this._popupService.close, this), 500));
+      
       // $layer.find('.select-list li.checkbox').click(_.debounce($.proxy(this._handleClickFilter, this, $layer), 300));
       // $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
       $('.quickFilterBtn').click(function(e){_this._historyService.replaceURL(
@@ -323,28 +303,43 @@ Tw.ProductRenewalList.prototype = {
           }
       });
       if(this.curFilter) { // 현재 적용된 필터 항목 하단에 표시
-        for(var a=0 ; a < this.curFilter.length ; a++){
-          if($('[data-filter="' + this.curFilter[a] + '"]').data('filtername') != undefined) {
+        for(var a=0 ; a < this.curFilter.length ; a++) {
+          
             $('[data-filter="' + this.curFilter[a] + '"]').parent("li").addClass('on');
             $('#selectFilter').append('<li data-filtersummary="' + this.curFilter[a] +
                 '"><span class="f-keyword">'+ $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') +
                 '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+            if($('[data-filter="' + this.curFilter[a] + '"]').data('filtername') == undefined) {
+              $('[data-filtersummary="' + this.curFilter[a] + '"]').css('display','none');
+            }
+          if($('[data-code="' + this.curFilter[a] + '"]')){
+            $('[data-code="' + this.curFilter[a] + '"]').parent('li').addClass('on');
           }
         }
+        
       }
 
-      $checked.on("click", function() { // 항목 선택 시 하단에 선택한 필터 항목 표시
-        if($(this).parent('li').hasClass('on')) {
-          $(this).parent('li').removeClass('on');
-          $('[data-filtersummary="' + $(this).data('filter') + '"]').remove();
+      $checked.on('click', function() { // 항목 선택 시 하단에 선택한 필터 항목 표시
+        var $quickFilterBtn = $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li');
+        var quickFilterCheck = false;
+        for(var i = 0; (i<$quickFilterBtn.length) && !quickFilterCheck; i++) {
+          quickFilterCheck = $quickFilterBtn.eq(i).hasClass('on');
+        }
+        if(quickFilterCheck) {
+          _this._popupQuickFilter();
         } else {
-          $(this).parent('li').addClass('on');
-          $('#selectFilter').append('<li data-filtersummary="' + $(this).data('filter') +
-             '"><span class="f-keyword">'+ $(this).data('filtername') +
-             '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
-          setTimeout(function() {
-            $('.f-del-filter').click($.proxy(_this._deleteSelectFilter, this));
-          },500);
+          if($(this).parent('li').hasClass('on')) {
+            $(this).parent('li').removeClass('on');
+            $('[data-filtersummary="' + $(this).data('filter') + '"]').remove();
+          } else {
+            $(this).parent('li').addClass('on');
+            $('#selectFilter').append('<li data-filtersummary="' + $(this).data('filter') +
+              '"><span class="f-keyword">'+ $(this).data('filtername') +
+              '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+            setTimeout(function() {
+              $('.f-del-filter').click($.proxy(_this._deleteSelectFilter, this));
+            },500);
+          }
         }
       });
       this.$container.find('.f-del-filter').click($.proxy(this._deleteSelectFilter, this));
@@ -408,6 +403,11 @@ Tw.ProductRenewalList.prototype = {
     _handleResetFilters: function() { //선택 초기화 버튼 선택 시
       $('#selectFilter').empty();
       $('.check-box > ul > li').removeClass('on');
+    },
+    _handleResetQuickFilters: function() {
+      $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li').removeClass('on');
+      this._handleResetFilters();
+      this._popupService.close();
     },
 
     _deleteSelectFilter: function(e) { // 필터 화면 하단 선택 항목 삭제 시
@@ -492,8 +492,9 @@ Tw.ProductRenewalList.prototype = {
       if(groupItems.length>5) {
         this._remainGroupData = parseInt(groupItems.length / 5);
         this._curRemainGroupData = 1 ;
-        this._groupData = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+        this._groupData = [];
         for(var i = 0; i < this._remainGroupData + 1 ; i++) {
+          this._groupData[i] = [];
           if(groupItems[i*5]) {
             this._groupData[i].push(groupItems[i*5]);
           }
@@ -516,7 +517,7 @@ Tw.ProductRenewalList.prototype = {
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[0], separateItems: null, seriesClass: this._seriesClass, cdn: this._cdn}));
       } else {
         this._curNetworkCount++;
-        $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: groupItems[0], separateItems: separateItems, seriesClass: this._seriesClass, cdn: this._cdn }));
+        $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: groupItems, separateItems: separateItems, seriesClass: this._seriesClass, cdn: this._cdn }));
         if(this._curNetworkCount == 5) {
           this._hasNext = 'false';
           $('.tod-nmp-loading').css('display','none');
@@ -600,6 +601,8 @@ Tw.ProductRenewalList.prototype = {
             item.filters[i].fltTagWelfare = 'Y';
           } else if(prodFltId == 'F01162') {
             item.filters[i].fltTagKid = 'Y';
+          } else if(prodFltId == 'F01165') {
+            item.prodFltList[i].fltTagCollege = 'Y';
           }
           if((this._networkInfo[0] == 'F01713' && prodFltId == 'F01713') || (this._networkInfo[0] == 'F01121' && prodFltId == 'F01121')) {
             if(this._svcInfo){
@@ -619,12 +622,17 @@ Tw.ProductRenewalList.prototype = {
             item.prodFltList[i].fltTagWelfare = 'Y';
           } else if(prodFltId == 'F01162') {
             item.prodFltList[i].fltTagKid = 'Y';
+          } else if(prodFltId == 'F01165') {
+            item.prodFltList[i].fltTagCollege = 'Y';
           }
           if((this._networkInfo[0] == 'F01713' && prodFltId == 'F01713') || (this._networkInfo[0] == 'F01121' && prodFltId == 'F01121')) {
             if(this._svcInfo){
               if(this._svcInfo.prodId != item.prodId) {
                 item.compareBtn = true;
               }
+            }
+            if(this._isCompare = 'N') {
+              item.compareBtn = false;
             }
           }
         } 
@@ -635,28 +643,29 @@ Tw.ProductRenewalList.prototype = {
 
     _mapProperDataGroup: function(item) {
       if(item.prodList){
+        console.log("item",item.prodList);
         item.prodList = _.map(item.prodList, $.proxy(this._mapProperData, this));
       }
       return item;
     },
 
     _getTabCodeSeries: function(item) {
-          if(item.prodFltNm) {
-            switch (item.prodFltNm) {
-              case '5G':
-                return 'prod-5g';
-              case 'LTE':
-                return 'prod-lte';
-              case '3G':
-                return 'prod-band';
-              case '태블릿/2nd device':
-                return 'prod-2nd';
-              case '선불':
-                return 'prod-2nd';
-              default :
-                return 'prod-5g';
-            }
-          }
+      if(item.prodFltId) {
+        switch (item.prodFltId) {
+          case 'F01713':
+            return 'prod-5g';
+          case 'F01121':
+            return 'prod-lte';
+          case 'F01122':
+            return 'prod-band';
+          case 'F01124':
+            return 'prod-2nd';
+          case 'F01125':
+            return 'prod-2nd';
+          default :
+            return 'prod-5g';
+        }
+      }
       return '';
     },
 
