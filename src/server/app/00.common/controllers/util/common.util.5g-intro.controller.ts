@@ -18,7 +18,6 @@ class CommonUtil5gIntro extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const page = req.params.page;
-
     if (!page) {
       return res.render('util/common.util.5g-intro.html', {pageInfo, svcInfo});
     } else if (!this._isAllow(page)) {
@@ -29,7 +28,13 @@ class CommonUtil5gIntro extends TwViewController {
         svcInfo
       });
     }
-    res.render(`util/common.util.5g-intro_${page}.html`, {pageInfo, svcInfo, isAndroid: BrowserHelper.isAndroid(req)});
+    res.render(`util/common.util.5g-intro_${page}.html`, {
+      pageInfo, svcInfo, isAndroid: BrowserHelper.isAndroid(req),
+      personDataNoLoginMap: {
+        personTimeChk: null,
+        personAgentTypeChk: null
+      }
+    });
   }
 
 
