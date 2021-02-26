@@ -57,23 +57,25 @@ _%>
                 </ul>
                 <%_}_%>
             </div>
+            <%_
+                const {isThisMonth} = data.autoPayment;
+                // 통합청구 대표일때
+                if( data.type !== 'UF' && !isThisMonth){
+                    const {paymentInfo = {}} = data;
+                    const {isPaid, payDate} = data.autoPayment;
+                    payText = isPaid ? '납부' : isThisMonth ? '납부될 예정' : '미납',
+                    payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.';
+            _%>
             <p class="payment-msg">
                 <!--통합청구 대표일때-->
-                <%_
-                    if(data.type !== 'UF'){
-                        const {paymentInfo = {}} = data;
-                        const {isPaid, isThisMonth, payDate} = data.autoPayment;
-                        payText = isPaid ? '납부' : isThisMonth ? '납부될 예정' : '미납',
-                        payTextEnd = isPaid ? '되었습니다.' : isThisMonth ? '입니다.' : '되었습니다.';
-                _%>
                 <strong class="highlight"><%-`${data.month}월 요금이 ${payText}`%></strong> <%-payTextEnd%>
-                <%_if(isThisMonth){_%>
-                <span class="detail-type"><%-`${payDate} ${paymentInfo.payMthdNm}`%></span>
-                <%_}_%>
-                <%_} else if(repSvcNm){_%>
-                <strong class="highlight"><%- repSvcNm%>에 통합청구</strong> 되었습니다.
-                <%_}_%>
             </p>
+            <%_} else if (data.type == 'UF' && repSvcNm) { _%>
+            <p class="payment-msg">
+                <strong class="highlight"><%- repSvcNm%>에 통합청구</strong> 되었습니다.
+            </p>
+            <%_}_%>
+
             <!--요금 상세내역 영역-->
             <%# SK브로드밴드 인 경우%>
             <%_if(data.isBroadBand){_%>
