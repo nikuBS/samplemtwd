@@ -240,7 +240,8 @@ Tw.MyTJoinInfoDiscountAdv.prototype._openDaysPopup = function(event) {
     this.resData.commDataInfo.repaymentInfo.forEach(function(item) {
       if (item.titNm === itemTarget) {
         defaultPopupOpt.title =
-          '총 24회 중<br><strong>13회 납부 완료</strong>'
+          '총 24회 중<br><strong>13회 납부 완료</strong>' +
+          'API 개발 중'
         return false;
       }
     });
@@ -251,15 +252,12 @@ Tw.MyTJoinInfoDiscountAdv.prototype._openDaysPopup = function(event) {
       selectItem = this.resData.commDataInfo.feeInfo.find(function(item) {
         return item.prodId === itemTarget;
       });
-    } else {
-      // device
-      selectItem = this.resData.commDataInfo.terminalInfo.find(function(item) {
-        return item.typeStr === itemTarget;
-      });
     }
     if (selectItem) {
       defaultPopupOpt.title =
-        '총'+ selectItem.totMt +'회 중<br><strong>'+ selectItem.curMt +'회 납부 완료</strong>'
+        '총'+ selectItem.totMt +'회 중<br><strong>'+ selectItem.curMt +'회 납부 완료</strong>' +
+        'API 개발 중'
+
     }
   }
   this._popupService.open(defaultPopupOpt, $.proxy(function ($popup) {

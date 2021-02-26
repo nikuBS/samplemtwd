@@ -48,10 +48,9 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
           svcInfo: svcInfo
         });
       }
-      console.log('################', agrmtInfosResp)
       if ( agrmtInfosResp.code === API_CODE.CODE_00 ) {
         if ( agrmtInfosResp.result.agrmtInfoList.length ) {
-
+          // TODO: result 결과 전달 시 parsing 해서 finishInfoList 로 추가 필요
         }
       }
 
