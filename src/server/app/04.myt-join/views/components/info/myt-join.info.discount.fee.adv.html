@@ -1,0 +1,73 @@
+<%#
+* @file myt-join.info.discount.fee.adv.html
+* @author Kim In Hwan
+_%>
+<%_
+var tipId = feeItem.typeStr === 'FEE_TYPE_A'? 'MS_09_tip_01' : '';
+_%>
+
+<div class="box-group">
+    <div class="box-group-head-tit">
+        <a href="#" class="link"><%= feeItem.disProdNm_N %></a>
+    </div>
+    <div class="box-group-cont">
+        <ul class="report-list item-no-border small">
+            <li class="report-item">
+                <dl class="report-define d-wrap">
+                    <dt class="report-tit">지난달까지 할인받은 요금
+                        <% if (tipId) { %>
+                        <button type="button" class="tip" id="<%= tipId %>" aria-haspopup="true">TIP</button>
+                        <% } %>
+                    </dt>
+                    <dd class="report-cont basics13-larger"><%= feeItem.salePay.replace('-', '') %>원</dd>
+                </dl>
+            </li>
+            <!--
+            <li class="report-item">
+                <dl class="report-define d-wrap">
+                    <dt class="report-tit">오늘 해지 시 할인반환금</dt>
+                    <dd class="report-cont"></dd>
+                </dl>
+            </li>
+            -->
+        </ul>
+        <a href="#" class="detail-info-link" data-target="detailList"
+           data-value='<%-JSON.stringify(feeItem.svcAgrmtDcObj) %>'>월별 상세 할인 내역 ></a>
+        <div class="gray-box">
+            <ul class="report-list item-no-border small">
+                <li class="report-item">
+                    <dl class="report-define d-wrap">
+                        <dt class="report-tit">약정 기간</dt>
+                        <dd class="report-cont">
+                            <button type="button" class="detail-agree-btn" data-id="fee"
+                                    data-target="<%= feeItem.prodId %>">
+                                <%= feeItem.totMt %>개월(<%= feeItem.totDt %>일)
+                            </button>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="horizon-bar-wrap contract-graph">
+            <div class="horizon-bar">
+                <span class="data" style="width:<%- feeItem.nPerDt %>%">
+                    <span class="bar"></span>
+                    <span class="bar-bubble"><%= feeItem.remDt %>일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+                </span>
+            </div>
+            <div class="data-date">
+                <span class="start-date">
+                    <%= feeItem.startDt %>
+                    <span class="day-dec">시작일</span>
+                </span>
+                <span class="end-date">
+                    <%= feeItem.endDt %>
+                    <span class="day-dec">종료일</span>
+                </span>
+            </div>
+        </div>
+        <% if (feeItem.typeStr === 'FEE_TYPE_A') { %>
+        <p class="warning">&lt;스페셜약정할인&gt;, &lt;LTE플러스약정할인&gt;이 &lt;요금약정할인&gt;으로 통합되었습니다. 이용에 참고해 주시기 바랍니다.</p>
+        <% } %>
+    </div><!-- group-cont -->
+</div>
