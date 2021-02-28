@@ -72,6 +72,9 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
     });
   }
 
+  /**
+   * 자주하는질문 API 요청
+   */
   _getFaqRequest() {
     return Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010553' }),
