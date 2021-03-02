@@ -5,7 +5,7 @@
 * @since 2020.11.10
 %>
 <%# 청구 내역 없을때%>
-<%_if(!data.isBroadBand && (data.latestDates.length < 1 || data.isNewMember) ){_%>
+<%_if(data.isNotClaimData || data.latestDates.length < 1 || data.isNewMember ){_%>
 <% include ../components/submain/myt-fare.submain.non-data.html %>
 <%_ } else {
     const isRep = data.svcInfo.actRepYn === 'Y'; // 통합청구 대표여부
@@ -58,9 +58,9 @@ _%>
                 <%_}_%>
             </div>
             <%_
-                const {isThisMonth} = data.autoPayment;
                 // 통합청구 대표일때
-                if( data.type !== 'UF' && !isThisMonth){
+                if( data.type !== 'UF' && data.autoPayment && !data.autoPayment.isThisMonth){
+                    const {isThisMonth = false} = data.autoPayment;
                     const {paymentInfo = {}} = data;
                     const {isPaid, payDate} = data.autoPayment;
                     payText = isPaid ? '납부' : isThisMonth ? '납부될 예정' : '미납',
@@ -114,7 +114,7 @@ _%>
             <%_}_%>
 
             <!-- 요금납부 (통합청구 대표) -->
-            <%_ if(data.type !== 'UF' && data.isNotAutoPayment){
+            <%_ if(data.type !== 'UF' && data.isNotAutoPayment && data.autoPayment){
                 const {isThisMonth, isPaid} = data.autoPayment;
                 // 미납버튼 노출 조건:
                 // 1. 당월인경우: 당월 납부예정(납부 전)이라도, 미납요금버튼 미노출이나, 당월보다 이전 미납금액 있으면 노출.
