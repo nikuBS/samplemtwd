@@ -1961,18 +1961,28 @@ class ApiRouter {
         let bannerType = '';
         let imgAltCtt = '';
         if (resp.code === API_CODE.CODE_00) {
-          imgAltCtt = resp.result.imgList[0].imgAltCtt;
-          if (resp.result.bannerType === '0023') {
-              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-05.png" alt="혜택">`
-          } else if (resp.result.bannerType === '0024') {
-              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-04.png" alt="알림">`
-          } else if (resp.result.bannerType === '0025') {
-              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-03.png" alt="이벤트">`
-          } else if (resp.result.bannerType === '0026') {
-              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-02.png" alt="안내">`
-          } else if (resp.result.bannerType === '0027') {
-              bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-01.png" alt="맞춤서비스">`
+          try {
+            imgAltCtt = resp.result.imgList[0].imgAltCtt;
+            if (resp.result.bannerType === '0023') {
+                bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-05.png" alt="혜택">`
+            } else if (resp.result.bannerType === '0024') {
+                bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-04.png" alt="알림">`
+            } else if (resp.result.bannerType === '0025') {
+                bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-03.png" alt="이벤트">`
+            } else if (resp.result.bannerType === '0026') {
+                bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-02.png" alt="안내">`
+            } else if (resp.result.bannerType === '0027') {
+                bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-01.png" alt="맞춤서비스">`
+            }
+          } catch (e) {
+            this.logger.error(e);
+            return res.json({
+                code: API_CODE.CODE_01,
+                msg: '',
+                result: ''
+            });
           }
+          
         }
         const bannerHtml = `
           <div class="tos_inner">
@@ -1984,7 +1994,7 @@ class ApiRouter {
           </div>
         `;
 
-        res.json({
+        return res.json({
             code: loginYn === false ? API_CODE.CODE_01 : resp.code,
             msg: resp.msg,
             result: bannerHtml
