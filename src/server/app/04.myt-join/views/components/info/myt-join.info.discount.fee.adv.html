@@ -8,7 +8,9 @@ _%>
 
 <div class="box-group">
     <div class="box-group-head-tit">
-        <a href="#" class="link"><%= feeItem.disProdNm_N %></a>
+        <a href="/product/callplan?prod_id=<%= feeItem.prodId %>" class="link">
+            <%= feeItem.disProdNm_N %>
+        </a>
     </div>
     <div class="box-group-cont">
         <ul class="report-list item-no-border small">
