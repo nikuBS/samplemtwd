@@ -291,7 +291,12 @@ Tw.FormatHelper = (function () {
    */
   var sortObjArrDesc = function (array, key) {
     return array.sort(function (a, b) {
-      return (parseInt(b[key], 10) - parseInt(a[key], 10));
+      var keyA = a[key], keyB = b[key];
+      if (Tw.FormatHelper.isNumber(keyA)) {
+        return (parseInt(keyB, 10) - parseInt(keyA, 10));
+      }
+
+      return keyB > keyA ? 1 : (keyB < keyA ? -1 : 0);
     });
   };
   
@@ -304,7 +309,12 @@ Tw.FormatHelper = (function () {
    */
   var sortObjArrAsc = function (array, key) {
     return array.sort(function (a, b) {
-      return (parseInt(a[key], 10) - parseInt(b[key], 10));
+      var keyA = a[key], keyB = b[key];
+      if (Tw.FormatHelper.isNumber(keyA)) {
+        return (parseInt(keyA, 10) - parseInt(keyB, 10));
+      }
+
+      return keyA > keyB ? 1 : (keyA < keyB ? -1 : 0);
     });
   };
 
