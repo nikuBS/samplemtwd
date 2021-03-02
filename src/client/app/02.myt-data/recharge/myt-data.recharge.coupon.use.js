@@ -400,13 +400,12 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       case 'voice':
         this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=voice');
         break;
-      case 'gift':
+      default:
+        // gift or default
         var number = this.$numberInput.val();
         number = Tw.FormatHelper.getFormattedPhoneNumber(number.replace(/[^0-9]/gi, ''));
         this._historyService.replaceURL(
           '/myt-data/recharge/coupon/complete?category=gift&number=' + number);
-        break;
-      default:
         break;
     }
   },
