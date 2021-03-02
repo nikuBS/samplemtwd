@@ -56,10 +56,53 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
 
       this.resDataInfo = discountResp.result;
       this._dataInit();
-      /**
-       * 기능 추가 부분 - 할인반환금,
-       */
 
+      this._getFeeInfoDetailCount({ res, svcInfo, faqList });
+    });
+  }
+
+  /**
+   * 카테고리: 약정할인 총 납부 횟수 조회 (가장마지막에 조회)
+   */
+  _getFeeInfoDetailCount(params) {
+    const { faqList, svcInfo, res } = params;
+    const requestIds: any = [];
+    const requests = this.commDataInfo.feeInfo.map(item => {
+      if (item.svcAgrmtDcObj) {
+        requestIds.push(item.svcAgrmtDcObj.svcAgrmtDcId);
+        return this.apiService.request(API_CMD.BFF_05_0076, {
+          svcAgrmtCdId: item.svcAgrmtDcObj.svcAgrmtDcId,
+          svcAgrmtDcCd: item.svcAgrmtDcObj.svcAgrmtDcCd
+        });
+      }
+    });
+    if (requests.length) {
+      Observable.combineLatest(requests)
+        .subscribe(responses => {
+          responses.forEach((resp: any, index: number) => {
+            if (resp.code === API_CODE.CODE_00) {
+              if (!FormatHelper.isEmpty(resp.result)) {
+                this.commDataInfo.feeInfo.forEach(feeItem => {
+                  if (feeItem.svcAgrmtDcObj) {
+                    if (requestIds[index] === feeItem.svcAgrmtDcObj.svcAgrmtDcId) {
+                      feeItem.paymentCount = resp.result.agrmt.length;
+                    }
+                  }
+                })
+              }
+            }
+          });
+          this.renderView(res, 'info/myt-join.info.discount.adv.html', {
+            reqQuery: this.reqQuery,
+            svcInfo: svcInfo,
+            pageInfo: this.pageInfo,
+            commDataInfo: this.commDataInfo,
+            resDataInfo: this.resDataInfo,
+            faqList,
+            finishInfoList: this.finishInfoList
+          });
+        });
+    } else {
       this.renderView(res, 'info/myt-join.info.discount.adv.html', {
         reqQuery: this.reqQuery,
         svcInfo: svcInfo,
@@ -69,7 +112,7 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
         faqList,
         finishInfoList: this.finishInfoList
       });
-    });
+    }
   }
 
   /**
