@@ -59,6 +59,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.selectedYear = this._params.year || this.data.curYear;
     this.selectedMonth = this._params.month || this.data.curMonth;
     $.extend(this, this._getQueryFromTo(this.data.beforeYear, this.data.beforeMonth, this.data.curYear, this.data.curMonth)); // get fromDt, toDt,
+    this._certShowLists();
   },
 
   /**
