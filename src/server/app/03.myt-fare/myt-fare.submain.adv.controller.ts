@@ -148,7 +148,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   }
 
   private getSubmain(data: any): Observable<any> {
-    const date = this.info.req.query.date;
+    const date = this.info.req.query.date,
+      nowDate = new Date();
+    const prevDate = DateHelper.getEndOfMonSubtractDate(nowDate, '1', 'YYYYMMDD');
+
     data.claimDt = date;
     data.month = this._mytFareSubmainGuideService.getMonth(date, 'M');
     data.claimFirstDay = DateHelper.getShortFirstDate(date);
@@ -171,10 +174,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       data.type = 'UF';
       data.isBroadBand = true;
     }
-    // 1일~4일 에는 요금조회가 안됨
-    if (new Date().getDate() < 5) {
+    // 선택월이 당월인경우, 1일~4일 에는 요금조회가 안됨
+    if (date === prevDate && nowDate.getDate() < 5) {
       data.isNotClaimData = true;
-      return Observable.of(data);
+      // return Observable.of(data);
     }
 
     return this._requestClaim(data);

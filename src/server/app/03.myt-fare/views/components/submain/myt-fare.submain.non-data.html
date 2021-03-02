@@ -17,7 +17,7 @@ _%>
                     <%_
                         let warningMsg = "전월 사용하신<br>이용요금이 없습니다.";
                         warningMsg = latestDates.length < 1 && !isNewMember ? "최근 6개월 내 청구된<br>해당 월 요금조회가 가능합니다." : warningMsg;
-                        warningMsg = isNotClaimData ? "매월 5일경 부터<br>해당 월 요금조회가 가능합니다." : warningMsg;
+                        warningMsg = isNotClaimData ? "매월 5일경 부터<br>당월 요금조회가 가능합니다." : warningMsg;
                         warningMsg = billError ? billError.msg : warningMsg;
                     _%>
                     <p class="warning-tit"><%-warningMsg%></p>
@@ -25,7 +25,7 @@ _%>
                     <p class="warning-sub-tit">잠시 후 다시 이용해 주세요.</p>
                     <p class="warning-sub-txt"><%-billError.code%></p>
                     <%_}_%>
-                    <%_if(isNotClaimData){_%>
+                    <%_if(data.isNotFirstDate && data.isRealTime){_%>
                     <div class="btn-area">
                         <a href="/myt-fare/bill/hotbill" class="rect-btn">실시간 이용요금 조회하기</a>
                     </div>
