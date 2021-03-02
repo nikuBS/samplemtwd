@@ -23,23 +23,16 @@ export default class MyTDataRechargeCouponComplete extends TwViewController {
       case 'voice':
         res.render('recharge/myt-data.recharge.coupon-complete-voice.html');
         break;
-      case 'gift':
-        const number = req.query.number;
+      default:
+        // category => gift or null
+        const number = req.query.number || null;
         this.getUsableCouponList(res, svcInfo, pageInfo).subscribe(
           (result) => {
-            if (!FormatHelper.isEmpty(result)) {
-              res.render('recharge/myt-data.recharge.coupon-complete-gift.html', {
-                coupons: result.length,
-                number: number
-              });
-            }
-          },
-          (err) => {
-            this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
-          }
-        );
-        break;
-      default:
+            res.render('recharge/myt-data.recharge.coupon-complete-gift.html', {
+              coupons: result && result.length ? result.length : 0,
+              number: number
+            });
+          });
         break;
     }
   }
@@ -48,8 +41,8 @@ export default class MyTDataRechargeCouponComplete extends TwViewController {
    * @function
    * @desc 현재 사용자가 보유한 쿠폰 리스트를 BFF에서 조회해옴 (잔여쿠폰 숫자를 출력하기 위함)
    * @param  {Response} res - Response
-   * @param  {any} svcInfo - 사용자 정보
-   * @param  {any} pageInfo - 페이지 정보
+   * @param  {Object} svcInfo - 사용자 정보
+   * @param  {Object} pageInfo - 페이지 정보
    * @returns Observable
    */
   private getUsableCouponList(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
@@ -58,14 +51,12 @@ export default class MyTDataRechargeCouponComplete extends TwViewController {
         return resp.result;
       }
 
-      this.error.render(res, {
+      return this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
         pageInfo: pageInfo,
         svcInfo
       });
-
-      return null;
     });
   }
 }
