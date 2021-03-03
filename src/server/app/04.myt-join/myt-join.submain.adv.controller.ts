@@ -139,19 +139,22 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       if ( this.type === 1 ) {
         // PPS 인 경우
         data.paidBillInfo = billInfo.dataOnlyYn === 'Y' ?
-          FormatHelper.convDataFormat(billInfo.prodAmt, 'MB') : {
-            data: FormatHelper.addComma(billInfo.prodAmt),
+          FormatHelper.convDataFormat(billInfo.prodAmt || 0, 'MB') : {
+            data: FormatHelper.addComma(billInfo.prodAmt || '0'),
             unit: '원'
           };
       } else {
-        data.paidBillInfo = {
-          amount: FormatHelper.addComma(billInfo.amt),
-          showMonth: DateHelper.getAddDays(billInfo.invDt, 1, 'M월'),
-          startDate: DateHelper.getShortFirstDate(billInfo.invDt),
-          endDate: DateHelper.getShortLastDate(billInfo.invDt),
-          isBroadBand: data.svcInfo.actCoClCd === 'B',
-          isUsageBill: !(data.svcInfo.actRepYn === 'Y')
-        };
+        // [OP002-13504] 신규가입한 경우 amt = '', invDt = ''로 넘어와 이 경우 납부/청구 영역 비노출
+        if (!FormatHelper.isEmpty(billInfo.amt) && !FormatHelper.isEmpty(billInfo.invDt)) {
+          data.paidBillInfo = {
+            amount: FormatHelper.addComma(billInfo.amt),
+            showMonth: DateHelper.getAddDays(billInfo.invDt, 1, 'M월'),
+            startDate: DateHelper.getShortFirstDate(billInfo.invDt),
+            endDate: DateHelper.getShortLastDate(billInfo.invDt),
+            isBroadBand: data.svcInfo.actCoClCd === 'B',
+            isUsageBill: !(data.svcInfo.actRepYn === 'Y')
+          };
+        }
       }
     }
 
@@ -224,16 +227,17 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         this.apiService.request(API_CMD.BFF_05_0179, {}), // 부가상품 갯수 조회
         this.apiService.request(API_CMD.BFF_05_0133, {}) // 유선 결합상품 조회. BFF 매핑 등록하기
       ).map(([additionResp, combinationsResp]) => {
+        // 신규 가입한 경우 초기화 오류로 인하여 무한로딩 발생이 생길 수 있어 예외처리 추
         const addition = additionResp.code === API_CODE.CODE_00 ? additionResp.result : null;
         const combinations = combinationsResp.code === API_CODE.CODE_00 ? combinationsResp.result : null;
-        const comProdCnt = combinations.combinationMemberCnt ?
-          parseInt(combinations.combinationMemberCnt || 0, 10) : combinations.combinationMemberList ?
+        const comProdCnt = combinations && combinations.combinationMemberCnt ?
+          parseInt(combinations.combinationMemberCnt || 0, 10) : combinations && combinations.combinationMemberList ?
             combinations.combinationMemberList.length : 0;
         return {
-          feePlanProd: addition.feePlanProd || null,
-          addProdPayCnt: parseInt(addition.payAdditionCount || 0, 10), // 유료 부가상품
-          addProdPayFreeCnt: parseInt(addition.freeAdditionCount || 0, 10), // 무료 부가상품
-          additionCount: parseInt(addition.additionCount || 0, 10), // 총 부가상품 건수
+          feePlanProd: addition && addition.feePlanProd || null,
+          addProdPayCnt: parseInt(addition && addition.payAdditionCount || 0, 10), // 유료 부가상품
+          addProdPayFreeCnt: parseInt(addition && addition.freeAdditionCount || 0, 10), // 무료 부가상품
+          additionCount: parseInt(addition && addition.additionCount || 0, 10), // 총 부가상품 건수
           comProdCnt // 결합상품
         };
       });
