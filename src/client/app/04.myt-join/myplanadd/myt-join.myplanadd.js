@@ -15,7 +15,6 @@ Tw.MyTJoinMyPlanAdd = function(params) {
   this._apiService = Tw.Api;
   this._bpcpService = Tw.Bpcp;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._hashService = Tw.Hash;
   this._bpcpService.setData(this.$container, '/myt-join/additions');
   this._cachedElement();
   this._bindEvent();
@@ -40,19 +39,20 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _init: function() {
-    this._applyHash(location.hash);
-
-    // this._hashService.initHashNav($.proxy(this._onHashChange, this));
-
     this._getSvcInfo();
-
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
-  },
-
-  _onHashChange: function(hash) {
-    // Tw.Logger.log('[Tw.MyTJoinMyPlanAdd] Hash Change', hash, location.hash);
-    this._applyHash(hash.base);
+    /* this._lineComponent = */
+    new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    // 부가상품 처음 진입 시 유료, 무료, 옵션 영역 특정하여 선택하여 진입이 필요한 경우
+    if (location.hash) {
+      this.$todSel.find('a[href="' + location.hash + '"]').trigger('click');
+      // 위치조정을 위한 처리
+      setTimeout($.proxy(function() {
+        $(window).scrollTop(0);
+      }, this), 0);
+    } else {
+      $(window).scrollTop(0);
+    }
   },
 
   /**
@@ -60,8 +60,31 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _bindEvent: function() {
-    // this.$todSel.on('click', 'a', $.proxy(this._handleTodSelClick, this));  // 전체 보기 버튼 클릭 시
     this.$container.on('click', '.fe-btn-link',  $.proxy(this._handleClickLink, this));  // 부가서비스 버튼 클릭시
+    // 카테고리 이벤트
+    this.$todSelAnchors.on('click', $.proxy(this._onClickCategory, this));
+  },
+
+  /**
+   * 카테고리 영역 선택 시 이벤트 처리
+   * @param event
+   * @private
+   */
+  _onClickCategory: function (event) {
+    var $target = $(event.currentTarget);
+    $target.addClass('on')
+      .attr('title', '선택')
+      .siblings().removeClass('on')
+      .attr('title', '');
+    if ( $target.attr('href') === '#tod-all' ) {
+      this.$todSelContents.show();
+    }
+    else {
+      this.$todSelContents.hide();
+      $($target.attr('href')).show();
+    }
+    $(window).scrollTop(0);
+    event.preventDefault();
   },
 
   /**
@@ -83,52 +106,6 @@ Tw.MyTJoinMyPlanAdd.prototype = {
       this._svcInfo = resp.result;
     }
   },
-
-  /**
-   * @desc 전체/옵션할인/유료/무료 버튼 클릭 시
-   * @param {Event} event 클릭 이벤트 객체
-   * @private
-   */
-  _handleTodSelClick: function(event) {
-    // NOTE: hash를 변경하되, history를 쌓지 않도록 하여, 되돌아가기를 한번에 하도록 한다.
-    // this._historyService.replacePathName(event.currentTarget.href);
-    window.location.replace(event.currentTarget.href);
-    // this._applyHash(event.currentTarget.href);
-    event.preventDefault();
-  },
-
-  _applyHash: function (hash) {
-    // 초기화 (외부에서 hash를 달고 오는 경우에 대한 처리)
-    var $selectedAnchor;
-
-    if (hash && hash !== '#tod-all') {
-      $selectedAnchor = this.$todSelAnchors.filter(function (i, elem) {
-        return elem.href.includes(hash);
-      });
-      this.$todSelContents.hide();
-      $($selectedAnchor.attr('href')).show();
-    } else {
-      // NOTE: hash가 없으면, 첫번째("전체")를 자동으로 선택
-      $selectedAnchor = this.$todSelAnchors.eq(0);
-      this.$todSelContents.show();
-    }
-    $selectedAnchor.addClass('on').attr('title', '선택');
-    // $(window).scrollTop(0);
-    /*
-    var selectedButton;
-    this.$todSelAnchors.removeClass('on');
-    if (hash) {
-      selectedButton = this.$todSelAnchors.filter(function (i, elem) {
-        return elem.href.includes(hash);
-      });
-    } else {
-      // NOTE: hash가 없으면, 첫번째("전체")를 자동으로 선택
-      selectedButton = this.$todSelAnchors.eq(0);
-    }
-    selectedButton.addClass('on').attr('title', '선택');
-    */
-  },
-
   /**
    * @desc 링크 클릭시
    * @param {Event} e 클릭 이벤트 객체
