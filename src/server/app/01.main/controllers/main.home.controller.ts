@@ -38,15 +38,6 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import BannerHelper from '../../../utils/banner.helper';
 
-export interface Netfunnel {
-  "@class": string;
-  prtyId:  string;
-  prtyDev: string;
-  prtyStg: string;
-  prtyPrd: string;
-  prtyCur: string;
-}
-
 /**
  * @desc 메인화면-MY 초기화를 위한 class
  */

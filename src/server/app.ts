@@ -7,7 +7,7 @@ const WhatapAgent = require('whatap').NodeAgent;
 import * as path from 'path';
 
 // Express Modules
-import express, { Application, NextFunction } from 'express';
+import express, { Application } from 'express';
 import UA from 'express-useragent';
 import ejs from 'ejs';
 import cookie from 'cookie-parser';
@@ -61,23 +61,11 @@ import RedisService_en from './services_en/redis.service';
 import LoggerService_en from './services_en/logger.service';
 import VERSION_en from './config_en/version.config';
 import ErrorService_en from './services_en/error.service';
-import { Observable } from 'rxjs';
-import { REDIS_KEY } from './types/redis.type';
-import FormatHelper from './utils/format.helper';
 
 
 module.exports = require('../../nodejs-exporter');
 
 const manifest = require('./manifest.json');
-
-interface Netfunnel {
-  "@class": string;
-  prtyId:  string;
-  prtyDev: string;
-  prtyStg: string;
-  prtyPrd: string;
-  prtyCur: string;
-}
 
 class App {
   public app: Application = express();
@@ -265,9 +253,7 @@ class App {
   }
 
   private setRoutes() {
-    const self = this;
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
-    // this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/myt-data', new AppRouter(MyTDataRouter.instance.controllers).router);
     this.app.use('/myt-fare', new AppRouter(MyTFareRouter.instance.controllers).router);
@@ -292,10 +278,7 @@ class App {
   }
 
   private setShortCut() {
-     this.app.use('/', (req, res, next) => {
-      res.redirect('/main.html');
-    }, new ShortcutRouter().router);
-    // this.app.use('/', new ShortcutRouter().router);
+    this.app.use('/', new ShortcutRouter().router);
   }
 
   private setViewPath() {
