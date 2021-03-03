@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Observable } from "rxjs";
 import { of } from "rxjs/observable/of";
-import LoggerService from "../services/logger.service";
 import LoginService from "../services/login.service";
 import RedisService from "../services/redis.service";
 import { API_CODE } from "../types/api-command.type";
@@ -14,7 +13,6 @@ class BannerHelper {
 
     private readonly redisService: RedisService;
     private readonly ERROR_MSG: string = '해당 값이 없습니다.';
-    private logger = new LoggerService();
 
     constructor() {
         this.redisService = RedisService.getInstance();
