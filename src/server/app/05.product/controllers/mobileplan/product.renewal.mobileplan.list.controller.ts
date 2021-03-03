@@ -35,6 +35,7 @@ export default class RenewProductPlans extends TwViewController {
     const filterList = {
       filterList : ''
     };
+    let isCompare = '';
 
     if(req.query.filters) {
       const seriesCode: string = this._getSeries(req.query.filters);
@@ -74,7 +75,7 @@ export default class RenewProductPlans extends TwViewController {
         this._getTabList()
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
-        isCompare,
+        compareData,
         tabList
         ]) => {
             if(req.query.theme) {
@@ -85,6 +86,11 @@ export default class RenewProductPlans extends TwViewController {
               params.opClCd = '02';
             } else {
               params.opClCd = '02';
+            }
+            if(typeof(compareData) == 'string') {
+              isCompare = 'N';
+            } else {
+              isCompare = 'Y';
             }
           Observable.combineLatest(
             this._getSeriesPlans(params),
@@ -100,22 +106,21 @@ export default class RenewProductPlans extends TwViewController {
               });
             }
             plans.isCompare = isCompare;
-          
             for(let i in plans.groupProdList) {
               plans.groupProdList[i].prodList = this._getCompareYN(plans.groupProdList[i].prodList, networkInfoFilter[0], isCompare);
             }
             plans.separateProductList = this._getCompareYN(plans.separateProductList, networkInfoFilter[0], isCompare);
             if(req.query.theme) {
             series.theme = ' class=on';
-            res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList});
+            res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if (series.seriesCode == 'F01713') {
-              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == 'F01121' || series.seriesCode == 'F01122') {
-              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == 'F01124') {
-              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == 'F01125') {
-              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else {
               switch(networkInfoFilter[0]){
                 case 'F01713':
@@ -136,7 +141,7 @@ export default class RenewProductPlans extends TwViewController {
                 default : 
                   plans.series = '1';
               }
-              res.render('mobileplan/renewal/list/product.renewal.mobileplan.listall.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList });
+              res.render('mobileplan/renewal/list/product.renewal.mobileplan.listall.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             }
           });
         });
@@ -151,10 +156,15 @@ export default class RenewProductPlans extends TwViewController {
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
         plans,
-        isCompare,
+        compareData,
         tabList
         ]) => {
-        
+          let isCompare: string = '';
+          if(compareData != 'N'){
+            isCompare = 'Y'
+          } else {
+            isCompare = 'N'
+          }
           if (plans.code) {
             this.error.render(res, {
               code: plans.code,
@@ -183,7 +193,7 @@ export default class RenewProductPlans extends TwViewController {
               }
             }
           }
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn, tabList } );
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterall.html', { svcInfo, params, pageInfo, series, filterList, plans, mobileList, networkInfoFilter, cdn, tabList, compareData } );
         });
 
     } else {
@@ -197,9 +207,15 @@ export default class RenewProductPlans extends TwViewController {
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
         plans,
-        isCompare,
+        compareData,
         tabList
         ]) => {
+         let isCompare: string = '';
+          if(compareData != 'N') {
+            isCompare = 'Y'
+          } else {
+            isCompare = 'N'
+          }  
         if (plans.code) {
           this.error.render(res, {
             code: plans.code,
@@ -211,9 +227,9 @@ export default class RenewProductPlans extends TwViewController {
         plans.isCompare = isCompare;
         plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare);
         if(plans.productCount === 0) { // 요금제 항목 없음
-          res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList } );
+          res.render( 'mobileplan/renewal/list/product.renewal.mobileplan.list.nolist.html' , { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList, compareData } );
         } else if(series.noSeries == false) { // 탭 선택 후 필터 적용
-          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList } );
+          res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.filterlist.html', { svcInfo, params, pageInfo, series, filterList, plans, networkInfoFilter, cdn, tabList, compareData } );
         } 
       });
     }
@@ -227,7 +243,9 @@ export default class RenewProductPlans extends TwViewController {
           msg: resp.msg
         };
       }
-      
+      for(var i in resp.result.products){
+        console.log(resp.result.products[i]);
+      }
       
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
@@ -249,7 +267,8 @@ export default class RenewProductPlans extends TwViewController {
               ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             tabCode: this._getTabCodeInit(plan),
-            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
+            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+            benefitList: this._parseBenefitList(plan.benefitList)
             //m24agrmtFeeAmt: this._getM24agrmtFeeAmt(plan.basFeeAmt,plan.m24agrmtDcAmt)
           };
         })
@@ -264,9 +283,6 @@ export default class RenewProductPlans extends TwViewController {
           code: resp.code,
           msg: resp.msg
         };
-      }
-      for(let i in resp.result.products){
-      console.log(resp.result.products[i]);
       }
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
@@ -287,7 +303,8 @@ export default class RenewProductPlans extends TwViewController {
               ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             tabCode: this._getTabCodeSeries(plan.filters),
-            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
+            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+            benefitList: this._parseBenefitList(plan.benefitList)
           };
         })
       };
@@ -403,7 +420,8 @@ export default class RenewProductPlans extends TwViewController {
                     null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
                   basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
                   tabCode: this._getTabCodeSeries(plan.prodFltList),
-                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
+                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+                  benefitList: this._parseBenefitList(plan.benefitList)
                 };
               })
             }
@@ -420,7 +438,8 @@ export default class RenewProductPlans extends TwViewController {
                 null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+              benefitList: this._parseBenefitList(separatePlan.benefitList)
             }
           })
           // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
@@ -466,7 +485,8 @@ export default class RenewProductPlans extends TwViewController {
                 null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+              benefitList: this._parseBenefitList(separatePlan.benefitList)
             }
           }),
           rcnProductList: resp.result.rcnProductList.map(rcnPlan => {
@@ -511,7 +531,8 @@ export default class RenewProductPlans extends TwViewController {
                 null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
                 ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
+              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+              benefitList: this._parseBenefitList(separatePlan.benefitList)
             }
           })
           // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
@@ -539,7 +560,8 @@ export default class RenewProductPlans extends TwViewController {
                     null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
                   basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
                   tabCode: this._getTabCodeSeries(plan.prodFltList),
-                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
+                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+                  benefitList: this._parseBenefitList(plan.benefitList)
                 };
               })
             }
@@ -650,7 +672,7 @@ export default class RenewProductPlans extends TwViewController {
 
       // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지에 대해 체크한 값
       if ( isExistsPLMData || isExistsRedisData ) { 
-        return 'Y';
+        return isExistsPLMData;
       }
 
       return 'N';
@@ -676,8 +698,9 @@ export default class RenewProductPlans extends TwViewController {
           return false;
         }
 
-        return true;
+        return data;
       }
+      return false;
     });
   }
 
@@ -700,7 +723,7 @@ export default class RenewProductPlans extends TwViewController {
 
   private _getCompareYN(prodList, networkInfo, isCompare) {
     for(var i in prodList){
-      if(((prodList[i].tabcode == 'prod-5g') && (networkInfo == 'F01713')) || ((prodList[i].tabcode == 'prod-lte') && (networkInfo == 'F01121'))){
+      if(((prodList[i].tabCode == 'prod-5g') && (networkInfo == 'F01713')) || ((prodList[i].tabCode == 'prod-lte') && (networkInfo == 'F01121'))){
         prodList[i].compareYN = true;
       } else {
         prodList[i].compareYN = false;
@@ -747,6 +770,26 @@ export default class RenewProductPlans extends TwViewController {
       }
       return null;
     });
+  }
+
+  private _parseBenefitList(benefitList) {
+    let list = {chooseBenefitList :[{}],sepBenefitList:[{}]};
+    for(let i in benefitList) {
+      if(benefitList[i].useAmt) {
+        benefitList[i].useAmt = ProductHelper.convProductBasfeeInfo(benefitList[i].useAmt);
+        benefitList[i].benfAmt = ProductHelper.convProductBasfeeInfo(benefitList[i].benfAmt);
+      }
+      if(benefitList[i].prodBenfTypCd == '02') {
+        list.chooseBenefitList.push(benefitList[i]);
+      } else {
+        list.sepBenefitList.push(benefitList[i]);
+      }
+    }
+    list.chooseBenefitList.shift();
+    list.sepBenefitList.shift();
+    console.log("chooseBenefitList",list.chooseBenefitList);
+    console.log("sepBenefitList",list.sepBenefitList);
+    return list;
   }
 
   private _getCDN() {

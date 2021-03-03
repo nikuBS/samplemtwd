@@ -25,7 +25,6 @@
     <!--// #header -->
     <!-- .container-wrap -->
     <div class="container-wrap">
-        현재 비교하기 하드코딩 (Api 없음)
         <!-- 접근성 : 항목마다 tod-blind 대체텍스트 제공 (나의 요금제명과 비교 요금제명을 각각 명시) -->
         <section class="tod-nmp-comp-info">
             <div class="rn-comp-box">
@@ -115,45 +114,18 @@
                         </div>
                     </div>
                 </div>
-                {{#if data.dataAddtionOption}}
+                {{#if data.dataBenf}}
                     <div class="rn-shadow-box">
                         <p class="p-dotTxt">데이터 추가 혜택이 있어요</p>
-                        {{#if data.dataAddtionOption.dataOption}}
+                        {{#each data.dataBenf}}
                             <div class="dl-comp">
-                                <p class="title">데이터 옵션</p>
+                                <p class="title">{{list}}</p>
                                 <ul>
-                                    <li><span class="tod-blind">{{data.curPlan.prodNm}}</span> {{{data.curPlan.dataAddtionOption.dataOption}}}</li>
-                                    <li><span class="tod-blind">{{data.comparePlan.prodNm}}</span> {{{data.comparePlan.dataAddtionOption.dataOption}}}</li>
+                                    <li><span class="tod-blind">{{../data.curPlan.prodNm}}</span> {{{curData}}}</li>
+                                    <li><span class="tod-blind">{{../data.comparePlan.prodNm}}</span> {{{compareData}}}</li>
                                 </ul>
                             </div>
-                        {{/if}}
-                        {{#if data.dataAddtionOption.sharingDataLimit}}
-                            <div class="dl-comp">
-                                <p class="title">공유가능 데이터 한도</p>
-                                <ul>
-                                    <li><span class="tod-blind">{{data.curPlan.prodNm}}</span> {{{data.curPlan.dataAddtionOption.sharingDataLimit}}}</li>
-                                    <li><span class="tod-blind">{{data.comparePlan.prodNm}}</span> {{{data.comparePlan.dataAddtionOption.sharingDataLimit}}}</li>
-                                </ul>
-                            </div>
-                        {{/if}}
-                        {{#if data.dataAddtionOption.tetheringOption}}
-                            <div class="dl-comp">
-                                <p class="title">테더링 한도</p>
-                                <ul>
-                                    <li><span class="tod-blind">{{data.curPlan.prodNm}}</span> {{{data.curPlan.dataAddtionOption.tetheringOption}}}</li>
-                                    <li><span class="tod-blind">{{data.comparePlan.prodNm}}</span> {{{data.comparePlan.dataAddtionOption.tetheringOption}}}</li>
-                                </ul>
-                            </div>
-                        {{/if}}
-                        {{#if data.dataAddtionOption.dataRefill}}
-                            <div class="dl-comp">
-                                <p class="title">데이터 리필하기</p>
-                                <ul>
-                                    <li><span class="tod-blind">{{data.curPlan.prodNm}}</span> {{{data.curPlan.dataAddtionOption.dataRefill}}}</li>
-                                    <li><span class="tod-blind">{{data.comparePlan.prodNm}}</span> <span class="s-txt">{{{data.comparePlan.dataAddtionOption.dataRefill}}}</span></li>
-                                </ul>
-                            </div>
-                        {{/if}}
+                        {{/each}}
                     </div>
                 {{/if}}
             </div>
@@ -181,85 +153,108 @@
                     <li><span class="tod-blind">{{data.comparePlan.prodNm}}</span> {{{data.comparePlan.basOfrCharCntCtt}}}</li>
                 </ul>
             </div>
-            {{#if data.discountBenefits}}
-                <div class="rn-benefit">
-                    <h3 class="title">할인혜택</h3>
-                    {{#each data.discountBenefits}}
-                        <div class="tb-comp-cont">
-                            <p class="title"><i class="p-icon16-check"></i>{{{benefitName}}}</ㅔ>
-                            <ul class="tb-comp">
-                                <li>
-                                    <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
-                                    {{#if curPlan.text}}
-                                        {{{curPlan.text}}}
-                                    {{/if}}
-                                    {{#if curPlan.prePrice}}
-                                        <del>{{{curPlan.prePrice}}}</del><p class="price">{{{curPlan.curPrice}}}</p>
-                                    {{/if}}
-                                </li>
-                                <li>
-                                    <span class="tod-blind">{{../data.comparePlan.prodNm}}</span> 
-                                    {{#if comparePlan.text}}
-                                        {{{comparePlan.text}}}
-                                    {{/if}}
-                                    {{#if comparePlan.prePrice}}
-                                        <del>{{{comparePlan.prePrice}}}</del><p class="price">{{{comparePlan.curPrice}}}</p>
-                                    {{/if}}
-                                </li>
-                            </ul>
-                        </div>
-                    {{/each}}
-                </div>
-            {{/if}}
             <div class="rn-benefit">
                 <h3 class="title">추가혜택</h3>
-                {{#each data.additionBenefits}}
+                {{#each data.addtionalBenf.sepList}}
                     <div class="tb-comp-cont">
                         <p class="title">
-                            {{#each benefitKind}}
-                            <i class="p-icon16-{{benefitClass}}"></i> {{benefitName}} 
-                            {{/each}}
+                            <i class="p-icon16-img">
+                            <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
+                            </i>
+                            {{benfList.expsBenfNm}}
                         </p>
                         <ul class="tb-comp">
                             <li>
-                                <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
-                                {{#each curPlan}}
-                                    {{#if text}}
-                                        <p class="txt">{{{text}}}</p>
-                                    {{/if}}
-                                    {{#if prePrice}}
+                                {{#if curData}}
+                                    <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
+                                    <p class="txt">{{curdata.expsBenfNm}}<br>{{{curData.benfDtlCtt}}}</p>
+                                    {{#if curData.benfAmt}}
                                         <span class="s-price">
-                                            <del>{{{prePrice}}}</del>
+                                            <del>{{{curData.benfAmt}}}</del>
                                             <i class="icon-arr">&rarr;</i> 
-                                            <em>{{{curPrice}}}</em>
+                                            <em>{{{curData.addBenfCnt}}}</em>
                                         </span>
                                     {{/if}}
-                                    {{#if option}}
-                                        <p class="s-txt nmp-fc-orange">{{{option}}}</p>
-                                    {{/if}}
-                                {{/each}}
+                                {{/if}}
                             </li>
                             <li>
-                                <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
-                                {{#each comparePlan}}
-                                    {{#if text}}
-                                        <p class="txt">{{{text}}}</p>
-                                    {{/if}}
-                                    {{#if prePrice}}
+                                {{#if compareData}}
+                                    <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
+                                    <p class="txt">{{compareData.expsBenfNm}}<br>{{{compareData.benfDtlCtt}}}</p>
+                                    {{#if compareData.benfAmt}}
                                         <span class="s-price">
-                                            <del>{{{prePrice}}}</del>
+                                            <del>{{{compareData.benfAmt}}}</del>
                                             <i class="icon-arr">&rarr;</i> 
-                                            <em>{{{curPrice}}}</em>
+                                            <em>{{{compareData.addBenfCnt}}}</em>
                                         </span>
                                     {{/if}}
-                                    {{#if option}}
-                                        <p class="s-txt nmp-fc-orange">{{{option}}}</p>
-                                    {{/if}}
-                                {{/each}}
+                                {{/if}}
                             </li>
                         </ul>
                     </div>
                 {{/each}}
+                <div class="tb-comp-cont">
+                        <p class="title">
+                            {{#each data.addtionalBenf.chooseList}}
+                                <i class="p-icon16-img">
+                                    <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
+                                </i>
+                                {{benfList.expsBenfNm}}
+                            {{/each}}
+                        </p>
+                        {{#if data.addtionalBenf.chooseList}}
+                            <ul class="tb-comp">
+                                <li>
+                                    <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
+                                        {{#each data.addtionalBenf.chooseList}}
+                                            {{#if curSepData}}
+                                                <p class="txt">{{{curSepData.expsBenfNm}}}</p>
+                                                <p class="s-txt nmp-fc-orange">{{{curSepData.benfDtlCtt}}}</p>
+                                                {{#if curSepData.benfAmt}}
+                                                    <span class="s-price">
+                                                        <del>{{{curSepData.benfAmt}}}</del>
+                                                        <i class="icon-arr">&rarr;</i> 
+                                                        <em>{{{curSepData.addBenfCnt}}}</em>
+                                                    </span>
+                                                {{/if}}
+                                            {{/if}}
+                                        {{/each}}
+                                        <p class="txt mt10">
+                                            {{#each data.addtionalBenf.chooseList}}
+                                                {{#if curData}}
+                                                    {{curData.benfProdNm}} <em class="curAddtion">또는</em>
+                                                {{/if}}
+                                            {{/each}}
+                                        </p>
+                                        <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
+                                </li>
+                                <li>
+                                    <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
+                                    {{#each data.addtionalBenf.chooseList}}
+                                        {{#if compareSepData}}
+                                            <p class="txt">{{{compareSepData.expsBenfNm}}}</p>
+                                            <p class="s-txt nmp-fc-orange">{{{compareSepData.benfDtlCtt}}}</p>
+                                            {{#if compareSepData.benfAmt}}
+                                                <span class="s-price">
+                                                    <del>{{{compareSepData.benfAmt}}}</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>{{{compareSepData.addBenfCnt}}}</em>
+                                                </span>
+                                            {{/if}}
+                                        {{/if}}
+                                    {{/each}}
+                                    <p class="txt mt10">
+                                        {{#each data.addtionalBenf.chooseList}}
+                                            {{#if compareData}}
+                                                {{compareData.benfProdNm}} <em class="compareAddtion">또는</em>
+                                            {{/if}}
+                                        {{/each}}
+                                    </p>
+                                    <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
+                                </li>
+                            </ul>
+                        {{/if}}
+                </div>
             </div>
             <div class="tod-nmp-btn-wrap">
                 <button type="button" class="tod-nmp-btn46 arr changePlan" data-prod-id="{{data.comparePlan.prodId}}">{{data.comparePlan.prodNm}} 요금제 변경하기</button>

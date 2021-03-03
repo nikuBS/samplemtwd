@@ -37,7 +37,6 @@ Tw.ProductRenewalList.prototype = {
       this._scrollFocus();
       this._setInfinityScroll();
       this._checkTheme();
-      console.log(this._checkDefault);
     },
 
     _bindEvent: function() {
@@ -420,7 +419,6 @@ Tw.ProductRenewalList.prototype = {
     _handleLoadMore: function() {
       var viewMoreParam = this._params;
       viewMoreParam.searchLastProdId = $('.tod-cont-section').data('lastproduct');
-      console.log("파람",viewMoreParam);
       this._apiService.request(Tw.API_CMD.BFF_10_0031, viewMoreParam).done($.proxy(this._handleSuccessLoadingData, this));
     },
 
@@ -587,6 +585,26 @@ Tw.ProductRenewalList.prototype = {
         item.tabCode = this._series.seriesClass;
       }
       item.prodSmryExpsTypCd = this._getProdSmryExpsTypCd(item.prodSmryExpsTypCd);
+      if(item.prodSmryExpsTypCd == '2' && item.benefitList) {
+        item.showBenf = {chooseBenefitList :[{}],sepBenefitList:[{}]};
+        for(var k in item.benefitList) {
+          if(item.benefitList[k].useAmt) {
+            item.benefitList[k].useAmt = Tw.FormatHelper.addComma(item.benefitList[k].useAmt)+'원';
+            item.benefitList[k].benfAmt = Tw.FormatHelper.addComma(item.benefitList[k].benfAmt)+'원';
+          }
+          if(!item.benefitList[k].rgstImgAlt) {
+            item.benefitList[k].rgstImgAlt = '';
+          }
+          if(item.benefitList[k].prodBenfTypCd == '02') {
+            item.showBenf.chooseBenefitList.push(item.benefitList[k]);
+          } else if(item.benefitList[k].prodBenfTypCd == '01') {
+            item.showBenf.sepBenefitList.push(item.benefitList[k]);
+          }
+        }
+        item.showBenf.chooseBenefitList.shift();
+        item.showBenf.sepBenefitList.shift();
+      }
+
       item.basOfrVcallTmsCtt = this._isEmptyAmount(item.basOfrVcallTmsCtt) ? null : Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);
       item.basOfrCharCntCtt = this._isEmptyAmount(item.basOfrCharCntCtt) ? null : Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
       if(this._svcInfo) {
@@ -637,13 +655,12 @@ Tw.ProductRenewalList.prototype = {
           }
         } 
       }
-
+      console.log(item);
       return item;
     },
 
     _mapProperDataGroup: function(item) {
       if(item.prodList){
-        console.log("item",item.prodList);
         item.prodList = _.map(item.prodList, $.proxy(this._mapProperData, this));
       }
       return item;
@@ -699,10 +716,8 @@ Tw.ProductRenewalList.prototype = {
           if (_this.isScroll && _this._hasNext == 'true') {
             _this.isScroll = false;
             if(_this._checkDefault == 'N') {
-              console.log("N탐");
               setTimeout($.proxy(_this._handleLoadMore, _this) ,300);
             } else {
-              console.log("Y탐");
               setTimeout($.proxy(_this._handleLoadMoreDefault, _this) ,300);
             }
           }

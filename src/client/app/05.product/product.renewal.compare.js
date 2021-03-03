@@ -3,7 +3,7 @@
  * @author 이윤수
  * @since 2021. 01. 28
  */
-Tw.ProductCompare = function(rootEl, svcInfo, networkInfo) {
+Tw.ProductCompare = function(rootEl, svcInfo, networkInfo, myPLMData, cdn) {
     if( !svcInfo ) {
         return;
     }
@@ -11,15 +11,16 @@ Tw.ProductCompare = function(rootEl, svcInfo, networkInfo) {
     this.$container = rootEl;
     this._svcInfo = svcInfo;
     this._networkInfo = this._parseNetworkInfo(networkInfo);
+    this._myPLMData = myPLMData;
+    this._cdn = cdn;
   
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
     this._historyService = new Tw.HistoryService();
-
+    
     this._init();
 
-    this._getRedisCompare(svcInfo); // 비교 대상에 대한 redis 정보를 얻음
-
+     // 비교 대상에 대한 redis 정보를 얻음
     this._bindEvent();
   };
 
@@ -30,6 +31,7 @@ Tw.ProductCompare.prototype = {
             curPlan : '', 
             comparePlan : '' 
         };
+        
     },
     
     _bindEvent: function() {
@@ -65,137 +67,313 @@ Tw.ProductCompare.prototype = {
         var $target = $(e.currentTarget);
 
         this.compareProdId = $target.data('prod-id');
-        // this.compareData.curPlan = this._dataSetPlan(this.curProdId);
-        // this.compareData.comparePlan = this._dataSetPlan(this.compareProdId);
-        this.compareData.curPlan = {
-          prodId: 'NA00006404',
-          prodNm: '5GX 프라임',
-          basFeeAmt: '75,000원',
-          chartData: this._transChartData('9'),
-          basOfrDataQtyCtt: {
-            value: '9',
-            unit: 'GB'
-          },
-          speedControll: '5Mbps 속도로 계속 사용',
-          dataAddtionOption: {
-            dataOption: '9GB',
-            sharingDataLimit: '9GB',
-            tetheringOption: '9GB',
-            dataRefill: '9GB'
-          },
-          basOfrVcallTmsCtt: {
-            value: '집전화&middot;이동전화 무제한',
-            detail: '+영상 &middot; 부가통화 300분'
-          },
-          basOfrCharCntCtt: '기본제공'
-        };
-        this.compareData.comparePlan = {
-          prodId: 'NA00006405',
-          prodNm: '5GX 플레티넘',
-          basFeeAmt: '125,000원',
-          chartData: this._transChartData('무제한'),
-          basOfrDataQtyCtt: {
-            value: '무제한'
-          },
-          speedControll: '속도 제한없음',
-          dataAddtionOption: {
-            dataOption: '30GB',
-            sharingDataLimit: '30GB',
-            tetheringOption: '30GB',
-            dataRefill: '데이터 무제한으로 리필하기<br>미제공'
-          },
-          basOfrVcallTmsCtt: {
-            value: '집전화&middot;이동전화 무제한',
-            detail: '+영상 &middot; 부가통화 300분'
-          },
-          basOfrCharCntCtt: '기본제공'
-        };
-        this.compareData.compareData = this._makeCompareData(this.compareData);
-        this.compareData.dataAddtionOption = {
-          dataOption: false,
-          sharingDataLimit: true,
-          tetheringOption: true,
-          dataRefill: true
-        };
-        this.compareData.discountBenefits = [{
-          benefitName: '선택 약정 제도',
-          curPlan: {
-            prePrice: '월 45,000원',
-            curPrice: '월 33,725원'
-          },
-          comparePlan: {
-            prePrice: '월 45,000원',
-            curPrice: '월 33,725원'
-          }
-        }];
-        this.compareData.additionBenefits = [{
-          benefitKind:[{
-            benefitClass:'vip',
-            benefitName: 'T멤버십'
-          }],
-          curPlan:[{
-            text: '등급유지'
-          }],
-          comparePlan:[{
-            text: 'VIP 제공'
-          }]
-        },
-        {
-          benefitKind:[{
-            benefitClass:'cover',
-            benefitName: '휴대폰 보험'
-          }],
-          curPlan:[{
-            text: '-'
-          }],
-          comparePlan:[{
-            text: '분실파손80보험<br>50%할인',
-            prePrice: '7,900원',
-            curPrice: '0원'
-          }]
-        },
-        {
-          benefitKind:[{
-            benefitClass:'together',
-            benefitName: '함께쓰기'
-          }],
-          curPlan:[{
-            text: '-'
-          }],
-          comparePlan:[{
-            text: '1회선 무료',
-            prePrice: '7,900원',
-            curPrice: '0원'
-          }]
-        },
-        {
-          benefitKind:[{
-            benefitClass:'wavve',
-            benefitName: '동영상'
-          },
-          {
-            benefitClass:'flo',
-            benefitName: '음악'
-          }],
-          curPlan:[{
-            text: '-'
-          }],
-          comparePlan:[{
-            text: 'wavve 앤 데이터<br>또는 FLO 앤 데이터',
-            option: '1개 무료 제공'
-          }]
-        }];
-        this.compareData.graphData = this._setGraphData();
-        
-        this._openComparePopup(this.compareData, $target);
+        this._getRedisData(this._svcInfo.prodId, this.compareProdId, $target);
     },
 
     /**
    * @desc 각 요금제 API 통해 비교 값 세팅
    * @return {string} (임시) 
    */
-    _dataSetPlan: function(prodId) {
-      return prodId;
+    _setCompareDataCur: function(myPLMData, redisData) {
+      this.compareData.curPlan = {
+        prodId: myPLMData.linkProdId,
+        prodNm: myPLMData.prodNm,
+        basFeeAmt: '',
+        chartData: '',
+        basOfrDataQtyCtt: {
+          value: '',
+          unit: ''
+        },
+        speedControll: '',
+        basOfrVcallTmsCtt: {
+          value: myPLMData.basOfrVcallTmsTxt,
+          detail: ''
+        },
+        basOfrCharCntCtt: myPLMData.basOfrLtrAmtTxt
+      };
+
+      if (myPLMData.basFeeTxt && /^[0-9]+$/.test(myPLMData.basFeeTxt)) {
+        this.compareData.curPlan.basFeeAmt  = Tw.FormatHelper.addComma(myPLMData.basFeeTxt)+'원';
+      } else {
+        this.compareData.curPlan.basFeeAmt = myPLMData.basFeeTxt;
+      }
+
+      var data = '';
+      if (!this._isEmptyAmount(myPLMData.basDataGbTxt)) {
+        this.compareData.curPlan.chartData = this._transChartData(myPLMData.basDataGbTxt);
+        data = Number(myPLMData.basDataGbTxt);
+        if (isNaN(data)) {
+          this.compareData.curPlan.basOfrDataQtyCtt.value = myPLMData.basDataGbTxt;
+        } else {
+          this.compareData.curPlan.basOfrDataQtyCtt.value = myPLMData.basDataGbTxt;
+          this.compareData.curPlan.basOfrDataQtyCtt.unit = Tw.DATA_UNIT.GB;
+        }
+      } else if (!this._isEmptyAmount(myPLMData.basDataMbTxt)) {
+        data = Number(myPLMData.basDataMbTxt);
+        if (isNaN(data)) {
+          this.compareData.curPlan.chartData = this._transChartData(myPLMData.basDataMbTxt);
+          this.compareData.curPlan.basOfrDataQtyCtt.value = myPLMData.basDataMbTxt;
+        } else {
+          this.compareData.curPlan.chartData = this._transChartData(data/1024);
+          this.compareData.curPlan.basOfrDataQtyCtt.value = myPLMData.basDataMbTxt;
+          this.compareData.curPlan.basOfrDataQtyCtt.unit = Tw.DATA_UNIT.MB;
+        }
+      }
+
+      if(redisData.prodBenfCd_02.length > 0) {
+        this.compareData.comparePlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
+      }
+      if(redisData.prodBenfCd_01.length > 0) {
+        this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
+      }
+    },
+
+    _setCompareDataCompare: function($target, redisData) {
+      this.compareData.comparePlan = {
+        prodId: $target.data('prod-id'),
+        prodNm: $target.data('prod-nm'),
+        basFeeAmt: $target.data('prod-fee'),
+        chartData: '',
+        basOfrDataQtyCtt: {
+          value: '',
+          unit: ''
+        },
+        speedControll: '',
+        dataAddtionOption: {
+          dataOption: '30GB',
+          sharingDataLimit: '30GB',
+          tetheringOption: '30GB',
+          dataRefill: '데이터 무제한으로 리필하기<br>미제공'
+        },
+        basOfrVcallTmsCtt: {
+          value: $target.data('prod-call'),
+          detail: ''
+        },
+        basOfrCharCntCtt: $target.data('prod-text')
+      };
+
+      var data = '';
+      var chartData = '';
+      data = $target.data('prod-data').trim();
+      if(data.length != data.replace(/GB/g, '').length) {
+        this.compareData.comparePlan.basOfrDataQtyCtt.value = $target.data('prod-data').replace(/GB/g, '');
+        this.compareData.comparePlan.basOfrDataQtyCtt.unit = 'GB';
+        chartData = data.replace(/GB/g, '');
+      } else if(data.length != data.replace(/MB/g, '').length) {
+        this.compareData.comparePlan.basOfrDataQtyCtt.value = $target.data('prod-data').replace(/MB/g, '');
+        this.compareData.comparePlan.basOfrDataQtyCtt.unit = 'MB';
+        chartData = data.replace(/MB/g, '');
+      } else {
+        this.compareData.comparePlan.basOfrDataQtyCtt.value = data;
+        chartData = data;
+      }
+      this.compareData.comparePlan.chartData = this._transChartData(chartData);
+
+      if(redisData.prodBenfCd_02.length > 0) {
+        this.compareData.comparePlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
+      }
+      if(redisData.prodBenfCd_02.length > 0) {
+        this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
+      }
+
+    },
+
+    _getDataAddtionOption: function(curRedisData,compareRedisData) {
+      if(!curRedisData.prodBenfCd_03 && !compareRedisData.prodBenfCd_03) {
+        return null;
+      }
+      var dataArr = [];
+      for(var i in curRedisData.prodBenfCd_03) {
+        dataArr.push(curRedisData.prodBenfCd_03[i].expsBenfNm);
+      }
+      var optionListArr = dataArr;
+      for(var i in compareRedisData.prodBenfCd_03) {
+        if(dataArr == []) {
+          optionListArr.push(compareRedisData.prodBenfCd_03[i].expsBenfNm);
+        } else {
+          var dataCheck = '';
+          for(var j = 0; (j<dataArr.length) && (dataCheck == ''); j++ ) {
+            if(compareRedisData.prodBenfCd_03[i].expsBenfNm == dataArr[j]) {
+              dataCheck = 'N';
+            }
+            if((dataCheck == '') && (j == dataArr.length - 1)) {
+              optionListArr.push(compareRedisData.prodBenfCd_03[i].expsBenfNm);
+            }
+          }
+        }
+      }
+      var dataOption = [];
+      for(var i in optionListArr) {
+        dataOption.push({list:'',curData:'',compareData:''});
+        dataOption[i].list = optionListArr[i];
+        var checkSave = '';
+        for(var j = 0; (j < curRedisData.prodBenfCd_03.length) && (checkSave == ''); j++) {
+          if(optionListArr[i] == curRedisData.prodBenfCd_03[j].expsBenfNm) {
+            dataOption[i].curData = curRedisData.prodBenfCd_03[j].benfDtlCtt;
+            checkSave = 'Y';
+          } else {
+            dataOption[i].curData = '';
+          }
+          checkSave = '';
+        }
+        for(var j=0; (j< compareRedisData.prodBenfCd_03.length) && (checkSave == ''); j++) {
+          if(optionListArr[i] == compareRedisData.prodBenfCd_03[j].expsBenfNm) {
+            dataOption[i].compareData = compareRedisData.prodBenfCd_03[j].benfDtlCtt;
+            checkSave = 'Y';
+          } else {
+            dataOption[i].compareData = '';
+          }
+        }
+      }
+      return dataOption;
+    },
+
+
+
+    _getAdditionalBenf: function(curRedisData, compareRedisData) {
+      console.log("###########");
+      console.log(curRedisData);
+      console.log(compareRedisData);
+      console.log("###########");
+      if(!curRedisData.prodBenfCd_04 && !compareRedisData.prodBenfCd_04) {
+        return null;
+      }
+      var choDataArr = [];
+      var sepDataArr = [];
+      for(var i in curRedisData.prodBenfCd_04) {
+        if(curRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
+          choDataArr.push(curRedisData.prodBenfCd_04[i].prodBenfTitCd);
+        } else if(curRedisData.prodBenfCd_04[i].prodBenfTypCd == '01') {
+          sepDataArr.push(curRedisData.prodBenfCd_04[i].prodBenfTitCd);
+        }
+      }
+      console.log("^^^^");
+      console.log(choDataArr);
+      console.log(sepDataArr);
+      console.log("^^^^");
+      var choOptionListArr = choDataArr;
+      var sepOptionListArr = sepDataArr;
+      for(var i in compareRedisData.prodBenfCd_04) {
+        if(choDataArr==[]) {
+          if(compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
+            choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
+          } 
+        } else {
+          var dataCheck = '';
+          if(compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
+            for(var j = 0; (j<choDataArr.length) && (dataCheck == ''); j++ ) {
+              if(compareRedisData.prodBenfCd_04[i].prodBenfTitCd == choDataArr[j]) {
+                dataCheck = 'N';
+              }
+              if((dataCheck == '') && (j == compareRedisData.prodBenfCd_04.length - 1)) {
+                choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
+              }
+            }
+          }
+        }
+        if(sepDataArr) {
+          if (compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '01') {
+            sepOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
+          }
+        } else {
+          var dataCheck = '';
+          if(compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '01'){
+            for(var j = 0; (j<sepDataArr.length) && (dataCheck == ''); j++ ) {
+              if(compareRedisData.prodBenfCd_04[i].prodBenfTitCd == sepDataArr[j]) {
+                dataCheck = 'N';
+              }
+              if((dataCheck == '') && (j == compareRedisData.prodBenfCd_04.length - 1)) {
+                sepOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
+              }
+            }
+          }
+        }
+      }
+      console.log("^^^^");
+      console.log(choOptionListArr);
+      console.log(sepOptionListArr);
+      console.log("^^^^");
+      var benfData = {sepList :[],chooseList:[]};
+      var sepCount = 0;
+      for(var i in sepOptionListArr) {
+        var dataCheck = '';
+        for(var j in choOptionListArr) {
+          if(sepOptionListArr[i] == choOptionListArr[j]){
+            dataCheck = 'Y';
+          }
+        }
+        if(dataCheck == '') {
+          for(var j in curRedisData.prodBenfCd_04) {
+            if(sepOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
+              benfData.sepList.push({ benfList:{}, curData:{}, compareData:{} });
+              console.log(benfData);
+              benfData.sepList[sepCount].benfList = curRedisData.prodBenfCd_04[j];
+              benfData.sepList[sepCount].curData = curRedisData.prodBenfCd_04[j];
+            } 
+          }
+          for(var j in compareRedisData.prodBenfCd_04) {
+            if(sepOptionListArr[i] == compareRedisData.prodBenfCd_04[j].prodBenfTitCd) {
+              if(!benfData.sepList[sepCount]) {
+                benfData.sepList.push({ benfList:{}, curData:{}, compareData:{} });
+                benfData.sepList[sepCount].benfList = compareRedisData.prodBenfCd_04[j];
+              }
+              benfData.sepList[sepCount].compareData = compareRedisData.prodBenfCd_04[j];
+            } 
+          }
+          sepCount++;
+        }
+      }
+      for(var i in choOptionListArr) {
+        for(var j in curRedisData.prodBenfCd_04) {
+          if(choOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
+            benfData.chooseList.push({ benfList:{}, curData:{}, compareData:{}, curSepData:{}, compareSepData:{} });
+            benfData.chooseList[i].benfList = curRedisData.prodBenfCd_04[j];
+            if(curRedisData.prodBenfCd_04[j].prodBenfTypCd == '02') {
+              benfData.chooseList[i].curData = curRedisData.prodBenfCd_04[j];
+            } else {
+              benfData.chooseList[i].curSepData = curRedisData.prodBenfCd_04[j];
+            }
+          }
+        }
+        for(var j in compareRedisData.prodBenfCd_04) {
+          if(choOptionListArr[i] == compareRedisData.prodBenfCd_04[j].prodBenfTitCd) {
+            if(!benfData.chooseList[i]) {
+              benfData.chooseList.push({ benfList:{}, curData:{}, compareData:{}, curSepData:{}, compareSepData:{} });
+              benfData.chooseList[i].benfList = compareRedisData.prodBenfCd_04[j];
+            }
+            if(compareRedisData.prodBenfCd_04[j].prodBenfTypCd == '02') {
+              benfData.chooseList[i].compareData = compareRedisData.prodBenfCd_04[j];
+            } else {
+              benfData.chooseList[i].compareSepData = compareRedisData.prodBenfCd_04[j];
+            }
+          } 
+        }
+      }
+      console.log("###########");
+      console.log(benfData);
+      console.log("###########");
+      
+      if(benfData.chooseList){
+        var haveList = '';
+        for(var i = 0; (i < benfData.chooseList.length) || (haveList == 'Y'); i++) {
+          if(benfData.chooseList[i].curData) {
+            haveList = 'Y';
+          }
+          if(haveList == '' && i == benfData.chooseList.length - 1) {
+            benfData.noCurChooseList = true;
+          }
+        }
+        haveList = '';
+        for(var i = 0; (i < benfData.chooseList.length) || (haveList == 'Y'); i++) {
+          if(benfData.chooseList[i].compareData) {
+            haveList = 'Y';
+          }
+          if(haveList == '' && i == benfData.chooseList.length - 1) {
+            benfData.noCompareChooseList = true;
+          }
+        }
+      }
+      return benfData;
     },
 
       /**
@@ -204,38 +382,48 @@ Tw.ProductCompare.prototype = {
    */
 
     _makeCompareData: function(compareData) {
-      var curPlanData = compareData.curPlan.basOfrDataQtyCtt.value ? (compareData.curPlan.basOfrDataQtyCtt.value ? 
-        compareData.curPlan.basOfrDataQtyCtt.value : compareData.curPlan.basOfrMbDataQtyCtt.value/1000 ) : 'unknown';
-      var comparePlanData = compareData.comparePlan.basOfrDataQtyCtt.value ? (compareData.comparePlan.basOfrDataQtyCtt.value ? 
-        compareData.comparePlan.basOfrDataQtyCtt.value : compareData.comparePlan.basOfrMbDataQtyCtt.value / 1000 ) : 'unknown';
+      var curPlanData = compareData.curPlan.basOfrDataQtyCtt.value;
+      var comparePlanData = compareData.comparePlan.basOfrDataQtyCtt.value;
+      var curPlanUnit = compareData.curPlan.basOfrDataQtyCtt.unit;
+      var comparePlanUnit = compareData.comparePlan.basOfrDataQtyCtt.unit;
       var curPlanName = compareData.curPlan.prodNm;
       var comparePlanName = compareData.comparePlan.prodNm;
 
       var curPlanCheck = Number(curPlanData);
       var comparePlanCheck = Number(comparePlanData);
-      if(isNaN(curPlanCheck) || isNaN(comparePlanCheck)) {
-        if(curPlanData === 'unknown') {
-          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + ' 데이터를 제공해요.';
-        } else if(curPlanData === comparePlanData) {
-          return '두 요금제 모두<br>' + comparePlanData + ' 데이터를 제공해요.';
-        } else if(curPlanData === '무제한') {
-          return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + '으로 높은 데이터를 제공해요.';
-        } else if(comparePlanData === '무제한') {
-          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + '으로 높은 데이터를 제공해요.';
+      if(isNaN(curPlanCheck)) {
+        if(curPlanData === '무제한') {
+          if(comparePlanData === '무제한') {
+            return '두 요금제 모두<br>' + curPlanData + ' 데이터를 제공해요.';
+          } else if(!isNaN(comparePlanCheck)) {
+            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 높은 데이터를 제공해요.';
+          } 
+        } else {
+          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + ' 데이터를 제공해요.';
         }
-      } 
-      
-      if(curPlanCheck > comparePlanCheck) {
-        return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + '으로 높은 데이터를 제공해요.';
-      } else if(curPlanCheck < comparePlanCheck) {
-        return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + '으로 높은 데이터를 제공해요.';
-      } else if(curPlanCheck === comparePlanCheck) {
-        return '두 요금제 모두<br>' + comparePlanData + ' 데이터를 제공해요.';
       } else {
-        return '';
+        if(comparePlanData === '무제한') {
+          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 높은 데이터를 제공해요.';
+        } else {
+          if(curPlanUnit == 'MB') {
+            curPlanCheck = curPlanCheck/1024;
+          }
+          if(comparePlanUnit == 'MB') {
+            comparePlanCheck = comparePlanCheck/1024;
+          }
+          if(curPlanCheck > comparePlanCheck) {
+            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 높은 데이터를 제공해요.';
+          } else if(curPlanCheck < comparePlanCheck) {
+            return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 높은 데이터를 제공해요.';
+          } else if(curPlanCheck === comparePlanCheck) {
+            return '두 요금제 모두<br>' + comparePlanData + comparePlanUnit + ' 데이터를 제공해요.';
+          } else {
+            return '';
+          }
+        }
       }
     },
-    
+
     /**
    * @desc 액션시트 출력 시 이용불가 혜택 목록
    * @return {object}
@@ -257,12 +445,16 @@ Tw.ProductCompare.prototype = {
    * @return {Number}
    */
 
-    _transChartData: function(data) {
-      data = Number(data);
+    _transChartData: function(chartData) {
+      data = Number(chartData);
       if(isNaN(data)) {
-        return 100;
+        if(chartData == '무제한') {
+          return 100;
+        } else {
+          return 0;
+        }
       }
-      if(this._networkInfo === '5G') {
+      if(this._networkInfo == '5G') {
         if(data <= 10) {
           return ((data / 10) / 4) * 100;
         } else if(data <= 100) {
@@ -306,6 +498,7 @@ Tw.ProductCompare.prototype = {
    * @return {void} 
    */
     _openComparePopup: function(compareData, $target) {
+      compareData.cdn = this._cdn;
         this._popupService.open({
             hbs: 'renewal.mobileplan.compare',
             layer: true,
@@ -322,6 +515,8 @@ Tw.ProductCompare.prototype = {
    * @return {void} 
    */
     _handleOpenComparePopup: function(compareData) {
+        $('.curAddtion').eq(-1).remove();
+        $('.compareAddtion').eq(-1).remove();
         $('.prev-step').click(_.debounce($.proxy(this._popupService.close, this), 300));
         if(1){
           $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, compareData));
@@ -437,6 +632,8 @@ Tw.ProductCompare.prototype = {
     }, this));
   },
 
+
+
   /**
    * @desc 손실 혜택
    * @return {object} (임시) 
@@ -457,15 +654,14 @@ Tw.ProductCompare.prototype = {
   /**
    * 비교대상에 대한 Redis 정보를 얻음
    */
-  _getRedisCompare: function(svcInfo) {
-    var prodId = svcInfo.prodId;
-    if ( !prodId ) {
-      return;
+  _getRedisData: function(curProdId, compareProdId, $target) {
+    if ( !curProdId || !compareProdId ) {
+      return null;
     }
-
-    this._apiService.request(Tw.NODE_CMD.GET_BENF_PROD_INFO, { prodId : prodId })
-      .done($.proxy(this._successRedis, this))
-      .fail($.proxy(this._errorRedis, this));
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_BENF_PROD_INFO, params: { prodId : curProdId }},
+      { command: Tw.NODE_CMD.GET_BENF_PROD_INFO, params: { prodId : compareProdId }}
+    ]).done($.proxy(this._successRedis, this, $target));
   },
 
 
@@ -473,12 +669,21 @@ Tw.ProductCompare.prototype = {
    * Redis에서 값을 가지고 왔을 때
    * @param {*} redisData 
    */
-  _successRedis: function(res) {
-    if ( res.code === Tw.API_CODE.CODE_00 && res ) {
-      var parse = this._parseBenfProdInfo(res.result);
-      console.log("*****************");
-      console.log(parse);
-      console.log("*****************");
+  _successRedis: function($target,curRes,compareRes) {
+    if ( curRes.code === Tw.API_CODE.CODE_00 && curRes ) {
+      var curParse = this._parseBenfProdInfo(curRes.result);
+      var compareParse = this._parseBenfProdInfo(compareRes.result);
+
+      this.curRedisData = curParse;
+      this.compareRedisData = compareParse;
+      this._setCompareDataCur(this._myPLMData, this.curRedisData);
+      this._setCompareDataCompare($target, this.compareRedisData);
+      this.compareData.graphData = this._setGraphData();
+      this.compareData.compareData = this._makeCompareData(this.compareData);
+      this.compareData.dataBenf = this._getDataAddtionOption(this.curRedisData, this.compareRedisData);
+      var addtionalBenf = this._getAdditionalBenf(this.curRedisData, this.compareRedisData);
+      this.compareData.addtionalBenf = this._parseAdditionBenf(addtionalBenf);
+      this._openComparePopup(this.compareData, $target);
     }
   },
 
@@ -486,11 +691,101 @@ Tw.ProductCompare.prototype = {
    * Redis 정보 Load 에 실패했을 때
    * @param {*} error 
    */
-  _errorRedis: function(error) {
-
+  _errorRedis: function() {
+    return null;
   },
 
+  _parseAddtionBenf: function(addtionalBenf) {
+    addtionalBenf.sepList = _.map(addtionalBenf.sepList, $.proxy(this._parseSepList, this));
+    addtionalBenf.chooseList = _.map(addtionalBenf.chooseList, $.proxy(this._parseChooseList, this));
 
+    return addtionalBenf;
+  },
+
+  _parseSepList: function(sepList) {
+    if (!sepList) {
+      return null;
+    }
+    if(sepList.benfList) {
+      sepList.benfList.titleText = this._getTitleText(sepList.benfList.prodBenfTitCd);
+    }
+    if(sepList.curData) {
+      if(sepList.curData.benfAmt) {
+        sepList.curData.benfAmt = Tw.FormatHelper.addComma(sepList.curData.benfAmt) + '원';
+        if(!sepList.curData.addBenfCnt) {
+          sepList.curData.addBenfCnt = '0원'
+        } else {
+          sepList.curData.addBenfCnt = Tw.FormatHelper.addComma(sepList.curData.addBenfCnt) + '원';
+        }
+      }
+    }
+    if(sepList.compareData) {
+      if(sepList.compareData.benfAmt) {
+        sepList.compareData.benfAmt = Tw.FormatHelper.addComma(sepList.curData.benfAmt) + '원';
+        if(!sepList.compareData.addBenfCnt) {
+          sepList.compareData.addBenfCnt = '0원'
+        } else {
+          sepList.compareData.addBenfCnt = Tw.FormatHelper.addComma(sepList.curData.addBenfCnt) + '원';
+        }
+      }
+    }
+    if(sepList.benfList.prodBenfTitCd == '06' || sepList.benfList.prodBenfTitCd == '10') {
+      sepList.curData.expsBenfNm = null;
+      sepList.compareData.expsBenfNm = null;
+    }
+    return sepList;
+  },
+
+  _parseChooseList: function(chooseList) {
+    if (!chooseList) {
+      return null;
+    }
+    if(chooseList.benfList) {
+      chooseList.benfList.titleText = this._getTitleText(sepList.benfList.prodBenfTitCd);
+    }
+
+    return chooseList;
+  },
+
+  _getTitleText: function(prodBenfTitCd) {
+    var titleText = '';
+    switch(prodBenfTitCd) {
+      case '01':
+        titleText = '데이터 옵션';
+        break;
+      case '02':
+        titleText = '데이터 공유';
+        break;
+      case '03':
+        titleText = '테더링';
+        break;
+      case '04':
+        titleText = '리필하기';
+        break;
+      case '05':
+        titleText = '멤버십';
+        break;
+      case '06':
+        titleText = '영상';
+        break;
+      case '07':
+        titleText = '영상/음악';
+        break;
+      case '08':
+        titleText = '음악';
+        break;
+      case '09':
+        titleText = '보험';
+        break;
+      case '10':
+        titleText = '함께쓰기';
+        break;
+      default:
+        titleText = '';
+        break;
+    }
+    return titleText;
+  },
   /**
    * 혜택 상품에 대한 데이터를 parsing.
    * 
@@ -513,7 +808,7 @@ Tw.ProductCompare.prototype = {
         prodBenfTitCds : ['05', '06', '07', '08', '09', '10'], // 멤버십(05), 영상(06), 영상/음악(07), 음악(08), 보험(09), 함께쓰기(10)
       },
       '05': { // 안내문구
-        prodBenfTitCds : [''],
+        prodBenfTitCds : ['']
       },
     }
 
@@ -552,10 +847,72 @@ Tw.ProductCompare.prototype = {
    * 
    * @param {*} basicPid 현재 요금제
    * @param {*} comparePid 비교대상 요금제
-   * @param {*} type CPR: 요금제 비교, CAG: 요금제 변경
+   * @param {*} type CPR: 요금제 비교, CAG: 요금제 변경, 요금제 변경 (원장으로 바로 이동 시) : CAGC, 요금제 변경 취소 : CPGC
    */
   _sendTracking: function(basicPid, comparePid, type) {
     window.XtractorScript.xtrProdCompare(basicPid, comparePid, type);
+  },
+
+  _isEmptyAmount: function(value) {
+    return !value || value === '' || value === '-';
+  },
+
+  _save: function() {
+    this.compareData.curPlan = {
+      prodId: 'NA00006404',
+      prodNm: '5GX 프라임',
+      basFeeAmt: '75,000원',
+      chartData: this._transChartData('9'),
+      basOfrDataQtyCtt: {
+        value: '9',
+        unit: 'GB'
+      },
+      speedControll: '5Mbps 속도로 계속 사용',
+      dataAddtionOption: {
+        dataOption: '9GB',
+        sharingDataLimit: '9GB',
+        tetheringOption: '9GB',
+        dataRefill: '9GB'
+      },
+      basOfrVcallTmsCtt: {
+        value: '집전화&middot;이동전화 무제한',
+        detail: '+영상 &middot; 부가통화 300분'
+      },
+      basOfrCharCntCtt: '기본제공'
+    };
+    this.compareData.comparePlan = {
+      prodId: 'NA00006405',
+      prodNm: '5GX 플레티넘',
+      basFeeAmt: '125,000원',
+      chartData: this._transChartData('무제한'),
+      basOfrDataQtyCtt: {
+        value: '무제한'
+      },
+      speedControll: '속도 제한없음',
+      dataAddtionOption: {
+        dataOption: '30GB',
+        sharingDataLimit: '30GB',
+        tetheringOption: '30GB',
+        dataRefill: '데이터 무제한으로 리필하기<br>미제공'
+      },
+      basOfrVcallTmsCtt: {
+        value: '집전화&middot;이동전화 무제한',
+        detail: '+영상 &middot; 부가통화 300분'
+      },
+      basOfrCharCntCtt: '기본제공'
+    };
+    
+    this.compareData.discountBenefits = [{
+      benefitName: '선택 약정 제도',
+      curPlan: {
+        prePrice: '월 45,000원',
+        curPrice: '월 33,725원'
+      },
+      comparePlan: {
+        prePrice: '월 45,000원',
+        curPrice: '월 33,725원'
+      }
+    }];
   }
 
 };
