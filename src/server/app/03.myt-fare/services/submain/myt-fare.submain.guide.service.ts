@@ -75,7 +75,7 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
   };
 
   public getMonth(date: string, format: string) {
-    return date && DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', format ) || '';
+    return date && DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'month', format ) || '';
   }
 
   /**
@@ -111,7 +111,7 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
    * @private
    */
   private getSelEndDt (date: string) {
-    return date && DateHelper.getEndOfMonDate( date, 'YYYY.M.D.') || '';
+    return date && DateHelper.getShortDate(date) || '';
   }
 
   private getAllSvcItem(allSvc: any, svcMgmtNum: string) {
@@ -212,7 +212,7 @@ export class MytFareSubmainGuideService extends MytFareSubmainCommonService {
 
   /**
    * 조회조건 날짜 목록을 리턴
-   * 날짜는 모두 말일 -> +1일해서 다음 월로 리턴
+   * 날짜는 모두 말일 -> +1개월 해서 다음 월로 리턴
    */
   private conditionChangeDtListFun(invDtArr: Array<string>) {
     if (!invDtArr) {
