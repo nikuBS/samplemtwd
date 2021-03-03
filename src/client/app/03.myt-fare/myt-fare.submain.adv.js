@@ -30,7 +30,6 @@ Tw.MyTFareSubMainAdv.prototype = {
     this._bindEvent();
     this._getTosAdminMytFareBanner();
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
-    new Tw.LineSelectComponent(this.$container, '.fe-bt-line', true, null);
     // this._lineComponent = new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
     this._makeEid();
   },

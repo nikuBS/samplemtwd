@@ -3,7 +3,7 @@ Tw.FormatHelper = (function () {
    * @desc add leading zeros
    * @param  {number} number
    * @param  {number} length
-   * @returns {string} 
+   * @returns {string}
    * @public
    */
   var leadingZeros = function (number, length) {
@@ -11,7 +11,7 @@ Tw.FormatHelper = (function () {
     return result.length > length ? result : new Array(length - result.length + 1).join('0') + result;
   };
 
-  
+
   /**
    * @desc whether value is empty or not
    * @param  {any} values
@@ -34,9 +34,9 @@ Tw.FormatHelper = (function () {
     return !Array.isArray(array) || !array.length;
   };
 
-  
+
   /**
-   * @desc whether value is object or not 
+   * @desc whether value is object or not
    * @param  {any} value
    * @returns {boolean}
    * @public
@@ -57,7 +57,7 @@ Tw.FormatHelper = (function () {
 
   /**
    * @desc whether value is string
-   * @param {any} value 
+   * @param {any} value
    * @returns {boolean}
    * @public
    */
@@ -147,7 +147,7 @@ Tw.FormatHelper = (function () {
       unit: targetUnit
     };
   };
-  
+
   var convSpDataFormat = function (fee, curUnit) {
     // 데이터 단위가 '원' 인 경우가 있음
     fee = +fee;
@@ -274,7 +274,7 @@ Tw.FormatHelper = (function () {
 
   /**
    * @desc add dot to date
-   * @param {string} date 
+   * @param {string} date
    * @returns {string}
    * @public
    */
@@ -291,12 +291,7 @@ Tw.FormatHelper = (function () {
    */
   var sortObjArrDesc = function (array, key) {
     return array.sort(function (a, b) {
-      var keyA = a[key], keyB = b[key];
-      if (Tw.FormatHelper.isNumber(keyA)) {
-        return (parseInt(keyB, 10) - parseInt(keyA, 10));
-      }
-
-      return keyB > keyA ? 1 : (keyB < keyA ? -1 : 0);
+      return (parseInt(b[key], 10) - parseInt(a[key], 10));
     });
   };
   
@@ -309,12 +304,7 @@ Tw.FormatHelper = (function () {
    */
   var sortObjArrAsc = function (array, key) {
     return array.sort(function (a, b) {
-      var keyA = a[key], keyB = b[key];
-      if (Tw.FormatHelper.isNumber(keyA)) {
-        return (parseInt(keyA, 10) - parseInt(keyB, 10));
-      }
-
-      return keyA > keyB ? 1 : (keyA < keyB ? -1 : 0);
+      return (parseInt(a[key], 10) - parseInt(b[key], 10));
     });
   };
 
@@ -362,7 +352,7 @@ Tw.FormatHelper = (function () {
     }
   };
 
-  
+
   var _getDashedTelephoneNumber = function (phoneNumber) {
     var str = '';
     var centerIdx = -1;
@@ -446,7 +436,7 @@ Tw.FormatHelper = (function () {
 
   /**
    * @desc remove comma
-   * @param {string} str 
+   * @param {string} str
    * @returns {string}
    * @public
    */
@@ -487,7 +477,7 @@ Tw.FormatHelper = (function () {
   /**
    * @desc replace template string
    * @param  {string} template
-   * @param  { key: string } 
+   * @param  { key: string }
    * @public
    */
   var getTemplateString = function (template, values) {
@@ -498,7 +488,7 @@ Tw.FormatHelper = (function () {
 
   /**
    * @desc whether is cellphone number or not
-   * @param {string} sNumber 
+   * @param {string} sNumber
    * @returns {boolean}
    * @public
    */
@@ -511,7 +501,7 @@ Tw.FormatHelper = (function () {
     return regPhone.test(sNumber);
   };
 
-  
+
   /**
    * @param  {object[]} rawData
    * @public
@@ -557,7 +547,7 @@ Tw.FormatHelper = (function () {
 
   /**
    * @desc remove all tags
-   * @param {string} context 
+   * @param {string} context
    * @returns {string}
    * @public
    */
