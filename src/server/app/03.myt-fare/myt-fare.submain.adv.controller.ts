@@ -583,15 +583,20 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     return list;
   }
 
+  // BFF 결과 실패유무
+  private isFail(resp) {
+    return resp.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(resp.result);
+  }
+
   // 사용요금 조회
   private _getUsageFee() {
     return this.apiService.request(API_CMD.BFF_05_0204, {}).map((resp) => {
-      if ( resp.code !== API_CODE.CODE_00 ) {
+      if (resp.code !== API_CODE.CODE_00) {
         return {
           info: resp
         };
       }
-      return FormatHelper.isEmpty(resp.result.invDt) ? null : resp.result;
+      return FormatHelper.isEmpty(resp.result.invDt) ? {} : resp.result;
     });
   }
 
@@ -605,7 +610,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   // 납부/청구 정보 조회
   private _getPaymentInfo() {
     return this.apiService.request(API_CMD.BFF_05_0058, {}).map((resp) => {
-      if (resp.code !== API_CODE.CODE_00) {
+      if (this.isFail(resp)) {
         return undefined;
       }
       const {result} = resp;
@@ -613,14 +618,14 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       if (['4', '5', '8', 'C'].indexOf(result.billTypeCd) > -1) {
         result.billTypeNm = MYT_FARE_BILL_TYPE[result.billTypeCd];
       }
-      return resp.code === API_CODE.CODE_00 ? resp.result : undefined;
+      return resp.result;
     });
   }
 
   // 제휴카드 정보조회
   private _getAffiliateCard() {
     return this.apiService.request(API_CMD.BFF_07_0102, {}).map((resp) => {
-      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+      return resp.code !== API_CODE.CODE_00 ? null : resp.result;
     });
   }
 
@@ -631,7 +636,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_07_0060, {}).map((resp) => {
-      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+      return resp.code !== API_CODE.CODE_00 ? null : resp.result;
     });
   }
 
@@ -642,11 +647,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_05_0149, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
-      }
-      // error
-      return null;
+      return this.isFail(resp) ? null : resp.result;
     });
   }
 
@@ -657,11 +658,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_05_0194, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
-      }
-      // error
-      return null;
+      return this.isFail(resp) ? null : resp.result;
     });
   }
 
@@ -672,7 +669,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0068, {}).map((resp) => {
-      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+      return this.isFail(resp) ? null : resp.result;
     });
   }
 
