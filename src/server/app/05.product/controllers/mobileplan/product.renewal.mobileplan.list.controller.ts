@@ -618,16 +618,16 @@ export default class RenewProductPlans extends TwViewController {
   }
 
   private _getTabCodeInit(plan) {
-    switch (plan.prodFltNm) {
-      case '5G':
+    switch (plan.prodFltId) {
+      case 'F01713':
         return 'prod-5g';
-      case 'LTE':
+      case 'F01121':
         return 'prod-lte';
-      case '3G':
+      case 'F01122':
         return 'prod-band';
-      case '태블릿/2nd device':
+      case 'F01124':
         return 'prod-2nd';
-      case '선불':
+      case 'F01125':
         return 'prod-2nd';
     }
     return '';

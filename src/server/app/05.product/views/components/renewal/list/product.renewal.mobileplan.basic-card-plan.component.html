@@ -118,9 +118,9 @@
 
                         <% if (thisPlan.benefitList.sepBenefitList[k].useAmt) { %>
                             <span class="price">
-                                <del><%= thisPlan.benefitList.sepBenefitList[k].useAmt.value %>원</del>
+                                <del><%= thisPlan.benefitList.sepBenefitList[k].benfAmt.value %>원</del>
                                 <i class="icon-arr">&rarr;</i> 
-                                <em><%= thisPlan.benefitList.sepBenefitList[k].benfAmt.value %>원</em>
+                                <em><%= thisPlan.benefitList.sepBenefitList[k].useAmt.value %>원</em>
                             </span>
                         <% } %>
                         
@@ -143,9 +143,9 @@
 
                             <% if ( thisPlan.benefitList.chooseBenefitList[k].useAmt ) { %>
                                 <span class="price">
-                                    <del><%= thisPlan.benefitList.chooseBenefitList[k].useAmt.value %>원</del>
+                                    <del><%= thisPlan.benefitList.chooseBenefitList[k].benfAmt.value %>원</del>
                                     <i class="icon-arr">&rarr;</i> 
-                                    <em><%= thisPlan.benefitList.chooseBenefitList[k].benfAmt.value %>원</em>
+                                    <em><%= thisPlan.benefitList.chooseBenefitList[k].useAmt.value %>원</em>
                                 </span>
                             <% } %> 
                         </li>
