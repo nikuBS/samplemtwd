@@ -655,7 +655,6 @@ Tw.ProductRenewalList.prototype = {
           }
         } 
       }
-      console.log(item);
       return item;
     },
 

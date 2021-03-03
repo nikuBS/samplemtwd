@@ -219,14 +219,20 @@
                                                 {{/if}}
                                             {{/if}}
                                         {{/each}}
-                                        <p class="txt mt10">
-                                            {{#each data.addtionalBenf.chooseList}}
-                                                {{#if curData}}
-                                                    {{curData.benfProdNm}} <em class="curAddtion">또는</em>
-                                                {{/if}}
-                                            {{/each}}
-                                        </p>
+                                        {{#if data.addtionalBenf.noCurChooseList}}
+                                            <p class="txt mt10">    
+                                                -
+                                            </p>
+                                        {{else}}
+                                            <p class="txt mt10">
+                                                {{#each data.addtionalBenf.chooseList}}
+                                                    {{#if curData}}
+                                                        {{curData.benfProdNm}} <em class="curAddtion">또는</em>
+                                                    {{/if}}
+                                                {{/each}}
+                                            </p>
                                         <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
+                                        {{/if}}
                                 </li>
                                 <li>
                                     <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
@@ -243,14 +249,20 @@
                                             {{/if}}
                                         {{/if}}
                                     {{/each}}
-                                    <p class="txt mt10">
-                                        {{#each data.addtionalBenf.chooseList}}
-                                            {{#if compareData}}
-                                                {{compareData.benfProdNm}} <em class="compareAddtion">또는</em>
-                                            {{/if}}
-                                        {{/each}}
-                                    </p>
+                                    {{#if data.addtionalBenf.noCompareChooseList}}
+                                        <p class="txt mt10">    
+                                            -
+                                        </p>
+                                    {{else}}
+                                        <p class="txt mt10">
+                                            {{#each data.addtionalBenf.chooseList}}
+                                                {{#if compareData}}
+                                                    {{compareData.benfProdNm}} <em class="compareAddtion">또는</em>
+                                                {{/if}}
+                                            {{/each}}
+                                        </p>
                                     <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
+                                    {{/if}}
                                 </li>
                             </ul>
                         {{/if}}

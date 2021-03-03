@@ -265,13 +265,13 @@ Tw.ProductCompare.prototype = {
               if(compareRedisData.prodBenfCd_04[i].prodBenfTitCd == choDataArr[j]) {
                 dataCheck = 'N';
               }
-              if((dataCheck == '') && (j == compareRedisData.prodBenfCd_04.length - 1)) {
+              if((dataCheck == '') && (j == choDataArr - 1)) {
                 choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
               }
             }
           }
         }
-        if(sepDataArr == []) {
+        if(sepDataArr==[]) {
           if (compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '01') {
             sepOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
           }
@@ -282,7 +282,7 @@ Tw.ProductCompare.prototype = {
               if(compareRedisData.prodBenfCd_04[i].prodBenfTitCd == sepDataArr[j]) {
                 dataCheck = 'N';
               }
-              if((dataCheck == '') && (j == compareRedisData.prodBenfCd_04.length - 1)) {
+              if((dataCheck == '') && (j == sepDataArr.length - 1)) {
                 sepOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
               }
             }
@@ -353,21 +353,23 @@ Tw.ProductCompare.prototype = {
       console.log("###########");
       
       if(benfData.chooseList){
-        var haveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) && (haveList == ''); i++) {
+        var curHaveList = '';
+        for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) {
+          console.log('%%%%%%%%%%%',benfData.chooseList[i].curData);
           if(benfData.chooseList[i].curData) {
-            haveList = 'Y';
+            curHaveList = 'Y';
           }
-          if(haveList == '' && i == benfData.chooseList.length - 1) {
+          if(curHaveList == '' && i == benfData.chooseList.length - 1) {
             benfData.noCurChooseList = true;
           }
         }
-        haveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) && (haveList == ''); i++) {
+        var compareHaveList = '';
+        for(var i = 0; (i < benfData.chooseList.length) && (compareHaveList == ''); i++) {
+          console.log('***********',benfData.chooseList[i].compareData);
           if(benfData.chooseList[i].compareData) {
-            haveList = 'Y';
+            CompareHaveList = 'Y';
           }
-          if(haveList == '' && i == benfData.chooseList.length - 1) {
+          if(compareHaveList == '' && i == benfData.chooseList.length - 1) {
             benfData.noCompareChooseList = true;
           }
         }
