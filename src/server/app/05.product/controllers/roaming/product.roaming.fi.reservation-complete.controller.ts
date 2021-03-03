@@ -17,8 +17,12 @@ export default class ProductRoamingFiReservationComplete extends TwViewControlle
     const boothCd   = req.query.boothCd;
     // const rentfrom  = FormatHelper.conDateFormatWithDash(req.query.rentfrom);
     // const rentto    = FormatHelper.conDateFormatWithDash(req.query.rentto);
-    console.log(req.query.rentfrom);
-    console.log(req.query.rentto);
+
+    // console.log('=== rentfrom === : ', req.query.rentfrom);
+    // console.log('=== rentto === : ', req.query.rentto);
+    // console.log('=== boothCd === : ', req.query.boothCd);
+    // console.log('=== countryArr === : ', req.query.countryArr);
+
     const rentfrom  = moment(DateHelper.convDateFormat(req.query.rentfrom)).format('YYYY. M. DD.');
     const rentto    = moment(DateHelper.convDateFormat(req.query.rentto)).format('YYYY. M. DD.');
     
