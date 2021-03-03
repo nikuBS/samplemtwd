@@ -161,13 +161,13 @@
                             <i class="p-icon16-img">
                             <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
                             </i>
-                            {{benfList.expsBenfNm}}
+                             {{benfList.titleText}}
                         </p>
                         <ul class="tb-comp">
                             <li>
                                 {{#if curData}}
                                     <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
-                                    <p class="txt">{{curdata.expsBenfNm}}<br>{{{curData.benfDtlCtt}}}</p>
+                                    <p class="txt">{{curData.expsBenfNm}}<br>{{{curData.benfDtlCtt}}}</p>
                                     {{#if curData.benfAmt}}
                                         <span class="s-price">
                                             <del>{{{curData.benfAmt}}}</del>
@@ -199,7 +199,7 @@
                                 <i class="p-icon16-img">
                                     <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
                                 </i>
-                                {{benfList.expsBenfNm}}
+                                 {{benfList.titleText}}
                             {{/each}}
                         </p>
                         {{#if data.addtionalBenf.chooseList}}

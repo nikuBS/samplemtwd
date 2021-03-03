@@ -121,10 +121,10 @@ Tw.ProductCompare.prototype = {
       }
 
       if(redisData.prodBenfCd_02.length > 0) {
-        this.compareData.comparePlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
+        this.compareData.curPlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
       }
       if(redisData.prodBenfCd_01.length > 0) {
-        this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
+        this.compareData.curPlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
       }
     },
 
@@ -172,7 +172,7 @@ Tw.ProductCompare.prototype = {
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.comparePlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
       }
-      if(redisData.prodBenfCd_02.length > 0) {
+      if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
       }
 
@@ -214,8 +214,8 @@ Tw.ProductCompare.prototype = {
           } else {
             dataOption[i].curData = '';
           }
-          checkSave = '';
         }
+        checkSave = '';
         for(var j=0; (j< compareRedisData.prodBenfCd_03.length) && (checkSave == ''); j++) {
           if(optionListArr[i] == compareRedisData.prodBenfCd_03[j].expsBenfNm) {
             dataOption[i].compareData = compareRedisData.prodBenfCd_03[j].benfDtlCtt;
@@ -271,7 +271,7 @@ Tw.ProductCompare.prototype = {
             }
           }
         }
-        if(sepDataArr) {
+        if(sepDataArr == []) {
           if (compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '01') {
             sepOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
           }
@@ -306,7 +306,6 @@ Tw.ProductCompare.prototype = {
           for(var j in curRedisData.prodBenfCd_04) {
             if(sepOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
               benfData.sepList.push({ benfList:{}, curData:{}, compareData:{} });
-              console.log(benfData);
               benfData.sepList[sepCount].benfList = curRedisData.prodBenfCd_04[j];
               benfData.sepList[sepCount].curData = curRedisData.prodBenfCd_04[j];
             } 
@@ -355,7 +354,7 @@ Tw.ProductCompare.prototype = {
       
       if(benfData.chooseList){
         var haveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) || (haveList == 'Y'); i++) {
+        for(var i = 0; (i < benfData.chooseList.length) && (haveList == ''); i++) {
           if(benfData.chooseList[i].curData) {
             haveList = 'Y';
           }
@@ -364,7 +363,7 @@ Tw.ProductCompare.prototype = {
           }
         }
         haveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) || (haveList == 'Y'); i++) {
+        for(var i = 0; (i < benfData.chooseList.length) && (haveList == ''); i++) {
           if(benfData.chooseList[i].compareData) {
             haveList = 'Y';
           }
@@ -499,6 +498,7 @@ Tw.ProductCompare.prototype = {
    */
     _openComparePopup: function(compareData, $target) {
       compareData.cdn = this._cdn;
+      console.log("@#########",compareData.dataBenf);
         this._popupService.open({
             hbs: 'renewal.mobileplan.compare',
             layer: true,
@@ -515,14 +515,19 @@ Tw.ProductCompare.prototype = {
    * @return {void} 
    */
     _handleOpenComparePopup: function(compareData) {
+        var _this = this;
         $('.curAddtion').eq(-1).remove();
         $('.compareAddtion').eq(-1).remove();
         $('.prev-step').click(_.debounce($.proxy(this._popupService.close, this), 300));
-        if(1){
-          $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, compareData));
+        var curFee = this.compareData.curPlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
+        var compareFee = this.compareData.comparePlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
+        var actSheetBenfData = this._getCurPlanBenefits();
+        console.log("#########",actSheetBenfData);
+        if((Number(curFee) > Number(compareFee)) && actSheetBenfData.lostBenefits){
+          $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, actSheetBenfData));
         } else {
           $('.changePlan').click(function() {
-            this._historyService.replaceURL('/product/callplan?prod_id=' + this.compareData.comparePlan.prodId);
+            _this._historyService.replaceURL('/product/callplan?prod_id=' + _this.compareData.comparePlan.prodId);
           });
         }
     },
@@ -543,7 +548,7 @@ Tw.ProductCompare.prototype = {
         this._popupService.open({
             hbs: 'actionsheet_compare',
             layer: true,
-            data: this._getLostBenefits()
+            data: compareData
         }, 
         $.proxy(this._handleOpenConfirmPopup, this),
         $.proxy(this._handleCloseConfirmPopup, this), 
@@ -639,15 +644,22 @@ Tw.ProductCompare.prototype = {
    * @return {object} (임시) 
    */
 
-  _getLostBenefits: function() {
+  _getCurPlanBenefits: function() {
+    var lostBenefits = [{}];
+    if(this.curRedisData.prodBenfCd_04.length > 0) {
+      for(var i in this.curRedisData.prodBenfCd_04) {
+        if(this.curRedisData.prodBenfCd_04[i].prodBenfTypCd=='01'){
+          lostBenefits.push({benefit: this.curRedisData.prodBenfCd_04[i].expsBenfNm});
+        }
+      }
+    lostBenefits.shift();
+    } else {
+      lostBenefits = false;
+    }
+    
     return {
       prodNm: this.compareData.comparePlan.prodNm,
-      lostBenefits: [
-        {benefit: 'T 멤버십 VIP 기본제공'},
-        {benefit: '분실파손80 보험 100% 할인'},
-        {benefit: '5G 스마트워치 TAB할인 2회선 무료'},
-        {benefit: 'wavve 앤 데이터 플러스'}
-      ]
+      lostBenefits: lostBenefits
     };
   },
 
@@ -673,15 +685,14 @@ Tw.ProductCompare.prototype = {
     if ( curRes.code === Tw.API_CODE.CODE_00 && curRes ) {
       var curParse = this._parseBenfProdInfo(curRes.result);
       var compareParse = this._parseBenfProdInfo(compareRes.result);
-
-      this.curRedisData = curParse;
-      this.compareRedisData = compareParse;
+      this.curRedisData = JSON.parse(JSON.stringify(curParse));
+      this.compareRedisData = JSON.parse(JSON.stringify(compareParse));
       this._setCompareDataCur(this._myPLMData, this.curRedisData);
       this._setCompareDataCompare($target, this.compareRedisData);
       this.compareData.graphData = this._setGraphData();
       this.compareData.compareData = this._makeCompareData(this.compareData);
       this.compareData.dataBenf = this._getDataAddtionOption(this.curRedisData, this.compareRedisData);
-      var addtionalBenf = this._getAdditionalBenf(this.curRedisData, this.compareRedisData);
+      var addtionalBenf = this._getAdditionalBenf(curParse, compareParse);
       this.compareData.addtionalBenf = this._parseAdditionBenf(addtionalBenf);
       this._openComparePopup(this.compareData, $target);
     }
@@ -695,21 +706,23 @@ Tw.ProductCompare.prototype = {
     return null;
   },
 
-  _parseAddtionBenf: function(addtionalBenf) {
+  _parseAdditionBenf: function(addtionalBenf) {
     addtionalBenf.sepList = _.map(addtionalBenf.sepList, $.proxy(this._parseSepList, this));
+
     addtionalBenf.chooseList = _.map(addtionalBenf.chooseList, $.proxy(this._parseChooseList, this));
 
     return addtionalBenf;
   },
 
   _parseSepList: function(sepList) {
-    if (!sepList) {
+    if (sepList.length > 0) {
       return null;
     }
     if(sepList.benfList) {
       sepList.benfList.titleText = this._getTitleText(sepList.benfList.prodBenfTitCd);
     }
     if(sepList.curData) {
+      
       if(sepList.curData.benfAmt) {
         sepList.curData.benfAmt = Tw.FormatHelper.addComma(sepList.curData.benfAmt) + '원';
         if(!sepList.curData.addBenfCnt) {
@@ -721,15 +734,15 @@ Tw.ProductCompare.prototype = {
     }
     if(sepList.compareData) {
       if(sepList.compareData.benfAmt) {
-        sepList.compareData.benfAmt = Tw.FormatHelper.addComma(sepList.curData.benfAmt) + '원';
+        sepList.compareData.benfAmt = Tw.FormatHelper.addComma(sepList.compareData.benfAmt) + '원';
         if(!sepList.compareData.addBenfCnt) {
           sepList.compareData.addBenfCnt = '0원'
         } else {
-          sepList.compareData.addBenfCnt = Tw.FormatHelper.addComma(sepList.curData.addBenfCnt) + '원';
+          sepList.compareData.addBenfCnt = Tw.FormatHelper.addComma(sepList.compareData.addBenfCnt) + '원';
         }
       }
     }
-    if(sepList.benfList.prodBenfTitCd == '06' || sepList.benfList.prodBenfTitCd == '10') {
+    if(sepList.benfList.prodBenfTitCd == '05' || sepList.benfList.prodBenfTitCd == '10') {
       sepList.curData.expsBenfNm = null;
       sepList.compareData.expsBenfNm = null;
     }
@@ -737,11 +750,11 @@ Tw.ProductCompare.prototype = {
   },
 
   _parseChooseList: function(chooseList) {
-    if (!chooseList) {
+    if (chooseList.length > 0) {
       return null;
     }
     if(chooseList.benfList) {
-      chooseList.benfList.titleText = this._getTitleText(sepList.benfList.prodBenfTitCd);
+      chooseList.benfList.titleText = this._getTitleText(chooseList.benfList.prodBenfTitCd);
     }
 
     return chooseList;
@@ -856,63 +869,5 @@ Tw.ProductCompare.prototype = {
   _isEmptyAmount: function(value) {
     return !value || value === '' || value === '-';
   },
-
-  _save: function() {
-    this.compareData.curPlan = {
-      prodId: 'NA00006404',
-      prodNm: '5GX 프라임',
-      basFeeAmt: '75,000원',
-      chartData: this._transChartData('9'),
-      basOfrDataQtyCtt: {
-        value: '9',
-        unit: 'GB'
-      },
-      speedControll: '5Mbps 속도로 계속 사용',
-      dataAddtionOption: {
-        dataOption: '9GB',
-        sharingDataLimit: '9GB',
-        tetheringOption: '9GB',
-        dataRefill: '9GB'
-      },
-      basOfrVcallTmsCtt: {
-        value: '집전화&middot;이동전화 무제한',
-        detail: '+영상 &middot; 부가통화 300분'
-      },
-      basOfrCharCntCtt: '기본제공'
-    };
-    this.compareData.comparePlan = {
-      prodId: 'NA00006405',
-      prodNm: '5GX 플레티넘',
-      basFeeAmt: '125,000원',
-      chartData: this._transChartData('무제한'),
-      basOfrDataQtyCtt: {
-        value: '무제한'
-      },
-      speedControll: '속도 제한없음',
-      dataAddtionOption: {
-        dataOption: '30GB',
-        sharingDataLimit: '30GB',
-        tetheringOption: '30GB',
-        dataRefill: '데이터 무제한으로 리필하기<br>미제공'
-      },
-      basOfrVcallTmsCtt: {
-        value: '집전화&middot;이동전화 무제한',
-        detail: '+영상 &middot; 부가통화 300분'
-      },
-      basOfrCharCntCtt: '기본제공'
-    };
-    
-    this.compareData.discountBenefits = [{
-      benefitName: '선택 약정 제도',
-      curPlan: {
-        prePrice: '월 45,000원',
-        curPrice: '월 33,725원'
-      },
-      comparePlan: {
-        prePrice: '월 45,000원',
-        curPrice: '월 33,725원'
-      }
-    }];
-  }
 
 };
