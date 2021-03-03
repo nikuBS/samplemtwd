@@ -723,7 +723,7 @@ Tw.POPUP_TPL = {
             ' data-img="place-img-01-h" value="인천공항 1터미널 3층 T로밍센터(H 카운터)"' +
         //     // ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>"',
             ' data-officehour="<strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br>"',
-          txt: '인천공항 1터미널 3층 로밍센터(H 카운터)' },
+          txt: '인천공항 1터미널 3층 T로밍센터(H 카운터)' },
         {
           'radio-attr': 'name="r2"',
           'label-attr': 'id="08" data-center="1430456896" data-booth="1430456957"' +
