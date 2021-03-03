@@ -152,11 +152,11 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       nowDate = new Date();
     const prevDate = DateHelper.getEndOfMonSubtractDate(nowDate, '1', 'YYYYMMDD');
 
-    data.claimDt = date;
-    data.month = this._mytFareSubmainGuideService.getMonth(date, 'M');
+    // data.claimDt = date;
+    // data.month = this._mytFareSubmainGuideService.getMonth(date, 'M');
     data.claimFirstDay = DateHelper.getShortFirstDate(date);
-    data.claimLastDay = DateHelper.getShortLastDate(date);
-    data.claimPay = '0';
+    // data.claimLastDay = DateHelper.getShortLastDate(date);
+    // data.claimPay = '0';
     data.totalClaim = '0';
     data.latestDates = [];
 
@@ -174,10 +174,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       data.type = 'UF';
       data.isBroadBand = true;
     }
-    // 선택월이 당월인경우, 1일~4일 에는 요금조회가 안됨
+    // 선택월이 당월이면서 1일~4일 에는 청구요금 영역 미노출함.
     if (date === prevDate && nowDate.getDate() < 5) {
       data.isNotClaimData = true;
-      // return Observable.of(data);
     }
 
     return this._requestClaim(data);
@@ -190,7 +189,6 @@ export default class MyTFareSubmainAdvController extends TwViewController {
           code: resp.code,
           msg: resp.msg
         });
-        // return Observable.of(null);
       }
 
       return this._childService.getChildBillInfo().map( childInfo => {
@@ -323,13 +321,19 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const toDate = new Date();
     const eDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
     const sDate = DateHelper.getEndOfMonSubtractDate(eDate, '5', 'YYYYMMDD');
-    // let haveClaim = false; // 선택월 청구데이터 있는지 여부
+    const getMonth = (_date, _format) => {
+      return this._mytFareSubmainGuideService.getMonth(_date, _format);
+    };
+
     amtList.map( item => {
+      const month = getMonth(item.invDt, 'M');
       // 선택월의 청구금액
-      if (item.invDt === date) {
+      if (!data.claimPay && ((item.invDt === date) || month === getMonth(date, 'M'))) {
         data.claimPay = item.invAmt || '0';
-        // haveClaim = true;
         data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
+        data.claimDt = item.invDt;
+        data.month = month;
+        data.claimLastDay = DateHelper.getShortDate(item.invDt);
       }
 
       /*
@@ -342,21 +346,23 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         latestDates.push(item.invDt);
       }
     });
+    data.claimPay = data.claimPay || '0';
     // 청구 월 리스트에 '이번달' 넣기
-    const prevLastDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
-    if (latestDates.length > 0 && !latestDates.some( month => month === prevLastDate)) {
-      latestDates.splice(0, 0, prevLastDate);
+    // const prevLastDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
+    if (latestDates.length > 0 && !latestDates.some( month => getMonth(month, 'M') === DateHelper.getCurrentMonth(toDate))) {
+      latestDates.splice(0, 0, eDate);
     }
     data.latestDates = latestDates;
+    // 청구리스트에 당월이 없는경우 디폴트 값을 넣어준다.
+    data.claimPay = data.claimPay || '0';
+    data.claimDt = data.claimDt || eDate;
+    data.month = data.month || DateHelper.getCurrentMonth(toDate);
+    data.claimLastDay = data.claimLastDay || DateHelper.getShortDate(eDate);
 
     // 최근 6개월 청구내역이 없는경우, 당월 가입자인지 확인한다.
     return this.checkNewMember(data).map( resp => {
       data = resp;
-      /*if (!isRep) {
-        return;
-      }*/
       /*
-          대표청구 인 경우
           해당월 청구요금, 부분납부한 요금, 잔여납부 금액, 미납
        */
       // 청구금액
