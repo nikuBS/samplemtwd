@@ -540,13 +540,20 @@ Tw.ProductRenewalSubmain.prototype = {
       return;
     }
 
-    var sectionList = this._sectionSort.split(',').reverse(); // div 순서를 순차적으로 적용하기 위해 배열을 reverse 후 insertAfter함.
+    var sectionList = this._sectionSort.split(',');
+    var isQuickFilter = _.find(sectionList, function(item) {
+      return item === 'QUICK_FILTER' ? true : false; // sectionList에 퀵 필터가 있는지 체크
+    });
+    if ( !isQuickFilter && sectionList.length > 0 ) { // 퀵필터가 없으면 sectionList의 멘 앞에 배치 시킨다.
+      sectionList.unshift('QUICK_FILTER');
+    }
+    
     for ( var i=0, len=sectionList.length; i < len; i++ ) {
       var sectionName = sectionList[i];
       var $section = $sections.parent().find('section[data-sort="' + sectionName + '"]');
 
       if ( sectionName && $section ) {
-        $section.insertAfter($sectionTarget);
+        $section.insertAfter($sectionTarget); // insertAfter로 sectionList의 순차적으로 insert 한다.
       }
     }
 
