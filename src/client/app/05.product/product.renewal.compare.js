@@ -139,19 +139,18 @@ Tw.ProductCompare.prototype = {
           unit: ''
         },
         speedControll: '',
-        dataAddtionOption: {
-          dataOption: '30GB',
-          sharingDataLimit: '30GB',
-          tetheringOption: '30GB',
-          dataRefill: '데이터 무제한으로 리필하기<br>미제공'
-        },
         basOfrVcallTmsCtt: {
           value: $target.data('prod-call'),
           detail: ''
         },
         basOfrCharCntCtt: $target.data('prod-text')
       };
-
+      if(this.compareData.comparePlan.basOfrCharCntCtt.trim().length == 0) {
+        this.compareData.comparePlan.basOfrCharCntCtt = null;
+      }
+      if(this.compareData.comparePlan.basOfrVcallTmsCtt.value.trim().length == 0) {
+        this.compareData.comparePlan.basOfrVcallTmsCtt.value = null;
+      }
       var data = '';
       var chartData = '';
       data = $target.data('prod-data').trim();
@@ -717,6 +716,7 @@ Tw.ProductCompare.prototype = {
   },
 
   _parseSepList: function(sepList) {
+    console.log("!!!!!",sepList);
     if (sepList.length > 0) {
       return null;
     }
@@ -724,7 +724,6 @@ Tw.ProductCompare.prototype = {
       sepList.benfList.titleText = this._getTitleText(sepList.benfList.prodBenfTitCd);
     }
     if(sepList.curData) {
-      
       if(sepList.curData.benfAmt) {
         sepList.curData.benfAmt = Tw.FormatHelper.addComma(sepList.curData.benfAmt) + '원';
         if(!sepList.curData.addBenfCnt) {
@@ -752,6 +751,7 @@ Tw.ProductCompare.prototype = {
   },
 
   _parseChooseList: function(chooseList) {
+    console.log("%%%%%%%%%%",chooseList);
     if (chooseList.length > 0) {
       return null;
     }

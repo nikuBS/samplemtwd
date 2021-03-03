@@ -1535,7 +1535,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
                           '{{#each showBenf.sepBenefitList}}' +
                               '<li>' +
                                   '<i class="p-icon16-img">' +
-                                    '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                    '<img src="{{../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
                                   '</i>' +
                                 ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                   '{{#if useAmt}}' + 
@@ -1556,8 +1556,8 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
                               '{{#each showBenf.chooseBenefitList}}' +
                                     '<li>' + 
                                         '<i class="p-icon16-img">' +
-                                          '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
-                                        '</i>'
+                                          '<img src="{{../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                        '</i>' +
                                         ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                         '{{#if useAmt}}' + 
                                             '<span class="price">' +
@@ -1673,7 +1673,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                 '{{#each showBenf.sepBenefitList}}' +
                                     '<li>' +
                                         '<i class="p-icon16-img">' +
-                                          '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                          '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
                                         '</i>' +
                                       ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                         '{{#if useAmt}}' + 
@@ -1694,8 +1694,8 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                     '{{#each showBenf.chooseBenefitList}}' +
                                           '<li>' + 
                                               '<i class="p-icon16-img">' +
-                                                '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
-                                              '</i>'
+                                                '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                              '</i>' +
                                               ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                               '{{#if useAmt}}' + 
                                                   '<span class="price">' +
@@ -1803,7 +1803,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                 '{{#each showBenf.sepBenefitList}}' +
                                     '<li>' +
                                         '<i class="p-icon16-img">' +
-                                          '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                          '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
                                         '</i>' +
                                       ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                         '{{#if useAmt}}' + 
@@ -1824,8 +1824,8 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                     '{{#each showBenf.chooseBenefitList}}' +
                                           '<li>' + 
                                               '<i class="p-icon16-img">' +
-                                                '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
-                                              '</i>'
+                                                '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                              '</i>' +
                                               ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                               '{{#if useAmt}}' + 
                                                   '<span class="price">' +

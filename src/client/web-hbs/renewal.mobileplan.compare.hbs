@@ -133,13 +133,23 @@
                 <h3 class="title"><i class="p-icon16-phone"></i> 음성</h3>
                 <ul class="tb-comp">
                     <li>
-                        <span class="tod-blind">{{data.curPlan.prodNm}}</span> {{{data.curPlan.basOfrVcallTmsCtt.value}}}
+                        <span class="tod-blind">{{data.curPlan.prodNm}}</span>
+                        {{#if data.curPlan.basOfrVcallTmsCtt.value}}
+                            {{{data.curPlan.basOfrVcallTmsCtt.value}}}
+                        {{else}}
+                            -
+                        {{/if}}
                         {{#if data.curPlan.basOfrVcallTmsCtt.detail}}
                             <p class="s-txt">{{{data.curPlan.basOfrVcallTmsCtt.detail}}}</p>
                         {{/if}}
                     </li>
                     <li>
-                        <span class="tod-blind">{{data.comparePlan.prodNm}}</span> {{{data.comparePlan.basOfrVcallTmsCtt.value}}}
+                        <span class="tod-blind">{{data.comparePlan.prodNm}}</span>
+                        {{#if data.comparePlan.basOfrVcallTmsCtt.value}}
+                            {{{data.comparePlan.basOfrVcallTmsCtt.value}}}
+                        {{else}}
+                            -
+                        {{/if}}
                         {{#if data.comparePlan.basOfrVcallTmsCtt.detail}}
                             <p class="s-txt">{{{data.comparePlan.basOfrVcallTmsCtt.detail}}}</p>
                         {{/if}}
@@ -149,8 +159,20 @@
             <div class="rn-comp-box">
                 <h3 class="title"><i class="p-icon16-sms"></i> 문자</h3>
                 <ul class="tb-comp">
-                    <li><span class="tod-blind">{{data.curPlan.prodNm}}</span> {{{data.curPlan.basOfrCharCntCtt}}}</li>
-                    <li><span class="tod-blind">{{data.comparePlan.prodNm}}</span> {{{data.comparePlan.basOfrCharCntCtt}}}</li>
+                    <li><span class="tod-blind">{{data.curPlan.prodNm}}</span>
+                    {{#if data.curPlan.basOfrCharCntCtt}}
+                        {{{data.curPlan.basOfrCharCntCtt}}}
+                    {{else}}
+                        -
+                    {{/if}}
+                    </li>
+                    <li><span class="tod-blind">{{data.comparePlan.prodNm}}</span>
+                    {{#if data.comparePlan.basOfrCharCntCtt}}
+                        {{{data.comparePlan.basOfrCharCntCtt}}}
+                    {{else}}
+                        -
+                    {{/if}}
+                    </li>
                 </ul>
             </div>
             <div class="rn-benefit">
@@ -165,7 +187,7 @@
                         </p>
                         <ul class="tb-comp">
                             <li>
-                                {{#if curData}}
+                                {{#if curData.prodId}}
                                     <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
                                     <p class="txt">{{curData.expsBenfNm}}<br>{{{curData.benfDtlCtt}}}</p>
                                     {{#if curData.benfAmt}}
@@ -175,10 +197,12 @@
                                             <em>{{{curData.addBenfCnt}}}</em>
                                         </span>
                                     {{/if}}
+                                {{else}}
+                                    <p class="txt">-</p>
                                 {{/if}}
                             </li>
                             <li>
-                                {{#if compareData}}
+                                {{#if compareData.prodId}}
                                     <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
                                     <p class="txt">{{compareData.expsBenfNm}}<br>{{{compareData.benfDtlCtt}}}</p>
                                     {{#if compareData.benfAmt}}
@@ -188,6 +212,8 @@
                                             <em>{{{compareData.addBenfCnt}}}</em>
                                         </span>
                                     {{/if}}
+                                {{else}}
+                                    <p class="txt">-</p>
                                 {{/if}}
                             </li>
                         </ul>
@@ -210,13 +236,6 @@
                                             {{#if curSepData}}
                                                 <p class="txt">{{{curSepData.expsBenfNm}}}</p>
                                                 <p class="s-txt nmp-fc-orange">{{{curSepData.benfDtlCtt}}}</p>
-                                                {{#if curSepData.benfAmt}}
-                                                    <span class="s-price">
-                                                        <del>{{{curSepData.benfAmt}}}</del>
-                                                        <i class="icon-arr">&rarr;</i> 
-                                                        <em>{{{curSepData.addBenfCnt}}}</em>
-                                                    </span>
-                                                {{/if}}
                                             {{/if}}
                                         {{/each}}
                                         {{#if data.addtionalBenf.noCurChooseList}}
@@ -240,13 +259,6 @@
                                         {{#if compareSepData}}
                                             <p class="txt">{{{compareSepData.expsBenfNm}}}</p>
                                             <p class="s-txt nmp-fc-orange">{{{compareSepData.benfDtlCtt}}}</p>
-                                            {{#if compareSepData.benfAmt}}
-                                                <span class="s-price">
-                                                    <del>{{{compareSepData.benfAmt}}}</del>
-                                                    <i class="icon-arr">&rarr;</i> 
-                                                    <em>{{{compareSepData.addBenfCnt}}}</em>
-                                                </span>
-                                            {{/if}}
                                         {{/if}}
                                     {{/each}}
                                     {{#if data.addtionalBenf.noCompareChooseList}}

@@ -443,7 +443,7 @@ Tw.ProductRenewalList.prototype = {
   
       var items = _.map(resp.result.products, $.proxy(this._mapProperData, this));
       $('.tod-cont-section').data('lastproduct',items[items.length - 1].prodId);
-      $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass }));
+      $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass, cdn : this._cdn }));
       if(!resp.result.hasNext) {
         this._hasNext = 'false';
         $('.tod-nmp-loading').css('display','none');
@@ -620,7 +620,7 @@ Tw.ProductRenewalList.prototype = {
           } else if(prodFltId == 'F01162') {
             item.filters[i].fltTagKid = 'Y';
           } else if(prodFltId == 'F01165') {
-            item.prodFltList[i].fltTagCollege = 'Y';
+            item.filters[i].fltTagCollege = 'Y';
           }
           if((this._networkInfo[0] == 'F01713' && prodFltId == 'F01713') || (this._networkInfo[0] == 'F01121' && prodFltId == 'F01121')) {
             if(this._svcInfo){
