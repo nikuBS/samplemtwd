@@ -1528,11 +1528,56 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
                   '{{/if}}' +
               '</ul>' +
           '</div>' +
+          '{{#if showBenf}}' +
+                '<div class="rn-prod-benefit">' +
+                    '{{#if showBenf.sepBenefitList}}' +
+                        '<ul>' +
+                          '{{#each showBenf.sepBenefitList}}' +
+                              '<li>' +
+                                  '<i class="p-icon16-img">' +
+                                    '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                  '</i>' +
+                                ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                  '{{#if useAmt}}' + 
+                                      '<span class="price">' +
+                                          '<del>{{useAmt}}</del>' +
+                                          '<i class="icon-arr">&rarr;</i>' +
+                                          '<em>{{benfAmt}}</em>' + 
+                                      '</span>' +
+                                  '{{/if}}' + 
+                              '</li>' +
+                          '{{/each}}' +
+                        '</ul>' +
+                    '{{/if}}' +
+                    '{{#if showBenf.chooseBenefitList}}' +
+                        '<div class="p-benefit-choice">' +
+                            '<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>' +
+                            '<ul>' +
+                              '{{#each showBenf.chooseBenefitList}}' +
+                                    '<li>' + 
+                                        '<i class="p-icon16-img">' +
+                                          '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                        '</i>'
+                                        ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                        '{{#if useAmt}}' + 
+                                            '<span class="price">' +
+                                                '<del>{{useAmt}}</del>' +
+                                                '<i class="icon-arr">&rarr;</i>' +
+                                                '<em>{{benfAmt}}</em>' + 
+                                            '</span>' +
+                                        '{{/if}}' + 
+                                    '</li>' +
+                              '{{/each}}' +
+                            '</ul>' +
+                        '</div>' +
+                    '{{/if}}' +
+                '</div>' +
+            '{{/if}}' +
       '</a>' +
       '{{#if compareBtn}}' +
         '<div class="rn-prod-bottom">' +
             '<div class="rn-btn-right">' +
-                '<a class="btn-compare" data-prod-id="{{prodId}}">내 요금제와 비교</a>' +
+                '<a class="btn-compare" data-prod-id="{{prodId}} data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</a>' +
             '</div>' +
         '</div>' +
       '{{/if}}' +
@@ -1621,11 +1666,56 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                             '{{/if}}' +
                         '</ul>' +
                     '</div>' +
+                    '{{#if showBenf}}' +
+                      '<div class="rn-prod-benefit">' +
+                          '{{#if showBenf.sepBenefitList}}' +
+                              '<ul>' +
+                                '{{#each showBenf.sepBenefitList}}' +
+                                    '<li>' +
+                                        '<i class="p-icon16-img">' +
+                                          '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                        '</i>' +
+                                      ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                        '{{#if useAmt}}' + 
+                                            '<span class="price">' +
+                                                '<del>{{useAmt}}</del>' +
+                                                '<i class="icon-arr">&rarr;</i>' +
+                                                '<em>{{benfAmt}}</em>' + 
+                                            '</span>' +
+                                        '{{/if}}' + 
+                                    '</li>' +
+                                '{{/each}}' +
+                              '</ul>' +
+                          '{{/if}}' +
+                          '{{#if showBenf.chooseBenefitList}}' +
+                              '<div class="p-benefit-choice">' +
+                                  '<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>' +
+                                  '<ul>' +
+                                    '{{#each showBenf.chooseBenefitList}}' +
+                                          '<li>' + 
+                                              '<i class="p-icon16-img">' +
+                                                '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                              '</i>'
+                                              ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                              '{{#if useAmt}}' + 
+                                                  '<span class="price">' +
+                                                      '<del>{{useAmt}}</del>' +
+                                                      '<i class="icon-arr">&rarr;</i>' +
+                                                      '<em>{{benfAmt}}</em>' + 
+                                                  '</span>' +
+                                              '{{/if}}' + 
+                                          '</li>' +
+                                    '{{/each}}' +
+                                  '</ul>' +
+                              '</div>' +
+                          '{{/if}}' +
+                      '</div>' +
+                  '{{/if}}' +
                 '</a>' +
                 '{{#if compareBtn}}' +
                   '<div class="rn-prod-bottom">' +
                       '<div class="rn-btn-right">' +
-                          '<a class="btn-compare" data-prod-id="{{prodId}}">내 요금제와 비교</a>' +
+                          '<a class="btn-compare" data-prod-id="{{prodId}}" data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</a>' +
                       '</div>' +
                   '</div>' +
                 '{{/if}}' +
@@ -1706,11 +1796,56 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                         '{{/if}}' +
                     '</ul>' +
                 '</div>' +
+                '{{#if showBenf}}' +
+                      '<div class="rn-prod-benefit">' +
+                          '{{#if showBenf.sepBenefitList}}' +
+                              '<ul>' +
+                                '{{#each showBenf.sepBenefitList}}' +
+                                    '<li>' +
+                                        '<i class="p-icon16-img">' +
+                                          '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                        '</i>' +
+                                      ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                        '{{#if useAmt}}' + 
+                                            '<span class="price">' +
+                                                '<del>{{useAmt}}</del>' +
+                                                '<i class="icon-arr">&rarr;</i>' +
+                                                '<em>{{benfAmt}}</em>' + 
+                                            '</span>' +
+                                        '{{/if}}' + 
+                                    '</li>' +
+                                '{{/each}}' +
+                              '</ul>' +
+                          '{{/if}}' +
+                          '{{#if showBenf.chooseBenefitList}}' +
+                              '<div class="p-benefit-choice">' +
+                                  '<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>' +
+                                  '<ul>' +
+                                    '{{#each showBenf.chooseBenefitList}}' +
+                                          '<li>' + 
+                                              '<i class="p-icon16-img">' +
+                                                '<img src="{{../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                              '</i>'
+                                              ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                              '{{#if useAmt}}' + 
+                                                  '<span class="price">' +
+                                                      '<del>{{useAmt}}</del>' +
+                                                      '<i class="icon-arr">&rarr;</i>' +
+                                                      '<em>{{benfAmt}}</em>' + 
+                                                  '</span>' +
+                                              '{{/if}}' + 
+                                          '</li>' +
+                                    '{{/each}}' +
+                                  '</ul>' +
+                              '</div>' +
+                          '{{/if}}' +
+                      '</div>' +
+                  '{{/if}}' +
             '</a>' +
             '{{#if compareBtn}}' +
               '<div class="rn-prod-bottom">' +
                   '<div class="rn-btn-right">' +
-                      '<a class="btn-compare" data-prod-id="{{prodId}}">내 요금제와 비교</a>' +
+                      '<a class="btn-compare" data-prod-id="{{prodId}} data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</a>' +
                   '</div>' +
               '</div>' +
             '{{/if}}' +
