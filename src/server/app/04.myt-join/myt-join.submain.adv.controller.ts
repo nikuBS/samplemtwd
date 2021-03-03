@@ -140,7 +140,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         // PPS 인 경우
         data.paidBillInfo = billInfo.dataOnlyYn === 'Y' ?
           FormatHelper.convDataFormat(billInfo.prodAmt || 0, 'MB') : {
-            data: FormatHelper.addComma(billInfo.prodAmt || ''),
+            data: FormatHelper.addComma(billInfo.prodAmt || '0'),
             unit: '원'
           };
       } else {
