@@ -506,6 +506,8 @@ export default class RenewProduct extends TwViewController {
           basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
           basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
           basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
+
+          feePlanProd: data.feePlanProd // 상품정보
         }
       }
     }
@@ -647,6 +649,7 @@ export default class RenewProduct extends TwViewController {
 
         arr.push({
           basProductNm: item.prodNm, // 상품명
+          basProdId: item.prodId, // 상품 코드
           basProductUrl: '/product/callplan?prod_id=' + item.prodId || '#', // 상품 URL (상품 URL이 없다면 #을 리턴)
           basFeeInfo: spec.basFeeInfo,  // 금액
           basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터

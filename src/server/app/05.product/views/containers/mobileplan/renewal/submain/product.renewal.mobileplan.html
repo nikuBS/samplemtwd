@@ -454,12 +454,12 @@
 																<div class="rn-btn-right">
 																	<%# 비교하기를 위한 데이터 세팅:: prod-id(내 상품 코드), prod-nm(상품명), prod-fee(요금), prod-call(통화), prod-text(문자), prod-data(데이터) %>
 																	<% 
-																		let myProductId = svcInfo.prodId;
-																		let myProductName = data.payment.product.basProductNm;
-																		let myProductPrice = data.payment.product.basFeeInfo.value + '원';
-																		let myData = data.payment.product.basOfrDataQtyCtt || ''; // 데이터
-																		let myVoice = data.payment.product.basOfrVcallTmsCtt || ''; // 음성
-																		let mySms = data.payment.product.basOfrCharCntCtt || ''; // 문자
+																		let myProductId = data.themeListData.prodList[i].basProdId;
+																		let myProductName = data.themeListData.prodList[i].basProductNm;
+																		let myProductPrice = data.themeListData.prodList[i].basFeeInfo.value + '원';
+																		let myData = data.themeListData.prodList[i].basOfrDataQtyCtt || ''; // 데이터
+																		let myVoice = data.themeListData.prodList[i].basOfrVcallTmsCtt || ''; // 음성
+																		let mySms = data.themeListData.prodList[i].basOfrCharCntCtt || ''; // 문자
 
 																		if ( myData ) {
 																			myData = myData.isNaN ? myData.value : myData.value.data + myData.value.unit;
@@ -551,6 +551,7 @@
                 </div>
 			</div>
         </div>
+		
         <!--// #contents -->
         <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
@@ -561,7 +562,9 @@
 <script>
     $(document).ready(function () {
 		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', 'M000367');
-		new Tw.ProductCompare($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
+		new Tw.ProductCompare( $('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'), '<%= data.line.quickFilterCode %>', JSON.parse('<%- JSON.stringify( data.payment ? data.payment.product.feePlanProd : "") %>'), '<%= data.cdn %>');
+
+		
     });
 </script>
 
