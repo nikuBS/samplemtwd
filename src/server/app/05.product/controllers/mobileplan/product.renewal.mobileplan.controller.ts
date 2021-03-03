@@ -190,7 +190,7 @@ export default class RenewProduct extends TwViewController {
             , this.isPiAgree(svcInfo) // 개인정보 동의 조회
             // , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
             , this.getSortSection(line) // 섹션 순서 데이터를 조회
-            , this.getThemeListData(line) // 리스트 형 테마 데이터를 조회
+            , this.getThemeListData(svcInfo, line) // 리스트 형 테마 데이터를 조회
             , this.getMyAge(svcInfo) // 나의 나이를 리턴받음
 
             , this.isCompareButton(line, svcInfo) // 비교하기 버튼 출력 여부
@@ -382,10 +382,10 @@ export default class RenewProduct extends TwViewController {
      * 리스트 형 테마 데이터 데이터를 조회 
      * @param svcInfo 
      */
-    private getThemeListData( line ): Observable<any> {
+    private getThemeListData( svcInfo, line ): Observable<any> {
       return this.apiService.request(API_CMD.BFF_10_0204, { 'networkName' : this.getThemeNetworkName(line) }).map((resp) => {
         if (resp.code === API_CODE.CODE_00 ) {
-          if ( this.isObjectEmpty(resp.result) ) { // 객체 데이터가 존재하는지 체크
+          if ( this.isObjectEmpty(resp.result) || !resp.result.prodList ) { // 객체 데이터가 존재하는지 체크
             return null;
           }
 
@@ -401,7 +401,7 @@ export default class RenewProduct extends TwViewController {
               'mblBgImgUrl' : this.getCDN() + resp.result.mblBgImgUrl,
               'mblBgImgNm' : resp.result.mblBgImgNm,
             }, {
-              'prodList': this.convertThemePayment(resp)
+              'prodList': this.convertThemePayment(svcInfo, resp)
             })
           }
           
@@ -617,8 +617,16 @@ export default class RenewProduct extends TwViewController {
      * 테마 요금제에 해당되는 데이터에 대해 의미있는 값으로 변환
      * @param data 
      */
-    private convertThemePayment(data): any {
-      return data.result.prodList.reduce((arr, item) => {
+    private convertThemePayment(svcInfo, data): any {
+      return data.result.prodList.filter(item => {
+        if ( !svcInfo ) {
+          return item;
+        }
+
+        if ( svcInfo.prodId !== item.prodId ) { // 내 요금제와 테마요금제 리스트 중 동일한 상품이 있으면 건너뜀.
+          return item;
+        }
+      }).reduce((arr, item) => {
         const basFeeTxt = FormatHelper.getValidVars(item.basFeeInfo); // 이용요금
         const basOfrVcallTmsCtt = FormatHelper.getValidVars(item.basOfrVcallTmsCtt); // 음성 제공량
         const basOfrCharCntCtt = FormatHelper.getValidVars(item.basOfrCharCntCtt); // 문자 제공량

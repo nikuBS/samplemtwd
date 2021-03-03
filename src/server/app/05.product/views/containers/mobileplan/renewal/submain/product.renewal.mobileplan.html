@@ -560,8 +560,7 @@
 
 <script>
     $(document).ready(function () {
-		// new Tw.ProductRenewalSubmain($('.wrap'), '<%= svcInfo ? svcInfo : "" %>', '<%= pageInfo.menuId ? pageInfo.menuId : "" %>');
-		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', '<%= pageInfo.menuId ? "M000367" : "" %>');
+		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', 'M000367');
 		new Tw.ProductCompare($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
     });
 </script>

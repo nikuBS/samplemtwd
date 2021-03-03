@@ -86,7 +86,7 @@ Tw.ProductRenewalSubmain.prototype = {
   _successTosAdminProductBanner: function (banner, admBanner) {
     var result = [
       { target: 'T', banner: banner },
-      { target: 'C' }
+      { target: 'N' } // 2021.03.02 BE 내용 추가
     ];
 
     result.forEach(function(row) {
@@ -587,7 +587,7 @@ Tw.ProductRenewalSubmain.prototype = {
             layer: true,
           }
           , $.proxy(this._onOpenPiPopup, this, $target, content)
-          , null
+          , $.proxy(this._onClosePiPopup, this)
           , 'pi-layer', $target);
         } else {
           Tw.Error(res.code, res.msg).pop();
@@ -609,6 +609,13 @@ Tw.ProductRenewalSubmain.prototype = {
     layer.find('.inner-html').html(content);
     layer.on('click', '#btn-pi-agree', $.proxy(this._onPiAgree, this)); // 동의 버튼 클릭 시 
     layer.on('click', '#btn-pi-close', $.proxy(this._onPiDisagree, this)); // 동의 안함 버튼 클릭 시 
+  },
+
+  /**
+   * @desc AD 광고 close callback
+   */
+  _onClosePiPopup: function() {
+    // nothing.. 
   },
 
   /**
