@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Observable } from "rxjs";
 import { of } from "rxjs/observable/of";
+import LoggerService from "../services/logger.service";
 import LoginService from "../services/login.service";
 import RedisService from "../services/redis.service";
 import { API_CODE } from "../types/api-command.type";
@@ -13,6 +14,7 @@ class BannerHelper {
 
     private readonly redisService: RedisService;
     private readonly ERROR_MSG: string = '해당 값이 없습니다.';
+    private logger = new LoggerService();
 
     constructor() {
         this.redisService = RedisService.getInstance();
@@ -134,8 +136,11 @@ class BannerHelper {
         let serialNums = '';
         let realTimeBanner, campaignBanner;
 
+        this.logger.error(this, `[textbanner]=>${code}, ${userId}`);
+
         return this.redisService.getData(REDIS_KEY.BANNER_TOS_LINK + code)
             .switchMap((resp) => {  // TOS 정보를 호출함
+                this.logger.error(this, `[textbanner]=>${REDIS_KEY.BANNER_TOS_LINK + code}`, resp);
                 if (resp.code === API_CODE.CODE_00) {
                     if (resp.result.bltnYn === 'N') {
                         return of({
@@ -162,10 +167,13 @@ class BannerHelper {
                 }
             })
             .switchMap((resp) => {// 조회된 TOS정보 중 실시간배너(R)인것만 추출하여 배너를 조회함
+                this.logger.error(this, `[textbanner]=>${REDIS_TOS_KEY.BANNER_TOS_KEY + code + ':' + userId + ':' + svcMgmtNum}`, resp);
                 if (resp.code === API_CODE.CODE_00) {
                     serialNums = (resp.result || '').trim();
                     realTimeBanner = serialNums.split('|').filter(e => e.indexOf('R') > -1);
                     campaignBanner = serialNums.split('|').filter(e => e.indexOf('C') > -1);
+
+                    this.logger.error(this, `[textbanner]=>${serialNums},${realTimeBanner},${campaignBanner}`);
 
                     if (serialNums === '') {
                         return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
@@ -184,6 +192,7 @@ class BannerHelper {
                                     n.result.imgList.forEach(e => p.push(Object.assign({}, n.result.summary, e)));
                                     return p;
                                 }, []);
+                                this.logger.error(this, `[textbanner]=>${imgList}`);
                             return of({
                                 code: API_CODE.CODE_00,
                                 result: {
