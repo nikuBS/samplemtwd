@@ -2301,10 +2301,6 @@ Tw.MYT_FARE_BILL = {
     MINORS_RESTRICTIONS: {
       CODE: 'BIL0031',
       MSG: '미성년자명의 휴대폰 고객은 사용이 제한된 메뉴입니다.'
-    },
-    NO_AUTH_COMPANY: {
-      MSG: '선택된 회선으로<br/>이용할 수 없는 메뉴입니다.',
-      SUB_MSG: '선택하신 회선은<br/>서비스 이용을 할 수 없는 회선입니다.<br/>다른 회선을 선택해주세요.'
     }
   }
 };
