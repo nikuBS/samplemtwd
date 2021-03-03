@@ -473,7 +473,7 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  /*FARE_PAYMENT_MICRO_HISTORY_LIST: [
+  FARE_PAYMENT_MICRO_HISTORY_LIST: [
     {
       'list': [
         {
@@ -488,7 +488,7 @@ Tw.POPUP_TPL = {
         }
       ]
     }
-  ],*/
+  ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
