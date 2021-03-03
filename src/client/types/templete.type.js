@@ -1471,8 +1471,8 @@ Tw.RENEWAL_PRODUCT_SUBMAIN_TOP_BANNER =
     '</button>' + 
     '{{else}}' + 
       '<a tabindex="{{#if @index}}-1{{else}}0{{/if}}" {{#unless isInternalLink}}title="새 창"{{/unless}} role="link">' + 
-        '<img style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="https://cdnm-stg.tworld.co.kr{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' + 
-        // '<img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="{{CDN}}{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' + 
+        // '<img style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="https://cdnm-dev.tworld.co.kr{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' + 
+        '<img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="{{../CDN}}{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' +  
       '</a>' + 
     '{{/if}}' + 
   '</div>' + 

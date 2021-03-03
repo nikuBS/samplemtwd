@@ -61,6 +61,7 @@ Tw.BannerProductService.prototype = {
    */
   _renderBanners: function (target) {
     var CDN = Tw.Environment.cdn;
+    CDN = "https://cdnm-dev.tworld.co.kr"
 
     var hbs = Tw.RENEWAL_PRODUCT_SUBMAIN_TOP_BANNER;
     this._bannerTmpl = Handlebars.compile(hbs);

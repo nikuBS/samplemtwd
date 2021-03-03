@@ -455,6 +455,10 @@ export default class RenewProduct extends TwViewController {
      * 통신망 정보: BFF_05_0220 (http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=112658142)
      */
     private getDeviceCode( svcInfo: any ): Observable<any> {
+      if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) { // 회선이 유선이라면 5G로 리턴함 ( 유선회선에서 0220 API 호출 시 에러발생함 )
+        return Observable.of(DEVICE_CODES.F);
+      }
+
       return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
         if (resp.code === API_CODE.CODE_00) {
 
