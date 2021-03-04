@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+	<link rel="stylesheet" type="text/css" href="/css/roaming-next.css" media="all">
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+	<style type="text/css">		
+		.popup.tw-popup.rm-popup .popup-info .popup-header .popup-title.sub{clear:both;font-size:1.3125rem;font-weight:500}
+		.popup.tw-popup.rm-popup .popup-info .popup-header .pop-close{text-align:right;margin:-0.5rem -0.7rem 1rem 0}
+		.popup.tw-popup.rm-popup .popup-info .popup-header .btn-close{width:2rem;height:2rem;background:url(/img/product/roam/ico_close.svg) no-repeat center center;background-size:1rem auto;text-indent:-999rem}
+		.popup.tw-popup.rm-popup .inner-contents{font-size:1rem}
+		.popup.tw-popup.rm-popup .inner-contents strong{font-weight:400;color:#4b52ff}
+		.popup.tw-popup.rm-popup .popup-contents .bul-list{background:0;padding:0;margin-top:1rem}
+		.popup.tw-popup.rm-popup .popup-contents .bul-list li{margin-top:.2rem;font-size:.875rem;color:#959595}
+		.popup.tw-popup.rm-popup .popup-contents .bul-list li:before{background-color:#959595}
+		.popup.tw-popup.rm-popup .popup-info .bt-bottom li.bt-blue1 button{color:#4559fc;font-weight:400}
+		.popup.tw-popup.rm-popup .popup-info .bt-bottom{border-top:1px solid #e2e2e2}		
+	</style>
+    
+</head>
+
+<script type="text/javascript">
+    $(document).on('ready',function() {
+        skt_landing.action.popup.open({
+            url:'/hbs/',
+            hbs:'RM_poopup',
+			'title': '간편 가입 안내',
+			'title_type': 'sub',
+			'btn-close': 'btn-close pos-right',
+			'editor-type':'간편 가입을 통해 <strong>문자(SMS)로 본인인증</strong> 후 T로밍 상품에 가입하실 수 있습니다. 계속 진행하려면 <strong>확인</strong> 버튼을 눌러 주세요.',
+			'list-cont': [{txt: 'SK텔레콤 고객님 중 문자(SMS)를 받을 수 있는 고객님만 이용하실 수 있습니다.'},
+			{txt: 'T월드 아이디로 로그인하면 상품 페이지에서 바로 로밍 요금제에 가입 가능하며, 이용량/요금 조회, 설정 변경 등의 서비스도 이용하실 수 있습니다.'}],
+			'bt_b': [{
+				style_class: 'bt-blue1 pos-right',
+				txt: '확인'
+			}]
+        });
+    });
+
+</script>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        
+    </div>
+</body>
+
+</html>

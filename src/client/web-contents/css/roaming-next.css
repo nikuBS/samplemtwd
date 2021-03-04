@@ -4069,3 +4069,15 @@ body.rn #roamingGuide .card .sub a{display:block}
 body.rn #roamingGuide .card .point ul li{padding-right:0}
 body.rn #roamingGuide .card .point ul li button{width:100%;padding-right:1.5625rem;text-align:left;font-size:1rem;background:url(https://cdnm.tworld.co.kr/img/product/roam/ico_arrow.png) no-repeat center right;background-size:.8125rem}
 body.rn .guide-dialog .checklist li button[aria-pressed="true"]{background-image:url(https://cdnm.tworld.co.kr/img/product/roam/ico_collapse.svg)}
+
+/* [OP002-13188] 로밍 간편 가입 추가 건 */
+.popup.tw-popup.rm-popup .popup-info .popup-header .popup-title.sub{clear:both;font-size:1.3125rem;font-weight:500}
+.popup.tw-popup.rm-popup .popup-info .popup-header .pop-close{text-align:right;margin:-0.5rem -0.7rem 1rem 0}
+.popup.tw-popup.rm-popup .popup-info .popup-header .btn-close{width:2rem;height:2rem;background:url(/img/product/roam/ico_close.svg) no-repeat center center;background-size:1rem auto;text-indent:-999rem}
+.popup.tw-popup.rm-popup .inner-contents{font-size:1rem}
+.popup.tw-popup.rm-popup .inner-contents strong{font-weight:400;color:#4b52ff}
+.popup.tw-popup.rm-popup .popup-contents .bul-list{background:0;padding:0;margin-top:1rem}
+.popup.tw-popup.rm-popup .popup-contents .bul-list li{margin-top:.2rem;font-size:.875rem;color:#959595}
+.popup.tw-popup.rm-popup .popup-contents .bul-list li:before{background-color:#959595}
+.popup.tw-popup.rm-popup .popup-info .bt-bottom li.bt-blue1 button{color:#4559fc;font-weight:400}
+.popup.tw-popup.rm-popup .popup-info .bt-bottom{border-top:1px solid #e2e2e2}
