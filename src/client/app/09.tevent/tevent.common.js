@@ -162,7 +162,7 @@ Tw.TeventCommon.prototype = {
     this.$eventSelector = this.$container.find('.fe-select-event');
     this.$contentList = this.$container.find('.fe-content-list');
     this.$standardNode = this.$contentList.find('li.fe-first:first');
-    this.$moreBtn = this.$container .find('.fe-more-btn');
+    this.$moreBtn = this.$container.find('.fe-more-btn');
 
     this._uri = window.location.pathname.split('/')[2];
     this._page = 0;
@@ -185,6 +185,11 @@ Tw.TeventCommon.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._closeAgree, this));   // T world 광고정보수신동의 배너 닫기
     this.$container.on('click', '.fe-pop-close', $.proxy(this._closeAgreePop, this));   // T world 광고정보수신동의 팝업 닫기
     this.$container.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
+
+    $('.agree-popup-section').on('click', '.fe-pop-close', $.proxy(this._closeAgreePop, this));   // T world 광고정보수신동의 팝업 닫기
+    $('.agree-popup-section').on('click', '.fe-pop-show-detail', $.proxy(this._showAgreePopDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    $('.agree-popup-section').on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
+    $('.agree-popup-section').on('click', '.fe-pop-agree', $.proxy(this._modAgreePop, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
   },
   /**
    * @function
@@ -286,7 +291,6 @@ Tw.TeventCommon.prototype = {
    * @desc T world 광고정보수신동의 팝업 약관 상세보기
    */
   _showAgreePopDetail: function () {
-    // $('#agree-popup-area').hide();
     this._onCloseAgreePopup();
     Tw.CommonHelper.openTermLayer2('03');
   },
@@ -318,8 +322,6 @@ Tw.TeventCommon.prototype = {
     } else {
       this._setCookie('hideTwdAdRcvAgreePop', this._userId, 365*10);
     }
-
-    // $('#agree-popup-area').hide();
     this._onCloseAgreePopup();
   },
 
@@ -564,11 +566,14 @@ Tw.TeventCommon.prototype = {
    * @desc 광고성정보수신동의 팝업 open
    */
   _onOpenAgreePopup: function() {
-    var template = $('#fe-agree-popup'); // 각각의 메뉴 추가를 위한 handlebar template
-    this._agreePopup = Handlebars.compile(template.html());
-    this.$container.attr('aria-hidden', 'false');
-    this.$container.find('#contents').after(this._agreePopup({ }));
-    this._popupService._addHash(null, 'ad-info-agreement');
+    if($('#fe-agree-popup').length > 0 && $('.agree-popup-section').length > 0) {
+      var template = $('#fe-agree-popup'); // 각각의 메뉴 추가를 위한 handlebar template
+      this._agreePopup = Handlebars.compile(template.html());
+      this.$container.attr('aria-hidden', 'false');
+      $('.agree-popup-section').html(this._agreePopup({}));
+      //this.$container.find('#contents').after(this._agreePopup({}));
+      //this._popupService._addHash(null, 'ad-info-agreement');
+    }
   },
 
   /**
@@ -577,8 +582,11 @@ Tw.TeventCommon.prototype = {
    */
   _onCloseAgreePopup: function () {
     this.$container.attr('aria-hidden', 'true');
+    $('.agree-popup-section').html('');
+    /*
     if ( window.location.hash.indexOf('ad-info-agreement') !== -1 ) {
       this._historyService.goBack();
     }
+    */
   }
 };
