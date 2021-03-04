@@ -158,12 +158,14 @@ _%>
                 <dl class="report-define d-wrap">
                   <dt class="report-tit">최종 가입점</dt>
                   <dd class="report-cont"><%= data.myJoinInfo.saleOrgNm %></dd><!-- 210105 [OP002-10282] 수정01 -->
-                </dl>
+                </dl>w
               </li>
               <%_ } _%>
             </ul>
             <%_ if (!data.myHistory) { _%>
+            <!-- 기획 요청사항으로 문구 제거 (상세에서 노출되기 때문에)
             <p class="warning">2007년 3월 1일 이전 가입 고객은 지점/대리점에서 확인 가능합니다.</p>
+            -->
             <%_ } _%>
             <% if (data.type === 0 || data.type === 3) { %>
             </a>
