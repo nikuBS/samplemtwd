@@ -544,7 +544,7 @@ Tw.ProductRenewalSubmain.prototype = {
       return item === 'QUICK_FILTER' ? true : false; // sectionList에 퀵 필터가 있는지 체크
     });
     if ( !isQuickFilter && sectionList.length > 0 ) { // 퀵필터가 없으면 sectionList의 멘 앞에 배치 시킨다.
-      sectionList.unshift('QUICK_FILTER');
+      sectionList.push('QUICK_FILTER');
     }
     
     for ( var i=0, len=sectionList.length; i < len; i++ ) {
