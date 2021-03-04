@@ -110,7 +110,7 @@ Tw.ProductRenewalSubmain.prototype = {
       if( admBanner.code === Tw.API_CODE.CODE_00 ) {
         row.banner.result.imgList = row.banner.result.imgList.concat( 
           admBanner.result.banners.filter(function(admbnr) {
-            return admbnr.bnnrLocCd === row.target;
+            return admbnr.bnnrLocCd === row.target && admbnr.bnnrLocCd !== 'T';
           }).map( function(admbnr) {
             admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
             if ( admbnr.bnnrImgAltCtt ) {
@@ -137,8 +137,7 @@ Tw.ProductRenewalSubmain.prototype = {
       }
 
       if (!Tw.FormatHelper.isEmpty(bnr.banner.result.summary) && bnr.banner.result.imgList.length > 0) {
-        new Tw.BannerProductService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp);
-        // new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, $.proxy(this._successDrawBanner, this));
+        new Tw.BannerProductService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, bnr.banner.result.prtyTp, this._cdn);
       } 
     }, this));
     

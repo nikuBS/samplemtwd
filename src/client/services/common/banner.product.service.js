@@ -13,8 +13,9 @@
  * @param {string} priority M (admin banner 선노출) or T (tos banner 선노출)
  */
 
-Tw.BannerProductService = function (rootEl, type, banners, target, priority) {
+Tw.BannerProductService = function (rootEl, type, banners, target, priority, cdn) {
   this.$container = rootEl;
+  this._cdn = cdn;
   if ( !banners || banners.length <= 0 ) {
     if ( target ) {
       this.$container.find('#fe-banner-t').parents('div.nogaps').addClass('none');
@@ -61,7 +62,9 @@ Tw.BannerProductService.prototype = {
    */
   _renderBanners: function (target) {
     var CDN = Tw.Environment.cdn;
-    CDN = "https://cdnm-dev.tworld.co.kr"
+    if ( CDN === 'http://localhost:3001' && this._cdn ) {
+      CDN = this._cdn;
+    }
 
     var hbs = Tw.RENEWAL_PRODUCT_SUBMAIN_TOP_BANNER;
     this._bannerTmpl = Handlebars.compile(hbs);
