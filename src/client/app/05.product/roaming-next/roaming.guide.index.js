@@ -40,7 +40,7 @@ Tw.RoamingGuideIndex.prototype = {
     // 내부 다이얼로그 close 핸들러
     $(document).on('click', '.guide-dialog .appbar .close', $.proxy(this._handleClose, this));
     // '출국 전 필수 확인' 다이얼로그, 상황별 데이터 토글 핸들러
-    $(document).on('click', '.card ul li.toggleItem', $.proxy(this._handleToggleItem, this));
+    $(document).on('click', '.card ul button.toggleItem', $.proxy(this._handleToggleItem, this));
     // '출국 전 필수 확인' 다이얼로그, 상황별 데이터, 내용부분 토글을 방지하기 위한 핸들러
     $(document).on('click', '.card li.toggleItem .description', $.proxy(this._handleStop, this));
     // '출국 전 필수 확인' 다이얼로그, 탭 전환 핸들러
@@ -48,7 +48,7 @@ Tw.RoamingGuideIndex.prototype = {
     // 카테고리 선택 핸들러
     $(document).on('click', 'button.tag,a.tag', $.proxy(this._handleTag, this));
     //웹접근성 팝업 닫기 이전 포커스
-    $(document).on('click', '#checklistDialog .close #dialog_close', $.proxy(this._dialog_close, this));
+    $(document).on('click', '#checklistDialog #dialog_close', $.proxy(this._dialog_close, this));
     //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
     this.$container.find('#common-menu button#fe-close').on('click', $.proxy(this._closeGnb, this)); 
   },
@@ -69,11 +69,11 @@ Tw.RoamingGuideIndex.prototype = {
     if(itemId.substring(0,3)==='tag') {  //#해시테그
       setTimeout(function(){
         $('.tags a[data-id="'+ itemId.substring(4,6) +'"]').focus();
-      },500);
+      },200);
     }else{  //출국전 안내 
       setTimeout(function(){
-        $('li[data-checklist='+ itemId +']').focus();
-      },500);
+        $('button[data-checklist='+ itemId +']').focus();
+      },200);
     }
   },
 
@@ -326,7 +326,7 @@ Tw.RoamingGuideIndex.prototype = {
     }
 
     //웹접근성 닫기 버튼에 이전 포커스 id 값 넣어줌
-    $('#checklistDialog .close #dialog_close').attr('data-tabId',itemId);
+    $('#checklistDialog #dialog_close').attr('data-tabId',itemId);
     // 웹접근성 수정건 적용  :출국전 안내사항 팝업, title 포커스
     setTimeout(function(){
       $('#'+itemId).find('.title').focus();
@@ -370,17 +370,16 @@ Tw.RoamingGuideIndex.prototype = {
    */
   toggleCheckItemImpl: function (itemId) {
     var content = $('.guide-contents .' + itemId).html();
-    var descId = '#' + itemId + ' .description';
-    $(descId).html(content);
+    var descId = '#' + itemId;
+    $(descId).next('.description').html(content);
 
     var imagePrefix = Tw.Environment.cdn + '/img/product/roam/ico_';
 
     //웹접근성 aria toogle
     $('#' + itemId).attr('aria-pressed')=='true' ? $('#' + itemId).attr('aria-pressed','false') : $('#' + itemId).attr('aria-pressed','true'); 
 
-
-    $(descId).toggle(200, 'swing', function () {
-      var info = $(descId)[0];
+    $(descId).next('.description').toggle(200, 'swing', function () {
+      var info = $(descId).next('.description')[0];
       var hidden = info.style.display === 'none';
       $('#' + itemId + ' .arrow').attr('src', imagePrefix + (hidden ? 'expand' : 'collapse') + '.svg');
     });

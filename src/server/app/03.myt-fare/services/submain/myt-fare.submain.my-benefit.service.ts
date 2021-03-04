@@ -5,7 +5,7 @@
  * @since 2020.12.30
  *
  */
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import {API_CMD, API_CODE, SESSION_CMD} from '../../../../types/api-command.type';
 import {Request, Response} from 'express';
 import MytFareSubmainCommonService from './myt-fare.submain.common.service';
 import {Observable} from 'rxjs/Observable';
@@ -23,11 +23,10 @@ export class MytFareSubmainMyBenefitService extends MytFareSubmainCommonService 
     this.apiService.setTimeout(3000); // 타임아웃 3초 설정
     return Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_11_0001, {}), // membership
-      this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인 (bill-discounts)
-      this.apiService.request(API_CMD.BFF_05_0094, {}) // 결합할인 (combination-discounts)
-      // this.apiService.request(API_CMD.BFF_05_0196, {}), // 장기가입혜택 (loyalty-benefits)
-    ).map( ([membership, bill, combination/*, loyalty*/]) => {
-      return this.parseData(membership, bill, combination/*, loyalty*/);
+      this.apiService.requestStore(SESSION_CMD.BFF_05_0106, {}), // 요금할인 (bill-discounts)
+      this.apiService.requestStore(SESSION_CMD.BFF_05_0094, {}) // 결합할인 (combination-discounts)
+    ).map( ([membership, bill, combination]) => {
+      return this.parseData(membership, bill, combination);
     });
   }
 

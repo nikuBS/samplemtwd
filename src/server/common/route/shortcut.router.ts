@@ -3,13 +3,12 @@ import { Router, Request, Response, NextFunction } from 'express';
 import RedisService from '../../services/redis.service';
 import EnvHelper from '../../utils/env.helper';
 import { REDIS_KEY } from '../../types/redis.type';
-import { API_CMD, API_CODE } from '../../types/api-command.type';
+import { API_CODE } from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import { SHORTCUT_LOGIN_TYPE } from '../../types/bff.type';
 import FormatHelper from '../../utils/format.helper';
 import BrowserHelper from '../../utils/browser.helper';
 import { COOKIE_KEY } from '../../types_en/common.type';
-import ApiService from '../../services/api.service';
 
 const mapping = require('../mtwmweb_op.json');
 
@@ -25,7 +24,6 @@ class ShortcutRouter {
     this.router = express.Router();
 
     this.router.get('*', (req, res, next) => {
-      // this._apiService = new ApiService();
       const dns = req.headers.host;
       const path = req.path;
 
@@ -51,6 +49,7 @@ class ShortcutRouter {
         });
 
       } else if ( req.path === '/' ) {
+
         // 2020. 10. 28. 영문 페이지 => Menu => Settings => Set English T world as Default 가 설정되어있는 상태라면
         // '/' 로 접근하는 WEB의 페이지에 대해서 '/en/main/home' 으로 redirect 함. [김기남]
         if (!BrowserHelper.isApp(req)) {
@@ -60,6 +59,7 @@ class ShortcutRouter {
             return;
           }
         }
+
         res.redirect('/main/home');
       } else if ( req.path === '/s.jsp' ) {
         const encParam = req.query.p || '';

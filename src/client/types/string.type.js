@@ -1947,9 +1947,9 @@ Tw.ROAMING_RECEIVE_CODE = {
     officeHour: '<strong>업무시간</strong> | 오전 6시 ~ 오후 10시'   // OP002-11408 [로밍][M] baro Box 개선 건
   },
   1000004047: {
-    code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h',
+    code: 'A100110000', name: '인천공항 1터미널 3층 T로밍센터(H 카운터)', img: 'place-img-01-h',
     // officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
-    officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br>'
+    officeHour: '<strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br>'
   },
   1000004055: {
     code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03',
@@ -2301,10 +2301,6 @@ Tw.MYT_FARE_BILL = {
     MINORS_RESTRICTIONS: {
       CODE: 'BIL0031',
       MSG: '미성년자명의 휴대폰 고객은 사용이 제한된 메뉴입니다.'
-    },
-    NO_AUTH_COMPANY: {
-      MSG: '선택된 회선으로<br/>이용할 수 없는 메뉴입니다.',
-      SUB_MSG: '선택하신 회선은<br/>서비스 이용을 할 수 없는 회선입니다.<br/>다른 회선을 선택해주세요.'
     }
   }
 };

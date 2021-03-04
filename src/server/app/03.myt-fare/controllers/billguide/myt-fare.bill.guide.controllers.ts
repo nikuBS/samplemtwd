@@ -22,7 +22,6 @@ import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types/title.type';
 // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
 import CommonHelper from '../../../../utils/common.helper';
 import {MytFareInfoMiriService} from '../../services/info/myt-fare.info.miri.service';
-import MyTFareSubmainAdvController from '../../myt-fare.submain.adv.controller';
 import MyTFareBillGuideAdv from './myt-fare.bill.guide.adv.controllers';
 
 class MyTFareBillGuide extends TwViewController {
@@ -535,20 +534,21 @@ class MyTFareBillGuide extends TwViewController {
   // 월 끝나는 일 구하기
   public getSelEndDt(date: string): any {
     // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
-    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'YYYY.M.D.');
+    // return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'YYYY.M.D.');
+    return DateHelper.getShortDate(date);
   }
   // 청구 년월 구하기
   public getSelClaimDt(date: string): any {
     // return this._commDataInfo.selClaimDt =
     //   DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
     // NOTE this._commDataInfo.selClaimDt에 대입 불필요로 보임.
-    return date ? DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE ) : '';
+    return date ? DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'month', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE ) : '';
   }
   // 청구 년월 구하기
   public getSelClaimDtM(date: string): any {
     // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
     return this._commDataInfo.selClaimDtM =
-      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
+      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'month', 'M' );
   }
 
   /**
@@ -647,7 +647,7 @@ class MyTFareBillGuide extends TwViewController {
     const thisMain = this;
     const dtList = thisMain._billpayInfo.invDtArr ? thisMain._billpayInfo.invDtArr.slice() : [];
     for ( let i = 0; i < dtList.length; i++ ) {
-      dtList[i] = DateHelper.getShortDateWithFormatAddByUnit(dtList[i], 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+      dtList[i] = DateHelper.getShortDateWithFormatAddByUnit(dtList[i], 1, 'month', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
     }
     return dtList;
   }
