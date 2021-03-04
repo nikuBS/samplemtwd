@@ -32,7 +32,8 @@ class MyTFareBillContents extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
+    res.redirect('/myt-fare/bill/small');
+    /*Observable.combineLatest(
       this.getUnusualStatus()
     ).subscribe(([unusualStatus]) => {
       res.render('billcontents/myt-fare.bill.contents.html', {
@@ -41,7 +42,7 @@ class MyTFareBillContents extends TwViewController {
         unusualYn: unusualStatus, // 특이고객 여부
         currentMonth: this.getCurrentMonth() // 현재월 조회
       });
-    });
+    });*/
   }
 
   /**
