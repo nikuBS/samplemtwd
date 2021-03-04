@@ -880,7 +880,7 @@ Tw.MYT_TPL = {
     NEW_CHILD_LINE_TEMP: '<div class="slider-item"><!-- li -->' +
       '<a href="/myt-data/submain/child-hotdata?childSvcMgmtNum={{svcMgmtNum}}" class="slider-inner">' +
       '<dl class="child-info"><dt class="name">{{nickNm}}</dt><dd class="tel">{{svcNum}}</dd></dl>' +
-      '<ul class="report-list item-no-border small"><li class="report-item"><dl class="report-define d-wrap"></dl></li>' +
+      '<ul class="report-list item-no-border"><li class="report-item"><dl class="report-define d-wrap"></dl></li>' +
       '<li class="report-item"><dl class="report-define d-wrap"><dt class="report-tit">잔여량</dt>' +
       '<dd class="report-cont">{{data}}{{unit}}</dd></dl></li></ul></a></div>'
   },
