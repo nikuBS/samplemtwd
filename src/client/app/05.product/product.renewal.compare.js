@@ -64,9 +64,12 @@ Tw.ProductCompare.prototype = {
    * @return {void} 
    */
     _comparePlan: function(e) {
+
+        
         var $target = $(e.currentTarget);
 
         this.compareProdId = $target.data('prod-id');
+        this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CPR');
         this._getRedisData(this._svcInfo.prodId, this.compareProdId, $target);
     },
 
@@ -253,7 +256,6 @@ Tw.ProductCompare.prototype = {
       var choOptionListArr = JSON.parse(JSON.stringify(choDataArr));
       var sepOptionListArr = JSON.parse(JSON.stringify(sepDataArr));
       for(var i in compareRedisData.prodBenfCd_04) {
-        console.log(i);
         if(choDataArr.length == 0) {
           if(compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
             choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
@@ -291,22 +293,29 @@ Tw.ProductCompare.prototype = {
       }
       var finishRoof = '';
       var overlab;
+      console.log("%%%%%%%%",choOptionListArr);
+      console.log("^^^^^^^^^",sepOptionListArr);
       do {
-        overlab = '';
+        overlab = 'N';
         if(choOptionListArr.length == 0 || sepOptionListArr.length == 0) {
           finishRoof = 'Y';
         }
-        for(var i = 0; (i < choOptionListArr.length) && (overlab == ''); i++) {
-          for(var j = 0; (j < sepOptionListArr.length) && (overlab == ''); j++) {
+        for(var i = 0; (i < choOptionListArr.length) && (overlab == 'N'); i++) {
+          for(var j = 0; (j < sepOptionListArr.length) && (overlab == 'N'); j++) {
             if(choOptionListArr[i] == sepOptionListArr[j]){
-              sepOptionListArr.splice(j,j);
-              overlab = 'Y';
+              overlab = j;
             }
-            if((i == choOptionListArr.length - 1) && (j == sepOptionListArr.length -1) && (overlab == '')) {
+            if((i == choOptionListArr.length - 1) && (j == sepOptionListArr.length -1) && (overlab == 'N')) {
               finishRoof = 'Y';
+            }
+            if(overlab != 'N') {
+              overlab = Number(overlab);
+              sepOptionListArr.splice(overlab, 1);
             }
           }
         }
+          console.log(overlab);
+          console.log(sepOptionListArr);
       } while(finishRoof == '');
 
       console.log("^^^^");
@@ -575,6 +584,7 @@ Tw.ProductCompare.prototype = {
           $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, actSheetBenfData));
         } else {
           $('.changePlan').click(function() {
+            this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CAGC');
             _this._historyService.replaceURL('/product/callplan?prod_id=' + _this.compareData.comparePlan.prodId);
           });
         }
@@ -624,6 +634,7 @@ Tw.ProductCompare.prototype = {
    * @return {void} 
    */
     _confirmActionSheet: function() {
+        this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CAG');
         this._historyService.replaceURL('/product/callplan?prod_id=' + this.compareData.comparePlan.prodId);
     },
 
@@ -632,6 +643,7 @@ Tw.ProductCompare.prototype = {
    * @return {void} 
    */
     _cancelActionSheet: function() {
+        this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CPGC');
         setTimeout(this._popupService.close(), 300);
     },
 
