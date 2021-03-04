@@ -129,11 +129,11 @@ body.tod-white{background:#fff}
 .tod-submain .btn-area.short{margin-top:1rem; }
 .tod-submain .btn-area.medium{margin-top:1.875rem}
 .tod-submain .btn-area.high{margin-top:2.5rem}
-.tod-submain .round-btn{display:inline-block; width:100%; height:2.5rem; text-align:center; color:#fff; line-height:1; font-size:0.9375rem; font-weight:500; border-radius: 1.25rem; background: #f65252; padding:0.8125rem 0 0.75rem; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important; }
+.tod-submain .round-btn{display:inline-block; width:100%; height:2.5rem; text-align:center; color:#fff; line-height:1; font-size:0.9375rem; font-weight:500; border-radius: 1.25rem; background: #f65252; padding:0.8125rem 0 0.75rem; }
 .tod-submain .round-btn.line{border:1px solid #f65252; color:#f65252; background:#fff; padding:0.75rem 0 0.6875rem;}
 .tod-submain .btn-area.btn2 [class *= 'btn'] {width:47%; width:-webkit-calc((100% - 0.5rem)/2); width:calc((100% - 0.5rem)/2)}
 .tod-submain .btn-area [class *= 'btn'] + [class *= 'btn']{margin-left:0.5rem}
-.tod-submain .rect-btn{display:inline-block; width:100%; border:solid 1px #e0e0e0; text-align:center; border-radius:0.5rem; height:2.125rem; font-size:0.8125rem; line-height:2.125rem; color:#000; background:#fff; font-weight:600;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
+.tod-submain .rect-btn{display:inline-block; width:100%; border:solid 1px #e0e0e0; text-align:center; border-radius:0.5rem; height:2.125rem; font-size:0.8125rem; line-height:2.125rem; color:#000; background:#fff; font-weight:600;}
 .tod-submain .head-btn-area {display:inline-block; position:absolute; right:0; top:50%; margin-top:-0.8125rem }
 .tod-submain .rect-btn.small{padding:0 0.75rem; line-height:1.625rem; height:1.625rem; border-radius:0.375rem; font-weight:400;}
 .tod-submain .rect-btn.smaller{line-height:1.625rem; height:1.625rem; border-radius:0.375rem; font-weight:400; border-color:#adadad; font-size:0.6875rem; border-radius:0.25rem; font-weight:600}
