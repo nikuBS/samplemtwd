@@ -517,9 +517,9 @@ body.tod-white{background:#fff}
 .tod-submain .chart-area + .tmoa-comment{padding-top:1.5rem; border-top:0.0625rem solid #f2f2f2; margin-top:1.5rem}
 .tod-submain .tmoa-comment .tmoa-link-list{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
 .tod-submain .tmoa-comment .tmoa-link-list .link-item > a{display:block}
-.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share{font-size:0.8125rem; font-weight:600; color:#000; white-space:nowrap }
+.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share{font-size:0.85rem; font-weight:600; color:#000; white-space:nowrap }
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share .like-btn{display:inline-block; font-size:0.6875rem; border:1px solid #ddd; height:1.1875rem; padding:0 0.5rem; line-height:1.1875rem; margin-left:0.125rem; border-radius:0.25rem; font-weight:500} 
-.tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount{font-size:0.75rem; color:#82888f; position:relative; padding-right:0.75rem; text-align:right}
+.tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount{font-size:0.85rem; color:#82888f; position:relative; padding-right:0.75rem; text-align:right}
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount:after{content:''; display:inline-block; width:0.5rem; height:0.75rem; position:absolute; background:url('/img/myt/arrow.svg') no-repeat left top; right:0; top:50%; -webkit-transform:translateY(-50%) scale(.6); transform:translateY(-50%) scale(.6) }
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount strong{color:#157EB2;}
 .tod-submain .tmoa-comment .data-voucher{display:block; border-top:1px dotted #d0d0d0; font-size:13px; font-weight:600; color:#000; overflow:hidden; margin-top:1rem; position:relative;  padding:1rem 0.75rem 0 0; }
