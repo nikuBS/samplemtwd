@@ -19,11 +19,11 @@ _%>
                 <% include ../components/submain/myt-fare.submain.claim-pay.date.html %>
                 <dl class="sel-bill">
                     <dt class="term"><%- data.type !== 'UF' ? '청구요금' : '이용요금' %></dt>
-                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>">
-                        <dd class="charge">
+                    <dd class="charge">
+                        <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>">
                             <%-data.totalClaim%><span class="unit">원</span>
-                        </dd>
-                    </a>
+                        </a>
+                    </dd>
                 </dl>
                 <%_
                     const {prepay='0', remainPayment='0', unpaid='0'} = data;

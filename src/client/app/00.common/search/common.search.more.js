@@ -330,6 +330,7 @@ $.extend(Tw.CommonSearchMore.prototype,
           }
           return;
         }
+        listData.MENU_GROUP = listData.MENU_GROUP || '';
         $parent.append(templateData({ listData: listData, CDN: cdn }));
       }, this));
 

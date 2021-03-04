@@ -709,21 +709,21 @@ Tw.POPUP_TPL = {
   ROAMING_RECEIVE_PLACE: [
     {
       'list': [
-        {
+/*         {
           'radio-attr': 'name="r2"',
           'label-attr': 'id="06" data-center="A100110000" data-booth="1000004045"' +
-            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 T로밍센터(F 카운터)"' + // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
+            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 T로밍센터(F 카운터)"' + */ // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
             // ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>"',
 //            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
-            ' data-officehour="<strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br>"',   // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
-          txt: '인천공항 1터미널 3층 T로밍센터(F 카운터)'  // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
-        },
-        // { 'radio-attr': 'name="r2"',
-        //   'label-attr':'id="07" data-center="A100110000" data-booth="1000004047"' +
-        //     ' data-img="place-img-01-h" value="인천공항 1터미널 3층 로밍센터(H 카운터)"' +
+        //     ' data-officehour="<strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br>"',   // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 OP002-11941
+        //   txt: '인천공항 1터미널 3층 T로밍센터(F 카운터)'  // OP002-11408 [로밍][M] baro Box 개선 건 barobox 문구변경 로밍센터 ->T로밍센터 OP002-11941
+        // },
+        { 'radio-attr': 'name="r2"',
+          'label-attr':'id="07" data-center="A100110000" data-booth="1000004047"' +
+            ' data-img="place-img-01-h" value="인천공항 1터미널 3층 T로밍센터(H 카운터)"' +
         //     // ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>"',
-        //     ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br>"',
-        //   txt: '인천공항 1터미널 3층 로밍센터(H 카운터)' },
+            ' data-officehour="<strong>업무시간</strong> | 오전 6시 ~ 오후 10시<br>"',
+          txt: '인천공항 1터미널 3층 T로밍센터(H 카운터)' },
         {
           'radio-attr': 'name="r2"',
           'label-attr': 'id="08" data-center="1430456896" data-booth="1430456957"' +
@@ -880,7 +880,7 @@ Tw.MYT_TPL = {
     NEW_CHILD_LINE_TEMP: '<div class="slider-item"><!-- li -->' +
       '<a href="/myt-data/submain/child-hotdata?childSvcMgmtNum={{svcMgmtNum}}" class="slider-inner">' +
       '<dl class="child-info"><dt class="name">{{nickNm}}</dt><dd class="tel">{{svcNum}}</dd></dl>' +
-      '<ul class="report-list item-no-border small"><li class="report-item"><dl class="report-define d-wrap"></dl></li>' +
+      '<ul class="report-list item-no-border"><li class="report-item"><dl class="report-define d-wrap"></dl></li>' +
       '<li class="report-item"><dl class="report-define d-wrap"><dt class="report-tit">잔여량</dt>' +
       '<dd class="report-cont">{{data}}{{unit}}</dd></dl></li></ul></a></div>'
   },

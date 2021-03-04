@@ -68,7 +68,7 @@ Tw.MyTFareSubMainGuide.prototype = {
       if( item === $target.data('value').toString()){
         radioAttr += ' checked';
       }
-      var date = moment(Tw.DateHelper.convDateFormat(item)).add(1, 'days');
+      var date = moment(Tw.DateHelper.convDateFormat(item)).add(1, 'month');
       date = Tw.DateHelper.getShortDateWithFormat(date, Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE);
       return {
         'label-attr': idAttr + ' data-value="' + item + '"',

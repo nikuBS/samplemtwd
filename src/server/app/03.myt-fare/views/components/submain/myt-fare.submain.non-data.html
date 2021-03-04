@@ -16,7 +16,7 @@ _%>
                 <div class="warning-inner">
                     <%_
                         let warningMsg = "전월 사용하신<br>이용요금이 없습니다.";
-                        warningMsg = latestDates.length < 1 && !isNewMember ? "최근 6개월 내 청구된<br>해당 월 요금조회가 가능합니다." : warningMsg;
+                        warningMsg = latestDates.length < 1 && !isNewMember ? "최근 6개월 내 청구된<br>요금이 없습니다." : warningMsg;
                         warningMsg = isNotClaimData ? "매월 5일경 부터<br>당월 요금조회가 가능합니다." : warningMsg;
                         warningMsg = billError ? billError.msg : warningMsg;
                     _%>
