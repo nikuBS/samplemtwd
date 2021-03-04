@@ -203,7 +203,7 @@ Tw.ProductCompare.prototype = {
       }
       var dataOption = [];
       for(var i in optionListArr) {
-        dataOption.push({list:'',curData:'',compareData:''});
+        dataOption.push({list:'', curData:null, compareData:null});
         dataOption[i].list = optionListArr[i];
         var checkSave = '';
         for(var j = 0; (j < curRedisData.prodBenfCd_03.length) && (checkSave == ''); j++) {
@@ -250,10 +250,11 @@ Tw.ProductCompare.prototype = {
       console.log(choDataArr);
       console.log(sepDataArr);
       console.log("^^^^");
-      var choOptionListArr = choDataArr;
-      var sepOptionListArr = sepDataArr;
+      var choOptionListArr = JSON.parse(JSON.stringify(choDataArr));
+      var sepOptionListArr = JSON.parse(JSON.stringify(sepDataArr));
       for(var i in compareRedisData.prodBenfCd_04) {
-        if(choDataArr==[]) {
+        console.log(i);
+        if(choDataArr.length == 0) {
           if(compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
             choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
           } 
@@ -270,7 +271,7 @@ Tw.ProductCompare.prototype = {
             }
           }
         }
-        if(sepDataArr==[]) {
+        if(sepDataArr.length == 0) {
           if (compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '01') {
             sepOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
           }
@@ -288,37 +289,51 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
+      var finishRoof = '';
+      var overlab;
+      do {
+        overlab = '';
+        if(choOptionListArr.length == 0 || sepOptionListArr.length == 0) {
+          finishRoof = 'Y';
+        }
+        for(var i = 0; (i < choOptionListArr.length) && (overlab == ''); i++) {
+          for(var j = 0; (j < sepOptionListArr.length) && (overlab == ''); j++) {
+            if(choOptionListArr[i] == sepOptionListArr[j]){
+              sepOptionListArr.splice(j,j);
+              overlab = 'Y';
+            }
+            if((i == choOptionListArr.length - 1) && (j == sepOptionListArr.length -1) && (overlab == '')) {
+              finishRoof = 'Y';
+            }
+          }
+        }
+      } while(finishRoof == '');
+
       console.log("^^^^");
       console.log(choOptionListArr);
       console.log(sepOptionListArr);
       console.log("^^^^");
       var benfData = {sepList :[],chooseList:[]};
-      var sepCount = 0;
       for(var i in sepOptionListArr) {
-        var dataCheck = '';
-        for(var j in choOptionListArr) {
-          if(sepOptionListArr[i] == choOptionListArr[j]){
-            dataCheck = 'Y';
+        for(var j in curRedisData.prodBenfCd_04) {
+          if(sepOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
+            if(curRedisData.prodBenfCd_04[j].prodBenfTypCd == '01') {
+              benfData.sepList.push({ benfList:{}, curData:{}, compareData:{} });
+              benfData.sepList[i].benfList = curRedisData.prodBenfCd_04[j];
+              benfData.sepList[i].curData = curRedisData.prodBenfCd_04[j];
+            }
           }
         }
-        if(dataCheck == '') {
-          for(var j in curRedisData.prodBenfCd_04) {
-            if(sepOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
-              benfData.sepList.push({ benfList:{}, curData:{}, compareData:{} });
-              benfData.sepList[sepCount].benfList = curRedisData.prodBenfCd_04[j];
-              benfData.sepList[sepCount].curData = curRedisData.prodBenfCd_04[j];
-            } 
-          }
-          for(var j in compareRedisData.prodBenfCd_04) {
-            if(sepOptionListArr[i] == compareRedisData.prodBenfCd_04[j].prodBenfTitCd) {
-              if(!benfData.sepList[sepCount]) {
+        for(var j in compareRedisData.prodBenfCd_04) {
+          if(sepOptionListArr[i] == compareRedisData.prodBenfCd_04[j].prodBenfTitCd) {
+            if(compareRedisData.prodBenfCd_04[j].prodBenfTypCd == '01') {
+              if(!benfData.sepList[i]) {
                 benfData.sepList.push({ benfList:{}, curData:{}, compareData:{} });
-                benfData.sepList[sepCount].benfList = compareRedisData.prodBenfCd_04[j];
+                benfData.sepList[i].benfList = compareRedisData.prodBenfCd_04[j];
               }
-              benfData.sepList[sepCount].compareData = compareRedisData.prodBenfCd_04[j];
-            } 
-          }
-          sepCount++;
+              benfData.sepList[i].compareData = compareRedisData.prodBenfCd_04[j];
+            }
+          } 
         }
       }
       for(var i in choOptionListArr) {
@@ -354,25 +369,58 @@ Tw.ProductCompare.prototype = {
       if(benfData.chooseList){
         var curHaveList = '';
         for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) {
-          console.log('%%%%%%%%%%%',benfData.chooseList[i].curData);
-          if(benfData.chooseList[i].curData) {
+          if(benfData.chooseList[i].curData.prodId) {
             curHaveList = 'Y';
           }
           if(curHaveList == '' && i == benfData.chooseList.length - 1) {
+            benfData.noCurSelectList = true;
+          }
+        }
+        curHaveList = '';
+        for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) {
+          if(benfData.chooseList[i].curSepData.prodId) {
+            curHaveList = 'Y';
+          }
+          if(curHaveList == '' && i == benfData.chooseList.length - 1 && benfData.noCurSelectList) {
             benfData.noCurChooseList = true;
           }
         }
         var compareHaveList = '';
         for(var i = 0; (i < benfData.chooseList.length) && (compareHaveList == ''); i++) {
-          console.log('***********',benfData.chooseList[i].compareData);
-          if(benfData.chooseList[i].compareData) {
-            CompareHaveList = 'Y';
+          if(benfData.chooseList[i].compareData.prodId) {
+            compareHaveList = 'Y';
           }
           if(compareHaveList == '' && i == benfData.chooseList.length - 1) {
+            benfData.noCompareSelectList = true;
+          }
+        }
+        compareHaveList = '';
+        for(var i = 0; (i < benfData.chooseList.length) && (compareHaveList == ''); i++) {
+          if(benfData.chooseList[i].compareData.prodId) {
+            compareHaveList = 'Y';
+          }
+          if(compareHaveList == '' && i == benfData.chooseList.length - 1 && benfData.noCompareSelectList) {
             benfData.noCompareChooseList = true;
           }
         }
+        for(var i in benfData.chooseList) {
+          if(benfData.chooseList[i].curSepData.prodBenfTitCd) {
+            if(benfData.chooseList[i].curSepData.prodBenfTitCd == '06' || benfData.chooseList[i].curSepData.prodBenfTitCd == '08') {
+              benfData.curSepDataFW = true;
+              benfData.chooseList[i].curSepData.benfDtlCtt = null;
+            }
+
+          }
+          if(benfData.chooseList[i].compareSepData.prodBenfTitCd) {
+            if(benfData.chooseList[i].compareSepData.prodBenfTitCd == '06' || benfData.chooseList[i].compareSepData.prodBenfTitCd == '08') {
+              benfData.compareSepDataFW = true;
+              benfData.chooseList[i].compareSepData.benfDtlCtt = null;
+            }
+          }
+        }
       }
+      
+      
       return benfData;
     },
 
@@ -499,7 +547,6 @@ Tw.ProductCompare.prototype = {
    */
     _openComparePopup: function(compareData, $target) {
       compareData.cdn = this._cdn;
-      console.log("@#########",compareData.dataBenf);
         this._popupService.open({
             hbs: 'renewal.mobileplan.compare',
             layer: true,
@@ -693,8 +740,11 @@ Tw.ProductCompare.prototype = {
       this.compareData.graphData = this._setGraphData();
       this.compareData.compareData = this._makeCompareData(this.compareData);
       this.compareData.dataBenf = this._getDataAddtionOption(this.curRedisData, this.compareRedisData);
+      console.log("데이터 추가혜택",this.compareData.dataBenf);
       var addtionalBenf = this._getAdditionalBenf(curParse, compareParse);
       this.compareData.addtionalBenf = this._parseAdditionBenf(addtionalBenf);
+      console.log("추가혜택",this.compareData.addtionalBenf);
+      console.log("최종데이터",this.compareData);
       this._openComparePopup(this.compareData, $target);
     }
   },
