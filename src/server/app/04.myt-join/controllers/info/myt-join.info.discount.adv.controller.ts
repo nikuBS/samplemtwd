@@ -57,7 +57,17 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
       this.resDataInfo = discountResp.result;
       this._dataInit();
 
-      this._getFeeInfoDetailCount({ res, svcInfo, faqList });
+      // 3/11 배포 이후 BE 개발 완료 후 진행 - 납부회차 팝업
+      // this._getFeeInfoDetailCount({ res, svcInfo, faqList });
+      this.renderView(res, 'info/myt-join.info.discount.adv.html', {
+        reqQuery: this.reqQuery,
+        svcInfo: svcInfo,
+        pageInfo: this.pageInfo,
+        commDataInfo: this.commDataInfo,
+        resDataInfo: this.resDataInfo,
+        faqList,
+        finishInfoList: this.finishInfoList
+      });
     });
   }
 

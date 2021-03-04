@@ -203,9 +203,10 @@ Tw.MyTJoinInfoDiscountAdv.prototype._bindEvent = function () {
     $target.parent().toggleClass('open');
     $target.attr('aria-pressed', $target.parent().hasClass('open'));
   }, this));
-  this.$feeBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
-  this.$deviceBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
-  this.$deviceBuyBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // 3/11 배포 이후 BE 개발 완료 후 진행 - 납부회차 팝업
+  // this.$feeBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // this.$deviceBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // this.$deviceBuyBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
 };
 Tw.MyTJoinInfoDiscountAdv.prototype._init = function () {
   Tw.MyTJoinInfoDiscount.prototype._init.call(this);
