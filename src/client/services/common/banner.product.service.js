@@ -62,7 +62,7 @@ Tw.BannerProductService.prototype = {
    */
   _renderBanners: function (target) {
     var CDN = Tw.Environment.cdn;
-    if ( CDN === 'http://localhost:3001' && this._cdn ) {
+    if ( (CDN === 'http://localhost:3001' || CDN === 'http://172.23.69.117:3001') && this._cdn ) {
       CDN = this._cdn;
     }
 
