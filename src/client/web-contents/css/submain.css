@@ -359,6 +359,7 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .sel-bill .term.pps{font-size:0.75rem; font-weight:400; color:#333}
 .tod-submain .charge-cont .sel-bill .term.pps .date{display:block}
 .tod-submain .charge-cont .charge{letter-spacing:-2px; font-size:1.875rem; font-weight:700; color:#333; line-height:0.83 }
+.tod-submain .charge-cont .charge a{-webkit-tap-highlight-color:rgba(0, 0, 0, 0) !important; -tap-highlight-color:rgba(0, 0, 0, 0) !important; font-weight:inherit; color:inherit}
 .tod-submain .charge-cont .charge .unit{font-size:1.5rem; font-weight:600; margin-left:0.1875rem; vertical-align:1px; font-weight:400}
 .tod-submain .charge-cont .payment-msg{font-size:0.9375rem; line-height:1.5rem; color:#333; padding:1rem 0 1.5rem; border-top:1px solid #f2f2f2;}
 .tod-submain .charge-cont .payment-msg.top{padding:0 0 1.75rem; border:none; font-size:1.125rem}
@@ -506,7 +507,7 @@ body.tod-white{background:#fff}
 .tod-submain .chart-area .horizon-bar-wrap .left{font-size:0.85rem; color:#333;}
 .tod-submain .chart-area .horizon-bar-wrap .graph-comment{position:absolute; left:0; top:0; width:100%}
 .tod-submain .chart-area .horizon-bar-wrap .total{text-align:left; position:absolute; left:0; top:0; white-space:nowrap; max-width:100%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; letter-spacing:-0.05rem }
-.tod-submain .chart-area .horizon-bar-wrap .left{text-align:left; position:absolute; left:0; bottom:0; font-size:0.75rem; color:#333}
+.tod-submain .chart-area .horizon-bar-wrap .left{text-align:left; position:absolute; left:0; bottom:0; font-size:0.85rem; color:#333}
 .tod-submain .chart-area .horizon-bar-wrap.green .horizon-bar .data .bar{background-color:#00b36e}
 .tod-submain .chart-area .horizon-bar-wrap.yellow .horizon-bar .data .bar{background-color:#ffb119}
 .tod-submain .chart-area .horizon-bar-wrap.gray .horizon-bar .data .bar{background-color: #717171}
