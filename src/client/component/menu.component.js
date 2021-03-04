@@ -185,7 +185,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
               bannerTextComponent.hide();
               $("#common-menu").removeClass('use-tos-banner');
               // close 1 day 
-              Tw.CommonHelper.setCookie('bannerYn', 'Y', 1);
+              var expireDay = 1;
+              Tw.CommonHelper.setLocalStorageExpire('bannerYn', 'Y', expireDay);
               bannerTextComponent.html('');
 
             });
@@ -193,8 +194,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           
         });
     }
-    // console.log('bannerYn checked', Tw.CommonHelper.getCookie('bannerYn'));
-    var bannerYn = Tw.CommonHelper.getCookie('bannerYn') || '';
+    var bannerYn = Tw.CommonHelper.getLocalStorageExpire('bannerYn') || '';
     if (bannerYn === '') {
       // console.log('bannerTextDraw called');
       bannerTextDraw();
