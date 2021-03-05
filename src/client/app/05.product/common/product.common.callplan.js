@@ -686,9 +686,10 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    */
   _reqTerminateDefense: function(joinTermCd, url) {
-
     if(this._prodId === 'NA00007017') {
       new Tw.ProductMobilePlanDowngradeVcoloring(this.$container, this._event, $.proxy(this._reqTerminateDefenseVcoloring, this, joinTermCd, url));
+    }else if(this._prodId === 'NA00007246'){
+      new Tw.ProductMobilePlanDowngradeVcoloringPlus(this.$container, this._event, $.proxy(this._reqTerminateDefenseVcoloring, this, joinTermCd, url));
     }else{
       this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
       .done($.proxy(this._resTerminateDefense, this, joinTermCd, url));
@@ -697,13 +698,14 @@ Tw.ProductCommonCallplan.prototype = {
 
   /**
    * @function
-   * @desc 다운그레이드 Redis 조회 (V컬러링)
+   * @desc 다운그레이드 Redis 조회 (V컬러링, V컬러링플러스)
    * @param joinTermCd - 01 가입 03 해지
    * @param url - 타겟 url
    * @param currentProdId - 현재 상품코드
    * @param mbrNm - 고객명
    */
   _reqTerminateDefenseVcoloring: function(joinTermCd, url) {
+      console.log("KKKK : ~ file: product.common.callplan.js ~ line 708 ~ joinTermCd", joinTermCd)
       this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
       .done($.proxy(this._resTerminateDefense, this, joinTermCd, url));
   },
