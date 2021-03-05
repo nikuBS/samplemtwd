@@ -203,6 +203,11 @@ Tw.ProductSubmain.prototype = {
    * 2021. 02. 17 knkim
    */
   _showRenewal: function() {
+    var url = window.location.pathname;
+    if ( url != '/product/mobileplan' ) {
+      return;
+    }
+
     var html = 
       '<div class="h-person">' +
         '<button data-url="/product/renewal/mobileplan" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A4_B15-20" data-xt_csid="NO" data-xt_action="BC">' +
