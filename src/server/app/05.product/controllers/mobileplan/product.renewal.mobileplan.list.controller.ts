@@ -13,7 +13,7 @@ import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
-import { PRODUCT_CODE, _5GX_PROD_ID } from '../../../../types/bff.type';
+import { SVC_CDGROUP, PRODUCT_CODE, _5GX_PROD_ID } from '../../../../types/bff.type';
 /**
  * @class
  * @desc 
@@ -243,9 +243,6 @@ export default class RenewProductPlans extends TwViewController {
           msg: resp.msg
         };
       }
-      for(var i in resp.result.products){
-        console.log(resp.result.products[i]);
-      }
       
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
@@ -349,6 +346,10 @@ export default class RenewProductPlans extends TwViewController {
     
     return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
+
+        if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) { // 회선이 유선이라면 5G로 리턴함 ( 유선회선에서 0220 API 호출 시 에러발생함 )
+          return this.matchSvcCode('F');
+        }
 
         if ( resp.result.beqpMclEqpClSysCd !== '0101000' ) {
           return this.matchSvcCode('E');
@@ -704,8 +705,6 @@ export default class RenewProductPlans extends TwViewController {
     }
     list.chooseBenefitList.shift();
     list.sepBenefitList.shift();
-    console.log("chooseBenefitList",list.chooseBenefitList);
-    console.log("sepBenefitList",list.sepBenefitList);
     return list;
   }
 
