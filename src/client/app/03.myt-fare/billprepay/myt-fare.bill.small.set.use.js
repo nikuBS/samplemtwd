@@ -104,11 +104,13 @@ Tw.MyTFareBillSmallSetUse.prototype = {
    * @returns {string}
    */
   _getToastMessage: function (tx) {
-    var message = Tw.ALERT_MSG_MYT_FARE.MICRO_USE;
+    var message = Tw.ALERT_MSG_MYT_FARE.MICRO_USE; // 휴대폰 결제 사용이
 
-    if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) {
+    if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) { // 사용
+      // 허용되었습니다.
       message += Tw.ALERT_MSG_MYT_FARE.ALLOW + Tw.ALERT_MSG_MYT_FARE.MSG_DONE;
     } else {
+      // 차단되었습니다.
       message += Tw.ALERT_MSG_MYT_FARE.PROHIBIT + Tw.ALERT_MSG_MYT_FARE.MSG_DONE;
     }
 
