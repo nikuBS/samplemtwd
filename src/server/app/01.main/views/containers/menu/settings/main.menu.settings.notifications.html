@@ -38,9 +38,9 @@
                             <span class="widget">
                                 <span class="widget-box switch">
                                     <span class="btn-switch type1 <%= isServiceOn ? 'on' : null %>">
-                                        <span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false">
+                                        <span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false" aria-label="상품, 서비스 등 정보 / 헤택 알림동의">
                                             <span class="off-tx">거부</span>
-                                            <input id="fe-chk-service" type="checkbox" /> <!-- 웹 접근성 위배 조치 NO.19 -->
+                                            <input id="fe-chk-service" type="checkbox" aria-hidden="true"/> <!-- 웹 접근성 위배 조치 NO.19 -->
                                             <span class="on-tx">허용</span>
                                         </span>
                                     </span>
@@ -76,9 +76,9 @@
                             <span class="widget">
                                 <span class="widget-box switch">
                                     <span class="btn-switch type1 <%= isRecommendOn ? 'on' : null %>">
-                                        <span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false">
+                                        <span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false" aria-label="추천상품,주변매장 정보 알림동의">
                                             <span class="off-tx">거부</span>
-                                            <input id="fe-chk-recommend" type="checkbox"/> <!-- 웹 접근성 위배 조치 No.19-->
+                                            <input id="fe-chk-recommend" type="checkbox" aria-hidden="true"/> <!-- 웹 접근성 위배 조치 No.19-->
                                             <span class="on-tx">허용</span>
                                         </span>
                                     </span>
@@ -120,9 +120,9 @@
                             <span class="widget">
                                 <span class="widget-box switch">
                                     <span class="btn-switch type1 <%= isTplaceOn ? 'on' : null %>">
-                                        <span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false">
+                                        <span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false" aria-label="매장 방문 시 맞춤 정보 제공 설정 허용">
                                             <span class="off-tx">거부</span>
-                                            <input id="fe-chk-tplace" type="checkbox" title="매장 방문 시 맞춤 정보 알림 여부" />
+                                            <input id="fe-chk-tplace" type="checkbox" title="매장 방문 시 맞춤 정보 알림 여부" aria-hidden="true"/>
                                             <span class="on-tx">허용</span>
                                         </span>
                                     </span>

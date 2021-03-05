@@ -184,6 +184,11 @@ Tw.BenefitIndex.prototype = {
     }, this));   // T world 광고정보수신동의 배너 닫기
     this.$container.on('click', '.fe-pop-close', $.proxy(this._onCloseAgreePopup, this));   // T world 광고정보수신동의 팝업 닫기
     this.$container.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 다음에 보기 처리
+
+    $('.agree-popup-section').on('click', '.fe-pop-close', $.proxy(this._onCloseAgreePopup, this));   // T world 광고정보수신동의 팝업 닫기
+    $('.agree-popup-section').on('click', '.fe-pop-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    $('.agree-popup-section').on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
+    $('.agree-popup-section').on('click', '.fe-pop-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
   },
 
   /**
@@ -1033,11 +1038,14 @@ Tw.BenefitIndex.prototype = {
    * @desc 광고성정보수신동의 팝업 open
    */
   _onOpenAgreePopup: function () {
-    var template = $('#fe-agree-popup'); // 각각의 메뉴 추가를 위한 handlebar template
-    this._agreePopup = Handlebars.compile(template.html());
-    this.$container.attr('aria-hidden', 'false');
-    this.$container.find('#contents').after(this._agreePopup({}));
-    this._popupService._addHash(null, 'ad-info-agreement');
+    if($('#fe-agree-popup').length > 0 && $('.agree-popup-section').length > 0) {
+      var template = $('#fe-agree-popup'); // 각각의 메뉴 추가를 위한 handlebar template
+      this._agreePopup = Handlebars.compile(template.html());
+      this.$container.attr('aria-hidden', 'false');
+      $('.agree-popup-section').html(this._agreePopup({}));
+      //this.$container.prepend(this._agreePopup({}));
+      //this._popupService._addHash(null, 'ad-info-agreement');
+    }
   },
 
   /**
@@ -1046,8 +1054,9 @@ Tw.BenefitIndex.prototype = {
    */
   _onCloseAgreePopup: function () {
     this.$container.attr('aria-hidden', 'true');
-    if (window.location.hash.indexOf('ad-info-agreement') !== -1) {
+    $('.agree-popup-section').html('');
+    /* if (window.location.hash.indexOf('ad-info-agreement') !== -1) {
       this._historyService.goBack();
-    }
+    } */
   }
 };
