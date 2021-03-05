@@ -34,14 +34,14 @@ class RedisService {
       redisKey = EnvHelper.getEnvironment('REDIS_PWD_KEY');
     }
     
-    let password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
-      redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
+    // let password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
+    //   redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
     // if ( redisKey ==='cbbfc0a5-099e-4d03-8028-a18263f2b2d6' ) {
     //   password = 'devmtwd1@';
     // }
-    password = 'devmtwd1@';
-    // const password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
-    //     redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
+    // password = 'devmtwd1@';
+    const password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
+        redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
 
     this.redisOption = Object.assign(this.envRedis, {
       prefix: 'session:',

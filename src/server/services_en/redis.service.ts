@@ -39,7 +39,7 @@ class RedisService {
     // if ( redisKey ==='cbbfc0a5-099e-4d03-8028-a18263f2b2d6' ) {
     //   password = 'devmtwd1@';
     // }
-    password = 'devmtwd1@';
+    // password = 'devmtwd1@';
     // const password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
     //     redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
 

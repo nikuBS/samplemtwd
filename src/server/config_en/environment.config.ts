@@ -1,21 +1,21 @@
 const environment = {
   local: {
-    BFF_SERVER: 'http://61.250.19.37:31010',
+    BFF_SERVER: 'http://61.250.19.37:31020',
     BFF_SERVER_G: 'http://211.188.180.73:31020',
     CDN: 'http://localhost:3001',
     CDN_ORIGIN: 'http://localhost:3001',
     SHORTCUT: 'skt.sh:3000',
     REDIS: {
       host: '61.250.19.37',
-      port: 31300,
-      // port: 32300,
+      // port: 31300,
+      port: 32300,
       password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
     REDIS_TOS: {
       host: '61.250.19.37',
-      port: 31400,
-      // port: 32400,
+      // port: 31400,
+      port: 32400,
       db: 0
     },
     REDIS_PWD_KEY: 'cbbfc0a5-099e-4d03-8028-a18263f2b2d6',  // Will be removed
