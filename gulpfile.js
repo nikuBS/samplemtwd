@@ -573,9 +573,7 @@ gulp.task('css-rb', function () {
     'src/client/web-contents/css/roaming-next.css',
     'src/client/web-contents/css/m_product.css',
     'src/client/web-contents/css/product.css',
-    'src/client/web-contents/css/font_spoqa.css',
-    'src/client/web-contents/css/product_temp.css',
-    'src/client/web-contents/css/product_temp2.css'])
+    'src/client/web-contents/css/font_spoqa.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/web-contents/',
   //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
