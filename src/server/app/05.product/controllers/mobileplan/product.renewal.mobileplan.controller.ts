@@ -71,6 +71,14 @@ enum FILTER_STYLE_CODES {
   'F01124' = 'i-tag-cr3', // 2ndDevice 
 }
 
+// 필터 폰트 코드
+enum FILTER_FONT_STYLE_CODES {
+  'F01122' = 'prod-band', // 3G (3G는 Band 임)
+  'F01121' = 'prod-lte', // LTE
+  'F01713' = 'prod-5g"', // 5G
+  'F01124' = 'prod-2nd', // 2ndDevice 
+}
+
 // 필터 코드 문구 변경
 enum FILTER_REPLACE_TEXTS {
   'F01124' = '스마트기기', // 태블릿/스마트기기 => 스마트기기
@@ -569,6 +577,26 @@ export default class RenewProduct extends TwViewController {
     };
 
     /**
+     * 네트워크 타입을 리턴
+     * @param prodFltList 
+     */
+    private convertBasNetworkType(prodFltList): any {
+      if ( !prodFltList ) {
+        return '';
+      }
+
+      const type = prodFltList.find(item => {
+        return Object.keys(FILTER_FONT_STYLE_CODES).indexOf(item.prodFltId) > -1 ? item : '';
+      });
+
+      if ( type && type.prodFltId ) {
+        return FILTER_FONT_STYLE_CODES[type.prodFltId];
+      }
+
+      return '';
+    }
+
+    /**
      * 네트워크 정보를 파싱
      * @param prodFltList 
      */
@@ -640,10 +668,10 @@ export default class RenewProduct extends TwViewController {
         const basDataGbTxt = FormatHelper.getValidVars(item.basOfrGbDataQtyCtt); // 데이터 제공량 (GB)
         const basDataMbTxt = FormatHelper.getValidVars(item.basOfrMbDataQtyCtt); // 데이터 제공량 (MB)
         const basDataTxt = this.convertBasDataTxt(basDataGbTxt, basDataMbTxt); // GB, MB 컨버터
-
+        
+        const basNetworkType = this.convertBasNetworkType(item.prodFltList) || ''; // 회선의 네트워크 타입
         const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱
         const basAdditionalObject = this.convertAdditionalList(item.benfProdList) || []; // 부가 서비스 정보를 파싱
-
         // 상품 스펙 공통 헬퍼 사용하여 컨버팅
         const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
@@ -655,6 +683,7 @@ export default class RenewProduct extends TwViewController {
           basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
           basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
           basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
+          basNetworkType: basNetworkType, // 네트워크 타입
           basNetworkList: basNetworkList, // 네트워크 타입
           basAdditionalObject: basAdditionalObject // 기본혜택/추가혜택에 대한 정보
         });

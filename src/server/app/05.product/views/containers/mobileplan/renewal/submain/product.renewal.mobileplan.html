@@ -350,7 +350,7 @@
 										<ul>
 											<% for ( let i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
 												<li>
-													<div class="tod-nmp-item plan-type2 prod-5g">
+													<div class="tod-nmp-item plan-type2 <%- data.themeListData.prodList[i].basNetworkType %>">
 														<a href="<%= data.themeListData.prodList[i].basProductUrl %>" class="item-link">
 															<div class="rn-tag">
 																<% if ( data.themeListData.prodList[i].basNetworkList.length !== 0 ) { %>
