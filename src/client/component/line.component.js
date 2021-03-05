@@ -645,6 +645,13 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
    * @private
    */
   _onClickLine: function ($event) {
+    var $target = $($event.currentTarget);
+    var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
+    var svcCount = $target.data('svcCnt');
+    if (parseInt(svcCount, 10) === 1) {
+      this._historyService.goLoad('/common/member/line');
+      return;
+    }
     this.$selWrap.toggleClass('show');
     this.$lineTxt.text(this.$lineTxt.data('close-txt'));
     this.$lineDim.show();
@@ -655,13 +662,6 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
       this.$lineDim.hide();
       return;
     }
-    /*if (this.$atherLineArea.hasClass('have')) {
-      this.$atherLineArea.show().addClass('open');
-      this.$lineTxt.text(this.$lineTxt.data('close-txt'));
-      return;
-    }*/
-    var $target = $($event.currentTarget);
-    var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
     this.onClickLine(svcMgmtNum, $target);
   },
   /**
