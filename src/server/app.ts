@@ -258,9 +258,7 @@ class App {
   }
 
   private setRoutes() {
-    const self = this;
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
-    this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/myt-data', new AppRouter(MyTDataRouter.instance.controllers).router);
     this.app.use('/myt-fare', new AppRouter(MyTFareRouter.instance.controllers).router);
@@ -285,9 +283,6 @@ class App {
   }
 
   private setShortCut() {
-    //  this.app.use('/', (req, res, next) => {
-    //   res.redirect('/main.html');
-    // }, new ShortcutRouter().router);
     this.app.use('/', new ShortcutRouter().router);
   }
 
