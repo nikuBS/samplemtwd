@@ -269,7 +269,6 @@ export default class RenewProductPlans extends TwViewController {
             tabCode: this._getTabCodeInit(plan),
             prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
             benefitList: this._parseBenefitList(plan.benefitList)
-            //m24agrmtFeeAmt: this._getM24agrmtFeeAmt(plan.basFeeAmt,plan.m24agrmtDcAmt)
           };
         })
       };
@@ -391,14 +390,6 @@ export default class RenewProductPlans extends TwViewController {
           msg: resp.msg
         };
       }
-      // for(let i in resp.result.groupProdList){
-      //   for(let j in resp.result.groupProdList[i].prodList[0].prodFltList){
-      //     if(resp.result.groupProdList[i].prodList[0].prodFltList[j].prodFltId == 'F01121') {
-      //       console.log(resp.result.groupProdList[i].prodGrpNm,"@@@@",resp.result.groupProdList[i].prodList[0].prodFltList[j]);
-      //     }
-      //   }
-      // }
-      
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
@@ -442,37 +433,10 @@ export default class RenewProductPlans extends TwViewController {
               benefitList: this._parseBenefitList(separatePlan.benefitList)
             }
           })
-          // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
-          //   return {
-          //     ...rcnPlan,
-          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
-          //   }
-          // })
         }
       } else if (resp.result.rcnProductList) {
         return {
           ...resp.result,
-          // groupProdList: resp.result.groupProdList.map(groupPlan => {
-          //   return {
-          //     ...groupPlan,
-          //     prodList : groupPlan.prodList.map(plan => {
-          //       return {
-          //         ...plan,
-          //         basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-          //         basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
-          //           this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
-          //             null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
-          //           ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
-          //         basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
-          //           null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
-          //         basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
-          //         tabCode: this._getTabCodeSeries(plan.prodFltList),
-          //         prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-          //         compareYN: this._getCompareYN(this._getTabCodeSeries(plan.prodFltList),plan.basFeeInfo,plan.basOfrDataQtyCtt,plan.basOfrVcallTmsCtt,plan.basOfrCharCntCtt)
-          //       };
-          //     })
-          //   }
-          // }),
           separateProductList: resp.result.separateProductList.map(separatePlan => {
             return {
               ...separatePlan,
@@ -499,26 +463,6 @@ export default class RenewProductPlans extends TwViewController {
       } else if (!resp.result.groupProdList) {
         return {
           ...resp.result,
-          // groupProdList: resp.result.groupProdList.map(groupPlan => {
-          //   return {
-          //     ...groupPlan,
-          //     prodList : groupPlan.prodList.map(plan => {
-          //       return {
-          //         ...plan,
-          //         basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-          //         basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
-          //           this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
-          //             null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
-          //           ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
-          //         basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
-          //           null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
-          //         basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
-          //         tabCode: this._getTabCodeSeries(plan.prodFltList),
-          //         prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd)
-          //       };
-          //     })
-          //   }
-          // }),
           separateProductList: resp.result.separateProductList.map(separatePlan => {
             return {
               ...separatePlan,
@@ -535,12 +479,6 @@ export default class RenewProductPlans extends TwViewController {
               benefitList: this._parseBenefitList(separatePlan.benefitList)
             }
           })
-          // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
-          //   return {
-          //     ...rcnPlan,
-          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
-          //   }
-          // })
         }
       } else {
         return {
@@ -566,27 +504,6 @@ export default class RenewProductPlans extends TwViewController {
               })
             }
           })
-          // separateProductList: resp.result.separateProductList.map(separatePlan => {
-          //   return {
-          //     ...separatePlan,
-          //     basFeeAmt: ProductHelper.convProductBasfeeInfo(separatePlan.basFeeInfo),
-          //     basOfrVcallTmsCtt: this._isEmptyAmount(separatePlan.basOfrVcallTmsCtt) ?
-          //       null : ProductHelper.convProductBasOfrVcallTmsCtt(separatePlan.basOfrVcallTmsCtt, false),
-          //     basOfrCharCntCtt: this._isEmptyAmount(separatePlan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(separatePlan.basOfrCharCntCtt),
-          //     basOfrDataQtyCtt: this._isEmptyAmount(separatePlan.basOfrDataQtyCtt) ?
-          //       this._isEmptyAmount(separatePlan.basOfrMbDataQtyCtt) ?
-          //       null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
-          //       ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrDataQtyCtt, DATA_UNIT.GB),
-          //     tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd)
-          //   }
-          // })
-          // rcnProdList: resp.result.rcnProdList.map(rcnPlan => {
-          //   return {
-          //     ...rcnPlan,
-          //     prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(rcnPlan.prodSmryExpsTypCd)
-          //   }
-          // })
         }
       }
     })

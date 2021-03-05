@@ -156,7 +156,7 @@
     </div>
 <% } %>
 </a>
-<% if (thisPlan.compareYN) { %>
+<% if (thisPlan.compareYN && (thisPlan.tabCode != 'prod-band')) { %>
     <% if (svcInfo) { %>
         <% if (svcInfo.prodId != thisPlan.prodId) { %>
             <div class="rn-prod-bottom">

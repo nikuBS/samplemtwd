@@ -103,7 +103,7 @@ Tw.ProductCompare.prototype = {
 
       var data = '';
       if (!this._isEmptyAmount(myPLMData.basDataGbTxt)) {
-        this.compareData.curPlan.chartData = this._transChartData(myPLMData.basDataGbTxt);
+        this.compareData.curPlan.chartData = this._transChartData(myPLMData.basDataGbTxt,'GB');
         data = Number(myPLMData.basDataGbTxt);
         if (isNaN(data)) {
           this.compareData.curPlan.basOfrDataQtyCtt.value = myPLMData.basDataGbTxt;
@@ -114,10 +114,10 @@ Tw.ProductCompare.prototype = {
       } else if (!this._isEmptyAmount(myPLMData.basDataMbTxt)) {
         data = Number(myPLMData.basDataMbTxt);
         if (isNaN(data)) {
-          this.compareData.curPlan.chartData = this._transChartData(myPLMData.basDataMbTxt);
+          this.compareData.curPlan.chartData = this._transChartData(myPLMData.basDataMbTxt,'MB');
           this.compareData.curPlan.basOfrDataQtyCtt.value = myPLMData.basDataMbTxt;
         } else {
-          this.compareData.curPlan.chartData = this._transChartData(data/1024);
+          this.compareData.curPlan.chartData = this._transChartData(data,'MB');
           this.compareData.curPlan.basOfrDataQtyCtt.value = myPLMData.basDataMbTxt;
           this.compareData.curPlan.basOfrDataQtyCtt.unit = Tw.DATA_UNIT.MB;
         }
@@ -169,7 +169,7 @@ Tw.ProductCompare.prototype = {
         this.compareData.comparePlan.basOfrDataQtyCtt.value = data;
         chartData = data;
       }
-      this.compareData.comparePlan.chartData = this._transChartData(chartData);
+      this.compareData.comparePlan.chartData = this._transChartData(chartData,this.compareData.comparePlan.basOfrDataQtyCtt.unit);
 
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.comparePlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
@@ -500,7 +500,7 @@ Tw.ProductCompare.prototype = {
    * @return {Number}
    */
 
-    _transChartData: function(chartData) {
+    _transChartData: function(chartData,unit) {
       data = Number(chartData);
       if(isNaN(data)) {
         if(chartData == '무제한') {
@@ -509,6 +509,10 @@ Tw.ProductCompare.prototype = {
           return 0;
         }
       }
+      if(unit == 'MB') {
+        data = data/1000;
+      }
+      console.log("@@@@@@@@@@@@@",data);
       if(this._networkInfo == '5G') {
         if(data <= 10) {
           return ((data / 10) / 4) * 100;
@@ -521,7 +525,7 @@ Tw.ProductCompare.prototype = {
         }
       } else {
         if(data <= 1) {
-          return ((data / 0.25) * 4 / 13) * 100;
+          return ((data) * 4 / 13) * 100;
         } else if(data <= 10) {
           return (((data - 1)/3)/13 + 4/13) * 100;
         } else if(data <= 100) {
