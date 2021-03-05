@@ -57,13 +57,13 @@ export const SVC_CD_ICO_CLASS = {
 };
 
 export const LINE_SVC_ATTR_ICO_FILE_NM = {
-  M1: 'sel-ico-mobile.png',
-  M2: 'sel-ico-mobile.png',
-  M3: 'sel-ico-wifi.png',
-  M4: 'sel-ico-mobile.png', // T-login
-  S1: 'sel-ico-internet.png',
-  S2: 'sel-ico-tv.png',
-  S3: 'sel-ico-tel.png',
+  M1: 'sel-mobile-ico-white.svg', // 'sel-ico-mobile.png',
+  M2: 'sel-mobile-ico-white.svg', // 'sel-ico-mobile.png',
+  M3: 'sel-wifi-ico-white.svg', // 'sel-ico-wifi.png',
+  M4: 'sel-mobile-ico-white.svg', // 'sel-ico-mobile.png', // T-login
+  S1: 'sel-internet-ico-white.svg', // 'sel-ico-internet.png',
+  S2: 'sel-tv-ico-white.svg', // 'sel-ico-tv.png',
+  S3: 'sel-tel-ico-white.svg', // 'sel-ico-tel.png',
 };
 
 export const SVC_CATEGORY = {
