@@ -16,4 +16,7 @@
     <meta property="og:description" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
     <title><%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %></title>
     <% include ../components/stylesheet.component.html _%>
+    <% if (locals.pageInfo.advancement && locals.pageInfo.advancement.netFunnelVisible) { %>
+    <script type="text/javascript" src="<%= CDN %>/css/netfunnel.js" charset="UTF-8"></script>
+    <% } %>
 </head>

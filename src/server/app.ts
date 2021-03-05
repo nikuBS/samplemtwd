@@ -73,15 +73,6 @@ module.exports = require('../../nodejs-exporter');
 
 const manifest = require('./manifest.json');
 
-interface Netfunnel {
-  "@class": string;
-  prtyId:  string;
-  prtyDev: string;
-  prtyStg: string;
-  prtyPrd: string;
-  prtyCur: string;
-}
-
 class App {
   public app: Application = express();
   public redisService: RedisService;
@@ -267,9 +258,7 @@ class App {
   }
 
   private setRoutes() {
-    const self = this;
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
-    // this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/myt-data', new AppRouter(MyTDataRouter.instance.controllers).router);
     this.app.use('/myt-fare', new AppRouter(MyTFareRouter.instance.controllers).router);
@@ -294,10 +283,7 @@ class App {
   }
 
   private setShortCut() {
-     this.app.use('/', (req, res, next) => {
-      res.redirect('/main.html');
-    }, new ShortcutRouter().router);
-    // this.app.use('/', new ShortcutRouter().router);
+    this.app.use('/', new ShortcutRouter().router);
   }
 
   private setViewPath() {
