@@ -4,7 +4,7 @@
 * @author Kim InHwan (skt.p132150@partner.sk.com)
 * @since 2018.10.05
 _%>
-<%- include('../components/start.component.html', { pageInfo: data.pageInfo, adv: 1 }); %>
+<%- include('../components/start.component.html', { pageInfo: data.pageInfo }); %>
 <body class="tod-white">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -116,6 +116,9 @@ _%>
     <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); _%>
 </div>
 <%- include('../components/javascript.component.html') _%>
+<% if (data.pageInfo.advancement && data.pageInfo.advancement.netFunnelVisible) { %>
+<%- include('../../../common/views/components/netfunnel.complete.component.html') %>
+<% } %>
 <script>
     $(document).ready(function () {
         new Tw.MytJoinAdvSubMain({

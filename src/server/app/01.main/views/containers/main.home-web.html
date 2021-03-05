@@ -445,7 +445,7 @@
             <!-- //모바일 요금제 -->
 
 
-            
+
             <!-- 다이렉트샵 -->
             <!-- 2019.02.20 수정 - 타이틀 클릭영역 -->
             <div id="fe-direct-banner" class="section-box pdtb-main-box">
@@ -582,14 +582,10 @@
 </div>
 <% include ../components/javascript.component.html %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
-<script type="text/javascript" src="js/netfunnel.js" charset="UTF-8"></script>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');
   });
-  window.onload = function(){ 
-    NetFunnel_Complete({},"");
-  }
 </script>
 </body>
 <% include ../components/end.component.html %>

@@ -27,7 +27,15 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       // local 테스트틀 하기 위해 추가
       if ( (process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
         || process.env.NODE_ENV === 'local' ) {
-        this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+        // netfunnel 통해서 진입한 경우
+        const isNetFunnel = req.query && req.query.netfunnel === 'Y';
+        if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
+          res.render('../../../common/views/components/netfunnel.start.component.html', {
+            referer: '/myt-join/submain?netfunnel=Y'
+          });
+        } else {
+          this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+        }
         return false;
       }
     }
