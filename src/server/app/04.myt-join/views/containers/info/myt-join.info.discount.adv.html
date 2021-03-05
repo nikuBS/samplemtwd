@@ -49,18 +49,20 @@ _%>
                                 <div class="small-head-tit">요금약정할인</div>
                                 <div class="card-cont">
                                     <%_
+                                    const filterFeeInfos = commDataInfo.feeInfo.filter((feeItem) => feeItem.typeStr === 'FEE_TYPE_A' || feeItem.typeStr === 'FEE_TYPE_E' || feeItem.typeStr === 'FEE_TYPE_F');
+                                    const tipIdTarget = filterFeeInfos.length > 1 ? filterFeeInfos[filterFeeInfos.length - 1].typeStr : '';
                                     for (var idx = 0; idx < commDataInfo.feeInfo.length; idx++) {
-                                    var feeItem = commDataInfo.feeInfo[idx];
+                                        const feeItem = commDataInfo.feeInfo[idx];
                                     _%>
                                     <% include ../../components/info/myt-join.info.discount.fee.adv.html %>
                                     <%_ } _%>
                                     <div class="hash-wrap">
                                         <ul class="hash-list normal">
                                             <li class="hash-item">
-                                                <a href="#" class="hash">#요금납부내역</a>
+                                                <a href="/myt-fare/info/history" class="hash">#요금납부내역</a>
                                             </li>
                                             <li class="hash-item">
-                                                <a href="#" class="hash">#나의 결합상품</a>
+                                                <a href="/myt-join/combinations" class="hash">#나의 결합상품</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -98,9 +100,50 @@ _%>
                                 <div class="hash-wrap">
                                     <ul class="hash-list normal">
                                         <li class="hash-item">
-                                            <a href="#" class="hash">#요금납부내역</a>
+                                            <a href="/myt-fare/info/history" class="hash">#요금납부내역</a>
                                         </li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <% } %>
+                    <% if ( commDataInfo.tRental ) { %>
+                    <section class="cont-card">
+                        <div class="section-inner">
+                            <div class="small-head-tit">기기 구매 정보</div>
+                            <div class="card-cont">
+                                <div class="box-group">
+                                    <div class="box-group-head-tit">T렌탈</div>
+                                    <div class="box-group-cont">
+                                        <div class="gray-box">
+                                            <ul class="report-list item-no-border small">
+                                                <li class="report-item">
+                                                    <dl class="report-define d-wrap">
+                                                        <dt class="report-tit">모델명</dt>
+                                                        <dd class="report-cont"><%= commDataInfo.tRental.rentEqpMdlNm %></dd>
+                                                    </dl>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="gray-box claim-box">
+                                            <p class="contract-summary">월 이용요금은 <strong><%= commDataInfo.tRental.mthRentAmt %>원</strong> 입니다.</p>
+                                            <ul class="report-list item-no-border smaller">
+                                                <li class="report-item">
+                                                    <dl class="report-define d-wrap">
+                                                        <dt class="report-tit">T렌탈 시작일</dt>
+                                                        <dd class="report-cont"><%= commDataInfo.tRental.rentalStaDt %></dd>
+                                                    </dl>
+                                                </li>
+                                                <li class="report-item">
+                                                    <dl class="report-define d-wrap">
+                                                        <dt class="report-tit">T렌탈 반납 가능일</dt>
+                                                        <dd class="report-cont"><%= commDataInfo.tRental.allotEndSchdDt %></dd>
+                                                    </dl>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- group-cont -->
                                 </div>
                             </div>
                         </div>
