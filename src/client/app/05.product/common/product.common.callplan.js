@@ -705,7 +705,6 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    */
   _reqTerminateDefenseVcoloring: function(joinTermCd, url) {
-      console.log("KKKK : ~ file: product.common.callplan.js ~ line 708 ~ joinTermCd", joinTermCd)
       this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
       .done($.proxy(this._resTerminateDefense, this, joinTermCd, url));
   },
