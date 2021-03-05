@@ -1,20 +1,21 @@
 /**
  * @file myt-fare.bill.small.controller.ts
- * @author Jayoon Kong
- * @since 2018.10.04
- * @desc 소액결제 메인화면
+ * @author 양정규
+ * @since 2021.01.06
+ * @desc 휴대폰 결제/콘텐츠 이용료 메인화면 (구 소액결제)
  */
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
 import {MYT_FARE_MICRO_NAME} from '../../../../types/bff.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 /**
  * @class
- * @desc 소액결제 메인
+ * @desc 휴대폰 결제/콘텐츠 이용료 메인
  */
 class MyTFareBillSmall extends TwViewController {
   constructor() {
@@ -33,27 +34,39 @@ class MyTFareBillSmall extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     Observable.combineLatest(
       this.getHistory(),
       this.getPasswordStatus(),
-      this.getUnusualStatus()
-    ).subscribe(([microHistory, passwordStatus, unusualStatus]) => {
-      if (microHistory.code !== API_CODE.CODE_00) {
-        return this.errorRender(res, microHistory, svcInfo, pageInfo);
-      }
-
-      res.render('billsmall/myt-fare.bill.small.html', {
+      this.getUnusualStatus(),
+      this.getAutoCardInfo(),
+      this.getFaqList()
+    ).subscribe(([microHistory, passwordStatus, unusualStatus, autoCardInfo, faqList]) => {
+      const param = {
         usedYn: this.getHistoryInfo(microHistory),
         passwordInfo: this.getPasswordInfo(passwordStatus),
         unusualYn: unusualStatus, // 특이고객 여부
-        svcInfo: svcInfo, // 회선 정보 (필수)
-        pageInfo: pageInfo, // 페이지 정보 (필수)
-        currentMonth: this.getCurrentMonth() // 현재월 조회
-      });
+        autoCardInfo,
+        faqList,
+        svcInfo, // 회선 정보 (필수)
+        pageInfo // 페이지 정보 (필수)
+      };
+      res.render('billsmall/myt-fare.bill.small.html', this.parseData(param));
     }, (error) => {
       this.errorRender(res, error, svcInfo, pageInfo);
     });
+
+  }
+
+  private parseData(param): any {
+    const cDate = new Date(),
+      result = {
+        ...param,
+        currentMonth: DateHelper.getCurrentMonth(), // 현재월 조회
+        firstDate: DateHelper.getShortFirstDate(cDate), // 이달의 첫 날짜
+        toDate: DateHelper.getShortDate(cDate) // 현재 일자
+      };
+
+    return result;
   }
 
   /**
@@ -62,7 +75,13 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {Observable<any>}
    */
   private getHistory(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0079, {});
+    return Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0079, {}), // 소액결제 이용내역 조회
+      this.apiService.request(API_CMD.BFF_08_0080, {})  // 만 나이 조회
+    ).map( ([history, age]) => {
+      history.age = (age.result || {}).age;
+      return history;
+    });
   }
 
   /**
@@ -72,24 +91,22 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {any}
    */
   private getHistoryInfo(historyInfo: any): any {
-    const usedValueList = ['0', '2', '6']; // 소액결제 제한 없음/사용 코드값
-    const usedYn = {
+    // const usedValueList = ['0', '2', '6']; // 소액결제 제한 없음/사용 코드값
+    /*const usedYn = {
+      code: historyInfo.code,
+      isAdult: historyInfo.age > 19,
       isUsed: false,
       isPassword: false,
       rtnUseYn: null
+    };*/
+    const {rtnUseYn = {}, cpmsYn = {}} = historyInfo.result || {};
+    return {
+      code: historyInfo.code,
+      isAdult: historyInfo.age > 19,
+      isUsed: ['0', '2', '6'].indexOf(rtnUseYn) > -1, // 소액결제 사용여부. 0,2,6이면 사용으로 표시
+      rtnUseYn,
+      isPassword: cpmsYn === 'Y' // 비밀번호 서비스 사용여부
     };
-
-    if (historyInfo.code === API_CODE.CODE_00) {
-      const rtnUseYn = historyInfo.result.rtnUseYn; // 소액결제 사용여부
-      for (let i = 0; i < usedValueList.length; i++) { // 0,2,6이면 사용으로 표시
-        if (rtnUseYn === usedValueList[i]) {
-          usedYn.isUsed = true;
-        }
-      }
-      usedYn.rtnUseYn = historyInfo.result.rtnUseYn;
-      usedYn.isPassword = historyInfo.result.cpmsYn === 'Y'; // 비밀번호 서비스 사용여부
-    }
-    return usedYn;
   }
 
   /**
@@ -122,25 +139,100 @@ class MyTFareBillSmall extends TwViewController {
       const passwordResult = passwordStatus.result;
       passwordStatus.text = MYT_FARE_MICRO_NAME[passwordResult.cpinStCd]; // 코드값에 따라 신청, 변경, 잠김, 초기화 문구 셋팅
       passwordStatus.cpmsYn = passwordResult.cpmsYn;
-    } else {
-      if (passwordStatus.code === 'BIL0054') { // 부가서비스에 가입하지 않은 사용자의 경우
-        passwordStatus.text = MYT_FARE_MICRO_NAME['NC']; // 신청으로 텍스트 표기
-        passwordStatus.result = {};
-        passwordStatus.result.cpinStCd = 'NA00003909'; // 부가서비스 상품코드 (페이지로 이동)
-      } else {
-        passwordStatus.text = '';
-      }
     }
     return passwordStatus;
   }
 
   /**
    * @function
-   * @desc 현재월 조회
+   * @desc 자동선결제 정보 조회
+   * @returns {Observable<any>}
+   */
+  private getAutoCardInfo(): Observable<any> {
+    return Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_07_0072, {}),
+      this.apiService.request(API_CMD.BFF_07_0080, {})
+    ).map(([small, contents]) => {
+      // const error = this.error.apiError([small, contents]);
+      /*if (!FormatHelper.isEmpty(error) && error.code !== API_ADD_SVC_ERROR.BIL0030) {
+        return error;
+      }*/
+      return {
+        small: this.parseCardInfo(small.result),
+        contents: this.parseCardInfo(contents.result)
+      };
+    });
+  }
+
+  /**
+   * @function
+   * @desc parsing card info
+   * @param result
    * @returns {any}
    */
-  private getCurrentMonth(): any {
-    return DateHelper.getCurrentMonth();
+  private parseCardInfo(result: any): any {
+    if (!FormatHelper.isEmpty(result)) {
+      result.autoChargeAmount = FormatHelper.addComma(result.autoChrgAmt); // 선결제 신청금액에 콤마(,) 추가
+      result.autoChargeStandardAmount = FormatHelper.addComma(result.autoChrgStrdAmt); // 기준금액에 콤마(,) 추가
+    }
+    return result;
+  }
+
+
+  private getFaqList(): Observable<any> {
+
+    const isPrd = String(process.env.NODE_ENV) === 'prd', // 상용 여부
+      faqIds: any = [];
+    faqIds.push(['' , '1606010545']);
+    faqIds.push(['' , '1606010546']);
+    faqIds.push(['' , '1606010547']);
+    faqIds.push(['' , '1606010548']);
+    faqIds.push(['' , '1606010549']);
+    faqIds.push(['' , '1606010550']);
+    faqIds.push(['' , '1606010551']);
+    faqIds.push(['' , '1606010552']);
+
+    const getFaqId = (ifaqIds: Array<string>) => {
+      return ifaqIds[isPrd ? 0 : 1];
+    };
+
+    const reqFaq = (ifaqIds: Array<string>) => {
+      return this.apiService.request(API_CMD.BFF_08_0073, {ifaqId: getFaqId(ifaqIds)});
+    };
+    const requests: Array<Observable<any>> = faqIds.reduce( (acc, cur) => {
+      acc.push(reqFaq(cur));
+      return acc;
+    }, []);
+
+    /*
+        아래 faq id만 조회하여 노출한다.
+        [0] : 상용 faq id
+        [1] : 스테이징 faq id
+     */
+    return Observable.combineLatest(
+      /*reqFaq(['' , '1606010545']),
+      reqFaq(['' , '1606010546']),
+      reqFaq(['' , '1606010547']),
+      reqFaq(['' , '1606010548']),
+      reqFaq(['' , '1606010549']),
+      reqFaq(['' , '1606010550']),
+      reqFaq(['' , '1606010551']),
+      reqFaq(['' , '1606010552'])*/
+      requests
+    ).map( responses => {
+      this.logger.info(this, '### ', responses);
+      return responses.reduce((acc, cur, idx) => {
+        if (!FormatHelper.isEmpty(cur.result)) {
+          acc.push({
+            ...cur.result,
+            faqId: getFaqId(faqIds[idx])
+          });
+        }
+        return acc;
+      }, []);
+
+    });
+
   }
 
   /**
@@ -153,7 +245,7 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {any}
    */
   private errorRender(res, resp, svcInfo, pageInfo): any {
-    return this.error.render(res, {
+    this.error.render(res, {
       code: resp.code,
       msg: resp.msg,
       pageInfo: pageInfo,

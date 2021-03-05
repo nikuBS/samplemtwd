@@ -33,9 +33,9 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
   this._requestRealTimeFeeFlag = false;
   this._selectedCollectionToChangeSort = '';
   this._reqOptions = {
-    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.bundle-07.troaming-08' +
-      '.tapp-09.direct-10.tmembership-11.event-12.sale-13.as_outlet-14.question-15.notice-16.prevent-17.manner-18' +
-      '.serviceInfo-19.siteInfo-20.lastevent-21.banner-22',
+    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.troaming-07.tapp-08' +
+      '.direct-09.tmembership-10.event-11.sale-12.as_outlet-13.notice-14.prevent-15.question-16.manner-17.serviceInfo-18' +
+      '.siteInfo-19.banner-20.bundle-21.lastevent-22',
     sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
@@ -109,6 +109,8 @@ Tw.CommonSearch.prototype = {
 
     // 카테고리 스와이프 영역 템플릿을 만들어준다. (껍데기만 생성)
     this._categoryInit();
+    // 카테고리 정렬
+    this._categorySorting();
 
     for ( var i = 0; i < this._searchInfo.search.length; i++ ) {
       keyName = Object.keys(this._searchInfo.search[i])[0];
@@ -280,7 +282,7 @@ Tw.CommonSearch.prototype = {
         } else {
           $target .find('button').attr('aria-pressed', false);
         }
-    }, this))
+    }, this));
 
     this.$container.on('click', '.fe-category', $.proxy(this._selectCategory, this));    // 카테고리 클릭시 이벤트 바인딩
     // this.$container.on('click','#fe-more-rate',function(e){
@@ -365,6 +367,34 @@ Tw.CommonSearch.prototype = {
     var $categoryHtml = $('#common_template').html();
     var $categoryHtmlTemplate = Handlebars.compile($categoryHtml);
     $('.tod-srhcategory-scrwrap').append($categoryHtmlTemplate);
+  },
+  /**
+   * @function
+   * @desc 카테고리 정렬
+   * @returns {void}
+   */
+  _categorySorting: function () {
+    Tw.Logger.info('[common.search] [_categorySorting]', '');
+    var categoryArr = [];
+    //검색 카테고리 정렬
+    if(this._reqOptions && this._reqOptions.collectionPriority) {
+      categoryArr = this._reqOptions.collectionPriority.split('.');
+      categoryArr.forEach(function(row, index, theArray){
+        if(row.indexOf('-') !== -1) {
+          theArray[index] = row.substr(0, row.lastIndexOf('-'));
+        }
+      });
+    }
+
+    if($('.tod-srhcategory-scrwrap #fe-category-area li').length > 0 && categoryArr.length > 1) {
+      var $categoryArea = $('.tod-srhcategory-scrwrap #fe-category-area');
+      categoryArr.reverse();
+      categoryArr.forEach(function(row){
+        if(row && row !== undefined && $categoryArea.find('li.'+row).length > 0) {
+          $categoryArea.find('li.'+row).insertAfter('.tod-srhcategory-scrwrap #fe-category-area li.all');
+        }
+      });
+    }
   },
   /**
    * @function
@@ -547,45 +577,34 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
-
-      // 3뎁스에 데이터를 1뎁스 라인으로 랜더링 하기 위해 자료구조를 다시 만듭니다.
-      var depth3 = []; // 3뎁스를 1뎁스로 구조로 만드는 변수
-      var list = data; // 기존의 리스트를 담는 변수
-      var totalListCnt = 0; // 3뎁스의 리스트 사이즈 개수 총합에 사용할 변수
-      for(var i=0; i<list.length; i++) {
-        if (list[i].DEPTH_CHILD !== undefined) {
-          for(var j=0; j<list[i].DEPTH_CHILD.length; j++) {
-            if (list[i].DEPTH_CHILD[j].DEPTH_CHILD !== undefined) {
-              depth3.push({
-                idx: j,
-                DEPTH_PATH: list[i].DEPTH_CHILD[j].DEPTH_PATH,
-                MENU_URL: list[i].DEPTH_CHILD[j].MENU_URL,
-                DEPTH_LOC: list[i].DEPTH_CHILD[j].DEPTH_LOC,
-                MENU_NM: list[i].DEPTH_CHILD[j].MENU_NM,
-                DOCID: list[i].DEPTH_CHILD[j].DOCID,
-                CLICK_CNT: list[i].DEPTH_CHILD[j].CLICK_CNT,
-                DEPTH_SIZE: list[i].DEPTH_CHILD[j].DEPTH_CHILD.length,
-                USE_YN: 'Y',
-                DEPTH_CHILD: list[i].DEPTH_CHILD[j].DEPTH_CHILD
-              });
-            }
-          }
-        }
-      }
-
-      for (var i=0; i<depth3.length; i++) {
-        // 부모의 타이틀을 자식뎁스쪽으로 추가 하기 때문에 +1을 해줘야 함.
-        // 예) 부모(4) > 자식(3) 짜리 데이터를 렌더링 한다고 생각하면 아래와 같기 때문에 +1을 해줘야 합니다.
-        // 부모(4)
-        //  ㄴ 부모  <<< 추가
-        //  ㄴ 자식
-        //  ㄴ 자식
-        //  ㄴ 자식
-        totalListCnt += depth3[i].DEPTH_SIZE+1;
-        data.push(depth3[i])
-      }
+      // console.log(">>>>> ", data);
 
       _.each(data, $.proxy(function (listData, index) {
+        
+        var childList = [];
+        listData.MENU_GROUP = listData.MENU_GROUP || '';
+        // console.log(">>>>>>>> MENU_GROUP: ", listData.MENU_GROUP);
+        // 자식이 있는 경우.
+        if ( listData.MENU_GROUP !== '' && listData.MENU_GROUP !== undefined){
+          var docids = listData.DOCID.split("$");
+          var menuNms = listData.MENU_NM.split("$");
+          var useYns = listData.USE_YN.split("$");
+          var menuUrls = listData.MENU_URL.split("$");
+          var depthPaths = listData.DEPTH_PATH.split("$");
+          //var menuGroups = i.MENU_GROUP.split("$");
+          for (var j=0; j<docids.length; j++) {
+            var data = {
+              MENU_GROUP: listData.MENU_GROUP,
+              DOCID: docids[j],
+              MENU_NM: menuNms[j],
+              USE_YN: useYns[j],
+              MENU_URL: menuUrls[j],
+              DEPTH_PATH: depthPaths[j]
+            };
+            childList.push(data);
+          }
+          listData.DEPTH_CHILD = childList;
+        }
 
         // 바로가기는 최대 3건만 노출
         if (dataKey === 'shortcut') {
@@ -601,35 +620,6 @@ Tw.CommonSearch.prototype = {
             }
             return;
           }
-          // idx를 제외한 값들만 부모를 넣는 이유가 위에서 depth3에서 편집된 데이터들은 구지 아래 같은 추가 작업이 필요없기 때문이다.
-          if (listData.DEPTH_CHILD !== undefined && listData.idx === undefined) {
-            // 3뎁스 사이즈를 최상위 부모 뎁스 사이즈에서 빼야 제대로 개수가 맞음.
-            listData.DEPTH_SIZE = Number(listData.DEPTH_SIZE - totalListCnt);
-            listData.DEPTH_CHILD.unshift({
-              CLICK_CNT: listData.CLICK_CNT,
-              DEPTH_LOC: "2",
-              DEPTH_PATH: listData.DEPTH_PATH,
-              DOCID: listData.DOCID,
-              MENU_NM: listData.MENU_NM,
-              MENU_URL: listData.MENU_URL,
-              USE_YN: listData.USE_YN
-            });
-            _.each(listData.DEPTH_CHILD, $.proxy(function (subData, index) {
-              if (subData.DEPTH_CHILD !== undefined && subData.idx === undefined) {
-                subData.DEPTH_CHILD.unshift({
-                  CLICK_CNT: subData.CLICK_CNT,
-                  DEPTH_LOC: "3",
-                  DEPTH_PATH: subData.DEPTH_PATH,
-                  DOCID: subData.DOCID,
-                  MENU_NM: subData.MENU_NM,
-                  MENU_URL: subData.MENU_URL,
-                  USE_YN: subData.USE_YN
-                })
-
-              }
-            }));
-          }
-          // console.log(">>> listData: ", listData);
           $list.append(templateData({ listData: listData, CDN: cdn }));
         } else {
           if ( listData.DOCID === 'M000083' && this._nowUser === 'logOutUser' ) {

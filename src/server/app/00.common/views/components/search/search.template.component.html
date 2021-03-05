@@ -39,7 +39,8 @@
 
 <script type="text/x-handlebars-template" id="shortcut_template">
     <!-- 1 depth if -->
-    {{#isNaN listData.DEPTH_SIZE }}
+    {{#ifCond listData.MENU_GROUP '===' '' }}
+    <!-- {{#ifCond listData.MENU_GROUP '===' '' }} -->
     <li class="normal-box">
         <!-- <button data-url="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}"> -->
         <button href="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
@@ -47,14 +48,15 @@
             <span class="main-category">{{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}} </span>
         </button>
     </li>
-    {{/isNaN}}
+    <!-- {{/ifCond}} -->
+    {{/ifCond}}
     <!-- 1 depth else -->
-    {{#ifCond listData.DEPTH_SIZE '>' '0' }}
+    {{#ifCond listData.MENU_GROUP  '!==' '' }}
     <li class="acco-box"><!-- .on : 열기 -->
         <div class="acco-tit">
             <button href="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" aria-pressed="false" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
                 <span class="main-category">
-                    {{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}} <em class="num">({{sum listData.DEPTH_SIZE}})</em>
+                    {{{replace listData.MENU_GROUP '\|,MyT' ' > , my T '}}} <em class="num">({{listData.DEPTH_CHILD.length}})</em>
                 </span>
             </button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
         </div>
@@ -62,13 +64,11 @@
             <ul class="sub-list">
                 {{#each listData.DEPTH_CHILD}}
                     <!-- 2 depth if -->
-                    {{#isNaN this.DEPTH_SIZE }}
                     <li>
                         <button href="{{this.MENU_URL}}" type="button" class="shortcut-element list-data" data-category="shortcut" data-id="{{this.DOCID}}" data-tit="{{removeTag this.MENU_NM}}">
                             <span class="main-category">{{{replace this.DEPTH_PATH '\|,MyT' ' > , my T '}}} </span>
                         </button>
                     </li>
-                    {{/isNaN}}
                 {{/each}}
             </ul>
         </div>

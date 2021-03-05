@@ -43,6 +43,22 @@ class MytJoinInfoDiscount extends TwViewController {
     repaymentInfo: [] // 단말기 분할상환 정보
   };
 
+  get resDataInfo() {
+    return this._resDataInfo;
+  }
+
+  set resDataInfo(value) {
+    this._resDataInfo = value;
+  }
+
+  get commDataInfo() {
+    return this._commDataInfo;
+  }
+
+  set commDataInfo(value) {
+    this._commDataInfo = value;
+  }
+
   /*
   // default: 'info/myt-join.info.discount.html'
   private _urltplinfo: any = {
@@ -51,13 +67,12 @@ class MytJoinInfoDiscount extends TwViewController {
   */
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    CommonHelper.addCurLineInfo(svcInfo);
+    this._render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
+  }
 
-    this._svcInfo = svcInfo;
+  _render(req, res, next, svcInfo, allSvc, child, pageInfo) {
+    this._setDataInfo(req, svcInfo, pageInfo);
     const thisMain = this;
-    this.reqQuery = req.query;
-    this.pageInfo = pageInfo;
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
@@ -70,7 +85,7 @@ class MytJoinInfoDiscount extends TwViewController {
     Promise.all([p1]).then(function(resArr) {
       // thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView]', thisMain._urlTplInfo.pageRenderView);
 
-      thisMain._resDataInfo = resArr[0].result;
+      thisMain.resDataInfo = resArr[0].result;
 
       thisMain._dataInit();
 
@@ -79,8 +94,8 @@ class MytJoinInfoDiscount extends TwViewController {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
-        commDataInfo: thisMain._commDataInfo,
-        resDataInfo: thisMain._resDataInfo
+        commDataInfo: thisMain.commDataInfo,
+        resDataInfo: thisMain.resDataInfo
       });
     }, function(err) {
       thisMain.logger.info(thisMain, '[ Promise.all > error ] : ', err);
@@ -92,11 +107,14 @@ class MytJoinInfoDiscount extends TwViewController {
         svcInfo: svcInfo
       });
     });
+  }
 
-    // thisMain.renderView(res, thisMain._urlTplInfo.default, {
-    //   reqQuery: thisMain.reqQuery,
-    //   svcInfo: svcInfo,
-    // });
+  _setDataInfo(req, svcInfo, pageInfo) {
+    this._svcInfo = svcInfo;
+    this.reqQuery = req.query;
+    this.pageInfo = pageInfo;
+    // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+    CommonHelper.addCurLineInfo(svcInfo);
   }
 
   // NOTE: 안씀
@@ -146,33 +164,33 @@ class MytJoinInfoDiscount extends TwViewController {
    * 데이터 조회 후 화면 출력을 위해 세팅
    * @private
    */
-  private _dataInit() {
+  _dataInit() {
     this.logger.info(this, '[ _dataInit() start ]');
 
     const thisMain = this;
-    this._commDataInfo.feeInfo = [];
-    this._commDataInfo.terminalInfo = [];
-    this._commDataInfo.repaymentInfo = [];
-    this._commDataInfo.tRental = null;
+    this.commDataInfo.feeInfo = [];
+    this.commDataInfo.terminalInfo = [];
+    this.commDataInfo.repaymentInfo = [];
+    this.commDataInfo.tRental = null;
 
-    const priceList = thisMain._resDataInfo.priceList;
+    const priceList = thisMain.resDataInfo.priceList;
     this.logger.info(this, '[ (priceList) ]', this.getSizeObjOrArr(priceList));
 
-    const tAgree = thisMain._resDataInfo.tAgree;
-    const tInstallment = thisMain._resDataInfo.tInstallment;
-    const rsvPenTAgree = thisMain._resDataInfo.rsvPenTAgree;
-    const sucesAgreeList = thisMain._resDataInfo.sucesAgreeList;
+    const tAgree = thisMain.resDataInfo.tAgree;
+    const tInstallment = thisMain.resDataInfo.tInstallment;
+    const rsvPenTAgree = thisMain.resDataInfo.rsvPenTAgree;
+    const sucesAgreeList = thisMain.resDataInfo.sucesAgreeList;
     this.logger.info(this, '[ (tAgree) ]', this.getSizeObjOrArr(tAgree));
     this.logger.info(this, '[ (tInstallment) ]', this.getSizeObjOrArr(tInstallment));
     this.logger.info(this, '[ (rsvPenTAgree) ]', this.getSizeObjOrArr(rsvPenTAgree));
     this.logger.info(this, '[ (sucesAgreeList) ]', this.getSizeObjOrArr(sucesAgreeList));
-    this.logger.info(this, '[ (tRental) ]', this.getSizeObjOrArr(thisMain._resDataInfo.tRental));
+    this.logger.info(this, '[ (tRental) ]', this.getSizeObjOrArr(thisMain.resDataInfo.tRental));
 
-    const installmentList = thisMain._resDataInfo.installmentList;
+    const installmentList = thisMain.resDataInfo.installmentList;
     this.logger.info(this, '[ (installmentList) ]', this.getSizeObjOrArr(installmentList));
 
-    const tablet = thisMain._resDataInfo.tablet;
-    const wibro = thisMain._resDataInfo.wibro;
+    const tablet = thisMain.resDataInfo.tablet;
+    const wibro = thisMain.resDataInfo.wibro;
     this.logger.info(this, '[ (tablet) ]', this.getSizeObjOrArr(tablet));
     this.logger.info(this, '[ (wibro) ]', this.getSizeObjOrArr(wibro));
 
@@ -197,26 +215,31 @@ class MytJoinInfoDiscount extends TwViewController {
             // 사용 되지 않는 것으로 보임.
             // priceItem.titNm = titlePriceDC(priceItem.typeStr, priceItem.agrmtDcStaDt, priceItem.agrmtDcEndDt);
             priceItem.disProdNm2 = this.trimAll(priceItem.disProdNm);
+            priceItem.disProdNm_N = '요금약정할인제도';
             break;
           case 'NA00003681': // 뉴태블릿약정
             priceItem.typeStr = 'FEE_TYPE_B';
             priceItem.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
+            priceItem.disProdNm_N = 'LTE데이터약정할인제도';
             break;
           case 'NA00004430': // 선택약정할인
             priceItem.typeStr = 'FEE_TYPE_E';
             // 사용 되지 않는 것으로 보임.
             // priceItem.titNm = titlePriceDC(priceItem.typeStr, priceItem.agrmtDcStaDt, priceItem.agrmtDcEndDt);
             priceItem.disProdNm2 = this.trimAll(priceItem.disProdNm);
+            priceItem.disProdNm_N = '선택약정할인제도';
             break;
           case 'NA00006349': // 2G전환요금할인(70%) (24개월(2G전환))
             priceItem.typeStr = 'FEE_TYPE_F';
             priceItem.disProdNm2 = this.trimAll(priceItem.disProdNm);
+            priceItem.disProdNm_N = '2G전환요금할인';
             // priceItem.disProdNm2 = (priceItem.disProdNm || '').replace(/  /g, ' ');
             // priceItem.disProdNm2 = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_F.TIT_NM;
             break;
           default:
             priceItem.typeStr = 'FEE_NOTYPE';
             priceItem.titNm = priceItem.disProdNm; // 할인 상품명
+            priceItem.disProdNm_N = priceItem.disProdNm;
             break;
         }
         priceItem.svcAgrmtDcObj = {
@@ -228,7 +251,7 @@ class MytJoinInfoDiscount extends TwViewController {
           priceItem,
           priceItem.agrmtDcStaDt,
           priceItem.agrmtDcEndDt);
-        thisMain._commDataInfo.feeInfo.push(priceItem);
+        thisMain.commDataInfo.feeInfo.push(priceItem);
       }
     }
 
@@ -245,7 +268,7 @@ class MytJoinInfoDiscount extends TwViewController {
         tablet.agrmtDcStaDt,
         tablet.agrmtDcEndDt);
 
-      thisMain._commDataInfo.feeInfo.push(tablet);
+      thisMain.commDataInfo.feeInfo.push(tablet);
     }
 
     // // 와이브로
@@ -261,14 +284,14 @@ class MytJoinInfoDiscount extends TwViewController {
     //     wibro.agrmtDcStaDt,
     //     wibro.agrmtDcEndDt);
     //
-    //   thisMain._commDataInfo.feeInfo.push(wibro);
+    //   thisMain.commDataInfo.feeInfo.push(wibro);
     // }
 
 
 
 
-    this.logger.info(this, '[ 1. this._commDataInfo.feeInfo ]');
-    // console.dir(this._commDataInfo.feeInfo);
+    this.logger.info(this, '[ 1. this.commDataInfo.feeInfo ]');
+    // console.dir(this.commDataInfo.feeInfo);
 
     // -------------------------------------------------------------[2. 단말기 약정할인 정보]
     if ( this.getSizeObjOrArr(tAgree) > 0 ) {
@@ -303,7 +326,7 @@ class MytJoinInfoDiscount extends TwViewController {
         tAgree.agrmtTermDt,
         tAgree.rmnDayCnt );
 
-      thisMain._commDataInfo.terminalInfo.push(tAgree);
+      thisMain.commDataInfo.terminalInfo.push(tAgree);
     }
 
     if ( this.getSizeObjOrArr(tInstallment) > 0 ) { // T약정 할부지원
@@ -322,7 +345,7 @@ class MytJoinInfoDiscount extends TwViewController {
       tInstallment.penalty = FormatHelper.addComma(tInstallment.penAmt2); // 위약금
       const tInstallmentEndDt = moment(tInstallment.tInstallmentOpDt).add(tInstallment.allotMthCnt, 'months').format('YYYYMMDD');
       thisMain._proDate(tInstallment, tInstallment.tInstallmentOpDt, tInstallmentEndDt);
-      thisMain._commDataInfo.terminalInfo.push(tInstallment);
+      thisMain.commDataInfo.terminalInfo.push(tInstallment);
     }
 
     if ( this.getSizeObjOrArr(rsvPenTAgree) > 0 ) { // 약정 위약금2
@@ -340,7 +363,7 @@ class MytJoinInfoDiscount extends TwViewController {
         rsvPenTAgree.rtenAgrmtEndDt,
         rsvPenTAgree.remDayCnt );
 
-      thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
+      thisMain.commDataInfo.terminalInfo.push(rsvPenTAgree);
     }
     if ( this.getSizeObjOrArr(sucesAgreeList) > 0 ) { // 단말기 승계 정보
 
@@ -401,11 +424,11 @@ class MytJoinInfoDiscount extends TwViewController {
           sucesAgreeList[i].sucesAgrmtEndDt,
           sucesAgreeList[i].sucesRemDayCnt);
 
-        thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
+        thisMain.commDataInfo.terminalInfo.push(sucesAgreeList[i]);
       }
     }
-    this.logger.info(this, '[ 2. this._commDataInfo.terminalInfo ]');
-    // console.dir(this._commDataInfo.terminalInfo);
+    this.logger.info(this, '[ 2. this.commDataInfo.terminalInfo ]');
+    // console.dir(this.commDataInfo.terminalInfo);
 
     // -------------------------------------------------------------[3. 단말기 분할 상환 정보]
     if ( this.getSizeObjOrArr(installmentList) > 0 ) {
@@ -424,25 +447,28 @@ class MytJoinInfoDiscount extends TwViewController {
         // 분할상환금, 분할상환수수료
         installmentList[i].mthPrnAmt = FormatHelper.addComma(installmentList[i].mthprnAmt || '0');
         installmentList[i].mthIntAmt = FormatHelper.addComma(installmentList[i].mthintAmt || '0');
+        const mthTotAmt = parseInt(installmentList[i].mthprnAmt || 0, 10) +
+          parseInt(installmentList[i].mthintAmt || 0, 10)
+        installmentList[i].mthTotAmt = FormatHelper.addComma(mthTotAmt.toString());
 
         // 중도부분납금, 중도부분납일
         installmentList[i].allotPayAmt = FormatHelper.addComma(installmentList[i].allotPayAmt || '0');
         installmentList[i].lastAllotPayOpTm
           = installmentList[i].lastAllotPayOpTm ? DateHelper.getShortDate(installmentList[i].lastAllotPayOpTm) : '-';
 
-        thisMain._commDataInfo.repaymentInfo.push(installmentList[i]);
+        thisMain.commDataInfo.repaymentInfo.push(installmentList[i]);
       }
     }
-    this.logger.info(this, '[ 3. this._commDataInfo.repaymentInfo ]');
-    // console.dir(this._commDataInfo.repaymentInfo);
+    this.logger.info(this, '[ 3. this.commDataInfo.repaymentInfo ]');
+    // console.dir(this.commDataInfo.repaymentInfo);
 
 
     // 단말기 구매정보(T렌탈)
-    if ( this.getSizeObjOrArr(thisMain._resDataInfo.tRental) > 0 ) {
-      this._commDataInfo.tRental = thisMain._resDataInfo.tRental;
-      this._commDataInfo.tRental.rentalStaDt = DateHelper.getShortDate(this._commDataInfo.tRental.rentalStaDt);
-      this._commDataInfo.tRental.allotEndSchdDt = DateHelper.getShortDate(this._commDataInfo.tRental.allotEndSchdDt);
-      this._commDataInfo.tRental.mthRentAmt = FormatHelper.addComma(this._commDataInfo.tRental.mthRentAmt);
+    if ( this.getSizeObjOrArr(thisMain.resDataInfo.tRental) > 0 ) {
+      this.commDataInfo.tRental = thisMain.resDataInfo.tRental;
+      this.commDataInfo.tRental.rentalStaDt = DateHelper.getShortDate(this.commDataInfo.tRental.rentalStaDt);
+      this.commDataInfo.tRental.allotEndSchdDt = DateHelper.getShortDate(this.commDataInfo.tRental.allotEndSchdDt);
+      this.commDataInfo.tRental.mthRentAmt = FormatHelper.addComma(this.commDataInfo.tRental.mthRentAmt);
     }
 
 
@@ -473,15 +499,18 @@ class MytJoinInfoDiscount extends TwViewController {
     // dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
     dataObj.totDt = DateHelper.getDiffByUnit(endDt, startDt, 'day') + 1;  // 전체 일수(첫날 포함)
     dataObj.curDt = DateHelper.getDiffByUnit(useDt, startDt, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
+    dataObj.curMt = DateHelper.getDiffByUnit(useDt, startDt, 'month'); // 진행 월수(회차표기를 하기 위해)
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
+    const nPerDt = Math.min(Math.floor((dataObj.curDt / dataObj.totDt) * 100));
+    dataObj.nPerDt = nPerDt < 0 ? 0 : nPerDt > 100 ? 100 : nPerDt;
     dataObj.perDt = 100 - Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트(잔여일수에 대한..)
     dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);  // 퍼센트 min:0, max:100
     dataObj.totMt = Math.round(
       moment(endDt, 'YYYYMMDD').diff(startDt, 'months', true)
     );
 
-    this.logger.info(this, '[ _proDate ] stt:', startDt , ', end:', endDt
+    console.log( '[ _proDate ] stt:', startDt , ', end:', endDt
       , ', tot:', dataObj.totDt, ', ing:', dataObj.curDt, ', rem:' + dataObj.remDt
       , ', per(rem):' + dataObj.perDt, ', totMt:' + dataObj.totMt);
   }
@@ -493,14 +522,21 @@ class MytJoinInfoDiscount extends TwViewController {
   private _proDateRemMt( dataObj: any, start: string, end: string ) {
     const startDt = start;
     const endDt = end;
+    const useDt = DateHelper.getCurrentShortDate(new Date()); // 진행날짜
 
     dataObj.startDt = DateHelper.getShortDate(startDt);
     dataObj.endDt = DateHelper.getShortDate(endDt);
 
+    dataObj.totDt = DateHelper.getDiffByUnit(endDt, startDt, 'day') + 1;
+    dataObj.curDt = DateHelper.getDiffByUnit(useDt, startDt, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
+    dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
     dataObj.totMt = dataObj.allotMthCnt; // 전체 개월
     dataObj.curMt = dataObj.allotMthCnt - dataObj.invRmn; // 진행 개월
     dataObj.remMt = dataObj.invRmn; // 잔여 개월
 
+    // 고도화 그래프 처리 방법 변경
+    const nPerMt = Math.min(Math.floor((dataObj.curMt / dataObj.totMt) * 100));
+    dataObj.nPerMt = nPerMt < 0 ? 0 : nPerMt > 100 ? 100 : nPerMt;
     dataObj.perMt = 100 - Math.floor((dataObj.curMt / dataObj.totMt) * 100); // 퍼센트
     dataObj.perMt = this.limitMinMax(dataObj.perMt, 0, 100);
   }

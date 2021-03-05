@@ -139,19 +139,22 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       if ( this.type === 1 ) {
         // PPS 인 경우
         data.paidBillInfo = billInfo.dataOnlyYn === 'Y' ?
-          FormatHelper.convDataFormat(billInfo.prodAmt, 'MB') : {
-            data: FormatHelper.addComma(billInfo.prodAmt),
+          FormatHelper.convDataFormat(billInfo.prodAmt || 0, 'MB') : {
+            data: FormatHelper.addComma(billInfo.prodAmt || '0'),
             unit: '원'
           };
       } else {
-        data.paidBillInfo = {
-          amount: FormatHelper.addComma(billInfo.amt),
-          showMonth: DateHelper.getAddDays(billInfo.invDt, 1, 'M월'),
-          startDate: DateHelper.getShortFirstDate(billInfo.invDt),
-          endDate: DateHelper.getShortLastDate(billInfo.invDt),
-          isBroadBand: data.svcInfo.actCoClCd === 'B',
-          isUsageBill: !(data.svcInfo.actRepYn === 'Y')
-        };
+        // [OP002-13504] 신규가입한 경우 amt = '', invDt = ''로 넘어와 이 경우 납부/청구 영역 비노출
+        if (!FormatHelper.isEmpty(billInfo.amt) && !FormatHelper.isEmpty(billInfo.invDt)) {
+          data.paidBillInfo = {
+            amount: FormatHelper.addComma(billInfo.amt),
+            showMonth: DateHelper.getAddDays(billInfo.invDt, 1, 'M월'),
+            startDate: DateHelper.getShortFirstDate(billInfo.invDt),
+            endDate: DateHelper.getShortLastDate(billInfo.invDt),
+            isBroadBand: data.svcInfo.actCoClCd === 'B',
+            isUsageBill: !(data.svcInfo.actRepYn === 'Y')
+          };
+        }
       }
     }
 
@@ -164,17 +167,19 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       // 유선인 경우 일시정지/해제 버튼 무조건 노출
       data.myWirePauseState = true;
     }
-    // 납부/청구 유형
-    if ( data.myInfo && data.myInfo.billTypeCd ) {
-      // 아래 요금안내서 유형 정보가 현재 존재하지 않는 정보로 요금안내서 상세와 동일하게 처리
-      if (['4', '5', '8', 'C'].indexOf(data.myInfo.billTypeCd) > -1 ) {
-        data.myInfo.billTypeNm = MYT_FARE_BILL_TYPE[data.myInfo.billTypeCd];
+    // 납부/청구 유형 - 대표청구회선인 경우에만 노출
+    if (data.svcInfo.actRepYn === 'Y') {
+      if ( data.myInfo && data.myInfo.billTypeCd ) {
+        // 아래 요금안내서 유형 정보가 현재 존재하지 않는 정보로 요금안내서 상세와 동일하게 처리
+        if (['4', '5', '8', 'C'].indexOf(data.myInfo.billTypeCd) > -1 ) {
+          data.myInfo.billTypeNm = MYT_FARE_BILL_TYPE[data.myInfo.billTypeCd];
+        }
+        data.paymentInfo = {
+          billTypeNm: data.myInfo.billTypeNm || '-',
+          // 대표청구회선이 아닌 경우에는 "통합청구"로 노출 data.svcInfo.actRepYn !== 'Y'? '통합청구'
+          payMthdNm: data.myInfo.payMthdNm
+        };
       }
-      data.paymentInfo = {
-        billTypeNm: data.myInfo.billTypeNm,
-        // 대표청구회선이 아닌 경우에는 "통합청구"로 노출
-        payMthdNm: data.svcInfo.actRepYn !== 'Y'? '통합청구' : data.myInfo.payMthdNm
-      };
     }
   }
 
@@ -222,16 +227,17 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         this.apiService.request(API_CMD.BFF_05_0179, {}), // 부가상품 갯수 조회
         this.apiService.request(API_CMD.BFF_05_0133, {}) // 유선 결합상품 조회. BFF 매핑 등록하기
       ).map(([additionResp, combinationsResp]) => {
+        // 신규 가입한 경우 초기화 오류로 인하여 무한로딩 발생이 생길 수 있어 예외처리 추
         const addition = additionResp.code === API_CODE.CODE_00 ? additionResp.result : null;
         const combinations = combinationsResp.code === API_CODE.CODE_00 ? combinationsResp.result : null;
-        const comProdCnt = combinations.combinationMemberCnt ?
-          parseInt(combinations.combinationMemberCnt || 0, 10) : combinations.combinationMemberList ?
+        const comProdCnt = combinations && combinations.combinationMemberCnt ?
+          parseInt(combinations.combinationMemberCnt || 0, 10) : combinations && combinations.combinationMemberList ?
             combinations.combinationMemberList.length : 0;
         return {
-          feePlanProd: addition.feePlanProd || null,
-          addProdPayCnt: parseInt(addition.payAdditionCount || 0, 10), // 유료 부가상품
-          addProdPayFreeCnt: parseInt(addition.freeAdditionCount || 0, 10), // 무료 부가상품
-          additionCount: parseInt(addition.additionCount || 0, 10), // 총 부가상품 건수
+          feePlanProd: addition && addition.feePlanProd || null,
+          addProdPayCnt: parseInt(addition && addition.payAdditionCount || 0, 10), // 유료 부가상품
+          addProdPayFreeCnt: parseInt(addition && addition.freeAdditionCount || 0, 10), // 무료 부가상품
+          additionCount: parseInt(addition && addition.additionCount || 0, 10), // 총 부가상품 건수
           comProdCnt // 결합상품
         };
       });
@@ -441,7 +447,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         if ( resp.code === API_CODE.CODE_00 ) {
           return {
             grade: MEMBERSHIP_GROUP[resp.result.mbrGrCd].toUpperCase(),
-            point: FormatHelper.addComma(resp.result.mbrUsepowerdAmt || '0'),
+            point: FormatHelper.addComma(resp.result.mbrUsedAmt || '0'),
             used: 0 // 가입한 경우
           };
         }
@@ -631,6 +637,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       // 무선
       return {
         moreInfo: 'CMMA_A3_B13-30',
+        moreInfo2: 'CMMA_A3_B13-109',
         disInfo: 'CMMA_A3_B13-31',
         contractPlan: 'CMMA_A3_B13-32',
         usedContractPlan: 'CMMA_A3_B13-33',
@@ -658,7 +665,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         changePassword: 'CMMA_A3_B13-54',
         oldNumber: 'CMMA_A3_B13-55',
         changeNumber: 'CMMA_A3_B13-56',
-        banner: 'CMMA_A3_B13-57'
+        banner: 'CMMA_A3_B13-57',
+        product: 'CMMA_A3_B13-110'
       }
     } else if (this.type === 1) {
       // PPS
@@ -671,7 +679,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         reservation: 'CMMA_A3_B13-99',
         password: 'CMMA_A3_B13-100',
         changePassword: 'CMMA_A3_B13-101',
-        banner: 'CMMA_A3_B13-102'
+        banner: 'CMMA_A3_B13-102',
+        product: 'CMMA_A3_B13-112'
       }
     } else {
       // 유선
@@ -698,7 +707,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         prodChg: 'CMMA_A3_B13-75',
         instChg: 'CMMA_A3_B13-76',
         transferFee: 'CMMA_A3_B13-77',
-        wireNumChange: 'CMMA_A3_B13-78'
+        wireNumChange: 'CMMA_A3_B13-78',
+        product: 'CMMA_A3_B13-111'
       }
     }
   }

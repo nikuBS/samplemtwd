@@ -44,6 +44,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._onNumberCancel, this));
     this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._onCancel, this));
+    this.$container.on('click', 'button.fe-go-url', $.proxy(this._onReplaceUrl, this));
     this.$container.on('click', 'button.fe-replace-url', $.proxy(this._onReplaceUrl, this));
     this.$container.on('click', 'button.bt-link-tx', $.proxy(this._onPlans, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
@@ -209,8 +210,13 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         break;
     }
   },
-  _onReplaceUrl: function () {
-    this._historyService.goLoad('/myt-data/recharge/coupon');
+  _onReplaceUrl: function (event) {
+    var $target = $(event.target);
+    if ($target.hasClass('fe-go-url')) {
+      this._historyService.goLoad('/myt-data/recharge/coupon');
+    } else {
+      this._historyService.replaceURL('/myt-data/recharge/coupon');
+    }
   },
 
   /**
@@ -394,13 +400,12 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       case 'voice':
         this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=voice');
         break;
-      case 'gift':
+      default:
+        // gift or default
         var number = this.$numberInput.val();
         number = Tw.FormatHelper.getFormattedPhoneNumber(number.replace(/[^0-9]/gi, ''));
         this._historyService.replaceURL(
           '/myt-data/recharge/coupon/complete?category=gift&number=' + number);
-        break;
-      default:
         break;
     }
   },

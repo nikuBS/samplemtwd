@@ -289,25 +289,18 @@
                     <%_ if (data.isTmoaData || data._5gxTicket) { _%>
                         <div class="tmoa-comment">
                             <%_ if (data.isTmoaData) { _%>
-                                <a href="/myt-data/familydata" class="tmoa-link-list" data-xt_eid="<%=data.xtEid.familydata%>" data-xt_csid="NO" data-xt_action="BC">
-                                    <span class="link-item">
-                                        <span href="#" class="t-share">T가족모아데이터
-                                            <%_ if (data.isTmoaInsProdId && data.isTmoaProdId) { _%>
-                                            <!-- 해당 공유하기 기능은 서비스가 중단되어 제거
-                                            <span class="like-btn" data-id="family-moa" data-xt_eid="<%=data.xtEid.familydataShare%>" data-xt_csid="NO" data-xt_action="BC">공유하기</span>
-                                            -->
-                                            <%_ } _%>
-                                        </span>
-                                    </span>
-                                    <span class="link-item">
-                                        <span class="data-amount" data-xt_eid="<%=data.xtEid.familydata%>" data-xt_csid="NO" data-xt_action="BC">
-                                            총 <%= data.family.showTotal.data %><%= data.family.showTotal.unit %> 중
-                                            <strong>
-                                                <%= data.family.showRemained.data %><%= data.family.showRemained.unit %>남음
-                                            </strong>
-                                        </span>
-                                    </span>
-                                </a>
+                                <ul class="tmoa-link-list">
+                                    <%_ if (data.isTmoaDataShare) { _%>
+									    <li class="link-item"><a href="#" class="t-share" data-id="family-moa" data-xt_eid="<%=data.xtEid.familydataShare%>" data-xt_csid="NO" data-xt_action="BC">T가족모아데이터 <span class="like-btn">공유하기</span></a></li>
+                                    <%_ } else { _%>
+                                        <li class="link-item"><a href="/myt-data/familydata" class="t-share" data-xt_eid="<%=data.xtEid.familydata%>" data-xt_csid="NO" data-xt_action="BC">T가족모아데이터</li>
+                                    <%_ } _%>
+									<li class="link-item">
+                                        <a href="/myt-data/familydata" class="data-amount" data-xt_eid="<%=data.xtEid.familydata%>" data-xt_csid="NO" data-xt_action="BC">
+                                            총 <%= data.family.showTotal.data %><%= data.family.showTotal.unit %> 중 <strong><%= data.family.showRemained.data %><%= data.family.showRemained.unit %>남음</strong>
+                                        </a>
+                                    </li>
+								</ul>
                             <%_ } _%>
                             <%_ if (data._5gxTicket) { _%>
                                 <a href="/myt-data/5g-setting" class="data-voucher" data-xt_eid="<%=data.xtEid.dataTimeSetting%>" data-xt_csid="NO" data-xt_action="BC">

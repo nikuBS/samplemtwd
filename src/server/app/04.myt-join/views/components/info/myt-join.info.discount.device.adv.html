@@ -1,0 +1,71 @@
+<%#
+* @file myt-join.info.discount.device.adv.html
+* @author Kim In Hwan
+_%>
+
+<% var isSuccession = terminalItem.typeStr.indexOf('suc_') > -1; %>
+
+<div class="box-group">
+    <div class="box-group-head-tit">
+        <%_ if ( terminalItem.typeStr == 'join_type_B' ) { _%>
+        <a href="#" class="link"><%= terminalItem.titNm %></a>
+        <% } else { %>
+        <%= terminalItem.titNm %>
+        <% } %>
+    </div>
+    <div class="box-group-cont">
+        <ul class="report-list item-no-border small">
+            <li class="report-item">
+                <dl class="report-define d-wrap">
+                    <dt class="report-tit">기기 할인 금액</dt>
+                    <dd class="report-cont"><%=terminalItem.agreePay %>원</dd>
+                </dl>
+            </li>
+            <li class="report-item">
+                <dl class="report-define d-wrap">
+                    <dt class="report-tit">오늘 해지 시 할인반환금</dt>
+                    <dd class="report-cont"><%=terminalItem.penalty %>원</dd>
+                </dl>
+            </li>
+        </ul>
+        <div class="gray-box">
+            <ul class="report-list item-no-border small">
+                <li class="report-item">
+                    <dl class="report-define d-wrap">
+                        <dt class="report-tit">약정 가입 상태</dt>
+                        <dd class="report-cont"><%= isSuccession? '승계' : '가입' %></dd>
+                    </dl>
+                </li>
+                <li class="report-item">
+                    <dl class="report-define d-wrap">
+                        <dt class="report-tit">약정 기간</dt>
+                        <dd class="report-cont">
+                            <button type="button" class="detail-agree-btn" data-id="device"
+                                    data-target="<%= terminalItem.typeStr %>">
+                                <%= terminalItem.totMt %>개월(<%= terminalItem.totDt %>일)
+                            </button>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="horizon-bar-wrap contract-graph">
+            <div class="horizon-bar">
+                <span class="data" style="width:<%- terminalItem.nPerDt %>%">
+                    <span class="bar"></span>
+                    <span class="bar-bubble"><%= terminalItem.remDt %>일 남음</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+                </span>
+            </div>
+            <div class="data-date">
+                <span class="start-date">
+                    <%= terminalItem.startDt %>
+                    <span class="day-dec">시작일</span>
+                </span>
+                <span class="end-date">
+                    <%= terminalItem.endDt %>
+                    <span class="day-dec">종료일</span>
+                </span>
+            </div>
+        </div>
+    </div><!-- group-cont -->
+</div>

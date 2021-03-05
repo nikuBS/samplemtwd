@@ -5,7 +5,7 @@
  * @since 2020.12.30
  *
  */
-import {API_CMD} from '../../../../types/api-command.type';
+import {API_CMD, API_CODE, SESSION_CMD} from '../../../../types/api-command.type';
 import {Request, Response} from 'express';
 import MytFareSubmainCommonService from './myt-fare.submain.common.service';
 import {Observable} from 'rxjs/Observable';
@@ -23,15 +23,67 @@ export class MytFareSubmainMyBenefitService extends MytFareSubmainCommonService 
     this.apiService.setTimeout(3000); // 타임아웃 3초 설정
     return Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_11_0001, {}), // membership
-      this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인 (bill-discounts)
-      this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인 (combination-discounts)
-      this.apiService.request(API_CMD.BFF_05_0196, {}), // 장기가입혜택 (loyalty-benefits)
-    ).map( ([membership, bill, combination, loyalty]) => {
-      return this.parseData(membership, bill, combination, loyalty);
+      this.apiService.requestStore(SESSION_CMD.BFF_05_0106, {}), // 요금할인 (bill-discounts)
+      this.apiService.requestStore(SESSION_CMD.BFF_05_0094, {}) // 결합할인 (combination-discounts)
+    ).map( ([membership, bill, combination]) => {
+      return this.parseData(membership, bill, combination);
     });
   }
 
-  private parseData(membership, bill, combination, loyalty): any {
+  private parseData(membership, discountResp, combinationResp/*, loyalty*/): any {
+    const {svcInfo} = this.info;
+    const membershipResult = membership.result || {};
+
+    let benefitDiscount = 0;
+    if ( discountResp.code === API_CODE.CODE_00 ) {
+      // 요금할인
+      benefitDiscount += discountResp.result.priceAgrmtList.length;
+      // 클럽
+      benefitDiscount += discountResp.result.clubYN ? 1 : 0;
+      // 척척
+      benefitDiscount += discountResp.result.chucchuc ? 1 : 0;
+      // T끼리플러스
+      benefitDiscount += discountResp.result.tplus ? 1 : 0;
+      // 요금할인- 복지고객
+      benefitDiscount += (discountResp.result.wlfCustDcList && discountResp.result.wlfCustDcList.length > 0) ?
+        discountResp.result.wlfCustDcList.length : 0;
+      // 특화 혜택
+      benefitDiscount += discountResp.result.thigh5 ? 1 : 0;
+      benefitDiscount += discountResp.result.kdbthigh5 ? 1 : 0;
+      // 데이터 선물
+      benefitDiscount += (discountResp.result.dataGiftYN) ? 1 : 0;
+      // 장기가입 요금
+      benefitDiscount += (discountResp.result.dcList && discountResp.result.dcList.length > 0) ?
+        discountResp.result.dcList.length : 0;
+      // 쿠폰
+      benefitDiscount += (discountResp.result.benfList && discountResp.result.benfList.length > 0) ? 1 : 0;
+    } else {
+      this.logger.error(this, JSON.stringify(discountResp));
+    }
+    // 결합할인
+    if ( combinationResp.code === API_CODE.CODE_00 ) {
+      if ( combinationResp.result.prodNm.trim().length > 0 ) {
+        benefitDiscount += Number(combinationResp.result.etcCnt) + 1;
+      }
+    } else {
+      this.logger.error(this, JSON.stringify(combinationResp));
+    }
+
+    const result = {
+      isJoin: !FormatHelper.isEmpty(membershipResult), // 멤버십 가입유무
+      mbsGrade: (MEMBERSHIP_GROUP[membershipResult.mbrGrCd] || '가입하기').toUpperCase(), // 멤버십 등급
+      showUsedAmount: membershipResult.mbrUsedAmt ? FormatHelper.addComma((+membershipResult.mbrUsedAmt).toString()) : '', // 연간 혜택
+      benefitCount: benefitDiscount // 혜택/할인 건수
+    };
+    if (svcInfo.loginType === LOGIN_TYPE.EASY) {
+      result.mbsGrade = '간편 로그인</br>조회불가';
+      result.showUsedAmount = '';
+    }
+
+    return result;
+  }
+
+ /* private parseData(membership, bill, combination, loyalty): any {
     const {svcInfo} = this.info;
     let benefitCount = 0;
     const membershipResult = membership.result || {};
@@ -86,6 +138,6 @@ export class MytFareSubmainMyBenefitService extends MytFareSubmainCommonService 
     }
 
     return result;
-  }
+  }*/
 
 }

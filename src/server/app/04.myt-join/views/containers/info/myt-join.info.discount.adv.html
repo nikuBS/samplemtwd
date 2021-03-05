@@ -1,0 +1,301 @@
+<%#
+* MenuName: 나의 가입정보 > 약정할인/기기상환 정보(MS_09)
+* @file myt-join.info.discount.html
+* @author 김인환
+* @since 2021.02.16
+* Summary: 약정정보, 기기상환 정보 출력 화면
+_%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); _%>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#content-area" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '약정할인/기기상환 정보' }) _%>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container tod-submain">
+                <%- include('../../../../../common/views/components/common.select-line.component.v2.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C65-1", multiple: "CMMA_A3_B13_C65-2" } }); _%>
+                <%_
+                var isEmptyInfo = ((!commDataInfo.feeInfo || commDataInfo.feeInfo.length === 0) &&
+                (!commDataInfo.terminalInfo || commDataInfo.terminalInfo.length === 0) &&
+                (!commDataInfo.repaymentInfo || commDataInfo.repaymentInfo.length === 0) &&
+                (!commDataInfo.tRental));
+                _%>
+                <% if (isEmptyInfo) { %>
+                <section class="cont-card">
+                    <div class="section-inner">
+                        <div class="card-cont">
+                            <div class="warning-box">
+                                <div class="warning-inner">
+                                    <p class="warning-tit">현재 이용 중인<br>약정 할인/기기 상환 정보가 없습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <% } else { %>
+                    <% if ( commDataInfo.feeInfo.length > 0 ) { %>
+                    <section class="cont-card">
+                        <div class="section-inner">
+                            <div class="card-cont">
+                                <div class="small-head-tit">요금약정할인</div>
+                                <div class="card-cont">
+                                    <%_
+                                    for (var idx = 0; idx < commDataInfo.feeInfo.length; idx++) {
+                                    var feeItem = commDataInfo.feeInfo[idx];
+                                    _%>
+                                    <% include ../../components/info/myt-join.info.discount.fee.adv.html %>
+                                    <%_ } _%>
+                                    <div class="hash-wrap">
+                                        <ul class="hash-list normal">
+                                            <li class="hash-item">
+                                                <a href="#" class="hash">#요금납부내역</a>
+                                            </li>
+                                            <li class="hash-item">
+                                                <a href="#" class="hash">#나의 결합상품</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <% } %>
+                    <% if ( commDataInfo.terminalInfo.length > 0 ) { %>
+                    <section class="cont-card">
+                        <div class="section-inner">
+                            <div class="small-head-tit">기기 약정할인</div>
+                            <div class="card-cont">
+                                <%_
+                                for (var idx = 0; idx < commDataInfo.terminalInfo.length; idx++) {
+                                var terminalItem = commDataInfo.terminalInfo[idx];
+                                _%>
+                                <% include ../../components/info/myt-join.info.discount.device.adv.html %>
+                                <%_ } _%>
+                            </div>
+                        </div>
+                    </section>
+                    <% } %>
+                    <% if ( commDataInfo.repaymentInfo.length > 0 ) { %>
+                    <section class="cont-card">
+                        <div class="section-inner">
+                            <div class="small-head-tit">기기 할부 정보</div>
+                            <div class="card-cont">
+                                <%_
+                                for (var idx = 0; idx < commDataInfo.repaymentInfo.length; idx++) {
+                                var repaymentItem = commDataInfo.repaymentInfo[idx];
+                                _%>
+                                <% include ../../components/info/myt-join.info.discount.device.buy.adv.html %>
+                                <%_ } _%>
+                                <div class="hash-wrap">
+                                    <ul class="hash-list normal">
+                                        <li class="hash-item">
+                                            <a href="#" class="hash">#요금납부내역</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <% } %>
+                <% } %>
+                <% if (finishInfoList.length) { %>
+                <section class="cont-card">
+                    <div class="section-inner">
+                        <div class="head-tit">종료된 약정<span class="sub-txt">(최근 2년 이내)</span></div>
+                        <div class="card-cont">
+                            <div class="acc-list-wrap">
+                                <!-- .widget -->
+                                <div class="widget ">
+                                    <div class="widget-box accordion">
+                                        <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                                            <div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+                                                <ul class="acco-list pd0">
+                                                    <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                        <div class="acco-tit">
+                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">요금약정할인제도</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                        </div>
+                                                        <div class="acco-cont">
+                                                            <ul class="report-list item-no-border smaller">
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">총 할인 금액</dt>
+                                                                        <dd class="report-cont">62,496원</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">총 할인받은 횟수</dt>
+                                                                        <dd class="report-cont">13회</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">약정 기간</dt>
+                                                                        <dd class="report-cont">2018.7.7.~2020.7.7</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">중도 종료일</dt>
+                                                                        <dd class="report-cont">2018.7.7.</dd>
+                                                                    </dl>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="btn-area">
+                                                                <a href="#" class="rect-btn">월별 상세 할인 내역 보기</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="acco-box acc-item">
+                                                        <div class="acco-tit">
+                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">T지원금약정</button>
+                                                        </div>
+                                                        <div class="acco-cont">
+                                                            <ul class="report-list item-no-border smaller">
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">지원 약정 금액</dt>
+                                                                        <dd class="report-cont">62,496원</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">약정 기간</dt>
+                                                                        <dd class="report-cont">2018.7.7.~2020.7.7</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">중도 종료일</dt>
+                                                                        <dd class="report-cont">13회</dd>
+                                                                    </dl>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="acco-box acc-item">
+                                                        <div class="acco-tit">
+                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">기기 할부 정보</button>
+                                                        </div>
+                                                        <div class="acco-cont">
+                                                            <ul class="report-list item-no-border smaller">
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">모델명</dt>
+                                                                        <dd class="report-cont">S**************</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">총 할부 청구 금액</dt>
+                                                                        <dd class="report-cont">850,000원</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">할부 기간</dt>
+                                                                        <dd class="report-cont">2018.7.7.~2020.7.7</dd>
+                                                                    </dl>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="acco-box acc-item">
+                                                        <div class="acco-tit">
+                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">T렌탈</button>
+                                                        </div>
+                                                        <div class="acco-cont">
+                                                            <ul class="report-list item-no-border smaller">
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">모델명</dt>
+                                                                        <dd class="report-cont">S**************</dd>
+                                                                    </dl>
+                                                                </li>
+                                                                <li class="report-item">
+                                                                    <dl class="report-define d-wrap">
+                                                                        <dt class="report-tit">T렌탈 시작일</dt>
+                                                                        <dd class="report-cont">2018.7.7</dd>
+                                                                    </dl>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+                <% if (faqList.length) { %>
+                <section class="section-inner">
+                    <div class="section-group">
+                        <div class="head-tit">자주 하는 질문</div>
+                        <div class="section-cont">
+                            <div class="acc-list-wrap">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box accordion">
+                                        <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                                            <div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+                                                <ul class="acco-list pd0">
+                                                    <% for (var i = 0; i < faqList.length; i++) { %>
+                                                    <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                                        <div class="acco-tit">
+                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">
+                                                                <%= faqList[i].title %>
+                                                            </button>
+                                                            <!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                                        </div>
+                                                        <div class="acco-cont">
+                                                            <%- faqList[i].answer %>
+                                                        </div>
+                                                    </li>
+                                                    <% } %>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                            <a href="/customer/faq" class="other-info-btn"><span>다른 정보를 찾고 계신가요?</span></a>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+            </div>
+            <div class="dim" data-id="line-dim" style="display: none;"></div>
+        </div>
+        <!--// #contents -->
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
+    </div>
+    <%- include('../../components/javascript.component.html') _%>
+    <script>
+      $(document).ready(function () {
+        new Tw.MyTJoinInfoDiscountAdv({
+            $element: $('#contents'),
+            data: {
+              reqQuery: <%- JSON.stringify(reqQuery) %>,
+              commDataInfo: <%- JSON.stringify(commDataInfo) %>,
+              resDataInfo: <%- JSON.stringify(resDataInfo) %>
+            }
+        });
+      });
+    </script>
+</body>
+<%- include('../../components/end.component.html') _%>

@@ -14,7 +14,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import {API_CMD, API_CODE, SESSION_CMD} from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
-import {SVC_ATTR_NAME} from '../../types/bff.type';
+import {MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE, SVC_ATTR_NAME} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
 import CommonHelper from '../../utils/common.helper';
@@ -24,7 +24,7 @@ import {MytFareSubmainSmallService} from './services/submain/myt-fare.submain.sm
 import moment from 'moment';
 import {MytFareSubmainChildService} from './services/submain/myt-fare.submain.child.service';
 import {MytFareSubmainMyBenefitService} from './services/submain/myt-fare.submain.my-benefit.service';
-import {MYT_FARE_BILL_TYPE} from '../../types/string.type';
+import {MYT_FARE_BILL_TYPE, MYT_SUSPEND_STATE_EXCLUDE} from '../../types/string.type';
 
 interface Info {
   req: Request;
@@ -98,9 +98,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     try {
       this.getRquests(data, res).subscribe( resp => {
-        if ( data.billError && data.isPPS) {
+        /*if ( data.billError && data.isPPS) {
           return this.errorRender(res, data.billError);
-        }
+        }*/
         res.render('myt-fare.submain.adv.html', { data: resp });
       });
 
@@ -115,10 +115,12 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const reqs = new Array<Observable<any>>();
     reqs.push(this.getSubmain(data)); // as is 나의요금
     reqs.push(this.getBillCharge(svcInfo, res)); // 요금 안내서
+
     // 회선이 휴대폰 인 경우만
     if (svcInfo.svcAttrCd === 'M1') {
       reqs.push(this._smallService.getHistory()); // 소액결제, 콘텐츠 이용료
       reqs.push(this._benefitService.getBenefit()); // 나의 혜택/할인
+      reqs.push(this.getSearchReq()); // 일시정지/해제, 장기 일시정지
     }
 
     return Observable.combineLatest(
@@ -128,15 +130,17 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       const error = submain.code ? submain : guide.code ? guide : null;
       if (error) {
         data.billError = {
-          ...error
+          code: error.code,
+          msg: error.msg
         };
       }
 
-      const [small, benefit] = other || [{}, {}];
+      const [small, benefit, pause] = other || [{}, {}, {}];
       Object.assign(data, {
         guide,
         small,
-        benefit
+        benefit,
+        pause
       });
 
       return data;
@@ -144,12 +148,15 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   }
 
   private getSubmain(data: any): Observable<any> {
-    const date = this.info.req.query.date;
-    data.claimDt = date;
-    data.month = this._mytFareSubmainGuideService.getMonth(date, 'M');
+    const date = this.info.req.query.date,
+      nowDate = new Date();
+    const prevDate = DateHelper.getEndOfMonSubtractDate(nowDate, '1', 'YYYYMMDD');
+
+    // data.claimDt = date;
+    // data.month = this._mytFareSubmainGuideService.getMonth(date, 'M');
     data.claimFirstDay = DateHelper.getShortFirstDate(date);
-    data.claimLastDay = DateHelper.getShortLastDate(date);
-    data.claimPay = '0';
+    // data.claimLastDay = DateHelper.getShortLastDate(date);
+    // data.claimPay = '0';
     data.totalClaim = '0';
     data.latestDates = [];
 
@@ -167,10 +174,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       data.type = 'UF';
       data.isBroadBand = true;
     }
-    // 1일~4일 에는 요금조회가 안됨
-    if (new Date().getDate() < 5) {
+    // 선택월이 당월이면서 1일~4일 에는 청구요금 영역 미노출함. 유선: 6일, 무선 : 5일
+    const limitDate = svcInfo.svcAttrCd.indexOf('S') > -1 ? 6 : 5;
+    if (date === prevDate && nowDate.getDate() < limitDate) {
       data.isNotClaimData = true;
-      return Observable.of(data);
     }
 
     return this._requestClaim(data);
@@ -179,8 +186,10 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   private getBillCharge(svcInfo, res): Observable<any> {
     return this._mytFareSubmainGuideService.getBillCharge(svcInfo, res).switchMap( resp => {
       if (resp.code && resp.code !== API_CODE.CODE_00) {
-        return Observable.of(resp);
-        // return Observable.of(null);
+        return Observable.of({
+          code: resp.code,
+          msg: resp.msg
+        });
       }
 
       return this._childService.getChildBillInfo().map( childInfo => {
@@ -218,7 +227,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       reqs = commonReqs.concat(reqs);
       return Observable.combineLatest(
         reqs
-      ).map((responses) => {
+      ).switchMap((responses) => {
         const [paymentInfo, affiliateCard, miriBalance] = responses.splice(0, commonReqs.length);
         // 납부/청구 정보
         data.paymentInfo = paymentInfo;
@@ -265,9 +274,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
           }
         }
 
-        this.getClaimDate(data);
-
-        return data;
+        return this.getClaimDate(data);
       });
     };
 
@@ -315,13 +322,19 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     const toDate = new Date();
     const eDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
     const sDate = DateHelper.getEndOfMonSubtractDate(eDate, '5', 'YYYYMMDD');
-    // let haveClaim = false; // 선택월 청구데이터 있는지 여부
+    const getMonth = (_date, _format) => {
+      return this._mytFareSubmainGuideService.getMonth(_date, _format);
+    };
+
     amtList.map( item => {
+      const month = getMonth(item.invDt, 'M');
       // 선택월의 청구금액
-      if (item.invDt === date) {
+      if (!data.claimPay && ((item.invDt === date) || month === getMonth(date, 'M'))) {
         data.claimPay = item.invAmt || '0';
-        // haveClaim = true;
         data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
+        data.claimDt = item.invDt;
+        data.month = month;
+        data.claimLastDay = DateHelper.getShortDate(item.invDt);
       }
 
       /*
@@ -334,22 +347,23 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         latestDates.push(item.invDt);
       }
     });
+    data.claimPay = data.claimPay || '0';
     // 청구 월 리스트에 '이번달' 넣기
-    const prevLastDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
-    if (latestDates.length > 0 && !latestDates.some( month => month === prevLastDate)) {
-      latestDates.splice(0, 0, prevLastDate);
+    // const prevLastDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
+    if (latestDates.length > 0 && !latestDates.some( month => getMonth(month, 'M') === DateHelper.getCurrentMonth(toDate))) {
+      latestDates.splice(0, 0, eDate);
     }
     data.latestDates = latestDates;
-    // data.isRealTime = !haveClaim ? false : data.isRealTime;
+    // 청구리스트에 당월이 없는경우 디폴트 값을 넣어준다.
+    data.claimPay = data.claimPay || '0';
+    data.claimDt = data.claimDt || eDate;
+    data.month = data.month || DateHelper.getCurrentMonth(toDate);
+    data.claimLastDay = data.claimLastDay || DateHelper.getShortDate(eDate);
 
     // 최근 6개월 청구내역이 없는경우, 당월 가입자인지 확인한다.
-    this.checkNewMember(data).subscribe( resp => {
+    return this.checkNewMember(data).map( resp => {
       data = resp;
-      if (!isRep) {
-        return;
-      }
       /*
-          대표청구 인 경우
           해당월 청구요금, 부분납부한 요금, 잔여납부 금액, 미납
        */
       // 청구금액
@@ -404,8 +418,79 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         payDate,
         isThisMonth: eDate === date // 이번달 유무
       };
+      return data;
     });
+  }
 
+  // 조회/신청 서비스
+  private getSearchReq(): Observable<any> {
+    return Observable.combineLatest(
+      this._getPausedState(),
+      this._getLongPausedState()
+    ).map( ([myPausedState, myLongPausedState]) => {
+      // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
+      if (myPausedState) {
+        if (myPausedState.svcStCd === 'SP') {
+          const fromDt = myPausedState.fromDt, toDt = myPausedState.toDt;
+          myPausedState.sDate = DateHelper.getShortDate(fromDt);
+          myPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
+          myPausedState.state = true;
+          if (myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
+            || myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
+            || myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY) {
+            myLongPausedState = {
+              state: true,
+              opState: myPausedState.svcChgRsnNm.replace(MYT_SUSPEND_STATE_EXCLUDE, ''),
+              fromDt: myPausedState.fromDt,
+              toDt: myPausedState.toDt
+            };
+          }
+        } else if (((myPausedState.armyDt && myPausedState.armyDt !== '')
+          || (myPausedState.armyExtDt && myPausedState.armyExtDt !== ''))) {
+          myLongPausedState = {
+            state: true
+          };
+          myPausedState.armyDt = myPausedState.armyDt || myPausedState.armyExtDt;
+        } else if (myPausedState.reservedYn === 'Y') { // 일시정지 예약자
+          const fromDt = myPausedState.fromDt, toDt = myPausedState.toDt;
+          myPausedState.sDate = DateHelper.getShortDate(fromDt);
+          myPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
+        }
+      }
+
+      if (myLongPausedState) {
+        const fromDt = myLongPausedState.fromDt, toDt = myLongPausedState.toDt;
+        myLongPausedState.sDate = DateHelper.getShortDate(fromDt);
+        myLongPausedState.eDate = toDt && DateHelper.getShortDate(toDt); // 해외체류는 toDt 없음
+        myLongPausedState.state = true;
+        // 군입대로 인한 장기 일시정지
+        myLongPausedState.isArmy = (MYT_SUSPEND_MILITARY_RECEIVE_CD.indexOf(myLongPausedState.receiveCd) > -1);
+        if (myPausedState.svcStCd === 'AC') {
+          if ((myPausedState.armyDt && myPausedState.armyDt !== '')
+            || (myPausedState.armyExtDt && myPausedState.armyExtDt !== '')) {
+            const days = DateHelper.getDiffByUnit(myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
+            if (days < 0) {
+              myPausedState.state = false;
+              myLongPausedState.state = false;
+              delete myPausedState.armyDt;
+            }
+          }
+          // 장기일시정지 처리완료 상태에서 멈추는 문제 해결 (장기일시정지, 처리완료, 신청일이 오늘 포함 이전이면, 새로 신청가능한 것으로
+          if (myLongPausedState.opStateCd === 'C' && fromDt <= DateHelper.getCurrentShortDate()) {
+            myLongPausedState.stateReleased = true;
+          }
+        }
+
+        // DV001-18322 스윙 문구 고객언어 반영
+        if (myLongPausedState.opState) {
+          myLongPausedState.opState = myLongPausedState.opState.replace(MYT_SUSPEND_STATE_EXCLUDE, '');
+        }
+      }
+      return {
+        myPausedState,
+        myLongPausedState
+      };
+    });
   }
 
   // 이번달 가입자인지 확인
@@ -414,7 +499,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     if (data.latestDates.length !== 0) {
       return Observable.of(data);
     }
-    this._getMyInfo().map( resp => {
+    return this._getMyInfo().map( resp => {
       if (resp === null) {
         return data;
       }
@@ -505,15 +590,20 @@ export default class MyTFareSubmainAdvController extends TwViewController {
     return list;
   }
 
+  // BFF 결과 실패유무
+  private isFail(resp) {
+    return resp.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(resp.result);
+  }
+
   // 사용요금 조회
   private _getUsageFee() {
     return this.apiService.request(API_CMD.BFF_05_0204, {}).map((resp) => {
-      if ( resp.code !== API_CODE.CODE_00 ) {
+      if (resp.code !== API_CODE.CODE_00) {
         return {
           info: resp
         };
       }
-      return FormatHelper.isEmpty(resp.result.invDt) ? null : resp.result;
+      return FormatHelper.isEmpty(resp.result.invDt) ? {} : resp.result;
     });
   }
 
@@ -527,7 +617,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
   // 납부/청구 정보 조회
   private _getPaymentInfo() {
     return this.apiService.request(API_CMD.BFF_05_0058, {}).map((resp) => {
-      if (resp.code !== API_CODE.CODE_00) {
+      if (this.isFail(resp)) {
         return undefined;
       }
       const {result} = resp;
@@ -535,14 +625,14 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       if (['4', '5', '8', 'C'].indexOf(result.billTypeCd) > -1) {
         result.billTypeNm = MYT_FARE_BILL_TYPE[result.billTypeCd];
       }
-      return resp.code === API_CODE.CODE_00 ? resp.result : undefined;
+      return resp.result;
     });
   }
 
   // 제휴카드 정보조회
   private _getAffiliateCard() {
     return this.apiService.request(API_CMD.BFF_07_0102, {}).map((resp) => {
-      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+      return resp.code !== API_CODE.CODE_00 ? null : resp.result;
     });
   }
 
@@ -553,7 +643,29 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.request(API_CMD.BFF_07_0060, {}).map((resp) => {
-      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+      return resp.code !== API_CODE.CODE_00 ? null : resp.result;
+    });
+  }
+
+  // 일시정지/해제
+  _getPausedState() {
+    // 유선인 경우
+    if (this.info.svcInfo.svcAttrCd.indexOf('S') > -1) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_05_0149, {}).map((resp) => {
+      return this.isFail(resp) ? null : resp.result;
+    });
+  }
+
+  // 장기 일시정지
+  _getLongPausedState() {
+    // 유선인 경우
+    if (this.info.svcInfo.svcAttrCd.indexOf('S') > -1) {
+      return Observable.of(null);
+    }
+    return this.apiService.request(API_CMD.BFF_05_0194, {}).map((resp) => {
+      return this.isFail(resp) ? null : resp.result;
     });
   }
 
@@ -564,7 +676,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return Observable.of(null);
     }
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0068, {}).map((resp) => {
-      return resp.code === API_CODE.CODE_00 ? resp.result : null;
+      return this.isFail(resp) ? null : resp.result;
     });
   }
 

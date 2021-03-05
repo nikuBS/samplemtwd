@@ -1,0 +1,32 @@
+<section class="section-inner">
+    <div class="section-group">
+        <div class="head-tit">자주 하는 질문</div>
+        <div class="section-cont">
+            <div class="acc-list-wrap">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+                                <ul class="acco-list pd0">
+                                    <%_faqList.map( item => {_%>
+                                    <li class="acco-box acc-item" data-faq-id="<%-item.faqId%>"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false" class="acc-tit down-arr fe-faq"><%- item.inqCtt%></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                        </div>
+                                        <div class="acco-cont">
+                                            <%- item.answCtt%>
+                                        </div>
+                                    </li>
+                                    <%_})_%>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <a href="/customer/faq" class="other-info-btn"><span>다른 정보를 찾고 계신가요?</span></a>
+        </div>
+    </div>
+</section>

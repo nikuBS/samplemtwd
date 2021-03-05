@@ -462,7 +462,7 @@ Tw.API_CMD = {
   //SEARCH SURVEY
   BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: Tw.API_METHOD.POST },
   BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: Tw.API_METHOD.POST },
-
+  BFF_08_0073: { path: '/core-modification/:version/ifaq/iFaq-detail', method: Tw.API_METHOD.GET},
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
@@ -609,8 +609,8 @@ Tw.API_CMD = {
   STACK_SEARCH_USER_CLICK: { path: '/search/tworld/log/save', method: Tw.API_METHOD.GET },
   // SEARCH_APP: { path: '/search/tworld/mobile-app', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
   // SEARCH_WEB: { path: '/search/tworld/mobile-web', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_APP: { path: '/search/tworld/mobile-app4', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
-  SEARCH_WEB: { path: '/search/tworld/mobile-web4', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_APP: { path: '/search/tworld/mobile-app5', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB: { path: '/search/tworld/mobile-web5', method: Tw.API_METHOD.GET, server: Tw.API_SERVER.SEARCH, bypass: true },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },

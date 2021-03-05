@@ -18,11 +18,11 @@
     <%- include('../../../common/views/components/header.component.html', { title: '나의 데이터/통화', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); %>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap" data-id="wrapper">
+    <div id="contents" class="container-wrap" data-id="submain-container">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-        <div class="container tod-submain" data-id="submain-container">
+        <div class="container tod-submain">
             <!-- OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대 -->
-            <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22"} }); _%>
+            <%- include('../../../common/views/components/common.select-line.component.v2.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B10-23", multiple : "CMMA_A3_B10-22"} }); _%>
 
             <%- include('../components/submain/myt-data.submain.adv.remnant.html', data) _%>
 
@@ -46,7 +46,7 @@
                                         </dd>
                                         <dd class="report-cont" data-id="gift-text" style="display: none;">
                                             <!-- 데이터가 0 인 경우나 500 MB 이하 인 경우 em 추가 -->
-                                            <span class="large"></span>
+                                            <span class="medium"></span>
                                             <button type="button" class="re-check-btn" style="display: none;">
                                                 <span class="tod-blind">조회하기</span>
                                             </button>
@@ -104,7 +104,7 @@
             </section>
             <%_ } _%>
             <%_
-            } else if (data.svcInfo.svcAttrCd === 'M2' && data.ppsCard) {
+            } else if (data.svcInfo.svcAttrCd === 'M2') {
             _%>
             <!-- 선불폰 충전하기 -->
             <section class="cont-card" data-id="pps-section">
@@ -115,7 +115,6 @@
                     <div class="card-cont">
                         <div class="charging-wrap">
                             <ul class="pps-charge-list">
-                                <%_ if (data.ppsCard && data.ppsCard.dataOnlyYn === 'N') { _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -134,8 +133,6 @@
                                         </dd>
                                     </dl>
                                 </li>
-                                <%_ } _%>
-                                <%_ if (data.ppsCard && (data.ppsCard.dataYn === 'Y' || data.ppsCard.dataOnlyYn === 'Y')) { _%>
                                 <li class="pps-item">
                                     <dl class="charge">
                                         <dt>
@@ -154,7 +151,6 @@
                                         </dd>
                                     </dl>
                                 </li>
-                                <%_ } %>
                             </ul>
                         </div>
                         <div class="short-link-wrap minus-mg">
@@ -185,7 +181,7 @@
                     <div class="card-cont">
                         <%_ if (data.refill && data.refill.length) { _%>
                         <%_
-                        var usableCoupon = data.refill[data.pickCouponIndex];
+                        var usableCoupon = data.pickCoupon;
                         var btnSet = ((data.refillAvailable === 'NONE' && !usableCoupon.isGift) ||
                         (data.refillAvailable !== 'NONE' && usableCoupon.isGift)) ? 'btn' : 'btn2';
                         _%>
@@ -359,9 +355,7 @@
                                 <% if (!data.isEasyLogin) { %>
                                 <li class="link-item" data-id="ting"><a href="" data-xt_eid="<%=data.xtEid.elctcTing%>" data-xt_csid="NO" data-xt_action="BC">팅 요금제 충전 선물</a></li>
                                 <% } %>
-                                <% if (data.isApp) { %>
                                 <li class="link-item" data-id="data"><a href="" data-xt_eid="<%=data.xtEid.elctcData%>" data-xt_csid="NO" data-xt_action="BC">데이터 조르기</a></li>
-                                <% } %>
                             </ul>
                         </div>
                         <% if (!data.isEasyLogin) { %>
@@ -499,7 +493,7 @@
                                     </a>
                                 </li>
                                 <li class="item">
-                                    <a href="" data-href="/myt-fare/submain" data-xt_eid="<%=data.xtEid.ppsMytJoin%>" data-xt_csid="NO" data-xt_action="BC">
+                                    <a href="" data-href="/myt-join/submain" data-xt_eid="<%=data.xtEid.ppsMytJoin%>" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="ico-item">
                                             <i class="ico"><img src="<%= CDN %>/img/myt/submain-ico15.svg" alt=""></i>
                                             <div class="list-txt">
@@ -652,6 +646,7 @@
             </section>
             <%_ } _%>
         </div>
+        <div class="dim" data-id="line-dim" style="display: none;"></div>
     </div>
     <!--// #contents -->
     <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>

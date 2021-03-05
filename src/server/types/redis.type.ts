@@ -49,6 +49,9 @@ export enum REDIS_KEY {
   PRODUCT_SORT_SECTION_LTE = 'comm.theme.order.lte', // 네트워크 상태가 LTE 일 때
   PRODUCT_SORT_SECTION_5G = 'comm.theme.order.5g', // 네트워크 상태가 5G 일 때 
   PRODUCT_SORT_SECTION_2ND_DEVICE = 'comm.theme.order.2nd', // 네트워크 상태가 2nd Device일 때
+  PREFERENCE_PROPERTY = 'PreferenceProperty:', // 환경변수 키  
+  NETFUNNEL_PAGE_VISIBLE = 'PreferenceProperty:netfunnel.page.visible' // 넷퍼널 키
+  
 }
 
 export enum REDIS_TOS_KEY {

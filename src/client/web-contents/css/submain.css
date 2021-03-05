@@ -2,6 +2,7 @@
 
 /**************************************  서브메인 ***************************************/
 
+
 /* 서브메인 layout */
 body.tod-white{background:#fff}
 .tod-submain{position:relative;}
@@ -118,7 +119,7 @@ body.tod-white{background:#fff}
 .tod-submain .section-inner .head-tit.low{margin-bottom:1.25rem}
 .tod-submain .section-inner .head-tit.low2{margin-bottom:0.75rem}
 .tod-submain .section-inner .head-tit.high{margin-bottom:2rem}
-.tod-submain .section-inner .head-tit .link{display:block; width:100%; height:100%; padding-right:0.625rem; position:relative; color:inherit; font-weight:inherit }
+.tod-submain .section-inner .head-tit .link{display:block; width:100%; height:100%; padding-right:0.625rem; position:relative; color:inherit; font-weight:inherit; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
 .tod-submain .section-inner .head-tit .link:after{content:''; display:inline-block; width:0.5rem; height:0.8125rem; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:50%; -webkit-transform:translateY(-50%); transform:translateY(-50%)}
 .tod-submain .section-inner .head-tit .link .right-txt{display:inline-block; float:right; font-size:0.9375rem; font-weight:400; line-height:1.125rem; margin-right:0.125rem}
 .tod-submain .section-inner .head-tit .link.white-space{position:absolute; left:0; top:0; z-index:0}
@@ -132,17 +133,19 @@ body.tod-white{background:#fff}
 .tod-submain .round-btn.line{border:1px solid #f65252; color:#f65252; background:#fff; padding:0.75rem 0 0.6875rem;}
 .tod-submain .btn-area.btn2 [class *= 'btn'] {width:47%; width:-webkit-calc((100% - 0.5rem)/2); width:calc((100% - 0.5rem)/2)}
 .tod-submain .btn-area [class *= 'btn'] + [class *= 'btn']{margin-left:0.5rem}
-.tod-submain .rect-btn{display:inline-block; width:100%; border:solid 1px #e0e0e0; text-align:center; border-radius:0.5rem; height:2.125rem; font-size:0.8125rem; line-height:2.125rem; color:#000; background:#fff; font-weight:600}
+.tod-submain .rect-btn{display:inline-block; width:100%; border:solid 1px #e0e0e0; text-align:center; border-radius:0.5rem; height:2.125rem; font-size:0.8125rem; line-height:2.125rem; color:#000; background:#fff; font-weight:600;}
 .tod-submain .head-btn-area {display:inline-block; position:absolute; right:0; top:50%; margin-top:-0.8125rem }
 .tod-submain .rect-btn.small{padding:0 0.75rem; line-height:1.625rem; height:1.625rem; border-radius:0.375rem; font-weight:400;}
 .tod-submain .rect-btn.smaller{line-height:1.625rem; height:1.625rem; border-radius:0.375rem; font-weight:400; border-color:#adadad; font-size:0.6875rem; border-radius:0.25rem; font-weight:600}
 
 /* 내역 리스트 */
-.tod-submain .report-list .report-item{overflow:hidden; font-size:0.9375rem;  border-bottom:1px solid #f2f2f2;/*  padding:13px 0 12px */}
-.tod-submain .report-list .report-item > .d-wrap{padding:1rem 0}
-.tod-submain .report-list .report-item:first-child > a.d-wrap{padding-top:1rem !important}
+.tod-submain .report-list .report-item{overflow:hidden; font-size:0.9375rem;  border-bottom:1px solid #f2f2f2;}
+.tod-submain .report-list .report-item > .d-wrap{padding:1rem 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
+.tod-submain .report-list .report-item:first-child > a.d-wrap{padding-top:1rem !important;}
 .tod-submain .report-list .report-item:last-child > a.d-wrap{padding-bottom:1rem !important ; }
 .tod-submain .card-cont > .report-list:nth-last-child(-n + 1) .report-item:last-child > a.d-wrap{margin-bottom:-1rem;}
+.tod-submain .card-cont > .report-list:first-child .report-item:first-child{overflow:visible}
+.tod-submain .card-cont > .report-list:first-child .report-item:first-child > a.d-wrap{margin-top:-1rem;}
 .tod-submain .report-list .report-item:first-child > .d-wrap{padding-top:0 !important}
 .tod-submain .report-list .report-item:last-child > .d-wrap{padding-bottom:0 !important}
 .tod-submain .report-list .report-item:last-child{border:none; overflow:visible}
@@ -151,7 +154,7 @@ body.tod-white{background:#fff}
 .tod-submain .report-list.align-center .report-item .report-define{align-items:center}
 .tod-submain .report-list .report-item .report-define .report-tit{color:#82888f; -webkit-box-flex: 1; flex:1; max-width:70%;vertical-align:top; line-height: 1.1;}
 .tod-submain .report-list .report-item .report-define .report-sub{display:block; font-size:12px; color:#868e96; padding-top:0.3125rem; font-weight:400}
-.tod-submain .report-list .report-item .report-define .report-cont{text-align:right; font-weight:500; color:#000;line-height: 1.1; position:relative; /* padding-left:0.875rem */}
+.tod-submain .report-list .report-item .report-define .report-cont{text-align:right; font-weight:500; color:#000; line-height: 1.1; position:relative; /* padding-left:0.875rem */}
 @media screen and (max-width:320px){
     .tod-submain .report-list .report-item .report-define .report-cont{padding-left:0}
 }
@@ -196,6 +199,7 @@ body.tod-white{background:#fff}
 .tod-submain .hash-wrap{overflow:hidden;}
 .tod-submain [class *= 'wrap'] + .hash-wrap, 
 .tod-submain .report-list + .hash-wrap{padding-top:1.5rem}
+.tod-submain .report-list + .hash-wrap{margin-top:-1rem}
 .tod-submain .acc-list-wrap + .hash-wrap, 
 .tod-submain .short-link-wrap + .hash-wrap{margin:0 -1.5rem; padding:1.5rem 1.5rem 0; border-top:1px solid #f4f4f4}
 .tod-submain .hash-list{font-size:0; margin:0 -0.1875rem -0.625rem 0 }
@@ -212,12 +216,12 @@ body.tod-white{background:#fff}
 /* 아이콘 리스트 */
 .tod-submain .ico-list{display:-webkit-box; display:flex; width:100%; -webkit-box-pack:justify; justify-content: space-around; }
 .tod-submain .ico-list .item{padding:0 0.375rem; text-align:center; flex-basis:25%; flex-shrink:0; -webkit-box-flex: 1; flex-grow:1;}
-.tod-submain .ico-list .item a{display:block}
+.tod-submain .ico-list .item a{display:block; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
 .tod-submain .ico-list .item .ico-item{position:relative}
 .tod-submain .ico-item .ico{display:inline-block; width:2rem; height:2rem; vertical-align:top; }
 .tod-submain .ico-item img{width:100%; position:relative; z-index:1}
 .tod-submain .ico-list .item .list-txt{width:100%; padding-top:0.625rem}
-.tod-submain .ico-item .list-txt .item-sub-txt{display:inline-block; font-size:0.8125rem; color:#82888f; white-space:nowrap; vertical-align:top; width:100%; text-align:center}
+.tod-submain .ico-item .list-txt .item-sub-txt{display:inline-block; font-size:0.9375rem; color:#82888f; white-space:nowrap; vertical-align:top; width:100%; text-align:center}
 .tod-submain .ico-item .list-txt .item-tit{display:inline-block; width:100%; font-size:0.9375rem; color:#000; font-weight:500; vertical-align:top; padding-top:0.25rem; text-align:center}
 .tod-submain .ico-item .list-txt .item-tit .pro-tit{display:inline-block; max-width:calc(100% - 2.1875rem); text-overflow:ellipsis; white-space:nowrap; overflow:hidden; vertical-align:top}
 /* 아이콘 리스트 - 4칸 */
@@ -348,13 +352,14 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont{padding:0 1.5rem}
 .tod-submain .charge-cont .month-charge .charge-tit{font-size:1.125rem; padding-bottom:1.5625rem; display:-webkit-box; display:flex; -webkit-box-pack:justify ; justify-content: space-between;}
 .tod-submain .charge-cont .month-charge .charge-tit .period{font-size:0.75rem; text-align: right; color: #868e96; padding-top:0.375rem; }
-.tod-submain .charge-cont .month-charge .charge-tit .sel-month-btn{font-size:1.125rem; font-weight:700; padding:0 1.25rem 0.375rem 1.625rem; background:url('/img/myt/calendar.svg') no-repeat left -3px; background-size:1.5rem;}
+.tod-submain .charge-cont .month-charge .charge-tit .sel-month-btn{font-size:1.125rem; font-weight:700; padding:0 1.25rem 0.375rem 1.625rem; background:url('/img/myt/calendar.svg') no-repeat left -3px; background-size:1.5rem; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
 .tod-submain .charge-cont .month-charge .charge-tit .sel-month-btn:before{content:''; display:inline-block; position:absolute; left:0; bottom:0; height:1px; width:100%; background:#7f7f7f}
 .tod-submain .charge-cont .sel-bill{padding-bottom:1.5rem ; display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content: space-between; align-items:center }
 .tod-submain .charge-cont .sel-bill .term{font-size:0.9375rem; font-weight:600; color:#000;}
 .tod-submain .charge-cont .sel-bill .term.pps{font-size:0.75rem; font-weight:400; color:#333}
 .tod-submain .charge-cont .sel-bill .term.pps .date{display:block}
 .tod-submain .charge-cont .charge{letter-spacing:-2px; font-size:1.875rem; font-weight:700; color:#333; line-height:0.83 }
+.tod-submain .charge-cont .charge a{-webkit-tap-highlight-color:rgba(0, 0, 0, 0) !important; -tap-highlight-color:rgba(0, 0, 0, 0) !important; font-weight:inherit; color:inherit}
 .tod-submain .charge-cont .charge .unit{font-size:1.5rem; font-weight:600; margin-left:0.1875rem; vertical-align:1px; font-weight:400}
 .tod-submain .charge-cont .payment-msg{font-size:0.9375rem; line-height:1.5rem; color:#333; padding:1rem 0 1.5rem; border-top:1px solid #f2f2f2;}
 .tod-submain .charge-cont .payment-msg.top{padding:0 0 1.75rem; border:none; font-size:1.125rem}
@@ -364,7 +369,7 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .detail-charge-box{background:#f9f9f9; border-radius:0.5rem; padding:0 1rem 1.5rem; font-size:0.9375rem; color:#333 ;}
 .tod-submain .charge-cont .detail-charge-box + .detail-charge-box{margin-top:1rem}
 .tod-submain .charge-cont .detail-charge-box .detail-tit{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; width:100%; height:3rem; color:#000; font-size:15px; font-weight:600; border-bottom:1px solid #e4e4e4;}
-.tod-submain .charge-cont .detail-charge-box .detail-tit a{display:block; width:100%; height:100%; padding-right:0.75rem; position:relative;  font-weight:inherit; line-height:3.0625rem   }  
+.tod-submain .charge-cont .detail-charge-box .detail-tit a{display:block; width:100%; height:100%; padding-right:0.75rem; position:relative;  font-weight:inherit; line-height:3.0625rem ; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}  
 .tod-submain .charge-cont .detail-charge-box .detail-tit a:after{content:''; display:inline-block; width:0.5rem; height:0.8125rem; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:50%; margin-top:-0.375rem}
 .tod-submain .charge-cont .detail-charge-box .report-list {padding-top:1.5rem}
 .tod-submain .charge-cont .default-list{padding:0.625rem 0 1.25rem; border-top:1px dashed #f2f2f2; }
@@ -383,8 +388,9 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center;  -webkit-box-pack: justify;justify-content:space-between; font-size:0.9375rem; line-height:1.75rem}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .detail-article{color:#82888f; font-weight:400; line-height:1.75rem}
 .tod-submain .charge-cont .detail-charge-box .detail-list .detail-item .detail-price .price{font-weight:500; line-height:1.75rem}
-.tod-submain .charge-cont .guide-txt{margin:1.5rem 0 ; font-size:0.9375rem;}
-.tod-submain .charge-cont .guide-txt strong{font-weight:500; color:#f65252; letter-spacing: -0.45px; line-height:1.4}
+.tod-submain .charge-cont .guide-txt{margin:1.1875rem 0 1.5rem ; font-size:0.9375rem; color:#333; letter-spacing:-0.0375rem}
+.tod-submain .charge-cont .guide-txt strong{font-weight:500; color:#f65252; letter-spacing: -0.0281rem; line-height:1.4}
+.tod-submain .charge-cont .guide-txt:nth-last-child(-n + 1){margin-bottom:0;}
 
 /* pps */
 .tod-submain .report-list.pps .report-item .report-define .report-tit{width:70%; white-space:nowrap; line-height:1.3125rem}
@@ -407,6 +413,8 @@ body.tod-white{background:#fff}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list.small .report-item:first-child > a.d-wrap{padding-top:0.4375rem !important}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list.small .report-item:last-child > a.d-wrap{padding-bottom:0.4375rem !important}
 .tod-submain .rough-info .rough-info-inner .list-wrap .report-list + .warning{margin-top:1rem;} 
+.tod-submain .rough-info .rough-info-inner .list-wrap .list-wrap-link{-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
+.tod-submain .rough-info .rough-info-inner .list-wrap .list-wrap-link + .warning{margin-top:1rem;} 
 .tod-submain .rough-info .rough-info-inner .list-wrap .join-date{padding-top:0.1875rem; margin-left:-3.125rem; font-weight:500; letter-spacing:-0.075rem}
 
 /* 약정할인/기기상환 정보 */
@@ -420,10 +428,11 @@ body.tod-white{background:#fff}
 .tod-submain .hoz-group-wrap .small-group-wrap:last-child{padding-right:0}
 .tod-submain .hoz-group-wrap .small-group-wrap:only-child{border:none; padding-left:0; padding-right:0}
 .tod-submain .hoz-group-wrap .small-group-wrap:only-child .data-date .start-date, 
-.tod-submain .hoz-group-wrap .small-group-wrap:only-child .data-date .end-date{color:#666}
+.tod-submain .hoz-group-wrap .small-group-wrap:only-child .data-date .end-date{color:#666; font-size:12px}
 .tod-submain .hoz-group-wrap .small-group-wrap:only-child .day-dec{display:block; color:#666; padding-top:4px}
 .tod-submain .hoz-group-wrap .small-group-wrap .report-list{padding-top:0.5rem}
 .tod-submain .hoz-group-wrap .small-group-wrap .report-list.smaller .report-item{font-size:0.6875rem}
+.tod-submain .hoz-group-wrap .small-group-wrap:only-child .report-list.smaller .report-item{font-size:0.75rem}
 .tod-submain .hoz-group-wrap .small-group-wrap:only-child .data-date{padding-top:0.5rem}
 .tod-submain .hoz-group-wrap .small-group-wrap .report-list .report-item .report-define .report-cont{padding-left:0.3125rem}
 @media screen and (max-width:359px){
@@ -436,14 +445,15 @@ body.tod-white{background:#fff}
 
 /* 이용 중인 요금제/부가상품 */
 .tod-submain .using-plan{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; -webkit-box-pack: justify; justify-content:space-between; padding:1rem; border-radius:0.375rem; background:#f9f9f9; word-break:break-word; line-height:20px}
-.tod-submain .using-plan .plan-tit {font-size:1.125rem; color:#000; font-weight:600; text-align:center; width:60%; padding-right:0.875rem;}
+.tod-submain .using-plan .plan-tit{font-size:1.125rem; color:#000; font-weight:600; text-align:center; width:60%; padding-right:0.875rem;}
+.tod-submain .using-plan .plan-tit a{display:inline-block; font-weight:inherit; width:100%; }
 .tod-submain .using-plan .plan-info{width:40%; flex-shrink:0; -webkit-box-flex: 0; flex-grow:0}
 .tod-submain .using-plan .plan-info .report-list.small .report-item > .d-wrap{padding:0.5rem 0}
 .tod-submain .using-plan .plan-info .report-list .report-item{border-color:#e4e4e4}
 .tod-submain .add-pro-wrap{padding-top:1.75rem}
 .tod-submain .add-pro-wrap .add-pro-list{width:100%; display: -webkit-box; display:flex; -webkit-box-pack: center; justify-content:space-evenly; padding:0 0.625rem}
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item {min-width:25%; flex-basis:25%; flex-shrink:0; -webkit-box-flex: 0; flex-grow:0}
-.tod-submain .add-pro-wrap .add-pro-list .add-pro-item > a{display:block}
+.tod-submain .add-pro-wrap .add-pro-list .add-pro-item > a{display:block; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item .number{font-size:1.375rem; font-weight:800; color:#333; text-align:center; }
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item .number .unit{display:inline-block; font-size:0.8125rem; }
 .tod-submain .add-pro-wrap .add-pro-list .add-pro-item .service-name{color:#82888f; font-size:0.6875rem; text-align:center; line-height:1.27; padding-top:0.5rem;}
@@ -470,7 +480,7 @@ body.tod-white{background:#fff}
 /***************************************************************  나의 데이터 *************************************************************** /
 /* 실시간 잔여량 */
 .tod-submain .chart-area{display: -webkit-box; display:flex; -webkit-box-align: center; align-items:center; justify-content: space-around; overflow:hidden}
-.tod-submain .chart-area .donut-chart-wrap .left{font-size:0.8125rem;}
+.tod-submain .chart-area .donut-chart-wrap .left{font-size:0.85rem;}
 .tod-submain .chart-area .donut-chart-wrap .left .total{color:#333; display:block;}
 .tod-submain .chart-area .donut-chart-wrap .left .remain{color:#f65252}
 .tod-submain .chart-area .donut-chart-wrap .left .remain.blue{color:#59bcf5}
@@ -494,10 +504,10 @@ body.tod-white{background:#fff}
 .tod-submain .donut-chart .c100 .slice.transparent{clip:rect(auto, auto, auto, auto)}
 .tod-submain .chart-area .horizon-bar-wrap{padding:1.0625rem 0 1rem; position:relative}
 .tod-submain .chart-area .horizon-bar-wrap .total, 
-.tod-submain .chart-area .horizon-bar-wrap .left{font-size:0.75rem; color:#333;}
+.tod-submain .chart-area .horizon-bar-wrap .left{font-size:0.85rem; color:#333;}
 .tod-submain .chart-area .horizon-bar-wrap .graph-comment{position:absolute; left:0; top:0; width:100%}
-.tod-submain .chart-area .horizon-bar-wrap .total{text-align:left; position:absolute; left:0; top:0; white-space:nowrap}
-.tod-submain .chart-area .horizon-bar-wrap .left{text-align:left; position:absolute; left:0; bottom:0; font-size:0.75rem; color:#333}
+.tod-submain .chart-area .horizon-bar-wrap .total{text-align:left; position:absolute; left:0; top:0; white-space:nowrap; max-width:100%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; letter-spacing:-0.05rem }
+.tod-submain .chart-area .horizon-bar-wrap .left{text-align:left; position:absolute; left:0; bottom:0; font-size:0.85rem; color:#333}
 .tod-submain .chart-area .horizon-bar-wrap.green .horizon-bar .data .bar{background-color:#00b36e}
 .tod-submain .chart-area .horizon-bar-wrap.yellow .horizon-bar .data .bar{background-color:#ffb119}
 .tod-submain .chart-area .horizon-bar-wrap.gray .horizon-bar .data .bar{background-color: #717171}
@@ -505,11 +515,11 @@ body.tod-white{background:#fff}
 .tod-submain .chart-area .horizon-bar-wrap.yellow .left{color:#9e6900}
 .tod-submain .chart-area .horizon-bar-wrap.gray .left{color:#333}
 .tod-submain .chart-area + .tmoa-comment{padding-top:1.5rem; border-top:0.0625rem solid #f2f2f2; margin-top:1.5rem}
-.tod-submain .tmoa-comment .tmoa-link-list{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center }
+.tod-submain .tmoa-comment .tmoa-link-list{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
 .tod-submain .tmoa-comment .tmoa-link-list .link-item > a{display:block}
-.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share{font-size:0.8125rem; font-weight:600; color:#000; white-space:nowrap }
+.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share{font-size:0.85rem; font-weight:600; color:#000; white-space:nowrap }
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share .like-btn{display:inline-block; font-size:0.6875rem; border:1px solid #ddd; height:1.1875rem; padding:0 0.5rem; line-height:1.1875rem; margin-left:0.125rem; border-radius:0.25rem; font-weight:500} 
-.tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount{font-size:0.75rem; color:#82888f; position:relative; padding-right:0.75rem; text-align:right}
+.tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount{font-size:0.85rem; color:#82888f; position:relative; padding-right:0.75rem; text-align:right}
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount:after{content:''; display:inline-block; width:0.5rem; height:0.75rem; position:absolute; background:url('/img/myt/arrow.svg') no-repeat left top; right:0; top:50%; -webkit-transform:translateY(-50%) scale(.6); transform:translateY(-50%) scale(.6) }
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount strong{color:#157EB2;}
 .tod-submain .tmoa-comment .data-voucher{display:block; border-top:1px dotted #d0d0d0; font-size:13px; font-weight:600; color:#000; overflow:hidden; margin-top:1rem; position:relative;  padding:1rem 0.75rem 0 0; }
@@ -550,7 +560,7 @@ body.tod-white{background:#fff}
 .tod-submain .child-swiper-box .slider-item .slider-inner .child-info .tel{font-size:0.9375rem;}
 .tod-submain .child-swiper-box .slider-item .slider-inner .child-info .tel:before{content:'/'; padding:0 5px}
 .tod-submain .child-swiper-box .slider-item .slider-inner .report-list{margin-top:1rem}
-.tod-submain .child-swiper-box .slick-dots{width:auto; height:auto; position:absolute; right:1.25rem; top:-2.9375rem; bottom:auto; font-size:0 }
+.tod-submain .child-swiper-box .slick-dots{width:auto; height:auto; position:absolute; right:1.4375rem; top:-3.25rem; bottom:auto; font-size:0 }
 .tod-submain .submain-swipe .slick-dots li{width:0.8125rem !important; height:18px !important; padding:0 !important; display:inline-block; overflow:hidden; margin:0  }
 .tod-submain .submain-swipe .slick-dots li button{width:100% !important; height:100% !important ;font-size:0.9375rem; color:transparent; overflow:hidden; position:relative; vertical-align:top; border:none !important; background:none !important; margin:0 !important}
 .tod-submain .submain-swipe .slick-dots li button:before{content:''; display:inline-block; width:0.5rem; height:0.5rem; background:#000; left:50%; top:50%; border-radius:50%; opacity:0.15; -webkit-transform:translate(-50%, -50%); transform:translate(-50%, -50%)}
@@ -563,6 +573,7 @@ body.tod-white{background:#fff}
 
 /* 선물 쿠폰 구매/충전 */
 .tod-submain .have-coupon-wrap + .gift-coupon-wrap{padding-top:2rem; margin-top:1.5rem; border-top:1px solid #f2f2f2;}
+.tod-submain .have-coupon-wrap .rect-btn{font-size:0.9375rem}
 .tod-submain .free-scroll-wrap{height:7.3125rem; overflow:hidden}
 .tod-submain .free-scroll-wrap .free-scroll-container{height:calc(100% + 20px); overflow-y:hidden; overflow-x:auto; padding:0 1.5rem }
 .tod-submain .coupon-list{height:117px; display: -webkit-box; display:flex }

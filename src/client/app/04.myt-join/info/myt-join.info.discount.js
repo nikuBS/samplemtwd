@@ -48,7 +48,8 @@ Tw.MyTJoinInfoDiscount.prototype = {
     // this._popupService.openConfirm(contents, title, btName);
 
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
-    /* this._lineComponent = */ new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    /* this._lineComponent = */
+    new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   },
   _cachedElement: function () {
     // this.$entryTpl = $('#fe-entryTpl');
@@ -67,7 +68,7 @@ Tw.MyTJoinInfoDiscount.prototype = {
     var $target = $(e.currentTarget);
     var prodId = $target.attr('data-id');
     if ( prodId ) {
-      this._history.goLoad('/product/callplan?prod_id='+ prodId);
+      this._history.goLoad('/product/callplan?prod_id=' + prodId);
     }
     else {
       // 상품코드가 나오지 않은 아이템
@@ -179,4 +180,95 @@ Tw.MyTJoinInfoDiscount.prototype = {
     window.location.hash = hash;
   }
 
+};
+
+// overriding
+Tw.MyTJoinInfoDiscountAdv = function () {
+  Tw.MyTJoinInfoDiscount.apply(this, arguments);
+};
+Tw.MyTJoinInfoDiscountAdv.prototype = Object.create(Tw.MyTJoinInfoDiscount.prototype);
+Tw.MyTJoinInfoDiscountAdv.prototype.constructor = Tw.MyTJoinInfoDiscountAdv;
+Tw.MyTJoinInfoDiscountAdv.prototype._cachedElement = function() {
+  Tw.MyTJoinInfoDiscount.prototype._cachedElement.call(this);
+  this.$feeBtn = this.$container.find('[data-id=fee]');
+  this.$deviceBtn = this.$container.find('[data-id=device]');
+  this.$deviceBuyBtn = this.$container.find('[data-id=device-buy]');
+};
+Tw.MyTJoinInfoDiscountAdv.prototype._bindEvent = function () {
+  Tw.MyTJoinInfoDiscount.prototype._bindEvent.call(this);
+  // accordion widget 처리
+  this.$container.on('click', '.have-sub > a', $.proxy(function (event) {
+    event.preventDefault();
+    var $target = $(event.currentTarget);
+    $target.parent().toggleClass('open');
+    $target.attr('aria-pressed', $target.parent().hasClass('open'));
+  }, this));
+  // 3/11 배포 이후 BE 개발 완료 후 진행 - 납부회차 팝업
+  // this.$feeBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // this.$deviceBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // this.$deviceBuyBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+};
+Tw.MyTJoinInfoDiscountAdv.prototype._init = function () {
+  this._cachedElement();
+  this._bindEvent();
+  // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+  /* this._lineComponent = */
+  // new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+  // 약정할인금액 그래프 깨지는 문제 수정 건
+  var disHorizonBar = this.$container.find('.horizon-bar-wrap');
+  if ( disHorizonBar.length ) {
+    $(window).on('resize load', function () {
+      var barBubble = disHorizonBar.children('.bar-bubble');
+      disHorizonBar.children('.bar').width() < barBubble.outerWidth() ?
+        barBubble.addClass('left') : barBubble.removeClass('left');
+    });
+  }
+};
+Tw.MyTJoinInfoDiscountAdv.prototype._openDaysPopup = function(event) {
+  var $target = $(event.currentTarget);
+  var id = $target.data('id');
+  var itemTarget = $target.data('target');
+  var selectItem = null;
+  var defaultPopupOpt = {
+    title: '', //'총 24회 중<br><strong>13회 납부 완료</strong>',
+    title_type: 'sub2',
+    cont_align: 'tl',
+    contents: '',
+    bt_b: [{
+      style_class:'bt-red1 pos-right',
+      txt: '확인'
+    }]
+  };
+  if (id === 'device-buy') {
+    // TODO: 총 회차 정보만 알 수 있어 API 개발 완료되면 기능 추가
+    // defaultPopupOpt.cont_align = 'warning';
+    // defaultPopupOpt.contents =
+    //   '기기 할부금은 하루 단위로 계산되기 때문에 할부 개월 수보다 할부 청구 횟수가 1회 더 많을 수 있습니다.';
+    // selectItem = this.resData.commDataInfo.repaymentInfo.find(function(item) {
+    //   return item.titNm === itemTarget;
+    // });
+    // if (selectItem) {
+    //   defaultPopupOpt.title = '총 24회 중<br><strong>13회 납부 완료</strong>';
+    // }
+  } else {
+    defaultPopupOpt.notice_has = 'none';
+    if (id === 'fee') {
+      selectItem = this.resData.commDataInfo.feeInfo.find(function(item) {
+        return (item.prodId === itemTarget && item.paymentCount);
+      });
+    }
+    if (selectItem) {
+      defaultPopupOpt.title = '<strong>'+ selectItem.paymentCount +'회 납부 완료</strong>';
+    }
+  }
+  // 값이 있는 경우
+  if (selectItem) {
+    this._popupService.open(defaultPopupOpt, $.proxy(function ($popup) {
+      this.popupCloseBtn = $popup.find('.pos-right button');
+      this.popupCloseBtn.on('click', this._popupService.close);
+    }, this), $.proxy(function() {
+      this.popupCloseBtn.off('click');
+    }, this));
+  }
+  return false;
 };

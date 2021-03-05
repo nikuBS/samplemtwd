@@ -54,8 +54,8 @@ Tw.MyTFareSubMainRecentBill.prototype = {
     if (Tw.FormatHelper.isEmptyArray(claimList)) {
       return claimList;
     }
-    // 리스트는 최대 3개까지
-    claimList = _.reduce(claimList.slice(0, 3), function (acc, item) {
+
+    claimList = _.reduce(claimList, function (acc, item) {
       if (!Tw.DateHelper.isBetween(item.invDt, sDate, eDate)) {
         return acc;
       }
@@ -66,7 +66,10 @@ Tw.MyTFareSubMainRecentBill.prototype = {
       });
       return acc;
     }, []);
-    return _.sortBy(claimList, 'date');
+    // 리스트는 최대 3개까지
+    claimList = _.sortBy(claimList, 'date').slice(0, 3);
+
+    return claimList;
   },
 
   _makeChart: function () {
