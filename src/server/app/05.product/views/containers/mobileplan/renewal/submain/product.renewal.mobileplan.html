@@ -64,7 +64,8 @@
 											<%# 데이터/문자/전화 값이 1개이상 있다면 출력 (없다면 현재 사용중인 요금제 중 요금정보가 출력되지않음.) %>
 
 											<ul class="detail-info"> 
-												<li class="item">데이터
+												<li class="item">
+													<i class="p-icon18-data"><span class="blind">데이터</span></i>
 													<%_ if (data.payment.product.basOfrDataQtyCtt) { %>
 														<%_ if (data.payment.product.basOfrDataQtyCtt.isNaN ) { _%>
 															<span class="val"><%= data.payment.product.basOfrDataQtyCtt.value %></span>    
@@ -75,14 +76,16 @@
 														<span class="val">-</span>
 													<%_ } %>
 												</li>
-												<li class="item">음성
+												<li class="item">
+													<i class="p-icon18-phone"><span class="blind">음성</span></i>
 													<%_ if (data.payment.product.basOfrVcallTmsCtt) { %>
 														<span class="val"><%= data.payment.product.basOfrVcallTmsCtt.value %></span>
 													<%_ } else { %>
 														<span class="val">-</span>
 													<%_ } %>
 												</li>
-												<li class="item">문자
+												<li class="item">
+													<i class="p-icon18-sms"><span class="blind">문자</span></i>
 													<%_ if (data.payment.product.basOfrCharCntCtt) { %>
 														<%_ if (data.payment.product.basOfrCharCntCtt.isNaN ) { _%>
 															<span class="val"><%= data.payment.product.basOfrCharCntCtt.value %></span>
