@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="<%= CDN %>/img/common/favicon.png" />
+    <% include ../components/stylesheet.component.html %>
+    <script type="text/javascript" src="<%= CDN %>/css/netfunnel.js" charset="UTF-8"></script>
+	<script>
+      var referer = '<%- referer %>';
+      var callbackEvents = {
+        success: function(event, params) {
+          var msg = 'success:'
+            + ',code=' + params.code
+            + ',key=' + params.data.key
+            + ',ip=' + params.data.ip
+            + ',port=' + params.data.port
+            + ',nnext=' + params.data.nnext
+            + ',nwait=' + params.data.nwait
+            + ',tps=' + params.data.tps
+            + ',ttl=' + params.data.ttl;
+          console.log(event, msg);
+          window.location.href = referer;
+        },
+        stop: function(event) {
+          console.log('stopped::', event);
+          window.history.back();
+        }
+      };
+
+      window.addEventListener('load', function(){
+        NetFunnel_Action({}, callbackEvents);
+      });
+	</script>
+</head>
+<body>
+    <h1>index wait room</h1>
+</body>
+</html>
