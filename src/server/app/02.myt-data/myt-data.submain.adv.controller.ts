@@ -1101,16 +1101,26 @@ class MytDataSubmainAdvController extends TwViewController {
        * 4. 공유데이터가 있고 가입이 가능한 요금제 인 경우 (가입 안내버튼 및 메시지 노출)
        */
       // T가족모아 공유 및 가입이 가능 한 경우
-      if ( data.isTmoaProdId && data.isTmoaProdId ) {
+      if ( data.isTmoaProdId ) {
+        data.isTmoaDataShare = false;
+
         this.apiService.request(API_CMD.BFF_06_0044, {}).subscribe((family) => {
           if ( family.code === API_CODE.CODE_00 ) {
-            // 미성년자인 경우
-            if ( family.result.adultYn === 'N' ) {
-              data.isTmoaProdId = false;
-            }
-            // 공유가능데이터가 0인 경우 공유버튼 노출
-            if ( family.result.total !== '0' ) {
-              data.isTmoaProdId = false;
+            if ( family.result ) {
+              // 가족대표확인
+              if ( family.result.mbrList ) {
+                family.result.mbrList.forEach((item) => {
+                  if ( data.svcInfo && item.repYn === 'Y' && item.svcMgmtNum === data.svcInfo.svcMgmtNum ) {
+                    data.isTmoaDataShare = true;
+                  }
+                });
+              }
+              
+              // 공유가능데이터가 0인 경우 공유버튼 노출
+              if ( family.result.total !== '0' ) {
+                data.isTmoaProdId = false;
+                data.isTmoaDataShare = false;
+              }
             }
           }
           res.render('myt-data.submain.adv.html', { data });
