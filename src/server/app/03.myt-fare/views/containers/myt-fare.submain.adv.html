@@ -91,6 +91,9 @@ _%>
         <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
     </div>
 </body>
+<% if (data.pageInfo.advancement && data.pageInfo.advancement.netFunnelVisible) { %>
+<%- include('../../../common/views/components/netfunnel.complete.component.html') %>
+<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MyTFareSubMainAdv({
