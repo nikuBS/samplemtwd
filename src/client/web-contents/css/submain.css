@@ -53,8 +53,8 @@ body.tod-white{background:#fff}
 .tod-submain .symbol.ico12{background-image:url('/img/myt/sel-tel-ico-black.svg');} /* 전화 */
 
 /* 회선 선택 */
-.tod-submain .tod-line-sel-wrap {position:relative; z-index:10}
-.tod-submain .tod-line-sel-wrap .sel-show-btn{display:block;}
+.tod-submain .tod-line-sel-wrap {position:relative; z-index:10; min-height:3.25rem;}
+.tod-submain .tod-line-sel-wrap .sel-show-btn{display:block; position:fixed; width:100%; left:0; top:3.25rem}
 .tod-submain .tod-line-sel-wrap .sel-show{display:-webkit-box; display:flex; height:3.25rem; background:#f65252; padding:15px 16px 13px; box-sizing:border-box;-webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; }
 .tod-submain .tod-line-sel-wrap .sel-show .line-info{display:-webkit-box; display:flex; width:-webkit-calc(100% - 6.875rem);  width:calc(100% - 6.875rem) ; height:100%; -webkit-box-align: center; align-items:center; font-size:0.9375rem; color:#fff;}
 .tod-submain .tod-line-sel-wrap .sel-show .line-info .type-ico{display:inline-block; width:1.5rem; height:1.5rem; margin-right:0.25rem; vertical-align:middle ; flex-shrink:0}
@@ -64,7 +64,7 @@ body.tod-white{background:#fff}
 .tod-submain .tod-line-sel-wrap .sel-show .sel-line-btn{display:inline-block; color:#fff; height:1.375rem; border:0.0625rem solid #fcc1bf; border-radius:1.375rem; padding:0.3125rem 0.625rem 0; font-size:0.6875rem; white-space:nowrap ; line-height:normal;}
 .tod-submain .tod-line-sel-wrap .sel-show .sel-line-btn .sel-ico{display:inline-block; width:0.6875rem; height:0.6875rem; background:url('/img/myt/sel-line.svg') no-repeat left top; vertical-align:top; margin:0 0.1875rem 0 0;}
 .tod-submain .tod-line-sel-wrap .sel-show .sel-line-btn .btn-txt{display:inline-block; vertical-align:top; padding-top:1px}
-.tod-submain .tod-line-sel-wrap .other-list-wrap{position:absolute; left:0; width:100%; border:2px solid #f65252; border-top:none; border-radius:0 0 0.625rem 0.625rem; box-sizing:border-box; overflow:hidden; background:#fff; box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.08);}
+.tod-submain .tod-line-sel-wrap .other-list-wrap{position:fixed; left:0; top:6.4375rem; width:100%; border:2px solid #f65252; border-top:none; border-radius:0 0 0.625rem 0.625rem; box-sizing:border-box; overflow:hidden; background:#fff; box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.08);}
 .tod-submain .tod-line-sel-wrap .other-list-wrap {display:none}
 .tod-submain .tod-line-sel-wrap .tab-area .tab-linker > ul:after{content:none}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .tab-linker{position:relative; padding:1.125rem 1.125rem 0 ; overflow:hidden; }
@@ -133,9 +133,9 @@ body.tod-white{background:#fff}
 .tod-submain .round-btn.line{border:1px solid #f65252; color:#f65252; background:#fff; padding:0.75rem 0 0.6875rem;}
 .tod-submain .btn-area.btn2 [class *= 'btn'] {width:47%; width:-webkit-calc((100% - 0.5rem)/2); width:calc((100% - 0.5rem)/2)}
 .tod-submain .btn-area [class *= 'btn'] + [class *= 'btn']{margin-left:0.5rem}
-.tod-submain .rect-btn{display:inline-block; width:100%; border:solid 1px #e0e0e0; text-align:center; border-radius:0.5rem; height:2.125rem; font-size:0.8125rem; line-height:2.125rem; color:#000; background:#fff; font-weight:600;}
+.tod-submain .rect-btn{display:inline-block; width:100%; border:solid 1px #e0e0e0; text-align:center; border-radius:0.5rem; height:2.125rem; font-size:0.8125rem; line-height:2rem; color:#000; background:#fff; font-weight:600;}
 .tod-submain .head-btn-area {display:inline-block; position:absolute; right:0; top:50%; margin-top:-0.8125rem }
-.tod-submain .rect-btn.small{padding:0 0.75rem; line-height:1.625rem; height:1.625rem; border-radius:0.375rem; font-weight:400;}
+.tod-submain .rect-btn.small{padding:0 0.75rem; line-height:1.5rem; height:1.625rem; border-radius:0.375rem; font-weight:400;}
 .tod-submain .rect-btn.smaller{line-height:1.625rem; height:1.625rem; border-radius:0.375rem; font-weight:400; border-color:#adadad; font-size:0.6875rem; border-radius:0.25rem; font-weight:600}
 
 /* 내역 리스트 */
@@ -516,10 +516,15 @@ body.tod-white{background:#fff}
 .tod-submain .chart-area .horizon-bar-wrap.gray .left{color:#333}
 .tod-submain .chart-area + .tmoa-comment{padding-top:1.5rem; border-top:0.0625rem solid #f2f2f2; margin-top:1.5rem}
 .tod-submain .tmoa-comment .tmoa-link-list{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
+.tod-submain .tmoa-comment .tmoa-link-list a{-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
 .tod-submain .tmoa-comment .tmoa-link-list .link-item > a{display:block}
-.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share{font-size:0.85rem; font-weight:600; color:#000; white-space:nowrap }
-.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share .like-btn{display:inline-block; font-size:0.6875rem; border:1px solid #ddd; height:1.1875rem; padding:0 0.5rem; line-height:1.1875rem; margin-left:0.125rem; border-radius:0.25rem; font-weight:500} 
-.tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount{font-size:0.85rem; color:#82888f; position:relative; padding-right:0.75rem; text-align:right}
+.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share{font-size:0.85rem; font-weight:600; color:#000; white-space:nowrap; letter-spacing:-0.05rem }
+.tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share .like-btn{display:inline-block; font-size:0.6875rem; border:1px solid #ddd; height:1.1875rem; padding:0 5px; line-height:1.1875rem; margin-left:0.125rem; border-radius:0.25rem; font-weight:500} 
+.tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount{font-size:0.85rem; color:#82888f; position:relative; padding-right:0.75rem; text-align:right; letter-spacing:-0.05rem}
+@media screen and (max-width:320px){
+    .tod-submain .tmoa-comment .tmoa-link-list .link-item .t-share{font-size:0.75rem}
+    .tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount{font-size:0.75rem}
+}
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount:after{content:''; display:inline-block; width:0.5rem; height:0.75rem; position:absolute; background:url('/img/myt/arrow.svg') no-repeat left top; right:0; top:50%; -webkit-transform:translateY(-50%) scale(.6); transform:translateY(-50%) scale(.6) }
 .tod-submain .tmoa-comment .tmoa-link-list .link-item .data-amount strong{color:#157EB2;}
 .tod-submain .tmoa-comment .data-voucher{display:block; border-top:1px dotted #d0d0d0; font-size:13px; font-weight:600; color:#000; overflow:hidden; margin-top:1rem; position:relative;  padding:1rem 0.75rem 0 0; }
@@ -653,8 +658,8 @@ body.tod-white{background:#fff}
 .tod-submain .section-inner .box-group-head-tit .link:after{content:''; display:inline-block; width:8px; height:13px; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
 .tod-submain .section-inner .box-group + .hash-wrap{padding-top:1.5rem}
 .tod-submain .section-inner .box-group-cont .detail-info-link{display:block; text-align:right; font-size:12px; color:#4dadf7; text-decoration:underline; margin-top:10px;}
-.tod-submain .section-inner .box-group-cont .detail-agree-btn{font-size:inherit; font-weight:inherit; line-height:inherit; padding-right:18px; position:relative}
-.tod-submain .section-inner .box-group-cont .detail-agree-btn:after{content:''; display:inline-block; width:15px; height:15px; background:url('/img/myt/calendar_ico.svg') no-repeat left top; position:absolute; right:0; top:-1px}
+/* .tod-submain .section-inner .box-group-cont .detail-agree-btn{font-size:inherit; font-weight:inherit; line-height:inherit; padding-right:18px; position:relative}
+.tod-submain .section-inner .box-group-cont .detail-agree-btn:after{content:''; display:inline-block; width:15px; height:15px; background:url('/img/myt/calendar_ico.svg') no-repeat left top; position:absolute; right:0; top:-1px} */
 .tod-submain .section-inner .box-group-cont .gray-box{background:#f9f9f9; border-radius:6px; padding:16px ; margin-top:24px}
 .tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph{padding-top:30px; margin-top:24px}
 .tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph + .warning{margin-top:16px}

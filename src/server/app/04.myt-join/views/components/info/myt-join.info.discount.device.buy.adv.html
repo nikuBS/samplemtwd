@@ -55,6 +55,7 @@ _%>
                         <dt class="total-article">총 할부 청구 금액</dt>
                         <dd class="price"><%= repaymentItem.totSubsidy %>원</dd>
                     </dl>
+                    <% if (parseInt(repaymentItem.allotPayAmt, 10) > 0) { %>
                     <ul class="detail-list">
                         <li class="detail-item have-sub"> <!-- open toggle -->
                             <a href="#" role="button" aria-pressed="false">
@@ -92,6 +93,7 @@ _%>
                             </div>
                         </li>
                     </ul>
+                    <% } %>
                 </li>
                 <li class="claim-item">
                     <dl class="total-price">

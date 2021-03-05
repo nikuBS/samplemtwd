@@ -1,5 +1,5 @@
 /**
- * MenuName: 나의 가입정보 > 약정할인/기기상환 정보(MS_09)
+ * MenuName: 나의 가입정보 > 약정할인/기기 할부 정보(MS_09)
  * @file myt-join.info.discount.controller.ts
  * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * @since 2018.10.04
