@@ -9,11 +9,33 @@
                     <!-- .cont-actionsheet -->
                     <div class="cont-actionsheet">
                         <div class="inner">
-                            <p class="a-tit warning-txt"><em class="nmp-fc-orange">{{data.prodNm}} 요금제로 변경</em>하시면 <br> 아래 혜택을 이용하실 수 없어요.</p>
+                            <p class="a-tit warning-txt">이용중인 <em class="nmp-fc-orange">{{data.prodNm}}</em>의 혜택을 <br> 다시 한번 확인해보세요.</p>
                             <div class="detail-info">
                                 <ul class="tod-nmp-dotlist">
-                                    {{#each data.lostBenefits}}
-                                        <li>{{benefit}}</li>
+                                    {{#each data.lostSepBenefits}}
+                                        <li>{{benefit}} {{benfDtlCtt}}
+                                            {{#if addBenfCnt}}
+                                                <span class="price">
+                                                    <del>{{benfAmt}}원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>{{addBenfCnt}}원</em>
+                                                </span>
+                                            {{/if}}
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                                <p class="p-mid-title">추가 혜택 <strong>1개</strong>를 선택해 주세요.</p>
+                                <ul class="tod-nmp-dotlist">
+                                    {{#each data.lostChooseBenefits}}
+                                        <li>{{benefit}} {{benfDtlCtt}}
+                                            {{#if addBenfCnt}}
+                                                <span class="price">
+                                                    <del>{{benfAmt}}원</del>
+                                                    <i class="icon-arr">&rarr;</i> 
+                                                    <em>{{addBenfCnt}}원</em>
+                                                </span>
+                                            {{/if}}
+                                        </li>
                                     {{/each}}
                                 </ul>
                             </div>
