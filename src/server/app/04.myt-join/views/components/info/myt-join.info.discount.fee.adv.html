@@ -8,9 +8,13 @@ _%>
 
 <div class="box-group">
     <div class="box-group-head-tit">
+        <% if (feeItem.typeStr !== 'FEE_TYPE_F') { %>
         <a href="/product/callplan?prod_id=<%= feeItem.prodId %>" class="link">
             <%= feeItem.disProdNm_N %>
         </a>
+        <% } else {%>
+        <%= feeItem.disProdNm_N %>
+        <% } %>
     </div>
     <div class="box-group-cont">
         <ul class="report-list item-no-border small">
