@@ -718,7 +718,7 @@ export default class RenewProductPlans extends TwViewController {
     } else if ( env === 'dev') { // dev
       return 'https://cdnm-dev.tworld.co.kr';
     } else { // local
-      return 'https://cdnm-dev.tworld.co.kr';
+      return 'https://cdnm-stg.tworld.co.kr';
       // return 'http://localhost:3001';
     }
   }
