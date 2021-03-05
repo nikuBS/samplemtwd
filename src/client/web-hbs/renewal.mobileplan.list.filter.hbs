@@ -1,0 +1,76 @@
+<div class="popup-page filter-wrap">
+            <!-- .container-wrap -->
+    <div class="container-wrap"><!-- 스크롤시 .active 추가 -->
+        <div class="page-header">
+            <div class="header-title">
+                <p class="h-tit">고객님,<br class="s-hide"> 어떤 요금제를 찾고<br class="s-hide"> 계신가요?</p>
+                <p class="h-sub s-hide">여러 개 선택 가능</p>
+            </div>
+        </div>
+
+        <div class="tod-renewal-product-tab">
+            <div class="rn-prod-inner">
+                <ul>
+                    {{#each data.quickFilters}}
+                        <li><a class="quickFilterBtn" data-code="{{prodFltId}}">#{{prodFltNm}}</a></li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="widget-box accordion">
+                <div class="acco-cover toggle">
+                    <div class="acco-style">
+                        <ul class="acco-list plan-list">
+                            {{#each data.filters}}
+                                {{#if prodFltDesc}}
+                                    <li class="acco-box">
+                                        <div class="acco-tit">
+                                            <button class="list-box" aria-pressed="false">
+                                                {{{prodFltDesc}}}
+                                            </button>
+                                        </div>
+                                        <div class="acco-cont check-box">
+                                            <ul>
+                                                {{#each subFilters}}
+                                                    <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
+                                                        <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
+                                                            <span class="txt">{{prodFltDesc}}</span>
+                                                            <span class="limit">{{prodFltNm}}</span>
+                                                        </a>
+                                                    </li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </li>
+                                {{/if}}
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+
+    <!--.confirm-wrap -->
+    <div class="confirm-wrap on"><!-- 선택지에 선택된경우 .on 추가 -->
+        <div class="c-wrap">
+            <div class="tod-nmp-fixed-filter">
+                <div class="tod-filter-keyword">
+                    <ul id="selectFilter">
+                    </ul>
+                </div>
+            </div>
+            <div class="reset-wrap">
+                <button class="reset" tabindex="0" data-xt_eid="CMMA_A4_B84_C1215-19" data-xt_csid="NO" data-xt_action="BC">선택 초기화</button>
+                <button class="confrim" tabindex="0" data-xt_eid="CMMA_A4_B84_C1215-20" data-xt_csid="NO" data-xt_action="BC">요금제 확인</button>
+            </div>
+        </div>
+    </div>
+    <!--//.confirm-wrap -->
+
+            <!-- .popup-closeBtn -->
+    <button class="prev-step" data-xt_eid="CMMA_A4_B84_C1215-9" data-xt_csid="NO" data-xt_action="BC">취소</button>
+            <!--// .popup-closeBtn -->
+</div>

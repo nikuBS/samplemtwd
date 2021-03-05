@@ -1,0 +1,574 @@
+<%#
+* @file product.renewal.mobileplan.html
+* @author Kinam Kim
+* @since 2020.12.17
+%>
+
+<%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
+<body class="tod-renewalBody">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li><!-- 191115 웹접근성 수정_01 -->
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+		<!-- #header -->
+        <%- include('../../../../../../../common/views/components/header.component.html', { title: '요금제', svcInfo: svcInfo }); %>
+
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container">
+                <div class="key-visual-area">
+                    <div class="section-swiper-box">
+                        <!-- widget -->
+                        <div class="widget">
+                            <div class="widget-box" data-slider-auto="false">
+                                <div class="slider-box">
+                                    <div id="fe-banner-t" class="slider"></div>
+                                </div> 
+                            </div>
+                        </div><!-- //widget -->
+                    </div>
+                </div><!-- //key-visual-area -->
+                <div class="pro-cont">
+                    <section class="product-sec">
+                        <p class="wel-comment">고객님의 스타일에 맞는<br><strong>요금제를</strong> 찾아보세요.</p>
+                        
+                        <%_ if ( !svcInfo ) { _%>
+                            <%# 로그인 정보가 없을 때 %>
+                            <div class="pro-article login-box">
+                                <p class="login-msg">로그인하시고,<br>놓치고 있는 혜택도 확인하세요.</p>
+                                <div class="login-btn-area">
+                                    <a href="#" class="pro-btn login-btn" data-xt_eid="CMMA_A4_B84-3" data-xt_csid="NO" data-xt_action="BC">로그인하기</a>
+                                </div>
+                            </div>
+
+                        <%_ } else { _%>
+							
+							<%_ if ( data.isWireless && data.payment ) { _%>
+                                <%# 무선 사용자이면서 상품 정보가 있으면 출력 %>
+                                <div class="pro-article now-pay-box">
+                                    <div class="article-tit"><a href="/myt-join/myplan" data-xt_eid="CMMA_A4_B84-2" data-xt_csid="NO" data-xt_action="BC">현재 사용중인 요금제</a></div>
+                                    <div class="article-cont inset-shadow-box">
+                                        <dl class="item-define">
+                                            <dt><%= data.payment.product.basProductNm %></dt>
+                                            <dd class="strong"><%= data.payment.product.basFeeInfo.value %>원</dd>
+										</dl>
+										
+										<%_ if ( data.payment.product.isProductShow ) { _%>
+											<%# 데이터/문자/전화 값이 1개이상 있다면 출력 (없다면 현재 사용중인 요금제 중 요금정보가 출력되지않음.) %>
+
+											<ul class="detail-info"> 
+												<li class="item">
+													<i class="p-icon18-data"><span class="blind">데이터</span></i>
+													<%_ if (data.payment.product.basOfrDataQtyCtt) { %>
+														<%_ if (data.payment.product.basOfrDataQtyCtt.isNaN ) { _%>
+															<span class="val"><%= data.payment.product.basOfrDataQtyCtt.value %></span>    
+														<%_ } else { _%>
+															<span class="val"><%= data.payment.product.basOfrDataQtyCtt.value.data %><%= data.payment.product.basOfrDataQtyCtt.value.unit %></span>
+														<%_ } _%>
+													<%_ } else { %>
+														<span class="val">-</span>
+													<%_ } %>
+												</li>
+												<li class="item">
+													<i class="p-icon18-phone"><span class="blind">음성</span></i>
+													<%_ if (data.payment.product.basOfrVcallTmsCtt) { %>
+														<span class="val"><%= data.payment.product.basOfrVcallTmsCtt.value %></span>
+													<%_ } else { %>
+														<span class="val">-</span>
+													<%_ } %>
+												</li>
+												<li class="item">
+													<i class="p-icon18-sms"><span class="blind">문자</span></i>
+													<%_ if (data.payment.product.basOfrCharCntCtt) { %>
+														<%_ if (data.payment.product.basOfrCharCntCtt.isNaN ) { _%>
+															<span class="val"><%= data.payment.product.basOfrCharCntCtt.value %></span>
+														<%_ } else { _%>
+															<span class="val"><%= data.payment.product.basOfrCharCntCtt.value %><%= data.payment.product.basOfrCharCntCtt.unit %></span>
+														<%_ } _%>
+													<%_ } else { %>
+														<span class="val">-</span>
+													<%_ } %>
+												</li>
+											</ul>
+										<%_ } %>
+                                    </div>
+                                </div>
+							<%_ } _%>
+
+							<%_ if ( data.isWireless && data.isPiAgree ) { _%>
+								<%# 무선 사용자이면서 개인정보 동의가 N (data.isPiAgree => true)  일 때 %>
+								
+								<div class="pro-article pro-recmd-article">
+									<!-- <div class="article-tit">추천 요금제</div> -->
+									<div class="article-cont agree-info-box">
+										<p class="agr-txt">고객님의 상품 정보 분석을 위해 <br> 개인정보 이용 동의 해 주세요.</p>
+										<div class="agr-area">
+											<div class="agr-left">
+												<p class="a-txt"><label>개인정보 수집이용 동의 (선택)</label></p>
+												<a class="bt-detail" data-xt_eid="CMMA_A4_B84-55" data-xt_csid="NO" data-xt_action="BC">상세보기</a>
+											</div>
+											<div class="agr-left">
+												<ul class="on-off-list new">
+													<li>
+														<!-- widget -->
+														<span class="widget">
+															<span class="widget-box switch">
+																<span class="btn-switch type1"><!-- 체크 상태일 경우 .on 클래스 추가 -->
+																	<span class="switch-style">
+																		<span class="off-tx">꺼짐</span>
+																		<input class="bt-switch" type="checkbox" id="pro-ch1" title="이번 달 차단" data-xt_eid="CMMA_A4_B84-54" data-xt_csid="NO" data-xt_action="BC"><!-- 체크 상태일 경우 checked -->
+																		<span class="on-tx">켜짐</span>
+																	</span>
+																</span>
+															</span>
+														</span>
+														<!--// widget -->
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							<%_ } _%>
+							
+							<!--
+                            <%_ if (data.isWireless && data.additions ) { _%>
+                                <%_ if ( data.additions.length != 0 ) { _%>
+                                    <%# 무선 사용자이면서 가입할 부가 서비스가 있을 때 %>
+
+                                    <div class="pro-article free-service">
+                                        <div class="article-tit"><i class="ico-new">N</i>고객님, 아직 신청하지 않은 무료 부가서비스가 있어요</div>
+                                        <div class="article-cont">
+                                            <ul class="go-service add-service-list shadow-box ">
+    
+                                                <%_ for (let i=0, length=data.additions.length; i < length; i += 1) { _%>
+                                                    <li class="service-item">
+                                                        <div class="item-inner">
+                                                            <span class="service-name"><i class="ico"><img src="<%= CDN %><%= data.additions[i].additionIconImg %>" alt=""></i><%= data.additions[i].additionNm %></span>
+                                                            <a href="#none">
+                                                                <span class="service-detail join-additions" data-addition-id="<%= data.additions[i].targetAddition %>" data-addition-type="<%= data.additions[i].additionType %>" data-addition-action="<%= data.additions[i].targetAdditionAction %>">가입하기</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>    
+                                                <%_ } _%>
+                                            </ul>
+
+                                            <%_ if ( data.additions.length > 5 ) { _%>
+                                                <div class="more-link-area">
+                                                    <button type="button" class="more btn-benefit"><span class="more-txt">혜택 더보기</span></button>
+                                                </div>
+                                            <%_ } _%>
+                                        </div>
+                                    </div>
+                                <%_ } _%>
+                            <%_ } _%>
+							-->
+                        <%_ } _%>
+                    </section>
+
+                    <%# QUICK_FILTER, THEME_LIST, THEME_BANNER 정렬에 필요한 타겟 div %>
+                    <div id="section-target"></div>
+
+                    <%# 퀵 필터(sectionSort: QUICK_FILTER) %>
+                    <section class="product-sec bg none" data-sort="QUICK_FILTER">
+						<p class="sec-tit"><strong>꼭 필요한</strong><br>혜택이 있으신가요?</p>
+                        <div class="pro-article benefit-box">
+                            <div class="article-tit">찾으시는 혜택을 선택해 주세요</div>
+                            <div class="article-cont minus-space">
+								<div class="slider-wrap benefit-slider">
+									<div class="slider-container">
+										<ul class="slider-list"></ul>
+									</div>
+								</div>
+								<div class="more-link-area">
+									<a href="/product/renewal/mobileplan/list" class="more" data-xt_eid="CMMA_A4_B84-25" data-xt_csid="NO" data-xt_action="BC">
+										<span class="more-txt">전체요금제 보러가기</span>
+									</a>
+								</div>
+							</div>
+                        </div><!-- //pro-article -->
+                    </section>
+
+
+
+                    <%# 테마 리스트(sectionSort: THEME_LIST) %>
+					<% if ( data.themeListData ) { %>
+						<section class="product-sec none" data-sort="THEME_LIST">
+							<p class="sec-tit narrow">요즘 가장 인기 있는 상품</p>
+							<!-- 기본형 -->
+							<% if ( data.themeListData.themeTypeCode === 'TAG0000212' ) { %>
+								<%# 기본형 테마 %>
+								<div class="tod-cont-section tod-nmp-theme">
+									<div class="rn-banner-img">
+										<img src="<%= data.themeListData.mblBgImgUrl %>" alt="">
+									</div>
+									<div class="tod-nmp-title">
+										<h3 class="rn-prod-tit"><%= data.themeListData.expsTitNm %></h3>
+									</div>
+									<div class="tod-nmp-row-list">
+										<ul>
+											<% for ( let i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
+												<li>
+													<div class="tod-nmp-item plan-type1 prod-band">
+														<a href="<%= data.themeListData.prodList[i].basProductUrl %>" class="item-link">
+															<div class="rn-tag">
+																<% if ( data.themeListData.prodList[i].basNetworkList.length !== 0 ) { %>
+																	<%# 필터 정보들을 이용하여 3G/LTE/5G/2nd Device 외 태그들을 화면에 표시 %>
+																	<div class="col-left">
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
+																			<% if ( data.themeListData.prodList[i].basNetworkList[j].prodFltNm !== '' ) { %>
+																				<span class="<%= data.themeListData.prodList[i].basNetworkList[j].style %>"><%= data.themeListData.prodList[i].basNetworkList[j].prodFltNm %></span>
+																			<% } %>
+																		<% } %>
+																	</div>
+																<% } %>
+																<div class="col-right"></div>
+															</div>
+															<div class="rn-prod-name">
+																<p class="p-name"><%= data.themeListData.prodList[i].basProductNm %></p>
+																<% if( !data.themeListData.prodList[i].basFeeInfo.isNaN ) { %>
+																	<%# 상품 가격이 있다면 출력 %>
+																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
+																<% } %>
+															</div>
+															<div class="rn-prod-info">
+																<ul class="p-etc">
+																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
+																		<% if ( !data.themeListData.prodList[i].basOfrDataQtyCtt.isNaN ) { %>
+																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
+																		<% } else { %>
+																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
+																		<% } %>
+																	<% } %>
+
+																	<% if ( data.themeListData.prodList[i].basOfrVcallTmsCtt ) { %>
+																		<li><i class="p-icon18-phone"><span class="blind">통화</span></i><%= data.themeListData.prodList[i].basOfrVcallTmsCtt.value %></li>
+																	<% } %>
+
+																	<% if ( data.themeListData.prodList[i].basOfrCharCntCtt ) { %>
+																		<% if ( !data.themeListData.prodList[i].basOfrCharCntCtt.isNaN ) { %> 
+																				<li><i class="p-icon18-sms"><span class="blind">문자</span></i><%= data.themeListData.prodList[i].basOfrCharCntCtt.value %><%= data.themeListData.prodList[i].basOfrCharCntCtt.unit %></li>
+																			<% } else { %>
+																				<li><i class="p-icon18-sms"><span class="blind">문자</span></i><%= data.themeListData.prodList[i].basOfrCharCntCtt.value %> </li>
+																		<% }  %>
+																	<% } %>
+																</ul>
+															</div>
+														</a>
+													</div>
+												</li>
+											<% } %>
+										</ul>
+									</div>
+								</div>
+							<% } else if ( data.themeListData.themeTypeCode === 'TAG0000213' ) { %>
+								<%# 데이터강조형 테마 %>
+								<!-- 데이터 강조형 -->
+								<div class="tod-cont-section tod-nmp-theme">
+									<div class="rn-banner-img">
+										<img src="<%= data.themeListData.mblBgImgUrl %>" alt="">
+									</div>
+									<div class="tod-nmp-title">
+										<h3 class="rn-prod-tit"><%= data.themeListData.expsTitNm %></h3>
+									</div>
+									<!-- 요금제 row list -->
+									<div class="tod-nmp-row-list">
+										<ul>
+											<% for ( let i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
+												<li>
+													<div class="tod-nmp-item plan-type3 prod-lte">
+														<a href="<%= data.themeListData.prodList[i].basProductUrl %>" class="item-link">
+															<div class="rn-tag">
+																<% if ( data.themeListData.prodList[i].basNetworkList.length !== 0 ) { %>
+																	<%# 필터 정보들을 이용하여 3G/LTE/5G/2nd Device 외 태그들을 화면에 표시 %>
+																	<div class="col-left">
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
+																			<% if ( data.themeListData.prodList[i].basNetworkList[j].prodFltNm !== '' ) { %>
+																				<span class="<%= data.themeListData.prodList[i].basNetworkList[j].style %>"><%= data.themeListData.prodList[i].basNetworkList[j].prodFltNm %></span>
+																			<% } %>
+																		<% } %>
+																	</div>
+																<% } %>
+																<div class="col-right"></div>
+															</div>
+															<div class="rn-prod-name">
+																<p class="p-name"><%= data.themeListData.prodList[i].basProductNm %></p>
+
+																<% if( !data.themeListData.prodList[i].basFeeInfo.isNaN ) { %>
+																	<%# 상품 가격이 있다면 출력 %>
+																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
+																<% } %>
+															</div>
+															<div class="rn-prod-info">
+																<ul class="p-etc">
+																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
+																		<% if ( !data.themeListData.prodList[i].basOfrDataQtyCtt.isNaN ) { %>
+																			<li>데이터 <%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
+																		<% } else { %>
+																			<li>데이터 <%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
+																		<% } %>
+																	<% } %>
+
+																	<% if ( data.themeListData.prodList[i].basOfrVcallTmsCtt ) { %>
+																		<li><i class="p-icon18-phone"><span class="blind">통화</span></i><%= data.themeListData.prodList[i].basOfrVcallTmsCtt.value %></li>
+																	<% } %>
+
+																	<% if ( data.themeListData.prodList[i].basOfrCharCntCtt ) { %>
+																		<% if ( !data.themeListData.prodList[i].basOfrCharCntCtt.isNaN ) { %> 
+																				<li><i class="p-icon18-sms"><span class="blind">문자</span></i><%= data.themeListData.prodList[i].basOfrCharCntCtt.value %><%= data.themeListData.prodList[i].basOfrCharCntCtt.unit %></li>
+																			<% } else { %>
+																				<li><i class="p-icon18-sms"><span class="blind">문자</span></i><%= data.themeListData.prodList[i].basOfrCharCntCtt.value %> </li>
+																		<% }  %>
+																	<% } %>
+																</ul>
+															</div>
+														</a>
+													</div>
+												</li>
+											<% } %>
+										</ul>
+									</div>
+								</div>
+							<% } else if ( data.themeListData.themeTypeCode === 'TAG0000214' ) { %>
+								<%# 혜택강조형 테마 %>
+								<div class="tod-cont-section tod-nmp-theme">
+									<div class="rn-banner-img">
+										<img src="<%= data.themeListData.mblBgImgUrl %>" alt="">
+									</div>
+									<div class="tod-nmp-title">
+										<h3 class="rn-prod-tit"><%= data.themeListData.expsTitNm %></h3>
+									</div>
+									<!-- 요금제 row list -->
+									<div class="tod-nmp-row-list">
+										<ul>
+											<% for ( let i=0, len=data.themeListData.prodList.length; i < len; i++ ) { %>
+												<li>
+													<div class="tod-nmp-item plan-type2 prod-5g">
+														<a href="<%= data.themeListData.prodList[i].basProductUrl %>" class="item-link">
+															<div class="rn-tag">
+																<% if ( data.themeListData.prodList[i].basNetworkList.length !== 0 ) { %>
+																	<%# 필터 정보들을 이용하여 3G/LTE/5G/2nd Device 외 태그들을 화면에 표시 %>
+																	<div class="col-left">
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basNetworkList.length; j < jlen; j++ ) { %>
+																			<% if ( data.themeListData.prodList[i].basNetworkList[j].prodFltNm !== '' ) { %>
+																				<span class="<%= data.themeListData.prodList[i].basNetworkList[j].style %>"><%= data.themeListData.prodList[i].basNetworkList[j].prodFltNm %></span>
+																			<% } %>
+																		<% } %>
+																	</div>
+																<% } %>
+															</div>
+															<div class="rn-prod-name">
+																<p class="p-name"><%= data.themeListData.prodList[i].basProductNm %></p>
+																<% if( !data.themeListData.prodList[i].basFeeInfo.isNaN ) { %>
+																	<%# 상품 가격이 있다면 출력 %>
+																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
+																<% } %>
+															</div>
+															<div class="rn-prod-info">
+																<ul class="p-etc">
+																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
+																		<% if ( !data.themeListData.prodList[i].basOfrDataQtyCtt.isNaN ) { %>
+																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
+																		<% } else { %>
+																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
+																		<% } %>
+																	<% } %>
+
+																	<% if ( data.themeListData.prodList[i].basOfrVcallTmsCtt ) { %>
+																		<li><i class="p-icon18-phone"><span class="blind">통화</span></i><%= data.themeListData.prodList[i].basOfrVcallTmsCtt.value %></li>
+																	<% } %>
+																	
+																	<% if ( data.themeListData.prodList[i].basOfrCharCntCtt ) { %>
+																		<% if ( !data.themeListData.prodList[i].basOfrCharCntCtt.isNaN ) { %> 
+																				<li><i class="p-icon18-sms"><span class="blind">문자</span></i><%= data.themeListData.prodList[i].basOfrCharCntCtt.value %><%= data.themeListData.prodList[i].basOfrCharCntCtt.unit %></li>
+																			<% } else { %>
+																				<li><i class="p-icon18-sms"><span class="blind">문자</span></i><%= data.themeListData.prodList[i].basOfrCharCntCtt.value %> </li>
+																		<% }  %>
+																	<% } %>
+																</ul>
+															</div>
+															
+
+															<div class="rn-prod-benefit">
+																<%# 기본 혜택 %>
+																<% if ( data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr && data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr.length > 0 ) { %>
+																	<ul>
+																		<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr.length; j < jlen; j++ ) { %>
+																			<li>
+																				<i class="p-icon16-img">
+																					<img src="<%= data.cdn %><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].rgstImgUrl %>" alt="<%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].rgstImgAlt %>">
+																				</i>
+																				<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfNm %></span>
+
+																				<% if ( !data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].useAmtPrice.isNaN && !data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfAmtPrice.isNaN ) { %>
+																					<%# 이용금액과 혜택금액이 있다면? %>
+																					<span class="price">
+																						<del><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].benfAmtPrice.price%>원</del>
+																						<i class="icon-arr">&rarr;</i> 
+																						<em><%= data.themeListData.prodList[i].basAdditionalObject.basicBenefitsArr[j].useAmtPrice.price%>원</em>
+																					</span>
+																				<% } %>
+																				
+																			</li>
+																		<% } %>
+																	</ul>
+																<% } %>
+
+																<%# 추가 혜택 %>
+																<% if ( data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr && data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length > 0 ) { %>
+																	<div class="p-benefit-choice">
+																		<p class="title">추가혜택 <strong><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[0].addBenfCnt %>개</strong>를 선택해주세요</p>
+																		<ul>
+																			<% for ( let j=0, jlen=data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr.length; j < jlen; j++ ) { %>
+																				<li>
+																					<i class="p-icon16-img">
+																						<img src="<%= data.cdn %><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].rgstImgUrl %>" alt="<%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].rgstImgAlt %>">
+																					</i>
+																					<span class="txt"><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].expsBenfNm %></span>
+
+																					<% if ( !data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].useAmtPrice.isNaN && !data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].benfAmtPrice.isNaN ) { %>
+																						<span class="price">
+																							<del><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].benfAmtPrice.price%>원</del>
+																							<i class="icon-arr">&rarr;</i> 
+																							<em><%= data.themeListData.prodList[i].basAdditionalObject.additionalBenefitsArr[j].useAmtPrice.price%>원</em>
+																						</span>
+																					<% } %> 
+																				</li>
+																			<% } %>
+																		</ul>
+																	</div>
+																<% } %>
+															</div>
+														</a>
+														
+														<% 
+															const prodNetwork = data.themeListData.prodList[i].basNetworkList.find(e => e.prodFltNm).prodFltNm;
+														%>
+														<% if ( data.isCompareButton && (prodNetwork == 'LTE' || prodNetwork == '5G') ) { %>
+															<%# 비교하기 버튼(isCompareButton) 이 true 이면서 비교대상 요금제가 LTE/5G일 때에만 출력 %>
+															<div class="rn-prod-bottom">
+																<div class="rn-btn-right">
+																	<%# 비교하기를 위한 데이터 세팅:: prod-id(내 상품 코드), prod-nm(상품명), prod-fee(요금), prod-call(통화), prod-text(문자), prod-data(데이터) %>
+																	<% 
+																		let myProductId = data.themeListData.prodList[i].basProdId;
+																		let myProductName = data.themeListData.prodList[i].basProductNm;
+																		let myProductPrice = data.themeListData.prodList[i].basFeeInfo.value + '원';
+																		let myData = data.themeListData.prodList[i].basOfrDataQtyCtt || ''; // 데이터
+																		let myVoice = data.themeListData.prodList[i].basOfrVcallTmsCtt || ''; // 음성
+																		let mySms = data.themeListData.prodList[i].basOfrCharCntCtt || ''; // 문자
+
+																		if ( myData ) {
+																			myData = myData.isNaN ? myData.value : myData.value.data + myData.value.unit;
+																		}
+
+																		if ( myVoice ) {
+																			myVoice = myVoice.value;
+																		}
+
+																		if ( mySms ) {
+																			mySms = mySms.isNaN ? mySms.value : mySms.value + mySms.unit;
+																		}
+																	%>
+
+																	<a class="btn-compare" 
+																		data-prod-id="<%= myProductId %>" 
+																		data-prod-nm="<%= myProductName %>" 
+																		data-prod-fee="<%= myProductPrice%>" 
+																		data-prod-call="<%= myVoice %>" 
+																		data-prod-text="<%= mySms %>" 
+																		data-prod-data="<%= myData %>">내 요금제와 비교</a>
+																</div>
+															</div>
+														<% } %>
+													</div>
+												</li>
+											<% } %>
+										</ul>
+									</div>
+									<!-- // 요금제 row list -->
+								</div>
+							<% } %>
+						</section>
+					<% } %>
+
+                    <%# 테마 배너(sectionSort: THEME_BANNER) %>
+                    <section class="product-sec none" data-sort="THEME_BANNER">
+						<div class="pro-article various-plan-box">
+							<div class="article-tit"></div>
+							<div class="article-cont minus-space">
+								<div class="slider-wrap plan-slider">
+									<div class="slider-container">
+										<ul class="slider-list"></ul>
+									</div>
+								</div>
+								<div class="more-link-area">
+                                    <a href="/product/renewal/mobileplan/list?theme=all" class="more" data-xt_eid="CMMA_A4_B84-26" data-xt_csid="NO" data-xt_action="BC">
+										<span class="more-txt">테마 전체보기</span>
+									</a>
+								</div>
+							</div>
+						</div><!-- //pro-article -->
+                    </section>
+					
+					<%# 프로모션 %>
+					<section class="product-sec">
+						<section class="pro-article various-banner-box none" data-sort="PROMOTION_THEME" style="margin-top: 0px !important;"></section>
+						
+						<div class="pro-article variety-product-box">
+							<div class="article-tit">SKT의 다양한 상품을 만나보세요</div>
+							<div class="article-cont">
+								<div class="tod-nmp-other-list">
+									<ul>
+										<li>
+											<a href="/product/mobileplan-add" data-xt_eid="CMMA_A4_B84-50" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-service"></i> <em>부가서비스</em>
+											</a>
+										</li>
+										<li>
+											<a href="/product/wireplan" data-xt_eid="CMMA_A4_B84-51" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-internet"></i> <em>인터넷/IPTV</em>
+											</a>
+										</li>
+										<li>
+											<a href="/product/combinations" data-xt_eid="CMMA_A4_B84-52" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-plus"></i> <em>결합상품</em>
+											</a>
+										</li>
+										<li>
+											<a href="/product/roaming" data-xt_eid="CMMA_A4_B84-53" data-xt_csid="NO" data-xt_action="BC">
+												<i class="p-icon30-roaming"></i> <em>T로밍</em>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</section>
+                </div>
+			</div>
+        </div>
+		
+        <!--// #contents -->
+        <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </div>
+</body>
+
+<% include ../../../../components/javascript.component.html %>
+
+<script>
+    $(document).ready(function () {
+		new Tw.ProductRenewalSubmain($('.wrap'), '<%= data.sortSection ? data.sortSection : "" %>', '<%- JSON.stringify(data.line) %>', '<%= data.myAge %>', '<%= data.cdn %>', 'M000367');
+		new Tw.ProductCompare( $('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'), '<%= data.line.quickFilterCode %>', JSON.parse('<%- JSON.stringify( data.payment ? data.payment.product.feePlanProd : "") %>'), '<%= data.cdn %>');
+
+		
+    });
+</script>
+
+<% include ../../../../components/end.component.html %>
