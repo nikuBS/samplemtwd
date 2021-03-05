@@ -69,7 +69,7 @@ Tw.ProductCompare.prototype = {
         var $target = $(e.currentTarget);
 
         this.compareProdId = $target.data('prod-id');
-        this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CPR');
+        this._sendTracking(this._svcInfo.prodId, $target.data('prod-id'), 'CPR');
         this._getRedisData(this._svcInfo.prodId, this.compareProdId, $target);
     },
 
@@ -314,8 +314,6 @@ Tw.ProductCompare.prototype = {
             }
           }
         }
-          console.log(overlab);
-          console.log(sepOptionListArr);
       } while(finishRoof == '');
 
       console.log("^^^^");
@@ -579,12 +577,11 @@ Tw.ProductCompare.prototype = {
         var curFee = this.compareData.curPlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
         var compareFee = this.compareData.comparePlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
         var actSheetBenfData = this._getCurPlanBenefits();
-        console.log("#########",actSheetBenfData);
         if((Number(curFee) > Number(compareFee)) && actSheetBenfData.lostBenefits){
           $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, actSheetBenfData));
         } else {
           $('.changePlan').click(function() {
-            this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CAGC');
+            _this._sendTracking(_this._svcInfo.prodId, _this.compareProdId, 'CAGC');
             _this._historyService.replaceURL('/product/callplan?prod_id=' + _this.compareData.comparePlan.prodId);
           });
         }
@@ -778,7 +775,6 @@ Tw.ProductCompare.prototype = {
   },
 
   _parseSepList: function(sepList) {
-    console.log("!!!!!",sepList);
     if (sepList.length > 0) {
       return null;
     }
@@ -809,16 +805,37 @@ Tw.ProductCompare.prototype = {
       sepList.curData.expsBenfNm = null;
       sepList.compareData.expsBenfNm = null;
     }
+    if(sepList.benfList.prodBenfTitCd == '05') {
+      if(!sepList.curData.prodId) {
+        sepList.curData.prodId = 'Y';
+        sepList.curData.benfDtlCtt = '등급유지';
+      }
+      if(!sepList.compareData.prodId) {
+        sepList.compareData.prodId = 'Y';
+        sepList.compareData.benfDtlCtt = '등급유지';
+      }
+    }
     return sepList;
   },
 
   _parseChooseList: function(chooseList) {
-    console.log("%%%%%%%%%%",chooseList);
     if (chooseList.length > 0) {
       return null;
     }
     if(chooseList.benfList) {
       chooseList.benfList.titleText = this._getTitleText(chooseList.benfList.prodBenfTitCd);
+    }
+    if(chooseList.benfList.prodBenfTitCd == '05') {
+      if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) {
+        chooseList.curSepData.prodId = 'Y';
+        chooseList.curSepData.expsBenfNm = 'T맴버쉽';
+        chooseList.curSepData.benfDtlCtt = '등급유지';
+      }
+      if(!chooseList.compareData.prodId && !chooseList.compareSepData.prodId && (chooseList.curData.prodId || chooseList.curSepData.prodId)) {
+        chooseList.curSepData.prodId = 'Y';
+        chooseList.curSepData.expsBenfNm = 'T맴버쉽';
+        chooseList.curSepData.benfDtlCtt = '등급유지';
+      }
     }
 
     return chooseList;
@@ -927,6 +944,9 @@ Tw.ProductCompare.prototype = {
    * @param {*} type CPR: 요금제 비교, CAG: 요금제 변경, 요금제 변경 (원장으로 바로 이동 시) : CAGC, 요금제 변경 취소 : CPGC
    */
   _sendTracking: function(basicPid, comparePid, type) {
+    console.log("내 아이디",basicPid);
+    console.log("비교 아이디",comparePid);
+    console.log("타입",type);
     window.XtractorScript.xtrProdCompare(basicPid, comparePid, type);
   },
 
