@@ -512,7 +512,6 @@ Tw.ProductCompare.prototype = {
       if(unit == 'MB') {
         data = data/1000;
       }
-      console.log("@@@@@@@@@@@@@",data);
       if(this._networkInfo == '5G') {
         if(data <= 10) {
           return ((data / 10) / 4) * 100;
@@ -706,21 +705,55 @@ Tw.ProductCompare.prototype = {
    */
 
   _getCurPlanBenefits: function() {
-    var lostBenefits = [{}];
+    var lostSepBenefits = [{}];
+    var lostChooseBenefits = [{}];
+    var lostBenefits;
+    var n = 1;
+    var m = 1;
     if(this.curRedisData.prodBenfCd_04.length > 0) {
       for(var i in this.curRedisData.prodBenfCd_04) {
         if(this.curRedisData.prodBenfCd_04[i].prodBenfTypCd=='01'){
-          lostBenefits.push({benefit: this.curRedisData.prodBenfCd_04[i].expsBenfNm});
+          lostSepBenefits.push({benefit: this.curRedisData.prodBenfCd_04[i].expsBenfNm,
+                                benfDtlCtt: this.curRedisData.prodBenfCd_04[i].benfDtlCtt,
+                                benfAmt : false,
+                                addBenfCnt : false
+            });
+          if(this.curRedisData.prodBenfCd_04[i].benfAmt) {
+            lostSepBenefits[n].benfAmt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].benfAmt.replace(/원/g,'').replace(/,/g,''));
+
+          }
+          if(this.curRedisData.prodBenfCd_04[i].addBenfCnt) {
+            lostSepBenefits[n].addBenfCnt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].addBenfCnt.replace(/원/g,'').replace(/,/g,''));
+          }
+          n++;       
+        }
+        if(this.curRedisData.prodBenfCd_04[i].prodBenfTypCd=='02'){
+          lostChooseBenefits.push({benefit: this.curRedisData.prodBenfCd_04[i].expsBenfNm,
+                                benfDtlCtt: this.curRedisData.prodBenfCd_04[i].benfDtlCtt,
+                                benfAmt : false,
+                                addBenfCnt : false
+          });
+          if(this.curRedisData.prodBenfCd_04[i].benfAmt) {
+            lostChooseBenefits[m].benfAmt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].benfAmt.replace(/원/g,'').replace(/,/g,''));
+          }
+          if(this.curRedisData.prodBenfCd_04[i].addBenfCnt) {
+            lostChooseBenefits[m].addBenfCnt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].addBenfCnt.replace(/원/g,'').replace(/,/g,''));
+          }
+          m++;
         }
       }
-    lostBenefits.shift();
+      lostSepBenefits.shift();
+      lostChooseBenefits.shift();
+      lostBenefits = true;
     } else {
       lostBenefits = false;
     }
     
     return {
-      prodNm: this.compareData.comparePlan.prodNm,
-      lostBenefits: lostBenefits
+      prodNm: this.compareData.curPlan.prodNm,
+      lostBenefits : lostBenefits,
+      lostSepBenefits: lostSepBenefits,
+      lostChooseBenefits: lostChooseBenefits
     };
   },
 

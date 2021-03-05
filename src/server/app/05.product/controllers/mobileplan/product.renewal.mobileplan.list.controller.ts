@@ -25,7 +25,7 @@ export default class RenewProductPlans extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params: any = {};
-    const cdn = this._getCDN();
+    const cdn = this._getCDN(); //이미지 출력 시 불러올 도메인 얻어옴
     const series = { //상단 요금제 분류 선택시 하이라이트를 주기 위해
       seriesCode : '',
       theme : '',
@@ -60,7 +60,7 @@ export default class RenewProductPlans extends TwViewController {
           series.noSeries = true;
           break;
       }
-        filterList.filterList = this._getFilterList(req.query.filters);
+        filterList.filterList = this._getFilterList(req.query.filters); 
         if(filterList.filterList === '') {
           params.idxCtgCd = seriesCode;
         }
@@ -68,11 +68,12 @@ export default class RenewProductPlans extends TwViewController {
       series.noSeries = true;
     }
 
+    //여기서부터 데이터 불러오고 화면 랜더링
     if ((req.query.theme || filterList.filterList === '') && !req.query.code) {
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
-        this.isCompareButton(svcInfo),
-        this._getTabList()
+        this.isCompareButton(svcInfo), // 비교하기 버튼 출력 여부
+        this._getTabList() //탭 리스트를 불러옴
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
         compareData,
@@ -110,18 +111,18 @@ export default class RenewProductPlans extends TwViewController {
               plans.groupProdList[i].prodList = this._getCompareYN(plans.groupProdList[i].prodList, networkInfoFilter[0], isCompare);
             }
             plans.separateProductList = this._getCompareYN(plans.separateProductList, networkInfoFilter[0], isCompare);
-            if(req.query.theme) {
+            if(req.query.theme) { //시리즈별 리스트형 테마
             series.theme = ' class=on';
             res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
-            } else if (series.seriesCode == 'F01713') {
+            } else if (series.seriesCode == 'F01713') { //시리즈별 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
-            } else if(series.seriesCode == 'F01121' || series.seriesCode == 'F01122') {
+            } else if(series.seriesCode == 'F01121' || series.seriesCode == 'F01122') { // 시리즈별 리스트형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
-            } else if(series.seriesCode == 'F01124') {
+            } else if(series.seriesCode == 'F01124') { // 시리즈별 2 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
-            } else if(series.seriesCode == 'F01125') {
+            } else if(series.seriesCode == 'F01125') { // 단일상품 2 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.prepay.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
-            } else {
+            } else { // 시리즈별 리스트형 전체리스트
               switch(networkInfoFilter[0]){
                 case 'F01713':
                   plans.series = '1';
@@ -145,12 +146,12 @@ export default class RenewProductPlans extends TwViewController {
             }
           });
         });
-    } else if (series.noSeries === true) {
+    } else if (series.noSeries === true) { // 전체리스트 필터 적용 시 3개씩 받아와서 출력
       params.searchFltIds =  req.query.filters;
       params.idxCtgCd = 'F01100';
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
-        this._getInitPlans(params),
+        this._getInitPlans(params), // 전체리스트 필터 적용 시 3개씩 받아옴
         this.isCompareButton(svcInfo),
         this._getTabList()
       ).subscribe(([
