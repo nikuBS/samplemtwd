@@ -1960,9 +1960,11 @@ class ApiRouter {
     bannerResult.subscribe(resp => {
         let bannerType = '';
         let imgAltCtt = '';
+        let imgLink = '';
         if (resp.code === API_CODE.CODE_00) {
           try {
             imgAltCtt = resp.result.imgList[0].imgAltCtt;
+            imgLink = resp.result.imgList[0].imgLinkUrl;
             if (resp.result.bannerType === '0023') {
                 bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-05.png" alt="혜택">`
             } else if (resp.result.bannerType === '0024') {
@@ -1986,7 +1988,7 @@ class ApiRouter {
         }
         const bannerHtml = `
           <div class="tos_inner">
-            <a href="#n" class="tb-link">
+            <a href="${imgLink}" class="tb-link">
               <i class="tb-icon">${bannerType}</i>
               <p class="tb-text">${imgAltCtt}</p>
             </a>

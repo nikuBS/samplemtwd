@@ -74,7 +74,7 @@ body.rn #roamingMain #content .description {
   margin-bottom: 20px;
   font-size: 13px;
   letter-spacing: -1px;
-  color: #9f9f9f;
+  color: #888;
 }
 body.rn #roamingMain #content > .description {
   margin-bottom: 30px;
@@ -3921,7 +3921,6 @@ body.scroll #roamingOn #appbar .appbar {
 .rm-content .rm-card-call a{display:inline-block;margin:0 .75rem;padding-top:2.8125rem;font-size:.75rem;background:url(/img/product/roam/rm-card-tel.png) no-repeat center 0;background-size:2.5rem auto}
 .rm-content .card-coupon-wrap{padding:2.1875rem 0;background-color:#fff}
 .rm-content .card-coupon-wrap h4{margin-left:1rem}
-.rm-content .card-coupon-box{overflow:visible !important}
 .rm-content .card-coupon-box .card-coupon-inner .inner-box{min-width:17.06rem;width:auto;height:17.0625rem;padding:1.75rem 1.25rem;background-color:#f3f4f9}
 .rm-content .card-coupon-box .card-coupon-inner .tit{white-space:nowrap;margin:0;font-size:1.125rem;color:#4559fc;font-weight:500;margin:0}
 .rm-content .card-coupon-box .card-coupon-inner .card{width:auto;height:auto;margin:.94rem 0 0 0}
@@ -4054,6 +4053,31 @@ body.rn .tip-view{width:2.125rem;height:1.0625rem;background:#4559fc 0;color:#ff
 body.rn .card .tip-view{position:relative;top:-0.1rem}
 body.rn #roamingRates .card .link button{font-size:.8125rem;color:#4559fc;letter-spacing:-1px;text-decoration:underline}
 body.rn #roamingMain #content .history a{display:block}
-body.rn #scheduleDialog .bottom-button{width:100%}
+body.rn #scheduleDialog .bottom-button{width:100%;font-size:16px}
 body.rn #scheduleDialog .bottom-button:disabled{background-color:#ddd}
 body.rn #nationsDialog .menu li button.active{font-weight:bold}
+
+
+/* 접근성 추가 수정 */
+body.rn #roamingGuide .card .sub{flex:1;background:url(https://cdnm.tworld.co.kr/img/product/roam/guide_auto.svg) no-repeat center 0;background-size:4.875rem auto}
+body.rn #roamingGuide .card .sub a,
+body.rn #roamingGuide .card .sub button{width:4.875rem;padding-top:5.625rem;margin:0 auto;vertical-align:top}
+body.rn #roamingGuide .card .sub+.sub{background-image:url(https://cdnm.tworld.co.kr/img/product/roam/guide_datasms.svg)}
+body.rn #roamingGuide .card .sub+.sub+.sub{background-image:url(https://cdnm.tworld.co.kr/img/product/roam/guide_docs.svg)}
+body.rn #roamingGuide .card .subs{display:flex;margin:0}
+body.rn #roamingGuide .card .sub a{display:block}
+body.rn #roamingGuide .card .point ul li{padding-right:0}
+body.rn #roamingGuide .card .point ul li button{width:100%;padding-right:1.5625rem;text-align:left;font-size:1rem;background:url(https://cdnm.tworld.co.kr/img/product/roam/ico_arrow.png) no-repeat center right;background-size:.8125rem}
+body.rn .guide-dialog .checklist li button[aria-pressed="true"]{background-image:url(https://cdnm.tworld.co.kr/img/product/roam/ico_collapse.svg)}
+
+/* [OP002-13188] 로밍 간편 가입 추가 건 */
+.popup.tw-popup.rm-popup .popup-info .popup-header .popup-title.sub{clear:both;font-size:1.3125rem;font-weight:500}
+.popup.tw-popup.rm-popup .popup-info .popup-header .pop-close{text-align:right;margin:-0.5rem -0.7rem 1rem 0}
+.popup.tw-popup.rm-popup .popup-info .popup-header .btn-close{width:2rem;height:2rem;background:url(/img/product/roam/ico_close.svg) no-repeat center center;background-size:1rem auto;text-indent:-999rem}
+.popup.tw-popup.rm-popup .inner-contents{font-size:1rem}
+.popup.tw-popup.rm-popup .inner-contents strong{font-weight:400;color:#4b52ff}
+.popup.tw-popup.rm-popup .popup-contents .bul-list{background:0;padding:0;margin-top:1rem}
+.popup.tw-popup.rm-popup .popup-contents .bul-list li{margin-top:.2rem;font-size:.875rem;color:#959595}
+.popup.tw-popup.rm-popup .popup-contents .bul-list li:before{background-color:#959595}
+.popup.tw-popup.rm-popup .popup-info .bt-bottom li.bt-blue1 button{color:#4559fc;font-weight:400}
+.popup.tw-popup.rm-popup .popup-info .bt-bottom{border-top:1px solid #e2e2e2}

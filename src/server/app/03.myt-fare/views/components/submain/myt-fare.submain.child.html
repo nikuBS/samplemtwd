@@ -7,8 +7,8 @@
 <%_
     const childInfo = (data.guide || {}).childInfo || [],
         claimDt = data.claimDt;
-    // 자녀회선 있을때만 노출
-    if (childInfo.length > 0) {
+    // 부모 회선이 "휴대폰" 이면서, 자녀회선 있을때만 노출
+    if (data.svcInfo.svcAttrCd === 'M1' && childInfo.length > 0) {
 _%>
 <section class="cont-card fe-child-area" data-child-cnt="<%-childInfo.length%>">
     <div class="section-inner">
@@ -31,7 +31,7 @@ _%>
                                             <li class="report-item">
                                                 <dl class="report-define d-wrap">
                                                     <dt class="report-tit">이용요금</dt>
-                                                    <dd class="report-cont"><%-item.useAmtTot%>원</dd>
+                                                    <dd class="report-cont"><%-item.useAmtTot || 0%>원</dd>
                                                 </dl>
                                             </li>
                                         </ul>

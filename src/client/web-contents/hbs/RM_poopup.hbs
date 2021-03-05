@@ -1,0 +1,58 @@
+<div class="popup tw-popup rm-popup">
+    <div class="popup-info" role="alertdialog" {{#if title}}aria-labelledby="alertHeading"{{/if}} aria-describedby="alertText">
+	<div class="popup-header">
+            {{#if ico}}
+		<span class="ico {{ico}}"></span>
+            {{/if}}
+            {{#if btn-close}}
+                <div class="pop-close"><button type="button" class="{{btn-close}}">닫기</button></div>
+            {{/if}}            
+            {{#if title}}
+		<h5 class="popup-title {{title_type}}" id="alertHeading">{{{breaklines title}}}</h5>
+            {{/if}}
+        </div>
+        <div class="popup-contents {{notice_has}}" id="alertText">
+            <div class="inner-contents">
+                {{#if img-type}}
+                    <div class="img-type">
+                        {{{img-type}}}
+                    </div>
+                {{/if}}
+                {{#if editor-type}}
+                    <div class="editor-type">
+                        {{{editor-type}}}
+                    </div>
+                {{/if}}
+            </div>
+	    {{#if list-cont}}
+            <ul class="bul-list">
+                {{#list-cont}}
+                <li>{{txt}}</li>
+                {{/list-cont}}
+            </ul>
+            {{/if}}
+
+        </div>
+        {{#if bt}}
+        <div class="bt-box">
+            <ul class="bt-slice">
+            {{#bt}}
+            <li class="{{style_class}}">
+              <button>{{txt}}</button>
+            </li>
+            {{/bt}}
+            </ul>
+        </div>
+        {{/if}}
+	{{#if bt_b}}
+            <ul class="bt-bottom">
+                {{#bt_b}}
+                <li class="{{style_class}}">
+                   <button>{{txt}}</button>
+                </li>
+                {{/bt_b}}
+            </ul>
+        {{/if}}
+    </div>
+    <div class="popup-blind"></div>
+</div>
