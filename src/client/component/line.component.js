@@ -129,7 +129,9 @@ Tw.LineComponent.prototype = {
    * @function
    * @desc 전체 회선 정보 응답 처리
    * @param $target
-   * @param resp
+   * @param allSvcResp
+   * @param childSvcResp
+   * @param exposableResp
    * @private
    */
   _successGetLineList: function ($target, allSvcResp, childSvcResp, exposableResp) {
@@ -180,7 +182,7 @@ Tw.LineComponent.prototype = {
     this._popupService.open({
       hbs: 'actionsheet_line',
       layer: true,
-      hasNonExpsLine: totNonCnt > 0, 
+      hasNonExpsLine: totNonCnt > 0,
       totNonCnt: totNonCnt,
       data: lineData,
       btMore: this._index > Tw.DEFAULT_LIST_COUNT,
@@ -326,7 +328,6 @@ Tw.LineComponent.prototype = {
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
     if($selectedLine.hasClass('fe-child')) {
       this._historyService.goBack();
-      
       setTimeout($.proxy(function () {
           this._onOpenChildNavi(svcMgmtNum, $selectedLine);
       },this),100);
@@ -342,7 +343,6 @@ Tw.LineComponent.prototype = {
    * @private
    */
   _onOpenChildNavi: function (svcMgmtNum, $target) {
-    
     this._popupService.open({
       hbs: 'CU_UT_04_05',
       layer: true,
@@ -358,7 +358,6 @@ Tw.LineComponent.prototype = {
    */
   _onOpenChildPopup: function ($popupContainer) {
     Tw.CommonHelper.focusOnActionSheet($popupContainer);
-    
     new Tw.XtractorService($popupContainer);
     $popupContainer.on('click', '.fe-go-child', $.proxy(this._goUrl, this));
   },
@@ -515,3 +514,302 @@ Tw.LineComponent.prototype = {
     this._historyService.goLoad(url);
   }
 };
+/**
+ * @file line.componentv2
+ * @author Tonyspark (tonyspark@sk.partner.com)
+ * @editor 양정규, 김인환
+ * @since 2021.01.18
+ */
+Tw.LineComponentV2 = function () {
+  Tw.LineComponent.apply(this, arguments);
+  this.$container = arguments[0];
+  this._initialize();
+}
+Tw.LineComponentV2.prototype = Object.create(Tw.LineComponent.prototype);
+Tw.LineComponentV2.prototype.constructor = Tw.LineComponentV2;
+Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
+  // 최초실행 후 처리 로직
+  _initialize: function() {
+    // 최초실행 후 처리 로직
+    this._cachedElement();
+    this._bindEvents();
+    new Tw.XtractorService(this.$container);
+  },
+  _cachedElement: function () {
+    this.$lineTxt = this.$container.find('.fe-line-txt'); // "다른 회선" 텍스트 버튼
+    this.$atherLineArea = this.$container.find('#different-line'); // "다른 회선" 영역
+    this.$selWrap = this.$container.find('.tod-line-sel-wrap'); // 전체 영역
+    this.$lineDim = this.$container.find('[data-id=line-dim]'); // dim 영역
+  },
+  _bindEvents: function() {
+    this.$container.on('click', '.line-tab-cont input.fe-radio-line', _.debounce($.proxy(this._onSelectLine, this), 500));
+    this.$container.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
+    this.$container.on('click', '.fe-tab-wrap2 .linker-item', $.proxy(this._onTabClicked, this));
+    this.$container.on('click', '.fe-none-event', function (event) {
+      event.preventDefault();
+    });
+    this.$lineDim.on('click', $.proxy(function(event) {
+      var $target = $(event.currentTarget);
+      if ($target.is(':visible')) {
+        // dim 된 상태
+        this.$selWrap.toggleClass('show')
+        this.$lineTxt.text(this.$lineTxt.data('line-txt'));
+        this.$atherLineArea.hide().removeClass('open');
+        $target.hide();
+      }
+      return false;
+    }, this));
+  },
+
+  _onTabClicked: function (event) {
+    // 마우스로 LI를 클릭했을 때만, 발생시키기 위해
+    var $target = $(event.currentTarget);
+    var $otherTarget = $target.siblings();
+    $target.attr('aria-selected', true);
+    $target.find('a').attr('aria-selected', true);
+
+    $otherTarget.attr('aria-selected', false);
+    $otherTarget.find('a').attr('aria-selected', false);
+
+    var id = $target.find('a').attr('id');
+    if (id === 'tab1') {
+      $('#tab1-tab').attr('aria-selected', true);
+      $('#tab2-tab').attr('aria-selected', false);
+    } else {
+      $('#tab1-tab').attr('aria-selected', false);
+      $('#tab2-tab').attr('aria-selected', true);
+    }
+    return false;
+  },
+  /**
+   * @function
+   * @desc 회선 선택 click event 처리
+   * @param $event
+   * @private
+   */
+  _onSelectLine: function ($event) {
+    var $selectedLine = $($event.currentTarget);
+    var svcMgmtNum = $selectedLine.data('svcmgmtnum');
+    var mdn = $selectedLine.data('mdn');
+
+    // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+    if($selectedLine.hasClass('fe-child')) {
+      this._historyService.goBack();
+
+      // setTimeout($.proxy(function () {
+      //     this._onOpenChildNavi(svcMgmtNum, $selectedLine);
+      // },this),100);
+    } else {
+      this.changeLine(svcMgmtNum, mdn);
+    }
+  },
+  /**
+   * @function
+   * @desc 내부 경로로 이동
+   * @private
+   */
+  _onClickInternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.goLoad(url);
+    return false;
+  },
+
+  _openListPopup: function (lineData, totNonCnt, $target) {
+    var source = $('#common-select-list-template').html();
+    var template = Handlebars.compile(source);
+    var selectedMobileItem = lineData[0].list.find(function(item){
+      return !!item.option;
+    });
+    var selectedIptvItem = lineData[1].list.find(function(item){
+      return !!item.option;
+    });
+    var line_data = {
+      mobile: lineData[0],
+      iptv: lineData[1],
+      mobileLen: (lineData[0].list).length,
+      iptvLen: (lineData[1].list).length,
+      hasNonExpsLine: totNonCnt > 0,
+      totNonCnt: totNonCnt,
+      selectedMobile: !!selectedMobileItem,
+      selectedIptv: !!selectedIptvItem,
+      cdn: Tw.Environment.cdn
+    };
+    var html = template(line_data);
+    this.$atherLineArea.html(html).addClass('open have').show();
+  },
+  /**
+   * @function
+   * @desc 회선번호 클릭시 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickLine: function ($event) {
+    this.$selWrap.toggleClass('show');
+    this.$lineTxt.text(this.$lineTxt.data('close-txt'));
+    this.$lineDim.show();
+    // 회선 영역이 열려있으면 닫기
+    if (this.$atherLineArea.hasClass('open')) {
+      this.$lineTxt.text(this.$lineTxt.data('line-txt'));
+      this.$atherLineArea.hide().removeClass('open');
+      this.$lineDim.hide();
+      return;
+    }
+    /*if (this.$atherLineArea.hasClass('have')) {
+      this.$atherLineArea.show().addClass('open');
+      this.$lineTxt.text(this.$lineTxt.data('close-txt'));
+      return;
+    }*/
+    var $target = $($event.currentTarget);
+    var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
+    this.onClickLine(svcMgmtNum, $target);
+  },
+  /**
+   * @function
+   * @desc 회선 정보 파싱
+   * @param lineList
+   * @returns {Array}
+   * @private
+   */
+  _parseLineList: function (lineList, childLineList) {
+    var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+    var result = [];
+    _.map(category, $.proxy(function (line) {
+      var curLine = lineList[Tw.LINE_NAME[line]];
+      // if ( !Tw.FormatHelper.isEmptyArray(curLine) ) {
+      var showService = this._index < Tw.DEFAULT_LIST_COUNT ? '' : 'none';
+      var isWire = /*true;*/ Tw.LINE_NAME[line] === 's';
+      var isMobile = Tw.LINE_NAME[line] === 'm';
+      var list = this._convLineData(curLine, line);
+
+      // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+      if(line === 'MOBILE' && !Tw.FormatHelper.isEmpty(childLineList)) {
+
+        var childInfos = [];
+        _.map(childLineList, $.proxy(function (childLine) {
+          childInfos.push({
+            index: this._index++,
+            txt: childLine.eqpMdlNm || '휴대폰',
+            option: this._selectedMgmt.toString() === childLine.svcMgmtNum ? 'checked' : '',
+            badge: false,
+            showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
+            add: Tw.FormatHelper.conTelFormatWithDash(childLine.svcNum),
+            svcMgmtNum: childLine.svcMgmtNum,
+            icon: 'ico7',
+            child: true
+          });
+        }, this));
+        list = list.concat(childInfos);
+      }
+      result.push({
+        title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]],
+        cnt: list.length,
+        list: list,
+        showService: showService,
+        isWire: isWire,
+        isMobile: isMobile,
+        cdn: Tw.Environment.cdn
+      });
+      // }
+    }, this));
+    return result;
+  },
+  /**
+   * @function
+   * @desc 회선 변경 요청
+   * @param svcMgmtNum
+   * @param mdn
+   * @param callback
+   */
+  changeLine: function (svcMgmtNum, mdn, callback) {
+    this._callback = callback;
+    this._svcMgmtNum = svcMgmtNum;
+    this._mdn = mdn;
+    this.$selWrap.toggleClass('show')
+    this.$lineTxt.text(this.$lineTxt.data('line-txt'));
+    this.$atherLineArea.hide().removeClass('open');
+    Tw.CommonHelper.startLoading('[data-id=line-dim]', 'grey');
+    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
+      .done($.proxy(this._successChangeLine, this))
+      .fail($.proxy(this._failChangeLine, this));
+  },
+  /**
+   * @desc 회선 데이터 화면에 나타내는 데이터로 변경
+   * @param lineData
+   * @param category
+   * @returns {Array}
+   * @private
+   */
+  _convLineData: function (lineData, category) {
+    var result = [];
+    if (!Tw.FormatHelper.isEmptyArray(lineData)) {
+      if (category === 'MOBILE') {
+        lineData = Tw.FormatHelper.sortObjArrAsc(lineData, 'svcAttrCd');
+      } else {
+        lineData = Tw.FormatHelper.sortObjArrDesc(lineData, 'svcAttrCd');
+      }
+
+      _.map(lineData, $.proxy(function (line) {
+        result.push({
+          index: this._index++,
+          txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
+          option: this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',
+          badge: line.repSvcYn === 'Y',
+          showLine: this._index <= Tw.DEFAULT_LIST_COUNT ? '' : 'none',
+          add: Tw.LINE_NAME[category] === 's' ? line.svcAttrCd !== 'S3' ? line.addr :
+            Tw.FormatHelper.conTelFormatWithDash(line.svcNum) : Tw.FormatHelper.conTelFormatWithDash(line.svcNum),
+          svcMgmtNum: line.svcMgmtNum,
+          icon: Tw.LINE_NAME[category] === 'm' ? 'ico7' : line.svcAttrCd === 'S1' ? 'ico10' : line.svcAttrCd === 'S2' ? 'ico11' : 'ico12',
+          child: false
+        });
+      }, this));
+    }
+    return result;
+  },
+  /**
+   * @function
+   * @desc 회선 변경 응답 처리
+   * @param resp
+   * @private
+   */
+  _successChangeLine: function (resp) {
+    Tw.CommonHelper.endLoading('[data-id=line-dim]');
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._changeLine = true;
+      if ( this._openLineList ) {
+        this._onCloseListPopup();
+      }
+    } else if ( resp.code === this.ERROR_CODE.BFF0012 ) {
+      this._customerLogin = true;
+      if ( this._openLineList ) {
+        this._onCloseListPopup();
+      }
+    } else if ( resp.code === this.ERROR_CODE.BFF0013 ) {
+      // 고객보호 비밀번호 잠김
+      Tw.Error(resp.code, resp.msg).pop();
+    } else if ( resp.code === this.ERROR_CODE.BFF0014 ) {
+      // 고객보호 비밀번호 설정페이지
+      if ( this._openLineList ) {
+        this._historyService.replaceURL('/myt-join/custpassword');
+      } else {
+        this._historyService.goLoad('/myt-join/custpassword');
+      }
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+    this.$lineDim.hide();
+  },
+
+  /**
+   * @function
+   * @desc 회선 변경 요청 실패 처리
+   * @param error
+   * @private
+   */
+  _failChangeLine: function (error) {
+    Tw.Logger.error(error);
+    Tw.CommonHelper.endLoading('[data-id=line-dim]');
+    this.$lineDim.hide();
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+});

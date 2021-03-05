@@ -203,12 +203,17 @@ Tw.MyTJoinInfoDiscountAdv.prototype._bindEvent = function () {
     $target.parent().toggleClass('open');
     $target.attr('aria-pressed', $target.parent().hasClass('open'));
   }, this));
-  this.$feeBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
-  this.$deviceBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
-  this.$deviceBuyBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // 3/11 배포 이후 BE 개발 완료 후 진행 - 납부회차 팝업
+  // this.$feeBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // this.$deviceBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
+  // this.$deviceBuyBtn.on('click', _.debounce($.proxy(this._openDaysPopup, this), 500));
 };
 Tw.MyTJoinInfoDiscountAdv.prototype._init = function () {
-  Tw.MyTJoinInfoDiscount.prototype._init.call(this);
+  this._cachedElement();
+  this._bindEvent();
+  // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
+  /* this._lineComponent = */
+  // new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
   // 약정할인금액 그래프 깨지는 문제 수정 건
   var disHorizonBar = this.$container.find('.horizon-bar-wrap');
   if ( disHorizonBar.length ) {
@@ -223,6 +228,7 @@ Tw.MyTJoinInfoDiscountAdv.prototype._openDaysPopup = function(event) {
   var $target = $(event.currentTarget);
   var id = $target.data('id');
   var itemTarget = $target.data('target');
+  var selectItem = null;
   var defaultPopupOpt = {
     title: '', //'총 24회 중<br><strong>13회 납부 완료</strong>',
     title_type: 'sub2',
@@ -234,37 +240,35 @@ Tw.MyTJoinInfoDiscountAdv.prototype._openDaysPopup = function(event) {
     }]
   };
   if (id === 'device-buy') {
-    defaultPopupOpt.cont_align = 'warning';
-    defaultPopupOpt.contents =
-      '기기 할부금은 하루 단위로 계산되기 때문에 할부 개월 수보다 할부 청구 횟수가 1회 더 많을 수 있습니다.';
-    this.resData.commDataInfo.repaymentInfo.forEach(function(item) {
-      if (item.titNm === itemTarget) {
-        defaultPopupOpt.title =
-          '총 24회 중<br><strong>13회 납부 완료</strong>' +
-          'API 개발 중'
-        return false;
-      }
-    });
+    // TODO: 총 회차 정보만 알 수 있어 API 개발 완료되면 기능 추가
+    // defaultPopupOpt.cont_align = 'warning';
+    // defaultPopupOpt.contents =
+    //   '기기 할부금은 하루 단위로 계산되기 때문에 할부 개월 수보다 할부 청구 횟수가 1회 더 많을 수 있습니다.';
+    // selectItem = this.resData.commDataInfo.repaymentInfo.find(function(item) {
+    //   return item.titNm === itemTarget;
+    // });
+    // if (selectItem) {
+    //   defaultPopupOpt.title = '총 24회 중<br><strong>13회 납부 완료</strong>';
+    // }
   } else {
     defaultPopupOpt.notice_has = 'none';
-    var selectItem = null;
     if (id === 'fee') {
       selectItem = this.resData.commDataInfo.feeInfo.find(function(item) {
-        return item.prodId === itemTarget;
+        return (item.prodId === itemTarget && item.paymentCount);
       });
     }
     if (selectItem) {
-      defaultPopupOpt.title =
-        '총'+ selectItem.totMt +'회 중<br><strong>'+ selectItem.curMt +'회 납부 완료</strong>' +
-        'API 개발 중'
-
+      defaultPopupOpt.title = '<strong>'+ selectItem.paymentCount +'회 납부 완료</strong>';
     }
   }
-  this._popupService.open(defaultPopupOpt, $.proxy(function ($popup) {
-    this.popupCloseBtn = $popup.find('.pos-right button');
-    this.popupCloseBtn.on('click', this._popupService.close);
-  }, this), $.proxy(function() {
-    this.popupCloseBtn.off('click');
-  }, this));
+  // 값이 있는 경우
+  if (selectItem) {
+    this._popupService.open(defaultPopupOpt, $.proxy(function ($popup) {
+      this.popupCloseBtn = $popup.find('.pos-right button');
+      this.popupCloseBtn.on('click', this._popupService.close);
+    }, this), $.proxy(function() {
+      this.popupCloseBtn.off('click');
+    }, this));
+  }
   return false;
 };

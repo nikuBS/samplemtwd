@@ -849,7 +849,11 @@ Tw.MytJoinAdvSubMain.prototype._bindEvent = function () {
   }
 };
 Tw.MytJoinAdvSubMain.prototype._initialize = function() {
-  Tw.MyTJoinSubMain.prototype._initialize.call(this);
+  this._getTosAdminMytJoinBanner();
+  // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
+  // new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+  // OP002-12093 [고도화] 공통회선
+  // new Tw.LineComponentV2(this.$container, '.fe-bt-line', true, null);
   if (!(this._data.type === 0 || this._data.type === 2) && !this._data.isPwdSt) {
     // PPS, T-login, T-PocketFi 인 경우에는 고객비밀번호 사용하지 않는 다면 조회 신청 영역 숨김
     this.$serviceArea.hide();
