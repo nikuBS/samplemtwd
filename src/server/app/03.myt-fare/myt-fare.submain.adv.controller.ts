@@ -174,8 +174,9 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       data.type = 'UF';
       data.isBroadBand = true;
     }
-    // 선택월이 당월이면서 1일~4일 에는 청구요금 영역 미노출함.
-    if (date === prevDate && nowDate.getDate() < 5) {
+    // 선택월이 당월이면서 1일~4일 에는 청구요금 영역 미노출함. 유선: 6일, 무선 : 5일
+    const limitDate = svcInfo.svcAttrCd.indexOf('S') > -1 ? 6 : 5;
+    if (date === prevDate && nowDate.getDate() < limitDate) {
       data.isNotClaimData = true;
     }
 
