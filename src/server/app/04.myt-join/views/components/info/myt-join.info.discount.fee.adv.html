@@ -3,21 +3,25 @@
 * @author Kim In Hwan
 _%>
 <%_
-var tipId = feeItem.typeStr === 'FEE_TYPE_A'? 'MS_09_tip_01' : '';
+var tipId = (feeItem.typeStr === 'FEE_TYPE_A' || feeItem.typeStr === 'FEE_TYPE_E' || feeItem.typeStr === 'FEE_TYPE_F')? 'MS_09_tip_01' : '';
 _%>
 
 <div class="box-group">
     <div class="box-group-head-tit">
+        <% if (feeItem.typeStr !== 'FEE_TYPE_F') { %>
         <a href="/product/callplan?prod_id=<%= feeItem.prodId %>" class="link">
             <%= feeItem.disProdNm_N %>
         </a>
+        <% } else {%>
+        <%= feeItem.disProdNm_N %>
+        <% } %>
     </div>
     <div class="box-group-cont">
         <ul class="report-list item-no-border small">
             <li class="report-item">
                 <dl class="report-define d-wrap">
                     <dt class="report-tit">지난달까지 할인받은 요금
-                        <% if (tipId) { %>
+                        <% if (feeItem.typeStr === tipIdTarget) { %>
                         <button type="button" class="tip" id="<%= tipId %>" aria-haspopup="true">TIP</button>
                         <% } %>
                     </dt>
@@ -41,10 +45,11 @@ _%>
                     <dl class="report-define d-wrap">
                         <dt class="report-tit">약정 기간</dt>
                         <dd class="report-cont">
-                            <button type="button" class="detail-agree-btn" data-id="fee"
+                            <%= feeItem.totMt %>개월(<%= feeItem.totDt %>일)
+                            <!-- <button type="button" class="detail-agree-btn" data-id="fee"
                                     data-target="<%= feeItem.prodId %>">
                                 <%= feeItem.totMt %>개월(<%= feeItem.totDt %>일)
-                            </button>
+                            </button> -->
                         </dd>
                     </dl>
                 </li>

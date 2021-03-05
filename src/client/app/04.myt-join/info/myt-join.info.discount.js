@@ -218,9 +218,13 @@ Tw.MyTJoinInfoDiscountAdv.prototype._init = function () {
   var disHorizonBar = this.$container.find('.horizon-bar-wrap');
   if ( disHorizonBar.length ) {
     $(window).on('resize load', function () {
-      var barBubble = disHorizonBar.children('.bar-bubble');
-      disHorizonBar.children('.bar').width() < barBubble.outerWidth() ?
-        barBubble.addClass('left') : barBubble.removeClass('left');
+      // 여러개 그래프가 있는 경우
+      $.each(disHorizonBar, function(idx){
+        var barBubble = disHorizonBar.eq(idx).find('.bar-bubble');
+        var bar = disHorizonBar.eq(idx).find('.bar');
+        bar.width() < barBubble.outerWidth() ?
+          barBubble.addClass('left') : barBubble.removeClass('left');
+      });
     });
   }
 };

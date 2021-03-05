@@ -7,10 +7,10 @@ _%>
 
 <div class="box-group">
     <div class="box-group-head-tit">
-        <%_ if ( terminalItem.typeStr == 'join_type_B' ) { _%>
-        <a href="#" class="link"><%= terminalItem.titNm %></a>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' ) { _%>
+        <a href="/product/callplan?prod_id=TW20000015" class="link"><%= terminalItem.agreeNm.replace(/\s/g, '') %></a>
         <% } else { %>
-        <%= terminalItem.titNm %>
+        <%= terminalItem.agreeNm %>
         <% } %>
     </div>
     <div class="box-group-cont">
