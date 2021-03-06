@@ -58,3 +58,4 @@ nodemon-debug.json
 /src/server/manifest_en.json
 
 *.icloud
+.history/
