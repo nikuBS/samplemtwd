@@ -35,7 +35,7 @@ _%>
                         <div class="card-cont">
                             <div class="warning-box">
                                 <div class="warning-inner">
-                                    <p class="warning-tit">현재 이용 중인<br>약정 할인/기기 할부 정보가 없습니다.</p>
+                                    <p class="warning-tit">현재 이용 중인<br>약정할인/기기 할부 정보가 없습니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@ _%>
                                 <div class="card-cont">
                                     <%_
                                     const filterFeeInfos = commDataInfo.feeInfo.filter((feeItem) => feeItem.typeStr === 'FEE_TYPE_A' || feeItem.typeStr === 'FEE_TYPE_E' || feeItem.typeStr === 'FEE_TYPE_F');
-                                    const tipIdTarget = filterFeeInfos.length > 1 ? filterFeeInfos[filterFeeInfos.length - 1].typeStr : '';
+                                    const tipIdTarget = filterFeeInfos[filterFeeInfos.length - 1].typeStr;
                                     for (var idx = 0; idx < commDataInfo.feeInfo.length; idx++) {
                                         const feeItem = commDataInfo.feeInfo[idx];
                                     _%>

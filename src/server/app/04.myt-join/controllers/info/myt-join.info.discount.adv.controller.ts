@@ -130,9 +130,9 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
    */
   _getFaqRequest() {
     return Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010553' }),
-      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1000056771' }),
-      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1000056772' })
+      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010556' }),
+      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010557' }),
+      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010558' })
     ).map(([item, item1, item2]) => {
       const faqList: any = [];
       if ( item.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(item.result) ) {
