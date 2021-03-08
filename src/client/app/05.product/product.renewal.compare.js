@@ -761,6 +761,8 @@ Tw.ProductCompare.prototype = {
    * 비교대상에 대한 Redis 정보를 얻음
    */
   _getRedisData: function(curProdId, compareProdId, $target) {
+    console.log ("내 아이디",curProdId);
+    console.log ("비교할 아이디",compareProdId);
     if ( !curProdId || !compareProdId ) {
       return null;
     }
@@ -776,9 +778,30 @@ Tw.ProductCompare.prototype = {
    * @param {*} redisData 
    */
   _successRedis: function($target,curRes,compareRes) {
-    if ( curRes.code === Tw.API_CODE.CODE_00 && curRes ) {
-      var curParse = this._parseBenfProdInfo(curRes.result);
-      var compareParse = this._parseBenfProdInfo(compareRes.result);
+    var curParse = {};
+    var compareParse = {};
+    if(curRes.code === Tw.API_CODE.CODE_00) {
+      curParse = this._parseBenfProdInfo(curRes.result);
+    } else {
+      curParse = {
+        prodBenfCd_01 : [], // 통화 혜택 데이터 셋
+        prodBenfCd_02 : [], // 데이터 속도제어 데이터 셋
+        prodBenfCd_03 : [], // 데이터 추가 혜택 데이터 셋
+        prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
+        prodBenfCd_05 : [], // 안내문구 데이터 셋
+      }
+    }
+    if(compareRes.code === Tw.API_CODE.CODE_00) {
+      compareParse = this._parseBenfProdInfo(compareRes.result);
+    } else {
+      compareParse = {
+        prodBenfCd_01 : [], // 통화 혜택 데이터 셋
+        prodBenfCd_02 : [], // 데이터 속도제어 데이터 셋
+        prodBenfCd_03 : [], // 데이터 추가 혜택 데이터 셋
+        prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
+        prodBenfCd_05 : [], // 안내문구 데이터 셋
+      }
+    }
       this.curRedisData = JSON.parse(JSON.stringify(curParse));
       this.compareRedisData = JSON.parse(JSON.stringify(compareParse));
       this._setCompareDataCur(this._myPLMData, this.curRedisData);
@@ -792,7 +815,7 @@ Tw.ProductCompare.prototype = {
       console.log("추가혜택",this.compareData.addtionalBenf);
       console.log("최종데이터",this.compareData);
       this._openComparePopup(this.compareData, $target);
-    }
+    
   },
 
   /**
@@ -822,7 +845,7 @@ Tw.ProductCompare.prototype = {
       if(sepList.curData.benfAmt) {
         sepList.curData.benfAmt = Tw.FormatHelper.addComma(sepList.curData.benfAmt) + '원';
         if(!sepList.curData.addBenfCnt) {
-          sepList.curData.addBenfCnt = '0원'
+          sepList.curData.addBenfCnt = '0원';
         } else {
           sepList.curData.addBenfCnt = Tw.FormatHelper.addComma(sepList.curData.addBenfCnt) + '원';
         }
