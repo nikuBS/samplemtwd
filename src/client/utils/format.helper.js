@@ -72,6 +72,9 @@ Tw.FormatHelper = (function () {
    * @public
    */
   var addComma = function (value) {
+    if (!value) {
+      return value;
+    }
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
     return value.toString().replace(regexp, ',');
   };
