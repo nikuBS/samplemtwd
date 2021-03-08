@@ -23,6 +23,10 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
     if (svcInfo.actCoClCd === 'B') {
       return Observable.of(null);
     }
+    // TRBS에서 법인회선 관련 작업이 안되었다고 하여 임시로 막는다
+    if (['R', 'D', 'E'].indexOf(svcInfo.svcGr) > -1) {
+      return Observable.of(null);
+    }
 
     const params = {
       fromDt: DateHelper.getStartOfMonDate(reqQuery.date, 'YYYYMMDD'),
@@ -45,14 +49,6 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
           // isAdult: (contentsLimit.result || {}).isAdult === 'Y', // 성인여부
           isBubinCD: ['R', 'D'].indexOf(svcInfo.svcGr) > -1 // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
         };
-
-      // 휴대폰 결제 이용동의여부 "미동의" 인 경우 성인여부를 확인하기 위해 나이를 조회한다.
-      /*if (true || result.isNotAgree) {
-        return this._getIsAdult().map( resp => {
-          result.isAdult = resp;
-          return result;
-        });
-      }*/
       return Observable.of(result);
     });
   }

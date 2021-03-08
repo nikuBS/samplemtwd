@@ -37,8 +37,9 @@ class MyTFareSubmainController extends TwViewController {
         // netfunnel 통해서 진입한 경우
         const isNetFunnel = req.query && req.query.netfunnel === 'Y';
         if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
+          const query = Object.keys(req.query).map(key => key + '=' + req.query[key]).join('&');
           res.render('../../../common/views/components/netfunnel.start.component.html', {
-            referer: '/myt-fare/submain?netfunnel=Y'
+            referer: '/myt-fare/submain?netfunnel=Y' + (query ? '&' + query : '')
           });
         } else {
           new MyTFareSubmainAdvController().initPage(req, res, next);
