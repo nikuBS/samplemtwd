@@ -20,7 +20,7 @@ _%>
         <ul class="report-list item-no-border small">
             <li class="report-item">
                 <dl class="report-define d-wrap">
-                    <dt class="report-tit">지난달까지 할인받은 요금<% if (feeItem.typeStr === tipIdTarget) { %><button type="button" class="tip" id="<%= tipId %>" aria-haspopup="true">TIP</button><% } %></dt>
+                    <dt class="report-tit">지난달까지 할인받은 요금<% if (tipId) { %><button type="button" class="tip" id="<%= tipId %>" aria-haspopup="true">TIP</button><% } %></dt>
                     <dd class="report-cont basics13-larger"><%= feeItem.salePay.replace('-', '') %>원</dd>
                 </dl>
             </li>
