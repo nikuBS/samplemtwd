@@ -205,9 +205,15 @@ class MainHome extends TwViewController {
       }).map((resp) => {
         this.logger.info(this, '[Smart Card]', resp);
         // let order = ['00001', '00002', '00003', '00004', '00005'];
-        let order = [];
+        let order:string[] = [];
         if (resp.code === API_CODE.CODE_00) {
           order = resp.result.split(',');
+        } else {
+          order.push('00001');
+          order.push('00002');
+          order.push('00003');
+          order.push('00004');
+          order.push('00005');
         }
         return order.map((segment) => {
           return {
