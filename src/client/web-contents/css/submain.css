@@ -54,7 +54,7 @@ body.tod-white{background:#fff}
 
 /* 회선 선택 */
 .tod-submain .tod-line-sel-wrap {position:relative; z-index:10; min-height:3.25rem;}
-.tod-submain .tod-line-sel-wrap .sel-show-btn{display:block; position:fixed; width:100%; left:0; top:3.25rem}
+.tod-submain .tod-line-sel-wrap .sel-show-btn{display:block; position:fixed; width:100%; left:0;/*  top:3.25rem */}
 .tod-submain .tod-line-sel-wrap .sel-show{display:-webkit-box; display:flex; height:3.25rem; background:#f65252; padding:15px 16px 13px; box-sizing:border-box;-webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; }
 .tod-submain .tod-line-sel-wrap .sel-show .line-info{display:-webkit-box; display:flex; width:-webkit-calc(100% - 6.875rem);  width:calc(100% - 6.875rem) ; height:100%; -webkit-box-align: center; align-items:center; font-size:0.9375rem; color:#fff;}
 .tod-submain .tod-line-sel-wrap .sel-show .line-info .type-ico{display:inline-block; width:1.5rem; height:1.5rem; margin-right:0.25rem; vertical-align:middle ; flex-shrink:0}
@@ -88,15 +88,14 @@ body.tod-white{background:#fff}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item:last-child{border-bottom:none}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .check-status{display:inline-block; margin-left:auto}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info{display:inline-flex; width:80%; width:-webkit-calc(100% - 3.125rem); width:calc(100% - 3.125rem); -webkit-box-align: center; align-items:center;}
-.tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .symbol{width:1.5rem; height:1.5rem; margin-right:0.5rem; vertical-align:middle; }
-.tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type{display:inline-block; margin-right:0.9375rem;}
-.tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type-info{display:inline-block; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; flex-grow:1; vertical-align:middle;} 
+.tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .symbol{width:1.5rem; height:1.5rem; margin-right:0.5rem; vertical-align:middle; flex-shrink:0 }
+.tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type{display:inline-block; margin-right:0.9375rem; white-space:nowrap}
+.tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type-info{display:inline-block; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; vertical-align:middle;} 
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item .line-item-info .type-info .small-link{font-weight:500}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap{box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.24); background-color: #f2f2f2; padding:1.0625rem 1.375rem 0.9375rem; }
-.tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .warning + .line-admin{margin-top:0.5625rem;}
+.tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .warning + .line-admin{margin-top:0.4375rem;}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .line-admin{display: -webkit-box; display:flex; -webkit-box-pack: justify; justify-content: space-between; }
-.tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .small-link{display:inline-block !important; min-width:3.625rem; text-align:right; color:#2d9cde; font-size:0.75rem; text-decoration:underline;}
-
+.tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .small-link{display:inline-block !important; min-width:3.625rem; text-align:right; color:#2d9cde; font-size:0.85rem; text-decoration:underline; line-height:1.45}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .tab-banner .banner-area{display:inline-block; width:100%; vertical-align:top;  border-radius:0.5rem; text-align:center; overflow:hidden; background: #725ba4; overflow:hidden}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .tab-banner .banner-area a{display:block;}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .tab-banner .banner-area img{width:100%; height:5rem; object-fit:contain }
@@ -104,13 +103,19 @@ body.tod-white{background:#fff}
 .tod-submain .tod-line-sel-wrap.show .sel-show .sel-line-btn .sel-ico{display:none}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .sign{display:inline-block; height:1rem; padding:0.0625rem 0.3125rem 0; color:#fff; text-align:center; font-size:0.6875rem; letter-spacing:0; vertical-align:top; border-radius:0.1875rem; margin:0 0 0 0.3125rem; line-height:1rem; }
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .sign.standard{background:#f65252}
+.tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .warning{font-size:0.85rem !important; }
+.tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .warning:before{top:3px}
 
 /* 회선 선택 - 자녀회선 */
+.tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .line-item-info{width:100%}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .sign.child{background:#4dadf7;}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap{width:100%; flex-shrink:0; flex-basis:100%; padding:0.9375rem 0 0.375rem 1.8125rem }
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap .child-link-list{font-size:0; white-space:nowrap}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap .child-link-list .child-link{display:inline-block; margin-right:0.25rem;}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap .child-link-list .child-link a{display:inline-block; padding:0 0.6875rem; height:1.375rem; line-height:1.375rem; border: solid 1px #e0e0e0; border-radius:1.375rem ; color:#000; text-align:center; font-size:0.6875rem}
+@media screen and (max-width:320px){
+    .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap .child-link-list .child-link a{padding:0 0.4375rem}
+}
 
 /* 카드 타이틀 */
 .tod-submain .section-inner{margin:0 1.5rem}
@@ -652,49 +657,49 @@ body.tod-white{background:#fff}
 .popup .popup-info.tod-eventpop-type1.phone-payment .popup-contents .inner-contents .ico{background-image:url('/img/myt/payment-pop-ico.png'); background-size:100%; width:3.625rem; height:3.5625rem; margin-top:-3.125rem}
 
 /***************************************************************  약정할인/기기상환 정보 ***************************************************************/
-.tod-submain .section-inner .small-head-tit{font-size:13px; line-height:13px; color:#333; letter-spacing:-0.3px; margin-bottom:8px;}
-.tod-submain .section-inner .box-group-head-tit{color:#333; font-size:18px; font-weight:500; margin-bottom:24px; }
-.tod-submain .section-inner .box-group-head-tit .link{display:block; padding-right:10px; color:inherit; font-size:inherit; position:relative; font-weight:inherit}
-.tod-submain .section-inner .box-group-head-tit .link:after{content:''; display:inline-block; width:8px; height:13px; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
+.tod-submain .section-inner .small-head-tit{font-size:0.8125rem; line-height:0.8125rem; color:#333; letter-spacing:-0.0187rem; margin-bottom:0.5rem;}
+.tod-submain .section-inner .box-group-head-tit{color:#333; font-size:1.125rem; font-weight:500; margin-bottom:1.5rem; }
+.tod-submain .section-inner .box-group-head-tit .link{display:block; padding-right:0.625rem; color:inherit; font-size:inherit; position:relative; font-weight:inherit}
+.tod-submain .section-inner .box-group-head-tit .link:after{content:''; display:inline-block; width:0.5rem; height:0.8125rem; background:url('/img/myt/arrow.svg') no-repeat left top; position:absolute; right:0; top:0}
 .tod-submain .section-inner .box-group + .hash-wrap{padding-top:1.5rem}
-.tod-submain .section-inner .box-group-cont .detail-info-link{display:block; text-align:right; font-size:12px; color:#4dadf7; text-decoration:underline; margin-top:10px;}
+.tod-submain .section-inner .box-group-cont .detail-info-link{display:block; text-align:right; font-size:0.75rem; color:#4dadf7; text-decoration:underline; margin-top:0.625rem;}
 /* .tod-submain .section-inner .box-group-cont .detail-agree-btn{font-size:inherit; font-weight:inherit; line-height:inherit; padding-right:18px; position:relative}
 .tod-submain .section-inner .box-group-cont .detail-agree-btn:after{content:''; display:inline-block; width:15px; height:15px; background:url('/img/myt/calendar_ico.svg') no-repeat left top; position:absolute; right:0; top:-1px} */
-.tod-submain .section-inner .box-group-cont .gray-box{background:#f9f9f9; border-radius:6px; padding:16px ; margin-top:24px}
-.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph{padding-top:30px; margin-top:24px}
-.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph + .warning{margin-top:16px}
+.tod-submain .section-inner .box-group-cont .gray-box{background:#f9f9f9; border-radius:0.375rem; padding:1rem ; margin-top:1.5rem}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph{padding-top:1.875rem; margin-top:1.5rem}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph + .warning{margin-top:1rem}
 .tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .data-date .day{display:block;}
-.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .horizon-bar .data .bar-bubble{height:22px; line-height:22px; top:-30px}
-.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .data-date{padding-top:8px}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .horizon-bar .data .bar-bubble{height:1.375rem; line-height:1.375rem; top:-1.875rem}
+.tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph .data-date{padding-top:0.5rem}
 .tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph [class *= '-date']{color:#666}
 .tod-submain .section-inner .box-group-cont .horizon-bar-wrap.contract-graph [class *= '-date'] .day-dec{display:block; padding-top:0.125rem}
-.tod-submain .section-inner .box-group-cont .box-group .btn-area + .warning{margin-top:16px}
-.tod-submain .section-inner .box-group-cont .gray-box + .gray-box{margin-top:16px}
-.tod-submain .section-inner .box-group-cont .claim-box .contract-summary{font-size:15px; padding-bottom:12px; border-bottom:1px solid #e4e4e4; margin-bottom:19px; text-align:center; line-height:20px; color:#333; letter-spacing:-0.4px }
+.tod-submain .section-inner .box-group-cont .box-group .btn-area + .warning{margin-top:1rem}
+.tod-submain .section-inner .box-group-cont .gray-box + .gray-box{margin-top:1rem}
+.tod-submain .section-inner .box-group-cont .claim-box .contract-summary{font-size:0.9375rem; padding-bottom:0.75rem; border-bottom:1px solid #e4e4e4; margin-bottom:1.1875rem; text-align:center; line-height:1.25rem; color:#333; letter-spacing:-0.025rem }
 .tod-submain .section-inner .box-group-cont .claim-box .contract-summary strong{display:inline-block; font-weight:600; position:relative; }
-.tod-submain .section-inner .box-group-cont .claim-box .contract-summary strong:after{content:''; display:inline-block; width:100%; height:8px; background:#f65252; opacity:0.3; position:absolute; left:0; bottom:0; z-index:0}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item:not(:last-child){padding-bottom:15px}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item:not(:first-child){padding-top:15px; border-top:1px dotted #cecece; }
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .total-price{display:flex; font-size:13px; color:#333; text-align:left; overflow:hidden; line-height:22px; align-items:center; justify-content:space-between}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .total-price .price{line-height:22px; font-weight:500}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item{padding-left:12px; position:relative;}
+.tod-submain .section-inner .box-group-cont .claim-box .contract-summary strong:after{content:''; display:inline-block; width:100%; height:0.5rem; background:#f65252; opacity:0.3; position:absolute; left:0; bottom:0; z-index:0}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item:not(:last-child){padding-bottom:0.9375rem}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item:not(:first-child){padding-top:0.9375rem; border-top:1px dotted #cecece; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .total-price{display:flex; font-size:0.8125rem; color:#333; text-align:left; overflow:hidden; line-height:1.375rem; align-items:center; justify-content:space-between}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .total-price .price{line-height:1.375rem; font-weight:500}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item{padding-left:0.75rem; position:relative;}
 .tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub a{display:block; }
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub .detail-article{display:inline-block; padding-right:18px; position:relative; }
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub .detail-article:after{content:''; display:inline-block; width:13px; height:8px; background:url('/img/myt/arrow.svg') no-repeat 0 -13px; position:absolute; right:0; top:3px; transform:rotate(0);}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub .detail-article{display:inline-block; padding-right:1.125rem; position:relative; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub .detail-article:after{content:''; display:inline-block; width:0.8125rem; height:0.5rem; background:url('/img/myt/arrow.svg') no-repeat 0 -13px; position:absolute; right:0; top:3px; transform:rotate(0);}
 .tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub .sub-box{display:none}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub.open .detail-article:after{transform:rotate(180deg); }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub.open .detail-article:after{transform:rotate(180deg); top:2px }
 .tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item.have-sub.open .sub-box{display:block}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box{background:#fff; padding:16px; border-radius:6px; margin:8px 0 0 -12px }
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table{font-size:12px;}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table th{color:#000}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table .item{text-align:left;}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table .price{text-align:left;}
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table td{color:#82888f; line-height:22px; }
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .detail-price{display:flex; align-items:center; justify-content:space-between; font-size:13px; color:#82888f; line-height:22px; }
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .price{float:right; line-height:22px; font-weight:500 }
-.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item:before{content:''; display:inline-block; width:4px; height:4px; border-radius:100%; background:#82888f; position:absolute; top:8px; left:4px;}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box{background:#fff; padding:1rem; border-radius:0.375rem; margin:0.5rem 0 0 -0.75rem }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table{font-size:0.75rem;}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table th{color:#000; line-height:1.375rem; font-weight:500}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table .item{text-align:left; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table .price{text-align:right; float:none;}
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .sub-box .month-table td{color:#82888f; line-height:1.375rem; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .detail-price{display:flex; align-items:center; justify-content:space-between; font-size:0.8125rem; color:#82888f; line-height:1.375rem; }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .price{float:right; line-height:1.375rem; font-weight:500 }
+.tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item:before{content:''; display:inline-block; width:0.25rem; height:0.25rem; border-radius:100%; background:#82888f; position:absolute; top:0.5rem; left:0.25rem;}
 /* 약정 - 팝업 */
-.popup .popup-info .popup-header .popup-title.sub2{font-size:15px; font-weight:400; text-align:center; line-height:20px; letter-spacing:-0.4px; margin-top:20px }
+.popup .popup-info .popup-header .popup-title.sub2{font-size:0.9375rem; font-weight:400; text-align:center; line-height:1.25rem; letter-spacing:-0.025rem; margin-top:1.25rem }
 .popup .popup-info .popup-header .popup-title.sub2 strong{font-weight:600}
-.popup .popup-info .popup-contents .inner-contents .warning{font-size:11px; color:#666; line-height:16px; letter-spacing:-0.5px; padding-left:15px; position:relative; margin-top:8px;}
+.popup .popup-info .popup-contents .inner-contents .warning{font-size:0.6875rem; color:#666; line-height:1rem; letter-spacing:-0.0313rem; padding-left:0.9375rem; position:relative; margin-top:0.5rem;}
 .popup .popup-info .popup-contents .inner-contents .warning:before{content:''; display:inline-block; width:12px; height:12px; position:absolute; left:0; top:1px; background:url('/img/myt/caution.svg') no-repeat left top; text-align:left; }
