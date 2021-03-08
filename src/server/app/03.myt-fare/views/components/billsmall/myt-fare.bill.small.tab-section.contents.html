@@ -8,7 +8,7 @@ _%>
             const {autoChrgStCd} = data;
             const isUsed = autoChrgStCd === 'U'; // U:사용중, D: 신규
 
-            const autoPrepayUrl = isUsed ? '/myt-fare/bill/'+ title +'/auto' : '/myt-fare/bill/'+ title +'/auto/info',
+            const autoPrepayUrl = isUsed ? '/myt-fare/bill/'+ title +'/auto/info' : '/myt-fare/bill/'+ title +'/auto',
             prepayTitle = isUsed ? '변경/해지' : '신청';
     _%>
     <div class="section-group">
