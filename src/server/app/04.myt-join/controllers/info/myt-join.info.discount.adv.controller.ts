@@ -36,9 +36,9 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
     this._setDataInfo(req, svcInfo, pageInfo);
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2),
-      this.apiService.request(API_CMD.BFF_05_0238, {}),
+      // this.apiService.request(API_CMD.BFF_05_0238, {}),
       this._getFaqRequest()
-    ).subscribe(([discountResp, agrmtInfosResp, faqList]) => {
+    ).subscribe(([discountResp, faqList]) => {
       if ( discountResp.code !== API_CODE.CODE_00 ) {
         return this.error.render(res, {
           // title: 'title',
@@ -48,11 +48,12 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
           svcInfo: svcInfo
         });
       }
-      if ( agrmtInfosResp.code === API_CODE.CODE_00 ) {
-        if ( agrmtInfosResp.result.agrmtInfoList.length ) {
-          // TODO: result 결과 전달 시 parsing 해서 finishInfoList 로 추가 필요
-        }
-      }
+      // TODO: result 결과 전달 시 parsing 해서 finishInfoList 로 추가 필요
+      // TODO: BE 개발 완료 후 재확인 필요
+      // if ( agrmtInfosResp.code === API_CODE.CODE_00 ) {
+      //   if ( agrmtInfosResp.result.agrmtInfoList.length ) {
+      //   }
+      // }
 
       this.resDataInfo = discountResp.result;
       this._dataInit();
