@@ -211,16 +211,9 @@ Tw.ProductCompare.prototype = {
       var dataOption = [];
       for(var i in optionListArr) {
         dataOption.push({list:'', curData:[{}], compareData:[{}]});
-        if(optionListArr[i] == '01') {
-          dataOption[i].list = '데이터 옵션';
-        } else if(optionListArr[i] == '02') {
-          dataOption[i].list = '공유가능 데이터 한도';
-        } else if(optionListArr[i] == '03') {
-          dataOption[i].list = '테더링 한도';
-        } else if(optionListArr[i] == '04') {
-          dataOption[i].list = '데이터 리필하기';
-        }
         
+        dataOption[i].list = this._getTitleText(optionListArr[i]);
+       
         var checkSave = '';
         for(var j=0; j < curRedisData.prodBenfCd_03.length; j++) {
           if(optionListArr[i] == curRedisData.prodBenfCd_03[j].prodBenfTitCd) {
@@ -460,14 +453,14 @@ Tw.ProductCompare.prototype = {
           if(comparePlanData === '무제한') {
             return '두 요금제 모두<br>' + curPlanData + ' 데이터를 제공해요.';
           } else if(!isNaN(comparePlanCheck)) {
-            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 높은 데이터를 제공해요.';
+            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 더 많은 데이터를 제공해요.';
           } 
         } else {
           return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + ' 데이터를 제공해요.';
         }
       } else {
         if(comparePlanData === '무제한') {
-          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 높은 데이터를 제공해요.';
+          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 더 많은 데이터를 제공해요.';
         } else {
           if(curPlanUnit == 'MB') {
             curPlanCheck = curPlanCheck/1024;
@@ -476,9 +469,9 @@ Tw.ProductCompare.prototype = {
             comparePlanCheck = comparePlanCheck/1024;
           }
           if(curPlanCheck > comparePlanCheck) {
-            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 높은 데이터를 제공해요.';
+            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 더 많은 데이터를 제공해요.';
           } else if(curPlanCheck < comparePlanCheck) {
-            return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 높은 데이터를 제공해요.';
+            return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 더 많은 데이터를 제공해요.';
           } else if(curPlanCheck === comparePlanCheck) {
             return '두 요금제 모두<br>' + comparePlanData + comparePlanUnit + ' 데이터를 제공해요.';
           } else {
@@ -917,16 +910,16 @@ Tw.ProductCompare.prototype = {
         titleText = '데이터 옵션';
         break;
       case '02':
-        titleText = '데이터 공유';
+        titleText = '공유가능 데이터 한도';
         break;
       case '03':
-        titleText = '테더링';
+        titleText = '테더링 한도';
         break;
       case '04':
-        titleText = '리필하기';
+        titleText = '데이터 리필하기';
         break;
       case '05':
-        titleText = '멤버십';
+        titleText = 'T멤버십';
         break;
       case '06':
         titleText = '영상';
@@ -938,10 +931,10 @@ Tw.ProductCompare.prototype = {
         titleText = '음악';
         break;
       case '09':
-        titleText = '보험';
+        titleText = '휴대폰 분실파손보험';
         break;
       case '10':
-        titleText = '함께쓰기';
+        titleText = '데이터 함께쓰기';
         break;
       default:
         titleText = '';
