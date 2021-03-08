@@ -18,14 +18,15 @@ const SVC_ATTR = {
     const eid = svcCnt > 1 ? xtEid.multiple : xtEid.single;
 _%>
 <div class="tod-line-sel-wrap" tabindex="-1">
-  <a href="#" onclick="return false;" class="sel-show-btn" aria-controls="different-line" aria-expanded="false" title="다른 회선을 조회할수 있어요"><!-- aria-expanded는 하위 컨텐츠가 닫혀 있을 경우 false 열려 있을 경우 true -->
+  <a href="#" class="sel-show-btn fe-bt-line" aria-controls="different-line" aria-expanded="false" title="다른 회선을 조회할수 있어요"
+     data-svcmgmtnum="<%- svcMgmtNum %>" data-xt_eid="<%- eid %>" data-xt_csid="CS_ID" data-xt_action="BC" data-svc-cnt="<%-svcCnt%>"><!-- aria-expanded는 하위 컨텐츠가 닫혀 있을 경우 false 열려 있을 경우 true -->
     <div class="sel-show">
       <div class="line-info">
         <i class="type-ico"><img src="<%= CDN %>/img/myt/<%= svcInfo.ico %>" alt=""></i>
         <span class="type"><%= !lineNickNm ? SVC_ATTR[svcAttrCd] : lineNickNm %></span>
         <span class="type-info"><%= add %></span>
       </div>
-      <span class="fe-bt-line sel-line-btn" data-svcmgmtnum="<%- svcMgmtNum %>" data-xt_eid="<%- eid %>" data-xt_csid="CS_ID" data-xt_action="BC" data-svc-cnt="<%-svcCnt%>">
+      <span class="sel-line-btn">
         <i class="sel-ico"></i>
         <%_ const lineTxt = svcCnt === 1 ? '회선 관리' : '다른 회선 조회';_%>
         <span class="btn-txt fe-line-txt" data-line-txt="<%-lineTxt%>" data-close-txt="닫기"><%- lineTxt %></span>
@@ -53,12 +54,12 @@ _%>
           <div class="tab-linker tab-list-linker">
             <ul role="tablist" class="fe-tab-wrap2">
               <li class="linker-item" role="presentation" aria-selected="{{selectedMobile}}"> <!-- false/true -->
-                <a href="#" class="tab-btn fe-none-event" role="tab" aria-selected="{{selectedMobile}}" aria-controls="tab1-tab" id="tab1">
+                <a href="#" class="tab-btn fe-none-event" role="tab" aria-selected="{{selectedMobile}}" aria-controls="tab1-tab" id="tab1" data-length="{{mobileLen}}">
                   <span class="menu-txt">모바일</span><span class="num">{{mobileLen}}</span>
                 </a>
               </li>
               <li class="linker-item" role="presentation" aria-selected="{{selectedIptv}}">
-                <a href="#" class="tab-btn fe-none-event" role="tab" aria-selected="{{selectedIptv}}" aria-controls="tab2-tab" id="tab2">
+                <a href="#" class="tab-btn fe-none-event" role="tab" aria-selected="{{selectedIptv}}" aria-controls="tab2-tab" id="tab2" data-length="{{iptvLen}}">
                   <span class="menu-txt">인터넷/집전화/IPTV</span><span class="num">{{iptvLen}}</span>
                 </a>
               </li>
