@@ -124,7 +124,9 @@
                                     <li><span class="tod-blind">{{../data.curPlan.prodNm}}</span>
                                         {{#if curData}}
                                             {{#each curData}}
+                                            <div>
                                                 {{{expsBenfNm}}}<br>{{{benfDtlCtt}}}
+                                            </div>
                                             {{/each}}
                                         {{else}}
                                             -
@@ -133,7 +135,9 @@
                                     <li><span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
                                         {{#if compareData}}
                                             {{#each compareData}}
+                                                <div>
                                                 {{{expsBenfNm}}}<br>{{{benfDtlCtt}}}
+                                                </div>
                                             {{/each}}
                                         {{else}}
                                             -
@@ -191,124 +195,126 @@
                     </li>
                 </ul>
             </div>
-            <div class="rn-benefit">
-                <h3 class="b-title">추가혜택</h3>
-                {{#each data.addtionalBenf.sepList}}
-                    <div class="tb-comp-cont">
-                        <p class="title">
-                            <i class="p-icon16-img">
-                            <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
-                            </i>
-                             {{benfList.titleText}}
-                        </p>
-                        <ul class="tb-comp">
-                            <li>
-                                {{#if curData.prodId}}
-                                    <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
-                                    <p class="txt">{{curData.expsBenfNm}}<br>{{{curData.benfDtlCtt}}}</p>
-                                    {{#if curData.benfAmt}}
-                                        <span class="s-price">
-                                            <del>{{{curData.benfAmt}}}</del>
-                                            <i class="icon-arr">&rarr;</i> 
-                                            <em>{{{curData.addBenfCnt}}}</em>
-                                        </span>
-                                    {{/if}}
-                                {{else}}
-                                    <p class="txt">-</p>
-                                {{/if}}
-                            </li>
-                            <li>
-                                {{#if compareData.prodId}}
-                                    <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
-                                    <p class="txt">{{compareData.expsBenfNm}}<br>{{{compareData.benfDtlCtt}}}</p>
-                                    {{#if compareData.benfAmt}}
-                                        <span class="s-price">
-                                            <del>{{{compareData.benfAmt}}}</del>
-                                            <i class="icon-arr">&rarr;</i> 
-                                            <em>{{{compareData.addBenfCnt}}}</em>
-                                        </span>
-                                    {{/if}}
-                                {{else}}
-                                    <p class="txt">-</p>
-                                {{/if}}
-                            </li>
-                        </ul>
-                    </div>
-                {{/each}}
-                <div class="tb-comp-cont">
-                        <p class="title">
-                            {{#each data.addtionalBenf.chooseList}}
+            {{#if data.addtionalBenf}}
+                <div class="rn-benefit">
+                    <h3 class="b-title">추가혜택</h3>
+                    {{#each data.addtionalBenf.sepList}}
+                        <div class="tb-comp-cont">
+                            <p class="title">
                                 <i class="p-icon16-img">
-                                    <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
+                                <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
                                 </i>
-                                 {{benfList.titleText}}
-                            {{/each}}
-                        </p>
-                        {{#if data.addtionalBenf.chooseList}}
+                                {{benfList.titleText}}
+                            </p>
                             <ul class="tb-comp">
                                 <li>
-                                    <span class="tod-blind">{{data.curPlan.prodNm}}</span>
-                                    {{#if data.addtionalBenf.noCurChooseList}}
-                                        <p class="txt mt10">    
-                                            -
-                                        </p>
+                                    {{#if curData.prodId}}
+                                        <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
+                                        <p class="txt">{{curData.expsBenfNm}}<br>{{{curData.benfDtlCtt}}}</p>
+                                        {{#if curData.benfAmt}}
+                                            <span class="s-price">
+                                                <del>{{{curData.benfAmt}}}</del>
+                                                <i class="icon-arr">&rarr;</i> 
+                                                <em>{{{curData.addBenfCnt}}}</em>
+                                            </span>
+                                        {{/if}}
                                     {{else}}
-                                        <p class="txt mt10">
-                                          {{#each data.addtionalBenf.chooseList}}
-                                            {{#if curSepData.prodId}}
-                                                <p class="txt">{{{curSepData.expsBenfNm}}}</p>
-                                                <p class="s-txt nmp-fc-orange">{{{curSepData.benfDtlCtt}}}</p>
-                                            {{/if}}
-                                            {{/each}}
-                                            {{#if data.addtionalBenf.curSepDataFW}}
-                                                <p class="s-txt nmp-fc-orange">무료제공</p>
-                                            {{/if}}
-                                            
-                                                {{#each data.addtionalBenf.chooseList}}
-                                                    {{#if curData.prodId}}
-                                                        {{curData.benfProdNm}} <em class="curAddtion">또는</em>
-                                                    {{/if}}
-                                                {{/each}}
-                                            
-                                            {{#if data.addtionalBenf.noCurSelectList}}{{else}}
-                                                <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
-                                            {{/if}}
-                                        </p>
+                                        <p class="txt">-</p>
                                     {{/if}}
                                 </li>
                                 <li>
-                                    <span class="tod-blind">{{data.comparePlan.prodNm}}</span>
-                                    {{#if data.addtionalBenf.noCompareChooseList}}
-                                        <p class="txt mt10">    
-                                            -
-                                        </p>
+                                    {{#if compareData.prodId}}
+                                        <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
+                                        <p class="txt">{{compareData.expsBenfNm}}<br>{{{compareData.benfDtlCtt}}}</p>
+                                        {{#if compareData.benfAmt}}
+                                            <span class="s-price">
+                                                <del>{{{compareData.benfAmt}}}</del>
+                                                <i class="icon-arr">&rarr;</i> 
+                                                <em>{{{compareData.addBenfCnt}}}</em>
+                                            </span>
+                                        {{/if}}
                                     {{else}}
-                                        <p class="txt mt10">
-                                            {{#each data.addtionalBenf.chooseList}}
-                                                {{#if compareSepData.prodId}}
-                                                    <p class="txt">{{{compareSepData.expsBenfNm}}}</p>
-                                                    <p class="s-txt nmp-fc-orange">{{{compareSepData.benfDtlCtt}}}</p>
-                                                {{/if}}
-                                            {{/each}}
-                                                {{#if data.addtionalBenf.compareSepDataFW}}
-                                                    <p class="s-txt nmp-fc-orange">무료제공</p>
-                                                {{/if}}
-                                            
-                                                {{#each data.addtionalBenf.chooseList}}
-                                                    {{#if compareData.prodId}}
-                                                        {{compareData.benfProdNm}} <em class="compareAddtion">또는</em>
-                                                    {{/if}}
-                                                {{/each}}
-                                            {{#if data.addtionalBenf.noCompareSelectList}}{{else}}
-                                                <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
-                                            {{/if}}
-                                        </p>
+                                        <p class="txt">-</p>
                                     {{/if}}
                                 </li>
                             </ul>
-                        {{/if}}
+                        </div>
+                    {{/each}}
+                    <div class="tb-comp-cont">
+                            <p class="title">
+                                {{#each data.addtionalBenf.chooseList}}
+                                    <i class="p-icon16-img">
+                                        <img src="{{../data.cdn}}{{benfList.rgstImgUrl}}" alt="">
+                                    </i>
+                                    {{benfList.titleText}}
+                                {{/each}}
+                            </p>
+                            {{#if data.addtionalBenf.chooseList}}
+                                <ul class="tb-comp">
+                                    <li>
+                                        <span class="tod-blind">{{data.curPlan.prodNm}}</span>
+                                        {{#if data.addtionalBenf.noCurChooseList}}
+                                            <p class="txt mt10">    
+                                                -
+                                            </p>
+                                        {{else}}
+                                            <p class="txt mt10">
+                                            {{#each data.addtionalBenf.chooseList}}
+                                                {{#if curSepData.prodId}}
+                                                    <p class="txt">{{{curSepData.expsBenfNm}}}</p>
+                                                    <p class="s-txt nmp-fc-orange">{{{curSepData.benfDtlCtt}}}</p>
+                                                {{/if}}
+                                                {{/each}}
+                                                {{#if data.addtionalBenf.curSepDataFW}}
+                                                    <p class="s-txt nmp-fc-orange">무료제공</p>
+                                                {{/if}}
+                                                
+                                                    {{#each data.addtionalBenf.chooseList}}
+                                                        {{#if curData.prodId}}
+                                                            {{curData.benfProdNm}} <em class="curAddtion">또는</em>
+                                                        {{/if}}
+                                                    {{/each}}
+                                                
+                                                {{#if data.addtionalBenf.noCurSelectList}}{{else}}
+                                                    <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
+                                                {{/if}}
+                                            </p>
+                                        {{/if}}
+                                    </li>
+                                    <li>
+                                        <span class="tod-blind">{{data.comparePlan.prodNm}}</span>
+                                        {{#if data.addtionalBenf.noCompareChooseList}}
+                                            <p class="txt mt10">    
+                                                -
+                                            </p>
+                                        {{else}}
+                                            <p class="txt mt10">
+                                                {{#each data.addtionalBenf.chooseList}}
+                                                    {{#if compareSepData.prodId}}
+                                                        <p class="txt">{{{compareSepData.expsBenfNm}}}</p>
+                                                        <p class="s-txt nmp-fc-orange">{{{compareSepData.benfDtlCtt}}}</p>
+                                                    {{/if}}
+                                                {{/each}}
+                                                    {{#if data.addtionalBenf.compareSepDataFW}}
+                                                        <p class="s-txt nmp-fc-orange">무료제공</p>
+                                                    {{/if}}
+                                                
+                                                    {{#each data.addtionalBenf.chooseList}}
+                                                        {{#if compareData.prodId}}
+                                                            {{compareData.benfProdNm}} <em class="compareAddtion">또는</em>
+                                                        {{/if}}
+                                                    {{/each}}
+                                                {{#if data.addtionalBenf.noCompareSelectList}}{{else}}
+                                                    <p class="s-txt nmp-fc-orange">1개 무료 제공</p>
+                                                {{/if}}
+                                            </p>
+                                        {{/if}}
+                                    </li>
+                                </ul>
+                            {{/if}}
+                    </div>
                 </div>
-            </div>
+            {{/if}}
             <div class="tod-nmp-btn-wrap">
                 <button type="button" class="tod-nmp-btn46 arr changePlan" data-prod-id="{{data.comparePlan.prodId}}">{{data.comparePlan.prodNm}} 요금제 변경하기</button>
             </div>

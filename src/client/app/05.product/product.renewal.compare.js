@@ -87,7 +87,7 @@ Tw.ProductCompare.prototype = {
           value: '',
           unit: ''
         },
-        speedControll: '',
+        speedControl: '',
         basOfrVcallTmsCtt: {
           value: myPLMData.basOfrVcallTmsTxt,
           detail: ''
@@ -124,7 +124,7 @@ Tw.ProductCompare.prototype = {
       }
 
       if(redisData.prodBenfCd_02.length > 0) {
-        this.compareData.curPlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
+        this.compareData.curPlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
       }
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.curPlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
@@ -141,7 +141,7 @@ Tw.ProductCompare.prototype = {
           value: '',
           unit: ''
         },
-        speedControll: '',
+        speedControl: '',
         basOfrVcallTmsCtt: {
           value: $target.data('prod-call'),
           detail: ''
@@ -172,7 +172,7 @@ Tw.ProductCompare.prototype = {
       this.compareData.comparePlan.chartData = this._transChartData(chartData,this.compareData.comparePlan.basOfrDataQtyCtt.unit);
 
       if(redisData.prodBenfCd_02.length > 0) {
-        this.compareData.comparePlan.speedControll = redisData.prodBenfCd_02[0].expsBenfNm;
+        this.compareData.comparePlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
       }
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
@@ -582,7 +582,7 @@ Tw.ProductCompare.prototype = {
         var curFee = this.compareData.curPlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
         var compareFee = this.compareData.comparePlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
         var actSheetBenfData = this._getCurPlanBenefits();
-        if((Number(curFee) > Number(compareFee)) && actSheetBenfData.lostBenefits){
+        if((Number(curFee) > Number(compareFee)) && actSheetBenfData.lostBenefits) {
           $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, actSheetBenfData));
         } else {
           $('.changePlan').click(function() {
@@ -804,6 +804,7 @@ Tw.ProductCompare.prototype = {
         prodBenfCd_05 : [], // 안내문구 데이터 셋
       }
     }
+    console.log("compareRes",compareRes);
       this.curRedisData = JSON.parse(JSON.stringify(curParse));
       this.compareRedisData = JSON.parse(JSON.stringify(compareParse));
       this._setCompareDataCur(this._myPLMData, this.curRedisData);
@@ -814,6 +815,7 @@ Tw.ProductCompare.prototype = {
       console.log("데이터 추가혜택",this.compareData.dataBenf);
       var addtionalBenf = this._getAdditionalBenf(curParse, compareParse);
       this.compareData.addtionalBenf = this._parseAdditionBenf(addtionalBenf);
+
       console.log("추가혜택",this.compareData.addtionalBenf);
       console.log("최종데이터",this.compareData);
       this._openComparePopup(this.compareData, $target);
@@ -832,6 +834,10 @@ Tw.ProductCompare.prototype = {
     addtionalBenf.sepList = _.map(addtionalBenf.sepList, $.proxy(this._parseSepList, this));
 
     addtionalBenf.chooseList = _.map(addtionalBenf.chooseList, $.proxy(this._parseChooseList, this));
+
+    if((addtionalBenf.sepList.length == 0) && (addtionalBenf.chooseList.length == 0)) {
+      return null;
+    }
 
     return addtionalBenf;
   },

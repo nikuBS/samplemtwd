@@ -210,7 +210,7 @@ Tw.ProductRenewalList.prototype = {
       this._popupService.open({
         url: '/hbs/',
         hbs: 'renewal.product.initial.confirm',
-        data: '확인을 누르시면 <br> 선택하신 필터 항목이 초기화 됩니다.',
+        data: '확인을 누르시면 선택하신<br>필터 항목이 초기화 됩니다.',
         layer: true
         },
         $.proxy(this._onOpeninitialPopup, this, $(e.currentTarget)),
@@ -219,9 +219,17 @@ Tw.ProductRenewalList.prototype = {
         $(e.currentTarget));
     },
 
-    _onOpeninitialPopup: function() {
+    _onOpeninitialPopup: function($target) {
+      var _this = this;
       $('#initialCancel').click(_.debounce($.proxy(this._popupService.close, this), 500));
-      $('#initialConfirm').click($.proxy(this._initFilter, this));
+      if($target.data('code')) {
+        $('#initialConfirm').click($.proxy(function() {
+          var MobileFilterForQuick = (_this.curMobileFilter[0] == '') || (_this.curMobileFilter[0] == undefined) ? _this._networkInfo[0] : _this.curMobileFilter[0]; 
+          _this._historyService.replaceURL('/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + ',' + $target.data('code'));
+        }));
+      } else {
+        $('#initialConfirm').click($.proxy(_this._initFilter, this));
+      }
     },
 
     _onCloseinitailPopup: function() {
@@ -284,10 +292,24 @@ Tw.ProductRenewalList.prototype = {
       
       $('.prev-step').click(_.debounce($.proxy(_this._popupService.close, this), 500));
       
-      // $layer.find('.select-list li.checkbox').click(_.debounce($.proxy(this._handleClickFilter, this, $layer), 300));
-      // $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
-      $('.quickFilterBtn').click(function(e){_this._historyService.replaceURL(
-        '/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + ',' + e.currentTarget.dataset.code);});
+      var checkFilter = '';
+      $('body').on('click','.quickFilterBtn',$.proxy(function(e) { // 현재 골라진 필터가 있는지 확인
+        if($('.curFilter').length > 0) {
+          for(var i = 0; (i < $('.curFilter').length) && (checkFilter == ''); i++) {
+            if($('.curFilter').eq(i).css('display') != 'none') {
+              checkFilter = 'Y';
+            }
+          }
+          if(checkFilter == 'Y') {
+            _this._loadFilterConfirmPopup(e);
+          } else {
+            _this._historyService.replaceURL('/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + ',' + e.currentTarget.dataset.code);
+          }
+          
+        } else {
+          _this._historyService.replaceURL('/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + ',' + e.currentTarget.dataset.code);
+        }
+        }, this));
       $('.reset').click($.proxy(this._handleResetFilters, this));
       $('.confrim').click($.proxy(this._confirmFilter, this));
       // $layer.find('.link').click(_.debounce($.proxy(this._openSelectTagPopup, this, $layer), 300));
@@ -305,7 +327,7 @@ Tw.ProductRenewalList.prototype = {
         for(var a=0 ; a < this.curFilter.length ; a++) {
           
             $('[data-filter="' + this.curFilter[a] + '"]').parent("li").addClass('on');
-            $('#selectFilter').append('<li data-filtersummary="' + this.curFilter[a] +
+            $('#selectFilter').append('<li class="curFilter" data-filtersummary="' + this.curFilter[a] +
                 '"><span class="f-keyword">'+ $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') +
                 '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
             if($('[data-filter="' + this.curFilter[a] + '"]').data('filtername') == undefined) {
@@ -332,7 +354,7 @@ Tw.ProductRenewalList.prototype = {
             $('[data-filtersummary="' + $(this).data('filter') + '"]').remove();
           } else {
             $(this).parent('li').addClass('on');
-            $('#selectFilter').append('<li data-filtersummary="' + $(this).data('filter') +
+            $('#selectFilter').append('<li class="curFilter" data-filtersummary="' + $(this).data('filter') +
               '"><span class="f-keyword">'+ $(this).data('filtername') +
               '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
             setTimeout(function() {
