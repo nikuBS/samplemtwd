@@ -184,48 +184,57 @@ Tw.ProductCompare.prototype = {
       if(!curRedisData.prodBenfCd_03 && !compareRedisData.prodBenfCd_03) {
         return null;
       }
+      
       var dataArr = [];
       for(var i in curRedisData.prodBenfCd_03) {
-        dataArr.push(curRedisData.prodBenfCd_03[i].expsBenfNm);
+        dataArr.push(curRedisData.prodBenfCd_03[i].prodBenfTitCd);
       }
       var optionListArr = dataArr;
       for(var i in compareRedisData.prodBenfCd_03) {
         if(dataArr == []) {
-          optionListArr.push(compareRedisData.prodBenfCd_03[i].expsBenfNm);
+          optionListArr.push(compareRedisData.prodBenfCd_03[i].prodBenfTitCd);
         } else {
           var dataCheck = '';
           for(var j = 0; (j<dataArr.length) && (dataCheck == ''); j++ ) {
-            if(compareRedisData.prodBenfCd_03[i].expsBenfNm == dataArr[j]) {
+            if(compareRedisData.prodBenfCd_03[i].prodBenfTitCd == dataArr[j]) {
               dataCheck = 'N';
             }
             if((dataCheck == '') && (j == dataArr.length - 1)) {
-              optionListArr.push(compareRedisData.prodBenfCd_03[i].expsBenfNm);
+              optionListArr.push(compareRedisData.prodBenfCd_03[i].prodBenfTitCd);
             }
           }
         }
       }
+      var set = new Set(optionListArr);
+      optionListArr = Array.from(set);
+
       var dataOption = [];
       for(var i in optionListArr) {
-        dataOption.push({list:'', curData:null, compareData:null});
-        dataOption[i].list = optionListArr[i];
+        dataOption.push({list:'', curData:[{}], compareData:[{}]});
+        if(optionListArr[i] == '01') {
+          dataOption[i].list = '데이터 옵션';
+        } else if(optionListArr[i] == '02') {
+          dataOption[i].list = '공유가능 데이터 한도';
+        } else if(optionListArr[i] == '03') {
+          dataOption[i].list = '테더링 한도';
+        } else if(optionListArr[i] == '04') {
+          dataOption[i].list = '데이터 리필하기';
+        }
+        
         var checkSave = '';
-        for(var j = 0; (j < curRedisData.prodBenfCd_03.length) && (checkSave == ''); j++) {
-          if(optionListArr[i] == curRedisData.prodBenfCd_03[j].expsBenfNm) {
-            dataOption[i].curData = curRedisData.prodBenfCd_03[j].benfDtlCtt;
-            checkSave = 'Y';
-          } else {
-            dataOption[i].curData = '';
-          }
+        for(var j=0; j < curRedisData.prodBenfCd_03.length; j++) {
+          if(optionListArr[i] == curRedisData.prodBenfCd_03[j].prodBenfTitCd) {
+            dataOption[i].curData.push(curRedisData.prodBenfCd_03[j]);
+          } 
         }
         checkSave = '';
-        for(var j=0; (j< compareRedisData.prodBenfCd_03.length) && (checkSave == ''); j++) {
-          if(optionListArr[i] == compareRedisData.prodBenfCd_03[j].expsBenfNm) {
-            dataOption[i].compareData = compareRedisData.prodBenfCd_03[j].benfDtlCtt;
-            checkSave = 'Y';
-          } else {
-            dataOption[i].compareData = '';
+        for(var j=0; j< compareRedisData.prodBenfCd_03.length; j++) {
+          if(optionListArr[i] == compareRedisData.prodBenfCd_03[j].prodBenfTitCd) {
+            dataOption[i].compareData.push(compareRedisData.prodBenfCd_03[j]);
           }
         }
+        dataOption[i].curData.shift();
+        dataOption[i].compareData.shift();
       }
       return dataOption;
     },
