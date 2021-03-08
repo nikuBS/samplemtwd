@@ -635,7 +635,7 @@ Tw.ProductRenewalSubmain.prototype = {
           $('.pro-recmd-article').addClass('none');
 
           var today = this._dateHelper.getFullKoreanDate(new Date())
-          var toastMsg = today + '\n개인정보 수집/이용에 동의하셨습니다.';
+          var toastMsg = today + '\n개인정보 수집·이용에 동의하셨습니다.';
           this._toast(toastMsg);
 
           this._popupService.close();

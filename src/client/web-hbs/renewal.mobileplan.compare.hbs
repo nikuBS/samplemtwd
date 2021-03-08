@@ -123,14 +123,18 @@
                                 <ul>
                                     <li><span class="tod-blind">{{../data.curPlan.prodNm}}</span>
                                         {{#if curData}}
-                                            {{{curData}}}
+                                            {{#each curData}}
+                                                {{{expsBenfNm}}}<br>{{{benfDtlCtt}}}
+                                            {{/each}}
                                         {{else}}
                                             -
                                         {{/if}}
                                     </li>
                                     <li><span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
                                         {{#if compareData}}
-                                            {{{compareData}}}
+                                            {{#each compareData}}
+                                                {{{expsBenfNm}}}<br>{{{benfDtlCtt}}}
+                                            {{/each}}
                                         {{else}}
                                             -
                                         {{/if}}
@@ -188,7 +192,7 @@
                 </ul>
             </div>
             <div class="rn-benefit">
-                <h3 class="title">추가혜택</h3>
+                <h3 class="b-title">추가혜택</h3>
                 {{#each data.addtionalBenf.sepList}}
                     <div class="tb-comp-cont">
                         <p class="title">

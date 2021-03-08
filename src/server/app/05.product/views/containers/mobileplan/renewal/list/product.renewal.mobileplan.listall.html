@@ -37,7 +37,15 @@
                                         <% let thisPlan = thisSeries.prodList[j]; %>
                                         <li>
                                             <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-                                            <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <%= thisPlan.tabCode %>">
+                                            <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <% if(params.idxCtgCd == 'F01121') { %>
+                                                    prod-lte
+                                                <% } else if(params.idxCtgCd == 'F01122') { %>
+                                                    prod-band
+                                                <% } else if(params.idxCtgCd == 'F01713') { %>
+                                                    prod-5g
+                                                <% } else { %>
+                                                    prod-2nd
+                                                <% } %>">
                                                 <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
                                             </div>
                                             <!-- //요금제 모듈 : 혜택강조형 -->
