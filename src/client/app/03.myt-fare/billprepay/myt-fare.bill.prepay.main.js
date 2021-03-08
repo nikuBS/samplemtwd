@@ -72,7 +72,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @private
    */
   _checkAgree: function (callback) {
-    if (this.$container.data('code') !== 'BIL0030') {
+    var code = this.$container.data('code');
+    if (code !== 'BIL0030' && code !== 'BIL0031') {
       return callback();
     }
 
