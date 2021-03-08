@@ -546,6 +546,11 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
     this.$container.on('click', '.fe-bt-internal', $.proxy(this._onClickInternal, this));
     this.$container.on('click', '.fe-tab-wrap2 .linker-item', $.proxy(this._onTabClicked, this));
     this.$container.on('click', '.fe-none-event', function (event) {
+      var $target = $(event.currentTarget);
+      var length = $target.data('length');
+      if (parseInt(length, 10) === 0 && event.currentTarget.id === 'tab1') {
+        event.stopPropagation();
+      }
       event.preventDefault();
     });
     this.$lineDim.on('click', $.proxy(function(event) {
@@ -615,6 +620,9 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
   },
 
   _openListPopup: function (lineData, totNonCnt, $target) {
+    this.$selWrap.toggleClass('show');
+    this.$lineTxt.text(this.$lineTxt.data('close-txt'));
+    this.$lineDim.show();
     var source = $('#common-select-list-template').html();
     var template = Handlebars.compile(source);
     var selectedMobileItem = lineData[0].list.find(function(item){
@@ -652,11 +660,9 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
       this._historyService.goLoad('/common/member/line');
       return;
     }
-    this.$selWrap.toggleClass('show');
-    this.$lineTxt.text(this.$lineTxt.data('close-txt'));
-    this.$lineDim.show();
     // 회선 영역이 열려있으면 닫기
     if (this.$atherLineArea.hasClass('open')) {
+      this.$selWrap.toggleClass('show');
       this.$lineTxt.text(this.$lineTxt.data('line-txt'));
       this.$atherLineArea.hide().removeClass('open');
       this.$lineDim.hide();
