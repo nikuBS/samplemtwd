@@ -25,10 +25,10 @@ Tw.MyTFareBillPrepaySdkSKPay.prototype = {
 
       if ( this._data.title === 'small' ) {
         _linChnlClCd = 'MSS'; //소액선결제
-        _itemsName = '소액결제'; //소액결제
+        _itemsName = '휴대폰 결제'; //소액결제
       } else if ( this._data.title === 'contents' ) {
         _linChnlClCd = 'MSC'; //컨텐츠이용료
-        _itemsName = '콘텐츠이용료'; //콘텐츠이용료
+        _itemsName = '콘텐츠 이용료'; //콘텐츠이용료
       }
       /* jshint ignore:start */
       this._encryptedUserAgent = SKpaySDK.generateUserAgent();
