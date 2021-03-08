@@ -42,7 +42,7 @@
                         <%_ if ( !svcInfo ) { _%>
                             <%# 로그인 정보가 없을 때 %>
                             <div class="pro-article login-box">
-                                <p class="login-msg">로그인하시고,<br>놓치고 있는 혜택도 확인하세요.</p>
+                                <p class="login-msg">로그인하시면 고객님께 꼭 맞는<br>요금제를 찾아드려요!</p>
                                 <div class="login-btn-area">
                                     <a href="#" class="pro-btn login-btn" data-xt_eid="CMMA_A4_B84-3" data-xt_csid="NO" data-xt_action="BC">로그인하기</a>
                                 </div>
@@ -53,7 +53,7 @@
 							<%_ if ( data.isWireless && data.payment ) { _%>
                                 <%# 무선 사용자이면서 상품 정보가 있으면 출력 %>
                                 <div class="pro-article now-pay-box">
-                                    <div class="article-tit"><a href="/myt-join/myplan" data-xt_eid="CMMA_A4_B84-2" data-xt_csid="NO" data-xt_action="BC">현재 사용중인 요금제</a></div>
+                                    <div class="article-tit"><a href="/myt-join/myplan" data-xt_eid="CMMA_A4_B84-2" data-xt_csid="NO" data-xt_action="BC">현재 이용 중인 요금제</a></div>
                                     <div class="article-cont inset-shadow-box">
                                         <dl class="item-define">
                                             <dt><%= data.payment.product.basProductNm %></dt>
@@ -61,7 +61,7 @@
 										</dl>
 										
 										<%_ if ( data.payment.product.isProductShow ) { _%>
-											<%# 데이터/문자/전화 값이 1개이상 있다면 출력 (없다면 현재 사용중인 요금제 중 요금정보가 출력되지않음.) %>
+											<%# 데이터/문자/전화 값이 1개이상 있다면 출력 (없다면 현재  요금제 중 요금정보가 출력되지않음.) %>
 
 											<ul class="detail-info"> 
 												<li class="item">
@@ -108,11 +108,11 @@
 								<div class="pro-article pro-recmd-article">
 									<!-- <div class="article-tit">추천 요금제</div> -->
 									<div class="article-cont agree-info-box">
-										<p class="agr-txt">고객님의 상품 정보 분석을 위해 <br> 개인정보 이용 동의 해 주세요.</p>
+										<p class="agr-txt">고객님께 맞는 상품을 추천받으시려면<br>개인정보 수집·이용에 동의해 주세요</p>
 										<div class="agr-area">
 											<div class="agr-left">
-												<p class="a-txt"><label>개인정보 수집이용 동의 (선택)</label></p>
-												<a class="bt-detail" data-xt_eid="CMMA_A4_B84-55" data-xt_csid="NO" data-xt_action="BC">상세보기</a>
+												<p class="a-txt"><label>개인정보 수집·이용 동의(선택)</label></p>
+												<a class="bt-detail" data-xt_eid="CMMA_A4_B84-55" data-xt_csid="NO" data-xt_action="BC">자세히 보기</a>
 											</div>
 											<div class="agr-left">
 												<ul class="on-off-list new">
@@ -180,7 +180,7 @@
                     <section class="product-sec bg none" data-sort="QUICK_FILTER">
 						<p class="sec-tit"><strong>꼭 필요한</strong><br>혜택이 있으신가요?</p>
                         <div class="pro-article benefit-box">
-                            <div class="article-tit">찾으시는 혜택을 선택해 주세요</div>
+                            <div class="article-tit">원하는 혜택을 선택해 주세요</div>
                             <div class="article-cont minus-space">
 								<div class="slider-wrap benefit-slider">
 									<div class="slider-container">
@@ -189,7 +189,7 @@
 								</div>
 								<div class="more-link-area">
 									<a href="/product/renewal/mobileplan/list" class="more" data-xt_eid="CMMA_A4_B84-25" data-xt_csid="NO" data-xt_action="BC">
-										<span class="more-txt">전체요금제 보러가기</span>
+										<span class="more-txt">전체 요금제 보기</span>
 									</a>
 								</div>
 							</div>
@@ -510,7 +510,7 @@
 								</div>
 								<div class="more-link-area">
                                     <a href="/product/renewal/mobileplan/list?theme=all" class="more" data-xt_eid="CMMA_A4_B84-26" data-xt_csid="NO" data-xt_action="BC">
-										<span class="more-txt">테마 전체보기</span>
+										<span class="more-txt">전체 테마 보기</span>
 									</a>
 								</div>
 							</div>
@@ -522,7 +522,7 @@
 						<section class="pro-article various-banner-box none" data-sort="PROMOTION_THEME" style="margin-top: 0px !important;"></section>
 						
 						<div class="pro-article variety-product-box">
-							<div class="article-tit">SKT의 다양한 상품을 만나보세요</div>
+							<div class="article-tit">SK텔레콤의 다양한 서비스를 만나보세요</div>
 							<div class="article-cont">
 								<div class="tod-nmp-other-list">
 									<ul>
