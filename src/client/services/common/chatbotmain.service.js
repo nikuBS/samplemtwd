@@ -34,28 +34,26 @@ Tw.ChatbotMainService = function() {
 
     // 발화어 리스트
     this._greetingKeywords = [
-        // { keyword: 'initial', text:'챗봇으로 빠른 상담하기', type: 'A', message : '메뉴 찾기 어려우세요? 제가 도와드릴 수 있어요!'},
-        // { keyword: 'initial', text:'챗봇으로 빠른 상담하기', type: 'B', message : '챗봇에게 궁금한 점을 물어보세요.'},  
-        { keyword: 'pay_bill', message:'이번달 요금 얼마 나왔어?', type: 'A', linkUrl : ''},
-        { keyword: 'pay_bill', message:'이번달 요금이 궁금하세요?<br>이제 챗봇에게 물어보세요!', type: 'B', linkUrl : ''},
-        { keyword: 'hotbill', message:'실시간 이용요금 알려줘', type: 'A', linkUrl : ''},
-        { keyword: 'hotbill', message:'실시간 이용 요금이 궁금하세요?<br>이제 챗봇에게 물어보세요!', type: 'B', linkUrl : ''},
-        { keyword: 'hotdata', message:'실시간 잔여량 알려줘', type: 'A', linkUrl : ''},
-        { keyword: 'hotdata', message:'현재 데이터 잔여량이 궁금하신가요?<br>챗봇에서 확인해보세요!', type: 'B', linkUrl : ''},
-        { keyword: 'refill_coupon', message:'리필 쿠폰 선물할래', type: 'A', linkUrl : ''},
-        { keyword: 'refill_coupon', message:'리필 쿠폰 refillCouponCnt장이 남아있어요.<br>지금 챗봇에서 사용해 보시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'pay_mthd', message:'요금납부 변경 문의', type: 'A', linkUrl : ''},
-        { keyword: 'pay_mthd', message:'지금 은행 자동이체로 납부 방법 변경하고 더 많은 소득 공제 혜택을 누리세요!', type: 'B', linkUrl : ''},
-        { keyword: 'unpaid_amt', message:'미납요금 얼마야?', type: 'A', linkUrl : ''},
-        { keyword: 'unpaid_amt', message:'미납요금이 총 unpaidAmt원 있습니다!<br>바로 납부 하시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'micro_pay', message:'소액결제 금액 얼마야?', type: 'A', linkUrl : ''},
-        { keyword: 'micro_pay', message:'이번 달 소액결제 이용 금액이 있어요.<br>지금 챗봇에서 확인해보시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'contents_pay', message:'콘텐츠결제 금액 얼마야?', type: 'A', linkUrl : ''},
-        { keyword: 'contents_pay', message:'이번 달 콘텐츠 이용 금액이 있어요.<br>지금 챗봇에서 확인해보시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'data_gift', message:'데이터 선물할래', type: 'A', linkUrl : ''},
-        { keyword: 'data_gift', message:'데이터 선물 예정이신가요?<br>챗봇이 도와드릴게요!', type: 'B', linkUrl : ''},
-        { keyword: 'cancel_pause', message:'일시정지 취소하고 싶어', type: 'A', linkUrl : ''},
-        { keyword: 'cancel_pause', message:'일시정지 pauseDayCnt일째 입니다.<br>지금 바로 일시정지 해제를 도와드릴까요?', type: 'B', linkUrl : ''},
+        { keyword: 'pay_bill', message:'이번달 요금 얼마 나왔어?', type: 'A', linkUrl : '/myt-fare/submain'},
+        { keyword: 'pay_bill', message:'이번 달 요금이 궁금하세요?<br/>지금 상세 내역을 확인해보세요.', type: 'B', linkUrl : '/myt-fare/submain'},
+        { keyword: 'hotbill', message:'실시간 이용요금 알려줘', type: 'A', linkUrl : '/myt-fare/bill/hotbill'},
+        { keyword: 'hotbill', message:'실시간 이용 요금이 궁금하세요?<br/>지금 상세 내역을 확인해보세요.', type: 'B', linkUrl : '/myt-fare/bill/hotbill'},
+        { keyword: 'hotdata', message:'실시간 잔여량 알려줘', type: 'A', linkUrl : '/myt-data/hotdata'},
+        { keyword: 'hotdata', message:'현재 데이터 잔여량이 궁금하신가요?<br/>지금 상세 내역을 확인해보세요.', type: 'B', linkUrl : '/myt-data/hotdata'},
+        { keyword: 'refill_coupon', message:'리필 쿠폰 선물할래', type: 'A', linkUrl : '/myt-data/recharge/coupon'},
+        { keyword: 'refill_coupon', message:'리필쿠폰 refillCouponCnt장이 남아있어요.<br/>지금 사용해 보시겠어요?', type: 'B', linkUrl : '/myt-data/recharge/coupon'},
+        { keyword: 'pay_mthd', message:'요금납부 변경 문의', type: 'A', linkUrl : '/myt-fare/bill/option'},
+        { keyword: 'pay_mthd', message:'지금 은행 자동이체로 납부 방법 변경하고 더 많은 소득 공제 혜택을 누리세요!', type: 'B', linkUrl : '/myt-fare/bill/option'},
+        { keyword: 'unpaid_amt', message:'미납요금 얼마야?', type: 'A', linkUrl : '/myt-fare/unbill'},
+        { keyword: 'unpaid_amt', message:'미납요금이 총 unpaidAmt원 있습니다!<br>바로 납부 하시겠어요?', type: 'B', linkUrl : '/myt-fare/unbill'},
+        { keyword: 'micro_pay', message:'휴대폰 결제금액 얼마야?', type: 'A', linkUrl : '/myt-fare/bill/small'},
+        { keyword: 'micro_pay', message:'이번 달 휴대폰 결제 금액이 있어요.<br/>지금 상세내역을 확인해보시겠어요?', type: 'B', linkUrl : '/myt-fare/bill/small'},
+        { keyword: 'contents_pay', message:'콘텐츠 이용요금 얼마야?', type: 'A', linkUrl : '/myt-fare/bill/contents'},
+        { keyword: 'contents_pay', message:'이번 달 콘텐츠 이용료가 있어요.<br/>지금 상세내역을 확인해보시겠어요?', type: 'B', linkUrl : '/myt-fare/bill/contents'},
+        { keyword: 'data_gift', message:'데이터 선물할래', type: 'A', linkUrl : '/myt-data/giftdata'},
+        { keyword: 'data_gift', message:'데이터 선물 예정이신가요?<br/>지금 바로 선물해보세요.', type: 'B', linkUrl : '/myt-data/giftdata'},
+        { keyword: 'cancel_pause', message:'일시정지 취소하고 싶어', type: 'A', linkUrl : '/myt-join/submain/suspend'},
+        { keyword: 'cancel_pause', message:'일시정지 pauseDayCnt일째 입니다.<br>지금 바로 일시정지 해제를 도와드릴까요?', type: 'B', linkUrl : '/myt-join/submain/suspend'},
         { keyword: 'vcoloring', message:'V 컬러링이 뭐야?', type: 'A', unregYn : 'Y', linkUrl : 'https://www.vcoloring-event.com'},
         { keyword: 'vcoloring', message:'데이터의 vodRatio%를 동영상에 사용하셨네요!<br>V 컬러링으로 나의 원픽 동영상을 보여주세요!', type: 'B', unregYn : 'Y', linkUrl : 'https://www.vcoloring-event.com'},
         { keyword: 'vcoloring', message:'V 컬러링 설정하러 가기', type: 'A', unregYn : 'N', linkUrl : 'https://tworld.vcoloring.com'},
@@ -518,7 +516,6 @@ Tw.ChatbotMainService.prototype = {
 
                                         // MLS API 호출 성공시
                                         Tw.Logger.info('[chatbotmain.service] [_init] MLS API 조회 후 resp4 : ', resp4.code);
-                                        console.log('[chatbotmain.service] [_init] MLS API 조회 후 resp4 : ', resp4.code);
                                         if (resp4.code===Tw.API_CODE.CODE_00) {    
                                             Tw.Logger.info('[chatbotmain.service] [_init] MLS API 호출 성공', '');
                                             console.log('[chatbotmain.service] [_init] MLS API 호출 성공', '');
@@ -603,11 +600,12 @@ Tw.ChatbotMainService.prototype = {
                                                 for (var j = 0; j < this._greetingKeywords.length; j++){
                                                     var keyword = this._greetingKeywords[j].keyword;
                                                     var message = this._greetingKeywords[j].message;
-                                                    var type = this._greetingKeywords[j].type
+                                                    var type = this._greetingKeywords[j].type;
+                                                    var linkUrl = this._greetingKeywords[j].linkUrl;
                                                     if ((this._mlsGreetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
                                                         Tw.Logger.info('[chatbotmain.service] [_init] message : ', message);
                                                         Tw.Logger.info('[chatbotmain.service] [_init] type : ', type);
-                                                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type};
+                                                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl : linkUrl};
                                                         this._greetingKeywordInfos.push(greetingKeywordInfo);
                                                     }
                                                 }
@@ -906,6 +904,14 @@ Tw.ChatbotMainService.prototype = {
         $('.bpcpItem').on('click', function(e){
             Tw.Logger.info('[chatbotmain.service] [_bindEvent] $(.bpcpItem).on(click)', '');
 
+            var url = $(e.currentTarget).data('url');
+            Tw.Logger.info('[chatbot.service] [_bindEvent] url', url);
+
+            if(url && url.length > 0) {
+                _this._historyService.goLoad(url);
+            }
+
+            /*
             var chatbotGubun = ''
             if ($(e.currentTarget).hasClass('link-chatbot-go')) {
                 chatbotGubun = $(e.currentTarget).attr('class').replace('link-chatbot-go bpcpItem', '').trim();
@@ -986,6 +992,7 @@ Tw.ChatbotMainService.prototype = {
                 );
             }
             _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
+            */
         });
         $('.fe-home-charge_open').on('click', function(e){
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item fe-home-charge_open', '').trim();
@@ -1124,12 +1131,13 @@ Tw.ChatbotMainService.prototype = {
                 for (var j = 0; j < this._greetingKeywords.length; j++){
                     var keyword = this._greetingKeywords[j].keyword;
                     var message = this._greetingKeywords[j].message;
-                    var type = this._greetingKeywords[j].type
+                    var type = this._greetingKeywords[j].type;
+                    var linkUrl = this._greetingKeywords[j].linkUrl;
                     //message.replace(/\n/g, '<br/>');
                     if ((greetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
                         Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] message : ', message);
                         Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] type : ', type);
-                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type};
+                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl : linkUrl};
                         this._greetingKeywordInfos.push(greetingKeywordInfo);
                         // textType이 'B'인 경우 두줄 디자인으로
                         if (type === 'B'){

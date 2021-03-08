@@ -603,8 +603,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-62', icon: 'sub-ben-ico16.svg'
         },
         {
-          name: '소액결제', url: '/myt-fare/bill/small',
-          // name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
+          name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
           xt_eid: 'CMMA_A3_B13-64', icon: 'sub-ben-ico06.svg'
         }
       ];

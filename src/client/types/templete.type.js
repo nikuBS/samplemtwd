@@ -473,22 +473,6 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  /*FARE_PAYMENT_MICRO_HISTORY_LIST: [
-    {
-      'list': [
-        {
-          'label-attr': 'data-link="/myt-fare/bill/small/history"',
-          'radio-attr': 'data-link="/myt-fare/bill/small/history"',
-          txt: '소액결제 이용내역'
-        },
-        {
-          'label-attr': 'data-link="/myt-fare/bill/small/block"',
-          'radio-attr': 'data-link="/myt-fare/bill/small/block"',
-          txt: '자동결제 차단내역'
-        }
-      ]
-    }
-  ],*/
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
@@ -563,23 +547,6 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  /*OP002-8414 소액결제/콘텐츠 이용료 한도금액 리스트가 통합되어 현재건 삭제함*/
-  /*FARE_PAYMENT_CONTENTS_LIMIT: [
-    {
-      'list': [
-        { 'label-attr': 'id="1000000"', 'radio-attr': 'name="r2" id="1000000"', txt: '100만 원' },
-        { 'label-attr': 'id="800000"', 'radio-attr': 'name="r2" id="800000"', txt: '80만 원' },
-        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만 원' },
-        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만 원' },
-        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만 원' },
-        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만 원' },
-        { 'label-attr': 'id="100000"', 'radio-attr': 'name="r2" id="100000"', txt: '10만 원' },
-        { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만 원' },
-        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만 원' },
-        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만 원' }
-      ]
-    }
-  ],*/
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
@@ -592,10 +559,10 @@ Tw.POPUP_TPL = {
           'radio-attr': 'id="3" name="myTHistory" value="3"',
           onlyType: 'M'
         },
-        { 'label-attr': 'for="4"', txt: '소액결제 선결제', 'radio-attr': 'id="4" name="myTHistory" value="4"', onlyType: 'M' },
+        { 'label-attr': 'for="4"', txt: '휴대폰 결제 선결제', 'radio-attr': 'id="4" name="myTHistory" value="4"', onlyType: 'M' },
         {
           'label-attr': 'for="5"',
-          txt: '콘텐츠 이용요금 선결제',
+          txt: '콘텐츠 이용료 선결제',
           'radio-attr': 'id="5" name="myTHistory" value="5"',
           onlyType: 'M'
         },
@@ -991,9 +958,11 @@ Tw.MYT_FARE_BILL_GUIDE_TPL = {
   DETAIL_BTN: [
     {
       SCH_ID: '콘텐츠이용료',
-      ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'
+      ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠 이용료</button>'
     },
-    { SCH_ID: '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>' }
+    { SCH_ID: '휴대폰결제',
+      ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">휴대폰 결제</button>'
+    }
   ],
   THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>',
   ASTERISK_TPL: { SCH_ID: '*', ELEMENT: '<i class="icon-fnote"><span class="blind">각주 참고</span></i>' },

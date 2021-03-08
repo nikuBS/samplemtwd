@@ -3,11 +3,13 @@
             <ul>
                 <% for(let i in tabList.subFilters) { %>
                     <% let curFilter = tabList.subFilters[i]; %>
-                    <li
-                    <% if(series.seriesCode == curFilter.prodFltId) { %>
-                        class="on"
-                    <%}%>>
-                        <a href="/product/renewal/mobileplan/list?filters=<%= curFilter.prodFltId %><%= filterList.filterList %>" class="tapSelectButton"><%= curFilter.prodFltNm %></a></li>
+                    <% if(curFilter.prodFltId != 'F01123') { %>
+                        <li
+                        <% if(series.seriesCode == curFilter.prodFltId) { %>
+                            class="on"
+                        <%}%>>
+                            <a href="/product/renewal/mobileplan/list?filters=<%= curFilter.prodFltId %><%= filterList.filterList %>" class="tapSelectButton"><%= curFilter.prodFltNm %></a></li>
+                    <% } %>
                 <% } %>
                 <li<%= series.theme %>><a id="themeSelectBtn" class="tapSelectButton" data-xt_eid="CMMA_A4_B84_C1215-6" data-xt_csid="NO" data-xt_action="BC">테마</a></li>
             </ul>
