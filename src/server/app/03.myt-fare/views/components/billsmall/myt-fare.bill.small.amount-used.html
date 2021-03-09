@@ -19,13 +19,13 @@
                                         <span class="widget">
                                             <span class="widget-box switch">
                                              <%_
-                                                const {isUsed} = usedYn;
+                                                const {isUsed} = usedInfo;
                                              _%>
                                                 <span class="btn-switch type1 <%- isUsed ? 'on':''%>">  <!-- toggle class on  -->
                                                     <span class="switch-style" role="checkbox" aria-checked="<%-isUsed%>"
                                                           aria-disabled="false"><!-- aria-checked="false/true" aria-disabled="false/true" -->
                                                         <span class="off-tx">차단 중</span>
-                                                        <input type="checkbox" id="<%= usedYn.rtnUseYn %>" class="fe-set-use" title="T World 광고성 정보 수신동의" <%- isUsed ? 'checked':''%>>
+                                                        <input type="checkbox" id="<%= usedInfo.rtnUseYn %>" class="fe-set-use" data-make-eid="used<%-isUsed ? 'On':'Off'%>" title="T World 광고성 정보 수신동의" <%- isUsed ? 'checked':''%>>
                                                         <!-- disabled -->
                                                         <span class="on-tx">이용 중</span>
                                                     </span>
@@ -54,28 +54,30 @@
             <div class="hash-wrap">
                 <ul class="hash-list">
                     <li class="hash-item"><!-- disabled -->
-                        <a href="#" class="hash small fe-change-limit" data-unusual-state="<%-unusualYn%>">#한도 변경</a>
+                        <a href="#" class="hash small fe-change-limit" data-unusual-state="<%-unusualYn%>" data-make-eid="changeLimit">#한도 변경</a>
                     </li>
                     <li class="hash-item">
                         <a href="#" class="hash small fe-auto-prepay" data-unusual-state="<%-unusualYn%>"
-                           data-state="{{autoChrgStCd}}">#자동 선결제 {{stateTxt}}</a>
+                           data-state="{{autoChrgStCd}}" data-make-eid="autoPrepay-{{stateCd}}">#자동 선결제 {{stateTxt}}</a>
                     </li>
                     {{#ifCond title '===' 'small'}}
-                        <%_ if (usedYn.isPassword && passwordInfo.result) { _%>
+                        <%_ if (usedInfo.isPassword && passwordInfo.result) {
+                            const {cpinStCd, bDay} = passwordInfo.result;
+                        _%>
                         <li class="hash-item">
                             <a href="#" class="hash small fe-set-password"
-                               data-cpin="<%= passwordInfo.result.cpinStCd %>"
+                               data-cpin="<%= cpinStCd %>"
                                data-code="<%= passwordInfo.code %>"
                                data-msg="<%= passwordInfo.msg %>"
-                            <% if (passwordInfo.result.bDay) { %>
-                            data-birth="<%= passwordInfo.result.bDay %>"
-                            <% } %>>
+                               data-make-eid="setPassword<%-cpinStCd === 'NC' ? 'NC' : 'AC'%>"
+                               <%- bDay ? `data-birth="${bDay}"` : ''%>
+                            >
                             #결제비밀번호 <%- passwordInfo.text %></a>
                         </li>
                         <%_}_%>
                     {{/ifCond}}
                     <li class="hash-item">
-                        <a href="{{historyUrl}}" class="hash small fe-micro-history">#이용 내역 조회</a>
+                        <a href="{{historyUrl}}" class="hash small fe-micro-history" data-make-eid="searchHistory">#이용 내역 조회</a>
                     </li>
                 </ul>
             </div>

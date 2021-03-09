@@ -50,6 +50,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this._checkAgree(function (){
       this.getRemainLimit();
       this._preventLink();
+      this._makeEid();
       this._bindEvent();
     }.bind(this));
   },
@@ -88,6 +89,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
       data: {isAdult: this.$container.data('is-adult')},
       layer: true
     }, function ($layer) { // load callback
+      self.makeEidBuilder()
+        .setEid('agreeNo', 1)
+        .setEid('agreeYes', 2)
+        .build();
       $layer.on('click', '.fe-close', function () {
         // 팝업 닫기 및 이전 페이지로 이동하기 위해 -2
         self._historyService.go(-2);
@@ -107,6 +112,20 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this.$container.on('click', '#fe-tab1', $.proxy(this._checkAble, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
     $('.fe-faq').on('click', $.proxy(this._increaseViews, this));
+  },
+
+  /**
+   * @desc 오퍼통계 eid 만들기
+   * @private
+   */
+  _makeEid: function () {
+    this.makeEidBuilder()
+      .setEid('usedOn', 3) // 이용설정 '이용중'
+      .setEid('usedOff', 4) // 이용설정 '차단중'
+      .setEid('smallTab', 15) // 휴대폰 결제 탭
+      .setEid('otherFind', 32) // 다른정보를 찾고 계신가요
+      .setEid('contentsTab', 33) // 콘텐츠 이용료 탭
+      .build();
   },
 
   /**
@@ -163,25 +182,12 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
     // BFF 조회
     request = function (title) {
-      console.info('### request');
-      // var $def = $.Deferred();
       var options = data[title];
-      // options.def = $def;
-      /*self._apiService.request(options.cmd, options.param)
-        .done(response.bind(self, options))
-        .fail($.proxy(self._remainFail, self));
-      return options.def.promise();*/
-      /*self._apiService.request(options.cmd, options.param)
-        .done(function (resp){
-          response(options, resp);
-        })
-        .fail($.proxy(self._remainFail, self));*/
       _request(title);
       return options.def.promise();
     };
 
     _request = function (title) {
-      console.info('### _request');
       var options = data[title];
       self._apiService.request(options.cmd, options.param)
         .done(response.bind(self, options))
@@ -189,7 +195,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
     };
 
     response = function (_options, res) {
-      console.info('### response');
       if (res.code !== Tw.API_CODE.CODE_00) {
         _options.def.reject(res);
         return;
@@ -207,7 +212,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
       }
 
       if (res.result.gubun !== 'Done') { // 실패하면 다시 호출
-        if (param.requestCnt < 3) {
+        if (param.requestCnt < 6) {
           param.requestCnt++; // requestCnt 증가 (+1)
           retry(3000); // 3초 delay 후 재호출
         } else {
@@ -230,14 +235,17 @@ Tw.MyTFareBillPrepayMain.prototype = {
         $.when(request('small'), request('contents'))
           .done(function (small, contents){
             self._endLoading();
-            if (small.code !== succ || contents.code !== succ) {
-              self._remainFail(contents);
+            var error = _.find([small, contents], function (item){
+              return item.code !== succ;
+            });
+            if (error) {
+              self._remainFail(error);
               return;
             }
             small.title = 'small';
             contents.title = 'contents';
             self._setData([small, contents]);
-          });
+          }).fail($.proxy(this._remainFail, this));
         return;
       }
       // 미성년자는 "콘텐츠 이용료"만 조회한다.
@@ -257,45 +265,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
       self.$callback(resp);
     }).fail(this._remainFail.bind(this));
 
-    /*$.when(request('contents'))
-      .done(function (contents){
-        if (contents.code !== '00') {
-          self._remainFail(contents);
-          return;
-        }
-        // small.title = 'small';
-        contents.title = 'contents';
-        self._setData([contents]);
-      });*/
-
-    /*request('small').done(function (contents){
-      if (contents.code !== '00') {
-        self._remainFail(contents);
-        return;
-      }
-      contents.title = 'small';
-      self._setData([contents]);
-    }).fail(self._remainFail.bind(self));*/
-
-    /*var result = {
-      tmthChrgPsblAmt: 20000,
-      autoChrgStCd: 'U',
-      tmthUseAmt: 2000,
-      payLimitAmt: 50000,
-      remainUseLimit: 20000
-    };
-
-    self._setData([
-      {
-        code: '00',
-        title: 'small',
-        result: result
-      },{
-        code: '00',
-        title: 'contents',
-        result: result
-      }
-    ]);*/
   },
 
   /**
@@ -310,10 +279,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
       code: Tw.API_CODE.CODE_00,
       title: title,
       result: {
-        tmthChrgPsblAmt: 0, // 선결제 가능금액
-        tmthUseAmt: 0, // 당월 사용금액
-        payLimitAmt: 0, // 총한도(월한도)
-        remainUseLimit: 0 // 잔여한도
+        tmthChrgPsblAmt: '0', // 선결제 가능금액
+        tmthUseAmt: '0', // 당월 사용금액
+        payLimitAmt: '0', // 총한도(월한도)
+        remainUseLimit: '0' // 잔여한도
       }
     };
   },
@@ -344,18 +313,72 @@ Tw.MyTFareBillPrepayMain.prototype = {
         title: item.title,
         titleName: this._getTitleKo(item.title),
         autoChrgStCd: result.autoChrgStCd, // 자동선결제 신청상태(U: 사용중, 그 외는 미신청)
+        stateCd: result.autoChrgStCd === 'U' ? 'U' : 'D', // 자동 선결제 신청상태 (U: 사용중, D:미사용)
         stateTxt: result.autoChrgStCd === 'U' ? Tw.MYT_FARE_PAYMENT_NAME.CHANGE : Tw.MYT_FARE_PAYMENT_NAME.REQUEST,
         historyUrl: '/myt-fare/bill/'+ item.title +'/history',
         tmthUseAmt: addComma(result.tmthUseAmt),  // 당월 사용금액
         payLimitAmt: addComma(result[isContents ? 'useContentsLimitAmt' : 'microPayLimitAmt']), // 총한도(월한도)
         remainUseLimit: addComma(result.remainUseLimit),  // 잔여한도
-        tmthChrgPsblAmt: addComma(result.tmthChrgPsblAmt) // 설결제 가능금액
+        tmthChrgPsblAmt: addComma(result.tmthChrgPsblAmt), // 설결제 가능금액
+        prepayCd: parseInt(result.tmthChrgPsblAmt || '0', 10) > 0 ? 'U' : 'D'
       });
       return r;
     }.bind(this),[]);
 
+    // 상단 이용금액 영역 오퍼통계 코드 생성
+    var usedAreaMakeEid = function () {
+      // 휴대폰 결제
+      var $el = this.$container.find('[data-title="small"]');
+      this.makeEidBuilder($el)
+        .setEid('changeLimit', 5) // 한도변경
+        .setEid('autoPrepay-D', 6) // 태그 > 자동 선결제 신청
+        .setEid('autoPrepay-U', 7) // 태그 > 자동 선결제 변경
+        .setEid('searchHistory', 8) // 이용내역 조회
+        .setEid('setPasswordNC', 9) // 결제비밀번호 신청
+        .setEid('setPasswordAC', 10) // 결제비밀번호 변경
+        .build();
+
+      // 콘텐츠 이용료
+      $el = this.$container.find('[data-title="contents"]');
+      this.makeEidBuilder($el)
+        .setEid('changeLimit', 11) // 한도변경
+        .setEid('autoPrepay-D', 12) // 자동 선결제 신청
+        .setEid('autoPrepay-U', 13) // 자동 선결제 변경
+        .setEid('searchHistory', 14) // 이용내역 조회
+        .build();
+    }.bind(this);
+
+    // 하단 탭 오퍼통계 코드 생성
+    var tabsMakeEid = function () {
+      // 휴대폰 결제
+      var $el = this.$tab1;
+      this.makeEidBuilder($el)
+        .setEid('prepayD', 16) // 선결제 신청
+        .setEid('prepayU', 17) // 선결제 결제
+        .setEid('joinPassword', 18) // 결제 비밀번호 가입하기
+        .setEid('tabAutoPrepayD', 19) // 자동 선결제 신청
+        .setEid('tabAutoPrepayU', 20) // 자동 선결제 변경/해지
+        .setEid('autoBlockHistory', 21) // 자동 결제 차단내역
+        .setEid('historyTip', 22) // 이용내역 TIP
+        .setEid('search', 23) // 조회하기
+        .build();
+
+      // 콘텐츠 이용료
+      $el = this.$tab2;
+      this.makeEidBuilder($el)
+        .setEid('prepayD', 34) // 선결제 신청
+        .setEid('prepayU', 35) // 선결제 결제
+        .setEid('tabAutoPrepayD', 36) // 자동 선결제 신청
+        .setEid('tabAutoPrepayU', 37) // 자동 선결제 변경/해지
+        .setEid('historyTip', 38) // 이용내역 TIP
+        .setEid('search', 39) // 조회하기
+        .build();
+    }.bind(this);
+
     this._renderAmountUsed(list);
     this._renderPrepaid(list);
+    usedAreaMakeEid();
+    tabsMakeEid();
     this._bindEventAfterData();
   },
 
@@ -502,14 +525,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
       this._showErrorPopup(aTitle, msg, e.currentTarget);
     }
-
-    /*var resp = {
-      code: '00',
-      result: {
-        msg_disp_yn: 'N'
-      }
-    };
-    this._checkTimeSuccess.call(this, e, resp);*/
   },
   /**
    * 선결제 가능 시간 확인 후 처리
@@ -601,6 +616,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @param event
    */
   _changeUseStatus: function (event) {
+    var $target = $(event.currentTarget);
+    $target.attr('data-xt_eid', $target.attr('checked') ? 'CMMA_A3_B12-C53-3' : 'CMMA_A3_B12-C53-4');
     new Tw.MyTFareBillSmallSetUse(this.$container, $(event.target));
   },
   /**
@@ -669,6 +686,40 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
   _endLoading: function () {
     Tw.CommonHelper.endLoading(this.$title ? this.$container : this.$amountUsed);
+  },
+
+  /**
+   * @function
+   * @desc 통계코드 data attr 생성
+   * @private
+   */
+  makeEidBuilder: function ($container) {
+    var eid = {};
+    $container = $container || this.$container;
+
+    var setEid = function (key, eidCd) {
+      eid[key] = 'CMMA_A3_B12-C53-' + eidCd;
+      return this;
+    };
+
+    var build = function () {
+      $.each($container.find('[data-make-eid]'), function (idx, item){
+        var $item = $(item);
+        var eidCd = eid[$item.data('make-eid')];
+        if (eidCd) {
+          $item.attr('data-xt_eid', eidCd)
+            .attr('data-xt_csid', 'NO')
+            .attr('data-xt_action', 'BC');
+          $item.removeAttr('data-make-eid');
+        }
+      });
+    };
+
+    return {
+      setEid: setEid,
+      build: build
+    };
+
   },
 
   /**

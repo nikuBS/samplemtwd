@@ -12,7 +12,9 @@
                                     <%_faqList.map( item => {_%>
                                     <li class="acco-box acc-item" data-faq-id="<%-item.faqId%>"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
                                         <div class="acco-tit">
-                                            <button role="button" aria-pressed="false" class="acc-tit down-arr fe-faq"><%- item.inqCtt%></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            <button role="button" aria-pressed="false" class="acc-tit down-arr fe-faq"
+                                                    data-xt_eid="CMMA_A3_B12-C53-<%-item.eid%>" data-xt_csid="NO" data-xt_action="BC"
+                                            ><%- item.inqCtt%></button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
                                         </div>
                                         <div class="acco-cont">
                                             <%- item.answCtt%>
@@ -26,7 +28,7 @@
                 </div>
                 <!--// .widget -->
             </div>
-            <a href="/customer/faq" class="other-info-btn"><span>다른 정보를 찾고 계신가요?</span></a>
+            <a href="/customer/faq" class="other-info-btn" data-make-eid="otherFind"><span>다른 정보를 찾고 계신가요?</span></a>
         </div>
     </div>
 </section>

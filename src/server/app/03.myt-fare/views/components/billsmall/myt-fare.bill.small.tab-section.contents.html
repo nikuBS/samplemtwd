@@ -7,13 +7,13 @@ _%>
         if(data){
             const {autoChrgStCd} = data;
             const isUsed = autoChrgStCd === 'U'; // U:사용중, D: 신규
-
+            const stateCd = autoChrgStCd === 'U' ? 'U' : 'D';
             const autoPrepayUrl = isUsed ? '/myt-fare/bill/'+ title +'/auto/info' : '/myt-fare/bill/'+ title +'/auto',
             prepayTitle = isUsed ? '변경/해지' : '신청';
     _%>
     <div class="section-group">
         <div class="head-tit">
-            <a href="<%-autoPrepayUrl%>" class="link">자동 선결제<span class="right-txt"><%-prepayTitle%></span></a>
+            <a href="<%-autoPrepayUrl%>" class="link" data-make-eid="tabAutoPrepay<%-stateCd%>">자동 선결제<span class="right-txt"><%-prepayTitle%></span></a>
         </div>
         <div class="section-cont">
             <%_if(!isUsed){_%>
@@ -44,7 +44,7 @@ _%>
             <%_}_%>
             <%_if(isSmall){ // 소액결제일때만 노출 _%>
             <div class="btn-area mb0">
-                <a href="/myt-fare/bill/small/block" class="rect-btn">자동 결제 차단 내역</a>
+                <a href="/myt-fare/bill/small/block" class="rect-btn" data-make-eid="autoBlockHistory">자동 결제 차단 내역</a>
             </div>
             <%_}_%>
         </div>
@@ -62,7 +62,7 @@ _%>
                     tipId = isSmall ? 'TC000119' : 'TC000120';
                 }
             _%>
-            이용 내역<button id="<%-tipId%>" type="button" class="tip" aria-haspopup="true" title="tip"></button>
+            이용 내역<button id="<%-tipId%>" type="button" class="tip" aria-haspopup="true" title="tip" data-make-eid="historyTip"></button>
         </div>
         <div class="section-cont">
             <ul class="dot-list">
@@ -75,7 +75,7 @@ _%>
                 <li class="dot-item">문자(SMS) 또는 공동인증서 (구 공인인증서) 인증 후 조회하세요.</li><!-- 201210 [OP002-10555] 수정01 -->
             </ul>
             <div class="btn-area mb0">
-                <a href="/myt-fare/bill/<%-title%>/history" class="rect-btn">조회하기</a>
+                <a href="/myt-fare/bill/<%-title%>/history" class="rect-btn" data-make-eid="search">조회하기</a>
             </div>
         </div>
     </div><!-- //section-group -->

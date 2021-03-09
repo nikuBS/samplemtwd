@@ -42,7 +42,7 @@ class MyTFareBillSmall extends TwViewController {
       this.getFaqList()
     ).subscribe(([microHistory, passwordStatus, unusualStatus, autoCardInfo, faqList]) => {
       const param = {
-        usedYn: this.getHistoryInfo(microHistory),
+        usedInfo: this.getHistoryInfo(microHistory),
         passwordInfo: this.getPasswordInfo(passwordStatus),
         unusualYn: unusualStatus, // 특이고객 여부
         autoCardInfo,
@@ -91,15 +91,7 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {any}
    */
   private getHistoryInfo(historyInfo: any): any {
-    // const usedValueList = ['0', '2', '6']; // 소액결제 제한 없음/사용 코드값
-    /*const usedYn = {
-      code: historyInfo.code,
-      isAdult: historyInfo.age > 19,
-      isUsed: false,
-      isPassword: false,
-      rtnUseYn: null
-    };*/
-    const {rtnUseYn = {}, cpmsYn = {}} = historyInfo.result || {};
+    const {rtnUseYn = '', cpmsYn = 'N'} = historyInfo.result || {};
     return {
       code: historyInfo.code,
       isAdult: historyInfo.age > 19,
@@ -183,14 +175,14 @@ class MyTFareBillSmall extends TwViewController {
 
     const isPrd = String(process.env.NODE_ENV) === 'prd', // 상용 여부
       faqIds: any = [];
-    faqIds.push(['' , '1606010545']);
-    faqIds.push(['' , '1606010546']);
-    faqIds.push(['' , '1606010547']);
-    faqIds.push(['' , '1606010548']);
-    faqIds.push(['' , '1606010549']);
-    faqIds.push(['' , '1606010550']);
-    faqIds.push(['' , '1606010551']);
-    faqIds.push(['' , '1606010552']);
+    faqIds.push(['' , '1606010545', '24']);
+    faqIds.push(['' , '1606010546', '25']);
+    faqIds.push(['' , '1606010547', '26']);
+    faqIds.push(['' , '1606010548', '27']);
+    faqIds.push(['' , '1606010549', '28']);
+    faqIds.push(['' , '1606010550', '29']);
+    faqIds.push(['' , '1606010551', '30']);
+    faqIds.push(['' , '1606010552', '31']);
 
     const getFaqId = (ifaqIds: Array<string>) => {
       return ifaqIds[isPrd ? 0 : 1];
@@ -210,22 +202,14 @@ class MyTFareBillSmall extends TwViewController {
         [1] : 스테이징 faq id
      */
     return Observable.combineLatest(
-      /*reqFaq(['' , '1606010545']),
-      reqFaq(['' , '1606010546']),
-      reqFaq(['' , '1606010547']),
-      reqFaq(['' , '1606010548']),
-      reqFaq(['' , '1606010549']),
-      reqFaq(['' , '1606010550']),
-      reqFaq(['' , '1606010551']),
-      reqFaq(['' , '1606010552'])*/
       requests
     ).map( responses => {
-      this.logger.info(this, '### ', responses);
       return responses.reduce((acc, cur, idx) => {
         if (!FormatHelper.isEmpty(cur.result)) {
           acc.push({
             ...cur.result,
-            faqId: getFaqId(faqIds[idx])
+            faqId: getFaqId(faqIds[idx]),
+            eid: faqIds[idx][2] // 오퍼통계 코드
           });
         }
         return acc;
