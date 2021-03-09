@@ -168,7 +168,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this._nativeService.setGNB(this);
     var template = $('#fe-tpl-menu'); // 각각의 메뉴 추가를 위한 handlebar template
     this._menuTpl = Handlebars.compile(template.html());
-    var bannerTextComponent = $('#tosTextBanner'); 
+    var bannerTextComponent = $('#tosTextBanner');
     bannerTextComponent.hide();
     var self = this;
     var bannerTextDraw = function() {
@@ -180,18 +180,18 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
             bannerTextComponent.html('');
             bannerTextComponent.html(res.result);
             $("#common-menu").addClass('use-tos-banner');
-            // 닫기 버튼 
+            // 닫기 버튼
             bannerTextComponent.find('.tos_inner').on('click', 'button', function(e) {
               bannerTextComponent.hide();
               $("#common-menu").removeClass('use-tos-banner');
-              // close 1 day 
+              // close 1 day
               var expireDay = 1;
               Tw.CommonHelper.setLocalStorageExpire('bannerYn', 'Y', expireDay);
               bannerTextComponent.html('');
 
             });
           }
-          
+
         });
     }
     var bannerYn = Tw.CommonHelper.getLocalStorageExpire('bannerYn') || '';
@@ -391,7 +391,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         this._lineComponent = new Tw.LineComponent(null, null, false, this.$gnbBtn);
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해
-      this._lineComponent.onClickLine(this._svcInfo.svcMgmtNum, $target);
+      this._lineComponent.onClickLine(this._svcInfo.svcMgmtNum, $target, true);
     // }
   },
 
@@ -613,9 +613,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
             }
           }, this))
           .fail(function(err) {
-              
+
           });
-    
+
     return false;
   },
 
@@ -1006,7 +1006,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         // } else {
         //   item.isShowDataCharge = item.exUrlNoti.indexOf('MW') !== -1 ? true : false
         }
-        
+
         // expose & not empty start, end date
         if (item.newIconExpsYn === 'Y' && !Tw.FormatHelper.isEmpty(item.newIconExpsStaDt) && !Tw.FormatHelper.isEmpty(item.newIconExpsEndDt)) {
           var currentDate = Tw.DateHelper.getCurrentShortDate(new Date());

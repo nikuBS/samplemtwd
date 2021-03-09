@@ -61,10 +61,11 @@ Tw.LineComponent.prototype = {
    * @desc 회선 변경 레이어 팝업 오픈 요청
    * @param selectedMgmt
    * @param $target
+   * @param isActCall
    */
-  onClickLine: function (selectedMgmt, $target) {
+  onClickLine: function (selectedMgmt, $target, isActCall) {
     var isLineComponentV2 = Tw.CommonHelper.getLocalStorage('lineComponentV2');
-    if (isLineComponentV2) {
+    if (isLineComponentV2 && isActCall) {
       return false;
     }
     this._init(selectedMgmt);
@@ -542,6 +543,7 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
     // 최초실행 후 처리 로직
     this._cachedElement();
     this._bindEvents();
+    Tw.CommonHelper.removeLocalStorage('lineComponentV2');
     new Tw.XtractorService(this.$container);
   },
   _cachedElement: function () {
@@ -572,6 +574,7 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
         $('body').removeClass('noscroll');
         $target.hide();
       }
+      Tw.CommonHelper.removeLocalStorage('lineComponentV2');
       return false;
     }, this));
   },
