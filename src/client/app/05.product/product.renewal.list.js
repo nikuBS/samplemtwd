@@ -98,7 +98,7 @@ Tw.ProductRenewalList.prototype = {
 
     _goDeleteFilter: function(e) { // 필터 항목 제거
       var deletedFilter = e.currentTarget.dataset.filterid;
-      if(deletedFilter == ''){
+      if(deletedFilter == '') {
         this._historyService.replaceURL('/product/renewal/mobileplan/list?filters='+this.curMobileFilter[0]);
       } else {
         var nextFilter = this.curFilter.filter(

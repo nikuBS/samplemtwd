@@ -210,7 +210,7 @@
                                 <li>
                                     {{#if curData.prodId}}
                                         <span class="tod-blind">{{../data.curPlan.prodNm}}</span>
-                                        <p class="txt">{{curData.expsBenfNm}}<br>{{{curData.benfDtlCtt}}}</p>
+                                        <p class="txt">{{#if curData.expsBenfNm}}{{curData.expsBenfNm}}<br>{{/if}}<br>{{{curData.benfDtlCtt}}}</p>
                                         {{#if curData.benfAmt}}
                                             <span class="s-price">
                                                 <del>{{{curData.benfAmt}}}</del>
@@ -225,7 +225,7 @@
                                 <li>
                                     {{#if compareData.prodId}}
                                         <span class="tod-blind">{{../data.comparePlan.prodNm}}</span>
-                                        <p class="txt">{{compareData.expsBenfNm}}<br>{{{compareData.benfDtlCtt}}}</p>
+                                        <p class="txt">{{#if compareData.expsBenfNm}}{{compareData.expsBenfNm}}<br>{{/if}}{{{compareData.benfDtlCtt}}}</p>
                                         {{#if compareData.benfAmt}}
                                             <span class="s-price">
                                                 <del>{{{compareData.benfAmt}}}</del>
@@ -271,7 +271,7 @@
                                                 
                                                     {{#each data.addtionalBenf.chooseList}}
                                                         {{#if curData.prodId}}
-                                                            {{curData.benfProdNm}} <em class="curAddtion">또는</em>
+                                                            {{curData.expsBenfNm}} {{curData.benfDtlCtt}} <em class="curAddtion">또는</em>
                                                         {{/if}}
                                                     {{/each}}
                                                 
@@ -301,7 +301,7 @@
                                                 
                                                     {{#each data.addtionalBenf.chooseList}}
                                                         {{#if compareData.prodId}}
-                                                            {{compareData.benfProdNm}} <em class="compareAddtion">또는</em>
+                                                            {{compareData.expsBenfNm}} {{compareData.benfDtlCtt}} <em class="compareAddtion">또는</em>
                                                         {{/if}}
                                                     {{/each}}
                                                 {{#if data.addtionalBenf.noCompareSelectList}}{{else}}
