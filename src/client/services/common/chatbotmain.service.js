@@ -1362,7 +1362,7 @@ Tw.ChatbotMainService.prototype = {
                             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] [galaxy_all] isAndroid : ', Tw.BrowserHelper.isAndroid());
                             Tw.Logger.info('[chatbot.service] [_checkTargetGroup] [galaxy_all] typeB : ', _this._typeB);
                             // 할부원금 백만원 이상, 할부 20개월 이상 경과, 안드로이드 접속
-                            if( Number(row.allotApprAmt) >= 1000000 && (Number(row.allotMthCnt) - Number(row.invRmn)) >= 20 && Tw.BrowserHelper.isAndroid() && _this._typeB) {
+                            if( Number(row.allotApprAmt) >= 1000000 && (Number(row.allotMthCnt) - Number(row.invRmn)) >= 10 && Tw.BrowserHelper.isAndroid() && _this._typeB) {
                                 isGalaxyAll = true;
                             }
                         } else {
