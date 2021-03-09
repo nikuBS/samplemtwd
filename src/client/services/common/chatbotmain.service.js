@@ -1062,7 +1062,7 @@ Tw.ChatbotMainService.prototype = {
                     );
                 }
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
-            }else{
+            } else {
                // window.open(url, '_blank');
                 //Tw.CommonHelper.openUrlInApp(url);
                 // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
@@ -1077,7 +1077,7 @@ Tw.ChatbotMainService.prototype = {
                 }
 
                 if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
-                    _this.openOutLink(e, url, res);
+                    window.open(url, '_blank');
                 } else {
                     _this._historyService.goLoad(url);
                 }

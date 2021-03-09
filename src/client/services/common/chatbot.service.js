@@ -1086,7 +1086,7 @@ Tw.ChatbotService.prototype = {
                 }
 
                 if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
-                    _this.openOutLink(e, url, res);
+                    window.open(url, '_blank');
                 } else {
                     _this._historyService.goLoad(url);
                 }
