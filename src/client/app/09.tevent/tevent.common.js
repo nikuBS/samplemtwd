@@ -37,11 +37,11 @@ Tw.TeventCommon.prototype = {
 /**
    * @function
    * @desc 성인 여부 (만 14세 이상) 체크
-   * @param 
+   * @param
    */
   _checkAge: function () {
     var _this = this;
-    // 이벤트 페이지는 비로그인시 접근도 가능한 화면이기 때문에 
+    // 이벤트 페이지는 비로그인시 접근도 가능한 화면이기 때문에
     // 성인인지 여부를 체크하기 이전에 로그인 여부를 먼저 조회하도록 한다. (로그인 시에만 성인 여부 조회하도록)
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
     .done($.proxy(function (res) {
@@ -79,16 +79,16 @@ Tw.TeventCommon.prototype = {
       // GET_SVC_INFO API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
       // Tw.Error(err.code, err.msg).pop();
       return;
-    });    
+    });
   },
 
   /**
    * @function
-   * @desc T world 광고정보수신동의 여부 조회 및 미동의시 배너영역 노출 
-   * @param 
+   * @desc T world 광고정보수신동의 여부 조회 및 미동의시 배너영역 노출
+   * @param
    */
   _reqTwdAdRcvAgreeInfo: function () {
-    // 이벤트 페이지는 비로그인시 접근도 가능한 화면이기 때문에 
+    // 이벤트 페이지는 비로그인시 접근도 가능한 화면이기 때문에
     // T world 광고정보수신동의 여부를 조회하기 이전에 로그인 여부를 먼저 조회하도록 한다. (로그인 시에만 T world 광고정보수신동의 여부 조회하도록)
     if (this._isLogined) {
       // T world 광고정보수신동의 여부 조회
@@ -99,7 +99,7 @@ Tw.TeventCommon.prototype = {
 
             if ( this._isAdult ) {
               $('#agree-banner-area').show();
-              
+
               // 모바일App
               if ( Tw.BrowserHelper.isApp() ) {
                 var data = Tw.CommonHelper.getLocalStorage('hideTwdAdRcvAgreePop_' + this._userId);
@@ -109,14 +109,14 @@ Tw.TeventCommon.prototype = {
                   // $('#agree-popup-area').show();
                   this._onOpenAgreePopup();
                   // return;
-                } 
+                }
                 // 그 외 경우 처리
                 else {
                   data = JSON.parse(data);
 
                   var now = new Date();
                   now = Tw.DateHelper.convDateFormat(now);
-  
+
                   if ( Tw.DateHelper.convDateFormat(data.expireTime) < now ) { // 만료시간이 지난 데이터 일 경우
                     // console.log('만료시점이 지난 경우 (노출)');
                     // 광고 정보 수신동의 팝업 노출
@@ -126,7 +126,7 @@ Tw.TeventCommon.prototype = {
                     // console.log('만료시점 이전인 경우 (비노출)');
                   }
                 }
-              } 
+              }
               // 모바일웹
               else {
                 if ( Tw.CommonHelper.getCookie('hideTwdAdRcvAgreePop_' + this._userId) !== null ) {
@@ -137,7 +137,7 @@ Tw.TeventCommon.prototype = {
                   // $('#agree-popup-area').show();
                   this._onOpenAgreePopup();
                 }
-              }              
+              }
             }
           }
         } else {
@@ -168,6 +168,8 @@ Tw.TeventCommon.prototype = {
     this._page = 0;
     this._totalPage = this.$contentList.attr('data-page') - 1;
     this._totalCnt = this.$contentList.attr('data-cnt');
+
+    this.$agreePopup = $('body .popup.tw-popup');
   },
   /**
    * @function
@@ -186,10 +188,10 @@ Tw.TeventCommon.prototype = {
     this.$container.on('click', '.fe-pop-close', $.proxy(this._closeAgreePop, this));   // T world 광고정보수신동의 팝업 닫기
     this.$container.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
 
-    $('.agree-popup-section').on('click', '.fe-pop-close', $.proxy(this._closeAgreePop, this));   // T world 광고정보수신동의 팝업 닫기
-    $('.agree-popup-section').on('click', '.fe-pop-show-detail', $.proxy(this._showAgreePopDetail, this));   // T world 광고정보수신동의 약관 상세보기
-    $('.agree-popup-section').on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
-    $('.agree-popup-section').on('click', '.fe-pop-agree', $.proxy(this._modAgreePop, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
+    this.$agreePopup.on('click', '.fe-pop-close', $.proxy(this._closeAgreePop, this));   // T world 광고정보수신동의 팝업 닫기
+    this.$agreePopup.on('click', '.fe-pop-show-detail', $.proxy(this._showAgreePopDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    this.$agreePopup.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
+    this.$agreePopup.on('click', '.fe-pop-agree', $.proxy(this._modAgreePop, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
   },
   /**
    * @function
@@ -251,7 +253,7 @@ Tw.TeventCommon.prototype = {
         $('#agree-banner-area').hide();
         // $('#agree-popup-area').hide();
         var toastMsg = '수신동의가 완료되었습니다.';
-        // Tw.CommonHelper.toast(toastMsg);        
+        // Tw.CommonHelper.toast(toastMsg);
         Tw.Popup.toast(toastMsg);
       }, this))
       .fail(function (err) {
@@ -332,7 +334,7 @@ Tw.TeventCommon.prototype = {
   _setLocalStorage: function (key, userId, expiredays) {
     var keyName = key + '_' + userId;  // ex) hideTwdAdRcvAgreePop_shindh
     var today = new Date();
-    
+
     today.setDate( today.getDate() + expiredays );
 
     Tw.CommonHelper.setLocalStorage(keyName, JSON.stringify({
@@ -546,8 +548,6 @@ Tw.TeventCommon.prototype = {
       // 모바일WEB
       _this._historyService.goLoad(url + id);
     }
-    
-    
     // if (billYn === 'Y') {
     //   this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
     //     $.proxy(function () {
@@ -560,20 +560,14 @@ Tw.TeventCommon.prototype = {
     //   this._historyService.goLoad(url + id);
     // }
   },
-  
+
   /**
    * @function
    * @desc 광고성정보수신동의 팝업 open
    */
   _onOpenAgreePopup: function() {
-    if($('#fe-agree-popup').length > 0 && $('.agree-popup-section').length > 0) {
-      var template = $('#fe-agree-popup'); // 각각의 메뉴 추가를 위한 handlebar template
-      this._agreePopup = Handlebars.compile(template.html());
-      this.$container.attr('aria-hidden', 'false');
-      $('.agree-popup-section').html(this._agreePopup({}));
-      //this.$container.find('#contents').after(this._agreePopup({}));
-      //this._popupService._addHash(null, 'ad-info-agreement');
-    }
+    this.$agreePopup.removeClass('none');
+    this.$container.attr('aria-hidden', 'false');
   },
 
   /**
@@ -581,12 +575,7 @@ Tw.TeventCommon.prototype = {
    * @desc 광고성정보수신동의 팝업 close
    */
   _onCloseAgreePopup: function () {
+    this.$agreePopup.addClass('none');
     this.$container.attr('aria-hidden', 'true');
-    $('.agree-popup-section').html('');
-    /*
-    if ( window.location.hash.indexOf('ad-info-agreement') !== -1 ) {
-      this._historyService.goBack();
-    }
-    */
   }
 };
