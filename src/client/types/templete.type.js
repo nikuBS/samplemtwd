@@ -1831,10 +1831,10 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
 Tw.RENEWAL_PRODUCT_SUBMAIN_QUICKFILTER = 
 '{{#each banners}}' +
   '<li class="slider-item">' +
-    '<a class="shadow-box quick-item" title="{{bnnrImgAltCtt}}" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
+    '<a class="shadow-box quick-item" role="link" tabindex="0" title="{{bnnrImgAltCtt}}" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
       '<p class="benefit-txt">{{{anchTagInfo}}}</p>' +
       '<i class="benefit-ico">' +
-        '<img src="{{../cdn_url}}/{{bnnrFilePathNm}}" alt="{{bnnrImgAltCtt}}">' +
+        '<img src="{{../cdn_url}}/{{bnnrFilePathNm}}" alt=" ">' +
       '</i>' +
     '</a>' +
   '</li>' +
@@ -1843,8 +1843,7 @@ Tw.RENEWAL_PRODUCT_SUBMAIN_QUICKFILTER =
 Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER =
 '{{#each banners}}' +
   '<li class="slider-item">' +
-    '<a class="shadow-box theme-item" style="background-image:url({{../cdn_url}}/{{bnnrFilePathNm}})" title="{{bnnrImgAltCtt}}" alt="{{bnnrImgAltCtt}}" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
-      '<span class="tod-blind">{{bnnrImgAltCtt}}</span>' + 
+    '<a class="shadow-box theme-item" style="background-image:url({{../cdn_url}}/{{bnnrFilePathNm}})" role="link" tabindex="0" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
       '<p class="i-txt">{{anchTagInfo}}</p>' + 
     '</a>' + 
   '</li>' + 
