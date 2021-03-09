@@ -28,6 +28,9 @@ _%>
                 </dl>
             </li>
         </ul>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' ) { _%>
+        <a href="/product/callplan?prod_id=TW20000015" class="bundle-link">
+        <% } %>
         <div class="gray-box">
             <ul class="report-list item-no-border small">
                 <li class="report-item">
@@ -68,5 +71,8 @@ _%>
                 </span>
             </div>
         </div>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' ) { _%>
+        </a>
+        <% } %>
     </div><!-- group-cont -->
 </div>
