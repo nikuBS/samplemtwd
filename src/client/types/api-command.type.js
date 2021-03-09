@@ -151,6 +151,7 @@ Tw.API_CMD = {
   BFF_05_0058: { path: '/core-bill/:version/accounts', method: Tw.API_METHOD.GET },
   BFF_05_0060: { path: '/core-modification/:version/no-contract-plan-points', method: Tw.API_METHOD.GET },
   BFF_05_0062: { path: '/core-modification/:version/wire-network-notification', method: Tw.API_METHOD.POST },
+  BFF_05_0063: { path: '/core-modification/:version/myinfo/discount-infos', method: Tw.API_METHOD.GET },
   BFF_05_0064: { path: '/core-bill/:version/use-contents/hist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0066: { path: '/core-bill/:version/use-contents/limit-requests', method: Tw.API_METHOD.GET },
   BFF_05_0067: { path: '/core-bill/:version/use-contents/limit-up', method: Tw.API_METHOD.POST },
