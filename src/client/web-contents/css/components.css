@@ -34488,8 +34488,9 @@ body.apphome .section-box {
   position: relative; }
 
 .pro-sub-area:after {
-  content: 'space';
-  font-size: 0; }
+  content: '';
+  display: inline-block;
+  font-size: 0; }/* 210216 [2021 접근성] 수정 */
 
 .pro-sub-area .pro-sub-text {
   position: absolute;
