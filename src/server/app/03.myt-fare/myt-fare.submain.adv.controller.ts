@@ -328,7 +328,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
 
     const setClaimData = (item) => {
       data.claimPay = item.invAmt || '0';
-      data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
+      data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(item.dcAmt))).toString() );
       data.claimDt = item.invDt;
       data.month = getMonth(item.invDt, 'M');
       data.claimLastDay = DateHelper.getShortDate(item.invDt);
@@ -351,7 +351,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       }
     });
 
-    // 선택월의 청구금액이 없는경우 배열의 첫번째가 선택월과 같은경우 해당 데이터를 세팅한다.
+    // 선택월의 청구금액이 없는경우 선택월과 같은 해당 데이터를 세팅한다.
     if (!data.claimPay) {
       const currClaimData = amtList.find( item => getMonth(item.invDt, 'M') === getMonth(date, 'M'));
       if (currClaimData) {
