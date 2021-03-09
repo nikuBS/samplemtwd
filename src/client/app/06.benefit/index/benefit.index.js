@@ -1041,7 +1041,6 @@ Tw.BenefitIndex.prototype = {
    */
   _onOpenAgreePopup: function () {
     this.$agreePopup.removeClass('none');
-    this.$container.attr('aria-hidden', 'false');
   },
 
   /**
@@ -1050,6 +1049,5 @@ Tw.BenefitIndex.prototype = {
    */
   _onCloseAgreePopup: function () {
     this.$agreePopup.addClass('none');
-    this.$container.attr('aria-hidden', 'true');
   }
 };

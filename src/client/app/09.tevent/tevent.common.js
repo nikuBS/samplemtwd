@@ -567,7 +567,6 @@ Tw.TeventCommon.prototype = {
    */
   _onOpenAgreePopup: function() {
     this.$agreePopup.removeClass('none');
-    this.$container.attr('aria-hidden', 'false');
   },
 
   /**
@@ -576,6 +575,5 @@ Tw.TeventCommon.prototype = {
    */
   _onCloseAgreePopup: function () {
     this.$agreePopup.addClass('none');
-    this.$container.attr('aria-hidden', 'true');
   }
 };
