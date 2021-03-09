@@ -1509,9 +1509,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
                                 ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                   '{{#if useAmt}}' + 
                                       '<span class="price">' +
-                                          '<del>{{useAmt}}</del>' +
+                                          '<del>{{benfAmt}}</del>' +
                                           '<i class="icon-arr">&rarr;</i>' +
-                                          '<em>{{benfAmt}}</em>' + 
+                                          '<em>{{useAmt}}</em>' + 
                                       '</span>' +
                                   '{{/if}}' + 
                               '</li>' +
@@ -1530,9 +1530,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
                                         ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                         '{{#if useAmt}}' + 
                                             '<span class="price">' +
-                                                '<del>{{useAmt}}</del>' +
+                                                '<del>{{benfAmt}}</del>' +
                                                 '<i class="icon-arr">&rarr;</i>' +
-                                                '<em>{{benfAmt}}</em>' + 
+                                                '<em>{{useAmt}}</em>' + 
                                             '</span>' +
                                         '{{/if}}' + 
                                     '</li>' +
@@ -1647,9 +1647,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                       ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                         '{{#if useAmt}}' + 
                                             '<span class="price">' +
-                                                '<del>{{useAmt}}</del>' +
+                                                '<del>{{benfAmt}}</del>' +
                                                 '<i class="icon-arr">&rarr;</i>' +
-                                                '<em>{{benfAmt}}</em>' + 
+                                                '<em>{{useAmt}}</em>' + 
                                             '</span>' +
                                         '{{/if}}' + 
                                     '</li>' +
@@ -1668,9 +1668,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                               ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                               '{{#if useAmt}}' + 
                                                   '<span class="price">' +
-                                                      '<del>{{useAmt}}</del>' +
+                                                      '<del>{{benfAmt}}</del>' +
                                                       '<i class="icon-arr">&rarr;</i>' +
-                                                      '<em>{{benfAmt}}</em>' + 
+                                                      '<em>{{useAmt}}</em>' + 
                                                   '</span>' +
                                               '{{/if}}' + 
                                           '</li>' +
@@ -1777,9 +1777,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                       ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                         '{{#if useAmt}}' + 
                                             '<span class="price">' +
-                                                '<del>{{useAmt}}</del>' +
+                                                '<del>{{benfAmt}}</del>' +
                                                 '<i class="icon-arr">&rarr;</i>' +
-                                                '<em>{{benfAmt}}</em>' + 
+                                                '<em>{{useAmt}}</em>' + 
                                             '</span>' +
                                         '{{/if}}' + 
                                     '</li>' +
@@ -1798,9 +1798,9 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                                               ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
                                               '{{#if useAmt}}' + 
                                                   '<span class="price">' +
-                                                      '<del>{{useAmt}}</del>' +
+                                                      '<del>{{benfAmt}}</del>' +
                                                       '<i class="icon-arr">&rarr;</i>' +
-                                                      '<em>{{benfAmt}}</em>' + 
+                                                      '<em>{{useAmt}}</em>' + 
                                                   '</span>' +
                                               '{{/if}}' + 
                                           '</li>' +

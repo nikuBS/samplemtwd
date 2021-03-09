@@ -17,7 +17,6 @@ Tw.ProductCompare = function(rootEl, svcInfo, networkInfo, myPLMData, cdn) {
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
     this._historyService = new Tw.HistoryService();
-    
     this._init();
 
      // 비교 대상에 대한 redis 정보를 얻음
@@ -157,7 +156,12 @@ Tw.ProductCompare.prototype = {
       var data = '';
       var chartData = '';
       data = $target.data('prod-data').trim();
-      if(data.length != data.replace(/GB/g, '').length) {
+      if(data == '') {
+        this.compareData.comparePlan.basOfrDataQtyCtt.value = 0;
+        this.compareData.comparePlan.basOfrDataQtyCtt.unit = 'GB';
+        chartData = 0;
+      }
+      else if(data.length != data.replace(/GB/g, '').length) {
         this.compareData.comparePlan.basOfrDataQtyCtt.value = $target.data('prod-data').replace(/GB/g, '');
         this.compareData.comparePlan.basOfrDataQtyCtt.unit = 'GB';
         chartData = data.replace(/GB/g, '');
@@ -579,8 +583,8 @@ Tw.ProductCompare.prototype = {
         $('.curAddtion').eq(-1).remove();
         $('.compareAddtion').eq(-1).remove();
         $('.prev-step').click(_.debounce($.proxy(this._popupService.close, this), 300));
-        var curFee = this.compareData.curPlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
-        var compareFee = this.compareData.comparePlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
+        var curFee = compareData.curPlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
+        var compareFee = compareData.comparePlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
         var actSheetBenfData = this._getCurPlanBenefits();
         if((Number(curFee) > Number(compareFee)) && actSheetBenfData.lostBenefits) {
           $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, actSheetBenfData));
@@ -718,14 +722,14 @@ Tw.ProductCompare.prototype = {
           lostSepBenefits.push({benefit: this.curRedisData.prodBenfCd_04[i].expsBenfNm,
                                 benfDtlCtt: this.curRedisData.prodBenfCd_04[i].benfDtlCtt,
                                 benfAmt : false,
-                                addBenfCnt : false
+                                useAmt : false
             });
           if(this.curRedisData.prodBenfCd_04[i].benfAmt) {
             lostSepBenefits[n].benfAmt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].benfAmt.replace(/원/g,'').replace(/,/g,''));
 
           }
-          if(this.curRedisData.prodBenfCd_04[i].addBenfCnt) {
-            lostSepBenefits[n].addBenfCnt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].addBenfCnt.replace(/원/g,'').replace(/,/g,''));
+          if(this.curRedisData.prodBenfCd_04[i].useAmt) {
+            lostSepBenefits[n].useAmt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].useAmt.replace(/원/g,'').replace(/,/g,''));
           }
           n++;       
         }
@@ -733,19 +737,25 @@ Tw.ProductCompare.prototype = {
           lostChooseBenefits.push({benefit: this.curRedisData.prodBenfCd_04[i].expsBenfNm,
                                 benfDtlCtt: this.curRedisData.prodBenfCd_04[i].benfDtlCtt,
                                 benfAmt : false,
-                                addBenfCnt : false
+                                useAmt : false
           });
           if(this.curRedisData.prodBenfCd_04[i].benfAmt) {
             lostChooseBenefits[m].benfAmt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].benfAmt.replace(/원/g,'').replace(/,/g,''));
           }
-          if(this.curRedisData.prodBenfCd_04[i].addBenfCnt) {
-            lostChooseBenefits[m].addBenfCnt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].addBenfCnt.replace(/원/g,'').replace(/,/g,''));
+          if(this.curRedisData.prodBenfCd_04[i].useAmt) {
+            lostChooseBenefits[m].useAmt = Tw.FormatHelper.addComma(this.curRedisData.prodBenfCd_04[i].useAmt.replace(/원/g,'').replace(/,/g,''));
           }
           m++;
         }
       }
       lostSepBenefits.shift();
       lostChooseBenefits.shift();
+      if(lostSepBenefits.length == 0) {
+        lostSepBenefits = null;
+      }
+      if(lostChooseBenefits.length == 0) {
+        lostChooseBenefits = null;
+      }
       lostBenefits = true;
     } else {
       lostBenefits = false;
@@ -804,7 +814,6 @@ Tw.ProductCompare.prototype = {
         prodBenfCd_05 : [], // 안내문구 데이터 셋
       }
     }
-    console.log("compareRes",compareRes);
       this.curRedisData = JSON.parse(JSON.stringify(curParse));
       this.compareRedisData = JSON.parse(JSON.stringify(compareParse));
       this._setCompareDataCur(this._myPLMData, this.curRedisData);
@@ -852,20 +861,20 @@ Tw.ProductCompare.prototype = {
     if(sepList.curData) {
       if(sepList.curData.benfAmt) {
         sepList.curData.benfAmt = Tw.FormatHelper.addComma(sepList.curData.benfAmt) + '원';
-        if(!sepList.curData.addBenfCnt) {
-          sepList.curData.addBenfCnt = '0원';
+        if(!sepList.curData.useAmt) {
+          sepList.curData.useAmt = '0원';
         } else {
-          sepList.curData.addBenfCnt = Tw.FormatHelper.addComma(sepList.curData.addBenfCnt) + '원';
+          sepList.curData.useAmt = Tw.FormatHelper.addComma(sepList.curData.useAmt) + '원';
         }
       }
     }
     if(sepList.compareData) {
       if(sepList.compareData.benfAmt) {
         sepList.compareData.benfAmt = Tw.FormatHelper.addComma(sepList.compareData.benfAmt) + '원';
-        if(!sepList.compareData.addBenfCnt) {
-          sepList.compareData.addBenfCnt = '0원'
+        if(!sepList.compareData.useAmt) {
+          sepList.compareData.useAmt = '0원'
         } else {
-          sepList.compareData.addBenfCnt = Tw.FormatHelper.addComma(sepList.compareData.addBenfCnt) + '원';
+          sepList.compareData.useAmt = Tw.FormatHelper.addComma(sepList.compareData.useAmt) + '원';
         }
       }
     }
@@ -1012,9 +1021,6 @@ Tw.ProductCompare.prototype = {
    * @param {*} type CPR: 요금제 비교, CAG: 요금제 변경, 요금제 변경 (원장으로 바로 이동 시) : CAGC, 요금제 변경 취소 : CPGC
    */
   _sendTracking: function(basicPid, comparePid, type) {
-    console.log("내 아이디",basicPid);
-    console.log("비교 아이디",comparePid);
-    console.log("타입",type);
     window.XtractorScript.xtrProdCompare(basicPid, comparePid, type);
   },
 
