@@ -806,7 +806,7 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page012: '꼭 지켜야 할 정보보호 실천수칙 10가지',
   page013: '명의도용 피해예방법',
   page014: '결합상품 피해예방법',
-  page015: '소액결제 피해예방법',
+  page015: '휴대폰 결제 피해예방법',
   page016: '해외 로밍 피해예방법',
   page017: 'SNS 개인정보 보호 꿀팁! (2단계 인증설정)',
   page018: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)'
@@ -918,7 +918,7 @@ export const CUSTOMER_SITE_OPTION_TYPE = [
   },
   {
     cat: 'myT',
-    title: '소액결제 현명하게 관리하기',
+    title: '휴대폰 결제 현명하게 관리하기',
     code: 'D00002',
     className: 'ico-myt',
     listIndex: 1
