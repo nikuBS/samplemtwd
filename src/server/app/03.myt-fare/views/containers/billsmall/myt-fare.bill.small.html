@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-bill-small" class="wrap" data-menuId="<%= pageInfo.menuId %>" data-code="<%-usedYn.code%>" data-is-adult="<%-usedYn.isAdult%>">
+    <div id="myt-fare-bill-small" class="wrap" data-menuId="<%= pageInfo.menuId %>" data-code="<%-usedInfo.code%>" data-is-adult="<%-usedInfo.isAdult%>">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html', { title: '휴대폰 결제/콘텐츠 이용료', svcInfo: svcInfo }); %>
         <!--// #header -->
@@ -28,7 +28,7 @@
                         <div class="charge-cont phone-payment fe-amount-used">
                             <div class="month-charge">
                                 <div class="charge-tit">
-                                    <%_if(usedYn.code !== 'BIL0030') { // 휴대폰 결제 이용동의 일때 노출_%>
+                                    <%_if(usedInfo.code !== 'BIL0030') { // 휴대폰 결제 이용동의 일때 노출_%>
                                     <span class="charge-month"><%-currentMonth%>월 이용 금액</span>
                                     <span class="period"><%- `${firstDate}~${toDate}`%></span>
                                     <%_} else {_%>
