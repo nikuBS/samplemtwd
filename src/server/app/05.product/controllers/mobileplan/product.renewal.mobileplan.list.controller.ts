@@ -109,14 +109,27 @@ export default class RenewProductPlans extends TwViewController {
             plans.isCompare = isCompare;
             for(let i in plans.groupProdList) {
               plans.groupProdList[i].prodList = this._getCompareYN(plans.groupProdList[i].prodList, networkInfoFilter[0], isCompare);
+              for(let j in plans.groupProdList[i].prodList) { //  LTE요금제 이면서 3G요금제 인 상품에 대한 예외 처리
+                if(plans.groupProdList[i].prodList[j].prodFltId == 'F01122') {
+                  plans.groupProdList[i].prodList[j].compareYN = false; 
+                }
+              }
             }
             plans.separateProductList = this._getCompareYN(plans.separateProductList, networkInfoFilter[0], isCompare);
+            for(let i in plans.separateProductList) {
+              if(plans.separateProductList[i].prodFltId == 'F01122') {
+                plans.separateProductList[i].compareYN = false;
+              }
+            }
             if(req.query.theme) { //시리즈별 리스트형 테마
             series.theme = ' class=on';
             res.render('mobileplan/renewal/list/product.renewal.mobileplan.theme.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if (series.seriesCode == 'F01713') { //시리즈별 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == 'F01121' || series.seriesCode == 'F01122') { // 시리즈별 리스트형
+              for(let i in plans.groupProdList[0].prodList) {
+                console.log("!!!!!!!!!",plans.groupProdList[0].prodList[i]);
+              }
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == 'F01124') { // 시리즈별 2 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
