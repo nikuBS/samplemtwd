@@ -63,6 +63,10 @@ Tw.LineComponent.prototype = {
    * @param $target
    */
   onClickLine: function (selectedMgmt, $target) {
+    var isLineComponentV2 = Tw.CommonHelper.getLocalStorage('lineComponentV2');
+    if (isLineComponentV2) {
+      return false;
+    }
     this._init(selectedMgmt);
     this._openLineList = true;
     this._getLineList($target);
@@ -120,7 +124,9 @@ Tw.LineComponent.prototype = {
       { command: Tw.NODE_CMD.GET_ALL_SVC, params: {}},
       // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
       { command: Tw.NODE_CMD.GET_CHILD_INFO, params: {}},
-      { command: Tw.API_CMD.BFF_03_0029, params: {}}
+      { command: Tw.API_CMD.BFF_03_0029, params: {}, headers: {
+        'Cache-Control': 'private', expire: '60000'
+      }}
     ]).done($.proxy(this._successGetLineList, this, $target))
       .fail($.proxy(this._failTosStoreBanner, this));
   },
@@ -148,6 +154,9 @@ Tw.LineComponent.prototype = {
         this._openListPopup(this._lineList, totNonCnt, $target);
       } else if ( this._index === 1 ){
         this._historyService.goLoad('/common/member/line');
+      } else {
+        // 회선이 0개인 경우는 해당 부분 호출 불가
+        return false;
       }
     } else {
       Tw.Error(allSvcResp.code, allSvcResp.msg).pop();
@@ -560,10 +569,23 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
         this.$selWrap.toggleClass('show')
         this.$lineTxt.text(this.$lineTxt.data('line-txt'));
         this.$atherLineArea.hide().removeClass('open');
+        $('body').removeClass('noscroll');
         $target.hide();
       }
       return false;
     }, this));
+  },
+
+  /**
+   * @function
+   * @desc 회선 변경 레이어 팝업 오픈 요청
+   * @param selectedMgmt
+   * @param $target
+   */
+  onClickLine: function (selectedMgmt, $target) {
+    this._init(selectedMgmt);
+    this._openLineList = true;
+    this._getLineList($target);
   },
 
   _onTabClicked: function (event) {
@@ -600,10 +622,6 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
     // OP002-5303 : [개선][FE](W-1910-078-01) 회선선택 영역 확대
     if($selectedLine.hasClass('fe-child')) {
       this._historyService.goBack();
-
-      // setTimeout($.proxy(function () {
-      //     this._onOpenChildNavi(svcMgmtNum, $selectedLine);
-      // },this),100);
     } else {
       this.changeLine(svcMgmtNum, mdn);
     }
@@ -623,6 +641,10 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
     this.$selWrap.toggleClass('show');
     this.$lineTxt.text(this.$lineTxt.data('close-txt'));
     this.$lineDim.show();
+    // 스크롤 방지를 위해 추가
+    $('body').addClass('noscroll');
+    // 기존 회선 선택 팝업 영향도가 발생하여 flag 추가
+    Tw.CommonHelper.setLocalStorage('lineComponentV2', 'Y');
     var source = $('#common-select-list-template').html();
     var template = Handlebars.compile(source);
     var selectedMobileItem = lineData[0].list.find(function(item){
@@ -666,6 +688,8 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
       this.$lineTxt.text(this.$lineTxt.data('line-txt'));
       this.$atherLineArea.hide().removeClass('open');
       this.$lineDim.hide();
+      $('body').removeClass('noscroll');
+      Tw.CommonHelper.removeLocalStorage('lineComponentV2');
       return;
     }
     this.onClickLine(svcMgmtNum, $target);
@@ -804,6 +828,8 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
       Tw.Error(resp.code, resp.msg).pop();
     }
     this.$lineDim.hide();
+    $('body').removeClass('noscroll');
+    Tw.CommonHelper.removeLocalStorage('lineComponentV2');
   },
 
   /**
@@ -816,6 +842,8 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
     Tw.Logger.error(error);
     Tw.CommonHelper.endLoading('[data-id=line-dim]');
     this.$lineDim.hide();
+    $('body').removeClass('noscroll');
+    Tw.CommonHelper.removeLocalStorage('lineComponentV2');
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 });
