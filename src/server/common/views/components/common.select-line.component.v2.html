@@ -73,20 +73,20 @@ _%>
                     {{#each mobile.list}}
                       <li class="line-item {{#if child}} have-child {{/if}}">
                         <label class="line-item-wrap">
-                                              <span class="line-item-info">
-                                                  {{#if icon}}<span class="symbol {{icon}}"></span>{{/if}}
-                                                {{#if txt}}<span class="type">{{txt}}</span>{{/if}}
-                                                {{#if add}}
-                                                  <span class="type-info">{{add}}
-                                                    {{#if badge}}<span class="sign standard">기준</span>{{/if}}
-                                                    {{#if child}}<span class="sign child">자녀</span>{{/if}}
-                                                  </span>
-                                                {{/if}}
-                                              </span>
+                          <span class="line-item-info">
+                              {{#if icon}}<span class="symbol {{icon}}"></span>{{/if}}
+                            {{#if txt}}<span class="type">{{txt}}</span>{{/if}}
+                            {{#if add}}
+                              <span class="type-info">{{add}}
+                                {{#if badge}}<span class="sign standard">기준</span>{{/if}}
+                                {{#if child}}<span class="sign child">자녀</span>{{/if}}
+                              </span>
+                            {{/if}}
+                          </span>
                           {{#unless child}}
                             <span class="check-status">
-                                                <span class="custom-form"><input class=" {{#if child}}fe-child{{/if}} fe-radio-line" type="radio" name="line" {{#if option}} checked {{/if}} data-svcMgmtNum="{{svcMgmtNum}}" data-mdn="{{add}}" data-xt_eid="CMMA_A11-100" data-xt_csid="CS_ID" data-xt_action="BC"><span class="r-type1"></span></span>
-                                              </span>
+                              <span class="custom-form"><input class=" {{#if child}}fe-child{{/if}} fe-radio-line" type="radio" name="line" {{#if option}} checked {{/if}} data-svcMgmtNum="{{svcMgmtNum}}" data-mdn="{{add}}" data-xt_eid="CMMA_A11-100" data-xt_csid="CS_ID" data-xt_action="BC"><span class="r-type1"></span></span>
+                            </span>
                           {{/unless}}
                         </label>
                         {{#if child}}
