@@ -124,6 +124,8 @@ Tw.ProductCompare.prototype = {
 
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.curPlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
+      } else {
+        this.compareData.curPlan.speedControl = '속도 제어 없음';
       }
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.curPlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
@@ -177,6 +179,8 @@ Tw.ProductCompare.prototype = {
 
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.comparePlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
+      } else {
+        this.compareData.comparePlan.speedControl = '속도 제어 없음';
       }
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
@@ -185,6 +189,7 @@ Tw.ProductCompare.prototype = {
     },
 
     _getDataAddtionOption: function(curRedisData,compareRedisData) {
+      var _this = this;
       if(!curRedisData.prodBenfCd_03 && !compareRedisData.prodBenfCd_03) {
         return null;
       }
@@ -233,16 +238,42 @@ Tw.ProductCompare.prototype = {
         dataOption[i].curData.shift();
         dataOption[i].compareData.shift();
       }
+      if(dataOption) {
+        dataOption.sort(function(preDataOption,postDataOption) {
+          var preDataOptionList = preDataOption.list;
+          var postDataOptionList = postDataOption.list;
+          if(_this._dataAdditonOptionSort(preDataOptionList) > _this._dataAdditonOptionSort(postDataOptionList)) {
+            return 1;
+          }
+          if(_this._dataAdditonOptionSort(preDataOptionList) == _this._dataAdditonOptionSort(postDataOptionList)) {
+            return 0;
+          }
+          if(_this._dataAdditonOptionSort(preDataOptionList) < _this._dataAdditonOptionSort(postDataOptionList)) {
+            return -1;
+          }
+          return 0;
+        });
+      }
       return dataOption;
     },
 
-
+    _dataAdditonOptionSort: function(list) { // 정렬 함수, 기획파트에서 하드코딩 요청
+      switch(list) {
+        case '데이터 옵션':
+          return 0;
+        case '공유가능 데이터 한도':
+          return 1;
+        case '테더링 한도':
+          return 2;
+        case '데이터 리필하기':
+          return 3;
+        default :
+          return 4;
+      }
+      return 4;
+    },
 
     _getAdditionalBenf: function(curRedisData, compareRedisData) {
-      console.log("###########");
-      console.log(curRedisData);
-      console.log(compareRedisData);
-      console.log("###########");
       if(!curRedisData.prodBenfCd_04 && !compareRedisData.prodBenfCd_04) {
         return null;
       }
@@ -255,10 +286,7 @@ Tw.ProductCompare.prototype = {
           sepDataArr.push(curRedisData.prodBenfCd_04[i].prodBenfTitCd);
         }
       }
-      console.log("^^^^");
-      console.log(choDataArr);
-      console.log(sepDataArr);
-      console.log("^^^^");
+
       var choOptionListArr = JSON.parse(JSON.stringify(choDataArr));
       var sepOptionListArr = JSON.parse(JSON.stringify(sepDataArr));
       for(var i in compareRedisData.prodBenfCd_04) {
@@ -297,10 +325,9 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
+
       var finishRoof = '';
       var overlab;
-      console.log("%%%%%%%%",choOptionListArr);
-      console.log("^^^^^^^^^",sepOptionListArr);
       do {
         overlab = 'N';
         if(choOptionListArr.length == 0 || sepOptionListArr.length == 0) {
@@ -322,10 +349,6 @@ Tw.ProductCompare.prototype = {
         }
       } while(finishRoof == '');
 
-      console.log("^^^^");
-      console.log(choOptionListArr);
-      console.log(sepOptionListArr);
-      console.log("^^^^");
       var benfData = {sepList :[],chooseList:[]};
       for(var i in sepOptionListArr) {
         for(var j in curRedisData.prodBenfCd_04) {
@@ -375,10 +398,7 @@ Tw.ProductCompare.prototype = {
           } 
         }
       }
-      console.log("###########");
-      console.log(benfData);
-      console.log("###########");
-      
+
       if(benfData.chooseList){
         var curHaveList = '';
         for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) {
@@ -432,8 +452,40 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
-      
-      
+      console.log('정렬 전',benfData);
+      if(benfData.chooseList) {
+        benfData.chooseList.sort(function(preBenfData,postBenfData){
+          var preBenfDataSeq = Number(preBenfData.benfList.expsSeq);
+          var postBenfDataSeq = Number(postBenfData.benfList.expsSeq);
+          if(preBenfDataSeq > postBenfDataSeq) {
+            return 1;
+          }
+          if(preBenfDataSeq == postBenfDataSeq) {
+            return 0;
+          }
+          if(preBenfDataSeq < postBenfDataSeq) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      if(benfData.seqList) {
+        benfData.seqList.sort(function(preBenfData,postBenfData){
+          var preBenfDataSeq = Number(preBenfData.benfList.expsSeq);
+          var postBenfDataSeq = Number(postBenfData.benfList.expsSeq);
+          if(preBenfDataSeq > postBenfDataSeq) {
+            return 1;
+          }
+          if(preBenfDataSeq == postBenfDataSeq) {
+            return 0;
+          }
+          if(preBenfDataSeq < postBenfDataSeq) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      console.log('정렬 후',benfData);
       return benfData;
     },
 
@@ -773,8 +825,6 @@ Tw.ProductCompare.prototype = {
    * 비교대상에 대한 Redis 정보를 얻음
    */
   _getRedisData: function(curProdId, compareProdId, $target) {
-    console.log ("내 아이디",curProdId);
-    console.log ("비교할 아이디",compareProdId);
     if ( !curProdId || !compareProdId ) {
       return null;
     }
@@ -814,8 +864,11 @@ Tw.ProductCompare.prototype = {
         prodBenfCd_05 : [], // 안내문구 데이터 셋
       }
     }
+
       this.curRedisData = JSON.parse(JSON.stringify(curParse));
       this.compareRedisData = JSON.parse(JSON.stringify(compareParse));
+      console.log('curRedisData:',this.curRedisData);
+      console.log('compareRedisData:',this.compareRedisData);
       this._setCompareDataCur(this._myPLMData, this.curRedisData);
       this._setCompareDataCompare($target, this.compareRedisData);
       this.compareData.graphData = this._setGraphData();
@@ -903,15 +956,16 @@ Tw.ProductCompare.prototype = {
       chooseList.benfList.titleText = this._getTitleText(chooseList.benfList.prodBenfTitCd);
     }
     if(chooseList.benfList.prodBenfTitCd == '05') {
+      console.log(!chooseList.curData.prodId);
       if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) {
         chooseList.curSepData.prodId = 'Y';
         chooseList.curSepData.expsBenfNm = 'T맴버쉽';
         chooseList.curSepData.benfDtlCtt = '등급유지';
       }
       if(!chooseList.compareData.prodId && !chooseList.compareSepData.prodId && (chooseList.curData.prodId || chooseList.curSepData.prodId)) {
-        chooseList.curSepData.prodId = 'Y';
-        chooseList.curSepData.expsBenfNm = 'T맴버쉽';
-        chooseList.curSepData.benfDtlCtt = '등급유지';
+        chooseList.compareSepData.prodId = 'Y';
+        chooseList.compareSepData.expsBenfNm = 'T맴버쉽';
+        chooseList.compareSepData.benfDtlCtt = '등급유지';
       }
     }
 
