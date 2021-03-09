@@ -35,6 +35,7 @@ _%>
         </ul>
         <a href="#" class="detail-info-link" data-target="detailList"
            data-value='<%-JSON.stringify(feeItem.svcAgrmtDcObj) %>'>월별 상세 할인 내역 ></a>
+        <a href="#" data-target="detailList" data-value='<%-JSON.stringify(feeItem.svcAgrmtDcObj) %>' class="bundle-link">
         <div class="gray-box">
             <ul class="report-list item-no-border small">
                 <li class="report-item">
@@ -69,6 +70,7 @@ _%>
                 </span>
             </div>
         </div>
+        </a>
         <% if (feeItem.typeStr === 'FEE_TYPE_A') { %>
         <p class="warning">&lt;스페셜약정할인&gt;, &lt;LTE플러스약정할인&gt;이 &lt;요금약정할인&gt;으로 통합되었습니다. 이용에 참고해 주시기 바랍니다.</p>
         <% } %>
