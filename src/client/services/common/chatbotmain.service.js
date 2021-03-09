@@ -916,8 +916,12 @@ Tw.ChatbotMainService.prototype = {
             var url = $(e.currentTarget).data('url');
             Tw.Logger.info('[chatbot.service] [_bindEvent] url', url);
 
-            if(url && url.length > 0) {
-                _this._historyService.goLoad(url);
+            if ( url && url.length > 0 ) {
+                if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
+                    Tw.CommonHelper.openUrlExternal(url);
+                } else {
+                    _this._historyService.goLoad(url);
+                }
             }
 
             /*
@@ -1077,7 +1081,7 @@ Tw.ChatbotMainService.prototype = {
                 }
 
                 if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
-                    window.open(url, '_blank');
+                    Tw.CommonHelper.openUrlExternal(url);
                 } else {
                     _this._historyService.goLoad(url);
                 }
