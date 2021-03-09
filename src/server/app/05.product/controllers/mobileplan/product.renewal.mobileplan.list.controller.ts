@@ -49,7 +49,7 @@ export default class RenewProductPlans extends TwViewController {
           break;
         case 'F01122':
           series.seriesClass = 'prod-band';
-          break;
+        break;
         case 'F01124':
           series.seriesClass = 'prod-2nd';
           break;
@@ -127,9 +127,6 @@ export default class RenewProductPlans extends TwViewController {
             } else if (series.seriesCode == 'F01713') { //시리즈별 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.5g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == 'F01121' || series.seriesCode == 'F01122') { // 시리즈별 리스트형
-              for(let i in plans.groupProdList[0].prodList) {
-                console.log("!!!!!!!!!",plans.groupProdList[0].prodList[i]);
-              }
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.lte3g.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
             } else if(series.seriesCode == 'F01124') { // 시리즈별 2 카드형
               res.render('mobileplan/renewal/list/product.renewal.mobileplan.list.2ndDevice.html', { svcInfo, params, pageInfo, series, filterList, networkInfoFilter, plans, cdn, tabList, compareData });
