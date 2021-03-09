@@ -924,9 +924,14 @@ Tw.ChatbotService.prototype = {
             var url = $(e.currentTarget).data('url');
             Tw.Logger.info('[chatbot.service] [_bindEvent] url', url);
 
-            if(url && url.length > 0) {
-                _this._historyService.goLoad(url);
+            if ( url && url.length > 0 ) {
+                if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
+                    Tw.CommonHelper.openUrlExternal(url);
+                } else {
+                    _this._historyService.goLoad(url);
+                }
             }
+
             /*
             var chatbotGubun = ''
             if ($(e.currentTarget).hasClass('link-chatbot-go')) {
@@ -1026,7 +1031,7 @@ Tw.ChatbotService.prototype = {
                     );
                 }
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
-            }else{                
+            } else {                
                 if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
                     Tw.Logger.info('[chatbot.service] [_bindEvent] vcoloring/xbox chatbotGubun : ', chatbotGubun)
                     // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
@@ -1086,7 +1091,7 @@ Tw.ChatbotService.prototype = {
                 }
 
                 if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
-                    _this.openOutLink(e, url, res);
+                    Tw.CommonHelper.openUrlExternal(url);
                 } else {
                     _this._historyService.goLoad(url);
                 }

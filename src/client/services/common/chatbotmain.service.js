@@ -916,8 +916,12 @@ Tw.ChatbotMainService.prototype = {
             var url = $(e.currentTarget).data('url');
             Tw.Logger.info('[chatbot.service] [_bindEvent] url', url);
 
-            if(url && url.length > 0) {
-                _this._historyService.goLoad(url);
+            if ( url && url.length > 0 ) {
+                if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
+                    Tw.CommonHelper.openUrlExternal(url);
+                } else {
+                    _this._historyService.goLoad(url);
+                }
             }
 
             /*
@@ -1062,7 +1066,7 @@ Tw.ChatbotMainService.prototype = {
                     );
                 }
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
-            }else{
+            } else {
                // window.open(url, '_blank');
                 //Tw.CommonHelper.openUrlInApp(url);
                 // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
@@ -1077,7 +1081,7 @@ Tw.ChatbotMainService.prototype = {
                 }
 
                 if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
-                    _this.openOutLink(e, url, res);
+                    Tw.CommonHelper.openUrlExternal(url);
                 } else {
                     _this._historyService.goLoad(url);
                 }
