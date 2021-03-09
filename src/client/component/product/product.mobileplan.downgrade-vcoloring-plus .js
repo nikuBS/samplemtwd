@@ -135,7 +135,6 @@ Tw.ProductMobilePlanDowngradeVcoloringPlus.prototype = {
    * @param e - 변경 할게요 버튼 클릭 이벤트
    */
   _onChange: function() {
-    this._popupService.closeAll();    
     if (this._confirmCallback) {
       this._confirmCallback();
     }
@@ -147,10 +146,7 @@ Tw.ProductMobilePlanDowngradeVcoloringPlus.prototype = {
    * @desc 다음에 할게요. 클릭 시 요금제 리스트로 이동
    */
   _onClose: function() {
-    this._popupService.closeAll();
-    setTimeout($.proxy(function() {
-      this._historyService.goLoad('/product/callplan?prod_id=NA00007246');
-    }, this));
+    this._popupService.closeAll();    
   },
 
   /**
