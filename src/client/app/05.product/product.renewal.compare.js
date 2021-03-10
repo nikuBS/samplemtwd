@@ -125,7 +125,7 @@ Tw.ProductCompare.prototype = {
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.curPlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
       } else {
-        this.compareData.curPlan.speedControl = '속도 제어 없음';
+        this.compareData.curPlan.speedControl = '속도 제한 없음';
       }
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.curPlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
@@ -180,7 +180,7 @@ Tw.ProductCompare.prototype = {
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.comparePlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
       } else {
-        this.compareData.comparePlan.speedControl = '속도 제어 없음';
+        this.compareData.comparePlan.speedControl = '속도 제한 없음';
       }
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
@@ -261,7 +261,7 @@ Tw.ProductCompare.prototype = {
       switch(list) {
         case '데이터 옵션':
           return 0;
-        case '공유가능 데이터 한도':
+        case '데이터 공유 한도':
           return 1;
         case '테더링 한도':
           return 2;
@@ -936,11 +936,11 @@ Tw.ProductCompare.prototype = {
     if(sepList.benfList.prodBenfTitCd == '05') {
       if(!sepList.curData.prodId) {
         sepList.curData.prodId = 'Y';
-        sepList.curData.benfDtlCtt = '등급유지';
+        sepList.curData.benfDtlCtt = '기존 등급 유지';
       }
       if(!sepList.compareData.prodId) {
         sepList.compareData.prodId = 'Y';
-        sepList.compareData.benfDtlCtt = '등급유지';
+        sepList.compareData.benfDtlCtt = '기존 등급 유지';
       }
     }
     return sepList;
@@ -957,12 +957,12 @@ Tw.ProductCompare.prototype = {
       if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) {
         chooseList.curSepData.prodId = 'Y';
         chooseList.curSepData.expsBenfNm = 'T 멤버쉽';
-        chooseList.curSepData.benfDtlCtt = '등급유지';
+        chooseList.curSepData.benfDtlCtt = '기존 등급 유지';
       }
       if(!chooseList.compareData.prodId && !chooseList.compareSepData.prodId && (chooseList.curData.prodId || chooseList.curSepData.prodId)) {
         chooseList.compareSepData.prodId = 'Y';
         chooseList.compareSepData.expsBenfNm = 'T 멤버쉽';
-        chooseList.compareSepData.benfDtlCtt = '등급유지';
+        chooseList.compareSepData.benfDtlCtt = '기존 등급 유지';
       }
     }
 
@@ -976,7 +976,7 @@ Tw.ProductCompare.prototype = {
         titleText = '데이터 옵션';
         break;
       case '02':
-        titleText = '공유가능 데이터 한도';
+        titleText = '데이터 공유 한도';
         break;
       case '03':
         titleText = '테더링 한도';
