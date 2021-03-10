@@ -47,14 +47,14 @@ Tw.ChatbotCommonService.prototype = {
             { keyword: 'flo', message:'음악을 즐겨듣는 당신에게 추천드립니다.<br>이젠 FLO 전용 데이터로 음악을 즐겨보세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006520'},
             { keyword: 'xbox', message:'5GX 클라우드 게임 알아보기', type: 'A', linkUrl : 'https://www.5gxcloudgame.com/main'},
             { keyword: 'xbox', message:'지금 5GX 클라우드 게임 신청하면<br>1개월 100원 이용권 혜택이 찾아갑니다!', type: 'B', linkUrl : 'https://www.5gxcloudgame.com/main'},
-            { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210308', endDate : '20210411'},
-            { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210308', endDate : '20210411'}
+            { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210319', endDate : '20210411'},
+            { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210319', endDate : '20210411'}
         ];
     },
 
     /**
     * @function
-    * @desc 이미 표시된 그리팅 메시지 순서변경
+    * @desc 노출 안된 메시지 순서를 맨 앞으로 변경
     */
     _changeMlsGreetingRangking: function(mlsGreetingRangking) {
         Tw.Logger.info('[chatbot.common.service] [_changeMlsGreetingRangking] mlsGreetingRangking : ', mlsGreetingRangking);
