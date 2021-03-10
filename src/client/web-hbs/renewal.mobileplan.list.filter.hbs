@@ -12,7 +12,7 @@
             <div class="rn-prod-inner">
                 <ul>
                     {{#each data.quickFilters}}
-                        <li><a class="quickFilterBtn" data-code="{{prodFltId}}">#{{prodFltNm}}</a></li>
+                        <li><a class="quickFilterBtn" data-code="{{prodFltId}}">#{{{prodFltNm}}}</a></li>
                     {{/each}}
                 </ul>
             </div>
@@ -35,7 +35,7 @@
                                                 {{#each subFilters}}
                                                     <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
                                                         <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
-                                                            <span class="txt">{{prodFltDesc}}</span>
+                                                            <span class="txt">{{{prodFltDesc}}}</span>
                                                             <span class="limit">{{prodFltNm}}</span>
                                                         </a>
                                                     </li>
