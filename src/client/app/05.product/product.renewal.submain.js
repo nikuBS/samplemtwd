@@ -539,7 +539,7 @@ Tw.ProductRenewalSubmain.prototype = {
       return;
     }
 
-    var sectionList = this._sectionSort.split(',');
+    var sectionList = this._sectionSort.split(',').reverse();
     var isQuickFilter = _.find(sectionList, function(item) {
       return item === 'QUICK_FILTER' ? true : false; // sectionList에 퀵 필터가 있는지 체크
     });
