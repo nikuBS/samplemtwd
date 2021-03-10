@@ -94,11 +94,12 @@ Tw.MyTFareBillPrepayMain.prototype = {
         .setEid('agreeYes', 2)
         .build();
       $layer.on('click', '.fe-close', function () {
-        // 팝업 닫기 및 이전 페이지로 이동하기 위해 -2
-        self._historyService.go(-2);
+        // 팝업 닫기 및 이전 페이지로 이동
+        self._popupService.close();
+        self._historyService.goBack();
       });
       $layer.on('click', '[data-url]', $.proxy(self._goUrl, self));
-    }, null, 'checkAgree');
+    }, null, null);
   },
 
   /**
@@ -275,14 +276,16 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @private
    */
   _getDefData: function (title) {
+    var payLimitAmt = '20000'; // 총한도(월한도)
     return {
       code: Tw.API_CODE.CODE_00,
       title: title,
       result: {
-        tmthChrgPsblAmt: '0', // 선결제 가능금액
-        tmthUseAmt: '0', // 당월 사용금액
-        payLimitAmt: '0', // 총한도(월한도)
-        remainUseLimit: '0' // 잔여한도
+        tmthChrgPsblAmt: '100000', // 선결제 가능금액
+        tmthUseAmt: '1000', // 당월 사용금액
+        useContentsLimitAmt: payLimitAmt,
+        microPayLimitAmt: payLimitAmt,
+        remainUseLimit: '50000' // 잔여한도
       }
     };
   },
@@ -681,11 +684,11 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
 
   _startLoading: function () {
-    Tw.CommonHelper.startLoading(this.$title ? this.$container : this.$amountUsed, 'grey');
+    Tw.CommonHelper.startLoading(this.$title ? this.$className : this.$amountUsed, 'grey');
   },
 
   _endLoading: function () {
-    Tw.CommonHelper.endLoading(this.$title ? this.$container : this.$amountUsed);
+    Tw.CommonHelper.endLoading(this.$title ? this.$className : this.$amountUsed);
   },
 
   /**
