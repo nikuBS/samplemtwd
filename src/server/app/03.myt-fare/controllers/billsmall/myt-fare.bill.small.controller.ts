@@ -34,22 +34,42 @@ class MyTFareBillSmall extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.apiService.setTimeout(3000); // 타임아웃 설정
+    const isBubin = ['R', 'D'].indexOf(svcInfo.svcGr) > -1; // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
+    const reqList = new Array();
+    if (!isBubin) {
+      reqList.push(this.getHistory());
+      reqList.push(this.getPasswordStatus());
+      reqList.push(this.getUnusualStatus());
+      reqList.push(this.getAutoCardInfo());
+    }
+    reqList.push(this.getFaqList());
+
     Observable.combineLatest(
-      this.getHistory(),
-      this.getPasswordStatus(),
-      this.getUnusualStatus(),
-      this.getAutoCardInfo(),
-      this.getFaqList()
-    ).subscribe(([microHistory, passwordStatus, unusualStatus, autoCardInfo, faqList]) => {
+      reqList
+    ).subscribe((responses) => {
       const param = {
-        usedInfo: this.getHistoryInfo(microHistory),
-        passwordInfo: this.getPasswordInfo(passwordStatus),
-        unusualYn: unusualStatus, // 특이고객 여부
-        autoCardInfo,
-        faqList,
+        usedInfo: {},
+        passwordInfo: {},
+        unusualYn: {}, // 특이고객 여부
+        autoCardInfo : {},
+        isBubin,
         svcInfo, // 회선 정보 (필수)
         pageInfo // 페이지 정보 (필수)
       };
+      if (!isBubin) {
+        const [microHistory, passwordStatus, unusualStatus, autoCardInfo] = responses.splice(0, 4);
+        Object.assign(param, {
+          usedInfo: this.getHistoryInfo(microHistory),
+          passwordInfo: this.getPasswordInfo(passwordStatus),
+          unusualYn: unusualStatus, // 특이고객 여부
+          autoCardInfo
+        });
+      }
+      Object.assign(param, {
+        faqList: responses.pop()
+      });
+
       res.render('billsmall/myt-fare.bill.small.html', this.parseData(param));
     }, (error) => {
       this.errorRender(res, error, svcInfo, pageInfo);
@@ -145,10 +165,6 @@ class MyTFareBillSmall extends TwViewController {
       this.apiService.request(API_CMD.BFF_07_0072, {}),
       this.apiService.request(API_CMD.BFF_07_0080, {})
     ).map(([small, contents]) => {
-      // const error = this.error.apiError([small, contents]);
-      /*if (!FormatHelper.isEmpty(error) && error.code !== API_ADD_SVC_ERROR.BIL0030) {
-        return error;
-      }*/
       return {
         small: this.parseCardInfo(small.result),
         contents: this.parseCardInfo(contents.result)

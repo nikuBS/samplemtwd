@@ -4,7 +4,7 @@
 _%>
 <li role="tabpanel" id="cont-<%-tabName%>-tab" class="fe-<%-tabName%>" data-title="<%-title%>" aria-labelledby="cont-<%-tabName%>" aria-selected="true">
     <%_
-        if(data){
+        if(!isBubin && data){
             const {autoChrgStCd} = data;
             const isUsed = autoChrgStCd === 'U'; // U:사용중, D: 신규
             const stateCd = autoChrgStCd === 'U' ? 'U' : 'D';
