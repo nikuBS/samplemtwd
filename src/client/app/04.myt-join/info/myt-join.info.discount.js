@@ -214,6 +214,8 @@ Tw.MyTJoinInfoDiscountAdv.prototype._init = function () {
   // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
   /* this._lineComponent = */
   // new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+  // 오퍼통계코드 추가
+  new Tw.XtractorService(this.$container);
   // 약정할인금액 그래프 깨지는 문제 수정 건
   var disHorizonBar = this.$container.find('.horizon-bar-wrap');
   if ( disHorizonBar.length ) {
