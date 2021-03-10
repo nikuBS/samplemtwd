@@ -644,7 +644,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   MICRO: '휴대폰 결제',
   CONTENTS: '콘텐츠 이용료',
   USABLE: '사용',
-  MICRO_USE: '휴대폰 결제 사용이 ',
+  MICRO_USE: '휴대폰 결제가 ',
   MSG_DONE: '되었습니다.',
   ALLOW: '허용',
   PROHIBIT: '차단',
