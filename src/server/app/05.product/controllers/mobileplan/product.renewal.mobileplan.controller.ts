@@ -707,7 +707,9 @@ export default class RenewProduct extends TwViewController {
      * @param svcInfo 
      */
     private isCase4(svcInfo) {
-      return (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) || (['R', 'D', 'E', 'O'].indexOf(svcInfo.svcGr) >= 0);
+      // 2021. 03. 10 [기획] 일반 법인 이동전화, SKT 법인 이동전화, SWG기준 실사용자 등록된 법인 이동전화에 대한 조건을 빼달라고함
+      return (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) || (['O'].indexOf(svcInfo.svcGr) >= 0); 
+      // return (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) || (['R', 'D', 'E', 'O'].indexOf(svcInfo.svcGr) >= 0);
     }
 
     /**
