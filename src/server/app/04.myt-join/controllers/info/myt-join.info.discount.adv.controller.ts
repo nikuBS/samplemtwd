@@ -139,19 +139,22 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
       if ( item.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(item.result) ) {
         faqList.push({
           title: item.result.inqCtt,
-          answer: item.result.answCtt
+          answer: item.result.answCtt,
+          xtId: 'CMMA_A3_B13_C65-12'
         });
       }
       if ( item1.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(item1.result) ) {
         faqList.push({
           title: item1.result.inqCtt,
-          answer: item1.result.answCtt
+          answer: item1.result.answCtt,
+          xtId: 'CMMA_A3_B13_C65-13'
         });
       }
       if ( item2.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(item2.result) ) {
         faqList.push({
           title: item2.result.inqCtt,
-          answer: item2.result.answCtt
+          answer: item2.result.answCtt,
+          xtId: 'CMMA_A3_B13_C65-14'
         });
       }
       return faqList;

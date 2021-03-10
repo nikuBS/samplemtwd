@@ -59,10 +59,14 @@ _%>
                                     <div class="hash-wrap">
                                         <ul class="hash-list normal">
                                             <li class="hash-item">
-                                                <a href="/myt-fare/info/history" class="hash">#요금납부내역</a>
+                                                <a href="/myt-fare/info/history"
+                                                   data-xt_eid="CMMA_A3_B13_C65-7" data-xt_csid="NO" data-xt_action="BC"
+                                                   class="hash">#요금납부내역</a>
                                             </li>
                                             <li class="hash-item">
-                                                <a href="/myt-join/combinations" class="hash">#나의 결합상품</a>
+                                                <a href="/myt-join/combinations"
+                                                   data-xt_eid="CMMA_A3_B13_C65-8" data-xt_csid="NO" data-xt_action="BC"
+                                                   class="hash">#나의 결합상품</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -100,7 +104,9 @@ _%>
                                 <div class="hash-wrap">
                                     <ul class="hash-list normal">
                                         <li class="hash-item">
-                                            <a href="/myt-fare/info/history" class="hash">#요금납부내역</a>
+                                            <a href="/myt-fare/info/history"
+                                               data-xt_eid="CMMA_A3_B13_C65-11" data-xt_csid="NO" data-xt_action="BC"
+                                               class="hash">#요금납부내역</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -119,14 +125,15 @@ _%>
                                         <div class="gray-box">
                                             <ul class="report-list item-no-border small">
                                                 <li class="report-item">
-                                                    <dl class="report-define d-wrap">
+                                                    <dl class="report-define d-wrap fs15">
                                                         <dt class="report-tit">모델명</dt>
                                                         <dd class="report-cont"><%= commDataInfo.tRental.rentEqpMdlNm %></dd>
                                                     </dl>
                                                 </li>
                                             </ul>
                                         </div>
-                                        <a href="/myt-fare/billguide/guide" class="bundle-link">
+                                        <a href="/myt-fare/billguide/guide" class="bundle-link"
+                                           data-xt_eid="CMMA_A3_B13_C65-17" data-xt_csid="NO" data-xt_action="BC">
                                         <div class="gray-box claim-box">
                                             <p class="contract-summary">월 이용요금은 <strong><%= commDataInfo.tRental.mthRentAmt %>원</strong> 입니다.</p>
                                             <ul class="report-list item-no-border smaller">
@@ -301,7 +308,8 @@ _%>
                                                     <% for (var i = 0; i < faqList.length; i++) { %>
                                                     <li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
                                                         <div class="acco-tit">
-                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr">
+                                                            <button role="button" aria-pressed="false" class="acc-tit down-arr"
+                                                                    data-xt_eid="<%= faqList[i].xtId %>" data-xt_csid="NO" data-xt_action="BC">
                                                                 <%= faqList[i].title %>
                                                             </button>
                                                             <!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
@@ -318,7 +326,10 @@ _%>
                                 </div>
                                 <!--// .widget -->
                             </div>
-                            <a href="/customer/faq" class="other-info-btn"><span>다른 정보를 찾고 계신가요?</span></a>
+                            <a href="/customer/faq" class="other-info-btn"
+                               data-xt_eid="CMMA_A3_B13_C65-15" data-xt_csid="NO" data-xt_action="BC">
+                                <span>다른 정보를 찾고 계신가요?</span>
+                            </a>
                         </div>
                     </div>
                 </section>
