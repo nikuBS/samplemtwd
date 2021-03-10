@@ -34,8 +34,6 @@ Tw.MyTFareBillPrepayAccount.prototype = {
    */
   _init: function () {
     var prepayMain = new Tw.MyTFareBillPrepayMain(this.$container, this.$title, '.popup-page', $.proxy(this._setAvailableAmount, this));
-    prepayMain.initRequestParam();
-    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     prepayMain.getRemainLimit();
 
     this._initVariables();
