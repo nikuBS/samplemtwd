@@ -676,15 +676,16 @@
 /* 하단 요금제 확인 */
 .tod-renewalBody .filter-wrap .confirm-wrap {position: absolute; left:0; bottom:0; z-index: 30;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .c-wrap {bottom:0;}
-.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap {position:fixed; left:0; bottom:-8.375rem; width:100%; background: #fff; -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-transition: bottom 0.5s; transition: bottom 0.5s; }
-.tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap {display: -webkit-box; display:flex;-webkit-justify-content:space-between; justify-content:space-between; padding:0.9375rem 1.875rem; overflow:hidden;}
+.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap {position:fixed; left:0; bottom:-8.375rem; width:100%; -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-transition: bottom 0.5s; transition: bottom 0.5s; }
+.tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap {display: -webkit-box; display:flex;-webkit-justify-content:space-between; justify-content:space-between; padding:0.9375rem 1.875rem; overflow:hidden; background: #fff;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .reset {color:#262626; font-size:0.75rem;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .reset:before {content:""; display:inline-block; vertical-align:middle; width:1rem; height:1rem; background:url('/img/product/v2/icon-reset.svg') no-repeat;}
 .tod-renewalBody .filter-wrap .confirm-wrap.on .reset-wrap .confrim {padding:0.6875rem 0 0.625rem; width:9rem; height:2.4375rem; border-radius:1.4375rem; box-shadow:-0.25rem -0.375rem 0.625rem 0 #ffffff, 0.25rem 0.4375rem 0.625rem 0 rgba(247, 98, 82, 0.33), -0.125rem -0.125rem 0.125rem 0 #ffffff; background:#f76252; color:#fff; font-weight:500;}
 
-.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap .tod-filter-keyword > ul {padding-left:1.875rem}
+.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap .tod-filter-keyword > ul {padding:0}
+.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap .tod-filter-keyword > ul > li {padding: 0.9375rem 0 0.9375rem 0.625rem}
+.tod-renewalBody .filter-wrap .confirm-wrap .c-wrap .tod-filter-keyword > ul > li:first-child {padding-left:1.875rem}
 .tod-renewalBody .filter-wrap .confirm-wrap .c-wrap .tod-filter-keyword > ul > li:last-child {padding-right:1.875rem}
-
 
 /* 210113 아코디언 수정 */
 .tod-renewalBody .filter-wrap .accordion .acco-list.plan-list .acco-box:after {display:none}
