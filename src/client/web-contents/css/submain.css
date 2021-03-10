@@ -207,7 +207,7 @@ body.tod-white{background:#fff}
 .tod-submain .hash-wrap{overflow:hidden;}
 .tod-submain [class *= 'wrap'] + .hash-wrap, 
 .tod-submain .report-list + .hash-wrap{padding-top:1.5rem}
-.tod-submain .report-list + .hash-wrap{margin-top:-1rem}
+.tod-submain .report-list + .hash-wrap{margin-top:-0.5rem}
 .tod-submain .acc-list-wrap + .hash-wrap, 
 .tod-submain .short-link-wrap + .hash-wrap{margin:0 -1.5rem; padding:1.5rem 1.5rem 0; border-top:1px solid #f4f4f4}
 .tod-submain .hash-list{font-size:0; margin:0 -0.1875rem -0.625rem 0 }
@@ -366,9 +366,9 @@ body.tod-white{background:#fff}
 .tod-submain .charge-cont .sel-bill .term{font-size:0.9375rem; font-weight:600; color:#000;}
 .tod-submain .charge-cont .sel-bill .term.pps{font-size:0.75rem; font-weight:400; color:#333}
 .tod-submain .charge-cont .sel-bill .term.pps .date{display:block}
-.tod-submain .charge-cont .charge{letter-spacing:-2px; font-size:1.875rem; font-weight:700; color:#333; line-height:0.83 }
+.tod-submain .charge-cont .charge{letter-spacing:-2px; font-size:1.5rem; font-weight:700; color:#333; line-height:0.83 }
 .tod-submain .charge-cont .charge a{-webkit-tap-highlight-color:rgba(0, 0, 0, 0) !important; -tap-highlight-color:rgba(0, 0, 0, 0) !important; font-weight:inherit; color:inherit}
-.tod-submain .charge-cont .charge .unit{font-size:1.5rem; font-weight:600; margin-left:0.1875rem; vertical-align:1px; font-weight:400}
+.tod-submain .charge-cont .charge .unit{font-size:1.3rem; font-weight:600; margin-left:0.1875rem; vertical-align:1px; font-weight:400}
 .tod-submain .charge-cont .payment-msg{font-size:0.9375rem; line-height:1.5rem; color:#333; padding:1rem 0 1.5rem; border-top:1px solid #f2f2f2;}
 .tod-submain .charge-cont .payment-msg.top{padding:0 0 1.75rem; border:none; font-size:1.125rem}
 .tod-submain .charge-cont .payment-msg .highlight{position:relative}
