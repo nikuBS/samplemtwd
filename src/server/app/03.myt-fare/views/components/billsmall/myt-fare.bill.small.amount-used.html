@@ -54,10 +54,10 @@
             <div class="hash-wrap">
                 <ul class="hash-list">
                     <li class="hash-item"><!-- disabled -->
-                        <a href="#" class="hash small fe-change-limit" data-unusual-state="<%-unusualYn%>" data-make-eid="changeLimit">#한도 변경</a>
+                        <a href="#" class="hash fe-change-limit" data-unusual-state="<%-unusualYn%>" data-make-eid="changeLimit">#한도 변경</a>
                     </li>
                     <li class="hash-item">
-                        <a href="#" class="hash small fe-auto-prepay" data-unusual-state="<%-unusualYn%>"
+                        <a href="#" class="hash fe-auto-prepay" data-unusual-state="<%-unusualYn%>"
                            data-state="{{autoChrgStCd}}" data-make-eid="autoPrepay-{{stateCd}}">#자동 선결제 {{stateTxt}}</a>
                     </li>
                     {{#ifCond title '===' 'small'}}
@@ -65,7 +65,7 @@
                             const {cpinStCd, bDay} = passwordInfo.result;
                         _%>
                         <li class="hash-item">
-                            <a href="#" class="hash small fe-set-password"
+                            <a href="#" class="hash fe-set-password"
                                data-cpin="<%= cpinStCd %>"
                                data-code="<%= passwordInfo.code %>"
                                data-msg="<%= passwordInfo.msg %>"
@@ -77,7 +77,7 @@
                         <%_}_%>
                     {{/ifCond}}
                     <li class="hash-item">
-                        <a href="{{historyUrl}}" class="hash small fe-micro-history" data-make-eid="searchHistory">#이용 내역 조회</a>
+                        <a href="{{historyUrl}}" class="hash fe-micro-history" data-make-eid="searchHistory">#이용 내역 조회</a>
                     </li>
                 </ul>
             </div>
