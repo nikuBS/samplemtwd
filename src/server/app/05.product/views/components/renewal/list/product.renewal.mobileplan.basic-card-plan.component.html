@@ -4,16 +4,21 @@
             <% if(thisPlan.filters) { %>
                 <% for(let n=0; n< thisPlan.filters.length; n++) { %>
                     <% if(isTheme == 'Y') { %>
-                        <% if(thisPlan.filters[n].prodFltId == 'F01713'){ %>
+                        <% if(thisPlan.filters[n].prodFltId == 'F01713') { %>
                             <span class="i-tag-cr1">5G</span>
-                        <% } else if(thisPlan.filters[n].prodFltId == 'F01121') {%>
+                            <% isTheme = ''; %>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01121') { %>
                             <span class="i-tag-cr2">LTE</span>
-                        <% } else if(thisPlan.filters[n].prodFltId == 'F01122') {%>
+                            <% isTheme = ''; %>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01122') { %>
                             <span class="i-tag-cr4">3G</span>
-                        <% } else if(thisPlan.filters[n].prodFltId == 'F01124') {%>
+                            <% isTheme = ''; %>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01124') { %>
                             <span class="i-tag-cr3">스마트기기</span>
-                        <% } else if(thisPlan.filters[n].prodFltId == 'F01125') {%>
+                            <% isTheme = ''; %>
+                        <% } else if(thisPlan.filters[n].prodFltId == 'F01125') { %>
                             <span class="i-tag-cr3">선불</span>
+                            <% isTheme = ''; %>
                         <% } %>
                     <% } %>
                     <% if(thisPlan.filters[n].prodFltId == 'F01163'){ %>
@@ -31,14 +36,19 @@
                     <% if(isTheme == 'Y') { %>
                         <% if(thisPlan.prodFltList[n].prodFltId == 'F01713'){ %>
                             <span class="i-tag-cr1">5G</span>
+                            <% isTheme = ''; %>
                         <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01121') {%>
                             <span class="i-tag-cr2">LTE</span>
+                            <% isTheme = ''; %>
                         <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01122') {%>
                             <span class="i-tag-cr4">3G</span>
+                            <% isTheme = ''; %>
                         <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01124') {%>
                             <span class="i-tag-cr3">스마트기기</span>
+                            <% isTheme = ''; %>
                         <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01125') {%>
                             <span class="i-tag-cr3">선불</span>
+                            <% isTheme = ''; %>
                         <% } %>
                     <% } %>
                     <% if(thisPlan.prodFltList[n].prodFltId == 'F01163'){ %>
@@ -55,7 +65,7 @@
         </div>
         <div class="col-right">
             <% if(svcInfo){ %>
-                <% if(svcInfo.prodId == thisPlan.prodId){ %>
+                <% if(svcInfo.prodId == thisPlan.prodId) { %>
                     <span class="i-tag-myplan">사용중</span>
                 <% } %>
             <% } %>

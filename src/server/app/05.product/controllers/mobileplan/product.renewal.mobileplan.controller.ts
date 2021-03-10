@@ -506,9 +506,14 @@ export default class RenewProduct extends TwViewController {
       // 상품 스펙 공통 헬퍼 사용하여 컨버팅
       const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
+      const isProductShow = this.convertUndefined(data.feePlanProd.basDataGbTxt) 
+        || this.convertUndefined(data.feePlanProd.basDataMbTxt) 
+        || this.convertUndefined(data.feePlanProd.basOfrVcallTmsTxt)
+        || this.convertUndefined(data.feePlanProd.basOfrVcallTmsTxt);
+
       return {
         product: FormatHelper.isEmpty(data.feePlanProd) ? null : {
-          isProductShow: !!(spec.basOfrDataQtyCtt || spec.basOfrVcallTmsCtt || spec.basOfrCharCntCtt), // 데이터, 음성, 문자 데이터 중 하나라도 존재하면 데이터, 음성, 문자를 출력한다
+          isProductShow: isProductShow, // 데이터, 음성, 문자 데이터 중 하나라도 존재하면 데이터, 음성, 문자를 출력한다
           basProductNm: data.feePlanProd.prodNm, // 상품명
           basFeeInfo: spec.basFeeInfo,  // 금액
           basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
