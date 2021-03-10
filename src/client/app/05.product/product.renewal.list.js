@@ -310,9 +310,10 @@ Tw.ProductRenewalList.prototype = {
           _this._historyService.replaceURL('/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + ',' + e.currentTarget.dataset.code);
         }
         }, this));
+        
       $('.reset').click($.proxy(this._handleResetFilters, this));
       $('.confrim').click($.proxy(this._confirmFilter, this));
-      // $layer.find('.link').click(_.debounce($.proxy(this._openSelectTagPopup, this, $layer), 300));
+
       var $headerH = $('.page-header').height();
       var $checked = $('.check-box > ul > li > a');
       $(".filter-wrap").scroll(function() {    
@@ -343,7 +344,7 @@ Tw.ProductRenewalList.prototype = {
       $checked.on('click', function() { // 항목 선택 시 하단에 선택한 필터 항목 표시
         var $quickFilterBtn = $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li');
         var quickFilterCheck = false;
-        for(var i = 0; (i<$quickFilterBtn.length) && !quickFilterCheck; i++) {
+        for(var i = 0; (i<$quickFilterBtn.length) && !quickFilterCheck; i++) { // 퀵필터가 선택되어 있는지 확인
           quickFilterCheck = $quickFilterBtn.eq(i).hasClass('on');
         }
         if(quickFilterCheck) {
@@ -363,19 +364,33 @@ Tw.ProductRenewalList.prototype = {
           }
         }
       });
+      this._filterScript();
       this.$container.find('.f-del-filter').click($.proxy(this._deleteSelectFilter, this));
     },
 
+    _filterScript: function() { // 버튼 클릭시 필터 헤더부분 숨김
+      var $element = $('button.list-box').closest('li'),
+          offsetTop = [],
+          index = 0;
+      // 엘리먼트 높이값 계산 - document가 스크롤되는 것이 아닌 filter-wrap이 스크롤(offset top이 유동적으로 변경됨)이 되어 높이값을 초기에 계산한다.
+      setTimeout(function () {
+          $element.each(function (index, element) {
+              offsetTop[index] = $(element).offset().top - $('.tod-renewal-product-tab').outerHeight();
+          });
+      }, 200);
+      // 버튼 클릭시 스크롤 이동
+      $('button.list-box').on('click', function () {
+          if ($(this).attr('aria-pressed') === 'false') {
+              index = $element.index($(this).closest('li'));
+              setTimeout(function () {
+                  $(".filter-wrap").scrollTop(offsetTop[index]);
+              }, 200);
+          }
+      });
+    },
+
     _handleCloseSelectFilterPopup: function() {
-      
-     
-      // if (this._loadedNewSearch) {
-      //   if (this._params.searchFltIds) {
-      //     location.href = location.pathname + '?filters=' + this._params.searchFltIds;
-      //   } else {
-      //     location.href = location.pathname;
-      //   }
-      // }
+
     },
 
     _confirmFilter: function() { // 필터 선택 후 요금제 확인 버튼 선택 시
@@ -389,14 +404,12 @@ Tw.ProductRenewalList.prototype = {
           this._params.searchFltIds += ',';
         }
       }
-      
       if(this.curMobileFilter[0] !== '' && this.curMobileFilter[0] !== undefined) {
         if(this._params.searchFltIds !== ''){
           this._params.searchFltIds += ',';
         }
         this._params.searchFltIds += this.curMobileFilter[0];
       }
-
       this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
         .done($.proxy(this._handleLoadDataWithNewFilters, this, $('.confrim'))); 
     },
@@ -406,6 +419,7 @@ Tw.ProductRenewalList.prototype = {
         Tw.Error(resp.code, resp.msg).pop();
         return;
       }
+      console.log('확인',resp);
 
       if (resp.result.products.length === 0) {
         this._popupService.open({
@@ -422,8 +436,17 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _handleResetFilters: function() { //선택 초기화 버튼 선택 시
-      $('#selectFilter').empty();
-      $('.check-box > ul > li').removeClass('on');
+      var $quickFilterBtn = $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li');
+      var quickFilterCheck = false;
+      for(var i = 0; (i<$quickFilterBtn.length) && !quickFilterCheck; i++) { // 퀵필터가 있는지 확인
+        quickFilterCheck = $quickFilterBtn.eq(i).hasClass('on');
+      }
+      if(quickFilterCheck) {
+        this._popupQuickFilter();
+      } else {
+        $('#selectFilter').empty();
+        $('.check-box > ul > li').removeClass('on');
+      }
     },
     _handleResetQuickFilters: function() {
       $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li').removeClass('on');

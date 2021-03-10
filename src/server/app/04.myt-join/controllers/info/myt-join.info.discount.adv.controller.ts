@@ -79,7 +79,7 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
     const { faqList, svcInfo, res } = params;
     const requestIds: any = [];
     const requests = this.commDataInfo.feeInfo.map(item => {
-      if (item.svcAgrmtDcObj) {
+      if ( item.svcAgrmtDcObj ) {
         requestIds.push(item.svcAgrmtDcObj.svcAgrmtDcId);
         return this.apiService.request(API_CMD.BFF_05_0076, {
           svcAgrmtCdId: item.svcAgrmtDcObj.svcAgrmtDcId,
@@ -87,19 +87,19 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
         });
       }
     });
-    if (requests.length) {
+    if ( requests.length ) {
       Observable.combineLatest(requests)
         .subscribe(responses => {
           responses.forEach((resp: any, index: number) => {
-            if (resp.code === API_CODE.CODE_00) {
-              if (!FormatHelper.isEmpty(resp.result)) {
+            if ( resp.code === API_CODE.CODE_00 ) {
+              if ( !FormatHelper.isEmpty(resp.result) ) {
                 this.commDataInfo.feeInfo.forEach(feeItem => {
-                  if (feeItem.svcAgrmtDcObj) {
-                    if (requestIds[index] === feeItem.svcAgrmtDcObj.svcAgrmtDcId) {
+                  if ( feeItem.svcAgrmtDcObj ) {
+                    if ( requestIds[index] === feeItem.svcAgrmtDcObj.svcAgrmtDcId ) {
                       feeItem.paymentCount = resp.result.agrmt.length;
                     }
                   }
-                })
+                });
               }
             }
           });
@@ -128,12 +128,19 @@ class MytJoinInfoDiscountAdvController extends MytJoinInfoDiscount {
 
   /**
    * 자주하는질문 API 요청
+   * 상용 조회 값 다름
    */
   _getFaqRequest() {
     return Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010556' }),
-      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010557' }),
-      this.apiService.request(API_CMD.BFF_08_0073, { ifaqId: '1606010558' })
+      this.apiService.request(API_CMD.BFF_08_0073, {
+        ifaqId: process.env.NODE_ENV === 'prd' ? '1606010620' : '1606010556'
+      }),
+      this.apiService.request(API_CMD.BFF_08_0073, {
+        ifaqId: process.env.NODE_ENV === 'prd' ? '1606010619' : '1606010557'
+      }),
+      this.apiService.request(API_CMD.BFF_08_0073, {
+        ifaqId: process.env.NODE_ENV === 'prd' ? '1606010618' : '1606010558'
+      })
     ).map(([item, item1, item2]) => {
       const faqList: any = [];
       if ( item.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(item.result) ) {

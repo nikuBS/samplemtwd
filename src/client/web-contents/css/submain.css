@@ -52,7 +52,7 @@ body.tod-white{background:#fff}
 
 /* 회선 선택 */
 .tod-submain .tod-line-sel-wrap {position:relative; z-index:10; min-height:3.25rem;}
-.tod-submain .tod-line-sel-wrap .sel-show-btn{display:block; position:fixed; width:100%; left:0;/*  top:3.25rem */ -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important;}
+.tod-submain .tod-line-sel-wrap .sel-show-btn{display:inline-block; position:fixed; width:100%; left:0;/*  top:3.25rem */ -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -tap-highlight-color: rgba(0, 0, 0, 0) !important; text-align:left}
 .tod-submain .tod-line-sel-wrap .sel-show{display:-webkit-box; display:flex; height:3.25rem; background:#f65252; padding:15px 16px 13px; box-sizing:border-box;-webkit-box-pack: justify; justify-content:space-between; -webkit-box-align: center; align-items:center; }
 .tod-submain .tod-line-sel-wrap .sel-show .line-info{display:-webkit-box; display:flex; width:-webkit-calc(100% - 6.875rem);  width:calc(100% - 6.875rem) ; height:100%; -webkit-box-align: center; align-items:center; font-size:0.9375rem; color:#fff;}
 .tod-submain .tod-line-sel-wrap .sel-show .line-info .type-ico{display:inline-block; width:1.5rem; height:1.5rem; margin-right:0.25rem; vertical-align:middle ; flex-shrink:0}

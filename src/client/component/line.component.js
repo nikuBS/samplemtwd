@@ -678,6 +678,7 @@ Tw.LineComponentV2.prototype = $.extend(Tw.LineComponentV2.prototype, {
    * @private
    */
   _onClickLine: function ($event) {
+    $event.preventDefault();
     var $target = $($event.currentTarget);
     var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
     var svcCount = $target.data('svcCnt');

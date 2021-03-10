@@ -175,14 +175,14 @@ class MyTFareBillSmall extends TwViewController {
 
     const isPrd = String(process.env.NODE_ENV) === 'prd', // 상용 여부
       faqIds: any = [];
-    faqIds.push(['' , '1606010545', '24']);
-    faqIds.push(['' , '1606010546', '25']);
-    faqIds.push(['' , '1606010547', '26']);
-    faqIds.push(['' , '1606010548', '27']);
-    faqIds.push(['' , '1606010549', '28']);
-    faqIds.push(['' , '1606010550', '29']);
-    faqIds.push(['' , '1606010551', '30']);
-    faqIds.push(['' , '1606010552', '31']);
+    faqIds.push(['1606010621' , '1606010545', '24']);
+    faqIds.push(['1606010622' , '1606010546', '25']);
+    faqIds.push(['1606010623' , '1606010547', '26']);
+    faqIds.push(['1606010624' , '1606010548', '27']);
+    faqIds.push(['1606010625' , '1606010549', '28']);
+    faqIds.push(['1606010626' , '1606010550', '29']);
+    faqIds.push(['1606010627' , '1606010551', '30']);
+    faqIds.push(['1606010628' , '1606010552', '31']);
 
     const getFaqId = (ifaqIds: Array<string>) => {
       return ifaqIds[isPrd ? 0 : 1];
@@ -200,6 +200,7 @@ class MyTFareBillSmall extends TwViewController {
         아래 faq id만 조회하여 노출한다.
         [0] : 상용 faq id
         [1] : 스테이징 faq id
+        [2] : 오퍼통계 코드
      */
     return Observable.combineLatest(
       requests

@@ -220,8 +220,6 @@ Tw.ProductMobilePlanAddDowngradeProtect.prototype = {
       // this._apiService.request(Tw.API_CMD.BFF_10_0000, {});
     }
 
-    this._popupService.closeAll();
-
     if (this._confirmCallback) {
       this._confirmCallback();
     }

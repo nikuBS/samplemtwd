@@ -202,7 +202,14 @@ class ProductHelper {
           value: ruleInfo.RESULT,
           unit: null
         };
-
+        return false;
+      }
+      if (basOfrCharCntCtt == '상세참조') {
+        replacedResult = {
+          isNaN: true,
+          value: '상세참조',
+          unit: null
+        };
         return false;
       }
     });

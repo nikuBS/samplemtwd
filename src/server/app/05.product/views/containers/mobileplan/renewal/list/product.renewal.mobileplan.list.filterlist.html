@@ -19,7 +19,7 @@
                         <!-- 필터 조건값 노출 영역 -->
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: ''}); %>
                     </div>
-                    <section class="tod-cont-section" data-lastproduct="<%= plans.products[plans.products.length-1].prodId %>">
+                    <section class="tod-cont-section tod-nmp-search" data-lastproduct="<%= plans.products[plans.products.length-1].prodId %>">
                         <% for(let i = 0; i < plans.productCount && i < 20; i++ ) { %>
                             <% let thisPlan = plans.products[i]; %>
                             <!-- 요금제 모듈 : 일반형 - .plan-type1 -->
