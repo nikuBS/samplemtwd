@@ -57,7 +57,11 @@
                                     <div class="article-cont inset-shadow-box">
                                         <dl class="item-define">
                                             <dt><%= data.payment.product.basProductNm %></dt>
-                                            <dd class="strong"><%= data.payment.product.basFeeInfo.value %>원</dd>
+											<% if ( data.payment.product.basFeeInfo.isNaN ) { %>
+                                            	<dd class="strong"><%= data.payment.product.basFeeInfo.value %></dd>
+											<% } else { %>
+												<dd class="strong"><%= data.payment.product.basFeeInfo.value %>원</dd>
+											<% } %>
 										</dl>
 										
 										<%_ if ( data.payment.product.isProductShow ) { _%>
