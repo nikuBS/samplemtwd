@@ -63,7 +63,8 @@ class MytDataSubmainController extends TwViewController {
         const isNetFunnel = req.query && req.query.netfunnel === 'Y';
         if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
           res.render('../../../common/views/components/netfunnel.start.component.html', {
-            referer: '/myt-data/submain?netfunnel=Y'
+            referer: '/myt-data/submain?netfunnel=Y',
+            action: 'myt_data_submain'
           });
         } else {
           const advInst = new MytDataSubmainAdvController();

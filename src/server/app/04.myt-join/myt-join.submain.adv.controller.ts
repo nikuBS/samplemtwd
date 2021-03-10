@@ -31,7 +31,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         const isNetFunnel = req.query && req.query.netfunnel === 'Y';
         if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
           res.render('../../../common/views/components/netfunnel.start.component.html', {
-            referer: '/myt-join/submain?netfunnel=Y'
+            referer: '/myt-join/submain?netfunnel=Y',
+            action: 'myt_join_submain'
           });
         } else {
           this._render(req, res, next, svcInfo, allSvc, child, pageInfo);

@@ -43,7 +43,8 @@ class MyTFareSubmainController extends TwViewController {
             netfunnel: 'Y'
           }));
           res.render('../../../common/views/components/netfunnel.start.component.html', {
-            referer: '/myt-fare/submain?' + qr
+            referer: '/myt-fare/submain?' + qr,
+            action: 'myt_fare_submain'
           });
         } else {
           new MyTFareSubmainAdvController().initPage(req, res, next);
