@@ -204,13 +204,15 @@ class ProductHelper {
         };
         return false;
       }
-      if (basOfrCharCntCtt == '상세참조') {
-        replacedResult = {
-          isNaN: true,
-          value: '상세참조',
-          unit: null
-        };
-        return false;
+      if(basOfrCharCntCtt) {
+        if ((basOfrCharCntCtt == '상세참조') || basOfrCharCntCtt.replace(/건/g,'').length != basOfrCharCntCtt.length) {
+          replacedResult = {
+            isNaN: true,
+            value: basOfrCharCntCtt,
+            unit: null
+          };
+          return false;
+        }
       }
     });
 
