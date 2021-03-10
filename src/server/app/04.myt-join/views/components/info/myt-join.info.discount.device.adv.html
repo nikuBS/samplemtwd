@@ -7,7 +7,7 @@ _%>
 
 <div class="box-group">
     <div class="box-group-head-tit">
-        <%_ if ( terminalItem.typeStr === 'join_type_B' ) { _%>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' || terminalItem.typeStr === 'suc_type_D') { _%>
         <a href="/product/callplan?prod_id=TW20000015"
            data-xt_eid="CMMA_A3_B13_C65-9" data-xt_csid="NO" data-xt_action="BC"
            class="link"><%= terminalItem.agreeNm.replace(/\s/g, '') %></a>
@@ -30,7 +30,7 @@ _%>
                 </dl>
             </li>
         </ul>
-        <%_ if ( terminalItem.typeStr === 'join_type_B' ) { _%>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' || terminalItem.typeStr === 'suc_type_D' ) { _%>
         <a href="/product/callplan?prod_id=TW20000015" class="bundle-link"
            data-xt_eid="CMMA_A3_B13_C65-9" data-xt_csid="NO" data-xt_action="BC">
         <% } %>
@@ -74,7 +74,7 @@ _%>
                 </span>
             </div>
         </div>
-        <%_ if ( terminalItem.typeStr === 'join_type_B' ) { _%>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' || terminalItem.typeStr === 'suc_type_D') { _%>
         </a>
         <% } %>
     </div><!-- group-cont -->
