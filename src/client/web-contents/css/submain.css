@@ -102,6 +102,7 @@ body.tod-white{background:#fff}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .sign{display:inline-block; height:1rem; padding:0.0625rem 0.3125rem 0; color:#fff; text-align:center; font-size:0.6875rem; letter-spacing:0; vertical-align:top; border-radius:0.1875rem; margin:0 0 0 0.3125rem; line-height:1rem; }
 .tod-submain .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .sign.standard{background:#f65252}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .warning{font-size:0.85rem !important; }
+.tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .warning em{font-size:0.9125rem; font-weight:500}
 .tod-submain .tod-line-sel-wrap .other-list-wrap .warning-wrap .warning:before{top:3px}
 
 /* 회선 선택 - 자녀회선 */
