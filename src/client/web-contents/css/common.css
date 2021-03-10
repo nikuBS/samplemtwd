@@ -9605,7 +9605,7 @@ button:focus span {
 .popup .popup-info.tod-eventpop-type1 .popup-header .btn-tooltip-close {top:2px; right:2px;}
 .popup .popup-info.tod-eventpop-type1 .bt-box {overflow:hidden; margin-top:-1px; background:#fff; border-radius:0 0 0.56rem 0.56rem;}
 .popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating {height:3rem; line-height:3rem; border-radius:0; font-size:0.9375rem; font-weight:bold;}
-.popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue {background:#69c0ed; color:#fff;}
+.popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue {background:#178bce; color:#fff;} /* 210216 [2021 접근성] 수정 */
 .popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue.back:before {content:''; display:inline-block; vertical-align:middle; width:0.4375rem; height:0.8125rem; margin:0 0.375rem 0.1875rem 0; background:url(/img/benefit/sp-eventpop.png) no-repeat 0 -2.25rem; background-size:3.563rem auto;}
 .popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue.disagree {font-size:0.8125rem; color:rgba(255,255,255,.7);}
 .popup .popup-info.tod-eventpop-type1 .bt-box.bt-slice>li {height:auto; padding:0;}
