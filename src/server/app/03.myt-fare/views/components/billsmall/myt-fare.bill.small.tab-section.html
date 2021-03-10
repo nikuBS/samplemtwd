@@ -5,14 +5,15 @@
             <div class="tab-area new01 large">
                 <div class="tab-linker">
                     <ul role="tablist" style="width: 100%;">
-                        <li id="fe-tab1" role="presentation" aria-selected="<%-usedInfo.isAdult%>"><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                            <a href="#" role="tab" aria-selected="<%-usedInfo.isAdult%>" aria-controls="cont-tab1-tab"
-                               id="cont-tab1" class="<%-!usedInfo.isAdult ? 'disabled':undefined%>"
+                        <%_ const allow = !isBubin && usedInfo.isAdult; _%>
+                        <li id="fe-tab1" role="presentation" aria-selected="<%-allow%>"><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                            <a href="#" role="tab" aria-selected="<%-allow%>" aria-controls="cont-tab1-tab"
+                               id="cont-tab1" class="<%-allow ? undefined : 'disabled'%>"
                                data-make-eid="smallTab"
                             >휴대폰 결제</a><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                         </li>
-                        <li role="presentation" aria-selected="<%-!usedInfo.isAdult%>">
-                            <a href="#" role="tab" aria-selected="<%-!usedInfo.isAdult%>" aria-controls="cont-tab2-tab" id="cont-tab2"
+                        <li role="presentation" aria-selected="<%-!allow%>">
+                            <a href="#" role="tab" aria-selected="<%-!allow%>" aria-controls="cont-tab2-tab" id="cont-tab2"
                                data-make-eid="contentsTab"
                             >콘텐츠 이용료</a>
                         </li>
