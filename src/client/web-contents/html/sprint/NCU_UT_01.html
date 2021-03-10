@@ -62,7 +62,7 @@
 			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container tod-submain">
 				<div class="tod-line-sel-wrap"> <!-- show 추가 -->
-					<a href="#" class="sel-show-btn" aria-controls="different-line" aria-expanded="false" title="다른 회선을 조회할수 있어요"><!-- aria-expanded는 하위 컨텐츠가 닫혀 있을 경우 false 열려 있을 경우 true -->
+					<button type="button" class="sel-show-btn" aria-controls="different-line" aria-expanded="false" title="다른 회선을 조회할수 있어요"><!-- aria-expanded는 하위 컨텐츠가 닫혀 있을 경우 false 열려 있을 경우 true -->
 						<div class="sel-show">
 							<div class="line-info">
 								<i class="type-ico"><img src="/img/myt/sel-mobile-ico-white.svg" alt=""></i>
@@ -101,7 +101,7 @@
                                 <!-- 다른 회선 조회를 닫을 경우 : 닫기 -->
 							</span>
 						</div>
-					</a>
+					</button>
 					<div class="other-list-wrap" id="different-line">
 						<div class="other-inner">
 							<!-- .component -->
@@ -130,7 +130,7 @@
 															<li class="line-item">
 																<label class="line-item-wrap">
 																	<span class="line-item-info">
-																		<span class="symbol ico7"></span> <!-- 210121 [OP002-12087] 수정01 -->
+																		<span class="symbol ico7"></span> 
 																		<span class="type">휴대폰1</span>
 																		<span class="type-info">010-50**-13**
 																			<span class="sign standard">기준</span>
@@ -144,17 +144,32 @@
 															<li class="line-item have-child">
                                                                 <label class="line-item-wrap">
                                                                     <span class="line-item-info">
-                                                                        <span class="symbol ico7"></span> <!-- 210121 [OP002-12087] 수정02 -->
-                                                                        <span class="type">휴대폰2</span>
-                                                                        <span class="type-info">010-50**-13**
-                                                                            <span class="sign child">자녀</span> 
-                                                                        </span>
+                                                                        <span class="symbol ico7"></span> 
+                                                                        <span class="type">갤*************</span>
+																		<!-- 210308 [OP002-12068] 수정01 -->
+                                                                        <span class="type-info">010-50**-13**</span> 
+																		<span class="sign child">자녀</span> 
+																		<!-- //210308 [OP002-12068] 수정01 -->
                                                                     </span>
-																	<!-- 210209 [OP002-12087] 삭제01 -->
-                                                                    <!-- <span class="check-status">
-																		<span class="custom-form"><input type="radio" name="mobile-line"><span class="r-type1"></span></span>
-																	</span> -->
-																	<!-- //210209 [OP002-12087] 삭제01 -->
+                                                                </label>
+																<div class="child-link-wrap">
+																	<ul class="child-link-list">
+																		<li class="child-link"><a href="#">#실시간 잔여량</a></li>
+																		<li class="child-link"><a href="#">#이용요금</a></li>
+																		<li class="child-link"><a href="#">#실시간 이용요금</a></li>
+																	</ul>
+																</div>
+															</li>
+															<li class="line-item have-child">
+                                                                <label class="line-item-wrap">
+                                                                    <span class="line-item-info">
+                                                                        <span class="symbol ico7"></span> 
+                                                                        <span class="type">갤*************</span>
+																		<!-- 210308 [OP002-12068] 수정02 -->
+                                                                        <span class="type-info">010-50**-13**</span>
+																		<span class="sign child">자녀</span> 
+																		<!-- //210308 [OP002-12068] 수정02 -->
+                                                                    </span>
                                                                 </label>
 																<div class="child-link-wrap">
 																	<ul class="child-link-list">
@@ -167,7 +182,7 @@
 															<li class="line-item">
                                                                 <label class="line-item-wrap">
                                                                     <span class="line-item-info">
-                                                                        <span class="symbol ico9"></span> <!-- 210121 [OP002-12087] 수정03 -->
+                                                                        <span class="symbol ico9"></span> 
                                                                         <span class="type">태블릿</span>
                                                                         <span class="type-info">070-48**-75**</span>
 																	</span>
@@ -179,7 +194,7 @@
 															<li class="line-item">
                                                                 <label class="line-item-wrap">
                                                                     <span class="line-item-info">
-                                                                        <span class="symbol ico8"></span> <!-- 210121 [OP002-12087] 수정04 -->
+                                                                        <span class="symbol ico8"></span> 
                                                                         <span class="type">T Pocket-Fi</span>
                                                                         <span class="type-info">010-60**-48**</span>
                                                                     </span>
@@ -197,7 +212,7 @@
 															<li class="line-item">
                                                                 <label class="line-item-wrap">
                                                                     <div class="line-item-info">
-                                                                        <span class="symbol ico10"></span> <!-- 210121 [OP002-12087] 수정05 -->
+                                                                        <span class="symbol ico10"></span>
                                                                         <span class="type">인터넷</span>
                                                                         <span class="type-info">세종시 ********</span>
                                                                     </div>
@@ -209,7 +224,7 @@
 															<li class="line-item">
                                                                 <label class="line-item-wrap">
                                                                     <div class="line-item-info">
-																		<span class="symbol ico10"></span> <!-- 210121 [OP002-12087] 수정06 -->
+																		<span class="symbol ico10"></span> 
                                                                         <span class="type">인터넷인터넷인</span>
                                                                         <span class="type-info">세종시 ********</span>
                                                                     </div>
@@ -233,7 +248,6 @@
 							</div>
 							<!--// .component -->
 						</div>
-						<!-- 201216 [OP002-12087] 수정01 -->
 						<div class="warning-wrap">
 							<p class="warning">아직 등록되지 않은 회선이 <em class="tod-txcolor6">2개</em> 있습니다.</p>
 							<div class="line-admin">
@@ -241,10 +255,8 @@
 								<a href="#" class="small-link">회선관리</a>
 							</div>
 						</div>
-						<!-- //201216 [OP002-12087] 수정01 -->
 					</div>
 				</div>
-				<!-- 201216 [OP002-12087] 삭제01 : word-bubble-wrap 삭제-->
 				<section class="cont-card" style="height:6000px">
 					<div>1</div>
 					<div>2</div>
@@ -385,11 +397,13 @@
 					});
 					scrollTop = $(document).scrollTop()
 					$('body').css({'position':'fixed', 'top': -scrollTop+'px'});
+					$('.sel-show-btn').css({'top':'3.25rem'}); 
 				} else {
 					$(this).find('.sel-line-btn > span').html('다른 회선 조회');
 					$(this).attr('aria-expanded', false);
 					$content.off('focusin focusout');
 					$('body').css({'position':'', 'top' : ''});
+					$('.sel-show-btn').css({'top': ''}); 
 					$(document).scrollTop(scrollTop); 
 					scrollTop = 0; 
 				}
