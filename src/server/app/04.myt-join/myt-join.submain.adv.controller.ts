@@ -605,7 +605,7 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         },
         {
           name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
-          xt_eid: 'CMMA_A3_B13-64', icon: 'sub-ben-ico06.svg'
+          xt_eid: 'CMMA_A3_B13-64', icon: 'sub-ben-ico04.svg'
         }
       ];
       // 요금제 변경 가능일 알림 휴대폰 이나 PPS 인 경우에만 노출 하도록 하기 위해 기능 추가
