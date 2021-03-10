@@ -505,16 +505,16 @@ Tw.ProductCompare.prototype = {
       if(isNaN(curPlanCheck)) {
         if(curPlanData === '무제한') {
           if(comparePlanData === '무제한') {
-            return '두 요금제 모두<br>' + curPlanData + ' 데이터를 제공해요.';
+            return '두 요금제 모두<br>' + '<em>' + curPlanData + '</em>' + ' 데이터를 제공해요.';
           } else if(!isNaN(comparePlanCheck)) {
-            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 더 많은 데이터를 제공해요.';
+            return '<em>' + curPlanName + '</em> 요금제가<br>' + '<em>' + curPlanData + curPlanUnit + '</em>' + '으로 더 많은 데이터를 제공해요.';
           } 
         } else {
-          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + ' 데이터를 제공해요.';
+          return '<em>' + comparePlanName + '</em> 요금제가<br>' + '<em>' + comparePlanData + comparePlanUnit + '</em>' + ' 데이터를 제공해요.';
         }
       } else {
         if(comparePlanData === '무제한') {
-          return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 더 많은 데이터를 제공해요.';
+          return '<em>' + comparePlanName + '</em> 요금제가<br>' + '<em>' + comparePlanData + comparePlanUnit + '</em>' + '으로 더 많은 데이터를 제공해요.';
         } else {
           if(curPlanUnit == 'MB') {
             curPlanCheck = curPlanCheck/1024;
@@ -523,11 +523,11 @@ Tw.ProductCompare.prototype = {
             comparePlanCheck = comparePlanCheck/1024;
           }
           if(curPlanCheck > comparePlanCheck) {
-            return '<em>' + curPlanName + '</em> 요금제가<br>' + curPlanData + curPlanUnit + '으로 더 많은 데이터를 제공해요.';
+            return '<em>' + curPlanName + '</em> 요금제가<br>' + '<em>' + curPlanData + curPlanUnit + '</em>' + '으로 더 많은 데이터를 제공해요.';
           } else if(curPlanCheck < comparePlanCheck) {
-            return '<em>' + comparePlanName + '</em> 요금제가<br>' + comparePlanData + comparePlanUnit + '으로 더 많은 데이터를 제공해요.';
+            return '<em>' + comparePlanName + '</em> 요금제가<br>' + '<em>' + comparePlanData + comparePlanUnit + '</em>' + '으로 더 많은 데이터를 제공해요.';
           } else if(curPlanCheck === comparePlanCheck) {
-            return '두 요금제 모두<br>' + comparePlanData + comparePlanUnit + ' 데이터를 제공해요.';
+            return '두 요금제 모두<br>' + '<em>' + comparePlanData + comparePlanUnit + '</em>' + ' 데이터를 제공해요.';
           } else {
             return '';
           }
