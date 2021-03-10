@@ -401,7 +401,7 @@ Tw.ProductCompare.prototype = {
 
       if(benfData.chooseList){
         var curHaveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) {
+        for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) { // curData에 값이 있는지 확인
           if(benfData.chooseList[i].curData.prodId) {
             curHaveList = 'Y';
           }
@@ -410,7 +410,7 @@ Tw.ProductCompare.prototype = {
           }
         }
         curHaveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) {
+        for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) {// curSepData에 값이 있는지 확인
           if(benfData.chooseList[i].curSepData.prodId) {
             curHaveList = 'Y';
           }
@@ -419,7 +419,7 @@ Tw.ProductCompare.prototype = {
           }
         }
         var compareHaveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) && (compareHaveList == ''); i++) {
+        for(var i = 0; (i < benfData.chooseList.length) && (compareHaveList == ''); i++) { // compareData에 값이 있는지 확인
           if(benfData.chooseList[i].compareData.prodId) {
             compareHaveList = 'Y';
           }
@@ -428,8 +428,8 @@ Tw.ProductCompare.prototype = {
           }
         }
         compareHaveList = '';
-        for(var i = 0; (i < benfData.chooseList.length) && (compareHaveList == ''); i++) {
-          if(benfData.chooseList[i].compareData.prodId) {
+        for(var i = 0; (i < benfData.chooseList.length) && (compareHaveList == ''); i++) { //compareSepData에 값이 있는지 확인
+          if(benfData.chooseList[i].compareSepData.prodId) {
             compareHaveList = 'Y';
           }
           if(compareHaveList == '' && i == benfData.chooseList.length - 1 && benfData.noCompareSelectList) {
@@ -452,7 +452,6 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
-      console.log('정렬 전',benfData);
       if(benfData.chooseList) {
         benfData.chooseList.sort(function(preBenfData,postBenfData){
           var preBenfDataSeq = Number(preBenfData.benfList.expsSeq);
@@ -485,7 +484,6 @@ Tw.ProductCompare.prototype = {
           return 0;
         });
       }
-      console.log('정렬 후',benfData);
       return benfData;
     },
 
@@ -956,15 +954,14 @@ Tw.ProductCompare.prototype = {
       chooseList.benfList.titleText = this._getTitleText(chooseList.benfList.prodBenfTitCd);
     }
     if(chooseList.benfList.prodBenfTitCd == '05') {
-      console.log(!chooseList.curData.prodId);
       if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) {
         chooseList.curSepData.prodId = 'Y';
-        chooseList.curSepData.expsBenfNm = 'T맴버쉽';
+        chooseList.curSepData.expsBenfNm = 'T 멤버쉽';
         chooseList.curSepData.benfDtlCtt = '등급유지';
       }
       if(!chooseList.compareData.prodId && !chooseList.compareSepData.prodId && (chooseList.curData.prodId || chooseList.curSepData.prodId)) {
         chooseList.compareSepData.prodId = 'Y';
-        chooseList.compareSepData.expsBenfNm = 'T맴버쉽';
+        chooseList.compareSepData.expsBenfNm = 'T 멤버쉽';
         chooseList.compareSepData.benfDtlCtt = '등급유지';
       }
     }
@@ -988,7 +985,7 @@ Tw.ProductCompare.prototype = {
         titleText = '데이터 리필하기';
         break;
       case '05':
-        titleText = 'T멤버십';
+        titleText = 'T 멤버십';
         break;
       case '06':
         titleText = '영상';
