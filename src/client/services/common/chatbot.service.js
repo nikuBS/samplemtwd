@@ -545,6 +545,7 @@ Tw.ChatbotService.prototype = {
                                                 this._typeA = true;
                                                 this._typeB = false;
                                                 this._typeC = false;
+                                                this._mlsGreetingTextType = 'A';
                                             }else if (this._mlsGreetingImageType === 'B'){
                                                 this._typeA = false;
                                                 this._typeB = true;
@@ -554,6 +555,15 @@ Tw.ChatbotService.prototype = {
                                                 this._typeB = false;
                                                 this._typeC = true;
                                             }
+
+                                            if ( !this._mlsGreetingImageType ) {
+                                                this._mlsGreetingImageType = 'B';
+                                            }
+
+                                            if ( !this._mlsGreetingTextType ) {
+                                                this._mlsGreetingTextType = 'A';
+                                            }
+
                                             // 챗봇 팝업 그리기 전 분기
                                             this._preDrawChatbot();
                                         } else {
@@ -989,6 +999,7 @@ Tw.ChatbotService.prototype = {
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item fe-home-charge_open', '').trim();
             var url = $(e.currentTarget).data('url');
             if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
+                /*
                 chatbotGubun = 'initial';
                 // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
                 if ( mlsProcessId !== 'N'){
@@ -1001,6 +1012,7 @@ Tw.ChatbotService.prototype = {
                     );
                 }
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
+                */
             } else {                
                 if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
                     Tw.Logger.info('[chatbot.service] [_bindEvent] vcoloring/xbox chatbotGubun : ', chatbotGubun)
@@ -1033,19 +1045,7 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_bindEvent] [.bpcpItemlink] bpcpItemlinkurl : ', url);
             
             if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
-                chatbotGubun = 'initial';
-                // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
-                if ( mlsProcessId !== 'N'){
-                    _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
-                        channel_id: mlsChannelId,
-                        process_id: mlsProcessId,
-                        item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
-                    }).done(
-                        Tw.Logger.info('[chatbot.service] [_bindEvent]  $(.bpcpItemlink).on(click) - !$(.tod-combot-btn).hasClass(open) && _this._typeB : BFF_05_0233 ', '')
-                    );
-                }
-                Tw.Logger.info('[chatbot.service] [_bindEvent] [.bpcpItemlink] open_withExtraParam', '');
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
+
             } else {
                 // window.open(url, '_blank');
                 // Tw.CommonHelper.openUrlInApp(url);
@@ -1632,7 +1632,7 @@ Tw.ChatbotService.prototype = {
         $('.btn-chabot-default').attr('data-param', extraParam);
 
         // 인트로 페이지에서 '챗봇 상담 시작하기' 버튼 클릭시
-        $('.btn-chabot-default').on('click', function(e){
+        /* $('.btn-chabot-default').on('click', function(e){
             Tw.Logger.info('[chatbot.service] [_bindEvent] $(.btn-chabot-default).on(click)', '');
 
 
@@ -1642,7 +1642,7 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_bindEvent] param : ', param);
 
             _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', param);
-        });
+        }); */
 
         $('.popup-closeBtn').on('click', $.proxy(function () {
             _this._historyService.goBack();
