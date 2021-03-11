@@ -524,6 +524,7 @@ Tw.ChatbotMainService.prototype = {
                                                 this._typeA = true;
                                                 this._typeB = false;
                                                 this._typeC = false;
+                                                this._mlsGreetingTextType = 'A';
                                             }else if (this._mlsGreetingImageType === 'B'){
                                                 this._typeA = false;
                                                 this._typeB = true;
@@ -533,6 +534,15 @@ Tw.ChatbotMainService.prototype = {
                                                 this._typeB = false;
                                                 this._typeC = true;
                                             }
+
+                                            if ( !this._mlsGreetingImageType ) {
+                                                this._mlsGreetingImageType = 'B';
+                                            }
+
+                                            if ( !this._mlsGreetingTextType ) {
+                                                this._mlsGreetingTextType = 'A';
+                                            }
+
                                             // 챗봇 팝업 그리기 전 분기
                                             this._preDrawChatbot();
                                         } else {
