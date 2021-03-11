@@ -280,16 +280,16 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @private
    */
   _getDefData: function (title) {
-    var payLimitAmt = '20000'; // 총한도(월한도)
+    var payLimitAmt = '0'; // 총한도(월한도)
     return {
       code: Tw.API_CODE.CODE_00,
       title: title,
       result: {
-        tmthChrgPsblAmt: '100000', // 선결제 가능금액
-        tmthUseAmt: '1000', // 당월 사용금액
+        tmthChrgPsblAmt: '0', // 선결제 가능금액
+        tmthUseAmt: '0', // 당월 사용금액
         useContentsLimitAmt: payLimitAmt,
         microPayLimitAmt: payLimitAmt,
-        remainUseLimit: '50000' // 잔여한도
+        remainUseLimit: '0' // 잔여한도
       }
     };
   },
