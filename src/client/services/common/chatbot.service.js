@@ -545,6 +545,7 @@ Tw.ChatbotService.prototype = {
                                                 this._typeA = true;
                                                 this._typeB = false;
                                                 this._typeC = false;
+                                                this._mlsGreetingTextType = 'A';
                                             }else if (this._mlsGreetingImageType === 'B'){
                                                 this._typeA = false;
                                                 this._typeB = true;
