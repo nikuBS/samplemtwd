@@ -563,8 +563,8 @@ body.hidden {
 #common-menu .section-cont .section-gnb:first-child .gnb-depth1 {
   padding: 0.94rem 0; }
 
-#common-menu .section-cont .section-gnb:first-child .gnb-depth1 > li:last-child.open {
-  margin-bottom: -1.88rem; }
+/* #common-menu .section-cont .section-gnb:first-child .gnb-depth1 > li:last-child.open {
+  margin-bottom: -1.88rem; } 210308 [OP002-13492] 수정  */
 
 #common-menu .section-cont .section-gnb:first-child .gnb-depth1:last-child > li:last-child.open {
   margin-bottom: -0.94rem; }

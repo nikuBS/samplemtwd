@@ -76,9 +76,12 @@
 
 #common-menu .section-cont .section-gnb .bt-depth1 { min-height: 4.69rem; }
 
-#common-menu .section-cont .section-gnb .bt-depth1.line::before { content: ''; display: inline-block; width: 92%; height: 1px; background: #e5e5e5; position: absolute; top: 0; left: 50%; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); }
+/* 210308 [OP002-13492] 수정 */
+#common-menu .section-cont .section-gnb > .gnb-depth1 > li:not(:first-child) .bt-depth1::before { content: ''; display: inline-block; width: 92%; height: 1px; background: #e5e5e5; position: absolute; top: 0; left: 50%; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); }
 
-#common-menu .section-cont .section-gnb .bt-depth1.line::after { content: ''; display: inline-block; width: 92%; height: 1px; background: #e5e5e5; position: absolute; bottom: 0; left: 50%; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); }
+/* #common-menu .section-cont .section-gnb .bt-depth1.line::after { content: ''; display: inline-block; width: 92%; height: 1px; background: #e5e5e5; position: absolute; bottom: 0; left: 50%; -webkit-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); } */
+
+/* //210308 [OP002-13492] 수정 */
 
 #common-menu .section-cont .open .bt-depth1.line::after { display: none; }
 
