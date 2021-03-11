@@ -473,22 +473,6 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  FARE_PAYMENT_MICRO_HISTORY_LIST: [
-    {
-      'list': [
-        {
-          'label-attr': 'data-link="/myt-fare/bill/small/history"',
-          'radio-attr': 'data-link="/myt-fare/bill/small/history"',
-          txt: '소액결제 이용내역'
-        },
-        {
-          'label-attr': 'data-link="/myt-fare/bill/small/block"',
-          'radio-attr': 'data-link="/myt-fare/bill/small/block"',
-          txt: '자동결제 차단내역'
-        }
-      ]
-    }
-  ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
@@ -563,23 +547,6 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  /*OP002-8414 소액결제/콘텐츠 이용료 한도금액 리스트가 통합되어 현재건 삭제함*/
-  /*FARE_PAYMENT_CONTENTS_LIMIT: [
-    {
-      'list': [
-        { 'label-attr': 'id="1000000"', 'radio-attr': 'name="r2" id="1000000"', txt: '100만 원' },
-        { 'label-attr': 'id="800000"', 'radio-attr': 'name="r2" id="800000"', txt: '80만 원' },
-        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만 원' },
-        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만 원' },
-        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만 원' },
-        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만 원' },
-        { 'label-attr': 'id="100000"', 'radio-attr': 'name="r2" id="100000"', txt: '10만 원' },
-        { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만 원' },
-        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만 원' },
-        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만 원' }
-      ]
-    }
-  ],*/
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
@@ -592,10 +559,10 @@ Tw.POPUP_TPL = {
           'radio-attr': 'id="3" name="myTHistory" value="3"',
           onlyType: 'M'
         },
-        { 'label-attr': 'for="4"', txt: '소액결제 선결제', 'radio-attr': 'id="4" name="myTHistory" value="4"', onlyType: 'M' },
+        { 'label-attr': 'for="4"', txt: '휴대폰 결제 선결제', 'radio-attr': 'id="4" name="myTHistory" value="4"', onlyType: 'M' },
         {
           'label-attr': 'for="5"',
-          txt: '콘텐츠 이용요금 선결제',
+          txt: '콘텐츠 이용료 선결제',
           'radio-attr': 'id="5" name="myTHistory" value="5"',
           onlyType: 'M'
         },
@@ -991,9 +958,11 @@ Tw.MYT_FARE_BILL_GUIDE_TPL = {
   DETAIL_BTN: [
     {
       SCH_ID: '콘텐츠이용료',
-      ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'
+      ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠 이용료</button>'
     },
-    { SCH_ID: '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>' }
+    { SCH_ID: '휴대폰결제',
+      ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">휴대폰 결제</button>'
+    }
   ],
   THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>',
   ASTERISK_TPL: { SCH_ID: '*', ELEMENT: '<i class="icon-fnote"><span class="blind">각주 참고</span></i>' },
@@ -1455,3 +1424,436 @@ Tw.HOME_DIRECT_BANNER =
   '</button>' +
   '</li>' +
   '{{/each}}';
+
+Tw.RENEWAL_PRODUCT_SUBMAIN_TOP_BANNER =
+'{{#each banners}}' + 
+  '<div class="slider-item"' + 
+    '{{#if isTos}}' + 
+      'data-xt_action="BN" data-xt_cmpgn_num="{{tosCmpgnNum}}" data-xt_schd_num="{{tosExecSchNum}}" data-xt_cell_num="{{tosCellNum}}" data-xt_msg_ser_num="{{tosMsgSerNum}}"' + 
+    '{{else}}' + 
+      'data-xt_eid="{{oferStcCd}}" data-xt_action="BV" data-xt_action2="BC" data-xt_csid="NO"' + 
+    '{{/if}}' + 
+    '>' + 
+  '{{#if isHTML}}' + 
+    '<button style="width:100%" tabindex="{{#if @index}}-1{{else}}0{{/if}}">' + 
+      '{{{bnnrHtmlCtt}}}' + 
+    '</button>' + 
+    '{{else}}' + 
+      '<a tabindex="{{#if @index}}-1{{else}}0{{/if}}" {{#unless isInternalLink}}title="새 창"{{/unless}} role="link">' + 
+        // '<img style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="https://cdnm-dev.tworld.co.kr{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' + 
+        '<img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="{{../CDN}}{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">' +  
+      '</a>' + 
+    '{{/if}}' + 
+  '</div>' + 
+'{{/each}}';
+
+Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
+'{{#each items}}' +
+  '<div class="tod-nmp-item plan-type{{prodSmryExpsTypCd}} {{tabCode}} ">' +
+      '<a href="/product/callplan?prod_id={{prodId}}" class="item-link">' +
+          '<div class="rn-tag">' +
+              '<div class="col-left">' +
+                  '{{#each filters}}' +
+                      '{{#if fltTagSenior}}' +
+                          '<span class="i-tag-cr5">시니어</span>' +
+                      '{{/if}}' +
+                      '{{#if fltTagWelfare}}' +
+                          '<span class="i-tag-cr5">복지</span>' +
+                      '{{/if}}' +
+                      '{{#if fltTagKid}}' +
+                          '<span class="i-tag-cr5">어린이/청소년</span>' +
+                      '{{/if}}' +
+                      '{{#if fltTagCollege}}' +
+                          '<span class="i-tag-cr5">대학생/군인</span>' +
+                      '{{/if}}' +
+                  '{{/each}}' +
+              '</div>' +
+              '<div class="col-right">' +
+                  '{{#if usingProduct}}' +
+                          '<span class="i-tag-myplan">사용중</span>' +
+                  '{{/if}}' +
+              '</div>' +
+          '</div>' +
+          '<div class="rn-prod-name">' +
+              '<p class="p-name">{{prodNm}}</p>' +
+              '<p class="p-price">' +
+                '{{basFeeAmt}}' +
+              '</p>' +
+          '</div>' +
+          '<div class="rn-prod-info">' +
+              '<ul class="p-etc">' +
+                  '{{#if basOfrDataQtyCtt}}' +
+                      '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
+                              '{{basOfrDataQtyCtt}}' +
+                      '</li>' +
+                  '{{/if}}' +
+                  '{{#if basOfrVcallTmsCtt}}' +
+                      '<li><i class="p-icon18-phone"><span class="blind">통화</span></i>{{basOfrVcallTmsCtt}}</li>' +
+                  '{{/if}}' +
+                  '{{#if basOfrCharCntCtt}}' +
+                      '<li><i class="p-icon18-sms"><span class="blind">문자</span></i>' +
+                              '{{basOfrCharCntCtt}}' +
+                      '</li>' +
+                  '{{/if}}' +
+              '</ul>' +
+          '</div>' +
+          '{{#if showBenf}}' +
+                '<div class="rn-prod-benefit">' +
+                    '{{#if showBenf.sepBenefitList}}' +
+                        '<ul>' +
+                          '{{#each showBenf.sepBenefitList}}' +
+                              '<li>' +
+                                  '<i class="p-icon16-img">' +
+                                    '<img src="{{../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                  '</i>' +
+                                ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                  '{{#if useAmt}}' + 
+                                      '<span class="price">' +
+                                          '<del>{{benfAmt}}</del>' +
+                                          '<i class="icon-arr">&rarr;</i>' +
+                                          '<em>{{useAmt}}</em>' + 
+                                      '</span>' +
+                                  '{{/if}}' + 
+                              '</li>' +
+                          '{{/each}}' +
+                        '</ul>' +
+                    '{{/if}}' +
+                    '{{#if showBenf.chooseBenefitList}}' +
+                        '<div class="p-benefit-choice">' +
+                            '<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>' +
+                            '<ul>' +
+                              '{{#each showBenf.chooseBenefitList}}' +
+                                    '<li>' + 
+                                        '<i class="p-icon16-img">' +
+                                          '<img src="{{../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                        '</i>' +
+                                        ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                        '{{#if useAmt}}' + 
+                                            '<span class="price">' +
+                                                '<del>{{benfAmt}}</del>' +
+                                                '<i class="icon-arr">&rarr;</i>' +
+                                                '<em>{{useAmt}}</em>' + 
+                                            '</span>' +
+                                        '{{/if}}' + 
+                                    '</li>' +
+                              '{{/each}}' +
+                            '</ul>' +
+                        '</div>' +
+                    '{{/if}}' +
+                '</div>' +
+            '{{/if}}' +
+      '</a>' +
+      '{{#if compareBtn}}' +
+        '<div class="rn-prod-bottom">' +
+            '<div class="rn-btn-right">' +
+                '<a class="btn-compare" data-prod-id="{{prodId}} data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</a>' +
+            '</div>' +
+        '</div>' +
+      '{{/if}}' +
+  '</div>' +
+'{{/each}}';
+
+Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT = 
+  '{{#each groupItems}}' +
+    '<section class="tod-cont-section">' +
+      '<div class="rn-banner-img">' +
+        '<img src="{{../cdn}}{{prodGrpBackgroundImgUrl}}" alt="{{prodGrpBackgroundImgAlt}}">' +
+      '</div>' +
+      '<div class="tod-nmp-title">' +
+        '<div class="rn-tag">' +
+          ' <span class="i-tag-cr{{../seriesClass}}">{{prodGrpNm}}</span>' + 
+        '</div>' +
+          ' <h3 class="rn-prod-tit">{{{prodGrpDesc}}}</h3>' +
+      '</div>' +
+      '<div class="tod-nmp-row-list">' + 
+        '<ul>' +
+          '{{#each prodList}}' +
+            '<li>' +
+              '<div class="tod-nmp-item plan-type{{prodSmryExpsTypCd}} {{tabCode}} ">' +
+                '<a href="/product/callplan?prod_id={{prodId}}" class="item-link">' +
+                    '<div class="rn-tag">' +
+                        '<div class="col-left">' +
+                            '{{#if filters}}' +
+                              '{{#each filters}}' +
+                                  '{{#if fltTagSenior}}' +
+                                      '<span class="i-tag-cr5">시니어</span>' +
+                                  '{{/if}}' +
+                                  '{{#if fltTagWelfare}}' +
+                                      '<span class="i-tag-cr5">복지</span>' +
+                                  '{{/if}}' +
+                                  '{{#if fltTagKid}}' +
+                                      '<span class="i-tag-cr5">어린이/청소년</span>' +
+                                  '{{/if}}' +
+                                  '{{#if fltTagCollege}}' +
+                                      '<span class="i-tag-cr5">대학생/군인</span>' +
+                                  '{{/if}}' +
+                              '{{/each}}' +
+                            '{{/if}}' +
+                            '{{#if prodFltList}}' +
+                              '{{#each prodFltList}}' +
+                                '{{#if fltTagSenior}}' +
+                                    '<span class="i-tag-cr5">시니어</span>' +
+                                '{{/if}}' +
+                                '{{#if fltTagWelfare}}' +
+                                    '<span class="i-tag-cr5">복지</span>' +
+                                '{{/if}}' +
+                                '{{#if fltTagKid}}' +
+                                    '<span class="i-tag-cr5">어린이/청소년</span>' +
+                                '{{/if}}' +
+                                '{{#if fltTagCollege}}' +
+                                    '<span class="i-tag-cr5">대학생/군인</span>' +
+                                '{{/if}}' +
+                              '{{/each}}' +
+                            '{{/if}}' +
+                        '</div>' +
+                        '<div class="col-right">' +
+                            '{{#if usingProduct}}' +
+                                    '<span class="i-tag-myplan">사용중</span>' +
+                            '{{/if}}' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="rn-prod-name">' +
+                        '<p class="p-name">{{prodNm}}</p>' +
+                        '<p class="p-price">' +
+                          '{{basFeeAmt}}' +
+                        '</p>' +
+                    '</div>' +
+                    '<div class="rn-prod-info">' +
+                        '<ul class="p-etc">' +
+                            '{{#if basOfrDataQtyCtt}}' +
+                                '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
+                                        '{{basOfrDataQtyCtt}}' +
+                                '</li>' +
+                            '{{/if}}' +
+                            '{{#if basOfrVcallTmsCtt}}' +
+                                '<li><i class="p-icon18-phone"><span class="blind">통화</span></i>{{basOfrVcallTmsCtt}}</li>' +
+                            '{{/if}}' +
+                            '{{#if basOfrCharCntCtt}}' +
+                                '<li><i class="p-icon18-sms"><span class="blind">문자</span></i>' +
+                                        '{{basOfrCharCntCtt}}' +
+                                '</li>' +
+                            '{{/if}}' +
+                        '</ul>' +
+                    '</div>' +
+                    '{{#if showBenf}}' +
+                      '<div class="rn-prod-benefit">' +
+                          '{{#if showBenf.sepBenefitList}}' +
+                              '<ul>' +
+                                '{{#each showBenf.sepBenefitList}}' +
+                                    '<li>' +
+                                        '<i class="p-icon16-img">' +
+                                          '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                        '</i>' +
+                                      ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                        '{{#if useAmt}}' + 
+                                            '<span class="price">' +
+                                                '<del>{{benfAmt}}</del>' +
+                                                '<i class="icon-arr">&rarr;</i>' +
+                                                '<em>{{useAmt}}</em>' + 
+                                            '</span>' +
+                                        '{{/if}}' + 
+                                    '</li>' +
+                                '{{/each}}' +
+                              '</ul>' +
+                          '{{/if}}' +
+                          '{{#if showBenf.chooseBenefitList}}' +
+                              '<div class="p-benefit-choice">' +
+                                  '<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>' +
+                                  '<ul>' +
+                                    '{{#each showBenf.chooseBenefitList}}' +
+                                          '<li>' + 
+                                              '<i class="p-icon16-img">' +
+                                                '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                              '</i>' +
+                                              ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                              '{{#if useAmt}}' + 
+                                                  '<span class="price">' +
+                                                      '<del>{{benfAmt}}</del>' +
+                                                      '<i class="icon-arr">&rarr;</i>' +
+                                                      '<em>{{useAmt}}</em>' + 
+                                                  '</span>' +
+                                              '{{/if}}' + 
+                                          '</li>' +
+                                    '{{/each}}' +
+                                  '</ul>' +
+                              '</div>' +
+                          '{{/if}}' +
+                      '</div>' +
+                  '{{/if}}' +
+                '</a>' +
+                '{{#if compareBtn}}' +
+                  '<div class="rn-prod-bottom">' +
+                      '<div class="rn-btn-right">' +
+                          '<a class="btn-compare" data-prod-id="{{prodId}}" data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</a>' +
+                      '</div>' +
+                  '</div>' +
+                '{{/if}}' +
+              '</div>' +
+            '</li>' +
+          '{{/each}}' +
+        '</ul>' +
+      '</div>' +
+    '</section>' +
+  '{{/each}}' +
+  '{{#if separateItems}}' +
+    '<section class="tod-cont-section">' +
+  '{{/if}}' +
+    '{{#each separateItems}}' +
+      '<div class="tod-nmp-prod-group">' +
+        '<h3 class="gr-tit">{{{prodSmryDesc}}}</h3>' + 
+        '<div class="tod-nmp-item plan-type{{prodSmryExpsTypCd}} {{tabCode}}">' +
+            '<a href="/product/callplan?prod_id={{prodId}}" class="item-link">' +
+                '<div class="rn-tag">' +
+                    '<div class="col-left">' +
+                        '{{#each filters}}' +
+                            '{{#if fltTagSenior}}' +
+                                '<span class="i-tag-cr5">시니어</span>' +
+                            '{{/if}}' +
+                            '{{#if fltTagWelfare}}' +
+                                '<span class="i-tag-cr5">복지</span>' +
+                            '{{/if}}' +
+                            '{{#if fltTagKid}}' +
+                                '<span class="i-tag-cr5">어린이/청소년</span>' +
+                            '{{/if}}' +
+                            '{{#if fltTagCollege}}' +
+                                '<span class="i-tag-cr5">대학생/군인</span>' +
+                            '{{/if}}' +
+                        '{{/each}}' +
+                        '{{#if prodFltList}}' +
+                          '{{#each prodFltList}}' +
+                            '{{#if fltTagSenior}}' +
+                                '<span class="i-tag-cr5">시니어</span>' +
+                            '{{/if}}' +
+                            '{{#if fltTagWelfare}}' +
+                                '<span class="i-tag-cr5">복지</span>' +
+                            '{{/if}}' +
+                            '{{#if fltTagKid}}' +
+                                '<span class="i-tag-cr5">어린이/청소년</span>' +
+                            '{{/if}}' +
+                            '{{#if fltTagCollege}}' +
+                                '<span class="i-tag-cr5">대학생/군인</span>' +
+                            '{{/if}}' +
+                          '{{/each}}' +
+                        '{{/if}}' +
+                    '</div>' +
+                    '<div class="col-right">' +
+                        '{{#if usingProduct}}' +
+                                '<span class="i-tag-myplan">사용중</span>' +
+                        '{{/if}}' +
+                    '</div>' +
+                '</div>' +
+                '<div class="rn-prod-name">' +
+                    '<p class="p-name">{{prodNm}}</p>' +
+                    '<p class="p-price">' +
+                      '{{basFeeAmt}}' +
+                    '</p>' +
+                '</div>' +
+                '<div class="rn-prod-info">' +
+                    '<ul class="p-etc">' +
+                        '{{#if basOfrDataQtyCtt}}' +
+                            '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
+                                    '{{basOfrDataQtyCtt}}' +
+                            '</li>' +
+                        '{{/if}}' +
+                        '{{#if basOfrVcallTmsCtt}}' +
+                            '<li><i class="p-icon18-phone"><span class="blind">통화</span></i>{{basOfrVcallTmsCtt}}</li>' +
+                        '{{/if}}' +
+                        '{{#if basOfrCharCntCtt}}' +
+                            '<li><i class="p-icon18-sms"><span class="blind">문자</span></i>' +
+                                    '{{basOfrCharCntCtt}}' +
+                            '</li>' +
+                        '{{/if}}' +
+                    '</ul>' +
+                '</div>' +
+                '{{#if showBenf}}' +
+                      '<div class="rn-prod-benefit">' +
+                          '{{#if showBenf.sepBenefitList}}' +
+                              '<ul>' +
+                                '{{#each showBenf.sepBenefitList}}' +
+                                    '<li>' +
+                                        '<i class="p-icon16-img">' +
+                                          '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                        '</i>' +
+                                      ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                        '{{#if useAmt}}' + 
+                                            '<span class="price">' +
+                                                '<del>{{benfAmt}}</del>' +
+                                                '<i class="icon-arr">&rarr;</i>' +
+                                                '<em>{{useAmt}}</em>' + 
+                                            '</span>' +
+                                        '{{/if}}' + 
+                                    '</li>' +
+                                '{{/each}}' +
+                              '</ul>' +
+                          '{{/if}}' +
+                          '{{#if showBenf.chooseBenefitList}}' +
+                              '<div class="p-benefit-choice">' +
+                                  '<p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>' +
+                                  '<ul>' +
+                                    '{{#each showBenf.chooseBenefitList}}' +
+                                          '<li>' + 
+                                              '<i class="p-icon16-img">' +
+                                                '<img src="{{../../../cdn}}{{rgstImgUrl}}" alt="{{rgstImgAlt}}">' +
+                                              '</i>' +
+                                              ' <span class="txt">{{expsBenfNm}} {{benfDtlCtt}}</span>' +
+                                              '{{#if useAmt}}' + 
+                                                  '<span class="price">' +
+                                                      '<del>{{benfAmt}}</del>' +
+                                                      '<i class="icon-arr">&rarr;</i>' +
+                                                      '<em>{{useAmt}}</em>' + 
+                                                  '</span>' +
+                                              '{{/if}}' + 
+                                          '</li>' +
+                                    '{{/each}}' +
+                                  '</ul>' +
+                              '</div>' +
+                          '{{/if}}' +
+                      '</div>' +
+                  '{{/if}}' +
+            '</a>' +
+            '{{#if compareBtn}}' +
+              '<div class="rn-prod-bottom">' +
+                  '<div class="rn-btn-right">' +
+                      '<a class="btn-compare" data-prod-id="{{prodId}} data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</a>' +
+                  '</div>' +
+              '</div>' +
+            '{{/if}}' +
+          '</div>' +
+        '</div>' +
+        '{{/each}}' + 
+        '{{#if separateItems}}' +    
+    '</section>'+
+  '{{/if}}';
+ 
+    
+  
+
+Tw.RENEWAL_PRODUCT_SUBMAIN_QUICKFILTER = 
+'{{#each banners}}' +
+  '<li class="slider-item">' +
+    '<a class="shadow-box quick-item" role="link" tabindex="0" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
+      '<p class="benefit-txt">{{{anchTagInfo}}}</p>' +
+      '<i class="benefit-ico">' +
+        '<img src="{{../cdn_url}}/{{bnnrFilePathNm}}" alt=" ">' +
+      '</i>' +
+    '</a>' +
+  '</li>' +
+'{{/each}}';
+
+Tw.RENEWAL_PRODUCT_SUBMAIN_THEME_BANNER =
+'{{#each banners}}' +
+  '<li class="slider-item">' +
+    '<a class="shadow-box theme-item" style="background-image:url({{../cdn_url}}/{{bnnrFilePathNm}})" role="link" tabindex="0" data-option="{{linkTypCd}}" data-link="{{imgLinkUrl}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
+      '<p class="i-txt">{{anchTagInfo}}</p>' + 
+    '</a>' + 
+  '</li>' + 
+'{{/each}}';
+
+Tw.RENEWAL_PRODUCT_SUBMAIN_PROMOTION_BANNER = 
+'<div class="pro-article various-plan-box">' + 
+  '<div class="banner-area shadow-box">' + 
+    '<a class="promotions-item" data-option="{{promotion.linkTypCd}}" data-link="{{promotion.imgLinkUrl}}" data-xt_eid="{{promotion.oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' + 
+      '<img src="{{cdn_url}}/{{promotion.bnnrFilePathNm}}" title="{{promotion.bnnrImgAltCtt}}" alt="{{promotion.bnnrImgAltCtt}}">' + 
+    '</a>' + 
+  '</div>' + 
+'</div>';

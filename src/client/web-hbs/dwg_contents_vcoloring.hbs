@@ -16,10 +16,12 @@
         <div class="bt-fixed-area dwg-dialog-area">
             <div class="dwg-dialog-btns">                    
                 <div class="col">
-                    <a href="#" class="btn-dialog-1 fe-btn_change" data-xt_eid="{{data_xt_eid1}}" data-xt_csid="NO" data-xt_action="BC"><span>지금 해지할래요</span></a>
+                    <!-- # -> javascript:void(0) :: this._popupService.closeAll() 제거 후 URL # 추가되어 window.history 스텍이 추가되어 뒤로가기 2번해야 기존페이지를 가는문제로인한 변경 -->
+                    <a href="javascript:void(0)" class="btn-dialog-1 fe-btn_change" data-xt_eid="{{data_xt_eid1}}" data-xt_csid="NO" data-xt_action="BC"><span>지금 해지할래요</span></a>
                 </div>
                 <div class="col">
-                    <a href="#" class="btn-dialog-2 fe-btn_close" data-xt_eid="{{data_xt_eid2}}" data-xt_csid="NO" data-xt_action="BC"><span>계속 이용할게요</span></a>
+                    <!-- # -> javascript:void(0) :: this._popupService.closeAll() 제거 후 URL # 추가되어 window.history 스텍이 추가되어 뒤로가기 2번해야 기존페이지를 가는문제로인한 변경 -->
+                    <a href="javascript:void(0)" class="btn-dialog-2 fe-btn_close" data-xt_eid="{{data_xt_eid2}}" data-xt_csid="NO" data-xt_action="BC"><span>계속 이용할게요</span></a>
                 </div> 
             </div>
         </div>
@@ -27,6 +29,6 @@
     </div>
     <!--// .container-wrap -->
     <!-- .popup-closeBtn -->
-    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <button class="popup-closeBtn" data-xt_eid="{{data_xt_eid3}}" data-xt_csid="NO" data-xt_action="BC"><span class="blind">팝업 페이지 닫기</span></button>
     <!--// .popup-closeBtn -->
 </div>

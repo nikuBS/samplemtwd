@@ -6,6 +6,7 @@ Tw.ChatbotMainService = function() {
     this._popupService = Tw.Popup; 
     this._twdUrl = '';
     this._adid = null;
+    this._chatbotCommonService = new Tw.ChatbotCommonService();
    
     this._hbsFile;     // 챗봇 발화어 노출 대상 화면별 팝업 디자인
     this._menuId;      // 어느 화면에서 진입한 케이스인지 구분하기 위해 챗봇으로 I/F 하기 위한 메뉴ID
@@ -15,58 +16,20 @@ Tw.ChatbotMainService = function() {
 
     // 챗봇 발화어 노출 대상군 판단을 위해 호출 필요한 API List (201014)
     this._defaultRequestUrls = [
-        { command: Tw.API_CMD.BFF_05_0058, params: {} }                             // 1. 요금 납부방법 (01:은행자동납부, 02:카드자동납부, G1:은행지로자동납부)
-        ,{ command: Tw.API_CMD.BFF_05_0030, params: {} }                            // 2. 미납 내역 조회 (/core-bill/v1/bill-pay/unpaid-bills)
-        ,{ command: Tw.API_CMD.BFF_05_0149, params: {} }                            // 3. 일시정지 (svcStCd: AC(사용중), SP(일시정지))
-        ,{ command: Tw.API_CMD.BFF_05_0235, params: {profile_id : 'default', item_ids : ['app_use_traffic_category_ratio','app_use_traffic_game_median_yn','app_use_traffic_music_ratio_median_yn']}}
+        { command: Tw.API_CMD.BFF_05_0058, params: {} },                             // 1. 요금 납부방법 (01:은행자동납부, 02:카드자동납부, G1:은행지로자동납부)
+        { command: Tw.API_CMD.BFF_05_0030, params: {} },                            // 2. 미납 내역 조회 (/core-bill/v1/bill-pay/unpaid-bills)
+        { command: Tw.API_CMD.BFF_05_0149, params: {} },                            // 3. 일시정지 (svcStCd: AC(사용중), SP(일시정지))
+        { command: Tw.API_CMD.BFF_05_0235, params: {profile_id : 'default', item_ids : ['app_use_traffic_category_ratio','app_use_traffic_game_median_yn','app_use_traffic_music_ratio_median_yn']}}
+        // { command: Tw.API_CMD.BFF_05_0063, params: {}, version: Tw.API_VERSION.V2 } // 9. 약정할인 및 단말분할상환정보
     ];
 
     // 챗봇 팝업 노출대상 화면 리스트 (10/22)
-     this._chatbotPopDispPageUrls = {
-        '/main/home' : 'greeting_pop',               // 0. 메인
-        // '/myt-data/submain' : 'greeting_pop',        // 1. 나의 데이터/통화
-        // '/myt-fare/submain'   : 'greeting_pop',      // 2. 나의요금
-        // '/myt-join/submain'   : 'greeting_pop',      // 3. 나의 가입정보
-        // '/membership/submain'   : 'greeting_pop',    // 4. T 멤버십
-        // '/product/mobileplan'   : 'greeting_pop',    // 5. 요금제
-        // '/product/mobileplan-add'   : 'greeting_pop' // 6. 부가서비스
+    this._chatbotPopDispPageUrls = {
+        '/main/home' : 'greeting_pop'
     };
 
     // 발화어 리스트
-    this._greetingKeywords = [
-        // { keyword: 'initial', text:'챗봇으로 빠른 상담하기', type: 'A', message : '메뉴 찾기 어려우세요? 제가 도와드릴 수 있어요!'},
-        // { keyword: 'initial', text:'챗봇으로 빠른 상담하기', type: 'B', message : '챗봇에게 궁금한 점을 물어보세요.'},  
-        { keyword: 'pay_bill', message:'이번달 요금 얼마 나왔어?', type: 'A', linkUrl : ''},
-        { keyword: 'pay_bill', message:'이번달 요금이 궁금하세요?<br>이제 챗봇에게 물어보세요!', type: 'B', linkUrl : ''},
-        { keyword: 'hotbill', message:'실시간 이용요금 알려줘', type: 'A', linkUrl : ''},
-        { keyword: 'hotbill', message:'실시간 이용 요금이 궁금하세요?<br>이제 챗봇에게 물어보세요!', type: 'B', linkUrl : ''},
-        { keyword: 'hotdata', message:'실시간 잔여량 알려줘', type: 'A', linkUrl : ''},
-        { keyword: 'hotdata', message:'현재 데이터 잔여량이 궁금하신가요?<br>챗봇에서 확인해보세요!', type: 'B', linkUrl : ''},
-        { keyword: 'refill_coupon', message:'리필 쿠폰 선물할래', type: 'A', linkUrl : ''},
-        { keyword: 'refill_coupon', message:'리필 쿠폰 refillCouponCnt장이 남아있어요.<br>지금 챗봇에서 사용해 보시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'pay_mthd', message:'요금납부 변경 문의', type: 'A', linkUrl : ''},
-        { keyword: 'pay_mthd', message:'지금 은행 자동이체로 납부 방법 변경하고 더 많은 소득 공제 혜택을 누리세요!', type: 'B', linkUrl : ''},
-        { keyword: 'unpaid_amt', message:'미납요금 얼마야?', type: 'A', linkUrl : ''},
-        { keyword: 'unpaid_amt', message:'미납요금이 총 unpaidAmt원 있습니다!<br>바로 납부 하시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'micro_pay', message:'소액결제 금액 얼마야?', type: 'A', linkUrl : ''},
-        { keyword: 'micro_pay', message:'이번 달 소액결제 이용 금액이 있어요.<br>지금 챗봇에서 확인해보시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'contents_pay', message:'콘텐츠결제 금액 얼마야?', type: 'A', linkUrl : ''},
-        { keyword: 'contents_pay', message:'이번 달 콘텐츠 이용 금액이 있어요.<br>지금 챗봇에서 확인해보시겠어요?', type: 'B', linkUrl : ''},
-        { keyword: 'data_gift', message:'데이터 선물할래', type: 'A', linkUrl : ''},
-        { keyword: 'data_gift', message:'데이터 선물 예정이신가요?<br>챗봇이 도와드릴게요!', type: 'B', linkUrl : ''},
-        { keyword: 'cancel_pause', message:'일시정지 취소하고 싶어', type: 'A', linkUrl : ''},
-        { keyword: 'cancel_pause', message:'일시정지 pauseDayCnt일째 입니다.<br>지금 바로 일시정지 해제를 도와드릴까요?', type: 'B', linkUrl : ''},
-        { keyword: 'vcoloring', message:'V 컬러링이 뭐야?', type: 'A', unregYn : 'Y', linkUrl : 'https://www.vcoloring-event.com'},
-        { keyword: 'vcoloring', message:'데이터의 vodRatio%를 동영상에 사용하셨네요!<br>V 컬러링으로 나의 원픽 동영상을 보여주세요!', type: 'B', unregYn : 'Y', linkUrl : 'https://www.vcoloring-event.com'},
-        { keyword: 'vcoloring', message:'V 컬러링 설정하러 가기', type: 'A', unregYn : 'N', linkUrl : 'https://tworld.vcoloring.com'},
-        { keyword: 'vcoloring', message:'V 컬러링을 사용 중이시네요! V 컬러링 앱에서 새로운 동영상을 확인해보세요!', type: 'B', unregYn : 'N', linkUrl : 'https://tworld.vcoloring.com'},
-        { keyword: 'wavve', message:'영상 콘텐츠는 wavve에서', type: 'A', linkUrl : '/product/callplan?prod_id=NA00006577'},
-        { keyword: 'wavve', message:'데이터 vodRatio%를 영상 시청에 쓰는 당신!<br>Wavve에서 데이터 걱정 없이 영상 시청하세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006577'},
-        { keyword: 'flo', message:'무제한 음악 스트리밍 FLO', type: 'A', linkUrl : '/product/callplan?prod_id=NA00006520'},
-        { keyword: 'flo', message:'음악을 즐겨듣는 당신에게 추천드립니다.<br>이젠 FLO 전용 데이터로 음악을 즐겨보세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006520'},
-        { keyword: 'xbox', message:'5GX 클라우드 게임 알아보기', type: 'A', linkUrl : 'https://www.5gxcloudgame.com/main'},
-        { keyword: 'xbox', message:'지금 5GX 클라우드 게임 신청하면<br>1개월 100원 이용권 혜택이 찾아갑니다!', type: 'B', linkUrl : 'https://www.5gxcloudgame.com/main'}
-    ];
+    this._greetingKeywords = this._chatbotCommonService._getGreetingKeywords();
 
     // 챗봇 팝업 타입
     this._typeA = false;
@@ -425,9 +388,7 @@ Tw.ChatbotMainService.prototype = {
                 
                                         // 챗봇 노출 접근대상  : 5G (F) / LTE (L) / 3G (W)
                                         // 태블릿은 접근 불가 (태블릿 : 0102001, 0202001)
-                                        if (resp1.result.svcAttrCd === 'M1' && ['W', 'L', 'F'].indexOf(eqpMthdCd) > -1 
-                                            && ['0102001', '0202001'].indexOf(beqpSclEqpClSysCd) < 0
-                                        ) {
+                                        if ( resp1.result.svcAttrCd === 'M1' && ['W', 'L', 'F'].indexOf(eqpMthdCd) > -1 && ['0102001', '0202001'].indexOf(beqpSclEqpClSysCd) < 0 ) {
                                             Tw.Logger.info('[chatbotmain.service] [_init] 챗봇 접근 대상 (5G/LTE/3G 이고 태블릿이 아닌 경우) 인 경우', '');
                                             this._hbsFile = this._chatbotPopDispPageUrls[urlPath];
                                             var menuList = JSON.parse(Tw.CommonHelper.getSessionStorage('MENU_DATA_INFO'));
@@ -518,8 +479,7 @@ Tw.ChatbotMainService.prototype = {
 
                                         // MLS API 호출 성공시
                                         Tw.Logger.info('[chatbotmain.service] [_init] MLS API 조회 후 resp4 : ', resp4.code);
-                                        console.log('[chatbotmain.service] [_init] MLS API 조회 후 resp4 : ', resp4.code);
-                                        if (resp4.code===Tw.API_CODE.CODE_00) {    
+                                        if ( resp4.code === Tw.API_CODE.CODE_00 && resp4.result && resp4.result.results && resp4.result.results[this._mlsChannelId] && resp4.result.results[this._mlsChannelId].length > 0 ) {
                                             Tw.Logger.info('[chatbotmain.service] [_init] MLS API 호출 성공', '');
                                             console.log('[chatbotmain.service] [_init] MLS API 호출 성공', '');
                                             
@@ -555,16 +515,9 @@ Tw.ChatbotMainService.prototype = {
                                                 }                                        
                                             }
                                             Tw.Logger.info('[chatbotmain.service] [_init] MLS API _mlsGreetingImageType : ', this._mlsGreetingImageType);
-                                            console.log('[chatbotmain.service] [_init] MLS API _mlsGreetingImageType : ', this._mlsGreetingImageType);
-
                                             Tw.Logger.info('[chatbotmain.service] [_init] MLS API _mlsGreetingColor : ', this._mlsGreetingColor);
-                                            console.log('[chatbotmain.service] [_init] MLS API _mlsGreetingColor : ', this._mlsGreetingColor);
-
                                             Tw.Logger.info('[chatbotmain.service] [_init] MLS API _mlsGreetingTheme : ', this._mlsGreetingTheme);
-                                            console.log('[chatbotmain.service] [_init] MLS API _mlsGreetingTheme : ', this._mlsGreetingTheme);
-
                                             Tw.Logger.info('[chatbotmain.service] [_init] MLS API _mlsGreetingRangking : ', this._mlsGreetingRangking);
-                                            console.log('[chatbotmain.service] [_init] MLS API _mlsGreetingRangking : ', this._mlsGreetingRangking);
 
                                             // hbs 파일에서 사용할 타입 정의 (imageType)
                                             if (this._mlsGreetingImageType === 'A'){
@@ -582,10 +535,15 @@ Tw.ChatbotMainService.prototype = {
                                             }
                                             // 챗봇 팝업 그리기 전 분기
                                             this._preDrawChatbot();
-                                        }else{
+                                        } else {
+                                            Tw.Logger.info('[chatbotmain.service] [_init] MLS API 호출 실패', '');
                                             // MLS API 0231 호출 후 오류난 경우(ex. 데이터가 없는 경우 등) , imageType = 'B', textType = 'A', 기본발화어
                                             // imageType
                                             this._mlsGreetingImageType = 'B';
+                                            // color
+                                            this._mlsGreetingColor = 'purple';
+                                            // theme
+                                            this._mlsGreetingTheme = 'normal';
                                             // textType
                                             this._mlsGreetingTextType = 'A';
                                             // 발화어 배열
@@ -594,20 +552,29 @@ Tw.ChatbotMainService.prototype = {
                                             var mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType + '|' + this._mlsGreetingRangking[0];
                                             this._mlsItemIds = mlsItemIds;
                                             // 발화어 배열 크기 (B타입인 경우 1)
-                                            var greetingRangkingSize = 1;
+                                            // var greetingRangkingSize = 1;
                                             // processId (0232, 0233 호출하지 않도록 처리하기 위해 'N'으로)
                                             this._mlsProcessId = 'N';
+
+                                            // 챗봇 팝업 그리기 전 분기
+                                            this._preDrawChatbot();
+
+                                            /*
+                                            Tw.Logger.info('[chatbot.service] [_init] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
+                                            Tw.Logger.info('[chatbot.service] [_init] mlsItemIds : ', mlsItemIds);
+
                                             Tw.Logger.info('[chatbotmain.service] [_init] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
                                             Tw.Logger.info('[chatbotmain.service] [_init] mlsItemIds : ', mlsItemIds);
                                             for (var i = 0; i < this._mlsGreetingRangking.length; i++) {
                                                 for (var j = 0; j < this._greetingKeywords.length; j++){
                                                     var keyword = this._greetingKeywords[j].keyword;
                                                     var message = this._greetingKeywords[j].message;
-                                                    var type = this._greetingKeywords[j].type
+                                                    var type = this._greetingKeywords[j].type;
+                                                    var linkUrl = this._greetingKeywords[j].linkUrl;
                                                     if ((this._mlsGreetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
                                                         Tw.Logger.info('[chatbotmain.service] [_init] message : ', message);
                                                         Tw.Logger.info('[chatbotmain.service] [_init] type : ', type);
-                                                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type};
+                                                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl : linkUrl};
                                                         this._greetingKeywordInfos.push(greetingKeywordInfo);
                                                     }
                                                 }
@@ -624,6 +591,7 @@ Tw.ChatbotMainService.prototype = {
                                             }];
                                             Tw.Logger.info('[chatbotmain.service] [_init] option : ', option);
                                             this._drawChatbotPop(option, mlsItemIds);
+                                            */
                                         }
                                     }         
                                 }, this));
@@ -688,8 +656,8 @@ Tw.ChatbotMainService.prototype = {
         this.$combotBeta = $('.tod-combot-btn .beta');
         this.$combotClose = $('.tod-combot-btn .btn-close');
         this.$chattxt = $('.chat-txt');
-        this.$combotColor = $('.tod-combot-btn').attr("data-color"); //201109 [OP002-11653] 컬러 추가
-        this.$combotThema = $('.tod-combot-btn').attr("data-thema"); //201109 [OP002-11653] 테마 추가 
+        this.$combotColor = $('.tod-combot-btn').attr('data-color'); //201109 [OP002-11653] 컬러 추가
+        this.$combotThema = $('.tod-combot-btn').attr('data-thema'); //201109 [OP002-11653] 테마 추가 
         this.$combotTxt2 = $('.tod-combot-btn.twoline .chat-txt');  //201109  
         this.$combotCloseC = $('.tod-combot-ctype-wrap .btn-close'); 
     },
@@ -701,11 +669,11 @@ Tw.ChatbotMainService.prototype = {
     _bindEvent: function () {
         Tw.Logger.info('[chatbotmain.service] [_bindEvent]', '');
 
-        var mlsGreetingImageType = this._mlsGreetingImageType;
+        // var mlsGreetingImageType = this._mlsGreetingImageType;
         var mlsGreetingImageInfo = this._mlsGreetingImageInfo;
         var mlsGreetingTextType = this._mlsGreetingTextType;
-        var mlsGreetingColor    = this._mlsGreetingColor;
-        var mlsGreetingTheme    = this._mlsGreetingTheme;
+        // var mlsGreetingColor    = this._mlsGreetingColor;
+        // var mlsGreetingTheme    = this._mlsGreetingTheme;
         var mlsChannelId = this._mlsChannelId;
         var mlsProcessId = this._mlsProcessId;
         var mlsItemIds = this._mlsItemIds;
@@ -716,14 +684,14 @@ Tw.ChatbotMainService.prototype = {
             // 3초 후 안내 팝업 슬라이드 업
             if(_this._typeB){
                 _this._timer = setTimeout( function () {
-                    _this.$combot.addClass("open");
+                    _this.$combot.addClass('open');
                 }, 1500); 
                 _this.$combotClose.on('click', function () {
                     //_this.$combot.hide();
-                    _this.$combot.removeClass("open");
+                    _this.$combot.removeClass('open');
                     Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
                     _this._timer = setTimeout( function () {
-                        $('.tod-combot-btn.twoline .chat-txt').addClass("nowrap");  //201109 [OP002-11653] 두줄타입 일 경우만  - 글자 사라질때, 넘침 방지
+                        $('.tod-combot-btn.twoline .chat-txt').addClass('nowrap');  //201109 [OP002-11653] 두줄타입 일 경우만  - 글자 사라질때, 넘침 방지
                     }, 300); 
                     console.log('[chatbotmain.service] [_bindEvent] $(document).on(scroll)', '닫으면 안열리게 수정');
                     
@@ -732,7 +700,7 @@ Tw.ChatbotMainService.prototype = {
            switch(_this.$combotColor){
                
              case 'purple' :
-                  if(_this.$combotThema == 'normal'){
+                  if(_this.$combotThema === 'normal'){
                         console.log('_this.$combotColor1' + _this.$combotColor);
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_purple.json', false);
                   }else{
@@ -740,14 +708,14 @@ Tw.ChatbotMainService.prototype = {
                   }
                  break;
              case 'blue' :
-                 if(_this.$combotThema == 'normal'){
+                 if(_this.$combotThema === 'normal'){
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_blue.json', false);
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_blue.json', false);
                   }
                  break;
              case 'red' :
-                 if(_this.$combotThema == 'normal'){
+                 if(_this.$combotThema === 'normal'){
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_mask_red.json', false);
                   }else{
                      _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_red.json', false);
@@ -759,23 +727,22 @@ Tw.ChatbotMainService.prototype = {
 
              //   _this._animateSvg('.profile1', Tw.Environment.cdn + '/js/chatbot_santa_purple.json', false);
             }else if(_this._typeC){
-                console.log("test");
                 _this._timer = setTimeout(function() {
                     $('.tod-combot-ctype-wrap').addClass('slideUp'); 
                 }, 3000);
                 _this._rollingTimer = setTimeout(function() {
                     setInterval(function(){
-                        $(".ul-rolling li:first").slideUp(
+                        $('.ul-rolling li:first').slideUp(
                             function() { 
-                               $(this).appendTo(".ul-rolling").slideDown();
+                               $(this).appendTo('.ul-rolling').slideDown();
                             }
                         );
                     }, 4000); 
                 }, 3000);
                 _this.rolling=(function(){
-                    $(".ul-rolling li:first").slideUp(
+                    $('.ul-rolling li:first').slideUp(
                         function() { 
-                           $(this).appendTo(".ul-rolling").slideDown();
+                           $(this).appendTo('.ul-rolling').slideDown();
                         }
                     );
                 });
@@ -796,7 +763,7 @@ Tw.ChatbotMainService.prototype = {
                         );
                     }
                     _this.$combot.hide(); 
-                    $(".tod-combot-ctype-wrap").removeClass("slideUp");
+                    $('.tod-combot-ctype-wrap').removeClass('slideUp');
                     clearTimeout(_this._timer);
 				    clearTimeout(_this._rollingTimer);
                     Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
@@ -819,7 +786,7 @@ Tw.ChatbotMainService.prototype = {
                 clearTimeout(_this._timer);
             }, _this));
 
-            $(".tod-ui-chabot2 .btn-close").on('click', function() {
+            $('.tod-ui-chabot2 .btn-close').on('click', function() {
                 console.log('[chatbot.service] [_bindEvent] A타입 this._mlsChannelId : ', mlsChannelId);
                 console.log('[chatbot.service] [_bindEvent] A타입 this._mlsProcessId : ', mlsProcessId);
                 console.log('[chatbot.service] [_bindEvent] A타입 this._mlsItemIds : ', mlsItemIds);
@@ -833,7 +800,7 @@ Tw.ChatbotMainService.prototype = {
                         Tw.Logger.info('[chatbot.service] [_bindEvent]  : BFF_05_0236 - ', mlsItemIds)
                     );
                 }
-                $elChabot.removeClass("slideUp");
+                $elChabot.removeClass('slideUp');
                 Tw.CommonHelper.setSessionStorage('GREETING_DISABLED', 'Y');
             });
             // //touch event
@@ -906,6 +873,18 @@ Tw.ChatbotMainService.prototype = {
         $('.bpcpItem').on('click', function(e){
             Tw.Logger.info('[chatbotmain.service] [_bindEvent] $(.bpcpItem).on(click)', '');
 
+            var url = $(e.currentTarget).data('url');
+            Tw.Logger.info('[chatbot.service] [_bindEvent] url', url);
+
+            if ( url && url.length > 0 ) {
+                if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
+                    Tw.CommonHelper.openUrlExternal(url);
+                } else {
+                    _this._historyService.goLoad(url);
+                }
+            }
+
+            /*
             var chatbotGubun = ''
             if ($(e.currentTarget).hasClass('link-chatbot-go')) {
                 chatbotGubun = $(e.currentTarget).attr('class').replace('link-chatbot-go bpcpItem', '').trim();
@@ -986,6 +965,7 @@ Tw.ChatbotMainService.prototype = {
                 );
             }
             _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, eParam, extraParam);
+            */
         });
         $('.fe-home-charge_open').on('click', function(e){
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item fe-home-charge_open', '').trim();
@@ -1005,9 +985,9 @@ Tw.ChatbotMainService.prototype = {
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
             }else{                
                 if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
-                    Tw.Logger.info('[chatbotmain.service] [_bindEvent] vcoloring/xbox chatbotGubun : ', chatbotGubun)
+                    Tw.Logger.info('[chatbotmain.service] [_bindEvent] vcoloring/xbox chatbotGubun : ', chatbotGubun);
                     // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
-                    if ( mlsProcessId !== 'N'){
+                    if ( mlsProcessId !== 'N') {
                         _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
                             channel_id: mlsChannelId,
                             process_id: mlsProcessId,
@@ -1030,8 +1010,9 @@ Tw.ChatbotMainService.prototype = {
         $('.bpcpItemlink').on('click', function(e){
             Tw.Logger.info('[chatbotmain.service] [_bindEvent] $(.bpcpItemlink).on(click)', '');
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item bpcpItemlink', '').trim();
-            var url = $(e.currentTarget).data('url'); 
-            console.log('bpcpItemlinkurl'+url);
+            var url = $(e.currentTarget).data('url');
+            Tw.Logger.info('[chatbotmain.service] [_bindEvent] [.bpcpItemlink] bpcpItemlinkurl : ', url);
+            
             if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
                 chatbotGubun = 'initial';
                 // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
@@ -1045,7 +1026,7 @@ Tw.ChatbotMainService.prototype = {
                     );
                 }
                 _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
-            }else{
+            } else {
                // window.open(url, '_blank');
                 //Tw.CommonHelper.openUrlInApp(url);
                 // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
@@ -1058,11 +1039,14 @@ Tw.ChatbotMainService.prototype = {
                         Tw.Logger.info('[chatbotmain.service] [_bindEvent] $(.linkItem).on(click) : BFF_05_0233 : ', '')
                     );
                 }
-                _this._historyService.goLoad(url);
+
+                if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
+                    Tw.CommonHelper.openUrlExternal(url);
+                } else {
+                    _this._historyService.goLoad(url);
+                }
             }
-                
-                // Tw.CommonHelper.openUrlExternal('https://app.tworld.co.kr' + url);
-           
+            // Tw.CommonHelper.openUrlExternal('https://app.tworld.co.kr' + url);
         });
     },
 
@@ -1074,7 +1058,10 @@ Tw.ChatbotMainService.prototype = {
     _preDrawChatbot: function () {
         if (this._loginType !== 'S'){   // 간편로그인 아닌 경우 
             this._requestApis();
-        } else { // 간편로그인일 경우 API 태우지 않고 MLS 랭킹 순서만 맞춰서 _drawchatbot 호출                    
+        } else { 
+            Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] 간편로그인', '');
+
+            // 간편로그인일 경우 API 태우지 않고 MLS 랭킹 순서만 맞춰서 _drawchatbot 호출                    
             // BFF_05_0232에서 쓰일 item_id
             this._mlsItemIds = this._mlsGreetingImageInfo + '|' + this._mlsGreetingTextType;
 
@@ -1124,12 +1111,13 @@ Tw.ChatbotMainService.prototype = {
                 for (var j = 0; j < this._greetingKeywords.length; j++){
                     var keyword = this._greetingKeywords[j].keyword;
                     var message = this._greetingKeywords[j].message;
-                    var type = this._greetingKeywords[j].type
+                    var type = this._greetingKeywords[j].type;
+                    var linkUrl = this._greetingKeywords[j].linkUrl;
                     //message.replace(/\n/g, '<br/>');
                     if ((greetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
                         Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] message : ', message);
                         Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] type : ', type);
-                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type};
+                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl : linkUrl};
                         this._greetingKeywordInfos.push(greetingKeywordInfo);
                         // textType이 'B'인 경우 두줄 디자인으로
                         if (type === 'B'){
@@ -1180,7 +1168,10 @@ Tw.ChatbotMainService.prototype = {
                 Tw.Logger.info('[chatbotmain.service] [_requestApis] 호출할 API 리스트 : ', this._defaultRequestUrls);
 
                 this._apiService.requestArray(this._defaultRequestUrls)
-                    .done($.proxy(this._checkTargetGroup, this));
+                    .done($.proxy(this._checkTargetGroup, this))
+                    .fail(function(error){
+                        Tw.Logger.info('[chatbotmain.service] [_requestApis] requestArray fail : ', error);
+                    });
             
             } else {    // 준회원인 경우
                 Tw.Logger.info('[chatbotmain.service] [_requestApis] 준회원인 경우', '');
@@ -1193,67 +1184,55 @@ Tw.ChatbotMainService.prototype = {
         }        
     },
 
-
     /**
      * @function
      * @desc 말풍선 노출 대상군 확인
      */
     _checkTargetGroup: function (billmthInfo, unpaidBillInfo, pauseInfo, userProfileInfo) {        
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------billmthInfo : ', billmthInfo);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------unpaidBillInfo : ', unpaidBillInfo);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------pauseInfo : ', pauseInfo);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------userProfileInfo : ', userProfileInfo);
+        var discountInfo = {};
+        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] billmthInfo : ', billmthInfo);
+        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] unpaidBillInfo : ', unpaidBillInfo);
+        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] pauseInfo : ', pauseInfo);
+        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] userProfileInfo : ', userProfileInfo);
+        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] discountInfo : ', discountInfo);
         /* *******************************************
             1. 자동납부 신청 관련 말풍선 노출 대상군 여부 체크 
         ******************************************* */
         if ( billmthInfo.code === Tw.API_CODE.CODE_00 ) {
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 납부방법 코드 : ', billmthInfo.result.payMthdCd);
             var rtnPayMthCd = billmthInfo.result.payMthdCd;    // 납부방법코드
 
             if (rtnPayMthCd !== '01') {
                 this._payMthdYn = 'Y';
             }
-
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 1. 자동납부 신청 관련 말풍선 노출 대상군 여부 : ', this._payMthdYn);
         } else {
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 1. 납부방법 코드 조회 API 리턴 에러', billmthInfo.code, billmthInfo.msg);
             this._payMthdYn = 'N';
             //Tw.Error(billmthInfo.code, billmthInfo.msg, '1. 자동납부').pop();
         }
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------', '');
 
         /* *******************************************
             2. 미납내역 관련 말풍선 노출 대상군 여부 체크 
         ******************************************* */
         if ( unpaidBillInfo.code === Tw.API_CODE.CODE_00 ) {
             var unPaidTotSum = unpaidBillInfo.result.unPaidTotSum;
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 미납액 : ', unPaidTotSum);
             if ( unPaidTotSum === '0' ) {
                 this._unpaidYn = 'N';
             } else {
                 this._unpaidAmt = Tw.FormatHelper.convNumFormat(Number(unPaidTotSum));
                 this._unpaidYn = 'Y';
             }
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._unpaidAmt : ', this._unpaidAmt);
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 2. 미납내역 관련 말풍선 노출 대상군 여부 : ', this._unpaidYn);
         } else {
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 2. 미납금액 조회 API 리턴 에러', unpaidBillInfo.code, unpaidBillInfo.msg);
             this._unpaidYn = 'N';
             // Tw.Error(unpaidBillInfo.code, unpaidBillInfo.msg, '2. 미납내역').pop();
         }
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------', '');
+        
         // /* *******************************************
         //     3. 일시 중지 중 관련 말풍선 노출 대상군 여부 체크 
         // ******************************************* */
         if ( pauseInfo.code === Tw.API_CODE.CODE_00 ) {
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 일시정지  : ', pauseInfo.result.svcStCd);
-
             if ( pauseInfo.result.svcStCd === 'AC' ) {
                 this._pauseYn = 'N';
             } else {
                 this._pauseYn = 'Y';
-                Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] pauseInfo.result.fromDt  : ', pauseInfo.result.fromDt);
-
                 var fromDt = pauseInfo.result.fromDt;   // 일시정지 시작날짜
                 var yyyy = fromDt.substr(0,4);
                 var mm = fromDt.substr(4,2);
@@ -1263,20 +1242,13 @@ Tw.ChatbotMainService.prototype = {
                 var diff = nowDay.getTime() - pDay.getTime();
                 var pauseDays = Math.floor(diff/(1000*60*60*24));
                 this._pauseDayCnt = pauseDays + 1;      // 일시정지 일수
-                Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] pDay  : ', pDay);
-                Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] nowDay  : ', nowDay);
-                Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] pauseDays  : ', pauseDays);
-                Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._pauseDayCnt  : ', this._pauseDayCnt);
             }
-
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 5. 일시정지 관련 말풍선 노출 대상군 여부 : ', this._pauseYn);
         } else {
             Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 5. 일시정지 조회 API 리턴 에러', pauseInfo.code, pauseInfo.msg);
-
             this._pauseYn = 'N';
             // Tw.Error(unpaidBillInfo.code, unpaidBillInfo.msg, '2. 미납내역').pop();
         }  
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------', '');
+        
         // /* *******************************************
         //   4.0 MLS User Profile 조회 (BFF_05_0235)
         // ******************************************* */        
@@ -1289,10 +1261,7 @@ Tw.ChatbotMainService.prototype = {
             }
             var appUseTrafficMusicRatioMedianYn = resultData.app_use_traffic_music_ratio_median_yn; // 음악감상 데이터가 소비평균보다 높은지 여부
             var appUseTrafficGameMedianYn = resultData.app_use_traffic_game_median_yn;  // 게임 데이터가 소비평균보다 높은지 여부
-
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.0 MLS User Profile 조회 API(BFF_05_0235) this._vodRatio : ', this._vodRatio);
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.0 MLS User Profile 조회 API(BFF_05_0235) appUseTrafficGameMedianYn : ', appUseTrafficGameMedianYn);
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.0 MLS User Profile 조회 API(BFF_05_0235) appUseTrafficMusicRatioMedianYn : ', appUseTrafficMusicRatioMedianYn);
+            
             // /* *******************************************
             //   4.1 V컬러링 
             //   4.2 wavve 관련 말풍선 노출 대상군 여부 체크
@@ -1303,17 +1272,13 @@ Tw.ChatbotMainService.prototype = {
                     this._wavveYn = 'Y';
                 }
             }
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.1 V컬러링 관련 말풍선 노출 대상군 여부 : ', this._vColoringYn);
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.2 wavve 관련 말풍선 노출 대상군 여부 : ', this._wavveYn);
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------', '');
+            
             // /* *******************************************
             //   4.3 flo 관련 말풍선 노출 대상군 여부 체크
             // ******************************************* */        
             if (this._floProdUnregYn === 'Y' && appUseTrafficMusicRatioMedianYn === 'Y'){
                 this._floYn = 'Y';
             }
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.3 flo 관련 말풍선 노출 대상군 여부 : ', this._floYn);
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------', '');
 
             // /* *******************************************
             //   4.4 xbox 관련 말풍선 노출 대상군 여부 체크
@@ -1321,15 +1286,46 @@ Tw.ChatbotMainService.prototype = {
             if (this._xboxProdUnregYn === 'Y' && appUseTrafficGameMedianYn === 'Y'){
                 this._xboxYn = 'Y';
             }
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.4 xbox 관련 말풍선 노출 대상군 여부 : ', this._xboxYn);
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------', '');
         } else {
             Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 4.0 MLS User Profile 조회 API(BFF_05_0235) 리턴 에러', userProfileInfo.code, userProfileInfo.msg);
         }
 
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] ----------------------------------------------------------', '');
+        // /* *******************************************
+        //   9.0 약정할인 및 단말분할상환정보 (BFF_05_0063)
+        // ******************************************* */
+        if ( discountInfo && discountInfo.code === Tw.API_CODE.CODE_00 ) {
+            if( discountInfo.result && discountInfo.result.installmentList ) {
+                var _this = this;
+                var isGalaxyAll = false;
+                discountInfo.result.installmentList.forEach(function (row) {
+                    if ( row.allotApprAmt && row.allotMthCnt && row.invRmn ) {
+                        if ( Tw.FormatHelper.isNumber(row.allotApprAmt) && Tw.FormatHelper.isNumber(row.allotMthCnt) && Tw.FormatHelper.isNumber(row.invRmn) ) {
+                            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] [galaxy_all] isAndroid : ', Tw.BrowserHelper.isAndroid());
+                            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] [galaxy_all] typeB : ', _this._typeB);
+                            // 할부원금 백만원 이상, 할부 20개월 이상 경과, 안드로이드 접속
+                            if( Number(row.allotApprAmt) >= 1000000 && (Number(row.allotMthCnt) - Number(row.invRmn)) >= 20 && Tw.BrowserHelper.isAndroid() && _this._typeB) {
+                                isGalaxyAll = true;
+                            }
+                        } else {
+                            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] allotApprAmt or allotMthCnt or invRmn is not number', '');
+                        }
+                    } else {
+                        Tw.Logger.info('[chatbot.service] [_checkTargetGroup] allotApprAmt or allotMthCnt or invRmn is null', '');
+                    }
+                });
 
-        
+                Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 삼성통합기획전 표시 여부 : ', isGalaxyAll);
+
+                // 삼성통합기획전
+                if( isGalaxyAll ) {
+                    // MLS 에서 받아온 티월드그리팅랭킹 앞에 키워드 추가
+                    this._chatbotCommonService._mlsGreetingRangkingUnshift('galaxy_all', this._mlsGreetingRangking, this._greetingKeywords, this._mlsGreetingTextType);
+                }
+            }
+        } else {
+            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 약정할인 및 단말분할상환정보 (BFF_05_0063) 리턴 에러', discountInfo);
+        }
+
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
 
         // BFF_05_0232에서 쓰일 item_id
@@ -1338,74 +1334,70 @@ Tw.ChatbotMainService.prototype = {
         // 실제 발화어 정보 리스트 세팅        
         var greetingRangking = [];      // 발화어 노출 조건에 부합한 발화어 배열
         var greetingRangkingSize = 0;   // 발화어 노출 조건에 부합한 발화어 배열 크기
-        
-        // imageType이 B인 경우는 발화어 한개, 그 외의 경우(A타입)는 발화어 4개
-        if (this._mlsGreetingImageType === 'B'){
-            greetingRangkingSize = 1;
-        } else if (this._mlsGreetingImageType === 'C'){
-            greetingRangkingSize = 3;
-        } else{
-            greetingRangkingSize = 4;
-
-        }
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._payMthdYn : ', this._payMthdYn);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._unpaidYn : ', this._unpaidYn);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._pauseYn : ', this._pauseYn);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._vColoringYn : ', this._vColoringYn);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._wavveYn : ', this._wavveYn);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._floYn : ', this._floYn);
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] this._xboxYn : ', this._xboxYn);
 
         if (this._mlsGreetingRangking.length > 0){   
             for (var i = 0; i < this._mlsGreetingRangking.length; i++) {
                 var mlsKeyword = this._mlsGreetingRangking[i];
-                if (greetingRangking.length < greetingRangkingSize ){
-                    // * 발화어 노출 조건 *
-                    if (mlsKeyword === 'pay_mthd'){ // 1. pay_mthd - 납부 방법 != 은행 자동이체
-                        if (this._payMthdYn === 'Y'){
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        }
-                    } else if (mlsKeyword === 'unpaid_amt'){ // 2. unpaid_amt - 미납 요금 있음
-                        if (this._unpaidYn === 'Y'){
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        }
-                    } else if (mlsKeyword === 'cancel_pause'){ // 3. cancel_pause - 일시정지 중
-                        if (this._pauseYn === 'Y'){
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        }    
-                    } else if (mlsKeyword === 'vcoloring'){ // 8. vcoloring - 동영상 사용량 데이터 30퍼센트 이상
-                        if (this._vColoringYn === 'Y'){
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        } 
-                    } else if (mlsKeyword === 'wavve'){ // 9. wavve - 동영상 사용량 데이터 30퍼센트 이상 && waave 계열 부가서비스 미가입
-                        if (this._wavveYn === 'Y'){
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        }    
-                    } else if (mlsKeyword === 'flo'){ // 10. flo - 음악감상 데이터가 소비평균보다 높은경우(UserProfile.app_use_traffic_music_ratio_median_yn === 'Y') && FLO 계열 부가서비스 미가입
-                        if (this._floYn === 'Y'){
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        }   
-                    } else if (mlsKeyword === 'xbox'){ // 11. xbox - 게임 데이터가 소비평균보다 높은경우(UserProfile.app_use_traffic_game_median_yn === 'Y') && 클라우드게임 계열 부가서비스 미가입
-                        if (this._xboxYn === 'Y'){
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        }                    
-                    }else{
+                // * 발화어 노출 조건 *
+                if (mlsKeyword === 'pay_mthd'){ // 1. pay_mthd - 납부 방법 != 은행 자동이체
+                    if (this._payMthdYn === 'Y'){
                         greetingRangking.push(mlsKeyword);
-                        this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
                     }
+                } else if (mlsKeyword === 'unpaid_amt'){ // 2. unpaid_amt - 미납 요금 있음
+                    if (this._unpaidYn === 'Y'){
+                        greetingRangking.push(mlsKeyword);
+                    }
+                } else if (mlsKeyword === 'cancel_pause'){ // 3. cancel_pause - 일시정지 중
+                    if (this._pauseYn === 'Y'){
+                        greetingRangking.push(mlsKeyword);
+                    }    
+                } else if (mlsKeyword === 'vcoloring'){ // 8. vcoloring - 동영상 사용량 데이터 30퍼센트 이상
+                    if (this._vColoringYn === 'Y'){
+                        greetingRangking.push(mlsKeyword);
+                    } 
+                } else if (mlsKeyword === 'wavve'){ // 9. wavve - 동영상 사용량 데이터 30퍼센트 이상 && waave 계열 부가서비스 미가입
+                    if (this._wavveYn === 'Y'){
+                        greetingRangking.push(mlsKeyword);
+                    }    
+                } else if (mlsKeyword === 'flo'){ // 10. flo - 음악감상 데이터가 소비평균보다 높은경우(UserProfile.app_use_traffic_music_ratio_median_yn === 'Y') && FLO 계열 부가서비스 미가입
+                    if (this._floYn === 'Y'){
+                        greetingRangking.push(mlsKeyword);
+                    }   
+                } else if (mlsKeyword === 'xbox'){ // 11. xbox - 게임 데이터가 소비평균보다 높은경우(UserProfile.app_use_traffic_game_median_yn === 'Y') && 클라우드게임 계열 부가서비스 미가입
+                    if (this._xboxYn === 'Y'){
+                        greetingRangking.push(mlsKeyword);
+                    }                    
+                }else{
+                    greetingRangking.push(mlsKeyword);
                 }
             }
-        }else{                        
+        } else {
             greetingRangking = this._defaultGreetingKeywords;
-            this._mlsItemIds = this._defaultMlsItems;
         }
+
+        // imageType이 B인 경우는 발화어 한개, 그 외의 경우(A타입)는 발화어 4개
+        if (this._mlsGreetingImageType === 'B'){
+            greetingRangkingSize = 1;
+            
+            // 이미 표시된 그리팅 메시지 순서변경
+            this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
+        } else if (this._mlsGreetingImageType === 'C'){
+            greetingRangkingSize = 3;
+        } else{
+            greetingRangkingSize = 4;
+        }
+
+        if ( greetingRangkingSize < greetingRangking.length ) {
+            // 발화어 개수이상 삭제
+            greetingRangking.splice(greetingRangkingSize);
+        }
+
+        if ( greetingRangking ) {
+            greetingRangking.forEach($.proxy(function (itme) {
+                this._mlsItemIds = this._mlsItemIds + '|' + itme;
+            }, this));
+        }
+        
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] greetingRangking : ', greetingRangking);
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] mlsItemIds : ', this._mlsItemIds);
         for (var i = 0; i < greetingRangking.length; i++) {
@@ -1416,7 +1408,6 @@ Tw.ChatbotMainService.prototype = {
                 var linkUrl = '';
                 if ((greetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
                     if (greetingRangking[i] === 'vcoloring'){
-                        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] vcoloring : vColoring!', '');
                         if (this._vColoringProdUnregYn === this._greetingKeywords[j].unregYn){
                             message = this._greetingKeywords[j].message;
                             linkUrl = this._greetingKeywords[j].linkUrl;
@@ -1438,8 +1429,6 @@ Tw.ChatbotMainService.prototype = {
                             message = message.replace(/vodRatio/g, this._vodRatio);
                         }
                     }
-                    Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] message : ', message);
-                    Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] type : ', type);
                     // vColoring의 경우 A, B 타입 외에 unRegYn(Y/N)으로도 나뉘어 있기 때문에
                     // 루프 돌면서 message가 ''인 경우가 중복으로 생기므로 이럴 경우는 제외시켜줌
                     if (message !== ''){
@@ -1468,20 +1457,12 @@ Tw.ChatbotMainService.prototype = {
         }];
         Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] option : ', option);
 
-        
-
         // 챗봇 팝업 노출 대상 화면인 경우 this._hbsFile 이 null 이 아님.
         // this._hbsFile 이 null 인 경우는 전체메뉴 > 쳇봇 상담하기 를 통한 진입인 경우이므로 
         // 별도 분기처리를 해준다.
-        Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] hbs 파일 경로 : ', this._hbsFile);
-
         if (Tw.FormatHelper.isEmpty(this._hbsFile)) {
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 쳇봇 상담하기 를 통한 진입인 경우', '');
-
             this._redirectChatbotPage();
         } else {
-            Tw.Logger.info('[chatbotmain.service] [_checkTargetGroup] 쳇봇 발화어 노출 대상 화면를 통한 진입인 경우', ' - 화면을 그려주기 위한 메서드 (_drawChatbotPop) 호출');
-
             this._drawChatbotPop(option, this._mlsItemIds);
         }
     },
@@ -1556,11 +1537,7 @@ Tw.ChatbotMainService.prototype = {
 
             $('.wrap').append(html);
 
-            Tw.Logger.info('[chatbotmain.service] [_drawChatbotPop] 챗봇 팝업 내 발화어 버튼 리스트 : ', $('.tod-ui-chabot2 .list .item'));
-
             _this._timer = setTimeout(function () {
-                Tw.Logger.info('[chatbotmain.service] [_drawChatbotPop] 챗봇 팝업 객체 : ', _this.$elChabot);
-
                 // 설문조사 플로팅 배너 객체 ($(".tod-floating")) 가 존재하는 경우 챗봇 발화어 팝업과 겹치므로 설문조사 플로팅 배너를 hide 처리한다.
                 if ($('.tod-floating').length > 0) {
                     $('.tod-floating').hide();
@@ -1629,13 +1606,13 @@ Tw.ChatbotMainService.prototype = {
           switch(this.$combotColor){
             case 'purple' :
                 this.$combot.css({'background':'linear-gradient(to right, #609aff , #877efc)'});
-                break
+                break;
             case 'blue' :
                 this.$combot.css({'background':'linear-gradient(to right, #48beed, #439af7)'});
-                break
+                break;
             case 'red' :
                 this.$combot.css({'background':'linear-gradient(to right, #ff9062 , #ff6372)'});
-                break
+                break;
             default:
                 this.$combot.css({'background-image':'linear-gradient(to right, #609aff , #877efc)'});
         } 
@@ -1662,23 +1639,23 @@ Tw.ChatbotMainService.prototype = {
     },
 
     _loadPopup: function (e,url) {
-        this._popupService.open({
-          url: '/hbs/' ,
-          hbs: 'popup_a5'
-        },
-          $.proxy(this._onOpenPopup, this, url),
-          null,
-          'prod_info',
-          $(e.currentTarget));
-      },
+    this._popupService.open({
+        url: '/hbs/' ,
+        hbs: 'popup_a5'
+    },
+        $.proxy(this._onOpenPopup, this, url),
+        null,
+        'prod_info',
+        $(e.currentTarget));
+    },
 
-      _onOpenPopup: function (url, $layer) {
-        Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
-        $layer.on('click', '.pos-right', $.proxy(this._confirm, this, url));
-       
-      },
+    _onOpenPopup: function (url, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+    $layer.on('click', '.pos-right', $.proxy(this._confirm, this, url));
+    
+    },
 
-      _confirm: function (url) {
-        Tw.CommonHelper.openUrlExternal(url);
-      },
+    _confirm: function (url) {
+    Tw.CommonHelper.openUrlExternal(url);
+    }
 };

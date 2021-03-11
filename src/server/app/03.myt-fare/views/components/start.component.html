@@ -16,5 +16,8 @@
     <meta property="og:image" content="<%= CDN %>/img/dummy/kakao_share.jpg" />
     <meta property="og:description" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
     <title><%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %></title>
+    <% if (locals.pageInfo.advancement && locals.pageInfo.advancement.netFunnelVisible) { %>
+    <script type="text/javascript" src="<%= CDN %>/js/netfunnel.js" charset="UTF-8"></script>
+    <% } %>
     <% include ../components/stylesheet.component.html %>
 </head>

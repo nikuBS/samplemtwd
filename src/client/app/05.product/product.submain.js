@@ -17,6 +17,7 @@ Tw.ProductSubmain = function(rootEl, menuId) {
   this._bindEvent();
 
   this._setCoachMark();
+  // this._showRenewal(); // 3월 15일 해제 예정
 };
 
 Tw.ProductSubmain.prototype = {
@@ -195,5 +196,77 @@ Tw.ProductSubmain.prototype = {
    */
   _setCoachMark: function () {
     new Tw.CoachMark(this.$container, '.fe-coach-total', '.fe-coach-total-target', Tw.NTV_STORAGE.COACH_PRODUCT_MOBILEPLAN_TOTAL);
-  }
+  },
+
+  /**
+   * Renewal 페이지 이동 안내 띠 노출 
+   * 2021. 02. 17 knkim
+   */
+  _showRenewal: function() {
+    var url = window.location.pathname;
+    if ( url != '/product/mobileplan' ) {
+      return;
+    }
+
+    var html = 
+      '<div class="h-person">' +
+        '<button data-url="/product/renewal/mobileplan" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A4_B15-20" data-xt_csid="NO" data-xt_action="BC">' +
+            '<span class="person-btn-wrap">' +
+                '<span class="inner-btn">' +
+                    '<span class="tod-blind">새로운 요금제 화면을 만나보세요.</span>' +
+                '</span>' +
+                '<span class="btn-comment"><span class="txt">새로운 요금제 화면을 만나보세요.</span></span>' +
+            '</span>' +
+        '</button>' +
+      '</div>';
+
+    this.$container.find('.h-serarch').before(html);
+    this._initPersonAction();
+  },
+
+  /**
+   * Renewal 버튼에 대한 애니메이션 설정
+   * 2021. 02. 17 knkim
+   */
+  _initPersonAction: function () {
+    var personTimer = null, hideTimer1 = null, hideTimer2 = null;
+    var personIcoClickYN = Tw.CommonHelper.getSessionStorage('PERSON_ICO_CLICKED'); // 한번 이상 개인화 진입 아이콘 클릭
+    if ( personIcoClickYN === 'Y' ) {
+      $('.h-person').removeClass('show');
+      $('.h-person .btn-comment').hide();
+    }
+
+    function personAction() {
+      clearTimeout(personTimer);
+      clearTimeout(hideTimer1);
+      clearTimeout(hideTimer2);
+
+      personTimer = setTimeout(function () {
+        $('.h-person').addClass('show');
+        hideTimer1 = setTimeout(function () {
+          $('.h-person').removeClass('show');
+          hideTimer2 = setTimeout(function () {
+            $('.h-person .btn-comment').hide();
+          }, 1000);
+        }, 3000);
+      }, 500);
+    }
+
+    $(window).on('scroll', function () {
+      if ( $(this).scrollTop() === 0 ) {
+        if ( personIcoClickYN !== 'Y' ) {
+          personAction();
+        }
+      } else {
+        if ( personIcoClickYN !== 'Y' ) {
+          $('.h-person .btn-comment').show();  //2020.05.13 추가
+        }
+        $('.h-person').removeClass('show');
+      }
+    });
+    if ( personIcoClickYN !== 'Y' ) {
+      personAction();
+    }
+  },
+
 };

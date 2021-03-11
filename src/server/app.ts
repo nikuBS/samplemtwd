@@ -10,7 +10,7 @@ if ( process.env.NODE_ENV !== 'local' ) {
 import * as path from 'path';
 
 // Express Modules
-import express, { Application } from 'express';
+import express, { Application, NextFunction } from 'express';
 import UA from 'express-useragent';
 import ejs from 'ejs';
 import cookie from 'cookie-parser';
@@ -64,6 +64,9 @@ import RedisService_en from './services_en/redis.service';
 import LoggerService_en from './services_en/logger.service';
 import VERSION_en from './config_en/version.config';
 import ErrorService_en from './services_en/error.service';
+import { Observable } from 'rxjs';
+import { REDIS_KEY } from './types/redis.type';
+import FormatHelper from './utils/format.helper';
 
 
 module.exports = require('../../nodejs-exporter');

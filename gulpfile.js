@@ -571,7 +571,9 @@ gulp.task('css-rb', function () {
     'src/client/web-contents/css/widgets.css',
     'src/client/web-contents/css/components.css',
     'src/client/web-contents/css/roaming-next.css',
-    'src/client/web-contents/css/m_product.css'])
+    'src/client/web-contents/css/m_product.css',
+    'src/client/web-contents/css/product.css',
+    'src/client/web-contents/css/font_spoqa.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/web-contents/',
   //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
@@ -758,6 +760,11 @@ gulp.task('css-idpt', function() {
     .pipe(gulp.dest('.'));
 });
 
+gulp.task('netfunnel', function () {
+  return gulp.src('src/client/web-contents/js/netfunnel.js')
+    .pipe(gulp.dest(dist + 'js'));
+});
+
 gulp.task('myt-adv-css', function () {
   return gulp.src('src/client/web-contents/css/submain.css')
     .pipe(gulp.dest(dist + 'css'));
@@ -867,7 +874,7 @@ gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
 gulp.task('json', ['json-chatbot-1', 'json-chatbot-2', 'json-chatbot-3', 'json-chatbot-4', 'json-chatbot-5', 'json-chatbot-6', 'json-chatbot-7', 'json-chatbot-8']);
-gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'myt-adv-css', 'img', 'hbs', 'font', 'mp4', 'json']);
+gulp.task('rb', ['js-rb', 'netfunnel', 'css-rb', 'css-main', 'css-idpt', 'myt-adv-css', 'img', 'hbs', 'font', 'mp4', 'json']);
 
 gulp.task('en_js', ['en_js-util', 'en_js-component', 'en_js-app']);
 gulp.task('en_js-client', ['en_js-util-client', 'en_js-component-client', 'en_js-app-client']);

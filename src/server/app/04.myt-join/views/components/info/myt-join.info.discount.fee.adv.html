@@ -3,24 +3,34 @@
 * @author Kim In Hwan
 _%>
 <%_
-var tipId = feeItem.typeStr === 'FEE_TYPE_A'? 'MS_09_tip_01' : '';
+var tipId = (feeItem.typeStr === 'FEE_TYPE_A' || feeItem.typeStr === 'FEE_TYPE_E' || feeItem.typeStr === 'FEE_TYPE_F')? 'MS_09_tip_01' : '';
 _%>
 
 <div class="box-group">
     <div class="box-group-head-tit">
-        <a href="/product/callplan?prod_id=<%= feeItem.prodId %>" class="link">
+        <%_
+        if (feeItem.typeStr !== 'FEE_TYPE_F') {
+            var title_XtId = '';
+            if (feeItem.typeStr === 'FEE_TYPE_A') {
+                title_XtId = 'CMMA_A3_B13_C65-3';
+            } else if (feeItem.typeStr === 'FEE_TYPE_E') {
+                title_XtId = 'CMMA_A3_B13_C65-4';
+            }
+        _%>
+        <a href="/product/callplan?prod_id=<%= feeItem.prodId %>"
+           data-xt_eid="<%= title_XtId %>" data-xt_csid="NO" data-xt_action="BC" class="link">
             <%= feeItem.disProdNm_N %>
         </a>
+        <% } else {%>
+        <%= feeItem.disProdNm_N %>
+        <% } %>
     </div>
     <div class="box-group-cont">
         <ul class="report-list item-no-border small">
             <li class="report-item">
-                <dl class="report-define d-wrap">
-                    <dt class="report-tit">지난달까지 할인받은 요금
-                        <% if (tipId) { %>
-                        <button type="button" class="tip" id="<%= tipId %>" aria-haspopup="true">TIP</button>
-                        <% } %>
-                    </dt>
+                <dl class="report-define d-wrap fs15">
+                    <dt class="report-tit">지난달까지 할인받은 요금<% if (tipId) { %><button type="button" class="tip"
+                          id="<%= tipId %>" data-xt_eid="CMMA_A3_B13_C65-5" data-xt_csid="NO" data-xt_action="BC" aria-haspopup="true">TIP</button><% } %></dt>
                     <dd class="report-cont basics13-larger"><%= feeItem.salePay.replace('-', '') %>원</dd>
                 </dl>
             </li>
@@ -34,17 +44,22 @@ _%>
             -->
         </ul>
         <a href="#" class="detail-info-link" data-target="detailList"
+           data-xt_eid="CMMA_A3_B13_C65-6" data-xt_csid="NO" data-xt_action="BC"
            data-value='<%-JSON.stringify(feeItem.svcAgrmtDcObj) %>'>월별 상세 할인 내역 ></a>
+        <a href="#" data-target="detailList"
+           data-xt_eid="CMMA_A3_B13_C65-6" data-xt_csid="NO" data-xt_action="BC"
+           data-value='<%-JSON.stringify(feeItem.svcAgrmtDcObj) %>' class="bundle-link">
         <div class="gray-box">
             <ul class="report-list item-no-border small">
                 <li class="report-item">
-                    <dl class="report-define d-wrap">
+                    <dl class="report-define d-wrap fs15">
                         <dt class="report-tit">약정 기간</dt>
                         <dd class="report-cont">
-                            <button type="button" class="detail-agree-btn" data-id="fee"
+                            <%= feeItem.totMt %>개월(<%= feeItem.totDt %>일)
+                            <!-- <button type="button" class="detail-agree-btn" data-id="fee"
                                     data-target="<%= feeItem.prodId %>">
                                 <%= feeItem.totMt %>개월(<%= feeItem.totDt %>일)
-                            </button>
+                            </button> -->
                         </dd>
                     </dl>
                 </li>
@@ -68,6 +83,7 @@ _%>
                 </span>
             </div>
         </div>
+        </a>
         <% if (feeItem.typeStr === 'FEE_TYPE_A') { %>
         <p class="warning">&lt;스페셜약정할인&gt;, &lt;LTE플러스약정할인&gt;이 &lt;요금약정할인&gt;으로 통합되었습니다. 이용에 참고해 주시기 바랍니다.</p>
         <% } %>

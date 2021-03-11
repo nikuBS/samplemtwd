@@ -41,7 +41,17 @@ export enum REDIS_KEY {
   DATA_RECHARGE_COUNT = 'data.recharge.count', // 데이터 리필 표기 관련 환경변수 개수
   DATA_DEDUCTION_PRODUCTS = 'data.deduction.prodId',
   DATA_DEDUCTION_COUNT = 'data.deduction.count',
-  ADVANCEMENT_PAGE_VISIBLE = 'advancement.page.visible'
+  ADVANCEMENT_PAGE_VISIBLE = 'advancement.page.visible',
+  BENF_PROD_INFO = 'BenfProdInfo:', // 상품 고도화 ( 혜택 상품관리 Redis )
+
+  // 상품 리뉴얼 ( 상품 메인화면의 섹션 순서가 세팅되어있는 환경 변수 )
+  PRODUCT_SORT_SECTION_3G = 'comm.theme.order.3g', // 네트워크 상태가 3G 일 때
+  PRODUCT_SORT_SECTION_LTE = 'comm.theme.order.lte', // 네트워크 상태가 LTE 일 때
+  PRODUCT_SORT_SECTION_5G = 'comm.theme.order.5g', // 네트워크 상태가 5G 일 때 
+  PRODUCT_SORT_SECTION_2ND_DEVICE = 'comm.theme.order.2nd', // 네트워크 상태가 2nd Device일 때
+  PREFERENCE_PROPERTY = 'PreferenceProperty:', // 환경변수 키  
+  NETFUNNEL_PAGE_VISIBLE = 'PreferenceProperty:netfunnel.page.visible' // 넷퍼널 키
+  
 }
 
 export enum REDIS_TOS_KEY {

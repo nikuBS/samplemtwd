@@ -1,0 +1,74 @@
+<%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% let hasNext = 'false' %>
+<!-- // 최대로 내려서 요금제 더 불러오기 기능 사용 안함 -->
+
+<body class="tod-renewalBody">
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <div>
+        <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+            <%- include('../../../../../../../common/views/components/header.component.html', { title: '전체요금제', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
+            <div id="contents" class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <div class="tod-nmp-top-wrap">
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
+                        <!-- 필터 조건값 노출 영역 -->
+                    </div>
+                    <% for( let i = 0; i < plans.groupProdList.length; i++ ) { %>
+                        <% let thisSeries = plans.groupProdList[i]; %>
+                        <section class="tod-cont-section">
+                            <div class="rn-banner-img">
+                                <img src="<%= cdn %><%= thisSeries.prodGrpBackgroundImgUrl %>" alt="<%= thisSeries.prodGrpBackgroundImgAlt %>">
+                            </div>
+                            <div class="tod-nmp-title">
+                                <div class="rn-tag">
+                                    <span class="i-tag-cr3"><%= thisSeries.prodGrpNm %></span>
+                                </div>
+                                <h3 class="rn-prod-tit"><%= thisSeries.prodGrpDesc %></h3>
+                            </div>
+                            <!-- 요금제 two column list -->
+                            <div class="tod-nmp-column-list">
+                                <ul>
+                                    <% for(let j = 0; j < thisSeries.prodList.length; j++) { %>
+                                        <% let thisPlan = thisSeries.prodList[j]; %>
+                                        <li>
+                                            <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, PPSYN:''}); %>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                            <!-- //요금제 two column list -->
+                        </section>
+                    <% } %>
+                    
+                    <% if(plans.separateProductList) { %>
+                        <section class="tod-cont-section">
+                            <% for( let i = 0; i < plans.separateProductList.length; i++ ) { %>
+                                <% let thisPlan = plans.separateProductList[i]; %>
+                                <div class="tod-nmp-prod-group">
+                                    <h3 class="gr-tit"><%= thisPlan.prodSmryDesc %></h3>
+                                    <div class="tod-nmp-column-list">
+                                        <ul>
+                                            <li>
+                                                <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, PPSYN:''}); %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <% } %>    
+                        </section>
+                    <% } %>
+                    <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../../../../components/javascript.component.html', {}); %>
+<%- include('../../../../components/renewal/list/product.renewal.mobileplan.list-script.component.html', {hasNext:hasNext}); %>
+<%- include('../../../../components/end.component.html', {}); %>
+

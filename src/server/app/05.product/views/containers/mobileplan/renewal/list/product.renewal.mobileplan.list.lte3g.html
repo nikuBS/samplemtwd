@@ -1,0 +1,65 @@
+<%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% let hasNext = 'false' %>
+<!-- // 최대로 내려서 요금제 더 불러오기 기능 사용 안함 -->
+
+<body class="tod-renewalBody">
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a class="fe-replace-history" href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <div>
+        <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+            <%- include('../../../../../../../common/views/components/header.component.html', { title: '전체요금제', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
+            <div id="contents" class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <div class="tod-nmp-top-wrap">
+                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
+                        <!-- 필터 조건값 노출 영역 -->
+                    </div>
+                    <% for( let i = 0; i < plans.groupProdList.length; i++ ) { %>
+                        <% let thisSeries = plans.groupProdList[i]; %>
+                        <section class="tod-cont-section">
+                            <div class="rn-banner-img">
+                                <img src="<%= cdn %><%= thisSeries.prodGrpBackgroundImgUrl %>" alt="<%= thisSeries.prodGrpBackgroundImgAlt %>">
+                            </div>
+                            <div class="tod-nmp-title">
+                                <div class="rn-tag">
+                                    <% if(series.seriesClass == 'prod-lte') { %>
+                                        <span class="i-tag-cr2"><%= thisSeries.prodGrpNm %></span>
+                                    <% } else { %>
+                                        <span class="i-tag-cr4"><%= thisSeries.prodGrpNm %></span>
+                                    <% } %>
+                                </div>
+                                <h3 class="rn-prod-tit"><%= thisSeries.prodGrpDesc %></h3>
+                            </div>
+                            <!-- 요금제 row list -->
+                            <div class="tod-nmp-row-list">
+                                <ul>
+                                    <% for(let j = 0; j < thisSeries.prodList.length; j++) { %>
+                                        <% let thisPlan = thisSeries.prodList[j]; %>
+                                        <li>
+                                            <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
+                                            <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <%if(params.idxCtgCd == 'F01121') {%>prod-lte<%} else {%>prod-band<%}%>">
+                                                <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
+                                            </div>
+                                            <!-- //요금제 모듈 : 혜택강조형 -->
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                            <!-- // 요금제 row list -->
+                        </section>
+                    <% } %>
+                    <%- include('../../../../components/renewal/list/product.renewal.mobileplan.separateList.component.html',{}); %>
+                    <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../../../../components/javascript.component.html', {}); %>
+<%- include('../../../../components/renewal/list/product.renewal.mobileplan.list-script.component.html', {hasNext:hasNext}); %>
+<%- include('../../../../components/end.component.html', {}); %>
+

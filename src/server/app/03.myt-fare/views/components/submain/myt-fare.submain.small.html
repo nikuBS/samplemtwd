@@ -13,24 +13,24 @@ _%>
 <section class="cont-card">
     <div class="section-inner">
         <div class="head-tit">
-            소액결제/콘텐츠 이용요금
+            <a href="/myt-fare/bill/small" class="link">휴대폰 결제/콘텐츠 이용료</a>
         </div>
         <div class="card-cont">
             <ul class="report-list">
                 <%_if(small.isAdult && !isBubinCD){_%>
                 <li class="report-item">
-                    <a href="/myt-fare/bill/small" class="link d-wrap" data-make-eid="mobileCharge">
+                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>" class="link d-wrap" data-make-eid="mobileCharge">
                         <dl class="report-define">
-                            <dt class="report-tit">소액결제 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
+                            <dt class="report-tit">휴대폰 결제 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
                             <dd class="report-cont"><%-small.smallTotal%>원</dd>
                         </dl>
                     </a>
                 </li>
                 <%_}_%>
                 <li class="report-item">
-                    <a href="/myt-fare/bill/contents" class="link d-wrap" data-make-eid="contentsBill">
+                    <a href="/myt-fare/billguide/guide?date=<%-data.claimDt%>" class="link d-wrap" data-make-eid="contentsBill">
                         <dl class="report-define">
-                            <dt class="report-tit">콘텐츠 이용요금 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
+                            <dt class="report-tit">콘텐츠 이용료 <span class="report-sub"><%-`${data.claimFirstDay} ~ ${data.claimLastDay}`%></span></dt>
                             <dd class="report-cont"><%-small.contentsTotal%>원</dd>
                         </dl>
                     </a>
@@ -41,7 +41,7 @@ _%>
                 <ul class="hash-list">
                     <%_if(small.isAdult){ // 성인인 경우만 노출_%>
                     <li class="hash-item">
-                        <button class="hash" data-change-limit="small" data-make-eid="mobileChangeLimit">#소액결제 한도변경</button>
+                        <button class="hash" data-change-limit="small" data-make-eid="mobileChangeLimit">#휴대폰 결제 한도변경</button>
                     </li>
                     <%_}_%>
                     <li class="hash-item">
@@ -57,7 +57,7 @@ _%>
 <section class="cont-card">
     <div class="section-inner">
         <div class="head-tit">
-            소액결제/콘텐츠 이용요금
+            휴대폰 결제/콘텐츠 이용료
         </div>
         <%_if(small.isAdult){ // 성인일때_%>
         <div class="card-cont">
@@ -65,8 +65,8 @@ _%>
                 '휴대폰결제 이용동의' 서비스에 먼저 가입해 주세요.
             </p>
             <ul class="refer-list">
-                <li class="refer">※ 소액결제 : 상품&amp;콘텐츠를 휴대폰으로 결제가능</li>
-                <li class="refer">※ 콘텐츠 이용요금 : 구글플레이,앱스토어등에서 구매하신 이용요금</li>
+                <li class="refer">※ 휴대폰 결제 : 상품&amp;콘텐츠를 휴대폰으로 결제가능</li>
+                <li class="refer">※ 콘텐츠 이용료 : 구글플레이,앱스토어등에서 구매하신 이용요금</li>
             </ul>
             <div class="btn-area mb0">
                 <a href="/product/callplan?prod_id=NA00004184" class="rect-btn" data-make-eid="agreeJoin">휴대폰 결제 이용동의 서비스 가입</a>
@@ -77,7 +77,7 @@ _%>
             <ul class="refer-list">
                 <li class="refer">미성년 고객님은 법정대리인 통의 하에</li>
                 <li class="refer">고객센터(114) 또는 지점/대리점을 통해 가입 후</li>
-                <li class="refer">콘텐츠 이용요금 결제만 이용 가능합니다.</li>
+                <li class="refer">콘텐츠 이용료 결제만 이용 가능합니다.</li>
             </ul>
         </div>
         <%_}_%>

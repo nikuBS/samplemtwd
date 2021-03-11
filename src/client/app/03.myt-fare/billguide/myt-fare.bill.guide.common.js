@@ -46,7 +46,7 @@ Tw.MyTFareBillGuideCommon.prototype = {
     Handlebars.registerHelper('if_contents', function (strVal) {
       for(var i = 0; i < Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN.length; i++){
         var searchName = Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].SCH_ID;
-        if ( strVal.indexOf(searchName) > -1 ) {
+        if ( Tw.StringHelper.removeAllBlank(strVal).indexOf(searchName) > -1 ) {
           return Tw.MYT_FARE_BILL_GUIDE_TPL.DETAIL_BTN[i].ELEMENT;
         }
       }
@@ -67,7 +67,7 @@ Tw.MyTFareBillGuideCommon.prototype = {
 
     // 콘텐츠 이용료, 소액결제 템플릿 리턴
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
-      if ( strVal.indexOf(searchName) > -1) {
+      if ( Tw.StringHelper.removeAllBlank(strVal).indexOf(searchName) > -1) {
         return Tw.MYT_FARE_BILL_GUIDE_TPL.THIRD_PARTY_TPL;
       }
     });

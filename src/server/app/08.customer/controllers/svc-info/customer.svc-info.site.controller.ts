@@ -23,7 +23,7 @@ class CustomerSvcInfoSite extends TwViewController {
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any)  {
 
-    // tworld admin > 컨텐츠관리 > 사이트 이용방법 > "모바일 T world" 컨텐츠 id : D00003
+    // tworld admin > 이용안내 > 컨텐츠 통합 관리 > 컨텐츠관리 > 사이트 이용방법 > "모바일 T world" 컨텐츠 id : D00003
 
     Observable.combineLatest(
         this.apiService.request(API_CMD.BFF_08_0064, {}, {}, ['D00003'] ),

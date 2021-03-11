@@ -29,10 +29,9 @@ Tw.MyTFareBillSmallSetUse.prototype = {
    */
   _init: function () {
     var id = this.$target.attr('id');
-    var tx = this.$target.siblings('.fe-tx:visible').text();
 
     this._apiService.request(Tw.API_CMD.BFF_05_0083, { rtnUseYn: id })
-      .done($.proxy(this._changeSuccess, this, tx))
+      .done($.proxy(this._changeSuccess, this))
       .fail($.proxy(this._fail, this));
   },
   /**
@@ -41,9 +40,9 @@ Tw.MyTFareBillSmallSetUse.prototype = {
    * @param tx
    * @param res
    */
-  _changeSuccess: function (tx, res) {
+  _changeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._getUseStatus(tx); // 성공 후 status 조회
+      this._getUseStatus(); // 성공 후 status 조회
     } else {
       this._fail(res);
     }
@@ -61,9 +60,9 @@ Tw.MyTFareBillSmallSetUse.prototype = {
    * @desc 처리상태 조회 API 호출
    * @param tx
    */
-  _getUseStatus: function (tx) {
+  _getUseStatus: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0079, {})
-      .done($.proxy(this._getSuccess, this, tx))
+      .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._fail, this));
   },
   /**
@@ -72,10 +71,10 @@ Tw.MyTFareBillSmallSetUse.prototype = {
    * @param tx
    * @param res
    */
-  _getSuccess: function (tx, res) {
+  _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setId(res.result.rtnUseYn);
-      this._setToast(tx);
+      this._setToast();
     } else {
       this._fail(res);
     }
@@ -93,8 +92,8 @@ Tw.MyTFareBillSmallSetUse.prototype = {
    * @desc set toast
    * @param tx
    */
-  _setToast: function (tx) {
-    var message = this._getToastMessage(tx);
+  _setToast: function () {
+    var message = this._getToastMessage();
     this._commonHelper.toast(message);
   },
   /**
@@ -103,12 +102,14 @@ Tw.MyTFareBillSmallSetUse.prototype = {
    * @param tx
    * @returns {string}
    */
-  _getToastMessage: function (tx) {
+  _getToastMessage: function () {
     var message = Tw.ALERT_MSG_MYT_FARE.MICRO_USE;
 
-    if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) {
+    if (this.$target.attr('checked') === 'checked') { // 사용
+      // 허용되었습니다.
       message += Tw.ALERT_MSG_MYT_FARE.ALLOW + Tw.ALERT_MSG_MYT_FARE.MSG_DONE;
     } else {
+      // 차단되었습니다.
       message += Tw.ALERT_MSG_MYT_FARE.PROHIBIT + Tw.ALERT_MSG_MYT_FARE.MSG_DONE;
     }
 

@@ -205,9 +205,15 @@ class MainHome extends TwViewController {
       }).map((resp) => {
         this.logger.info(this, '[Smart Card]', resp);
         // let order = ['00001', '00002', '00003', '00004', '00005'];
-        let order = [];
+        let order:string[] = [];
         if (resp.code === API_CODE.CODE_00) {
           order = resp.result.split(',');
+        } else {
+          order.push('00001');
+          order.push('00002');
+          order.push('00003');
+          order.push('00004');
+          order.push('00005');
         }
         return order.map((segment) => {
           return {
@@ -870,7 +876,7 @@ class MainHome extends TwViewController {
         let reg = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}_[0-9]{0,3}');
         let reg2 = new RegExp('OS [0-9]{0,3}_[0-9]{0,3}');
         let reg3 = new RegExp('OS [0-9]{0,3}');
-        var ios_text = '  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15 TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.10|osVersion:27|model:LM-V409N|id:6ae9a542-fcb6-44ae-9cbd-8cbf45538933|APP_API:app|TWM_CHANNEL=mobile-app|widget:0 x-requested-with: com.sktelecom.minit.qa';
+        let ios_text = '  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15 TWM_APP TWM_DEVICE=osType:ios|appVersion:5.0.10|osVersion:27|model:LM-V409N|id:6ae9a542-fcb6-44ae-9cbd-8cbf45538933|APP_API:app|TWM_CHANNEL=mobile-app|widget:0 x-requested-with: com.sktelecom.minit.qa';
         ios_text = agentString;
         // version output
         let mac_version_temp = reg.exec(ios_text);
@@ -882,7 +888,7 @@ class MainHome extends TwViewController {
         }
         let mac_version: string = '';
         if (mac_version_temp) {
-          mac_version = mac_version_temp[0].split(' ')[1] 
+          mac_version = mac_version_temp[0].split(' ')[1];
         }
         // version length check
         let mac_version_len = mac_version.split('_').length;
@@ -894,9 +900,9 @@ class MainHome extends TwViewController {
 
         mac_version = mac_version.replace(/_/g, '.');
 
-        // true: 노출, false: 비노출 
+        // true: 노출, false: 비노출
         return this.compareVer(mac_version, mac_check_version);
-        
+
       } else { // aos
         const mac_check_version = '4.4.4';
         let reg = new RegExp('Android [0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}');
@@ -914,7 +920,7 @@ class MainHome extends TwViewController {
         }
         let mac_version: string = '';
         if (mac_version_temp) {
-          mac_version = mac_version_temp[0].split(' ')[1] 
+          mac_version = mac_version_temp[0].split(' ')[1]
         }
         // version length check
         let mac_version_len = mac_version.split('.').length;
@@ -923,16 +929,13 @@ class MainHome extends TwViewController {
         } else if (mac_version_len === 2) {
           mac_version = mac_version + '.0';
         }
-
         return this.compareVer(mac_version, mac_check_version);
       }
-    
     } catch (e) {
       console.error(e);
     }
 
     return false;
-    
   }
 
 }

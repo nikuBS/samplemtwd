@@ -151,6 +151,7 @@ Tw.API_CMD = {
   BFF_05_0058: { path: '/core-bill/:version/accounts', method: Tw.API_METHOD.GET },
   BFF_05_0060: { path: '/core-modification/:version/no-contract-plan-points', method: Tw.API_METHOD.GET },
   BFF_05_0062: { path: '/core-modification/:version/wire-network-notification', method: Tw.API_METHOD.POST },
+  BFF_05_0063: { path: '/core-modification/:version/myinfo/discount-infos', method: Tw.API_METHOD.GET },
   BFF_05_0064: { path: '/core-bill/:version/use-contents/hist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0066: { path: '/core-bill/:version/use-contents/limit-requests', method: Tw.API_METHOD.GET },
   BFF_05_0067: { path: '/core-bill/:version/use-contents/limit-up', method: Tw.API_METHOD.POST },
@@ -462,7 +463,7 @@ Tw.API_CMD = {
   //SEARCH SURVEY
   BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: Tw.API_METHOD.POST },
   BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: Tw.API_METHOD.POST },
-
+  BFF_08_0073: { path: '/core-modification/:version/ifaq/iFaq-detail', method: Tw.API_METHOD.GET},
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
@@ -561,6 +562,7 @@ Tw.API_CMD = {
   BFF_10_0185: { path: '/core-product/:version/mobiles/additions-sets/smartcallpick-infos', method: Tw.API_METHOD.GET },
   BFF_10_0186: { path: '/core-product/:version/mobiles/additions-sets/smartcallpick-sets', method: Tw.API_METHOD.POST },
   BFF_10_0191: { path: '/core-product/:version/mobiles/additions/:args0/prodFstScrbInfo', method: Tw.API_METHOD.GET },
+  BFF_10_0203: { path: '/core-product/v1/submain/overall-product', method: Tw.API_METHOD.GET},
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
@@ -659,6 +661,8 @@ Tw.NODE_CMD = {
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: Tw.API_METHOD.GET },
   GET_TOSS_BANNER_TEXT: { path: '/banner/tosstext', method: Tw.API_METHOD.GET },
+
+  GET_BENF_PROD_INFO: { path: '/benfProdInfo', method: Tw.API_METHOD.GET },
 
     /*임시 API TOS배너확인후 삭제*/
     GET_BANNER_TOS_LNKG_INFO: { path: '/banner/bannerTosLnkgInfo', method: Tw.API_METHOD.GET },

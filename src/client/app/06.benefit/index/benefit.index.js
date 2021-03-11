@@ -159,6 +159,8 @@ Tw.BenefitIndex.prototype = {
     this.$useCondition = this.$container.find('#fe-use-condition'); // 이용조건
     this.$anotherPage = this.$container.find('#fe-another-page');
     this._G1 = 'G1'; // Giga code값
+
+    this.$agreePopup = $('body .popup.tw-popup');
   },
   /**
    * @function
@@ -184,6 +186,11 @@ Tw.BenefitIndex.prototype = {
     }, this));   // T world 광고정보수신동의 배너 닫기
     this.$container.on('click', '.fe-pop-close', $.proxy(this._onCloseAgreePopup, this));   // T world 광고정보수신동의 팝업 닫기
     this.$container.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 다음에 보기 처리
+
+    this.$agreePopup.on('click', '.fe-pop-close', $.proxy(this._onCloseAgreePopup, this));   // T world 광고정보수신동의 팝업 닫기
+    this.$agreePopup.on('click', '.fe-pop-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    this.$agreePopup.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
+    this.$agreePopup.on('click', '.fe-pop-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
   },
 
   /**
@@ -772,10 +779,10 @@ Tw.BenefitIndex.prototype = {
 
         requestCommand.push(param);
         // requestCommand[idx] = param;
-        
+
         // Tw.Logger.info('[_reqProductList] ' + idx + '번째 requestCommand', requestCommand[idx]);
-        // 다른 페이지에서 특정 카테고리를 선택된 채로 호출하거나 특정 카테고리가 선택된 상태에서 
-        // 상품 상세로 이동 후 뒤로가기 시 기존 선택된 상태를 유지하기 위해서 
+        // 다른 페이지에서 특정 카테고리를 선택된 채로 호출하거나 특정 카테고리가 선택된 상태에서
+        // 상품 상세로 이동 후 뒤로가기 시 기존 선택된 상태를 유지하기 위해서
         // 선택된 카테고리 정보를 hidden 개체에 설정
         if (idx < categoryArray.length - 1) {
           selectedCategoryString = selectedCategoryString + selectCategory + '|';
@@ -939,7 +946,7 @@ Tw.BenefitIndex.prototype = {
       list: categoryArray
     });
     this.$list.append(output);
-    
+
     // 웹접근성 위배사항 수정
     // 새창으로 열리는 링크의 경우 titla="새창" 추가
     for (var i = 0; i < this.$list[0].children.length; i++) {
@@ -1033,11 +1040,7 @@ Tw.BenefitIndex.prototype = {
    * @desc 광고성정보수신동의 팝업 open
    */
   _onOpenAgreePopup: function () {
-    var template = $('#fe-agree-popup'); // 각각의 메뉴 추가를 위한 handlebar template
-    this._agreePopup = Handlebars.compile(template.html());
-    this.$container.attr('aria-hidden', 'false');
-    this.$container.find('#contents').after(this._agreePopup({}));
-    this._popupService._addHash(null, 'ad-info-agreement');
+    this.$agreePopup.removeClass('none');
   },
 
   /**
@@ -1045,9 +1048,6 @@ Tw.BenefitIndex.prototype = {
    * @desc 광고성정보수신동의 팝업 close
    */
   _onCloseAgreePopup: function () {
-    this.$container.attr('aria-hidden', 'true');
-    if (window.location.hash.indexOf('ad-info-agreement') !== -1) {
-      this._historyService.goBack();
-    }
+    this.$agreePopup.addClass('none');
   }
 };

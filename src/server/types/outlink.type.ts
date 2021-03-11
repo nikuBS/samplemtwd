@@ -242,7 +242,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: false
   },
   {
-    TEXT: '소액결제 피해 예방법',
+    TEXT: '휴대폰 결제 피해 예방법',
     LINK: '/customer/damage-info/contents/page015',
     IS_EXTERNAL: false
   },

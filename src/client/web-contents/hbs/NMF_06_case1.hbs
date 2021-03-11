@@ -1,0 +1,30 @@
+<div class="popup tw-popup">
+    <div class="popup-info tod-eventpop-type1 phone-payment" role="alertdialog" aria-describedby="alertText">
+        <div class="popup-contents" id="alertText">
+            <div class="inner-contents">
+                <i class="ico"></i>
+                {{#if data.isAdult}}
+                    <strong class="text-ti-medium">휴대폰 결제 이용동의 서비스 가입 후 이용하실 수 있습니다.
+                        <br><br>서비스를 가입하러 가시겠습니까?
+                    </strong>
+                {{else}}
+                    <span class="need-agree pt0">
+                        <strong>‘휴대폰결제 이용동의’ 서비스</strong>에 먼저 가입해 주세요. <br><br>
+                        미성년 고객님은 법정대리인 동의 하에 고객센터(114) 또는 지점/대리점을 통해 가입 후 콘텐츠 이용료 결제만 이용 가능합니다.
+                    </span>
+                {{/if}}
+            </div>
+        </div>
+        {{#if data.isAdult}}
+            <ul class="bt-box bt-slice item-two">
+                <li><button class="btn-floating disagree fe-close" data-make-eid="agreeNo">아니요</button></li>
+                <li><button class="btn-floating agree" data-url="/product/callplan?prod_id=NA00004184" data-make-eid="agreeYes">네, 이용할래요!</button></li>
+            </ul>
+        {{else}}
+            <ul class="bt-box bt-slice">
+                <li><button class="btn-floating agree fe-close">네, 확인했어요</button></li>
+            </ul>
+        {{/if}}
+    </div>
+    <div class="popup-blind fe-no-blind-close"></div>
+</div>

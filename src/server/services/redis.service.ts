@@ -54,7 +54,7 @@ class RedisService {
     };
 
     const redisSentinel = EnvHelper.getEnvironment('REDIS_SENTINEL'),
-      redisSentinelTos = EnvHelper.getEnvironment('REDIS_SENTINEL_TOS');
+      redisSentinelTos = EnvHelper.getEnvironment('REDIS_TOS_SENTINEL');
 
     if (!FormatHelper.isEmpty(redisSentinel)) {
       redisConf = Object.assign(redisConf, {

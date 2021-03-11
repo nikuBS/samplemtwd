@@ -34488,8 +34488,9 @@ body.apphome .section-box {
   position: relative; }
 
 .pro-sub-area:after {
-  content: 'space';
-  font-size: 0; }
+  content: '';
+  display: inline-block;
+  font-size: 0; }/* 210216 [2021 접근성] 수정 */
 
 .pro-sub-area .pro-sub-text {
   position: absolute;
@@ -36633,3 +36634,7 @@ body.apphome .section-box {
 
 /* 201106 [OP002-11708] [VOC: V20358881447] 나의 부가상품들어가면 맨위 부가서비스글자가 반만 보이는 현상 */
 .tod-sel-top-wrap .link-cont {overflow-x: auto; white-space: nowrap}
+
+/* 210309 [OP002-13575] [공통] 넷퍼넬 기능 추가 */ 
+.icon-gnb-home-T{display: inline-block; width: 3.06rem; height: 2.5rem; background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0; background-size: 100% 100%}
+.bt-fixed-area .tod-wait{padding:1.125rem 0; border-top:1px solid #e5e5e5; text-align: center; font-size: 0.75rem; color:#666;}

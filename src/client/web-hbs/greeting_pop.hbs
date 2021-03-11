@@ -15,7 +15,7 @@
             <div class="list-wrap nowrap">
                 <div class="list">            
                 {{#each param.[0].greetingKeywordInfos}}
-                    <button class="item bpcpItem {{keyword}}">
+                    <button class="item bpcpItem {{keyword}}" data-url="{{linkUrl}}">
                         <span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{message}}</span>
                     </button>
                 {{/each}}

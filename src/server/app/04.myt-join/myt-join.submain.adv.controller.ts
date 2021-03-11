@@ -27,7 +27,16 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
       // local 테스트틀 하기 위해 추가
       if ( (process.env.NODE_ENV === pageInfo.advancement.env && pageInfo.advancement.visible)
         || process.env.NODE_ENV === 'local' ) {
-        this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+        // netfunnel 통해서 진입한 경우
+        const isNetFunnel = req.query && req.query.netfunnel === 'Y';
+        if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
+          res.render('../../../common/views/components/netfunnel.start.component.html', {
+            referer: '/myt-join/submain?netfunnel=Y',
+            action: 'myt_join_submain'
+          });
+        } else {
+          this._render(req, res, next, svcInfo, allSvc, child, pageInfo);
+        }
         return false;
       }
     }
@@ -336,8 +345,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
               const ingDate = DateHelper.getDiffByUnit(curDate, item.startDate, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
               const remainDate = totDate - ingDate; // 잔여일수
               // 3/11 이후 변경되는 그래프 형식으로 처리
-              // const percentage = Math.min(100, Math.floor((ingDate / totDate) * 100));
-              const percentage = 100 - Math.floor((ingDate / totDate) * 100);
+              const percentage = Math.min(100, Math.floor((ingDate / totDate) * 100));
+              // const percentage = 100 - Math.floor((ingDate / totDate) * 100);
               const graphPercent = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
               return {
                 name: item.name,
@@ -595,9 +604,8 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
           xt_eid: 'CMMA_A3_B13-62', icon: 'sub-ben-ico16.svg'
         },
         {
-          name: '소액결제', url: '/myt-fare/bill/small',
-          // name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
-          xt_eid: 'CMMA_A3_B13-64', icon: 'sub-ben-ico06.svg'
+          name: '휴대폰 결제/콘텐츠 이용료', url: '/myt-fare/bill/small',
+          xt_eid: 'CMMA_A3_B13-64', icon: 'sub-ben-ico04.svg'
         }
       ];
       // 요금제 변경 가능일 알림 휴대폰 이나 PPS 인 경우에만 노출 하도록 하기 위해 기능 추가

@@ -336,8 +336,8 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   direct: '즉시납부',
   auto: '자동납부',
   autoAll: '자동 납부 통합 인출',
-  microPrepay: '소액 선결제',
-  contentPrepay: '콘텐츠 선결제',
+  microPrepay: '휴대폰 결제 선결제',
+  contentPrepay: '콘텐츠 이용료 선결제',
   pointReserve: '포인트 납부 예약',
   pointAuto: '포인트 자동납부',
   PAY_KOR_TITLE: '납부',
@@ -431,7 +431,7 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   CARD: '신용카드 납부 상세 내역',
   AT: '자동납부 상세 내역',
   AU: '자동납부 상세 내역',
-  MP: '소액 결제 선결제 상세 내역',
+  MP: '휴대폰 결제 선결제 상세 내역',
   CP: '콘텐츠 이용료 선결제 상세 내역'
 };
 
@@ -806,7 +806,7 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page012: '꼭 지켜야 할 정보보호 실천수칙 10가지',
   page013: '명의도용 피해예방법',
   page014: '결합상품 피해예방법',
-  page015: '소액결제 피해예방법',
+  page015: '휴대폰 결제 피해예방법',
   page016: '해외 로밍 피해예방법',
   page017: 'SNS 개인정보 보호 꿀팁! (2단계 인증설정)',
   page018: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)'
@@ -918,7 +918,7 @@ export const CUSTOMER_SITE_OPTION_TYPE = [
   },
   {
     cat: 'myT',
-    title: '소액결제 현명하게 관리하기',
+    title: '휴대폰 결제 현명하게 관리하기',
     code: 'D00002',
     className: 'ico-myt',
     listIndex: 1

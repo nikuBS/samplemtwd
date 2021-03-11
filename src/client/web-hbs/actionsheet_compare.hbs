@@ -1,0 +1,65 @@
+<div class="popup product-popup" role="dialog" aria-hidden="false">
+    <div class="popup-page layer actionsheet has-floating  compare-actionsheet" style="bottom: 0px;">
+        <!-- actionsheet, has-floating, has-header // -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <!-- .cont-actionsheet -->
+                    <div class="cont-actionsheet">
+                        <div class="inner">
+                            <p class="a-tit warning-txt">이용중인 <em class="nmp-fc-orange">{{data.prodNm}}</em>의 혜택을 <br> 다시 한번 확인해보세요.</p>
+                            <div class="detail-info">
+                                {{#if data.lostSepBenefits}}
+                                    <ul class="tod-nmp-dotlist">
+                                        {{#each data.lostSepBenefits}}
+                                            <li>{{benefit}} {{benfDtlCtt}}
+                                                {{#if useAmt}}
+                                                    <span class="price">
+                                                        <del>{{benfAmt}}원</del>
+                                                        <i class="icon-arr">&rarr;</i> 
+                                                        <em>{{useAmt}}원</em>
+                                                    </span>
+                                                {{/if}}
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                {{/if}}
+                                {{#if data.lostChooseBenefits}}
+                                    <p class="p-mid-title">추가 혜택 <strong>1개</strong>를 선택해 주세요.</p>
+                                    <ul class="tod-nmp-dotlist">
+                                        {{#each data.lostChooseBenefits}}
+                                            <li>{{benefit}} {{benfDtlCtt}}
+                                                {{#if useAmt}}
+                                                    <span class="price">
+                                                        <del>{{benfAmt}}원</del>
+                                                        <i class="icon-arr">&rarr;</i> 
+                                                        <em>{{useAmt}}원</em>
+                                                    </span>
+                                                {{/if}}
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                {{/if}}
+                            </div>
+                            <div class="tod-nmp-btn-wrap">
+                                <a href="#" class="tod-nmp-btn46" id="btn-confirm">요금제 변경하기</a>
+                                <a href="#" class="tod-nmp-btn46 style2" id="btn-cancel">현재 요금제 유지하기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // .cont-actionsheet -->
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// .container-wrap -->
+
+        <!-- 210120 팝업닫기 버튼 -->
+        <div class="popup-close-area">
+            <button type="button" class="rn-prev-step"><span class="tod-blind">닫기</span></button>
+        </div>
+    </div>
+    <div class="popup-blind"></div>
+</div>

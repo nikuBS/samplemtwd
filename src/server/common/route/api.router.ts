@@ -85,6 +85,8 @@ class ApiRouter {
     GET_BANNER_TOS: { path: '/banner/tos', method: API_METHOD.GET, target: this.getBannerTos },
     GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: API_METHOD.GET, target: this.getNewBannerTos },
 
+    GET_BENF_PROD_INFO: { path: '/benfProdInfo', method: API_METHOD.GET, target: this.getBenfProdInfo },
+
     /*임시 API TOS배너확인후 삭제*/
     GET_BANNER_TOS_LNKG_INFO: {
       path: '/banner/bannerTosLnkgInfo',
@@ -1960,9 +1962,11 @@ class ApiRouter {
     bannerResult.subscribe(resp => {
         let bannerType = '';
         let imgAltCtt = '';
+        let imgLink = '';
         if (resp.code === API_CODE.CODE_00) {
           try {
             imgAltCtt = resp.result.imgList[0].imgAltCtt;
+            imgLink = resp.result.imgList[0].imgLinkUrl;
             if (resp.result.bannerType === '0023') {
                 bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-05.png" alt="혜택">`
             } else if (resp.result.bannerType === '0024') {
@@ -1986,7 +1990,7 @@ class ApiRouter {
         }
         const bannerHtml = `
           <div class="tos_inner">
-            <a href="#n" class="tb-link">
+            <a href="${imgLink}" class="tb-link">
               <i class="tb-icon">${bannerType}</i>
               <p class="tb-text">${imgAltCtt}</p>
             </a>
@@ -2000,6 +2004,20 @@ class ApiRouter {
             result: bannerHtml
         })
     });
+  }
+
+  /**
+   * 상품 고도화 (혜택 상품관리 Redis 호출)
+   * @param req 
+   * @param res 
+   * @param next 
+   */
+  private getBenfProdInfo(req: Request, res: Response) {
+    const prodId = req.query.prodId || '';
+    this.redisService.getData(REDIS_KEY.BENF_PROD_INFO + prodId)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
   }
 }
 

@@ -1,0 +1,28 @@
+    <div class="tod-nmp-tab">
+        <div class="rn-prod-inner">
+            <ul>
+                <% for(let i in tabList.subFilters) { %>
+                    <% let curFilter = tabList.subFilters[i]; %>
+                    <% if(curFilter.prodFltId != 'F01123') { %>
+                        <li
+                        <% if(series.seriesCode == curFilter.prodFltId) { %>
+                            class="on"
+                        <%}%>>
+                            <a href="/product/renewal/mobileplan/list?filters=<%= curFilter.prodFltId %><%= filterList.filterList %>" class="tapSelectButton"><%= curFilter.prodFltNm %></a></li>
+                    <% } %>
+                <% } %>
+                <li<%= series.theme %>><a id="themeSelectBtn" class="tapSelectButton" data-xt_eid="CMMA_A4_B84_C1215-6" data-xt_csid="NO" data-xt_action="BC">테마</a></li>
+            </ul>
+            <!-- 필터 선택 유도 툴팁 -->
+            <div class="rn-notice" style="display:none">
+                <div class="tod-nmp-noti-box">
+                    <p class="nb-txt">필터를 이용하여 원하시는 요금제를 찾아보세요</p>
+                    <button type="button" class="btn-nb-close"><span class="blind">닫기</span></button>
+                </div>
+            </div>
+            <!-- 필터 버튼 -->
+            <div class="rn-filter">
+                <button type="button" class="p-btn-filter filterBtn" data-xt_eid="CMMA_A4_B84_C1215-7" data-xt_csid="NO" data-xt_action="BC"><span class="blind">조건 검색</span></button>
+            </div>
+        </div>
+    </div>

@@ -4,7 +4,7 @@
 * @author Kim InHwan (skt.p132150@partner.sk.com)
 * @since 2018.10.05
 _%>
-<%- include('../components/start.component.html', { pageInfo: data.pageInfo, adv: 1 }); %>
+<%- include('../components/start.component.html', { pageInfo: data.pageInfo }); %>
 <body class="tod-white">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -16,11 +16,11 @@ _%>
     <div class="wrap" data-menuId="<%- data.pageInfo.menuId %>">
         <%- include('../components/header.component.html', { title: '나의 가입 정보', svcInfo: data.svcInfo,  pageInfo: data.pageInfo }); _%>
         <!-- #contents -->
-        <div id="contents" class="container-wrap">
+        <div id="contents" class="container-wrap" data-id="submain-container">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-            <div class="container tod-submain" data-id="submain-container"
+            <div class="container tod-submain"
                  style="padding-bottom: 1px; margin-bottom: -1.25rem;<%= data.isIos && data.isEasyLogin? 'padding-top: 1px;' : ''; %>">
-                <%- include('../../../common/views/components/common.select-line.component.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B13-29", multiple : "CMMA_A3_B13-28"} }); _%>
+                <%- include('../../../common/views/components/common.select-line.component.v2.html', { svcInfo: data.svcInfo, xtEid: {single: "CMMA_A3_B13-29", multiple : "CMMA_A3_B13-28"} }); _%>
                 <!-- 기본가입정보 : start -->
                 <%- include('../components/submain/myt-join.submain.adv.more-info.html', data) _%>
                 <!-- 기본가입정보 : end -->
@@ -110,11 +110,15 @@ _%>
                 </section>
                 <!-- //201201 [OP002-10282] 수정03 -->
             </div>
+            <div class="dim" data-id="line-dim" style="display: none;"></div>
         </div>
     <!--// #contents -->
     <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); _%>
 </div>
 <%- include('../components/javascript.component.html') _%>
+<% if (data.pageInfo.advancement && data.pageInfo.advancement.netFunnelVisible) { %>
+<%- include('../../../common/views/components/netfunnel.complete.component.html') %>
+<% } %>
 <script>
     $(document).ready(function () {
         new Tw.MytJoinAdvSubMain({

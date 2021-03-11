@@ -7,43 +7,50 @@ _%>
 
 <div class="box-group">
     <div class="box-group-head-tit">
-        <%_ if ( terminalItem.typeStr == 'join_type_B' ) { _%>
-        <a href="#" class="link"><%= terminalItem.titNm %></a>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' || terminalItem.typeStr === 'suc_type_D') { _%>
+        <a href="/product/callplan?prod_id=TW20000015"
+           data-xt_eid="CMMA_A3_B13_C65-9" data-xt_csid="NO" data-xt_action="BC"
+           class="link"><%= terminalItem.agreeNm.replace(/\s/g, '') %></a>
         <% } else { %>
-        <%= terminalItem.titNm %>
+        <%= terminalItem.agreeNm %>
         <% } %>
     </div>
     <div class="box-group-cont">
         <ul class="report-list item-no-border small">
             <li class="report-item">
-                <dl class="report-define d-wrap">
+                <dl class="report-define d-wrap fs15">
                     <dt class="report-tit">기기 할인 금액</dt>
                     <dd class="report-cont"><%=terminalItem.agreePay %>원</dd>
                 </dl>
             </li>
             <li class="report-item">
-                <dl class="report-define d-wrap">
+                <dl class="report-define d-wrap fs15">
                     <dt class="report-tit">오늘 해지 시 할인반환금</dt>
                     <dd class="report-cont"><%=terminalItem.penalty %>원</dd>
                 </dl>
             </li>
         </ul>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' || terminalItem.typeStr === 'suc_type_D' ) { _%>
+        <a href="/product/callplan?prod_id=TW20000015" class="bundle-link"
+           data-xt_eid="CMMA_A3_B13_C65-9" data-xt_csid="NO" data-xt_action="BC">
+        <% } %>
         <div class="gray-box">
             <ul class="report-list item-no-border small">
                 <li class="report-item">
-                    <dl class="report-define d-wrap">
+                    <dl class="report-define d-wrap fs15">
                         <dt class="report-tit">약정 가입 상태</dt>
                         <dd class="report-cont"><%= isSuccession? '승계' : '가입' %></dd>
                     </dl>
                 </li>
                 <li class="report-item">
-                    <dl class="report-define d-wrap">
+                    <dl class="report-define d-wrap fs15">
                         <dt class="report-tit">약정 기간</dt>
                         <dd class="report-cont">
-                            <button type="button" class="detail-agree-btn" data-id="device"
+                            <%= terminalItem.totMt %>개월(<%= terminalItem.totDt %>일)
+                            <!--<button type="button" class="detail-agree-btn" data-id="device"
                                     data-target="<%= terminalItem.typeStr %>">
                                 <%= terminalItem.totMt %>개월(<%= terminalItem.totDt %>일)
-                            </button>
+                            </button>-->
                         </dd>
                     </dl>
                 </li>
@@ -67,5 +74,8 @@ _%>
                 </span>
             </div>
         </div>
+        <%_ if ( terminalItem.typeStr === 'join_type_B' || terminalItem.typeStr === 'suc_type_D') { _%>
+        </a>
+        <% } %>
     </div><!-- group-cont -->
 </div>

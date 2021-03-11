@@ -1276,3 +1276,6 @@
 .idpt-benefit .tod-care-list-wrap{padding:2.3125rem 1rem 0; }
 .idpt-benefit .tod-care-list-wrap .idpt-bg-list{margin-top:0}
 .idpt-benefit .tod-care-solution .tod-care-solution-list img{width:100%; vertical-align:top}
+
+/* 210308 [OP002-13603] 온라인 T-World BTV 채널수 현행화 요청 */
+.idpt-benefit .idpt-charge-wrap .charge-box-list.col3 > li {width: 33.33333333333333%;}

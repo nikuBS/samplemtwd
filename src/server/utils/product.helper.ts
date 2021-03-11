@@ -202,8 +202,17 @@ class ProductHelper {
           value: ruleInfo.RESULT,
           unit: null
         };
-
         return false;
+      }
+      if(basOfrCharCntCtt) {
+        if ((basOfrCharCntCtt == '상세참조') || basOfrCharCntCtt.replace(/건/g,'').length != basOfrCharCntCtt.length) {
+          replacedResult = {
+            isNaN: true,
+            value: basOfrCharCntCtt,
+            unit: null
+          };
+          return false;
+        }
       }
     });
 

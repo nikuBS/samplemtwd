@@ -106,6 +106,14 @@ Tw.StringHelper = (function () {
     return (val || '0').toString().replace(/[^0-9]/g, '');
   };
 
+  /**
+   * @desc 모든 "공백" 제거
+   * @param val
+   */
+  var removeAllBlank = function (val) {
+    return (val || '').toString().replace(/ /gi, '');
+  };
+
   return {
     replaceAt: replaceAt,
     masking: masking,
@@ -116,6 +124,7 @@ Tw.StringHelper = (function () {
     removeStringToDash: removeStringToDash,
     stringf : stringf,
     getKorInitialChar : getKorInitialChar,
-    getOnlyNumber: getOnlyNumber
+    getOnlyNumber: getOnlyNumber,
+    removeAllBlank: removeAllBlank
   };
 })();

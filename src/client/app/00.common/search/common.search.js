@@ -33,9 +33,9 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
   this._requestRealTimeFeeFlag = false;
   this._selectedCollectionToChangeSort = '';
   this._reqOptions = {
-    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.bundle-07.troaming-08' +
-      '.tapp-09.direct-10.tmembership-11.event-12.sale-13.as_outlet-14.question-15.notice-16.prevent-17.manner-18' +
-      '.serviceInfo-19.siteInfo-20.lastevent-21.banner-22',
+    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.troaming-07.tapp-08' +
+      '.direct-09.tmembership-10.event-11.sale-12.as_outlet-13.notice-14.prevent-15.question-16.manner-17.serviceInfo-18' +
+      '.siteInfo-19.banner-20.bundle-21.lastevent-22',
     sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
@@ -109,6 +109,8 @@ Tw.CommonSearch.prototype = {
 
     // 카테고리 스와이프 영역 템플릿을 만들어준다. (껍데기만 생성)
     this._categoryInit();
+    // 카테고리 정렬
+    this._categorySorting();
 
     for ( var i = 0; i < this._searchInfo.search.length; i++ ) {
       keyName = Object.keys(this._searchInfo.search[i])[0];
@@ -280,7 +282,7 @@ Tw.CommonSearch.prototype = {
         } else {
           $target .find('button').attr('aria-pressed', false);
         }
-    }, this))
+    }, this));
 
     this.$container.on('click', '.fe-category', $.proxy(this._selectCategory, this));    // 카테고리 클릭시 이벤트 바인딩
     // this.$container.on('click','#fe-more-rate',function(e){
@@ -365,6 +367,34 @@ Tw.CommonSearch.prototype = {
     var $categoryHtml = $('#common_template').html();
     var $categoryHtmlTemplate = Handlebars.compile($categoryHtml);
     $('.tod-srhcategory-scrwrap').append($categoryHtmlTemplate);
+  },
+  /**
+   * @function
+   * @desc 카테고리 정렬
+   * @returns {void}
+   */
+  _categorySorting: function () {
+    Tw.Logger.info('[common.search] [_categorySorting]', '');
+    var categoryArr = [];
+    //검색 카테고리 정렬
+    if(this._reqOptions && this._reqOptions.collectionPriority) {
+      categoryArr = this._reqOptions.collectionPriority.split('.');
+      categoryArr.forEach(function(row, index, theArray){
+        if(row.indexOf('-') !== -1) {
+          theArray[index] = row.substr(0, row.lastIndexOf('-'));
+        }
+      });
+    }
+
+    if($('.tod-srhcategory-scrwrap #fe-category-area li').length > 0 && categoryArr.length > 1) {
+      var $categoryArea = $('.tod-srhcategory-scrwrap #fe-category-area');
+      categoryArr.reverse();
+      categoryArr.forEach(function(row){
+        if(row && row !== undefined && $categoryArea.find('li.'+row).length > 0) {
+          $categoryArea.find('li.'+row).insertAfter('.tod-srhcategory-scrwrap #fe-category-area li.all');
+        }
+      });
+    }
   },
   /**
    * @function
@@ -570,7 +600,7 @@ Tw.CommonSearch.prototype = {
               USE_YN: useYns[j],
               MENU_URL: menuUrls[j],
               DEPTH_PATH: depthPaths[j]
-            }
+            };
             childList.push(data);
           }
           listData.DEPTH_CHILD = childList;

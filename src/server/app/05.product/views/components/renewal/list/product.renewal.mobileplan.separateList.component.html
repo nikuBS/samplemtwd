@@ -1,0 +1,13 @@
+<% if(plans.separateProductList) { %>
+    <section class="tod-cont-section">
+        <% for( let i = 0; i < plans.separateProductList.length; i++ ) { %>
+            <% let thisPlan = plans.separateProductList[i]; %>
+            <div class="tod-nmp-prod-group">
+                <h3 class="gr-tit"><%= thisPlan.prodSmryDesc %></h3>
+                <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <%= thisPlan.tabCode %>">
+                    <%- include('./product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
+                </div>
+            </div>
+        <% } %>    
+    </section>
+<% } %>

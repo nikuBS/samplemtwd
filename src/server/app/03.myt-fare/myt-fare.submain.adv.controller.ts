@@ -326,15 +326,18 @@ export default class MyTFareSubmainAdvController extends TwViewController {
       return this._mytFareSubmainGuideService.getMonth(_date, _format);
     };
 
+    const setClaimData = (item) => {
+      data.claimPay = item.invAmt || '0';
+      data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(item.dcAmt))).toString() );
+      data.claimDt = item.invDt;
+      data.month = getMonth(item.invDt, 'M');
+      data.claimLastDay = DateHelper.getShortDate(item.invDt);
+    };
+
     amtList.map( item => {
-      const month = getMonth(item.invDt, 'M');
       // 선택월의 청구금액
-      if (!data.claimPay && ((item.invDt === date) || month === getMonth(date, 'M'))) {
-        data.claimPay = item.invAmt || '0';
-        data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(claim.dcAmt))).toString() );
-        data.claimDt = item.invDt;
-        data.month = month;
-        data.claimLastDay = DateHelper.getShortDate(item.invDt);
+      if (!data.claimPay && item.invDt === date) {
+        setClaimData(item);
       }
 
       /*
@@ -347,7 +350,15 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         latestDates.push(item.invDt);
       }
     });
-    data.claimPay = data.claimPay || '0';
+
+    // 선택월의 청구금액이 없는경우 선택월과 같은 해당 데이터를 세팅한다.
+    if (!data.claimPay) {
+      const currClaimData = amtList.find( item => getMonth(item.invDt, 'M') === getMonth(date, 'M'));
+      if (currClaimData) {
+        setClaimData(currClaimData);
+      }
+    }
+
     // 청구 월 리스트에 '이번달' 넣기
     // const prevLastDate = DateHelper.getEndOfMonSubtractDate(toDate, '1', 'YYYYMMDD');
     if (latestDates.length > 0 && !latestDates.some( month => getMonth(month, 'M') === DateHelper.getCurrentMonth(toDate))) {
@@ -416,7 +427,7 @@ export default class MyTFareSubmainAdvController extends TwViewController {
         isPaid: remainPayment.toString() === '0', // 선택월 요금 납부 여부(예정(or 미납), 완료)
         // payCode,
         payDate,
-        isThisMonth: eDate === date // 이번달 유무
+        isThisMonth: getMonth(eDate, 'M') === getMonth(date, 'M') // 이번달 유무
       };
       return data;
     });
