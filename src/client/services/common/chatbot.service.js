@@ -27,8 +27,8 @@ Tw.ChatbotService = function() {
         { command: Tw.API_CMD.BFF_05_0235, params: {
             profile_id : 'default', 
             item_ids : ['app_use_traffic_category_ratio','app_use_traffic_game_median_yn','app_use_traffic_music_ratio_median_yn']
-        }},
-        { command: Tw.API_CMD.BFF_05_0063, params: {}, version: Tw.API_VERSION.V2 } // 9. 약정할인 및 단말분할상환정보
+        }}
+        // { command: Tw.API_CMD.BFF_05_0063, params: {}, version: Tw.API_VERSION.V2 } // 9. 약정할인 및 단말분할상환정보
     ];
 
     // 챗봇 팝업 노출대상 화면 리스트 (10/22)
@@ -1184,7 +1184,10 @@ Tw.ChatbotService.prototype = {
                 Tw.Logger.info('[chatbot.service] [_requestApis] 호출할 API 리스트 : ', this._defaultRequestUrls);
 
                 this._apiService.requestArray(this._defaultRequestUrls)
-                    .done($.proxy(this._checkTargetGroup, this));
+                    .done($.proxy(this._checkTargetGroup, this))
+                    .fail(function(error){
+                        Tw.Logger.info('[chatbot.service] [_requestApis] requestArray fail : ', error);
+                    });
             
             } else {    // 준회원인 경우
                 Tw.Logger.info('[chatbot.service] [_requestApis] 준회원인 경우', '');
@@ -1202,7 +1205,8 @@ Tw.ChatbotService.prototype = {
      * @function
      * @desc 말풍선 노출 대상군 확인
      */
-    _checkTargetGroup: function (refillInfo,refillHistInfo, billmthInfo, unpaidBillInfo, micropayInfo , dataGiftInfo, pauseInfo, contentsInfo, userProfileInfo, discountInfo) {
+    _checkTargetGroup: function (refillInfo,refillHistInfo, billmthInfo, unpaidBillInfo, micropayInfo , dataGiftInfo, pauseInfo, contentsInfo, userProfileInfo) {
+        var discountInfo = {};
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] refillInfo : ', refillInfo);
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] refillHistInfo : ', refillHistInfo);    
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] billmthInfo : ', billmthInfo);
@@ -1399,7 +1403,7 @@ Tw.ChatbotService.prototype = {
         // /* *******************************************
         //   9.0 약정할인 및 단말분할상환정보 (BFF_05_0063)
         // ******************************************* */
-        if ( discountInfo.code === Tw.API_CODE.CODE_00 ) {
+        if ( discountInfo && discountInfo.code === Tw.API_CODE.CODE_00 ) {
             if( discountInfo.result && discountInfo.result.installmentList ) {
                 var _this = this;
                 var isGalaxyAll = false;
@@ -1429,7 +1433,7 @@ Tw.ChatbotService.prototype = {
                 }
             }
         } else {
-            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 약정할인 및 단말분할상환정보 (BFF_05_0063) 리턴 에러', discountInfo.code, discountInfo.msg);
+            Tw.Logger.info('[chatbot.service] [_checkTargetGroup] 약정할인 및 단말분할상환정보 (BFF_05_0063) 리턴 에러', discountInfo);
         }
         
         Tw.Logger.info('[chatbot.service] [_checkTargetGroup] this._mlsGreetingRangking : ', this._mlsGreetingRangking);
