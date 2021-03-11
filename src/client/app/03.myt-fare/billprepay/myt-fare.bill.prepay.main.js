@@ -138,7 +138,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    */
   _checkAble: function (e){
     if (this._isBubin) {
-      return this._popupService.openAlert('법인 실사용자 비회선,SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.', Tw.POPUP_TITLE.NOTIFY, null, null, null, $(e.currentTarget));
+      return this._popupService.openAlert('법인 실사용자 비회선, SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.', Tw.POPUP_TITLE.NOTIFY, null, null, null, $(e.currentTarget));
     }
     if (!this._isAdult) {
       return this._popupService.openAlert('미성년 고객님은 휴대폰 결제를 이용하실 수 없습니다.', null, null, null, null, $(e.currentTarget));

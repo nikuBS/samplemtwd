@@ -56,8 +56,7 @@ _%>
                 const isPrd = String(process.env.NODE_ENV) === 'prd';
                 let tipId = isSmall ? 'TC000119' : 'TC000120';
                 if (isPrd) {
-                    // 상용 tip id 나오면 적용하기
-                    // tipId = isSmall ? 'TC000119' : 'TC000120';
+                    tipId = isSmall ? 'TC000120' : 'TC000121';
                 } else {
                     tipId = isSmall ? 'TC000119' : 'TC000120';
                 }
