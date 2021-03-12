@@ -24,9 +24,9 @@ _%>
                 <ul class="data-ul fe-chart-list">
                     <%# fe-chart-templ 청구(이용)내역 차트 템플릿 들어가는곳%>
                 </ul>
-                <svg id="svg-chart" viewBox="0 0 0 0">
-                    <path class="chart-dash" d="M50 104 150 104 250 90 "></path>
-                    <path class="chart-area" d="M50 140 L51 105  L151 105  L251 91  L251 140 Z"></path>
+                <svg id="svg-chart" viewbox="0 0 303 140">
+                    <path class="chart-dash" d="M0,0 0,0 0,0" ></path>
+                    <path class="chart-area" d="M0 0 L0 0 L0 0 L0 0 L0 0 Z"></path>
                 </svg>
             </div>
             <%# fe-legend-templ 하단 범례(평균 요금) 템플릿 들어가는곳%>
@@ -45,11 +45,9 @@ _%>
                     <span class="v" style="bottom:{{claimH}}%;">{{claim}}원</span>
                     <span class="bar" style="height:{{claimH}}%;"></span>
                     <%_if(isRep){_%>
-                    {{#ifCond discount '>' '0'}}
                     <span class="tod-blind">할인</span>
                     <span class="tod-blind">{{discount}}원</span>
-                    <span class="discount-point" style="bottom:{{dcH}}%;"></span>
-                    {{/ifCond}}
+                    <span class="discount-point" style="bottom:0%;display: none;"></span>
                     <%_}_%>
                 </dd>
             </dl>

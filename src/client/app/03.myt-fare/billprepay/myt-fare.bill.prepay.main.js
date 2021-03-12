@@ -323,8 +323,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
         stateCd: result.autoChrgStCd === 'U' ? 'U' : 'D', // 자동 선결제 신청상태 (U: 사용중, D:미사용)
         stateTxt: result.autoChrgStCd === 'U' ? Tw.MYT_FARE_PAYMENT_NAME.CHANGE : Tw.MYT_FARE_PAYMENT_NAME.REQUEST,
         historyUrl: '/myt-fare/bill/'+ item.title +'/history',
+        tmthUseAmtOri: result.tmthUseAmt,
         tmthUseAmt: addComma(result.tmthUseAmt),  // 당월 사용금액
         payLimitAmt: addComma(result[isContents ? 'useContentsLimitAmt' : 'microPayLimitAmt']), // 총한도(월한도)
+        remainUseLimitOri: result.remainUseLimit,
         remainUseLimit: addComma(result.remainUseLimit),  // 잔여한도
         tmthChrgPsblAmt: addComma(result.tmthChrgPsblAmt), // 설결제 가능금액
         prepayCd: parseInt(result.tmthChrgPsblAmt || '0', 10) > 0 ? 'U' : 'D'
