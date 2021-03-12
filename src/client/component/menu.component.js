@@ -1276,8 +1276,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       benefitDiscount += (loyalty.result.benfList && loyalty.result.benfList.length > 0)? 1 : 0;
     }
     // 결합할인
-    if (combination.code === Tw.API_CODE.CODE_00) {
-      if (combination.result.prodNm.trim().length > 0) {
+    if (combination.code === Tw.API_CODE.CODE_00 && combination.result) {
+      // 결합합인 조회 결과에 result 는 있지만 result.prodNm 요소가 없는 케이스로 인해 오류 발생하여 보강
+      if (combination.result.prodNm && combination.result.prodNm.trim().length > 0) {
         benefitDiscount += Number(combination.result.etcCnt) + 1;
       }
     }
