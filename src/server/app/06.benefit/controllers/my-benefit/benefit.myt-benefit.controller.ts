@@ -126,7 +126,8 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 결합할인
-        if ( combination.result.prodNm.trim().length > 0 ) {
+        // 결합합인 조회 결과에 result 는 있지만 result.prodNm 요소가 없는 케이스로 인해 오류 발생하여 보강
+        if ( combination.result.prodNm && combination.result.prodNm.trim().length > 0 ) {
           options['bond'] = {
             name: combination.result.prodNm,
             total: parseInt(combination.result.etcCnt, 10) + 1
