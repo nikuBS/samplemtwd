@@ -137,37 +137,77 @@ Tw.MyTFareSubMainRecentBill.prototype = {
     // 데이터는 높이값 100%기준으로 계산
     var chartData = _.reduce(discounts, function (acc, cur){
       if (cur.dcH < 1) {
+        acc.push(0);
         return acc;
       }
       acc.push(cur.dcH);
       return acc;
     }, []);
     // var chartData = [40, 0];
-    var halfCir = $('.discount-point').height() / 2,
+    // viewBox 크기 설정
+    // $chart[0].setAttribute('viewBox', '0 0 ' + baseWidth + ' ' + baseHeight);
+
+    // 데이터는 높이값 100%기준으로 계산
+    // var chartData = [0, 100, 10], // 데이터가 0 인 경우 Point 표기 안하도록 수정 (3개월인 경우 데이터는 3개여야 한다)
+    var $discountPoint = $('.discount-point'),
+      halfCir = $discountPoint.height() / 2,
       $chart = $('#svg-chart'),
       baseWidth = $chart.width(),
       baseHeight = $chart.height(),
       targetWidth = baseWidth / chartData.length,
       path1, path2, lastPosition;
 
+    // viewBox 크기 설정
+    $chart[0].setAttribute('viewBox', '0 0 ' + baseWidth + ' ' + baseHeight);
     // 2개 이상인 경우만 도형을 그려준다.
-    if (chartData.length > 1) {
-      path1 = 'M';
-      path2 = 'M' + (targetWidth / 2) + ' ' + baseHeight + '';
 
-      chartData.forEach(function (target, index) {
-        // dash 옵션 추가
-        path1 = path1 + ((targetWidth * index) + (targetWidth / 2) ) + ' ' + (baseHeight * ((100 - target ) / 100) - halfCir) + ' ';
-        // area 옵션 추가
-        lastPosition =  ((targetWidth * index) + (targetWidth / 2) + 1);
-        path2 = path2 + ' L' + lastPosition + ' ' + (baseHeight * ((100 - target ) / 100) + 1 - halfCir) + ' ';
-      });
+    switch (chartData.length) {
+      case 0 :
+        // 청구 내역이 없는 경우
+        break;
+      case 1 :
+        // 청구 내역이 1개월인 경우
+        break;
+      case 2 :
+        // 청구 내역이 2개월이면서 데이터가 둘다 있을 경우
+        if (chartData[0] > 0 && chartData[1] > 0) {
+          path1 = 'M';
+          path2 = 'M' + (targetWidth / 2 + targetWidth) + ' ' + baseHeight + '';
+        } else {
+          $discountPoint.hide();
+        }
+      case 3 :
+        // 청구 내역이 3개월이면서 1/2번 데이터가 있을 경우 (3번 데이터가 있을 경우까지도 포함)
+        if (chartData[0] > 0 && chartData[1] > 0) {
+          path1 = 'M';
+          path2 = 'M' + (targetWidth / 2) + ' ' + baseHeight + '';
+          // 청구 내역이 3개월이면서 1번에 데이터가 없고 2/3번에 데이터가 있을 경우
+        } else if (chartData[0] === 0 && chartData[1] > 0 && chartData[2] > 0) {
+          path1 = 'M';
+          path2 = 'M' + (targetWidth / 2 + targetWidth) + ' ' + baseHeight + '';
+        } else {
+          $discountPoint.hide();
+        }
+      default :
+        // 청구 내역이 2/3개월인 경우 background를 그려주고 point 위치를 잡아준다.
+        chartData.forEach(function (target, index) {
+          target = target * 0.9;
+          if (target > 0) {
+            // dash 옵션 추가
+            path1 = path1 + ((targetWidth * index) + (targetWidth / 2) ) + ' ' + (baseHeight * ((100 - target ) / 100) - halfCir) + ' ';
+            // area 옵션 추가
+            lastPosition =  ((targetWidth * index) + (targetWidth / 2) + 1);
+            path2 = path2 + ' L' + lastPosition + ' ' + (baseHeight * ((100 - target ) / 100) + 1 - halfCir) + ' ';
+            $discountPoint.eq(index).css({'bottom' : baseHeight * (target / 100)}).show();
+          } else {
+            $discountPoint.eq(index).hide();
+          }
+        });
 
-      path2 = path2 + ' L' + lastPosition + ' ' + baseHeight +' Z';
-      $('.chart-dash').attr('d', path1);
-      $('.chart-area').attr('d', path2);
-      // viewBox 크기 설정
-      $chart[0].setAttribute('viewBox', '0 0 ' + baseWidth + ' ' + baseHeight);
+        path2 = path2 + ' L' + lastPosition + ' ' + baseHeight +' Z';
+        $('.chart-dash').attr('d', path1);
+        $('.chart-area').attr('d', path2);
+        break;
     }
   },
 
