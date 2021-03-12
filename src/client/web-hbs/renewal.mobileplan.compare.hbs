@@ -4,7 +4,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>요금제 비교하기</h1>
+                <h1>요금제 비교</h1>
             </div>
         </div>
         <div class="tod-nmp-comp-header">
@@ -65,11 +65,16 @@
                                 {{/if}}
                             </ul>
                             <div class="shapes">
-                                <span class="bar" style="height:{{data.curPlan.chartData}}%"><span class="data">{{data.curPlan.basOfrDataQtyCtt.value}}
-                                    {{#if data.curPlan.basOfrDataQtyCtt.unit}}
-                                        {{data.curPlan.basOfrDataQtyCtt.unit}}
+                                <span class="bar" style="height:{{data.curPlan.chartData}}%">
+                                    {{#if data.curPlan.basOfrDataQtyCtt.exist}}
+                                        <span class="data">
+                                            {{data.curPlan.basOfrDataQtyCtt.value}}
+                                            {{#if data.curPlan.basOfrDataQtyCtt.unit}}
+                                                {{data.curPlan.basOfrDataQtyCtt.unit}}
+                                            {{/if}}
+                                        </span>
                                     {{/if}}
-                                </span></span>
+                                </span>
                                 <span class="txt">{{{data.curPlan.speedControl}}}</span>
                             </div>
                         </div>
@@ -104,11 +109,15 @@
                                 {{/if}}
                             </ul>
                             <div class="shapes">
-                                <span class="bar" style="height:{{data.comparePlan.chartData}}%;"><span class="data">{{{data.comparePlan.basOfrDataQtyCtt.value}}}
-                                    {{#if data.comparePlan.basOfrDataQtyCtt.unit}}
-                                        {{{data.comparePlan.basOfrDataQtyCtt.unit}}}
+                                <span class="bar" style="height:{{data.comparePlan.chartData}}%;">
+                                    {{#if data.comparePlan.basOfrDataQtyCtt.exist}}
+                                        <span class="data">{{{data.comparePlan.basOfrDataQtyCtt.value}}}
+                                            {{#if data.comparePlan.basOfrDataQtyCtt.unit}}
+                                                {{{data.comparePlan.basOfrDataQtyCtt.unit}}}
+                                            {{/if}}
+                                        </span>
                                     {{/if}}
-                                </span></span>
+                                </span>
                                 <span class="txt">{{{data.comparePlan.speedControl}}}</span>
                             </div>
                         </div>

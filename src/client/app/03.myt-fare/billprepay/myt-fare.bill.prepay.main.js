@@ -21,6 +21,7 @@ Tw.MyTFareBillPrepayMain = function (rootEl, title, className, callback) {
   this.$className = className || '.container';
   this.$callback = callback;
   this._isAdult = this.$container.data('is-adult');  // OP002-7282. 미성년자 여부 추가
+  this._isBubin = this.$container.data('is-bubin');  // 법인 여부
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -131,13 +132,16 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
   /**
    * @function
-   * @desc "휴대폰 결제" 탭 선택 시 미성년자인 경우 사용불가 알럿 띄우기
+   * @desc "휴대폰 결제" 탭 선택 시 법인(C, D) 또는, 미성년자인 경우 사용불가 알럿 띄우기
    * @param e
    * @private
    */
   _checkAble: function (e){
-    if (!this.$container.data('is-adult')) {
-      this._popupService.openAlert('미성년 고객님은 휴대폰 결제를 이용하실 수 없습니다.', null, null, null, null, $(e.currentTarget));
+    if (this._isBubin) {
+      return this._popupService.openAlert('법인 실사용자 비회선, SKT법인 고객님은 휴대폰 결제를 이용하실 수 없습니다.', Tw.POPUP_TITLE.NOTIFY, null, null, null, $(e.currentTarget));
+    }
+    if (!this._isAdult) {
+      return this._popupService.openAlert('미성년 고객님은 휴대폰 결제를 이용하실 수 없습니다.', null, null, null, null, $(e.currentTarget));
     }
   },
 
@@ -232,7 +236,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     // $title 이 공백이면 소액, 콘텐츠 둘다 호출
     if (Tw.FormatHelper.isEmpty(this.$title)) {
       var succ = Tw.API_CODE.CODE_00;
-      if (this._isAdult) {
+      if (!this._isBubin && this._isAdult) {
         $.when(request('small'), request('contents'))
           .done(function (small, contents){
             self._endLoading();
@@ -249,7 +253,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
           }).fail($.proxy(this._remainFail, this));
         return;
       }
-      // 미성년자는 "콘텐츠 이용료"만 조회한다.
+      // 법인 이거나, 미성년자는 "콘텐츠 이용료"만 조회한다.
       request('contents').done(function (contents){
         self._endLoading();
         if (contents.code !== succ) {
@@ -276,16 +280,16 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @private
    */
   _getDefData: function (title) {
-    var payLimitAmt = '20000'; // 총한도(월한도)
+    var payLimitAmt = '0'; // 총한도(월한도)
     return {
       code: Tw.API_CODE.CODE_00,
       title: title,
       result: {
-        tmthChrgPsblAmt: '100000', // 선결제 가능금액
-        tmthUseAmt: '1000', // 당월 사용금액
+        tmthChrgPsblAmt: '0', // 선결제 가능금액
+        tmthUseAmt: '0', // 당월 사용금액
         useContentsLimitAmt: payLimitAmt,
         microPayLimitAmt: payLimitAmt,
-        remainUseLimit: '50000' // 잔여한도
+        remainUseLimit: '0' // 잔여한도
       }
     };
   },
@@ -406,12 +410,12 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
   /**
    * @function
-   * @desc 선결제 영역 렌더링
+   * @desc 선결제 영역 렌더링(법인:C, D 가 아닌경우만)
    * @param data
    * @private
    */
    _renderPrepaid: function (list) {
-    if (Tw.FormatHelper.isEmptyArray(list)) {
+    if (this._isBubin || Tw.FormatHelper.isEmptyArray(list)) {
       return;
     }
     list.forEach(function (item){

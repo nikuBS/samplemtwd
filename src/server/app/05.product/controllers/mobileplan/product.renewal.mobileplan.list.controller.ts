@@ -405,48 +405,8 @@ export default class RenewProductPlans extends TwViewController {
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
-      if(resp.result.separateProductList && resp.result.groupProdList) {
-        return {
-          ...resp.result,
-          groupProdList: resp.result.groupProdList.map(groupPlan => {
-            return {
-              ...groupPlan,
-              prodList : groupPlan.prodList.map(plan => {
-                return {
-                  ...plan,
-                  basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-                  basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
-                    this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
-                      null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
-                    ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
-                  basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
-                    null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
-                  basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
-                  tabCode: this._getTabCodeSeries(plan.prodFltList),
-                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-                  benefitList: this._parseBenefitList(plan.benefitList)
-                };
-              })
-            }
-          }),
-          separateProductList: resp.result.separateProductList.map(separatePlan => {
-            return {
-              ...separatePlan,
-              basFeeAmt: ProductHelper.convProductBasfeeInfo(separatePlan.basFeeInfo),
-              basOfrVcallTmsCtt: this._isEmptyAmount(separatePlan.basOfrVcallTmsCtt) ?
-                null : ProductHelper.convProductBasOfrVcallTmsCtt(separatePlan.basOfrVcallTmsCtt, false),
-              basOfrCharCntCtt: this._isEmptyAmount(separatePlan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(separatePlan.basOfrCharCntCtt),
-              basOfrDataQtyCtt: this._isEmptyAmount(separatePlan.basOfrGbDataQtyCtt) ?
-                this._isEmptyAmount(separatePlan.basOfrMbDataQtyCtt) ?
-                null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
-                ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
-              tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
-              prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
-              benefitList: this._parseBenefitList(separatePlan.benefitList)
-            }
-          })
-        }
-      } else if (resp.result.rcnProductList) {
+
+      if (resp.result.rcnProductList) {
         return {
           ...resp.result,
           separateProductList: resp.result.separateProductList.map(separatePlan => {
@@ -472,7 +432,75 @@ export default class RenewProductPlans extends TwViewController {
             }
           })
         }
-      } else if (!resp.result.groupProdList) {
+      } else if(resp.result.groupProdList) {
+        if(resp.result.separateProductList) {
+          return {
+            ...resp.result,
+            groupProdList: resp.result.groupProdList.map(groupPlan => {
+              return {
+                ...groupPlan,
+                prodList : groupPlan.prodList.map(plan => {
+                  return {
+                    ...plan,
+                    basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+                    basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
+                      this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+                        null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+                      ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+                    basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+                      null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+                    basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+                    tabCode: this._getTabCodeSeries(plan.prodFltList),
+                    prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+                    benefitList: this._parseBenefitList(plan.benefitList)
+                  };
+                })
+              }
+            }),
+            separateProductList: resp.result.separateProductList.map(separatePlan => {
+              return {
+                ...separatePlan,
+                basFeeAmt: ProductHelper.convProductBasfeeInfo(separatePlan.basFeeInfo),
+                basOfrVcallTmsCtt: this._isEmptyAmount(separatePlan.basOfrVcallTmsCtt) ?
+                  null : ProductHelper.convProductBasOfrVcallTmsCtt(separatePlan.basOfrVcallTmsCtt, false),
+                basOfrCharCntCtt: this._isEmptyAmount(separatePlan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(separatePlan.basOfrCharCntCtt),
+                basOfrDataQtyCtt: this._isEmptyAmount(separatePlan.basOfrGbDataQtyCtt) ?
+                  this._isEmptyAmount(separatePlan.basOfrMbDataQtyCtt) ?
+                  null : ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrMbDataQtyCtt) :
+                  ProductHelper.convProductBasOfrDataQtyCtt(separatePlan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+                tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
+                prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
+                benefitList: this._parseBenefitList(separatePlan.benefitList)
+              }
+            })
+          }
+        } else {
+          return {
+            ...resp.result,
+            groupProdList: resp.result.groupProdList.map(groupPlan => {
+              return {
+                ...groupPlan,
+                prodList : groupPlan.prodList.map(plan => {
+                  return {
+                    ...plan,
+                    basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
+                    basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
+                      this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+                        null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+                      ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
+                    basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+                      null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+                    basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+                    tabCode: this._getTabCodeSeries(plan.prodFltList),
+                    prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
+                    benefitList: this._parseBenefitList(plan.benefitList)
+                  };
+                })
+              }
+            })
+          }
+        }
+      } else {
         return {
           ...resp.result,
           separateProductList: resp.result.separateProductList.map(separatePlan => {
@@ -489,31 +517,6 @@ export default class RenewProductPlans extends TwViewController {
               tabCode: this._getTabCodeSeries(separatePlan.prodFltList),
               prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(separatePlan.prodSmryExpsTypCd),
               benefitList: this._parseBenefitList(separatePlan.benefitList)
-            }
-          })
-        }
-      } else {
-        return {
-          ...resp.result,
-          groupProdList: resp.result.groupProdList.map(groupPlan => {
-            return {
-              ...groupPlan,
-              prodList : groupPlan.prodList.map(plan => {
-                return {
-                  ...plan,
-                  basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-                  basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrGbDataQtyCtt) ?
-                    this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
-                      null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
-                    ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrGbDataQtyCtt, DATA_UNIT.GB),
-                  basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
-                    null : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
-                  basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
-                  tabCode: this._getTabCodeSeries(plan.prodFltList),
-                  prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-                  benefitList: this._parseBenefitList(plan.benefitList)
-                };
-              })
             }
           })
         }

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/en/favicon.ico" />
+    <link rel="shortcut icon" href="/img/en/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/en/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/en/logo-tworld01.png" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common_en.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout_en.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets_en.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components_en.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/style_en.css" media="all" /><!-- [C] 글로벌T(영문) 스타일 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
+    <script type="text/javascript" src="/js/$vars_en.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common_en.js"></script>
+    <script type="text/javascript" src="/js/widgets_en.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart_en.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+<body class="tod-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">Skip to main contents</a></li> 
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">menu open</span></button>
+					</div>
+                    <h1 class="h-tit">CONTRACT DISCOUNTS / DEVICE INSTALLMENTS</h1>
+				</div>
+			</div>
+		</div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">Main contents</span></h2> 
+
+            <div class="container tod-submain">
+				<div class="tod-line-sel-box">
+                    <button type="button" class="line-sel-btn">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-mobile.png" alt=""></i><span class="item blind">Mobile Phone</span>
+                        <span class="detail-info">010-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-tel.png" alt=""></i><span class="item blind">Landline</span>
+                        <span class="detail-info">070-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-wifi.png" alt=""></i><span class="item blind">T Pocket-Fi</span>
+                        <span class="detail-info">070-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-tablet.png" alt=""></i><span class="item blind">tablet</span>
+                        <span class="detail-info">070-94**-04**</span>
+                    </button>
+                    <button type="button" class="line-sel-btn" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-tv.png" alt=""></i><span class="item blind">IPTV</span>
+                        <span class="detail-info">세종특별자치시 전** ****</span>
+                    </button>
+                    <button type="button" class="line-sel-btn side-arr" style="display:none">
+                        <i class="sel-ico"><img src="/img/en/sel-ico-internet.png" alt=""></i><span class="item blind">Internet</span>
+                        <span class="detail-info">세종특별자치시 전** ****</span>
+                    </button>
+                </div>
+                <section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">Fixed Plan Contract Discount</div> 
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">Fixed Plan Contract Discount</div>
+								<div class="box-group-cont">
+									<ul class="report-list item-no-border small">
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">
+													<span class="side-tip-txt">
+														Total Discounts As of<br>Last Month
+													</span>
+													<button type="button" class="tip">TIP</button>
+												</dt>
+												<dd class="report-cont basics13-larger"><span class="unit">₩</span>850,000</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">Cancellation Penalty As of Today</dt>
+												<dd class="report-cont"><span class="unit">₩</span>196,451</dd>
+											</dl>
+										</li>
+									</ul>
+									<a href="#" class="detail-info-link">Monthly Discount Breakdowns ></a>
+									<a href="#" class="bundle-link">
+										<div class="gray-box">
+											<ul class="report-list item-no-border small">
+												<li class="report-item">
+													<dl class="report-define d-wrap">
+														<dt class="report-tit">Contract Period</dt>
+														<dd class="report-cont">24months(730days)</dd>
+													</dl>
+												</li>
+											</ul>
+										</div>
+										<div class="horizon-bar-wrap contract-graph">
+											<div class="horizon-bar">
+												<span class="data" style="width:5%">
+													<span class="bar"></span>
+													<span class="bar-bubble">74days remaining</span> 
+												</span>
+											</div>
+											<div class="data-date">
+												<span class="start-date">
+													2020.7.27.
+													<span class="day-dec">Start Date</span>
+												</span>
+												<span class="end-date">
+													2021.5.24.
+													<span class="day-dec">End Date</span>
+												</span>
+											</div>
+										</div>
+									</a>
+									<p class="warning">&lt;Special Contract Discount&gt; and &lt;LTE Plus Contract Discount&gt; have been combined into &lt;Fixed Plan Contract Discount&gt;</p>
+								</div><!-- group-cont -->
+							</div>
+							<div class="box-group">
+								<div class="box-group-head-tit">Flexible Plan Contract Discount</div>
+								<div class="box-group-cont">
+									<ul class="report-list item-no-border small">
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+                                                <dt class="report-tit">
+													<span class="side-tip-txt">
+														Total Discounts As of<br>Last Month
+													</span>
+													<button type="button" class="tip">TIP</button>
+												</dt>
+												<dd class="report-cont basics13-larger"><span class="unit">₩</span>850,000</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">Cancellation Penalty As of Today</dt>
+												<dd class="report-cont"><span class="unit">₩</span>196,451</dd>
+											</dl>
+										</li>
+									</ul>
+									<a href="#" class="detail-info-link">Monthly Discount Breakdowns ></a>
+									<a href="#" class="bundle-link">
+										<div class="gray-box">
+											<ul class="report-list item-no-border small">
+												<li class="report-item">
+													<dl class="report-define d-wrap">
+														<dt class="report-tit">Contract Period</dt>
+														<dd class="report-cont">24months(730days)</dd> 
+													</dl>
+												</li>
+											</ul>
+										</div>
+										<div class="horizon-bar-wrap contract-graph">
+											<div class="horizon-bar">
+												<span class="data" style="width:70%">
+													<span class="bar"></span>
+													<span class="bar-bubble">74days remaining</span> 
+												</span>
+											</div>
+											<div class="data-date">
+												<span class="start-date">
+													2020.7.27.
+													<span class="day-dec">Start Date</span>
+												</span>
+												<span class="end-date">
+													2021.5.24.
+													<span class="day-dec">End Date</span>
+												</span>
+											</div>
+										</div>
+									</a>
+								</div><!-- group-cont -->
+							</div>
+						</div>
+					</div>
+				</section><!-- //cont-card -->
+                <section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">Device Contract Discount</div>
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">T Subsidy Contract</div>
+								<div class="box-group-cont">
+									<ul class="report-list item-no-border small">
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">Device Discount</dt>
+												<dd class="report-cont basics13-larger"><span class="unit">₩</span>850,000</dd>
+											</dl>
+										</li>
+										<li class="report-item">
+											<dl class="report-define d-wrap">
+												<dt class="report-tit">Cancellation Penalty As of Today</dt>
+												<dd class="report-cont"><span class="unit">₩</span>850,000</dd>
+											</dl>
+										</li>
+									</ul>
+									<a href="#" class="bundle-link">
+										<div class="gray-box">
+											<ul class="report-list item-no-border small">
+												<li class="report-item">
+													<dl class="report-define d-wrap">
+														<dt class="report-tit">Current Contract Status</dt>
+														<dd class="report-cont">Subscribed</dd>
+													</dl>
+												</li>
+												<li class="report-item">
+													<dl class="report-define d-wrap">
+														<dt class="report-tit">Contract Period</dt>
+														<dd class="report-cont">24months(730days)</dd>
+													</dl>
+												</li>
+											</ul>
+										</div>
+										<div class="horizon-bar-wrap contract-graph">
+											<div class="horizon-bar">
+												<span class="data" style="width:70%">
+													<span class="bar"></span>
+													<span class="bar-bubble">74days remaining</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+												</span>
+											</div>
+											<div class="data-date">
+												<span class="start-date">
+													2020.7.27.
+													<span class="day-dec">Start Date</span>
+												</span>
+												<span class="end-date">
+													2021.5.24.
+													<span class="day-dec">End Date</span>
+												</span>
+											</div>
+										</div>
+									</a>
+								</div><!-- group-cont -->
+							</div>
+						</div>
+					</div>
+				</section><!-- //cont-card -->
+                <section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">Device Installments</div>
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">Galaxy Note20 Ultra</div>
+								<div class="box-group-cont">
+									<div class="gray-box">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">Installment Start Date</dt>
+													<dd class="report-cont">2018.05.23.</dd>
+												</dl>
+											</li>
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">Installment Period</dt>
+													<dd class="report-cont">24months</dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+									<div class="horizon-bar-wrap contract-graph">
+										<div class="horizon-bar">
+											<span class="data" style="width:70%">
+												<span class="bar"></span>
+												<span class="bar-bubble">9months remaining</span> <!-- bar-bubble의 너비값이 bar너비보다 크면 left 추가 / 아래 스크립트 참조 -->
+											</span>
+										</div>
+										<div class="data-date">
+											<span class="start-date">
+												2020.7.27.
+												<span class="day-dec">Start Date</span>
+											</span>
+											<span class="end-date">
+												2021.5.24.
+												<span class="day-dec">End Date</span>
+											</span>
+										</div>
+									</div>
+									<div class="gray-box claim-box">
+										<a class="contract-summary bundle-link">Your remaining installment balance is<br>
+											<strong><span class="price"><span class="unit">₩</span>457,000</span></strong> 
+										</a>
+										<ul class="claim-list">
+											<li class="claim-item">
+												<dl class="total-price">
+													<dt class="total-article">Total Installment Amount</dt>
+													<dd class="price"><span class="unit">₩</span>850,000</dd>
+												</dl>
+												<ul class="detail-list">
+													<li class="detail-item have-sub"> <!-- open toggle -->
+														<a href="#" role="button" aria-pressed="false">
+															<dl class="detail-price">
+																<dt class="detail-article">Early Payments</dt>
+																<dd class="price"><span class="unit">₩</span>20,000</dd>
+															</dl>
+														</a>
+														<div class="sub-box">
+															<table class="month-table">
+																<colgroup>
+																	<col style="width:60%">
+																	<col style="width:40%">
+																</colgroup>
+																<thead>
+																	<tr>
+																		<th scope="col" class="item">Early Payment Date</th>
+																		<th scope="col" class="price">Paid Amount</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td class="item">2018.07.23.</td>
+																		<td class="price"><span class="unit">₩</span>12,000</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</li>
+												</ul>
+											</li>
+											<li class="claim-item">
+												<dl class="total-price">
+													<dt class="total-article">Monthly Installment Payments</dt>
+													<dd class="price"><span class="unit">₩</span>850,000</dd>
+												</dl>
+												<ul class="detail-list">
+													<li class="detail-item">
+														<dl class="detail-price">
+															<dt class="detail-article">Monthly Installments</dt>
+															<dd class="price"><span class="unit">₩</span>20,000</dd>
+														</dl>
+													</li>
+													<li class="detail-item">
+														<dl class="detail-price">
+															<dt class="detail-article">Installment Fees</dt>
+															<dd class="price"><span class="unit">₩</span>700</dd>
+														</dl>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</div>
+								</div><!-- group-cont -->
+							</div>
+						</div>
+					</div>
+				</section><!-- //cont-card -->
+                <section class="cont-card">
+					<div class="section-inner">
+						<div class="small-head-tit">Device  Purchase  Details</div>
+						<div class="card-cont">
+							<div class="box-group">
+								<div class="box-group-head-tit">T Rental</div>
+								<div class="box-group-cont">
+									<div class="gray-box">
+										<ul class="report-list item-no-border small">
+											<li class="report-item">
+												<dl class="report-define d-wrap">
+													<dt class="report-tit">Model</dt>
+													<dd class="report-cont">S**************</dd>
+												</dl>
+											</li>
+										</ul>
+									</div>
+									<a href="#" class="bundle-link">
+										<div class="gray-box claim-box">
+											<p class="contract-summary">
+												Your monthly payable amount is
+												<strong><span class="price"><span class="unit">₩</span>33,180</span></strong>
+											</p>
+											<ul class="report-list item-no-border smaller">
+												<li class="report-item">
+													<dl class="report-define d-wrap">
+														<dt class="report-tit">T Rental Start Date</dt>
+														<dd class="report-cont">2018.9.5.</dd>
+													</dl>
+												</li>
+												<li class="report-item">
+													<dl class="report-define d-wrap">
+														<dt class="report-tit">T Rental Return Date</dt>
+														<dd class="report-cont">2020.9.4.</dd>
+													</dl>
+												</li>
+											</ul>
+										</div>
+									</a>
+								</div><!-- group-cont -->
+							</div>
+						</div>
+					</div>
+				</section><!-- //cont-card -->
+                <section class="cont-card">
+					<div class="section-inner">
+						<div class="head-tit">Terminated Contract<span class="sub-txt">(Within the last 2 years)</span></div>
+						<div class="card-cont">
+							<div class="acc-list-wrap">
+								<!-- .widget -->
+								<div class="widget ">
+									<div class="widget-box accordion">
+										<div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+											<div class="acco-style tod-renew"><!-- style별 클래스 추가 -->
+												<ul class="acco-list pd0">
+													<li class="acco-box acc-item"><!-- .on : 열기 --><!-- .imp-view : 제목이 없고 내용만 있는 경우 -->
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">Fixed Plan Contract Discount</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Total Discounted Amount </dt>
+																		<dd class="report-cont"><span class="unit">₩</span>62,496</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Rounds of Discounts</dt>
+																		<dd class="report-cont">13 times</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Contract Period</dt>
+																		<dd class="report-cont">2018.7.7.~2020.7.7.</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Early Termination Date</dt>
+																		<dd class="report-cont">2018.7.7.</dd>
+																	</dl>
+																</li>
+															</ul>
+															<div class="btn-area">
+																<a href="#" class="rect-btn">View Monthly Discount Details</a>
+															</div>
+														</div>
+                                                    </li>
+                                                    <li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">T Subsidy Contract</button>
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Device Discount</dt>
+																		<dd class="report-cont"><span class="unit">₩</span>62,496</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Contract Period</dt>
+																		<dd class="report-cont">2018.7.7.~2020.7.7.</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Early Termination Date</dt>
+																		<dd class="report-cont">2019.05.28.</dd>
+																	</dl>
+																</li>
+															</ul>
+														</div>
+													</li>
+													<li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">Device Installment</button>
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Model</dt>
+																		<dd class="report-cont">S**************</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Total Installment Amount</dt>
+																		<dd class="report-cont"><span class="unit">₩</span>850,000</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Installment Period</dt>
+																		<dd class="report-cont">2018.7.7.~2020.7.7.</dd>
+																	</dl>
+																</li>
+															</ul>
+														</div>
+													</li>
+													<li class="acco-box acc-item">
+														<div class="acco-tit">
+															<button role="button" aria-pressed="false" class="acc-tit down-arr">T Rental</button>
+														</div>
+														<div class="acco-cont">
+															<ul class="report-list item-no-border smaller">
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">Model</dt>
+																		<dd class="report-cont">S**************</dd>
+																	</dl>
+																</li>
+																<li class="report-item">
+																	<dl class="report-define d-wrap">
+																		<dt class="report-tit">T Rental Start Day</dt>
+																		<dd class="report-cont">2018.7.7.</dd>
+																	</dl>
+																</li>
+															</ul>
+														</div>
+                                                    </li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--// .widget -->
+							</div>
+						</div>
+					</div>
+				</section><!-- //cont-card -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+    <script>
+		$(window).on('resize load', function(){
+			var horizonBarWrap = $('.horizon-bar-wrap')
+			horizonBarWrap.each(function(){
+				var horizonBar = $(this).find('.horizon-bar .data'); 
+				var barBubble = horizonBar.children('.bar-bubble'); 
+				(horizonBar.children('.bar').width() < barBubble.outerWidth())? barBubble.addClass('left') : barBubble.removeClass('left');
+			})
+		});
+
+		$('.have-sub > a').on('click', function(e){
+			e.preventDefault();
+			$(this).parent().toggleClass('open'); 
+			$(this).attr('aria-pressed', $(this).parent().hasClass('open'))
+		});
+	</script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 _%>
 <li role="tabpanel" id="cont-<%-tabName%>-tab" class="fe-<%-tabName%>" data-title="<%-title%>" aria-labelledby="cont-<%-tabName%>" aria-selected="true">
     <%_
-        if(data){
+        if(!isBubin && data){
             const {autoChrgStCd} = data;
             const isUsed = autoChrgStCd === 'U'; // U:사용중, D: 신규
             const stateCd = autoChrgStCd === 'U' ? 'U' : 'D';
@@ -56,8 +56,7 @@ _%>
                 const isPrd = String(process.env.NODE_ENV) === 'prd';
                 let tipId = isSmall ? 'TC000119' : 'TC000120';
                 if (isPrd) {
-                    // 상용 tip id 나오면 적용하기
-                    // tipId = isSmall ? 'TC000119' : 'TC000120';
+                    tipId = isSmall ? 'TC000120' : 'TC000121';
                 } else {
                     tipId = isSmall ? 'TC000119' : 'TC000120';
                 }
