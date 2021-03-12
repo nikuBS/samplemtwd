@@ -246,9 +246,9 @@
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
 																		<% if ( !data.themeListData.prodList[i].basOfrDataQtyCtt.isNaN ) { %>
-																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
+																			<li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
 																		<% } else { %>
-																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
+																			<li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
 																		<% } %>
 																	<% } %>
 
@@ -314,9 +314,9 @@
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
 																		<% if ( !data.themeListData.prodList[i].basOfrDataQtyCtt.isNaN ) { %>
-																			<li>데이터 <%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
+																			<li class="v-data">데이터 <%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
 																		<% } else { %>
-																			<li>데이터 <%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
+																			<li class="v-data">데이터 <%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
 																		<% } %>
 																	<% } %>
 
@@ -379,9 +379,9 @@
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
 																		<% if ( !data.themeListData.prodList[i].basOfrDataQtyCtt.isNaN ) { %>
-																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
+																			<li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.data %><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value.unit %></li>
 																		<% } else { %>
-																			<li><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
+																			<li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i><%= data.themeListData.prodList[i].basOfrDataQtyCtt.value %></li>
 																		<% } %>
 																	<% } %>
 
@@ -480,14 +480,15 @@
 																			mySms = mySms.isNaN ? mySms.value : mySms.value + mySms.unit;
 																		}
 																	%>
-
-																	<a class="btn-compare" 
+																	
+																	<button type="button" aria-haspopup="true" class="btn-compare"
 																		data-prod-id="<%= myProductId %>" 
 																		data-prod-nm="<%= myProductName %>" 
 																		data-prod-fee="<%= myProductPrice%>" 
 																		data-prod-call="<%= myVoice %>" 
 																		data-prod-text="<%= mySms %>" 
-																		data-prod-data="<%= myData %>">내 요금제와 비교</a>
+																		data-prod-data="<%= myData %>">내 요금제와 비교
+																	</button>
 																</div>
 															</div>
 														<% } %>
