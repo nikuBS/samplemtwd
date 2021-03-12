@@ -38,17 +38,22 @@ class CommonMemberLine extends TwViewController {
       this.apiService.request(API_CMD.BFF_03_0004, { svcCtg: LINE_NAME.INTERNET_PHONE_IPTV, pageSize: DEFAULT_LIST_COUNT}),
       this.apiService.request(API_CMD.BFF_03_0030, { svcCtg: LINE_NAME.MOBILE })
     ]).subscribe(([mobile, internet, exposed]) => {
-      if ( mobile.code === API_CODE.CODE_00 ) {
-        if ( mobile.result.totalCnt === '0' ) {
+      const totalExposedCnt = exposed.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(exposed.result) ?
+        exposed.result.totalCnt : 0;
+      const s = internet.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(internet.result) ?
+        internet.result.s : [];
+      if ( mobile.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(mobile.result)) {
+        if ( parseInt(mobile.result.totalCnt || 0, 10) === 0 ) {
+          // 모바일 회선이 하나도 없는 경우
           res.render('member/common.member.line.empty.html', { svcInfo, pageInfo });
         } else {
           const lineInfo = this.parseLineList({
             totalCnt: mobile.result.totalCnt,
-            totalExposedCnt : exposed.result.totalCnt,
+            totalExposedCnt,
             mCnt: mobile.result.mCnt,
             sCnt: mobile.result.sCnt,
             m: mobile.result.m,
-            s: internet.result.s,
+            s,
             mTitle: SVC_CATEGORY.m,
             sTitle: SVC_CATEGORY.s
           });

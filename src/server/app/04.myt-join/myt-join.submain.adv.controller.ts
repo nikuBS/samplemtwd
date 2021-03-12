@@ -421,8 +421,9 @@ class MyTJoinSubmainAdvController extends MyTJoinSubmainController {
         this.logger.error(this, JSON.stringify(discountResp));
       }
       // 결합할인
-      if ( combinationResp.code === API_CODE.CODE_00 ) {
-        if ( combinationResp.result.prodNm.trim().length > 0 ) {
+      if ( combinationResp.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(combinationResp.result)) {
+        // combinationResp.result 는 있지만 result.prodNm 요소가 없는 케이스로 인해 오류 발생하여 보강
+        if ( combinationResp.result.prodNm && combinationResp.result.prodNm.trim().length > 0 ) {
           benefitDiscount += Number(combinationResp.result.etcCnt) + 1;
         }
       } else {
