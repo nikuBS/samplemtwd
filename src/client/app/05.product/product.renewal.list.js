@@ -4,15 +4,14 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, netwo
     this._params.searchLastProdId = ''; // 탭 없는 랜딩페이지 시 추가된 searchLastProdId 초기화
     this._svcInfo = svcInfo;
     this._series = series;
-    this._hasNext = hasNext;
-    this._networkInfo = networkInfo;
-    this._isCompare = isCompare;
+    this._hasNext = hasNext; // 스크립트에서 추가 리스트 로딩이 있는지
+    this._networkInfo = networkInfo; //사용자의 통신망 정보
+    this._isCompare = isCompare; // 비교하기 노출 플래그
     this._checkDefault = 'N'; //전체리스트 Default 페이지 랜딩 인지 확인
     this._curNetworkCount = 1; // 전체리스트 Default 페이지 추가 호출 횟수 count
-    this._cdn = cdn;
-    this._remainGroupData = 0;
-    this._curRemainGroupData = 0;
-    this._deletedQuickFilter = '';
+    this._cdn = cdn; 
+    this._remainGroupData = 0; //요금제 시리즈 API에서 호출 후 시리즈가 5개 이상인지 체크
+    this._curRemainGroupData = 0; //요금제 시리즈 API에서 호출 후 화면에 표시 하지 않은 시리즈가 있는지 (그룹은 5개씩 노출)
   
     this.CODE = 'F01100';
     this.TYPE = 'plans';
@@ -29,14 +28,14 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, netwo
 Tw.ProductRenewalList.prototype = {
     _init: function() {
       this.themeParam = this._getParameter('theme');
-      this._listTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE);
-      this._listDefaultTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT);
-      this.curFilter = this._checkFilter();
-      this.curMobileFilter = this._checkMobilefilter();
-      this._loadNotice();
-      this._scrollFocus();
-      this._setInfinityScroll();
-      this._checkTheme();
+      this._listTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE); // 시리즈 별 요금제 핸들바
+      this._listDefaultTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT); // 단일 상품 요금제 핸들바
+      this.curFilter = this._checkFilter(); // 현재 필터 정보 가져옴
+      this.curMobileFilter = this._checkMobilefilter(); // 현재 탭 정보 가져옴
+      this._loadNotice(); // 툴팁 노출 여부
+      this._scrollFocus(); //탭 제목이 보이도록 포커스 이동
+      this._setInfinityScroll(); // 스크롤 하단으로 이동 시 요금제 리스트(시리즈 자동 로딩)
+      this._checkTheme();// 테마 탭인지 확인
     },
 
     _bindEvent: function() {
@@ -47,8 +46,8 @@ Tw.ProductRenewalList.prototype = {
       //$('.more-link-area > button').click($.proxy(this._handleLoadMore, this));
     },
 
-    _scrollFocus: function() {
-      if(this.curMobileFilter[0] !== undefined || this.themeParam !== '') { // 탭 제목 보이도록 상단 스크롤 이동
+    _scrollFocus: function() { // 탭 제목 보이도록 상단 스크롤 이동 (퍼블리셔님이 준 스크립트)
+      if(this.curMobileFilter[0] !== undefined || this.themeParam !== '') { 
         var $tabWrap = $('.tod-nmp-tab').find('ul');
         var tabWidth = $tabWrap.width();
         var onWidth = $tabWrap.find('.on').width();
@@ -86,7 +85,7 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _goToTheme: function(e) { // 테마요금제 진입 시 컨펌 창 띄움
+    _goToTheme: function(e) { // 테마요금제 진입 시 필터가 있으면 컨펌 창 띄움
       this.destinationUrl = '/product/renewal/mobileplan/list?theme=all';
 
       if((this.curFilter[0] !== undefined && this.curFilter[0] !== '' && this.curFilter[0] !== null)) {
@@ -129,7 +128,7 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _popupQuickFilter: function() {
+    _popupQuickFilter: function() { // 퀵필터 항목 초기화 시
       this._popupService.open({
           url: '/hbs/',
           hbs: 'renewal.product.initial.confirm',
@@ -206,7 +205,7 @@ Tw.ProductRenewalList.prototype = {
         this._loadFilterConfirmPopup(e);
     },
 
-    _loadFilterConfirmPopup: function(e){ 
+    _loadFilterConfirmPopup: function(e) { // 필터 초기화 시 알럿 노출
       this._popupService.open({
         url: '/hbs/',
         hbs: 'renewal.product.initial.confirm',
@@ -222,12 +221,12 @@ Tw.ProductRenewalList.prototype = {
     _onOpeninitialPopup: function($target) {
       var _this = this;
       $('#initialCancel').click(_.debounce($.proxy(this._popupService.close, this), 500));
-      if($target.data('code')) {
+      if($target.data('code')) { // 퀵필터 버튼 일 경우
         $('#initialConfirm').click($.proxy(function() {
           var MobileFilterForQuick = (_this.curMobileFilter[0] == '') || (_this.curMobileFilter[0] == undefined) ? _this._networkInfo[0] : _this.curMobileFilter[0]; 
           _this._historyService.replaceURL('/product/renewal/mobileplan/list?filters=' + MobileFilterForQuick + ',' + $target.data('code'));
         }));
-      } else {
+      } else { // 초기화 버튼일 경우
         $('#initialConfirm').click($.proxy(_this._initFilter, this));
       }
     },
@@ -344,12 +343,12 @@ Tw.ProductRenewalList.prototype = {
       $checked.on('click', function() { // 항목 선택 시 하단에 선택한 필터 항목 표시
         var $quickFilterBtn = $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li');
         var quickFilterCheck = false;
-        for(var i = 0; (i<$quickFilterBtn.length) && !quickFilterCheck; i++) { // 퀵필터가 선택되어 있는지 확인
+        for(var i = 0; (i < $quickFilterBtn.length) && !quickFilterCheck; i++) { // 퀵필터가 선택되어 있는지 확인
           quickFilterCheck = $quickFilterBtn.eq(i).hasClass('on');
         }
-        if(quickFilterCheck) {
+        if(quickFilterCheck) { // 퀵 필터가 선택되어 있을 때
           _this._popupQuickFilter();
-        } else {
+        } else { // 하단 필터 리스트에 선택된 필터 추가
           if($(this).parent('li').hasClass('on')) {
             $(this).parent('li').removeClass('on');
             $('[data-filtersummary="' + $(this).data('filter') + '"]').remove();
@@ -448,7 +447,7 @@ Tw.ProductRenewalList.prototype = {
         $('.check-box > ul > li').removeClass('on');
       }
     },
-    _handleResetQuickFilters: function() {
+    _handleResetQuickFilters: function() { // 퀵 필터 항목을 초기화하고 팝업 닫음
       $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li').removeClass('on');
       this._handleResetFilters();
       this._popupService.close();
@@ -461,13 +460,13 @@ Tw.ProductRenewalList.prototype = {
       $('[data-filter="' + filterCode + '"]').parent("li").removeClass('on');
     },
 
-    _handleLoadMore: function() {
+    _handleLoadMore: function() { //단일 상품 추가 로딩
       var viewMoreParam = this._params;
-      viewMoreParam.searchLastProdId = $('.tod-cont-section').data('lastproduct');
+      viewMoreParam.searchLastProdId = $('.tod-cont-section').data('lastproduct'); // 로딩된 마지막 prod-id를 섹션 data에 저장
       this._apiService.request(Tw.API_CMD.BFF_10_0031, viewMoreParam).done($.proxy(this._handleSuccessLoadingData, this));
     },
 
-    _handleLoadMoreDefault: function() {
+    _handleLoadMoreDefault: function() { // 시리즈 상품 추가 로딩
       var viewMoreParam = this._params;
       
       viewMoreParam.idxCtgCd = this._networkInfo[this._curNetworkCount];
@@ -486,10 +485,10 @@ Tw.ProductRenewalList.prototype = {
         return;
       }
   
-      var items = _.map(resp.result.products, $.proxy(this._mapProperData, this));
+      var items = _.map(resp.result.products, $.proxy(this._mapProperData, this)); // 가져온 데이터 파싱
       $('.tod-cont-section').data('lastproduct',items[items.length - 1].prodId);
-      $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass, cdn : this._cdn }));
-      if(!resp.result.hasNext) {
+      $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass, cdn : this._cdn })); // 핸들바로 html 만들어서 붙임
+      if(!resp.result.hasNext) { // 추가 로딩할 부분이 있는지 확인
         this._hasNext = 'false';
         $('.tod-nmp-loading').css('display','none');
       }
@@ -510,9 +509,9 @@ Tw.ProductRenewalList.prototype = {
         Tw.Error(resp.code, resp.msg).pop();
         return;
       }
-      var groupItems = _.map(resp.result.groupProdList, $.proxy(this._mapProperDataGroup, this));
-      var separateItems = _.map(resp.result.separateProductList, $.proxy(this._mapProperData, this));
-      switch(this._networkInfo[this._curNetworkCount]) {
+      var groupItems = _.map(resp.result.groupProdList, $.proxy(this._mapProperDataGroup, this)); //가져온 데이터 파싱
+      var separateItems = _.map(resp.result.separateProductList, $.proxy(this._mapProperData, this));//가져온 데이터 파싱
+      switch(this._networkInfo[this._curNetworkCount]) { //통신망에 따른 css 클래스 설정
         case 'F01713':
           this._seriesClass = '1';
           break;
@@ -532,7 +531,7 @@ Tw.ProductRenewalList.prototype = {
           this._seriesClass = '1';
       }
       
-      if(groupItems.length>5) {
+      if(groupItems.length>5) { // 추가 로딩된 데이터 중 시리즈가 5개 이상일 때 배열에 저장
         this._remainGroupData = parseInt(groupItems.length / 5);
         this._curRemainGroupData = 1 ;
         this._groupData = [];
@@ -558,19 +557,19 @@ Tw.ProductRenewalList.prototype = {
         this._separateItems = separateItems;
         this._curNetworkCount++;
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[0], separateItems: null, seriesClass: this._seriesClass, cdn: this._cdn}));
-      } else {
-        this._curNetworkCount++;
+      } else { // 5개 미만이면 한번에 출력
+        this._curNetworkCount++; // 요금제 통신망 별 호출 시 현재 순번 (ex. 0: 5g / 1: lte / 2: 3g / 3: 2nd / 4 : pps)
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: groupItems, separateItems: separateItems, seriesClass: this._seriesClass, cdn: this._cdn }));
         if(this._curNetworkCount == 5) {
           this._hasNext = 'false';
           $('.tod-nmp-loading').css('display','none');
         }
       }
-      this.isScroll = true;
+      this.isScroll = true; // 데이터 추가 호출 중 중복 호출 요청을 막기 위한 플래그
     },
 
-    _drawRemainGroup: function() {
-      if(this._remainGroupData == this._curRemainGroupData) {
+    _drawRemainGroup: function() { // 시리즈 요금제를 화면에 그럼
+      if(this._remainGroupData == this._curRemainGroupData) { // 더이상 남은 시리즈 없을 때
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[this._curRemainGroupData], separateItems: this._separateItems,  seriesClass: this._seriesClass, cdn: this._cdn }));
         this._remainGroupData = 0;
         this._curRemainGroupData = 0;
@@ -578,14 +577,14 @@ Tw.ProductRenewalList.prototype = {
           this._hasNext = 'false';
           $('.tod-nmp-loading').css('display','none');
         }
-      } else {
+      } else { // 받아온 데이터 중 아직 화면에 표시하지 않은 시리즈가 남아 있을 때
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[this._curRemainGroupData], separateItems: null,  seriesClass: this._seriesClass, cdn: this._cdn }));
         this._curRemainGroupData++;
       }
       this.isScroll = true;
     },
 
-    _mapProperData: function(item) {
+    _mapProperData: function(item) { // API로 받아온 요금제 데이터 파싱
       if (item.basFeeAmt){
         if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
           item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt)+'원';
@@ -703,14 +702,14 @@ Tw.ProductRenewalList.prototype = {
       return item;
     },
 
-    _mapProperDataGroup: function(item) {
+    _mapProperDataGroup: function(item) { //요금제 시리즈 별로 요금제 데이터 파싱
       if(item.prodList){
         item.prodList = _.map(item.prodList, $.proxy(this._mapProperData, this));
       }
       return item;
     },
 
-    _getTabCodeSeries: function(item) {
+    _getTabCodeSeries: function(item) { //요금제 tab별 클래스 할당
       if(item.prodFltId) {
         switch (item.prodFltId) {
           case 'F01713':
@@ -730,7 +729,7 @@ Tw.ProductRenewalList.prototype = {
       return '';
     },
 
-    _getProdSmryExpsTypCd: function(value) {
+    _getProdSmryExpsTypCd: function(value) { //요금제 모듈 형태 별 코드 치환 (1.기본형 2. 혜택강조형 3.데이터 강조형)
       switch (value) {
         case '1':
           return '1';
@@ -752,16 +751,16 @@ Tw.ProductRenewalList.prototype = {
       return !value || value === '' || value === '-';
     },
 
-    _setInfinityScroll: function() {
+    _setInfinityScroll: function() { // 스크롤이 일정부분 내려갈 시 데이터 추가 로딩
       var _this = this;
       this.isScroll = true;
       $(document).scroll(function() {
         if(($(window).height() + $(document).scrollTop()) >= ($(document).height() - ($(window).height() * 2))) {
           if (_this.isScroll && _this._hasNext == 'true') {
             _this.isScroll = false;
-            if(_this._checkDefault == 'N') {
+            if(_this._checkDefault == 'N') { // 단일 상품 리스트 출력
               setTimeout($.proxy(_this._handleLoadMore, _this) ,300);
-            } else {
+            } else { // 시리즈 상품 리스트 출력
               setTimeout($.proxy(_this._handleLoadMoreDefault, _this) ,300);
             }
           }
@@ -769,7 +768,7 @@ Tw.ProductRenewalList.prototype = {
       });
     },
 
-    _escapeHtmlEntities : function(filter) {
+    _escapeHtmlEntities : function(filter) { // 필터 desc 출력 시 받아온 데이터를 html로 출력할 수 있도록 치환
       var str = ''
       if(filter.prodFltDesc){
         filter.prodFltDesc = filter.prodFltDesc.replace(/&amp;/g, '&').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/\"/g,' ').replace(/&#034;/g,'\''); 
