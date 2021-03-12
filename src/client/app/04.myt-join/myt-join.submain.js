@@ -884,6 +884,7 @@ Tw.MytJoinAdvSubMain.prototype._successDrawBanner = function () {
 Tw.MytJoinAdvSubMain.prototype._onMovedAddProduct = function (event) {
   var $target = $(event.currentTarget);
   var type = $target.data('type');
+  var count = parseInt($target.data('count') || 0, 10);
   var hash = '';
   if (type === 'fee') {
     hash = this._data.type === 2 ? '#tod-cont1' : '#tod-cont2';
@@ -891,6 +892,10 @@ Tw.MytJoinAdvSubMain.prototype._onMovedAddProduct = function (event) {
     hash = this._data.type === 2 ? '#tod-cont2' : '#tod-cont3';
   } else if (type === 'opt') {
     hash = '#tod-cont1';
+  }
+  // 상품 개수가 0인 경우는 전체 선택
+  if (count === 0) {
+    hash = '#tod-all';
   }
   this._historyService.goLoad('/myt-join/additions' + hash);
   return false;

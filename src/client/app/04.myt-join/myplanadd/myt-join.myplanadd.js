@@ -44,15 +44,15 @@ Tw.MyTJoinMyPlanAdd.prototype = {
     /* this._lineComponent = */
     new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
     // 부가상품 처음 진입 시 유료, 무료, 옵션 영역 특정하여 선택하여 진입이 필요한 경우
-    if (location.hash) {
-      this.$todSel.find('a[href="' + location.hash + '"]').trigger('click');
-      // 위치조정을 위한 처리
-      setTimeout($.proxy(function() {
-        $(window).scrollTop(0);
-      }, this), 0);
-    } else {
-      $(window).scrollTop(0);
+    var hash = location.hash;
+    if (!hash) {
+      hash = '#tod-all'
     }
+    this.$todSel.find('a[href="' + hash + '"]').trigger('click');
+    // 위치조정을 위한 처리
+    setTimeout($.proxy(function() {
+      $(window).scrollTop(0);
+    }, this), 0);
   },
 
   /**
