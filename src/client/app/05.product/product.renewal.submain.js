@@ -8,7 +8,7 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuI
   this.$container = rootEl;
   this._sectionSort = sectionSort;
   this._menuId = menuId;
-  this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'};
+  this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'}; // 기본값 세팅
   this._myAge = myAge;
   this._cdn = cdn;
 
