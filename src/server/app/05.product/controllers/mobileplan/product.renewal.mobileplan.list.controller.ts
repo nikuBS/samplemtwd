@@ -40,7 +40,7 @@ export default class RenewProductPlans extends TwViewController {
     if(req.query.filters) {
       const seriesCode: string = this._getSeries(req.query.filters);
       series.seriesCode = seriesCode;
-      switch(seriesCode) { // 상단 탭 하이라이트 적용
+      switch(seriesCode) { // 상단 탭 하이라이트 적용, 탭 별 클래스 적용
         case 'F01713':
           series.seriesClass = 'prod-5g';
           break;
@@ -193,11 +193,11 @@ export default class RenewProductPlans extends TwViewController {
               name: tabList.subFilters[i].prodFltNm,
               code: tabList.subFilters[i].prodFltId,
               exist: 'N',
-              url:'/product/renewal/mobileplan/list?filters=' + tabList.subFilters[i].prodFltId
+              url:'/product/renewal/mobileplan/list?filters=' + tabList.subFilters[i].prodFltId // 더보기 버튼 리다이렉트 url
               };
           }
 
-          for( let k in mobileList ) {
+          for( let k in mobileList ) { // 통신망 별로 해당 통신망이 있나 체크
             for( let i in plans.products) {
               if(mobileList[k].name === plans.products[i].prodFltNm){
                 mobileList[k].exist = 'Y';
