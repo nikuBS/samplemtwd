@@ -116,54 +116,56 @@
         </ul>
     </div>
 <% if(thisPlan.prodSmryExpsTypCd == '2') { %>
-    <div class="rn-prod-benefit">
-        <% if(thisPlan.benefitList.sepBenefitList) { %>
-            <ul>
-                <% for ( let k=0; k < thisPlan.benefitList.sepBenefitList.length; k++ ) { %>
-                    <li>
-                        <i class="p-icon16-img">
-                            <img src="<%= cdn %><%= thisPlan.benefitList.sepBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.sepBenefitList[k].rgstImgAlt %>">
-                        </i>
-                        <span class="txt"><%= thisPlan.benefitList.sepBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.sepBenefitList[k].benfDtlCtt%></span>
-
-                        <% if (thisPlan.benefitList.sepBenefitList[k].useAmt) { %>
-                            <span class="price">
-                                <del><%= thisPlan.benefitList.sepBenefitList[k].benfAmt.value %>원</del>
-                                <i class="icon-arr">&rarr;</i> 
-                                <em><%= thisPlan.benefitList.sepBenefitList[k].useAmt.value %>원</em>
-                            </span>
-                        <% } %>
-                        
-                    </li>
-                <% } %>
-            </ul>
-        <% } %>
-
-        <%# 추가 혜택 %>
-        <% if ( thisPlan.benefitList.chooseBenefitList.length > 0) { %>
-            <div class="p-benefit-choice">
-                <p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+    <% if((thisPlan.benefitList.sepBenefitList.length > 0) || (thisPlan.benefitList.chooseBenefitList.length > 0)) { %>
+        <div class="rn-prod-benefit">
+            <% if(thisPlan.benefitList.sepBenefitList) { %>
                 <ul>
-                    <% for ( let k=0; k < thisPlan.benefitList.chooseBenefitList.length; k++ ) { %>
+                    <% for ( let k=0; k < thisPlan.benefitList.sepBenefitList.length; k++ ) { %>
                         <li>
                             <i class="p-icon16-img">
-                                <img src="<%= cdn %><%= thisPlan.benefitList.chooseBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.chooseBenefitList[k].rgstImgAlt %>">
+                                <img src="<%= cdn %><%= thisPlan.benefitList.sepBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.sepBenefitList[k].rgstImgAlt %>">
                             </i>
-                            <span class="txt"><%= thisPlan.benefitList.chooseBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.chooseBenefitList[k].benfDtlCtt%></span>
+                            <span class="txt"><%= thisPlan.benefitList.sepBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.sepBenefitList[k].benfDtlCtt%></span>
 
-                            <% if ( thisPlan.benefitList.chooseBenefitList[k].useAmt ) { %>
+                            <% if (thisPlan.benefitList.sepBenefitList[k].useAmt) { %>
                                 <span class="price">
-                                    <del><%= thisPlan.benefitList.chooseBenefitList[k].benfAmt.value %>원</del>
+                                    <del><%= thisPlan.benefitList.sepBenefitList[k].benfAmt.value %>원</del>
                                     <i class="icon-arr">&rarr;</i> 
-                                    <em><%= thisPlan.benefitList.chooseBenefitList[k].useAmt.value %>원</em>
+                                    <em><%= thisPlan.benefitList.sepBenefitList[k].useAmt.value %>원</em>
                                 </span>
-                            <% } %> 
+                            <% } %>
+                            
                         </li>
                     <% } %>
                 </ul>
-            </div>
-        <% } %>
-    </div>
+            <% } %>
+
+            <%# 추가 혜택 %>
+            <% if ( thisPlan.benefitList.chooseBenefitList.length > 0) { %>
+                <div class="p-benefit-choice">
+                    <p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+                    <ul>
+                        <% for ( let k=0; k < thisPlan.benefitList.chooseBenefitList.length; k++ ) { %>
+                            <li>
+                                <i class="p-icon16-img">
+                                    <img src="<%= cdn %><%= thisPlan.benefitList.chooseBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.chooseBenefitList[k].rgstImgAlt %>">
+                                </i>
+                                <span class="txt"><%= thisPlan.benefitList.chooseBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.chooseBenefitList[k].benfDtlCtt%></span>
+
+                                <% if ( thisPlan.benefitList.chooseBenefitList[k].useAmt ) { %>
+                                    <span class="price">
+                                        <del><%= thisPlan.benefitList.chooseBenefitList[k].benfAmt.value %>원</del>
+                                        <i class="icon-arr">&rarr;</i> 
+                                        <em><%= thisPlan.benefitList.chooseBenefitList[k].useAmt.value %>원</em>
+                                    </span>
+                                <% } %> 
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
 <% } %>
 </a>
 <% if (thisPlan.compareYN) { %>

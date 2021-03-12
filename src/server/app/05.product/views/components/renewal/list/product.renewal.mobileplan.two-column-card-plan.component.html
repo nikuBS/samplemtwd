@@ -1,33 +1,35 @@
 <a href="/product/callplan?prod_id=<%= thisPlan.prodId %>" class="prod-box">
-    <p class="p-name"><%= thisPlan.prodNm %></p>
-            <div class="p-tag">
-                <% if(thisPlan.filters) { %>
-                    <% for(let n=0; n< thisPlan.filters.length; n++) { %>
-                        <% if(thisPlan.filters[n].prodFltId == 'F01163'){ %>
-                            <span class="i-tag-cr5">시니어</span>
-                        <% } else if(thisPlan.filters[n].prodFltId == 'F01164') { %>
-                            <span class="i-tag-cr5">복지</span>
-                        <% } else if(thisPlan.filters[n].prodFltId == 'F01162') { %>
-                            <span class="i-tag-cr5">어린이/청소년</span>
-                        <% } %>
-                    <% } %>
-                <% } else if(thisPlan.prodFltList) { %>
-                    <% for(let n=0; n< thisPlan.prodFltList.length; n++) { %>
-                        <% if(thisPlan.prodFltList[n].prodFltId == 'F01163'){ %>
-                            <span class="i-tag-cr5">시니어</span>
-                        <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01164') { %>
-                            <span class="i-tag-cr5">복지</span>
-                        <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01162') { %>
-                            <span class="i-tag-cr5">어린이/청소년</span>
-                        <% } %>
+    <div class="p-top-cont">
+        <p class="p-name"><%= thisPlan.prodNm %></p>
+        <div class="p-tag">
+            <% if(thisPlan.filters) { %>
+                <% for(let n=0; n< thisPlan.filters.length; n++) { %>
+                    <% if(thisPlan.filters[n].prodFltId == 'F01163'){ %>
+                        <span class="i-tag-cr5">시니어</span>
+                    <% } else if(thisPlan.filters[n].prodFltId == 'F01164') { %>
+                        <span class="i-tag-cr5">복지</span>
+                    <% } else if(thisPlan.filters[n].prodFltId == 'F01162') { %>
+                        <span class="i-tag-cr5">어린이/청소년</span>
                     <% } %>
                 <% } %>
-                <% if(svcInfo){ %>
-                    <% if(svcInfo.prodId == thisPlan.prodId){ %>
-                        <span class="i-tag-myplan">사용중</span>
+            <% } else if(thisPlan.prodFltList) { %>
+                <% for(let n=0; n< thisPlan.prodFltList.length; n++) { %>
+                    <% if(thisPlan.prodFltList[n].prodFltId == 'F01163'){ %>
+                        <span class="i-tag-cr5">시니어</span>
+                    <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01164') { %>
+                        <span class="i-tag-cr5">복지</span>
+                    <% } else if(thisPlan.prodFltList[n].prodFltId == 'F01162') { %>
+                        <span class="i-tag-cr5">어린이/청소년</span>
                     <% } %>
                 <% } %>
-            </div>
+            <% } %>
+            <% if(svcInfo){ %>
+                <% if(svcInfo.prodId == thisPlan.prodId){ %>
+                    <span class="i-tag-myplan">사용중</span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
     <div class="p-info">
         <% if(thisPlan.basOfrVcallTmsCtt && PPSYN == 'Y') { %>
             <p class="row1"><%= thisPlan.basOfrVcallTmsCtt.value %>

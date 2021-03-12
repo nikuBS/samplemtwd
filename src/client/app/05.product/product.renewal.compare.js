@@ -941,11 +941,11 @@ Tw.ProductCompare.prototype = {
     if (chooseList.length > 0) {
       return null;
     }
-    if(chooseList.benfList) {
+    if(chooseList.benfList) { // list 하드코딩
       chooseList.benfList.titleText = this._getTitleText(chooseList.benfList.prodBenfTitCd);
     }
     if(chooseList.benfList.prodBenfTitCd == '05') {
-      if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) {
+      if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) { // t 멤버쉽 예외처리
         chooseList.curSepData.prodId = 'Y';
         chooseList.curSepData.expsBenfNm = 'T 멤버쉽';
         chooseList.curSepData.benfDtlCtt = '기존 등급 유지';
@@ -954,6 +954,14 @@ Tw.ProductCompare.prototype = {
         chooseList.compareSepData.prodId = 'Y';
         chooseList.compareSepData.expsBenfNm = 'T 멤버쉽';
         chooseList.compareSepData.benfDtlCtt = '기존 등급 유지';
+      }
+    }
+    if(chooseList.benfList.prodBenfTitCd == '06' || chooseList.benfList.prodBenfTitCd == '08') { // 음악 / 영상 하드코딩 '무료' 제거
+      if(chooseList.curData.prodId) {
+        chooseList.curData.benfDtlCtt = null;
+      }
+      if(chooseList.compareData.prodId) {
+        chooseList.compareData.benfDtlCtt = null;
       }
     }
 

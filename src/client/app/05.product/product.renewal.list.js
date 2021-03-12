@@ -13,9 +13,15 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, netwo
     this._remainGroupData = 0; //요금제 시리즈 API에서 호출 후 시리즈가 5개 이상인지 체크
     this._curRemainGroupData = 0; //요금제 시리즈 API에서 호출 후 화면에 표시 하지 않은 시리즈가 있는지 (그룹은 5개씩 노출)
   
-    this.CODE = 'F01100';
-    this.TYPE = 'plans';
-  
+    this.CODE_PRODUCT = 'F01100';
+    this.CODE_PLAN = 'F01120';
+    this.CODE_5G = 'F01713';
+    this.CODE_LTE = 'F01121';
+    this.CODE_3G = 'F01122';
+    this.CODE_2nd = 'F01124';
+    this.CODE_PPS = 'F01125';
+    this.CODE_THEME = 'F01180';
+
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
     this._historyService = new Tw.HistoryService();
@@ -27,7 +33,7 @@ Tw.ProductRenewalList = function(rootEl, params, svcInfo, series, hasNext, netwo
 
 Tw.ProductRenewalList.prototype = {
     _init: function() {
-      this.themeParam = this._getParameter('theme');
+      this.themeParam = this._getParameter('theme');//테마 코드 얻어옴
       this._listTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE); // 시리즈 별 요금제 핸들바
       this._listDefaultTmpl = Handlebars.compile(Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT); // 단일 상품 요금제 핸들바
       this.curFilter = this._checkFilter(); // 현재 필터 정보 가져옴
@@ -35,15 +41,14 @@ Tw.ProductRenewalList.prototype = {
       this._loadNotice(); // 툴팁 노출 여부
       this._scrollFocus(); //탭 제목이 보이도록 포커스 이동
       this._setInfinityScroll(); // 스크롤 하단으로 이동 시 요금제 리스트(시리즈 자동 로딩)
-      this._checkTheme();// 테마 탭인지 확인
+      this._checkTheme();// 테마 탭인지 확인 후 해당 테마 위치로 스크롤
     },
 
     _bindEvent: function() {
-      $('.filterBtn').click(_.debounce($.proxy(this._handleClickChangeFilters, this), 30));
-      $('.resetBtn').click(_.debounce($.proxy(this._initialFilter, this), 30));
-      $('#themeSelectBtn').click($.proxy(this._goToTheme, this));
-      $('.f-del-list').click($.proxy(this._goDeleteFilter, this));
-      //$('.more-link-area > button').click($.proxy(this._handleLoadMore, this));
+      $('.filterBtn').click(_.debounce($.proxy(this._handleClickChangeFilters, this), 30)); //필터 버튼 클릭 시
+      $('.resetBtn').click(_.debounce($.proxy(this._initialFilter, this), 30)); // 초기화 버튼 클릭 시
+      $('#themeSelectBtn').click($.proxy(this._goToTheme, this)); // 테마 텝 선택 시
+      $('.f-del-list').click($.proxy(this._goDeleteFilter, this));//필터 란에서 필터 X 버튼
     },
 
     _scrollFocus: function() { // 탭 제목 보이도록 상단 스크롤 이동 (퍼블리셔님이 준 스크립트)
@@ -53,14 +58,14 @@ Tw.ProductRenewalList.prototype = {
         var onWidth = $tabWrap.find('.on').width();
         var onPosi = $tabWrap.find('.on').position();
         var onTotalPosi = onPosi.left + onWidth;
-        if(onTotalPosi > tabWidth){
+        if(onTotalPosi > tabWidth) {
           $tabWrap.scrollLeft(onPosi.left - 20);
         }
       }
   
       //스크롤시 헤더 숨김 및 tab 고정
-      $(document).scroll(function(){
-        if($(this).scrollTop() > 51 ){
+      $(document).scroll(function() {
+        if($(this).scrollTop() > 51 ) {
           $('.tod-nmp-top-wrap').addClass('tod-nmp-scroll-fixed');
         } else {
           $('.tod-nmp-top-wrap').removeClass('tod-nmp-scroll-fixed');
@@ -69,7 +74,7 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _loadNotice: function() { // Notice 최초 전체 진입 화면에서만 출력
-      if((this.curFilter == [] || this.curFilter[0] == undefined) && (this.curMobileFilter[0] == undefined || this.curMobileFilter == [])){
+      if((this.curFilter == [] || this.curFilter[0] == undefined) && (this.curMobileFilter[0] == undefined || this.curMobileFilter == [])) {
         if(this.themeParam !== '') {
         } else {
           $('.rn-notice').css('display','block');
@@ -173,11 +178,11 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _getfilter: function(split) {
-      return !(split === 'F01713' || split === 'F01121' || split === 'F01122' || split === 'F01124' || split === 'F01125');
+      return !(split === this.CODE_5G || split === this.CODE_LTE || split === this.CODE_3G || split === this.CODE_2nd || split === this.CODE_PPS);
     },
 
     _getMobilefilter: function(split) {
-      return (split === 'F01713' || split === 'F01121' || split === 'F01122' || split === 'F01124' || split === 'F01125');
+      return (split === this.CODE_5G || split === this.CODE_LTE || split === this.CODE_3G || split === this.CODE_2nd || split === this.CODE_PPS);
     },
 
     _getParameter: function(name) { // name의 get 파라미터를 가져옴
@@ -243,7 +248,7 @@ Tw.ProductRenewalList.prototype = {
       var $target = $(e.currentTarget);
       if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
         this._apiService.requestArray([
-          { command: Tw.API_CMD.BFF_10_0032, params: { idxCtgCd: this.CODE }},
+          { command: Tw.API_CMD.BFF_10_0032, params: { idxCtgCd: this.CODE_PRODUCT }},
           { command: Tw.API_CMD.BFF_10_0033, pathParams: ['F01170']}
         ]).done($.proxy(this._handleLoadFilters, this, $target));
         
@@ -396,7 +401,7 @@ Tw.ProductRenewalList.prototype = {
       var selectedFilter = $('#selectFilter').children("li");
 
       this._params.searchFltIds = '';
-      this._params.idxCtgCd = 'F01100';
+      this._params.idxCtgCd = this.CODE_PRODUCT;
       for( var a = 0 ; a < selectedFilter.length ; a++) {
         this._params.searchFltIds += $(selectedFilter[a]).data("filtersummary");
         if (a !== selectedFilter.length-1) {
@@ -512,19 +517,19 @@ Tw.ProductRenewalList.prototype = {
       var groupItems = _.map(resp.result.groupProdList, $.proxy(this._mapProperDataGroup, this)); //가져온 데이터 파싱
       var separateItems = _.map(resp.result.separateProductList, $.proxy(this._mapProperData, this));//가져온 데이터 파싱
       switch(this._networkInfo[this._curNetworkCount]) { //통신망에 따른 css 클래스 설정
-        case 'F01713':
+        case this.CODE_5G:
           this._seriesClass = '1';
           break;
-        case 'F01121':
+        case this.CODE_LTE:
           this._seriesClass = '2';
           break;
-        case 'F01122':
+        case this.CODE_3G:
           this._seriesClass = '4';
           break;
-        case 'F01124':
+        case this.CODE_2nd:
           this._seriesClass = '3';
           break;
-        case 'F01125':
+        case this.CODE_PPS:
           this._seriesClass = '3';
           break;
         default :
@@ -666,7 +671,7 @@ Tw.ProductRenewalList.prototype = {
           } else if(prodFltId == 'F01165') {
             item.filters[i].fltTagCollege = 'Y';
           }
-          if((this._networkInfo[0] == 'F01713' && prodFltId == 'F01713') || (this._networkInfo[0] == 'F01121' && prodFltId == 'F01121')) {
+          if((this._networkInfo[0] == this.CODE_5G && prodFltId == this.CODE_5G) || (this._networkInfo[0] == this.CODE_LTE && prodFltId == this.CODE_LTE)) {
             if(this._svcInfo){
               if(this._svcInfo.prodId != item.prodId) {
                 item.compareBtn = true;
@@ -687,7 +692,7 @@ Tw.ProductRenewalList.prototype = {
           } else if(prodFltId == 'F01165') {
             item.prodFltList[i].fltTagCollege = 'Y';
           }
-          if((this._networkInfo[0] == 'F01713' && prodFltId == 'F01713') || (this._networkInfo[0] == 'F01121' && prodFltId == 'F01121')) {
+          if((this._networkInfo[0] == this.CODE_5G && prodFltId == this.CODE_5G) || (this._networkInfo[0] == this.CODE_LTE && prodFltId == this.CODE_LTE)) {
             if(this._svcInfo){
               if(this._svcInfo.prodId != item.prodId) {
                 item.compareBtn = true;
@@ -712,15 +717,15 @@ Tw.ProductRenewalList.prototype = {
     _getTabCodeSeries: function(item) { //요금제 tab별 클래스 할당
       if(item.prodFltId) {
         switch (item.prodFltId) {
-          case 'F01713':
+          case this.CODE_5G:
             return 'prod-5g';
-          case 'F01121':
+          case this.CODE_LTE:
             return 'prod-lte';
-          case 'F01122':
+          case this.CODE_3G:
             return 'prod-band';
-          case 'F01124':
+          case this.CODE_2nd:
             return 'prod-2nd';
-          case 'F01125':
+          case this.CODE_PPS:
             return 'prod-2nd';
           default :
             return 'prod-5g';
@@ -768,9 +773,9 @@ Tw.ProductRenewalList.prototype = {
       });
     },
 
-    _escapeHtmlEntities : function(filter) { // 필터 desc 출력 시 받아온 데이터를 html로 출력할 수 있도록 치환
+    _escapeHtmlEntities : function(filter) { // 필터 desc 출력 시 받아온 데이터를 html로 출력할 수 있도록 치환 + 필터에서 데이터, 대상 오른쪽 작은 글씨 제거 (기획 요청 사항)
       var str = ''
-      if(filter.prodFltDesc){
+      if(filter.prodFltDesc) { // 필터 desc 출력 시 받아온 데이터를 html로 출력할 수 있도록 치환
         filter.prodFltDesc = filter.prodFltDesc.replace(/&amp;/g, '&').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/\"/g,' ').replace(/&#034;/g,'\''); 
         for(var i = 0; i < filter.prodFltDesc.length ; i++){
           if(filter.prodFltDesc.charCodeAt(i) != 8220 && filter.prodFltDesc.charCodeAt(i) != 8221) {
@@ -778,6 +783,13 @@ Tw.ProductRenewalList.prototype = {
           }
         }
         filter.prodFltDesc = str;
+      }
+      if(filter.subFilters) {
+        for(var i in filter.subFilters) {
+          if(filter.prodFltId != 'F01130' && filter.prodFltId != 'F01160') {
+            filter.subFilters[i].text = filter.subFilters[i].prodFltNm;
+          }
+        }
       }
       return filter;
     }
