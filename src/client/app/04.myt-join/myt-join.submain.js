@@ -877,3 +877,21 @@ Tw.MytJoinAdvSubMain.prototype._successDrawBanner = function () {
     return false;
   }, this));
 }
+/**
+ * @function
+ * @desc 부가 상품 특정 타겟으로 이동
+ */
+Tw.MytJoinAdvSubMain.prototype._onMovedAddProduct = function (event) {
+  var $target = $(event.currentTarget);
+  var type = $target.data('type');
+  var hash = '';
+  if (type === 'fee') {
+    hash = this._data.type === 2 ? '#tod-cont1' : '#tod-cont2';
+  } else if (type === 'free') {
+    hash = this._data.type === 2 ? '#tod-cont2' : '#tod-cont3';
+  } else if (type === 'opt') {
+    hash = '#tod-cont1';
+  }
+  this._historyService.goLoad('/myt-join/additions' + hash);
+  return false;
+};

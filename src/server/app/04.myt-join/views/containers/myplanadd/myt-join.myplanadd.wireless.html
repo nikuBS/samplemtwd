@@ -188,35 +188,12 @@ _%>
 </div>
 <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); _%>
 <%- include('../../components/javascript.component.html') _%>
-<script type="text/javascript">
-  $(document).ready(function () {
-    var $anchor = $('.tod-sel-top-wrap > .link-cont > a'),
-      $content = $('.tod-js-list-ctrl');
 
-    $anchor.on('click', function (e) {
-      e.preventDefault();
-      $(this).addClass('on').attr('title', '선택').siblings().removeClass('on').attr('title', '');
-      if ($(this).attr('href') === '#tod-all') {
-        $content.show();
-      } else {
-        $content.hide();
-        $($(this).attr('href')).show();
-      }
-      $(window).scrollTop(0);
-    });
-  });
-</script>
 <script>
     $(document).ready(function () {
       new Tw.MyTJoinMyPlanAdd({
         $element: $('#contents')
       });
     });
-    // NOTE: hash가 있는 채로 들어오면, scroll이 발생하게 되는데, 무조건 맨 위로 올려버린다.
-    if (location.hash) {
-      $(window).on('load', function () {
-        $(window).scrollTop(0);
-      });
-    }
 </script>
 <%- include('../../components/end.component.html') _%>
