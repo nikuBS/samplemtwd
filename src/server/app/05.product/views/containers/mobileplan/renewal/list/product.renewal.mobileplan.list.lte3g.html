@@ -52,7 +52,19 @@
                             <!-- // 요금제 row list -->
                         </section>
                     <% } %>
-                    <%- include('../../../../components/renewal/list/product.renewal.mobileplan.separateList.component.html',{}); %>
+                    <% if(plans.separateProductList) { %>
+                        <section class="tod-cont-section">
+                            <% for( let i = 0; i < plans.separateProductList.length; i++ ) { %>
+                                <% let thisPlan = plans.separateProductList[i]; %>
+                                <div class="tod-nmp-prod-group">
+                                    <h3 class="gr-tit"><%= thisPlan.prodSmryDesc %></h3>
+                                    <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <%if(params.idxCtgCd == 'F01121') {%>prod-lte<%} else {%>prod-band<%}%>">
+                                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
+                                    </div>
+                                </div>
+                            <% } %>    
+                        </section>
+                    <% } %>
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
                 </div>
             </div>

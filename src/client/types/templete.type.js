@@ -1483,7 +1483,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
           '<div class="rn-prod-info">' +
               '<ul class="p-etc">' +
                   '{{#if basOfrDataQtyCtt}}' +
-                      '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
+                      '<li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
                               '{{basOfrDataQtyCtt}}' +
                       '</li>' +
                   '{{/if}}' +
@@ -1621,7 +1621,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                     '<div class="rn-prod-info">' +
                         '<ul class="p-etc">' +
                             '{{#if basOfrDataQtyCtt}}' +
-                                '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
+                                '<li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
                                         '{{basOfrDataQtyCtt}}' +
                                 '</li>' +
                             '{{/if}}' +
@@ -1751,7 +1751,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                 '<div class="rn-prod-info">' +
                     '<ul class="p-etc">' +
                         '{{#if basOfrDataQtyCtt}}' +
-                            '<li><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
+                            '<li class="v-data"><i class="p-icon18-data"><span class="blind">데이터</span></i>' +
                                     '{{basOfrDataQtyCtt}}' +
                             '</li>' +
                         '{{/if}}' +

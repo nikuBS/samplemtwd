@@ -84,14 +84,15 @@ Tw.ProductCompare.prototype = {
         chartData: '',
         basOfrDataQtyCtt: {
           value: '',
-          unit: ''
+          unit: '',
+          exist: true,
         },
         speedControl: '',
         basOfrVcallTmsCtt: {
-          value: myPLMData.basOfrVcallTmsTxt,
+          value: Tw.FormatHelper.appendVoiceUnit(myPLMData.basOfrVcallTmsTxt),
           detail: ''
         },
-        basOfrCharCntCtt: myPLMData.basOfrLtrAmtTxt
+        basOfrCharCntCtt: Tw.FormatHelper.appendSMSUnit(myPLMData.basOfrLtrAmtTxt)
       };
 
       if (myPLMData.basFeeTxt && /^[0-9]+$/.test(myPLMData.basFeeTxt)) {
@@ -121,12 +122,14 @@ Tw.ProductCompare.prototype = {
           this.compareData.curPlan.basOfrDataQtyCtt.unit = Tw.DATA_UNIT.MB;
         }
       }
+      if(this.compareData.curPlan.basOfrDataQtyCtt.value == '0' || this.compareData.curPlan.basOfrDataQtyCtt.value == '') {
+        this.compareData.curPlan.basOfrDataQtyCtt.exist = false;
+      }
 
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.curPlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
-      } else {
-        this.compareData.curPlan.speedControl = '속도 제한 없음';
       }
+
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.curPlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
       }
@@ -140,7 +143,8 @@ Tw.ProductCompare.prototype = {
         chartData: '',
         basOfrDataQtyCtt: {
           value: '',
-          unit: ''
+          unit: '',
+          exist: true
         },
         speedControl: '',
         basOfrVcallTmsCtt: {
@@ -177,11 +181,14 @@ Tw.ProductCompare.prototype = {
       }
       this.compareData.comparePlan.chartData = this._transChartData(chartData,this.compareData.comparePlan.basOfrDataQtyCtt.unit);
 
+      if(this.compareData.comparePlan.basOfrDataQtyCtt.value == '0' || this.compareData.comparePlan.basOfrDataQtyCtt.value == '') {
+        this.compareData.comparePlan.basOfrDataQtyCtt.exist = false;
+      }
+
       if(redisData.prodBenfCd_02.length > 0) {
         this.compareData.comparePlan.speedControl = redisData.prodBenfCd_02[0].expsBenfNm;
-      } else {
-        this.compareData.comparePlan.speedControl = '속도 제한 없음';
       }
+
       if(redisData.prodBenfCd_01.length > 0) {
         this.compareData.comparePlan.basOfrVcallTmsCtt.detail = redisData.prodBenfCd_01[0].expsBenfNm;
       }
@@ -214,7 +221,7 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
-      var set = new Set(optionListArr);
+      var set = new Set(optionListArr); // 중복 제거
       optionListArr = Array.from(set);
 
       var dataOption = [];

@@ -17,7 +17,7 @@ Tw.ProductSubmain = function(rootEl, menuId) {
   this._bindEvent();
 
   this._setCoachMark();
-  // this._showRenewal(); // 3월 15일 해제 예정
+  this._showRenewal();
 };
 
 Tw.ProductSubmain.prototype = {
