@@ -126,7 +126,7 @@
 .tod-nmp-item .rn-prod-benefit .p-benefit-choice .title strong {font-weight:bold}
 .tod-nmp-item .rn-prod-benefit ul:empty + .p-benefit-choice,
 .tod-nmp-item .rn-prod-benefit .p-benefit-choice:first-child {margin-top:0}
-.tod-nmp-item .rn-prod-bottom {padding:0 1.25rem 1.25rem;}
+.tod-nmp-item .rn-prod-bottom {position:relative; padding:0 1.25rem 1.25rem;}
 .tod-nmp-item .rn-prod-bottom .rn-btn-right {text-align:right; line-height:1}
 .tod-nmp-item .btn-compare {text-decoration:underline; font-size: 0.75rem; letter-spacing: -0.6px; color: #767778;}
 .tod-nmp-item + .tod-nmp-item {margin-top:1.25rem}
@@ -321,10 +321,12 @@
 .tod-nmp-comp-header {position:relative;}
 .tod-nmp-comp-header .comp-inner {position:relative; width:100%; z-index: 25; padding:10px 0 20px;}
 .tod-nmp-comp-header .comp-inner::after {content: ""; clear: both; display:block;}
-.tod-nmp-comp-header .comp-inner > div {float:left; width:50%; text-align:center; padding:0 1.5625rem; box-sizing: border-box; }
-.tod-nmp-comp-header .comp-inner .tit {display:inline-block; font-size: 0.6875rem; color: #767778;;}
-.tod-nmp-comp-header .comp-inner .name {margin-top:0.5rem; font-size: 1.125rem; font-weight:500; color:#222222; letter-spacing: -1px;}
+.tod-nmp-comp-header .comp-inner > div {float:left; width:50%; text-align:center; box-sizing: border-box; }
+.tod-nmp-comp-header .comp-inner .tit {display:inline-block; font-size: 0.6875rem; color: #767778;}
+.tod-nmp-comp-header .comp-inner .name {margin-top:0.5rem; font-size: 1.125rem; font-weight:500; color:#222222; line-height:1.2; letter-spacing: -1px; word-break: normal;}
 .tod-nmp-comp-header .comp-inner .price {margin-top:0.125rem; font-size:0.875rem; font-weight:bold; color:#222222; letter-spacing: -0.11px;}
+.tod-nmp-comp-header .comp-inner .p-my-plan {padding:0 30px 0 17px;}
+.tod-nmp-comp-header .comp-inner .p-comp-plan {padding:0 17px 0 30px;}
 .tod-nmp-comp-header .comp-inner .p-comp-plan .tit {height:1.25rem; line-height:1.25rem; padding:0 0.5625rem; border-radius: 10px; border: solid 1px #f76252; color: #f76252; box-sizing: border-box;}
 .tod-nmp-comp-header .comp-inner::before {position:absolute; content:"VS"; left:50%; top:50%; margin:-25px 0 0 -25px; width:3.125rem; height:3.125rem; font-weight: bold; line-height:3.125rem; text-align:center; font-size: 0.875rem; color: #f76252; border-radius: 100%; box-shadow: -4px -6px 10px 0 #ffffff, 4px 7px 10px 0 #dde0e2, -2px -2px 2px 0 #ffffff;}
 
@@ -430,12 +432,14 @@
 .tod-nmp-comp-info .graph-cont .p-graph.select .shapes .txt {left:0}
 
 .tod-nmp-comp-info .tod-nmp-btn-wrap {margin-top:2.5rem}
-
+@media screen and (max-width: 320px) {
+  .tod-nmp-comp-info .tod-nmp-btn-wrap .tod-nmp-btn46 {font-size:0.75rem}
+}
 
 
 /*********************** 상품 서브메인 ***********************/
 
-/*
+/*z
 .pro-cont: 컨텐츠가 있는 큰 뭉치,.product-sec : 큰 단락,  pro-article: 소단락
 
 */

@@ -41,7 +41,7 @@ Tw.ProductCompare.prototype = {
    * @desc 통신망 정보 parsing
    * @return {string}
    */
-    _parseNetworkInfo: function(networkInfo) {
+    _parseNetworkInfo: function(networkInfo) { //네트워크 정보 데이터 파싱
       switch(networkInfo) {
         case 'F01713' :
           return '5G';
@@ -76,7 +76,7 @@ Tw.ProductCompare.prototype = {
    * @desc 각 요금제 API 통해 비교 값 세팅
    * @return {string} (임시) 
    */
-    _setCompareDataCur: function(myPLMData, redisData) {
+    _setCompareDataCur: function(myPLMData, redisData) { //현재 요금제 데이터 셋 생성
       this.compareData.curPlan = {
         prodId: myPLMData.linkProdId,
         prodNm: myPLMData.prodNm,
@@ -135,7 +135,7 @@ Tw.ProductCompare.prototype = {
       }
     },
 
-    _setCompareDataCompare: function($target, redisData) {
+    _setCompareDataCompare: function($target, redisData) { // 비교할 요금제 데이터 셋
       this.compareData.comparePlan = {
         prodId: $target.data('prod-id'),
         prodNm: $target.data('prod-nm'),
@@ -195,7 +195,7 @@ Tw.ProductCompare.prototype = {
 
     },
 
-    _getDataAddtionOption: function(curRedisData,compareRedisData) {
+    _getDataAddtionOption: function(curRedisData,compareRedisData) { // 데이터 추가 옵션 리스트 생성
       var _this = this;
       if(!curRedisData.prodBenfCd_03 && !compareRedisData.prodBenfCd_03) {
         return null;
@@ -280,13 +280,13 @@ Tw.ProductCompare.prototype = {
       return 4;
     },
 
-    _getAdditionalBenf: function(curRedisData, compareRedisData) {
+    _getAdditionalBenf: function(curRedisData, compareRedisData) { // 추가혜택 리스트 생성 (개별 , 택 1 리스트 각각 구분)
       if(!curRedisData.prodBenfCd_04 && !compareRedisData.prodBenfCd_04) {
         return null;
       }
       var choDataArr = [];
       var sepDataArr = [];
-      for(var i in curRedisData.prodBenfCd_04) {
+      for(var i in curRedisData.prodBenfCd_04) { // 현재 데이터에서 리스트 생성
         if(curRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
           choDataArr.push(curRedisData.prodBenfCd_04[i].prodBenfTitCd);
         } else if(curRedisData.prodBenfCd_04[i].prodBenfTypCd == '01') {
@@ -296,7 +296,7 @@ Tw.ProductCompare.prototype = {
 
       var choOptionListArr = JSON.parse(JSON.stringify(choDataArr));
       var sepOptionListArr = JSON.parse(JSON.stringify(sepDataArr));
-      for(var i in compareRedisData.prodBenfCd_04) {
+      for(var i in compareRedisData.prodBenfCd_04) { // 리스트에 비교할 데이터 리스트 추가
         if(choDataArr.length == 0) {
           if(compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
             choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
@@ -335,7 +335,7 @@ Tw.ProductCompare.prototype = {
 
       var finishRoof = '';
       var overlab;
-      do {
+      do { // 중복 제거
         overlab = 'N';
         if(choOptionListArr.length == 0 || sepOptionListArr.length == 0) {
           finishRoof = 'Y';
@@ -356,7 +356,7 @@ Tw.ProductCompare.prototype = {
         }
       } while(finishRoof == '');
 
-      var benfData = {sepList :[],chooseList:[]};
+      var benfData = {sepList :[],chooseList:[]}; // 개별 / 택 1 리스트 각각의 자리에 삽입
       for(var i in sepOptionListArr) {
         for(var j in curRedisData.prodBenfCd_04) {
           if(sepOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
@@ -443,7 +443,7 @@ Tw.ProductCompare.prototype = {
             benfData.noCompareChooseList = true;
           }
         }
-        for(var i in benfData.chooseList) {
+        for(var i in benfData.chooseList) { // 함께 쓰기, 멤버쉽은 benfDtlCtt 예외 처리 (기획 요청 사항)
           if(benfData.chooseList[i].curSepData.prodBenfTitCd) {
             if(benfData.chooseList[i].curSepData.prodBenfTitCd == '06' || benfData.chooseList[i].curSepData.prodBenfTitCd == '08') {
               benfData.curSepDataFW = true;
@@ -451,7 +451,7 @@ Tw.ProductCompare.prototype = {
             }
 
           }
-          if(benfData.chooseList[i].compareSepData.prodBenfTitCd) {
+          if(benfData.chooseList[i].compareSepData.prodBenfTitCd) { // 함께 쓰기, 멤버쉽은 benfDtlCtt 예외 처리 (기획 요청 사항)
             if(benfData.chooseList[i].compareSepData.prodBenfTitCd == '06' || benfData.chooseList[i].compareSepData.prodBenfTitCd == '08') {
               benfData.compareSepDataFW = true;
               benfData.chooseList[i].compareSepData.benfDtlCtt = null;
@@ -459,7 +459,7 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
-      if(benfData.chooseList) {
+      if(benfData.chooseList) { // 순서 정렬
         benfData.chooseList.sort(function(preBenfData,postBenfData){
           var preBenfDataSeq = Number(preBenfData.benfList.expsSeq);
           var postBenfDataSeq = Number(postBenfData.benfList.expsSeq);
@@ -475,7 +475,7 @@ Tw.ProductCompare.prototype = {
           return 0;
         });
       }
-      if(benfData.seqList) {
+      if(benfData.seqList) { // 순서 정렬
         benfData.seqList.sort(function(preBenfData,postBenfData){
           var preBenfDataSeq = Number(preBenfData.benfList.expsSeq);
           var postBenfDataSeq = Number(postBenfData.benfList.expsSeq);
@@ -540,22 +540,6 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
-    },
-
-    /**
-   * @desc 액션시트 출력 시 이용불가 혜택 목록
-   * @return {object}
-   */
-
-    _checkConfirmActionSheet: function(compareData) {
-      var cur = compareData.curPlan;
-      var com = compareData.comparePlan;
-      if(cur.basFeeAmt >= com.basFeeAmt) {
-        return {};
-      }
-      
-
-      return {};
     },
 
    /**
@@ -690,14 +674,14 @@ Tw.ProductCompare.prototype = {
     },
 
     _handleCloseConfirmPopup: function() {
-  },
+    },
 
      /**
    * @desc 요금제 변경 확인 ActionSheet 확인 버튼 선택 시
    * @return {void} 
    */
     _confirmActionSheet: function() {
-        this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CAG');
+        this._sendTracking(this._svcInfo.prodId, this.compareProdId, 'CAG'); // 트래킹 코드
         this._historyService.replaceURL('/product/callplan?prod_id=' + this.compareData.comparePlan.prodId);
     },
 
@@ -763,7 +747,7 @@ Tw.ProductCompare.prototype = {
 
 
   /**
-   * @desc 손실 혜택
+   * @desc 내 요금제 혜택 목록 가져오기 (actionSheet 표시 용)
    * @return {object} (임시) 
    */
 
@@ -909,7 +893,7 @@ Tw.ProductCompare.prototype = {
     return addtionalBenf;
   },
 
-  _parseSepList: function(sepList) {
+  _parseSepList: function(sepList) { //추가 혜택 중 개별 혜택 데이터 파싱
     if (sepList.length > 0) {
       return null;
     }
@@ -953,15 +937,15 @@ Tw.ProductCompare.prototype = {
     return sepList;
   },
 
-  _parseChooseList: function(chooseList) {
+  _parseChooseList: function(chooseList) { //추가 혜택 중 택 1 혜택 데이터 파싱
     if (chooseList.length > 0) {
       return null;
     }
-    if(chooseList.benfList) {
+    if(chooseList.benfList) { // list 하드코딩
       chooseList.benfList.titleText = this._getTitleText(chooseList.benfList.prodBenfTitCd);
     }
     if(chooseList.benfList.prodBenfTitCd == '05') {
-      if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) {
+      if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) { // t 멤버쉽 예외처리
         chooseList.curSepData.prodId = 'Y';
         chooseList.curSepData.expsBenfNm = 'T 멤버쉽';
         chooseList.curSepData.benfDtlCtt = '기존 등급 유지';
@@ -972,11 +956,19 @@ Tw.ProductCompare.prototype = {
         chooseList.compareSepData.benfDtlCtt = '기존 등급 유지';
       }
     }
+    if(chooseList.benfList.prodBenfTitCd == '06' || chooseList.benfList.prodBenfTitCd == '08') { // 음악 / 영상 하드코딩 '무료' 제거
+      if(chooseList.curData.prodId) {
+        chooseList.curData.benfDtlCtt = null;
+      }
+      if(chooseList.compareData.prodId) {
+        chooseList.compareData.benfDtlCtt = null;
+      }
+    }
 
     return chooseList;
   },
 
-  _getTitleText: function(prodBenfTitCd) {
+  _getTitleText: function(prodBenfTitCd) { //레디스 데이터에서 코드를 해당 타이틀로 치환 (하드코딩 기획에서 요청)
     var titleText = '';
     switch(prodBenfTitCd) {
       case '01':

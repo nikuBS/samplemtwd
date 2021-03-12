@@ -6,7 +6,7 @@
         <div class="box-group fe-title" data-title="{{title}}">
             <dl class="sel-bill small-sum"><!-- disabled -->
                 <dt class="term">{{titleName}}</dt>
-                <dd class="charge">{{tmthUseAmt}}<span class="unit">원</span></dd>
+                <dd class="charge"><span class="fe-use-amount" id="{{tmthUseAmtOri}}">{{tmthUseAmt}}</span><span class="unit">원</span></dd>
             </dl>
             <ul class="report-list item-no-border small-sum">
                 {{#unless isContents}}
@@ -47,7 +47,7 @@
                 <li class="report-item"><!-- disabled -->
                     <dl class="report-define d-wrap">
                         <dt class="report-tit">남은 한도 금액</dt>
-                        <dd class="report-cont">{{remainUseLimit}}원</dd>
+                        <dd class="report-cont"><span class="fe-remain-amount" id="{{remainUseLimitOri}}">{{remainUseLimit}}</span>원</dd>
                     </dl>
                 </li>
             </ul>
