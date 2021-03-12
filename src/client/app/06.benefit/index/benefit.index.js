@@ -673,7 +673,9 @@ Tw.BenefitIndex.prototype = {
       data.benefitDiscount += this._benefitInfo.bill.kdbthigh5 ? 1 : 0;
     }
     // 결합할인
-    if (this._benefitInfo.combination && this._benefitInfo.combination.prodNm.trim().length > 0) {
+    // 결합합인 조회 결과에 result 는 있지만 result.prodNm 요소가 없는 케이스로 인해 오류 발생하여 보강
+    if (this._benefitInfo.combination && this._benefitInfo.combination.prodNm &&
+      this._benefitInfo.combination.prodNm.trim().length > 0) {
       data.benefitDiscount += Number(this._benefitInfo.combination.etcCnt) + 1;
     }
     // 장기가입 요금
