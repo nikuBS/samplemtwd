@@ -36636,6 +36636,7 @@ body.apphome .section-box {
 .tod-sel-top-wrap .link-cont {overflow-x: auto; white-space: nowrap}
 
 /* 210208 [OP002-13114] [요금팀] 요금제 선택약정 반영금액 표기 */
+.cont-box.gaps-style03 .tod-choice-txt{display:block; padding: 0rem 1rem 0.625rem; text-align:right; font-size:0.75rem; color:#666;}
 .extraservice-list .tod-choice-money{text-align:right; margin:0.5rem 0 0.4375rem 0; font-size:0.75rem; color:#666;}
 .productinfoscroll-box .tod-choice-txt{display:block; padding: 0rem 1rem 0.625rem; text-align:right; font-size:0.75rem; color:#666;}
 .productinfoscroll-box .product-info.tod-choice{height:7.5rem}
