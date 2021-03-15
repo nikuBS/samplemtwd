@@ -11,14 +11,6 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuI
   this._line = JSON.parse(line) || {'deviceCode': 'F', 'quickFilterCode': 'F01713'}; // 기본값 세팅
   this._myAge = myAge;
   this._cdn = cdn;
-
-  console.log('-------------------');
-  console.log('소팅방법: ', sectionSort);
-  console.log('회선라인: ', line);
-  console.log('W: 3G, L: LTE, F: 5G, E: 2nd device, P: PPS');
-  console.log('cdn:: ', this._cdn);
-  console.log('env cdn:: ', Tw.Environment.cdn);
-  console.log('-------------------');
   
   // 공통 모듈 선언
   this._popupService = Tw.Popup;
@@ -154,24 +146,6 @@ Tw.ProductRenewalSubmain.prototype = {
     return tosBanner.code === Tw.API_CODE.CODE_00 && (tosBanner.result.bltnYn === 'N' || tosBanner.result.tosLnkgYn === 'Y');
   },
 
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
    * @desc Redis Banner 데이터 조회
    */
@@ -195,17 +169,7 @@ Tw.ProductRenewalSubmain.prototype = {
     } else { // redis 결과 값 코드가 '00'(정상 처리)가 아니라면 모든 filter의 html 객체를 삭제.
       this._clearAllFilters();
     }
-
-    
   },
-
-
-  
-
-  
-
-
-
 
   /**
    * 퀵 필터 Redis 값을 parsing
@@ -240,11 +204,6 @@ Tw.ProductRenewalSubmain.prototype = {
       quickFilterParseList = _.sortBy(quickFilterParseList, 'bnnrExpsSeq');
     }
     
-    console.log("=====");
-    console.log('퀵 필터에 보여지는 항목은 이거입니다. ', quickFilterParseList);
-    console.log("=====");
-
-
     this._drawQuickFilterBanner(quickFilterParseList, this); // 퀵 필터 데이터를 draw
   },
 
@@ -294,12 +253,7 @@ Tw.ProductRenewalSubmain.prototype = {
         }
       }
     });
-    
   }, 
-
-
-
-
 
   /**
    * 테마 배너 Redis 값을 parsing
@@ -362,11 +316,6 @@ Tw.ProductRenewalSubmain.prototype = {
       return arr;
     }, []);
 
-    console.log("=====");
-    console.log('저의 만 나이는 ' + age + '세 입니다..');
-    console.log('배너형 테마에 보여지는 항목은 이거입니다. ', themeBannerParseList);
-    console.log("=====");
-
     this._drawThemeBanner(themeMainTitle, themeBannerParseList, this); // 배너형 테마를 draw
   },
 
@@ -412,10 +361,6 @@ Tw.ProductRenewalSubmain.prototype = {
     });
   },
 
-
-
-
-
   /**
    * 프로모션 Redis 값을 parsing
    * @param {*} redisData 
@@ -449,10 +394,6 @@ Tw.ProductRenewalSubmain.prototype = {
       return;
     } 
 
-    console.log("=====");
-    console.log('프로모션에 보여지는 항목은 이거입니다. ', promotionParseItem);
-    console.log("=====");
-
     var $promotion = this.$container.find('section[data-sort="PROMOTION_THEME"]');
     var promotionHandle = Handlebars.compile(Tw.RENEWAL_PRODUCT_SUBMAIN_PROMOTION_BANNER);
     var html = promotionHandle({
@@ -480,13 +421,6 @@ Tw.ProductRenewalSubmain.prototype = {
 
   },
 
-
-
-
-
-
-
-
   /**
    * 퀵 필터 데이터 조회 실패 시
    * @param {*} error 
@@ -503,24 +437,6 @@ Tw.ProductRenewalSubmain.prototype = {
     this.$container.find('section[data-sort="THEME_BANNER"]').addClass('none');
     this.$container.find('section[data-sort="PROMOTION_THEME"]').addClass('none');
   }, 
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   /**
    * @desc 섹션 데이터(퀵필터, 테마 리스트, 테마 배너)데이터를 정렬 
@@ -818,13 +734,6 @@ Tw.ProductRenewalSubmain.prototype = {
   _getBannerCode: function(uri) {
     return this.TOS_BANNER_CODES[uri];
   },
-
-
-
-
-
-
-
 
   /**
    * 팝업 중 slide 로 팝업창을 닫을 때
