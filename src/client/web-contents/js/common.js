@@ -53,6 +53,7 @@ $(document).on('ready', function () {
             }
         });
     }
+    $('hr').attr('aria-hidden', 'true'); // 210315 - 접근성용 스크립트 추가
 });
 
 $(window).on('resize', function (e, datas) {

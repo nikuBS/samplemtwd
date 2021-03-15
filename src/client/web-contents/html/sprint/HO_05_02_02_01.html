@@ -45,7 +45,7 @@
             <!-- 191001 [OP002-4009] 수정01 -->
             <div class="sch-form tod-sch-form">
                 <!-- <form action="#" role="search"> -->
-                    <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+                    <div class="searchbox-close"><button class="close-area"><span class="tod-blind">이전</span></button></div>
                     <span class="inputbox">
                         <span class="input">
                             <input type="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="">
@@ -59,9 +59,15 @@
         </div>
         
         <!-- #contents -->
-        <!-- 191127 [OP002-4532] 수정 (전체 UI개선) -->
         <div id="contents" class="container-wrap">
             <div class="search-content">
+                <!-- 정타키워드 안내 영역 -->
+                <div class="cont-box nogaps">
+                    <div class="tod-typing-error">
+                        <span class="te_txt"><strong class="tod-txcolor7">티끼리</strong>에 대한 검색결과입니다.</span> <a href="#" role="button" class="bt-link-tx underline small">티기리 검색하기</a>
+                    </div>
+                </div>
+                
                 <!-- 검색 결과 없음 -->
                 <div class="cont-box nogaps-hoz">
                     <div class="tod-search-feedback noresult">
@@ -71,12 +77,44 @@
                 </div>
                 <!-- //검색 결과 없음 -->
     
-                <hr class="cont-sp type1" aria-hidden="true">
-                
                 <!-- 검색 개선 의견 보내기 -->
                 <div class="cont-box nogaps-hoz">
                     <div class="tod-search-feedback">
-                        <p class="text-ti srch">원하는 검색결과를 찾지 못하셨나요?</p>
+                        <!-- 210305 [OP002-13461] 수정_01 -->
+                        <p class="text-ti srch mb24">T world 검색 서비스는 어떠셨나요?</p>
+                        <div class="poll-box tod-poll-box">
+                            <div class="tod-poll-comp radio">
+                                <div class="tod-poll-comp-inner">
+                                    <ul class="select-list fieldset-panel">
+                                        <li>
+                                            <label for="satisfaction1">
+                                                <span class="custom-form">
+                                                    <input type="radio" id="satisfaction1" name="satisfaction"><span class="r-type1"></span>
+                                                </span>
+                                                <span class="custom-txt">만족해요</span>    
+                                            </label>   
+                                        </li>
+                                        <li>
+                                            <label for="satisfaction2">
+                                                <span class="custom-form">
+                                                    <input type="radio" id="satisfaction2" name="satisfaction"><span class="r-type1"></span>
+                                                </span>
+                                                <span class="custom-txt">보통이에요</span>    
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="satisfaction3">
+                                                <span class="custom-form">
+                                                    <input type="radio" id="satisfaction3" name="satisfaction"><span class="r-type1"></span>
+                                                </span>
+                                                <span class="custom-txt">불편해요</span>    
+                                            </label>  
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //210305 [OP002-13461] 수정_01 -->
                         <ul class="bt-slice item-two mt10">
                             <li><button type="button" class="btn-round2 btn-style3">검색 개선 의견 보내기</button></li>
                         </ul>
@@ -129,7 +167,6 @@
                 <!-- //인기 검색어 -->
             </div>
         </div>
-        <!-- //191127 [OP002-4532] 수정 (전체 UI개선) -->
         <!--// #contents -->
     </div>
 </body>
