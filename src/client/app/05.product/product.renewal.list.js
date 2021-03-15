@@ -92,7 +92,6 @@ Tw.ProductRenewalList.prototype = {
 
     _goToTheme: function(e) { // 테마요금제 진입 시 필터가 있으면 컨펌 창 띄움
       this.destinationUrl = '/product/renewal/mobileplan/list?theme=all';
-
       if((this.curFilter[0] !== undefined && this.curFilter[0] !== '' && this.curFilter[0] !== null)) {
         this._loadFilterConfirmPopup(e);
       } else {
@@ -158,7 +157,7 @@ Tw.ProductRenewalList.prototype = {
       
     _checkFilter: function() { //url상의 필터 중에 기기 관련 필터 제거
       var urlFilterArr = this._getParameter('filters').split(',');
-      var curfilterArr = urlFilterArr.filter(this._getfilter);
+      var curfilterArr = urlFilterArr.filter($.proxy(this._getfilter,this));
       if(curfilterArr[0] !== '' && curfilterArr !== []) {
         return curfilterArr;
       } else {
@@ -168,7 +167,7 @@ Tw.ProductRenewalList.prototype = {
 
     _checkMobilefilter: function() { //url상의 필터 중 기기 관련 필터만 얻어옴
       var urlFilterArr = this._getParameter('filters').split(',');
-      var curMobilefilterArr = urlFilterArr.filter(this._getMobilefilter);
+      var curMobilefilterArr = urlFilterArr.filter($.proxy(this._getMobilefilter,this));
       if(curMobilefilterArr[0] !== '' && curMobilefilterArr !== []) {
         return curMobilefilterArr;
       } else {
@@ -178,7 +177,7 @@ Tw.ProductRenewalList.prototype = {
     },
 
     _getfilter: function(split) {
-      return !(split === this.CODE_5G || split === this.CODE_LTE || split === this.CODE_3G || split === this.CODE_2nd || split === this.CODE_PPS);
+      return !(split == this.CODE_5G || split == this.CODE_LTE || split == this.CODE_3G || split == this.CODE_2nd || split == this.CODE_PPS);
     },
 
     _getMobilefilter: function(split) {
@@ -423,7 +422,6 @@ Tw.ProductRenewalList.prototype = {
         Tw.Error(resp.code, resp.msg).pop();
         return;
       }
-      console.log('확인',resp);
 
       if (resp.result.products.length === 0) {
         this._popupService.open({
