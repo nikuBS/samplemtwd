@@ -784,7 +784,7 @@ Tw.ProductRenewalList.prototype = {
       }
       if(filter.subFilters) {
         for(var i in filter.subFilters) {
-          if(filter.prodFltId != 'F01130' && filter.prodFltId != 'F01160') {
+          if(filter.prodFltId != 'F01140' && filter.prodFltId != 'F01150') {
             filter.subFilters[i].text = filter.subFilters[i].prodFltNm;
           }
         }

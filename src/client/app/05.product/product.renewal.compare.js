@@ -85,7 +85,7 @@ Tw.ProductCompare.prototype = {
         basOfrDataQtyCtt: {
           value: '',
           unit: '',
-          exist: true,
+          exist: true
         },
         speedControl: '',
         basOfrVcallTmsCtt: {

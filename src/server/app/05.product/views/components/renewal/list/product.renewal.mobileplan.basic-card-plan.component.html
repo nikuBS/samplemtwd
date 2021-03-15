@@ -173,7 +173,7 @@
         <% if (svcInfo.prodId != thisPlan.prodId) { %>
             <div class="rn-prod-bottom">
                 <div class="rn-btn-right">
-                    <a class="btn-compare" data-prod-id="<%= thisPlan.prodId %>" data-prod-nm="<%= thisPlan.prodNm %>"
+                    <button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="<%= thisPlan.prodId %>" data-prod-nm="<%= thisPlan.prodNm %>"
                         data-prod-fee="
                         <% if(thisPlan.basFeeAmt.value !== '기본제공' && thisPlan.basFeeAmt.value !== '상세참조' && thisPlan.basFeeAmt.value !== '제공안함') { %>
                             <%= thisPlan.basFeeAmt.value %>원
@@ -204,7 +204,7 @@
                                 <%= thisPlan.basOfrDataQtyCtt.value.data+thisPlan.basOfrDataQtyCtt.value.unit %>
                             <% } %>
                         <% } %>"
-                        >내 요금제와 비교</a>
+                        >내 요금제와 비교</button>
                 </div>
             </div>
         <% } %>
