@@ -320,21 +320,17 @@
                 </div>
             </a>
         </div>
-        <div class="card tips">
-            <h2>꼭 확인해 주세요</h2>
-            <h3>서비스 이용 조건 
-                <button type="button" class="tip" data-tip="TC000056">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 : span을 button으로 변경 -->
-            </h3>
-            <h3>
-                요금 청구 및 이용 안내 
-                <button type="button" class="tip" data-tip="TC000057">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 : span을 button으로 변경 -->
-            </h3>
-            <h3>
-                유의 사항
-                <button type="button" class="tip" data-tip="TC000058">TIP</button> <!-- //202011 - 웹접근성 수정건 적용 : span을 button으로 변경 -->
-            </h3> 
-        </div>
-        <div class="h36"></div>
+        <!-- 210315 수정 [OP002-13743] -->
+        <hr class="cont-sp type1" aria-hidden="true">
+        <div class="cont-box rm-cont-tooltip">
+			<h3 class="tx-bold">꼭 확인해 주세요</h3>
+			<ul class="noti-list02">
+			<li><button aria-haspopup="true" id="TC000056" class="tip-view-btn fe-tip">서비스 이용 조건 <span class="tip-view">TIP</span></button></li>
+			<li><button aria-haspopup="true" id="TC000057" class="tip-view-btn fe-tip">요금 청구 및 이용 안내 <span class="tip-view">TIP</span></button></li>
+			<li><button aria-haspopup="true" id="TC000058" class="tip-view-btn fe-tip">유의 사항 <span class="tip-view">TIP</span></button></li>
+			</ul>
+		</div>
+		<!-- // 210315 수정 [OP002-13743] -->
     </div>
     <div id="gnb" class="gnb-wrap on">
         <div class="q-wrap">
