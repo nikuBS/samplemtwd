@@ -8,7 +8,8 @@
                         <% if(series.seriesCode == curFilter.prodFltId) { %>
                             class="on"
                         <%}%>>
-                            <a href="/product/renewal/mobileplan/list?filters=<%= curFilter.prodFltId %><%= filterList.filterList %>" class="tapSelectButton"><%= curFilter.prodFltNm %></a></li>
+                            <a href="/product/renewal/mobileplan/list?filters=<%= curFilter.prodFltId %><%= filterList.filterList %>" 
+                                data-xt_eid="<%= curFilter.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC" class="tapSelectButton" ><%= curFilter.prodFltNm %></a></li>
                     <% } %>
                 <% } %>
                 <li<%= series.theme %>><a id="themeSelectBtn" class="tapSelectButton" data-xt_eid="CMMA_A4_B84_C1215-6" data-xt_csid="NO" data-xt_action="BC">테마</a></li>
