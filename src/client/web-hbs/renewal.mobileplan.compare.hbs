@@ -11,13 +11,17 @@
             <div class="comp-inner">
                 <div class="p-my-plan">
                     <p class="tit">나의 요금제</p>
-                    <p class="name">{{data.curPlan.prodNm}}</p>
-                    <p class="price">{{data.curPlan.basFeeAmt}}</p>
+                    <a href="/product/callplan?prod_id={{data.curPlan.prodId}}" class="plan-link">
+                        <p class="name">{{data.curPlan.prodNm}}</p>
+                        <p class="price">{{data.curPlan.basFeeAmt}}</p>
+                    </a>
                 </div>
                 <div class="p-comp-plan">
                     <p class="tit">비교 요금제</p>
-                    <p class="name">{{data.comparePlan.prodNm}}</p>
-                    <p class="price">{{data.comparePlan.basFeeAmt}}</p>
+                    <a href="/product/callplan?prod_id={{data.comparePlan.prodId}}" class="plan-link">
+                        <p class="name">{{data.comparePlan.prodNm}}</p>
+                        <p class="price">{{data.comparePlan.basFeeAmt}}</p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -325,7 +329,7 @@
                 </div>
             {{/if}}
             <div class="tod-nmp-btn-wrap">
-                <button type="button" class="tod-nmp-btn46 arr changePlan" data-prod-id="{{data.comparePlan.prodId}}">{{data.comparePlan.prodNm}} (으)로 요금제 변경하기</button>
+                <button type="button" class="tod-nmp-btn46 arr changePlan" data-prod-id="{{data.comparePlan.prodId}}"><span class="nmp-fc-orange">{{data.comparePlan.prodNm}}</span> (으)로 요금제 변경하기</button>
             </div>
         </section>
     </div>

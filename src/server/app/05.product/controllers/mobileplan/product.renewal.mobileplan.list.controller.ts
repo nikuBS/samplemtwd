@@ -630,7 +630,7 @@ export default class RenewProductPlans extends TwViewController {
     ).map(([isExistsPLMData, isExistsRedisData]) => {
 
       // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지에 대해 체크한 값
-      if ( isExistsPLMData || isExistsRedisData ) { 
+      if ( isExistsPLMData && isExistsRedisData ) { 
         return isExistsPLMData;
       }
 
