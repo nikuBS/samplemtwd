@@ -278,3 +278,8 @@ Tw.MyTJoinInfoDiscountAdv.prototype._openDaysPopup = function(event) {
   }
   return false;
 };
+Tw.MyTJoinInfoDiscountAdv.prototype._detailListEvt = function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  Tw.MyTJoinInfoDiscount.prototype._detailListEvt.call(this, event);
+}
