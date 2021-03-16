@@ -734,6 +734,14 @@ Tw.ALERT_MSG_MYT_FARE = {
     MSG:  '<li>납부방법: {0}</li>' +
           '<li>예금주: {1}</li>' +
           '<li>계좌정보: {2}</li>'
+  },
+  DUPLICATE_AUTO_PAYMENT: {
+    REQ_EDIT: '신청/변경이',
+    CANCEL: '해지가',
+    ALERT: {
+      TITLE: '알림',
+      MSG: '자동납부 {0} 중복으로 요청되었습니다.</br> 다시 시도해 주시기 바랍니다.'
+    }
   }
 };
 
