@@ -10021,6 +10021,7 @@ button:focus span {
 
 /* Btype - SKT-챗봇 버튼형  */
 .tod-combot-wrap{z-index: 29; position:fixed; bottom:3.75rem; right: 1rem;}
+.tod-combot-wrap.main-combot{bottom:1rem;} /* 210317 [OP002-13778]  추가 */
 .tod-combot-btn{
     position: relative;
     border-radius: 0.625rem; box-sizing: border-box; border-bottom-right-radius: 0;
