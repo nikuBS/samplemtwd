@@ -330,25 +330,31 @@ export default class RenewProduct extends TwViewController {
       return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
         if (resp.code === API_CODE.CODE_00) {
 
-          // 2021. 03. 16 BFF_05_0220의 BFF 중 prodFltId의 필드값으로 사용해달라는 요청이 있었음.
-          if ( resp.result.prodFltId ) {
-            if ( Object.keys(SUB_DEVICE_CODES).indexOf( resp.result.prodFltId ) > -1 ) {
-              return SUB_DEVICE_CODES[resp.result.prodFltId];
+          try {
+            // 2021. 03. 16 BFF_05_0220의 BFF 중 prodFltId의 필드값으로 사용해달라는 요청이 있었음.
+            if ( resp.result.prodFltId ) {
+              if ( Object.keys(SUB_DEVICE_CODES).indexOf( resp.result.prodFltId ) > -1 ) {
+                return SUB_DEVICE_CODES[resp.result.prodFltId];
+              }
             }
-          }
 
-          // 단말기 방식 코드 검사 ( 2021. 03. 16. BE 단말기 코드 검사 방식 변경요청으로 prodFltId의의 로직으로 변경 )
-          // if ( Object.keys(DEVICE_CODES).indexOf( resp.result.eqpMthdCd ) > -1 ) {
-          //   return DEVICE_CODES[resp.result.eqpMthdCd];
-          // }
+            // 단말기 방식 코드 검사 ( 2021. 03. 16. BE 단말기 코드 검사 방식 변경요청으로 prodFltId의의 로직으로 변경 )
+            // if ( Object.keys(DEVICE_CODES).indexOf( resp.result.eqpMthdCd ) > -1 ) {
+            //   return DEVICE_CODES[resp.result.eqpMthdCd];
+            // }
 
-          // 중 분류 코드가 휴대폰이 아닌경우는 모두 'PPS/2nd Device' 장비
-          if ( resp.result.beqpMclEqpClSysCd !== '0101000' ) {
-            return DEVICE_CODES.E;
+            // 중 분류 코드가 휴대폰이 아닌경우는 모두 '2nd Device' 장비
+            if ( resp.result.beqpMclEqpClSysCd !== '0101000' ) {
+              return DEVICE_CODES.E;
+            }
+
+            return DEVICE_CODES.W; // 코드에 해당되는 데이터가 없으면 W로 세팅
+          } catch (e) {
+            return DEVICE_CODES.W; // 코드에 해당되는 데이터가 없으면 W로 세팅
           }
         }
         
-        return DEVICE_CODES.F; // 코드에 해당되는 데이터가 없으면 F로 세팅
+        return DEVICE_CODES.W; // CODE 값이 00이 아니라면 W로 세팅
       });
     } 
 
