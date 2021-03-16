@@ -9,9 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import { 
-  SVC_CDGROUP, SVC_ATTR_E, LOGIN_TYPE
-} from '../../../../types/bff.type';
+import { SVC_CDGROUP } from '../../../../types/bff.type';
 import {
   DATA_UNIT, MYT_FEEPLAN_BENEFIT
 } from '../../../../types/string.type';
@@ -24,13 +22,6 @@ import { flatMap } from 'rxjs/operators';
 
 // section sort 정보가 없을 때 기본값을 아래로 세팅하기 위해 (기본값: 테마배너, 테마리스트 순)
 const DEFAULT_SORT_SECTION = 'THEME_LIST,THEME_BANNER';
-
-// 부가서비스 타입
-enum ADDITION_TYPE {
-  DEFAULT_LINK = 'DEFAULT_LINK', // 기본 링크를 제공할 때
-  CUSTOM_LINK = 'CUSTOM_LINK', // 기본 링크 이외의 링크를 제공하고 싶을 때
-  ACTION_SHEET = 'ACTION_SHEET' // 액션시트로 출력하고 싶을 때
-}
 
 // 단말기 방식 코드 (상품 리스트 필터값을 전달할 때 사용) 
 enum DEVICE_FILTER_CODES {
@@ -75,7 +66,7 @@ enum FILTER_STYLE_CODES {
 enum FILTER_FONT_STYLE_CODES {
   'F01122' = 'prod-band', // 3G (3G는 Band 임)
   'F01121' = 'prod-lte', // LTE
-  'F01713' = 'prod-5g"', // 5G
+  'F01713' = 'prod-5g', // 5G
   'F01124' = 'prod-2nd', // 2ndDevice 
 }
 
@@ -95,94 +86,6 @@ enum LIST_THEME_CODE {
   'TAG0000214' = 'TAG0000214', // 혜택 강조형
 }
 
- // 손실보전 부가서비스 정보
-const ADDITIONS_LIST = [
-  {
-    'additionType' : ADDITION_TYPE.DEFAULT_LINK, // 부가서비스 타입 
-    'additionNm' : 'FLO 앤 데이터', // 부가 서비스 명
-    'additionIconImg' : '/img/product/v2/ico-add-flo.svg', // 부가 서비스 아이콘
-    'additionNoticeMsg' : '', // notice 메시지
-    'additionJoined': true, // 가입하기 버튼 노출(true) 또는 확인하기 버튼 노출 (false)
-    'targetPayments': [ 'NA00006404' ,'NA00006539' ,'NA00006538' ,'NA00006797' ,'NA00006157' ], // 타겟이 되는 요금제 코드 리스트
-    'targetAddition': 'NA00006520', // 타겟이 되는 부가서비스 코드명
-    'targetAdditionAction': '/product/mobileplan-add/join' // 타겟이 되는 부가서비스 가입 URL
-  },
-  {
-    'additionType' : ADDITION_TYPE.DEFAULT_LINK,
-    'additionNm' : 'FLO 앤 데이터 플러스',
-    'additionIconImg' : '/img/product/v2/ico-add-flo.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006405' ],
-    'targetAddition': 'NA00006599',
-    'targetAdditionAction': '/product/mobileplan-add/join'
-  },
-  {
-    'additionType' : ADDITION_TYPE.DEFAULT_LINK,
-    'additionNm' : 'wavve 앤 데이터',
-    'additionIconImg' : '/img/product/v2/ico-add-wavve.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006404' ,'NA00006539' ,'NA00006538' ,'NA00006797' ,'NA00006157' ],
-    'targetAddition': 'NA00006577',
-    'targetAdditionAction': '/product/mobileplan-add/join'
-  },
-  {
-    'additionType' : ADDITION_TYPE.DEFAULT_LINK,
-    'additionNm' : 'wavve 앤 데이터 플러스',
-    'additionIconImg' : '/img/product/v2/ico-add-wavve.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006405' ],
-    'targetAddition': 'NA00006584',
-    'targetAdditionAction': '/product/mobileplan-add/join'
-  },
-
-  {
-    'additionType' : ADDITION_TYPE.DEFAULT_LINK,
-    'additionNm' : 'T가족모아데이터',
-    'additionIconImg' : '/img/product/v2/ico-add-vip.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006539', 'NA00006538', 'NA00006797', 'NA00006157', 'NA00005958', 'NA00005959', 'NA00007004', 'NA00007005' ],
-    'targetAddition': 'NA00006031',
-    'targetAdditionAction': ''
-  },
-  {
-    'additionType' : ADDITION_TYPE.DEFAULT_LINK,
-    'additionNm' : '5G 스마트워치TAB할인(모)',
-    'additionIconImg' : '/img/product/v2/ico-add-watch.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006405', 'NA00006404', 'NA00006403' ],
-    'targetAddition': 'NA00006484',
-    'targetAdditionAction': ''
-  },
-
-  {
-    'additionType' : ADDITION_TYPE.CUSTOM_LINK,
-    'additionNm' : 'T멤버쉽 VIP (테스트)',
-    'additionIconImg' : '/img/product/v2/ico-add-vip.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006404' ], // 패밀리 가입 가능 (테스트용^^)
-    'targetAddition': '',
-    'targetAdditionAction': '/membership/submain'
-  },
-  {
-    'additionType' : ADDITION_TYPE.CUSTOM_LINK,
-    'additionNm' : '분실파손보험 (테스트)',
-    'additionIconImg' : '/img/product/v2/ico-add-insurance.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006404' ], // 패밀리 가입 가능 (테스트용^^)
-    'targetAddition': '',
-    'targetAdditionAction': '/product/mobileplan-add/list?filters=F01233'
-  },
-  {
-    'additionType' : ADDITION_TYPE.ACTION_SHEET,
-    'additionNm' : '잔여분할금면제 (테스트)',
-    'additionIconImg' : '/img/product/v2/ico-add-excuse.svg',
-    'additionNoticeMsg' : '',
-    'targetPayments': [ 'NA00006404' ], // 패밀리 가입 가능 (테스트용^^)
-    'targetAddition': '',
-    'targetAdditionAction': ''
-  },
-]
-
 export default class RenewProduct extends TwViewController {
     constructor() {
       super();
@@ -196,31 +99,22 @@ export default class RenewProduct extends TwViewController {
           Observable.combineLatest(
             this.getMyPayment(svcInfo) // 사용중인 요금제 조회
             , this.isPiAgree(svcInfo) // 개인정보 동의 조회
-            // , this.getMyAdditions(svcInfo) // 사용중인 부가서비스 조회
             , this.getSortSection(line) // 섹션 순서 데이터를 조회
             , this.getThemeListData(svcInfo, line) // 리스트 형 테마 데이터를 조회
             , this.getMyAge(svcInfo) // 나의 나이를 리턴받음
-
             , this.isCompareButton(line, svcInfo) // 비교하기 버튼 출력 여부
           ).subscribe(([
             payment // 사용중인 요금제 데이터 결과 값
             , isPiAgree // 개인정보 동의 여부
-            // , additions // 사용중인 부가서비스 결과 값 (사용안함..)
             , sortSection // 섹션 순서 데이터 결과 값
             , themeListData // 테마 리스트 데이터 조회
             , myAge // 내 회선에 대한 나의 만 나이
-
             , isCompareButton // 비교하기 버튼 출력 여부
           ]) => {
             const isWireless = svcInfo ? !(SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) : false; // 무선 회선인지 체크
             const data = {
               line, payment, isPiAgree, isWireless, sortSection, themeListData, myAge, isCompareButton, cdn: this.getCDN()
             }
-            
-            console.log("#####");
-            console.log(svcInfo);
-            console.log(data);
-            console.log("#####");
 
             res.render('mobileplan/renewal/submain/product.renewal.mobileplan.html', { svcInfo, pageInfo, data });
           });
@@ -266,8 +160,6 @@ export default class RenewProduct extends TwViewController {
      * 현재 사용중인 요금제를 조회
      * 로그인이 되어있고 선택된 회선이 있을 때 데이터를 조회할 수 있다.
      * 오직 무선 데이터 회선만 조회 가능하다.
-     * 
-     * 무선 요금상품(휴대폰, T pocket-fi, PPS): BFF_05_0136 (http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=56754635)
      */
     private getMyPayment ( svcInfo: any ): Observable<any> { 
       if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.
@@ -311,48 +203,6 @@ export default class RenewProduct extends TwViewController {
     }
 
     /**
-     * 사용중인 부가 서비스를 조회
-     * 
-     * @param svcInfo 
-     */
-    private getMyAdditions ( svcInfo: any ): Observable<any> { 
-      if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.if ( FormatHelper.isEmpty(svcInfo) ) {
-        return Observable.of([]);
-      } 
-
-      if ( SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0 ) { // 지금 나의 회선이 유선 회선일 경우 요금제를 표현하지 않음.
-        return Observable.of([]);
-      }
-
-      // 나의 요금제에 해당되는 부가서비스의 정보를 얻기 위해서 필터 정보를 얻음
-      const additionsFilter = ADDITIONS_LIST.filter(data => {
-        return data.targetPayments.indexOf(svcInfo.prodId) > -1 ? true : false;
-      });
-
-      // 필터 정보가 없다면 종료.
-      if ( !additionsFilter || additionsFilter.length === 0) {
-        return Observable.of([]);
-      }
-
-      // 가입된 부가 서비스 정보를 얻어옴.
-      return this.apiService.request(API_CMD.BFF_05_0137, {}).map((resp) => {
-        if (resp.code === API_CODE.CODE_00) {
-          resp.result.addProdList.filter((prod) => { // 현재 로그인된 사용자의 부가서비스의 정보를 얻고 난 뒤
-            const joined = additionsFilter.find(target => target.targetAddition === prod.prodId); 
-            if ( joined ) { // 가입된 부가서비스가 있는지 체크
-              const index = additionsFilter.findIndex(f => f.targetAddition === joined.targetAddition);
-              if ( index > -1 ) { // 가입된 부가서비스가 있으면 부가서비스에 해당되는 항목을 삭제한다
-                additionsFilter.splice(index, 1);
-              }
-            }
-          });
-
-          return additionsFilter;
-        }
-      });
-    }
-
-    /**
      * 메인 화면의 섹션영역 (<section>)의 데이터를 정렬하기 위해서 먼저 환경변수 redis에서 순서 정보를 얻어옴
      * 
      * @param line 
@@ -388,6 +238,7 @@ export default class RenewProduct extends TwViewController {
 
     /**
      * 리스트 형 테마 데이터 데이터를 조회 
+     * 
      * @param svcInfo 
      */
     private getThemeListData( svcInfo, line ): Observable<any> {
@@ -506,7 +357,7 @@ export default class RenewProduct extends TwViewController {
       // 상품 스펙 공통 헬퍼 사용하여 컨버팅
       const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
-      const isProductShow = this.convertUndefined(data.feePlanProd.basDataGbTxt) 
+      const isProductShow = this.convertUndefined(data.feePlanProd.basDataGbTxt) // 상세참조에 노출여부
         || this.convertUndefined(data.feePlanProd.basDataMbTxt) 
         || this.convertUndefined(data.feePlanProd.basOfrVcallTmsTxt)
         || this.convertUndefined(data.feePlanProd.basOfrVcallTmsTxt);
@@ -674,8 +525,8 @@ export default class RenewProduct extends TwViewController {
         const basDataMbTxt = FormatHelper.getValidVars(item.basOfrMbDataQtyCtt); // 데이터 제공량 (MB)
         const basDataTxt = this.convertBasDataTxt(basDataGbTxt, basDataMbTxt); // GB, MB 컨버터
         
-        const basNetworkType = this.convertBasNetworkType(item.prodFltList) || ''; // 회선의 네트워크 타입
-        const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱
+        const basNetworkType = this.convertBasNetworkType(item.prodFltList) || ''; // 회선의 네트워크 타입 ( 데이터타입에 폰트 컬러를 설정하는 스타일 지정 )
+        const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱 ( LTE/5G의 아이콘 스타일 및 텍스트를 지정)
         const basAdditionalObject = this.convertAdditionalList(item.benfProdList) || []; // 부가 서비스 정보를 파싱
         // 상품 스펙 공통 헬퍼 사용하여 컨버팅
         const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
@@ -868,10 +719,8 @@ export default class RenewProduct extends TwViewController {
         return 'https://cdnm-stg.tworld.co.kr';
       } else if ( env === 'dev') { // dev
         return 'https://cdnm-dev.tworld.co.kr';
-      } else { // local
+      } else { // 기타
         return 'https://cdnm-stg.tworld.co.kr';
-        // return 'http://172.23.69.117:3001'; // TODO: 임시
-        // return 'http://localhost:3001';
       }
     }
 

@@ -19,7 +19,7 @@ Tw.ProductList = function(rootEl, params, pageInfo) {
   this._bindEvent();
   this._init();
 
-  // this._showRenewal(); // 3월 15일 해제 예정
+  this._showRenewal();
 };
 
 Tw.ProductList.prototype = {

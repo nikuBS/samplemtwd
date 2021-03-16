@@ -36635,6 +36635,19 @@ body.apphome .section-box {
 /* 201106 [OP002-11708] [VOC: V20358881447] 나의 부가상품들어가면 맨위 부가서비스글자가 반만 보이는 현상 */
 .tod-sel-top-wrap .link-cont {overflow-x: auto; white-space: nowrap}
 
+/* 210208 [OP002-13114] [요금팀] 요금제 선택약정 반영금액 표기 */
+.cont-box.gaps-style03 .tod-choice-txt{display:block; padding: 0rem 1rem 0.625rem; text-align:right; font-size:0.75rem; color:#666;}
+.extraservice-list .tod-choice-money{text-align:right; margin:0.5rem 0 0.4375rem 0; font-size:0.75rem; color:#666;}
+.productinfoscroll-box .tod-choice-txt{display:block; padding: 0rem 1rem 0.625rem; text-align:right; font-size:0.75rem; color:#666;}
+.productinfoscroll-box .product-info.tod-choice{height:7.5rem}
+.productinfoscroll-box .product-info.tod-choice .info{margin-bottom:0;}
+.productinfoscroll-box .product-info.tod-choice .tod-choice-money{color:#959595;font-size:0.75rem}
+
+/* 210302 [OP002-13195] [요금팀] 요금제 선택약정 반영금액 표기 */ 
+.tod-searchlist-head.tod-choice{position: relative}
+.tod-searchlist-head.tod-choice .tit{padding: 0 0 1.7rem;}
+.tod-searchlist-head.tod-choice .tod-choice-txt{position: absolute;right:0;bottom:0.5rem;font-size:0.75rem; color:#666;}
+
 /* 210309 [OP002-13575] [공통] 넷퍼넬 기능 추가 */ 
 .icon-gnb-home-T{display: inline-block; width: 3.06rem; height: 2.5rem; background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0; background-size: 100% 100%}
 .bt-fixed-area .tod-wait{padding:1.125rem 0; border-top:1px solid #e5e5e5; text-align: center; font-size: 0.75rem; color:#666;}

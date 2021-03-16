@@ -19,8 +19,6 @@ Tw.MyTFareBillPayComplete = function (rootEl, paymentOption) {
      */
     drwagrPrfKeyVal: Tw.CommonHelper.getSessionStorage('drwagrPrfKeyVal')
   });
-  // session storage 에 있는 증빙키값 삭제한다.
-  Tw.CommonHelper.removeSessionStorage('drwagrPrfKeyVal');
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
@@ -59,10 +57,12 @@ Tw.MyTFareBillPayComplete.prototype = {
    * @private
    */
   _onReqAutoPayments: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey');
-    this._apiService.request(this._getApiName(), this._paymentOption)
-      .done($.proxy(this._success, this))
-      .fail($.proxy(this._fail, this));
+    this._possibleRequest(function () {
+      Tw.CommonHelper.startLoading('.container', 'grey');
+      this._apiService.request(this._getApiName(), this._paymentOption)
+        .done($.proxy(this._success, this))
+        .fail($.proxy(this._fail, this));
+    }.bind(this));
   },
 
   /**
@@ -87,9 +87,12 @@ Tw.MyTFareBillPayComplete.prototype = {
         title = alertData.AUTO_PAYMENT_COMPLETE.TITLE,
         date = new Date(),
         // 날짜가 4일 이전이면 이번달, 이외에는 다음달.
-        month = date.getDate() < 4 ? Tw.DateHelper.getShortDateWithFormat(date, 'M') : Tw.DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'month', 'M');
+        month = date.getDate() < 4 ? Tw.DateHelper.getShortDateWithFormat(date, 'M')
+          : Tw.DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'month', 'M');
       contents = Tw.StringHelper.stringf(contents, Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT, this._mbrNm, this._accountInfo);
       title = title.replace('{month}', month);
+      // session storage 에 있는 증빙키값 삭제한다.
+      Tw.CommonHelper.removeSessionStorage('drwagrPrfKeyVal');
       this._popupService.openAlert(contents, title, null, $.proxy(this._popupCloseCallback, this), null, null);
     } else {
       this._fail(res);
@@ -103,6 +106,33 @@ Tw.MyTFareBillPayComplete.prototype = {
    */
   _popupCloseCallback: function () {
     this._historyService.goLoad('/myt-fare/bill/option');
+  },
+
+  /**
+   * @desc 자동납부 신청/변경 가능여부 확인
+   * @private
+   */
+  _possibleRequest: function (callback) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0060, {})
+      .done($.proxy(function (res) {
+        var self = this;
+        if (res.code !== Tw.API_CODE.CODE_00) {
+          this._fail(res);
+          return;
+        }
+        if (res.result.authReqSerNum !== this._paymentOption.authReqSerNum) {
+          var templ = Tw.ALERT_MSG_MYT_FARE.DUPLICATE_AUTO_PAYMENT;
+          var msg = Tw.StringHelper.stringf(templ.ALERT.MSG, templ.REQ_EDIT);
+          this._popupService.openAlert(msg,
+            templ.title, null,
+            function () {
+              self._historyService.reload();
+            });
+          return;
+        }
+        callback();
+      }, this))
+      .fail($.proxy(this._fail, this));
   },
 
   /**

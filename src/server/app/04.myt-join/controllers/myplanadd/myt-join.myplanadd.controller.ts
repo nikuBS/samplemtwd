@@ -48,6 +48,30 @@ const sortByHigher = (list: Array<any>): Array<any> =>
 */
 
 /**
+ * @desc 무선 부가서비스 BFF 데이터 가공
+ * @private
+ */
+const convertWirelessAdditionData = (addition: any) => {
+  return {
+    ...addition,  // 추가작업 불필요한 속성들 스프레드
+    ...(addition.btnList && addition.btnList.length > 0 ? // 버튼 리스트가 있을 경우
+      {
+        btnList: addition.btnList
+          .filter(btn => {
+            // 설정 버튼이 있고, 어드민에서 설정버튼 노출 Y일 경우(가입, 해지버튼 미노출), 버튼 링크 값이 있을 경우 버튼 노출
+            return btn.btnTypCd === PLAN_BUTTON_TYPE.SET && addition.prodSetYn === 'Y' && btn.btnLinkUrl && btn.btnLinkUrl.trim().length > 0;
+          })
+          // .sort(this._sortButtons) // 해지버튼을 제일 뒤에 노출해달라는 요구사항이 있어 추가 -> 설정 버튼 외 미노출로 변경되어 삭제
+      } :
+      {}),
+    basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
+    // [OP002-4115] 신규 변경사항 - 유료만 보기 탭 선택시 유료 및 상세참조 부가서비스 카운팅 개수 출력
+    isNotFree: addition.payFreeYn === 'N' || addition.payFreeYn === 'Y' && PRODUCT_CALLPLAN.SEE_CONTENTS.includes(addition.basFeeTxt),
+    scrbDt: DateHelper.getShortDate(addition.scrbDt) // 신청일
+  };
+};
+
+/**
  * @desc 부가서비스 BFF 데이터 가공
  * @private
  */
@@ -162,8 +186,10 @@ class MyTJoinMyPlanAdd extends TwViewController {
           };
         }
         const [additionProds = {}, smartCallPickProds, combinations] = resps.map(resp => resp.result);
-        let joinedPaid = (additionProds.addProdPayList || []).map(convertAdditionData);
-        let joinedFree = (additionProds.addProdFreeList || []).map(convertAdditionData);
+        // 가입한 유료 부가상품 리스트
+        let joinedPaid = (additionProds.addProdPayList || []).map(convertWirelessAdditionData);
+        // 가입한 무료 부가상품 리스트
+        let joinedFree = (additionProds.addProdFreeList || []).map(convertWirelessAdditionData);
         // 가입된 로밍 요금제가 있을 경우
         const roaming = additionProds.roamingProd ? {
             ...additionProds.roamingProd,
@@ -272,11 +298,10 @@ class MyTJoinMyPlanAdd extends TwViewController {
     const settingBtnList: any = [];
 
     btnList.forEach((item) => {
-      if (item.btnTypCd !== 'SE') { // 설정 외 버튼은 노출되지 않도록 처리 (by 기획 요건)
-        return true;
+      // 버튼타입이 설정이면서 버튼링크 URL 값이 있다면 표시
+      if (item.btnTypCd && item.btnTypCd === 'SE' && item.btnLinkUrl && item.btnLinkUrl.trim().length > 0) {
+        settingBtnList.push(item);
       }
-
-      settingBtnList.push(item);
     });
 
     return settingBtnList;

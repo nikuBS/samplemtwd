@@ -1,9 +1,12 @@
 <a href="/product/callplan?prod_id=<%=thisPlan.prodId%>" class="item-link">
     <div class="rn-tag">
         <div class="col-left">
+            <!-- 기획에서 하드코딩 요청 -->
             <% if(thisPlan.filters) { %>
                 <% for(let n=0; n< thisPlan.filters.length; n++) { %>
+                    <!-- BFF_10_0031 일때 -->
                     <% if(isTheme == 'Y') { %>
+                        <!-- 테마요금제 일때만 해당 태그 사용 -->
                         <% if(thisPlan.filters[n].prodFltId == 'F01713') { %>
                             <span class="i-tag-cr1">5G</span>
                             <% isTheme = ''; %>
@@ -32,8 +35,10 @@
                     <% } %>
                 <% } %>
             <% } else if(thisPlan.prodFltList) { %>
+                <!-- BFF_10_0203, BFF_10_0205 일때 -->
                 <% for(let n=0; n< thisPlan.prodFltList.length; n++) { %>
                     <% if(isTheme == 'Y') { %>
+                        <!-- 테마요금제 일때만 해당 태그 사용 -->
                         <% if(thisPlan.prodFltList[n].prodFltId == 'F01713'){ %>
                             <span class="i-tag-cr1">5G</span>
                             <% isTheme = ''; %>
@@ -64,7 +69,7 @@
             <% } %>
         </div>
         <div class="col-right">
-            <% if(svcInfo){ %>
+            <% if(svcInfo) { %>
                 <% if(svcInfo.prodId == thisPlan.prodId) { %>
                     <span class="i-tag-myplan">사용중</span>
                 <% } %>
@@ -84,7 +89,7 @@
     <div class="rn-prod-info">
         <ul class="p-etc">
             <% if(thisPlan.basOfrDataQtyCtt){ %>
-                <li>
+                <li class="v-data">
                     <i class="p-icon18-data"><span class="blind">데이터</span></i> 
                     <% if(typeof(thisPlan.basOfrDataQtyCtt.value)=='string') { %>
                         <%= thisPlan.basOfrDataQtyCtt.value %>
@@ -116,62 +121,70 @@
         </ul>
     </div>
 <% if(thisPlan.prodSmryExpsTypCd == '2') { %>
-    <div class="rn-prod-benefit">
-        <% if(thisPlan.benefitList.sepBenefitList) { %>
-            <ul>
-                <% for ( let k=0; k < thisPlan.benefitList.sepBenefitList.length; k++ ) { %>
-                    <li>
-                        <i class="p-icon16-img">
-                            <img src="<%= cdn %><%= thisPlan.benefitList.sepBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.sepBenefitList[k].rgstImgAlt %>">
-                        </i>
-                        <span class="txt"><%= thisPlan.benefitList.sepBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.sepBenefitList[k].benfDtlCtt%></span>
-
-                        <% if (thisPlan.benefitList.sepBenefitList[k].useAmt) { %>
-                            <span class="price">
-                                <del><%= thisPlan.benefitList.sepBenefitList[k].benfAmt.value %>원</del>
-                                <i class="icon-arr">&rarr;</i> 
-                                <em><%= thisPlan.benefitList.sepBenefitList[k].useAmt.value %>원</em>
-                            </span>
-                        <% } %>
-                        
-                    </li>
-                <% } %>
-            </ul>
-        <% } %>
-
-        <%# 추가 혜택 %>
-        <% if ( thisPlan.benefitList.chooseBenefitList.length > 0) { %>
-            <div class="p-benefit-choice">
-                <p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+    <!-- 혜택 강조형 일 때만 혜택 노출 -->
+    <% if((thisPlan.benefitList.sepBenefitList.length > 0) || (thisPlan.benefitList.chooseBenefitList.length > 0)) { %>
+        <div class="rn-prod-benefit">
+            <% if(thisPlan.benefitList.sepBenefitList) { %>
+                <!-- 개별 해택 -->
                 <ul>
-                    <% for ( let k=0; k < thisPlan.benefitList.chooseBenefitList.length; k++ ) { %>
+                    <% for ( let k=0; k < thisPlan.benefitList.sepBenefitList.length; k++ ) { %>
                         <li>
                             <i class="p-icon16-img">
-                                <img src="<%= cdn %><%= thisPlan.benefitList.chooseBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.chooseBenefitList[k].rgstImgAlt %>">
+                                <img src="<%= cdn %><%= thisPlan.benefitList.sepBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.sepBenefitList[k].rgstImgAlt %>">
                             </i>
-                            <span class="txt"><%= thisPlan.benefitList.chooseBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.chooseBenefitList[k].benfDtlCtt%></span>
+                            <span class="txt"><%= thisPlan.benefitList.sepBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.sepBenefitList[k].benfDtlCtt%></span>
 
-                            <% if ( thisPlan.benefitList.chooseBenefitList[k].useAmt ) { %>
+                            <% if (thisPlan.benefitList.sepBenefitList[k].useAmt) { %>
                                 <span class="price">
-                                    <del><%= thisPlan.benefitList.chooseBenefitList[k].benfAmt.value %>원</del>
+                                    <del><%= thisPlan.benefitList.sepBenefitList[k].benfAmt.value %>원</del>
                                     <i class="icon-arr">&rarr;</i> 
-                                    <em><%= thisPlan.benefitList.chooseBenefitList[k].useAmt.value %>원</em>
+                                    <em><%= thisPlan.benefitList.sepBenefitList[k].useAmt.value %>원</em>
                                 </span>
-                            <% } %> 
+                            <% } %>
+                            
                         </li>
                     <% } %>
                 </ul>
-            </div>
-        <% } %>
-    </div>
+            <% } %>
+
+            <%# 추가 혜택 %>
+            <% if ( thisPlan.benefitList.chooseBenefitList.length > 0) { %>
+                <!-- 택 1 혜택 -->
+                <div class="p-benefit-choice">
+                    <p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
+                    <ul>
+                        <% for ( let k=0; k < thisPlan.benefitList.chooseBenefitList.length; k++ ) { %>
+                            <li>
+                                <i class="p-icon16-img">
+                                    <img src="<%= cdn %><%= thisPlan.benefitList.chooseBenefitList[k].rgstImgUrl %>" alt="<%= thisPlan.benefitList.chooseBenefitList[k].rgstImgAlt %>">
+                                </i>
+                                <span class="txt"><%= thisPlan.benefitList.chooseBenefitList[k].expsBenfNm + ' ' + thisPlan.benefitList.chooseBenefitList[k].benfDtlCtt%></span>
+
+                                <% if ( thisPlan.benefitList.chooseBenefitList[k].useAmt ) { %>
+                                    <span class="price">
+                                        <del><%= thisPlan.benefitList.chooseBenefitList[k].benfAmt.value %>원</del>
+                                        <i class="icon-arr">&rarr;</i> 
+                                        <em><%= thisPlan.benefitList.chooseBenefitList[k].useAmt.value %>원</em>
+                                    </span>
+                                <% } %> 
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
 <% } %>
 </a>
 <% if (thisPlan.compareYN) { %>
+    <!-- 요금제 별 비교하기 세부조건 충족 -->
     <% if (svcInfo) { %>
+        <!-- 로그인 여부 -->
         <% if (svcInfo.prodId != thisPlan.prodId) { %>
+            <!-- 사용중이 아님 -->
             <div class="rn-prod-bottom">
                 <div class="rn-btn-right">
-                    <a class="btn-compare" data-prod-id="<%= thisPlan.prodId %>" data-prod-nm="<%= thisPlan.prodNm %>"
+                    <button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="<%= thisPlan.prodId %>" data-prod-nm="<%= thisPlan.prodNm %>"
                         data-prod-fee="
                         <% if(thisPlan.basFeeAmt.value !== '기본제공' && thisPlan.basFeeAmt.value !== '상세참조' && thisPlan.basFeeAmt.value !== '제공안함') { %>
                             <%= thisPlan.basFeeAmt.value %>원
@@ -202,7 +215,7 @@
                                 <%= thisPlan.basOfrDataQtyCtt.value.data+thisPlan.basOfrDataQtyCtt.value.unit %>
                             <% } %>
                         <% } %>"
-                        >내 요금제와 비교</a>
+                        >내 요금제와 비교</button>
                 </div>
             </div>
         <% } %>

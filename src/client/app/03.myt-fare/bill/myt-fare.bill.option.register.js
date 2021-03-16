@@ -170,13 +170,15 @@ Tw.MyTFareBillOptionRegister.prototype = {
    */
   _submit: function () {
     if (this._validationService.isAllValid()) {
-      var reqData = this._makeRequestData();
-      var apiName = this._getApiName();
+      this._possibleRequest(function () {
+        var reqData = this._makeRequestData();
+        var apiName = this._getApiName();
 
-      Tw.CommonHelper.startLoading('.container', 'grey');
-      this._apiService.request(apiName, reqData)
-        .done($.proxy(this._success, this))
-        .fail($.proxy(this._fail, this));
+        Tw.CommonHelper.startLoading('.container', 'grey');
+        this._apiService.request(apiName, reqData)
+          .done($.proxy(this._success, this))
+          .fail($.proxy(this._fail, this));
+      }.bind(this));
     }
   },
   /**
@@ -249,6 +251,34 @@ Tw.MyTFareBillOptionRegister.prototype = {
     }
     return apiName;
   },
+
+  /**
+   * @desc 자동납부 신청/변경 가능여부 확인
+   * @private
+   */
+  _possibleRequest: function (callback) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0060, {})
+      .done($.proxy(function (res) {
+        var self = this;
+        if (res.code !== Tw.API_CODE.CODE_00) {
+          this._fail(res);
+          return;
+        }
+        if (res.result.authReqSerNum !== this.$infoWrap.attr('data-auth-req-ser-num')) {
+          var templ = Tw.ALERT_MSG_MYT_FARE.DUPLICATE_AUTO_PAYMENT;
+          var msg = Tw.StringHelper.stringf(templ.ALERT.MSG, templ.REQ_EDIT);
+          this._popupService.openAlert(msg,
+            templ.TITLE, null,
+            function () {
+              self._historyService.reload();
+            });
+          return;
+        }
+        callback();
+      }, this))
+      .fail($.proxy(this._fail, this));
+  },
+
   /**
    * @function
    * @desc x 버튼 클릭 시 공통 confirm 노출

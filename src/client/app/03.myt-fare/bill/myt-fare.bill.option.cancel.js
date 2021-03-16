@@ -41,12 +41,14 @@ Tw.MyTFareBillOptionCancel.prototype = {
    * @param e
    */
   _cancel: function (e) {
-    var $target = $(e.currentTarget);
-    var reqData = this._makeRequestData();
+    this._possibleRequest(function () {
+      var $target = $(e.currentTarget);
+      var reqData = this._makeRequestData();
 
-    this._apiService.request(Tw.API_CMD.BFF_07_0063, reqData)
-      .done($.proxy(this._cancelSuccess, this, $target))
-      .fail($.proxy(this._fail, this, $target));
+      this._apiService.request(Tw.API_CMD.BFF_07_0063, reqData)
+        .done($.proxy(this._cancelSuccess, this, $target))
+        .fail($.proxy(this._fail, this, $target));
+    }.bind(this));
   },
   /**
    * @function
@@ -89,6 +91,34 @@ Tw.MyTFareBillOptionCancel.prototype = {
       this._fail($target, res);
     }
   },
+
+  /**
+   * @desc 자동납부 신청/변경 가능여부 확인
+   * @private
+   */
+  _possibleRequest: function (callback) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0060, {})
+      .done($.proxy(function (res) {
+        var self = this;
+        if (res.code !== Tw.API_CODE.CODE_00) {
+          this._fail(res);
+          return;
+        }
+        if (res.result.authReqSerNum !== this.$infoBox.attr('data-auth-req-ser-num')) {
+          var templ = Tw.ALERT_MSG_MYT_FARE.DUPLICATE_AUTO_PAYMENT;
+          var msg = Tw.StringHelper.stringf(templ.ALERT.MSG, templ.CANCEL);
+          this._popupService.openAlert(msg,
+            templ.title, null,
+            function () {
+              self._historyService.goLoad('/myt-fare/bill/option');
+            });
+          return;
+        }
+        callback();
+      }, this))
+      .fail($.proxy(this._fail, this));
+  },
+
   /**
    * @function
    * @desc 자동납부 해지 API 응답 처리 (실패)
