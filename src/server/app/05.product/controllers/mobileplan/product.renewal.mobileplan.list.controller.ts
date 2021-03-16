@@ -170,7 +170,7 @@ export default class RenewProductPlans extends TwViewController {
             } else { // 시리즈별 리스트형 전체리스트
               switch(networkInfoFilter[0]){ // 태그 시리즈 색상 클래스 세팅 (i-tag-crX)
                 case INDEX_CATAGORY['5G']:
-                  plans.series = '1'; 
+                  plans.series = '1';
                   break;
                 case INDEX_CATAGORY.LTE:
                   plans.series = '2';
@@ -220,21 +220,21 @@ export default class RenewProductPlans extends TwViewController {
             });
           }
           plans.isCompare = isCompare;
-          plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare);
+          plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare); //비교하기 표시 여부
           let mobileList: any = []; // 통신망 별 section 구성을 위한 데이터 세팅
           for(let i in tabList.subFilters) {
             mobileList[i] = 
               {
-              name: tabList.subFilters[i].prodFltNm,
-              code: tabList.subFilters[i].prodFltId,
-              exist: 'N',
-              url:'/product/renewal/mobileplan/list?filters=' + tabList.subFilters[i].prodFltId // 더보기 버튼 리다이렉트 url
+                name: tabList.subFilters[i].prodFltNm,
+                code: tabList.subFilters[i].prodFltId,
+                exist: 'N',
+                url:'/product/renewal/mobileplan/list?filters=' + tabList.subFilters[i].prodFltId // 더보기 버튼 리다이렉트 url
               };
           }
 
           for( let k in mobileList ) { // 통신망 별로 해당 통신망이 있나 체크
             for( let i in plans.products) {
-              if(mobileList[k].name === plans.products[i].prodFltNm){
+              if(mobileList[k].name === plans.products[i].prodFltNm) {
                 mobileList[k].exist = 'Y';
               }
             }
@@ -243,6 +243,7 @@ export default class RenewProductPlans extends TwViewController {
         });
 
     } else {
+      // BFF_10_0031 사용 화면
       params.idxCtgCd = INDEX_CATAGORY.PRODUCT;
       params.searchFltIds = req.query.filters;
       Observable.combineLatest(
@@ -258,9 +259,9 @@ export default class RenewProductPlans extends TwViewController {
         ]) => {
          let isCompare: string = '';
           if(compareData != 'N') {
-            isCompare = 'Y'
+            isCompare = 'Y';
           } else {
-            isCompare = 'N'
+            isCompare = 'N';
           }  
         if (plans.code) {
           this.error.render(res, {
@@ -281,6 +282,10 @@ export default class RenewProductPlans extends TwViewController {
     }
   } 
 
+  /**
+   * @desc 전체요금제 화면 통신망 별 3개씩 요금제 호출
+   * @param params
+   */
   private _getInitPlans(params) {
     return this.apiService.request(API_CMD.BFF_10_0205, params).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -309,14 +314,18 @@ export default class RenewProductPlans extends TwViewController {
               null :
               ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
-            tabCode: this._getTabCodeInit(plan),
-            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd),
-            benefitList: this._parseBenefitList(plan.benefitList)
+            tabCode: this._getTabCodeInit(plan), // 통신망에 따른 요금제 모듈 별 클래스
+            prodSmryExpsTypCd: this._parseProdSmryExpsTypCd(plan.prodSmryExpsTypCd), // 요금제 노출 유형
+            benefitList: this._parseBenefitList(plan.benefitList) // 혜택
           };
         })
       };
     });
   }
+   /**
+   * @desc 필터 적용 요금제 리스트 호출 
+   * @param params
+   */
 
   private _getSeperatePlans(params) {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
@@ -353,84 +362,10 @@ export default class RenewProductPlans extends TwViewController {
     });
   }
 
-  private _isEmptyAmount(value: any) {
-    return !value || value === '' || value === '-';
-  }
-
-  private _getSeries(searchFltIds): string { // 탭 정보 얻어옴
-    if(!searchFltIds) {
-      return '';
-    }
-    const splitCheck: string[] = searchFltIds.split(',');
-    let splitSeries = splitCheck.filter(split => (split === INDEX_CATAGORY['5G'] || split === INDEX_CATAGORY.LTE || split === INDEX_CATAGORY['3G']
-       || split === INDEX_CATAGORY['2nd'] || split === INDEX_CATAGORY.PPS));
-    if(splitSeries[0]){
-      return splitSeries[0];
-    }
-
-    return '';
-  }
-
-  private _getFilterList(searchFltIds): string { // 필터 리스트 얻어옴
-    let splitCheck = searchFltIds.split(',');
-    let splitFilter = splitCheck.filter ( split => !(split === INDEX_CATAGORY['5G'] || split === INDEX_CATAGORY.LTE || split === INDEX_CATAGORY['3G']
-       || split === INDEX_CATAGORY['2nd'] || split === INDEX_CATAGORY.PPS));
-    let splitString : string = '';
-    for(let i = 0; i < splitFilter.length; i++) {
-      splitString += ',';
-      splitString += splitFilter[i];
-    }
-    return splitString;
-  }
-
-  private getNetworkInfoFilter ( svcInfo: any ): Observable<any> {
-    if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.
-      return Observable.of([INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS]);
-    }
-
-    if ( svcInfo.svcGr === 'P' ) { // 선택한 회선이 선불폰(PPS) 라면 P
-      return Observable.of([INDEX_CATAGORY.PPS, INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd']]);
-    }
-    
-    return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-
-        if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) { // 회선이 유선이라면 5G로 리턴함 ( 유선회선에서 0220 API 호출 시 에러발생함 )
-          return this.matchSvcCode('F');
-        }
-
-        if ( resp.result.beqpMclEqpClSysCd !== '0101000' ) {
-          return this.matchSvcCode('E');
-        }
-        return this.matchSvcCode(resp.result.eqpMthdCd);
-      }
-      return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-    });
-  }
-
-  private matchSvcCode (code) { // 전체요금제 최초 랜딩 시 요금제 시리즈 래더링 순서
-    
-    switch(code) {
-      case 'A' : //2G (3G로 표현)
-        return [INDEX_CATAGORY['3G'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-      case 'D' : //2G (3G로 표현)
-        return [INDEX_CATAGORY['3G'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-      case 'W' : //3G
-        return [INDEX_CATAGORY['3G'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-      case 'L' : //LTE
-        return [INDEX_CATAGORY.LTE, INDEX_CATAGORY['5G'], INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-      case 'F' : //5G
-        return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-      case 'E' : //2nd Device
-        return [INDEX_CATAGORY['2nd'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY.PPS];
-      case 'P' : //PPS
-        return [INDEX_CATAGORY.PPS, INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd']];
-      default :
-        return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-    }
-    return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
-  }
-
+   /**
+   * @desc 시리즈 별 요금제 리스트 호출 
+   * @param params
+   */
   private _getSeriesPlans(params) {
     return this.apiService.request(API_CMD.BFF_10_0203, params).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -442,8 +377,7 @@ export default class RenewProductPlans extends TwViewController {
       if (FormatHelper.isEmpty(resp.result)) {
         return resp.result;
       }
-
-      if (resp.result.rcnProductList) {
+      if (resp.result.rcnProductList) { // 테마 요금제
         return {
           ...resp.result,
           separateProductList: resp.result.separateProductList.map(separatePlan => {
@@ -469,7 +403,7 @@ export default class RenewProductPlans extends TwViewController {
             }
           })
         }
-      } else if(resp.result.groupProdList) {
+      } else if(resp.result.groupProdList) { // 5G, LTE, 3G, 2nd Device
         if(resp.result.separateProductList) {
           return {
             ...resp.result,
@@ -537,7 +471,7 @@ export default class RenewProductPlans extends TwViewController {
             })
           }
         }
-      } else {
+      } else { //PPS
         return {
           ...resp.result,
           separateProductList: resp.result.separateProductList.map(separatePlan => {
@@ -560,6 +494,104 @@ export default class RenewProductPlans extends TwViewController {
       }
     })
   }
+
+  private _isEmptyAmount(value: any) {
+    return !value || value === '' || value === '-';
+  }
+
+   /**
+   * @desc 탭 정보를 얻어옴
+   * @param searchFltIds (req.query.filters)
+   */
+
+  private _getSeries(searchFltIds): string { // 탭 정보 얻어옴
+    if(!searchFltIds) {
+      return '';
+    }
+    const splitCheck: string[] = searchFltIds.split(',');
+    let splitSeries = splitCheck.filter(split => (split === INDEX_CATAGORY['5G'] || split === INDEX_CATAGORY.LTE || split === INDEX_CATAGORY['3G']
+       || split === INDEX_CATAGORY['2nd'] || split === INDEX_CATAGORY.PPS));
+    if(splitSeries[0]){
+      return splitSeries[0];
+    }
+
+    return '';
+  }
+
+  /**
+   * @desc 필터 정보를 얻어옴
+   * @param searchFltIds (req.query.filters)
+   */
+
+  private _getFilterList(searchFltIds): string { // 필터 리스트 얻어옴
+    let splitCheck = searchFltIds.split(',');
+    let splitFilter = splitCheck.filter ( split => !(split === INDEX_CATAGORY['5G'] || split === INDEX_CATAGORY.LTE || split === INDEX_CATAGORY['3G']
+       || split === INDEX_CATAGORY['2nd'] || split === INDEX_CATAGORY.PPS));
+    let splitString : string = '';
+    for(let i = 0; i < splitFilter.length; i++) {
+      splitString += ',';
+      splitString += splitFilter[i];
+    }
+    return splitString;
+  }
+
+  /**
+   * @desc 내 통신망 정보를 얻어옴
+   * @param svcInfo
+   */
+
+  private getNetworkInfoFilter ( svcInfo: any ): Observable<any> {
+    if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) { // 로그인이 되어있지 않거나 선택된 회선이 없다면 현재 사용중인 요금제를 표현할 필요가 없음.
+      return Observable.of([INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS]);
+    }
+
+    if ( svcInfo.svcGr === 'P' ) { // 선택한 회선이 선불폰(PPS) 라면 P
+      return Observable.of([INDEX_CATAGORY.PPS, INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd']]);
+    }
+    
+    return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+
+        if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) { // 회선이 유선이라면 5G로 리턴함 ( 유선회선에서 0220 API 호출 시 에러발생함 )
+          return this.matchSvcCode(INDEX_CATAGORY['5G']);
+        }
+
+        return this.matchSvcCode(resp.result.prodFltId);
+      }
+      return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+    });
+  }
+
+   /**
+   * @desc API를 통해 얻은 기기 필터 값으로 노출 순서 배열을 얻어옴
+   * @param code (API로 얻은 코드값)
+   */
+
+  private matchSvcCode (code) { // 전체요금제 최초 랜딩 시 요금제 시리즈 래더링 순서
+    
+    switch(code) {
+      case 'F01123' : //2G (3G로 표현)
+        return [INDEX_CATAGORY['3G'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+      case INDEX_CATAGORY['3G'] : //3G
+        return [INDEX_CATAGORY['3G'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+      case INDEX_CATAGORY.LTE : //LTE
+        return [INDEX_CATAGORY.LTE, INDEX_CATAGORY['5G'], INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+      case INDEX_CATAGORY['5G'] : //5G
+        return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+      case INDEX_CATAGORY['2nd'] : //2nd Device
+        return [INDEX_CATAGORY['2nd'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY.PPS];
+      case INDEX_CATAGORY.PPS : //PPS
+        return [INDEX_CATAGORY.PPS, INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd']];
+      default :
+        return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+    }
+    return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+  }
+
+   /**
+   * @desc 통신망에 따른 요금제 모듈 별 클래스 (API 별로 필드명이 달라 별도의 함수로 구현, map돌리는거 보다 간단하게 하기위해...)
+   * @param prodFltList (개별 상품 내 필터 리스트)
+   */
 
   private _getTabCodeSeries(prodFltList) {
       if(!prodFltList) {
@@ -586,6 +618,11 @@ export default class RenewProductPlans extends TwViewController {
       return '';
   }
 
+   /**
+   * @desc 통신망에 따른 요금제 모듈 별 클래스 (API 별로 필드명이 달라 별도의 함수로 구현, map돌리는거 보다 간단하게 하기위해...)
+   * @param plan (상품 리스트)
+   */
+
   private _getTabCodeInit(plan) {
     switch (plan.prodFltId) {
       case INDEX_CATAGORY['5G']:
@@ -601,6 +638,11 @@ export default class RenewProductPlans extends TwViewController {
     }
     return '';
   }
+
+   /**
+   * @desc 요금제 별 plan-typeX 데이터를 파싱함, BE와 퍼블리셔 간의 의사소통 부재로 인해 2, 3 번이 미스매치 됨
+   * @param data (ProdSmryExpsTypCd)
+   */
 
   private _parseProdSmryExpsTypCd(data) {
     switch (data) {
@@ -619,13 +661,11 @@ export default class RenewProductPlans extends TwViewController {
     }
     return '';
   }
-  
-  private _getM24agrmtFeeAmt(basFeeAmt,m24agrmtDcAmt) {
-    if(isNaN(Number(basFeeAmt))) {
-      return '';
-    }
-    return Number(basFeeAmt) - Number(m24agrmtDcAmt);
-  }
+
+  /**
+   * @desc 나의 요금제의 PLM 정보와 redis 혜택정보를 통해 비교하기 버튼 노출 여부를 판별
+   * @param svcInfo
+   */
 
   private isCompareButton(svcInfo: any): Observable<any> {
     // 로그인이 안되어있다면? 
@@ -649,8 +689,8 @@ export default class RenewProductPlans extends TwViewController {
   }
   
   /**
-     * 나의 요금제의 PLM 정보가 있는지 체크 (BFF)
-     */
+   * @desc 나의 요금제의 PLM 정보가 있는지 체크 (BFF)
+   */
   private getExistsMyProductPLM(): Observable<any>{
     return this.apiService.request(API_CMD.BFF_05_0136, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
@@ -674,7 +714,7 @@ export default class RenewProductPlans extends TwViewController {
   }
 
     /**
-     * 나의 요금제의 어드민 등록 혜택이 있는지 체크 (Redis)
+     * @desc 나의 요금제의 어드민 등록 혜택이 있는지 체크 (Redis)
      * @param svcInfo 
      */
     private getExistsMyProductRedis(svcInfo: any): Observable<any> {
@@ -689,6 +729,13 @@ export default class RenewProductPlans extends TwViewController {
         return false;
       });
     }
+
+    /**
+     * @desc 노출 할 요금제와 나의 요금제의 통신망 정보를 비교하고 isCompareButton 을 통해 얻은 값으로 각 요금제 별 compareYN을 얻어냄
+     * @param prodList - 노출할 요금제 리스트
+     * @param networkInfo - 내 통신망 정보
+     * @param isCompare - isCompareButton의 결과 값
+     */
 
   private _getCompareYN(prodList, networkInfo, isCompare) {
     for(var i in prodList){
@@ -720,6 +767,11 @@ export default class RenewProductPlans extends TwViewController {
     return txt;
   }
 
+   /**
+     * @desc 필터리스트를 얻어오는 API에서 화면의 탭을 구성하는 목록을 얻어옴
+     * 
+     */
+
   private _getTabList() : Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0032, {idxCtgCd:INDEX_CATAGORY['PRODUCT']}).map( resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -741,23 +793,32 @@ export default class RenewProductPlans extends TwViewController {
     });
   }
 
+   /**
+     * @desc 혜택을 택 1 항목과 개별 노출 항목으로 구분하여 리턴
+     * @param benefitList - 혜택 리스트
+     */
+
   private _parseBenefitList(benefitList) {
-    let list = {chooseBenefitList :[{}],sepBenefitList:[{}]};
+    let list = {chooseBenefitList :[{}],sepBenefitList:[{}]}; // type을 맞추기 위해 각 list[0] = {} 
     for(let i in benefitList) {
       if(benefitList[i].useAmt) {
         benefitList[i].useAmt = ProductHelper.convProductBasfeeInfo(benefitList[i].useAmt);
         benefitList[i].benfAmt = ProductHelper.convProductBasfeeInfo(benefitList[i].benfAmt);
       }
-      if(benefitList[i].prodBenfTypCd == '02') {
+      if(benefitList[i].prodBenfTypCd == '02') { // 택 1
         list.chooseBenefitList.push(benefitList[i]);
-      } else {
+      } else { // 개별 노출
         list.sepBenefitList.push(benefitList[i]);
       }
     }
-    list.chooseBenefitList.shift();
-    list.sepBenefitList.shift();
+    list.chooseBenefitList.shift(); // list[0] 을 제거함
+    list.sepBenefitList.shift(); 
     return list;
   }
+
+   /**
+     * @desc cdn값 가져옴
+     */
 
   private _getCDN() {
     const env = String(process.env.NODE_ENV);

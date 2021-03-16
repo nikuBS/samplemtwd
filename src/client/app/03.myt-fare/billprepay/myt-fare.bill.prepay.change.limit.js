@@ -473,7 +473,8 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    * @desc 한도 변경 성공 시 잔여한도 표시
    */
   _setRemainAmount: function () {
-    var usedAmount = this.$container.find('.fe-use-amount').attr('id');
+    var $root = this.$container.find('[data-title="'+ this.$title +'"]');
+    var usedAmount = $root.find('.fe-use-amount').attr('id');
     var remainAmount = this.$monthSelector.attr('id');
     var remain = parseInt(remainAmount, 10) - parseInt(usedAmount, 10);
 
@@ -481,7 +482,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       remain = 0;
     }
     var remainText = remain.toString();
-    this.$container.find('.fe-remain-amount').attr('id', remainText)
+    $root.find('.fe-remain-amount').attr('id', remainText)
       .text(Tw.FormatHelper.addComma(remainText));
   },
   /**
