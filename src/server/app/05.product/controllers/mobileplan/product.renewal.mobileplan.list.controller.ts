@@ -695,7 +695,9 @@ export default class RenewProductPlans extends TwViewController {
     return this.apiService.request(API_CMD.BFF_05_0136, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         const data = resp.result.feePlanProd;
-
+        if(!data) {
+          return false;
+        } 
         const basFeeTxt = this.convertUndefined(FormatHelper.getValidVars(data.basFeeTxt));
         const basDataGbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataGbTxt));
         const basDataMbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataMbTxt));
@@ -708,6 +710,7 @@ export default class RenewProductPlans extends TwViewController {
         }
 
         return data;
+        
       }
       return false;
     });
