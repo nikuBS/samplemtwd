@@ -172,7 +172,9 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn === 'Y') { // 설정 버튼 & 설정가능
+      // 어드민 상품 원장 버튼관리에 등록된 버튼 중에서 URL입력이 Mobile부분이 '' 로 입력 된 버튼은 비노출로써
+      // v컬러링 플러스 상품에서 설정 버튼 클릭 시 액션 시트 띄워줄때 linkUrl(목적지 URL)이 '' 설정된 버튼 안보이도록 처리 (OP002-13288)
+      if (item.linkTypCd === 'SE' && (!FormatHelper.isEmpty(item.linkUrl)) && basicInfo.prodSetYn === 'Y') { // 설정 버튼 & 설정가능
         settingBtnList.push(item);
         return true;
       }
