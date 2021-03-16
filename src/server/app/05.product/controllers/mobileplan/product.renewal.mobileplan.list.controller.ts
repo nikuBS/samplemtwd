@@ -550,6 +550,7 @@ export default class RenewProductPlans extends TwViewController {
     }
     
     return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
+      console.log(resp);
       if (resp.code === API_CODE.CODE_00) {
 
         if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) { // 회선이 유선이라면 5G로 리턴함 ( 유선회선에서 0220 API 호출 시 에러발생함 )
@@ -558,7 +559,7 @@ export default class RenewProductPlans extends TwViewController {
 
         return this.matchSvcCode(resp.result.prodFltId);
       }
-      return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+      return [INDEX_CATAGORY['3G'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
     });
   }
 
@@ -583,7 +584,7 @@ export default class RenewProductPlans extends TwViewController {
       case INDEX_CATAGORY.PPS : //PPS
         return [INDEX_CATAGORY.PPS, INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd']];
       default :
-        return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
+        return [INDEX_CATAGORY['3G'], INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
     }
     return [INDEX_CATAGORY['5G'], INDEX_CATAGORY.LTE, INDEX_CATAGORY['3G'], INDEX_CATAGORY['2nd'], INDEX_CATAGORY.PPS];
   }
