@@ -342,13 +342,13 @@ export default class RenewProduct extends TwViewController {
           //   return DEVICE_CODES[resp.result.eqpMthdCd];
           // }
 
-          // 중 분류 코드가 휴대폰이 아닌경우는 모두 'PPS/2nd Device' 장비
+          // 중 분류 코드가 휴대폰이 아닌경우는 모두 '2nd Device' 장비
           if ( resp.result.beqpMclEqpClSysCd !== '0101000' ) {
             return DEVICE_CODES.E;
           }
         }
         
-        return DEVICE_CODES.F; // 코드에 해당되는 데이터가 없으면 F로 세팅
+        return DEVICE_CODES.W; // 코드에 해당되는 데이터가 없으면 W로 세팅
       });
     } 
 
