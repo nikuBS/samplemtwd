@@ -672,6 +672,10 @@ export default class RenewProduct extends TwViewController {
         if (resp.code === API_CODE.CODE_00) {
           const data = resp.result.feePlanProd;
 
+          if ( !data ) {
+            return false;
+          }
+
           const basFeeTxt = this.convertUndefined(FormatHelper.getValidVars(data.basFeeTxt));
           const basDataGbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataGbTxt));
           const basDataMbTxt = this.convertUndefined(FormatHelper.getValidVars(data.basDataMbTxt));
