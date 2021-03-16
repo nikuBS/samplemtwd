@@ -460,7 +460,7 @@ Tw.ProductCompare.prototype = {
         }
       }
       if(benfData.chooseList) { // 순서 정렬
-        benfData.chooseList.sort(function(preBenfData,postBenfData){
+        benfData.chooseList.sort(function(preBenfData,postBenfData) {
           var preBenfDataSeq = Number(preBenfData.benfList.expsSeq);
           var postBenfDataSeq = Number(postBenfData.benfList.expsSeq);
           if(preBenfDataSeq > postBenfDataSeq) {
@@ -475,8 +475,8 @@ Tw.ProductCompare.prototype = {
           return 0;
         });
       }
-      if(benfData.seqList) { // 순서 정렬
-        benfData.seqList.sort(function(preBenfData,postBenfData){
+      if(benfData.sepList) { // 순서 정렬
+        benfData.sepList.sort(function(preBenfData,postBenfData){
           var preBenfDataSeq = Number(preBenfData.benfList.expsSeq);
           var postBenfDataSeq = Number(postBenfData.benfList.expsSeq);
           if(preBenfDataSeq > postBenfDataSeq) {
