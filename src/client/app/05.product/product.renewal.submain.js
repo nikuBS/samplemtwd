@@ -12,6 +12,8 @@ Tw.ProductRenewalSubmain = function(rootEl, sectionSort, line, myAge, cdn, menuI
   this._myAge = myAge;
   this._cdn = cdn;
   
+  console.log('[ProductRenewalSubmain]: ' + myAge + " / " + this._line.deviceCode);
+
   // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
