@@ -206,7 +206,6 @@ export default class RenewProductPlans extends TwViewController {
         compareData,
         tabList
         ]) => {
-          let isCompare: string = '';
           if(compareData != 'N'){
             isCompare = 'Y'
           } else {
@@ -222,7 +221,7 @@ export default class RenewProductPlans extends TwViewController {
           }
           plans.isCompare = isCompare;
           plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare);
-          let mobileList: any = [];
+          let mobileList: any = []; // 통신망 별 section 구성을 위한 데이터 세팅
           for(let i in tabList.subFilters) {
             mobileList[i] = 
               {
@@ -641,7 +640,7 @@ export default class RenewProductPlans extends TwViewController {
     ).map(([isExistsPLMData, isExistsRedisData]) => {
 
       // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지에 대해 체크한 값
-      if ( isExistsPLMData && isExistsRedisData ) { 
+      if ( isExistsPLMData || isExistsRedisData ) { 
         return isExistsPLMData;
       }
 
