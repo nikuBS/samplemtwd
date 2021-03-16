@@ -45,6 +45,15 @@ enum DEVICE_CODES {
   'P' = 'P', // PPS (Custom)
 }
 
+enum SUB_DEVICE_CODES {
+  'F01123' = 'W', // 2G (2G는 3G를 표현)
+  'F01122' = 'W', // 3G
+  'F01121' = 'L', // LTE
+  'F01713' = 'F', // 5G
+  'F01124' = 'E', // 태블릿/ETC (Custom)
+  'F01125' = 'P', // PPS (Custom)
+}
+
 // 단말기 코드 명
 enum DEVICE_CODE_NAME {
   'W' = '3G',
@@ -326,13 +335,21 @@ export default class RenewProduct extends TwViewController {
             return DEVICE_CODES.E;
           }
 
-          // 단말기 방식 코드 검사
-          if ( Object.keys(DEVICE_CODES).indexOf( resp.result.eqpMthdCd ) > -1 ) {
-            return DEVICE_CODES[resp.result.eqpMthdCd];
+          // 단말기 방식 코드 검사 ( 2021. 03. 16. BE 단말기 코드 검사 방식 변경요청으로 prodFltId의의 로직으로 변경 )
+          // if ( Object.keys(DEVICE_CODES).indexOf( resp.result.eqpMthdCd ) > -1 ) {
+          //   return DEVICE_CODES[resp.result.eqpMthdCd];
+          // }
+
+          // 2021. 03. 16 BFF_05_0220의 BFF 중 prodFltId의 필드값으로 사용해달라는 요청이 있었음.
+          if ( resp.result.prodFltId ) {
+            if ( Object.keys(SUB_DEVICE_CODES).indexOf( resp.result.prodFltId ) > -1 ) {
+              return SUB_DEVICE_CODES[resp.result.prodFltId];
+            }
           }
+
         }
         
-        return DEVICE_CODES.E; // 코드에 해당되는 데이터가 없으면 E로 세팅
+        return DEVICE_CODES.F; // 코드에 해당되는 데이터가 없으면 E로 세팅
       });
     } 
 

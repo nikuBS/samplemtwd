@@ -1,6 +1,5 @@
 /**
  * @file 상품 비교하기
- * @author 이윤수
  * @since 2021. 01. 28
  */
 Tw.ProductCompare = function(rootEl, svcInfo, networkInfo, myPLMData, cdn) {
@@ -63,29 +62,92 @@ Tw.ProductCompare.prototype = {
    * @return {void} 
    */
     _comparePlan: function(e) {
-
-        
         var $target = $(e.currentTarget);
 
         this.compareProdId = $target.data('prod-id');
-        this._sendTracking(this._svcInfo.prodId, $target.data('prod-id'), 'CPR');
+        this._sendTracking(this._svcInfo.prodId, $target.data('prod-id'), 'CPR'); // 비교하기 버튼 눌렸을 때 통계코드 전송
         this._getRedisData(this._svcInfo.prodId, this.compareProdId, $target);
     },
 
     /**
-   * @desc 각 요금제 API 통해 비교 값 세팅
-   * @return {string} (임시) 
+     * @desc 비교대상에 대한 Redis 정보를 얻음
+     */
+
+    _getRedisData: function(curProdId, compareProdId, $target) {
+      if ( !curProdId || !compareProdId ) {
+        return null;
+      }
+      this._apiService.requestArray([
+        { command: Tw.NODE_CMD.GET_BENF_PROD_INFO, params: { prodId : curProdId }},
+        { command: Tw.NODE_CMD.GET_BENF_PROD_INFO, params: { prodId : compareProdId }}
+      ]).done($.proxy(this._successRedis, this, $target));
+    },
+
+    /**
+     * Redis 데이터 받고 데이터 파싱
+     * @param $target - 비교하기 버튼
+     * @param curRes - 현재 요금제 레디스 데이터
+     * @param compareRes - 비교할 요금제 레디스 데이터
+     */
+
+    _successRedis: function($target,curRes,compareRes) {
+      var curParse = {};
+      var compareParse = {};
+      if(curRes.code === Tw.API_CODE.CODE_00) {
+        curParse = this._parseBenfProdInfo(curRes.result);
+      } else { // 레디스 호출 실패 시 모든 혜택 빈값으로 세팅
+        curParse = {
+          prodBenfCd_01 : [], // 통화 혜택 데이터 셋
+          prodBenfCd_02 : [], // 데이터 속도제어 데이터 셋
+          prodBenfCd_03 : [], // 데이터 추가 혜택 데이터 셋
+          prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
+          prodBenfCd_05 : [], // 안내문구 데이터 셋
+        }
+      }
+      if(compareRes.code === Tw.API_CODE.CODE_00) {
+        compareParse = this._parseBenfProdInfo(compareRes.result);
+      } else {
+        compareParse = { // 레디스 호출 실패 시 모든 혜택 빈값으로 세팅
+          prodBenfCd_01 : [], // 통화 혜택 데이터 셋
+          prodBenfCd_02 : [], // 데이터 속도제어 데이터 셋
+          prodBenfCd_03 : [], // 데이터 추가 혜택 데이터 셋
+          prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
+          prodBenfCd_05 : [], // 안내문구 데이터 셋
+        }
+      }
+
+        this.curRedisData = JSON.parse(JSON.stringify(curParse)); // this.curRedisData 와 curParse 주소값 공유(얕은 복사) 끊음 
+        this.compareRedisData = JSON.parse(JSON.stringify(compareParse)); // this.compareRedisData 와 compareParse 주소값 공유(얕은 복사) 끊음
+        //console.log('curRedisData:',this.curRedisData);
+        //console.log('compareRedisData:',this.compareRedisData);
+        this._setCompareDataCur(this._myPLMData, this.curRedisData);
+        this._setCompareDataCompare($target, this.compareRedisData);
+        this.compareData.graphData = this._setGraphData();
+        this.compareData.compareData = this._makeCompareData(this.compareData);
+        this.compareData.dataBenf = this._getDataAddtionOption(this.curRedisData, this.compareRedisData);
+        //console.log("데이터 추가혜택",this.compareData.dataBenf);
+        var addtionalBenf = this._getAdditionalBenf(curParse, compareParse);
+        this.compareData.addtionalBenf = this._parseAdditionBenf(addtionalBenf);
+
+        //console.log("추가혜택",this.compareData.addtionalBenf);
+        //console.log("최종데이터",this.compareData);
+        this._openComparePopup(this.compareData, $target);
+      
+    },
+    /**
+   * @desc PLM 데이터와 redis데이터를 이용하여 데이터, 음성, 문자 기본 값 세팅
+   * @return {list}
    */
     _setCompareDataCur: function(myPLMData, redisData) { //현재 요금제 데이터 셋 생성
       this.compareData.curPlan = {
         prodId: myPLMData.linkProdId,
         prodNm: myPLMData.prodNm,
         basFeeAmt: '',
-        chartData: '',
+        chartData: '', //차트 안에 들어갈 변환된 data 값
         basOfrDataQtyCtt: {
           value: '',
           unit: '',
-          exist: true
+          exist: true //그래프의 말주머니 표시 여부
         },
         speedControl: '',
         basOfrVcallTmsCtt: {
@@ -494,7 +556,7 @@ Tw.ProductCompare.prototype = {
       return benfData;
     },
 
-      /**
+  /**
    * @desc 데이터 비교 문구 생성
    * @return {string}
    */
@@ -808,77 +870,6 @@ Tw.ProductCompare.prototype = {
       lostSepBenefits: lostSepBenefits,
       lostChooseBenefits: lostChooseBenefits
     };
-  },
-
-  /**
-   * 비교대상에 대한 Redis 정보를 얻음
-   */
-  _getRedisData: function(curProdId, compareProdId, $target) {
-    if ( !curProdId || !compareProdId ) {
-      return null;
-    }
-    this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_BENF_PROD_INFO, params: { prodId : curProdId }},
-      { command: Tw.NODE_CMD.GET_BENF_PROD_INFO, params: { prodId : compareProdId }}
-    ]).done($.proxy(this._successRedis, this, $target));
-  },
-
-
-  /**
-   * Redis에서 값을 가지고 왔을 때
-   * @param {*} redisData 
-   */
-  _successRedis: function($target,curRes,compareRes) {
-    var curParse = {};
-    var compareParse = {};
-    if(curRes.code === Tw.API_CODE.CODE_00) {
-      curParse = this._parseBenfProdInfo(curRes.result);
-    } else {
-      curParse = {
-        prodBenfCd_01 : [], // 통화 혜택 데이터 셋
-        prodBenfCd_02 : [], // 데이터 속도제어 데이터 셋
-        prodBenfCd_03 : [], // 데이터 추가 혜택 데이터 셋
-        prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
-        prodBenfCd_05 : [], // 안내문구 데이터 셋
-      }
-    }
-    if(compareRes.code === Tw.API_CODE.CODE_00) {
-      compareParse = this._parseBenfProdInfo(compareRes.result);
-    } else {
-      compareParse = {
-        prodBenfCd_01 : [], // 통화 혜택 데이터 셋
-        prodBenfCd_02 : [], // 데이터 속도제어 데이터 셋
-        prodBenfCd_03 : [], // 데이터 추가 혜택 데이터 셋
-        prodBenfCd_04 : [], // 추가 혜텍 데이터 셋
-        prodBenfCd_05 : [], // 안내문구 데이터 셋
-      }
-    }
-
-      this.curRedisData = JSON.parse(JSON.stringify(curParse));
-      this.compareRedisData = JSON.parse(JSON.stringify(compareParse));
-      console.log('curRedisData:',this.curRedisData);
-      console.log('compareRedisData:',this.compareRedisData);
-      this._setCompareDataCur(this._myPLMData, this.curRedisData);
-      this._setCompareDataCompare($target, this.compareRedisData);
-      this.compareData.graphData = this._setGraphData();
-      this.compareData.compareData = this._makeCompareData(this.compareData);
-      this.compareData.dataBenf = this._getDataAddtionOption(this.curRedisData, this.compareRedisData);
-      console.log("데이터 추가혜택",this.compareData.dataBenf);
-      var addtionalBenf = this._getAdditionalBenf(curParse, compareParse);
-      this.compareData.addtionalBenf = this._parseAdditionBenf(addtionalBenf);
-
-      console.log("추가혜택",this.compareData.addtionalBenf);
-      console.log("최종데이터",this.compareData);
-      this._openComparePopup(this.compareData, $target);
-    
-  },
-
-  /**
-   * Redis 정보 Load 에 실패했을 때
-   * @param {*} error 
-   */
-  _errorRedis: function() {
-    return null;
   },
 
   _parseAdditionBenf: function(addtionalBenf) {
