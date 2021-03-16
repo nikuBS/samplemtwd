@@ -1,6 +1,6 @@
 <%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% let hasNext = 'false' %>
-<!-- // 최대로 내려서 요금제 더 불러오기 기능 사용 안함 -->
+<!-- 요금제 더 불러오기 기능 사용 안함 -->
 
 <body class="tod-renewalBody">
     <div id="skipNav" class="skip_navi">
@@ -17,36 +17,35 @@
                     <div class="tod-nmp-top-wrap">
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
                     </div>
+                    <% if(plans.rcnProductList) { %>
+                        <% for( let i = 0; i < plans.rcnProductList.length; i++ ) { %>
+                            <% let thisSeries = plans.rcnProductList[i]; %>
+                            <section class="tod-cont-section tod-nmp-theme" data-theme="<%= thisSeries.prodFltId %>">
+                                <div class="rn-banner-img">
+                                    <img src="<%= cdn %><%= thisSeries.prodFltBgImgUrl %>" alt="">
+                                </div>
+                                <div class="tod-nmp-title">
+                                    <h3 class="rn-prod-tit"><%= thisSeries.prodFltNm %></h3>
+                                </div>
+                                <div class="tod-nmp-row-list">
+                                    <ul>
+                                        <% for(let j = 0; j < plans.separateProductList.length; j++) { %>
+                                            <% let thisPlan = plans.separateProductList[j]; %>
 
-                    <% for( let i = 0; i < plans.rcnProductList.length; i++ ) { %>
-                        <% let thisSeries = plans.rcnProductList[i]; %>
-                        <section class="tod-cont-section tod-nmp-theme" data-theme="<%= thisSeries.prodFltId %>">
-                            <div class="rn-banner-img">
-                                <img src="<%= cdn %><%= thisSeries.prodFltBgImgUrl %>" alt="">
-                            </div>
-                            <div class="tod-nmp-title">
-                                <h3 class="rn-prod-tit"><%= thisSeries.prodFltNm %></h3>
-                            </div>
-                            <!-- 요금제 row list -->
-                            <div class="tod-nmp-row-list">
-                                <ul>
-                                    <% for(let j = 0; j < plans.separateProductList.length; j++) { %>
-                                        <% let thisPlan = plans.separateProductList[j]; %>
-                                        <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
-                                        <% if(thisSeries.prodFltId == thisPlan.prodFltId) { %>
-                                            <% thisPlan.prodSmryExpsTypCd = thisSeries.prodSmryExpTypeCd %>
-                                            <li>
-                                                <div class="tod-nmp-item plan-type<%= thisSeries.prodSmryExpTypeCd %> <%= thisPlan.tabCode %>">
-                                                    <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: 'Y'}); %>
-                                                </div>
-                                            </li>
+                                            <% if(thisSeries.prodFltId == thisPlan.prodFltId) { %>
+                                                <% thisPlan.prodSmryExpsTypCd = thisSeries.prodSmryExpTypeCd %>
+                                                <!-- 요금제 모듈 타입 유형을 같은 테마 끼리 일치시킴 -->
+                                                <li>
+                                                    <div class="tod-nmp-item plan-type<%= thisSeries.prodSmryExpTypeCd %> <%= thisPlan.tabCode %>">
+                                                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: 'Y'}); %>
+                                                    </div>
+                                                </li>
+                                            <% } %>
                                         <% } %>
-                                        <!-- //요금제 모듈 : 혜택강조형 -->
-                                    <% } %>
-                                </ul>
-                            </div>
-                            <!-- // 요금제 row list -->
-                        </section>
+                                    </ul>
+                                </div>
+                            </section>
+                        <% } %>
                     <% } %>
                     
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>

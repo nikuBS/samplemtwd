@@ -1,6 +1,6 @@
 <%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% let hasNext = 'true' %>
-<!-- // 최대로 내려서 요금제 더 불러오기 기능 사용 안함 -->
+<!-- // 요금제 더 불러오기 기능 사용 -->
 
 <body class="tod-renewalBody">
     <div id="skipNav" class="skip_navi">
@@ -16,7 +16,6 @@
                 <div class="container">
                     <div class="tod-nmp-top-wrap">
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
-                        <!-- 필터 조건값 노출 영역 -->
                     </div>
                     <% if (plans.groupProdList) { %>
                         <% for( let i = 0; i < plans.groupProdList.length; i++ ) { %>
@@ -31,13 +30,11 @@
                                     </div>
                                     <h3 class="rn-prod-tit"><%= thisSeries.prodGrpDesc %></h3>
                                 </div>
-                                <!-- 요금제 row list -->
                                 <div class="tod-nmp-row-list">
                                     <ul>
                                         <% for(let j = 0; j < thisSeries.prodList.length; j++) { %>
                                             <% let thisPlan = thisSeries.prodList[j]; %>
                                             <li>
-                                                <!-- 요금제 모듈 : 혜택강조형 - .plan-type2 -->
                                                 <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <% if(params.idxCtgCd == 'F01121') { %>
                                                         prod-lte
                                                     <% } else if(params.idxCtgCd == 'F01122') { %>
@@ -47,14 +44,13 @@
                                                     <% } else { %>
                                                         prod-2nd
                                                     <% } %>">
+                                                    <!-- 요금제 시리즈 별 class를 params.idxCtgCd로 결정 -->
                                                     <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
                                                 </div>
-                                                <!-- //요금제 모듈 : 혜택강조형 -->
                                             </li>
                                         <% } %>
                                     </ul>
                                 </div>
-                                <!-- // 요금제 row list -->
                             </section>
                         <% } %>
                     <% } %>
@@ -72,6 +68,7 @@
                                 <% } else { %>
                                     prod-2nd
                                 <% } %>">
+                                <!-- 요금제 시리즈 별 class를 params.idxCtgCd로 결정 -->
                                     <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
                                 </div>
                             </section>

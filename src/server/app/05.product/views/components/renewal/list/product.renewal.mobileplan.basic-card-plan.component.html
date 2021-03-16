@@ -1,9 +1,12 @@
 <a href="/product/callplan?prod_id=<%=thisPlan.prodId%>" class="item-link">
     <div class="rn-tag">
         <div class="col-left">
+            <!-- 기획에서 하드코딩 요청 -->
             <% if(thisPlan.filters) { %>
                 <% for(let n=0; n< thisPlan.filters.length; n++) { %>
+                    <!-- BFF_10_0031 일때 -->
                     <% if(isTheme == 'Y') { %>
+                        <!-- 테마요금제 일때만 해당 태그 사용 -->
                         <% if(thisPlan.filters[n].prodFltId == 'F01713') { %>
                             <span class="i-tag-cr1">5G</span>
                             <% isTheme = ''; %>
@@ -32,8 +35,10 @@
                     <% } %>
                 <% } %>
             <% } else if(thisPlan.prodFltList) { %>
+                <!-- BFF_10_0203, BFF_10_0205 일때 -->
                 <% for(let n=0; n< thisPlan.prodFltList.length; n++) { %>
                     <% if(isTheme == 'Y') { %>
+                        <!-- 테마요금제 일때만 해당 태그 사용 -->
                         <% if(thisPlan.prodFltList[n].prodFltId == 'F01713'){ %>
                             <span class="i-tag-cr1">5G</span>
                             <% isTheme = ''; %>
@@ -64,7 +69,7 @@
             <% } %>
         </div>
         <div class="col-right">
-            <% if(svcInfo){ %>
+            <% if(svcInfo) { %>
                 <% if(svcInfo.prodId == thisPlan.prodId) { %>
                     <span class="i-tag-myplan">사용중</span>
                 <% } %>
@@ -116,9 +121,11 @@
         </ul>
     </div>
 <% if(thisPlan.prodSmryExpsTypCd == '2') { %>
+    <!-- 혜택 강조형 일 때만 혜택 노출 -->
     <% if((thisPlan.benefitList.sepBenefitList.length > 0) || (thisPlan.benefitList.chooseBenefitList.length > 0)) { %>
         <div class="rn-prod-benefit">
             <% if(thisPlan.benefitList.sepBenefitList) { %>
+                <!-- 개별 해택 -->
                 <ul>
                     <% for ( let k=0; k < thisPlan.benefitList.sepBenefitList.length; k++ ) { %>
                         <li>
@@ -142,6 +149,7 @@
 
             <%# 추가 혜택 %>
             <% if ( thisPlan.benefitList.chooseBenefitList.length > 0) { %>
+                <!-- 택 1 혜택 -->
                 <div class="p-benefit-choice">
                     <p class="title">추가혜택 <strong>1개</strong>를 선택해주세요</p>
                     <ul>
@@ -169,8 +177,11 @@
 <% } %>
 </a>
 <% if (thisPlan.compareYN) { %>
+    <!-- 요금제 별 비교하기 세부조건 충족 -->
     <% if (svcInfo) { %>
+        <!-- 로그인 여부 -->
         <% if (svcInfo.prodId != thisPlan.prodId) { %>
+            <!-- 사용중이 아님 -->
             <div class="rn-prod-bottom">
                 <div class="rn-btn-right">
                     <button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="<%= thisPlan.prodId %>" data-prod-nm="<%= thisPlan.prodNm %>"
