@@ -1,6 +1,6 @@
 <%- include('../../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% let hasNext = 'false' %>
-<!-- // 최대로 내려서 요금제 더 불러오기 기능 사용 안함 -->
+<!-- 요금제 더 불러오기 기능 사용 안함 -->
 
 <body class="tod-renewalBody">
     <div id="skipNav" class="skip_navi">
@@ -16,23 +16,22 @@
                 <div class="container">
                     <div class="tod-nmp-top-wrap">
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.top-select.component.html', {series: series, filterList: filterList}); %>
-                        <!-- 필터 조건값 노출 영역 -->
                         <%- include('../../../../components/renewal/list/product.renewal.mobileplan.filter-list.component.html', {plans: plans, filterList: filterList, hideFilter: '', hideTotalNum: ''}); %>
                     </div>
-                    <section class="tod-cont-section">
-                        <!-- 요금제 two column list -->
-                        <div class="tod-nmp-column-list">
-                            <ul>
-                                <% for(let i=0; i < plans.separateProductList.length; i++ ) { %>
-                                    <% let thisPlan = plans.separateProductList[i]; %>
-                                    <li>
-                                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, PPSYN: 'Y'}); %>
-                                    </li>
-                                <% } %>
-                            </ul>
-                        </div>
-                        <!-- //요금제 two column list -->
-                    </section>
+                    <% if(plans.separateProductList) { %>
+                        <section class="tod-cont-section">
+                            <div class="tod-nmp-column-list">
+                                <ul>
+                                    <% for(let i=0; i < plans.separateProductList.length; i++ ) { %>
+                                        <% let thisPlan = plans.separateProductList[i]; %>
+                                        <li>
+                                            <%- include('../../../../components/renewal/list/product.renewal.mobileplan.two-column-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, PPSYN: 'Y'}); %>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </section>
+                    <% } %>
                     <%- include('../../../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
                 </div>
             </div>
@@ -40,18 +39,6 @@
     </div>
 </body>
 <%- include('../../../../components/javascript.component.html', {}); %>
-<script>
-    $(document).ready(function(){
-        var $tabWrap = $(".tod-nmp-tab").find("ul");
-        var tabWidth = $tabWrap.width();
-        var onWidth = $tabWrap.find(".on").width();
-        var onPosi = $tabWrap.find(".on").position();
-        var onTotalPosi = onPosi.left + onWidth 
-        if(onTotalPosi > tabWidth){
-            $tabWrap.scrollLeft(onPosi.left - 20);
-        }
-    });
-</script>
 <%- include('../../../../components/renewal/list/product.renewal.mobileplan.list-script.component.html', {hasNext:hasNext}); %>
 <%- include('../../../../components/end.component.html', {}); %>
 

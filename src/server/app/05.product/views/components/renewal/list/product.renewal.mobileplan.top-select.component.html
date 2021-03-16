@@ -1,6 +1,7 @@
     <div class="tod-nmp-tab">
         <div class="rn-prod-inner">
             <ul>
+                <!-- 기기 필터 리스트에서 일반폰을 제외한 나머지 목록을 탭에 노출 / 현재 선택된 탭에 하이라이트를 줌 -->
                 <% for(let i in tabList.subFilters) { %>
                     <% let curFilter = tabList.subFilters[i]; %>
                     <% if(curFilter.prodFltId != 'F01123') { %>

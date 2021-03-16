@@ -15,7 +15,7 @@ import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { SVC_CDGROUP, PRODUCT_CODE, _5GX_PROD_ID } from '../../../../types/bff.type';
 
-  enum SERIES_CLASS {
+  enum SERIES_CLASS { // 기기 별 모듈 클래스
     '5G' = 'prod-5g',
     'LTE' = 'prod-lte',
     '3G' = 'prod-band',
@@ -23,12 +23,12 @@ import { SVC_CDGROUP, PRODUCT_CODE, _5GX_PROD_ID } from '../../../../types/bff.t
     'PPS' = 'prod-2nd'
   }
 
-  enum OPCLCD {
+  enum OPCLCD { // BFF_10_0203 처리구분
     'TOTAL' = '01',
     'SEP' = '02'
   }
 
-  enum INDEX_CATAGORY {
+  enum INDEX_CATAGORY { //인덱스 카테고리
     'PRODUCT' = 'F01100',
     'PLAN' = 'F01120',
     '5G' = 'F01713',
@@ -47,7 +47,16 @@ export default class RenewProductPlans extends TwViewController {
       super();
   }
 
-
+  /**
+   * 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params: any = {};
     const cdn = this._getCDN(); //이미지 출력 시 불러올 도메인 얻어옴
@@ -57,10 +66,10 @@ export default class RenewProductPlans extends TwViewController {
       noSeries : false,
       seriesClass : '',
     };
-    const filterList = {
+    const filterList = { //기기 필터(탭 정보)를 제외한 적용된 필터
       filterList : ''
     };
-    let isCompare = '';
+    let isCompare = ''; // PML정보와 혜택 정보를 가지고 있는지 여부
 
     if(req.query.filters) {
       const seriesCode: string = this._getSeries(req.query.filters);
@@ -95,9 +104,10 @@ export default class RenewProductPlans extends TwViewController {
 
     //여기서부터 데이터 불러오고 화면 랜더링
     if ((req.query.theme || filterList.filterList === '') && !req.query.code) {
+      //BFF_10_0203 사용하는 화면
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
-        this.isCompareButton(svcInfo), // 비교하기 버튼 출력 여부
+        this.isCompareButton(svcInfo), // PML정보, Redis혜택 정보 있는지 확인
         this._getTabList() //탭 리스트를 불러옴
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
@@ -141,7 +151,7 @@ export default class RenewProductPlans extends TwViewController {
               }
             }
             plans.separateProductList = this._getCompareYN(plans.separateProductList, networkInfoFilter[0], isCompare);
-            for(let i in plans.separateProductList) { //(비교하기 버튼) 
+            for(let i in plans.separateProductList) { //LTE요금제 이면서 3G요금제 인 상품에 대한 예외 처리 (비교하기 버튼) 
               if(plans.separateProductList[i].prodFltId == INDEX_CATAGORY['3G']) {
                 plans.separateProductList[i].compareYN = false;
               }
@@ -182,20 +192,20 @@ export default class RenewProductPlans extends TwViewController {
           });
         });
     } else if (series.noSeries === true) { // 전체리스트 필터 적용 시 3개씩 받아와서 출력
+      // BFF_10_0205 사용 화면
       params.searchFltIds =  req.query.filters;
       params.idxCtgCd = INDEX_CATAGORY.PRODUCT;
       Observable.combineLatest(
         this.getNetworkInfoFilter(svcInfo), // 나의 회선의 통신망 정보 조회
         this._getInitPlans(params), // 전체리스트 필터 적용 시 3개씩 받아옴
-        this.isCompareButton(svcInfo),
-        this._getTabList()
+        this.isCompareButton(svcInfo), // PML정보, Redis혜택 정보 있는지 확인
+        this._getTabList() //탭 리스트를 불러옴
       ).subscribe(([
         networkInfoFilter, // 통신망 정보 결과 값
         plans,
         compareData,
         tabList
         ]) => {
-          let isCompare: string = '';
           if(compareData != 'N'){
             isCompare = 'Y'
           } else {
@@ -211,7 +221,7 @@ export default class RenewProductPlans extends TwViewController {
           }
           plans.isCompare = isCompare;
           plans.products = this._getCompareYN(plans.products, networkInfoFilter[0], isCompare);
-          let mobileList: any = [];
+          let mobileList: any = []; // 통신망 별 section 구성을 위한 데이터 세팅
           for(let i in tabList.subFilters) {
             mobileList[i] = 
               {
@@ -630,7 +640,7 @@ export default class RenewProductPlans extends TwViewController {
     ).map(([isExistsPLMData, isExistsRedisData]) => {
 
       // 문자 사용량에 대한 데이터가 없고 전화 데이터가 없고 데이터 대한 데이터가 없는지에 대해 체크한 값
-      if ( isExistsPLMData && isExistsRedisData ) { 
+      if ( isExistsPLMData || isExistsRedisData ) { 
         return isExistsPLMData;
       }
 

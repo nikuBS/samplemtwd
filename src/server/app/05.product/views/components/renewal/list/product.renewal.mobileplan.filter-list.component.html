@@ -1,5 +1,6 @@
 <% if(filterList.filterList !== '') { %>
     <% if(hideFilter !== 'Y'){ %>
+        <!-- 필터리스트 숨김 여부 -->
         <div class="tod-nmp-fixed-filter">
             <div class="tod-filter-keyword">
                 <ul>
@@ -20,6 +21,7 @@
         </div>
     <% } %>
     <% if(hideTotalNum !== 'Y') { %>
+        <!-- 요금제 개수, 초기화 버튼 숨김 여부 -->
 </div>
     <div class="tod-nmp-search-top <% if(plans.productCount == 0) { %>noBg<% } %>">
         <p class="sh-total">총 <em><%= plans.productCount %></em>개</p>
