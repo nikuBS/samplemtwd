@@ -27,7 +27,7 @@ _%>
         <span class="type-info"><%= add %></span>
       </div>
       <span class="sel-line-btn">
-        <i class="sel-ico"></i>
+        <!--<i class="sel-ico"></i>-->
         <%_ const lineTxt = svcCnt === 1 ? '회선 관리' : '다른 회선 조회';_%>
         <span class="btn-txt fe-line-txt" data-line-txt="<%-lineTxt%>" data-close-txt="닫기"><%- lineTxt %></span>
         <!-- 회선이 단일인 경우 : 회선관리 -->
@@ -69,6 +69,7 @@ _%>
             <ul class="tab-cont-list">
               <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="{{selectedMobile}}"> <!-- false/true -->
                 <div class="line-cont-box">
+                  {{#if mobile.list.length}}
                   <ul>
                     {{#each mobile.list}}
                       <li class="line-item {{#if child}} have-child {{/if}}">
@@ -101,10 +102,12 @@ _%>
                       </li>
                     {{/each}}
                   </ul>
+                  {{/if}}
                 </div>
               </li>
               <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="{{selectedIptv}}">
                 <div class="line-cont-box">
+                  {{#if iptv.list.length}}
                   <ul>
                     {{#each iptv.list}}
                       {{#unless child}}
@@ -125,6 +128,7 @@ _%>
                       {{/unless}}
                     {{/each}}
                   </ul>
+                  {{/if}}
                   {{#if iptv.isWire}}
                     <div class="tab-banner">
                       <a href="/common/member/line/skb-svc-agreement" class="banner-area">
