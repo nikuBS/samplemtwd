@@ -1480,7 +1480,8 @@ Tw.ProductCommonCallplan.prototype = {
         return true;
       }
 
-      if (item.linkTypCd === 'SE' && prodSetYn === 'Y') {
+      // v컬러링 플러스 상품에서 설정 버튼 클릭 시 액션 시트 띄워줄때 linkUrl(목적지 URL)이 '' 설정된 버튼 안보이도록 처리 (OP002-13288)
+      if (item.linkTypCd === 'SE' && !Tw.FormatHelper.isEmpty(item.linkUrl) && prodSetYn === 'Y') { // 설정 버튼
         settingBtnList.push(item);
         return true;
       }
@@ -1490,7 +1491,13 @@ Tw.ProductCommonCallplan.prototype = {
         return true;
       }
 
-      termBtnList.push(item);
+      // if조건을 넣지 않고 해지 버튼 설정 시 위에 item.linkUrl에 empty string으로 올 경우 해당 버튼이 해지버튼으로 들어가서 분기 처리 함 (OP002-13288)
+      if (item.linkTypCd === 'TE') {  // 해지 버튼
+        termBtnList.push(item);
+        return true;
+      }
+
+      // termBtnList.push(item);
     });
 
     return {
