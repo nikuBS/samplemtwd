@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/product.css" media="all" /><!-- [C] 210317 임시연결 [퍼블확인용] -->
     
     
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
@@ -48,6 +49,16 @@
 					</div>
 
                     <div class="h-tit">요금제</div>
+                    <!-- 210317 [OP002-12712] [상품고도화] 베타 아이콘 추가 -->
+                    <div class="h-person h-plan-beta"> <!-- show클래스 추가 -->
+                        <button class="icon-gnb-person" aria-label="요금제 beta -새로운 요금제 화면을 만나보세요.">
+                            <span class="person-btn-wrap">
+                                <span class="inner-btn"></span>
+                                <span class="btn-comment"><span class="txt">새로운 요금제 화면을 만나보세요.</span></span> 
+                            </span>
+                        </button>
+                    </div>
+                    <!-- //210317 [OP002-12712] [상품고도화] 베타 아이콘 추가 -->
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
@@ -726,6 +737,42 @@
             };
         </script>
         <!-- // 200818 [OP002-7810] 스크립트 추가_01  -->
+
+        <!-- 210317 [OP002-12712] [상품고도화] 베타 아이콘 추가 : 스크립트 (개인화와 동일 퍼블확인용) -->
+        <script>
+            $(document).on('ready',function(){
+                skt_landing.action.home_slider({
+                    initialSlide: 0
+                });
+                var personTimer = null, hideTimer1 = null, hideTimer2 = null;
+                function personAction() {
+                    clearTimeout(personTimer);
+                    clearTimeout(hideTimer1);
+                    clearTimeout(hideTimer2);
+                    personTimer = setTimeout(function(){
+                        $('.h-person').addClass('show');
+                        hideTimer1 = setTimeout(function(){
+                            $('.h-person').removeClass('show');
+                            hideTimer2 = setTimeout(function(){
+                                $('.h-person .btn-comment').hide();
+                            }, 1000)
+                        }, 3000)
+                    }, 500);
+                }
+    
+                $(window).on('scroll', function () {
+                    if ($(this).scrollTop() === 0) {
+                        personAction();
+                    } else {
+                        $('.h-person .btn-comment').show();
+                        $('.h-person').removeClass('show');
+                        
+                    }
+                });
+                personAction();
+            });
+        </script>
+        <!-- //210317 [OP002-12712] [상품고도화] 베타 아이콘 추가 : 스크립트 (개인화와 동일 퍼블확인용) -->
     </div>
 </body>
 </html>
