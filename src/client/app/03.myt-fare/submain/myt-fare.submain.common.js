@@ -7,6 +7,7 @@
 Tw.MyTFareSubMainCommon = function (params) {
   this.$container = params.$element;
   this.data = params.data;
+  this.isPrd = $('[data-is-prd]').data('is-prd'); // 상용 여부
 };
 
 Tw.MyTFareSubMainCommon.prototype = {
@@ -34,7 +35,7 @@ Tw.MyTFareSubMainCommon.prototype = {
 
     var setEid = function (key, stgEId, prdEid) {
       var preCode = 'CMMA_A3_B12-';
-      eid[key] = preCode + (Tw.Environment.environment === 'prd' ? prdEid : stgEId);
+      eid[key] = preCode + (self.isPrd ? prdEid : stgEId);
       return this;
     };
 
