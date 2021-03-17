@@ -7,7 +7,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="roamingRates" class="wrap">
+<div id="roamingRates" class="wrap" data-menuid="<%= pageInfo.menuId %>">
     <!-- //웹접근성 hearder 삭제-->
     <%- include('../components/header.component.html', { title: '국가별 로밍 이용요금 조회', svcInfo: svcInfo }) %>
     <div id="contents" class="mt60">
@@ -27,7 +27,7 @@
     </div>
     <% } %>
     <div class="card">
-        <h2>출국 국가 검색 <button class="tip-view fe-tip" data-tip="RM_03_01_01_01_tip_01" title="추가 혜택 TIP보기" aria-haspopup="true">TIP</button></h2><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
+        <h2>출국 국가 검색 <button class="tip-view" id="RM_03_01_01_01_tip_01" title="추가 혜택 TIP보기" aria-haspopup="true">TIP</button></h2><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
 
         <form id="searchForm" action="/product/roaming/search-result" method="get">
             <input type="hidden" name="code" value="" />
@@ -80,7 +80,7 @@
         </div>
         <h3 class="section">종량 요금 안내</h3>
         <div class="rateHead" id="rateData">
-            <span class="title">데이터<button class="tip-view fe-tip" data-tip="RM_04_tip_01" title="데이터 사용량 예시 TIP보기" aria-haspopup="true">TIP</button></span><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
+            <span class="title">데이터<button class="tip-view" id="RM_04_tip_01" title="데이터 사용량 예시 TIP보기" aria-haspopup="true">TIP</button></span><!-- 210217 수정 [OP002-12168] 웹접근성 재인증 -->
             <span class="values">
                 <span class="colorPoint" id="dataCharge">-</span>/패킷
             </span>
@@ -215,8 +215,8 @@
     <div class="cont-box rm-cont-tooltip">
         <h3 class="tx-bold">꼭 확인해 주세요</h3>
         <ul class="noti-list02">
-        <li><button aria-haspopup="true" data-tip="RM_03_01_01_01_tip_03" class="tip-view-btn">이용 관련 안내<span class="tip-view">TIP</span></button></li>
-        <li><button aria-haspopup="true" data-tip="RM_03_01_01_01_tip_04" class="tip-view-btn">요금제 관련 안내<span class="tip-view">TIP</span></button></li>
+            <li><button aria-haspopup="true" id="RM_03_01_01_01_tip_03" class="tip-view-btn">이용 관련 안내111<span class="tip-view">TIP</span></button></li>
+			<li><button aria-haspopup="true" id="RM_03_01_01_01_tip_04" class="tip-view-btn">요금제 관련 안내<span class="tip-view">TIP</span></button></li>
         </ul>
     </div>
     <!-- // 210217 수정 [OP002-12168] 웹접근성 재인증 -->
