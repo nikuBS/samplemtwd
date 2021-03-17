@@ -71,20 +71,6 @@ Tw.CommonSearch.prototype = {
 
     Tw.Logger.info('[common.search] [_nextInit] document.referer : ', document.referrer);
 
-    // 검색 의견 목록 불러오기
-    setTimeout($.proxy(function () {
-        this._apiService.request(Tw.API_CMD.BFF_08_0070, {}).done($.proxy(function (res) { // console.log("res =====> ", res);
-            if (res.code === Tw.API_CODE.CODE_00) {
-                var surveyListTempl = Handlebars.compile(this.$container.find('#surveyList_templ').html());
-                this.$container.find('.tod-search-feedback').html(surveyListTempl(res));
-                // 검색 의견 보내기 버튼 리스너
-                this.$container.on('click', '#btn_08_0072', $.proxy(this._openAlert, this, Tw.ALERT_MSG_SEARCH.ALERT_4_A40, this._improveInvest));
-            }
-        }, this)).fail($.proxy(function (err) { // console.log("err =====> ", err);
-        }, this));
-    }, this), 1);
-    
-
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
 
@@ -878,19 +864,19 @@ Tw.CommonSearch.prototype = {
    * @function
    * @desc 검색 개선 의견 보내기
    */
-  // _improveInvest: function (evt) {
-  //   this._popupService.close();
+  _improveInvest: function (evt) {
+    this._popupService.close();
 
-  //   this._apiService.request(Tw.API_CMD.BFF_08_0084, {
-  //     ctt: this.$requestKeywordPopup.find('.input-focus').val()
-  //   }, null, null, null, { jsonp: false })
-  //     .done($.proxy(function (res) {
-  //       this._claimCallback(res, 52, evt);
-  //     }, this))
-  //     .fail($.proxy(function (err) {
-  //       this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
-  //     }, this));
-  // },
+    this._apiService.request(Tw.API_CMD.BFF_08_0084, {
+      ctt: this.$requestKeywordPopup.find('.input-focus').val()
+    }, null, null, null, { jsonp: false })
+      .done($.proxy(function (res) {
+        this._claimCallback(res, 52, evt);
+      }, this))
+      .fail($.proxy(function (err) {
+        this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
+      }, this));
+  },
   /**
    * @function
    * @desc 검색어 설문조사 요청 콜백
@@ -917,7 +903,6 @@ Tw.CommonSearch.prototype = {
       this._popupService.close();
     } else {
       this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
-      this._popupService.close();
     }
   },
   /**
@@ -2196,27 +2181,5 @@ Tw.CommonSearch.prototype = {
         this._nextInit();
       }, this))
       .fail($.proxy(this._nextInit, this));
-  },
-  _improveInvest: function (evt) { 
-      var typeCd = '';
-      if (Tw.BrowserHelper.isMobile()) {
-        typeCd = 'M'; 
-      } else {
-        if (Tw.BrowserHelper.isAndroid) {
-          typeCd = 'A'; 
-        } else {
-          typeCd = 'I'; 
-        }
-      }
-      this._apiService.request(Tw.API_CMD.BFF_08_0072, {
-          inqNum: this.$container.find('input[name=invstQstnAnswItm]:checked').val(),
-          typeCd: typeCd,
-          searchKeyword: this.$container.find('#keyword').val()
-      }, {}).done($.proxy(function (res) {
-          this._claimCallback(res, 51, evt);
-      }, this)).fail($.proxy(function (err) {
-          this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
-          this._popupService.close();
-      }, this))
-    }
+  }
 };
