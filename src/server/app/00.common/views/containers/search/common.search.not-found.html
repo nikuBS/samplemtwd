@@ -7,14 +7,14 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <%
 function recognizeLastChar(keyword){
-if(!keyword||keyword.length<=0){
-return '';
+    if(!keyword||keyword.length<=0){
+      return '';
+    }
+    var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
+    return endCharIdx>0 ? '으' : '';
 }
-var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
-return endCharIdx>0 ? '으' : '';
-}
-keyword = encodeURIComponent(keyword);
-inKeyword = encodeURIComponent(inKeyword);
+    keyword = encodeURIComponent(keyword);
+    inKeyword = encodeURIComponent(inKeyword);
 %>
 <!-- body -->
 <!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
@@ -25,115 +25,95 @@ inKeyword = encodeURIComponent(inKeyword);
     </div>
     // #skip_navigation -->
 <div class="wrap">
-    <div class="searchbox-header fe-header-wrap fe-aria-hidden-el">
-        <!-- 191001 [OP002-4009] 수정01 -->
-        <div class="sch-form tod-sch-form">
-            <form action="#" role="search" id="frm" onsubmit="return false;">
-                <div class="searchbox-close"><button class="close-area"><span class="tod-blind">이전</span></button></div>
-                <span class="inputbox">
+<div class="searchbox-header fe-header-wrap fe-aria-hidden-el">
+    <!-- 191001 [OP002-4009] 수정01 -->
+    <div class="sch-form tod-sch-form">
+        <form action="#" role="search" id="frm" onsubmit="return false;">
+            <div class="searchbox-close"><button class="close-area"><span class="tod-blind">이전</span></button></div>
+            <span class="inputbox">
                 <span class="input">
                     <!-- <input type="search" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>"> -->
                     <input type="search" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </span>
             </span>
-                <button class="icon-gnb-search"><span class="blind">검색</span></button>
-            </form>
-        </div>
-        <!-- //191001 [OP002-4009] 수정01 -->
+            <button class="icon-gnb-search"><span class="blind">검색</span></button>
+        </form>
     </div>
+    <!-- //191001 [OP002-4009] 수정01 -->
+</div>
 
-    <div id="contents" class="search-content fe-aria-hidden-el fe-container-wrap container-wrap">
-        <div class="search-content">
-            <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
-            <div class="cont-box nogaps">
-                <div class="tod-related-keywords tod-horizon-shadow">
-                    <p class="tit"><span>연관<span class="blind">검색어</span></span></p>
-                    <div class="widget">
-                        <div class="widget-box horizontal">
-                            <div class="horizontal-slide">
-                                <ul class="horizontal-list">
-                                    <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
-                                    <li>
-                                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-keyword="<%= relatedKeyword.result.Word[i] %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
-                                            <%= relatedKeyword.result.Word[i] %>
-                                        </a>
-                                    </li>
-                                    <% } %>
-                                </ul>
-                            </div>
+<div id="contents" class="search-content fe-aria-hidden-el fe-container-wrap container-wrap">
+    <div class="search-content">
+        <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
+        <div class="cont-box nogaps">
+            <div class="tod-related-keywords tod-horizon-shadow">
+                <p class="tit"><span>연관<span class="blind">검색어</span></span></p>
+                <div class="widget"> 
+                    <div class="widget-box horizontal">
+                        <div class="horizontal-slide">
+                            <ul class="horizontal-list">
+                            <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
+                                <li>
+                                    <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-keyword="<%= relatedKeyword.result.Word[i] %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                                        <%= relatedKeyword.result.Word[i] %>
+                                    </a>
+                                </li>
+                            <% } %>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <hr class="cont-sp type1" aria-hidden="true">
-            <% } %>
+        <hr class="cont-sp type1" aria-hidden="true">
+        <% } %>
 
-            <!-- 검색 결과 없음 -->
-            <div class="cont-box nogaps-hoz">
-                <div class="tod-search-feedback noresult">
-                    <strong class="text-ti"><span class="tod-txcolor6">‘<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>’</span>에 대한 검색 결과가 없습니다.</strong>
-                    <p class="text">검색어의 맞춤법이 정확한지 확인해 주세요.<br> 검색어의 길이를 줄이거나 비슷한 다른 검색어를 입력해 보세요.</p>
-                </div>
+        <!-- 검색 결과 없음 -->
+        <div class="cont-box nogaps-hoz">
+            <div class="tod-search-feedback noresult">
+                <strong class="text-ti"><span class="tod-txcolor6">‘<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>’</span>에 대한 검색 결과가 없습니다.</strong>
+                <p class="text">검색어의 맞춤법이 정확한지 확인해 주세요.<br> 검색어의 길이를 줄이거나 비슷한 다른 검색어를 입력해 보세요.</p>
             </div>
-            <!-- //검색 결과 없음 -->
+        </div>
+        <!-- //검색 결과 없음 -->
 
-            <!-- 검색 개선 의견 보내기 -->
-            <div class="cont-box nogaps-hoz">
-                <div class="tod-search-feedback">
-                    <!-- 210305 [OP002-13461] 수정_01 -->
-                    <p class="text-ti srch mb24"><%= surveyList.result.invstQstnInqItm[0].title %></p>
-                    <div class="poll-box tod-poll-box">
-                        <div class="tod-poll-comp radio">
-                            <div class="tod-poll-comp-inner">
-                                <ul class="select-list fieldset-panel">
-                                    <% surveyList.result.invstQstnAnswItm.forEach(function(invast){ %>
-                                    <li>
-                                        <label for="satisfaction1">
-                                        <span class="custom-form">
-                                            <input type="radio" id="satisfaction1" name="invstQstnAnswItm" value="<%= invast.inqNum %>"><span class="r-type1"></span>
-                                        </span>
-                                            <span class="custom-txt"><%= invast.inqCtt %></span>
-                                        </label>
-                                    </li>
-                                    <% }); %>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- //210305 [OP002-13461] 수정_01 -->
-                    <ul class="bt-slice item-two mt10">
-                        <li><button type="button" class="btn-round2 btn-style3" id="btn_08_0072">검색 개선 의견 보내기</button></li>
+        <!-- 검색 개선 의견 보내기 -->
+        <div class="cont-box nogaps-hoz">
+            <div class="tod-search-feedback">
+                <p class="text-ti srch">원하는 검색결과를 찾지 못하셨나요?</p>
+                <ul class="bt-slice item-two mt10">
+                    <li><button type="button" id="fe-btn-feedback" class="btn-round2 btn-style3">검색 개선 의견 보내기</button></li>
+                </ul>
+            </div>
+        </div>
+        <!-- //검색 개선 의견 보내기 -->
+
+        <hr class="cont-sp type1" aria-hidden="true">
+
+        <!-- 191001 [OP002-4009] 수정02 -->
+        <div class="cont-box nogaps-btm">
+            <div class="rec-list">
+                <p class="tod-search-tit">인기 검색어</p>
+                <div class="tod-popularword-wrap">
+                    <ul class="popularsearchword-list linklist-type tod-popularsearchword-list">
+                        <% for(var i=0;i<popularKeyword.Query.length;i++){ %>
+                        <% if(i>4) break;%>
+                        <li>
+                            <a href="/common/search?keyword=<%= encodeURIComponent(popularKeyword.Query[i].content) %>&step=<%= Number(step)+1%>" data-keyword="<%= popularKeyword.Query[i].content %>" class="category-type search-element">
+                                <strong class="number"><%= i+1 %></strong>
+                                <span class="text"><%= popularKeyword.Query[i].content %></span>
+                            </a>
+                        </li>
+                        <% } %>
                     </ul>
                 </div>
             </div>
-            <!-- //검색 개선 의견 보내기 -->
-
-            <hr class="cont-sp type1" aria-hidden="true">
-
-            <!-- 191001 [OP002-4009] 수정02 -->
-            <div class="cont-box nogaps-btm">
-                <div class="rec-list">
-                    <p class="tod-search-tit">인기 검색어</p>
-                    <div class="tod-popularword-wrap">
-                        <ul class="popularsearchword-list linklist-type tod-popularsearchword-list">
-                            <% for(var i=0;i<popularKeyword.Query.length;i++){ %>
-                            <% if(i>4) break;%>
-                            <li>
-                                <a href="/common/search?keyword=<%= encodeURIComponent(popularKeyword.Query[i].content) %>&step=<%= Number(step)+1%>" data-keyword="<%= popularKeyword.Query[i].content %>" class="category-type search-element">
-                                    <strong class="number"><%= i+1 %></strong>
-                                    <span class="text"><%= popularKeyword.Query[i].content %></span>
-                                </a>
-                            </li>
-                            <% } %>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- //191001 [OP002-4009] 수정02 -->
         </div>
+        <!-- //191001 [OP002-4009] 수정02 -->
     </div>
+</div>
 
 
 </div>

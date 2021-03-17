@@ -45,10 +45,6 @@ $.extend(Tw.CommonSearchNotFound.prototype,
    * @returns {void}
    */
   _nextInit : function () {
-
-    // 검색 의견 보내기 버튼 리스너
-    this.$container.on('click', '#btn_08_0072', $.proxy(this._openAlert, this, Tw.ALERT_MSG_SEARCH.ALERT_4_A40, this._improveInvest));
-
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
@@ -337,7 +333,6 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._popupService.close();
     }else{
       this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
-      this._popupService.close();
     }
   },
   /**
@@ -430,29 +425,5 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     }else{
       this.$ariaHiddenEl.attr('aria-hidden',false);
     }
-  },
-
-  _improveInvest: function (evt) { 
-    var typeCd = '';
-    if (Tw.BrowserHelper.isMobile()) {
-      typeCd = 'M'; 
-    } else {
-      if (Tw.BrowserHelper.isAndroid) {
-        typeCd = 'A'; 
-      } else {
-        typeCd = 'I'; 
-      }
-    }
-    this._apiService.request(Tw.API_CMD.BFF_08_0072, {
-        inqNum: this.$container.find('input[name=invstQstnAnswItm]:checked').val(),
-        typeCd: typeCd,
-        searchKeyword: this.$container.find('#search_keyword').val()
-    }, {}).done($.proxy(function (res) {
-        this._claimCallback(res, 51, evt);
-    }, this)).fail($.proxy(function (err) {
-        this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
-        this._popupService.close();
-    }, this))
   }
-
 });
