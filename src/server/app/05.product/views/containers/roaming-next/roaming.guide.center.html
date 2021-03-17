@@ -10,7 +10,7 @@
 <!--// #skip_navigation -->
 
 
-<div id="roamingGuide" class="wrap">
+<div id="roamingGuide" class="wrap" data-menuid="<%= pageInfo.menuId %>">
     <!-- //웹접근성 hearder 삭제-->
     <%- include('../components/header.component.html', { title: 'T로밍센터', svcInfo: svcInfo }) %>
     <div id="contents" class="first">
@@ -201,11 +201,16 @@
         </div>
     </div>
 
-    <div class="card tips">
-        <h2>꼭 확인해 주세요</h2>
-        <h3>고객센터(로밍폰 이용 시) <span class="tip" data-tip="RM_15_01_01_tip_01">TIP</span></h3>
-        <h3>고객센터(해외에서 일반/공중/호텔 전화 이용 시) <span class="tip" data-tip="RM_15_01_01_tip_02">TIP</span></h3>
+    <!-- 210315 수정 [OP002-13743] -->
+    <hr class="cont-sp type1" aria-hidden="true">
+    <div class="cont-box rm-cont-tooltip">
+        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+        <ul class="noti-list02">
+        <li><button aria-haspopup="true" id="RM_15_01_01_tip_01"" class="tip-view-btn">서고객센터(로밍폰 이용 시)  <span class="tip-view">TIP</span></button></li>
+        <li><button aria-haspopup="true" id="RM_15_01_01_tip_02" class="tip-view-btn">고객센터(해외에서 일반/공중/호텔 전화 이용 시)<span class="tip-view">TIP</span></button></li>
+        </ul>
     </div>
+    <!-- // 210315 수정 [OP002-13743] -->
 
     <div class="h36"></div>
     <div id="center1" class="standby">
@@ -375,7 +380,6 @@
   var baseDiv = '#roamingGuide';
   $(document).ready(function () {
     var main = new Tw.RoamingGuides($(baseDiv), JSON.parse('<%- JSON.stringify(pageInfo) %>'));
-    main.prepareTooltips()
   });
 </script>
 <% include ../../components/end.component.html %>

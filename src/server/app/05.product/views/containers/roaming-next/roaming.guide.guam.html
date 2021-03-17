@@ -1,6 +1,6 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="rn">
-<div id="roamingGuide" class="wrap">
+<div id="roamingGuide" class="wrap" data-menuid="<%= pageInfo.menuId %>">
     
      <!-- 202011 - 웹접근성 수정건 적용 : 스킵네비 추가 시작 -->
      
@@ -136,13 +136,17 @@
         </a>
     </div>
     <%- include('../../components/roaming-next/roaming.guide.cs.html'); %>
-    <div class="card tips">
-        <h2>꼭 확인해 주세요</h2>
-        <h3>T괌사이판 국내처럼 이용 안내<span class="tip" data-tip="TC000059">TIP</span></h3>
-        <h3>T괌사이판 5천원 이용 안내 <span class="tip" data-tip="TC000060">TIP</span></h3>
-        <h3>서비스 제공 국가 <span class="tip" data-tip="TC000061">TIP</span></h3>
-    </div>
-    <div class="h36"></div>
+        <!-- 210315 수정 [OP002-13743] -->
+        <hr class="cont-sp type1" aria-hidden="true">
+        <div class="cont-box rm-cont-tooltip">
+			<h3 class="tx-bold">꼭 확인해 주세요</h3>
+			<ul class="noti-list02">
+			<li><button aria-haspopup="true" id="TC000059" class="tip-view-btn">T괌사이판 국내처럼 이용 안내 <span class="tip-view">TIP</span></button></li>
+			<li><button aria-haspopup="true" id="TC000060" class="tip-view-btn">T괌사이판 5천원 이용 안내 <span class="tip-view">TIP</span></button></li>
+			<li><button aria-haspopup="true" id="TC000061" class="tip-view-btn">서비스 제공 국가 <span class="tip-view">TIP</span></button></li>
+			</ul>
+		</div>
+		<!-- // 210315 수정 [OP002-13743] -->  
     </div>
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }) %>
 </div>
@@ -154,7 +158,6 @@
   $(document).ready(function () {
     var main = new Tw.RoamingGuides($(baseDiv), JSON.parse('<%- JSON.stringify(pageInfo) %>'));
     main.prepareAnchorTabs();
-    main.prepareTooltips();
-  });
+  }); 
 </script>
 <% include ../../components/end.component.html %>

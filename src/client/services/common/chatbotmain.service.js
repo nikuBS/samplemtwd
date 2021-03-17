@@ -487,15 +487,12 @@ Tw.ChatbotMainService.prototype = {
                                                 this._mlsGreetingTextType = 'A';
                                             }
 
-                                            // hbs 파일에서 사용할 타입 정의 (imageType)
-                                            if (this._mlsGreetingImageType === 'A'){
-                                                this._typeA = true;
-                                                this._typeB = false;
-                                                this._typeC = false;
-
-                                                // imageType이 A일경우 textType을 A로 고정
+                                            if ( this._mlsGreetingImageType === 'A' ) {
+                                                this._mlsGreetingImageType = 'B';
                                                 this._mlsGreetingTextType = 'A';
-                                            } else if (this._mlsGreetingImageType === 'B'){
+                                            }
+
+                                            if (this._mlsGreetingImageType === 'B'){
                                                 this._typeA = false;
                                                 this._typeB = true;
                                                 this._typeC = false;
@@ -512,21 +509,9 @@ Tw.ChatbotMainService.prototype = {
                                             // MLS API 0231 호출 후 오류난 경우(ex. 데이터가 없는 경우 등) , imageType = 'B', textType = 'A', 기본발화어
                                             // imageType
                                             this._mlsGreetingImageType = 'B';
-    
-                                            // hbs 파일에서 사용할 타입 정의 (imageType)
-                                            if (this._mlsGreetingImageType === 'A'){
-                                                this._typeA = true;
-                                                this._typeB = false;
-                                                this._typeC = false;
-                                            } else if (this._mlsGreetingImageType === 'B'){
-                                                this._typeA = false;
-                                                this._typeB = true;
-                                                this._typeC = false;
-                                            } else if (this._mlsGreetingImageType === 'C'){
-                                                this._typeA = false;
-                                                this._typeB = false;
-                                                this._typeC = true;
-                                            }
+                                            this._typeA = false;
+                                            this._typeB = true;
+                                            this._typeC = false;
 
                                             Tw.Logger.info('[chatbotmain.service] [_init] this._mlsGreetingImageType', this._mlsGreetingImageType);
                                             // color
@@ -725,7 +710,7 @@ Tw.ChatbotMainService.prototype = {
             } else if (_this._typeC) {
                 _this._timer = setTimeout(function() {
                     $('.tod-combot-ctype-wrap').addClass('slideUp');
-                    $(".tod-combot-ctype-wrap").css( "bottom", "1rem" ); // 210317 [OP002-13778] 추가 : APP 메인에서 노출(하단 앱바가 없는 경우) bottom 위치 변경.
+                    $('.tod-combot-ctype-wrap').css( 'bottom', '1rem' ); // 210317 [OP002-13778] 추가 : APP 메인에서 노출(하단 앱바가 없는 경우) bottom 위치 변경.
                 }, 3000);
                 /*
                 _this._rollingTimer = setTimeout(function() {
@@ -866,7 +851,12 @@ Tw.ChatbotMainService.prototype = {
 
             if ( url && url.length > 0 ) {
                 if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
-                    Tw.CommonHelper.openUrlExternal(url);
+                    // 과금팝업 후 링크로 이동
+                    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+                        $.proxy(function (res) {
+                            _this.openOutLink(e, url, res);
+                        }, this)
+                    );
                 } else {
                     _this._historyService.goLoad(url);
                 }
@@ -958,43 +948,23 @@ Tw.ChatbotMainService.prototype = {
         $('.fe-home-charge_open').on('click', function(e){
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item fe-home-charge_open', '').trim();
             var url = $(e.currentTarget).data('url');
-            if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
-                /*
-                chatbotGubun = 'initial';
-                // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
-                if ( mlsProcessId !== 'N'){
-                    _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
-                        channel_id: mlsChannelId,
-                        process_id: mlsProcessId,
-                        item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
-                    }).done(
-                        Tw.Logger.info('[chatbotmain.service] [_bindEvent]  !$(.tod-combot-btn).hasClass(open) && _this._typeB : BFF_05_0233', '')
-                    );
-                }
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
-                */
-            } else {                
-                if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
-                    Tw.Logger.info('[chatbotmain.service] [_bindEvent] vcoloring/xbox chatbotGubun : ', chatbotGubun);
-                    // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
-                    if ( mlsProcessId !== 'N') {
-                        _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
-                            channel_id: mlsChannelId,
-                            process_id: mlsProcessId,
-                            item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
-                        }).done(
-                            Tw.Logger.info('[chatbotmain.service] [_bindEvent] vcoloring/xbox : BFF_05_0233 ', '')
-                        );
-                    }
-                    // 과금팝업 후 링크로 이동
-                    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
-                        $.proxy(function (res) {
-                            _this.openOutLink(e, url, res);
-                        }, this)
-                    );    
-                }
+            
+            // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
+            if ( mlsProcessId !== 'N') {
+                _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
+                    channel_id: mlsChannelId,
+                    process_id: mlsProcessId,
+                    item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
+                }).done(
+                    Tw.Logger.info('[chatbotmain.service] [_bindEvent] vcoloring/xbox : BFF_05_0233 ', '')
+                );
             }
- 
+            // 과금팝업 후 링크로 이동
+            Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+                $.proxy(function (res) {
+                    _this.openOutLink(e, url, res);
+                }, this)
+            );
         });
 
         // 말풍선 (링크) 클릭시 ( wavve, flo - 상품페이지 이동 )
@@ -1013,12 +983,17 @@ Tw.ChatbotMainService.prototype = {
                     process_id: mlsProcessId,
                     item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
                 }).done(
-                    Tw.Logger.info('[chatbotmain.service] [_bindEvent] $(.linkItem).on(click) : BFF_05_0233 : ', '')
+                    Tw.Logger.info('[chatbotmain.service] [_bindEvent] bpcpItemlink click : BFF_05_0233', '')
                 );
             }
 
             if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
-                Tw.CommonHelper.openUrlExternal(url);
+                // 과금팝업 후 링크로 이동
+                Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+                    $.proxy(function (res) {
+                        _this.openOutLink(e, url, res);
+                    }, this)
+                );
             } else {
                 _this._historyService.goLoad(url);
             }
@@ -1049,8 +1024,14 @@ Tw.ChatbotMainService.prototype = {
             Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] this._mlsGreetingImageType : ', this._mlsGreetingImageType);
             if (this._mlsGreetingImageType === 'B'){
                 greetingRangkingSize = 1;
+
+                // 노출 안된 메시지 순서를 맨 앞으로 변경
+                this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
             }else if (this._mlsGreetingImageType === 'C'){
-                greetingRangkingSize = 3;
+                greetingRangkingSize = 1;
+
+                // 노출 안된 메시지 순서를 맨 앞으로 변경
+                this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
             }else{
                 // 간편 로그인의 경우는 발화어 세개( hotbill, pay_bill, hotdata ) 만 표시해야 하므로 A 타입의 경우에도 사이즈는 3
                 //greetingRangkingSize = 4;
@@ -1063,23 +1044,30 @@ Tw.ChatbotMainService.prototype = {
             // 간편 로그인의 경우는 발화어 세개( hotbill, pay_bill, hotdata ) 만 표시
                 for (var i = 0; i < this._mlsGreetingRangking.length; i++) {
                     var mlsKeyword = this._mlsGreetingRangking[i];
-                    if (greetingRangking.length < greetingRangkingSize ){
-                        if (mlsKeyword === 'hotbill'){ // 1. hotbill
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        } else if (mlsKeyword === 'pay_bill'){ // 2. pay_bill
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;                                
-                        } else if (mlsKeyword === 'hotdata'){ // 3. hotdata
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;     
-                        }
+                    if (mlsKeyword === 'hotbill'){ // 1. hotbill
+                        greetingRangking.push(mlsKeyword);
+                    } else if (mlsKeyword === 'pay_bill'){ // 2. pay_bill
+                        greetingRangking.push(mlsKeyword);
+                    } else if (mlsKeyword === 'hotdata'){ // 3. hotdata
+                        greetingRangking.push(mlsKeyword);
                     }
                 }
             }else{                        
                 greetingRangking = this._defaultGreetingKeywords;
                 this._mlsItemIds = this._defaultMlsItems;
             }
+
+            if ( greetingRangkingSize < greetingRangking.length ) {
+                // 발화어 개수이상 삭제
+                greetingRangking.splice(greetingRangkingSize);
+            }
+    
+            if ( greetingRangking ) {
+                greetingRangking.forEach($.proxy(function (itme) {
+                    this._mlsItemIds = this._mlsItemIds + '|' + itme;
+                }, this));
+            }
+
             //this._mlsItemIds = this._mlsItemIds;
             Tw.Logger.info('[chatbotmain.service] [_preDrawChatbot] greetingRangking : ', greetingRangking);
             
@@ -1297,7 +1285,7 @@ Tw.ChatbotMainService.prototype = {
                     if (this._xboxYn === 'Y'){
                         greetingRangking.push(mlsKeyword);
                     }                    
-                }else{
+                } else if (this._chatbotCommonService._checkGreetingDate(mlsKeyword)) { // 그리팅 키워드 시작일 종료일 유효성 검사
                     greetingRangking.push(mlsKeyword);
                 }
             }
@@ -1309,10 +1297,13 @@ Tw.ChatbotMainService.prototype = {
         if (this._mlsGreetingImageType === 'B'){
             greetingRangkingSize = 1;
             
-            // 이미 표시된 그리팅 메시지 순서변경
+            // 노출 안된 메시지 순서를 맨 앞으로 변경
             this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
         } else if (this._mlsGreetingImageType === 'C'){
-            greetingRangkingSize = 3;
+            greetingRangkingSize = 1;
+
+            // 노출 안된 메시지 순서를 맨 앞으로 변경
+            this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
         } else{
             greetingRangkingSize = 4;
         }
@@ -1361,10 +1352,11 @@ Tw.ChatbotMainService.prototype = {
                     }
                     // vColoring의 경우 A, B 타입 외에 unRegYn(Y/N)으로도 나뉘어 있기 때문에
                     // 루프 돌면서 message가 ''인 경우가 중복으로 생기므로 이럴 경우는 제외시켜줌
-                    if (message !== ''){
+                    if (message !== '' ) {
                         var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl: linkUrl};
                         this._greetingKeywordInfos.push(greetingKeywordInfo);
                     }
+
                     // textType이 'B'인 경우 두줄 디자인으로
                     if (type === 'B'){
                         this._greetingLines = 'twoline';
@@ -1569,10 +1561,10 @@ Tw.ChatbotMainService.prototype = {
     },
 
     _loadPopup: function (e,url) {
-    this._popupService.open({
-        url: '/hbs/' ,
-        hbs: 'popup_a5'
-    },
+        this._popupService.open({
+            url: '/hbs/' ,
+            hbs: 'popup_a5'
+        },
         $.proxy(this._onOpenPopup, this, url),
         null,
         'prod_info',
@@ -1586,6 +1578,6 @@ Tw.ChatbotMainService.prototype = {
     },
 
     _confirm: function (url) {
-    Tw.CommonHelper.openUrlExternal(url);
+        Tw.CommonHelper.openUrlExternal(url);
     }
 };

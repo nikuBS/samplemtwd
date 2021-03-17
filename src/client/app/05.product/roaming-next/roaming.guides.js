@@ -19,12 +19,8 @@ Tw.RoamingGuides = function (rootEl, pageInfo) {
   this.baseLastScrollTop = 0;
   this.pageInfo = pageInfo;
   this.baseDiv = '#roamingGuide';
-
-  this.tooltips = {};
-  this.tooltipService = new Tw.TooltipService();
-
   this.bindEvents();
-  new Tw.RoamingMenu(rootEl).install();
+  new Tw.RoamingMenu(rootEl).install(); 
 };
 
 Tw.RoamingGuides.prototype = {
@@ -59,8 +55,6 @@ Tw.RoamingGuides.prototype = {
       $('.tab-body').hide();
       $('#' + tabId).show();
     });
-    // 툴팁 핸들러
-    this.$container.find('.tips .tip').on('click', $.proxy(this._handleTip, this));
     // T로밍센터, 터미널 선택 ActionSheet
     this.$container.find('#terminal').on('click', $.proxy(this.openTerminalActionSheet, this));
     //웹접근성 레프트 gnb 슬라이딩 메뉴, 닫기  
@@ -97,47 +91,6 @@ Tw.RoamingGuides.prototype = {
       // 이용안내 > baro 통화 (M001879) '혜택 대상 로밍 요금제 확인하기' 링크
       this.showBaroTariffs();
     }
-  },
-  _handleTip: function(e) {
-    // 이용안내 툴팁들의 경우 'data-tip' attribute에 tipId가 보관되어 있다.
-    var tipId = e.currentTarget.getAttribute('data-tip');
-    this.showTip(e, tipId);
-  },
-  /**
-   * 툴팁 노출 함수
-   *
-   * @param e EventObject
-   * @param tipId 툴팁 ID
-   */
-  showTip: function (e, tipId) {
-    this.tooltipService._openTip(this.tooltips[tipId], e.currentTarget);
-  },
-  /**
-   * 서버가 리턴한 툴팁 JSON 받아, this.tooltips Object 에 보관.
-   * 이렇게 보관된 데이터는 showTip 함수에서 추후 참조될 목적으로 보관한다.
-   *
-   * @param items [{mtwdTtipId, ttipTitNm, ttipCtt, ttipPreTypCd},]
-   */
-  collectTooltips: function (items) {
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      this.tooltips[item.mtwdTtipId] = {
-        ttipTitNm: item.ttipTitNm,
-        ttipCtt: item.ttipCtt,
-        type: item.ttipPreTypCd
-      };
-    }
-  },
-  /**
-   * 현재 페이지의 MenuId로 이 페이지에 포함된 모든 툴팁을 가져와
-   * collectTooltips 함수로 보낸다.
-   */
-  prepareTooltips: function () {
-    var menuId = this.pageInfo.menuId;
-    var proxy = this;
-    Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: menuId}).done(function (r) {
-      if (r.result && r.result.tooltip) proxy.collectTooltips(r.result.tooltip);
-    });
   },
   /**
    * 특정 앵커탭이 선택된 상태로 전환.
