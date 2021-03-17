@@ -209,15 +209,13 @@ Tw.ProductSubmain.prototype = {
     }
 
     var html = 
-      '<div class="h-person">' +
-        '<button data-url="/product/renewal/mobileplan" type="button" class="icon-gnb-person" data-xt_eid="CMMA_A4_B15-20" data-xt_csid="NO" data-xt_action="BC">' +
-            '<span class="person-btn-wrap">' +
-                '<span class="inner-btn">' +
-                    '<span class="tod-blind">새로운 요금제 화면을 만나보세요.</span>' +
-                '</span>' +
-                '<span class="btn-comment"><span class="txt">새로운 요금제 화면을 만나보세요.</span></span>' +
-            '</span>' +
-        '</button>' +
+      '<div class="h-person h-plan-beta">' + 
+        '<button data-url="/product/renewal/mobileplan" class="icon-gnb-person" aria-label="요금제 beta -새로운 요금제 화면을 만나보세요." data-xt_eid="CMMA_A4_B15-20" data-xt_csid="NO" data-xt_action="BC">' + 
+          '<span class="person-btn-wrap">' + 
+            '<span class="inner-btn"></span>' + 
+            '<span class="btn-comment"><span class="txt">새로운 요금제 화면을 만나보세요.</span></span>' + 
+          '</span>' + 
+        '</button>' + 
       '</div>';
 
     this.$container.find('.h-serarch').before(html);
