@@ -94,8 +94,8 @@
 								<span class="type">인터넷</span>
 								<span class="type-info">세종시 ********</span>
 							</div>
-							<span class="sel-line-btn"> 
-                                <i class="sel-ico"></i><span class="btn-txt">다른 회선 조회</span>
+							<span class="sel-line-btn"> <!-- 210316 [OP002-13729] 수정01 :sel-ico 삭제 -->
+                                <span class="btn-txt">다른 회선 조회</span> 
                                 <!-- 회선이 단일인 경우 : 회선관리 -->
                                 <!-- 회선이 복수인 경우 : 다른 회선 조회 -->
                                 <!-- 다른 회선 조회를 닫을 경우 : 닫기 -->
@@ -397,11 +397,13 @@
 					});
 					scrollTop = $(document).scrollTop()
 					$('body').css({'position':'fixed', 'top': -scrollTop+'px'});
+					$('.sel-show-btn').css({'top':'3.25rem'}); 
 				} else {
 					$(this).find('.sel-line-btn > span').html('다른 회선 조회');
 					$(this).attr('aria-expanded', false);
 					$content.off('focusin focusout');
 					$('body').css({'position':'', 'top' : ''});
+					$('.sel-show-btn').css({'top': ''}); 
 					$(document).scrollTop(scrollTop); 
 					scrollTop = 0; 
 				}
