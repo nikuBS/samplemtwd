@@ -474,16 +474,16 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    */
   _setRemainAmount: function () {
     var $root = this.$container.find('[data-title="'+ this.$title +'"]');
-    var usedAmount = $root.find('.fe-use-amount').attr('id');
-    var remainAmount = this.$monthSelector.attr('id');
-    var remain = parseInt(remainAmount, 10) - parseInt(usedAmount, 10);
+    var usedAmount = $root.find('.fe-use-amount').attr('id'); // 사용금액
+    var remainAmount = this.$monthSelector.attr('id');  // 월 한도
+    var remain = parseInt(remainAmount, 10) - parseInt(usedAmount, 10); // 잔여한도: 월한도 - 사용금액
 
-    if (remain < 0) {
-      remain = 0;
-    }
+    remain = remain < 0 ? 0 : remain;
+
     var remainText = remain.toString();
+    $root.find('.fe-limit-amount').text(Tw.FormatHelper.addComma(remainAmount)); // 총한도(월한도)
     $root.find('.fe-remain-amount').attr('id', remainText)
-      .text(Tw.FormatHelper.addComma(remainText));
+      .text(Tw.FormatHelper.addComma(remainText)); // 남은한도
   },
   /**
    * @function
