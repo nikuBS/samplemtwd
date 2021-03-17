@@ -134,9 +134,9 @@ Tw.ProductCompare.prototype = {
         this._openComparePopup(this.compareData, $target);
       
     },
-    /**
+   /**
    * @desc PLM 데이터와 redis데이터를 이용하여 데이터, 음성, 문자 기본 값 세팅
-   * @return {list}
+   * @return 
    */
     _setCompareDataCur: function(myPLMData, redisData) { //현재 요금제 데이터 셋 생성
       this.compareData.curPlan = {
@@ -197,16 +197,21 @@ Tw.ProductCompare.prototype = {
       }
     },
 
+   /**
+   * @desc 비교하기 버튼의 데이터와 redis데이터를 이용하여 데이터, 음성, 문자 기본 값 세팅
+   * @return 
+   */
+
     _setCompareDataCompare: function($target, redisData) { // 비교할 요금제 데이터 셋
       this.compareData.comparePlan = {
         prodId: $target.data('prod-id'),
         prodNm: $target.data('prod-nm'),
         basFeeAmt: $target.data('prod-fee'),
-        chartData: '',
+        chartData: '', //차트 안에 들어갈 변환된 data 값
         basOfrDataQtyCtt: {
           value: '',
           unit: '',
-          exist: true
+          exist: true // 말 주머니 표시여부
         },
         speedControl: '',
         basOfrVcallTmsCtt: {
@@ -257,6 +262,11 @@ Tw.ProductCompare.prototype = {
 
     },
 
+   /**
+   * @desc 레디스 데이터로 데이터 추가 옵션 리스트 생성
+   * @return {list}
+   */
+
     _getDataAddtionOption: function(curRedisData,compareRedisData) { // 데이터 추가 옵션 리스트 생성
       var _this = this;
       if(!curRedisData.prodBenfCd_03 && !compareRedisData.prodBenfCd_03) {
@@ -264,11 +274,11 @@ Tw.ProductCompare.prototype = {
       }
       
       var dataArr = [];
-      for(var i in curRedisData.prodBenfCd_03) {
+      for(var i in curRedisData.prodBenfCd_03) { // 1. 내 요금제 혜택 코드를 배열에 넣음
         dataArr.push(curRedisData.prodBenfCd_03[i].prodBenfTitCd);
       }
       var optionListArr = dataArr;
-      for(var i in compareRedisData.prodBenfCd_03) {
+      for(var i in compareRedisData.prodBenfCd_03) {// 2. 비교하는 요금제의 혜택 코드를 배열에 넣음
         if(dataArr == []) {
           optionListArr.push(compareRedisData.prodBenfCd_03[i].prodBenfTitCd);
         } else {
@@ -283,12 +293,12 @@ Tw.ProductCompare.prototype = {
           }
         }
       }
-      var set = new Set(optionListArr); // 중복 제거
+      var set = new Set(optionListArr); // 3. 중복 제거
       optionListArr = Array.from(set);
 
       var dataOption = [];
-      for(var i in optionListArr) {
-        dataOption.push({list:'', curData:[{}], compareData:[{}]});
+      for(var i in optionListArr) { // 4. list : 혜택 목록 정보   curData : 내 혜택 정보  compareData : 비교할 요금제 정보  삽입
+        dataOption.push({list:'', curData:[{}], compareData:[{}]}); // dataOption[i].curData[0], dataOption[i].compareData[0] 은 {} (push 함수 사용 위해서) 
         
         dataOption[i].list = this._getTitleText(optionListArr[i]);
        
@@ -304,11 +314,11 @@ Tw.ProductCompare.prototype = {
             dataOption[i].compareData.push(compareRedisData.prodBenfCd_03[j]);
           }
         }
-        dataOption[i].curData.shift();
+        dataOption[i].curData.shift(); // 5. curData[0], compareData[0] 배열 첫 항 제거
         dataOption[i].compareData.shift();
       }
       if(dataOption) {
-        dataOption.sort(function(preDataOption,postDataOption) {
+        dataOption.sort(function(preDataOption,postDataOption) { // 6. 정렬
           var preDataOptionList = preDataOption.list;
           var postDataOptionList = postDataOption.list;
           if(_this._dataAdditonOptionSort(preDataOptionList) > _this._dataAdditonOptionSort(postDataOptionList)) {
@@ -326,8 +336,13 @@ Tw.ProductCompare.prototype = {
       return dataOption;
     },
 
-    _dataAdditonOptionSort: function(list) { // 정렬 함수, 기획파트에서 하드코딩 요청
-      switch(list) {
+   /**
+   * @desc 정렬을 위한 정렬 함수 리턴
+   * @return {int}
+   */
+
+    _dataAdditonOptionSort: function(text) { // 정렬 함수, 기획파트에서 하드코딩 요청
+      switch(text) {
         case '데이터 옵션':
           return 0;
         case '데이터 공유 한도':
@@ -342,13 +357,18 @@ Tw.ProductCompare.prototype = {
       return 4;
     },
 
+   /**
+   * @desc 추가혜택  노출 리스트 생성
+   * @return {int}
+   */
+
     _getAdditionalBenf: function(curRedisData, compareRedisData) { // 추가혜택 리스트 생성 (개별 , 택 1 리스트 각각 구분)
       if(!curRedisData.prodBenfCd_04 && !compareRedisData.prodBenfCd_04) {
         return null;
       }
-      var choDataArr = [];
-      var sepDataArr = [];
-      for(var i in curRedisData.prodBenfCd_04) { // 현재 데이터에서 리스트 생성
+      var choDataArr = []; // 택1 목록 배열
+      var sepDataArr = []; // 개별 목록 배열
+      for(var i in curRedisData.prodBenfCd_04) { // 1. 현재 요금제 데이터에서 개별, 택1 리스트 각각 생성
         if(curRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
           choDataArr.push(curRedisData.prodBenfCd_04[i].prodBenfTitCd);
         } else if(curRedisData.prodBenfCd_04[i].prodBenfTypCd == '01') {
@@ -356,9 +376,9 @@ Tw.ProductCompare.prototype = {
         }
       }
 
-      var choOptionListArr = JSON.parse(JSON.stringify(choDataArr));
+      var choOptionListArr = JSON.parse(JSON.stringify(choDataArr)); // 얕은 복사된 배열 주소값 끊음
       var sepOptionListArr = JSON.parse(JSON.stringify(sepDataArr));
-      for(var i in compareRedisData.prodBenfCd_04) { // 리스트에 비교할 데이터 리스트 추가
+      for(var i in compareRedisData.prodBenfCd_04) { // 2. 비교할 요금제 데이터를 목록에 추가 (개별, 택1 리스트 각각)
         if(choDataArr.length == 0) {
           if(compareRedisData.prodBenfCd_04[i].prodBenfTypCd == '02') {
             choOptionListArr.push(compareRedisData.prodBenfCd_04[i].prodBenfTitCd);
@@ -397,9 +417,9 @@ Tw.ProductCompare.prototype = {
 
       var finishRoof = '';
       var overlab;
-      do { // 중복 제거
-        overlab = 'N';
-        if(choOptionListArr.length == 0 || sepOptionListArr.length == 0) {
+      do { // 3. 택 1 혜택 리스트와 개별 혜택 리스트를 비교하여 중복되는 리스트가 있으면 개별 혜택 리스트에서 제거
+        overlab = 'N'; // 중복 됬는지 여부 플래그
+        if(choOptionListArr.length == 0 || sepOptionListArr.length == 0) { // 둘 중 하나가 비어있으면 바로 탈출
           finishRoof = 'Y';
         }
         for(var i = 0; (i < choOptionListArr.length) && (overlab == 'N'); i++) {
@@ -418,7 +438,7 @@ Tw.ProductCompare.prototype = {
         }
       } while(finishRoof == '');
 
-      var benfData = {sepList :[],chooseList:[]}; // 개별 / 택 1 리스트 각각의 자리에 삽입
+      var benfData = {sepList :[],chooseList:[]}; // 4. 개별 혜택 리스트 list : 개별 혜택 목록 정보   curData : 내 개별 혜택 정보  compareData : 비교할 요금제 개별 혜택 정보  삽입
       for(var i in sepOptionListArr) {
         for(var j in curRedisData.prodBenfCd_04) {
           if(sepOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
@@ -441,10 +461,11 @@ Tw.ProductCompare.prototype = {
           } 
         }
       }
-      for(var i in choOptionListArr) {
-        for(var j in curRedisData.prodBenfCd_04) {
+      for(var i in choOptionListArr) { // 5. list : 혜택 목록 정보   curData : 내 요금제 택1 혜택 정보  compareData : 비교할 요금제 택1 혜택 정보  
+        for(var j in curRedisData.prodBenfCd_04) { // curSepData : 내 개별 혜택 정보 (비교할 요금제 동일한 종류의 혜택이 택 1이라 chooseList에 묶인 혜택) compareSepData : 비교할 요금제 개별 혜택 정보 (내 요금제의 동일한 종류의 혜택이 택 1이라 chooseList에 묶인 혜택) 삽입
           if(choOptionListArr[i] == curRedisData.prodBenfCd_04[j].prodBenfTitCd) {
             benfData.chooseList.push({ benfList:{}, curData:{}, compareData:{}, curSepData:{}, compareSepData:{} });
+            //
             benfData.chooseList[i].benfList = curRedisData.prodBenfCd_04[j];
             if(curRedisData.prodBenfCd_04[j].prodBenfTypCd == '02') {
               benfData.chooseList[i].curData = curRedisData.prodBenfCd_04[j];
@@ -468,8 +489,8 @@ Tw.ProductCompare.prototype = {
         }
       }
 
-      if(benfData.chooseList){
-        var curHaveList = '';
+      if(benfData.chooseList){ //noCurChooseList = true 면 나의 혜택 택 1 영역 - 로 표시됨  /  noCompareChooseList = true 면 비교할 요금제 택 1 영역 - 로 표시됨
+        var curHaveList = ''; // noCurSelectList = false 면 나의 혜택 택 1 영역에 '1개 무료 제공' text 삽입  /  noCompareSelectList = false 면 비교할 요금제 혜택 택 1 영역에 '1개 무료 제공' text 삽입
         for(var i = 0; (i < benfData.chooseList.length) && (curHaveList == ''); i++) { // curData에 값이 있는지 확인
           if(benfData.chooseList[i].curData.prodId) {
             curHaveList = 'Y';
@@ -647,7 +668,7 @@ Tw.ProductCompare.prototype = {
     },
 
    /**
-   * @desc graph 관련 데이터 생성
+   * @desc graph 관련 데이터 생성 (5G 인지 LTE인지 판별하여 그래프 종류를 선택)
    * @return {object} 
    */
 
@@ -683,17 +704,17 @@ Tw.ProductCompare.prototype = {
    */
     _handleOpenComparePopup: function(compareData) {
         var _this = this;
-        $('.curAddtion').eq(-1).remove();
-        $('.compareAddtion').eq(-1).remove();
+        $('.curAddtion').eq(-1).remove(); // '또는' 을 curData 개수 만큼 생성한뒤 가장 뒤에 '또는' 을 삭제
+        $('.compareAddtion').eq(-1).remove(); // '또는' 을 compareData 개수 만큼 생성한뒤 가장 뒤에 '또는' 을 삭제
         $('.prev-step').click(_.debounce($.proxy(this._popupService.close, this), 300));
         var curFee = compareData.curPlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
         var compareFee = compareData.comparePlan.basFeeAmt.trim().replace(/,/g,'').replace(/원/g,'');
         var actSheetBenfData = this._getCurPlanBenefits();
-        if((Number(curFee) > Number(compareFee)) && actSheetBenfData.lostBenefits) {
+        if((Number(curFee) > Number(compareFee)) && actSheetBenfData.lostBenefits) { // DG 방어 액션 시트 출력 여부
           $('.changePlan').click($.proxy(this._openConfirmChangePlan, this, actSheetBenfData));
         } else {
           $('.changePlan').click(function() {
-            _this._sendTracking(_this._svcInfo.prodId, _this.compareProdId, 'CAGC');
+            _this._sendTracking(_this._svcInfo.prodId, _this.compareProdId, 'CAGC'); // 통계 코드
             _this._historyService.replaceURL('/product/callplan?prod_id=' + _this.compareData.comparePlan.prodId);
           });
         }
@@ -757,7 +778,7 @@ Tw.ProductCompare.prototype = {
     },
 
     /**
-   * 팝업 중 slide 로 팝업창을 닫을 때
+   * 팝업 중 slide 로 팝업창을 닫을 때 (퍼블리싱 에서 제공한 script)
    */
     _slidePopupClose: function() {
     var page = document.querySelector('.compare-actionsheet');
@@ -810,7 +831,7 @@ Tw.ProductCompare.prototype = {
 
   /**
    * @desc 내 요금제 혜택 목록 가져오기 (actionSheet 표시 용)
-   * @return {object} (임시) 
+   * @return {object} 
    */
 
   _getCurPlanBenefits: function() {
@@ -866,11 +887,16 @@ Tw.ProductCompare.prototype = {
     
     return {
       prodNm: this.compareData.curPlan.prodNm,
-      lostBenefits : lostBenefits,
+      lostBenefits : lostBenefits, // 표시할 혜택이 있는지 여부 (false 면 액션시트 노출 안함)
       lostSepBenefits: lostSepBenefits,
       lostChooseBenefits: lostChooseBenefits
     };
   },
+
+  /**
+   * @desc 혜택 목록 파싱 
+   * @return {object} 
+   */
 
   _parseAdditionBenf: function(addtionalBenf) {
     addtionalBenf.sepList = _.map(addtionalBenf.sepList, $.proxy(this._parseSepList, this));
@@ -883,6 +909,11 @@ Tw.ProductCompare.prototype = {
 
     return addtionalBenf;
   },
+
+   /**
+   * @desc 추가 혜택 중 개별 혜택 데이터 파싱
+   * @return {object} 
+   */
 
   _parseSepList: function(sepList) { //추가 혜택 중 개별 혜택 데이터 파싱
     if (sepList.length > 0) {
@@ -911,11 +942,11 @@ Tw.ProductCompare.prototype = {
         }
       }
     }
-    if(sepList.benfList.prodBenfTitCd == '05' || sepList.benfList.prodBenfTitCd == '10') {
+    if(sepList.benfList.prodBenfTitCd == '05' || sepList.benfList.prodBenfTitCd == '10') { // T 멤버쉽 , 함께 쓰기는 detail 만 화면에 노출 (기획 요구사항)
       sepList.curData.expsBenfNm = null;
       sepList.compareData.expsBenfNm = null;
     }
-    if(sepList.benfList.prodBenfTitCd == '05') {
+    if(sepList.benfList.prodBenfTitCd == '05') { // T 멤버쉽이 노출될 때 해당 혜택이 없는 영역에 - 대신 '기존 등급 유지' 노출 (기획 요구사항)
       if(!sepList.curData.prodId) {
         sepList.curData.prodId = 'Y';
         sepList.curData.benfDtlCtt = '기존 등급 유지';
@@ -928,6 +959,11 @@ Tw.ProductCompare.prototype = {
     return sepList;
   },
 
+  /**
+   * @desc 추가 혜택 중 택 1 혜택 데이터 파싱
+   * @return {object} 
+   */
+
   _parseChooseList: function(chooseList) { //추가 혜택 중 택 1 혜택 데이터 파싱
     if (chooseList.length > 0) {
       return null;
@@ -936,7 +972,7 @@ Tw.ProductCompare.prototype = {
       chooseList.benfList.titleText = this._getTitleText(chooseList.benfList.prodBenfTitCd);
     }
     if(chooseList.benfList.prodBenfTitCd == '05') {
-      if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) { // t 멤버쉽 예외처리
+      if(!chooseList.curData.prodId && !chooseList.curSepData.prodId && (chooseList.compareData.prodId || chooseList.compareSepData.prodId)) { // // T 멤버쉽이 노출될 때 해당 혜택이 없는 영역에 - 대신 '기존 등급 유지' 노출 (기획 요구사항)
         chooseList.curSepData.prodId = 'Y';
         chooseList.curSepData.expsBenfNm = 'T 멤버쉽';
         chooseList.curSepData.benfDtlCtt = '기존 등급 유지';
@@ -947,7 +983,7 @@ Tw.ProductCompare.prototype = {
         chooseList.compareSepData.benfDtlCtt = '기존 등급 유지';
       }
     }
-    if(chooseList.benfList.prodBenfTitCd == '06' || chooseList.benfList.prodBenfTitCd == '08') { // 음악 / 영상 하드코딩 '무료' 제거
+    if(chooseList.benfList.prodBenfTitCd == '06' || chooseList.benfList.prodBenfTitCd == '08') { // 음악 / 영상 하드코딩 detail에 '무료' 제거
       if(chooseList.curData.prodId) {
         chooseList.curData.benfDtlCtt = null;
       }
@@ -959,7 +995,12 @@ Tw.ProductCompare.prototype = {
     return chooseList;
   },
 
-  _getTitleText: function(prodBenfTitCd) { //레디스 데이터에서 코드를 해당 타이틀로 치환 (하드코딩 기획에서 요청)
+    /**
+   * @desc 레디스 데이터에서 코드를 해당 타이틀로 치환 (하드코딩 기획에서 요청)
+   * @return {string}  
+   */
+
+  _getTitleText: function(prodBenfTitCd) { //
     var titleText = '';
     switch(prodBenfTitCd) {
       case '01':
