@@ -178,14 +178,10 @@ Tw.BenefitIndex.prototype = {
     this.$clearBtn.on('click', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
 
     this.$container.on('change', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
-    this.$container.on('click', '.fe-pop-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
     this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
-    this.$container.on('click', '.fe-pop-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
     this.$container.on('click', '.fe-close', $.proxy(function () {
       $('#agree-banner-area').hide();
     }, this));   // T world 광고정보수신동의 배너 닫기
-    this.$container.on('click', '.fe-pop-close', $.proxy(this._onCloseAgreePopup, this));   // T world 광고정보수신동의 팝업 닫기
-    this.$container.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 다음에 보기 처리
 
     this.$agreePopup.on('click', '.fe-pop-close', $.proxy(this._onCloseAgreePopup, this));   // T world 광고정보수신동의 팝업 닫기
     this.$agreePopup.on('click', '.fe-pop-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
@@ -1042,7 +1038,13 @@ Tw.BenefitIndex.prototype = {
    * @desc 광고성정보수신동의 팝업 open
    */
   _onOpenAgreePopup: function () {
+    this.$agreePopup.attr('aria-hidden', 'false');
     this.$agreePopup.removeClass('none');
+    this.$container.attr('aria-hidden', 'true');
+    $('#skipNav').attr('aria-hidden', 'true');
+    setTimeout($.proxy(function(){
+      this.$agreePopup.find('.fe-pop-close').focus();
+    }, this), 100);
   },
 
   /**
@@ -1050,6 +1052,10 @@ Tw.BenefitIndex.prototype = {
    * @desc 광고성정보수신동의 팝업 close
    */
   _onCloseAgreePopup: function () {
+    this.$agreePopup.attr('aria-hidden', 'true');
     this.$agreePopup.addClass('none');
+    setTimeout($.proxy(function() {
+      this.$container.attr('aria-hidden', 'false');
+    }, this), 100);
   }
 };

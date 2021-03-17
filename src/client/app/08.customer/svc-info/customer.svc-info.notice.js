@@ -161,6 +161,8 @@ Tw.CustomerSvcInfoNotice.prototype = {
     $targetElem.html(this._fixHtml(resp.result.ntcCtt));
 
     Tw.CommonHelper.replaceExternalLinkTarget($targetElem);
+    // OP002-13748 웹 접근성으로 hr이 있는 경우는 무시
+    $('body hr').attr('aria-hidden', 'true');
   },
 
   /**
