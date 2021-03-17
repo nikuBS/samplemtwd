@@ -196,7 +196,9 @@ Tw.ProductRenewalSubmain.prototype = {
         }) || [];
         
         if ( filter.length > 0) {
-          arr.push(item);
+          arr.push(Object.assign(item, {
+            bnnrExpsSeq: Number(item.bnnrExpsSeq) // bnnrExpsSeq은 string 인데 number로 casting 하여 sort를 진행
+          }));
         }
       }
       return arr;
@@ -308,6 +310,7 @@ Tw.ProductRenewalSubmain.prototype = {
 
           if ( compare.length !== 0 ) {
             arr.push(Object.assign(item, { // 추가적인 정보를 assign 함.
+              bnnrExpsSeq: Number(item.bnnrExpsSeq), // bnnrExpsSeq은 string 인데 number로 casting 하여 sort를 진행
               scopeTarget: Number(age),
               scope: list
             }));
@@ -317,6 +320,10 @@ Tw.ProductRenewalSubmain.prototype = {
       }
       return arr;
     }, []);
+
+    if ( themeBannerParseList.length > 0 ) { // bnnrExpsSeq 기준으로 정렬
+      themeBannerParseList = _.sortBy(themeBannerParseList, 'bnnrExpsSeq');
+    }
 
     this._drawThemeBanner(themeMainTitle, themeBannerParseList, this); // 배너형 테마를 draw
   },
