@@ -58,18 +58,20 @@
                         <% for( let i = 0; i < plans.separateProductList.length; i++ ) { %>
                            <% let thisPlan = plans.separateProductList[i]; %>
                             <section class="tod-cont-section">
-                                <h3 class="gr-tit"><%= thisPlan.prodSmryDesc %></h3>
-                                <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <% if(params.idxCtgCd == 'F01121') { %>
-                                    prod-lte
-                                <% } else if(params.idxCtgCd == 'F01122') { %>
-                                    prod-band
-                                <% } else if(params.idxCtgCd == 'F01713') { %>
-                                    prod-5g
-                                <% } else { %>
-                                    prod-2nd
-                                <% } %>">
-                                <!-- 요금제 시리즈 별 class를 params.idxCtgCd로 결정 -->
-                                    <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
+                                <div class="tod-nmp-prod-group">
+                                    <h3 class="gr-tit"><%= thisPlan.prodSmryDesc %></h3>
+                                    <div class="tod-nmp-item plan-type<%= thisPlan.prodSmryExpsTypCd %> <% if(params.idxCtgCd == 'F01121') { %>
+                                        prod-lte
+                                    <% } else if(params.idxCtgCd == 'F01122') { %>
+                                        prod-band
+                                    <% } else if(params.idxCtgCd == 'F01713') { %>
+                                        prod-5g
+                                    <% } else { %>
+                                        prod-2nd
+                                    <% } %>">
+                                    <!-- 요금제 시리즈 별 class를 params.idxCtgCd로 결정 -->
+                                        <%- include('../../../../components/renewal/list/product.renewal.mobileplan.basic-card-plan.component.html', {thisPlan: thisPlan, svcInfo: svcInfo, isTheme: ''}); %>
+                                    </div>
                                 </div>
                             </section>
                         <% } %>

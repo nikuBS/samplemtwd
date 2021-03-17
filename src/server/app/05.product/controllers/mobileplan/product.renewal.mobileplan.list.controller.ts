@@ -550,7 +550,6 @@ export default class RenewProductPlans extends TwViewController {
     }
     
     return this.apiService.request(API_CMD.BFF_05_0220, {}).map((resp) => {
-      console.log(resp);
       if (resp.code === API_CODE.CODE_00) {
 
         if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) >= 0) { // 회선이 유선이라면 5G로 리턴함 ( 유선회선에서 0220 API 호출 시 에러발생함 )
