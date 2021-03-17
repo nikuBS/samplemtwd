@@ -1059,7 +1059,7 @@ Tw.ChatbotService.prototype = {
                 // 노출 안된 메시지 순서를 맨 앞으로 변경
                 this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
             }else if (this._mlsGreetingImageType === 'C'){
-                greetingRangkingSize = 3;
+                greetingRangkingSize = 1;
 
                 // 노출 안된 메시지 순서를 맨 앞으로 변경
                 this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
@@ -1441,7 +1441,7 @@ Tw.ChatbotService.prototype = {
             // 그리팅 랭킹을 석는다
             this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
         } else if (this._mlsGreetingImageType === 'C'){
-            greetingRangkingSize = 3;
+            greetingRangkingSize = 1;
 
             // 그리팅 랭킹을 석는다
             this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);

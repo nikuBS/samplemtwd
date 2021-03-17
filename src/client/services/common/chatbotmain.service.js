@@ -1028,7 +1028,7 @@ Tw.ChatbotMainService.prototype = {
                 // 노출 안된 메시지 순서를 맨 앞으로 변경
                 this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
             }else if (this._mlsGreetingImageType === 'C'){
-                greetingRangkingSize = 3;
+                greetingRangkingSize = 1;
 
                 // 노출 안된 메시지 순서를 맨 앞으로 변경
                 this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
@@ -1300,7 +1300,7 @@ Tw.ChatbotMainService.prototype = {
             // 노출 안된 메시지 순서를 맨 앞으로 변경
             this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
         } else if (this._mlsGreetingImageType === 'C'){
-            greetingRangkingSize = 3;
+            greetingRangkingSize = 1;
 
             // 노출 안된 메시지 순서를 맨 앞으로 변경
             this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
