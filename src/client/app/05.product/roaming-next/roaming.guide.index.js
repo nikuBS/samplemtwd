@@ -32,7 +32,7 @@ Tw.RoamingGuideIndex.prototype = {
    */
   bindEvents: function () {
     // '로밍 이용 가이드' 핸들러
-    this.$container.find('.subs .sub.documents').on('click', $.proxy(this.showDocuments, this));
+    this.$container.find('.subs .sub .documents').on('click', $.proxy(this.showDocuments, this));
     // 상황별 포인트 클릭 핸들러
     this.$container.find('.point .item').on('click', $.proxy(this._handleChecklist, this));
     // 상황별 포인트 횡스크롤 slick dots 핸들러
