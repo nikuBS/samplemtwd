@@ -877,7 +877,12 @@ Tw.ChatbotService.prototype = {
 
             if ( url && url.length > 0 ) {
                 if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
-                    Tw.CommonHelper.openUrlExternal(url);
+                    // 과금팝업 후 링크로 이동
+                    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+                        $.proxy(function (res) {
+                            _this.openOutLink(e, url, res);
+                        }, this)
+                    );
                 } else {
                     _this._historyService.goLoad(url);
                 }
@@ -969,43 +974,30 @@ Tw.ChatbotService.prototype = {
         $('.fe-home-charge_open').on('click', function(e){
             var chatbotGubun = $(e.currentTarget).attr('class').replace('item fe-home-charge_open', '').trim();
             var url = $(e.currentTarget).data('url');
-            if(!$('.tod-combot-btn').hasClass('open') && _this._typeB){
-                /*
-                chatbotGubun = 'initial';
-                // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
-                if ( mlsProcessId !== 'N'){
-                    _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
-                        channel_id: mlsChannelId,
-                        process_id: mlsProcessId,
-                        item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
-                    }).done(
-                        Tw.Logger.info('[chatbot.service] [_bindEvent]  !$(.tod-combot-btn).hasClass(open) && _this._typeB : BFF_05_0233', '')
-                    );
-                }
-                _this._bpcpService.open_withExtraParam('BPCP:0000065084', _this._svcInfo ? _this._svcInfo.svcMgmtNum : null, '', '&keyword=initial');
-                */
-            } else {                
-                if ( url === 'https://www.vcoloring-event.com' || url === 'https://tworld.vcoloring.com' || url === 'https://www.5gxcloudgame.com/main' ) {
-                    Tw.Logger.info('[chatbot.service] [_bindEvent] vcoloring/xbox chatbotGubun : ', chatbotGubun);
-                    // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
-                    if ( mlsProcessId !== 'N') {
-                        _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
-                            channel_id: mlsChannelId,
-                            process_id: mlsProcessId,
-                            item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
-                        }).done(
-                            Tw.Logger.info('[chatbot.service] [_bindEvent] vcoloring/xbox : BFF_05_0233 ', '')
-                        );
-                    }
+
+            // BFF_05_0233 MLS CHATBOT 사용자의 채널 / 아이템 click 이벤트
+            if ( mlsProcessId !== 'N') {
+                _this._apiService.request(Tw.API_CMD.BFF_05_0233, {
+                    channel_id: mlsChannelId,
+                    process_id: mlsProcessId,
+                    item_id: mlsGreetingImageInfo + '|' + mlsGreetingTextType + '|' + chatbotGubun
+                }).done(
+                    Tw.Logger.info('[chatbot.service] [_bindEvent] vcoloring/xbox : BFF_05_0233 ', '')
+                );
+            }
+
+            if ( url && url.length > 0 ) {
+                if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
                     // 과금팝업 후 링크로 이동
                     Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
                         $.proxy(function (res) {
                             _this.openOutLink(e, url, res);
                         }, this)
-                    );    
+                    );
+                } else {
+                    _this._historyService.goLoad(url);
                 }
             }
- 
         });
         
         // 말풍선 (링크) 클릭시 ( wavve, flo - 상품페이지 이동 )
@@ -1028,10 +1020,17 @@ Tw.ChatbotService.prototype = {
                 );
             }
 
-            if ( url && ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) ) {
-                Tw.CommonHelper.openUrlExternal(url);
-            } else {
-                _this._historyService.goLoad(url);
+            if ( url && url.length > 0 ) {
+                if ( url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1 ) {
+                    // 과금팝업 후 링크로 이동
+                    Tw.Native.send(Tw.NTV_CMD.GET_NETWORK,{},
+                        $.proxy(function (res) {
+                            _this.openOutLink(e, url, res);
+                        }, this)
+                    );
+                } else {
+                    _this._historyService.goLoad(url);
+                }
             }
             // Tw.CommonHelper.openUrlExternal('https://app.tworld.co.kr' + url);
         });
@@ -1056,8 +1055,14 @@ Tw.ChatbotService.prototype = {
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] this._mlsGreetingImageType : ', this._mlsGreetingImageType);
             if (this._mlsGreetingImageType === 'B'){
                 greetingRangkingSize = 1;
+
+                // 노출 안된 메시지 순서를 맨 앞으로 변경
+                this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
             }else if (this._mlsGreetingImageType === 'C'){
                 greetingRangkingSize = 3;
+
+                // 노출 안된 메시지 순서를 맨 앞으로 변경
+                this._chatbotCommonService._changeMlsGreetingRangking(this._mlsGreetingRangking);
             }else{
                 // 간편 로그인의 경우는 발화어 세개( hotbill, pay_bill, hotdata ) 만 표시해야 하므로 A 타입의 경우에도 사이즈는 3
                 //greetingRangkingSize = 4;
@@ -1070,23 +1075,30 @@ Tw.ChatbotService.prototype = {
             // 간편 로그인의 경우는 발화어 세개( hotbill, pay_bill, hotdata ) 만 표시
                 for (var i = 0; i < this._mlsGreetingRangking.length; i++) {
                     var mlsKeyword = this._mlsGreetingRangking[i];
-                    if (greetingRangking.length < greetingRangkingSize ){
-                        if (mlsKeyword === 'hotbill'){ // 1. hotbill
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;
-                        } else if (mlsKeyword === 'pay_bill'){ // 2. pay_bill
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;                                
-                        } else if (mlsKeyword === 'hotdata'){ // 3. hotdata
-                            greetingRangking.push(mlsKeyword);
-                            this._mlsItemIds = this._mlsItemIds + '|' + mlsKeyword;     
-                        }
+                    if (mlsKeyword === 'hotbill'){ // 1. hotbill
+                        greetingRangking.push(mlsKeyword);
+                    } else if (mlsKeyword === 'pay_bill'){ // 2. pay_bill
+                        greetingRangking.push(mlsKeyword);
+                    } else if (mlsKeyword === 'hotdata'){ // 3. hotdata
+                        greetingRangking.push(mlsKeyword);
                     }
                 }
             }else{                        
                 greetingRangking = this._defaultGreetingKeywords;
                 this._mlsItemIds = this._defaultMlsItems;
             }
+
+            if ( greetingRangkingSize < greetingRangking.length ) {
+                // 발화어 개수이상 삭제
+                greetingRangking.splice(greetingRangkingSize);
+            }
+    
+            if ( greetingRangking ) {
+                greetingRangking.forEach($.proxy(function (itme) {
+                    this._mlsItemIds = this._mlsItemIds + '|' + itme;
+                }, this));
+            }
+
             //this._mlsItemIds = this._mlsItemIds;
             Tw.Logger.info('[chatbot.service] [_preDrawChatbot] greetingRangking : ', greetingRangking);
             
@@ -1414,7 +1426,7 @@ Tw.ChatbotService.prototype = {
                     if (this._xboxYn === 'Y'){
                         greetingRangking.push(mlsKeyword);
                     }                    
-                }else{
+                } else if (this._chatbotCommonService._checkGreetingDate(mlsKeyword)) { // 그리팅 키워드 시작일 종료일 유효성 검사
                     greetingRangking.push(mlsKeyword);
                 }
             }
@@ -1430,6 +1442,9 @@ Tw.ChatbotService.prototype = {
             this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
         } else if (this._mlsGreetingImageType === 'C'){
             greetingRangkingSize = 3;
+
+            // 그리팅 랭킹을 석는다
+            this._chatbotCommonService._changeMlsGreetingRangking(greetingRangking);
         } else{
             greetingRangkingSize = 4;
         }

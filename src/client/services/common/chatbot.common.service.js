@@ -38,8 +38,8 @@ Tw.ChatbotCommonService = function() {
         { keyword: 'flo', message:'음악을 즐겨듣는 당신에게 추천드립니다.<br>이젠 FLO 전용 데이터로 음악을 즐겨보세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006520'},
         { keyword: 'xbox', message:'5GX 클라우드 게임 알아보기', type: 'A', linkUrl : 'https://www.5gxcloudgame.com/main'},
         { keyword: 'xbox', message:'지금 5GX 클라우드 게임 신청하면<br>1개월 100원 이용권 혜택이 찾아갑니다!', type: 'B', linkUrl : 'https://www.5gxcloudgame.com/main'},
-        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210319', endDate : '20210411' },
-        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210319', endDate : '20210411' },
+        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210317', endDate : '20210411' },
+        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000180&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210317', endDate : '20210411' },
         { keyword: 'untactplan', message:'3만원 대의 5G 요금제를 이용해 보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000170&utm_source=tworld&utm_medium=app_message&utm_campaign=untactplan' },
         { keyword: 'untactplan', message:'3만원 대의 5G 요금제를 이용해 보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000170&utm_source=tworld&utm_medium=app_message&utm_campaign=untactplan' },
         { keyword: 'newphone', message:'휴대폰 바꾸고 T기프트도 챙기세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/shop/main?referrer=&utm_source=tworld&utm_medium=app_message&utm_campaign=phone' },
@@ -118,7 +118,7 @@ Tw.ChatbotCommonService.prototype = {
             greetingKeywords.forEach(function (row) {
                 if( row.keyword && row.type && row.keyword === keywordText && row.type === mlsGreetingTextType && mlsGreetingRangking ) {
                     // 그리팅 키워드 시작일 종료일 검사
-                    if ( _this._checkGreetingDate(row) ) {
+                    if ( _this._checkGreetingDate(row.keyword) ) {
                         mlsGreetingRangking.unshift(row.keyword);
                         Tw.Logger.info('[chatbot.common.service] [_mlsGreetingRangkingUnshift] mlsGreetingRangking unshift success', '');
                         return;
@@ -131,23 +131,34 @@ Tw.ChatbotCommonService.prototype = {
     /**
      * @function
      * @desc 그리팅 키워드 시작일 종료일 유효성 검사
-     * @param (Object) greetingKeyword
+     * @param (String) keyword
      * @returns boolean
      */
-     _checkGreetingDate: function (greetingKeyword) {
-        Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] 그리팅 키워드 시작일 종료일 유효성 검사 시작', '');
+     _checkGreetingDate: function (keyword) {
+        Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] 그리팅 키워드 시작일 종료일 유효성 검사 시작 keyword : ', keyword);
         var toDay = Tw.DateHelper.getCurrentShortDate();
+        var greetingKeywords = this._greetingKeywords;
+        var targetKeyword = {};
+
+        greetingKeywords.forEach(function(item) {
+            if ( item.keyword === keyword ) {
+                targetKeyword = item;
+                return;
+            }
+        });
+            
+        Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] targetKeyword : ', targetKeyword);
 
         // 시작일자가 오늘 날짜보다 크다면
-        if ( greetingKeyword.startDate && Tw.FormatHelper.isNumber(greetingKeyword.startDate) && Number(greetingKeyword.startDate) > Number(toDay) ) {
-            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] startDate : ' + greetingKeyword.startDate + ', toDay : ' + toDay, '');
+        if ( targetKeyword.startDate && Tw.FormatHelper.isNumber(targetKeyword.startDate) && Number(targetKeyword.startDate) > Number(toDay) ) {
+            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] startDate : ' + targetKeyword.startDate + ', toDay : ' + toDay, '');
             Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] return : ', 'false');
             return false;
         }
 
         // 종료일자가 오늘 날짜보다 작다면
-        if ( greetingKeyword.endDate && Tw.FormatHelper.isNumber(greetingKeyword.endDate) && Number(greetingKeyword.endDate) < Number(toDay) ) {
-            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] endDate : ' + greetingKeyword.endDate + ', toDay : ' + toDay, '');
+        if ( targetKeyword.endDate && Tw.FormatHelper.isNumber(targetKeyword.endDate) && Number(targetKeyword.endDate) < Number(toDay) ) {
+            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] endDate : ' + targetKeyword.endDate + ', toDay : ' + toDay, '');
             Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] return : ', 'false');
             return false;
         }

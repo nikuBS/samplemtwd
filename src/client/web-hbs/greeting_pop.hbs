@@ -42,6 +42,8 @@
                     <button type="button" class="item fe-home-charge_open {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림">
                 {{else if (eq param.[0].greetingKeywordInfos.[0].keyword "xbox")}}
                     <button type="button" class="item fe-home-charge_open {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림">
+                {{else if (eq param.[0].greetingKeywordInfos.[0].keyword "galaxy_all")}}
+                    <button type="button" class="item fe-home-charge_open {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}" title="새 창 열림">
                 {{else}}
                     <button type="button" class="item bpcpItemlink {{param.[0].greetingKeywordInfos.[0].keyword}}" data-url="{{param.[0].greetingKeywordInfos.[0].linkUrl}}">
                 {{/if}}
@@ -69,7 +71,9 @@
                                 {{#if (eq keyword "vcoloring")}}
                                 <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
                                 {{else if (eq keyword "xbox")}}
-                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button> 
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC" title="새 창 열림"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
+                                {{else if (eq keyword "galaxy_all")}}
+                                <button class="item fe-home-charge_open {{keyword}}" data-url="{{linkUrl}}" title="새 창 열림"><span class="ico-chatbot pay_bill"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>
                                 {{else}}
                                 <button class="item bpcpItemlink {{keyword}}" data-url="{{linkUrl}}" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC"><span class="ico-chatbot {{keyword}}"><em class="tod-blind">Ai</em></span><span class="txt">{{{message}}}</span></button>                                 
                                 {{/if}}
