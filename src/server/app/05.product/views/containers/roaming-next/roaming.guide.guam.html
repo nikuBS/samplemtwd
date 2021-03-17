@@ -157,7 +157,7 @@
   var baseDiv = '#roamingGuide';
   $(document).ready(function () {
     var main = new Tw.RoamingGuides($(baseDiv), JSON.parse('<%- JSON.stringify(pageInfo) %>'));
-    main.prepareTooltips();
-  });
+    main.prepareAnchorTabs();
+  }); 
 </script>
 <% include ../../components/end.component.html %>
