@@ -1546,7 +1546,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE =
       '{{#if compareBtn}}' +
         '<div class="rn-prod-bottom">' +
             '<div class="rn-btn-right">' +
-                '<button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="{{prodId}} data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</button>' +
+                '<button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="{{prodId}}" data-prod-nm="{{prodNm}}" data-prod-fee="{{basFeeAmt}}" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</button>' +
             '</div>' +
         '</div>' +
       '{{/if}}' +
@@ -1684,7 +1684,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
                 '{{#if compareBtn}}' +
                   '<div class="rn-prod-bottom">' +
                       '<div class="rn-btn-right">' +
-                          '<button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="{{prodId}}" data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</button>' +
+                          '<button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="{{prodId}}" data-prod-nm="{{prodNm}}" data-prod-fee="{{basFeeAmt}}" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</button>' +
                       '</div>' +
                   '</div>' +
                 '{{/if}}' +
@@ -1814,7 +1814,7 @@ Tw.RENEWAL_PRODUCT_LIST_VIEW_MORE_MODULE_DEFAULT =
             '{{#if compareBtn}}' +
               '<div class="rn-prod-bottom">' +
                   '<div class="rn-btn-right">' +
-                      '<button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="{{prodId}} data-prod-nm={{prodNm}}" data-prod-fee="basFeeAmt" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</button>' +
+                      '<button class="btn-compare" type="button" aria-haspopup="true" data-prod-id="{{prodId}}" data-prod-nm="{{prodNm}}" data-prod-fee="{{basFeeAmt}}" data-prod-call="{{basOfrVcallTmsCtt}}" data-prod-text="{{basOfrCharCntCtt}}" data-prod-data="{{basOfrDataQtyCtt}}">내 요금제와 비교</button>' +
                   '</div>' +
               '</div>' +
             '{{/if}}' +
