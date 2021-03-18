@@ -381,11 +381,13 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     window.setTimeout(function () {
       var apiName = this._changeLimitApiName();
       var reqData = this._makeRequestData();
-
+      this.$isChanged = parseInt(this.$monthSelector.attr('id'), 10) !== parseInt(this.$monthSelector.attr('origin-value'), 10);
       this._apiService.request(apiName, reqData)
         .done($.proxy(this._changeLimitSuccess, this, $target))
         .fail($.proxy(this._fail, this, $target));
+
     }.bind(this), 300);
+
   },
   /**
    * @function
@@ -450,7 +452,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       if (this.$isChanged) {
         this._setRemainAmount();
       }
-      this._popupService.closeAll();
+      this._popupService.close();
       this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_LIMIT);
     } else {
       this._fail($target, res);
