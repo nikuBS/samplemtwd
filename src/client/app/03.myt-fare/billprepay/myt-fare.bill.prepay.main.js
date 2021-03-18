@@ -329,7 +329,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
         result = item.result;
       // 콘텐츠 이용요금 페이지에서만 사용
       if (isContents) {
-        this._isAdult = result.isAdult || 'Y';
+        this._isAdult = (result.isAdult || 'Y') === 'Y';
       }
 
       var addComma = Tw.FormatHelper.addComma;
@@ -529,7 +529,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
       amt = $(e.currentTarget).data('amt').toString();
 
     // 20.04.06 OP002-7282 : 미성년자인 경우 에러페이지로 이동
-    if(title === 'contents' && this._isAdult !== 'Y') {
+    if(title === 'contents' && !this._isAdult) {
       return this._goErrorMinor();
     }
 
@@ -627,7 +627,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
 
     // 20.04.06 OP002-7282 : 미성년자인 경우 에러페이지로 이동
-    if(title === 'contents' && this._isAdult !== 'Y') {
+    if(title === 'contents' && !this._isAdult) {
       return this._goErrorMinor();
     }
 
