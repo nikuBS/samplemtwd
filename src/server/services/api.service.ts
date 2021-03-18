@@ -454,11 +454,13 @@ class ApiService {
       })
       .switchMap(([select, all, ageResp]) => {
         const curSvcInfo = {
-          age: 0
+          age: 0,
+          isAdult: false
         };
         if ( ageResp ) {
           if ( ageResp.code === API_CODE.CODE_00 ) {
             curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
+            curSvcInfo.isAdult = ageResp.result.age && parseInt(ageResp.result.age, 10) >= 19;
           }
         }
         return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
@@ -542,11 +544,13 @@ class ApiService {
       })
       .switchMap(([resp, ageResp]) => {
         const curSvcInfo = {
-          age: 0
+          age: 0,
+          isAdult: false
         };
         if ( ageResp ) {
           if ( ageResp.code === API_CODE.CODE_00 ) {
             curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
+            curSvcInfo.isAdult = ageResp.result.age && parseInt(ageResp.result.age, 10) >= 19;
           }
         }
         return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
@@ -744,11 +748,13 @@ class ApiService {
       })
       .switchMap(([selectResp, ageResp]) => {
         const curSvcInfo = {
-          age: 0
+          age: 0,
+          isAdult: false
         };
         if ( ageResp ) {
           if ( ageResp.code === API_CODE.CODE_00 ) {
             curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
+            curSvcInfo.isAdult = ageResp.result.age && parseInt(ageResp.result.age, 10) >= 19;
           }
         }
         return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
@@ -863,11 +869,13 @@ class ApiService {
       })
       .switchMap(([selectResp, ageResp]) => {
         const curSvcInfo = {
-          age: 0
+          age: 0,
+          isAdult: false
         };
         if (ageResp) {
           if ( ageResp.code === API_CODE.CODE_00 ) {
-            curSvcInfo.age = ageResp.result.age ? ageResp.result.age : '';
+            curSvcInfo.age = ageResp.result.age ? parseInt(ageResp.result.age, 10) : 0;
+            curSvcInfo.isAdult = ageResp.result.age && parseInt(ageResp.result.age, 10) >= 19;
           }
         }
         return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
