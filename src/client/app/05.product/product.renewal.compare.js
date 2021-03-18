@@ -718,6 +718,9 @@ Tw.ProductCompare.prototype = {
             _this._historyService.replaceURL('/product/callplan?prod_id=' + _this.compareData.comparePlan.prodId);
           });
         }
+        var $todCompHeader = $(".tod-nmp-pop-compare");
+        var compInnerH = $todCompHeader.find(".header-wrap").outerHeight();
+        $todCompHeader.css("padding-top", compInnerH);
     },
 
     /**
