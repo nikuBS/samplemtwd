@@ -108,7 +108,7 @@ class MyTFareBillSmall extends TwViewController {
     const {rtnUseYn = '', cpmsYn = 'N'} = historyInfo.result || {};
     return {
       code: historyInfo.code,
-      isAdult: svcInfo.age > 18, // 만 19세 부터 성인
+      isAdult: svcInfo.isAdult, // 만 19세 부터 성인
       isUsed: ['0', '2', '6'].indexOf(rtnUseYn) > -1, // 소액결제 사용여부. 0,2,6이면 사용으로 표시
       rtnUseYn,
       isPassword: cpmsYn === 'Y' // 비밀번호 서비스 사용여부
