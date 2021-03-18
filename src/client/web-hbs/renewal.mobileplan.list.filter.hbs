@@ -12,7 +12,7 @@
             <div class="rn-prod-inner">
                 <ul>
                     {{#each data.quickFilters}}
-                        <li><a class="quickFilterBtn" data-code="{{prodFltId}}">#{{{prodFltNm}}}</a></li>
+                        <li><a class="quickFilterBtn" data-code="{{prodFltId}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">#{{{prodFltNm}}}</a></li>
                     {{/each}}
                 </ul>
             </div>
@@ -26,7 +26,7 @@
                                 {{#if prodFltDesc}}
                                     <li class="acco-box">
                                         <div class="acco-tit">
-                                            <button class="list-box" aria-pressed="false">
+                                            <button class="list-box" aria-pressed="false" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">
                                                 {{{prodFltDesc}}}
                                             </button>
                                         </div>
@@ -34,9 +34,9 @@
                                             <ul>
                                                 {{#each subFilters}}
                                                     <li><!-- 체크 되었을 경우 .on 추가 해제일 경우 .on 제거-->
-                                                        <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}">
+                                                        <a role="checkbox" aria-checked="false" data-filter="{{prodFltId}}" data-filtername="{{prodFltNm}}" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">
                                                             <span class="txt">{{{prodFltDesc}}}</span>
-                                                            <span class="limit">{{prodFltNm}}</span>
+                                                            <span class="limit">{{text}}</span>
                                                         </a>
                                                     </li>
                                                 {{/each}}

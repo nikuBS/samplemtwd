@@ -4,10 +4,12 @@
 <script id="amount-used-templ" type="text/x-handlebars-template">
     {{#list}}
         <div class="box-group fe-title" data-title="{{title}}">
+          <a href="#" class="bundle-link fe-go-bill" title="요금 안내서로 이동">
             <dl class="sel-bill small-sum"><!-- disabled -->
                 <dt class="term">{{titleName}}</dt>
                 <dd class="charge"><span class="fe-use-amount" id="{{tmthUseAmtOri}}">{{tmthUseAmt}}</span><span class="unit">원</span></dd>
             </dl>
+          </a>
             <ul class="report-list item-no-border small-sum">
                 {{#unless isContents}}
                     <li class="report-item"><!-- disabled : disabled추가하면 pointer-events:none 으로 스크립트차단 -->
@@ -39,16 +41,20 @@
                     </li>
                 {{/unless}}
                 <li class="report-item"><!-- disabled -->
+                  <a href="#" class="bundle-link fe-go-bill" title="요금 안내서로 이동">
                     <dl class="report-define d-wrap">
-                        <dt class="report-tit">총 한도 금액</dt>
-                        <dd class="report-cont">{{payLimitAmt}}원</dd>
+                        <dt class="report-tit">총 한도 금액</dt> <!--총 한도 == 월 한도-->
+                        <dd class="report-cont"><span class="fe-limit-amount">{{payLimitAmt}}</span>원</dd>
                     </dl>
+                  </a>  
                 </li>
                 <li class="report-item"><!-- disabled -->
+                  <a href="#" class="bundle-link fe-go-bill" title="요금 안내서로 이동">
                     <dl class="report-define d-wrap">
                         <dt class="report-tit">남은 한도 금액</dt>
                         <dd class="report-cont"><span class="fe-remain-amount" id="{{remainUseLimitOri}}">{{remainUseLimit}}</span>원</dd>
                     </dl>
+                  </a>  
                 </li>
             </ul>
             <div class="hash-wrap">

@@ -101,7 +101,7 @@ class MyTFareBillPayComplete extends TwViewController {
   }
 
   /**
-   * @desc 자동납부 정보 데이
+   * @desc 자동납부 정보 데이터
    * @param data
    * @param resp
    * @param params

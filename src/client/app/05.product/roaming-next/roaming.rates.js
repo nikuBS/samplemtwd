@@ -19,10 +19,6 @@ Tw.RoamingRates = function (rootEl, nations, meta, lastQuery) {
   // BFF 요청시 넘길 파라미터
   this.reqParams = {};
 
-  // 이 페이지에 표시될 툴팁 데이터 내용
-  this.tooltips = {};
-  this.tooltipService = new Tw.TooltipService();
-
   if (!Tw.Environment.init) {
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this.afterInit, this));
   } else {
@@ -84,15 +80,6 @@ Tw.RoamingRates.prototype = {
     return false;
   },
   /**
-   * 툴팁 핸들러
-   * @param e EventObject
-   * @private
-   */
-  _showTip: function(e) {
-    var tipId = e.currentTarget.getAttribute('data-tip');
-    this.tooltipService._openTip(this.tooltips[tipId], e.currentTarget);
-  },
-  /**
    * 요금 더보기 핸들러
    * @param e EventObject
    * @private
@@ -127,35 +114,6 @@ Tw.RoamingRates.prototype = {
     }
     if (this.roamingMeta) {
       this.setupResult(this.roamingMeta);
-    }
-    this.prepareTooltips();
-  },
-  /**
-   * 이 메뉴에 포함된 툴팁을 가져온다.
-   * 이 페이지인 M000455 만 사용할 경우 pageInfo 값만 참조하면 되지만,
-   * 타 페이지에 등록된 툴팁도 여기서 사용하므로 M00460 툴팁도 함께 가져온다.
-   */
-  prepareTooltips: function() {
-    var proxy = this;
-    Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: 'M000455'}).done(function(r) {
-      if (r.result && r.result.tooltip) proxy.collectTooltips(r.result.tooltip);
-    });
-    Tw.Api.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: 'M000460'}).done(function(r) {
-      if (r.result && r.result.tooltip) proxy.collectTooltips(r.result.tooltip);
-    });
-  },
-  /**
-   * 툴팁 요청 XHR 응답 핸들러
-   * @param items JSON 응답
-   */
-  collectTooltips: function(items) {
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      this.tooltips[item.mtwdTtipId] = {
-        ttipTitNm: item.ttipTitNm,
-        ttipCtt: item.ttipCtt,
-        type: item.ttipPreTypCd
-      };
     }
   },
   /**

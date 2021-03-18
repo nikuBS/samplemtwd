@@ -4081,3 +4081,9 @@ body.rn .guide-dialog .checklist li button[aria-pressed="true"]{background-image
 .popup.tw-popup.rm-popup .popup-contents .bul-list li:before{background-color:#959595}
 .popup.tw-popup.rm-popup .popup-info .bt-bottom li.bt-blue1 button{color:#4559fc;font-weight:400}
 .popup.tw-popup.rm-popup .popup-info .bt-bottom{border-top:1px solid #e2e2e2}
+
+/* */
+.rn .cont-box.rm-cont-tooltip h3{font-size:1.3125rem}
+.rn .noti-list02 li{padding:0;border:0;font-size:1.6025rem}
+.rn .noti-list02 li .tip-view-btn{font-size:1.0625rem;color:#000;font-weight:500}
+.rn .tip-view{width:2.125rem;height:1.0625rem;background:#4559fc 0;color:#fff;text-indent:0;border-radius:1rem;font-size:.75rem;line-height:1.2rem}

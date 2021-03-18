@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 컴포너트 위젯 -->
     <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /> --><!-- [C] 단락별 컴퍼넌트 -->
     <!-- //191101_css링크수정 - main.css삭제/components추가 -->
+
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
@@ -46,7 +47,7 @@
             <!-- 191001 [OP002-4009] 수정01 -->
             <div class="sch-form tod-sch-form">
                 <!-- <form role="search" action="." > -->
-                    <div class="searchbox-close"><button class="close-area"><span class="tod-blind">취소</span></button></div>
+                    <div class="searchbox-close"><button class="close-area"><span class="tod-blind">이전</span></button></div>
                     <span class="inputbox">
                         <span class="input">
                             <input type="search" name="search" placeholder="원하는 업무나 상품을 찾아보세요" title="검색어 입력" value="">
@@ -65,6 +66,15 @@
         <!-- 191127 [OP002-4532] 수정 (전체 UI개선) -->
         <div id="contents" class="container-wrap">
             <div class="search-content">
+                <!-- 200318 [OP002-7211] 추가_01 -->
+                <!-- 정타키워드 안내 영역 -->
+                <div class="cont-box nogaps">
+                    <div class="tod-typing-error">
+                        <span class="te_txt"><strong class="tod-txcolor7">내집처럼T로밍중국플러스</strong>에 대한 검색결과입니다.</span> <a href="#" role="button" class="bt-link-tx underline small">내집처럼T로밍중국플러스 검색하기</a>
+                    </div>
+                </div>
+                <!-- //200318 [OP002-7211] 추가_01 -->
+                
                 <!-- 연관 검색어 -->
                 <div class="cont-box nogaps">
                     <div class="tod-related-keywords tod-horizon-shadow">
@@ -91,16 +101,16 @@
                 <!-- //연관 검색어 -->
 
                 <!-- 210129 [OP002-12844] 추가-->				 
-				<!-- 검색 결과 없음 -->
-				 <div class="cont-box nogaps-hoz">
+                <!-- 검색 결과 없음 -->
+                 <div class="cont-box nogaps-hoz">
                     <div class="tod-search-feedback noresult">
                         <strong class="text-ti"><span class="tod-txcolor6">‘영화 티켓’</span>에 대한 검색 결과가 없습니다.</strong>
                         <p class="text">아래는 <span class="tod-txcolor6">‘영화’</span> 또는 <span class="tod-txcolor6">‘티켓’</span>(으)로 검색한 결과로, 총 <strong>17건</strong> 입니다.</p>
                     </div>
                 </div>
-				<!-- //검색 결과 없음 -->
-				<!-- //210129 [OP002-12844] 추가-->
-    
+                <!-- //검색 결과 없음 -->
+                <!-- //210129 [OP002-12844] 추가-->
+
                 <!-- 즉답검색 및 스마트 검색 배너 영역 -->
                 <div class="cont-box bgnone noborder">
                     <div class="tod-search-mytbox">
@@ -114,7 +124,7 @@
                     <a href="#"><img src="/img/search/@img_banner_smt.png" alt="SKT 5GX Boost Park 혜택과 재미가 터지는 부스트 파크 9월 이벤트"></a>
                 </div>
                 <!-- //즉답검색 및 스마트 검색 배너 영역 -->
-    
+
                 <!-- 전체 검색결과 건수 및 결과 내 재검색 -->
                 <div class="cont-box bgnone noborder pb10 tod-re-searchbox">
                     <h2 class="tit">검색결과 총 <span class="num">84</span>건</h2>
@@ -142,7 +152,11 @@
                                         <li><a href="#">결합상품<span class="num">84</span></a></li>
                                         <li><a href="#">T로밍<span class="num">84</span></a></li>
                                         <li><a href="#">T앱<span class="num">84</span></a></li>
-                                        <li><a href="#">T다이렉트샵<span class="num">84</span></a></li> <!-- 200323 [OP002-7401] 수정_01 -->
+                                        <!-- 210302 [OP002-13456] T다이렉트샵 하위 카테고리 추가_01 -->
+                                        <li><a href="#">휴대폰<span class="num">6</span></a></li>
+                                        <li><a href="#">태블릿/2nd Device<span class="num">9</span></a></li>
+                                        <li><a href="#">액세서리<span class="num">33</span></a></li>
+                                        <!-- //210302 [OP002-13456] T다이렉트샵 하위 카테고리 추가_01 -->
                                         <li><a href="#">T멤버십<span class="num">84</span></a></li>
                                         <li><a href="#">진행중인 이벤트<span class="num">84</span></a></li>
                                         <li><a href="#">혜택/할인<span class="num">84</span></a></li>
@@ -162,9 +176,9 @@
                 <!-- //카테고리 탭 -->
     
                 <hr class="cont-sp type1" aria-hidden="true">
-    
-                	<!-- 바로가기 :  AS-IS  -->
-				<!--
+
+                <!-- 바로가기 :  AS-IS  -->
+                <!--
                 <div class="cont-box nogaps-btm">
                     <div class="tod-searchlist-head">
                         <h3 class="tit"><a href="#">바로가기 <span class="num">5</span></a></h3>
@@ -204,161 +218,161 @@
                 </div>
                 -->
                 <!-- //바로가기 -->
-    
+
                 <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- 210201 [OP002-12960]  추가 : TO-BE 바로가기( Foldable(아코디언) UI 기능 ) -->
-				<div class="cont-box nogaps-btm">
-					<div class="tod-searchlist-head">
-						<h3 class="tit"><a href="#">바로가기 <span class="num">5</span></a></h3>
-					</div>
-					
-					<!-- .widget -->
-					<div class="widget">
-						<div class="widget-box accordion">
-							<div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
-								<div class="acco-style tod-renew keyword-search-list tod-srhtype1">
-									<ul class="acco-list pd0">
-										<li class="acco-box"><!-- .on : 열기 -->
-											<div class="acco-tit">
-												<button aria-pressed="false">
-													<span class="main-category">
-														myt &gt; 나의 요금 <em class="num">(2)</em>
-													</span>
-												</button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
-											</div>
-											<div class="acco-cont">
-												<ul class="sub-list">
-													<li>
-														<button type="button">
-															<span class="main-category">&gt; myT &gt; 나의 요금</span>
-														</button>
-													</li>
-													<li>
-														<button type="button">
-															<span class="main-category">&gt; myT &gt; 나의 요금 실시간 &gt; 이용요금</span>
-														</button>
-													</li>
-												</ul>
-											</div>
-										</li>
-										<li class="acco-box">
-											<div class="acco-tit">
-												<button aria-pressed="false">
-													<span class="main-category">
-														myt &gt; 나의 요금 &gt; 요금 안내서 <em class="num">(3)</em>
-													</span>
-												</button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
-											</div>
-											<div class="acco-cont">
-												<ul class="sub-list">
-													<li>
-														<button role="link">
-															<span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서</span>
-														</button>
-													</li>
-													<li>
-														<button role="link">
-															<span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회</span>
-														</button>
-													</li>
-													<li>
-														<button role="link">
-															<span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회</span>
-														</button>
-													</li>
-												</ul>
-											</div>
-										</li>
-										<li class="acco-box">
-											<div class="acco-tit">
-												<button aria-pressed="false">
-													<span class="main-category">
-														myt &gt; 나의 요금제 &gt; 요금제 <em class="num">(2)</em> 
-													</span>
-												</button>
-											</div>
-											<div class="acco-cont">
-												<ul class="sub-list">
-													<li>
-														<button role="link">
-															<span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서</span>
-														</button>
-													</li>
-													<li>
-														<button role="link">
-															<span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 </span>
-														</button>
-													</li>
-												</ul>
-											</div>
-										</li>
-										<li class="acco-box">
-											<div class="acco-tit">
-												<button aria-pressed="false">
-													<span class="main-category">
-														my T &gt; 나의 데이터/통화 &gt; 실시간 잔여량 &gt; 통합공유 센터 <em class="num">(2)</em> 
-													</span>
-												</button>
-											</div>
-											<div class="acco-cont">
-												<ul class="sub-list">
-													<li>
-														<button role="link">
-															<span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서</span>
-														</button>
-													</li>
-													<li>
-														<button role="link">
-															<span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 </span>
-														</button>
-													</li>
-												</ul>
-											</div>
-										</li>
-										<li class="normal-box">
-											<button role="link">
-												<span class="main-category">
-													myt &gt; 나의 요금제 &gt; 요금제 
-												</span>
-											</button>
-										</li>
-										<li class="normal-box">
-											<button role="link">
-												<span class="main-category">
-													myt &gt; 나의 데이터/통화 &gt; 실시간 잔여량  &gt; 통합공유 센터
-												</span>
-											</button>
-										</li>
-										<li class="normal-box">
-											<button role="link">
-												<span class="main-category">
-													my T &gt;  나의 데이터/통화 &gt; 실시간 잔여량 &gt;  통합공유 센터 my T &gt;  나의 데이터/통화 &gt;  실시간 잔여량 &gt; 통합공유 센터 my T &gt; 나의 데이터/통화 &gt;  실시간 잔여량 &gt;  통합공유 센터
-												</span>
-											</button>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--// .widget -->
-					
-					<div class="btn-more">
-						<button><span class="tod-blind">바로가기</span>전체보기<i class="ico-arrow-r"></i></button>
-					</div>
-				</div>	
-				<!-- //210201 [OP002-12960]  추가 : TO-BE 바로가기( Foldable(아코디언) UI 기능 ) -->
-                
-                <hr class="cont-sp type1" aria-hidden="true">
-                
-                <!-- 요금제 -->
                 <div class="cont-box nogaps-btm">
                     <div class="tod-searchlist-head">
+                        <h3 class="tit"><a href="#">바로가기 <span class="num">5</span></a></h3>
+                    </div>
+                    
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="acco-style tod-renew keyword-search-list tod-srhtype1">
+                                    <ul class="acco-list pd0">
+                                        <li class="acco-box"><!-- .on : 열기 -->
+                                            <div class="acco-tit">
+                                                <button aria-pressed="false">
+                                                    <span class="main-category">
+                                                        myt &gt; 나의 요금 <em class="num">(2)</em>
+                                                    </span>
+                                                </button><!-- 아코디언 열려있는 상태일 경우 aria-pressed="true", 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <button type="button">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금</span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 실시간 &gt; 이용요금</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button aria-pressed="false">
+                                                    <span class="main-category">
+                                                        myt &gt; 나의 요금 &gt; 요금 안내서 <em class="num">(3)</em>
+                                                    </span>
+                                                </button><!-- 아코디언 닫혀있는 상태일 경우 aria-pressed="false" -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <button role="link">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서</span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button role="link">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회</span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button role="link">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회 &gt; 로밍 사용요금조회</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button aria-pressed="false">
+                                                    <span class="main-category">
+                                                        myt &gt; 나의 요금제 &gt; 요금제 <em class="num">(2)</em> 
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <button role="link">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서</span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button role="link">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 </span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button aria-pressed="false">
+                                                    <span class="main-category">
+                                                        my T &gt; 나의 데이터/통화 &gt; 실시간 잔여량 &gt; 통합공유 센터 <em class="num">(2)</em> 
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="sub-list">
+                                                    <li>
+                                                        <button role="link">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서</span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button role="link">
+                                                            <span class="main-category">&gt; myT &gt; 나의 요금 &gt; 요금안내서 &gt; 로밍 사용요금조회 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 &gt; 두줄이 넘치는 경우 처리 </span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="normal-box">
+                                            <button role="link">
+                                                <span class="main-category">
+                                                    myt &gt; 나의 요금제 &gt; 요금제 
+                                                </span>
+                                            </button>
+                                        </li>
+                                        <li class="normal-box">
+                                            <button role="link">
+                                                <span class="main-category">
+                                                    myt &gt; 나의 데이터/통화 &gt; 실시간 잔여량  &gt; 통합공유 센터
+                                                </span>
+                                            </button>
+                                        </li>
+                                        <li class="normal-box">
+                                            <button role="link">
+                                                <span class="main-category">
+                                                    my T &gt;  나의 데이터/통화 &gt; 실시간 잔여량 &gt;  통합공유 센터 my T &gt;  나의 데이터/통화 &gt;  실시간 잔여량 &gt; 통합공유 센터 my T &gt; 나의 데이터/통화 &gt;  실시간 잔여량 &gt;  통합공유 센터
+                                                </span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                    
+                    <div class="btn-more">
+                        <button><span class="tod-blind">바로가기</span>전체보기<i class="ico-arrow-r"></i></button>
+                    </div>
+                </div>	
+                <!-- //210201 [OP002-12960]  추가 : TO-BE 바로가기( Foldable(아코디언) UI 기능 ) -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- 요금제 -->
+                <div class="cont-box nogaps-btm">
+                    <div class="tod-searchlist-head tod-choice"><!-- 210302 [OP002-13195] 수정 -->
                         <h3 class="tit"><a href="#">요금제 <span class="num">5</span></a></h3>
                         <div class="tod-fright">
                             <button class="btn-select" title="정렬 기준 선택" aria-haspopup="true">추천순<span class="ico"></span></button>
                         </div>
+                        <span class="tod-choice-txt">월정액 (*선택약정 반영 금액)</span><!-- 210302 [OP002-13195] 추가_01 -->
                     </div>
                     <ul class="extraservice-list tod-srhtype1">
                         <li class="category-type">
@@ -367,6 +381,7 @@
                                     <p class="title">뉴 T끼리 <em class="tod-highlight-text">맞춤형</em>(100분+6GB) 뉴 T끼리 맞춤형(100분+6GB)</p>
                                     <p class="info"><span class="money">43,175</span>원</p><!-- 210112 [OP002-12729] 수정_01 -->
                                 </div>
+                                <div class="tod-choice-money"><span class="blind">월정액 (*선택약정 반영 금액)</span>(*93,705원)</div><!-- 210302 [OP002-13195] 추가_02 -->
                                 <ul class="products-detailinfo02">
                                     <li class="category-type type01">
                                         <p class="gb"><span>20</span>GB</p>
@@ -383,6 +398,7 @@
                                     </li>
                                 </ul>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#LTE</span>
                                     <span class="tag-text">#<em class="tod-highlight-text">5~8G</em>B</span>
                                     <span class="tag-text">#실버</span>
@@ -395,6 +411,7 @@
                                     <p class="title">T시그니처 Master</p>
                                     <p class="info"><span class="money">110,000</span>원</p><!-- 210112 [OP002-12729] 수정_02 -->
                                 </div>
+                                <div class="tod-choice-money"><span class="blind">월정액 (*선택약정 반영 금액)</span>(*93,705원)</div><!-- 210302 [OP002-13195] 추가_03 -->
                                 <ul class="products-detailinfo02">
                                     <li class="category-type type01">
                                         <p class="gb"><span>20</span>GB</p>
@@ -411,6 +428,7 @@
                                     </li>
                                 </ul>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#LTE</span>
                                     <span class="tag-text">#데이터</span>
                                 </div>
@@ -422,6 +440,7 @@
                                     <p class="title">T시그니처 Master</p>
                                     <p class="info"><span class="money">110,000</span>원</p><!-- 210112 [OP002-12729] 수정_03 -->
                                 </div>
+                                <div class="tod-choice-money"><span class="blind">월정액 (*선택약정 반영 금액)</span>(*93,705원)</div><!-- 210302 [OP002-13195] 추가_04 -->
                                 <ul class="products-detailinfo02">
                                     <li class="category-type type01">
                                         <p class="gb"><span>20</span>GB</p>
@@ -438,6 +457,7 @@
                                     </li>
                                 </ul>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#LTE</span>
                                     <span class="tag-text">#데이터</span>
                                 </div>
@@ -449,6 +469,7 @@
                                     <p class="title">T시그니처 Master</p>
                                     <p class="info"><span class="money">110,000</span>원</p><!-- 210112 [OP002-12729] 수정_04 -->
                                 </div>
+                                <div class="tod-choice-money"><span class="blind">월정액 (*선택약정 반영 금액)</span>(*93,705원)</div><!-- 210302 [OP002-13195] 추가_05 -->
                                 <ul class="products-detailinfo02">
                                     <li class="category-type type01">
                                         <p class="gb"><span>20</span>GB</p>
@@ -465,6 +486,7 @@
                                     </li>
                                 </ul>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#LTE</span>
                                     <span class="tag-text">#데이터</span>
                                 </div>
@@ -476,6 +498,7 @@
                                     <p class="title">T시그니처 Master</p>
                                     <p class="info"><span class="money">110,000</span>원</p><!-- 210112 [OP002-12729] 수정_05 -->
                                 </div>
+                                <div class="tod-choice-money"><span class="blind">월정액 (*선택약정 반영 금액)</span>(*93,705원)</div><!-- 210302 [OP002-13195] 추가_06 -->
                                 <ul class="products-detailinfo02">
                                     <li class="category-type type01">
                                         <p class="gb"><span>20</span>GB</p>
@@ -492,6 +515,7 @@
                                     </li>
                                 </ul>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#LTE</span>
                                     <span class="tag-text">#데이터</span>
                                 </div>
@@ -526,6 +550,7 @@
                                 </div>
                                 <p class="products-detailinfo">기본제공 데이터를 모두 사용한 후에도 부담없이 웹서핑 / SNS / 이메일 등을 이용 할 수 있는 부가서비스</p>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#<em class="tod-highlight-text">데이터</em></span>
                                     <span class="tag-text">#혜택 / 편의</span>
                                 </div>
@@ -539,6 +564,7 @@
                                 </div>
                                 <p class="products-detailinfo">실시간 TV 및 최신 영화 등의 <em class="tod-highlight-text">동영상</em> 콘텐츠(oksusu)를 마음껏 누릴 수 있습니다 최대 2줄까지 노출, 2줄이 이상 넘어갈 경우 점점 처리 최대 2줄까지 노출, 2줄이 이상 넘어갈 경우 점점 처리</p>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#<em class="tod-highlight-text">데이터</em></span>
                                 </div>
                             </a>
@@ -735,6 +761,7 @@
                                 </div>
                                 <p class="products-detailinfo">기본제공 데이터 소진 후에도 부담 없이 웹서핑/SNS/이메일 등 이용가능한 요금제!</p>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <span class="tag-text">#데이터</span>
                                     <span class="tag-text">#추천하는</span>
                                 </div>
@@ -757,6 +784,7 @@
                                 </div>
                                 <p class="products-detailinfo">기본제공 데이터 소진 후에도 부담 없이 웹서핑/SNS/이메일 등 이용가능한 부가서비스 </p>
                                 <div class="taglist-wrap">
+                                    <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <p class="tag-text">#데이터</p>
                                     <p class="tag-text">#추천하는</p>
                                 </div>
@@ -783,6 +811,7 @@
                                 </div>
                                 <p class="products-detailinfo">기본제공 데이터 소진 후에도 부담 없이 웹서핑/SNS/이메일 등 이용가능한 부가서비스 </p>
                                 <div class="taglist-wrap">
+                                     <span class="tod-blind">TAG</span><!-- 201204 웹접근성 추가 -->
                                     <p class="tag-text">#데이터</p>
                                     <p class="tag-text">#추천하는</p>
                                 </div>
@@ -867,13 +896,15 @@
                 <!-- //T앱 -->
     
                 <hr class="cont-sp type1" aria-hidden="true">
-    
+                
+                <!-- 210302 [OP002-13456] T다이렉트샵 하위 카테고리 추가_02 -->
                 <!-- T다이렉트 -->
+                <!-- 휴대폰 -->
                 <div class="cont-box nogaps-btm">
                     <div class="tod-searchlist-head">
-                        <h3 class="tit"><a href="#">T다이렉트샵 <span class="num">5</span></a></h3> <!-- 200323 [OP002-7401] 수정_02 -->
+                        <h3 class="tit"><a href="#">휴대폰 <span class="num">6</span></a></h3>
                         <div class="tod-fright">
-                            <button class="bt-link-tx underline" title="새창">T다이렉트샵 가기</button> <!-- 200323 [OP002-7401] 수정_03 -->
+                            <button class="bt-link-tx underline" title="새창">T다이렉트샵 가기</button>
                         </div>
                     </div>
                     <div class="direct-shop-wrap tod-srhtype1">
@@ -926,13 +957,146 @@
                         </ul>
                     </div>
                     <div class="btn-more">
-                        <button><span class="blind">T월드 다이렉트</span>전체보기<i class="ico-arrow-r"></i></button>
+                        <button><span class="blind">휴대폰</span>전체보기<i class="ico-arrow-r"></i></button>
                     </div>
                 </div>
+                <!-- //휴대폰 -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <!-- 태블릿/2nd Device -->
+                <div class="cont-box nogaps-btm">
+                    <div class="tod-searchlist-head">
+                        <h3 class="tit"><a href="#">태블릿/2nd Device <span class="num">9</span></a></h3>
+                        <div class="tod-fright">
+                            <button class="bt-link-tx underline" title="새창">T다이렉트샵 가기</button>
+                        </div>
+                    </div>
+                    <div class="direct-shop-wrap tod-srhtype1">
+                        <ul>
+                            <li>
+                                <button class="link" title="새창">
+                                    <div class="img"><img src="/img/etc/img-phone01.png" alt="샤오미 포코폰" /></div>
+                                    <div class="cont">
+                                        <div class="tit"><em class="tod-highlight-text">샤오미</em> 포코폰</div>
+                                        <div class="price">8,800원~/월</div>
+                                    </div>
+                                </button>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                <div class="img"><img src="/img/etc/img-phone02.png" alt="샤오미 포코폰" /></div>
+                                <div class="cont">
+                                    <div class="tit">엘지 V30S 플러스 ThinQ</div>
+                                    <div class="price">13,725원~/월</div>
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                    <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰" /></div>
+                                    <div class="cont">
+                                        <div class="tit">[타거스]링버클 충전/싱크 라이트닝 USB 8핀 케이블 9cm 최대 2줄까지 노출, 2줄이 이상 넘어갈 경우 점점 처리 최대 2줄까지 노출, 2줄이 이상 넘어갈 경우 점점 처리</div>
+                                        <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                <div class="img"><img src="/img/etc/img-phone02.png" alt="샤오미 포코폰" /></div>
+                                <div class="cont">
+                                    <div class="tit">엘지 V30S 플러스 ThinQ</div>
+                                    <div class="price">13,725원~/월</div>
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                    <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰" /></div>
+                                    <div class="cont">
+                                        <div class="tit">[타거스]링버클 충전/싱크 라이트닝 USB 8핀 케이블 9cm</div>
+                                        <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn-more">
+                        <button><span class="blind">태블릿/2nd Device</span>전체보기<i class="ico-arrow-r"></i></button>
+                    </div>
+                </div>
+                <!-- //태블릿/2nd Device -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <!-- 액세서리 -->
+                <div class="cont-box nogaps-btm">
+                    <div class="tod-searchlist-head">
+                        <h3 class="tit"><a href="#">액세서리 <span class="num">33</span></a></h3>
+                        <div class="tod-fright">
+                            <button class="bt-link-tx underline" title="새창">T다이렉트샵 가기</button>
+                        </div>
+                    </div>
+                    <div class="direct-shop-wrap tod-srhtype1">
+                        <ul>
+                            <li>
+                                <button class="link" title="새창">
+                                    <div class="img"><img src="/img/etc/img-phone01.png" alt="샤오미 포코폰" /></div>
+                                    <div class="cont">
+                                        <div class="tit"><em class="tod-highlight-text">샤오미</em> 포코폰</div>
+                                        <div class="price">8,800원~/월</div>
+                                    </div>
+                                </button>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                <div class="img"><img src="/img/etc/img-phone02.png" alt="샤오미 포코폰" /></div>
+                                <div class="cont">
+                                    <div class="tit">엘지 V30S 플러스 ThinQ</div>
+                                    <div class="price">13,725원~/월</div>
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                    <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰" /></div>
+                                    <div class="cont">
+                                        <div class="tit">[타거스]링버클 충전/싱크 라이트닝 USB 8핀 케이블 9cm 최대 2줄까지 노출, 2줄이 이상 넘어갈 경우 점점 처리 최대 2줄까지 노출, 2줄이 이상 넘어갈 경우 점점 처리</div>
+                                        <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                <div class="img"><img src="/img/etc/img-phone02.png" alt="샤오미 포코폰" /></div>
+                                <div class="cont">
+                                    <div class="tit">엘지 V30S 플러스 ThinQ</div>
+                                    <div class="price">13,725원~/월</div>
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="link" title="새창">
+                                    <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰" /></div>
+                                    <div class="cont">
+                                        <div class="tit">[타거스]링버클 충전/싱크 라이트닝 USB 8핀 케이블 9cm</div>
+                                        <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn-more">
+                        <button><span class="blind">액세서리</span>전체보기<i class="ico-arrow-r"></i></button>
+                    </div>
+                </div>
+                <!-- //액세서리 -->
+
                 <div class="search-banner">
                     <a href="#"><img src="/img/search/@img_banner.png" alt="5GX 클럽_노트10 새로운 노트의 귀환, Galaxy Note 10 5G 구매하고 12/24개월 후 기변시 잔여할부금 면제 받으세요!"></a>
                 </div>
                 <!-- //T다이렉트 -->
+                <!-- //210302 [OP002-13456] T다이렉트샵 하위 카테고리 추가_02 -->
     
                 <hr class="cont-sp type1" aria-hidden="true">
     
@@ -1137,7 +1301,8 @@
                     <a href="#"><img src="/img/search/@img_banner.png" alt="5GX 클럽_노트10 새로운 노트의 귀환, Galaxy Note 10 5G 구매하고 12/24개월 후 기변시 잔여할부금 면제 받으세요!"></a>
                 </div>
                 <!-- //혜택/할인 -->
-
+    
+                
                 <!-- 200710 [OP002-8565] o2o 고도화 관련 작업 : 추가 -->
                 <!-- 위치 미동의 한 경우 -->
                 <hr class="cont-sp type1" aria-hidden="true">
@@ -1385,7 +1550,7 @@
                     </div>
                 </div>
                 <!-- //200710 [OP002-8565] o2o 고도화 관련 작업 : 추가 -->
-    
+
                 <hr class="cont-sp type1" aria-hidden="true">
     
                 <!-- 지점/대리점, A/S센터 -->
@@ -1718,12 +1883,44 @@
                 </div>
                 <!-- // SKT 고객센터 포스트 배너 -->
     
-                <hr class="cont-sp type1" aria-hidden="true">
-    
                 <!-- 검색 개선 의견 보내기 -->
                 <div class="cont-box nogaps-hoz">
                     <div class="tod-search-feedback">
-                        <p class="text-ti srch">원하는 검색결과를 찾지 못하셨나요?</p>
+                        <!-- 210305 [OP002-13461] 수정_01 -->
+                        <p class="text-ti srch mb24">T world 검색 서비스는 어떠셨나요?</p>
+                        <div class="poll-box tod-poll-box">
+                            <div class="tod-poll-comp radio">
+                                <div class="tod-poll-comp-inner">
+                                    <ul class="select-list fieldset-panel">
+                                        <li>
+                                            <label for="satisfaction1">
+                                                <span class="custom-form">
+                                                    <input type="radio" id="satisfaction1" name="satisfaction"><span class="r-type1"></span>
+                                                </span>
+                                                <span class="custom-txt">만족해요</span>    
+                                            </label>   
+                                        </li>
+                                        <li>
+                                            <label for="satisfaction2">
+                                                <span class="custom-form">
+                                                    <input type="radio" id="satisfaction2" name="satisfaction"><span class="r-type1"></span>
+                                                </span>
+                                                <span class="custom-txt">보통이에요</span>    
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="satisfaction3">
+                                                <span class="custom-form">
+                                                    <input type="radio" id="satisfaction3" name="satisfaction"><span class="r-type1"></span>
+                                                </span>
+                                                <span class="custom-txt">불편해요</span>    
+                                            </label>  
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //210305 [OP002-13461] 수정_01 -->
                         <ul class="bt-slice item-two mt10">
                             <li><button type="button" class="btn-round2 btn-style3">검색 개선 의견 보내기</button></li>
                         </ul>

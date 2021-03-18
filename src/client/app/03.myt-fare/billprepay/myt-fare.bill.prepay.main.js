@@ -97,7 +97,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
       $layer.on('click', '.fe-close', function () {
         // 팝업 닫기 및 이전 페이지로 이동
         self._popupService.close();
-        self._historyService.goBack();
+        // 아이폰의 경우 팝업 닫히면 뒤로가기 안되서 타임아웃을 줌.
+        window.setTimeout(function (){
+          self._historyService.goBack();
+        }, 300);
       });
       $layer.on('click', '[data-url]', $.proxy(self._goUrl, self));
     }, null, null);
@@ -113,7 +116,22 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this.$container.on('click', '[data-unusual-state]', $.proxy(this._unusualBlock, this));
     this.$container.on('click', '#fe-tab1', $.proxy(this._checkAble, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
+    this.$container.on('click', '.fe-go-bill', $.proxy(this._goBill, this));
     $('.fe-faq').on('click', $.proxy(this._increaseViews, this));
+  },
+
+  /**
+   * @desc 요금안내서로 이동
+   * @private
+   */
+  _goBill: function (e) {
+    e.preventDefault();
+    // 1~4 일에는 요금 안내서 이동 안함
+    if (new Date().getDate() < 5) {
+      this._popupService.openAlert('매월 5일경 부터 해당 월 요금조회가 가능합니다.', Tw.POPUP_TITLE.NOTIFY);
+      return;
+    }
+    this._historyService.goLoad('/myt-fare/billguide/guide?date=' + Tw.DateHelper.getEndOfMonSubtractDate(new Date(), '1', 'YYYYMMDD'));
   },
 
   /**
@@ -311,7 +329,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
         result = item.result;
       // 콘텐츠 이용요금 페이지에서만 사용
       if (isContents) {
-        this._isAdult = result.isAdult || 'Y';
+        this._isAdult = (result.isAdult || 'Y') === 'Y';
       }
 
       var addComma = Tw.FormatHelper.addComma;
@@ -511,7 +529,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
       amt = $(e.currentTarget).data('amt').toString();
 
     // 20.04.06 OP002-7282 : 미성년자인 경우 에러페이지로 이동
-    if(title === 'contents' && this._isAdult !== 'Y') {
+    if(title === 'contents' && !this._isAdult) {
       return this._goErrorMinor();
     }
 
@@ -609,7 +627,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
 
     // 20.04.06 OP002-7282 : 미성년자인 경우 에러페이지로 이동
-    if(title === 'contents' && this._isAdult !== 'Y') {
+    if(title === 'contents' && !this._isAdult) {
       return this._goErrorMinor();
     }
 

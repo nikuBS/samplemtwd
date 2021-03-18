@@ -1,6 +1,7 @@
     <div class="tod-nmp-tab">
         <div class="rn-prod-inner">
             <ul>
+                <!-- 기기 필터 리스트에서 일반폰을 제외한 나머지 목록을 탭에 노출 / 현재 선택된 탭에 하이라이트를 줌 -->
                 <% for(let i in tabList.subFilters) { %>
                     <% let curFilter = tabList.subFilters[i]; %>
                     <% if(curFilter.prodFltId != 'F01123') { %>
@@ -8,7 +9,8 @@
                         <% if(series.seriesCode == curFilter.prodFltId) { %>
                             class="on"
                         <%}%>>
-                            <a href="/product/renewal/mobileplan/list?filters=<%= curFilter.prodFltId %><%= filterList.filterList %>" class="tapSelectButton"><%= curFilter.prodFltNm %></a></li>
+                            <a href="/product/renewal/mobileplan/list?filters=<%= curFilter.prodFltId %><%= filterList.filterList %>" 
+                                data-xt_eid="<%= curFilter.oferStcCd %>" data-xt_csid="NO" data-xt_action="BC" class="tapSelectButton" ><%= curFilter.prodFltNm %></a></li>
                     <% } %>
                 <% } %>
                 <li<%= series.theme %>><a id="themeSelectBtn" class="tapSelectButton" data-xt_eid="CMMA_A4_B84_C1215-6" data-xt_csid="NO" data-xt_action="BC">테마</a></li>

@@ -59,7 +59,7 @@
                 </li>
             </ul>
             {{#ifCond title '===' 'small'}}
-                <%_ if (passwordInfo.code === 'BIL0054') { // 부가서비스에 가입하지 않은 사용자의 경우 _%>
+                <%_ if (!usedInfo.isPassword) { // 결제비밀번호 서비스에 가입하지 않은 사용자의 경우 _%>
                     <button type="button" class="payment-join-btn" data-url="/product/callplan?prod_id=NA00003909" data-make-eid="joinPassword">
                         <span class="btn-txt"><em>결제 비밀번호</em> 하나로 더 안전하게</span>
                         <span class="join-txt">가입하기</span>
