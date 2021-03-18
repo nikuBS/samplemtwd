@@ -35467,6 +35467,7 @@ body.tod-white{background:#fff}
 .tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .detail-price{display: -webkit-box; display:flex;  -webkit-box-align: center; align-items:center; -webkit-box-pack: justify; justify-content:space-between; font-size:0.8125rem; color:#82888f; line-height:1.375rem; }
 .tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item .price{float:right; line-height:22px; font-weight:500 }
 .tod-submain .section-inner .box-group-cont .claim-box .claim-list .claim-item .detail-list .detail-item:before{content:''; display:inline-block; width:0.25rem; height:0.25rem; border-radius:100%; background:#82888f; position:absolute; top:0.5rem; left:0.25rem;}
+.full-link-list li a.tod-full-link .inner .tit{font-weight:500; }
 /* 약정 - 에러 */
 .tod-submain .section-inner .item-error{text-align:center; min-height:13.75rem; display: -webkit-box; display:flex; -webkit-box-pack: center; justify-content: center;  -webkit-box-align: center; align-items:center;-webkit-box-orient: vertical; flex-direction:column; margin: 0 -1.5rem}
 .tod-submain .section-inner .item-error img{width:3.75rem; height:3.75rem;}
