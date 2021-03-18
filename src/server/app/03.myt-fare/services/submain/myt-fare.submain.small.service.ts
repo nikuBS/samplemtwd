@@ -37,29 +37,18 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
       this.apiService.request( API_CMD.BFF_05_0079 , params), // 소액결제
       this.apiService.request( API_CMD.BFF_05_0064 , params),  // 콘텐츠 이용료
       // this.apiService.request( API_CMD.BFF_05_0066 , {})  // 콘텐츠 이용료 한도조회(미성년자 여부 판단하기 위해 사용)
-      this._getIsAdult() // 성인 여부 확인
-    ).switchMap( ([small, contents, /*contentsLimit*/ isAdult]) => {
+    ).switchMap( ([small, contents, /*contentsLimit*/]) => {
       const smallResult = small.result || {},
         contentsResult = contents.result || {},
         result: any = {
           isNotAgree: contents.code === API_ADD_SVC_ERROR.BIL0030, // 휴대폰 결제 이용동의여부
           smallTotal: smallResult.totalSumPrice || '0', // 총 사용금액
           contentsTotal: contentsResult.invDtTotalAmtCharge || '0', // 총 사용금액
-          isAdult: isAdult, // 성인여부
+          isAdult: svcInfo.isAdult, // 성인여부
           // isAdult: (contentsLimit.result || {}).isAdult === 'Y', // 성인여부
           isBubinCD: ['R', 'D'].indexOf(svcInfo.svcGr) > -1 // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
         };
       return Observable.of(result);
-    });
-  }
-
-  /**
-   * @desc BFF 호출하여, 미성년자 여부확인
-   * @private
-   */
-  private _getIsAdult() {
-    return this.apiService.request(API_CMD.BFF_08_0080, {}).map((resp) => {
-      return (resp.result || {}).age > 19;
     });
   }
 }
