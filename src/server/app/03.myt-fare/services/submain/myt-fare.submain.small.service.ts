@@ -42,8 +42,8 @@ export class MytFareSubmainSmallService extends MytFareSubmainCommonService {
         contentsResult = contents.result || {},
         result: any = {
           isNotAgree: contents.code === API_ADD_SVC_ERROR.BIL0030, // 휴대폰 결제 이용동의여부
-          smallTotal: smallResult.totalSumPrice || '0', // 총 사용금액
-          contentsTotal: contentsResult.invDtTotalAmtCharge || '0', // 총 사용금액
+          smallTotal: FormatHelper.addComma(smallResult.totalSumPrice || '0'), // 총 사용금액
+          contentsTotal: FormatHelper.addComma(contentsResult.invDtTotalAmtCharge || '0'), // 총 사용금액
           isAdult: svcInfo.isAdult, // 성인여부
           // isAdult: (contentsLimit.result || {}).isAdult === 'Y', // 성인여부
           isBubinCD: ['R', 'D'].indexOf(svcInfo.svcGr) > -1 // 법인 C, D (회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R)
