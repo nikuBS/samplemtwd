@@ -9,6 +9,8 @@ Tw.Environment = {
   cdn: ''
 };
 
+Tw.NetFunnelInfo = [];
+
 /**
  * @class
  * @desc 초기화
@@ -22,6 +24,7 @@ Tw.Init = function () {
   this._initService();
   this._initComponent();
   this._initXtvId();
+  this._initNetfunnelInfo();
   this._getEnvironment();
   this._getSvcInfo();
   this._sendXtractorLoginDummy();
@@ -53,7 +56,7 @@ Tw.Init.prototype = {
     Tw.Bpcp = new Tw.BpcpService();
     Tw.Tracker = Tw.TrackerService.newInstance();
     Tw.Survey = new Tw.SurveyService();
-    
+
     Tw.ChatbotMain = new Tw.ChatbotMainService();
     Tw.Chatbot = new Tw.ChatbotService();
 
@@ -182,11 +185,11 @@ Tw.Init.prototype = {
 
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(function (res) {
-        if( res.code===Tw.API_CODE.CODE_00 ) {
-          if( !Tw.FormatHelper.isEmpty(res.result) ) {
-            if( !Tw.FormatHelper.isEmpty(res.result.eqpMdlCd) ) {
+        if ( res.code === Tw.API_CODE.CODE_00 ) {
+          if ( !Tw.FormatHelper.isEmpty(res.result) ) {
+            if ( !Tw.FormatHelper.isEmpty(res.result.eqpMdlCd) ) {
               _this._eqpMdlCd = res.result.eqpMdlCd;
-            }                  
+            }
           }
         }
       }));
@@ -246,11 +249,11 @@ Tw.Init.prototype = {
           if ( /model:/.test(userAgentString) ) {
             eqpMdlNm = userAgentString.split('model:')[1].split('|')[0];
           }
-          
+
           // OS 정보 (ex. Android 1.1.1)
-          if (Tw.BrowserHelper.isAndroid()) {
+          if ( Tw.BrowserHelper.isAndroid() ) {
             osInfo = 'Android ' + Tw.BrowserHelper.getAndroidVersion();
-          } else if (Tw.BrowserHelper.isIos()) {
+          } else if ( Tw.BrowserHelper.isIos() ) {
             osInfo = 'Ios ' + Tw.BrowserHelper.getIosVersion();
           }
 
@@ -260,7 +263,7 @@ Tw.Init.prototype = {
           } else {
             eqpMdlCd = 'undefined';
           }
-          
+
           console.log('OS버전 : ' + osInfo + '\n앱버전 : ' + appVersion + '\n모델명 : ' + eqpMdlNm + '\n모델코드 : ' + eqpMdlCd);
 
           window.XtractorScript.xtrLoginDummy($.param({
@@ -327,8 +330,46 @@ Tw.Init.prototype = {
     }
 
     Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
-  }
+  },
 
+  /**
+   * netfunnel 환경 변수 값 가져오기 및 skin 설정
+   * @private
+   */
+  _initNetfunnelInfo: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0069, { property: 'netfunnel.page.visible' })
+      .done($.proxy(function (resp) {
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          var items = resp.result.split(',');
+          Tw.NetFunnelInfo = _.map(items, function (item) {
+            return {
+              actionId: item.split('|')[0],
+              visible: parseInt(item.split('|')[1], 10) === 1
+            };
+          });
+          NetFunnel.SkinUtil.add('tworld', {
+            prepareCallback: function () {
+              var progress_print = document.getElementById('Progress_Print');
+              progress_print.innerHTML = '0 % (0/0) - 0 sec';
+            },
+            updateCallback: function (percent, nwait, totwait, timeleft) {
+              var progress_print = document.getElementById('Progress_Print');
+              var prog = totwait - nwait;
+              progress_print.innerHTML = percent + ' % (' + prog + '/' + totwait + ') - ' + timeleft + ' sec';
+            },
+            htmlStr: '<div id="NetFunnel_Skin_Top" style="background-color:#ffffff;border:1px solid #9ab6c4;width:300px">' +
+              '<div style="text-align:right;padding-top:5px;padding-right:5px;;text-align:center;">' +
+              '<div style="text-align:left;font-size:9pt;color:#001f6c;padding-left:10px;">' +
+              '<b><span style="color:#013dc1">접속대기 중</span>..</b><br>' +
+              '- 대기자수 : <span id="NetFunnel_Loading_Popup_Count"></span>명<br>' +
+              '- 대기시간 : <span id="NetFunnel_Loading_Popup_TimeLeft"></span><br>' +
+              '<div id="Progress_Print" style="text-align:center;padding:5px;font:bold 20px Trebuchet MS,굴림,Gulim;color:gray"></div>' +
+              '</div><div style="padding:10px;;vertical-align:center;width:280px" id="NetFunnel_Loading_Popup_Progressbar">' +
+              '</div><div id="NetFunnel_Countdown_Stop" >중지</div></div>'
+          });
+        }
+      }, this));
+  }
 };
 
 $(document).ready(function () {

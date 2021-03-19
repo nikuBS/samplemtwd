@@ -247,8 +247,6 @@ abstract class TwViewController {
           }
           const env = selectItem[0].split(':')[1];
           const visible = parseInt(selectItem[0].split(':')[2], 10) === 1;
-          const netFunnelVisible = selectItem[0].split(':')[3] ?
-            parseInt(selectItem[0].split(':')[3], 10) === 1 : false;
           // this.logger.error(this, 'host::: '+ host +' env:::: '+ env + ' ===> ' + (env.indexOf('-g') > -1));
           // 상용환경인 경우 green, blue 구분 하기 위한 코드 추가 (green: 'prd-g', blue: 'prd')
           // green 환경은 기존 NODE_ENV 값에 '-g'을 추가하여 처리
@@ -256,14 +254,12 @@ abstract class TwViewController {
             // 무조건 그린환경인 경우
             return {
               env: env.replace('-g', ''),
-              visible,
-              netFunnelVisible
+              visible
             }
           }
           return {
             env,
-            visible,
-            netFunnelVisible
+            visible
           };
         } catch (e) {
           this.logger.warn(this, '[getAdvancementPageVisibleCheck] error ::: '+ e);
