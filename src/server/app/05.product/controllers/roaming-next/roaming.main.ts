@@ -49,7 +49,7 @@ export default class RoamingMainController extends RoamingController {
       this.getBanners(pageInfo),
       this.getFirstRoaming(isLogin),
       this.getTariffGroups(),
-      this.getHistory()
+      this.getHistory(isLogin)
     ).subscribe(([popularNations, nations, currentUse, recentUse, banners, newbie, groups, history]) => {
       if (RoamingHelper.renderErrorIfAny(this.error, res, svcInfo, pageInfo,
         [currentUse, newbie, groups, history])) {
@@ -321,7 +321,11 @@ export default class RoamingMainController extends RoamingController {
    *
    * @private
    */
-  private getHistory(): Observable<any> {
+  private getHistory(isLogin: boolean): Observable<any> {
+    if (!isLogin) {
+      return Observable.of(null);
+    }
+
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0234, {}).map((resp) => {
       
       const error = RoamingHelper.checkBffError(resp);
