@@ -73,24 +73,39 @@ Tw.ProductRenewalList.prototype = {
       });
     },
 
+   /**
+   * @desc 필터 선택 유도 툴팁 표시 여부
+   * @return {}  
+   */
+
     _loadNotice: function() { // Notice 최초 전체 진입 화면에서만 출력
       if((this.curFilter == [] || this.curFilter[0] == undefined) && (this.curMobileFilter[0] == undefined || this.curMobileFilter == [])) {
         if(this.themeParam !== '') {
         } else {
           $('.rn-notice').css('display','block');
           $('.btn-nb-close').click(function(){$('.rn-notice').css('display','none');});
-          this._checkDefault = 'Y';
+          this._checkDefault = 'Y'; // 전체요금제 최초 랜딩 화면 여부
         }
       }
     },
 
-    _checkTheme: function() { // 테마요금제 진입 시 선택한 테마로 이동
+    /**
+   * @desc 테마요금제 진입 시 선택한 테마로 스크롤 이동
+   * @return {}  
+   */
+
+    _checkTheme: function() { 
       if(this.themeParam !== '' && this.themeParam !== 'all') { 
         $(window).scrollTop($('[data-theme="' + this.themeParam + '"]').offset().top - $('.rn-prod-inner').height());
       }
     },
 
-    _goToTheme: function(e) { // 테마요금제 진입 시 필터가 있으면 컨펌 창 띄움
+     /**
+   * @desc 테마요금제 진입 시 필터가 있으면 컨펌 창 띄움
+   * @return {}  
+   */
+
+    _goToTheme: function(e) { 
       this.destinationUrl = '/product/renewal/mobileplan/list?theme=all';
       if((this.curFilter[0] !== undefined && this.curFilter[0] !== '' && this.curFilter[0] !== null)) {
         this._loadFilterConfirmPopup(e);
@@ -99,7 +114,12 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _goDeleteFilter: function(e) { // 필터 항목 제거
+   /**
+   * @desc 필터 항목 제거
+   * @return {}  
+   */
+
+    _goDeleteFilter: function(e) {
       var deletedFilter = e.currentTarget.dataset.filterid;
       if(deletedFilter == '') {
         this._historyService.replaceURL('/product/renewal/mobileplan/list?filters='+this.curMobileFilter[0]);
@@ -132,7 +152,12 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _popupQuickFilter: function() { // 퀵필터 항목 초기화 시
+   /**
+   * @desc 퀵필터 항목 초기화 시
+   * @return {}  
+   */
+
+    _popupQuickFilter: function() {  
       this._popupService.open({
           url: '/hbs/',
           hbs: 'renewal.product.initial.confirm',
@@ -145,6 +170,11 @@ Tw.ProductRenewalList.prototype = {
         null);
     },
 
+    /**
+   * @desc 퀵필터 항목 초기화 확인 팝업 open call back
+   * @return {}  
+   */
+
     _onOpenquickinitialPopup: function() { 
       $('#initialCancel').click(_.debounce($.proxy(this._popupService.close, this), 30));
       $('#initialConfirm').click($.proxy(this._handleResetQuickFilters, this));
@@ -154,8 +184,12 @@ Tw.ProductRenewalList.prototype = {
 
     },
 
-      
-    _checkFilter: function() { //url상의 필터 중에 기기 관련 필터 제거
+   /**
+   * @desc url상의 필터 중에 기기 관련 필터 제거
+   * @return {}  
+   */
+
+    _checkFilter: function() { 
       var urlFilterArr = this._getParameter('filters').split(',');
       var curfilterArr = urlFilterArr.filter($.proxy(this._getfilter,this));
       if(curfilterArr[0] !== '' && curfilterArr !== []) {
@@ -165,7 +199,12 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _checkMobilefilter: function() { //url상의 필터 중 기기 관련 필터만 얻어옴
+   /**
+   * @desc url상의 필터 중 기기 관련 필터만 얻어옴
+   * @return {}  
+   */
+
+    _checkMobilefilter: function() {
       var urlFilterArr = this._getParameter('filters').split(',');
       var curMobilefilterArr = urlFilterArr.filter($.proxy(this._getMobilefilter,this));
       if(curMobilefilterArr[0] !== '' && curMobilefilterArr !== []) {
@@ -176,11 +215,11 @@ Tw.ProductRenewalList.prototype = {
       
     },
 
-    _getfilter: function(split) {
+    _getfilter: function(split) { // 기기 관련 필터 아닌 것만 리턴
       return !(split == this.CODE_5G || split == this.CODE_LTE || split == this.CODE_3G || split == this.CODE_2nd || split == this.CODE_PPS);
     },
 
-    _getMobilefilter: function(split) {
+    _getMobilefilter: function(split) { // 기기 관련 필터만 리턴
       return (split === this.CODE_5G || split === this.CODE_LTE || split === this.CODE_3G || split === this.CODE_2nd || split === this.CODE_PPS);
     },
 
@@ -198,9 +237,12 @@ Tw.ProductRenewalList.prototype = {
       return value;
     },
 
-    
+    /**
+   * @desc 초기화 버튼 클릭시
+   * @return {}  
+   */
 
-    _initialFilter: function(e) { // 초기화 버튼 클릭시
+    _initialFilter: function(e) { 
         if(this.curMobileFilter[0] !== undefined && this.curMobileFilter[0] !== '') {
           this.destinationUrl = '/product/renewal/mobileplan/list?filters=' + this.curMobileFilter[0];
         } else {
@@ -209,7 +251,12 @@ Tw.ProductRenewalList.prototype = {
         this._loadFilterConfirmPopup(e);
     },
 
-    _loadFilterConfirmPopup: function(e) { // 필터 초기화 시 알럿 노출
+   /**
+   * @desc 필터 초기화 시 알럿 노출
+   * @return {}  
+   */
+
+    _loadFilterConfirmPopup: function(e) { 
       this._popupService.open({
         url: '/hbs/',
         hbs: 'renewal.product.initial.confirm',
@@ -221,6 +268,11 @@ Tw.ProductRenewalList.prototype = {
         'initialFilter',
         $(e.currentTarget));
     },
+
+   /**
+   * @desc 필터 초기화 팝업 open callback
+   * @return {}  
+   */
 
     _onOpeninitialPopup: function($target) {
       var _this = this;
@@ -239,10 +291,20 @@ Tw.ProductRenewalList.prototype = {
 
     },
 
+   /**
+   * @desc 초기화 버튼 onclick 실행 함수
+   * @return {}  
+   */
+
     _initFilter: function() {
         this._historyService.replaceURL(this.destinationUrl);
     },
 
+   /**
+   * @desc 필터 버튼 클릭 시 필터 목록 가져옴 (As-Is)
+   * @return {}  
+   */
+    
     _handleClickChangeFilters: function(e) {
       var $target = $(e.currentTarget);
       if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
@@ -257,7 +319,12 @@ Tw.ProductRenewalList.prototype = {
       
     },
 
-    _handleLoadFilters: function($target, filterResp, quickFilterResp) { // API로 받아온 데이터로 필터 열음 ( 현재 안씀 )
+   /**
+   * @desc 필터 데이터 파싱
+   * @return {}  
+   */
+
+    _handleLoadFilters: function($target, filterResp, quickFilterResp) { // 
       if (filterResp.code !== Tw.API_CODE.CODE_00) {
         Tw.Error(filterResp.code, filterResp.msg).pop();
         return;
@@ -270,11 +337,16 @@ Tw.ProductRenewalList.prototype = {
   
       this._filters = filterResp.result;
       this._filters.quickFilters = quickFilterResp.result.filters;
-      this._filters.filters = _.map(this._filters.filters, $.proxy(this._escapeHtmlEntities, this));
+      this._filters.filters = _.map(this._filters.filters, $.proxy(this._escapeHtmlEntities, this)); // desc 파싱 및 예외처리
       this._openSelectFiltersPopup($target);
     },
 
-    _openSelectFiltersPopup: function($target) { // 필터 팝업 띄움
+   /**
+   * @desc 필터 팝업 띄움
+   * @return {}  
+   */
+
+    _openSelectFiltersPopup: function($target) { 
   
       this._popupService.open({
           hbs: 'renewal.mobileplan.list.filter',
@@ -288,15 +360,20 @@ Tw.ProductRenewalList.prototype = {
       );
     },
 
-    _handleOpenSelectFilterPopup: function() { //필터 팝업 열릴 시 콜백 함수
+   /**
+   * @desc 필터 팝업 열릴 시 콜백 함수
+   * @return {}  
+   */
+
+    _handleOpenSelectFilterPopup: function() {
 
       var _this = this;
       var MobileFilterForQuick = (this.curMobileFilter[0] == '') || (this.curMobileFilter[0] == undefined) ? this._networkInfo[0] : this.curMobileFilter[0];
       
-      $('.prev-step').click(_.debounce($.proxy(_this._popupService.close, this), 500));
+      $('.prev-step').click(_.debounce($.proxy(_this._popupService.close, this), 500)); //상단 닫기 버튼
       
       var checkFilter = '';
-      $('body').on('click','.quickFilterBtn',$.proxy(function(e) { // 현재 골라진 필터가 있는지 확인
+      $('body').on('click', '.quickFilterBtn', $.proxy(function(e) { // 현재 선택된 퀵필터가 있는지 확인
         if($('.curFilter').length > 0) {
           for(var i = 0; (i < $('.curFilter').length) && (checkFilter == ''); i++) {
             if($('.curFilter').eq(i).css('display') != 'none') {
@@ -316,7 +393,7 @@ Tw.ProductRenewalList.prototype = {
         
       $('.reset').click($.proxy(this._handleResetFilters, this));
       $('.confrim').click($.proxy(this._confirmFilter, this));
-
+      // 퍼블리싱 영역
       var $headerH = $('.page-header').height();
       var $checked = $('.check-box > ul > li > a');
       $(".filter-wrap").scroll(function() {    
@@ -327,13 +404,21 @@ Tw.ProductRenewalList.prototype = {
             $('.container-wrap').removeClass('active');
           }
       });
+      // 퍼블리싱 영역
       if(this.curFilter) { // 현재 적용된 필터 항목 하단에 표시
         for(var a=0 ; a < this.curFilter.length ; a++) {
           
             $('[data-filter="' + this.curFilter[a] + '"]').parent("li").addClass('on');
-            $('#selectFilter').append('<li class="curFilter" data-filtersummary="' + this.curFilter[a] +
-                '"><span class="f-keyword">'+ $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') +
-                '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+            $('#selectFilter').append(
+              '<li class="curFilter" data-filtersummary="' + this.curFilter[a] +'">' +
+                '<span class="f-keyword">' +
+                  $('[data-filter="' + this.curFilter[a] + '"]').data('filtername') +
+                    '<button type="button" class="f-del f-del-filter">' +
+                      '<span class="blind">삭제</span>' + 
+                    '</button>' +
+                '</span>' +
+              '</li>'
+            );
             if($('[data-filter="' + this.curFilter[a] + '"]').data('filtername') == undefined) {
               $('[data-filtersummary="' + this.curFilter[a] + '"]').css('display','none');
             }
@@ -358,20 +443,27 @@ Tw.ProductRenewalList.prototype = {
             $('[data-filtersummary="' + $(this).data('filter') + '"]').remove();
           } else {
             $(this).parent('li').addClass('on');
-            $('#selectFilter').append('<li class="curFilter" data-filtersummary="' + $(this).data('filter') +
-              '"><span class="f-keyword">'+ $(this).data('filtername') +
-              '<button type="button" class="f-del f-del-filter"><span class="blind">삭제</span></button></span></li>');
+            $('#selectFilter').append(
+              '<li class="curFilter" data-filtersummary="' + $(this).data('filter') + '">' +
+                '<span class="f-keyword">' +
+                  $(this).data('filtername') +
+                  '<button type="button" class="f-del f-del-filter">' +
+                    '<span class="blind">삭제</span>' +
+                  '</button>' +
+                '</span>' +
+              '</li>'
+            );
             setTimeout(function() {
               $('.f-del-filter').click($.proxy(_this._deleteSelectFilter, this));
-            },500);
+            }, 500);
           }
         }
       });
       this._filterScript();
-      this.$container.find('.f-del-filter').click($.proxy(this._deleteSelectFilter, this));
+      this.$container.find('.f-del-filter').click($.proxy(this._deleteSelectFilter, this)); // 하단 필터 리스트 삭제 버튼
     },
 
-    _filterScript: function() { // 버튼 클릭시 필터 헤더부분 숨김
+    _filterScript: function() { // 버튼 클릭시 필터 헤더부분 숨김 (퍼블리셔가 준 script)
       var $element = $('button.list-box').closest('li'),
           offsetTop = [],
           index = 0;
@@ -396,7 +488,12 @@ Tw.ProductRenewalList.prototype = {
 
     },
 
-    _confirmFilter: function() { // 필터 선택 후 요금제 확인 버튼 선택 시
+   /**
+   * @desc 필터 선택 후 요금제 확인 버튼 선택 시
+   * @return {}  
+   */
+
+    _confirmFilter: function() { 
       var selectedFilter = $('#selectFilter').children("li");
 
       this._params.searchFltIds = '';
@@ -417,7 +514,12 @@ Tw.ProductRenewalList.prototype = {
         .done($.proxy(this._handleLoadDataWithNewFilters, this, $('.confrim'))); 
     },
 
-    _handleLoadDataWithNewFilters: function($target,resp) { // 요금제 항목 없으면 없음 팝업 출력
+   /**
+   * @desc 요금제 항목 없으면 없음 팝업 출력
+   * @return {}  
+   */
+
+    _handleLoadDataWithNewFilters: function($target,resp) { 
       if (resp.code !== Tw.API_CODE.CODE_00) {
         Tw.Error(resp.code, resp.msg).pop();
         return;
@@ -437,7 +539,12 @@ Tw.ProductRenewalList.prototype = {
       }
     },
 
-    _handleResetFilters: function() { //선택 초기화 버튼 선택 시
+   /**
+   * @desc 선택 초기화 버튼 선택 시
+   * @return {}  
+   */
+
+    _handleResetFilters: function() { 
       var $quickFilterBtn = $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li');
       var quickFilterCheck = false;
       for(var i = 0; (i<$quickFilterBtn.length) && !quickFilterCheck; i++) { // 퀵필터가 있는지 확인
@@ -450,37 +557,63 @@ Tw.ProductRenewalList.prototype = {
         $('.check-box > ul > li').removeClass('on');
       }
     },
-    _handleResetQuickFilters: function() { // 퀵 필터 항목을 초기화하고 팝업 닫음
+
+   /**
+   * @desc 선퀵 필터 항목을 초기화하고 팝업 닫음
+   * @return {}  
+   */
+
+    _handleResetQuickFilters: function() {
       $('.popup-page > div > .tod-renewal-product-tab > .rn-prod-inner > ul > li').removeClass('on');
       this._handleResetFilters();
       this._popupService.close();
     },
 
-    _deleteSelectFilter: function(e) { // 필터 화면 하단 선택 항목 삭제 시
+    /**
+   * @desc 필터 화면 하단 선택 항목 삭제 시
+   * @return {}  
+   */
+
+    _deleteSelectFilter: function(e) { 
       var $filterli = $(e.currentTarget).parent("span").parent("li");
       var filterCode = $filterli.data("filtersummary");
       $filterli.remove();
       $('[data-filter="' + filterCode + '"]').parent("li").removeClass('on');
     },
 
-    _handleLoadMore: function() { //단일 상품 추가 로딩
+   /**
+   * @desc 단일 상품 추가 로딩
+   * @return {}  
+   */
+
+    _handleLoadMore: function() {
       var viewMoreParam = this._params;
       viewMoreParam.searchLastProdId = $('.tod-cont-section').data('lastproduct'); // 로딩된 마지막 prod-id를 섹션 data에 저장
       this._apiService.request(Tw.API_CMD.BFF_10_0031, viewMoreParam).done($.proxy(this._handleSuccessLoadingData, this));
     },
 
-    _handleLoadMoreDefault: function() { // 시리즈 상품 추가 로딩
+   /**
+   * @desc 시리즈 상품 추가 로딩 (데이터를 통신망 별로 API 별로 받아서 js에서 데이터를 보관한 상태로 한번에 시리즈 별로 5개씩 노출)
+   * @return {}  
+   */
+
+    _handleLoadMoreDefault: function() { 
       var viewMoreParam = this._params;
       
       viewMoreParam.idxCtgCd = this._networkInfo[this._curNetworkCount];
       viewMoreParam.opClCd = '02';
       
-      if(this._remainGroupData != 0 && this._curRemainGroupData != 0) {
+      if(this._remainGroupData != 0 && this._curRemainGroupData != 0) { //화면에 노출하지 않은 요금제 데이터가 남아있음
         this._drawRemainGroup();
-      } else {
+      } else { //남아있는 저장된 요금제 데이터가 없음
         this._apiService.request(Tw.API_CMD.BFF_10_0203, viewMoreParam).done($.proxy(this._handleSuccessLoadingDataDefault, this));
       }
     },
+
+   /**
+   * @desc 단일 상품 추가 로딩
+   * @return {}  
+   */
 
     _handleSuccessLoadingData: function(resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -491,21 +624,17 @@ Tw.ProductRenewalList.prototype = {
       var items = _.map(resp.result.products, $.proxy(this._mapProperData, this)); // 가져온 데이터 파싱
       $('.tod-cont-section').data('lastproduct',items[items.length - 1].prodId);
       $('.' + this._series.seriesClass).eq(-1).after(this._listTmpl({ items: items, seriesClass : this._series.seriesClass, cdn : this._cdn })); // 핸들바로 html 만들어서 붙임
-      if(!resp.result.hasNext) { // 추가 로딩할 부분이 있는지 확인
+      if(!resp.result.hasNext) { // 추가 로딩할 데이터가 있는지 확인
         this._hasNext = 'false';
         $('.tod-nmp-loading').css('display','none');
       }
-      this.isScroll = true;
-      
-      // var hasNone = this.$moreBtn.hasClass('none');
-      // if (this._leftCount > 0) {
-      //   if (hasNone) {
-      //     this.$moreBtn.removeClass('none').attr('aria-hidden', false);
-      //   }
-      // } else if (!hasNone) {
-      //   this.$moreBtn.addClass('none').attr('aria-hidden', true);
-      // }      
+      this.isScroll = true; // 호출 중에 중복 호출을 막기위한 Flag
     },
+
+   /**
+   * @desc 시리즈 상품 추가 로딩
+   * @return {}  
+   */
 
     _handleSuccessLoadingDataDefault: function(resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -561,7 +690,7 @@ Tw.ProductRenewalList.prototype = {
         this._curNetworkCount++;
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: this._groupData[0], separateItems: null, seriesClass: this._seriesClass, cdn: this._cdn}));
       } else { // 5개 미만이면 한번에 출력
-        this._curNetworkCount++; // 요금제 통신망 별 호출 시 현재 순번 (ex. 0: 5g / 1: lte / 2: 3g / 3: 2nd / 4 : pps)
+        this._curNetworkCount++; // 요금제 통신망 별 호출 시 현재 순번 (ex. 0: 5g (사용자의 통신망 정보) / 1: lte / 2: 3g / 3: 2nd / 4 : pps)
         $('.tod-cont-section').eq(-1).after(this._listDefaultTmpl({ groupItems: groupItems, separateItems: separateItems, seriesClass: this._seriesClass, cdn: this._cdn }));
         if(this._curNetworkCount == 5) {
           this._hasNext = 'false';
@@ -570,6 +699,12 @@ Tw.ProductRenewalList.prototype = {
       }
       this.isScroll = true; // 데이터 추가 호출 중 중복 호출 요청을 막기 위한 플래그
     },
+
+    /**
+   * @desc 받아온 데이터 중 (시리즈가 6개 이상이라서) 아직 화면에 그리지 않은 데이터가 남아있을 경우 (this._groupData 배열 안에)
+   * @return {}  
+   */
+
 
     _drawRemainGroup: function() { // 시리즈 요금제를 화면에 그럼
       if(this._remainGroupData == this._curRemainGroupData) { // 더이상 남은 시리즈 없을 때
@@ -587,17 +722,25 @@ Tw.ProductRenewalList.prototype = {
       this.isScroll = true;
     },
 
-    _mapProperData: function(item) { // API로 받아온 요금제 데이터 파싱
-      if (item.basFeeAmt){
+   /**
+   * @desc API로 받아온 요금제 데이터 파싱 (As-Is)
+   * @return {}  
+   */
+
+    _mapProperData: function(item) { 
+      if (item.basFeeAmt) {
         if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
-          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt)+'원';
+          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt) + '원';
         }
       } else {
         if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
-          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeInfo)+'원';
+          item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeInfo) + '원';
         } else {
           item.basFeeAmt = item.basFeeInfo;
         }
+      }
+      if (item.selAgrmtAplyMfixAmt) {
+        item.selAgrmtAplyMfixAmt = Tw.FormatHelper.addComma(item.selAgrmtAplyMfixAmt) + '원';
       }
       var data = '';
       if (!this._isEmptyAmount(item.basOfrDataQtyCtt)) {
@@ -705,14 +848,24 @@ Tw.ProductRenewalList.prototype = {
       return item;
     },
 
-    _mapProperDataGroup: function(item) { //요금제 시리즈 별로 요금제 데이터 파싱
+   /**
+   * @desc 요금제 시리즈 별로 요금제 데이터 파싱
+   * @return {}  
+   */
+
+    _mapProperDataGroup: function(item) { 
       if(item.prodList){
         item.prodList = _.map(item.prodList, $.proxy(this._mapProperData, this));
       }
       return item;
     },
 
-    _getTabCodeSeries: function(item) { //요금제 tab별 클래스 할당
+   /**
+   * @desc 요금제 tab별 클래스 할당
+   * @return {}  
+   */
+
+    _getTabCodeSeries: function(item) {
       if(item.prodFltId) {
         switch (item.prodFltId) {
           case this.CODE_5G:
@@ -732,7 +885,12 @@ Tw.ProductRenewalList.prototype = {
       return '';
     },
 
-    _getProdSmryExpsTypCd: function(value) { //요금제 모듈 형태 별 코드 치환 (1.기본형 2. 혜택강조형 3.데이터 강조형)
+   /**
+   * @desc 요금제 모듈 형태 별 코드 치환 (1.기본형 2. 혜택강조형 3. 데이터 강조형)
+   * @return {}  
+   */
+
+    _getProdSmryExpsTypCd: function(value) { 
       switch (value) {
         case '1':
           return '1';
@@ -754,7 +912,12 @@ Tw.ProductRenewalList.prototype = {
       return !value || value === '' || value === '-';
     },
 
-    _setInfinityScroll: function() { // 스크롤이 일정부분 내려갈 시 데이터 추가 로딩
+   /**
+   * @desc 스크롤이 일정부분 내려갈 시 데이터 추가 로딩
+   * @return {}  
+   */
+    
+    _setInfinityScroll: function() {
       var _this = this;
       this.isScroll = true;
       $(document).scroll(function() {
@@ -771,7 +934,12 @@ Tw.ProductRenewalList.prototype = {
       });
     },
 
-    _escapeHtmlEntities : function(filter) { // 필터 desc 출력 시 받아온 데이터를 html로 출력할 수 있도록 치환 + 필터에서 데이터, 대상 오른쪽 작은 글씨 제거 (기획 요청 사항)
+   /**
+   * @desc 필터 desc 출력 시 받아온 데이터를 html로 출력할 수 있도록 치환 + 필터에서 데이터, 대상 오른쪽 작은 글씨 제거 (기획 요청 사항)
+   * @return {}  
+   */
+
+    _escapeHtmlEntities : function(filter) { 
       var str = ''
       if(filter.prodFltDesc) { // 필터 desc 출력 시 받아온 데이터를 html로 출력할 수 있도록 치환
         filter.prodFltDesc = filter.prodFltDesc.replace(/&amp;/g, '&').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/\"/g,' ').replace(/&#034;/g,'\''); 
