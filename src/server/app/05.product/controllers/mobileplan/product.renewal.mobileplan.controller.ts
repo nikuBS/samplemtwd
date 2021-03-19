@@ -526,6 +526,19 @@ export default class RenewProduct extends TwViewController {
     }
 
     /**
+     * 선택 약정 반영 월 정액 금액을 파싱
+     * @param benfProdList 
+     */
+    private convertAgreementAmount(basAgreementAmount) {
+      const isbasAgreementAmount = isNaN(Number(basAgreementAmount));
+
+      return {
+        isNaN: isbasAgreementAmount,
+        value: isbasAgreementAmount ? basAgreementAmount : FormatHelper.addComma(basAgreementAmount)
+      };
+    }
+
+    /**
      * 테마 요금제에 해당되는 데이터에 대해 의미있는 값으로 변환
      * @param data 
      */
@@ -542,6 +555,7 @@ export default class RenewProduct extends TwViewController {
         const basFeeTxt = FormatHelper.getValidVars(item.basFeeInfo); // 이용요금
         const basOfrVcallTmsCtt = FormatHelper.getValidVars(item.basOfrVcallTmsCtt); // 음성 제공량
         const basOfrCharCntCtt = FormatHelper.getValidVars(item.basOfrCharCntCtt); // 문자 제공량
+        const basAgreementAmountCtt = FormatHelper.getValidVars(item.selAgrmtAplyMfixAmt); // 선택 약정 금액 반영 월 정액 금액
 
         const basDataGbTxt = FormatHelper.getValidVars(item.basOfrGbDataQtyCtt); // 데이터 제공량 (GB)
         const basDataMbTxt = FormatHelper.getValidVars(item.basOfrMbDataQtyCtt); // 데이터 제공량 (MB)
@@ -550,6 +564,9 @@ export default class RenewProduct extends TwViewController {
         const basNetworkType = this.convertBasNetworkType(item.prodFltList) || ''; // 회선의 네트워크 타입 ( 데이터타입에 폰트 컬러를 설정하는 스타일 지정 )
         const basNetworkList = this.convertBasNetwork(item.prodFltList) || []; // 네트워크값을 파싱 ( LTE/5G의 아이콘 스타일 및 텍스트를 지정)
         const basAdditionalObject = this.convertAdditionalList(item.benfProdList) || []; // 부가 서비스 정보를 파싱
+        
+        const basAgreementAmount = this.convertAgreementAmount(basAgreementAmountCtt); // 선택 약정 금액 반영 월 정액 금액 계산
+
         // 상품 스펙 공통 헬퍼 사용하여 컨버팅
         const spec = ProductHelper.convProductSpecifications(basFeeTxt, basDataTxt.txt, basOfrVcallTmsCtt, basOfrCharCntCtt, basDataTxt.unit);
 
@@ -561,9 +578,10 @@ export default class RenewProduct extends TwViewController {
           basOfrDataQtyCtt: spec.basOfrDataQtyCtt,  // 데이터
           basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,  // 음성
           basOfrCharCntCtt: spec.basOfrCharCntCtt,  // 문자
+          basAgreementAmount: basAgreementAmount, // 선택 약정 금액 반영 월 정액
           basNetworkType: basNetworkType, // 네트워크 타입
           basNetworkList: basNetworkList, // 네트워크 타입
-          basAdditionalObject: basAdditionalObject // 기본혜택/추가혜택에 대한 정보
+          basAdditionalObject: basAdditionalObject, // 기본혜택/추가혜택에 대한 정보
         });
 
         return arr;
