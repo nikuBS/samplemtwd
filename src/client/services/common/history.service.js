@@ -267,7 +267,7 @@ Tw.HistoryService.prototype = {
       skin_id: 'tworld'
     }, {
       stop: function() {
-        window.history.back();
+        // 중지 시 별도 처리가 필요한지 검토 필요
       },
       success: function(event, data) {
         console.log('event', data);
