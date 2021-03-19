@@ -314,6 +314,93 @@
             <% } %>
             <!--// .cont-box -->
 
+            <!-- 휴대폰 검색 결과 -->
+            <% if ( accessQuery.category == 'phone' && searchInfo.search[0] && searchInfo.search[0].phone ) { %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm phone">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">휴대폰</h3>
+                    <div class="tod-fright">
+                        <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].phone.sort %>">
+                            <%=
+                                searchInfo.search[0].phone.sort==='R'?'정확도순':
+                                searchInfo.search[0].phone.sort==='D'?'최신순':
+                                searchInfo.search[0].phone.sort==='L'?'낮은가격순':'높은가격순'
+                            %>
+                            <span class="ico"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="direct-shop-wrap tod-srhtype1">
+                    <ul id="phone_list"></ul>
+                </div>
+                <% if ( searchInfo.search[0].phone.count > 20 ) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">T다이렉트샵</span>더보기</button>
+                </div>
+                <% } %>
+            </div>
+            <% } %>
+            <!--// 휴대폰 검색 결과 -->
+
+            <!-- 태블릿/2nd Device 검색 결과 -->
+            <% if ( accessQuery.category == 'tablet' && searchInfo.search[0] && searchInfo.search[0].tablet ) { %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm tablet">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">태블릿/2nd Device</h3>
+                    <div class="tod-fright">
+                        <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].tablet.sort %>">
+                            <%=
+                                searchInfo.search[0].tablet.sort==='R'?'정확도순':
+                                searchInfo.search[0].tablet.sort==='D'?'최신순':
+                                searchInfo.search[0].tablet.sort==='L'?'낮은가격순':'높은가격순'
+                            %>
+                            <span class="ico"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="direct-shop-wrap tod-srhtype1">
+                    <ul id="tablet_list"></ul>
+                </div>
+                <% if ( searchInfo.search[0].tablet.count > 20 ) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">T다이렉트샵</span>더보기</button>
+                </div>
+                <% } %>
+            </div>
+            <% } %>
+            <!--// 태블릿/2nd Device 검색 결과 -->
+
+            <!-- 액세서리 검색 결과 -->
+            <% if ( accessQuery.category == 'accessory' && searchInfo.search[0] && searchInfo.search[0].accessory ) { %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm accessory">
+                <div class="tod-searchlist-head">
+                    <h3 class="tit">액세서리</h3>
+                    <div class="tod-fright">
+                        <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].accessory.sort %>">
+                            <%=
+                                searchInfo.search[0].accessory.sort==='R'?'정확도순':
+                                searchInfo.search[0].accessory.sort==='D'?'최신순':
+                                searchInfo.search[0].accessory.sort==='L'?'낮은가격순':'높은가격순'
+                            %>
+                            <span class="ico"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="direct-shop-wrap tod-srhtype1">
+                    <ul id="accessory_list"></ul>
+                </div>
+                <% if ( searchInfo.search[0].accessory.count > 20 ) { %>
+                <div class="btn-more">
+                    <button class="fe-btn-more"><span class="blind">T다이렉트샵</span>더보기</button>
+                </div>
+                <% } %>
+            </div>
+            <% } %>
+            <!--// 액세서리 검색 결과 -->
+
             <% if(accessQuery.category=='tmembership'&&searchInfo.search[0]&&searchInfo.search[0].tmembership){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm tmembership">
