@@ -240,7 +240,8 @@ class CommonSearch extends TwViewController {
               nowUrl : req.originalUrl,
               searchTotalCount: searchResult.result.totalcount,
               arrKeyword: arrKeyword,
-              arrKeywordSize: arrKeywordSize
+              arrKeywordSize: arrKeywordSize,
+              searchKategorie: _this._getSearchKategorie(searchResult.result)
             });
           }
 
@@ -248,9 +249,9 @@ class CommonSearch extends TwViewController {
           let keywords: string = searchResult.result.query;
           let arrKeyword = keywords.split(' ');
           let arrKeywordSize: number = 0;
-            if ('Y' === searchResult.result.orSearch) {
-              arrKeywordSize = arrKeyword.length || 0;
-            }
+          if ('Y' === searchResult.result.orSearch) {
+            arrKeywordSize = arrKeyword.length || 0;
+          }
           res.render('search/common.search.html', {
             pageInfo: pageInfo,
             searchInfo : searchResult.result,
@@ -263,7 +264,8 @@ class CommonSearch extends TwViewController {
             nowUrl : req.originalUrl,
             searchTotalCount: searchResult.result.totalcount,
             arrKeyword: arrKeyword,
-            arrKeywordSize: arrKeywordSize
+            arrKeywordSize: arrKeywordSize,
+            searchKategorie: _this._getSearchKategorie(searchResult.result)
           });
         }
       }
@@ -495,6 +497,58 @@ class CommonSearch extends TwViewController {
    */
   private _getRemainLimit(gubun: string, requestCnt: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0073, { gubun: gubun, requestCnt: requestCnt });
+  }
+
+  /**
+   * 카테고리별 검색 결과 정보를 구한다
+   * @param result 검색 결과
+   * @returns 카테고리별 검색 결과 정보
+   */
+  private _getSearchKategorie(result: any): any {
+    const searchKategorie = {
+      immediate: {},
+      smart: {},
+      shortcut: {},
+      rate: {},
+      service: {},
+      tv_internet: {},
+      troaming: {},
+      tapp: {},
+      direct: {},
+      phone: {},
+      tablet: {},
+      accessory: {},
+      tmembership: {},
+      event: {},
+      sale: {},
+      as_outlet: {},
+      notice: {},
+      prevent: {},
+      question: {},
+      manner: {},
+      serviceInfo: {},
+      siteInfo: {},
+      banner: {},
+      bundle: {},
+      lastevent: {}
+    };
+
+    const keyArr: Array<string> = Object.keys(searchKategorie);
+    let key: string;
+
+    if ( result && result.search && result.search.length > 0 ) {
+      result.search.forEach(search => {
+        for ( let i = 0; i < keyArr.length; i++ ) {
+          key = keyArr[i];
+          if ( search[key] ) {
+            searchKategorie[key] = search[key];
+            break;
+          }
+        }
+      });
+    }
+
+    return searchKategorie;
   }
 }
 

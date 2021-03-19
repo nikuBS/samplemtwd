@@ -269,7 +269,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               data[i][key] = data[i][key].replace('|', '');
             }
           }
-          if ( category === 'direct' && key === 'TYPE' ) {
+          if ( ( category === 'direct' || category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
             if ( data[i][key] === 'shopacc' ) {
               if ( data[i].PRODUCT_TYPE !== '' ) {
                 data[i].linkUrl = Tw.OUTLINK.DIRECT_IOT + '?categoryId=' + data[i].CATEGORY_ID +
@@ -1128,6 +1128,21 @@ $.extend(Tw.CommonSearchMore.prototype,
      * @returns {void}
      */
     _showSelectFilter: function (evt) {
+      console.log('[_showSelectFilter] this._searchInfo.search[0] :',  this._searchInfo.search[0]);
+      var searchResult = {sort: ''};
+
+      if ( this._searchInfo.search[0] ) {
+        if ( this._searchInfo.search[0].direct ) {
+          searchResult = this._searchInfo.search[0].direct;
+        } else if ( this._searchInfo.search[0].phone ) {
+          searchResult = this._searchInfo.search[0].phone;
+        } else if ( this._searchInfo.search[0].tablet ) {
+          searchResult = this._searchInfo.search[0].tablet;
+        } else if ( this._searchInfo.search[0].accessory ) {
+          searchResult = this._searchInfo.search[0].accessory;
+        }
+      }
+
       var listData = [
         // { 'label-attr': 'for=ra0', 'txt': Tw.SEARCH_FILTER_STR.ACCURACY,
         //   'radio-attr':'id="ra0" data-type="R" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.ACCURACY+'" '+
@@ -1135,22 +1150,22 @@ $.extend(Tw.CommonSearchMore.prototype,
         {
           'label-attr': 'for=ra4', 'txt': Tw.SEARCH_FILTER_STR.CLICK,
           'radio-attr': 'id="ra4" data-type="C" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.CLICK + '" ' +
-            (this._searchInfo.search[0].direct.sort === 'C' ? 'checked' : '')
+            (searchResult.sort === 'C' ? 'checked' : '')
         },
         {
           'label-attr': 'for=ra1', 'txt': Tw.SEARCH_FILTER_STR.NEW,
           'radio-attr': 'id="ra1" data-type="D" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.NEW + '" ' +
-            (this._searchInfo.search[0].direct.sort === 'D' ? 'checked' : '')
+            (searchResult.sort === 'D' ? 'checked' : '')
         },
         {
           'label-attr': 'for=ra2', 'txt': Tw.SEARCH_FILTER_STR.LOW,
           'radio-attr': 'id="ra2" data-type="L" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.LOW + '" ' +
-            (this._searchInfo.search[0].direct.sort === 'L' ? 'checked' : '')
+            (searchResult.sort === 'L' ? 'checked' : '')
         },
         {
           'label-attr': 'for=ra3', 'txt': Tw.SEARCH_FILTER_STR.HIGH,
           'radio-attr': 'id="ra3" data-type="H" name="selectFilter" value="' + Tw.SEARCH_FILTER_STR.HIGH + '" ' +
-            (this._searchInfo.search[0].direct.sort === 'H' ? 'checked' : '')
+            (searchResult.sort === 'H' ? 'checked' : '')
         }
       ];
       this._popupService.open({

@@ -33,9 +33,7 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
   this._requestRealTimeFeeFlag = false;
   this._selectedCollectionToChangeSort = '';
   this._reqOptions = {
-    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.troaming-07.tapp-08' +
-      '.direct-09.tmembership-10.event-11.sale-12.as_outlet-13.notice-14.prevent-15.question-16.manner-17.serviceInfo-18' +
-      '.siteInfo-19.banner-20.bundle-21.lastevent-22',
+    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.troaming-07.tapp-08.direct-09.phone-10.tablet-11.accessory-12.tmembership-13.event-14.sale-15.as_outlet-16.notice-17.prevent-18.question-19.manner-20.serviceInfo-21.siteInfo-22.banner-23.bundle-24.lastevent-25',
     sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
@@ -504,7 +502,7 @@ Tw.CommonSearch.prototype = {
             data[i][key] = data[i][key].replace('|', '');
           }
         }
-        if ( category === 'direct' && key === 'TYPE' ) {
+        if ( ( category === 'direct' || category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
           if ( data[i][key] === 'shopacc' ) {
             if ( data[i].PRODUCT_TYPE !== '' ) {
               data[i].linkUrl = Tw.OUTLINK.DIRECT_IOT + '?categoryId=' + data[i].CATEGORY_ID + '&productId=' +
@@ -562,8 +560,12 @@ Tw.CommonSearch.prototype = {
     // 지난이벤트 컬렉션이 추가되었지만 티월드 노출 요건이 없으므로 예외처리함.
     if ( dataKey !== 'lastevent' ) {
 
-      if ( gubun !== 'sort' ) {
+      if ( gubun !== 'sort' && $('#' + dataKey + '_base').length !== 0 ) {
         $('.container').append(Handlebars.compile($('#' + dataKey + '_base').html()));
+      }
+      
+      if ( $('#' + dataKey + '_template').length == 0 ) {
+        return;
       }
 
       var $template = $('#' + dataKey + '_template');
@@ -1339,7 +1341,7 @@ Tw.CommonSearch.prototype = {
     var scrollHeightPosition = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
     Tw.CommonHelper.setCookie('scroll_position', scrollHeightPosition);
     Tw.Logger.info('[common.search] [_goLink] scrollHeightPosition : ', scrollHeightPosition);
-
+    
     var linkUrl = $linkData.attr('href');
 
     if ( Tw.FormatHelper.isEmpty(linkUrl) ) {
