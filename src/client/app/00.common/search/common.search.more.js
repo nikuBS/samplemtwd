@@ -145,7 +145,7 @@ $.extend(Tw.CommonSearchMore.prototype,
         } else {
           $target .find('button').attr('aria-pressed', false);
         }
-    }, this))
+    }, this));
 
 
       this.$container.on('scroll', $.proxy(function () {

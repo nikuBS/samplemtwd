@@ -369,7 +369,6 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    * @desc 한도변경 팝업 닫기
    */
   _close: function () {
-    // this.$isChange = true;
     this._popupService.close();
   },
   /**
@@ -378,17 +377,17 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    * @param $target
    */
   _change: function ($target) {
-    // if (this.$isChange) {
     this._popupService.close();
-    var apiName = this._changeLimitApiName();
-    var reqData = this._makeRequestData();
+    window.setTimeout(function () {
+      var apiName = this._changeLimitApiName();
+      var reqData = this._makeRequestData();
+      this.$isChanged = parseInt(this.$monthSelector.attr('id'), 10) !== parseInt(this.$monthSelector.attr('origin-value'), 10);
+      this._apiService.request(apiName, reqData)
+        .done($.proxy(this._changeLimitSuccess, this, $target))
+        .fail($.proxy(this._fail, this, $target));
 
-    this.$isChanged = parseInt(this.$monthSelector.attr('id'), 10) !== parseInt(this.$monthSelector.attr('origin-value'), 10);
+    }.bind(this), 300);
 
-    this._apiService.request(apiName, reqData)
-      .done($.proxy(this._changeLimitSuccess, this, $target))
-      .fail($.proxy(this._fail, this, $target));
-    // }
   },
   /**
    * @function

@@ -60,7 +60,7 @@ class MyTFareBillSmall extends TwViewController {
       if (!isBubin) {
         const [microHistory, passwordStatus, unusualStatus, autoCardInfo] = responses.splice(0, 4);
         Object.assign(param, {
-          usedInfo: this.getHistoryInfo(microHistory),
+          usedInfo: this.getHistoryInfo(microHistory, svcInfo),
           passwordInfo: this.getPasswordInfo(passwordStatus),
           unusualYn: unusualStatus, // 특이고객 여부
           autoCardInfo
@@ -95,13 +95,7 @@ class MyTFareBillSmall extends TwViewController {
    * @returns {Observable<any>}
    */
   private getHistory(): Observable<any> {
-    return Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0079, {}), // 소액결제 이용내역 조회
-      this.apiService.request(API_CMD.BFF_08_0080, {})  // 만 나이 조회
-    ).map( ([history, age]) => {
-      history.age = (age.result || {}).age;
-      return history;
-    });
+    return this.apiService.request(API_CMD.BFF_05_0079, {}); // 소액결제 이용내역 조회;
   }
 
   /**
@@ -110,11 +104,11 @@ class MyTFareBillSmall extends TwViewController {
    * @param historyInfo
    * @returns {any}
    */
-  private getHistoryInfo(historyInfo: any): any {
+  private getHistoryInfo(historyInfo: any, svcInfo: any): any {
     const {rtnUseYn = '', cpmsYn = 'N'} = historyInfo.result || {};
     return {
       code: historyInfo.code,
-      isAdult: historyInfo.age > 18, // 만 19세 부터 성인
+      isAdult: svcInfo.isAdult, // 만 19세 부터 성인
       isUsed: ['0', '2', '6'].indexOf(rtnUseYn) > -1, // 소액결제 사용여부. 0,2,6이면 사용으로 표시
       rtnUseYn,
       isPassword: cpmsYn === 'Y' // 비밀번호 서비스 사용여부

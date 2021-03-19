@@ -74,7 +74,7 @@ class MytDataSubmainAdvController extends TwViewController {
       isEasyLogin: svcInfo.loginType === LOGIN_TYPE.EASY,
       bpcpServiceId: req.query.bpcpServiceId || '',
       eParam: req.query.eParam || '',
-      isAdult: (svcInfo.age && svcInfo.age > 19),
+      isAdult: svcInfo.isAdult,
       xtEid: this.getXtEid(), // 오퍼통계코드
       ppsCard: {} // PPS 정보
     };
