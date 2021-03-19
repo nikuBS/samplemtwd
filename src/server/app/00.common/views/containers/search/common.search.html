@@ -160,21 +160,21 @@ return [sortCode, codeToData(sortCode)]
 
 
             <!--즉답검색결과[S]-->
-            <% if(searchInfo.search[0].immediate.data.length>0){ %>
+            <% if(searchKategorie.immediate.data.length>0){ %>
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
-            <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
+            <% if(searchKategorie.immediate.data[0].DOCID==1){  %>
             <div class="cont-box bgnone noborder">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 요금제 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 요금제 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
-                            </a>
-                            회선의 요금제는<br>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
+                            </a> 
+                            회선의 요금제는<br> 
                             <em class="highlight">
-                                <a class="list-data" href="/myt-join/myplan" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                    <%= searchInfo.search[0].immediate.data[0].subData %>
+                                <a class="list-data" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                    <%= searchKategorie.immediate.data[0].subData %>
                                 </a>
                             </em>
                             입니다.
@@ -182,18 +182,18 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==2){ %>
             <div class="cont-box bgnone noborder">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 데이터 잔여량 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 데이터 잔여량 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
-                            </a>
-                            회선의<br> 총 데이터 잔여량은
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
+                            </a> 
+                            회선의<br> 총 데이터 잔여량은  
                             <em class="highlight">
-                                <a class="list-data fe-data-remaind" href="/myt-data/hotdata" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-data-remaind" href="/myt-data/hotdata" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             입니다.
@@ -201,18 +201,18 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==3){ %>
             <div class="cont-box bgnone noborder">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 실시간 이용요금 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 실시간 이용요금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
-                            </a>
-                            회선의 실시간 이용요금은<br>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
+                            </a> 
+                            회선의 실시간 이용요금은<br>  
                             <em class="highlight">
-                                <a class="list-data fe-realtime-fee" href="/myt-fare/bill/hotbill" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-realtime-fee" href="/myt-fare/bill/hotbill" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             입니다.
@@ -220,19 +220,19 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==4){ %>
             <div class="cont-box bgnone noborder">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 휴대폰 결제 이용요금 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 휴대폰 결제 이용요금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
-                            </a>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
+                            </a> 
                             회선의 휴대폰 결제 이용요금은<br>
                             <em class="highlight">
-                                <a class="list-data" href="/myt-fare/bill/small" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                    <%= searchInfo.search[0].immediate.data[0].subData %>원
+                                <a class="list-data" href="/myt-fare/bill/small" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                    <%= searchKategorie.immediate.data[0].subData %>원
                                 </a>
                             </em>
                             입니다.
@@ -240,63 +240,63 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==5){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==5){ %>
             <div class="cont-box bgnone noborder">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 T멤버십 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 T멤버십 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
                             T멤버십 등급은
                             <em class="highlight">
-                                <a href="/membership/my" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>">
-                                    <%=
-                                    searchInfo.search[0].immediate.data[0].mainData === 'V'?'VIP':
-                                    searchInfo.search[0].immediate.data[0].mainData === 'G'?'Gold':
-                                    searchInfo.search[0].immediate.data[0].mainData === 'S'?'Silver':'일반'
+                                <a href="/membership/my" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].BNNR_BOT_BTN_NM1 %>">
+                                    <%= 
+                                    searchKategorie.immediate.data[0].mainData === 'V'?'VIP':
+                                    searchKategorie.immediate.data[0].mainData === 'G'?'Gold':
+                                    searchKategorie.immediate.data[0].mainData === 'S'?'Silver':'일반'
                                     %>
                                 </a>
                             </em>
                             이며,<br> 올해 받으신 혜택은
-                            <a class="list-data" href="/membership/my" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>">
-                                <%= searchInfo.search[0].immediate.data[0].subData %>원
+                            <a class="list-data" href="/membership/my" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].BNNR_BOT_BTN_NM1 %>">
+                                <%= searchKategorie.immediate.data[0].subData %>원
                             </a>
                             입니다.
                         </p>
                         <div class="search-barcode">
-                            <img id="membership-barcode" data-cardNum="<%= searchInfo.search[0].immediate.data[0].barcode %>" alt="barcode"/>
+                            <img id="membership-barcode" data-cardNum="<%= searchKategorie.immediate.data[0].barcode %>" alt="barcode"/>
                             <p class="bar-code-num"></p>
                         </div>
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==7){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==7){ %>
             <div class="cont-box bgnone noborder">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 부가서비스 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 부가서비스 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
-                            </a>
-                            회선의 이용 중인 부가서비스는<br>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
+                            </a> 
+                            회선의 이용 중인 부가서비스는<br>  
                             <em class="highlight fe-prod-cnt-wireless">
                                 옵션/할인
-                                <a class="list-data fe-wireless-discount-additions-cnt" href="/myt-join/myplan" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-wireless-discount-additions-cnt" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                                 , 유료
-                                <a class="list-data fe-wireless-paid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-wireless-paid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                                 , 무료
-                                <a class="list-data fe-wireless-unpaid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-wireless-unpaid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
 
                             <em class="highlight fe-prod-cnt-wire" style="display: none;">
                                 유료
-                                <a class="list-data fe-wire-paid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-wire-paid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                                 , 무료
-                                <a class="list-data fe-wire-unpaid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-wire-unpaid-additions-cnt" href="/myt-join/myplan" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             입니다.
@@ -304,18 +304,18 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==8){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==8){ %>
             <div class="cont-box bgnone noborder">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 음성 잔여량 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 음성 잔여량 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선의<br> 총 음성 잔여량은
                             <em class="highlight">
-                                <a class="list-data fe-voice-remaind" href="/myt-data/hotdata" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-voice-remaind" href="/myt-data/hotdata" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             입니다.
@@ -323,22 +323,22 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==9){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==9){ %>
             <div class="cont-box bgnone noborder" id="fe-fee-agrmnt-info-case1" style="display: none;">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선은<br>
                             <em class="highlight">
-                                <a class="list-data fe-fee-agrmnt-name" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-fee-agrmnt-name" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             사용 중이며<br>약정종료일은
-                            <strong class="fe-fee-agrmnt-end-dt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                            <strong class="fe-fee-agrmnt-end-dt" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>"></strong>
                             입니다.
                         </p>
                     </div>
@@ -347,15 +347,15 @@ return [sortCode, codeToData(sortCode)]
 
             <div class="cont-box bgnone noborder" id="fe-fee-agrmnt-info-case2" style="display: none;">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 요금약정 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선은<br>
                             <em class="highlight">
-                                <a class="list-data fe-fee-agrmnt-cnt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-fee-agrmnt-cnt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             의 요금약정 정보가 있습니다.
@@ -363,22 +363,22 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==10){ %>
+            <% } else if(searchKategorie.immediate.data[0].DOCID==10){ %>
             <div class="cont-box bgnone noborder" id="fe-eqp-installment-info-case1" style="display: none;">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선의 단말기 잔여 할부금은<br>
                             <em class="highlight">
-                                <a class="list-data fe-remain-eqp-installment-amt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-remain-eqp-installment-amt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             이며
-                            <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                            <strong class="fe-remain-eqp-installment-month" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>"></strong>
                             남았습니다.
                         </p>
                     </div>
@@ -387,23 +387,23 @@ return [sortCode, codeToData(sortCode)]
 
             <div class="cont-box bgnone noborder" id="fe-eqp-installment-info-case2" style="display: none;">
                 <div class="tod-search-mytbox">
-                    <strong class="tit"><%= searchInfo.search[0].immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
+                    <strong class="tit"><%= searchKategorie.immediate.data[0].nameData %>님의 단말기 할부금 정보입니다.</strong>
                     <div class="text-area">
                         <p class="text">
-                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                                <%= searchInfo.search[0].immediate.data[0].mainData %>
+                            <a href="/myt-join/submain" class="pnum list-data" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
+                                <%= searchKategorie.immediate.data[0].mainData %>
                             </a>
                             회선의<br>가장 최근 구매한 단말기 잔여 할부금은
                             <em class="highlight">
-                                <a class="list-data fe-remain-eqp-installment-amt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                                <a class="list-data fe-remain-eqp-installment-amt" href="/myt-join/myplancombine/infodiscount" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>">
                                 </a>
                             </em>
                             이며
-                            <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                            <strong class="fe-remain-eqp-installment-month" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>"></strong>
                             남았습니다.
                             <br>
                             그 외 기기상환정보 :
-                            <strong class="fe-remain-eqp-installment-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                            <strong class="fe-remain-eqp-installment-cnt" data-id="<%= searchKategorie.immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchKategorie.immediate.data[0].DOCID %>"></strong>
                         </p>
                     </div>
                 </div>
@@ -416,13 +416,13 @@ return [sortCode, codeToData(sortCode)]
 
             <!--스마트검색결과[S]-->
             <!--// .cont-box -->
-            <% if(searchInfo.search[1].smart.data.length>0){ %>
-            <% if(searchInfo.search[1].smart.data[0].BNNR_IOS320_URL.length>0){ %>
+            <% if(searchKategorie.smart.data.length>0){ %>
+            <% if(searchKategorie.smart.data[0].BNNR_IOS320_URL.length>0){ %>
             <div class="search-banner">
-                <a class="list-data smart-element" data-require-pay="<%= searchInfo.search[1].smart.data[0].BNNR_NBILL_YN %>"
-                   href="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_URL %>"
-                   data-id="<%= searchInfo.search[1].smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
-                    <img src="<%= CDN + searchInfo.search[1].smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
+                <a class="list-data smart-element" data-require-pay="<%= searchKategorie.smart.data[0].BNNR_NBILL_YN %>"
+                   href="<%= searchKategorie.smart.data[0].SMART_SRCH_URL %>"
+                   data-id="<%= searchKategorie.smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchKategorie.smart.data[0].SMART_SRCH_NM %>">
+                    <img src="<%= CDN + searchKategorie.smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchKategorie.smart.data[0].SMART_SRCH_NM %>">
                 </a>
             </div>
             <% } %>
@@ -502,11 +502,11 @@ return [sortCode, codeToData(sortCode)]
 
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[2].shortcut.count>5){ %>
+                    <% if(searchKategorie.shortcut.count>5){ %>
                     <a class="shortcut" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        바로가기 <span class="num"><%= searchInfo.search[2].shortcut.count %></span>
-                        <% if(searchInfo.search[2].shortcut.count>5){ %>
+                        바로가기 <span class="num"><%= searchKategorie.shortcut.count %></span>
+                        <% if(searchKategorie.shortcut.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -522,7 +522,7 @@ return [sortCode, codeToData(sortCode)]
                     </div>
                 </div>
             </div>
-            <% if(searchInfo.search[2].shortcut.count>5){ %>
+            <% if(searchKategorie.shortcut.count>5){ %>
             <div class="btn-more">
                 <button class="shortcut" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">바로가기</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -540,12 +540,12 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm rate" id="searchlist_rate">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[3].rate.count>5){%>
+                    <% if(searchKategorie.rate.count>5){%>
                     <!-- <a class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1%>"> -->
                     <a class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(1, sort)[0]%>">
                         <% } %>
-                        요금제 <span class="num"><%= searchInfo.search[3].rate.count %></span>
-                        <% if(searchInfo.search[3].rate.count>5){%>
+                        요금제 <span class="num"><%= searchKategorie.rate.count %></span>
+                        <% if(searchKategorie.rate.count>5){%>
                     </a>
                     <% } %>
                 </h3>
@@ -556,7 +556,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="extraservice-list tod-srhtype1" id="rate_list">
 
             </ul>
-            <% if(searchInfo.search[3].rate.count>5){%>
+            <% if(searchKategorie.rate.count>5){%>
             <div class="btn-more">
                 <button class="rate" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(1, sort)[0]%>"><span class="blind">요금제</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -573,11 +573,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm service" id="searchlist_service">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[4].service.count>5){ %>
+                    <% if(searchKategorie.service.count>5){ %>
                     <a class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(2, sort)[0]%>">
                         <% } %>
-                        부가서비스 <span class="num"><%= searchInfo.search[4].service.count %></span>
-                        <% if(searchInfo.search[4].service.count>5){ %>
+                        부가서비스 <span class="num"><%= searchKategorie.service.count %></span>
+                        <% if(searchKategorie.service.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -588,7 +588,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="extraservice-list tod-srhtype1" id="service_list">
 
             </ul>
-            <% if(searchInfo.search[4].service.count>5){ %>
+            <% if(searchKategorie.service.count>5){ %>
             <div class="btn-more">
                 <button class="service" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(2, sort)[0]%>"><span class="blind">부가서비스</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -605,11 +605,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm tv_internet" id="searchlist_tv_internet">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[5].tv_internet.count>5){ %>
+                    <% if(searchKategorie.tv_internet.count>5){ %>
                     <a class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(3, sort)[0]%>">
                         <% } %>
-                        인터넷 · 집전화 · IPTV <span class="num"><%= searchInfo.search[5].tv_internet.count %></span>
-                        <% if(searchInfo.search[5].tv_internet.count>5){ %>
+                        인터넷 · 집전화 · IPTV <span class="num"><%= searchKategorie.tv_internet.count %></span>
+                        <% if(searchKategorie.tv_internet.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -620,7 +620,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="extraservice-list tod-srhtype1" id="tv_internet_list">
 
             </ul>
-            <% if(searchInfo.search[5].tv_internet.count>5){ %>
+            <% if(searchKategorie.tv_internet.count>5){ %>
             <div class="btn-more">
                 <button class="tv_internet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(3, sort)[0]%>"><span class="blind">인터넷 · 집전화 · IPTV</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -636,11 +636,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm troaming" id="searchlist_troaming">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[6].troaming.count>5){ %>
+                    <% if(searchKategorie.troaming.count>5){ %>
                     <a class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(4, sort)[0]%>">
                         <% } %>
-                        T로밍 <span class="num"><%= searchInfo.search[6].troaming.count %></span>
-                        <% if(searchInfo.search[6].troaming.count>5){ %>
+                        T로밍 <span class="num"><%= searchKategorie.troaming.count %></span>
+                        <% if(searchKategorie.troaming.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -651,7 +651,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="extraservice-list tod-srhtype1" id="troaming_list">
 
             </ul>
-            <% if(searchInfo.search[6].troaming.count>5){ %>
+            <% if(searchKategorie.troaming.count>5){ %>
             <div class="btn-more">
                 <button class="troaming" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>&sort=<%=sortToCodeName(4, sort)[0]%>"><span class="blind">T로밍</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -668,15 +668,15 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm tapp" id="searchlist_tapp">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[7].tapp.count>8){ %>
+                    <% if(searchKategorie.tapp.count>8){ %>
                     <a class="tapp" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tapp&keyword='+keyword:inResultViewUrl+'?category=tapp&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        T앱 <span class="num"><%= searchInfo.search[7].tapp.count %></span>
-                        <% if(searchInfo.search[7].tapp.count>8){ %>
+                        T앱 <span class="num"><%= searchKategorie.tapp.count %></span>
+                        <% if(searchKategorie.tapp.count>8){ %>
                     </a>
                     <% } %>
                 </h3>
-                <% if(searchInfo.search[7].tapp.count>8){ %>
+                <% if(searchKategorie.tapp.count>8){ %>
                 <div class="tod-fright">
                     <button class="bt-link-tx underline list-data" href="/product/apps">T앱 전체보기</button>
                 </div>
@@ -687,7 +687,7 @@ return [sortCode, codeToData(sortCode)]
 
                 </ul>
             </div>
-            <% if(searchInfo.search[7].tapp.count>8){ %>
+            <% if(searchKategorie.tapp.count>8){ %>
             <div class="btn-more">
                 <button class="tapp" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tapp&keyword='+keyword:inResultViewUrl+'?category=tapp&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T앱</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -704,11 +704,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm direct" id="searchlist_direct">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[8].direct.count>5){ %>
+                    <% if(searchKategorie.direct.count>5){ %>
                     <a class="direct" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        T다이렉트샵 <span class="num"><%= searchInfo.search[8].direct.count %></span>
-                        <% if(searchInfo.search[8].direct.count>5){ %>
+                        T다이렉트샵 <span class="num"><%= searchKategorie.direct.count %></span>
+                        <% if(searchKategorie.direct.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -721,7 +721,7 @@ return [sortCode, codeToData(sortCode)]
 
                 </ul>
             </div>
-            <% if(searchInfo.search[8].direct.count>5){ %>
+            <% if(searchKategorie.direct.count>5){ %>
             <div class="btn-more">
                 <button class="direct" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T다이렉트샵</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -733,6 +733,98 @@ return [sortCode, codeToData(sortCode)]
     <!--다이렉트샵 검색결과[E]-->
 
 
+<!--휴대폰 검색결과[S]-->
+    <script type="text/x-handlebars-template" id="phone_base">
+        <hr class="cont-sp type1 phone" aria-hidden="true">
+        <div class="cont-box list nogaps-btm direct" id="searchlist_phone">
+            <div class="tod-searchlist-head">
+                <h3 class="tit">
+                    <% if(searchKategorie.phone.count>5){ %>
+                    <a class="phone" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=phone&keyword='+keyword:inResultViewUrl+'?category=phone&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                    <% } %>
+                        휴대폰 <span class="num"><%= searchKategorie.phone.count %></span>
+                    <% if(searchKategorie.phone.count>5){ %>
+                    </a>
+                    <% } %>
+                </h3>
+                <div class="tod-fright">
+                    <button class="bt-link-tx underline list-data direct-element home" href="https://m.shop.tworld.co.kr" title="새창">T다이렉트샵 가기</button>
+                </div>
+            </div>
+            <div class="direct-shop-wrap tod-srhtype1">
+                <ul id="phone_list"></ul>
+            </div>
+            <% if(searchKategorie.phone.count>5){ %>
+            <div class="btn-more">
+                <button class="phone" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=phone&keyword='+keyword:inResultViewUrl+'?category=phone&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">휴대폰</span>전체보기<i class="ico-arrow-r"></i></button>
+            </div>
+            <% } %>
+        </div>
+        <hr class="cont-sp type1 phone" aria-hidden="true">
+    </script>
+<!--휴대폰 검색결과[E]-->
+
+<!--태블릿/2nd Device 검색결과[S]-->
+<script type="text/x-handlebars-template" id="tablet_base">
+    <hr class="cont-sp type1 tablet" aria-hidden="true">
+    <div class="cont-box list nogaps-btm direct" id="searchlist_tablet">
+        <div class="tod-searchlist-head">
+            <h3 class="tit">
+                <% if(searchKategorie.tablet.count>5){ %>
+                <a class="tablet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tablet&keyword='+keyword:inResultViewUrl+'?category=tablet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                <% } %>
+                    태블릿/2nd Device <span class="num"><%= searchKategorie.tablet.count %></span>
+                <% if(searchKategorie.tablet.count>5){ %>
+                </a>
+                <% } %>
+            </h3>
+            <div class="tod-fright">
+                <button class="bt-link-tx underline list-data direct-element home" href="https://m.shop.tworld.co.kr" title="새창">T다이렉트샵 가기</button>
+            </div>
+        </div>
+        <div class="direct-shop-wrap tod-srhtype1">
+            <ul id="tablet_list"></ul>
+        </div>
+        <% if(searchKategorie.tablet.count>5){ %>
+        <div class="btn-more">
+            <button class="tablet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tablet&keyword='+keyword:inResultViewUrl+'?category=tablet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">태블릿/2nd Device</span>전체보기<i class="ico-arrow-r"></i></button>
+        </div>
+        <% } %>
+    </div>
+    <hr class="cont-sp type1 tablet" aria-hidden="true">
+</script>
+<!--태블릿/2nd Device 검색결과[E]-->
+
+<!--액세서리 검색결과[S]-->
+<script type="text/x-handlebars-template" id="accessory_base">
+    <hr class="cont-sp type1 accessory" aria-hidden="true">
+    <div class="cont-box list nogaps-btm direct" id="searchlist_accessory">
+        <div class="tod-searchlist-head">
+            <h3 class="tit">
+                <% if(searchKategorie.accessory.count>5){ %>
+                <a class="accessory" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=accessory&keyword='+keyword:inResultViewUrl+'?category=accessory&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
+                <% } %>
+                액세서리 <span class="num"><%= searchKategorie.accessory.count %></span>
+                <% if(searchKategorie.accessory.count>5){ %>
+                </a>
+                <% } %>
+            </h3>
+            <div class="tod-fright">
+                <button class="bt-link-tx underline list-data direct-element home" href="https://m.shop.tworld.co.kr" title="새창">T다이렉트샵 가기</button>
+            </div>
+        </div>
+        <div class="direct-shop-wrap tod-srhtype1">
+            <ul id="accessory_list"></ul>
+        </div>
+        <% if(searchKategorie.accessory.count>5){ %>
+        <div class="btn-more">
+            <button class="accessory" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=accessory&keyword='+keyword:inResultViewUrl+'?category=accessory&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">액세서리</span>전체보기<i class="ico-arrow-r"></i></button>
+        </div>
+        <% } %>
+    </div>
+    <hr class="cont-sp type1 accessory" aria-hidden="true">
+</script>
+<!--액세서리 검색결과[E]-->
 
     <!--T멤버십 검색결과[S]-->
     <!-- .cont-box -->
@@ -741,11 +833,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm tmembership" id="searchlist_tmembership">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[9].tmembership.count>5){ %>
+                    <% if(searchKategorie.tmembership.count>5){ %>
                     <a class="tmembership" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tmembership&keyword='+keyword:inResultViewUrl+'?category=tmembership&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        T멤버십 <span class="num"><%= searchInfo.search[9].tmembership.count %></span>
-                        <% if(searchInfo.search[9].tmembership.count>5){ %>
+                        T멤버십 <span class="num"><%= searchKategorie.tmembership.count %></span>
+                        <% if(searchKategorie.tmembership.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -755,7 +847,7 @@ return [sortCode, codeToData(sortCode)]
 
                 </ul>
             </div>
-            <% if(searchInfo.search[9].tmembership.count>5){ %>
+            <% if(searchKategorie.tmembership.count>5){ %>
             <div class="btn-more">
                 <button class="tmembership" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=tmembership&keyword='+keyword:inResultViewUrl+'?category=tmembership&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">T멤버십</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -773,11 +865,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box nogaps-btm list event" id="searchlist_event">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[10].event.count>5){ %>
+                    <% if(searchKategorie.event.count>5){ %>
                     <a class="event" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        진행 중인 이벤트 <span class="num"><%= searchInfo.search[10].event.count %></span>
-                        <% if(searchInfo.search[10].event.count>5){ %>
+                        진행 중인 이벤트 <span class="num"><%= searchKategorie.event.count %></span>
+                        <% if(searchKategorie.event.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -787,7 +879,7 @@ return [sortCode, codeToData(sortCode)]
 
                 </ul>
             </div>
-            <% if(searchInfo.search[10].event.count>5){ %>
+            <% if(searchKategorie.event.count>5){ %>
             <div class="btn-more">
                 <button class="event" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">진행 중인 이벤트</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -805,11 +897,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box nogaps-btm list sale" id="searchlist_sale">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[11].sale.count>5){ %>
+                    <% if(searchKategorie.sale.count>5){ %>
                     <a class="sale" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        혜택/할인 <span class="num"><%= searchInfo.search[11].sale.count %></span>
-                        <% if(searchInfo.search[11].sale.count>5){ %>
+                        혜택/할인 <span class="num"><%= searchKategorie.sale.count %></span>
+                        <% if(searchKategorie.sale.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -817,7 +909,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="tod-benefit-list tod-srhtype1" id="sale_list">
 
             </ul>
-            <% if(searchInfo.search[11].sale.count>5){ %>
+            <% if(searchKategorie.sale.count>5){ %>
             <div class="btn-more">
                 <button class="sale" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">혜택/할인</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -841,11 +933,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm as_outlet" id="searchlist_as_outlet">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[12].as_outlet.count>5){ %>
+                    <% if(searchKategorie.as_outlet.count>5){ %>
                     <a class="as_outlet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=as_outlet&keyword='+keyword:inResultViewUrl+'?category=as_outlet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        지점/대리점, A/S센터 <span class="num"><%= searchInfo.search[12].as_outlet.count %></span>
-                        <% if(searchInfo.search[12].as_outlet.count>5){ %>
+                        지점/대리점, A/S센터 <span class="num"><%= searchKategorie.as_outlet.count %></span>
+                        <% if(searchKategorie.as_outlet.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -853,7 +945,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="service-guide-s tod-srhtype1" id="as_outlet_list">
 
             </ul>
-            <% if(searchInfo.search[12].as_outlet.count>5){ %>
+            <% if(searchKategorie.as_outlet.count>5){ %>
             <div class="btn-more">
                 <button class="as_outlet" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=as_outlet&keyword='+keyword:inResultViewUrl+'?category=as_outlet&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">지점/대리점, A/S센터</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -871,11 +963,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm notice" id="searchlist_notice">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[13].notice.count>5){  %>
+                    <% if(searchKategorie.notice.count>5){  %>
                     <a class="notice" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        공지사항 <span class="num"><%= searchInfo.search[13].notice.count %></span>
-                        <% if(searchInfo.search[13].notice.count>5){  %>
+                        공지사항 <span class="num"><%= searchKategorie.notice.count %></span>
+                        <% if(searchKategorie.notice.count>5){  %>
                     </a>
                     <% } %>
                 </h3>
@@ -883,7 +975,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="service-guide-s tod-srhtype1" id="notice_list">
 
             </ul>
-            <% if(searchInfo.search[13].notice.count>5){  %>
+            <% if(searchKategorie.notice.count>5){  %>
             <div class="btn-more">
                 <button class="notice" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">공지사항</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -902,11 +994,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm prevent" id="searchlist_prevent">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[14].prevent.count>5){ %>
+                    <% if(searchKategorie.prevent.count>5){ %>
                     <a class="prevent" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        이용자 피해예방 주의보 <span class="num"><%= searchInfo.search[14].prevent.count %></span>
-                        <% if(searchInfo.search[14].prevent.count>5){ %>
+                        이용자 피해예방 주의보 <span class="num"><%= searchKategorie.prevent.count %></span>
+                        <% if(searchKategorie.prevent.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -914,7 +1006,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="service-guide-s tod-srhtype1" id="prevent_list">
 
             </ul>
-            <% if(searchInfo.search[14].prevent.count>5){ %>
+            <% if(searchKategorie.prevent.count>5){ %>
             <div class="btn-more">
                 <button class="prevent" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">이용자 피해예방 주의보</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -933,11 +1025,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm question" id="searchlist_question">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <%if(searchInfo.search[15].question.count>5){ %>
+                    <%if(searchKategorie.question.count>5){ %>
                     <a class="question" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        자주 하는 질문 <span class="num"><%= searchInfo.search[15].question.count %></span>
-                        <%if(searchInfo.search[15].question.count>5){ %>
+                        자주 하는 질문 <span class="num"><%= searchKategorie.question.count %></span>
+                        <%if(searchKategorie.question.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -945,7 +1037,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="service-guide-s tod-srhtype1" id="question_list">
 
             </ul>
-            <%if(searchInfo.search[15].question.count>5){ %>
+            <%if(searchKategorie.question.count>5){ %>
             <div class="btn-more">
                 <button class="question" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">자주 하는 질문</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -964,11 +1056,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm manner" id="searchlist_manner">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[16].manner.count>5){ %>
+                    <% if(searchKategorie.manner.count>5){ %>
                     <a class="manner" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        이럴 땐 이렇게 하세요 <span class="num"><%= searchInfo.search[16].manner.count %></span>
-                        <% if(searchInfo.search[16].manner.count>5){ %>
+                        이럴 땐 이렇게 하세요 <span class="num"><%= searchKategorie.manner.count %></span>
+                        <% if(searchKategorie.manner.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -976,7 +1068,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="service-guide-s tod-srhtype1" id="manner_list">
 
             </ul>
-            <% if(searchInfo.search[16].manner.count>5){ %>
+            <% if(searchKategorie.manner.count>5){ %>
             <div class="btn-more">
                 <button class="manner" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">이럴 땐 이렇게 하세요</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -995,11 +1087,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm serviceInfo" id="searchlist_serviceInfo">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[17].serviceInfo.count>5){ %>
+                    <% if(searchKategorie.serviceInfo.count>5){ %>
                     <a class="serviceInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        서비스 이용안내 <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>
-                        <% if(searchInfo.search[17].serviceInfo.count>5){ %>
+                        서비스 이용안내 <span class="num"><%= searchKategorie.serviceInfo.count %></span>
+                        <% if(searchKategorie.serviceInfo.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -1007,7 +1099,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="service-guide-s tod-srhtype1" id="serviceInfo_list">
 
             </ul>
-            <% if(searchInfo.search[17].serviceInfo.count>5){ %>
+            <% if(searchKategorie.serviceInfo.count>5){ %>
             <div class="btn-more">
                 <button class="serviceInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">서비스 이용안내</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -1026,11 +1118,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm siteInfo" id="searchlist_siteInfo">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[18].siteInfo.count>5){ %>
+                    <% if(searchKategorie.siteInfo.count>5){ %>
                     <a class="siteInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        사이트 이용방법 <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>
-                        <% if(searchInfo.search[18].siteInfo.count>5){ %>
+                        사이트 이용방법 <span class="num"><%= searchKategorie.siteInfo.count %></span>
+                        <% if(searchKategorie.siteInfo.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -1038,7 +1130,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="site-guide-s tod-srhtype1" id="siteInfo_list">
 
             </ul>
-            <% if(searchInfo.search[18].siteInfo.count>5){ %>
+            <% if(searchKategorie.siteInfo.count>5){ %>
             <div class="btn-more">
                 <button class="siteInfo" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">사이트 이용방법</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
@@ -1056,11 +1148,11 @@ return [sortCode, codeToData(sortCode)]
         <div class="cont-box list nogaps-btm bundle" id="searchlist_bundle">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
-                    <% if(searchInfo.search[20].bundle.count>5){ %>
+                    <% if(searchKategorie.bundle.count>5){ %>
                     <a class="bundle" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=bundle&keyword='+keyword:inResultViewUrl+'?category=bundle&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>">
                         <% } %>
-                        결합상품 <span class="num"><%= searchInfo.search[20].bundle.count %></span>
-                        <% if(searchInfo.search[20].bundle.count>5){ %>
+                        결합상품 <span class="num"><%= searchKategorie.bundle.count %></span>
+                        <% if(searchKategorie.bundle.count>5){ %>
                     </a>
                     <% } %>
                 </h3>
@@ -1068,7 +1160,7 @@ return [sortCode, codeToData(sortCode)]
             <ul class="extraservice-list tod-srhtype1" id="bundle_list">
 
             </ul>
-            <% if(searchInfo.search[20].bundle.count>5){ %>
+            <% if(searchKategorie.bundle.count>5){ %>
             <div class="btn-more">
                 <button class="bundle" data-url="<%=keyword===inKeyword?moreViewUrl+'?category=bundle&keyword='+keyword:inResultViewUrl+'?category=bundle&keyword='+keyword+'&in_keyword='+in_keyword%>&step=<%= Number(step)+1%>"><span class="blind">결합상품</span>전체보기<i class="ico-arrow-r"></i></button>
             </div>
