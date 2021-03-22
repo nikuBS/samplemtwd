@@ -36657,3 +36657,6 @@ body.apphome .section-box {
 .popup .popup-info .popup-contents .inner-contents.tod-wait-wrap img{width:100%}
 .popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box{margin:1.0625rem 0.5rem 3.75rem 0.5rem; padding:1.25rem 0; background:#f5f5f5; border-radius:5px}
 .popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box .txt{display:block; color:#000; font-size:0.94rem; font-weight:500}
+
+/* 210322 [OP002-13888] SKT를 통해 가입한 IPTV상품, 요금안내서에서 상품명 선택 시 에러페이지 노출 */
+.calling-plan .wrap-link.tod-no-link:after{ content:none }
