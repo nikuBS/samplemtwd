@@ -36655,6 +36655,5 @@ body.apphome .section-box {
 /* 210322 [OP002-13839] NetFunnel 팝업 코딩 및 디자인 작업 재작업 */ 
 .popup .popup-info .popup-contents .inner-contents.tod-wait-wrap{margin-top:3.125rem; text-align:center}
 .popup .popup-info .popup-contents .inner-contents.tod-wait-wrap img{width:100%}
-.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tit{margin-top:1.875rem;font-size:1.56rem;color:#000; font-weight:700}
 .popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box{margin:1.0625rem 0.5rem 3.75rem 0.5rem; padding:1.25rem 0; background:#f5f5f5; border-radius:5px}
 .popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box .txt{display:block; color:#000; font-size:0.94rem; font-weight:500}
