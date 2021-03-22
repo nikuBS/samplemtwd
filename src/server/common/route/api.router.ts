@@ -2009,10 +2009,9 @@ class ApiRouter {
   }
 
   /**
-   * 상품 고도화 (혜택 상품1관리 Redis 호출)
+   * 상품 고도화 (혜택 상품관리 Redis 호출)
    * @param req
    * @param res
-   * @param next
    */
   private getBenfProdInfo(req: Request, res: Response) {
     const prodId = req.query.prodId || '';
