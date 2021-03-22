@@ -697,8 +697,7 @@ return [sortCode, codeToData(sortCode)]
     </script>
     <!--T앱 검색결과[E]-->
 
-    <!--다이렉트샵 검색결과[S]-->
-    <!-- .cont-box -->
+    <!--다이렉트샵 검색결과[S]
     <script type="text/x-handlebars-template" id="direct_base">
         <hr class="cont-sp type1 direct" aria-hidden="true">
         <div class="cont-box list nogaps-btm direct" id="searchlist_direct">
@@ -729,14 +728,13 @@ return [sortCode, codeToData(sortCode)]
         </div>
         <hr class="cont-sp type1 direct" aria-hidden="true">
     </script>
-    <!--// .cont-box -->
-    <!--다이렉트샵 검색결과[E]-->
+    -->
 
 
 <!--휴대폰 검색결과[S]-->
     <script type="text/x-handlebars-template" id="phone_base">
         <hr class="cont-sp type1 phone" aria-hidden="true">
-        <div class="cont-box list nogaps-btm direct" id="searchlist_phone">
+        <div class="cont-box list nogaps-btm phone" id="searchlist_phone">
             <div class="tod-searchlist-head">
                 <h3 class="tit">
                     <% if(searchKategorie.phone.count>5){ %>
@@ -767,7 +765,7 @@ return [sortCode, codeToData(sortCode)]
 <!--태블릿/2nd Device 검색결과[S]-->
 <script type="text/x-handlebars-template" id="tablet_base">
     <hr class="cont-sp type1 tablet" aria-hidden="true">
-    <div class="cont-box list nogaps-btm direct" id="searchlist_tablet">
+    <div class="cont-box list nogaps-btm tablet" id="searchlist_tablet">
         <div class="tod-searchlist-head">
             <h3 class="tit">
                 <% if(searchKategorie.tablet.count>5){ %>
@@ -798,7 +796,7 @@ return [sortCode, codeToData(sortCode)]
 <!--액세서리 검색결과[S]-->
 <script type="text/x-handlebars-template" id="accessory_base">
     <hr class="cont-sp type1 accessory" aria-hidden="true">
-    <div class="cont-box list nogaps-btm direct" id="searchlist_accessory">
+    <div class="cont-box list nogaps-btm accessory" id="searchlist_accessory">
         <div class="tod-searchlist-head">
             <h3 class="tit">
                 <% if(searchKategorie.accessory.count>5){ %>
