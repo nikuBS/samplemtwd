@@ -347,7 +347,7 @@ Tw.Init.prototype = {
               visible: parseInt(item.split('|')[1], 10) === 1
             };
           });
-          NetFunnel.SkinUtil.add('tworld', {
+          var netfunnelSkinOption = {
             prepareCallback: function () {
               var progress_print = document.getElementById('Progress_Print');
               progress_print.innerHTML = '0 % (0/0) - 0 sec';
@@ -366,7 +366,10 @@ Tw.Init.prototype = {
               '<div id="Progress_Print" style="text-align:center;padding:5px;font:bold 20px Trebuchet MS,굴림,Gulim;color:gray"></div>' +
               '</div><div style="padding:10px;;vertical-align:center;width:280px" id="NetFunnel_Loading_Popup_Progressbar">' +
               '</div><div id="NetFunnel_Countdown_Stop" >중지</div></div>'
-          });
+          };
+          // 웹, 모바일 두가지 케이스에 대해서 모두 등록이 필요함
+          NetFunnel.SkinUtil.add('tworld', netfunnelSkinOption, 'normal');
+          NetFunnel.SkinUtil.add('tworld', netfunnelSkinOption, 'mobile');
         }
       }, this));
   }
