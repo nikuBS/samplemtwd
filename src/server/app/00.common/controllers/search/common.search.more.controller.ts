@@ -38,6 +38,16 @@ class CommonSearchMore extends TwViewController {
       sort = 'A';
     }
 
+    // 카테고리가 휴대폰, 태블릿, 악세서리일 경우 sort 파라미터를 규약에 맞게 생성
+    if ( collection === 'phone' || collection === 'tablet' || collection === 'accessory') {
+      // 휴대폰, 태블릿, 악세서리 카테고리는 A(추천순) 정렬 없음
+      if ( sort === 'A' ) {
+        sort = 'D';
+      }
+
+      sort = collection + '-' + sort;
+    }
+
     // console.log('sort: ', sort);
     this.log.info(this, '[common.search.more.controller] ------------------------------------------------------', '');
     this.log.info(this, '[common.search.more.controller] req.query : ', req.query);   // keyword=요금제, step=3, category=rate, sort=A

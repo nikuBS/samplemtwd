@@ -254,6 +254,7 @@
             </div>
             <% } %>
 
+            <!-- T다이렉트샵 
             <% if(accessQuery.category=='direct'&&searchInfo.search[0]&&searchInfo.search[0].direct){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm direct">
@@ -281,39 +282,9 @@
                 </div>
                 <% } %>
             </div>
-
-            <!-- <div class="cont-box bgnone noborder gaps-style03">
-                <div class="contheader-box">
-                    <div class="totalfilter-wrap"></div>
-                    <div class="filter-select">
-                        <button type="button" class="filterselect-btn" aria-haspopup="true" data-type="<%= searchInfo.search[0].direct.sort %>">
-                            <%=
-                                searchInfo.search[0].direct.sort==='R'?'정확도순':
-                                searchInfo.search[0].direct.sort==='D'?'최신순':
-                                searchInfo.search[0].direct.sort==='L'?'낮은가격순':'높은가격순'
-                            %>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cont-box pb0 direct">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">T world 다이렉트</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.totalcount %></span>건
-                    </div>
-                </div>
-                <div class="direct-shop-wrap">
-                    <ul id="direct_list">
-
-                    </ul>
-
-                </div>
-            </div> -->
             <% } %>
-            <!--// .cont-box -->
-
+            -->
+            
             <!-- 휴대폰 검색 결과 -->
             <% if ( accessQuery.category == 'phone' && searchInfo.search[0] && searchInfo.search[0].phone ) { %>
             <hr class="cont-sp type1" aria-hidden="true">
@@ -323,9 +294,9 @@
                     <div class="tod-fright">
                         <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].phone.sort %>">
                             <%=
-                                searchInfo.search[0].phone.sort==='R'?'정확도순':
-                                searchInfo.search[0].phone.sort==='D'?'최신순':
-                                searchInfo.search[0].phone.sort==='L'?'낮은가격순':'높은가격순'
+                                searchInfo.search[0].phone.sort==='phone-R'?'정확도순':
+                                searchInfo.search[0].phone.sort==='phone-D'?'최신순':
+                                searchInfo.search[0].phone.sort==='phone-L'?'낮은가격순':'높은가격순'
                             %>
                             <span class="ico"></span>
                         </button>
@@ -336,7 +307,7 @@
                 </div>
                 <% if ( searchInfo.search[0].phone.count > 20 ) { %>
                 <div class="btn-more">
-                    <button class="fe-btn-more"><span class="blind">T다이렉트샵</span>더보기</button>
+                    <button class="fe-btn-more"><span class="blind">휴대폰</span>더보기</button>
                 </div>
                 <% } %>
             </div>
@@ -352,9 +323,9 @@
                     <div class="tod-fright">
                         <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].tablet.sort %>">
                             <%=
-                                searchInfo.search[0].tablet.sort==='R'?'정확도순':
-                                searchInfo.search[0].tablet.sort==='D'?'최신순':
-                                searchInfo.search[0].tablet.sort==='L'?'낮은가격순':'높은가격순'
+                                searchInfo.search[0].tablet.sort==='tablet-R'?'정확도순':
+                                searchInfo.search[0].tablet.sort==='tablet-D'?'최신순':
+                                searchInfo.search[0].tablet.sort==='tablet-L'?'낮은가격순':'높은가격순'
                             %>
                             <span class="ico"></span>
                         </button>
@@ -365,7 +336,7 @@
                 </div>
                 <% if ( searchInfo.search[0].tablet.count > 20 ) { %>
                 <div class="btn-more">
-                    <button class="fe-btn-more"><span class="blind">T다이렉트샵</span>더보기</button>
+                    <button class="fe-btn-more"><span class="blind">태블릿/2nd Device</span>더보기</button>
                 </div>
                 <% } %>
             </div>
@@ -381,9 +352,9 @@
                     <div class="tod-fright">
                         <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].accessory.sort %>">
                             <%=
-                                searchInfo.search[0].accessory.sort==='R'?'정확도순':
-                                searchInfo.search[0].accessory.sort==='D'?'최신순':
-                                searchInfo.search[0].accessory.sort==='L'?'낮은가격순':'높은가격순'
+                                searchInfo.search[0].accessory.sort==='accessory-R'?'정확도순':
+                                searchInfo.search[0].accessory.sort==='accessory-D'?'최신순':
+                                searchInfo.search[0].accessory.sort==='accessory-L'?'낮은가격순':'높은가격순'
                             %>
                             <span class="ico"></span>
                         </button>
@@ -394,7 +365,7 @@
                 </div>
                 <% if ( searchInfo.search[0].accessory.count > 20 ) { %>
                 <div class="btn-more">
-                    <button class="fe-btn-more"><span class="blind">T다이렉트샵</span>더보기</button>
+                    <button class="fe-btn-more"><span class="blind">액세서리</span>더보기</button>
                 </div>
                 <% } %>
             </div>
