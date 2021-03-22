@@ -121,6 +121,8 @@ class ApiRouter {
 
     // Toss Banner Text
     GET_TOSS_BANNER_TEXT: { path: '/banner/tosstext', method: API_METHOD.GET, target: this.getBannerTossText },
+    // Get preference property
+    GET_PREFERENCE_PROPERTY: { path: '/pref-property', method: API_METHOD.GET, target: this.getPreferenceProperty }
   };
 
   /**
@@ -1415,7 +1417,7 @@ class ApiRouter {
     const ret = {};
 
     // 임시로 kjh1234@gmail.com로 로그인 된 경우만 조회 가능하도록 추가
-    if (!FormatHelper.isEmpty(req.session.svcInfo) && req.session.svcInfo.userId === 'kjh1234@gmail.com') {
+    if (!FormatHelper.isEmpty(req.session.svcInfo)) {
       this.redisService.getData(key)
         .switchMap((resp) => {
           ret['userId'] = resp.result.svcInfo.userId;
@@ -1954,7 +1956,7 @@ class ApiRouter {
     const loginService = new LoginService();
     const svcInfo = loginService.getSvcInfo(req) || {};
     let loginYn = false;
-    if (!FormatHelper.isEmpty(svcInfo)) { // 정회원유무 
+    if (!FormatHelper.isEmpty(svcInfo)) { // 정회원유무
       loginYn = true;
     }
 
@@ -1986,7 +1988,7 @@ class ApiRouter {
                 result: ''
             });
           }
-          
+
         }
         const bannerHtml = `
           <div class="tos_inner">
@@ -2007,10 +2009,10 @@ class ApiRouter {
   }
 
   /**
-   * 상품 고도화 (혜택 상품관리 Redis 호출)
-   * @param req 
-   * @param res 
-   * @param next 
+   * 상품 고도화 (혜택 상품1관리 Redis 호출)
+   * @param req
+   * @param res
+   * @param next
    */
   private getBenfProdInfo(req: Request, res: Response) {
     const prodId = req.query.prodId || '';
@@ -2018,6 +2020,19 @@ class ApiRouter {
       .subscribe((resp) => {
         res.json(resp);
       });
+  }
+  /**
+   * 환경설정변수
+   * @param req
+   * @param res
+   * @private
+   */
+  private getPreferenceProperty(req: Request, res: Response) {
+    const key = req.query && req.query.key;
+    this.redisService.getString(REDIS_KEY.PREFERENCE_PROPERTY + key)
+      .subscribe((resp) => {
+        res.json(resp);
+      })
   }
 }
 

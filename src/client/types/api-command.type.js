@@ -682,8 +682,8 @@ Tw.NODE_CMD = {
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET },
   GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET },
-  GET_SSO_URL: { path: '/common/sso-url', method: Tw.API_METHOD.GET }
-
+  GET_SSO_URL: { path: '/common/sso-url', method: Tw.API_METHOD.GET },
+  GET_PREFERENCE_PROPERTY: { path: '/pref-property', method: Tw.API_METHOD.GET }
 };
 
 Tw.SESSION_CMD = {
