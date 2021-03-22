@@ -36651,3 +36651,10 @@ body.apphome .section-box {
 /* 210309 [OP002-13575] [공통] 넷퍼넬 기능 추가 */ 
 .icon-gnb-home-T{display: inline-block; width: 3.06rem; height: 2.5rem; background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0; background-size: 100% 100%}
 .bt-fixed-area .tod-wait{padding:1.125rem 0; border-top:1px solid #e5e5e5; text-align: center; font-size: 0.75rem; color:#666;}
+
+/* 210322 [OP002-13839] NetFunnel 팝업 코딩 및 디자인 작업 재작업 */ 
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap{margin-top:3.125rem; text-align:center}
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap img{width:100%}
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tit{margin-top:1.875rem;font-size:1.56rem;color:#000; font-weight:700}
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box{margin:1.0625rem 0.5rem 3.75rem 0.5rem; padding:1.25rem 0; background:#f5f5f5; border-radius:5px}
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box .txt{display:block; color:#000; font-size:0.94rem; font-weight:500}
