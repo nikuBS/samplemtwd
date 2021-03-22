@@ -39,7 +39,8 @@ export default class RoamingMainController extends RoamingController {
       return;
     }
 
-    const isLogin: boolean = !FormatHelper.isEmpty(svcInfo);
+    // 회선이 없는 고객도 로밍 서브메인 접근이 가능해야 됨 (회선이 없는 사용자의 정의는 아래 조건으로 판단 - OP002-13821)
+    const isLogin: boolean = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcGr) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum);
 
     Observable.combineLatest(
       this.getPopularNations(),
