@@ -284,7 +284,7 @@
             </div>
             <% } %>
             -->
-            
+
             <!-- 휴대폰 검색 결과 -->
             <% if ( accessQuery.category == 'phone' && searchInfo.search[0] && searchInfo.search[0].phone ) { %>
             <hr class="cont-sp type1" aria-hidden="true">
@@ -294,6 +294,7 @@
                     <div class="tod-fright">
                         <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].phone.sort %>">
                             <%=
+                                searchInfo.search[0].phone.sort==='phone-C'?'클릭순':
                                 searchInfo.search[0].phone.sort==='phone-R'?'정확도순':
                                 searchInfo.search[0].phone.sort==='phone-D'?'최신순':
                                 searchInfo.search[0].phone.sort==='phone-L'?'낮은가격순':'높은가격순'
@@ -323,6 +324,7 @@
                     <div class="tod-fright">
                         <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].tablet.sort %>">
                             <%=
+                                searchInfo.search[0].tablet.sort==='tablet-C'?'클릭순':
                                 searchInfo.search[0].tablet.sort==='tablet-R'?'정확도순':
                                 searchInfo.search[0].tablet.sort==='tablet-D'?'최신순':
                                 searchInfo.search[0].tablet.sort==='tablet-L'?'낮은가격순':'높은가격순'
@@ -352,6 +354,7 @@
                     <div class="tod-fright">
                         <button class="btn-select filterselect-btn" title="정렬 기준 선택" aria-haspopup="true" data-type="<%= searchInfo.search[0].accessory.sort %>">
                             <%=
+                                searchInfo.search[0].accessory.sort==='accessory-C'?'클릭순':
                                 searchInfo.search[0].accessory.sort==='accessory-R'?'정확도순':
                                 searchInfo.search[0].accessory.sort==='accessory-D'?'최신순':
                                 searchInfo.search[0].accessory.sort==='accessory-L'?'낮은가격순':'높은가격순'

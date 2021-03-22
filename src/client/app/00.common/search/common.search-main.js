@@ -251,11 +251,14 @@ Tw.CommonSearchMain.prototype = {
     },this));
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(recentlyKeywordData));
 
-    Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-    Tw.CommonHelper.setCookie('search_sort::service', 'A');
-    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-    Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
-    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    Tw.CommonHelper.setCookie('search_sort::rate', 'C');
+    Tw.CommonHelper.setCookie('search_sort::service', 'C');
+    Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
+    Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
+    // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    Tw.CommonHelper.setCookie('search_sort::phone', 'D');
+    Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
+    Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
 
     return recentlyKeywordData;
   },
@@ -393,13 +396,19 @@ Tw.CommonSearchMain.prototype = {
     sort += '.service-C';
     sort += '.tv_internet-C';
     sort += '.troaming-C';
-    sort += '.direct-D';
+    // sort += '.direct-D';
+    sort += '.phone-D';
+    sort += '.tablet-D';
+    sort += '.accessory-D';
 
     Tw.CommonHelper.setCookie('search_sort::rate', 'C');
     Tw.CommonHelper.setCookie('search_sort::service', 'C');
     Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
     Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
-    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    Tw.CommonHelper.setCookie('search_sort::phone', 'D');
+    Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
+    Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
 
     setTimeout($.proxy(function () {
       // Tw.Logger.info('[common.search-main] [_doSearch]', '"doSearch" Cookie 셋팅');
