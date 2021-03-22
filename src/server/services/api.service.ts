@@ -262,7 +262,13 @@ class ApiService {
    */
   private handleError(observer, command, req, res, options, err) {
     if ( !err.response && err.stack ) {
-      this.logger.error(this, '[Programming error]', err.stack);
+      this.logger.error(this, '[Programming error] Stack :: ', err.stack);
+      this.logger.error(this, '[Programming error] SvcInfo :: ', req.session && req.session.svcInfo )
+      // page controller 에서 error 가 발생하여 무한로딩이 발생 시 error 페이지 노출 하도록 추가
+      return res.status(500).render('error.page-not-found.html', {
+        svcInfo: req.session ? req.session.svcInfo : null,
+        code: res.statusCode
+      });
     }
 
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
