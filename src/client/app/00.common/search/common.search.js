@@ -34,7 +34,7 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
   this._selectedCollectionToChangeSort = '';
   this._reqOptions = {
     collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.troaming-07.tapp-08.direct-09.phone-10.tablet-11.accessory-12.tmembership-13.event-14.sale-15.as_outlet-16.notice-17.prevent-18.question-19.manner-20.serviceInfo-21.siteInfo-22.banner-23.bundle-24.lastevent-25',
-    sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
+    sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
   this._autoCompleteRegExObj = {
@@ -344,7 +344,7 @@ Tw.CommonSearch.prototype = {
       Tw.CommonHelper.setCookie('search_sort::service', 'C');
       Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
       Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
-      Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+      // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
       Tw.CommonHelper.setCookie('search_sort::phone', 'D');
       Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
       Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
@@ -496,7 +496,6 @@ Tw.CommonSearch.prototype = {
       }
     }
 
-
     for ( var i = 0; i < data.length; i++ ) {
       for ( var key in data[i] ) {
         if ( key === 'PR_STA_DT' || key === 'PR_END_DT' ) {
@@ -517,7 +516,7 @@ Tw.CommonSearch.prototype = {
             data[i][key] = data[i][key].replace('|', '');
           }
         }
-        if ( ( category === 'direct' || category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
+        if ( ( /*category === 'direct' ||*/ category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
           if ( data[i][key] === 'shopacc' ) {
             if ( data[i].PRODUCT_TYPE !== '' ) {
               data[i].linkUrl = Tw.OUTLINK.DIRECT_IOT + '?categoryId=' + data[i].CATEGORY_ID + '&productId=' +
@@ -718,7 +717,7 @@ Tw.CommonSearch.prototype = {
     sort += '.service-C';
     sort += '.tv_internet-C';
     sort += '.troaming-C';
-    sort += '.direct-D';
+    // sort += '.direct-D';
     sort += '.phone-D';
     sort += '.tablet-D';
     sort += '.accessory-D';
@@ -728,7 +727,7 @@ Tw.CommonSearch.prototype = {
     Tw.CommonHelper.setCookie('search_sort::service', 'C');
     Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
     Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
-    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
     Tw.CommonHelper.setCookie('search_sort::phone', 'D');
     Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
     Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
@@ -767,16 +766,15 @@ Tw.CommonSearch.prototype = {
     requestUrl += encodeURIComponent(resultSearchKeyword.trim());
     requestUrl += '&step=' + (Number(this._step) + 1);
 
-    var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct', 'search_sort::phone', 'search_sort::tablet', 'search_sort::accessory'];
+    var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::phone', 'search_sort::tablet', 'search_sort::accessory'];
     var sort = 'shortcut-C';
     sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
     sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
     sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
     sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
-    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
-    sort += '.phone-' + (Tw.CommonHelper.getCookie(sortsName[5]) || 'D');
-    sort += '.tablet-' + (Tw.CommonHelper.getCookie(sortsName[6]) || 'D');
-    sort += '.accessory-' + (Tw.CommonHelper.getCookie(sortsName[7]) || 'D');
+    sort += '.phone-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
+    sort += '.tablet-' + (Tw.CommonHelper.getCookie(sortsName[5]) || 'D');
+    sort += '.accessory-' + (Tw.CommonHelper.getCookie(sortsName[6]) || 'D');
     requestUrl += '&sort=' + sort;
 
     // Tw.Logger.info('[common.search] [_doResultSearch]', '"doSearch" Cookie 셋팅');
