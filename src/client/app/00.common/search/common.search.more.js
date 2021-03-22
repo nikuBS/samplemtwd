@@ -806,7 +806,7 @@ $.extend(Tw.CommonSearchMore.prototype,
               contentsCnt = Number(res.result.search[i][keyName].count);
 
 
-              if ( keyName === 'smart' || keyName === 'immediate' || keyName === 'banner' || keyName === 'lastevent' ) {
+              if ( keyName === 'smart' || keyName === 'immediate' || keyName === 'banner' || keyName === 'lastevent' || keyName === 'direct' ) {
                 continue;
               } else {
                 var categoryStr = '.fe-' + keyName + '-count';
