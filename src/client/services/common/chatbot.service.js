@@ -1156,7 +1156,7 @@ Tw.ChatbotService.prototype = {
                     this._apiService.requestArray(this._defaultRequestUrls)
                         .done($.proxy(this._checkTargetGroup, this))
                         .fail(function(error){
-                            Tw.Logger.info('[chatbot.service] [_requestApis] requestArray fail : ', error);
+                            Tw.Logger.error('[chatbot.service] [_requestApis] requestArray fail : ', error);
                         });
                 }
             } else {
@@ -1426,7 +1426,7 @@ Tw.ChatbotService.prototype = {
                     if (this._xboxYn === 'Y'){
                         greetingRangking.push(mlsKeyword);
                     }                    
-                } else if (this._chatbotCommonService._checkGreetingDate(mlsKeyword)) { // 그리팅 키워드 시작일 종료일 유효성 검사
+                } else {
                     greetingRangking.push(mlsKeyword);
                 }
             }
