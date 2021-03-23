@@ -38,8 +38,8 @@ Tw.ChatbotCommonService = function() {
         { keyword: 'flo', message:'음악을 즐겨듣는 당신에게 추천드립니다.<br>이젠 FLO 전용 데이터로 음악을 즐겨보세요.', type: 'B', linkUrl : '/product/callplan?prod_id=NA00006520'},
         { keyword: 'xbox', message:'5GX 클라우드 게임 알아보기', type: 'A', linkUrl : 'https://www.5gxcloudgame.com/main'},
         { keyword: 'xbox', message:'지금 5GX 클라우드 게임 신청하면<br>1개월 100원 이용권 혜택이 찾아갑니다!', type: 'B', linkUrl : 'https://www.5gxcloudgame.com/main'},
-        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000182&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210319', endDate : '20210415' },
-        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000182&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all', startDate : '20210319', endDate : '20210415' },
+        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000182&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all' },
+        { keyword: 'galaxy_all', message:'혜택받고 최신 갤럭시 시리즈로 바꿔보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000182&utm_source=tworld&utm_medium=beta_message&utm_campaign=galaxy_all' },
         { keyword: 'untactplan', message:'3만원 대의 5G 요금제를 이용해 보세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000170&utm_source=tworld&utm_medium=app_message&utm_campaign=untactplan' },
         { keyword: 'untactplan', message:'3만원 대의 5G 요금제를 이용해 보세요.', type: 'B', linkUrl : 'https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000170&utm_source=tworld&utm_medium=app_message&utm_campaign=untactplan' },
         { keyword: 'newphone', message:'휴대폰 바꾸고 T기프트도 챙기세요.', type: 'A', linkUrl : 'https://m.shop.tworld.co.kr/shop/main?referrer=&utm_source=tworld&utm_medium=app_message&utm_campaign=phone' },
@@ -97,7 +97,6 @@ Tw.ChatbotCommonService.prototype = {
      * @param (String) 키워드
      */
     _mlsGreetingRangkingUnshift: function (keywordText, mlsGreetingRangking, greetingKeywords, mlsGreetingTextType) {
-        var _this = this;
         var isOverlap = false;
         
         Tw.Logger.info('[chatbot.common.service] [_mlsGreetingRangkingUnshift] keywordText : ', keywordText);
@@ -117,12 +116,9 @@ Tw.ChatbotCommonService.prototype = {
         if( isOverlap === false ) {
             greetingKeywords.forEach(function (row) {
                 if( row.keyword && row.type && row.keyword === keywordText && row.type === mlsGreetingTextType && mlsGreetingRangking ) {
-                    // 그리팅 키워드 시작일 종료일 검사
-                    if ( _this._checkGreetingDate(row.keyword) ) {
-                        mlsGreetingRangking.unshift(row.keyword);
-                        Tw.Logger.info('[chatbot.common.service] [_mlsGreetingRangkingUnshift] mlsGreetingRangking unshift success', '');
-                        return;
-                    }
+                    mlsGreetingRangking.unshift(row.keyword);
+                    Tw.Logger.info('[chatbot.common.service] [_mlsGreetingRangkingUnshift] mlsGreetingRangking unshift success', '');
+                    return;
                 }
             });
         }
@@ -130,40 +126,57 @@ Tw.ChatbotCommonService.prototype = {
 
     /**
      * @function
-     * @desc 그리팅 키워드 시작일 종료일 유효성 검사
-     * @param (String) keyword
-     * @returns boolean
+     * @desc 노출 날짜에 조건에 맞지 않는 키워드 삭제
+     * @param mlsGreetingRangking 키워드 배열
+     * @param keywordDateResult 키워드 노출날짜 환경설정 정보
      */
-     _checkGreetingDate: function (keyword) {
-        Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] 그리팅 키워드 시작일 종료일 유효성 검사 시작 keyword : ', keyword);
+     _removeGreetingDate: function (mlsGreetingRangking, keywordDateResult) {
+        Tw.Logger.info('[chatbot.common.service] [_removeGreetingDate] mlsGreetingRangking : ', mlsGreetingRangking);
+        Tw.Logger.info('[chatbot.common.service] [_removeGreetingDate] keywordDateResult : ', keywordDateResult);
+
         var toDay = Tw.DateHelper.getCurrentShortDate();
-        var greetingKeywords = this._greetingKeywords;
-        var targetKeyword = {};
 
-        greetingKeywords.forEach(function(item) {
-            if ( item.keyword === keyword ) {
-                targetKeyword = item;
-                return;
-            }
-        });
-            
-        Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] targetKeyword : ', targetKeyword);
+        if ( keywordDateResult && keywordDateResult.code === Tw.API_CODE.CODE_00 && keywordDateResult.result ) {
+            var keywordDateArr = keywordDateResult.result.split('|');
+            keywordDateArr.forEach(function(keywordDate){
+                if ( !keywordDate || keywordDate.length === 0 ) {
+                    return;
+                }
 
-        // 시작일자가 오늘 날짜보다 크다면
-        if ( targetKeyword.startDate && Tw.FormatHelper.isNumber(targetKeyword.startDate) && Number(targetKeyword.startDate) > Number(toDay) ) {
-            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] startDate : ' + targetKeyword.startDate + ', toDay : ' + toDay, '');
-            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] return : ', 'false');
-            return false;
+                var keywordDateInfoArr = keywordDate.split(',');
+                var keyword = '';
+                var startDate = '';
+                var endDate = '';
+
+                if ( keywordDateInfoArr.length === 3 ) {
+                    keyword = keywordDateInfoArr[0].trim();
+                    startDate = keywordDateInfoArr[1].trim();
+                    endDate = keywordDateInfoArr[2].trim();
+                } else {
+                    return;
+                }
+
+                for (var i = 0; i < mlsGreetingRangking.length; i++) {
+                    var greetingRangking = mlsGreetingRangking[i];
+
+                    if ( greetingRangking === keyword ) {
+                        Tw.Logger.info('[chatbot.common.service] [_removeGreetingDate] startDate : ', startDate, ', tobay : ', toDay);
+                        Tw.Logger.info('[chatbot.common.service] [_removeGreetingDate] endDate : ', endDate, ', tobay : ', toDay);
+
+                        // 시작일자가 오늘 날짜보다 크다면
+                        if ( startDate && Tw.FormatHelper.isNumber(startDate) && Number(startDate) > Number(toDay) ) {
+                            mlsGreetingRangking.splice(i, 1);
+                            break;
+                        }
+
+                        // 종료일자가 오늘 날짜보다 작다면
+                        if ( endDate && Tw.FormatHelper.isNumber(endDate) && Number(endDate) < Number(toDay) ) {
+                            mlsGreetingRangking.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            });
         }
-
-        // 종료일자가 오늘 날짜보다 작다면
-        if ( targetKeyword.endDate && Tw.FormatHelper.isNumber(targetKeyword.endDate) && Number(targetKeyword.endDate) < Number(toDay) ) {
-            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] endDate : ' + targetKeyword.endDate + ', toDay : ' + toDay, '');
-            Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] return : ', 'false');
-            return false;
-        }
-
-        Tw.Logger.info('[chatbot.common.service] [_checkGreetingDate] return : ', 'true');
-        return true;
     }
 };
