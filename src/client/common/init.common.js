@@ -350,7 +350,7 @@ Tw.Init.prototype = {
           var netfunnelSkinOption = {
             prepareCallback: function () {
               var progress_print = document.getElementById('Progress_Print');
-              progress_print.innerHTML =  '0';
+              progress_print.innerHTML = '0';
             },
             updateCallback: function (percent, nwait, totwait, timeleft) {
               // percent 진행률
@@ -365,8 +365,8 @@ Tw.Init.prototype = {
               '            <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">' +
               '                <div class="popup-contents " id="alertText">' +
               '                    <div class="inner-contents tod-wait-wrap">' +
-              '                        <img src="/img/product/img-banner-wait.png" alt="잠시만 기다리시면 자동 접속됩니다.">                    ' +
-              '                        <p class="tod-txcolor1 mt10">다시 접속하시면 대기시간이 길어지니 <br>잠시만 기다려 주세요.</p>' +
+              '                        <span class="blind">잠시만 기다리시면 자동 접속됩니다.</span>' +
+              '                        <p class="tod-txcolor1 tod-wait-txt">다시 접속하시면 대기시간이 길어지니 잠시만 기다려 주세요.</p>' +
               '                        <div class="tod-wait-box">' +
               '                            <span class="txt mb5">현재 대기인원 <em class="tod-txcolor6">' +
               '                             <span id="Progress_Print">0</span>명</em></span>' +
