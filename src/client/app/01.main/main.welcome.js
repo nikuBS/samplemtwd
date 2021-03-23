@@ -15,7 +15,7 @@ Tw.MainWelcome = function (rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(this.$container);
+  this._historyService = new Tw.HistoryService();
   this._xTractorService = new Tw.XtractorService(rootEl);
 
   this._menuId = menuId;
@@ -45,7 +45,7 @@ Tw.MainWelcome.prototype = {
     this.$list = this.$container.find('.app-list-bottom');
   },
 
-  _bindEvent() {
+  _bindEvent: function() {
     this.$container.on('click', 'button', _.debounce($.proxy(function(event) {
       var $target = $(event.currentTarget);
       var url = $target.data('url');
