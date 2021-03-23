@@ -202,12 +202,20 @@ _%>
             <div class="cont-box nogaps">
                 <div class="calling-plan">
                     <%_ const url = feePlan.isLink ? '/product/callplan?prod_id=' + feePlan.prodId : '';  _%>
-                    <button class="wrap-link <%- !url ? 'tod-no-link' : ''%>" data-target="goProdPageBtn"
+                    <%_if(url){_%>
+                    <button class="wrap-link" data-target="goProdPageBtn"
                             data-prod-page-url="<%-url%>">
                         <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
                         <i class="badge icon-badge-plan-my use"><span class="blind">이용 중</span></i>
                         <span class="stit"><%= feePlan.prodNm || ''%></span>
                     </button>
+                    <%_} else {_%>
+                    <span class="wrap-link tod-no-link">
+                        <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
+                        <i class="badge icon-badge-plan-my use"><span class="blind">이용 중</span></i>
+                        <span class="stit"><%= feePlan.prodNm || ''%></span>
+                    </span>
+                    <%_}_%>
                 </div>
             </div>
             <!--// .cont-box -->
