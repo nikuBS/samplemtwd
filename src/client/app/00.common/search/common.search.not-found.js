@@ -427,7 +427,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     }
   },
 
-  _improveInvest: function (evt) { 
+  _improveInvest: function (evt) {
     var typeCd = '';
     if ( Tw.BrowserHelper.isApp() ) {
       if ( Tw.BrowserHelper.isAndroid() ) {
@@ -448,7 +448,8 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._claimCallback(res, 51, evt);
     }, this)).fail($.proxy(function (err) {
       this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
-      Tw.Common
+      Tw.CommonHelper.endLoading('body');
+    }, this));
   }
 
 });
