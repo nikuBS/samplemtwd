@@ -74,7 +74,7 @@ Tw.CommonSearch.prototype = {
         this._apiService.request(Tw.API_CMD.BFF_08_0070, {}).done($.proxy(function (res) {
             if (res.code === Tw.API_CODE.CODE_00) {
                 var surveyListTempl = Handlebars.compile(this.$container.find('#surveyList_templ').html());
-                this.$container.find('.tod-search-feedback').html(surveyListTempl(res));
+                this.$container.find('.searchFeedbackSurvey').html(surveyListTempl(res));
                 // 검색 의견 보내기 버튼 리스너
                 this.$container.on('click', '#btn_08_0072', $.proxy(this._openAlert, this, Tw.ALERT_MSG_SEARCH.ALERT_4_A40, this._improveInvest));
             }
