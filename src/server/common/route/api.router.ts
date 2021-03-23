@@ -1965,10 +1965,22 @@ class ApiRouter {
         let bannerType = '';
         let imgAltCtt = '';
         let imgLink = '';
+        let summary = {
+            "tosBatCmpgnSerNum":"" 
+            ,"cmpgnStaDt":"" 
+            ,"cmpgnEndDt":"" 
+            ,"cmpgnStaHm":"" 
+            ,"cmpgnEndHm":"" 
+            ,"tosCmpgnNum":""
+            ,"tosExecSchNum":"" 
+            ,"tosCellNum":"" 
+            ,"tosMsgSerNum":"" 
+        };
         if (resp.code === API_CODE.CODE_00) {
           try {
             imgAltCtt = resp.result.imgList[0].imgAltCtt;
             imgLink = resp.result.imgList[0].imgLinkUrl;
+            summary = resp.result.summary;
             if (resp.result.bannerType === '0023') {
                 bannerType = `<img src="${EnvHelper.getEnvironment('CDN')}/img/common/icon74-05.png" alt="혜택">`
             } else if (resp.result.bannerType === '0024') {
@@ -1990,9 +2002,12 @@ class ApiRouter {
           }
 
         }
+        /**
+         * 'data-xt_action="BN" data-xt_cmpgn_num="{{tosCmpgnNum}}" data-xt_schd_num="{{tosExecSchNum}}" data-xt_cell_num="{{tosCellNum}}" data-xt_msg_ser_num="{{tosMsgSerNum}}"'
+         */
         const bannerHtml = `
           <div class="tos_inner">
-            <a href="${imgLink}" class="tb-link">
+            <a href="${imgLink}" class="tb-link" data-xt_action="BN" data-xt_cmpgn_num="${summary.tosCmpgnNum}" data-xt_schd_num="${summary.tosExecSchNum}" data-xt_cell_num="${summary.tosCellNum}" data-xt_msg_ser_num="${summary.tosMsgSerNum}">
               <i class="tb-icon">${bannerType}</i>
               <p class="tb-text">${imgAltCtt}</p>
             </a>
