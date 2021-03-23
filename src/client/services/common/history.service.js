@@ -250,6 +250,10 @@ Tw.HistoryService.prototype = {
    * @returns { boolean }
    */
   requestNetfunnel: function(url, rSuc) {
+    // 로그인 안된상태 (sessionStorage 정보 확인) 에서는 정상 처리
+    if (!Tw.CommonHelper.getSessionStorage(Tw.SSTORE_KEY.PRE_TWM)) {
+      return false
+    }
     // query 가 추가되어 온 경우 체크
     var checkActionId = url;
     if (url.indexOf('?') > -1) {
@@ -258,6 +262,7 @@ Tw.HistoryService.prototype = {
     var findTarget = _.find(Tw.NetFunnelInfo, function(info) {
       return checkActionId === '/' + info.actionId;
     });
+    // netfunnel 환경설정변수 값 중 노출여부 체크
     if (!findTarget || !(findTarget && findTarget.visible)) {
       return false;
     }
@@ -270,7 +275,6 @@ Tw.HistoryService.prototype = {
         // 중지 시 별도 처리가 필요한지 검토 필요
       },
       success: function(event, data) {
-        console.log('event', data);
         rSuc();
       }
     });
