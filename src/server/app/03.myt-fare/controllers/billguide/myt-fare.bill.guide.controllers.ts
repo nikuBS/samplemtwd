@@ -116,7 +116,6 @@ class MyTFareBillGuide extends TwViewController {
     this.pageInfo = pageInfo;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
-    // this._miriService = new MytFareInfoMiriService(this.reqQuery.line || svcInfo.svcMgmtNum, req, res);
     this._miriService = new MytFareInfoMiriService(req, res, svcInfo, req.query.line);
 
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
@@ -460,7 +459,8 @@ class MyTFareBillGuide extends TwViewController {
       // this.apiService.request(API_CMD.BFF_05_0044, params),
       this.apiService.request(API_CMD.BFF_05_0038, params),
       this.apiService.request(API_CMD.BFF_05_0045, params),
-      this._miriService.getMiriPayment(this._billpayInfo.invDt)
+      this._miriService.getMiriPayment(this._billpayInfo.invDt),
+      this._getFeePlan(data)
     ).subscribe((resp) => {
       // thisMain.logger.info(thisMain, resp);
       if ( resp[0].code === API_CODE.CODE_00 &&
@@ -472,6 +472,7 @@ class MyTFareBillGuide extends TwViewController {
         data.roamDonaCallBtnYn.callgiftYn = 'Y';
       }
       data.miriPayment = resp[2];
+      data.feePlan = resp[3];
 
       thisMain.logger.info( thisMain, '===================== 로밍 YN : ' + data.roamDonaCallBtnYn.roamingYn);
       thisMain.logger.info( thisMain, '===================== 기부금 YN : ' + data.roamDonaCallBtnYn.donationYn);
@@ -480,6 +481,40 @@ class MyTFareBillGuide extends TwViewController {
       thisMain.renderView(res, view, data);
     });
 
+  }
+
+  /**
+   * @desc 나의 가입 요금상품
+   */
+  private _getFeePlan(data: any): Observable<any> {
+    const {svcAttrCd} = data.svcInfo;
+    const isWireless = svcAttrCd.indexOf('S') === -1;
+    const command = isWireless ? API_CMD.BFF_05_0136 : API_CMD.BFF_05_0128; // 무선, 유선
+
+    return this.apiService.request(command, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        let _result;
+        const result = resp.result;
+        if (isWireless) {
+          const {linkProdId: prodId, prodNm, prodLinkYn: linkYn} = result.feePlanProd;
+          _result = {
+            prodId,
+            prodNm,
+            isLink: linkYn === 'Y' && !FormatHelper.isEmpty(prodId)
+          };
+        } else {
+          const {linkProdId: prodId, feeProdNm: prodNm, prodDetailLinkYn: linkYn} = result;
+          _result = {
+            prodId,
+            prodNm,
+            isLink: linkYn === 'Y' && !FormatHelper.isEmpty(prodId)
+          };
+        }
+        return _result;
+      }
+      // error
+      return {};
+    });
   }
 
   // -------------------------------------------------------------[SVC]

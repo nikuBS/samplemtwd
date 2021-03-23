@@ -4,6 +4,7 @@ Tw.UIService = function () {
   this.setReplace();
   this.setBackRefresh();
   this.setInputEvent();
+  this.setNetfunnel();
 };
 
 Tw.UIService.prototype = {
@@ -92,5 +93,27 @@ Tw.UIService.prototype = {
         $target.val($target.val().slice(0, maxLength));
       }
     }
+  },
+
+  /**
+   * @desc netfunnel 이벤트 적용
+   * @private
+   */
+  setNetfunnel: function () {
+    var history = new Tw.HistoryService();
+    $('[data-netf-href]').on('click', function ($event) {
+      var href = $($event.currentTarget).attr('href');
+      if (href) {
+        $event.preventDefault();
+        history.goLoad(href);
+      }
+    });
+    $('[data-netf-replace]').on('click', function ($event) {
+      var href = $($event.currentTarget).attr('href');
+      if (href) {
+        $event.preventDefault();
+        history.replaceURL(href);
+      }
+    });
   }
 };
