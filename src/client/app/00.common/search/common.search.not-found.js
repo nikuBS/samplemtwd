@@ -138,10 +138,17 @@ $.extend(Tw.CommonSearchNotFound.prototype,
    * @returns {void}
    */
   _openAlert : function (alertObj,doRequest,event){
-    this._popupService.openModalTypeATwoButton(alertObj.TITLE, null, null, alertObj.BUTTON,
+    this._popupService.openModalTypeATwoButton(
+      alertObj.TITLE,
       null,
-      $.proxy(doRequest,this,event),
-      null,null,$(event.currentTarget));
+      null,
+      alertObj.BUTTON,
+      null,
+      _.debounce($.proxy(doRequest, this, event), 500),
+      null,
+      null,
+      $(event.currentTarget)
+    );
   },
   /**
    * @function
