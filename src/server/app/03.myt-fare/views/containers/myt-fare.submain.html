@@ -171,7 +171,7 @@ _%>
                     <!--휴대폰/포켓파이/티로그인 인 경우-->
                     <%_ if (['M1', 'M3', 'M4'].indexOf(data.svcInfo.svcAttrCd) > -1) { _%>
                     <li class="tod-linktype2">
-                        <button data-href="/myt-join/submain" data-xt_eid="<%= eid.join %>" data-xt_csid="NO" data-xt_action="BC">
+                        <button data-href="/myt-join/submain" data-netf-href="true" data-xt_eid="<%= eid.join %>" data-xt_csid="NO" data-xt_action="BC">
                             <i class="icon-my-40"></i>나의 가입정보 <span class="stxt">나의 요금제/부가서비스를 확인하세요</span>
                         </button>
                     </li>

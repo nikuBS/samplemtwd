@@ -1,4 +1,5 @@
 Tw.UIService = function () {
+  this.historyService = new Tw.HistoryService();
   this.setBack();
   this.setForward();
   this.setReplace();
@@ -18,9 +19,9 @@ Tw.UIService.prototype = {
       Tw.Logger.info('[Common Back]');
       if ( Tw.BrowserHelper.isApp() && $($event.currentTarget).parent().data('history') <= 1 &&
         !(/\/main\/home/.test(location.href) || /\/main\/store/.test(location.href))) {
-        location.replace('/main/home');
+        this.historyService.replaceURL('/main/home');
       } else {
-        window.history.back();
+        this.historyService.goBack();
       }
     });
   },
@@ -31,7 +32,7 @@ Tw.UIService.prototype = {
   setForward: function () {
     $('.fe-common-forward').on('click', function () {
       Tw.Logger.info('[Common Forward]');
-      window.history.forward();
+      this.historyService.go(1);
     });
   },
 
@@ -42,7 +43,7 @@ Tw.UIService.prototype = {
   setReplace: function () {
     $('.fe-replace-history').on('click', function ($event) {
       Tw.Logger.info('[Replace History]');
-      location.replace($event.currentTarget.href);
+      this.historyService.replaceURL($event.currentTarget.href);
       return false;
     });
   },
@@ -96,23 +97,22 @@ Tw.UIService.prototype = {
   },
 
   /**
-   * @desc netfunnel 이벤트 적용
+   * @desc a tag 로 페이지 이동시 특정 속성값 체크하여 netfunnel 적용하기 위한 이벤트처리
    * @private
    */
   setNetfunnel: function () {
-    var history = new Tw.HistoryService();
-    $('[data-netf-href]').on('click', function ($event) {
-      var href = $($event.currentTarget).attr('href');
+    $('[data-netf-href]').on('click', function (event) {
+      var href = $(event.currentTarget).attr('href');
       if (href) {
-        $event.preventDefault();
-        history.goLoad(href);
+        event.preventDefault();
+        this.historyService.goLoad(href);
       }
     });
-    $('[data-netf-replace]').on('click', function ($event) {
-      var href = $($event.currentTarget).attr('href');
+    $('[data-netf-replace]').on('click', function (event) {
+      var href = $(event.currentTarget).attr('href');
       if (href) {
-        $event.preventDefault();
-        history.replaceURL(href);
+        event.preventDefault();
+        this.historyService.replaceURL(href);
       }
     });
   }

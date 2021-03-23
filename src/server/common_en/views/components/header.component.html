@@ -38,7 +38,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
 
 <div id="common-menu" class="user-type tod-common-menu" aria-hidden="true"><!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
     <button class="c-close" id="fe-close"><span class="blind">Close whole menu</span></button>
-    
+
     <div class="section-userinfo fe-menu-section">
         <!-- 로그인전 -->
         <span class="userinfo fe-when-logout none">
@@ -50,11 +50,11 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         <span class="userinfo  fe-when-login-type0 none">
             <button id="fe-svc-number" class="login under-line fe-userinfo none" data-xt_eid="MWMA_A10_B80_C1199-2" data-xt_csid="NO" data-xt_action="BC"></button>
             <span class="login none"></span>
-        </span>  
+        </span>
         <!-- 회선등록 -->
         <span class="userinfo fe-when-login-type1 none">
             <button class="login under-line fe-bt-regi-svc" >Register Line</button>
-        </span>           
+        </span>
         <!-- 회선없음 -->
         <span class="userinfo fe-when-login-type2 none">
             <span class="login" >welcome</span>
@@ -62,7 +62,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
         <!-- 회선선택 -->
         <span class="userinfo fe-when-login-type3 none">
             <button class="login under-line fe-userinfo" data-xt_eid="MWMA_A10_B80_C1199-56" data-xt_csid="NO" data-xt_action="BC">Select Line</button>
-        </span>                
+        </span>
     </div>
     <div class="section-cont">
         <!-- gnb -->
@@ -74,7 +74,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                     <div class="bt-depth1 txt-long">
                         <button class="bt fe-menu-link" value="/en/myt-data/hotdata" data-xt_eid="MWMA_A10_B80_C1199-3" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="M000194" data-tracker_tw_menu_nm="My Data / Talktime">
                             <span class="ico"><img src="<%= CDN %>/img/en/icon_48px_history.svg" alt="My Data / Talk / Text icon"></span><!-- 아이콘 있는 경우 -->
-                            <span class="ti-info">My Data / Talk / Text 
+                            <span class="ti-info">My Data / Talk / Text
                                 <em class="info  fe-menu-realtime" data-value="data" ></em>
                             </span>
                         </button>
@@ -84,7 +84,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                     <div class="bt-depth1 line">
                         <a href="/en/myt-fare/submain" class="bt fe-menu-link "  value="/en/myt-fare/submain" data-xt_eid="MWMA_A10_B80_C1199-4" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="M000233" data-tracker_tw_menu_nm="My Bills">
                             <span class="ico"><img src="<%= CDN %>/img/en/icon_48px_charge.svg" alt="My Bills icon"></span>
-                            <span class="ti-info">My Bills 
+                            <span class="ti-info">My Bills
                                 <em class="info fe-menu-realtime" data-value="bill" ></em>
                             </span>
                         </a>
@@ -99,7 +99,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                 </li>
                 <li>
                     <div class="bt-depth1 txt-long">
-                        <a href="/en/myt-join/submain" class="bt fe-menu-link" value="/en/myt-join/submain" data-xt_eid="MWMA_A10_B80_C1199-7" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="M000301" data-tracker_tw_menu_nm="My Information">
+                        <a href="/en/myt-join/submain" data-netf-href="true" class="bt fe-menu-link" value="/en/myt-join/submain" data-xt_eid="MWMA_A10_B80_C1199-7" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="M000301" data-tracker_tw_menu_nm="My Information">
                             <span class="ico"><img src="<%= CDN %>/img/en/icon_48px_my.svg" alt="My Information icon"></span>
                             <span class="ti-info">My Information
                                 <em class="info fe-menu-realtime" data-value="svcCnt"></em>
@@ -157,7 +157,7 @@ var easyLogin = (svcInfo && svcInfo.loginType && svcInfo.loginType === 'S'); // 
                 <li class="ico-location">65, Eulji-ro, Jung-gu Seoul, Republic of Korea</li>
                 <li class="ico-ceo">CEO & President Jung-Ho Park</li>
                 <li>Business Registration Number : 104-81-37225</li>
-                <li>Customer Center <button class="f-btel" onclick="document.location.href='tel:114'" role="link" data-xt_eid="CMMA_A11_B3-98" data-xt_csid="NO" data-xt_action="BC">114</button> (Free) / 
+                <li>Customer Center <button class="f-btel" onclick="document.location.href='tel:114'" role="link" data-xt_eid="CMMA_A11_B3-98" data-xt_csid="NO" data-xt_action="BC">114</button> (Free) /
                     <button class="f-btel" onclick="document.location.href='tel:080-2525-011'" role="link" data-xt_eid="CMMA_A11_B3-99" data-xt_csid="NO" data-xt_action="BC">080-2525-011</button>(free)</li>
                 <li>without Toll Number or <button class="f-btel" onclick="document.location.href='tel:1599-0011'" role="link" data-xt_eid="CMMA_A11_B3-99" data-xt_csid="NO" data-xt_action="BC">1599-0011</button> (Paid)</li>
                 <li class="f-ltd">COPYRIGHT © SK TELECOM CO., LTD. ALL RIGHTS RESERVED</li>
