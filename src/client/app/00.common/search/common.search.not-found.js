@@ -440,10 +440,11 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     }
     Tw.CommonHelper.startLoading('body', 'grey', true);
     this._popupService.close();
+
     this._apiService.request(Tw.API_CMD.BFF_08_0072, {
       inqNum: this.$container.find('input[name=invstQstnAnswItm]:checked').val(),
       typeCd: typeCd,
-      searchKeyword: this.$container.find('#keyword').val()
+      searchKeyword: this.$container.find('#search_keyword').val()
     }, {}).done($.proxy(function (res) {
       this._claimCallback(res, 51, evt);
     }, this)).fail($.proxy(function (err) {
