@@ -2,7 +2,7 @@
 * @file main.welcome.html
 * @author Tonyspark (jobkim0410@gmail.com)
 * @since 2020.11.17
-* 
+*
 %>
 <%- include('../components/welcome.start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
@@ -20,7 +20,7 @@
 				<!-- 201116 [OP002-11754] 추가_01 : 작업영역 -->
 				<div class="welcome-wrap">
 					<div class="welcome-header">
-						<button class="icon-gnb-home" onclick="location.href='/main/home'" data-xt_eid="CMMA_A17-1" data-xt_csid="NO" data-xt_action="BC"><span class="blind">홈으로</span></button>
+						<button class="icon-gnb-home" data-url="/main/home" data-xt_eid="CMMA_A17-1" data-xt_csid="NO" data-xt_action="BC"><span class="blind">홈으로</span></button>
 						<strong class="ti">환영합니다.</strong>
 						<p class="tx">당신의 초시대를 만드는<br>SKT T world입니다.</p>
 					</div>
@@ -31,23 +31,23 @@
 								<div class="slider-box">
 									<ul class="slider" data-location="1">
 										<li>
-											<button class="bt" onclick="location.href='/product/callplan?prod_id=NA00007017' " data-xt_eid="CMMA_A17-2" data-xt_csid="NO" data-xt_action="BC">
+											<button class="bt" data-url="/product/callplan?prod_id=NA00007017" data-xt_eid="CMMA_A17-2" data-xt_csid="NO" data-xt_action="BC">
 												<img class="fe-banner" style="width:100%" data-idx="1" src="<%= CDN %>/img/main/img_banner_main1.png" alt="한 달만 넣어놔도 3,333원 - T 이득통장 - SK텔레콤 전용 2% 금리 자유입출금 통장">
 											</button>
 										</li>
 										<li>
-											<button class="bt" onclick="location.href='/product/callplan?prod_id=NA00006520' " data-xt_eid="CMMA_A17-3" data-xt_csid="NO" data-xt_action="BC">
+											<button class="bt" data-url="/product/callplan?prod_id=NA00006520" data-xt_eid="CMMA_A17-3" data-xt_csid="NO" data-xt_action="BC">
 												<img class="fe-banner" style="width:100%" data-idx="2" src="<%= CDN %>/img/main/img_banner_main2.png" alt="베스트셀러부터 웹툰까지 - 북스 앤 데이터로
 												무제한 즐기세요 첫 달 100원! 북스캐쉬 1,000원!">
 											</button>
 										</li>
 										<li>
-											<button class="bt" onclick="location.href='/product/callplan?prod_id=NA00006993' " data-xt_eid="CMMA_A17-4" data-xt_csid="NO" data-xt_action="BC">
+											<button class="bt" data-url="/product/callplan?prod_id=NA00006993" data-xt_eid="CMMA_A17-4" data-xt_csid="NO" data-xt_action="BC">
 												<img class="fe-banner" style="width:100%" data-idx="4" src="<%= CDN %>/img/main/img_banner_main3.png" alt="아직 안 써보셨나요? - 1,000만 다운로드 뮤직 앱 FLO 앤 데이터로 2개월간 100원에 만나보세요! 요금제 무료 혜택도 있어요!">
 											</button>
 										</li>
 										<li>
-											<button class="bt" onclick="location.href='/product/callplan?prod_id=NC00000088' " data-xt_eid="CMMA_A17-5" data-xt_csid="NO" data-xt_action="BC">
+											<button class="bt" data-url="/product/callplan?prod_id=NC00000088" data-xt_eid="CMMA_A17-5" data-xt_csid="NO" data-xt_action="BC">
 												<img class="fe-banner" style="width:100%" data-idx="4" src="<%= CDN %>/img/main/img_banner_main4.png" alt="보이는 컬러링, V컬러링 연말까지 월 100원으로
 												V 컬러링을 써보세요">
 											</button>
@@ -62,10 +62,10 @@
 
 					<div class="main-top-group">
 						<ul class="quick-menu-list mt0">
-							<li><button class="bt" tabindex="0" onclick="location.href='/main/home' " data-xt_eid="CMMA_A17-6" data-xt_csid="NO" data-xt_action="BC"><i class="icon-tworld-80"></i>T월드<br>바로가기</button></li>
-							<li><button class="bt" tabindex="0" onclick="location.href='/myt-join/submain' " data-xt_eid="CMMA_A17-7" data-xt_csid="NO" data-xt_action="BC"><i class="icon-myjoin-80"></i>나의<br>가입정보</button></li>
-							<li><button class="bt" tabindex="0" onclick="location.href='/myt-data/submain' " data-xt_eid="CMMA_A17-8" data-xt_csid="NO" data-xt_action="BC"><i class="icon-mydata-80"></i>나의<br>데이터/통화</button></li>
-							<li><button class="bt" tabindex="0" onclick="location.href='/customer' " data-xt_eid="CMMA_A17-9" data-xt_csid="NO" data-xt_action="BC"><i class="icon-myinfo-80"></i>T월드<br>이용안내</button></li>
+							<li><button class="bt" tabindex="0" data-url="/main/home" data-xt_eid="CMMA_A17-6" data-xt_csid="NO" data-xt_action="BC"><i class="icon-tworld-80"></i>T월드<br>바로가기</button></li>
+							<li><button class="bt" tabindex="0" data-url="/myt-join/submain" data-xt_eid="CMMA_A17-7" data-xt_csid="NO" data-xt_action="BC"><i class="icon-myjoin-80"></i>나의<br>가입정보</button></li>
+							<li><button class="bt" tabindex="0" data-url="/myt-data/submain" data-xt_eid="CMMA_A17-8" data-xt_csid="NO" data-xt_action="BC"><i class="icon-mydata-80"></i>나의<br>데이터/통화</button></li>
+							<li><button class="bt" tabindex="0" data-url="/customer" data-xt_eid="CMMA_A17-9" data-xt_csid="NO" data-xt_action="BC"><i class="icon-myinfo-80"></i>T월드<br>이용안내</button></li>
 						</ul>
 					</div>
 
@@ -80,9 +80,9 @@
                                     <% const addition = bestAdditions[i]; %>
                                     <li aria-hidden="true">
                                         <div class="section-box extra">
-                                            <button tabindex="0" data-xt_eid="CMMA_A17-10" data-xt_csid="NO" data-xt_action="BC" onclick="location.href='/product/callplan?prod_id=<%= addition.prodId %>' ">
+                                            <button tabindex="0" data-xt_eid="CMMA_A17-10" data-xt_csid="NO" data-xt_action="BC" data-url="/product/callplan?prod_id=<%= addition.prodId %>">
                                                 <div class="extra-cont-box">
-                                                    <% if (addition.prodIconImgUrl) { %> 
+                                                    <% if (addition.prodIconImgUrl) { %>
                                                     <em class="icon"><img src="<%= addition.prodIconImgUrl %>" alt="V COLORING"></em>
                                                     <% } %>
                                                     <strong class="ti"><%= addition.prodNm %></strong>
@@ -175,23 +175,23 @@
 										<div class="slider-box">
 											<ul class="slider" data-location="C">
 												<!-- <li>
-													<button onclick="location.href='/product/callplan?prod_id=TW20000013' " data-xt_eid="CMMA_A17-25" data-xt_csid="NO" data-xt_action="BC">
+													<button data-url="/product/callplan?prod_id=TW20000013" data-xt_eid="CMMA_A17-25" data-xt_csid="NO" data-xt_action="BC">
 														<img class="full-img" src="<%= CDN %>/img/main/img_banner_welcome5.png" alt="인터넷/전화/IPTV - 온가족플랜 - 휴대폰과 인터넷을 결합하면
 														최대 38,610원 할인">
 													</button>
 												</li>
 												<li>
-													<button onclick="location.href='/product/callplan?prod_id=TW00000063' " data-xt_eid="CMMA_A17-26" data-xt_csid="NO" data-xt_action="BC">
+													<button data-url="/product/callplan?prod_id=TW00000063" data-xt_eid="CMMA_A17-26" data-xt_csid="NO" data-xt_action="BC">
 														<img class="full-img" src="<%= CDN %>/img/main/img_banner_welcome6.png" alt="결합시 할인혜택 제공 - T+B전화/인터넷전화 - 결합하면 통화료 최대 50% 할인">
 													</button>
 												</li>
 												<li>
-													<button onclick="location.href='/product/callplan?prod_id=TW00000009' " data-xt_eid="CMMA_A17-27" data-xt_csid="NO" data-xt_action="BC">
+													<button data-url="/product/callplan?prod_id=TW00000009" data-xt_eid="CMMA_A17-27" data-xt_csid="NO" data-xt_action="BC">
 														<img class="full-img" src="<%= CDN %>/img/main/img_banner_welcome7.png" alt="할인받기 아주 쉬운 - 한가족할인  - 월 8,800원 할인">
 													</button>
 												</li>
 												<li>
-													<button onclick="location.href='/product/callplan?prod_id=TW00000016' " data-xt_eid="CMMA_A17-28" data-xt_csid="NO" data-xt_action="BC">
+													<button data-url="/product/callplan?prod_id=TW00000016" data-xt_eid="CMMA_A17-28" data-xt_csid="NO" data-xt_action="BC">
 														<img class="full-img" src="<%= CDN %>/img/main/img_banner_welcome8.png" alt="결합시 추가할인 - TB끼리 TV플러스 - 결합하면 최대 2,200원 할인">
 													</button>
 												</li> -->

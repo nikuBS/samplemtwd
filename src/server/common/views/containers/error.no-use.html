@@ -44,18 +44,11 @@
 
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
-                <li><button type="button" class="btn-floating btn-style2 fe-submain">확인</button></li>
+                <li><button href="/myt-fare/submain" type="button" class="btn-floating btn-style2 fe-replace-history">확인</button></li>
             </ul>
         </div>
     </div>
     <!--// .popup hbs -->
 </div>
 <% include ../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    $('.fe-submain', '.wrap').on('click', function () {
-      window.location.replace('/myt-fare/submain');
-    });
-  });
-</script>
 <% include ../components/end.component.html %>

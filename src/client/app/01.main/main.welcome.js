@@ -15,14 +15,15 @@ Tw.MainWelcome = function (rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this._xTractorService = new Tw.XtractorService(rootEl);
 
   this._menuId = menuId;
 
   this._getTosAdminProductBanner();
   this._cachedElement();
+  this._bindEvent();
   this._init();
-  
 };
 
 Tw.MainWelcome.prototype = {
@@ -44,6 +45,15 @@ Tw.MainWelcome.prototype = {
     this.$list = this.$container.find('.app-list-bottom');
   },
 
+  _bindEvent: function() {
+    this.$container.on('click', 'button', _.debounce($.proxy(function(event) {
+      var $target = $(event.currentTarget);
+      var url = $target.data('url');
+      if (url) {
+        this._historyService.goLoad(url);
+      }
+    }, this), 500));
+  },
 
   /**
    * @desc 앱 리스트 요청
@@ -110,13 +120,13 @@ Tw.MainWelcome.prototype = {
 
   /**
    * @desc native에서 설치된 앱 응답 값이 돌아온 경우
-   * @param {Array<object>} apps 
+   * @param {Array<object>} apps
    * @param {object} resp native 응답 값
    * @private
    */
   _handleConfirmAppInstalled: function(apps, resp) {
     var installedList = (resp.params && resp.params.list) || [];
-    var list = _.reduce(  
+    var list = _.reduce(
       installedList,  // [ { "appname": true | false } ] -> { "appname": boolean ... } 형태로 변경(Array 에서 spread 함)
       function(apps, app) {
         var key = Object.keys(app)[0];
@@ -186,7 +196,7 @@ Tw.MainWelcome.prototype = {
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
         if(!row.banner.result.summary){
-          row.banner.result.summary = {target: row.target};  
+          row.banner.result.summary = {target: row.target};
         }
         row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
         row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
@@ -195,7 +205,7 @@ Tw.MainWelcome.prototype = {
       }
 
       if(admBanner.code === Tw.API_CODE.CODE_00){
-        row.banner.result.imgList = row.banner.result.imgList.concat( 
+        row.banner.result.imgList = row.banner.result.imgList.concat(
           admBanner.result.banners.filter(function(admbnr){
             return admbnr.bnnrLocCd === row.target;
           }).map(function(admbnr){
@@ -234,7 +244,7 @@ Tw.MainWelcome.prototype = {
         }
       }
     }, this));
-    
+
     new Tw.XtractorService(this.$container);
 
   },

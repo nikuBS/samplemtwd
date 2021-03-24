@@ -55,7 +55,11 @@ Tw.HistoryService.prototype = {
    * @public
    */
   goLoad: function (url) {
-    window.location.href = url;
+    if(!this.requestNetfunnel(url, function (){
+      window.location.href = url;
+    })) {
+      window.location.href = url;
+    }
   },
   /**
    * @desc go back
@@ -100,7 +104,11 @@ Tw.HistoryService.prototype = {
    * @public
    */
   replaceURL: function (sUrl) {
-    window.location.replace(sUrl);
+    if(!this.requestNetfunnel(sUrl, function (){
+      window.location.replace(sUrl);
+    })) {
+      window.location.replace(sUrl);
+    }
   },
   /**
    * @desc go
@@ -234,5 +242,42 @@ Tw.HistoryService.prototype = {
     if ( this.isReturendMain() && this.isCompleted() ) {
       this._resetHashHistory();
     }
+  },
+  /**
+   * netfunnel 처리
+   * @param { string } url
+   * @param { function } rSuc
+   * @returns { boolean }
+   */
+  requestNetfunnel: function(url, rSuc) {
+    // 로그인 안된상태 (sessionStorage 정보 확인) 에서는 정상 처리
+    if (!Tw.CommonHelper.getSessionStorage(Tw.SSTORE_KEY.PRE_TWM)) {
+      return false
+    }
+    // query 가 추가되어 온 경우 체크
+    var checkActionId = url;
+    if (url.indexOf('?') > -1) {
+      checkActionId = url.substring(0, url.indexOf('?'));
+    }
+    var findTarget = _.find(Tw.NetFunnelInfo, function(info) {
+      return checkActionId === '/' + info.actionId;
+    });
+    // netfunnel 환경설정변수 값 중 노출여부 체크
+    if (!findTarget || !(findTarget && findTarget.visible)) {
+      return false;
+    }
+
+    NetFunnel_Action({
+      action_id: findTarget.actionId,
+      skin_id: 'tworld'
+    }, {
+      stop: function() {
+        // 중지 시 별도 처리가 필요한지 검토 필요
+      },
+      success: function(event, data) {
+        rSuc();
+      }
+    });
+    return true;
   }
 };

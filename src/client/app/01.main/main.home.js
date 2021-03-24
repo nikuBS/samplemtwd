@@ -1061,6 +1061,13 @@ Tw.MainHome.prototype = {
       element.removeClass('empty');
       element.addClass('nogaps');
       element.on('click', '#fe-bt-payment', _.debounce($.proxy(this._onClickPayment, this), 500));
+      element.on('click', '[data-netf-href]', $.proxy(function(event) {
+        var href = $(event.currentTarget).attr('href');
+        if (href) {
+          event.preventDefault();
+          this._historyService.goLoad(href);
+        }
+      }, this));
     } else {
       element.hide();
     }

@@ -33,10 +33,8 @@ Tw.CommonSearch = function (rootEl, searchInfo, cdn, step, from, sort, nowUrl) {
   this._requestRealTimeFeeFlag = false;
   this._selectedCollectionToChangeSort = '';
   this._reqOptions = {
-    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.troaming-07.tapp-08' +
-      '.direct-09.tmembership-10.event-11.sale-12.as_outlet-13.notice-14.prevent-15.question-16.manner-17.serviceInfo-18' +
-      '.siteInfo-19.banner-20.bundle-21.lastevent-22',
-    sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.direct-D.tmembership-R.event-D.sale-C' +
+    collectionPriority: 'immediate-01.smart-02.shortcut-03.rate-04.service-05.tv_internet-06.troaming-07.tapp-08.direct-09.phone-10.tablet-11.accessory-12.tmembership-13.event-14.sale-15.as_outlet-16.notice-17.prevent-18.question-19.manner-20.serviceInfo-21.siteInfo-22.banner-23.bundle-24.lastevent-25',
+    sortCd: 'shortcut-C.rate-C.service-C.tv_internet-C.troaming-C.tapp-D.phone-D.tablet-D.accessory-D.tmembership-R.event-D.sale-C' +
       '.as_outlet-R.question-D.notice-D.prevent-D.manner-D.serviceInfo-D.siteInfo-D.bundle-A'
   };
   this._autoCompleteRegExObj = {
@@ -70,6 +68,20 @@ Tw.CommonSearch.prototype = {
     Tw.Logger.info('[common.search] [_nextInit]', '');
 
     Tw.Logger.info('[common.search] [_nextInit] document.referer : ', document.referrer);
+
+    // 검색 의견 목록 불러오기
+    setTimeout($.proxy(function () {
+        this._apiService.request(Tw.API_CMD.BFF_08_0070, {}).done($.proxy(function (res) {
+            if (res.code === Tw.API_CODE.CODE_00) {
+                var surveyListTempl = Handlebars.compile(this.$container.find('#surveyList_templ').html());
+                this.$container.find('.searchFeedbackSurvey').html(surveyListTempl(res));
+                // 검색 의견 보내기 버튼 리스너
+                this.$container.on('click', '#btn_08_0072', $.proxy(this._openAlert, this, Tw.ALERT_MSG_SEARCH.ALERT_4_A40, this._improveInvest));
+            }
+        }, this)).fail($.proxy(function (err) {
+        }, this));
+    }, this), 1);
+
 
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
@@ -328,11 +340,14 @@ Tw.CommonSearch.prototype = {
 
     // 최근 검색어 클릭시 초기화
     this.$container.on('click', '#auto_complete_list li, #recently_keyword_list li a', function (/* e */) {
-      Tw.CommonHelper.setCookie('search_sort::rate', 'A');
-      Tw.CommonHelper.setCookie('search_sort::service', 'A');
-      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'A');
-      Tw.CommonHelper.setCookie('search_sort::troaming', 'A');
-      Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+      Tw.CommonHelper.setCookie('search_sort::rate', 'C');
+      Tw.CommonHelper.setCookie('search_sort::service', 'C');
+      Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
+      Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
+      // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+      Tw.CommonHelper.setCookie('search_sort::phone', 'D');
+      Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
+      Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
     });
 
     function sortCodeToName(code) {
@@ -346,12 +361,10 @@ Tw.CommonSearch.prototype = {
     $(window).bind('pageshow', function (event) {
       if ( event.originalEvent.persisted ) {
       } else {
-        console.log('화면진입 sort 재정렬');
         $('.fe-btn-sort-rate').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::rate')));
         $('.fe-btn-sort-service').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::service')));
         $('.fe-btn-sort-tv_internet').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::tv_internet')));
         $('.fe-btn-sort-troaming').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::troaming')));
-        $('.fe-btn-sort-direct').text(sortCodeToName(Tw.CommonHelper.getCookie('search_sort::direct')));
       }
     });
 
@@ -469,7 +482,7 @@ Tw.CommonSearch.prototype = {
     if ( this._searchInfo.query !== this._searchInfo.researchQuery ) {
       resultSearchKeyword = this._searchInfo.researchQuery.replace(this._searchInfo.query, '').trim();
     }
-    Tw.Logger.info('[common.search] [_arrangeData] 결과내 재검색 키워드 : ', resultSearchKeyword);
+    // Tw.Logger.info('[common.search] [_arrangeData] 결과내 재검색 키워드 : ', resultSearchKeyword);
 
     // 5개까지만 노출해달라는 요건으로 인한 처리. (T app 은 8개)
     // 와이즈넛 엔진에서 전달주는 결과값 개수 조정이 가능하다면 아래 로직은 삭제 처리 필요
@@ -483,7 +496,6 @@ Tw.CommonSearch.prototype = {
       }
     }
 
-
     for ( var i = 0; i < data.length; i++ ) {
       for ( var key in data[i] ) {
         if ( key === 'PR_STA_DT' || key === 'PR_END_DT' ) {
@@ -496,7 +508,7 @@ Tw.CommonSearch.prototype = {
             data[i][key] = data[i][key].replace(/<!HS>/g, '<em class="tod-highlight-text">');
             data[i][key] = data[i][key].replace(/<!HE>/g, '</em>');
 
-            Tw.Logger.info('[common.search] [_arrangeData] 하이라이트 처리 : ', data[i][key]);
+            // Tw.Logger.info('[common.search] [_arrangeData] 하이라이트 처리 : ', data[i][key]);
           }
         }
         if ( key === 'DEPTH_PATH' ) {
@@ -504,7 +516,7 @@ Tw.CommonSearch.prototype = {
             data[i][key] = data[i][key].replace('|', '');
           }
         }
-        if ( category === 'direct' && key === 'TYPE' ) {
+        if ( ( /*category === 'direct' ||*/ category === 'phone' || category === 'tablet' || category === 'accessory' ) && key === 'TYPE' ) {
           if ( data[i][key] === 'shopacc' ) {
             if ( data[i].PRODUCT_TYPE !== '' ) {
               data[i].linkUrl = Tw.OUTLINK.DIRECT_IOT + '?categoryId=' + data[i].CATEGORY_ID + '&productId=' +
@@ -558,9 +570,16 @@ Tw.CommonSearch.prototype = {
    * @returns {void}
    */
   _showShortcutList: function (data, dataKey, cdn, gubun) {
-    // console.log("data => ", data, dataKey, cdn, gubun);
     // 지난이벤트 컬렉션이 추가되었지만 티월드 노출 요건이 없으므로 예외처리함.
     if ( dataKey !== 'lastevent' ) {
+
+      if ( $('#' + dataKey + '_base').length === 0 ) {
+        return;
+      }
+
+      if ( $('#' + dataKey + '_template').length === 0 ) {
+        return;
+      }
 
       if ( gubun !== 'sort' ) {
         $('.container').append(Handlebars.compile($('#' + dataKey + '_base').html()));
@@ -577,20 +596,19 @@ Tw.CommonSearch.prototype = {
         $list.addClass('none');
         this.$container.find('.' + dataKey).addClass('none');
       }
-      // console.log(">>>>> ", data);
 
       _.each(data, $.proxy(function (listData, index) {
-        
+
         var childList = [];
         listData.MENU_GROUP = listData.MENU_GROUP || '';
-        // console.log(">>>>>>>> MENU_GROUP: ", listData.MENU_GROUP);
+
         // 자식이 있는 경우.
         if ( listData.MENU_GROUP !== '' && listData.MENU_GROUP !== undefined){
-          var docids = listData.DOCID.split("$");
-          var menuNms = listData.MENU_NM.split("$");
-          var useYns = listData.USE_YN.split("$");
-          var menuUrls = listData.MENU_URL.split("$");
-          var depthPaths = listData.DEPTH_PATH.split("$");
+          var docids = listData.DOCID.split('$');
+          var menuNms = listData.MENU_NM.split('$');
+          var useYns = listData.USE_YN.split('$');
+          var menuUrls = listData.MENU_URL.split('$');
+          var depthPaths = listData.DEPTH_PATH.split('$');
           //var menuGroups = i.MENU_GROUP.split("$");
           for (var j=0; j<docids.length; j++) {
             var data = {
@@ -699,14 +717,20 @@ Tw.CommonSearch.prototype = {
     sort += '.service-C';
     sort += '.tv_internet-C';
     sort += '.troaming-C';
-    sort += '.direct-D';
+    // sort += '.direct-D';
+    sort += '.phone-D';
+    sort += '.tablet-D';
+    sort += '.accessory-D';
     requestUrl += sort;
 
     Tw.CommonHelper.setCookie('search_sort::rate', 'C');
     Tw.CommonHelper.setCookie('search_sort::service', 'C');
     Tw.CommonHelper.setCookie('search_sort::tv_internet', 'C');
     Tw.CommonHelper.setCookie('search_sort::troaming', 'C');
-    Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    // Tw.CommonHelper.setCookie('search_sort::direct', 'D');
+    Tw.CommonHelper.setCookie('search_sort::phone', 'D');
+    Tw.CommonHelper.setCookie('search_sort::tablet', 'D');
+    Tw.CommonHelper.setCookie('search_sort::accessory', 'D');
 
     // Tw.Logger.info('[common.search] [_doSearch]', '"doSearch" Cookie 셋팅');
     // Tw.CommonHelper.setCookie('doSearch', 'Y');
@@ -742,13 +766,15 @@ Tw.CommonSearch.prototype = {
     requestUrl += encodeURIComponent(resultSearchKeyword.trim());
     requestUrl += '&step=' + (Number(this._step) + 1);
 
-    var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::direct'];
+    var sortsName = ['search_sort::rate', 'search_sort::service', 'search_sort::tv_internet', 'search_sort::troaming', 'search_sort::phone', 'search_sort::tablet', 'search_sort::accessory'];
     var sort = 'shortcut-C';
     sort += '.rate-' + (Tw.CommonHelper.getCookie(sortsName[0]) || 'C');
     sort += '.service-' + (Tw.CommonHelper.getCookie(sortsName[1]) || 'C');
     sort += '.tv_internet-' + (Tw.CommonHelper.getCookie(sortsName[2]) || 'C');
     sort += '.troaming-' + (Tw.CommonHelper.getCookie(sortsName[3]) || 'C');
-    sort += '.direct-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
+    sort += '.phone-' + (Tw.CommonHelper.getCookie(sortsName[4]) || 'D');
+    sort += '.tablet-' + (Tw.CommonHelper.getCookie(sortsName[5]) || 'D');
+    sort += '.accessory-' + (Tw.CommonHelper.getCookie(sortsName[6]) || 'D');
     requestUrl += '&sort=' + sort;
 
     // Tw.Logger.info('[common.search] [_doResultSearch]', '"doSearch" Cookie 셋팅');
@@ -803,7 +829,7 @@ Tw.CommonSearch.prototype = {
       null,
       alertObj.BUTTON,
       null,
-      $.proxy(doRequest, this, event),
+      _.debounce($.proxy(doRequest, this, event), 500),
       null,
       null,
       $(event.currentTarget)
@@ -864,19 +890,19 @@ Tw.CommonSearch.prototype = {
    * @function
    * @desc 검색 개선 의견 보내기
    */
-  _improveInvest: function (evt) {
-    this._popupService.close();
+  // _improveInvest: function (evt) {
+  //   this._popupService.close();
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0084, {
-      ctt: this.$requestKeywordPopup.find('.input-focus').val()
-    }, null, null, null, { jsonp: false })
-      .done($.proxy(function (res) {
-        this._claimCallback(res, 52, evt);
-      }, this))
-      .fail($.proxy(function (err) {
-        this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
-      }, this));
-  },
+  //   this._apiService.request(Tw.API_CMD.BFF_08_0084, {
+  //     ctt: this.$requestKeywordPopup.find('.input-focus').val()
+  //   }, null, null, null, { jsonp: false })
+  //     .done($.proxy(function (res) {
+  //       this._claimCallback(res, 52, evt);
+  //     }, this))
+  //     .fail($.proxy(function (err) {
+  //       this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
+  //     }, this));
+  // },
   /**
    * @function
    * @desc 검색어 설문조사 요청 콜백
@@ -887,7 +913,7 @@ Tw.CommonSearch.prototype = {
    */
   _claimCallback: function (res, srchId, evt) {
     Tw.Logger.info('[common.search] [_claimCallBack]', '');
-
+    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.REQUEST_IMPROVE);
 
@@ -900,7 +926,6 @@ Tw.CommonSearch.prototype = {
           $selectedEl.eq(idx).removeClass();
         }
       });
-      this._popupService.close();
     } else {
       this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
     }
@@ -1828,9 +1853,6 @@ Tw.CommonSearch.prototype = {
     var returnStr3 = '';
     var keyName = '';
 
-    console.log('[common.search] [_calculateAdditionsFee] usingAdditions : ', usingAdditions);
-    console.log('[common.search] [_calculateAdditionsFee] this._svcInfo.svcAttrCd : ', this._svcInfo.svcAttrCd);
-
     // 선택된 회선이 유선인 경우
     if ( !Tw.FormatHelper.isEmpty(this._svcInfo) && this._svcInfo.svcAttrCd.startsWith('S') ) {
       // console.log('[common.search] [_calculateAdditionsFee] 선택된 회선이 유선인 경우', '');
@@ -1845,7 +1867,7 @@ Tw.CommonSearch.prototype = {
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 무료 유선 부가상품 카운트 : ', addProdPayFreeCnt);
 
       if ( paidProdCnt === 0 && unpaidProdCnt === 0 ) {
-        console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 부가서비스 없음');
+        // console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 부가서비스 없음');
         $('.tod-search-mytbox').parent().hide();
 
         // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
@@ -1864,12 +1886,12 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.fe-wire-unpaid-additions-cnt').text(returnStr2);
 
         if ( paidProdCnt === 0 ) {
-          console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 유료 부가서비스 없음');
+          // console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 유료 부가서비스 없음');
           $('.fe-wire-paid-additions-cnt').removeAttr('href');
         }
 
         if ( unpaidProdCnt === 0 ) {
-          console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 무료 부가서비스 없음');
+          // console.log('[common.search] [_calculateAdditionsFee] 가입한 유선 무료 부가서비스 없음');
           $('.fe-wire-unpaid-additions-cnt').removeAttr('href');
         }
 
@@ -1890,7 +1912,7 @@ Tw.CommonSearch.prototype = {
       // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가상품 카운트 : ', addProdPayFreeCnt);
 
       if ( disProdCnt === 0 && addProdPayCnt === 0 && addProdPayFreeCnt === 0 ) {
-        console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 및 부가서비스 없음');
+        // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 및 부가서비스 없음');
         $('.tod-search-mytbox').parent().hide();
 
         // 가입된 부가서비스 개수가 모두 0 이면 smart 배너를 노출
@@ -1911,17 +1933,17 @@ Tw.CommonSearch.prototype = {
         this.$container.find('.fe-wireless-unpaid-additions-cnt').text(returnStr3);
 
         if ( disProdCnt === 0 ) {
-          console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 없음');
+          // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 옵션/할인 프로그램 없음');
           $('.fe-wireless-discount-additions-cnt').removeAttr('href');
         }
 
         if ( addProdPayCnt === 0 ) {
-          console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가서비스 없음');
+          // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 유료 부가서비스 없음');
           $('.fe-wireless-paid-additions-cnt').removeAttr('href');
         }
 
         if ( addProdPayFreeCnt === 0 ) {
-          console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가서비스 없음');
+          // console.log('[common.search] [_calculateAdditionsFee] 가입한 무선 무료 부가서비스 없음');
           $('.fe-wireless-unpaid-additions-cnt').removeAttr('href');
         }
 
@@ -2181,5 +2203,29 @@ Tw.CommonSearch.prototype = {
         this._nextInit();
       }, this))
       .fail($.proxy(this._nextInit, this));
+  },
+  _improveInvest: function (evt) {
+    var typeCd = '';
+    if ( Tw.BrowserHelper.isApp() ) {
+      if ( Tw.BrowserHelper.isAndroid() ) {
+        typeCd = 'A';
+      } else {
+        typeCd = 'I';
+      }
+    } else {
+      typeCd = 'M';
+    }
+    Tw.CommonHelper.startLoading('body', 'grey', true);
+    this._popupService.close();
+    this._apiService.request(Tw.API_CMD.BFF_08_0072, {
+      inqNum: this.$container.find('input[name=invstQstnAnswItm]:checked').val(),
+      typeCd: typeCd,
+      searchKeyword: this.$container.find('#keyword').val()
+    }, {}).done($.proxy(function (res) {
+      this._claimCallback(res, 51, evt);
+    }, this)).fail($.proxy(function (err) {
+      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $(evt.currentTarget));
+      Tw.CommonHelper.endLoading('body');
+    }, this));
   }
 };

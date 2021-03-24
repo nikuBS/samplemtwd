@@ -10169,3 +10169,9 @@ button:focus span {
 .tod-renew.tod-srhtype1 .sub-list > li > a{padding: 0.4375rem 0;}
 .tod-renew.tod-srhtype1 .sub-list > li .main-category{font-size: 0.875rem;}
 .tod-renew.tod-srhtype1 .acco-list .acco-box.on > .acco-tit + .acco-cont{padding-top: 0 !important; padding-bottom: 0 !important;}
+
+/* 210322 [OP002-13839] NetFunnel 팝업 코딩 및 디자인 작업 재작업 */ 
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap{margin-top:3.125rem; padding-top:10.625rem; text-align:center; background: url(/img/product/img-banner-wait.png) no-repeat 50% 0; background-size: 16rem auto}
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-txt{margin-top:0.625rem; padding: 0 1.5rem; word-break: keep-all}
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box{margin:1.0625rem 0.5rem 3.75rem 0.5rem; padding:1.25rem 0; background:#f5f5f5; border-radius:0.4375rem}
+.popup .popup-info .popup-contents .inner-contents.tod-wait-wrap .tod-wait-box .txt{display:block; color:#000; font-size:0.94rem; font-weight:500}

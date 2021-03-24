@@ -19,7 +19,10 @@
                         <li class="fe-category bundle"><button>결합상품<span class="num fe-bundle-count"></span></button></li>
                         <li class="fe-category troaming"><button>T로밍<span class="num fe-troaming-count"></span></button></li>
                         <li class="fe-category tapp"><button>T앱<span class="num fe-tapp-count"></span></button></li>
-                        <li class="fe-category direct"><button>T다이렉트샵<span class="num fe-direct-count"></span></button></li>
+                        <!-- <li class="fe-category direct"><button>T다이렉트샵<span class="num fe-direct-count"></span></button></li> -->
+                        <li class="fe-category phone"><button>휴대폰<span class="num fe-phone-count"></span></button></li>
+                        <li class="fe-category tablet"><button>태블릿/2nd Device<span class="num fe-tablet-count"></span></button></li>
+                        <li class="fe-category accessory"><button>액세서리<span class="num fe-accessory-count"></span></button></li>
                         <li class="fe-category tmembership"><button>T멤버십<span class="num fe-tmembership-count"></span></button></li>
                         <li class="fe-category event"><button>진행중인 이벤트<span class="num fe-event-count"></span></button></li>
                         <li class="fe-category sale"><button>혜택/할인<span class="num fe-sale-count"></span></button></li>
@@ -263,9 +266,68 @@
     </li>
 </script>
 
+<!-- T다이렉트 
 <script type="text/x-handlebars-template" id="direct_template">
     <li>
         <button class="direct-element list-data link" title="새창" href="{{listData.linkUrl}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
+            <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
+            <div class="cont">
+                <div class="tit">{{{listData.PRODUCT_NM}}}</div>
+                <div class="price">{{currencyComma listData.SALE_PRICE}}원
+                    {{#ifCond listData.TYPE '===' 'shopmobile'}}
+                    ~/월
+                    {{/ifCond}}
+                </div>
+                {{#ifCond listData.TYPE '===' 'shopacc'}}
+                <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
+                {{/ifCond}}
+            </div>
+        </button>
+    </li>
+</script>
+-->
+
+<script type="text/x-handlebars-template" id="phone_template">
+    <li>
+        <button class="direct-element list-data link" title="새창" href="{{listData.linkUrl}}" data-id="{{listData.DOCID}}" data-category="phone" data-tit="{{removeTag listData.PRODUCT_NM}}">
+            <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
+            <div class="cont">
+                <div class="tit">{{{listData.PRODUCT_NM}}}</div>
+                <div class="price">{{currencyComma listData.SALE_PRICE}}원
+                    {{#ifCond listData.TYPE '===' 'shopmobile'}}
+                    ~/월
+                    {{/ifCond}}
+                </div>
+                {{#ifCond listData.TYPE '===' 'shopacc'}}
+                <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
+                {{/ifCond}}
+            </div>
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="tablet_template">
+    <li>
+        <button class="direct-element list-data link" title="새창" href="{{listData.linkUrl}}" data-id="{{listData.DOCID}}" data-category="tablet" data-tit="{{removeTag listData.PRODUCT_NM}}">
+            <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
+            <div class="cont">
+                <div class="tit">{{{listData.PRODUCT_NM}}}</div>
+                <div class="price">{{currencyComma listData.SALE_PRICE}}원
+                    {{#ifCond listData.TYPE '===' 'shopmobile'}}
+                    ~/월
+                    {{/ifCond}}
+                </div>
+                {{#ifCond listData.TYPE '===' 'shopacc'}}
+                <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
+                {{/ifCond}}
+            </div>
+        </button>
+    </li>
+</script>
+
+<script type="text/x-handlebars-template" id="accessory_template">
+    <li>
+        <button class="direct-element list-data link" title="새창" href="{{listData.linkUrl}}" data-id="{{listData.DOCID}}" data-category="accessory" data-tit="{{removeTag listData.PRODUCT_NM}}">
             <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
             <div class="cont">
                 <div class="tit">{{{listData.PRODUCT_NM}}}</div>

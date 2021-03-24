@@ -149,7 +149,9 @@ Tw.MyTFareBillGuideCommon.prototype = {
    */
   _goProdPage: function (event) {
     var url = $(event.currentTarget).data('prod-page-url');
-    this._history.goLoad(url);
+    if (!!url) {
+      this._history.goLoad(url);
+    }
   },
   // 요금납부 호출
   _feePayBtnEvt: function (event) {

@@ -35,20 +35,7 @@ class MyTFareSubmainController extends TwViewController {
         {NODE_ENV} = process.env;
       // local 테스트틀 하기 위해 추가
       if ((NODE_ENV === env && visible) || NODE_ENV === 'local') {
-        // netfunnel 통해서 진입한 경우
-        const isNetFunnel = req.query && req.query.netfunnel === 'Y';
-        if (pageInfo.advancement.netFunnelVisible && !isNetFunnel) {
-          const query = Object.keys(req.query).map(key => key + '=' + req.query[key]).join('&');
-          const qr = querystring.stringify(Object.assign(req.query, {
-            netfunnel: 'Y'
-          }));
-          res.render('../../../common/views/components/netfunnel.start.component.html', {
-            referer: '/myt-fare/submain?' + qr,
-            action: 'myt_fare_submain'
-          });
-        } else {
-          new MyTFareSubmainAdvController().initPage(req, res, next);
-        }
+        new MyTFareSubmainAdvController().initPage(req, res, next);
         return false;
       }
     }

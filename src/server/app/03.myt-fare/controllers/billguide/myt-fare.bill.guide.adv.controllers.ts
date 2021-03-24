@@ -68,7 +68,8 @@ class MyTFareBillGuideAdv extends TwViewController {
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0038, params),
       this.apiService.request(API_CMD.BFF_05_0045, params),
-      this._miriService.getMiriPayment(this._billpayInfo.invDt)
+      this._miriService.getMiriPayment(this._billpayInfo.invDt),
+      this._mytFareSubmainGuideService.getFeePlan() // 요금제 조회
     ).subscribe((resp) => {
       data.roamDonaCallBtnYn = {
         roamingYn: 'N',
@@ -85,6 +86,7 @@ class MyTFareBillGuideAdv extends TwViewController {
         });
       }
       data.miriPayment = resp[2];
+      data.feePlan = resp[3];
       this._mytFareSubmainGuideService.renderView(res, view, data);
     });
 
