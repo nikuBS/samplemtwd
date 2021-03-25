@@ -51,6 +51,7 @@ export default class MyTFareBillPrepayAccount extends TwViewController {
       res.render('share/common.share.app-install.info.html', {
         svcInfo, pageInfo, isAndroid: BrowserHelper.isAndroid(req)
       }); // 앱이 아닐 경우 앱 설치 유도 페이지로 이동
+      return;
     }
 
     Observable.combineLatest(

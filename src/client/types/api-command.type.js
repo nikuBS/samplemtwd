@@ -411,6 +411,8 @@ Tw.API_CMD = {
   BFF_07_0106: { path: '/core-bill/:version/use-contents-prepay/auto-process-bank', method: Tw.API_METHOD.POST },
   BFF_07_0107: { path: '/core-bill/:version/auto-payments-nc', method: Tw.API_METHOD.POST},
   BFF_07_0108: { path: '/core-bill/:version/auto-payments-nc', method: Tw.API_METHOD.PUT},
+  BFF_07_0110: { path: '/core-bill/:version/real-time/transfer-bank', method: Tw.API_METHOD.GET},
+  BFF_07_0111: { path: '/core-bill/:version/bill-pay/pay-cardinfo', method: Tw.API_METHOD.GET},
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
