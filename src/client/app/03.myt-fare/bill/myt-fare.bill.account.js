@@ -178,7 +178,7 @@ Tw.MyTFareBillAccount.prototype = {
     if (this._validationService.isAllValid()) {
       var self = this;
       var data = this._getData();
-      this._paymentCommon.checkFinancial()
+      this._validationService.checkFinancial()
         .bank() // 은행상태 체크
         .validation(data.bankCd, function () { // 콜백은 성공일때만 실행된다.
           self._popupService.open({

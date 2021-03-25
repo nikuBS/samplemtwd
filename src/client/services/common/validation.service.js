@@ -397,6 +397,75 @@ Tw.ValidationService.prototype = {
     }
     return true;
   },
+
+  /**
+   * @desc 은행/카드사 상태확인. 해당 금융사가 서비스 점검등으로 이용불가인 경우 알럿을 띄움.
+   * @public
+   */
+  checkFinancial: function () {
+    var isBank = true, isAutoCardInfo = 'N', self = this, fail = function (err) {
+      Tw.Error(err.code, err.msg).pop(); // 에러 시 공통팝업 호출
+    };
+
+    var bank = function () {
+      isBank = true;
+      return this;
+    };
+
+    var card = function (isAuto) {
+      isBank = false;
+      isAutoCardInfo = isAuto === 'Y' ? 'Y' : 'N';
+      return this;
+    };
+
+    /**
+     *
+     * @param code 은행 또는 카드사 코드
+     */
+    var validation = function (bankCodeOrCardNum, callback) {
+      var cmd;
+      // 은행인 경우
+      if (isBank) {
+        cmd = {
+          BFF_ID : Tw.API_CMD.BFF_07_0110,
+          param : {
+            bankCd: bankCodeOrCardNum
+          }
+        };
+      } else { // 카드사 인 경우
+        cmd = {
+          BFF_ID : Tw.API_CMD.BFF_07_0111,
+          param : {
+            cardNum: bankCodeOrCardNum,
+            isAutoCardInfo: isAutoCardInfo
+          }
+        };
+      }
+      self._apiService.request(cmd.BFF_ID, cmd.param)
+        .done(function (resp) {
+          if (resp.code !== Tw.API_CODE.CODE_00) {
+            fail(resp);
+            return;
+          }
+          var errMsg = Tw.FINANCIAL_VALIDATION[(resp.result || {}).errCd];
+          if (!!errMsg) {
+            self._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
+            return;
+          }
+          // 성공일때만 콜백실행
+          callback();
+        })
+        .fail(fail);
+    };
+
+    return {
+      bank: bank,
+      card: card,
+      validation: validation
+    };
+  },
+
+
   /**
    * @function
    * @desc 버튼 비활성화 return
