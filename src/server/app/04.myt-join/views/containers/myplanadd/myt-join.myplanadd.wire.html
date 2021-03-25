@@ -21,7 +21,7 @@ _%>
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
-            <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C62-1", multiple: "CMMA_A3_B13_C62-2" } }); _%>
+            <%- include('../../../../../common/views/components/common.select-line.component.v2.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C62-1", multiple: "CMMA_A3_B13_C62-2" } }); _%>
             <%_
                 const {joined, reserved : additionsReserved, joinable:additionsJoinable, combinations} = additions;
                 const {paids:additionsPaid, frees:additionsFree} = joined,
@@ -162,6 +162,7 @@ _%>
             </div>
             <!--// .cont-box -->
         </div>
+        <div class="dim" data-id="line-dim" style="display: none;"></div>
     </div>
     <!--// #contents -->
 </div>

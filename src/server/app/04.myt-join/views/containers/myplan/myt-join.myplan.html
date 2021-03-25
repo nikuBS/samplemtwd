@@ -18,10 +18,11 @@ _%>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
       <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
-      <%- include('../../../../../common/views/components/common.select-line.component.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C61-1", multiple: "CMMA_A3_B13_C61-2" } }); _%>
+      <%- include('../../../../../common/views/components/common.select-line.component.v2.html', { svcInfo: svcInfo, xtEid: { single: "CMMA_A3_B13_C61-1", multiple: "CMMA_A3_B13_C61-2" } }); _%>
       <div class="container" data-id="sub-container">
         <%- include('../../components/myplan/myt-join.myplan.' + templateType + '.html', feePlan, additions, benefits, /* agreements, fee, usagePattern, pps, */ tipList) _%>
       </div>
+      <div class="dim" data-id="line-dim" style="display: none;"></div>
     </div>
     <!--// #contents -->
     <!-- #footer -->

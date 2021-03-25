@@ -42,7 +42,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
     this._getSvcInfo();
     // OP002-8156: [개선][FE](W-2002-034-01) 회선선택 영역 확대 2차
     /* this._lineComponent = */
-    new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
+    // new Tw.LineComponent(this.$container, '.fe-bt-line', true, null);
     // 부가상품 처음 진입 시 유료, 무료, 옵션 영역 특정하여 선택하여 진입이 필요한 경우
     var hash = location.hash;
     if (!hash) {
