@@ -41,7 +41,7 @@ Tw.ChatbotService = function() {
     };
 
     // 발화어 리스트
-    this._greetingKeywords = this._chatbotCommonService._greetingKeywords;
+    this._greetingKeywords = [];
 
     // 챗봇 팝업 타입
     this._typeA = false;
@@ -240,6 +240,9 @@ Tw.ChatbotService.prototype = {
                 break;                    
         }
         
+        // 그리팅 메시지 키워드 목록을 구한다
+        this._greetingKeywords = this._chatbotCommonService._getGreetingKeywords();
+
         var isAllowedOs = false;
         if(Tw.BrowserHelper.isIos()){
             var iosVer = Number((Tw.BrowserHelper.getIosVersion() + '').split('.')[0]);
@@ -1108,11 +1111,12 @@ Tw.ChatbotService.prototype = {
                     var message = this._greetingKeywords[j].message;
                     var type = this._greetingKeywords[j].type;
                     var linkUrl = this._greetingKeywords[j].linkUrl;
+
                     //message.replace(/\n/g, '<br/>');
                     if ((greetingRangking[i] === keyword) && (this._mlsGreetingTextType === type)){
                         Tw.Logger.info('[chatbot.service] [_preDrawChatbot] message : ', message);
                         Tw.Logger.info('[chatbot.service] [_preDrawChatbot] type : ', type);
-                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl : linkUrl};
+                        var greetingKeywordInfo = {keyword: keyword, message: message, type: type, linkUrl: linkUrl, xtEid: this._greetingKeywords[j].xtEid, isOutLink: this._greetingKeywords[j].isOutLink};
                         this._greetingKeywordInfos.push(greetingKeywordInfo);
                         // textType이 'B'인 경우 두줄 디자인으로
                         if (type === 'B'){
@@ -1505,8 +1509,7 @@ Tw.ChatbotService.prototype = {
                     // vColoring의 경우 A, B 타입 외에 unRegYn(Y/N)으로도 나뉘어 있기 때문에
                     // 루프 돌면서 message가 ''인 경우가 중복으로 생기므로 이럴 경우는 제외시켜줌
                     if (message !== ''){
-                        var greetingKeywordInfo = {keyword : keyword, message : message, type : type, linkUrl: linkUrl};
-                        this._greetingKeywordInfos.push(greetingKeywordInfo);
+                        this._greetingKeywordInfos.push({keyword : keyword, message : message, type : type, linkUrl: linkUrl, xtEid: this._greetingKeywords[j].xtEid, isOutLink: this._greetingKeywords[j].isOutLink});
                     }
                     // textType이 'B'인 경우 두줄 디자인으로
                     if (type === 'B'){
