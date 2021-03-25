@@ -188,16 +188,21 @@ Tw.MyTFareBillCard.prototype = {
   _checkPay: function (e) {
     if ( this._isAvailable() ) {
       if ( this._paymentCommon._isPartialVaild() && this._validationService.isAllValid() ) {
-        this._popupService.open({
-            'hbs': 'MF_01_01_01',
-            'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
-            'unit': Tw.CURRENCY_UNIT.WON
-          },
-          $.proxy(this._openCheckPay, this), // open callback
-          $.proxy(this._afterPaySuccess, this), // close callback
-          'check-pay',
-          $(e.currentTarget)
-        );
+        var self = this, cardNum = this.$cardNumber.val();
+        this._paymentCommon.checkFinancial()
+          .card() // 카드사 상태 체크
+          .validation(cardNum, function () { // 성공 시 콜백 실행
+            self._popupService.open({
+              'hbs': 'MF_01_01_01',
+              'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
+              'unit': Tw.CURRENCY_UNIT.WON
+              },
+              $.proxy(self._openCheckPay, self), // open callback
+              $.proxy(self._afterPaySuccess, self), // close callback
+              'check-pay',
+              $(e.currentTarget)
+            );
+        });
       }
     }
   },

@@ -571,6 +571,8 @@ export const API_CMD = {
   BFF_07_0107: { path: '/core-bill/:version/auto-payments-nc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true},
   BFF_07_0108: { path: '/core-bill/:version/auto-payments-nc', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true},
   BFF_07_0109: { path: '/core-bill/:version/bill-pay/miri', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0110: { path: '/core-bill/:version/real-time/transfer-bank', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0111: { path: '/core-bill/:version/bill-pay/pay-cardinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

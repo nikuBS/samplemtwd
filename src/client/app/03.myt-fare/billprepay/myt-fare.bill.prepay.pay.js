@@ -26,6 +26,7 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, name, isMasking) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 공통 얼럿 노출
   this._recvAutoCardNumber = ''; // 수신한 자동납부 카드번호
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
 
   this._init();
 };
@@ -171,10 +172,17 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _checkPay: function (e) {
     if (this._isAvailable()) {
       if (this._validationService.isAllValid()) {
-        this._goCheck(e);
+        var self = this;
+        var isAutoCard = this._recvAutoCardNumber === this.$cardNumber.val() ? 'Y':'N'; // 자동납부 카드 유무
+        this._paymentCommon.checkFinancial()
+          .card(isAutoCard) // 카드사 상태 체크
+          .validation(this.$cardNumber.val(), function () {
+            self._goCheck(e);
+          });
       }
     }
   },
+
   /**
    * @function
    * @desc 납부할 요금이 50,000원 미만일 경우 일시불만 가능

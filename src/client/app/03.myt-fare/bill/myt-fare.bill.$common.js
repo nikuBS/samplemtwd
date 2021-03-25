@@ -18,6 +18,7 @@ Tw.MyTFareBillCommon = function (rootEl, paymentType) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
   this._historyService.init();
+  this._apiService = Tw.Api;
 
   this._init();
 };
@@ -512,13 +513,78 @@ Tw.MyTFareBillCommon.prototype = {
    * @desc 완료 페이지 이동
    */
   goComplete: function (options) {
-    /*if (Tw.FormatHelper.isEmpty(options)) {
-      Tw.Logger.error('[goComplete] options is Empty!!');
-      return;
-    }*/
     options = options || {};
     options.type = this.type;
     options.amount = this.getAmount();
     this._historyService.replaceURL('/myt-fare/bill/pay-complete?' + $.param(options)); // 완료 페이지로 이동
+  },
+
+  /**
+   * @desc 은행/카드사 상태확인. 해당 금융사가 서비스 점검등으로 이용불가인 경우 알럿을 띄움.
+   * @public
+   */
+  checkFinancial: function () {
+    var isBank = true, isAutoCardInfo = 'N', self = this, fail = this._fail;
+
+    var bank = function () {
+      isBank = true;
+      return this;
+    };
+
+    var card = function (isAuto) {
+      isBank = false;
+      isAutoCardInfo = isAuto === 'Y' ? 'Y' : 'N';
+      return this;
+    };
+
+    /**
+     *
+     * @param code 은행 또는 카드사 코드
+     */
+    var validation = function (bankCodeOrCardNum, callback) {
+      var cmd;
+      // 은행인 경우
+      if (isBank) {
+        cmd = {
+          BFF_ID : Tw.API_CMD.BFF_07_0110,
+          param : {
+            bankCd: bankCodeOrCardNum
+          }
+        };
+      } else { // 카드사 인 경우
+        cmd = {
+          BFF_ID : Tw.API_CMD.BFF_07_0111,
+          param : {
+            cardNum: bankCodeOrCardNum,
+            isAutoCardInfo: isAutoCardInfo
+          }
+        };
+      }
+      self._apiService.request(cmd.BFF_ID, cmd.param)
+        .done(function (resp) {
+          if (resp.code !== Tw.API_CODE.CODE_00) {
+            fail(resp);
+            return;
+          }
+          var errMsg = Tw.FINANCIAL_VALIDATION[(resp.result || {}).errCd];
+          if (!!errMsg) {
+            self._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
+            return;
+          }
+          // 성공일때만 콜백실행
+          callback();
+        })
+        .fail(fail);
+    };
+
+    return {
+      bank: bank,
+      card: card,
+      validation: validation
+    };
+  },
+
+  _fail: function (err) {
+    Tw.Error(err.code, err.msg).pop(); // 에러 시 공통팝업 호출
   }
 };
