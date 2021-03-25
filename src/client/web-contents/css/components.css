@@ -36732,3 +36732,4 @@ body.apphome .section-box {
 @media screen and (max-width:320px){
     .tod-line-sel-wrap .other-list-wrap .other-inner .line-tab-cont .line-item.have-child .child-link-wrap .child-link-list .child-link a{padding:0 0.4375rem}
 }
+.dim[data-id^='line-dim']{position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(00, 00, 00, .3); z-index:1; display:none}
