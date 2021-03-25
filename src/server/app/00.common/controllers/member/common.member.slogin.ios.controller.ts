@@ -32,8 +32,12 @@ class CommonMemberSloginIos extends TwViewController {
     // app 에서 query target 에 query 포함 전체 url이 넘어오는 이슈로 인해 예외처리 추가
     const chkTarget = 'target=';
     let target = decodeURIComponent(req.query.target || '');
+    // req.query.target 값이 'undefined' 값이 온 경우 빈 문자열로 처리
+    if ( req.query.target === 'undefined' ) {
+      target = '';
+    }
     const targetIndex = target.indexOf(chkTarget);
-    if (targetIndex > -1) {
+    if ( targetIndex > -1 ) {
       target = target.substring(targetIndex + chkTarget.length, target.length);
     }
     // const target = req.query.target !== 'undefined' ? decodeURIComponent(req.query.target) : '';
