@@ -189,7 +189,7 @@ Tw.MyTFareBillCard.prototype = {
     if ( this._isAvailable() ) {
       if ( this._paymentCommon._isPartialVaild() && this._validationService.isAllValid() ) {
         var self = this, cardNum = this.$cardNumber.val();
-        this._paymentCommon.checkFinancial()
+        this._validationService.checkFinancial()
           .card() // 카드사 상태 체크
           .validation(cardNum, function () { // 성공 시 콜백 실행
             self._popupService.open({
