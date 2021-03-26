@@ -34,7 +34,7 @@ _%>
                   }
                   _%>
                   <span class="symbol <%= icon %>">
-                    <span class="tod-blind"><%= data.svcInfo.oriRmk || data.svcInfo.oriEqpMdlNm %></span>
+                    <span class="tod-blind"><%= data.svcInfo.eqpMdlNm %></span>
                   </span>
                 </span>
               </span>
@@ -115,7 +115,7 @@ _%>
                   </span>
                 </span>
             </span>
-            <p class="model"><%= data.svcInfo.eqpMdlNm %></p>
+            <p class="model"><%= data.svcInfo.oriRmk || data.svcInfo.oriEqpMdlNm %></p>
           </div>
           <div class="list-wrap">
             <% if (data.type === 0 || data.type === 3) { %>
