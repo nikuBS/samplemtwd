@@ -32,7 +32,7 @@ import CommonMemberLoginCustPwdFail from './controllers/member/common.member.log
 import CommonMemberLoginRoute from './controllers/member/common.member.login.route.controller';
 import CommonMemberSloginIos from './controllers/member/common.member.slogin.ios.controller';
 import CommonMemberSloginFail from './controllers/member/common.member.slogin.fail.controller';
-// import CommonMemberSloginAos from './controllers/member/common.member.slogin.aos.controller';
+import CommonMemberSloginAos from './controllers/member/common.member.slogin.aos.controller';
 import CommonMemberLoginReactive from './controllers/member/common.member.login.reactive.controller';
 import CommonMemberLoginCustPwd from './controllers/member/common.member.login.cust-pwd.controller';
 import CommonMemberLoginExceedFail from './controllers/member/common.member.login.exceed-fail.controller';
@@ -89,7 +89,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/member/login/lost', controller: CommonMemberLoginLost });
 
     // member - slogin
-    this.controllers.push({ url: '/member/slogin/aos', controller: CommonMemberSloginIos });
+    this.controllers.push({ url: '/member/slogin/aos', controller: CommonMemberSloginAos });
     this.controllers.push({ url: '/member/slogin/ios', controller: CommonMemberSloginIos });
     this.controllers.push({ url: '/member/slogin/fail', controller: CommonMemberSloginFail });
 
