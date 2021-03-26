@@ -20,6 +20,7 @@ Tw.MyTDataPrepaidVoice = function (rootEl, skpayInfo) {
   this._historyService = new Tw.HistoryService();
   this._backAlert = new Tw.BackAlert(rootEl, true);
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-request:visible'));
+  this._validationService = new Tw.ValidationService(rootEl, null, false);
 
   this._cachedElement();
   this._init();
@@ -373,9 +374,14 @@ Tw.MyTDataPrepaidVoice.prototype = {
       var htParams = {
         cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)
       };
-
-      this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
-        .done($.proxy(this._getCreditCardInfo, this, $elButton));
+      var self = this;
+      this._validationService.checkFinancial()
+      .card()
+      .validation(this.$cardNumber.val(), function () {
+        self._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
+        .done($.proxy(self._getCreditCardInfo, self, $elButton)),
+        $(e.currentTarget)
+      });
     }
   },
   /**

@@ -278,15 +278,20 @@ Tw.MyTDataPrepaidData.prototype = {
    */
   _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
-      this._popupService.open({
+      var self = this;
+      this._validationService.checkFinancial()
+      .card()
+      .validation(this.$cardNumber.val(), function () {
+        self._popupService.open({
           'hbs': 'DC_09_03_01',
           'title': Tw.MYT_DATA_PREPAID.DATA_TITLE
         },
-        $.proxy(this._openCheckPay, this, false),
-        $.proxy(this._afterRechargeSuccess, this),
+        $.proxy(self._openCheckPay, self,false),
+        $.proxy(self._afterRechargeSuccess, self),
         'check-pay',
         $(e.currentTarget)
-      );
+       );
+     });
     }
   },
   /**
