@@ -420,7 +420,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @private
    */
    _renderPrepaid: function (list) {
-    if (this._isBubin || Tw.FormatHelper.isEmptyArray(list)) {
+    if (!this._isAdult || this._isBubin || Tw.FormatHelper.isEmptyArray(list)) {
       return;
     }
     list.forEach(function (item){
