@@ -153,11 +153,13 @@ _%>
 
 <script>
   $(document).ready(function () {
+    var data = '<%- escape(JSON.stringify(data))%>';
+    data = JSON.parse(window.unescape(data))
     new Tw.MyTFareSubMainGuide({
       $element: $('.wrap'),
       data: {
-        svcInfo: JSON.parse('<%- JSON.stringify(data.svcInfo) %>'),
-        guide: JSON.parse('<%- JSON.stringify(data.guide) %>')
+        svcInfo: data.svcInfo,
+        guide: data.guide
       }
     });
   });

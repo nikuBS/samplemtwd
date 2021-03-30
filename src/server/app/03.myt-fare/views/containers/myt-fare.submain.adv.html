@@ -96,9 +96,11 @@ _%>
 <% } %>
 <script>
   $(document).ready(function () {
+    var data = '<%- escape(JSON.stringify(data))%>';
+    data = JSON.parse(window.unescape(data))
     new Tw.MyTFareSubMainAdv({
       $element: $('.wrap'),
-      data: JSON.parse('<%- JSON.stringify(data) %>')
+      data: data
     });
   });
 </script>
