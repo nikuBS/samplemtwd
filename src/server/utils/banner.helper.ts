@@ -184,13 +184,26 @@ class BannerHelper {
                                     n.result.imgList.forEach(e => p.push(Object.assign({}, n.result.summary, e)));
                                     return p;
                                 }, []);
-                            return of({
-                                code: API_CODE.CODE_00,
-                                result: {
-                                    summary: {},
-                                    imgList: imgList
-                                }
-                            });
+
+                            try {
+                                const summary = args.map(e => e.result.summary).pop();
+                                return of({
+                                    code: API_CODE.CODE_00,
+                                    result: {
+                                        summary: summary,
+                                        imgList: imgList
+                                    }
+                                });
+                            } catch(e) {
+                                return of({
+                                    code: API_CODE.CODE_00,
+                                    result: {
+                                        summary: {},
+                                        imgList: imgList
+                                    }
+                                })
+                            } 
+                            
 
                         });
                     }
