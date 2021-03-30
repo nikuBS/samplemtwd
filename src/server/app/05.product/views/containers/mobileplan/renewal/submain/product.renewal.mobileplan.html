@@ -237,20 +237,11 @@
 															</div>
 															<div class="rn-prod-name">
 																<p class="p-name"><%= data.themeListData.prodList[i].basProductNm %></p>
-																
 																<% if( !data.themeListData.prodList[i].basFeeInfo.isNaN ) { %>
 																	<%# 상품 가격이 있다면 출력 %>
 																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
 																<% } %>
 															</div>
-															
-															<% if ( !data.themeListData.prodList[i].basAgreementAmount.isNaN ) { %>
-																<div class="rn-prod-sale">
-																	<span>선택약정 반영 시</span>
-																	<em><%= data.themeListData.prodList[i].basAgreementAmount.value %>원</em>
-																</div>
-															<% } %>
-
 															<div class="rn-prod-info">
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
@@ -319,14 +310,6 @@
 																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
 																<% } %>
 															</div>
-
-															<% if ( !data.themeListData.prodList[i].basAgreementAmount.isNaN ) { %>
-																<div class="rn-prod-sale">
-																	<span>선택약정 반영 시</span>
-																	<em><%= data.themeListData.prodList[i].basAgreementAmount.value %>원</em>
-																</div>
-															<% } %>
-
 															<div class="rn-prod-info">
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
@@ -387,20 +370,11 @@
 															</div>
 															<div class="rn-prod-name">
 																<p class="p-name"><%= data.themeListData.prodList[i].basProductNm %></p>
-
 																<% if( !data.themeListData.prodList[i].basFeeInfo.isNaN ) { %>
 																	<%# 상품 가격이 있다면 출력 %>
 																	<p class="p-price"><%= data.themeListData.prodList[i].basFeeInfo.value %>원</p>
 																<% } %>
 															</div>
-
-															<% if ( !data.themeListData.prodList[i].basAgreementAmount.isNaN ) { %>
-																<div class="rn-prod-sale">
-																	<span>선택약정 반영 시</span>
-																	<em><%= data.themeListData.prodList[i].basAgreementAmount.value %>원</em>
-																</div>
-															<% } %>
-
 															<div class="rn-prod-info">
 																<ul class="p-etc">
 																	<% if ( data.themeListData.prodList[i].basOfrDataQtyCtt ) { %>
